@@ -3,6 +3,8 @@ package net.insane96mcp.iguanatweaks.modules;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
+import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -24,19 +26,19 @@ public class ModuleHud {
 		if (!Properties.Hud.hideHealthBar)
 			return false;
 		
-		NBTTagCompound tags = player.getEntityData();
+		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		int totalTime = (int) player.world.getTotalWorldTime();
 		
 		if (Math.ceil(player.getHealth()) >= Properties.Hud.hideHealthBarThreshold && player.getAbsorptionAmount() == 0f)
 		{
-			int delay = totalTime - tags.getInteger("IguanaTweaks:HideHealthBarLastTime");
+			int delay = totalTime - playerData.getHideHealthBarLastTimestamp();
 			if (delay >= Properties.Hud.hideHealthBarDelay * 20)
 				return true;
 			else if (delay < 0)
-				tags.setInteger("IguanaTweaks:HideHealthBarLastTime", totalTime);
+				playerData.setHideHealthBarLastTimestamp(totalTime);
 		}
 		else
-			tags.setInteger("IguanaTweaks:HideHealthBarLastTime", totalTime);
+			playerData.setHideHealthBarLastTimestamp(totalTime);
 		return false;
 	}
 	
@@ -46,20 +48,20 @@ public class ModuleHud {
 
 		if (!Properties.Hud.hideHungerBar)
 			return false;
-		
-		NBTTagCompound tags = player.getEntityData();
+
+		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		int totalTime = (int) player.world.getTotalWorldTime();
 		
 		if (player.getFoodStats().getFoodLevel() >= Properties.Hud.hideHungerBarThreshold)
 		{
-			int delay = totalTime - tags.getInteger("IguanaTweaks:HideHungerBarLastTime");
+			int delay = totalTime - playerData.getHideHungerBarLastTimestamp();
 			if (delay >= Properties.Hud.hideHungerBarDelay * 20)
 				return true;
 			else if (delay < 0)
-				tags.setInteger("IguanaTweaks:HideHungerBarLastTime", totalTime);
+				playerData.setHideHungerBarLastTimestamp(totalTime);
 		}
 		else 
-			tags.setInteger("IguanaTweaks:HideHungerBarLastTime", totalTime);
+			playerData.setHideHungerBarLastTimestamp(totalTime);
 		
 		return false;
 	}
@@ -76,14 +78,14 @@ public class ModuleHud {
 		if (!Properties.Hud.hideHotbar)
 			return false;
 		
-		NBTTagCompound tags = player.getEntityData();
+		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		int totalTime = (int) player.world.getTotalWorldTime();
 		
-		int delay = totalTime - tags.getInteger("IguanaTweaks:HideHotbarLastTime");
+		int delay = totalTime - playerData.getHideHotbarLastTimestamp();
 		if (delay >= Properties.Hud.hideHotbarDelay * 20)
 			return true;
 		else if (delay < 0)
-			tags.setInteger("IguanaTweaks:HideHotbarLastTime", totalTime);
+			playerData.setHideHotbarLastTimestamp(totalTime);
 		
 		return false;
 	}
@@ -112,8 +114,8 @@ public class ModuleHud {
 						if (mc.currentScreen == null)
 						{
 							EntityPlayerSP player = mc.player;
-							NBTTagCompound tags = player.getEntityData();
-							tags.setInteger("IguanaTweaks:HideHotbarLastTime", (int) player.world.getTotalWorldTime());
+							IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
+							playerData.setHideHotbarLastTimestamp((int) player.world.getTotalWorldTime());
 						}
 					}
 				}
@@ -124,8 +126,8 @@ public class ModuleHud {
 	public static void HotbarCheckMouse(int dwheel) {
 		if (dwheel != 0) {
 			EntityPlayerSP player = Minecraft.getMinecraft().player;
-			NBTTagCompound tags = player.getEntityData();
-			tags.setInteger("IguanaTweaks:HideHotbarLastTime", (int) player.world.getTotalWorldTime());
+			IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
+			playerData.setHideHotbarLastTimestamp((int) player.world.getTotalWorldTime());
 		}
 	}
 }

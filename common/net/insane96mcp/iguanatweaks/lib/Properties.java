@@ -23,13 +23,16 @@ public class Properties {
 	    public static boolean lessObviousSilverfish;
 	    public static boolean alterPoison;
 	    public static int torchesPerCoal;
-		public static int miningExhaustionPercentage;
 		public static int tickRateEntityUpdate;
 		public static boolean disableFovOnSpeedModified;
 		
 		public static void Init() {
 			tickRateEntityUpdate = Config.LoadIntProperty(CATEGORY, "tick_rate_entity_update", "How often the speed of entities are calculated (in ticks).  Higher values reduce client-side CPU load but may increase the chance of odd behavior", 5);
 			disableFovOnSpeedModified = Config.LoadBoolProperty(CATEGORY, "disable_fov_change_on_speed_change", "Disables fov changes when you get slowed down or sped up. Highly recommended if you have 'movement_restrictions' active.", true);
+			increasedStepHeight = Config.LoadBoolProperty(CATEGORY, "increased_step_height", "If the player should be able to walk on full blocks", false);
+			alterPoison = Config.LoadBoolProperty(CATEGORY, "alter_poison", "The poison effect will be changed to be deadly and drain hunger slowly, but will damage the player slowly", true);
+			lessObviousSilverfish = Config.LoadBoolProperty(CATEGORY, "less_obivious_silverfish", "If true, silverfish blocks will be almost like stone", true);
+			torchesPerCoal = Config.LoadIntProperty(CATEGORY, "torches_per_coal", "Sets how many torches you get on crafting", 1);
 		}
 	}
 	
@@ -174,7 +177,7 @@ public class Properties {
 		public static float rockWeight;
 		public static float armorWeight;
 		public static int damageSlowdownDuration;
-		public static int damageSlowdownDurationMax;
+		public static float damageSlowdownEffectiveness;
 		public static boolean damageSlowdownDifficultyScaling;
 		public static float terrainSlowdownPercentage;
 		public static float terrainSlowdownOnDirt;
@@ -195,7 +198,7 @@ public class Properties {
 			rockWeight = Config.LoadFloatProperty(CATEGORY, "rock_weight", "Weight of one rock block, used as a base to calculate weight of other blocks", 1);
 			armorWeight = Config.LoadFloatProperty(CATEGORY, "armor_weight", "Percentage of slowdown for each point (half-shield) of armor (set to 0 to disable)", 0.5f);
 			damageSlowdownDuration = Config.LoadIntProperty(CATEGORY, "damage_slowdown_duration", "Number of ticks each heart of damage slows you down for (set to 0 to disable)", 5);
-			damageSlowdownDurationMax = Config.LoadIntProperty(CATEGORY, "damage_slowdown_duration_max", "When player's damage slowdown duration, players will be slowed down by 100%, scales with duration. (affected by difficulty if 'damage_slowdown_difficulty_scaling' is true).\nE.g. This value set to 100 in normal difficulty means that when the player reaches 50 duration remaining for the slowness, will be slowed down by 50%", 100);
+			damageSlowdownEffectiveness = Config.LoadFloatProperty(CATEGORY, "damage_slowdown_effectiveness", "When player's damaged, how much is slowed down?", 20.0f);
 			damageSlowdownDifficultyScaling = Config.LoadBoolProperty(CATEGORY, "damage_slowdown_difficulty_scaling", "Is the duration of the slowdown dependant on difficulty?", true);
 			terrainSlowdownPercentage = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_percentage", "Global modifier on the amount that terrain affects movement speed (set to 0 to disable)", 100.0f);
 			terrainSlowdownOnDirt = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_dirt", "Percentage of slowdown when walking on dirt or grass (set to 0 to disable)", 5f);

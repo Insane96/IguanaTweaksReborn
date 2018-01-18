@@ -1,5 +1,8 @@
 package net.insane96mcp.iguanatweaks.modules;
 
+import net.insane96mcp.iguanatweaks.IguanaTweaks;
+import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
+import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.insane96mcp.iguanatweaks.lib.Utils;
 import net.minecraft.block.Block;
@@ -21,7 +24,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 public class ModuleMovementRestriction {
-	@SuppressWarnings("unused")
 	public static void Apply(EntityLivingBase living) {
 		World world = living.world;
 		
@@ -59,12 +61,10 @@ public class ModuleMovementRestriction {
     	
     	speedModifier = 1f - (speedModifierArmour * speedModifierTerrain * speedModifierWeight * slownessDamage);
     	
-    	if (player.moveForward < 0f)
-    		speedModifier *= 2;
-    	if (onIce)
-    		speedModifier = 0.5f + (speedModifier / 5f);
+    	if (player.moveForward < 0f || onIce)
+    		speedModifier = 0.5f + (speedModifier / 2f);
     	
-    	//player.jumpMovementFactor = 0.02f * (1f - speedModifier / 2f);
+    	player.jumpMovementFactor = 0.02f * (1f - speedModifier / 2f);
 
 		AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
 		IAttributeInstance attribute = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
@@ -101,10 +101,11 @@ public class ModuleMovementRestriction {
 
     	if (slownessWeight > 0)
     		player.addExhaustion(0.0001F * Math.round(slownessWeight));
-	
-		NBTTagCompound tags = player.getEntityData();
-		tags.setFloat("IguanaTweaks:weight", weight);
 		
+    	IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
+    	
+    	playerData.setWeight(weight);
+    	
 		if (slownessWeight > 100f)
 			slownessWeight = 100f;
 		return slownessWeight;
@@ -148,33 +149,16 @@ public class ModuleMovementRestriction {
 		if (Properties.MovementRestriction.damageSlowdownDuration == 0)
 			return 1f;
 		
-		NBTTagCompound tags = player.getEntityData();
+		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		
-		int duration = tags.getInteger("IguanaTweaks:damageSlownessDuration");
-		System.out.println("slow " + tags);
+		int duration = playerData.getDamageSlownessDuration();
 		
 		if (duration == 0)
 			return 1f;
 		
-		tags.setInteger("IguanaTweaks:damageSlownessDuration", --duration);
+		playerData.tickDamageSlownessDuration();
 		
-		float slownessDamage = 0f;
-		
-		int max = Properties.MovementRestriction.damageSlowdownDurationMax;
-		
-		if (Properties.MovementRestriction.damageSlowdownDifficultyScaling) {
-			if (player.world.getDifficulty() == EnumDifficulty.EASY)
-				max *= 0.5;
-			else if (player.world.getDifficulty() == EnumDifficulty.HARD)
-				max *= 2;
-		}
-		
-		slownessDamage = (duration / max) * 100f;
-		
-		if (slownessDamage > 100f)
-			slownessDamage = 100f;
-		
-		return slownessDamage;
+		return 100f - Properties.MovementRestriction.damageSlowdownEffectiveness;
 	}
 	
 	public static void DamageSlowness(EntityLivingBase living, float damageAmount) {
@@ -186,7 +170,7 @@ public class ModuleMovementRestriction {
 		
 		EntityPlayer player = (EntityPlayer)living;
 		
-		NBTTagCompound tags = player.getEntityData();
+		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		
 		int duration = Math.round(damageAmount);
 		
@@ -197,9 +181,9 @@ public class ModuleMovementRestriction {
 				duration *= 2;
 		}
 		
-		int playerDuration = tags.getInteger("IguanaTweaks:damageSlownessDuration");
+		int playerDuration = playerData.getDamageSlownessDuration();
 		
-		tags.setInteger("IguanaTweaks:damageSlownessDuration", duration + playerDuration);
+		playerData.setDamageSlownessDuration(duration + playerDuration);
 	}
 	
 	public static boolean OnIce(EntityPlayer player, World world) {

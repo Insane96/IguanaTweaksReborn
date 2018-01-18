@@ -9,9 +9,6 @@ public class LivingHurt {
 
 	@SubscribeEvent
 	public static void EventLivingHurt(LivingHurtEvent event) {
-		if (event.getEntityLiving() instanceof EntityPlayer){
-			System.out.println(event.getEntityLiving().getEntityData());
-		}
 		ModuleMovementRestriction.DamageSlowness(event.getEntityLiving(), event.getAmount());
 	}
 }

@@ -1,5 +1,9 @@
 package net.insane96mcp.iguanatweaks.proxies;
 
+import net.insane96mcp.iguanatweaks.capabilities.CapabilityHandler;
+import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
+import net.insane96mcp.iguanatweaks.capabilities.PlayerData;
+import net.insane96mcp.iguanatweaks.capabilities.PlayerDataStorage;
 import net.insane96mcp.iguanatweaks.events.Break;
 import net.insane96mcp.iguanatweaks.events.ClientTick;
 import net.insane96mcp.iguanatweaks.events.EntityJoinWorld;
@@ -11,21 +15,20 @@ import net.insane96mcp.iguanatweaks.events.LivingUpdate;
 import net.insane96mcp.iguanatweaks.events.Mouse;
 import net.insane96mcp.iguanatweaks.events.PlayerLogInRespawn;
 import net.insane96mcp.iguanatweaks.events.PlayerSleepInBed;
+import net.insane96mcp.iguanatweaks.events.RegistryRegister;
 import net.insane96mcp.iguanatweaks.events.RenderGameOverlay;
 import net.insane96mcp.iguanatweaks.lib.Config;
 import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.modules.ModuleGeneral;
 import net.insane96mcp.iguanatweaks.modules.ModuleHardness;
 import net.insane96mcp.iguanatweaks.modules.ModuleHud;
 import net.insane96mcp.iguanatweaks.modules.ModuleStackSizes;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy {
 	public void PreInit(FMLPreInitializationEvent event) {
@@ -48,10 +51,17 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(FovUpdate.class);
 		MinecraftForge.EVENT_BUS.register(LivingHurt.class);
 		MinecraftForge.EVENT_BUS.register(Break.class);
+		MinecraftForge.EVENT_BUS.register(RegistryRegister.class);
+		MinecraftForge.EVENT_BUS.register(CapabilityHandler.class);
+		
+		CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataStorage(), PlayerData.class);
 	}
 	
 	public void PostInit(FMLPostInitializationEvent event) {
 		Config.SaveConfig();
+
+		//General
+		ModuleGeneral.LessObiviousSilverfish();
 		
 		//Hardness
 		ModuleHardness.ProcessGlobalHardness();

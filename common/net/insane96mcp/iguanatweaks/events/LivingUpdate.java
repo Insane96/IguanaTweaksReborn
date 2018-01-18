@@ -9,9 +9,6 @@ public class LivingUpdate {
 	
 	@SubscribeEvent
 	public static void EventLivingUpdate(LivingUpdateEvent event) {
-		if (event.getEntityLiving() instanceof EntityPlayer){
-			System.out.println(event.getEntityLiving().getEntityData());
-		}
 		ModuleMovementRestriction.Apply(event.getEntityLiving());
 	}
 }

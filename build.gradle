@@ -12,8 +12,8 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 
 version = "1.0.0-mc1.12.x"
-group = "net.insane96mcp.naturalnetherportals" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "naturalnetherportals"
+group = "net.insane96mcp.iguanatweaksreborn" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "iguanatweaksreborn"
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
