@@ -104,22 +104,23 @@ public class ModuleHud {
 			Map<String, KeyBinding> binds = null;
 			try {
 				binds = (Map<String, KeyBinding>) KEYBIND_ARRAY.get(null);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-	    	for (String bind : binds.keySet()) {
-				if(binds.get(bind).isKeyDown()){
-					if (binds.get(bind).getKeyCode() >= 2 && binds.get(bind).getKeyCode() <= 9) {
-						Minecraft mc = Minecraft.getMinecraft();
-						if (mc.currentScreen == null)
-						{
-							EntityPlayerSP player = mc.player;
-							IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
-							playerData.setHideHotbarLastTimestamp((int) player.world.getTotalWorldTime());
+				for (String bind : binds.keySet()) {
+					if(binds.get(bind).isKeyDown()){
+						if (binds.get(bind).getKeyCode() >= 2 && binds.get(bind).getKeyCode() <= 9) {
+							Minecraft mc = Minecraft.getMinecraft();
+							if (mc.currentScreen == null)
+							{
+								EntityPlayerSP player = mc.player;
+								IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
+								playerData.setHideHotbarLastTimestamp((int) player.world.getTotalWorldTime());
+							}
 						}
 					}
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+	    	
 		}
 	}
 
