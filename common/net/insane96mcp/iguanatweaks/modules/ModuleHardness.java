@@ -11,25 +11,15 @@ public class ModuleHardness {
 	public static void ProcessGlobalHardness() {
 		if (Properties.Hardness.multiplier == 1.0f)
 			return;
-		
-		try {
-			Field hardnessField;
-			float hardness;
-			Class blockClass = Block.class;
-			hardnessField = blockClass.getDeclaredField("blockHardness");
-			hardnessField.setAccessible(true);
 
-			for (Block block : Block.REGISTRY) {
-				ResourceLocation blockResource = block.getRegistryName();
-				if ((Properties.Hardness.blockListIsWhitelist && Properties.Hardness.blockList.contains(blockResource.toString()))
-					|| !Properties.Hardness.blockListIsWhitelist && !Properties.Hardness.blockList.contains(blockResource.toString())){
-					hardness = (float) hardnessField.get(block);
-					block.setHardness(hardness * Properties.Hardness.multiplier);
-				}
+		float hardness;
+		for (Block block : Block.REGISTRY) {
+			ResourceLocation blockResource = block.getRegistryName();
+			if ((Properties.Hardness.blockListIsWhitelist && Properties.Hardness.blockList.contains(blockResource.toString()))
+				|| !Properties.Hardness.blockListIsWhitelist && !Properties.Hardness.blockList.contains(blockResource.toString())){
+				hardness = block.getBlockHardness(null, null, null);
+				block.setHardness(hardness * Properties.Hardness.multiplier);
 			}
-		}
-		catch (Exception e) {
-			IguanaTweaks.logger.error(e.getMessage());
 		}
 	}
 	
