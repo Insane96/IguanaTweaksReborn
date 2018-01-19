@@ -8,6 +8,6 @@ public class ClientTick {
 
 	@SubscribeEvent
 	public static void EventClientTick(TickEvent.ClientTickEvent event) {
-		ModuleHud.HotbarCheckKeyPress(event.phase);
+		//ModuleHud.HotbarCheckKeyPress(event.phase);
 	}
 }

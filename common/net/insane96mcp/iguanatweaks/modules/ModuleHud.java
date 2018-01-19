@@ -71,7 +71,7 @@ public class ModuleHud {
 			GuiIngameForge.renderExperiance = false;
 	}
 	
-	public static boolean HideHotbar(ElementType type, EntityPlayer player) {
+	/*public static boolean HideHotbar(ElementType type, EntityPlayer player) {
 		if (type != ElementType.HOTBAR)
 			return false;
 		
@@ -88,10 +88,12 @@ public class ModuleHud {
 			playerData.setHideHotbarLastTimestamp(totalTime);
 		
 		return false;
-	}
+	}*/
 
-	private static Field KEYBIND_ARRAY = null;
+	//private static Field KEYBIND_ARRAY = null;
 	public static void HotbarCheckKeyPress(Phase phase) {
+		/*if (Properties.Hud.hideHotbar)
+			return;
 		if (KEYBIND_ARRAY == null) {
 			try {
 				KEYBIND_ARRAY = KeyBinding.class.getDeclaredField("KEYBIND_ARRAY");
@@ -121,7 +123,7 @@ public class ModuleHud {
 				e.printStackTrace();
 			}
 	    	
-		}
+		}*/
 	}
 
 	public static void HotbarCheckMouse(int dwheel) {
