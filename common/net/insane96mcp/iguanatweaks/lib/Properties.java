@@ -22,17 +22,17 @@ public class Properties {
 		public static boolean increasedStepHeight;
 	    public static boolean lessObviousSilverfish;
 	    public static boolean alterPoison;
-	    public static int torchesPerCoal;
+	    //public static int torchesPerCoal;
 		public static int tickRateEntityUpdate;
 		public static boolean disableFovOnSpeedModified;
 		
 		public static void Init() {
-			tickRateEntityUpdate = Config.LoadIntProperty(CATEGORY, "tick_rate_entity_update", "How often the speed of entities are calculated (in ticks).  Higher values reduce client-side CPU load but may increase the chance of odd behavior", 5);
+			tickRateEntityUpdate = Config.LoadIntProperty(CATEGORY, "tick_rate_entity_update", "How often the speed of players are calculated (in ticks). Higher values reduce client-side CPU load but may increase the chance of odd behavior", 7);
 			disableFovOnSpeedModified = Config.LoadBoolProperty(CATEGORY, "disable_fov_change_on_speed_change", "Disables fov changes when you get slowed down or sped up. Highly recommended if you have 'movement_restrictions' active.", true);
-			increasedStepHeight = Config.LoadBoolProperty(CATEGORY, "increased_step_height", "If the player should be able to walk on full blocks", false);
+			increasedStepHeight = Config.LoadBoolProperty(CATEGORY, "increased_step_height", "If the player should be able to walk over full blocks", false);
 			alterPoison = Config.LoadBoolProperty(CATEGORY, "alter_poison", "The poison effect will be changed to be deadly and drain hunger slowly, but will damage the player slowly", true);
 			lessObviousSilverfish = Config.LoadBoolProperty(CATEGORY, "less_obivious_silverfish", "If true, silverfish blocks will be almost like stone", true);
-			torchesPerCoal = Config.LoadIntProperty(CATEGORY, "torches_per_coal", "Sets how many torches you get on crafting", 1);
+			//torchesPerCoal = Config.LoadIntProperty(CATEGORY, "torches_per_coal", "Sets how many torches you get on crafting", 1);
 		}
 	}
 	
@@ -215,7 +215,6 @@ public class Properties {
 		public static String CATEGORY = "experience";
 		public static String DESCRIPTION = "Configure some properties for the vanilla experience";
 
-		//public static float percentageSmelting;
 		public static float percentageOre;
 		public static float percentageAll;
 		public static int lifespan;
@@ -223,7 +222,6 @@ public class Properties {
 		public static void Init(){
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
 
-			//percentageSmelting = Config.LoadFloatProperty(CATEGORY, "percentage_smelting", "Percentage of experience given when smelting items (0 to disable smelting giving xp) (100 to disable)", 100);
 			percentageOre = Config.LoadFloatProperty(CATEGORY, "percentage_ore", "Percentage of experience dropped by blocks (0 to disable blocks dropping xp) (100 to disable)", 100);
 			percentageAll = Config.LoadFloatProperty(CATEGORY, "percentage_all", "Percentage of experience given by orbs (0 to disable all xp orbs from being created) (100 to disable)", 100);
 			lifespan = Config.LoadIntProperty(CATEGORY, "xp_lifespan", "Lifespan (in ticks) of xp orbs (Range: 0 - 38000. If set to 39000 the orbs will never despawn)", 6000);

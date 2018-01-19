@@ -1,6 +1,5 @@
 package net.insane96mcp.iguanatweaks.modules;
 
-import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
@@ -14,6 +13,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,25 +26,23 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 public class ModuleMovementRestriction {
 	public static void Apply(EntityLivingBase living) {
 		World world = living.world;
-		
-		if (!world.isRemote)
-			return;
 
 		float speedModifier = 1f;
 		
-		EntityPlayer player;
+		EntityPlayerMP player;
 		
-		if (!(living instanceof EntityPlayer)) 
+		if (!(living instanceof EntityPlayerMP)) 
 			return;
 	
-		player = (EntityPlayer) living;
+		player = (EntityPlayerMP) living;
 		if (player.isCreative())
 			return;
 		
 		float slownessDamage = SlownessDamage(player, world);
 		
-		if (player.ticksExisted % 7 != 0)
+		if (player.ticksExisted % Properties.General.tickRateEntityUpdate != 0)
 			return;
+		
 		
 		float slownessWeight = SlownessWeight(player, world);
 		float slownessTerrain = SlownessTerrain(player, world);
@@ -158,7 +156,7 @@ public class ModuleMovementRestriction {
 		
 		playerData.tickDamageSlownessDuration();
 		
-		return 100f - Properties.MovementRestriction.damageSlowdownEffectiveness;
+		return 1f - (Properties.MovementRestriction.damageSlowdownEffectiveness / 100f);
 	}
 	
 	public static void DamageSlowness(EntityLivingBase living, float damageAmount) {
@@ -172,7 +170,7 @@ public class ModuleMovementRestriction {
 		
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		
-		int duration = Math.round(damageAmount);
+		int duration = Math.round(damageAmount * 3);
 		
 		if (Properties.MovementRestriction.damageSlowdownDifficultyScaling) {
 			if (player.world.getDifficulty() == EnumDifficulty.EASY)

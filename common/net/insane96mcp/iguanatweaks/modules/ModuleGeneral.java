@@ -26,8 +26,12 @@ public class ModuleGeneral {
         IAttributeInstance iattributeinstance = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
         f = (float)((double)f * ((iattributeinstance.getAttributeValue() / (double)player.capabilities.getWalkSpeed() + 1.0D) / 2.0D));
 
+        if (player.isSprinting())
+        	f /= 1.23;
+        	
         if (player.capabilities.getWalkSpeed() == 0.0F || Float.isNaN(f) || Float.isInfinite(f))
             f = 1.0F;
+        
         
         event.setNewfov(event.getFov() / f);
 	}
@@ -38,15 +42,16 @@ public class ModuleGeneral {
 	}
 
 	public static void LessObiviousSilverfish(){
-		Blocks.MONSTER_EGG.setHardness(1.5f).setResistance(10.0F).setHarvestLevel("pickaxe", 0);
+		Blocks.MONSTER_EGG.setHardness(1.4f).setResistance(10.0F).setHarvestLevel("pickaxe", 0);
 	}
 
 	public static void TorchesPerCoal(RegistryEvent.Register<IRecipe> event){
-		if (Properties.General.torchesPerCoal == 4)
+		/*if (Properties.General.torchesPerCoal == 4)
 			return;
 		
-		/*ResourceLocation torch = new ResourceLocation("minecraft:torch");
+		ResourceLocation torch = new ResourceLocation("minecraft:torch");
         IForgeRegistryModifiable modRegistry = (IForgeRegistryModifiable) event.getRegistry();
+		System.out.println(modRegistry);
 		modRegistry.remove(torch);*/
 		//modRegistry.register(value);
 
@@ -54,12 +59,12 @@ public class ModuleGeneral {
 	}
 	
 	public static void AlterPoison(RegistryEvent.Register<Potion> event) {
-		/*System.out.println("Replacing Poison");
 		IForgeRegistryModifiable modRegistry = (IForgeRegistryModifiable) event.getRegistry();
 		ResourceLocation potionName = new ResourceLocation("minecraft:poison");
-		modRegistry.remove(potionName);
 		AlteredPoison alteredPoison = new AlteredPoison(true, Potion.getPotionFromResourceLocation("minecraft:poison").getLiquidColor());
 		alteredPoison.setRegistryName(potionName);
-		modRegistry.register(alteredPoison);*/
+		alteredPoison.setPotionName("effect.poison");
+		alteredPoison.setIconIndex(6, 0);
+		modRegistry.register(alteredPoison);
 	}
 }

@@ -51,7 +51,6 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(FovUpdate.class);
 		MinecraftForge.EVENT_BUS.register(LivingHurt.class);
 		MinecraftForge.EVENT_BUS.register(Break.class);
-		MinecraftForge.EVENT_BUS.register(RegistryRegister.class);
 		MinecraftForge.EVENT_BUS.register(CapabilityHandler.class);
 		
 		CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataStorage(), PlayerData.class);

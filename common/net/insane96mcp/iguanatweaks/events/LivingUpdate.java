@@ -9,6 +9,8 @@ public class LivingUpdate {
 	
 	@SubscribeEvent
 	public static void EventLivingUpdate(LivingUpdateEvent event) {
+		if (event.getEntityLiving().world.isRemote)
+			return;
 		ModuleMovementRestriction.Apply(event.getEntityLiving());
 	}
 }
