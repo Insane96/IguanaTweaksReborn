@@ -12,13 +12,19 @@ public class ModuleHardness {
 		if (Properties.Hardness.multiplier == 1.0f)
 			return;
 
-		float hardness;
 		for (Block block : Block.REGISTRY) {
 			ResourceLocation blockResource = block.getRegistryName();
 			if ((Properties.Hardness.blockListIsWhitelist && Properties.Hardness.blockList.contains(blockResource.toString()))
 				|| !Properties.Hardness.blockListIsWhitelist && !Properties.Hardness.blockList.contains(blockResource.toString())){
-				hardness = block.getBlockHardness(null, null, null);
-				block.setHardness(hardness * Properties.Hardness.multiplier);
+				float hardness = 0.0f;
+				try {
+					hardness = block.getBlockHardness(null, null, null);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				if (hardness != 0.0f)
+					block.setHardness(hardness * Properties.Hardness.multiplier);
 			}
 		}
 	}
