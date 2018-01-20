@@ -11,6 +11,7 @@ public class LivingUpdate {
 	public static void EventLivingUpdate(LivingUpdateEvent event) {
 		if (event.getEntityLiving().world.isRemote)
 			return;
-		ModuleMovementRestriction.Apply(event.getEntityLiving());
+		ModuleMovementRestriction.ApplyPlayer(event.getEntityLiving());
+		ModuleMovementRestriction.ApplyEntity(event.getEntityLiving());
 	}
 }

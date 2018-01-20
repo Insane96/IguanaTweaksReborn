@@ -12,6 +12,6 @@ public class LivingHurt {
 	public static void EventLivingHurt(LivingHurtEvent event) {
 		if (event.getEntityLiving().world.isRemote)
 			return;
-		ModuleMovementRestriction.DamageSlowness(event.getEntityLiving(), event.getAmount());
+		ModuleMovementRestriction.Stun(event.getEntityLiving(), event.getAmount());
 	}
 }

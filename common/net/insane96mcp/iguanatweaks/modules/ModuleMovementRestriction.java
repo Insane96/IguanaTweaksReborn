@@ -1,5 +1,6 @@
 package net.insane96mcp.iguanatweaks.modules;
 
+import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
@@ -24,7 +25,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 public class ModuleMovementRestriction {
-	public static void Apply(EntityLivingBase living) {
+	public static void ApplyPlayer(EntityLivingBase living) {
 		World world = living.world;
 
 		float speedModifier = 1f;
@@ -62,7 +63,7 @@ public class ModuleMovementRestriction {
     	if (player.moveForward < 0f || onIce)
     		speedModifier = 0.5f + (speedModifier / 2f);
     	
-    	player.jumpMovementFactor = 0.02f * (1f - speedModifier / 2f);
+    	player.jumpMovementFactor = 0.02f * (1f - speedModifier / 1.5f);
 
 		AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
 		IAttributeInstance attribute = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
@@ -159,7 +160,7 @@ public class ModuleMovementRestriction {
 		return 1f - (Properties.MovementRestriction.damageSlowdownEffectiveness / 100f);
 	}
 	
-	public static void DamageSlowness(EntityLivingBase living, float damageAmount) {
+	public static void Stun(EntityLivingBase living, float damageAmount) {
 		if (Properties.MovementRestriction.damageSlowdownDuration == 0)
 			return;
 		
@@ -170,7 +171,7 @@ public class ModuleMovementRestriction {
 		
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		
-		int duration = Math.round(damageAmount * 3);
+		int duration = Math.round(damageAmount * 4);
 		
 		if (Properties.MovementRestriction.damageSlowdownDifficultyScaling) {
 			if (player.world.getDifficulty() == EnumDifficulty.EASY)
@@ -189,6 +190,90 @@ public class ModuleMovementRestriction {
 			return false;
 		
 		BlockPos playerPos = new BlockPos(player.posX, player.posY - 1, player.posZ);
+
+		Material blockOnMaterial = world.getBlockState(playerPos).getMaterial();
+		
+        if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
+        	return true;
+        
+        return false;
+	}
+
+	public static void ApplyEntity(EntityLivingBase living) {
+
+    	if (living instanceof EntityPlayer)
+    		return;
+    	
+		World world = living.world;
+
+		float speedModifier = 1f;
+		
+		if (living.ticksExisted % Properties.General.tickRateEntityUpdate != 0)
+			return;
+		
+		float slownessTerrain = SlownessTerrainEntity(living, world);
+		
+		float slownessArmor = living.getTotalArmorValue() * Properties.MovementRestriction.armorWeight;
+		if (slownessArmor > 100f) 
+			slownessArmor = 100f;
+    	
+    	float speedModifierArmour = (100f - slownessArmor) / 100f;
+    	float speedModifierTerrain = (100f - slownessTerrain) / 100f;
+    	
+    	speedModifier = 1f - (speedModifierArmour * speedModifierTerrain);
+    	
+    	if (living.moveForward < 0f)
+    		speedModifier = 0.5f + (speedModifier / 2f);
+    	
+    	living.jumpMovementFactor = 0.02f * (1f - speedModifier / 1.5f);
+
+		AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
+		IAttributeInstance attribute = living.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+		if (attribute.getModifier(Utils.movementRestrictionUUID) == null)
+			attribute.applyModifier(modifier);
+		if (attribute.getModifier(Utils.movementRestrictionUUID).getAmount() != modifier.getAmount())
+			attribute.removeModifier(Utils.movementRestrictionUUID);
+	}
+	
+	public static float SlownessTerrainEntity(EntityLivingBase living, World world) {
+		
+		float slownessTerrain = 0f;
+		
+		if (living.isInWater() || Properties.MovementRestriction.terrainSlowdownPercentage == 0)
+			return 0f;
+		BlockPos playerPos = new BlockPos(living.posX, living.posY - 1, living.posZ);
+
+		Material blockOnMaterial = world.getBlockState(playerPos).getMaterial();			
+		Material blockInMaterial = world.getBlockState(playerPos.add(0, 1, 0)).getMaterial();
+		
+        if (blockOnMaterial == Material.GRASS || blockOnMaterial == Material.GROUND) 
+        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnDirt; 
+        else if (blockOnMaterial == Material.SAND) 
+        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnSand;
+        else if (blockOnMaterial == Material.LEAVES || blockOnMaterial == Material.PLANTS || blockOnMaterial == Material.VINE) 
+        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnPlant;
+        else if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
+        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnIce;
+        else if (blockOnMaterial == Material.SNOW || blockOnMaterial == Material.CRAFTED_SNOW)
+        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnSnow;
+		
+        if (blockInMaterial == Material.SNOW || blockInMaterial == Material.CRAFTED_SNOW) 
+        	slownessTerrain += Properties.MovementRestriction.terrainSlowdownInSnow;
+		else if (blockInMaterial == Material.VINE || blockInMaterial == Material.PLANTS) 
+			slownessTerrain += Properties.MovementRestriction.terrainSlowdownInPlant;
+        
+        slownessTerrain = Math.round((float)slownessTerrain * ((float)Properties.MovementRestriction.terrainSlowdownPercentage / 100f));
+        
+        if (slownessTerrain > 100f)
+        	slownessTerrain = 100f;
+        return slownessTerrain;
+	}
+	
+	public static boolean OnIceEntity(EntityLivingBase living, World world) {
+		if (living.isInWater() || Properties.MovementRestriction.terrainSlowdownPercentage == 0)
+			return false;
+		
+		BlockPos playerPos = new BlockPos(living.posX, living.posY - 1, living.posZ);
 
 		Material blockOnMaterial = world.getBlockState(playerPos).getMaterial();
 		

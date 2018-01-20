@@ -25,6 +25,7 @@ public class Properties {
 	    //public static int torchesPerCoal;
 		public static int tickRateEntityUpdate;
 		public static boolean disableFovOnSpeedModified;
+		public static boolean exhaustionOnBlockBreak;
 		
 		public static void Init() {
 			tickRateEntityUpdate = Config.LoadIntProperty(CATEGORY, "tick_rate_entity_update", "How often the speed of players are calculated (in ticks). Higher values reduce client-side CPU load but may increase the chance of odd behavior", 7);
@@ -33,6 +34,7 @@ public class Properties {
 			alterPoison = Config.LoadBoolProperty(CATEGORY, "alter_poison", "The poison effect will be changed to be deadly and drain hunger slowly, but will damage the player slowly", true);
 			lessObviousSilverfish = Config.LoadBoolProperty(CATEGORY, "less_obivious_silverfish", "If true, silverfish blocks will be almost like stone", true);
 			//torchesPerCoal = Config.LoadIntProperty(CATEGORY, "torches_per_coal", "Sets how many torches you get on crafting", 1);
+			exhaustionOnBlockBreak = Config.LoadBoolProperty(CATEGORY, "exhaustion_on_block_break", "Minecraft normally adds 0.005 exaustion for block broken. With this at true, exhaustion will be added based on block hardness (hardness / 100). ELI5 you lose more hunger the more hard is a block to break.", true);
 		}
 	}
 	
@@ -49,7 +51,7 @@ public class Properties {
 		public static void Init() {
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
 			
-			multiplier = Config.LoadFloatProperty(CATEGORY, "multiplier", "Multiplier applied to the hardness of blocks (set to 1 to disable). This is applied before the block_hardness", 2.0f);
+			multiplier = Config.LoadFloatProperty(CATEGORY, "multiplier", "Multiplier applied to the hardness of blocks (set to 1 to disable). This is applied before the block_hardness", 4.0f);
 			blockListIsWhitelist = Config.LoadBoolProperty(CATEGORY, "block_list_is_whitelist", "True if hardness multiplier should only affect blocks on the list, false if all blocks are affected except those on the list", false);
 			blockList = Config.LoadStringListProperty(CATEGORY, "block_list", "Block ids (one per line) for the hardness whitelist/blacklist.\nE.g. 'minecraft:stone'", new ArrayList<String>() {});
 			

@@ -1,7 +1,11 @@
 package net.insane96mcp.iguanatweaks.modules;
 
+
+import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.insane96mcp.iguanatweaks.potioneffects.AlteredPoison;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,6 +15,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 
 public class ModuleGeneral {
@@ -43,6 +48,28 @@ public class ModuleGeneral {
 
 	public static void LessObiviousSilverfish(){
 		Blocks.MONSTER_EGG.setHardness(1.4f).setResistance(10.0F).setHarvestLevel("pickaxe", 0);
+	}
+	
+	public static void ExhaustionOnBlockBreak(BreakEvent event) {
+		if (!Properties.General.exhaustionOnBlockBreak)
+			return;
+		
+		IBlockState blockState = event.getState();
+		Block block = blockState.getBlock();
+		float hardness = 0f;
+		try {
+			hardness = block.getBlockHardness(null, null, null);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (hardness == 0f)
+			return;
+		
+		IguanaTweaks.logger.info(hardness);
+		
+		event.getPlayer().addExhaustion(hardness / 100f);
 	}
 
 	public static void TorchesPerCoal(RegistryEvent.Register<IRecipe> event){
