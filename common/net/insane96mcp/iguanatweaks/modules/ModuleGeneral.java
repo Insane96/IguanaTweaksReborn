@@ -67,8 +67,6 @@ public class ModuleGeneral {
 		if (hardness == 0f)
 			return;
 		
-		IguanaTweaks.logger.info(hardness);
-		
 		event.getPlayer().addExhaustion(hardness / 100f);
 	}
 

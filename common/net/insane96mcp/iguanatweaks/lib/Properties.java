@@ -188,6 +188,7 @@ public class Properties {
 		public static float terrainSlowdownOnSnow;
 		public static float terrainSlowdownInSnow;
 		public static float terrainSlowdownInPlant;
+		public static boolean slowdownWhenWalkingBackwards;
 		
 		public static void Init() {
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
@@ -209,6 +210,8 @@ public class Properties {
 			terrainSlowdownOnSnow = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_snow", "Percentage of slowdown when walking on snow (set to 0 to disable)", 20f);
 			terrainSlowdownInPlant = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_in_plant", "Percentage of slowdown when walking through leaves or plants (set to 0 to disable)", 5f);
 			terrainSlowdownInSnow = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_in_snow", "Percentage of slowdown when walking through snow (set to 0 to disable)", 20f);
+			
+			slowdownWhenWalkingBackwards = Config.LoadBoolProperty(CATEGORY, "slowdown_when_walking_backwards", "Set to false to disable the slowdown when walking backwards", true);
 		}
 	}
 	

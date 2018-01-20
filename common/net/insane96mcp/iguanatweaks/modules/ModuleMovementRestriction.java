@@ -1,6 +1,5 @@
 package net.insane96mcp.iguanatweaks.modules;
 
-import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
@@ -60,7 +59,9 @@ public class ModuleMovementRestriction {
     	
     	speedModifier = 1f - (speedModifierArmour * speedModifierTerrain * speedModifierWeight * slownessDamage);
     	
-    	if (player.moveForward < 0f || onIce)
+    	if (player.moveForward < 0f && Properties.MovementRestriction.slowdownWhenWalkingBackwards)
+    		speedModifier = 0.5f + (speedModifier / 2f);
+    	if (onIce)
     		speedModifier = 0.5f + (speedModifier / 2f);
     	
     	player.jumpMovementFactor = 0.02f * (1f - speedModifier / 1.5f);
