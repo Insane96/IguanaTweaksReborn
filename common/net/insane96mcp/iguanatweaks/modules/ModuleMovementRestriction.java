@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -15,9 +16,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumDifficulty;
@@ -273,15 +272,17 @@ public class ModuleMovementRestriction {
 			
 			if (Properties.Hud.showCreativeText && !mc.gameSettings.showDebugInfo && player.capabilities.isCreativeMode)
 			{
-				event.getLeft().add("Creative Mode");
+				event.getLeft().add(I18n.format("info.creative_mode"));
+				return;
 			}
+			
 			IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 			float weight = playerData.getWeight();
 			float encumbrance = weight / Properties.MovementRestriction.maxCarryWeight;
 
 			if (mc.gameSettings.showDebugInfo && Properties.MovementRestriction.addEncumbranceDebugText) {
 				event.getLeft().add("");
-				event.getLeft().add("Weight: " + String.format("%.2f", weight) + " / " + String.format("%d", Properties.MovementRestriction.maxCarryWeight) + " (" + String.format("%.2f", encumbrance * 100.0f) + "%)");
+				event.getLeft().add(I18n.format("info.weight") + ": " + String.format("%.2f", weight) + " / " + String.format("%d", Properties.MovementRestriction.maxCarryWeight) + " (" + String.format("%.2f", encumbrance * 100.0f) + "%)");
 			} 
 
 			if (!player.isDead && !player.capabilities.isCreativeMode && Properties.MovementRestriction.addEncumbranceHudText)
@@ -292,43 +293,43 @@ public class ModuleMovementRestriction {
 				
 				if (Properties.MovementRestriction.detailedEncumbranceHudText)
 				{
-					if (encumbrance >= 0.95) 
+					if (encumbrance >= 0.95)
 						color = TextFormatting.BOLD;
-					else if (encumbrance >= 0.85) 
+					else if (encumbrance >= 0.85)
 						color = TextFormatting.GRAY;
-					else if (encumbrance >= 0.40) 
+					else if (encumbrance >= 0.40)
 						color = TextFormatting.RED;
-					else if (encumbrance >= 0.25) 
+					else if (encumbrance >= 0.25)
 						color = TextFormatting.GOLD;
-					else if (encumbrance >= 0.10) 
+					else if (encumbrance >= 0.10)
 						color = TextFormatting.YELLOW;
 					
-					line = "Weight: " + Double.toString(Math.round(weight)) + " / " + Double.toString(Math.round(Properties.MovementRestriction.maxCarryWeight)) + " (" + String.format("%.2f", (weight / Properties.MovementRestriction.maxCarryWeight) * 100) + "%)";
+					line = I18n.format("info.weight") + ": " + Double.toString(Math.round(weight)) + " / " + Double.toString(Math.round(Properties.MovementRestriction.maxCarryWeight)) + " (" + String.format("%.2f", (weight / Properties.MovementRestriction.maxCarryWeight) * 100) + "%)";
 				}
 				else
 				{
 					float totalEncumberance = (encumbrance + (player.getTotalArmorValue() * Properties.MovementRestriction.armorWeight / 20f)) * 100f;
-					if (totalEncumberance >= 95) 
+					if (totalEncumberance >= 95)
 						color = TextFormatting.BOLD;
-					else if (totalEncumberance >= 85) 
+					else if (totalEncumberance >= 85)
 						color = TextFormatting.GRAY;
-					else if (totalEncumberance >= 40) 
+					else if (totalEncumberance >= 40)
 						color = TextFormatting.RED;
-					else if (totalEncumberance >= 25) 
+					else if (totalEncumberance >= 25)
 						color = TextFormatting.GOLD;
-					else if (totalEncumberance >= 10) 
+					else if (totalEncumberance >= 10)
 						color = TextFormatting.YELLOW;
 
 					if (totalEncumberance >= 95)
-						line = "Fully encumbered";
+						line = I18n.format("info.encumbered.fully");
 					else if (totalEncumberance >= 85)
-						line = "Almost Fully encumbered";
+						line = I18n.format("info.encumbered.almost_fully");
 					else if (totalEncumberance >= 40)
-						line = "Greatly encumbered";
+						line = I18n.format("info.encumbered.greatly");
 					else if (totalEncumberance >= 25)
-						line = "Encumbered";
+						line = I18n.format("info.encumbered.encumbered");
 					else if (totalEncumberance >= 10)
-						line = "Slightly encumbered";
+						line = I18n.format("info.encumbered.slightly");
 				}
 				
 				if (!line.equals("")) event.getRight().add(color + line + "\u00A7r");
