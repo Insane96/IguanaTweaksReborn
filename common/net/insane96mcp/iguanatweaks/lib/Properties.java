@@ -53,6 +53,8 @@ public class Properties {
 		public static boolean stackSize;
 		
 		public static void Init() {
+			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
+			
 			drops = Config.LoadBoolProperty(CATEGORY, "drops_enabled", "Set to false to disable everything the Drops module does.", true);
 			experience = Config.LoadBoolProperty(CATEGORY, "experience_enabled", "Set to false to disable everything the Experience module does.", true);
 			hardness = Config.LoadBoolProperty(CATEGORY, "hardness_enabled", "Set to false to disable everything the Hardness module does.", true);
@@ -148,7 +150,6 @@ public class Properties {
 		public static int hideHungerBarThreshold;
 		public static int hideHungerBarDelay;
 		public static boolean hideExperienceBar;
-		public static int hideExperienceBarDelay;
 		public static boolean showCreativeText;
 		
 		public static void Init() {
@@ -166,7 +167,6 @@ public class Properties {
 			hideHungerBarDelay = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_delay", "Delay (in seconds) before hiding the hunger bar", 4);
 			
 			hideExperienceBar = Config.LoadBoolProperty(CATEGORY, "hide_experience_bar", "If true, the experience bar will be hidden unless there are xp orbs in a 4 blocks (cubic) radius around the player", true);
-			hideExperienceBarDelay = Config.LoadIntProperty(CATEGORY, "hide_experience_bar_delay", "Delay (in seconds) before hiding the experience bar", 4);
 			
 			showCreativeText = Config.LoadBoolProperty(CATEGORY, "show_creative_text", "If true, a 'Creative mode' text will show up when in creative mode", true);
 		}
@@ -253,9 +253,9 @@ public class Properties {
 		public static void Init(){
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
 
-			percentageOre = Config.LoadFloatProperty(CATEGORY, "percentage_ore", "Percentage of experience dropped by blocks (0 to disable blocks dropping xp) (100 to disable)", 100);
-			percentageAll = Config.LoadFloatProperty(CATEGORY, "percentage_all", "Percentage of experience given by orbs (0 to disable all xp orbs from being created) (100 to disable)", 100);
-			lifespan = Config.LoadIntProperty(CATEGORY, "xp_lifespan", "Lifespan (in ticks) of xp orbs (Range: -1 ~ 38000. If set to -1 the orbs will never despawn)", 6000);
+			percentageOre = Config.LoadFloatProperty(CATEGORY, "percentage_ore", "Percentage of experience dropped by blocks. Experience dropped by blocks are still affected by percentage_all, so if you have e.g. percentage_all at 50, this needs to be set to 200 to make blocks drop normal experience. (set to 0 to make blocks not drop xp) (100 to disable)", 100);
+			percentageAll = Config.LoadFloatProperty(CATEGORY, "percentage_all", "Percentage of experience given by everything (0 to disable all xp orbs from being created) (100 to disable)", 100);
+			lifespan = Config.LoadIntProperty(CATEGORY, "xp_lifespan", "Lifespan (in ticks) of xp orbs (Range: -1 -> 38000. If set to -1 the orbs will never despawn)", 6000);
 		}
 	}
 	

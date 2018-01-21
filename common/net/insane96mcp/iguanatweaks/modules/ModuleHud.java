@@ -1,22 +1,9 @@
 package net.insane96mcp.iguanatweaks.modules;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-
-import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -78,26 +65,9 @@ public class ModuleHud {
 		return false;
 	}
 	
-	public static boolean HideExperienceBar(ElementType type, EntityPlayer player) {
-		if (!Properties.Global.hud)
-			return false;
-		
-		if (type != ElementType.EXPERIENCE)
-			return false;
-
-		if (!Properties.Hud.hideExperienceBar)
-			return false;
-
-		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
-		int totalTime = (int) player.world.getTotalWorldTime();
-		
-		int delay = totalTime - playerData.getHideXpBarLastTimestamp();
-		if (delay >= Properties.Hud.hideExperienceBarDelay * 20)
-			return true;
-		else if (delay < 0)
-			playerData.setHideXpBarLastTimestamp(totalTime);
-		
-		return false;
+	public static void HideExperienceBar() {
+		if (Properties.Hud.hideExperienceBar)
+			GuiIngameForge.renderExperiance = false;
 	}
 	
 	/*public static boolean HideHotbar(ElementType type, EntityPlayer player) {
@@ -164,30 +134,5 @@ public class ModuleHud {
 			IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 			playerData.setHideHotbarLastTimestamp((int) player.world.getTotalWorldTime());
 		}*/
-	}
-
-	public static void CheckExperienceNear(EntityLivingBase living) {
-		if (!Properties.Global.hud)
-			return;
-		
-		EntityPlayerSP player;
-		
-		if (!(living instanceof EntityPlayerSP))
-			return;
-		
-		player = (EntityPlayerSP) living;
-
-		BlockPos corner1 = player.getPosition().add(4, 4, 4);
-		BlockPos corner2 = player.getPosition().add(-4, -4, -4);
-		AxisAlignedBB axisAlignedBB = new AxisAlignedBB(corner1, corner2);
-		List<EntityXPOrb> xpOrbs = player.world.getEntitiesWithinAABB(EntityXPOrb.class, axisAlignedBB);
-		
-		if (xpOrbs.isEmpty())
-			return;
-		
-		int timestamp = (int) player.world.getTotalWorldTime();
-		
-		IPlayerData playerData = Minecraft.getMinecraft().player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
-		playerData.setHideXpBarLastTimestamp(timestamp);
 	}
 }

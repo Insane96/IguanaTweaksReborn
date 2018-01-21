@@ -10,7 +10,6 @@ public class LivingUpdate {
 	
 	@SubscribeEvent
 	public static void EventLivingUpdate(LivingUpdateEvent event) {
-		ModuleHud.CheckExperienceNear(event.getEntityLiving());
 		ModuleMovementRestriction.ApplyPlayer(event.getEntityLiving());
 		ModuleMovementRestriction.ApplyEntity(event.getEntityLiving());
 	}
