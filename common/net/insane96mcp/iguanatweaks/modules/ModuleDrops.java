@@ -11,6 +11,9 @@ import net.minecraft.item.ItemStack;
 
 public class ModuleDrops {
 	public static void RestrictedDrops(EntityLivingBase living, List<EntityItem> drops) {
+		if (!Properties.Global.drops)
+			return;
+		
 		if (Properties.Drops.restrictedDrops.size() == 0)
 			return;
 		
@@ -38,6 +41,9 @@ public class ModuleDrops {
 	}
 	
 	public static void MobDrop(EntityLivingBase living, List<EntityItem> drops) {
+		if (!Properties.Global.drops)
+			return;
+		
 		if (Properties.Drops.itemLifespanMobDeath == 6000)
 			return;
 		
@@ -50,6 +56,9 @@ public class ModuleDrops {
 	}
 	
 	public static void PlayerDrop(EntityLivingBase living, List<EntityItem> drops) {
+		if (!Properties.Global.drops)
+			return;
+		
 		if (Properties.Drops.itemLifespanPlayerDeath == 6000)
 			return;
 		
@@ -62,6 +71,9 @@ public class ModuleDrops {
 	}
 	
 	public static void PlayerToss(EntityItem item) {
+		if (!Properties.Global.drops)
+			return;
+		
 		if (Properties.Drops.itemLifespanTossed == 6000)
 			return;
 		

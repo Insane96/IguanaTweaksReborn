@@ -26,6 +26,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ModuleHud {
 	public static boolean HideHealthBar(ElementType type, EntityPlayer player) {
+		if (!Properties.Global.hud)
+			return false;
+		
 		if (type != ElementType.HEALTH)
 			return false;
 		
@@ -49,6 +52,9 @@ public class ModuleHud {
 	}
 	
 	public static boolean HideHungerBar(ElementType type, EntityPlayer player) {
+		if (!Properties.Global.hud)
+			return false;
+		
 		if (type != ElementType.FOOD)
 			return false;
 
@@ -73,6 +79,9 @@ public class ModuleHud {
 	}
 	
 	public static boolean HideExperienceBar(ElementType type, EntityPlayer player) {
+		if (!Properties.Global.hud)
+			return false;
+		
 		if (type != ElementType.EXPERIENCE)
 			return false;
 
@@ -147,14 +156,20 @@ public class ModuleHud {
 	}
 
 	public static void HotbarCheckMouse(int dwheel) {
+		/*if (!Properties.Global.hud)
+			return;
+		
 		if (dwheel != 0) {
 			EntityPlayerSP player = Minecraft.getMinecraft().player;
 			IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 			playerData.setHideHotbarLastTimestamp((int) player.world.getTotalWorldTime());
-		}
+		}*/
 	}
 
 	public static void CheckExperienceNear(EntityLivingBase living) {
+		if (!Properties.Global.hud)
+			return;
+		
 		EntityPlayerSP player;
 		
 		if (!(living instanceof EntityPlayerSP))

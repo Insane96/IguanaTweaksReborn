@@ -9,6 +9,9 @@ import net.minecraft.util.ResourceLocation;
 
 public class ModuleHardness {
 	public static void ProcessGlobalHardness() {
+		if (!Properties.Global.hardness)
+			return;
+		
 		if (Properties.Hardness.multiplier == 1.0f)
 			return;
 
@@ -30,6 +33,9 @@ public class ModuleHardness {
 	}
 	
 	public static void ProcessSingleHardness() {
+		if (!Properties.Global.hardness)
+			return;
+		
 		if (Properties.Hardness.blockHardness.size() == 0)
 			return;
 		

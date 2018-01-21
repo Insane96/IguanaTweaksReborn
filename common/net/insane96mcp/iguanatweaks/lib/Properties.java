@@ -7,6 +7,7 @@ public class Properties {
 	
 	public static void Init() {
 		General.Init();
+		Global.Init();
 		Hardness.Init();
 		StackSizes.Init();
 		SleepRespawn.Init();
@@ -36,6 +37,29 @@ public class Properties {
 			alterPoison = Config.LoadBoolProperty(CATEGORY, "alter_poison", "The poison effect will be changed to be deadly and drain hunger slowly, but will damage the player slowly", true);
 			lessObviousSilverfish = Config.LoadBoolProperty(CATEGORY, "less_obivious_silverfish", "If true, silverfish blocks will be almost like stone", true);
 			exhaustionOnBlockBreak = Config.LoadBoolProperty(CATEGORY, "exhaustion_on_block_break", "Minecraft normally adds 0.005 exaustion for block broken. With this at true, exhaustion will be added based on block hardness (hardness / 100). ELI5 you lose more hunger the more hard is a block to break.", true);
+		}
+	}
+	
+	public static class Global{
+		public static String CATEGORY = "_global_config";
+		public static String DESCRIPTION = "Completely disable every module from here";
+		
+		public static boolean drops;
+		public static boolean experience;
+		public static boolean hardness;
+		public static boolean hud;
+		public static boolean movementRestriction;
+		public static boolean sleepRespawn;
+		public static boolean stackSize;
+		
+		public static void Init() {
+			drops = Config.LoadBoolProperty(CATEGORY, "drops_enabled", "Set to false to disable everything the Drops module does.", true);
+			experience = Config.LoadBoolProperty(CATEGORY, "experience_enabled", "Set to false to disable everything the Experience module does.", true);
+			hardness = Config.LoadBoolProperty(CATEGORY, "hardness_enabled", "Set to false to disable everything the Hardness module does.", true);
+			hud = Config.LoadBoolProperty(CATEGORY, "hud_enabled", "Set to false to disable everything the Hud module does.", true);
+			movementRestriction = Config.LoadBoolProperty(CATEGORY, "movement_restriction_enabled", "Set to false to disable everything the Movement Restriction module does.", true);
+			sleepRespawn = Config.LoadBoolProperty(CATEGORY, "sleep_respawn_enabled", "Set to false to disable everything the Sleep Respawn module does.", true);
+			stackSize = Config.LoadBoolProperty(CATEGORY, "stack_size_enabled", "Set to false to disable everything the Stack Size module does.", true);
 		}
 	}
 	

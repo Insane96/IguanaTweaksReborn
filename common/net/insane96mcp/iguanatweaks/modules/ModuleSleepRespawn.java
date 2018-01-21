@@ -20,6 +20,9 @@ import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 public class ModuleSleepRespawn {
 
 	public static void ProcessSpawn(EntityPlayer player) {
+		if (!Properties.Global.sleepRespawn)
+			return;
+		
 		if (Properties.SleepRespawn.spawnLocationRandomMax <= 0)
 			return;
 		
@@ -33,6 +36,9 @@ public class ModuleSleepRespawn {
 	}
 	
 	public static void ProcessRespawn(EntityPlayer player) {
+		if (!Properties.Global.sleepRespawn)
+			return;
+		
         RespawnPlayer((EntityPlayerMP)player, Properties.SleepRespawn.respawnLocationRandomMin, Properties.SleepRespawn.respawnLocationRandomMax);
         PlayerHealth((EntityPlayerMP)player);
         
@@ -43,6 +49,9 @@ public class ModuleSleepRespawn {
 	}
 	
 	private static void DestroyBed(EntityPlayerMP player) {
+		if (!Properties.Global.sleepRespawn)
+			return;
+		
 		if (!Properties.SleepRespawn.destroyBedOnRespawn)
 			return;
 		
@@ -62,8 +71,10 @@ public class ModuleSleepRespawn {
 			player.sendMessage(new TextComponentString("You awake up and find your bed smashed to pieces"));
 	}
 
-	private static void RespawnPlayer(EntityPlayerMP player, int minDistance, int maxDistance)
-	{
+	private static void RespawnPlayer(EntityPlayerMP player, int minDistance, int maxDistance) {
+		if (!Properties.Global.sleepRespawn)
+			return;
+		
 		if (maxDistance <= 0)
 			return;
 		
@@ -91,8 +102,7 @@ public class ModuleSleepRespawn {
         player.connection.setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
 	}
 	
-	private static BlockPos RandomiseCoordinates(World world, int x, int z, int min, int max)
-	{		
+	private static BlockPos RandomiseCoordinates(World world, int x, int z, int min, int max) {
 		BlockPos newBlockPos = new BlockPos(x, 64, z);
 	
 		for (int attempt = 0; attempt < 50; attempt++)
@@ -129,6 +139,9 @@ public class ModuleSleepRespawn {
 	}
 
 	private static void PlayerHealth(EntityPlayerMP player) {
+		if (!Properties.Global.sleepRespawn)
+			return;
+		
 		IguanaTweaks.logger.info("good spawn found at");
 		int respawnHealth = Properties.SleepRespawn.respawnHealth;
 		EnumDifficulty difficulty = player.getEntityWorld().getDifficulty();
@@ -148,6 +161,9 @@ public class ModuleSleepRespawn {
 	}
 
 	public static void DisabledSpawnPoint(PlayerSleepInBedEvent event) {
+		if (!Properties.Global.sleepRespawn)
+			return;
+		
 		if (!Properties.SleepRespawn.disableSleeping) 
 			return;
 		
@@ -155,9 +171,6 @@ public class ModuleSleepRespawn {
 		
 		if (player.world.isDaytime())
 			return;
-		
-		/*if (player.trySleep(event.getPos()) != SleepResult.OK)
-			return;*/
 		
 		event.setResult(SleepResult.OTHER_PROBLEM);
 		

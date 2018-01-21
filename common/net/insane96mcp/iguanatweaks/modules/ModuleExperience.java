@@ -9,6 +9,9 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemSmeltedEvent;
 
 public class ModuleExperience {
 	public static void XpLifespan(Entity entity) {
+		if (!Properties.Global.experience)
+			return;
+		
 		if (!(entity instanceof EntityXPOrb))
 			return;
 		
@@ -21,6 +24,9 @@ public class ModuleExperience {
     }
     
     public static void XpDropPercentage(Entity entity) {
+		if (!Properties.Global.experience)
+			return;
+		
         if (Properties.Experience.percentageAll == 100.0f)
             return;
 
@@ -33,6 +39,9 @@ public class ModuleExperience {
     }
 
     public static void XpDropOre(BreakEvent event) {
+		if (!Properties.Global.experience)
+			return;
+		
         if (Properties.Experience.percentageOre == 100.0f)
             return;
 

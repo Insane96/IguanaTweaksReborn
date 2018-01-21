@@ -15,6 +15,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +26,9 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 public class ModuleMovementRestriction {
 	public static void ApplyPlayer(EntityLivingBase living) {
+		if (!Properties.Global.movementRestriction)
+			return;
+		
 		World world = living.world;
 
 		float speedModifier = 1f;
@@ -88,7 +92,7 @@ public class ModuleMovementRestriction {
 			Block block = Block.getBlockFromItem(stack.getItem());
 
 	        if (!block.equals(Blocks.AIR))	        
-		        toAdd = Utils.getBlockWeight(block) * Properties.MovementRestriction.rockWeight;
+		        toAdd = Utils.GetBlockWeight(block) * Properties.MovementRestriction.rockWeight;
 	        else
 	        	toAdd = 1f / 64f;
 	        weight += toAdd * stack.getCount();
@@ -159,6 +163,9 @@ public class ModuleMovementRestriction {
 	}
 	
 	public static void Stun(EntityLivingBase living, float damageAmount) {
+		if (!Properties.Global.movementRestriction)
+			return;
+		
 		if (Properties.MovementRestriction.damageSlowdownDuration == 0)
 			return;
 		
@@ -184,6 +191,9 @@ public class ModuleMovementRestriction {
 	}
 
 	public static void ApplyEntity(EntityLivingBase living) {
+		if (!Properties.Global.movementRestriction)
+			return;
+		
     	if (living instanceof EntityPlayer || living.world.isRemote)
     		return;
     	
@@ -251,22 +261,11 @@ public class ModuleMovementRestriction {
         	slownessTerrain = 100f;
         return slownessTerrain;
 	}
-	
-	public static boolean OnIceEntity(EntityLivingBase living, World world) {
-		if (living.isInWater() || Properties.MovementRestriction.terrainSlowdownPercentage == 0)
-			return false;
-		
-		BlockPos livingPos = new BlockPos(living.posX, living.posY - 1, living.posZ);
-
-		Material blockOnMaterial = world.getBlockState(livingPos).getMaterial();
-		
-        if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
-        	return true;
-        
-        return false;
-	}
 
 	public static void PrintHudInfos(RenderGameOverlayEvent.Text event) {
+		if (!Properties.Global.movementRestriction)
+			return;
+		
 		if (Properties.MovementRestriction.maxCarryWeight > 0 || Properties.MovementRestriction.armorWeight > 0d) 
 		{
 			Minecraft mc = Minecraft.getMinecraft();

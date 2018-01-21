@@ -10,6 +10,9 @@ import net.minecraft.item.ItemBlock;
 public class ModuleStackSizes {
 	
 	public static void ProcessBlocks() {
+		if (!Properties.Global.stackSize)
+			return;
+		
     	if (Properties.StackSizes.blockDividerMax <= 1
     		|| (Properties.StackSizes.blockDividerMin > Properties.StackSizes.blockDividerMax))
     		return;
@@ -21,7 +24,7 @@ public class ModuleStackSizes {
     		if (item == null)
     			continue;
     		
-			float blockWeight = Utils.getBlockWeight(block);
+			float blockWeight = Utils.GetBlockWeight(block);
 	        
 			int maxStackSize = item.getItemStackLimit();
 	        int stackSize = maxStackSize / Properties.StackSizes.blockDividerMin;
@@ -47,6 +50,9 @@ public class ModuleStackSizes {
 	}
     
 	public static void ProcessItems() {
+		if (!Properties.Global.stackSize)
+			return;
+		
     	if (Properties.StackSizes.itemDivider <= 1)
     		return;
     	
