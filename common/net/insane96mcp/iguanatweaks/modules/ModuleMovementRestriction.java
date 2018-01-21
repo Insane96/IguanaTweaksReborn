@@ -46,7 +46,6 @@ public class ModuleMovementRestriction {
 		
 		float slownessWeight = SlownessWeight(player, world);
 		float slownessTerrain = SlownessTerrain(player, world);
-		boolean onIce = OnIce(player, world);
 		
 		float slownessArmor = player.getTotalArmorValue() * Properties.MovementRestriction.armorWeight;
 		if (slownessArmor > 100f) 
@@ -61,10 +60,8 @@ public class ModuleMovementRestriction {
     	
     	if (player.moveForward < 0f && Properties.MovementRestriction.slowdownWhenWalkingBackwards)
     		speedModifier = 0.5f + (speedModifier / 2f);
-    	if (onIce)
-    		speedModifier = 0.5f + (speedModifier / 2f);
     	
-    	player.jumpMovementFactor = 0.02f * (1f - speedModifier / 1.5f);
+    	player.jumpMovementFactor = 0.02f * (1f - speedModifier / 1.333f);
 
 		AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
 		IAttributeInstance attribute = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
@@ -185,24 +182,9 @@ public class ModuleMovementRestriction {
 		
 		playerData.setDamageSlownessDuration(duration + playerDuration);
 	}
-	
-	public static boolean OnIce(EntityPlayer player, World world) {
-		if (player.isInWater() || Properties.MovementRestriction.terrainSlowdownPercentage == 0)
-			return false;
-		
-		BlockPos playerPos = new BlockPos(player.posX, player.posY - 1, player.posZ);
-
-		Material blockOnMaterial = world.getBlockState(playerPos).getMaterial();
-		
-        if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
-        	return true;
-        
-        return false;
-	}
 
 	public static void ApplyEntity(EntityLivingBase living) {
-
-    	if (living instanceof EntityPlayer)
+    	if (living instanceof EntityPlayer || living.world.isRemote)
     		return;
     	
 		World world = living.world;
@@ -225,8 +207,8 @@ public class ModuleMovementRestriction {
     	
     	if (living.moveForward < 0f)
     		speedModifier = 0.5f + (speedModifier / 2f);
-    	
-    	living.jumpMovementFactor = 0.02f * (1f - speedModifier / 1.5f);
+
+    	living.jumpMovementFactor = 0.02f * (1f - speedModifier / 1.333f);
 
 		AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
 		IAttributeInstance attribute = living.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
@@ -274,9 +256,9 @@ public class ModuleMovementRestriction {
 		if (living.isInWater() || Properties.MovementRestriction.terrainSlowdownPercentage == 0)
 			return false;
 		
-		BlockPos playerPos = new BlockPos(living.posX, living.posY - 1, living.posZ);
+		BlockPos livingPos = new BlockPos(living.posX, living.posY - 1, living.posZ);
 
-		Material blockOnMaterial = world.getBlockState(playerPos).getMaterial();
+		Material blockOnMaterial = world.getBlockState(livingPos).getMaterial();
 		
         if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
         	return true;
@@ -294,8 +276,8 @@ public class ModuleMovementRestriction {
 			{
 				event.getLeft().add("Creative Mode");
 			}
-			NBTTagCompound tags = player.getEntityData();
-			float weight = tags.getFloat("IguanaTweaks:weight");
+			IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
+			float weight = playerData.getWeight();
 			float encumbrance = weight / Properties.MovementRestriction.maxCarryWeight;
 
 			if (mc.gameSettings.showDebugInfo && Properties.MovementRestriction.addEncumbranceDebugText) {

@@ -13,6 +13,7 @@ public class Properties {
 		Hud.Init();
 		Drops.Init();
 		MovementRestriction.Init();
+		Experience.Init();
 	}
 	
 	public static class General{
@@ -22,18 +23,18 @@ public class Properties {
 		public static boolean increasedStepHeight;
 	    public static boolean lessObviousSilverfish;
 	    public static boolean alterPoison;
-	    //public static int torchesPerCoal;
 		public static int tickRateEntityUpdate;
 		public static boolean disableFovOnSpeedModified;
 		public static boolean exhaustionOnBlockBreak;
 		
 		public static void Init() {
+			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
+			
 			tickRateEntityUpdate = Config.LoadIntProperty(CATEGORY, "tick_rate_entity_update", "How often the speed of players are calculated (in ticks). Higher values reduce client-side CPU load but may increase the chance of odd behavior", 7);
 			disableFovOnSpeedModified = Config.LoadBoolProperty(CATEGORY, "disable_fov_change_on_speed_change", "Disables fov changes when you get slowed down or sped up. Highly recommended if you have 'movement_restrictions' active.", true);
 			increasedStepHeight = Config.LoadBoolProperty(CATEGORY, "increased_step_height", "If the player should be able to walk over full blocks", false);
 			alterPoison = Config.LoadBoolProperty(CATEGORY, "alter_poison", "The poison effect will be changed to be deadly and drain hunger slowly, but will damage the player slowly", true);
 			lessObviousSilverfish = Config.LoadBoolProperty(CATEGORY, "less_obivious_silverfish", "If true, silverfish blocks will be almost like stone", true);
-			//torchesPerCoal = Config.LoadIntProperty(CATEGORY, "torches_per_coal", "Sets how many torches you get on crafting", 1);
 			exhaustionOnBlockBreak = Config.LoadBoolProperty(CATEGORY, "exhaustion_on_block_break", "Minecraft normally adds 0.005 exaustion for block broken. With this at true, exhaustion will be added based on block hardness (hardness / 100). ELI5 you lose more hunger the more hard is a block to break.", true);
 		}
 	}
@@ -123,6 +124,7 @@ public class Properties {
 		public static int hideHungerBarThreshold;
 		public static int hideHungerBarDelay;
 		public static boolean hideExperienceBar;
+		public static int hideExperienceBarDelay;
 		public static boolean showCreativeText;
 		
 		public static void Init() {
@@ -131,15 +133,16 @@ public class Properties {
 			//hideHotbar = Config.LoadBoolProperty(CATEGORY, "hide_hotbar", "If true, the hotbar will be hidden until an item is selected", false);
 			//hideHotbarDelay = Config.LoadIntProperty(CATEGORY, "hide_hotbar_delay", "Delay (in seconds) before hiding the hotbar", 3);
 			
-			hideHealthBar = Config.LoadBoolProperty(CATEGORY, "hide_health_bar", "If true, the health bar will be hidden when above a certain threshold (the bar will always be shown if absorpion hearts are present)", false);
+			hideHealthBar = Config.LoadBoolProperty(CATEGORY, "hide_health_bar", "If true, the health bar will be hidden when above a certain threshold (the bar will always be shown if absorpion hearts are present)", true);
 			hideHealthBarThreshold = Config.LoadIntProperty(CATEGORY, "hide_health_bar_threshold", "Health needs to be equal to or above this before the bar will hide", 20);
-			hideHealthBarDelay = Config.LoadIntProperty(CATEGORY, "hide_health_bar_delay", "Delay (in seconds) before hiding the health bar", 5);
+			hideHealthBarDelay = Config.LoadIntProperty(CATEGORY, "hide_health_bar_delay", "Delay (in seconds) before hiding the health bar", 4);
 			
-			hideHungerBar = Config.LoadBoolProperty(CATEGORY, "hide_hunger_bar", "If true, the hunger bar will be hidden when above a certain threshold", false);
+			hideHungerBar = Config.LoadBoolProperty(CATEGORY, "hide_hunger_bar", "If true, the hunger bar will be hidden when above a certain threshold", true);
 			hideHungerBarThreshold = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_threshold", "Hunger needs to be equal to or above this before the bar will hide", 20);
-			hideHungerBarDelay = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_delay", "Delay (in seconds) before hiding the hunger bar", 5);
+			hideHungerBarDelay = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_delay", "Delay (in seconds) before hiding the hunger bar", 4);
 			
-			hideExperienceBar = Config.LoadBoolProperty(CATEGORY, "hide_experience_bar", "If true, the experience bar will be hidden", false);
+			hideExperienceBar = Config.LoadBoolProperty(CATEGORY, "hide_experience_bar", "If true, the experience bar will be hidden unless there are xp orbs in a 4 blocks (cubic) radius around the player", true);
+			hideExperienceBarDelay = Config.LoadIntProperty(CATEGORY, "hide_experience_bar_delay", "Delay (in seconds) before hiding the experience bar", 4);
 			
 			showCreativeText = Config.LoadBoolProperty(CATEGORY, "show_creative_text", "If true, a 'Creative mode' text will show up when in creative mode", true);
 		}
@@ -161,7 +164,7 @@ public class Properties {
 			restrictedDrops = Config.LoadStringListProperty(CATEGORY, "restricted_drops", "List of items/blocks to restrict from mob drops (separated by new line, format id:meta)", new ArrayList<String>() {});
 			
 			itemLifespan = Config.LoadIntProperty(CATEGORY, "item_lifespan", "Lifespan (in ticks) of items on the ground", 6000);
-			itemLifespanMobDeath = Config.LoadIntProperty(CATEGORY, "item_lifespan_mob_drop", "Lifespan (in ticks) of items dropped when a mob dies (default 6000)", 6000);
+			itemLifespanMobDeath = Config.LoadIntProperty(CATEGORY, "item_lifespan_mob_drop", "Lifespan (in ticks) of items dropped when a mob dies", 6000);
 			itemLifespanPlayerDeath = Config.LoadIntProperty(CATEGORY, "item_lifespan_player_death", "Lifespan (in ticks) of items dropped when a player dies", Integer.MAX_VALUE);
 			itemLifespanTossed = Config.LoadIntProperty(CATEGORY, "item_lifespan_tossed", "Lifespan (in ticks) of items tossed on the ground", 6000);
 		}
@@ -204,7 +207,7 @@ public class Properties {
 			damageSlowdownDifficultyScaling = Config.LoadBoolProperty(CATEGORY, "damage_slowdown_difficulty_scaling", "Is the duration of the slowdown dependant on difficulty?", true);
 			terrainSlowdownPercentage = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_percentage", "Global modifier on the amount that terrain affects movement speed (set to 0 to disable)", 100.0f);
 			terrainSlowdownOnDirt = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_dirt", "Percentage of slowdown when walking on dirt or grass (set to 0 to disable)", 5f);
-			terrainSlowdownOnIce = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_ice", "Percentage of slowdown when walking on ice (set to 0 to disable)", 20f);
+			terrainSlowdownOnIce = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_ice", "Percentage of slowdown when walking on ice (set to 0 to disable)", 50f);
 			terrainSlowdownOnPlant = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_plant", "Percentage of slowdown when walking on leaves or plants (set to 0 to disable)", 20f);
 			terrainSlowdownOnSand = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_sand", "Percentage of slowdown when walking on sand (set to 0 to disable)", 20f);
 			terrainSlowdownOnSnow = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_snow", "Percentage of slowdown when walking on snow (set to 0 to disable)", 20f);
@@ -228,7 +231,7 @@ public class Properties {
 
 			percentageOre = Config.LoadFloatProperty(CATEGORY, "percentage_ore", "Percentage of experience dropped by blocks (0 to disable blocks dropping xp) (100 to disable)", 100);
 			percentageAll = Config.LoadFloatProperty(CATEGORY, "percentage_all", "Percentage of experience given by orbs (0 to disable all xp orbs from being created) (100 to disable)", 100);
-			lifespan = Config.LoadIntProperty(CATEGORY, "xp_lifespan", "Lifespan (in ticks) of xp orbs (Range: 0 - 38000. If set to 39000 the orbs will never despawn)", 6000);
+			lifespan = Config.LoadIntProperty(CATEGORY, "xp_lifespan", "Lifespan (in ticks) of xp orbs (Range: -1 ~ 38000. If set to -1 the orbs will never despawn)", 6000);
 		}
 	}
 	

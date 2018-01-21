@@ -14,7 +14,10 @@ public class ModuleExperience {
 		
 		EntityXPOrb xpOrb = (EntityXPOrb)entity;
 		
-		xpOrb.xpOrbAge = 6000 - Properties.Experience.lifespan;
+		if (Properties.Experience.lifespan == -1)
+			xpOrb.xpOrbAge = 32768;
+		else
+			xpOrb.xpOrbAge = 6000 - Properties.Experience.lifespan;
     }
     
     public static void XpDropPercentage(Entity entity) {

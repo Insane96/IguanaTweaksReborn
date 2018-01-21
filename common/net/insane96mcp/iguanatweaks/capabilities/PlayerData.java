@@ -65,4 +65,15 @@ public class PlayerData implements IPlayerData{
 			this.damageSlownessDuration -= 1;
 	}
 
+	private int xpBarLastTimeStamp;
+	@Override
+	public int getHideXpBarLastTimestamp() {
+		return this.xpBarLastTimeStamp;
+	}
+
+	@Override
+	public void setHideXpBarLastTimestamp(int timestamp) {
+		this.xpBarLastTimeStamp = timestamp;
+	}
+
 }

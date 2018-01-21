@@ -19,6 +19,7 @@ public class RenderGameOverlay {
 		
 		if (ModuleHud.HideHealthBar(type, player)
 			|| ModuleHud.HideHungerBar(type, player)
+			|| ModuleHud.HideExperienceBar(type, player)
 			/*|| ModuleHud.HideHotbar(type, player)*/) 
 			event.setCanceled(true);
 	}
