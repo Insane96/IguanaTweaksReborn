@@ -2,6 +2,7 @@ package net.insane96mcp.iguanatweaks.modules;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -45,7 +46,7 @@ public class ModuleSleepRespawn {
         DestroyBed((EntityPlayerMP)player);
         
         if (Properties.SleepRespawn.respawnLocationRandomMax != 0)
-        	player.sendMessage(new TextComponentString("You regain conciousness, confused as to where you are"));
+        	player.sendMessage(new TextComponentString(I18n.format("sleep.random_respawn")));
 	}
 	
 	private static void DestroyBed(EntityPlayerMP player) {
@@ -68,7 +69,7 @@ public class ModuleSleepRespawn {
         world.setBlockState(bedPos, Blocks.AIR.getDefaultState(), 3);
     	
 		if (Properties.SleepRespawn.respawnLocationRandomMax == 0)
-			player.sendMessage(new TextComponentString("You awake up and find your bed smashed to pieces"));
+			player.sendMessage(new TextComponentString(I18n.format("sleep.bed_destroyed")));
 	}
 
 	private static void RespawnPlayer(EntityPlayerMP player, int minDistance, int maxDistance) {
@@ -142,7 +143,6 @@ public class ModuleSleepRespawn {
 		if (!Properties.Global.sleepRespawn)
 			return;
 		
-		IguanaTweaks.logger.info("good spawn found at");
 		int respawnHealth = Properties.SleepRespawn.respawnHealth;
 		EnumDifficulty difficulty = player.getEntityWorld().getDifficulty();
 		   
@@ -175,11 +175,11 @@ public class ModuleSleepRespawn {
 		event.setResult(SleepResult.OTHER_PROBLEM);
 		
 		if (Properties.SleepRespawn.disableSetRespawnPoint) {
-			player.sendStatusMessage(new TextComponentString("Has no one told you? Beds are just for decoration"), true);
+			player.sendStatusMessage(new TextComponentString(I18n.format("sleep.bed_decoration")), true);
 		}
 		else {
 			player.setSpawnChunk(event.getPos(), false, player.dimension);
-			player.sendStatusMessage(new TextComponentString("Spawn point has been set. Enjoy the night ;)"), true);
+			player.sendStatusMessage(new TextComponentString(I18n.format("sleep.enjoy_the_night")), true);
 		}
 	}
 }
