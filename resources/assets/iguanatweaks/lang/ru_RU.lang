@@ -1,0 +1,12 @@
+info.encumbered.slightly=Вы немного перегружены
+info.encumbered.enumbered=Вы перегружены
+info.encumbered.almost_fully=Вы почти перегружены
+info.encumbered.greatly=Вы сильно перегружены
+info.encumbered.fully=Вы полностью перегружены
+info.weight=Вес
+info.creative_mode=Творческий режим
+
+sleep.random_respawn=Вы пришли в сознание и не знаете, где находитесь
+sleep.bed_destroyed=Вы проснулись и обнаружили, что Ваша кровать разбита вдребезги
+sleep.bed_decoration=Никто Вам не говорил? Кровати просто для украшения
+sleep.enjoy_the_night=Место появления настроено, наслаждайтесь ночью ;)
