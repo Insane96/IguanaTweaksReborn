@@ -69,5 +69,8 @@ public class CommonProxy {
 		//StackSizes
 		ModuleStackSizes.ProcessBlocks();
 		ModuleStackSizes.ProcessItems();
+		
+		//Hud
+		ModuleHud.Init();
 	}
 }

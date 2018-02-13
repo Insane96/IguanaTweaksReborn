@@ -141,8 +141,8 @@ public class Properties {
 		public static String CATEGORY = "hud";
 		public static String DESCRIPTION = "Options to hide HUD parts in certain situations";
 		
-		/*public static boolean hideHotbar;
-		public static int hideHotbarDelay;*/
+		public static boolean hideHotbar;
+		public static int hideHotbarDelay;
 		public static boolean hideHealthBar;
 		public static int hideHealthBarThreshold;
 		public static int hideHealthBarDelay;
@@ -155,8 +155,8 @@ public class Properties {
 		public static void Init() {
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
 			
-			//hideHotbar = Config.LoadBoolProperty(CATEGORY, "hide_hotbar", "If true, the hotbar will be hidden until an item is selected", false);
-			//hideHotbarDelay = Config.LoadIntProperty(CATEGORY, "hide_hotbar_delay", "Delay (in seconds) before hiding the hotbar", 3);
+			hideHotbar = Config.LoadBoolProperty(CATEGORY, "hide_hotbar", "If true, the hotbar will be hidden until an item is selected", false);
+			hideHotbarDelay = Config.LoadIntProperty(CATEGORY, "hide_hotbar_delay", "Delay (in seconds) before hiding the hotbar", 4);
 			
 			hideHealthBar = Config.LoadBoolProperty(CATEGORY, "hide_health_bar", "If true, the health bar will be hidden when above a certain threshold (the bar will always be shown if absorpion hearts are present)", true);
 			hideHealthBarThreshold = Config.LoadIntProperty(CATEGORY, "hide_health_bar_threshold", "Health needs to be equal to or above this before the bar will hide", 20);

@@ -1,10 +1,11 @@
 package net.insane96mcp.iguanatweaks.modules;
 
-import java.lang.reflect.Field;
+import com.google.common.collect.ImmutableList;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
 
 public class ModuleHardness {
@@ -20,11 +21,16 @@ public class ModuleHardness {
 			if ((Properties.Hardness.blockListIsWhitelist && Properties.Hardness.blockList.contains(blockResource.toString()))
 				|| !Properties.Hardness.blockListIsWhitelist && !Properties.Hardness.blockList.contains(blockResource.toString())){
 				float hardness = 0.0f;
-				try {
-					hardness = block.getBlockHardness(null, null, null);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
+				ImmutableList<IBlockState> blockStates = block.getBlockState().getValidStates();
+				for (IBlockState state : blockStates) {
+					try {
+						hardness = block.getBlockHardness(state, null, null);
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+					}
+					if (hardness != 0.0f)
+						break;
 				}
 				if (hardness != 0.0f)
 					block.setHardness(hardness * Properties.Hardness.multiplier);
