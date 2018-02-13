@@ -64,7 +64,7 @@ public class ModuleMovementRestriction {
     	if (player.moveForward < 0f && Properties.MovementRestriction.slowdownWhenWalkingBackwards)
     		speedModifier = 0.5f + (speedModifier / 2f);
     	
-    	player.jumpMovementFactor = 0.02f * (1f - speedModifier / 1.333f);
+    	player.jumpMovementFactor = 0.02f * (1f - speedModifier);
 
 		AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
 		IAttributeInstance attribute = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
