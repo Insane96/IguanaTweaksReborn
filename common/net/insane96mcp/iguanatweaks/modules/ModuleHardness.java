@@ -1,41 +1,46 @@
 package net.insane96mcp.iguanatweaks.modules;
 
-import com.google.common.collect.ImmutableList;
-
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 
 public class ModuleHardness {
-	public static void ProcessGlobalHardness() {
+	public static void ProcessGlobalHardness(BreakSpeed event) {
 		if (!Properties.Global.hardness)
 			return;
 		
 		if (Properties.Hardness.multiplier == 1.0f)
 			return;
-
-		for (Block block : Block.REGISTRY) {
-			ResourceLocation blockResource = block.getRegistryName();
-			if ((Properties.Hardness.blockListIsWhitelist && Properties.Hardness.blockList.contains(blockResource.toString()))
-				|| !Properties.Hardness.blockListIsWhitelist && !Properties.Hardness.blockList.contains(blockResource.toString())){
-				float hardness = 0.0f;
-				ImmutableList<IBlockState> blockStates = block.getBlockState().getValidStates();
-				for (IBlockState state : blockStates) {
-					try {
-						hardness = block.getBlockHardness(state, null, null);
-					}
-					catch (Exception e) {
-						e.printStackTrace();
-					}
-					if (hardness != 0.0f)
-						break;
+		
+		event.setNewSpeed(event.getOriginalSpeed() * Properties.Hardness.multiplier);
+		ResourceLocation blockResource = event.getEntityPlayer().world.getBlockState(event.getPos()).getBlock().getRegistryName();
+		boolean shouldProcess = true;
+		for (String line : Properties.Hardness.blockHardness) {
+			try {
+				ResourceLocation blockId = new ResourceLocation(line.split(",")[0]);
+				if (blockResource.equals(blockId)) {
+					shouldProcess = false;
+					break;
 				}
-				if (hardness != 0.0f)
-					block.setHardness(hardness * Properties.Hardness.multiplier);
+			}
+			catch (Exception e) {
+				IguanaTweaks.logger.error("[block_hardness] Failed to parse line " + line + ": " + e.getMessage());
 			}
 		}
+		
+		if (!shouldProcess)
+			return;
+		
+		System.out.println(event.getOriginalSpeed());
+		
+		if ((Properties.Hardness.blockListIsWhitelist && Properties.Hardness.blockList.contains(blockResource.toString()))
+				|| !Properties.Hardness.blockListIsWhitelist && !Properties.Hardness.blockList.contains(blockResource.toString()))
+		{
+			event.setNewSpeed(event.getOriginalSpeed() / Properties.Hardness.multiplier);
+		}
+		
 	}
 	
 	public static void ProcessSingleHardness() {

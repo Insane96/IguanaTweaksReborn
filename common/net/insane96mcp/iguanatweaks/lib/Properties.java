@@ -78,11 +78,11 @@ public class Properties {
 		public static void Init() {
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
 			
-			multiplier = Config.LoadFloatProperty(CATEGORY, "multiplier", "Multiplier applied to the hardness of blocks (set to 1 to disable). This is applied before the block_hardness", 4.0f);
+			multiplier = Config.LoadFloatProperty(CATEGORY, "multiplier", "Multiplier applied to the hardness of blocks (set to 1 to disable)", 4.0f);
 			blockListIsWhitelist = Config.LoadBoolProperty(CATEGORY, "block_list_is_whitelist", "True if hardness multiplier should only affect blocks on the list, false if all blocks are affected except those on the list", false);
 			blockList = Config.LoadStringListProperty(CATEGORY, "block_list", "Block ids (one per line) for the hardness whitelist/blacklist.\nE.g. 'minecraft:stone'", new ArrayList<String>() {});
 			
-			blockHardness = Config.LoadStringListProperty(CATEGORY, "block_hardness", "Define for each line a custom block hardness for every block.The format is modid:blockid,hardness.\nE.g. 'minecraft:stone,5.0' will make stone have 5 hardness", new ArrayList<String>() {});
+			blockHardness = Config.LoadStringListProperty(CATEGORY, "block_hardness", "Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier ('multiplier')\nThe format is modid:blockid,hardness.\nE.g. 'minecraft:stone,5.0' will make stone have 5 hardness", new ArrayList<String>() {});
 		}
 	}
 	

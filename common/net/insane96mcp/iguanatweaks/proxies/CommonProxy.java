@@ -13,6 +13,7 @@ import net.insane96mcp.iguanatweaks.events.LivingDrops;
 import net.insane96mcp.iguanatweaks.events.LivingHurt;
 import net.insane96mcp.iguanatweaks.events.LivingUpdate;
 import net.insane96mcp.iguanatweaks.events.Mouse;
+import net.insane96mcp.iguanatweaks.events.PlayerBreakSpeed;
 import net.insane96mcp.iguanatweaks.events.PlayerLogInRespawn;
 import net.insane96mcp.iguanatweaks.events.PlayerSleepInBed;
 import net.insane96mcp.iguanatweaks.events.RegistryRegister;
@@ -52,6 +53,7 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(LivingHurt.class);
 		MinecraftForge.EVENT_BUS.register(Break.class);
 		MinecraftForge.EVENT_BUS.register(CapabilityHandler.class);
+		MinecraftForge.EVENT_BUS.register(PlayerBreakSpeed.class);
 		
 		CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataStorage(), PlayerData.class);
 	}
@@ -63,7 +65,6 @@ public class CommonProxy {
 		ModuleGeneral.LessObiviousSilverfish();
 		
 		//Hardness
-		ModuleHardness.ProcessGlobalHardness();
 		ModuleHardness.ProcessSingleHardness();
 		
 		//StackSizes
