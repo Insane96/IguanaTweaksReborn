@@ -14,7 +14,6 @@ public class ModuleHardness {
 		if (Properties.Hardness.multiplier == 1.0f)
 			return;
 		
-		event.setNewSpeed(event.getOriginalSpeed() * Properties.Hardness.multiplier);
 		ResourceLocation blockResource = event.getEntityPlayer().world.getBlockState(event.getPos()).getBlock().getRegistryName();
 		boolean shouldProcess = true;
 		for (String line : Properties.Hardness.blockHardness) {
@@ -32,8 +31,6 @@ public class ModuleHardness {
 		
 		if (!shouldProcess)
 			return;
-		
-		System.out.println(event.getOriginalSpeed());
 		
 		if ((Properties.Hardness.blockListIsWhitelist && Properties.Hardness.blockList.contains(blockResource.toString()))
 				|| !Properties.Hardness.blockListIsWhitelist && !Properties.Hardness.blockList.contains(blockResource.toString()))
