@@ -43,7 +43,7 @@ public class ModuleStackSizes {
     		if (stackSize < maxStackSize) 
     		{
         		if (Properties.StackSizes.logChanges)
-        			IguanaTweaks.logger.debug("Reducing stack size of block " + item.getUnlocalizedName()  + " to " + stackSize);
+        			IguanaTweaks.logger.info("Reducing stack size of block " + item.getUnlocalizedName()  + " to " + stackSize);
     			item.setMaxStackSize(stackSize);
     		}
     	}
@@ -75,9 +75,31 @@ public class ModuleStackSizes {
     		if (stackSize < maxStackSize) 
     		{
     			if (Properties.StackSizes.logChanges) 
-    				IguanaTweaks.logger.debug("Reducing stack size of item " + item.getUnlocalizedName()  + " to " + stackSize);
+    				IguanaTweaks.logger.info("Reducing stack size of item " + item.getUnlocalizedName()  + " to " + stackSize);
     			item.setMaxStackSize(stackSize);
     		}
     	}
+	}
+	
+	public static void ProcessCustom() {
+		if (Properties.StackSizes.customStackList.length == 0)
+			return;
+		
+		for (int i = 0; i < Properties.StackSizes.customStackList.length; i++) {
+			try {
+				String[] split = Properties.StackSizes.customStackList[i].split(",");
+				if (split.length == 0)
+					continue;
+				String name = split[0];
+				int stackSize = Integer.parseInt(split[1]);
+				Item item = Item.getByNameOrId(name);
+				item.setMaxStackSize(stackSize);
+				if (Properties.StackSizes.logChanges) 
+					IguanaTweaks.logger.info("Reducing stack size by custom of item " + item.getUnlocalizedName()  + " to " + stackSize);
+			}
+			catch (Exception exception) {
+				System.err.println("Failed to parse: " + Properties.StackSizes.customStackList[i] + " " + exception);
+			}
+		}
 	}
 }

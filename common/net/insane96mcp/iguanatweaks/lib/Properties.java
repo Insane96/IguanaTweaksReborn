@@ -94,6 +94,7 @@ public class Properties {
 		public static int blockDividerMin;
 		public static int blockDividerMax;
 		public static int itemDivider;
+		public static String[] customStackList;
 		
 		public static void Init() {
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
@@ -102,6 +103,8 @@ public class Properties {
 			blockDividerMin = Config.LoadIntProperty(CATEGORY, "block_divider_min", "Min stack size divider for blocks", 2);
 			blockDividerMax = Config.LoadIntProperty(CATEGORY, "block_divider_man", "Max stack size divider for blocks", 4);
 			itemDivider = Config.LoadIntProperty(CATEGORY, "item_divider", "Stack size divider for items", 2);
+			
+			customStackList = Config.LoadStringArrayProperty(CATEGORY, "custom_stack_list", "List of all the custom stacks for blocks and items. The format is 'modid:name,max_stack_size'. Going over 64 doesn't work", new String[0]);
 		}
 	}
 	

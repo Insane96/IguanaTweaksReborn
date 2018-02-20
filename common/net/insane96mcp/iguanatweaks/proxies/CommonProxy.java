@@ -68,5 +68,6 @@ public class CommonProxy {
 		//StackSizes
 		ModuleStackSizes.ProcessBlocks();
 		ModuleStackSizes.ProcessItems();
+		ModuleStackSizes.ProcessCustom();
 	}
 }
