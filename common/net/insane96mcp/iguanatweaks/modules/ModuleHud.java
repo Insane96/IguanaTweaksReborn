@@ -102,7 +102,6 @@ public class ModuleHud {
 	public static void Init() {
 		try {
 			KEYBIND_ARRAY = ReflectionHelper.findField(KeyBinding.class, "KEYBIND_ARRAY", "field_74516_a");
-			KEYBIND_ARRAY.setAccessible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
