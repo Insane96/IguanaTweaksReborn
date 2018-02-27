@@ -8,8 +8,8 @@ import net.minecraft.block.state.IBlockState;
 
 public class Utils {
 
-	public static UUID movementRestrictionUUID = new UUID(22, 0x10000);
-	public static UUID stunUUID = new UUID(22, 0x10001);
+	public static final UUID movementRestrictionUUID = new UUID(22, 0x10000);
+	public static final UUID stunUUID = new UUID(22, 0x10001);
 	
 	@SuppressWarnings("deprecation")
 	public static float GetBlockWeight(Block block, IBlockState state) {

@@ -27,51 +27,48 @@ public class ModuleMovementRestriction {
 	public static void ApplyPlayer(EntityLivingBase living) {
 		if (!Properties.Global.movementRestriction)
 			return;
-		
-		World world = living.world;
 
 		float speedModifier = 1f;
 		
-		EntityPlayerMP player;
+		World world = living.world;
 		
-		if (!(living instanceof EntityPlayerMP)) 
-			return;
+		EntityPlayer player;
+		
+		if (living instanceof EntityPlayer) {
+			player = (EntityPlayer) living;
+			//if (living instanceof EntityPlayerMP) {
+				if (player.isCreative())
+					return;
+				
+				float slownessDamage = SlownessDamage(player, world);
+				
+				float slownessWeight = SlownessWeight(player, world);
+				float slownessTerrain = SlownessTerrain(player, world);
+				
+				float slownessArmor = player.getTotalArmorValue() * Properties.MovementRestriction.armorWeight;
+				if (slownessArmor > 100f) 
+					slownessArmor = 100f;
+		    	
+		    	float speedModifierArmour = (100f - slownessArmor) / 100f;
+		    	float speedModifierTerrain = (100f - slownessTerrain) / 100f;
+		    	float speedModifierWeight = (100f - slownessWeight) / 100f;
+		    	float speedModifierDamage = (100f - slownessDamage) / 100f;
+		    	
+		    	speedModifier = 1f - (speedModifierArmour * speedModifierTerrain * speedModifierWeight * slownessDamage);
+		    	
+		    	if (player.moveForward < 0f && Properties.MovementRestriction.slowdownWhenWalkingBackwards)
+		    		speedModifier = 0.5f + (speedModifier / 2f);
 	
-		player = (EntityPlayerMP) living;
-		if (player.isCreative())
-			return;
-		
-		float slownessDamage = SlownessDamage(player, world);
-		
-		if (player.ticksExisted % Properties.General.tickRateEntityUpdate != 0)
-			return;
-		
-		
-		float slownessWeight = SlownessWeight(player, world);
-		float slownessTerrain = SlownessTerrain(player, world);
-		
-		float slownessArmor = player.getTotalArmorValue() * Properties.MovementRestriction.armorWeight;
-		if (slownessArmor > 100f) 
-			slownessArmor = 100f;
-    	
-    	float speedModifierArmour = (100f - slownessArmor) / 100f;
-    	float speedModifierTerrain = (100f - slownessTerrain) / 100f;
-    	float speedModifierWeight = (100f - slownessWeight) / 100f;
-    	float speedModifierDamage = (100f - slownessDamage) / 100f;
-    	
-    	speedModifier = 1f - (speedModifierArmour * speedModifierTerrain * speedModifierWeight * slownessDamage);
-    	
-    	if (player.moveForward < 0f && Properties.MovementRestriction.slowdownWhenWalkingBackwards)
-    		speedModifier = 0.5f + (speedModifier / 2f);
-    	
-    	player.jumpMovementFactor = 0.02f * (1f - speedModifier);
-
-		AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
-		IAttributeInstance attribute = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
-		if (attribute.getModifier(Utils.movementRestrictionUUID) == null)
-			attribute.applyModifier(modifier);
-		if (attribute.getModifier(Utils.movementRestrictionUUID).getAmount() != modifier.getAmount())
-			attribute.removeModifier(Utils.movementRestrictionUUID);
+				AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
+				IAttributeInstance attribute = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+				if (attribute.getModifier(Utils.movementRestrictionUUID) == null)
+					attribute.applyModifier(modifier);
+				if (attribute.getModifier(Utils.movementRestrictionUUID).getAmount() != modifier.getAmount())
+					attribute.removeModifier(Utils.movementRestrictionUUID);
+	    	//}
+			
+	    	player.jumpMovementFactor = 0.02f * (1f - speedModifier);
+		}
 	}
 	
 	public static float SlownessWeight(EntityPlayer player, World world) {
@@ -105,7 +102,7 @@ public class ModuleMovementRestriction {
     	IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
     	
     	playerData.setWeight(weight);
-    	
+
 		if (slownessWeight > 100f)
 			slownessWeight = 100f;
 		return slownessWeight;
@@ -217,7 +214,7 @@ public class ModuleMovementRestriction {
     	if (living.moveForward < 0f)
     		speedModifier = 0.5f + (speedModifier / 2f);
 
-    	living.jumpMovementFactor = 0.02f * (1f - speedModifier / 1.333f);
+    	living.jumpMovementFactor = 0.02f * (1f - speedModifier);
 
 		AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
 		IAttributeInstance attribute = living.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);

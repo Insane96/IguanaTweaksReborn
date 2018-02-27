@@ -1,6 +1,5 @@
 package net.insane96mcp.iguanatweaks.events;
 
-import net.insane96mcp.iguanatweaks.modules.ModuleHud;
 import net.insane96mcp.iguanatweaks.modules.ModuleMovementRestriction;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
