@@ -58,30 +58,12 @@ public class ModuleGeneral {
 		IBlockState blockState = event.getState();
 		Block block = blockState.getBlock();
 		float hardness = 0f;
-		try {
-			hardness = block.getBlockHardness(null, null, null);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		hardness = block.getBlockHardness(blockState, event.getWorld(), event.getPos());
 		
 		if (hardness == 0f)
 			return;
 		
 		event.getPlayer().addExhaustion(hardness / 100f);
-	}
-
-	public static void TorchesPerCoal(RegistryEvent.Register<IRecipe> event){
-		/*if (Properties.General.torchesPerCoal == 4)
-			return;
-		
-		ResourceLocation torch = new ResourceLocation("minecraft:torch");
-        IForgeRegistryModifiable modRegistry = (IForgeRegistryModifiable) event.getRegistry();
-		System.out.println(modRegistry);
-		modRegistry.remove(torch);*/
-		//modRegistry.register(value);
-
-		//Re-add the recipe
 	}
 	
 	public static void AlterPoison(RegistryEvent.Register<Potion> event) {
