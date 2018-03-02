@@ -1,0 +1,12 @@
+info.encumbered.slightly=稍微重
+info.encumbered.encumbered=重
+info.encumbered.almost_fully=很重
+info.encumbered.greatly=十分重
+info.encumbered.fully=过重
+info.weight=重量
+info.creative_mode=创造模式
+
+sleep.random_respawn=你已恢复了意识，但不知道自己人在何方
+sleep.bed_destroyed=你睡醒后发现你的床已被你砸成碎片了
+sleep.bed_decoration=没有人告诉给你吗？床只是用来装饰的
+sleep.enjoy_the_night=已设置重生点，好好享受晚上吧！
