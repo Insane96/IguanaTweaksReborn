@@ -111,7 +111,7 @@ public class ModuleHardness {
 		
 		IBlockState state = event.getEntityPlayer().world.getBlockState(event.getPos());
 		ResourceLocation blockResource = state.getBlock().getRegistryName();
-		for (String line : Properties.Hardness.blockHardness) {
+		for (String line : Properties.Hardness.blockHardness) { 
 			try {
 				String block = line.split(",")[0];
 				String hardness = line.split(",")[1];
