@@ -80,9 +80,9 @@ public class Properties {
 			
 			multiplier = Config.LoadFloatProperty(CATEGORY, "multiplier", "Multiplier applied to the hardness of blocks (set to 1 to disable)", 4.0f);
 			blockListIsWhitelist = Config.LoadBoolProperty(CATEGORY, "block_list_is_whitelist", "True if hardness multiplier should only affect blocks on the list, false if all blocks are affected except those on the list", false);
-			blockList = Config.LoadStringListProperty(CATEGORY, "block_list", "Block ids (one per line) for the hardness whitelist/blacklist.\nE.g. 'minecraft:stone'", new ArrayList<String>() {});
+			blockList = Config.LoadStringListProperty(CATEGORY, "block_list", "Block ids (one per line) for the hardness whitelist/blacklist.\nFormat is modid:blockid;meta\nE.g. 'minecraft:stone:1' will target granite", new ArrayList<String>() {});
 			
-			blockHardness = Config.LoadStringListProperty(CATEGORY, "block_hardness", "Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier ('multiplier')\nThe format is modid:blockid,hardness.\nE.g. 'minecraft:stone,5.0' will make stone have 5 hardness", new ArrayList<String>() {});
+			blockHardness = Config.LoadStringListProperty(CATEGORY, "block_hardness", "Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier ('multiplier')\nThe format is modid:blockid:meta,hardness.\nE.g. 'minecraft:stone:1,5.0' will make granite have 5 hardness. If no meta is specified, this will affect every block meta.", new ArrayList<String>() {});
 		}
 	}
 	

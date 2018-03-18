@@ -20,7 +20,6 @@ import net.insane96mcp.iguanatweaks.events.RenderGameOverlay;
 import net.insane96mcp.iguanatweaks.lib.Config;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.insane96mcp.iguanatweaks.modules.ModuleGeneral;
-import net.insane96mcp.iguanatweaks.modules.ModuleHardness;
 import net.insane96mcp.iguanatweaks.modules.ModuleStackSizes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -61,9 +60,6 @@ public class CommonProxy {
 
 		//General
 		ModuleGeneral.LessObiviousSilverfish();
-		
-		//Hardness
-		ModuleHardness.ProcessSingleHardness();
 		
 		//StackSizes
 		ModuleStackSizes.ProcessBlocks();

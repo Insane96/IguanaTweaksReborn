@@ -8,6 +8,6 @@ public class PlayerBreakSpeed {
 
 	@SubscribeEvent
 	public static void EventBreakSpeed(BreakSpeed event) {
-		ModuleHardness.ProcessGlobalHardness(event);
+		ModuleHardness.ProcessHardness(event);
 	}
 }
