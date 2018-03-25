@@ -25,49 +25,55 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
 public class ModuleMovementRestriction {
 	public static void ApplyPlayer(EntityLivingBase living) {
-		if (!Properties.Global.movementRestriction)
+		if (!(living instanceof EntityPlayer))
 			return;
+		
+		if (!Properties.Global.movementRestriction){
+			IAttributeInstance attribute = living.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+			if (attribute.getModifier(Utils.movementRestrictionUUID) != null)
+				attribute.removeModifier(Utils.movementRestrictionUUID);
+			return;
+		}
 
 		float speedModifier = 1f;
 		
 		World world = living.world;
 		
-		EntityPlayer player;
+		EntityPlayer player = (EntityPlayer) living;
 		
-		if (living instanceof EntityPlayer) {
-			player = (EntityPlayer) living;
-			
-			if (player.isCreative())
-				return;
-			
-			float slownessDamage = SlownessDamage(player, world);
-			
-			float slownessWeight = SlownessWeight(player, world);
-			float slownessTerrain = SlownessTerrain(player, world);
-			
-			float slownessArmor = player.getTotalArmorValue() * Properties.MovementRestriction.armorWeight;
-			if (slownessArmor > 100f) 
-				slownessArmor = 100f;
-	    	
-	    	float speedModifierArmour = (100f - slownessArmor) / 100f;
-	    	float speedModifierTerrain = (100f - slownessTerrain) / 100f;
-	    	float speedModifierWeight = (100f - slownessWeight) / 100f;
-	    	float speedModifierDamage = (100f - slownessDamage) / 100f;
-	    	
-	    	speedModifier = 1f - (speedModifierArmour * speedModifierTerrain * speedModifierWeight * slownessDamage);
-	    	
-	    	if (player.moveForward < 0f && Properties.MovementRestriction.slowdownWhenWalkingBackwards)
-	    		speedModifier = 0.5f + (speedModifier / 2f);
+		if (player.ticksExisted % Properties.General.tickRatePlayerUpdate != 0)
+			return;
+		
+		if (player.isCreative())
+			return;
+		
+		float slownessDamage = SlownessDamage(player, world);
+		float slownessWeight = SlownessWeight(player, world);
+		float slownessTerrain = SlownessTerrain(player, world);
+		float slownessArmor = player.getTotalArmorValue() * Properties.MovementRestriction.armorWeight;
+		if (slownessArmor > 100f) 
+			slownessArmor = 100f;
+    	
+    	float speedModifierArmour = (100f - slownessArmor) / 100f;
+    	float speedModifierTerrain = (100f - slownessTerrain) / 100f;
+    	float speedModifierWeight = (100f - slownessWeight) / 100f;
+    	float speedModifierDamage = (100f - slownessDamage) / 100f;
+    	
+    	speedModifier = 1f - (speedModifierArmour * speedModifierTerrain * speedModifierWeight * slownessDamage);
+    	
+    	if (player.moveForward < 0f && Properties.MovementRestriction.slowdownWhenWalkingBackwards)
+    		speedModifier = 0.5f + (speedModifier / 2f);
 
-			AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
-			IAttributeInstance attribute = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
-			if (attribute.getModifier(Utils.movementRestrictionUUID) == null)
-				attribute.applyModifier(modifier);
-			if (attribute.getModifier(Utils.movementRestrictionUUID).getAmount() != modifier.getAmount())
-				attribute.removeModifier(Utils.movementRestrictionUUID);
-			
-	    	player.jumpMovementFactor = 0.02f * (1f - speedModifier);
+		AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
+		IAttributeInstance attribute = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+		if (attribute.getModifier(Utils.movementRestrictionUUID) == null)
+			attribute.applyModifier(modifier);
+		else if (attribute.getModifier(Utils.movementRestrictionUUID).getAmount() != modifier.getAmount()) {
+			attribute.removeModifier(Utils.movementRestrictionUUID);
+			attribute.applyModifier(modifier);
 		}
+		
+    	player.jumpMovementFactor = 0.02f * (1f - speedModifier);
 	}
 	
 	public static float SlownessWeight(EntityPlayer player, World world) {
