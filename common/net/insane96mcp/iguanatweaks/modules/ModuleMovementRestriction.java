@@ -5,6 +5,7 @@ import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.insane96mcp.iguanatweaks.lib.Utils;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -14,9 +15,11 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumDifficulty;
@@ -91,12 +94,28 @@ public class ModuleMovementRestriction {
 	        float toAdd = 0f;
 	        
 			Block block = Block.getBlockFromItem(stack.getItem());
-
-	        if (!block.equals(Blocks.AIR))	        
-		        toAdd = Utils.GetBlockWeight(block) * Properties.MovementRestriction.rockWeight;
+			
+			if (block instanceof BlockShulkerBox) {
+				NBTTagCompound nbt = new NBTTagCompound();
+				nbt = stack.writeToNBT(nbt);
+				NBTTagCompound blockEntityTag = nbt.getCompoundTag("tag").getCompoundTag("BlockEntityTag");
+				NBTTagList items = blockEntityTag.getTagList("Items", 10);
+				for (int i = 0; i < items.tagCount(); i++){
+					NBTTagCompound itemTags = items.getCompoundTagAt(i);
+					ItemStack item = new ItemStack(Item.getByNameOrId(itemTags.getString("id")), itemTags.getByte("Count"));
+					Block blockInBox = Block.getBlockFromItem(item.getItem());
+					if (!block.equals(Blocks.AIR))	        
+				        toAdd += Utils.GetBlockWeight(blockInBox) * Properties.MovementRestriction.rockWeight * item.getCount();
+			        else
+			        	toAdd += 1f / 64f * item.getCount();
+				}
+				toAdd *= Properties.MovementRestriction.shulkerWeightReduction;
+			}
+			else if (!block.equals(Blocks.AIR))	        
+		        toAdd = Utils.GetBlockWeight(block) * Properties.MovementRestriction.rockWeight * stack.getCount();
 	        else
-	        	toAdd = 1f / 64f;
-	        weight += toAdd * stack.getCount();
+	        	toAdd = 1f / 64f * stack.getCount();
+	        weight += toAdd;
 		}
 		
 		slownessWeight = (weight / Properties.MovementRestriction.maxCarryWeight) * 100f;
@@ -154,6 +173,7 @@ public class ModuleMovementRestriction {
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		
 		int duration = playerData.getDamageSlownessDuration();
+		//System.out.println(duration + " " + player);
 		
 		if (duration == 0)
 			return 1f;
@@ -189,6 +209,8 @@ public class ModuleMovementRestriction {
 		int playerDuration = playerData.getDamageSlownessDuration();
 		
 		playerData.setDamageSlownessDuration(duration + playerDuration);
+    	
+    	//PacketHandler.SendToClient(new WeightMessage(duration + playerDuration), (EntityPlayerMP) player);
 	}
 
 	public static void ApplyEntity(EntityLivingBase living) {

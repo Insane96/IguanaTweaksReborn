@@ -39,8 +39,8 @@ public class AlteredPoison extends Potion {
 	}
 	
 	@Override
-	public Potion setIconIndex(int p_76399_1_, int p_76399_2_) {
-		return super.setIconIndex(p_76399_1_, p_76399_2_);
+	public Potion setIconIndex(int x, int y) {
+		return super.setIconIndex(x, y);
 	}
 	
 	@Override

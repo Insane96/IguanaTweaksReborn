@@ -34,6 +34,7 @@ public class CommonProxy {
 		Config.SyncConfig();
 		Properties.Init();
 		
+		//PacketHandler.Init();
 	}
 	
 	public void Init(FMLInitializationEvent event) {

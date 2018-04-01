@@ -221,6 +221,7 @@ public class Properties {
 		public static float terrainSlowdownInSnow;
 		public static float terrainSlowdownInPlant;
 		public static boolean slowdownWhenWalkingBackwards;
+		public static float shulkerWeightReduction;
 		
 		public static void Init() {
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
@@ -244,6 +245,7 @@ public class Properties {
 			terrainSlowdownInSnow = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_in_snow", "Percentage of slowdown when walking through snow (set to 0 to disable)", 20f);
 			
 			slowdownWhenWalkingBackwards = Config.LoadBoolProperty(CATEGORY, "slowdown_when_walking_backwards", "Set to false to disable the slowdown when walking backwards", true);
+			shulkerWeightReduction = Config.LoadFloatProperty(CATEGORY, "shulker_weight_reduction", "Multiplier for items in shulkerboxes. Set this to 0 to make items in shulker boxes not count towards weight. Set this to 1 to make items in shulker boxes weight the same as they were out of the box.", 0.75f);
 		}
 	}
 	
