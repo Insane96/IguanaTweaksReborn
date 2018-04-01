@@ -163,11 +163,11 @@ public class Properties {
 			hideHotbar = Config.LoadBoolProperty(CATEGORY, "hide_hotbar", "If true, the hotbar will be hidden until an item is selected", false);
 			hideHotbarDelay = Config.LoadIntProperty(CATEGORY, "hide_hotbar_delay", "Delay (in seconds) before hiding the hotbar", 4);
 			
-			hideHealthBar = Config.LoadBoolProperty(CATEGORY, "hide_health_bar", "If true, the health bar will be hidden when above a certain threshold (the bar will always be shown if absorpion hearts are present)", true);
+			hideHealthBar = Config.LoadBoolProperty(CATEGORY, "hide_health_bar", "If true, the health bar will be hidden when above a certain threshold (the bar will always be shown if absorpion hearts are present)", false);
 			hideHealthBarThreshold = Config.LoadIntProperty(CATEGORY, "hide_health_bar_threshold", "Health needs to be equal to or above this before the bar will hide", 20);
 			hideHealthBarDelay = Config.LoadIntProperty(CATEGORY, "hide_health_bar_delay", "Delay (in seconds) before hiding the health bar", 4);
 			
-			hideHungerBar = Config.LoadBoolProperty(CATEGORY, "hide_hunger_bar", "If true, the hunger bar will be hidden when above a certain threshold", true);
+			hideHungerBar = Config.LoadBoolProperty(CATEGORY, "hide_hunger_bar", "If true, the hunger bar will be hidden when above a certain threshold", false);
 			hideHungerBarThreshold = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_threshold", "Hunger needs to be equal to or above this before the bar will hide", 20);
 			hideHungerBarDelay = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_delay", "Delay (in seconds) before hiding the hunger bar", 4);
 			
@@ -190,7 +190,7 @@ public class Properties {
 		public static void Init() {
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
 			
-			restrictedDrops = Config.LoadStringListProperty(CATEGORY, "restricted_drops", "List of items/blocks to restrict from mob drops (separated by new line, format id:meta)", new ArrayList<String>() {});
+			restrictedDrops = Config.LoadStringListProperty(CATEGORY, "restricted_drops", "List of items/blocks to restrict from mob drops (separated by new line, format modid:itemid:meta)", new ArrayList<String>() {});
 			
 			itemLifespan = Config.LoadIntProperty(CATEGORY, "item_lifespan", "Lifespan (in ticks) of items on the ground", 6000);
 			itemLifespanMobDeath = Config.LoadIntProperty(CATEGORY, "item_lifespan_mob_drop", "Lifespan (in ticks) of items dropped when a mob dies", 6000);
@@ -229,7 +229,7 @@ public class Properties {
 			addEncumbranceDebugText = Config.LoadBoolProperty(CATEGORY, "add_debug_text", "Shows weight text in the debug (F3) details", false);
 			addEncumbranceHudText = Config.LoadBoolProperty(CATEGORY, "add_hud_text", "Shows weight text on the HUD when carrying too much", true);
 			detailedEncumbranceHudText = Config.LoadBoolProperty(CATEGORY, "detailed_hud_text", "Weight text on the HUD will be more detailed, showing numbers", false);
-			maxCarryWeight = Config.LoadIntProperty(CATEGORY, "max_carry_weight", "Maximum carry weight (set to 0 to disable)", 512);
+			maxCarryWeight = Config.LoadIntProperty(CATEGORY, "max_carry_weight", "Maximum carry weight (set to 0 to disable)", 768);
 			rockWeight = Config.LoadFloatProperty(CATEGORY, "rock_weight", "Weight of one rock block, used as a base to calculate weight of other blocks", 1);
 			armorWeight = Config.LoadFloatProperty(CATEGORY, "armor_weight", "Percentage of slowdown for each point (half-shield) of armor (set to 0 to disable)", 0.5f);
 			damageSlowdownDuration = Config.LoadIntProperty(CATEGORY, "damage_slowdown_duration", "Number of ticks each heart of damage slows you down for (set to 0 to disable)", 5);
@@ -245,7 +245,7 @@ public class Properties {
 			terrainSlowdownInSnow = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_in_snow", "Percentage of slowdown when walking through snow (set to 0 to disable)", 20f);
 			
 			slowdownWhenWalkingBackwards = Config.LoadBoolProperty(CATEGORY, "slowdown_when_walking_backwards", "Set to false to disable the slowdown when walking backwards", true);
-			shulkerWeightReduction = Config.LoadFloatProperty(CATEGORY, "shulker_weight_reduction", "Multiplier for items in shulkerboxes. Set this to 0 to make items in shulker boxes not count towards weight. Set this to 1 to make items in shulker boxes weight the same as they were out of the box.", 0.75f);
+			shulkerWeightReduction = Config.LoadFloatProperty(CATEGORY, "shulker_weight_reduction", "Multiplier for items weight in shulkerboxes. Set this to 0 to make items in shulker boxes not count towards weight. Set this to 1 to make items in shulker boxes weight the same as they were out of the box.", 0.75f);
 		}
 	}
 	
@@ -260,8 +260,8 @@ public class Properties {
 		public static void Init(){
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
 
-			percentageOre = Config.LoadFloatProperty(CATEGORY, "percentage_ore", "Percentage of experience dropped by blocks. Experience dropped by blocks are still affected by percentage_all, so if you have e.g. percentage_all at 50, this needs to be set to 200 to make blocks drop normal experience. (set to 0 to make blocks not drop xp) (100 to disable)", 100);
-			percentageAll = Config.LoadFloatProperty(CATEGORY, "percentage_all", "Percentage of experience given by everything (0 to disable all xp orbs from being created) (100 to disable)", 100);
+			percentageOre = Config.LoadFloatProperty(CATEGORY, "percentage_ore", "Percentage of experience dropped by blocks. Experience dropped by blocks are still affected by percentage_all, so if you have e.g. percentage_all at 50, this needs to be set to 200 to make blocks drop normal experience. (set to 0 to make blocks not drop xp) (100 to disable)", 100f);
+			percentageAll = Config.LoadFloatProperty(CATEGORY, "percentage_all", "Percentage of experience given by everything (0 to disable all xp orbs from being created) (100 to disable)", 100f);
 			lifespan = Config.LoadIntProperty(CATEGORY, "xp_lifespan", "Lifespan (in ticks) of xp orbs (Range: -1 -> 38000. If set to -1 the orbs will never despawn)", 6000);
 		}
 	}
