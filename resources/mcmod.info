@@ -1,14 +1,14 @@
 [
 {
-  "modid": "naturalnetherportals",
-  "name": "Natural Nether Portals",
-  "description": "Makes (broken) Nether Portals spawn randomly in the nether and the overworld",
+  "modid": "iguanatweaksreborn",
+  "name": "IguanaTweaks Reborn",
+  "description": "Various survival tweaks that make the game harder",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "https://minecraft.curseforge.com/projects/natural-nether-portals",
+  "url": "https://minecraft.curseforge.com/projects/iguanatweaks-reborn",
   "updateUrl": "",
   "authorList": ["Insane96MCP"],
-  "credits": "The Forge and Minecraft forum for help :P",
+  "credits": "The Forge forum for help :P",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
