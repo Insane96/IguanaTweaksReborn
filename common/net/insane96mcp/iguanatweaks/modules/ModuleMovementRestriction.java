@@ -4,6 +4,8 @@ import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.insane96mcp.iguanatweaks.lib.Utils;
+import net.insane96mcp.iguanatweaks.network.PacketHandler;
+import net.insane96mcp.iguanatweaks.network.StunMessage;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.block.material.Material;
@@ -15,6 +17,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -37,8 +40,6 @@ public class ModuleMovementRestriction {
 				attribute.removeModifier(Utils.movementRestrictionUUID);
 			return;
 		}
-
-		float speedModifier = 1f;
 		
 		World world = living.world;
 		
@@ -62,7 +63,7 @@ public class ModuleMovementRestriction {
     	float speedModifierWeight = (100f - slownessWeight) / 100f;
     	float speedModifierDamage = (100f - slownessDamage) / 100f;
     	
-    	speedModifier = 1f - (speedModifierArmour * speedModifierTerrain * speedModifierWeight * slownessDamage);
+    	float speedModifier = 1f - (speedModifierArmour * speedModifierTerrain * speedModifierWeight * slownessDamage);
     	
     	if (player.moveForward < 0f && Properties.MovementRestriction.slowdownWhenWalkingBackwards)
     		speedModifier = 0.5f + (speedModifier / 2f);
@@ -210,7 +211,7 @@ public class ModuleMovementRestriction {
 		
 		playerData.setDamageSlownessDuration(duration + playerDuration);
     	
-    	//PacketHandler.SendToClient(new WeightMessage(duration + playerDuration), (EntityPlayerMP) player);
+		PacketHandler.SendToClient(new StunMessage(duration + playerDuration), (EntityPlayerMP) player);
 	}
 
 	public static void ApplyEntity(EntityLivingBase living) {
@@ -332,31 +333,32 @@ public class ModuleMovementRestriction {
 				}
 				else
 				{
-					float totalEncumberance = (encumbrance + (player.getTotalArmorValue() * Properties.MovementRestriction.armorWeight / 20f)) * 100f;
-					if (totalEncumberance >= 95)
+					float totalEncumberance = Math.max(encumbrance, player.getTotalArmorValue() * Properties.MovementRestriction.armorWeight / 20f);
+					
+					if (totalEncumberance >= 0.95)
 						color = TextFormatting.BOLD;
-					else if (totalEncumberance >= 85)
+					else if (totalEncumberance >= 0.85)
 						color = TextFormatting.GRAY;
-					else if (totalEncumberance >= 40)
+					else if (totalEncumberance >= 0.40)
 						color = TextFormatting.RED;
-					else if (totalEncumberance >= 25)
+					else if (totalEncumberance >= 0.25)
 						color = TextFormatting.GOLD;
-					else if (totalEncumberance >= 10)
+					else if (totalEncumberance >= 0.10)
 						color = TextFormatting.YELLOW;
 
-					if (totalEncumberance >= 95)
+					if (totalEncumberance >= 0.95)
 						line = I18n.format("info.encumbered.fully");
-					else if (totalEncumberance >= 85)
+					else if (totalEncumberance >= 0.85)
 						line = I18n.format("info.encumbered.almost_fully");
-					else if (totalEncumberance >= 40)
+					else if (totalEncumberance >= 0.40)
 						line = I18n.format("info.encumbered.greatly");
-					else if (totalEncumberance >= 25)
+					else if (totalEncumberance >= 0.25)
 						line = I18n.format("info.encumbered.encumbered");
-					else if (totalEncumberance >= 10)
+					else if (totalEncumberance >= 0.10)
 						line = I18n.format("info.encumbered.slightly");
 				}
 				
-				if (!line.equals("")) event.getRight().add(color + line + "\u00A7r");
+				if (!line.isEmpty()) event.getRight().add(color + line + "\u00A7r");
 			}
 		}		
 	}

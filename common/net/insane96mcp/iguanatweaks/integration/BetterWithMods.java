@@ -25,11 +25,11 @@ public class BetterWithMods {
 		}
 	}
 	
-	public static boolean IsPresent() {
+	private static boolean IsPresent() {
 		return Loader.isModLoaded(name);
 	}
 	
-	public static boolean IsStump(IBlockState state) {
+	private static boolean IsStump(IBlockState state) {
 		try {
 			return (boolean) isStump.invoke(obj, state);
 		} catch (Exception e) {
@@ -38,7 +38,7 @@ public class BetterWithMods {
 		return false;
 	}
 	
-	public static boolean IsRoots(IBlockState state) {
+	private static boolean IsRoots(IBlockState state) {
 		try {
 			return (boolean) isRoots.invoke(obj, state);
 		} catch (Exception e) {

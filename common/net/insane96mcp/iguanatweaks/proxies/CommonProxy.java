@@ -22,6 +22,7 @@ import net.insane96mcp.iguanatweaks.lib.Config;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.insane96mcp.iguanatweaks.modules.ModuleGeneral;
 import net.insane96mcp.iguanatweaks.modules.ModuleStackSizes;
+import net.insane96mcp.iguanatweaks.network.PacketHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.config.Configuration;
@@ -36,7 +37,7 @@ public class CommonProxy {
 		Properties.Init();
 		Integration.Init();
 		
-		//PacketHandler.Init();
+		PacketHandler.Init();
 	}
 	
 	public void Init(FMLInitializationEvent event) {

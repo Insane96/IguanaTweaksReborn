@@ -30,8 +30,9 @@ public class IguanaTweaks {
 	
 	@EventHandler
 	public void PreInit(FMLPreInitializationEvent event) {
-		proxy.PreInit(event);
 		logger = event.getModLog();
+		
+		proxy.PreInit(event);
 	}
 	
 	@EventHandler

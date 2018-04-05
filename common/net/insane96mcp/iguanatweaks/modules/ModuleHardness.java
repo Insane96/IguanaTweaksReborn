@@ -27,6 +27,7 @@ public class ModuleHardness {
 		World world = event.getEntityPlayer().world;
 		
 		IBlockState state = world.getBlockState(event.getPos());
+		
 		if (BetterWithMods.IsStumpOrRoot(state, world, event.getPos()))
 			return;
 		
