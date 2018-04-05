@@ -1,6 +1,7 @@
 package net.insane96mcp.iguanatweaks.modules;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
+import net.insane96mcp.iguanatweaks.integration.BetterWithMods;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -23,7 +24,12 @@ public class ModuleHardness {
 		if (Properties.Hardness.multiplier == 1.0f)
 			return;
 		
-		IBlockState state = event.getEntityPlayer().world.getBlockState(event.getPos());
+		World world = event.getEntityPlayer().world;
+		
+		IBlockState state = world.getBlockState(event.getPos());
+		if (BetterWithMods.IsStumpOrRoot(state, world, event.getPos()))
+			return;
+		
 		ResourceLocation blockResource = state.getBlock().getRegistryName();
 		boolean shouldProcess = true;
 		for (String line : Properties.Hardness.blockHardness) {

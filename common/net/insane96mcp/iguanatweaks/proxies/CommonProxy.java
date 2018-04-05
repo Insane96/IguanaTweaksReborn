@@ -17,6 +17,7 @@ import net.insane96mcp.iguanatweaks.events.PlayerBreakSpeed;
 import net.insane96mcp.iguanatweaks.events.PlayerLogInRespawn;
 import net.insane96mcp.iguanatweaks.events.PlayerSleepInBed;
 import net.insane96mcp.iguanatweaks.events.RenderGameOverlay;
+import net.insane96mcp.iguanatweaks.integration.Integration;
 import net.insane96mcp.iguanatweaks.lib.Config;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.insane96mcp.iguanatweaks.modules.ModuleGeneral;
@@ -33,6 +34,7 @@ public class CommonProxy {
 		Config.config = new Configuration(event.getSuggestedConfigurationFile());
 		Config.SyncConfig();
 		Properties.Init();
+		Integration.Init();
 		
 		//PacketHandler.Init();
 	}
