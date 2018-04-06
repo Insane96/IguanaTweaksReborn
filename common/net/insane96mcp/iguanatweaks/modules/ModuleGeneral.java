@@ -60,10 +60,7 @@ public class ModuleGeneral {
 		float hardness = 0f;
 		hardness = block.getBlockHardness(blockState, event.getWorld(), event.getPos());
 		
-		if (hardness == 0f)
-			return;
-		
-		event.getPlayer().addExhaustion(hardness / 100f);
+		event.getPlayer().addExhaustion((hardness / 100f) * Properties.General.exhaustionMultiplier);
 	}
 	
 	public static void AlterPoison(RegistryEvent.Register<Potion> event) {

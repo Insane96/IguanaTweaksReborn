@@ -20,7 +20,7 @@ public class AlteredPoison extends Potion {
 		entityLivingBaseIn.attackEntityFrom(DamageSource.MAGIC, 1.0f);
 		
 		if (entityLivingBaseIn instanceof EntityPlayer) {
-			((EntityPlayer) entityLivingBaseIn).addExhaustion((float) (0.2 * amplifier));
+			((EntityPlayer) entityLivingBaseIn).addExhaustion(1.0f);
 		}
 	}
 	

@@ -57,7 +57,6 @@ public class PlayerData implements IPlayerData{
 
 	@Override
 	public void setDamageSlownessDuration(int duration) {
-		System.out.println("Changing from " + this.damageSlownessDuration + " to " + duration);
 		this.damageSlownessDuration = duration;
 	}
 

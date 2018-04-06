@@ -25,15 +25,13 @@ import net.insane96mcp.iguanatweaks.modules.ModuleStackSizes;
 import net.insane96mcp.iguanatweaks.network.PacketHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class CommonProxy {
 	public void PreInit(FMLPreInitializationEvent event) {
-		Config.config = new Configuration(event.getSuggestedConfigurationFile());
-		Config.SyncConfig();
+		Config.Init(event.getSuggestedConfigurationFile());
 		Properties.Init();
 		Integration.Init();
 		

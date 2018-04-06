@@ -27,6 +27,7 @@ public class Properties {
 		public static int tickRateEntityUpdate;
 		public static boolean disableFovOnSpeedModified;
 		public static boolean exhaustionOnBlockBreak;
+		public static float exhaustionMultiplier;
 		public static int tickRatePlayerUpdate;
 		
 		public static void Init() {
@@ -35,9 +36,10 @@ public class Properties {
 			tickRateEntityUpdate = Config.LoadIntProperty(CATEGORY, "tick_rate_entity_update", "How often the speed of entities (not player) are calculated (in ticks). Higher values reduces client-side CPU load but may increase the chance of odd behavior", 7);
 			disableFovOnSpeedModified = Config.LoadBoolProperty(CATEGORY, "disable_fov_change_on_speed_change", "Disables fov changes when you get slowed down or sped up. Highly recommended if you have 'movement_restrictions' active.", true);
 			increasedStepHeight = Config.LoadBoolProperty(CATEGORY, "increased_step_height", "If the player should be able to walk over full blocks", false);
-			alterPoison = Config.LoadBoolProperty(CATEGORY, "alter_poison", "The poison effect will be changed to be deadly and drain hunger slowly, but will damage the player slowly", true);
+			alterPoison = Config.LoadBoolProperty(CATEGORY, "alter_poison", "The poison effect will be changed to be deadly and drain hunger, but will damage the player about 4x slower", true);
 			lessObviousSilverfish = Config.LoadBoolProperty(CATEGORY, "less_obivious_silverfish", "If true, silverfish blocks will be almost like stone", true);
-			exhaustionOnBlockBreak = Config.LoadBoolProperty(CATEGORY, "exhaustion_on_block_break", "Minecraft normally adds 0.005 exaustion for block broken. With this at true, exhaustion will be added based on block hardness (hardness / 100). ELI5 you lose more hunger the more hard is a block to break.", true);
+			exhaustionOnBlockBreak = Config.LoadBoolProperty(CATEGORY, "exhaustion_on_block_break", "Minecraft normally adds 0.005 exaustion for block broken. With this at true, exhaustion will be added based on block hardness (hardness / 100). ELI5 when you break a block you lose more hunger the more hard is a block to break.", true);
+			exhaustionMultiplier = Config.LoadFloatProperty(CATEGORY, "exhaustion_on_block_break_multiplier", "Multiply the exhaustion given to the player when breaking blocks by this value", 1.0f);
 			tickRatePlayerUpdate = Config.LoadIntProperty(CATEGORY, "tick_rate_player_update", "How often the speed of players are calculated (in ticks). Higher values reduces client-side CPU load but may increase the chance of odd behavior", 2);
 		}
 	}
