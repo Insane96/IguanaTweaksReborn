@@ -8,6 +8,7 @@ import org.lwjgl.Sys;
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.Reflection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
@@ -97,29 +98,17 @@ public class ModuleHud {
 		
 		return false;
 	}
-
-	private static Field KEYBIND_ARRAY = null;
-	public static void Init() {
-		try {
-			KEYBIND_ARRAY = ReflectionHelper.findField(KeyBinding.class, "KEYBIND_ARRAY", "field_74516_a");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public static void HotbarCheckKeyPress(Phase phase) {
 		if (!Properties.Global.hud)
 			return;
 		if (!Properties.Hud.hideHotbar)
 			return;
-		if (KEYBIND_ARRAY == null) 
-			return;
-		
 		
 		if (phase.equals(Phase.END)) {
 			Map<String, KeyBinding> binds = null;
 			try {
-				binds = (Map<String, KeyBinding>) KEYBIND_ARRAY.get(null);
+				binds = (Map<String, KeyBinding>) Reflection.KeyBinding_KEYBIND_ARRAY.get(null);
 				for (String bind : binds.keySet()) {
 					if(binds.get(bind).isKeyDown()){
 						if (binds.get(bind).getKeyCode() >= 2 && binds.get(bind).getKeyCode() <= 9) {

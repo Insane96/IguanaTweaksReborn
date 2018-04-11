@@ -210,6 +210,7 @@ public class Properties {
 	    public static boolean detailedEncumbranceHudText;
 	    public static int maxCarryWeight;
 		public static float rockWeight;
+		public static String[] customWeight;
 		public static float armorWeight;
 		public static int damageSlowdownDuration;
 		public static float damageSlowdownEffectiveness;
@@ -233,6 +234,7 @@ public class Properties {
 			detailedEncumbranceHudText = Config.LoadBoolProperty(CATEGORY, "detailed_hud_text", "Weight text on the HUD will be more detailed, showing numbers", false);
 			maxCarryWeight = Config.LoadIntProperty(CATEGORY, "max_carry_weight", "Maximum carry weight (set to 0 to disable)", 768);
 			rockWeight = Config.LoadFloatProperty(CATEGORY, "rock_weight", "Weight of one rock block, used as a base to calculate weight of other blocks", 1);
+			customWeight = Config.LoadStringArrayProperty(CATEGORY, "custom_weight", "Set here (one per line) block weight for each block or item. Format is modid:blockid:meta,weight", new String[] {});
 			armorWeight = Config.LoadFloatProperty(CATEGORY, "armor_weight", "Percentage of slowdown for each point (half-shield) of armor (set to 0 to disable)", 0.5f);
 			damageSlowdownDuration = Config.LoadIntProperty(CATEGORY, "damage_slowdown_duration", "Number of ticks each heart of damage slows you down for (set to 0 to disable)", 5);
 			damageSlowdownEffectiveness = Config.LoadFloatProperty(CATEGORY, "damage_slowdown_effectiveness", "When player's damaged, how much is slowed down?", 20.0f);

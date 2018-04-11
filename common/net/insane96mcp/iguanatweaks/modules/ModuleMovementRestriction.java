@@ -1,14 +1,18 @@
 package net.insane96mcp.iguanatweaks.modules;
 
+import java.lang.reflect.Field;
+
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.Reflection;
 import net.insane96mcp.iguanatweaks.lib.Utils;
 import net.insane96mcp.iguanatweaks.network.PacketHandler;
 import net.insane96mcp.iguanatweaks.network.StunMessage;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.resources.I18n;
@@ -19,6 +23,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,6 +33,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class ModuleMovementRestriction {
 	public static void ApplyPlayer(EntityLivingBase living) {
@@ -77,7 +83,13 @@ public class ModuleMovementRestriction {
 			attribute.applyModifier(modifier);
 		}
 		
-    	player.jumpMovementFactor = 0.02f * (1f - speedModifier);
+		player.jumpMovementFactor = 0.02f * (1f - speedModifier);
+    	try {
+    		Reflection.EntityPlayer_speedInAir.set(player, 0.02f * (1f - speedModifier));
+    	}
+    	catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static float SlownessWeight(EntityPlayer player, World world) {
@@ -94,7 +106,10 @@ public class ModuleMovementRestriction {
 				continue;
 	        float toAdd = 0f;
 	        
+	        Item item = stack.getItem();
+	        
 			Block block = Block.getBlockFromItem(stack.getItem());
+			IBlockState state = block.getStateFromMeta(stack.getMetadata());
 			
 			if (block instanceof BlockShulkerBox) {
 				NBTTagCompound nbt = new NBTTagCompound();
@@ -103,19 +118,19 @@ public class ModuleMovementRestriction {
 				NBTTagList items = blockEntityTag.getTagList("Items", 10);
 				for (int i = 0; i < items.tagCount(); i++){
 					NBTTagCompound itemTags = items.getCompoundTagAt(i);
-					ItemStack item = new ItemStack(Item.getByNameOrId(itemTags.getString("id")), itemTags.getByte("Count"));
-					Block blockInBox = Block.getBlockFromItem(item.getItem());
-					if (!block.equals(Blocks.AIR))	        
-				        toAdd += Utils.GetBlockWeight(blockInBox) * Properties.MovementRestriction.rockWeight * item.getCount();
-			        else
-			        	toAdd += 1f / 64f * item.getCount();
+					ItemStack stackInBox = new ItemStack(Item.getByNameOrId(itemTags.getString("id")), itemTags.getByte("Count"), itemTags.getShort("Damage"));
+					Block blockInBox = Block.getBlockFromItem(stackInBox.getItem());
+					if (!block.equals(Blocks.AIR) && !stack.getItem().equals(Items.AIR))	        
+				        toAdd += Utils.GetItemWeight(stackInBox) * stackInBox.getCount();
+					if (toAdd == 0f)
+			        	toAdd = 1f / 64f * stack.getCount();
 				}
 				toAdd *= Properties.MovementRestriction.shulkerWeightReduction;
 			}
-			else if (!block.equals(Blocks.AIR))	        
-		        toAdd = Utils.GetBlockWeight(block) * Properties.MovementRestriction.rockWeight * stack.getCount();
-	        else
-	        	toAdd = 1f / 64f * stack.getCount();
+			else if (!item.equals(Items.AIR)) {
+		        toAdd = Utils.GetItemWeight(stack) * stack.getCount();
+			}
+	        
 	        weight += toAdd;
 		}
 		
@@ -174,7 +189,6 @@ public class ModuleMovementRestriction {
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		
 		int duration = playerData.getDamageSlownessDuration();
-		//System.out.println(duration + " " + player);
 		
 		if (duration == 0)
 			return 1f;

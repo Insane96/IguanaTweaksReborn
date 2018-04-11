@@ -20,9 +20,6 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public void PostInit(FMLPostInitializationEvent event) {
 		super.PostInit(event);
-		
-		//Hud
-		ModuleHud.Init();
 	}
 	
 }

@@ -22,6 +22,7 @@ import net.insane96mcp.iguanatweaks.events.RenderGameOverlay;
 import net.insane96mcp.iguanatweaks.integration.Integration;
 import net.insane96mcp.iguanatweaks.lib.Config;
 import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.Reflection;
 import net.insane96mcp.iguanatweaks.modules.ModuleGeneral;
 import net.insane96mcp.iguanatweaks.modules.ModuleStackSizes;
 import net.insane96mcp.iguanatweaks.network.PacketHandler;
@@ -37,6 +38,7 @@ public class CommonProxy {
 		Config.Init(event.getSuggestedConfigurationFile());
 		Properties.Init();
 		Integration.Init();
+		Reflection.Init();
 		
 		PacketHandler.Init();
 	}
