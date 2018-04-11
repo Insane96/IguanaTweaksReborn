@@ -10,7 +10,9 @@ import net.insane96mcp.iguanatweaks.events.EntityJoinWorld;
 import net.insane96mcp.iguanatweaks.events.FovUpdate;
 import net.insane96mcp.iguanatweaks.events.ItemToss;
 import net.insane96mcp.iguanatweaks.events.LivingDrops;
+import net.insane96mcp.iguanatweaks.events.LivingExperienceDrop;
 import net.insane96mcp.iguanatweaks.events.LivingHurt;
+import net.insane96mcp.iguanatweaks.events.LivingSpawn;
 import net.insane96mcp.iguanatweaks.events.LivingUpdate;
 import net.insane96mcp.iguanatweaks.events.Mouse;
 import net.insane96mcp.iguanatweaks.events.PlayerBreakSpeed;
@@ -25,6 +27,7 @@ import net.insane96mcp.iguanatweaks.modules.ModuleStackSizes;
 import net.insane96mcp.iguanatweaks.network.PacketHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -53,6 +56,8 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(Break.class);
 		MinecraftForge.EVENT_BUS.register(CapabilityHandler.class);
 		MinecraftForge.EVENT_BUS.register(PlayerBreakSpeed.class);
+		MinecraftForge.EVENT_BUS.register(LivingSpawn.class);
+		MinecraftForge.EVENT_BUS.register(LivingExperienceDrop.class);
 		
 		CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataStorage(), PlayerData.class);
 	}

@@ -257,6 +257,7 @@ public class Properties {
 
 		public static float percentageOre;
 		public static float percentageAll;
+		public static float percentageFromSpawner;
 		public static int lifespan;
 
 		public static void Init(){
@@ -265,8 +266,7 @@ public class Properties {
 			percentageOre = Config.LoadFloatProperty(CATEGORY, "percentage_ore", "Percentage of experience dropped by blocks. Experience dropped by blocks are still affected by percentage_all, so if you have e.g. percentage_all at 50, this needs to be set to 200 to make blocks drop normal experience. (set to 0 to make blocks not drop xp) (100 to disable)", 100f);
 			percentageAll = Config.LoadFloatProperty(CATEGORY, "percentage_all", "Percentage of experience given by everything (0 to disable all xp orbs from being created) (100 to disable)", 100f);
 			lifespan = Config.LoadIntProperty(CATEGORY, "xp_lifespan", "Lifespan (in ticks) of xp orbs (Range: -1 -> 38000. If set to -1 the orbs will never despawn)", 6000);
+			percentageFromSpawner = Config.LoadFloatProperty(CATEGORY, "percentage_from_spawner", "Percentage of experience dropped from mobs spawned from Spawners.", 50f);
 		}
 	}
-	
-	
 }
