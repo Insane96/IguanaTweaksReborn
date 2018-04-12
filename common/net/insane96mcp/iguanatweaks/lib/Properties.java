@@ -225,6 +225,7 @@ public class Properties {
 		public static float terrainSlowdownInPlant;
 		public static boolean slowdownWhenWalkingBackwards;
 		public static float shulkerWeightReduction;
+		public static String[] terrainSlowdownCustom;
 		
 		public static void Init() {
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
@@ -234,7 +235,7 @@ public class Properties {
 			detailedEncumbranceHudText = Config.LoadBoolProperty(CATEGORY, "detailed_hud_text", "Weight text on the HUD will be more detailed, showing numbers", false);
 			maxCarryWeight = Config.LoadIntProperty(CATEGORY, "max_carry_weight", "Maximum carry weight (set to 0 to disable)", 768);
 			rockWeight = Config.LoadFloatProperty(CATEGORY, "rock_weight", "Weight of one rock block, used as a base to calculate weight of other blocks", 1);
-			customWeight = Config.LoadStringArrayProperty(CATEGORY, "custom_weight", "Set here (one per line) block weight for each block or item. Format is modid:blockid:meta,weight", new String[] {});
+			customWeight = Config.LoadStringArrayProperty(CATEGORY, "custom_weight", "Set here (one per line) block weight for each block or item. Format is 'modid:blockid:meta,weight', meta is not needed, setting no meta, means all the blocks sub-types of that block.", new String[] {});
 			armorWeight = Config.LoadFloatProperty(CATEGORY, "armor_weight", "Percentage of slowdown for each point (half-shield) of armor (set to 0 to disable)", 0.5f);
 			damageSlowdownDuration = Config.LoadIntProperty(CATEGORY, "damage_slowdown_duration", "Number of ticks each heart of damage slows you down for (set to 0 to disable)", 5);
 			damageSlowdownEffectiveness = Config.LoadFloatProperty(CATEGORY, "damage_slowdown_effectiveness", "When player's damaged, how much is slowed down?", 20.0f);
@@ -247,6 +248,7 @@ public class Properties {
 			terrainSlowdownOnSnow = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_snow", "Percentage of slowdown when walking on snow (set to 0 to disable)", 20f);
 			terrainSlowdownInPlant = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_in_plant", "Percentage of slowdown when walking through leaves or plants (set to 0 to disable)", 5f);
 			terrainSlowdownInSnow = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_in_snow", "Percentage of slowdown when walking through snow (set to 0 to disable)", 20f);
+			terrainSlowdownCustom = Config.LoadStringArrayProperty(CATEGORY, "terrain_slowdown_custom", "Custom list for each block that slows you down when you walk on it. Format is 'modid:blockid:meta,slowness', meta is not needed, setting no meta, means all the blocks. E.g. 'minecraft:diamond_block,75' will slowdown the player by 75% when walks on diamond block.", new String[] {});
 			
 			slowdownWhenWalkingBackwards = Config.LoadBoolProperty(CATEGORY, "slowdown_when_walking_backwards", "Set to false to disable the slowdown when walking backwards", true);
 			shulkerWeightReduction = Config.LoadFloatProperty(CATEGORY, "shulker_weight_reduction", "Multiplier for items weight in shulkerboxes. Set this to 0 to make items in shulker boxes not count towards weight. Set this to 1 to make items in shulker boxes weight the same as they were out of the box.", 0.75f);

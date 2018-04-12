@@ -155,25 +155,8 @@ public class ModuleMovementRestriction {
 		if (player.isInWater() || Properties.MovementRestriction.terrainSlowdownPercentage == 0)
 			return 0f;
 		BlockPos playerPos = new BlockPos(player.posX, player.posY - 1, player.posZ);
-
-		Material blockOnMaterial = world.getBlockState(playerPos).getMaterial();			
-		Material blockInMaterial = world.getBlockState(playerPos.add(0, 1, 0)).getMaterial();
 		
-        if (blockOnMaterial == Material.GRASS || blockOnMaterial == Material.GROUND) 
-        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnDirt; 
-        else if (blockOnMaterial == Material.SAND) 
-        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnSand;
-        else if (blockOnMaterial == Material.LEAVES || blockOnMaterial == Material.PLANTS || blockOnMaterial == Material.VINE) 
-        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnPlant;
-        else if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
-        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnIce;
-        else if (blockOnMaterial == Material.SNOW || blockOnMaterial == Material.CRAFTED_SNOW)
-        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnSnow;
-		
-        if (blockInMaterial == Material.SNOW || blockInMaterial == Material.CRAFTED_SNOW) 
-        	slownessTerrain += Properties.MovementRestriction.terrainSlowdownInSnow;
-		else if (blockInMaterial == Material.VINE || blockInMaterial == Material.PLANTS) 
-			slownessTerrain += Properties.MovementRestriction.terrainSlowdownInPlant;
+		slownessTerrain = Utils.GetBlockSlowness(world, playerPos);
         
         slownessTerrain = Math.round((float)slownessTerrain * ((float)Properties.MovementRestriction.terrainSlowdownPercentage / 100f));
         
