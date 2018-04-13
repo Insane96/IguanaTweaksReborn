@@ -15,6 +15,8 @@ public class BetterWithMods {
 	private static Method isStump, isRoots;
 	
 	public static void Init() {
+		if (!IsPresent())
+			return;
 		try {
 			HCStumping = Class.forName("betterwithmods.module.hardcore.world.HCStumping");
 			obj = HCStumping.newInstance();

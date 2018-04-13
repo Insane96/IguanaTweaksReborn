@@ -7,7 +7,7 @@ public class Integration {
 		IguanaTweaks.logger.info("Initializing Mod Integration");
 		
 		BetterWithMods.Init();
-		WearableBackpacks.Init();
+		//WearableBackpacks.Init();
 		
 		IguanaTweaks.logger.info("Finished Initializing Mod Integration");
 	}
