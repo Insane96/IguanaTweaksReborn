@@ -10,18 +10,29 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
 public class Reflection {
 	public static Field EntityPlayer_speedInAir;
-	public static Field KeyBinding_KEYBIND_ARRAY;
 		
 	public static void Init() {
 		try {
 			EntityPlayer_speedInAir = ReflectionHelper.findField(EntityPlayer.class, "speedInAir", "field_71102_ce");
-			KeyBinding_KEYBIND_ARRAY = ReflectionHelper.findField(KeyBinding.class, "KEYBIND_ARRAY", "field_74516_a");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static class Client {
+		@SideOnly(Side.CLIENT)
+		public static Field KeyBinding_KEYBIND_ARRAY;
+		
+		public static void Init() {
+			try {
+				KeyBinding_KEYBIND_ARRAY = ReflectionHelper.findField(KeyBinding.class, "KEYBIND_ARRAY", "field_74516_a");
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

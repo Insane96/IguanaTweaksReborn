@@ -108,7 +108,7 @@ public class ModuleHud {
 		if (phase.equals(Phase.END)) {
 			Map<String, KeyBinding> binds = null;
 			try {
-				binds = (Map<String, KeyBinding>) Reflection.KeyBinding_KEYBIND_ARRAY.get(null);
+				binds = (Map<String, KeyBinding>) Reflection.Client.KeyBinding_KEYBIND_ARRAY.get(null);
 				for (String bind : binds.keySet()) {
 					if(binds.get(bind).isKeyDown()){
 						if (binds.get(bind).getKeyCode() >= 2 && binds.get(bind).getKeyCode() <= 9) {
