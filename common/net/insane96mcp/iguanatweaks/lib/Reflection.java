@@ -21,9 +21,9 @@ public class Reflection {
 			e.printStackTrace();
 		}
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static class Client {
-		@SideOnly(Side.CLIENT)
 		public static Field KeyBinding_KEYBIND_ARRAY;
 		
 		public static void Init() {

@@ -39,7 +39,7 @@ public class ModuleHardness {
 				String hardness = line.split(",")[1];
 				String modId = block.split(":")[0];
 				String blockId = block.split(":")[1];
-				ResourceLocation resourceLocation = new ResourceLocation(modId + ":" + blockId);
+				ResourceLocation resourceLocation = new ResourceLocation(modId, blockId);
 				
 				int metadata = -1;
 				if (block.split(":").length > 2) {
@@ -57,7 +57,8 @@ public class ModuleHardness {
 				}
 			}
 			catch (Exception e) {
-				IguanaTweaks.logger.error("[block_hardness] Failed to parse line " + line + ": " + e);
+				IguanaTweaks.logger.error("[block_hardness] Failed to parse line " + line + ": ");
+				e.printStackTrace();
 			}
 		}
 		
@@ -118,39 +119,37 @@ public class ModuleHardness {
 		
 		IBlockState state = event.getEntityPlayer().world.getBlockState(event.getPos());
 		ResourceLocation blockResource = state.getBlock().getRegistryName();
-		for (String line : Properties.Hardness.blockHardness) { 
-			try {
-				String block = line.split(",")[0];
-				String hardness = line.split(",")[1];
-				
-				String modId = block.split(":")[0];
-				String blockId = block.split(":")[1];
-				ResourceLocation resourceLocation = new ResourceLocation(modId + ":" + blockId);
-				int metadata = -1;
-				if (block.split(":").length > 2) {
-					metadata = Integer.parseInt(block.split(":")[2]);
-					if (blockResource.equals(resourceLocation) && state.getBlock().getMetaFromState(state) == metadata) {
-						event.setNewSpeed(event.getOriginalSpeed() * GetRatio(hardness, blockId, state, world, pos));
-						break;
-					}
-				}
-				else {
-					if (blockResource.equals(resourceLocation)) {
-						event.setNewSpeed(event.getOriginalSpeed() * GetRatio(hardness, blockId, state, world, pos));
-						break;
-					}
-				}
+		int meta = state.getBlock().getMetaFromState(state);
+		for (String line : Properties.Hardness.blockHardness) {
+			String[] lineSplit = line.split(",");
+			if (lineSplit.length != 2) {
+				IguanaTweaks.logger.error("[block_hardness] Failed to parse line " + line);
+				continue;
 			}
-			catch (Exception e) {
-				IguanaTweaks.logger.error("[block_hardness] Failed to parse line " + line + ": " + e);
+			
+			String[] blockSplit = lineSplit[0].split(":");
+			if (blockSplit.length < 2 || blockSplit.length > 3) {
+				IguanaTweaks.logger.error("[block_hardness] Failed to parse line " + line);
+				continue;
+			}
+			ResourceLocation blockId = new ResourceLocation(blockSplit[0], blockSplit[1]);
+			
+			int metadata = -1;
+			if (blockSplit.length == 3) 
+				metadata = Integer.parseInt(blockSplit[2]);
+			
+			float hardness = Float.parseFloat(lineSplit[1]);
+			
+			if (blockResource.equals(blockId) && (meta == metadata || metadata == -1)) {
+				event.setNewSpeed(event.getOriginalSpeed() * GetRatio(hardness, blockId, state, world, pos));
+				break;
 			}
 		}
 	}
 	
-	private static float GetRatio(String blockHardness, String blockId, IBlockState state, World world, BlockPos pos) {
-		float hardness = Float.parseFloat(blockHardness);
-		float originalHardness = Block.getBlockFromName(blockId).getBlockHardness(state, world, pos);
-		float ratio = originalHardness / hardness;
+	private static float GetRatio(float newHardness, ResourceLocation blockId, IBlockState state, World world, BlockPos pos) {
+		float originalHardness = Block.getBlockFromName(blockId.toString()).getBlockHardness(state, world, pos);
+		float ratio = originalHardness / newHardness;
 		return ratio;
 	}
 }
