@@ -11,12 +11,12 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = IguanaTweaks.MOD_ID, name = IguanaTweaks.MOD_NAME, version = IguanaTweaks.VERSION, acceptedMinecraftVersions = IguanaTweaks.MINECRAFT_VERSIONS, acceptableRemoteVersions = "[1.3.0,1.3.1]")
+@Mod(modid = IguanaTweaks.MOD_ID, name = IguanaTweaks.MOD_NAME, version = IguanaTweaks.VERSION, acceptedMinecraftVersions = IguanaTweaks.MINECRAFT_VERSIONS)
 public class IguanaTweaks {
 	
 	public static final String MOD_ID = "iguanatweaks";
 	public static final String MOD_NAME = "IguanaTweaks";
-	public static final String VERSION = "1.3.2";
+	public static final String VERSION = "1.3.3";
 	public static final String RESOURCE_PREFIX = MOD_ID.toLowerCase() + ":";
 	public static final String MINECRAFT_VERSIONS = "[1.12,1.12.2]";
 	
