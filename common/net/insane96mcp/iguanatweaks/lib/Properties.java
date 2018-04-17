@@ -108,7 +108,11 @@ public class Properties {
 			blockDividerMax = Config.LoadIntProperty(CATEGORY, "block_divider_man", "Max stack size divider for blocks", 4);
 			itemDivider = Config.LoadIntProperty(CATEGORY, "item_divider", "Stack size divider for items", 2);
 			
-			customStackList = Config.LoadStringArrayProperty(CATEGORY, "custom_stack_list", "List of all the custom stacks for blocks and items. The format is 'modid:name,max_stack_size'. Going over 64 doesn't work", new String[0]);
+			customStackList = Config.LoadStringArrayProperty(CATEGORY, "custom_stack_list", "List of all the custom stacks for blocks and items. The format is 'modid:name,max_stack_size'. Going over 64 doesn't work. By default, some items that villagers can trade are set to be tradeable.", new String[] {
+					"minecraft:emerald,64",
+					"minecraft:paper,36",
+					"minecraft:rotten_flesh,40"
+			});
 		}
 	}
 	
