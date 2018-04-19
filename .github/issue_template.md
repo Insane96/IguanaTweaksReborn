@@ -11,3 +11,5 @@ What Happens:
 Logs / Crash reports (use Pastebin):
 
 Config (if needed):
+
+List of mods installed / modpack: 
