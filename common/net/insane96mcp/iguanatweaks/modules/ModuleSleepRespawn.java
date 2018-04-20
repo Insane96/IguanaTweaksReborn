@@ -73,6 +73,10 @@ public class ModuleSleepRespawn {
 		if (maxDistance <= 0)
 			return;
 		
+		World world = player.getEntityWorld();
+		if (world.isRemote)
+			return;
+		
 		int x = (int)player.posX;
 		if (x < 0) 
 			--x;
@@ -80,10 +84,6 @@ public class ModuleSleepRespawn {
 		int z = (int)player.posZ;
 		if (z < 0) 
 			--z;
-		
-		World world = player.getEntityWorld();
-		if (world.isRemote)
-			return;
 		
 		EntityPlayerMP playerMP = (EntityPlayerMP)player;
 		
