@@ -1,21 +1,27 @@
 package net.insane96mcp.iguanatweaks.modules;
 
+import java.awt.Point;
+import java.util.Collection;
+import java.util.Iterator;
 
+import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.Reflection;
 import net.insane96mcp.iguanatweaks.potioneffects.AlteredPoison;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 
@@ -63,13 +69,33 @@ public class ModuleGeneral {
 		event.getPlayer().addExhaustion((hardness / 100f) * Properties.General.exhaustionMultiplier);
 	}
 	
-	public static void AlterPoison(RegistryEvent.Register<Potion> event) {
+	public static AlteredPoison alteredPoison;
+	
+	public static void RegisterPoison(RegistryEvent.Register<Potion> event) {
 		IForgeRegistryModifiable modRegistry = (IForgeRegistryModifiable) event.getRegistry();
-		ResourceLocation potionName = new ResourceLocation("minecraft:poison");
-		AlteredPoison alteredPoison = new AlteredPoison(true, Potion.getPotionFromResourceLocation("minecraft:poison").getLiquidColor());
+		ResourceLocation potionName = new ResourceLocation(IguanaTweaks.MOD_ID, "altered_poison");
+		alteredPoison = new AlteredPoison(true, Potion.getPotionFromResourceLocation("minecraft:poison").getLiquidColor());
 		alteredPoison.setRegistryName(potionName);
 		alteredPoison.setPotionName("effect.poison");
 		alteredPoison.setIconIndex(6, 0);
 		modRegistry.register(alteredPoison);
+	}
+	
+	public static void ApplyPoison(EntityLivingBase living) {
+		if (!Properties.General.alterPoison)
+			return;
+		
+		if (living.ticksExisted % 9 != 0)
+			return;
+		
+		Potion potionPoison = Potion.getPotionFromResourceLocation("minecraft:poison");
+		
+		if (!living.isPotionActive(potionPoison))
+			return;
+		
+		PotionEffect poison = living.getActivePotionEffect(potionPoison);
+		PotionEffect alteredPoison = new PotionEffect(ModuleGeneral.alteredPoison, poison.getDuration() * 2, poison.getAmplifier(), poison.getIsAmbient(), poison.doesShowParticles());
+		living.removeActivePotionEffect(potionPoison);
+		living.addPotionEffect(alteredPoison);
 	}
 }

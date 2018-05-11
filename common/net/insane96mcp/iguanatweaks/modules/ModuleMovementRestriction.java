@@ -84,12 +84,8 @@ public class ModuleMovementRestriction {
 		}
 		
 		player.jumpMovementFactor = 0.02f * (1f - speedModifier);
-    	try {
-    		Reflection.EntityPlayer_speedInAir.set(player, 0.02f * (1f - speedModifier));
-    	}
-    	catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		Reflection.Set(Reflection.EntityPlayer_speedInAir, player, 0.02f * (1f - speedModifier));
 	}
 	
 	public static float SlownessWeight(EntityPlayer player, World world) {

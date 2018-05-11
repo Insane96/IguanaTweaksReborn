@@ -13,11 +13,11 @@ public class RegistryRegister {
 	
 	@SubscribeEvent
 	public static void EventRegisterIRecipe(RegistryEvent.Register<IRecipe> event) {
-		//ModuleGeneral.TorchesPerCoal(event);
+
 	}
 	
 	@SubscribeEvent
 	public static void EventRegisterPotion(RegistryEvent.Register<Potion> event) {
-		ModuleGeneral.AlterPoison(event);
+		ModuleGeneral.RegisterPoison(event);
 	}
 }
