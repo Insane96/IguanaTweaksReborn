@@ -1,6 +1,5 @@
 package net.insane96mcp.iguanatweaks.capabilities;
 
-import net.minecraft.advancements.critereon.BredAnimalsTrigger.Instance;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
