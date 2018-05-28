@@ -1,12 +1,7 @@
 package net.insane96mcp.iguanatweaks.modules;
 
-import java.awt.Point;
-import java.util.Collection;
-import java.util.Iterator;
-
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.lib.Properties;
-import net.insane96mcp.iguanatweaks.lib.Reflection;
 import net.insane96mcp.iguanatweaks.potioneffects.AlteredPoison;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -14,8 +9,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.PlayerCapabilities;
 import net.minecraft.init.Blocks;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
