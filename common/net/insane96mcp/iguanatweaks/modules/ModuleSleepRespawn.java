@@ -2,7 +2,7 @@ package net.insane96mcp.iguanatweaks.modules;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.lib.Properties;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -46,7 +46,7 @@ public class ModuleSleepRespawn {
         DestroyBed(player);
         
         if (Properties.SleepRespawn.respawnLocationRandomMax != 0)
-        	player.sendMessage(new TextComponentString(I18n.format("sleep.random_respawn")));
+        	player.sendMessage(new TextComponentTranslation("sleep.random_respawn"));
 	}
 	
 	private static void DestroyBed(EntityPlayer player) {
@@ -66,7 +66,7 @@ public class ModuleSleepRespawn {
         world.setBlockState(bedPos, Blocks.AIR.getDefaultState(), 3);
     	
 		if (Properties.SleepRespawn.respawnLocationRandomMax == 0)
-			player.sendMessage(new TextComponentString(I18n.format("sleep.bed_destroyed")));
+			player.sendMessage(new TextComponentTranslation("sleep.bed_destroyed"));
 	}
 
 	private static void RespawnPlayer(EntityPlayer player, int minDistance, int maxDistance) {		
@@ -171,11 +171,11 @@ public class ModuleSleepRespawn {
 		event.setResult(SleepResult.OTHER_PROBLEM);
 		
 		if (Properties.SleepRespawn.disableSetRespawnPoint) {
-			player.sendStatusMessage(new TextComponentString(I18n.format("sleep.bed_decoration")), true);
+			player.sendStatusMessage(new TextComponentTranslation("sleep.bed_decoration"), true);
 		}
 		else {
 			player.setSpawnChunk(event.getPos(), false, player.dimension);
-			player.sendStatusMessage(new TextComponentString(I18n.format("sleep.enjoy_the_night")), true);
+			player.sendStatusMessage(new TextComponentTranslation("sleep.enjoy_the_night"), true);
 		}
 	}
 }
