@@ -1,6 +1,5 @@
 package net.insane96mcp.iguanatweaks.potioneffects;
 
-import net.insane96mcp.iguanatweaks.lib.Reflection;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -20,13 +19,13 @@ public class AlteredPoison extends Potion {
 		
 		if (entityLivingBaseIn instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer)entityLivingBaseIn;
-			player.addExhaustion(0.75f * (amplifier + 1));
+			player.addExhaustion(0.5f * (amplifier + 1));
 		}
 	}
 	
 	@Override
 	public boolean isReady(int duration, int amplifier) {
-		int j = 100 >> amplifier;
+		int j = 75 >> amplifier;
 
         if (j > 0)
         {
