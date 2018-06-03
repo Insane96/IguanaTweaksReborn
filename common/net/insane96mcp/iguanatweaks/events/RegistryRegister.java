@@ -11,10 +11,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber(modid = IguanaTweaks.MOD_ID)
 public class RegistryRegister {
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public static void EventRegisterIRecipe(RegistryEvent.Register<IRecipe> event) {
 
-	}
+	}*/
 	
 	@SubscribeEvent
 	public static void EventRegisterPotion(RegistryEvent.Register<Potion> event) {

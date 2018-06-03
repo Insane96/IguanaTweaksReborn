@@ -22,6 +22,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 
 public class ModuleGeneral {
@@ -104,6 +106,7 @@ public class ModuleGeneral {
 	static int lastPlayerHealth = 0;
 	static long lastSystemTime;
 	
+	@SideOnly(Side.CLIENT)
 	public static void RenderPoisonedHearts(ScaledResolution scaledResolution) {
 		GlStateManager.enableBlend();
 		
