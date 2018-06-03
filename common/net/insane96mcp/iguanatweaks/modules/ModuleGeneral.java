@@ -162,7 +162,6 @@ public class ModuleGeneral {
         {
             regen = updateCounter % 25;
         }
-
         final int TOP =  9 * (player.world.getWorldInfo().isHardcoreModeEnabled() ? 5 : 0);
         final int BACKGROUND = (highlight ? 25 : 16);
         int MARGIN = 16;

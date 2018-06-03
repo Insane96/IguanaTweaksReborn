@@ -22,6 +22,7 @@ public class RenderGameOverlay {
 		
 		if (type.equals(ElementType.HEALTH) && player.isPotionActive(ModuleGeneral.alteredPoison)) {
 			ModuleGeneral.RenderPoisonedHearts(event.getResolution());
+			event.setCanceled(true);
 		}
 		
 		if (ModuleHud.HideHealthBar(type, player)
