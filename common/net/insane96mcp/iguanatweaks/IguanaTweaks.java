@@ -16,7 +16,7 @@ public class IguanaTweaks {
 	
 	public static final String MOD_ID = "iguanatweaks";
 	public static final String MOD_NAME = "IguanaTweaks";
-	public static final String VERSION = "1.2.2";
+	public static final String VERSION = "1.3.9";
 	public static final String RESOURCE_PREFIX = MOD_ID.toLowerCase() + ":";
 	public static final String MINECRAFT_VERSIONS = "[1.12,1.12.2]";
 	
@@ -30,8 +30,9 @@ public class IguanaTweaks {
 	
 	@EventHandler
 	public void PreInit(FMLPreInitializationEvent event) {
-		proxy.PreInit(event);
 		logger = event.getModLog();
+		
+		proxy.PreInit(event);
 	}
 	
 	@EventHandler

@@ -1,5 +1,6 @@
 package net.insane96mcp.iguanatweaks.capabilities;
 
+import net.insane96mcp.iguanatweaks.lib.Properties;
 import scala.reflect.internal.Trees.This;
 
 public class PlayerData implements IPlayerData{
@@ -62,7 +63,7 @@ public class PlayerData implements IPlayerData{
 	@Override
 	public void tickDamageSlownessDuration() {
 		if (this.damageSlownessDuration > 0)
-			this.damageSlownessDuration -= 1;
+			this.damageSlownessDuration -= Properties.General.tickRatePlayerUpdate;
 	}
 
 }

@@ -1,21 +1,19 @@
 package net.insane96mcp.iguanatweaks.modules;
 
-import java.lang.reflect.Field;
 import java.util.Map;
-
-import org.lwjgl.Sys;
 
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.Reflection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,6 +27,9 @@ public class ModuleHud {
 			return false;
 		
 		if (!Properties.Hud.hideHealthBar)
+			return false;
+		
+		if (player.isPotionActive(MobEffects.WITHER) || player.isPotionActive(ModuleGeneral.alteredPoison))
 			return false;
 		
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
@@ -97,29 +98,17 @@ public class ModuleHud {
 		
 		return false;
 	}
-
-	private static Field KEYBIND_ARRAY = null;
-	public static void Init() {
-		try {
-			KEYBIND_ARRAY = ReflectionHelper.findField(KeyBinding.class, "KEYBIND_ARRAY", "field_74516_a");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public static void HotbarCheckKeyPress(Phase phase) {
 		if (!Properties.Global.hud)
 			return;
 		if (!Properties.Hud.hideHotbar)
 			return;
-		if (KEYBIND_ARRAY == null) 
-			return;
-		
 		
 		if (phase.equals(Phase.END)) {
 			Map<String, KeyBinding> binds = null;
 			try {
-				binds = (Map<String, KeyBinding>) KEYBIND_ARRAY.get(null);
+				binds = (Map<String, KeyBinding>) Reflection.Client.KeyBinding_KEYBIND_ARRAY.get(null);
 				for (String bind : binds.keySet()) {
 					if(binds.get(bind).isKeyDown()){
 						if (binds.get(bind).getKeyCode() >= 2 && binds.get(bind).getKeyCode() <= 9) {

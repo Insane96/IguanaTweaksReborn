@@ -1,5 +1,6 @@
 package net.insane96mcp.iguanatweaks.lib;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +11,11 @@ import net.minecraftforge.common.config.Property;
 public class Config {
 
 	public static Configuration config;
+	
+	public static void Init(File file) {
+		Config.config = new Configuration(file);
+		Config.SyncConfig();
+	}
 	
 	public static int LoadIntProperty(String category, String key, String description, int defaultValue) {
 		Property property = Config.config.get(category, key, defaultValue);

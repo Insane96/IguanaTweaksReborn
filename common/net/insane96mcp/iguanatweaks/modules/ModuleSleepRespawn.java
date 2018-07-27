@@ -2,7 +2,7 @@ package net.insane96mcp.iguanatweaks.modules;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.lib.Properties;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -32,7 +32,7 @@ public class ModuleSleepRespawn {
         if (!hasAlreadySpawned)
         {
         	tags.setBoolean("IguanaTweaks:spawned", true);
-			RespawnPlayer((EntityPlayerMP)player, Properties.SleepRespawn.spawnLocationRandomMin, Properties.SleepRespawn.spawnLocationRandomMax);
+			RespawnPlayer(player, Properties.SleepRespawn.spawnLocationRandomMin, Properties.SleepRespawn.spawnLocationRandomMax);
         }
 	}
 	
@@ -40,19 +40,16 @@ public class ModuleSleepRespawn {
 		if (!Properties.Global.sleepRespawn)
 			return;
 		
-        RespawnPlayer((EntityPlayerMP)player, Properties.SleepRespawn.respawnLocationRandomMin, Properties.SleepRespawn.respawnLocationRandomMax);
-        PlayerHealth((EntityPlayerMP)player);
+        RespawnPlayer(player, Properties.SleepRespawn.respawnLocationRandomMin, Properties.SleepRespawn.respawnLocationRandomMax);
+        PlayerHealth(player);
         
-        DestroyBed((EntityPlayerMP)player);
+        DestroyBed(player);
         
         if (Properties.SleepRespawn.respawnLocationRandomMax != 0)
-        	player.sendMessage(new TextComponentString(I18n.format("sleep.random_respawn")));
+        	player.sendMessage(new TextComponentTranslation("sleep.random_respawn"));
 	}
 	
-	private static void DestroyBed(EntityPlayerMP player) {
-		if (!Properties.Global.sleepRespawn)
-			return;
-		
+	private static void DestroyBed(EntityPlayer player) {
 		if (!Properties.SleepRespawn.destroyBedOnRespawn)
 			return;
 		
@@ -69,14 +66,15 @@ public class ModuleSleepRespawn {
         world.setBlockState(bedPos, Blocks.AIR.getDefaultState(), 3);
     	
 		if (Properties.SleepRespawn.respawnLocationRandomMax == 0)
-			player.sendMessage(new TextComponentString(I18n.format("sleep.bed_destroyed")));
+			player.sendMessage(new TextComponentTranslation("sleep.bed_destroyed"));
 	}
 
-	private static void RespawnPlayer(EntityPlayerMP player, int minDistance, int maxDistance) {
-		if (!Properties.Global.sleepRespawn)
+	private static void RespawnPlayer(EntityPlayer player, int minDistance, int maxDistance) {		
+		if (maxDistance <= 0)
 			return;
 		
-		if (maxDistance <= 0)
+		World world = player.getEntityWorld();
+		if (world.isRemote)
 			return;
 		
 		int x = (int)player.posX;
@@ -87,20 +85,21 @@ public class ModuleSleepRespawn {
 		if (z < 0) 
 			--z;
 		
-		World world = player.getEntityWorld();
+		EntityPlayerMP playerMP = (EntityPlayerMP)player;
+		
+        WorldServer worldserver = playerMP.getServerWorld();
 		
 		BlockPos newCoords = RandomiseCoordinates(world, x, z, minDistance, maxDistance);
-		player.setLocationAndAngles(newCoords.getX() + .5f, newCoords.getY() + 1.1f, newCoords.getZ() + .5f, 0.0f, 0.0f);
-		
-        WorldServer worldserver = player.getServerWorld();
-        worldserver.getChunkProvider().loadChunk((int)player.posX >> 4, (int)player.posZ >> 4);
-
-        while (!worldserver.getCollisionBoxes(player, player.getEntityBoundingBox()).isEmpty())
-        {
-            player.setPosition(player.posX, player.posY + 1.0D, player.posZ);
+        worldserver.getChunkProvider().loadChunk(newCoords.getX() >> 4, newCoords.getZ() >> 4);
+        System.out.println(world.getBlockState(newCoords).isBlockNormalCube());
+        while (world.getBlockState(newCoords).isBlockNormalCube()) {
+        	newCoords = newCoords.add(0, 1, 0);
+            System.out.println(world.getBlockState(newCoords).isBlockNormalCube());
         }
-
-        player.connection.setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
+		player.setLocationAndAngles(newCoords.getX() + .5f, newCoords.getY() + 1.1f, newCoords.getZ() + .5f, 0.0f, 0.0f);
+        playerMP.connection.setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
+        
+        System.out.println(player.posX + " " + player.posY + " " + player.posZ);
 	}
 	
 	private static BlockPos RandomiseCoordinates(World world, int x, int z, int min, int max) {
@@ -139,10 +138,7 @@ public class ModuleSleepRespawn {
 		return newBlockPos;
 	}
 
-	private static void PlayerHealth(EntityPlayerMP player) {
-		if (!Properties.Global.sleepRespawn)
-			return;
-		
+	private static void PlayerHealth(EntityPlayer player) {
 		int respawnHealth = Properties.SleepRespawn.respawnHealth;
 		EnumDifficulty difficulty = player.getEntityWorld().getDifficulty();
 		   
@@ -175,11 +171,11 @@ public class ModuleSleepRespawn {
 		event.setResult(SleepResult.OTHER_PROBLEM);
 		
 		if (Properties.SleepRespawn.disableSetRespawnPoint) {
-			player.sendStatusMessage(new TextComponentString(I18n.format("sleep.bed_decoration")), true);
+			player.sendStatusMessage(new TextComponentTranslation("sleep.bed_decoration"), true);
 		}
 		else {
 			player.setSpawnChunk(event.getPos(), false, player.dimension);
-			player.sendStatusMessage(new TextComponentString(I18n.format("sleep.enjoy_the_night")), true);
+			player.sendStatusMessage(new TextComponentTranslation("sleep.enjoy_the_night"), true);
 		}
 	}
 }

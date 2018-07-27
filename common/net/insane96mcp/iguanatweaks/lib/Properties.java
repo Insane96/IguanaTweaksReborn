@@ -27,16 +27,20 @@ public class Properties {
 		public static int tickRateEntityUpdate;
 		public static boolean disableFovOnSpeedModified;
 		public static boolean exhaustionOnBlockBreak;
+		public static float exhaustionMultiplier;
+		public static int tickRatePlayerUpdate;
 		
 		public static void Init() {
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
 			
-			tickRateEntityUpdate = Config.LoadIntProperty(CATEGORY, "tick_rate_entity_update", "How often the speed of players are calculated (in ticks). Higher values reduce client-side CPU load but may increase the chance of odd behavior", 7);
+			tickRateEntityUpdate = Config.LoadIntProperty(CATEGORY, "tick_rate_entity_update", "How often the speed of entities (not player) are calculated (in ticks). Higher values reduces client-side CPU load but may increase the chance of odd behavior", 7);
 			disableFovOnSpeedModified = Config.LoadBoolProperty(CATEGORY, "disable_fov_change_on_speed_change", "Disables fov changes when you get slowed down or sped up. Highly recommended if you have 'movement_restrictions' active.", true);
 			increasedStepHeight = Config.LoadBoolProperty(CATEGORY, "increased_step_height", "If the player should be able to walk over full blocks", false);
-			alterPoison = Config.LoadBoolProperty(CATEGORY, "alter_poison", "The poison effect will be changed to be deadly and drain hunger slowly, but will damage the player slowly", true);
+			alterPoison = Config.LoadBoolProperty(CATEGORY, "alter_poison", "The poison effect will be changed to be deadly and drain hunger, but will damage the player 3 times slower", true);
 			lessObviousSilverfish = Config.LoadBoolProperty(CATEGORY, "less_obivious_silverfish", "If true, silverfish blocks will be almost like stone", true);
-			exhaustionOnBlockBreak = Config.LoadBoolProperty(CATEGORY, "exhaustion_on_block_break", "Minecraft normally adds 0.005 exaustion for block broken. With this at true, exhaustion will be added based on block hardness (hardness / 100). ELI5 you lose more hunger the more hard is a block to break.", true);
+			exhaustionOnBlockBreak = Config.LoadBoolProperty(CATEGORY, "exhaustion_on_block_break", "Minecraft normally adds 0.005 exaustion for block broken. With this at true, exhaustion will be added based on block hardness (hardness / 100). ELI5 when you break a block you lose more hunger the more hard is a block to break.", true);
+			exhaustionMultiplier = Config.LoadFloatProperty(CATEGORY, "exhaustion_on_block_break_multiplier", "Multiply the exhaustion given to the player when breaking blocks by this value", 1.0f);
+			tickRatePlayerUpdate = Config.LoadIntProperty(CATEGORY, "tick_rate_player_update", "How often the speed of players are calculated (in ticks). Higher values reduces client-side CPU load but may increase the chance of odd behavior", 2);
 		}
 	}
 	
@@ -80,9 +84,9 @@ public class Properties {
 			
 			multiplier = Config.LoadFloatProperty(CATEGORY, "multiplier", "Multiplier applied to the hardness of blocks (set to 1 to disable)", 4.0f);
 			blockListIsWhitelist = Config.LoadBoolProperty(CATEGORY, "block_list_is_whitelist", "True if hardness multiplier should only affect blocks on the list, false if all blocks are affected except those on the list", false);
-			blockList = Config.LoadStringListProperty(CATEGORY, "block_list", "Block ids (one per line) for the hardness whitelist/blacklist.\nE.g. 'minecraft:stone'", new ArrayList<String>() {});
+			blockList = Config.LoadStringListProperty(CATEGORY, "block_list", "Block ids (one per line) for the hardness whitelist/blacklist.\nFormat is modid:blockid;meta\nE.g. 'minecraft:stone:1' will target granite", new ArrayList<String>() {});
 			
-			blockHardness = Config.LoadStringListProperty(CATEGORY, "block_hardness", "Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier ('multiplier')\nThe format is modid:blockid,hardness.\nE.g. 'minecraft:stone,5.0' will make stone have 5 hardness", new ArrayList<String>() {});
+			blockHardness = Config.LoadStringListProperty(CATEGORY, "block_hardness", "Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier ('multiplier')\nThe format is modid:blockid:meta,hardness.\nE.g. 'minecraft:stone:1,5.0' will make granite have 5 hardness. If no meta is specified, this will affect every block meta.", new ArrayList<String>() {});
 		}
 	}
 	
@@ -104,7 +108,11 @@ public class Properties {
 			blockDividerMax = Config.LoadIntProperty(CATEGORY, "block_divider_man", "Max stack size divider for blocks", 4);
 			itemDivider = Config.LoadIntProperty(CATEGORY, "item_divider", "Stack size divider for items", 2);
 			
-			customStackList = Config.LoadStringArrayProperty(CATEGORY, "custom_stack_list", "List of all the custom stacks for blocks and items. The format is 'modid:name,max_stack_size'. Going over 64 doesn't work", new String[0]);
+			customStackList = Config.LoadStringArrayProperty(CATEGORY, "custom_stack_list", "List of all the custom stacks for blocks and items. The format is 'modid:name,max_stack_size'. Going over 64 doesn't work. By default, some items that villagers can trade are set to be tradeable.", new String[] {
+					"minecraft:emerald,64",
+					"minecraft:paper,36",
+					"minecraft:rotten_flesh,40"
+			});
 		}
 	}
 	
@@ -161,11 +169,11 @@ public class Properties {
 			hideHotbar = Config.LoadBoolProperty(CATEGORY, "hide_hotbar", "If true, the hotbar will be hidden until an item is selected", false);
 			hideHotbarDelay = Config.LoadIntProperty(CATEGORY, "hide_hotbar_delay", "Delay (in seconds) before hiding the hotbar", 4);
 			
-			hideHealthBar = Config.LoadBoolProperty(CATEGORY, "hide_health_bar", "If true, the health bar will be hidden when above a certain threshold (the bar will always be shown if absorpion hearts are present)", true);
+			hideHealthBar = Config.LoadBoolProperty(CATEGORY, "hide_health_bar", "If true, the health bar will be hidden when above a certain threshold (the bar will always be shown if absorpion hearts are present)", false);
 			hideHealthBarThreshold = Config.LoadIntProperty(CATEGORY, "hide_health_bar_threshold", "Health needs to be equal to or above this before the bar will hide", 20);
 			hideHealthBarDelay = Config.LoadIntProperty(CATEGORY, "hide_health_bar_delay", "Delay (in seconds) before hiding the health bar", 4);
 			
-			hideHungerBar = Config.LoadBoolProperty(CATEGORY, "hide_hunger_bar", "If true, the hunger bar will be hidden when above a certain threshold", true);
+			hideHungerBar = Config.LoadBoolProperty(CATEGORY, "hide_hunger_bar", "If true, the hunger bar will be hidden when above a certain threshold", false);
 			hideHungerBarThreshold = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_threshold", "Hunger needs to be equal to or above this before the bar will hide", 20);
 			hideHungerBarDelay = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_delay", "Delay (in seconds) before hiding the hunger bar", 4);
 			
@@ -188,7 +196,7 @@ public class Properties {
 		public static void Init() {
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
 			
-			restrictedDrops = Config.LoadStringListProperty(CATEGORY, "restricted_drops", "List of items/blocks to restrict from mob drops (separated by new line, format id:meta)", new ArrayList<String>() {});
+			restrictedDrops = Config.LoadStringListProperty(CATEGORY, "restricted_drops", "List of items/blocks to restrict from mob drops (separated by new line, format modid:itemid:meta)", new ArrayList<String>() {});
 			
 			itemLifespan = Config.LoadIntProperty(CATEGORY, "item_lifespan", "Lifespan (in ticks) of items on the ground", 6000);
 			itemLifespanMobDeath = Config.LoadIntProperty(CATEGORY, "item_lifespan_mob_drop", "Lifespan (in ticks) of items dropped when a mob dies", 6000);
@@ -206,6 +214,7 @@ public class Properties {
 	    public static boolean detailedEncumbranceHudText;
 	    public static int maxCarryWeight;
 		public static float rockWeight;
+		public static String[] customWeight;
 		public static float armorWeight;
 		public static int damageSlowdownDuration;
 		public static float damageSlowdownEffectiveness;
@@ -219,6 +228,8 @@ public class Properties {
 		public static float terrainSlowdownInSnow;
 		public static float terrainSlowdownInPlant;
 		public static boolean slowdownWhenWalkingBackwards;
+		public static float shulkerWeightReduction;
+		public static String[] terrainSlowdownCustom;
 		
 		public static void Init() {
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
@@ -226,8 +237,9 @@ public class Properties {
 			addEncumbranceDebugText = Config.LoadBoolProperty(CATEGORY, "add_debug_text", "Shows weight text in the debug (F3) details", false);
 			addEncumbranceHudText = Config.LoadBoolProperty(CATEGORY, "add_hud_text", "Shows weight text on the HUD when carrying too much", true);
 			detailedEncumbranceHudText = Config.LoadBoolProperty(CATEGORY, "detailed_hud_text", "Weight text on the HUD will be more detailed, showing numbers", false);
-			maxCarryWeight = Config.LoadIntProperty(CATEGORY, "max_carry_weight", "Maximum carry weight (set to 0 to disable)", 512);
+			maxCarryWeight = Config.LoadIntProperty(CATEGORY, "max_carry_weight", "Maximum carry weight (set to 0 to disable)", 768);
 			rockWeight = Config.LoadFloatProperty(CATEGORY, "rock_weight", "Weight of one rock block, used as a base to calculate weight of other blocks", 1);
+			customWeight = Config.LoadStringArrayProperty(CATEGORY, "custom_weight", "Set here (one per line) block weight for each block or item. Format is 'modid:blockid:meta,weight', meta is not needed, setting no meta, means all the blocks sub-types of that block.", new String[] {});
 			armorWeight = Config.LoadFloatProperty(CATEGORY, "armor_weight", "Percentage of slowdown for each point (half-shield) of armor (set to 0 to disable)", 0.5f);
 			damageSlowdownDuration = Config.LoadIntProperty(CATEGORY, "damage_slowdown_duration", "Number of ticks each heart of damage slows you down for (set to 0 to disable)", 5);
 			damageSlowdownEffectiveness = Config.LoadFloatProperty(CATEGORY, "damage_slowdown_effectiveness", "When player's damaged, how much is slowed down?", 20.0f);
@@ -240,8 +252,10 @@ public class Properties {
 			terrainSlowdownOnSnow = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_snow", "Percentage of slowdown when walking on snow (set to 0 to disable)", 20f);
 			terrainSlowdownInPlant = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_in_plant", "Percentage of slowdown when walking through leaves or plants (set to 0 to disable)", 5f);
 			terrainSlowdownInSnow = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_in_snow", "Percentage of slowdown when walking through snow (set to 0 to disable)", 20f);
+			terrainSlowdownCustom = Config.LoadStringArrayProperty(CATEGORY, "terrain_slowdown_custom", "Custom list for each block that slows you down when you walk on it. Format is 'modid:blockid:meta,slowness', meta is not needed, setting no meta, means all the blocks. E.g. 'minecraft:diamond_block,75' will slowdown the player by 75% when walks on diamond block.", new String[] {});
 			
 			slowdownWhenWalkingBackwards = Config.LoadBoolProperty(CATEGORY, "slowdown_when_walking_backwards", "Set to false to disable the slowdown when walking backwards", true);
+			shulkerWeightReduction = Config.LoadFloatProperty(CATEGORY, "shulker_weight_reduction", "Multiplier for items weight in shulkerboxes. Set this to 0 to make items in shulker boxes not count towards weight. Set this to 1 to make items in shulker boxes weight the same as they were out of the box.", 0.75f);
 		}
 	}
 	
@@ -251,16 +265,16 @@ public class Properties {
 
 		public static float percentageOre;
 		public static float percentageAll;
+		public static float percentageFromSpawner;
 		public static int lifespan;
 
 		public static void Init(){
 			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
 
-			percentageOre = Config.LoadFloatProperty(CATEGORY, "percentage_ore", "Percentage of experience dropped by blocks. Experience dropped by blocks are still affected by percentage_all, so if you have e.g. percentage_all at 50, this needs to be set to 200 to make blocks drop normal experience. (set to 0 to make blocks not drop xp) (100 to disable)", 100);
-			percentageAll = Config.LoadFloatProperty(CATEGORY, "percentage_all", "Percentage of experience given by everything (0 to disable all xp orbs from being created) (100 to disable)", 100);
+			percentageOre = Config.LoadFloatProperty(CATEGORY, "percentage_ore", "Percentage of experience dropped by blocks. Experience dropped by blocks are still affected by percentage_all, so if you have e.g. percentage_all at 50, this needs to be set to 200 to make blocks drop normal experience. (set to 0 to make blocks not drop xp) (100 to disable)", 100f);
+			percentageAll = Config.LoadFloatProperty(CATEGORY, "percentage_all", "Percentage of experience given by everything (0 to disable all xp orbs from being created) (100 to disable)", 100f);
 			lifespan = Config.LoadIntProperty(CATEGORY, "xp_lifespan", "Lifespan (in ticks) of xp orbs (Range: -1 -> 38000. If set to -1 the orbs will never despawn)", 6000);
+			percentageFromSpawner = Config.LoadFloatProperty(CATEGORY, "percentage_from_spawner", "Percentage of experience dropped from mobs spawned from Spawners.", 50f);
 		}
 	}
-	
-	
 }
