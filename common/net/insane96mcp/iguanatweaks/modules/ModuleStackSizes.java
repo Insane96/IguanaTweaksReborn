@@ -82,6 +82,9 @@ public class ModuleStackSizes {
 	}
 	
 	public static void ProcessCustom() {
+		if (!Properties.Global.stackSize)
+			return;
+		
 		if (Properties.StackSizes.customStackList.length == 0)
 			return;
 		
