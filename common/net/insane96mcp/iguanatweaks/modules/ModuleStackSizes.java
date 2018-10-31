@@ -43,7 +43,7 @@ public class ModuleStackSizes {
     		if (stackSize < maxStackSize) 
     		{
         		if (Properties.StackSizes.logChanges)
-        			IguanaTweaks.logger.info("Reducing stack size of block " + item.getUnlocalizedName()  + " to " + stackSize);
+        			IguanaTweaks.logger.info("Reducing stack size of block " + item.getTranslationKey()  + " to " + stackSize);
     			item.setMaxStackSize(stackSize);
     		}
     	}
@@ -75,7 +75,7 @@ public class ModuleStackSizes {
     		if (stackSize < maxStackSize) 
     		{
     			if (Properties.StackSizes.logChanges) 
-    				IguanaTweaks.logger.info("Reducing stack size of item " + item.getUnlocalizedName()  + " to " + stackSize);
+    				IguanaTweaks.logger.info("Reducing stack size of item " + item.getTranslationKey()  + " to " + stackSize);
     			item.setMaxStackSize(stackSize);
     		}
     	}
@@ -95,7 +95,7 @@ public class ModuleStackSizes {
 				Item item = Item.getByNameOrId(name);
 				item.setMaxStackSize(stackSize);
 				if (Properties.StackSizes.logChanges) 
-					IguanaTweaks.logger.info("Reducing stack size by custom of item " + item.getUnlocalizedName()  + " to " + stackSize);
+					IguanaTweaks.logger.info("Reducing stack size by custom of item " + item.getTranslationKey()  + " to " + stackSize);
 			}
 			catch (Exception exception) {
 				System.err.println("Failed to parse: " + Properties.StackSizes.customStackList[i] + " " + exception);

@@ -19,6 +19,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
@@ -115,8 +116,8 @@ public class ModuleGeneral {
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
 		
-	    int left_height = 39;
-	    int right_height = 39;
+	    //int left_height = 39;
+	    //int right_height = 39;
 
         EntityPlayer player = Minecraft.getMinecraft().player;
         int health = MathHelper.ceil(player.getHealth());
@@ -153,9 +154,9 @@ public class ModuleGeneral {
         player.world.rand.setSeed((long)(updateCounter * 312871));
 
         int left = width / 2 - 91;
-        int top = height - left_height;
-        left_height += (healthRows * rowHeight);
-        if (rowHeight != 10) left_height += 10 - rowHeight;
+        int top = height - GuiIngameForge.left_height;
+        GuiIngameForge.left_height += (healthRows * rowHeight);
+        if (rowHeight != 10) GuiIngameForge.left_height += 10 - rowHeight;
 
         int regen = -1;
         if (player.isPotionActive(MobEffects.REGENERATION))

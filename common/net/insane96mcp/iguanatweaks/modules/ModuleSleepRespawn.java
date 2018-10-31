@@ -147,7 +147,7 @@ public class ModuleSleepRespawn {
 			{
 				respawnHealth = (int) Math.max(respawnHealth / 2f, 1);
 			}
-			else if (difficulty.getDifficultyId() <= EnumDifficulty.EASY.getDifficultyId()) 
+			else if (difficulty.getId() <= EnumDifficulty.EASY.getId()) 
 			{
 				respawnHealth = (int) Math.min(respawnHealth * 2f, 20);
 			}
