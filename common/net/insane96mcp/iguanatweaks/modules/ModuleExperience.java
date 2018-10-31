@@ -37,7 +37,10 @@ public class ModuleExperience {
 		
 		EntityXPOrb xpOrb = (EntityXPOrb)entity;
 		
-		xpOrb.xpValue = Math.round(xpOrb.xpValue * (Properties.Experience.percentageAll / 100f)); 
+		if (Properties.Experience.percentageAll == 0.0f)
+			entity.world.removeEntity(xpOrb);
+		else
+			xpOrb.xpValue = Math.round(xpOrb.xpValue * (Properties.Experience.percentageAll / 100f)); 
     }
     
     public static void XpDropFromSpawner(LivingExperienceDropEvent event) {
@@ -65,7 +68,7 @@ public class ModuleExperience {
         if (Properties.Experience.percentageOre == 100.0f)
             return;
 
-        event.setExpToDrop(Math.round(event.getExpToDrop() * (Properties.Experience.percentageAll / 100f)));
+        event.setExpToDrop(Math.round(event.getExpToDrop() * (Properties.Experience.percentageOre / 100f)));
     }
     
     public static void CheckFromSpawner(LivingSpawnEvent.SpecialSpawn event) {
