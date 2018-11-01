@@ -5,6 +5,7 @@ import net.insane96mcp.iguanatweaks.modules.ModuleHud;
 import net.insane96mcp.iguanatweaks.modules.ModuleMovementRestriction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,10 +26,25 @@ public class RenderGameOverlay {
 			event.setCanceled(true);
 		}
 		
-		if (ModuleHud.HideHealthBar(type, player)
-			|| ModuleHud.HideHungerBar(type, player)
-			|| ModuleHud.HideHotbar(type, player)) 
+		boolean hideHealthBar = ModuleHud.HideHealthBar(type, player);
+		boolean hideHungerBar = ModuleHud.HideHungerBar(type, player);
+		boolean hideHotbar = ModuleHud.HideHotbar(type, player);
+		boolean hideExperienceBar = ModuleHud.HideExperienceBar(type, player);
+		boolean hideArmorBar = ModuleHud.HideArmorBar(type, player);
+		
+		if (hideHealthBar || hideHungerBar || hideHotbar || hideExperienceBar || hideArmorBar)
 			event.setCanceled(true);
+		
+		if (hideHotbar) {
+			GuiIngameForge.left_height -= 28;
+			GuiIngameForge.right_height -= 28;
+		}
+
+		//Not working for some reasons
+		if (!hideHotbar && hideExperienceBar) {
+			GuiIngameForge.left_height -= 3;
+			GuiIngameForge.right_height -= 3;
+		}
 	}
 	
 	@SideOnly(Side.CLIENT)

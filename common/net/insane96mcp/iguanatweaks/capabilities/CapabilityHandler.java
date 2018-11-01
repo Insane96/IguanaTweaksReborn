@@ -30,6 +30,8 @@ public class CapabilityHandler {
 		playerData.setHideHealthBarLastTimestamp(oldPlayerData.getHideHealthBarLastTimestamp());
 		playerData.setHideHungerBarLastTimestamp(oldPlayerData.getHideHungerBarLastTimestamp());
 		playerData.setHideHotbarLastTimestamp(oldPlayerData.getHideHotbarLastTimestamp());
+		playerData.setHideExperienceLastTimestamp(oldPlayerData.getHideExperienceLastTimestamp());
+		playerData.setHideArmorLastTimestamp(oldPlayerData.getHideArmorLastTimestamp());
 		playerData.setWeight(oldPlayerData.getWeight());
 	}
 }

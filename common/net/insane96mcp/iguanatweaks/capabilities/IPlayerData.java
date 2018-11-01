@@ -10,6 +10,12 @@ public interface IPlayerData {
 	public int getHideHotbarLastTimestamp();
 	public void setHideHotbarLastTimestamp(int timestamp);
 	
+	public int getHideExperienceLastTimestamp();
+	public void setHideExperienceLastTimestamp(int timestamp);
+	
+	public int getHideArmorLastTimestamp();
+	public void setHideArmorLastTimestamp(int timestamp);
+	
 	public float getWeight();
 	public void setWeight(float weight);
 

@@ -1,7 +1,6 @@
 package net.insane96mcp.iguanatweaks.capabilities;
 
 import net.insane96mcp.iguanatweaks.lib.Properties;
-import scala.reflect.internal.Trees.This;
 
 public class PlayerData implements IPlayerData{
 
@@ -36,6 +35,28 @@ public class PlayerData implements IPlayerData{
 	@Override
 	public void setHideHotbarLastTimestamp(int timestamp) {
 		this.hotbarLastTimestamp = timestamp;
+	}
+
+	private int experienceLastTimestamp;
+	@Override
+	public int getHideExperienceLastTimestamp() {
+		return this.experienceLastTimestamp;
+	}
+
+	@Override
+	public void setHideExperienceLastTimestamp(int timestamp) {
+		this.experienceLastTimestamp = timestamp;
+	}
+
+	private int armorLastTimestamp;
+	@Override
+	public int getHideArmorLastTimestamp() {
+		return this.armorLastTimestamp;
+	}
+
+	@Override
+	public void setHideArmorLastTimestamp(int timestamp) {
+		this.armorLastTimestamp = timestamp;
 	}
 
 	private float weight;

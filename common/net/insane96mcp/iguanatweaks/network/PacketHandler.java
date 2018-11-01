@@ -13,6 +13,7 @@ public class PacketHandler {
 	
 	public static void Init() {
 		INSTANCE.registerMessage(StunMessageHandler.class, StunMessage.class, discriminator++, Side.CLIENT);
+		INSTANCE.registerMessage(HideArmorTimestamp.Handler.class, HideArmorTimestamp.class, discriminator++, Side.CLIENT);
 	}
 	
 	public static void SendToServer(IMessage message) {

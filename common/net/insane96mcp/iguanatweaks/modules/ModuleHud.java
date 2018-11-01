@@ -1,17 +1,25 @@
 package net.insane96mcp.iguanatweaks.modules;
 
+import java.util.List;
 import java.util.Map;
 
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.insane96mcp.iguanatweaks.lib.Reflection;
+import net.insane96mcp.iguanatweaks.network.HideArmorTimestamp;
+import net.insane96mcp.iguanatweaks.network.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
-import net.minecraftforge.client.GuiIngameForge;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
@@ -61,7 +69,7 @@ public class ModuleHud {
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		int totalTime = (int) player.world.getTotalWorldTime();
 		
-		if (player.getFoodStats().getFoodLevel() >= Properties.Hud.hideHungerBarThreshold)
+		if (player.getFoodStats().getFoodLevel() >= Properties.Hud.hideHungerBarThreshold && !player.isPotionActive(Potion.getPotionFromResourceLocation("minecraft:hunger")))
 		{
 			int delay = totalTime - playerData.getHideHungerBarLastTimestamp();
 			if (delay >= Properties.Hud.hideHungerBarDelay * 20)
@@ -74,13 +82,78 @@ public class ModuleHud {
 		
 		return false;
 	}
+
+	public static boolean HideExperienceBar(ElementType type, EntityPlayerSP player) {
+		if (!Properties.Global.hud)
+			return false;
+		
+		if (type != ElementType.EXPERIENCE)
+			return false;
+		
+		if (!Properties.Hud.hideExperienceBar)
+			return false;
+
+		BlockPos pos1 = player.getPosition().add(-6, -6, -6);
+		BlockPos pos2 = player.getPosition().add(6, 6, 6);
+		AxisAlignedBB axisAlignedBB = new AxisAlignedBB(pos1, pos2);
+		List<EntityXPOrb> orbsInRange = player.world.getEntitiesWithinAABB(EntityXPOrb.class, axisAlignedBB);
+		
+		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
+		int totalTime = (int) player.world.getTotalWorldTime();
+			
+		if (orbsInRange.size() == 0 && Minecraft.getMinecraft().currentScreen == null) {
+			
+			int delay = totalTime - playerData.getHideExperienceLastTimestamp();
+			if (delay >= Properties.Hud.hideExperienceDelay * 20)
+				return true;
+			if (delay < 0)
+				playerData.setHideExperienceLastTimestamp(totalTime);
+		}
+		else
+			playerData.setHideExperienceLastTimestamp(totalTime);
+		
+		return false;
+	}
 	
-	public static void HideExperienceBar() {
-		if (Properties.Hud.hideExperienceBar)
-			GuiIngameForge.renderExperiance = false;
+	public static boolean HideArmorBar(ElementType type, EntityPlayerSP player) {
+		if (!Properties.Global.hud)
+			return false;
+		
+		if (type != ElementType.ARMOR)
+			return false;
+		
+		if (!Properties.Hud.hideArmorBar)
+			return false;
+		
+		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
+		int totalTime = (int) player.world.getTotalWorldTime();
+		int delay = totalTime - playerData.getHideArmorLastTimestamp();
+
+		if (delay >= Properties.Hud.hideArmorDelay * 20)
+			return true;
+		if (delay < 0)
+			playerData.setHideArmorLastTimestamp(totalTime);
+		
+		return false;
+	}
+	
+	public static void DamagedPlayer(EntityLivingBase entity) {
+		if (!(entity instanceof EntityPlayerMP))
+			return;
+		
+		EntityPlayerMP player = (EntityPlayerMP) entity;
+		
+		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
+		int totalTime = (int) player.world.getTotalWorldTime();
+
+		PacketHandler.SendToClient(new HideArmorTimestamp(totalTime), player);
+		
 	}
 	
 	public static boolean HideHotbar(ElementType type, EntityPlayer player) {
+		if (!Properties.Global.hud)
+			return false;
+		
 		if (type != ElementType.HOTBAR)
 			return false;
 		

@@ -14,6 +14,8 @@ public class PlayerDataStorage implements IStorage<IPlayerData> {
 		tags.setInteger("IguanaTweaks:timestampHideHungerBar", instance.getHideHungerBarLastTimestamp());
 		tags.setInteger("IguanaTweaks:timestampHideHealthBar", instance.getHideHealthBarLastTimestamp());
 		tags.setInteger("IguanaTweaks:timestampHideHotbar", instance.getHideHotbarLastTimestamp());
+		tags.setInteger("IguanaTweaks:timestampHideExperience", instance.getHideExperienceLastTimestamp());
+		tags.setInteger("IguanaTweaks:timestampHideArmor", instance.getHideArmorLastTimestamp());
 		tags.setFloat("IguanaTweaks:weight", instance.getWeight());
 		tags.setInteger("IguanaTweaks:damageSlownessDuration", instance.getDamageSlownessDuration());
 		return tags;
@@ -25,6 +27,8 @@ public class PlayerDataStorage implements IStorage<IPlayerData> {
 		instance.setHideHungerBarLastTimestamp(nbtTagCompound.getInteger("IguanaTweaks:timestampHideHungerBar"));
 		instance.setHideHealthBarLastTimestamp(nbtTagCompound.getInteger("IguanaTweaks:timestampHideHealthBar"));
 		instance.setHideHotbarLastTimestamp(nbtTagCompound.getInteger("IguanaTweaks:timestampHideHotbar"));
+		instance.setHideExperienceLastTimestamp(nbtTagCompound.getInteger("IguanaTweaks:timestampHideExperience"));
+		instance.setHideArmorLastTimestamp(nbtTagCompound.getInteger("IguanaTweaks:timestampHideArmor"));
 		instance.setWeight(nbtTagCompound.getFloat("IguanaTweaks:weight"));
 		instance.setDamageSlownessDuration(nbtTagCompound.getInteger("IguanaTweaks:damageSlownessDuration"));
 	}

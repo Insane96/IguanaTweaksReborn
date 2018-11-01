@@ -161,6 +161,9 @@ public class Properties {
 		public static int hideHungerBarThreshold;
 		public static int hideHungerBarDelay;
 		public static boolean hideExperienceBar;
+		public static int hideExperienceDelay;
+		public static boolean hideArmorBar;
+		public static int hideArmorDelay;
 		public static boolean showCreativeText;
 		
 		public static void Init() {
@@ -169,15 +172,20 @@ public class Properties {
 			hideHotbar = Config.LoadBoolProperty(CATEGORY, "hide_hotbar", "If true, the hotbar will be hidden until an item is selected", false);
 			hideHotbarDelay = Config.LoadIntProperty(CATEGORY, "hide_hotbar_delay", "Delay (in seconds) before hiding the hotbar", 4);
 			
-			hideHealthBar = Config.LoadBoolProperty(CATEGORY, "hide_health_bar", "If true, the health bar will be hidden when above a certain threshold (the bar will always be shown if absorpion hearts are present)", false);
+			hideHealthBar = Config.LoadBoolProperty(CATEGORY, "hide_health_bar", "If true, the health bar will be hidden when above a certain threshold (the bar will always be shown if absorpion hearts are present)", true);
 			hideHealthBarThreshold = Config.LoadIntProperty(CATEGORY, "hide_health_bar_threshold", "Health needs to be equal to or above this before the bar will hide", 20);
 			hideHealthBarDelay = Config.LoadIntProperty(CATEGORY, "hide_health_bar_delay", "Delay (in seconds) before hiding the health bar", 4);
 			
-			hideHungerBar = Config.LoadBoolProperty(CATEGORY, "hide_hunger_bar", "If true, the hunger bar will be hidden when above a certain threshold", false);
+			hideHungerBar = Config.LoadBoolProperty(CATEGORY, "hide_hunger_bar", "If true, the hunger bar will be hidden when above a certain threshold", true);
 			hideHungerBarThreshold = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_threshold", "Hunger needs to be equal to or above this before the bar will hide", 20);
-			hideHungerBarDelay = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_delay", "Delay (in seconds) before hiding the hunger bar", 4);
+			hideHungerBarDelay = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_delay", "Delay (in seconds) before hiding the hunger bar", 
+4);
 			
-			hideExperienceBar = Config.LoadBoolProperty(CATEGORY, "hide_experience_bar", "If true, the experience bar will be hidden unless there are xp orbs in a 4 blocks (cubic) radius around the player", true);
+			hideExperienceBar = Config.LoadBoolProperty(CATEGORY, "hide_experience_bar", "If true, the experience bar will be hidden unless there are xp orbs in a small radius around the player or a gui is open", true);
+			hideExperienceDelay = Config.LoadIntProperty(CATEGORY, "hide_experience_delay", "Delay (in seconds) before hiding the experience bar", 4);
+			
+			hideArmorBar = Config.LoadBoolProperty(CATEGORY, "hide_armor_bar", "If true, the armor bar will be hidden unless the player takes damage", true);
+			hideArmorDelay = Config.LoadIntProperty(CATEGORY, "hide_armor_delay", "Delay (in seconds) before hiding the armor bar", 4);
 			
 			showCreativeText = Config.LoadBoolProperty(CATEGORY, "show_creative_text", "If true, a 'Creative mode' text will show up when in creative mode", true);
 		}
