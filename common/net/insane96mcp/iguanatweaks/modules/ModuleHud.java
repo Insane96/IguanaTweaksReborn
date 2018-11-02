@@ -28,13 +28,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ModuleHud {
 	public static boolean HideHealthBar(ElementType type, EntityPlayer player) {
-		if (!Properties.Global.hud)
+		if (!Properties.config.global.hud)
 			return false;
 		
 		if (type != ElementType.HEALTH)
 			return false;
 		
-		if (!Properties.Hud.hideHealthBar)
+		if (!Properties.config.hud.hideHealthBar)
 			return false;
 		
 		if (player.isPotionActive(MobEffects.WITHER) || player.isPotionActive(ModuleGeneral.alteredPoison))
@@ -43,10 +43,10 @@ public class ModuleHud {
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		int totalTime = (int) player.world.getTotalWorldTime();
 		
-		if (Math.ceil(player.getHealth()) >= Properties.Hud.hideHealthBarThreshold && player.getAbsorptionAmount() == 0f)
+		if (Math.ceil(player.getHealth()) >= Properties.config.hud.hideHealthBarThreshold && player.getAbsorptionAmount() == 0f)
 		{
 			int delay = totalTime - playerData.getHideHealthBarLastTimestamp();
-			if (delay >= Properties.Hud.hideHealthBarDelay * 20)
+			if (delay >= Properties.config.hud.hideHealthBarDelay * 20)
 				return true;
 			else if (delay < 0)
 				playerData.setHideHealthBarLastTimestamp(totalTime);
@@ -57,22 +57,22 @@ public class ModuleHud {
 	}
 	
 	public static boolean HideHungerBar(ElementType type, EntityPlayer player) {
-		if (!Properties.Global.hud)
+		if (!Properties.config.global.hud)
 			return false;
 		
 		if (type != ElementType.FOOD)
 			return false;
 
-		if (!Properties.Hud.hideHungerBar)
+		if (!Properties.config.hud.hideHungerBar)
 			return false;
 
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		int totalTime = (int) player.world.getTotalWorldTime();
 		
-		if (player.getFoodStats().getFoodLevel() >= Properties.Hud.hideHungerBarThreshold && !player.isPotionActive(Potion.getPotionFromResourceLocation("minecraft:hunger")))
+		if (player.getFoodStats().getFoodLevel() >= Properties.config.hud.hideHungerBarThreshold && !player.isPotionActive(Potion.getPotionFromResourceLocation("minecraft:hunger")))
 		{
 			int delay = totalTime - playerData.getHideHungerBarLastTimestamp();
-			if (delay >= Properties.Hud.hideHungerBarDelay * 20)
+			if (delay >= Properties.config.hud.hideHungerBarDelay * 20)
 				return true;
 			else if (delay < 0)
 				playerData.setHideHungerBarLastTimestamp(totalTime);
@@ -84,13 +84,13 @@ public class ModuleHud {
 	}
 
 	public static boolean HideExperienceBar(ElementType type, EntityPlayerSP player) {
-		if (!Properties.Global.hud)
+		if (!Properties.config.global.hud)
 			return false;
 		
 		if (type != ElementType.EXPERIENCE)
 			return false;
 		
-		if (!Properties.Hud.hideExperienceBar)
+		if (!Properties.config.hud.hideExperienceBar)
 			return false;
 
 		BlockPos pos1 = player.getPosition().add(-6, -6, -6);
@@ -104,7 +104,7 @@ public class ModuleHud {
 		if (orbsInRange.size() == 0 && Minecraft.getMinecraft().currentScreen == null) {
 			
 			int delay = totalTime - playerData.getHideExperienceLastTimestamp();
-			if (delay >= Properties.Hud.hideExperienceDelay * 20)
+			if (delay >= Properties.config.hud.hideExperienceDelay * 20)
 				return true;
 			if (delay < 0)
 				playerData.setHideExperienceLastTimestamp(totalTime);
@@ -116,20 +116,20 @@ public class ModuleHud {
 	}
 	
 	public static boolean HideArmorBar(ElementType type, EntityPlayerSP player) {
-		if (!Properties.Global.hud)
+		if (!Properties.config.global.hud)
 			return false;
 		
 		if (type != ElementType.ARMOR)
 			return false;
 		
-		if (!Properties.Hud.hideArmorBar)
+		if (!Properties.config.hud.hideArmorBar)
 			return false;
 		
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		int totalTime = (int) player.world.getTotalWorldTime();
 		int delay = totalTime - playerData.getHideArmorLastTimestamp();
 
-		if (delay >= Properties.Hud.hideArmorDelay * 20)
+		if (delay >= Properties.config.hud.hideArmorDelay * 20)
 			return true;
 		if (delay < 0)
 			playerData.setHideArmorLastTimestamp(totalTime);
@@ -151,20 +151,20 @@ public class ModuleHud {
 	}
 	
 	public static boolean HideHotbar(ElementType type, EntityPlayer player) {
-		if (!Properties.Global.hud)
+		if (!Properties.config.global.hud)
 			return false;
 		
 		if (type != ElementType.HOTBAR)
 			return false;
 		
-		if (!Properties.Hud.hideHotbar)
+		if (!Properties.config.hud.hideHotbar)
 			return false;
 		
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 		int totalTime = (int) player.world.getTotalWorldTime();
 		
 		int delay = totalTime - playerData.getHideHotbarLastTimestamp();
-		if (delay >= Properties.Hud.hideHotbarDelay * 20)
+		if (delay >= Properties.config.hud.hideHotbarDelay * 20)
 			return true;
 		else if (delay < 0)
 			playerData.setHideHotbarLastTimestamp(totalTime);
@@ -173,9 +173,9 @@ public class ModuleHud {
 	}
 	
 	public static void HotbarCheckKeyPress(Phase phase) {
-		if (!Properties.Global.hud)
+		if (!Properties.config.global.hud)
 			return;
-		if (!Properties.Hud.hideHotbar)
+		if (!Properties.config.hud.hideHotbar)
 			return;
 		
 		if (phase.equals(Phase.END)) {
@@ -202,7 +202,7 @@ public class ModuleHud {
 	}
 
 	public static void HotbarCheckMouse(int dwheel) {
-		if (!Properties.Global.hud)
+		if (!Properties.config.global.hud)
 			return;
 		
 		if (dwheel != 0) {

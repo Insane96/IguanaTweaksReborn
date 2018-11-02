@@ -20,23 +20,18 @@ import net.insane96mcp.iguanatweaks.events.PlayerLogInRespawn;
 import net.insane96mcp.iguanatweaks.events.PlayerSleepInBed;
 import net.insane96mcp.iguanatweaks.events.RenderGameOverlay;
 import net.insane96mcp.iguanatweaks.integration.Integration;
-import net.insane96mcp.iguanatweaks.lib.Config;
-import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.insane96mcp.iguanatweaks.lib.Reflection;
 import net.insane96mcp.iguanatweaks.modules.ModuleGeneral;
 import net.insane96mcp.iguanatweaks.modules.ModuleStackSizes;
 import net.insane96mcp.iguanatweaks.network.PacketHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class CommonProxy {
 	public void PreInit(FMLPreInitializationEvent event) {
-		Config.Init(event.getSuggestedConfigurationFile());
-		Properties.Init();
 		Integration.Init();
 		Reflection.Init();
 		
@@ -65,7 +60,6 @@ public class CommonProxy {
 	}
 	
 	public void PostInit(FMLPostInitializationEvent event) {
-		Config.SaveConfig();
 
 		//General
 		ModuleGeneral.LessObiviousSilverfish();

@@ -11,7 +11,7 @@ import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 
 public class ModuleExperience {
 	public static void XpLifespan(Entity entity) {
-		if (!Properties.Global.experience)
+		if (!Properties.config.global.experience)
 			return;
 		
 		if (!(entity instanceof EntityXPOrb))
@@ -19,17 +19,17 @@ public class ModuleExperience {
 		
 		EntityXPOrb xpOrb = (EntityXPOrb)entity;
 		
-		if (Properties.Experience.lifespan == -1)
+		if (Properties.config.experience.lifespan == -1)
 			xpOrb.xpOrbAge = 32768;
 		else
-			xpOrb.xpOrbAge = 6000 - Properties.Experience.lifespan;
+			xpOrb.xpOrbAge = 6000 - Properties.config.experience.lifespan;
     }
     
     public static void XpDropPercentage(Entity entity) {
-		if (!Properties.Global.experience)
+		if (!Properties.config.global.experience)
 			return;
 		
-        if (Properties.Experience.percentageAll == 100.0f)
+        if (Properties.config.experience.percentageAll == 100.0f)
             return;
 
         if (!(entity instanceof EntityXPOrb))
@@ -37,17 +37,17 @@ public class ModuleExperience {
 		
 		EntityXPOrb xpOrb = (EntityXPOrb)entity;
 		
-		if (Properties.Experience.percentageAll == 0.0f)
+		if (Properties.config.experience.percentageAll == 0.0f)
 			entity.world.removeEntity(xpOrb);
 		else
-			xpOrb.xpValue = Math.round(xpOrb.xpValue * (Properties.Experience.percentageAll / 100f)); 
+			xpOrb.xpValue = Math.round(xpOrb.xpValue * (Properties.config.experience.percentageAll / 100f)); 
     }
     
     public static void XpDropFromSpawner(LivingExperienceDropEvent event) {
-    	if (!Properties.Global.experience)
+    	if (!Properties.config.global.experience)
 			return;
 		
-        if (Properties.Experience.percentageFromSpawner == 100.0f)
+        if (Properties.config.experience.percentageFromSpawner == 100.0f)
             return;
 
         EntityLivingBase living = event.getEntityLiving();
@@ -57,18 +57,18 @@ public class ModuleExperience {
         	return;
 		
         int actualXp = event.getDroppedExperience();
-        int newXp = (int) (actualXp * (Properties.Experience.percentageFromSpawner / 100f));
+        int newXp = (int) (actualXp * (Properties.config.experience.percentageFromSpawner / 100f));
         event.setDroppedExperience(newXp);
     }
 
     public static void XpDropOre(BreakEvent event) {
-		if (!Properties.Global.experience)
+		if (!Properties.config.global.experience)
 			return;
 		
-        if (Properties.Experience.percentageOre == 100.0f)
+        if (Properties.config.experience.percentageOre == 100.0f)
             return;
 
-        event.setExpToDrop(Math.round(event.getExpToDrop() * (Properties.Experience.percentageOre / 100f)));
+        event.setExpToDrop(Math.round(event.getExpToDrop() * (Properties.config.experience.percentageOre / 100f)));
     }
     
     public static void CheckFromSpawner(LivingSpawnEvent.SpecialSpawn event) {

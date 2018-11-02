@@ -2,7 +2,6 @@ package net.insane96mcp.iguanatweaks.modules;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.lib.Properties;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,7 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -21,10 +20,10 @@ import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 public class ModuleSleepRespawn {
 
 	public static void ProcessSpawn(EntityPlayer player) {
-		if (!Properties.Global.sleepRespawn)
+		if (!Properties.config.global.sleepRespawn)
 			return;
 		
-		if (Properties.SleepRespawn.spawnLocationRandomMax <= 0)
+		if (Properties.config.sleepRespawn.spawnLocationRandomMax <= 0)
 			return;
 		
 		NBTTagCompound tags = player.getEntityData();
@@ -32,25 +31,25 @@ public class ModuleSleepRespawn {
         if (!hasAlreadySpawned)
         {
         	tags.setBoolean("IguanaTweaks:spawned", true);
-			RespawnPlayer(player, Properties.SleepRespawn.spawnLocationRandomMin, Properties.SleepRespawn.spawnLocationRandomMax);
+			RespawnPlayer(player, Properties.config.sleepRespawn.spawnLocationRandomMin, Properties.config.sleepRespawn.spawnLocationRandomMax);
         }
 	}
 	
 	public static void ProcessRespawn(EntityPlayer player) {
-		if (!Properties.Global.sleepRespawn)
+		if (!Properties.config.global.sleepRespawn)
 			return;
 		
-        RespawnPlayer(player, Properties.SleepRespawn.respawnLocationRandomMin, Properties.SleepRespawn.respawnLocationRandomMax);
+        RespawnPlayer(player, Properties.config.sleepRespawn.respawnLocationRandomMin, Properties.config.sleepRespawn.respawnLocationRandomMax);
         PlayerHealth(player);
         
         DestroyBed(player);
         
-        if (Properties.SleepRespawn.respawnLocationRandomMax != 0)
+        if (Properties.config.sleepRespawn.respawnLocationRandomMax != 0)
         	player.sendMessage(new TextComponentTranslation("sleep.random_respawn"));
 	}
 	
 	private static void DestroyBed(EntityPlayer player) {
-		if (!Properties.SleepRespawn.destroyBedOnRespawn)
+		if (!Properties.config.sleepRespawn.destroyBedOnRespawn)
 			return;
 		
 		BlockPos bedPos = player.getBedLocation(player.dimension);
@@ -65,7 +64,7 @@ public class ModuleSleepRespawn {
 
         world.setBlockState(bedPos, Blocks.AIR.getDefaultState(), 3);
     	
-		if (Properties.SleepRespawn.respawnLocationRandomMax == 0)
+		if (Properties.config.sleepRespawn.respawnLocationRandomMax == 0)
 			player.sendMessage(new TextComponentTranslation("sleep.bed_destroyed"));
 	}
 
@@ -139,10 +138,10 @@ public class ModuleSleepRespawn {
 	}
 
 	private static void PlayerHealth(EntityPlayer player) {
-		int respawnHealth = Properties.SleepRespawn.respawnHealth;
+		int respawnHealth = Properties.config.sleepRespawn.respawnHealth;
 		EnumDifficulty difficulty = player.getEntityWorld().getDifficulty();
-		   
-		if (Properties.SleepRespawn.respawnHealthDifficultyScaling) {
+		
+		if (Properties.config.sleepRespawn.respawnHealthDifficultyScaling) {
 			if (difficulty == EnumDifficulty.HARD) 
 			{
 				respawnHealth = (int) Math.max(respawnHealth / 2f, 1);
@@ -152,15 +151,18 @@ public class ModuleSleepRespawn {
 				respawnHealth = (int) Math.min(respawnHealth * 2f, 20);
 			}
 		}
+		
+		if (difficulty == EnumDifficulty.PEACEFUL)
+			respawnHealth = (int) player.getMaxHealth();
 
 		player.setHealth(respawnHealth);
 	}
 
 	public static void DisabledSpawnPoint(PlayerSleepInBedEvent event) {
-		if (!Properties.Global.sleepRespawn)
+		if (!Properties.config.global.sleepRespawn)
 			return;
 		
-		if (!Properties.SleepRespawn.disableSleeping) 
+		if (!Properties.config.sleepRespawn.disableSleeping) 
 			return;
 		
 		EntityPlayer player = event.getEntityPlayer();
@@ -170,7 +172,7 @@ public class ModuleSleepRespawn {
 		
 		event.setResult(SleepResult.OTHER_PROBLEM);
 		
-		if (Properties.SleepRespawn.disableSetRespawnPoint) {
+		if (Properties.config.sleepRespawn.disableSetRespawnPoint) {
 			player.sendStatusMessage(new TextComponentTranslation("sleep.bed_decoration"), true);
 		}
 		else {

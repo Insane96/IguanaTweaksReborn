@@ -2,7 +2,6 @@ package net.insane96mcp.iguanatweaks.lib;
 
 import java.util.UUID;
 
-import it.unimi.dsi.fastutil.shorts.Short2FloatArrayMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -24,7 +23,7 @@ public class Utils {
 		Block block = Block.getBlockFromItem(item);
 		IBlockState state = block.getStateFromMeta(meta);
 		
-		for (String line : Properties.MovementRestriction.customWeight) {
+		for (String line : Properties.config.movementRestriction.customWeight) {
 			String[] lineSplit = line.split(",");
 			if (lineSplit.length != 2)
 				continue;
@@ -45,7 +44,7 @@ public class Utils {
 			}
 		}
 
-		return GetBlockWeight(block) * Properties.MovementRestriction.rockWeight;
+		return GetBlockWeight(block) * Properties.config.movementRestriction.rockWeight;
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -58,7 +57,7 @@ public class Utils {
 		
 		float slowness = -1f;
 		
-		for (String line : Properties.MovementRestriction.terrainSlowdownCustom) {
+		for (String line : Properties.config.movementRestriction.terrainSlowdownCustom) {
 			String[] lineSplit = line.split(",");
 			if (lineSplit.length != 2)
 				continue;
@@ -78,22 +77,22 @@ public class Utils {
 		
 		if (slowness == -1f) {
 	        if (blockOnMaterial == Material.GRASS || blockOnMaterial == Material.GROUND) 
-	        	slowness = Properties.MovementRestriction.terrainSlowdownOnDirt; 
+	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnDirt; 
 	        else if (blockOnMaterial == Material.SAND) 
-	        	slowness = Properties.MovementRestriction.terrainSlowdownOnSand;
+	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnSand;
 	        else if (blockOnMaterial == Material.LEAVES || blockOnMaterial == Material.PLANTS || blockOnMaterial == Material.VINE) 
-	        	slowness = Properties.MovementRestriction.terrainSlowdownOnPlant;
+	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnPlant;
 	        else if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
-	        	slowness = Properties.MovementRestriction.terrainSlowdownOnIce;
+	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnIce;
 	        else if (blockOnMaterial == Material.SNOW || blockOnMaterial == Material.CRAFTED_SNOW)
-	        	slowness = Properties.MovementRestriction.terrainSlowdownOnSnow;
+	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnSnow;
 	        else
 	        	slowness = 0;
 		}
         if (blockInMaterial == Material.SNOW || blockInMaterial == Material.CRAFTED_SNOW) 
-        	slowness += Properties.MovementRestriction.terrainSlowdownInSnow;
+        	slowness += Properties.config.movementRestriction.terrainSlowdownInSnow;
 		else if (blockInMaterial == Material.VINE || blockInMaterial == Material.PLANTS) 
-			slowness += Properties.MovementRestriction.terrainSlowdownInPlant;
+			slowness += Properties.config.movementRestriction.terrainSlowdownInPlant;
 
         return slowness;
 	}

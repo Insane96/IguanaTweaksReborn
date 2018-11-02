@@ -30,7 +30,7 @@ import net.minecraftforge.registries.IForgeRegistryModifiable;
 public class ModuleGeneral {
 
 	public static void PreventFov(FOVUpdateEvent event) {
-		if (!Properties.General.disableFovOnSpeedModified)
+		if (!Properties.config.general.disableFovOnSpeedModified)
 			return;
 		
 		EntityPlayer player = event.getEntity();
@@ -50,17 +50,17 @@ public class ModuleGeneral {
         event.setNewfov(event.getFov() / f);
 	}
 
-	public static void IncreasedStepHeight(EntityPlayer player){
-		if (Properties.General.increasedStepHeight)
+	/*public static void IncreasedStepHeight(EntityPlayer player){
+		if (Properties.config.general.increasedStepHeight)
 			player.stepHeight = 1f;
-	}
+	}*/
 
 	public static void LessObiviousSilverfish(){
 		Blocks.MONSTER_EGG.setHardness(1.4f).setResistance(10.0F).setHarvestLevel("pickaxe", 0);
 	}
 	
 	public static void ExhaustionOnBlockBreak(BreakEvent event) {
-		if (!Properties.General.exhaustionOnBlockBreak)
+		if (!Properties.config.general.exhaustionOnBlockBreak)
 			return;
 		
 		IBlockState blockState = event.getState();
@@ -68,7 +68,7 @@ public class ModuleGeneral {
 		float hardness = 0f;
 		hardness = block.getBlockHardness(blockState, event.getWorld(), event.getPos());
 		
-		event.getPlayer().addExhaustion((hardness / 100f) * Properties.General.exhaustionMultiplier);
+		event.getPlayer().addExhaustion((hardness / 100f) * Properties.config.general.exhaustionMultiplier);
 	}
 	
 	public static AlteredPoison alteredPoison;
@@ -84,7 +84,7 @@ public class ModuleGeneral {
 	}
 	
 	public static void ApplyPoison(EntityLivingBase living) {
-		if (!Properties.General.alterPoison)
+		if (!Properties.config.general.alterPoison)
 			return;
 		
 		if (living.ticksExisted % 9 != 0)

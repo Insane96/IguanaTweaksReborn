@@ -10,11 +10,11 @@ import net.minecraft.item.ItemBlock;
 public class ModuleStackSizes {
 	
 	public static void ProcessBlocks() {
-		if (!Properties.Global.stackSize)
+		if (!Properties.config.global.stackSize)
 			return;
 		
-    	if (Properties.StackSizes.blockDividerMax <= 1
-    		|| (Properties.StackSizes.blockDividerMin > Properties.StackSizes.blockDividerMax))
+    	if (Properties.config.stackSizes.blockDividerMax <= 1
+    		|| (Properties.config.stackSizes.blockDividerMin > Properties.config.stackSizes.blockDividerMax))
     		return;
     	
     	for (Block block : Block.REGISTRY)
@@ -27,12 +27,12 @@ public class ModuleStackSizes {
 			float blockWeight = Utils.GetBlockWeight(block);
 	        
 			int maxStackSize = item.getItemStackLimit();
-	        int stackSize = maxStackSize / Properties.StackSizes.blockDividerMin;
+	        int stackSize = maxStackSize / Properties.config.stackSizes.blockDividerMin;
 	        
 	        if (blockWeight > 0f) {
-	        	stackSize = (int) (maxStackSize / (Properties.StackSizes.blockDividerMax * blockWeight));
-	        	if (stackSize > maxStackSize / Properties.StackSizes.blockDividerMin) 
-	        		stackSize = maxStackSize / Properties.StackSizes.blockDividerMin;
+	        	stackSize = (int) (maxStackSize / (Properties.config.stackSizes.blockDividerMax * blockWeight));
+	        	if (stackSize > maxStackSize / Properties.config.stackSizes.blockDividerMin) 
+	        		stackSize = maxStackSize / Properties.config.stackSizes.blockDividerMin;
 	        }
 	        
 	        if (stackSize < 1) 
@@ -42,7 +42,7 @@ public class ModuleStackSizes {
     		
     		if (stackSize < maxStackSize) 
     		{
-        		if (Properties.StackSizes.logChanges)
+        		if (Properties.config.stackSizes.logChanges)
         			IguanaTweaks.logger.info("Reducing stack size of block " + item.getTranslationKey()  + " to " + stackSize);
     			item.setMaxStackSize(stackSize);
     		}
@@ -50,10 +50,10 @@ public class ModuleStackSizes {
 	}
     
 	public static void ProcessItems() {
-		if (!Properties.Global.stackSize)
+		if (!Properties.config.global.stackSize)
 			return;
 		
-    	if (Properties.StackSizes.itemDivider <= 1)
+    	if (Properties.config.stackSizes.itemDivider <= 1)
     		return;
     	
     	for (Item item : Item.REGISTRY)
@@ -65,7 +65,7 @@ public class ModuleStackSizes {
     			continue;
 
 			int maxStackSize = item.getItemStackLimit();
-	        int stackSize = maxStackSize / Properties.StackSizes.itemDivider;
+	        int stackSize = maxStackSize / Properties.config.stackSizes.itemDivider;
 	        
     		if (stackSize < 1) 
     			stackSize = 1;
@@ -74,7 +74,7 @@ public class ModuleStackSizes {
     		
     		if (stackSize < maxStackSize) 
     		{
-    			if (Properties.StackSizes.logChanges) 
+    			if (Properties.config.stackSizes.logChanges) 
     				IguanaTweaks.logger.info("Reducing stack size of item " + item.getTranslationKey()  + " to " + stackSize);
     			item.setMaxStackSize(stackSize);
     		}
@@ -82,26 +82,26 @@ public class ModuleStackSizes {
 	}
 	
 	public static void ProcessCustom() {
-		if (!Properties.Global.stackSize)
+		if (!Properties.config.global.stackSize)
 			return;
 		
-		if (Properties.StackSizes.customStackList.length == 0)
+		if (Properties.config.stackSizes.customStackList.length == 0)
 			return;
 		
-		for (int i = 0; i < Properties.StackSizes.customStackList.length; i++) {
+		for (int i = 0; i < Properties.config.stackSizes.customStackList.length; i++) {
 			try {
-				String[] split = Properties.StackSizes.customStackList[i].split(",");
+				String[] split = Properties.config.stackSizes.customStackList[i].split(",");
 				if (split.length == 0)
 					continue;
 				String name = split[0];
 				int stackSize = Integer.parseInt(split[1]);
 				Item item = Item.getByNameOrId(name);
 				item.setMaxStackSize(stackSize);
-				if (Properties.StackSizes.logChanges) 
+				if (Properties.config.stackSizes.logChanges) 
 					IguanaTweaks.logger.info("Reducing stack size by custom of item " + item.getTranslationKey()  + " to " + stackSize);
 			}
 			catch (Exception exception) {
-				System.err.println("Failed to parse: " + Properties.StackSizes.customStackList[i] + " " + exception);
+				System.err.println("Failed to parse: " + Properties.config.stackSizes.customStackList[i] + " " + exception);
 			}
 		}
 	}

@@ -1,7 +1,5 @@
 package net.insane96mcp.iguanatweaks.modules;
 
-import java.lang.reflect.Field;
-
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
@@ -33,14 +31,13 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class ModuleMovementRestriction {
 	public static void ApplyPlayer(EntityLivingBase living) {
 		if (!(living instanceof EntityPlayer))
 			return;
 		
-		if (!Properties.Global.movementRestriction){
+		if (!Properties.config.global.movementRestriction){
 			IAttributeInstance attribute = living.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
 			if (attribute.getModifier(Utils.movementRestrictionUUID) != null)
 				attribute.removeModifier(Utils.movementRestrictionUUID);
@@ -51,7 +48,7 @@ public class ModuleMovementRestriction {
 		
 		EntityPlayer player = (EntityPlayer) living;
 		
-		if (player.ticksExisted % Properties.General.tickRatePlayerUpdate != 0)
+		if (player.ticksExisted % Properties.config.general.tickRatePlayerUpdate != 0)
 			return;
 		
 		if (player.isCreative())
@@ -60,7 +57,7 @@ public class ModuleMovementRestriction {
 		float slownessDamage = SlownessDamage(player, world);
 		float slownessWeight = SlownessWeight(player, world);
 		float slownessTerrain = SlownessTerrain(player, world);
-		float slownessArmor = player.getTotalArmorValue() * Properties.MovementRestriction.armorWeight;
+		float slownessArmor = player.getTotalArmorValue() * Properties.config.movementRestriction.armorWeight;
 		if (slownessArmor > 100f) 
 			slownessArmor = 100f;
     	
@@ -71,7 +68,7 @@ public class ModuleMovementRestriction {
     	
     	float speedModifier = 1f - (speedModifierArmour * speedModifierTerrain * speedModifierWeight * slownessDamage);
     	
-    	if (player.moveForward < 0f && Properties.MovementRestriction.slowdownWhenWalkingBackwards)
+    	if (player.moveForward < 0f && Properties.config.movementRestriction.slowdownWhenWalkingBackwards)
     		speedModifier = 0.5f + (speedModifier / 2f);
 
 		AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
@@ -93,7 +90,7 @@ public class ModuleMovementRestriction {
 		
 		float slownessWeight;
 		
-		if (Properties.MovementRestriction.maxCarryWeight == 0) 
+		if (Properties.config.movementRestriction.maxCarryWeight == 0) 
 			return 0f;
 		
 		for (ItemStack stack : player.inventory.mainInventory) 
@@ -121,7 +118,7 @@ public class ModuleMovementRestriction {
 					if (toAdd == 0f)
 			        	toAdd = 1f / 64f * stack.getCount();
 				}
-				toAdd *= Properties.MovementRestriction.shulkerWeightReduction;
+				toAdd *= Properties.config.movementRestriction.shulkerWeightReduction;
 			}
 			else if (!item.equals(Items.AIR)) {
 		        toAdd = Utils.GetItemWeight(stack) * stack.getCount();
@@ -130,7 +127,7 @@ public class ModuleMovementRestriction {
 	        weight += toAdd;
 		}
 		
-		slownessWeight = (weight / Properties.MovementRestriction.maxCarryWeight) * 100f;
+		slownessWeight = (weight / Properties.config.movementRestriction.maxCarryWeight) * 100f;
 
     	if (slownessWeight > 0)
     		player.addExhaustion(0.0001F * Math.round(slownessWeight));
@@ -148,13 +145,13 @@ public class ModuleMovementRestriction {
 		
 		float slownessTerrain = 0f;
 		
-		if (player.isInWater() || Properties.MovementRestriction.terrainSlowdownPercentage == 0)
+		if (player.isInWater() || Properties.config.movementRestriction.terrainSlowdownPercentage == 0)
 			return 0f;
 		BlockPos playerPos = new BlockPos(player.posX, player.posY - 1, player.posZ);
 		
 		slownessTerrain = Utils.GetBlockSlowness(world, playerPos);
         
-        slownessTerrain = Math.round((float)slownessTerrain * ((float)Properties.MovementRestriction.terrainSlowdownPercentage / 100f));
+        slownessTerrain = Math.round((float)slownessTerrain * ((float)Properties.config.movementRestriction.terrainSlowdownPercentage / 100f));
         
         if (slownessTerrain > 100f)
         	slownessTerrain = 100f;
@@ -162,7 +159,7 @@ public class ModuleMovementRestriction {
 	}
 	
 	public static float SlownessDamage(EntityPlayer player, World world) {
-		if (Properties.MovementRestriction.damageSlowdownDuration == 0)
+		if (Properties.config.movementRestriction.damageSlowdownDuration == 0)
 			return 1f;
 		
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
@@ -174,14 +171,14 @@ public class ModuleMovementRestriction {
 		
 		playerData.tickDamageSlownessDuration();
 		
-		return 1f - (Properties.MovementRestriction.damageSlowdownEffectiveness / 100f);
+		return 1f - (Properties.config.movementRestriction.damageSlowdownEffectiveness / 100f);
 	}
 	
 	public static void Stun(EntityLivingBase living, float damageAmount) {
-		if (!Properties.Global.movementRestriction)
+		if (!Properties.config.global.movementRestriction)
 			return;
 		
-		if (Properties.MovementRestriction.damageSlowdownDuration == 0)
+		if (Properties.config.movementRestriction.damageSlowdownDuration == 0)
 			return;
 		
 		if (!(living instanceof EntityPlayer))
@@ -193,7 +190,7 @@ public class ModuleMovementRestriction {
 		
 		int duration = Math.round(damageAmount * 4);
 		
-		if (Properties.MovementRestriction.damageSlowdownDifficultyScaling) {
+		if (Properties.config.movementRestriction.damageSlowdownDifficultyScaling) {
 			if (player.world.getDifficulty() == EnumDifficulty.EASY)
 				duration *= 0.5;
 			else if (player.world.getDifficulty() == EnumDifficulty.HARD)
@@ -208,7 +205,7 @@ public class ModuleMovementRestriction {
 	}
 
 	public static void ApplyEntity(EntityLivingBase living) {
-		if (!Properties.Global.movementRestriction)
+		if (!Properties.config.global.movementRestriction)
 			return;
 		
     	if (living instanceof EntityPlayer || living.world.isRemote)
@@ -218,12 +215,12 @@ public class ModuleMovementRestriction {
 
 		float speedModifier = 1f;
 		
-		if (living.ticksExisted % Properties.General.tickRateEntityUpdate != 0)
+		if (living.ticksExisted % Properties.config.general.tickRateEntityUpdate != 0)
 			return;
 		
 		float slownessTerrain = SlownessTerrainEntity(living, world);
 		
-		float slownessArmor = living.getTotalArmorValue() * Properties.MovementRestriction.armorWeight;
+		float slownessArmor = living.getTotalArmorValue() * Properties.config.movementRestriction.armorWeight;
 		if (slownessArmor > 100f) 
 			slownessArmor = 100f;
     	
@@ -249,7 +246,7 @@ public class ModuleMovementRestriction {
 		
 		float slownessTerrain = 0f;
 		
-		if (living.isInWater() || Properties.MovementRestriction.terrainSlowdownPercentage == 0)
+		if (living.isInWater() || Properties.config.movementRestriction.terrainSlowdownPercentage == 0)
 			return 0f;
 		BlockPos playerPos = new BlockPos(living.posX, living.posY - 1, living.posZ);
 
@@ -257,22 +254,22 @@ public class ModuleMovementRestriction {
 		Material blockInMaterial = world.getBlockState(playerPos.add(0, 1, 0)).getMaterial();
 		
         if (blockOnMaterial == Material.GRASS || blockOnMaterial == Material.GROUND) 
-        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnDirt; 
+        	slownessTerrain = Properties.config.movementRestriction.terrainSlowdownOnDirt; 
         else if (blockOnMaterial == Material.SAND) 
-        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnSand;
+        	slownessTerrain = Properties.config.movementRestriction.terrainSlowdownOnSand;
         else if (blockOnMaterial == Material.LEAVES || blockOnMaterial == Material.PLANTS || blockOnMaterial == Material.VINE) 
-        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnPlant;
+        	slownessTerrain = Properties.config.movementRestriction.terrainSlowdownOnPlant;
         else if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
-        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnIce;
+        	slownessTerrain = Properties.config.movementRestriction.terrainSlowdownOnIce;
         else if (blockOnMaterial == Material.SNOW || blockOnMaterial == Material.CRAFTED_SNOW)
-        	slownessTerrain = Properties.MovementRestriction.terrainSlowdownOnSnow;
+        	slownessTerrain = Properties.config.movementRestriction.terrainSlowdownOnSnow;
 		
         if (blockInMaterial == Material.SNOW || blockInMaterial == Material.CRAFTED_SNOW) 
-        	slownessTerrain += Properties.MovementRestriction.terrainSlowdownInSnow;
+        	slownessTerrain += Properties.config.movementRestriction.terrainSlowdownInSnow;
 		else if (blockInMaterial == Material.VINE || blockInMaterial == Material.PLANTS) 
-			slownessTerrain += Properties.MovementRestriction.terrainSlowdownInPlant;
+			slownessTerrain += Properties.config.movementRestriction.terrainSlowdownInPlant;
         
-        slownessTerrain = Math.round((float)slownessTerrain * ((float)Properties.MovementRestriction.terrainSlowdownPercentage / 100f));
+        slownessTerrain = Math.round((float)slownessTerrain * ((float)Properties.config.movementRestriction.terrainSlowdownPercentage / 100f));
         
         if (slownessTerrain > 100f)
         	slownessTerrain = 100f;
@@ -280,15 +277,15 @@ public class ModuleMovementRestriction {
 	}
 
 	public static void PrintHudInfos(RenderGameOverlayEvent.Text event) {
-		if (!Properties.Global.movementRestriction)
+		if (!Properties.config.global.movementRestriction)
 			return;
 		
-		if (Properties.MovementRestriction.maxCarryWeight > 0 || Properties.MovementRestriction.armorWeight > 0d) 
+		if (Properties.config.movementRestriction.maxCarryWeight > 0 || Properties.config.movementRestriction.armorWeight > 0d) 
 		{
 			Minecraft mc = Minecraft.getMinecraft();
 			EntityPlayerSP player = mc.player;
 			
-			if (Properties.Hud.showCreativeText && !mc.gameSettings.showDebugInfo && player.capabilities.isCreativeMode)
+			if (Properties.config.hud.showCreativeText && !mc.gameSettings.showDebugInfo && player.capabilities.isCreativeMode)
 			{
 				event.getLeft().add(I18n.format("info.creative_mode"));
 				return;
@@ -296,20 +293,20 @@ public class ModuleMovementRestriction {
 			
 			IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 			float weight = playerData.getWeight();
-			float encumbrance = weight / Properties.MovementRestriction.maxCarryWeight;
+			float encumbrance = weight / Properties.config.movementRestriction.maxCarryWeight;
 
-			if (mc.gameSettings.showDebugInfo && Properties.MovementRestriction.addEncumbranceDebugText) {
+			if (mc.gameSettings.showDebugInfo && Properties.config.movementRestriction.addEncumbranceDebugText) {
 				event.getLeft().add("");
-				event.getLeft().add(I18n.format("info.weight") + ": " + String.format("%.2f", weight) + " / " + String.format("%d", Properties.MovementRestriction.maxCarryWeight) + " (" + String.format("%.2f", encumbrance * 100.0f) + "%)");
+				event.getLeft().add(I18n.format("info.weight") + ": " + String.format("%.2f", weight) + " / " + String.format("%d", Properties.config.movementRestriction.maxCarryWeight) + " (" + String.format("%.2f", encumbrance * 100.0f) + "%)");
 			} 
 
-			if (!player.isDead && !player.capabilities.isCreativeMode && Properties.MovementRestriction.addEncumbranceHudText)
+			if (!player.isDead && !player.capabilities.isCreativeMode && Properties.config.movementRestriction.addEncumbranceHudText)
 			{
 				TextFormatting color = TextFormatting.WHITE;
 				
 				String line = "";
 				
-				if (Properties.MovementRestriction.detailedEncumbranceHudText)
+				if (Properties.config.movementRestriction.detailedEncumbranceHudText)
 				{
 					if (encumbrance >= 0.95)
 						color = TextFormatting.BOLD;
@@ -322,11 +319,11 @@ public class ModuleMovementRestriction {
 					else if (encumbrance >= 0.10)
 						color = TextFormatting.YELLOW;
 					
-					line = I18n.format("info.weight") + ": " + Double.toString(Math.round(weight)) + " / " + Double.toString(Math.round(Properties.MovementRestriction.maxCarryWeight)) + " (" + String.format("%.2f", (weight / Properties.MovementRestriction.maxCarryWeight) * 100) + "%)";
+					line = I18n.format("info.weight") + ": " + Double.toString(Math.round(weight)) + " / " + Double.toString(Math.round(Properties.config.movementRestriction.maxCarryWeight)) + " (" + String.format("%.2f", (weight / Properties.config.movementRestriction.maxCarryWeight) * 100) + "%)";
 				}
 				else
 				{
-					float totalEncumberance = Math.max(encumbrance, player.getTotalArmorValue() * Properties.MovementRestriction.armorWeight / 20f);
+					float totalEncumberance = Math.max(encumbrance, player.getTotalArmorValue() * Properties.config.movementRestriction.armorWeight / 20f);
 					
 					if (totalEncumberance >= 0.95)
 						color = TextFormatting.BOLD;

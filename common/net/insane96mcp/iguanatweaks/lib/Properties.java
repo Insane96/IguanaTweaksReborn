@@ -3,286 +3,339 @@ package net.insane96mcp.iguanatweaks.lib;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.insane96mcp.iguanatweaks.IguanaTweaks;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.Config.Comment;
+import net.minecraftforge.common.config.Config.Name;
+import net.minecraftforge.common.config.Config.RangeDouble;
+import net.minecraftforge.common.config.Config.RangeInt;
+
+@Config(modid = IguanaTweaks.MOD_ID, category = "", name = "IguanaTweaksReborn")
 public class Properties {
 	
-	public static void Init() {
-		General.Init();
-		Global.Init();
-		Hardness.Init();
-		StackSizes.Init();
-		SleepRespawn.Init();
-		Hud.Init();
-		Drops.Init();
-		MovementRestriction.Init();
-		Experience.Init();
-	}
+	public static ConfigOptions config = new ConfigOptions();
+	private static ConfigOptions localConfig = new ConfigOptions();
 	
-	public static class General{
-		public static String CATEGORY = "general";
-		public static String DESCRIPTION = "Other settings";
+	public static class ConfigOptions {
 		
-		public static boolean increasedStepHeight;
-	    public static boolean lessObviousSilverfish;
-	    public static boolean alterPoison;
-		public static int tickRateEntityUpdate;
-		public static boolean disableFovOnSpeedModified;
-		public static boolean exhaustionOnBlockBreak;
-		public static float exhaustionMultiplier;
-		public static int tickRatePlayerUpdate;
+		public General general = new General();
 		
-		public static void Init() {
-			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
-			
-			tickRateEntityUpdate = Config.LoadIntProperty(CATEGORY, "tick_rate_entity_update", "How often the speed of entities (not player) are calculated (in ticks). Higher values reduces client-side CPU load but may increase the chance of odd behavior", 7);
-			disableFovOnSpeedModified = Config.LoadBoolProperty(CATEGORY, "disable_fov_change_on_speed_change", "Disables fov changes when you get slowed down or sped up. Highly recommended if you have 'movement_restrictions' active.", true);
-			increasedStepHeight = Config.LoadBoolProperty(CATEGORY, "increased_step_height", "If the player should be able to walk over full blocks", false);
-			alterPoison = Config.LoadBoolProperty(CATEGORY, "alter_poison", "The poison effect will be changed to be deadly and drain hunger, but will damage the player 3 times slower", true);
-			lessObviousSilverfish = Config.LoadBoolProperty(CATEGORY, "less_obivious_silverfish", "If true, silverfish blocks will be almost like stone", true);
-			exhaustionOnBlockBreak = Config.LoadBoolProperty(CATEGORY, "exhaustion_on_block_break", "Minecraft normally adds 0.005 exaustion for block broken. With this at true, exhaustion will be added based on block hardness (hardness / 100). ELI5 when you break a block you lose more hunger the more hard is a block to break.", true);
-			exhaustionMultiplier = Config.LoadFloatProperty(CATEGORY, "exhaustion_on_block_break_multiplier", "Multiply the exhaustion given to the player when breaking blocks by this value", 1.0f);
-			tickRatePlayerUpdate = Config.LoadIntProperty(CATEGORY, "tick_rate_player_update", "How often the speed of players are calculated (in ticks). Higher values reduces client-side CPU load but may increase the chance of odd behavior", 2);
+		public static class General {
+			@Name("Less Obivious Silverfish")
+			@Comment("If true, silverfish blocks will be almost like stone")
+		    public boolean lessObviousSilverfish = true;
+			@Name("Alter Poison")
+			@Comment("The poison effect will be changed to be deadly and drain hunger, but will damage the player 3 times slower")
+		    public boolean alterPoison = true;
+			@Name("Tick Rate Player Update")
+			@Comment("How often the speed of players are calculated (in ticks). Higher values might increase performance but may increase the chance of odd behavior")
+			@RangeInt(min = 1, max = Integer.MAX_VALUE)
+			public int tickRatePlayerUpdate = 2;
+			@Name("Tick Rate Entity Update")
+			@Comment("How often the speed of entities (not player) are calculated (in ticks). Higher values might increase performance but may increase the chance of odd behavior")
+			@RangeInt(min = 1, max = Integer.MAX_VALUE)
+			public int tickRateEntityUpdate = 7;
+			@Name("Disable FoV on Speed Modified")
+			@Comment("Disables FoV changes when you get slowed down or sped up. Highly recommended if you have 'movement_restrictions' active.")
+			public boolean disableFovOnSpeedModified = true;
+			@Name("Exaustion Block Break Hardness Based")
+			@Comment("Minecraft normally adds 0.005 exaustion for block broken. With this at true, exhaustion will be added based on block hardness (hardness / 100). ELI5 when you break a block you lose more hunger the harder is a block to break.")
+			public boolean exhaustionOnBlockBreak = true;
+			@Name("Exaustion Multiplier on Block Break")
+			@Comment("Multiply the exhaustion given to the player when breaking blocks by this value")
+			@RangeDouble(min = 0, max = Float.MAX_VALUE)
+			public float exhaustionMultiplier = 1.0f;
 		}
-	}
-	
-	public static class Global{
-		public static String CATEGORY = "_global_config";
-		public static String DESCRIPTION = "Completely disable every module from here";
 		
-		public static boolean drops;
-		public static boolean experience;
-		public static boolean hardness;
-		public static boolean hud;
-		public static boolean movementRestriction;
-		public static boolean sleepRespawn;
-		public static boolean stackSize;
 		
-		public static void Init() {
-			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
-			
-			drops = Config.LoadBoolProperty(CATEGORY, "drops_enabled", "Set to false to disable everything the Drops module does.", true);
-			experience = Config.LoadBoolProperty(CATEGORY, "experience_enabled", "Set to false to disable everything the Experience module does.", true);
-			hardness = Config.LoadBoolProperty(CATEGORY, "hardness_enabled", "Set to false to disable everything the Hardness module does.", true);
-			hud = Config.LoadBoolProperty(CATEGORY, "hud_enabled", "Set to false to disable everything the Hud module does.", true);
-			movementRestriction = Config.LoadBoolProperty(CATEGORY, "movement_restriction_enabled", "Set to false to disable everything the Movement Restriction module does.", true);
-			sleepRespawn = Config.LoadBoolProperty(CATEGORY, "sleep_respawn_enabled", "Set to false to disable everything the Sleep Respawn module does.", true);
-			stackSize = Config.LoadBoolProperty(CATEGORY, "stack_size_enabled", "Set to false to disable everything the Stack Size module does.", true);
+		public Global global = new Global();
+		
+		public static class Global {
+			@Name("Drops")
+			@Comment("Set to false to disable everything the Drops module does")
+			public boolean drops = true;
+			@Name("Experience")
+			@Comment("Set to false to disable everything the Experience module does")
+			public boolean experience = true;
+			@Name("Hardness")
+			@Comment("Set to false to disable everything the Hardness module does")
+			public boolean hardness = true;
+			@Name("Hud")
+			@Comment("Set to false to disable everything the Hud module does")
+			public boolean hud = true;
+			@Name("Movement Restriction")
+			@Comment("Set to false to disable everything the Movement Restriction module does")
+			public boolean movementRestriction = true;
+			@Name("Sleep & Respawn")
+			@Comment("Set to false to disable everything the Sleep & Respawn module does")
+			public boolean sleepRespawn = true;
+			@Name("Stack Size")
+			@Comment("Set to false to disable everything the Stack Size module does")
+			public boolean stackSize = true;
 		}
-	}
 	
-	public static class Hardness{
-		public static String CATEGORY = "hardness";
-		public static String DESCRIPTION = "Change the hardness of blocks, globally or single, using either a blacklist or whitelist";
 		
-		public static float multiplier;
-		public static boolean blockListIsWhitelist;
-		public static List<String> blockList;
+		public Hardness hardness = new Hardness();
 		
-		public static List<String> blockHardness;
-		
-		public static void Init() {
-			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
-			
-			multiplier = Config.LoadFloatProperty(CATEGORY, "multiplier", "Multiplier applied to the hardness of blocks (set to 1 to disable)", 4.0f);
-			blockListIsWhitelist = Config.LoadBoolProperty(CATEGORY, "block_list_is_whitelist", "True if hardness multiplier should only affect blocks on the list, false if all blocks are affected except those on the list", false);
-			blockList = Config.LoadStringListProperty(CATEGORY, "block_list", "Block ids (one per line) for the hardness whitelist/blacklist.\nFormat is modid:blockid;meta\nE.g. 'minecraft:stone:1' will target granite", new ArrayList<String>() {});
-			
-			blockHardness = Config.LoadStringListProperty(CATEGORY, "block_hardness", "Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier ('multiplier')\nThe format is modid:blockid:meta,hardness.\nE.g. 'minecraft:stone:1,5.0' will make granite have 5 hardness. If no meta is specified, this will affect every block meta.", new ArrayList<String>() {});
+		public static class Hardness {
+			@Name("Multiplier")
+			@Comment("Multiplier applied to the hardness of blocks (set to 1 to disable)")
+			@RangeDouble(min = 0, max = Float.MAX_VALUE)
+			public float multiplier = 4.0f;
+			@Name("Block List as Whitelist")
+			@Comment("True if hardness multiplier should only affect blocks on the list, false if all blocks are affected except those on the list")
+			public boolean blockListIsWhitelist = false;
+			@Name("Block Black/Whitelist")
+			@Comment("Block ids (one per line) for the hardness whitelist/blacklist.\nFormat is modid:blockid;meta\nE.g. 'minecraft:stone:1' will target granite")
+			public List<String> blockList = new ArrayList<String>() {};
+			@Name("Custom Block Hardness")
+			@Comment("Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier ('multiplier')\nThe format is modid:blockid:meta,hardness.\nE.g. 'minecraft:stone:1,5.0' will make granite have 5 hardness. If no meta is specified, this will affect every block meta.")
+			public List<String> blockHardness = new ArrayList<String>() {};
 		}
-	}
 	
-	public static class StackSizes{
-		public static String CATEGORY = "stack_sizes";
-		public static String DESCRIPTION = "Change the stack sizes of blocks and items, based on material weight";
+		@Name("Stack Sizes")
+		public StackSizes stackSizes = new StackSizes();
 		
-		public static boolean logChanges;
-		public static int blockDividerMin;
-		public static int blockDividerMax;
-		public static int itemDivider;
-		public static String[] customStackList;
-		
-		public static void Init() {
-			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
-			
-			logChanges = Config.LoadBoolProperty(CATEGORY, "log_changes", "If true, writes in log files any change to stack sizes", false);
-			blockDividerMin = Config.LoadIntProperty(CATEGORY, "block_divider_min", "Min stack size divider for blocks", 2);
-			blockDividerMax = Config.LoadIntProperty(CATEGORY, "block_divider_man", "Max stack size divider for blocks", 4);
-			itemDivider = Config.LoadIntProperty(CATEGORY, "item_divider", "Stack size divider for items", 2);
-			
-			customStackList = Config.LoadStringArrayProperty(CATEGORY, "custom_stack_list", "List of all the custom stacks for blocks and items. The format is 'modid:name,max_stack_size'. Going over 64 doesn't work. By default, some items that villagers can trade are set to be tradeable.", new String[] {
+		public static class StackSizes {
+			@Name("Log changes")
+			@Comment("If true, writes in log file any change to stack sizes")
+			public boolean logChanges = false;
+			@Name("Block Stack Size Divider Min")
+			@Comment("Min stack size divider for blocks")
+			@RangeInt(min = 1, max = 64)
+			public int blockDividerMin = 2;
+			@Name("Block Stack Size Divider Max")
+			@Comment("Mia stack size divider for blocks")
+			@RangeInt(min = 1, max = 64)
+			public int blockDividerMax = 4;
+			@Name("Item Stack Size Divider")
+			@Comment("Stack size divider for items")
+			@RangeInt(min = 1, max = 64)
+			public int itemDivider = 2;
+			@Name("Custom Stack List")
+			@Comment("List of all the custom stacks for blocks and items. The format is 'modid:name,max_stack_size'. Going over 64 doesn't work. By default, some items that villagers can trade are set to be tradeable.")
+			@RangeInt(min = 1, max = 64)
+			public String[] customStackList = new String[] {
 					"minecraft:emerald,64",
 					"minecraft:paper,36",
 					"minecraft:rotten_flesh,40"
-			});
+			};
 		}
-	}
 	
-	public static class SleepRespawn{
-		public static String CATEGORY = "sleep_respawn";
-		public static String DESCRIPTION = "Various settings to change sleeping and respawning mechanics";
+		@Name("Sleep & Respawn")
+		public SleepRespawn sleepRespawn = new SleepRespawn();
 		
-		public static boolean disableSleeping;
-		public static boolean destroyBedOnRespawn;
-		public static boolean disableSetRespawnPoint;
-		public static int spawnLocationRandomMin;
-		public static int spawnLocationRandomMax;
-		public static int respawnLocationRandomMin;
-		public static int respawnLocationRandomMax;
-		public static int respawnHealth;
-		public static boolean respawnHealthDifficultyScaling;
-		
-		public static void Init() {
-			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
-			
-			disableSleeping = Config.LoadBoolProperty(CATEGORY, "disable_sleeping", "Stops players from sleeping", true);
-			destroyBedOnRespawn = Config.LoadBoolProperty(CATEGORY, "destroy_bed_on_respawn", "Upon respawn the bed is destroyed", false);
-			disableSetRespawnPoint = Config.LoadBoolProperty(CATEGORY, "disable_set_respawn_point", "If active using a bed will not set your spawn point (requires disable_sleeping to be true)", false);
-			
-			spawnLocationRandomMin = Config.LoadIntProperty(CATEGORY, "spawn_location_random_min", "Exactly where you spawn (upon login) is randomised around the spawn point, at least a minimum of this value, many blocks away (set to 0 to disable)", 0);
-			spawnLocationRandomMax = Config.LoadIntProperty(CATEGORY, "spawn_location_random_max", "Exactly where you spawn (upon login) is randomised around the spawn point, at least a maximum of this value, many blocks away (set to 0 to disable)", 0);
-			respawnLocationRandomMin = Config.LoadIntProperty(CATEGORY, "respawn_location_random_min", "Where you respawn (after death) is randomised around the players' spawn point (either to a bed or original spawn point), at least a minimum of this value, many blocks away (set to 0 to disable)", 0);
-			respawnLocationRandomMax = Config.LoadIntProperty(CATEGORY, "respawn_location_random_max", "Where you respawn (after death) is randomised around the players' spawn point (either to a bed or original spawn point), at least a maximum of this value, many blocks away (set to 0 to disable)", 0);
+		public static class SleepRespawn {
+			@Name("Disable Sleeping")
+			@Comment("Prevents players from sleeping")
+			public boolean disableSleeping = true;
+			@Name("Destroy Bed on Respawn")
+			@Comment("As the player respawns the bed will be destroyed. This makes bed one time respawn only")
+			public boolean destroyBedOnRespawn = false;
+			@Name("Disable Set Respawn Point")
+			@Comment("If active using a bed will not set your spawn point (requires disable_sleeping to be true)")
+			public boolean disableSetRespawnPoint = false;
+			@Name("Random Spawn Location Radius Min")
+			@Comment("Upon entering the world your spawn will be randomised around the spawn point, at least at this minimum distance (set to 0 to disable)")
+			@RangeInt(min = 0)
+			public int spawnLocationRandomMin = 0;
+			@Name("Random Spawn Location Radius Max")
+			@Comment("Upon entering the world your spawn will be randomised around the spawn point, at most at this maximum distance (set to 0 to disable)")
+			@RangeInt(min = 0)
+			public int spawnLocationRandomMax = 0;
+			@Name("Random Respawn Location Radius Min")
+			@Comment("Upon respawning your location will be randomised around your respawn point, at least at this minimum distance (set to 0 to disable)")
+			@RangeInt(min = 0)
+			public int respawnLocationRandomMin = 0;
+			@Name("Random Respawn Location Radius Max")
+			@Comment("Upon respawning your location will be randomised around your respawn point, at most at this maximum distance (set to 0 to disable)")
+			@RangeInt(min = 0)
+			public int respawnLocationRandomMax = 0;
+			@Name("Respawn Health")
+			@Comment("Amount of health you respawn with (with 'respawnHealthDifficultyScaling' this will be modified by difficulty)")
+			@RangeInt(min = 1)
+			public int respawnHealth = 10;
+			@Name("Respawn Health Difficulty Based")
+			@Comment("If true, the amount of health you respawn with is dependant on difficulty. (Easy x2, Normal x1, Hard x0.5)")
+			public boolean respawnHealthDifficultyScaling = true;
+		}
 
-			respawnHealth = Config.LoadIntProperty(CATEGORY, "respawn_health", "Amount of health you respawn with (with 'respawnHealthDifficultyScaling' this will be modified by difficulty)", 10);
-			respawnHealthDifficultyScaling = Config.LoadBoolProperty(CATEGORY, "respawn_health_difficulty_scaling", "If true, the amount of health you respawn with is dependant on difficulty", true);
-			
-		}
-	}
 	
-	public static class Hud{
-		public static String CATEGORY = "hud";
-		public static String DESCRIPTION = "Options to hide HUD parts in certain situations";
+		public Hud hud = new Hud();
 		
-		public static boolean hideHotbar;
-		public static int hideHotbarDelay;
-		public static boolean hideHealthBar;
-		public static int hideHealthBarThreshold;
-		public static int hideHealthBarDelay;
-		public static boolean hideHungerBar;
-		public static int hideHungerBarThreshold;
-		public static int hideHungerBarDelay;
-		public static boolean hideExperienceBar;
-		public static int hideExperienceDelay;
-		public static boolean hideArmorBar;
-		public static int hideArmorDelay;
-		public static boolean showCreativeText;
-		
-		public static void Init() {
-			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
-			
-			hideHotbar = Config.LoadBoolProperty(CATEGORY, "hide_hotbar", "If true, the hotbar will be hidden until an item is selected", false);
-			hideHotbarDelay = Config.LoadIntProperty(CATEGORY, "hide_hotbar_delay", "Delay (in seconds) before hiding the hotbar", 4);
-			
-			hideHealthBar = Config.LoadBoolProperty(CATEGORY, "hide_health_bar", "If true, the health bar will be hidden when above a certain threshold (the bar will always be shown if absorpion hearts are present)", true);
-			hideHealthBarThreshold = Config.LoadIntProperty(CATEGORY, "hide_health_bar_threshold", "Health needs to be equal to or above this before the bar will hide", 20);
-			hideHealthBarDelay = Config.LoadIntProperty(CATEGORY, "hide_health_bar_delay", "Delay (in seconds) before hiding the health bar", 4);
-			
-			hideHungerBar = Config.LoadBoolProperty(CATEGORY, "hide_hunger_bar", "If true, the hunger bar will be hidden when above a certain threshold", true);
-			hideHungerBarThreshold = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_threshold", "Hunger needs to be equal to or above this before the bar will hide", 20);
-			hideHungerBarDelay = Config.LoadIntProperty(CATEGORY, "hide_hunger_bar_delay", "Delay (in seconds) before hiding the hunger bar", 
-4);
-			
-			hideExperienceBar = Config.LoadBoolProperty(CATEGORY, "hide_experience_bar", "If true, the experience bar will be hidden unless there are xp orbs in a small radius around the player or a gui is open", true);
-			hideExperienceDelay = Config.LoadIntProperty(CATEGORY, "hide_experience_delay", "Delay (in seconds) before hiding the experience bar", 4);
-			
-			hideArmorBar = Config.LoadBoolProperty(CATEGORY, "hide_armor_bar", "If true, the armor bar will be hidden unless the player takes damage", true);
-			hideArmorDelay = Config.LoadIntProperty(CATEGORY, "hide_armor_delay", "Delay (in seconds) before hiding the armor bar", 4);
-			
-			showCreativeText = Config.LoadBoolProperty(CATEGORY, "show_creative_text", "If true, a 'Creative mode' text will show up when in creative mode", true);
+		public static class Hud {
+			@Name("Hide Hotbar")
+			@Comment("If true, the hotbar will be hidden until the mouse wheel is used or an item is selected with numbers")
+			public boolean hideHotbar = false;
+			@Name("Hide Hotbar Delay")
+			@Comment("Delay (in seconds) before hiding the hotbar")
+			@RangeInt(min = 0)
+			public int hideHotbarDelay = 4;
+			@Name("Hide Health bar")
+			@Comment("If true, the health bar will be hidden when above a certain threshold (the bar will always be shown if absorpion hearts are present)")
+			public boolean hideHealthBar = true;
+			@Name("Hide Health Bar Threshold")
+			@Comment("Health needs to be equal to or above this before the bar will hide")
+			@RangeInt(min = 1)
+			public int hideHealthBarThreshold = 20;
+			@Name("Hide Health Bar Delay")
+			@Comment("Delay (in seconds) before hiding the hunger bar")
+			@RangeInt(min = 0)
+			public int hideHealthBarDelay = 4;
+			@Name("Hide Hunger Bar")
+			@Comment("If true, the hunger bar will be hidden when above a certain threshold")
+			public static boolean hideHungerBar = true;
+			@Name("Hide Hunger Bar Threshold")
+			@Comment("Hunger needs to be equal to or above this before the bar will hide")
+			@RangeInt(min = 1)
+			public static int hideHungerBarThreshold = 20;
+			@Name("Hide Hunger Bar Delay")
+			@Comment("Delay (in seconds) before hiding the hunger bar")
+			@RangeInt(min = 0)
+			public int hideHungerBarDelay = 4;
+			@Name("Hide Experience Bar")
+			@Comment("If true, the experience bar will be hidden unless there are xp orbs in a small radius around the player or a gui is open")
+			public boolean hideExperienceBar = true;
+			@Name("Hide Experience Bar Delay")
+			@Comment("Delay (in seconds) before hiding the experience bar")
+			@RangeInt(min = 0)
+			public int hideExperienceDelay = 4;
+			@Name("Hide Armor Bar")
+			@Comment("If true, the armor bar will be hidden unless the player takes damage")
+			public boolean hideArmorBar = true;
+			@Name("Hide Armor Bar Delay")
+			@Comment("Delay (in seconds) before hiding the armor bar")
+			@RangeInt(min = 0)
+			public int hideArmorDelay = 4;
+			@Name("Show Creative Text")
+			@Comment("If true, a 'Creative mode' text will show up when in creative mode")
+			public boolean showCreativeText = true;
 		}
-	}
-	
-	public static class Drops{
-		public static String CATEGORY = "drops";
-		public static String DESCRIPTION = "Restrict items dropped and set lifespan of items spawned in various situations (20 ticks = 1 second)";
 		
-		public static List<String> restrictedDrops;
-		public static int itemLifespan;
-		public static int itemLifespanMobDeath;
-		public static int itemLifespanPlayerDeath;
-		public static int itemLifespanTossed;
 		
-		public static void Init() {
-			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
-			
-			restrictedDrops = Config.LoadStringListProperty(CATEGORY, "restricted_drops", "List of items/blocks to restrict from mob drops (separated by new line, format modid:itemid:meta)", new ArrayList<String>() {});
-			
-			itemLifespan = Config.LoadIntProperty(CATEGORY, "item_lifespan", "Lifespan (in ticks) of items on the ground", 6000);
-			itemLifespanMobDeath = Config.LoadIntProperty(CATEGORY, "item_lifespan_mob_drop", "Lifespan (in ticks) of items dropped when a mob dies", 6000);
-			itemLifespanPlayerDeath = Config.LoadIntProperty(CATEGORY, "item_lifespan_player_death", "Lifespan (in ticks) of items dropped when a player dies", Integer.MAX_VALUE);
-			itemLifespanTossed = Config.LoadIntProperty(CATEGORY, "item_lifespan_tossed", "Lifespan (in ticks) of items tossed on the ground", 6000);
+		public Drops drops = new Drops();
+		
+		public static class Drops {
+			@Name("Restricted Drops")
+			@Comment("List of items/blocks to restrict from mob drops (separated by new line, format modid:itemid:meta)")
+			public List<String> restrictedDrops = new ArrayList<String>() {};
+			@Name("Item Lifespan")
+			@Comment("Lifespan (in ticks) of items on the ground")
+			public int itemLifespan = 6000;
+			@Name("Item Lifespan Mob Death")
+			@Comment("Lifespan (in ticks) of items dropped when a mob dies")
+			public int itemLifespanMobDeath = 6000;
+			@Name("Item Lifespan Player Death")
+			@Comment("Lifespan (in ticks) of items dropped on player death")
+			public int itemLifespanPlayerDeath = Integer.MAX_VALUE;
+			@Name("Item Lifespan Tossed")
+			@Comment("Lifespan (in ticks) of items tossed on the ground")
+			public int itemLifespanTossed = 6000;
 		}
-	}
 	
-	public static class MovementRestriction{
-		public static String CATEGORY = "movement_restriction";
-		public static String DESCRIPTION = "Various settings related to restricting movement, such us encumbrance, armor weight and terrain slowdown";
+	
+		@Name("Movement Restriction")
+		public MovementRestriction movementRestriction = new MovementRestriction();
 		
-	    public static boolean addEncumbranceDebugText;
-	    public static boolean addEncumbranceHudText;
-	    public static boolean detailedEncumbranceHudText;
-	    public static int maxCarryWeight;
-		public static float rockWeight;
-		public static String[] customWeight;
-		public static float armorWeight;
-		public static int damageSlowdownDuration;
-		public static float damageSlowdownEffectiveness;
-		public static boolean damageSlowdownDifficultyScaling;
-		public static float terrainSlowdownPercentage;
-		public static float terrainSlowdownOnDirt;
-		public static float terrainSlowdownOnIce;
-		public static float terrainSlowdownOnPlant;
-		public static float terrainSlowdownOnSand;
-		public static float terrainSlowdownOnSnow;
-		public static float terrainSlowdownInSnow;
-		public static float terrainSlowdownInPlant;
-		public static boolean slowdownWhenWalkingBackwards;
-		public static float shulkerWeightReduction;
-		public static String[] terrainSlowdownCustom;
-		
-		public static void Init() {
-			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
-			
-			addEncumbranceDebugText = Config.LoadBoolProperty(CATEGORY, "add_debug_text", "Shows weight text in the debug (F3) details", false);
-			addEncumbranceHudText = Config.LoadBoolProperty(CATEGORY, "add_hud_text", "Shows weight text on the HUD when carrying too much", true);
-			detailedEncumbranceHudText = Config.LoadBoolProperty(CATEGORY, "detailed_hud_text", "Weight text on the HUD will be more detailed, showing numbers", false);
-			maxCarryWeight = Config.LoadIntProperty(CATEGORY, "max_carry_weight", "Maximum carry weight (set to 0 to disable)", 768);
-			rockWeight = Config.LoadFloatProperty(CATEGORY, "rock_weight", "Weight of one rock block, used as a base to calculate weight of other blocks", 1);
-			customWeight = Config.LoadStringArrayProperty(CATEGORY, "custom_weight", "Set here (one per line) block weight for each block or item. Format is 'modid:blockid:meta,weight', meta is not needed, setting no meta, means all the blocks sub-types of that block.", new String[] {});
-			armorWeight = Config.LoadFloatProperty(CATEGORY, "armor_weight", "Percentage of slowdown for each point (half-shield) of armor (set to 0 to disable)", 0.5f);
-			damageSlowdownDuration = Config.LoadIntProperty(CATEGORY, "damage_slowdown_duration", "Number of ticks each heart of damage slows you down for (set to 0 to disable)", 5);
-			damageSlowdownEffectiveness = Config.LoadFloatProperty(CATEGORY, "damage_slowdown_effectiveness", "When player's damaged, how much is slowed down?", 20.0f);
-			damageSlowdownDifficultyScaling = Config.LoadBoolProperty(CATEGORY, "damage_slowdown_difficulty_scaling", "Is the duration of the slowdown dependant on difficulty?", true);
-			terrainSlowdownPercentage = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_percentage", "Global modifier on the amount that terrain affects movement speed (set to 0 to disable)", 100.0f);
-			terrainSlowdownOnDirt = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_dirt", "Percentage of slowdown when walking on dirt or grass (set to 0 to disable)", 5f);
-			terrainSlowdownOnIce = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_ice", "Percentage of slowdown when walking on ice (set to 0 to disable)", 50f);
-			terrainSlowdownOnPlant = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_plant", "Percentage of slowdown when walking on leaves or plants (set to 0 to disable)", 20f);
-			terrainSlowdownOnSand = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_sand", "Percentage of slowdown when walking on sand (set to 0 to disable)", 20f);
-			terrainSlowdownOnSnow = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_snow", "Percentage of slowdown when walking on snow (set to 0 to disable)", 20f);
-			terrainSlowdownInPlant = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_in_plant", "Percentage of slowdown when walking through leaves or plants (set to 0 to disable)", 5f);
-			terrainSlowdownInSnow = Config.LoadFloatProperty(CATEGORY, "terrain_slowdown_in_snow", "Percentage of slowdown when walking through snow (set to 0 to disable)", 20f);
-			terrainSlowdownCustom = Config.LoadStringArrayProperty(CATEGORY, "terrain_slowdown_custom", "Custom list for each block that slows you down when you walk on it. Format is 'modid:blockid:meta,slowness', meta is not needed, setting no meta, means all the blocks. E.g. 'minecraft:diamond_block,75' will slowdown the player by 75% when walks on diamond block.", new String[] {});
-			
-			slowdownWhenWalkingBackwards = Config.LoadBoolProperty(CATEGORY, "slowdown_when_walking_backwards", "Set to false to disable the slowdown when walking backwards", true);
-			shulkerWeightReduction = Config.LoadFloatProperty(CATEGORY, "shulker_weight_reduction", "Multiplier for items weight in shulkerboxes. Set this to 0 to make items in shulker boxes not count towards weight. Set this to 1 to make items in shulker boxes weight the same as they were out of the box.", 0.75f);
+		public static class MovementRestriction {
+			@Name("Encumbrance Debug")
+			@Comment("Shows weight text in the debug (F3) details")
+		    public boolean addEncumbranceDebugText = true;
+			@Name("Encumbrance Hud")
+			@Comment("Shows weight text on the HUD when carrying too much")
+		    public boolean addEncumbranceHudText = true;
+			@Name("Detailed Encumbrance Hud")
+			@Comment("Weight text on the HUD will be more detailed, showing numbers")
+		    public boolean detailedEncumbranceHudText = false;
+			@Name("Max Carry Weight")
+			@Comment("Maximum carry weight (set to 0 to disable)")
+			@RangeInt(min = 0)
+		    public int maxCarryWeight = 768;
+			@Name("Rock Weight")
+			@Comment("Weight of one rock block, used as a base to calculate weight of other blocks")
+			@RangeDouble(min = 0f, max = Float.MAX_VALUE)
+			public float rockWeight = 1;
+			@Name("Custom Weights")
+			@Comment("Set here (one per line) block weight for each block or item. Format is 'modid:blockid:meta,weight', meta is not needed, setting no meta, means all the blocks sub-types of that block.")
+			public String[] customWeight = new String[] {};
+			@Name("Armor Weight")
+			@Comment("Percentage of slowdown for each point (half-shield) of armor (set to 0 to disable)")
+			@RangeDouble(min = 0f, max = 5f)
+			public float armorWeight = 0.5f;
+			@Name("Damage Slowdown Duration")
+			@Comment("Number of ticks each heart of damage slows you down for (set to 0 to disable)")
+			@RangeInt(min = 0)
+			public int damageSlowdownDuration = 5;
+			@Name("Damage Slowdown Effectiviness")
+			@Comment("When player's damaged, how much is slowed down?")
+			@RangeDouble(min = 0f, max = 100f)
+			public float damageSlowdownEffectiveness = 20f;
+			@Name("Damage Slowdown Difficulty Scaling")
+			@Comment("Is the duration of the slowdown dependant on difficulty?")
+			public boolean damageSlowdownDifficultyScaling = true;
+			@Name("Terrain Slowdown Percentage")
+			@Comment("Global modifier on the amount that terrain affects movement speed (set to 0 to disable)")
+			@RangeDouble(min = 0f, max = 100f)
+			public float terrainSlowdownPercentage = 10f;
+			@Name("Terrain Slowdown on Dirt")
+			@Comment("Percentage of slowdown when walking on dirt or grass")
+			@RangeDouble(min = 0f, max = 100f)
+			public float terrainSlowdownOnDirt = 5f;
+			@Name("Terrain Slowdown on Ice")
+			@Comment("Percentage of slowdown when walking on ice")
+			@RangeDouble(min = 0f, max = 100f)
+			public float terrainSlowdownOnIce = 50f;
+			@Name("Terrain Slowdown on Plants")
+			@Comment("Percentage of slowdown when walking on plants")
+			@RangeDouble(min = 0f, max = 100f)
+			public float terrainSlowdownOnPlant = 20f;
+			@Name("Terrain Slowdown on sand")
+			@Comment("Percentage of slowdown when walking on sand")
+			@RangeDouble(min = 0f, max = 100f)
+			public float terrainSlowdownOnSand = 20f;
+			@Name("Terrain Slowdown on snow")
+			@Comment("Percentage of slowdown when walking on snow")
+			@RangeDouble(min = 0f, max = 100f)
+			public float terrainSlowdownOnSnow = 20f;
+			@Name("Terrain Slowdown in Snow")
+			@Comment("Percentage of slowdown when walking in snow")
+			@RangeDouble(min = 0f, max = 100f)
+			public float terrainSlowdownInSnow = 20f;
+			@Name("Terrain Slowdown in Plants")
+			@Comment("Percentage of slowdown when walking in plants")
+			@RangeDouble(min = 0f, max = 100f)
+			public float terrainSlowdownInPlant = 5f;
+			@Name("Custom Terrain Slowdown")
+			@Comment("Custom list for each block that slows you down when you walk on it. Format is 'modid:blockid:meta,slowness', meta is not needed, setting no meta, means all the blocks. E.g. 'minecraft:diamond_block,75' will slowdown the player by 75% when walks on diamond block.")
+			public String[] terrainSlowdownCustom = new String[] {};
+			@Name("Slowdown Walking Backwards")
+			@Comment("Set to false to disable the slowdown when walking backwards")
+			public boolean slowdownWhenWalkingBackwards = true;
+			@Name("Shulker Weight Reduction")
+			@Comment("Multiplier for items weight in shulker boxes. Set this to 0 to make items in shulker boxes not count towards weight. Set this to 1 to make items in shulker boxes weight the same as they were out of the box.")
+			@RangeDouble(min = 0f, max = 1f)
+			public float shulkerWeightReduction = 0.75f;
 		}
-	}
 	
-	public static class Experience{
-		public static String CATEGORY = "experience";
-		public static String DESCRIPTION = "Configure some properties for the vanilla experience";
-
-		public static float percentageOre;
-		public static float percentageAll;
-		public static float percentageFromSpawner;
-		public static int lifespan;
-
-		public static void Init(){
-			Config.SetCategoryComment(CATEGORY, DESCRIPTION);
-
-			percentageOre = Config.LoadFloatProperty(CATEGORY, "percentage_ore", "Percentage of experience dropped by blocks. Experience dropped by blocks are still affected by percentage_all, so if you have e.g. percentage_all at 50, this needs to be set to 200 to make blocks drop normal experience. (set to 0 to make blocks not drop xp) (100 to disable)", 100f);
-			percentageAll = Config.LoadFloatProperty(CATEGORY, "percentage_all", "Percentage of experience given by everything (0 to disable all xp orbs from being created) (100 to disable)", 100f);
-			lifespan = Config.LoadIntProperty(CATEGORY, "xp_lifespan", "Lifespan (in ticks) of xp orbs (Range: -1 -> 38000. If set to -1 the orbs will never despawn)", 6000);
-			percentageFromSpawner = Config.LoadFloatProperty(CATEGORY, "percentage_from_spawner", "Percentage of experience dropped from mobs spawned from Spawners.", 50f);
+	
+		public Experience experience = new Experience();
+		
+		public static class Experience {
+			@Name("Percentage Ore")
+			@Comment("Percentage of experience dropped by blocks. Experience dropped by blocks are still affected by percentage_all, so if you have e.g. percentage_all at 50, this needs to be set to 200 to make blocks drop normal experience. (set to 0 to make blocks not drop xp)")
+			@RangeDouble(min = 0f, max = Float.MAX_VALUE)
+			public float percentageOre = 100f;
+			@Name("Percentage All")
+			@Comment("Percentage of experience given by everything (0 to disable all xp orbs from being created) (100 to disable)")
+			@RangeDouble(min = 0f, max = Float.MAX_VALUE)
+			public float percentageAll = 100f;
+			@Name("Percentage Mobs From Spawner")
+			@Comment("Percentage of experience dropped from mobs spawned from Spawners.")
+			@RangeDouble(min = 0f, max = Float.MAX_VALUE)
+			public float percentageFromSpawner = 80f;
+			@Name("Lifespan")
+			@Comment("Lifespan (in ticks) of xp orbs (Range: -1 -> 38000. If set to -1 the orbs will never despawn)")
+			public int lifespan = 6000;
 		}
 	}
 }

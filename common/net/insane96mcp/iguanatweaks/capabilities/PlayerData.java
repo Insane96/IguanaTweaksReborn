@@ -84,7 +84,7 @@ public class PlayerData implements IPlayerData{
 	@Override
 	public void tickDamageSlownessDuration() {
 		if (this.damageSlownessDuration > 0)
-			this.damageSlownessDuration -= Properties.General.tickRatePlayerUpdate;
+			this.damageSlownessDuration -= Properties.config.general.tickRatePlayerUpdate;
 	}
 
 }

@@ -11,10 +11,10 @@ import net.minecraft.item.ItemStack;
 
 public class ModuleDrops {
 	public static void RestrictedDrops(EntityLivingBase living, List<EntityItem> drops) {
-		if (!Properties.Global.drops)
+		if (!Properties.config.global.drops)
 			return;
 		
-		if (Properties.Drops.restrictedDrops.size() == 0)
+		if (Properties.config.drops.restrictedDrops.size() == 0)
 			return;
 		
 		if (living instanceof EntityPlayer)
@@ -29,8 +29,8 @@ public class ModuleDrops {
 			
 			String itemName = itemStack.getItem().getRegistryName().toString();
 			
-			if (Properties.Drops.restrictedDrops.contains(itemName) 
-				|| Properties.Drops.restrictedDrops.contains(itemName + ":" + itemStack.getItemDamage())) {
+			if (Properties.config.drops.restrictedDrops.contains(itemName) 
+				|| Properties.config.drops.restrictedDrops.contains(itemName + ":" + itemStack.getItemDamage())) {
 				toRemove.add(item);
 			}
 		}
@@ -41,42 +41,42 @@ public class ModuleDrops {
 	}
 	
 	public static void MobDrop(EntityLivingBase living, List<EntityItem> drops) {
-		if (!Properties.Global.drops)
+		if (!Properties.config.global.drops)
 			return;
 		
-		if (Properties.Drops.itemLifespanMobDeath == 6000)
+		if (Properties.config.drops.itemLifespanMobDeath == 6000)
 			return;
 		
 		if (living instanceof EntityPlayer)
 			return;
 		
 		for (EntityItem item : drops) {
-			item.lifespan = Properties.Drops.itemLifespanMobDeath;
+			item.lifespan = Properties.config.drops.itemLifespanMobDeath;
 		}
 	}
 	
 	public static void PlayerDrop(EntityLivingBase living, List<EntityItem> drops) {
-		if (!Properties.Global.drops)
+		if (!Properties.config.global.drops)
 			return;
 		
-		if (Properties.Drops.itemLifespanPlayerDeath == 6000)
+		if (Properties.config.drops.itemLifespanPlayerDeath == 6000)
 			return;
 		
 		if (!(living instanceof EntityPlayer))
 			return;
 		
 		for (EntityItem item : drops) {
-			item.lifespan = Properties.Drops.itemLifespanPlayerDeath;
+			item.lifespan = Properties.config.drops.itemLifespanPlayerDeath;
 		}
 	}
 	
 	public static void PlayerToss(EntityItem item) {
-		if (!Properties.Global.drops)
+		if (!Properties.config.global.drops)
 			return;
 		
-		if (Properties.Drops.itemLifespanTossed == 6000)
+		if (Properties.config.drops.itemLifespanTossed == 6000)
 			return;
 		
-		item.lifespan = Properties.Drops.itemLifespanMobDeath;
+		item.lifespan = Properties.config.drops.itemLifespanMobDeath;
 	}
 }
