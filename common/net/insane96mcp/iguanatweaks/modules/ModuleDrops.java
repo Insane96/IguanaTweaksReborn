@@ -1,6 +1,7 @@
 package net.insane96mcp.iguanatweaks.modules;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.insane96mcp.iguanatweaks.lib.Properties;
@@ -14,13 +15,14 @@ public class ModuleDrops {
 		if (!Properties.config.global.drops)
 			return;
 		
-		if (Properties.config.drops.restrictedDrops.size() == 0)
+		if (Properties.config.drops.restrictedDrops.length == 0)
 			return;
 		
 		if (living instanceof EntityPlayer)
 			return;
 		
 		List<EntityItem> toRemove = new ArrayList<EntityItem>();
+		List<String> restrictedDrops = Arrays.asList(Properties.config.drops.restrictedDrops);
 		
 		for (EntityItem item : drops) {
 			ItemStack itemStack = item.getItem();
@@ -29,8 +31,8 @@ public class ModuleDrops {
 			
 			String itemName = itemStack.getItem().getRegistryName().toString();
 			
-			if (Properties.config.drops.restrictedDrops.contains(itemName) 
-				|| Properties.config.drops.restrictedDrops.contains(itemName + ":" + itemStack.getItemDamage())) {
+			if (restrictedDrops.contains(itemName)
+				|| restrictedDrops.contains(itemName + ":" + itemStack.getItemDamage())) {
 				toRemove.add(item);
 			}
 		}

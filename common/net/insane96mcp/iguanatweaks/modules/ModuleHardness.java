@@ -110,7 +110,7 @@ public class ModuleHardness {
 		if (!Properties.config.global.hardness)
 			return;
 		
-		if (Properties.config.hardness.blockHardness.size() == 0)
+		if (Properties.config.hardness.blockHardness.length == 0)
 			return;
 		
 		World world = event.getEntityPlayer().world;

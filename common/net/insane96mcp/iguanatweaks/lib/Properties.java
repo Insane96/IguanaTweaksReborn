@@ -1,8 +1,5 @@
 package net.insane96mcp.iguanatweaks.lib;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
@@ -87,10 +84,10 @@ public class Properties {
 			public boolean blockListIsWhitelist = false;
 			@Name("Block Black/Whitelist")
 			@Comment("Block ids (one per line) for the hardness whitelist/blacklist.\nFormat is modid:blockid;meta\nE.g. 'minecraft:stone:1' will target granite")
-			public List<String> blockList = new ArrayList<String>() {};
+			public String[] blockList = new String[] {};
 			@Name("Custom Block Hardness")
 			@Comment("Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier ('multiplier')\nThe format is modid:blockid:meta,hardness.\nE.g. 'minecraft:stone:1,5.0' will make granite have 5 hardness. If no meta is specified, this will affect every block meta.")
-			public List<String> blockHardness = new ArrayList<String>() {};
+			public String[] blockHardness = new String[] {};
 		}
 	
 		@Name("Stack Sizes")
@@ -218,7 +215,7 @@ public class Properties {
 		public static class Drops {
 			@Name("Restricted Drops")
 			@Comment("List of items/blocks to restrict from mob drops (separated by new line, format modid:itemid:meta)")
-			public List<String> restrictedDrops = new ArrayList<String>() {};
+			public String[] restrictedDrops = new String[] {};
 			@Name("Item Lifespan")
 			@Comment("Lifespan (in ticks) of items on the ground")
 			public int itemLifespan = 6000;
