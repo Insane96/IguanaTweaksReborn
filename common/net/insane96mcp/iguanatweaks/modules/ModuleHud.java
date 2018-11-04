@@ -11,6 +11,7 @@ import net.insane96mcp.iguanatweaks.network.HideArmorTimestamp;
 import net.insane96mcp.iguanatweaks.network.PacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -20,6 +21,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
@@ -209,6 +211,20 @@ public class ModuleHud {
 			EntityPlayerSP player = Minecraft.getMinecraft().player;
 			IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 			playerData.setHideHotbarLastTimestamp((int) player.world.getTotalWorldTime());
+		}
+	}
+
+	public static void PrintCreativeText(RenderGameOverlayEvent.Text event) {
+		if (!Properties.config.hud.showCreativeText)
+			return;
+		
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayerSP player = mc.player;
+		
+		if (Properties.config.hud.showCreativeText && !mc.gameSettings.showDebugInfo && player.capabilities.isCreativeMode)
+		{
+			event.getLeft().add(I18n.format("info.creative_mode"));
+			return;
 		}
 	}
 }

@@ -6,6 +6,12 @@ import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.common.config.Config.RangeDouble;
 import net.minecraftforge.common.config.Config.RangeInt;
+import net.minecraftforge.common.config.Config.Type;
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 @Config(modid = IguanaTweaks.MOD_ID, category = "", name = "IguanaTweaksReborn")
 public class Properties {
@@ -334,5 +340,25 @@ public class Properties {
 			@Comment("Lifespan (in ticks) of xp orbs (Range: -1 -> 38000. If set to -1 the orbs will never despawn)")
 			public int lifespan = 6000;
 		}
+	}
+
+	@Mod.EventBusSubscriber(modid = IguanaTweaks.MOD_ID)
+	private static class EventHandler{
+		@SubscribeEvent
+	    public static void onConfigChangedEvent(OnConfigChangedEvent event)
+	    {
+	        if (event.getModID().equals(IguanaTweaks.MOD_ID))
+	        {
+	            ConfigManager.sync(IguanaTweaks.MOD_ID, Type.INSTANCE);
+	        }
+	    }
+	    
+		@SubscribeEvent
+	    public static void onPlayerLoggedIn(PlayerLoggedInEvent event) {
+	    	if (event.player.world.isRemote)
+	    		return;
+	    	
+	    	
+	    }
 	}
 }

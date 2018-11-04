@@ -1,5 +1,6 @@
 package net.insane96mcp.iguanatweaks.events;
 
+import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.modules.ModuleGeneral;
 import net.insane96mcp.iguanatweaks.modules.ModuleHud;
 import net.insane96mcp.iguanatweaks.modules.ModuleMovementRestriction;
@@ -8,10 +9,12 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@Mod.EventBusSubscriber(modid = IguanaTweaks.MOD_ID)
 public class RenderGameOverlay {
 	
 	@SideOnly(Side.CLIENT)
@@ -51,5 +54,6 @@ public class RenderGameOverlay {
 	@SubscribeEvent
 	public static void onRenderGameOverlay(RenderGameOverlayEvent.Text event) {
 		ModuleMovementRestriction.PrintHudInfos(event);
+		ModuleHud.PrintCreativeText(event);
 	}
 }
