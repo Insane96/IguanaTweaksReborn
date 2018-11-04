@@ -12,7 +12,7 @@ public class PacketHandler {
 	private static int discriminator = 0;
 	
 	public static void Init() {
-		INSTANCE.registerMessage(StunMessageHandler.class, StunMessage.class, discriminator++, Side.CLIENT);
+		INSTANCE.registerMessage(StunMessage.Handler.class, StunMessage.class, discriminator++, Side.CLIENT);
 		INSTANCE.registerMessage(HideArmorTimestamp.Handler.class, HideArmorTimestamp.class, discriminator++, Side.CLIENT);
 	}
 	
