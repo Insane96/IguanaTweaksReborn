@@ -376,8 +376,6 @@ public class Properties {
 		
 		@SubscribeEvent
 		public static void EventClientDisconnectionFromServer(ClientDisconnectionFromServerEvent event) {
-	    	System.out.println("Fkin porcodio");
-	    	
 	    	Properties.config = Properties.localConfig;
 	    	System.out.println(Arrays.toString(Properties.config.hardness.blockHardness) + " " + Arrays.toString(Properties.localConfig.hardness.blockHardness));
 		}
