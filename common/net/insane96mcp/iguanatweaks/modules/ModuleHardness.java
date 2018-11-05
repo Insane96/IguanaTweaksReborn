@@ -32,10 +32,20 @@ public class ModuleHardness {
 		
 		ResourceLocation blockResource = state.getBlock().getRegistryName();
 		boolean shouldProcess = true;
-		for (String line : Properties.config.hardness.blockHardness) {
-			try {
-				String block = line.split(",")[0];
-				String hardness = line.split(",")[1];
+		if ((Properties.config.hardness.blockHardness.length > 1) || (Properties.config.hardness.blockHardness.length > 0 && !Properties.config.hardness.blockHardness[0].equals(""))) {
+			for (String line : Properties.config.hardness.blockHardness) {
+				String[] splitLine = line.split(",");
+				if (splitLine.length < 2)
+				{
+					IguanaTweaks.logger.error("[block_hardness] Failed to parse line: " + line);
+					continue;
+				}
+				String block = splitLine[0];
+				if (block.split(":").length < 2) {
+					IguanaTweaks.logger.error("[block_hardness] Failed to parse block " + block + " of line: " + line);
+					continue;
+				}
+				String hardness = splitLine[1];
 				String modId = block.split(":")[0];
 				String blockId = block.split(":")[1];
 				ResourceLocation resourceLocation = new ResourceLocation(modId, blockId);
@@ -55,21 +65,19 @@ public class ModuleHardness {
 					}
 				}
 			}
-			catch (Exception e) {
-				IguanaTweaks.logger.error("[block_hardness] Failed to parse line " + line + ": ");
-				e.printStackTrace();
-			}
 		}
-		
 		if (!shouldProcess)
 			return;
 		
 		for (String line : Properties.config.hardness.blockList) {
 			//If is in blacklist mode
 			if (!Properties.config.hardness.blockListIsWhitelist){
-				String block = line.split(":")[0] + ":" + line.split(":")[1];
-				if (line.split(":").length == 3) {
-					int meta = Integer.parseInt(line.split(":")[2]);
+				String[] splitLine = line.split(":");
+				if (splitLine.length < 2)
+					continue;
+				String block = splitLine[0] + ":" + splitLine[1];
+				if (splitLine.length == 3) {
+					int meta = Integer.parseInt(splitLine[2]);
 					if (block.equals(blockResource.toString()) && state.getBlock().getMetaFromState(state) == meta) {
 						shouldProcess = false;
 						break;
@@ -85,9 +93,12 @@ public class ModuleHardness {
 			//If is in whitelist mode
 			else {
 				shouldProcess = false;
-				String block = line.split(":")[0] + ":" + line.split(":")[1];
+				String[] splitLine = line.split(":");
+				if (splitLine.length < 2)
+					continue;
+				String block = splitLine[0] + ":" + splitLine[1];
 				if (line.split(":").length == 3) {
-					int meta = Integer.parseInt(line.split(":")[2]);
+					int meta = Integer.parseInt(splitLine[2]);
 					if (block.equals(blockResource.toString()) && state.getBlock().getMetaFromState(state) == meta) {
 						shouldProcess = true;
 						break;
@@ -119,29 +130,31 @@ public class ModuleHardness {
 		IBlockState state = event.getEntityPlayer().world.getBlockState(event.getPos());
 		ResourceLocation blockResource = state.getBlock().getRegistryName();
 		int meta = state.getBlock().getMetaFromState(state);
-		for (String line : Properties.config.hardness.blockHardness) {
-			String[] lineSplit = line.split(",");
-			if (lineSplit.length != 2) {
-				IguanaTweaks.logger.error("[block_hardness] Failed to parse line " + line);
-				continue;
-			}
-			
-			String[] blockSplit = lineSplit[0].split(":");
-			if (blockSplit.length < 2 || blockSplit.length > 3) {
-				IguanaTweaks.logger.error("[block_hardness] Failed to parse line " + line);
-				continue;
-			}
-			ResourceLocation blockId = new ResourceLocation(blockSplit[0], blockSplit[1]);
-			
-			int metadata = -1;
-			if (blockSplit.length == 3) 
-				metadata = Integer.parseInt(blockSplit[2]);
-			
-			float hardness = Float.parseFloat(lineSplit[1]);
-			
-			if (blockResource.equals(blockId) && (meta == metadata || metadata == -1)) {
-				event.setNewSpeed(event.getOriginalSpeed() * GetRatio(hardness, blockId, state, world, pos));
-				break;
+		if ((Properties.config.hardness.blockHardness.length > 1) || (Properties.config.hardness.blockHardness.length > 0 && !Properties.config.hardness.blockHardness[0].equals(""))) {
+			for (String line : Properties.config.hardness.blockHardness) {
+				String[] lineSplit = line.split(",");
+				if (lineSplit.length != 2) {
+					IguanaTweaks.logger.error("[block_hardness] Failed to parse line: " + line);
+					continue;
+				}
+				
+				String[] blockSplit = lineSplit[0].split(":");
+				if (blockSplit.length < 2 || blockSplit.length > 3) {
+					IguanaTweaks.logger.error("[block_hardness] Failed to parse line: " + line);
+					continue;
+				}
+				ResourceLocation blockId = new ResourceLocation(blockSplit[0], blockSplit[1]);
+				
+				int metadata = -1;
+				if (blockSplit.length == 3) 
+					metadata = Integer.parseInt(blockSplit[2]);
+				
+				float hardness = Float.parseFloat(lineSplit[1]);
+				
+				if (blockResource.equals(blockId) && (meta == metadata || metadata == -1)) {
+					event.setNewSpeed(event.getOriginalSpeed() * GetRatio(hardness, blockId, state, world, pos));
+					break;
+				}
 			}
 		}
 	}

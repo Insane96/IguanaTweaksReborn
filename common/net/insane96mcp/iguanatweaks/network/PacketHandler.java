@@ -14,6 +14,7 @@ public class PacketHandler {
 	public static void Init() {
 		INSTANCE.registerMessage(StunMessage.Handler.class, StunMessage.class, discriminator++, Side.CLIENT);
 		INSTANCE.registerMessage(HideArmorTimestamp.Handler.class, HideArmorTimestamp.class, discriminator++, Side.CLIENT);
+		INSTANCE.registerMessage(ConfigSync.Handler.class, ConfigSync.class, discriminator++, Side.CLIENT);
 	}
 	
 	public static void SendToServer(IMessage message) {

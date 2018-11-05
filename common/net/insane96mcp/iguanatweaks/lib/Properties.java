@@ -1,6 +1,11 @@
 package net.insane96mcp.iguanatweaks.lib;
 
+import java.util.Arrays;
+
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
+import net.insane96mcp.iguanatweaks.network.ConfigSync;
+import net.insane96mcp.iguanatweaks.network.PacketHandler;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.Name;
@@ -12,12 +17,13 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEve
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
 
 @Config(modid = IguanaTweaks.MOD_ID, category = "", name = "IguanaTweaksReborn")
 public class Properties {
 	
 	public static ConfigOptions config = new ConfigOptions();
-	private static ConfigOptions localConfig = new ConfigOptions();
+	private static final ConfigOptions localConfig = new ConfigOptions();
 	
 	public static class ConfigOptions {
 		
@@ -345,7 +351,7 @@ public class Properties {
 	@Mod.EventBusSubscriber(modid = IguanaTweaks.MOD_ID)
 	private static class EventHandler{
 		@SubscribeEvent
-	    public static void onConfigChangedEvent(OnConfigChangedEvent event)
+	    public static void EventOnConfigChanged(OnConfigChangedEvent event)
 	    {
 	        if (event.getModID().equals(IguanaTweaks.MOD_ID))
 	        {
@@ -354,11 +360,26 @@ public class Properties {
 	    }
 	    
 		@SubscribeEvent
-	    public static void onPlayerLoggedIn(PlayerLoggedInEvent event) {
+	    public static void EventPlayerLoggedIn(PlayerLoggedInEvent event) {
 	    	if (event.player.world.isRemote)
 	    		return;
 	    	
+	    	ConfigSync message = new ConfigSync();
+	    	message.lessObiviousSilverfish = Properties.config.general.lessObviousSilverfish;
+	    	message.multiplier = Properties.config.hardness.multiplier;
+	    	message.blockListIsWhitelist = Properties.config.hardness.blockListIsWhitelist;
+	    	message.blockList = String.join("\r\n", Properties.config.hardness.blockList);
+	    	message.blockHardness = String.join("\r\n", Properties.config.hardness.blockHardness);
 	    	
+	    	PacketHandler.SendToClient(message, (EntityPlayerMP) event.player);
 	    }
+		
+		@SubscribeEvent
+		public static void EventClientDisconnectionFromServer(ClientDisconnectionFromServerEvent event) {
+	    	System.out.println("Fkin porcodio");
+	    	
+	    	Properties.config = Properties.localConfig;
+	    	System.out.println(Arrays.toString(Properties.config.hardness.blockHardness) + " " + Arrays.toString(Properties.localConfig.hardness.blockHardness));
+		}
 	}
 }
