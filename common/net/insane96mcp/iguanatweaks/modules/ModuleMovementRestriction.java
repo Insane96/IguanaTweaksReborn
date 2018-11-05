@@ -285,12 +285,6 @@ public class ModuleMovementRestriction {
 			Minecraft mc = Minecraft.getMinecraft();
 			EntityPlayerSP player = mc.player;
 			
-			if (Properties.config.hud.showCreativeText && !mc.gameSettings.showDebugInfo && player.capabilities.isCreativeMode)
-			{
-				event.getLeft().add(I18n.format("info.creative_mode"));
-				return;
-			}
-			
 			IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 			float weight = playerData.getWeight();
 			float encumbrance = weight / Properties.config.movementRestriction.maxCarryWeight;

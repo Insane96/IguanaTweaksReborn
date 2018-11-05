@@ -19,13 +19,14 @@ public class AlteredPoison extends Potion {
 		
 		if (entityLivingBaseIn instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer)entityLivingBaseIn;
-			player.addExhaustion(0.5f * (amplifier + 1));
+			player.addExhaustion(0.5f * (amplifier + 1) * (entityLivingBaseIn.world.getDifficulty().getId() - 1));
 		}
 	}
 	
 	@Override
 	public boolean isReady(int duration, int amplifier) {
-		int j = 75 >> amplifier;
+		int t = 75;
+		int j = t >> amplifier;
 
         if (j > 0)
         {

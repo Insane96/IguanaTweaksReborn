@@ -6,8 +6,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+@Mod.EventBusSubscriber(modid = IguanaTweaks.MOD_ID)
 public class CapabilityHandler {
 	public static final ResourceLocation PLAYER_DATA_CAP = new ResourceLocation(IguanaTweaks.MOD_ID, "playerData");
 	

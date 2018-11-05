@@ -96,7 +96,7 @@ public class ModuleGeneral {
 			return;
 		
 		PotionEffect poison = living.getActivePotionEffect(potionPoison);
-		PotionEffect alteredPoison = new PotionEffect(ModuleGeneral.alteredPoison, poison.getDuration() * 2, poison.getAmplifier(), poison.getIsAmbient(), poison.doesShowParticles());
+		PotionEffect alteredPoison = new PotionEffect(ModuleGeneral.alteredPoison, poison.getDuration() * (living.world.getDifficulty().getId()), poison.getAmplifier(), poison.getIsAmbient(), poison.doesShowParticles());
 		living.removeActivePotionEffect(potionPoison);
 		living.addPotionEffect(alteredPoison);
 	}
