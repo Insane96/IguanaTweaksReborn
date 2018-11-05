@@ -50,11 +50,6 @@ public class ModuleGeneral {
         event.setNewfov(event.getFov() / f);
 	}
 
-	/*public static void IncreasedStepHeight(EntityPlayer player){
-		if (Properties.config.general.increasedStepHeight)
-			player.stepHeight = 1f;
-	}*/
-
 	public static void LessObiviousSilverfish(){
 		Blocks.MONSTER_EGG.setHardness(1.4f).setResistance(10.0F).setHarvestLevel("pickaxe", 0);
 	}
@@ -115,9 +110,6 @@ public class ModuleGeneral {
 
 		int width = scaledResolution.getScaledWidth();
 		int height = scaledResolution.getScaledHeight();
-		
-	    //int left_height = 39;
-	    //int right_height = 39;
 
         EntityPlayer player = Minecraft.getMinecraft().player;
         int health = MathHelper.ceil(player.getHealth());
