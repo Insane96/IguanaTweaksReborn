@@ -10,3 +10,5 @@ sleep.random_respawn=你已恢复了意识，但不知道自己人在何方
 sleep.bed_destroyed=你睡醒后发现你的床已被你砸成碎片了
 sleep.bed_decoration=没有人告诉给你吗？床只是用来装饰的
 sleep.enjoy_the_night=已设置重生点，好好享受晚上吧！
+
+death.attack.altered_poison=%1$s不知道那瓶毒药是可以致命的
