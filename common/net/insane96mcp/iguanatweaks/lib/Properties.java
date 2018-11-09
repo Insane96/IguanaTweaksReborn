@@ -1,7 +1,5 @@
 package net.insane96mcp.iguanatweaks.lib;
 
-import java.util.Arrays;
-
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.network.ConfigSync;
 import net.insane96mcp.iguanatweaks.network.PacketHandler;
@@ -17,15 +15,42 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEve
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
-import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
 
 @Config(modid = IguanaTweaks.MOD_ID, category = "", name = "IguanaTweaksReborn")
 public class Properties {
 	
+	@Name("config")
 	public static ConfigOptions config = new ConfigOptions();
-	private static final ConfigOptions localConfig = new ConfigOptions();
+	private final static ConfigOptions localConfig = new ConfigOptions();
 	
 	public static class ConfigOptions {
+		
+		public Global global = new Global();
+		
+		public static class Global {
+			@Name("Drops")
+			@Comment("Set to false to disable everything the Drops module does")
+			public boolean drops = true;
+			@Name("Experience")
+			@Comment("Set to false to disable everything the Experience module does")
+			public boolean experience = true;
+			@Name("Hardness")
+			@Comment("Set to false to disable everything the Hardness module does")
+			public boolean hardness = true;
+			@Name("Hud")
+			@Comment("Set to false to disable everything the Hud module does")
+			public boolean hud = true;
+			@Name("Movement Restriction")
+			@Comment("Set to false to disable everything the Movement Restriction module does")
+			public boolean movementRestriction = true;
+			@Name("Sleep & Respawn")
+			@Comment("Set to false to disable everything the Sleep & Respawn module does")
+			public boolean sleepRespawn = true;
+			@Name("Stack Size")
+			@Comment("Set to false to disable everything the Stack Size module does")
+			public boolean stackSize = true;
+		}
+	
 		
 		public General general = new General();
 		
@@ -55,34 +80,7 @@ public class Properties {
 			@RangeDouble(min = 0, max = Float.MAX_VALUE)
 			public float exhaustionMultiplier = 1.0f;
 		}
-		
-		
-		public Global global = new Global();
-		
-		public static class Global {
-			@Name("Drops")
-			@Comment("Set to false to disable everything the Drops module does")
-			public boolean drops = true;
-			@Name("Experience")
-			@Comment("Set to false to disable everything the Experience module does")
-			public boolean experience = true;
-			@Name("Hardness")
-			@Comment("Set to false to disable everything the Hardness module does")
-			public boolean hardness = true;
-			@Name("Hud")
-			@Comment("Set to false to disable everything the Hud module does")
-			public boolean hud = true;
-			@Name("Movement Restriction")
-			@Comment("Set to false to disable everything the Movement Restriction module does")
-			public boolean movementRestriction = true;
-			@Name("Sleep & Respawn")
-			@Comment("Set to false to disable everything the Sleep & Respawn module does")
-			public boolean sleepRespawn = true;
-			@Name("Stack Size")
-			@Comment("Set to false to disable everything the Stack Size module does")
-			public boolean stackSize = true;
-		}
-	
+
 		
 		public Hardness hardness = new Hardness();
 		
@@ -98,10 +96,19 @@ public class Properties {
 			@Comment("Block ids (one per line) for the hardness whitelist/blacklist.\nFormat is modid:blockid;meta\nE.g. 'minecraft:stone:1' will target granite")
 			public String[] blockList = new String[] {};
 			@Name("Custom Block Hardness")
-			@Comment("Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier ('multiplier')\nThe format is modid:blockid:meta,hardness.\nE.g. 'minecraft:stone:1,5.0' will make granite have 5 hardness. If no meta is specified, this will affect every block meta.")
-			public String[] blockHardness = new String[] {};
+			@Comment("Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier\nThe format is modid:blockid:meta,hardness.\nE.g. 'minecraft:stone:1,5.0' will make granite have 5 hardness. If no meta is specified, this will affect every block meta.")
+			public String[] blockHardness = new String[] {
+				"minecraft:coal_ore,12.0",
+		        "minecraft:iron_ore,15",
+		        "minecraft:gold_ore,20",
+		        "minecraft:diamond_ore,25",
+		        "minecraft:redstone_ore,12.0",
+		        "minecraft:lapis_ore,15",
+		        "minecraft:emerald_ore,30"
+			};
 		}
 	
+		
 		@Name("Stack Sizes")
 		public StackSizes stackSizes = new StackSizes();
 		
@@ -131,6 +138,7 @@ public class Properties {
 			};
 		}
 	
+		
 		@Name("Sleep & Respawn")
 		public SleepRespawn sleepRespawn = new SleepRespawn();
 		
@@ -374,10 +382,9 @@ public class Properties {
 	    	PacketHandler.SendToClient(message, (EntityPlayerMP) event.player);
 	    }
 		
-		@SubscribeEvent
+		/*@SubscribeEvent
 		public static void EventClientDisconnectionFromServer(ClientDisconnectionFromServerEvent event) {
 	    	Properties.config = Properties.localConfig;
-	    	System.out.println(Arrays.toString(Properties.config.hardness.blockHardness) + " " + Arrays.toString(Properties.localConfig.hardness.blockHardness));
-		}
+		}*/
 	}
 }

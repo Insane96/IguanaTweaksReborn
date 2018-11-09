@@ -1,5 +1,6 @@
 package net.insane96mcp.iguanatweaks.modules;
 
+import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
@@ -38,9 +39,13 @@ public class ModuleMovementRestriction {
 			return;
 		
 		if (!Properties.config.global.movementRestriction){
-			IAttributeInstance attribute = living.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
-			if (attribute.getModifier(Utils.movementRestrictionUUID) != null)
-				attribute.removeModifier(Utils.movementRestrictionUUID);
+			IAttributeInstance movSpeedAttribute = living.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+			if (movSpeedAttribute.getModifier(Utils.movSpeedRestrictionUUID) != null)
+				movSpeedAttribute.removeModifier(Utils.movSpeedRestrictionUUID);
+			
+			IAttributeInstance swimSpeedAttribute = living.getEntityAttribute(EntityLivingBase.SWIM_SPEED);
+			if (swimSpeedAttribute.getModifier(Utils.swimSpeedRestrictionUUID) != null)
+				swimSpeedAttribute.removeModifier(Utils.swimSpeedRestrictionUUID);
 			return;
 		}
 		
@@ -71,16 +76,28 @@ public class ModuleMovementRestriction {
     	if (player.moveForward < 0f && Properties.config.movementRestriction.slowdownWhenWalkingBackwards)
     		speedModifier = 0.5f + (speedModifier / 2f);
 
-		AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
-		IAttributeInstance attribute = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
-		if (attribute.getModifier(Utils.movementRestrictionUUID) == null)
-			attribute.applyModifier(modifier);
-		else if (attribute.getModifier(Utils.movementRestrictionUUID).getAmount() != modifier.getAmount()) {
-			attribute.removeModifier(Utils.movementRestrictionUUID);
-			attribute.applyModifier(modifier);
+		AttributeModifier movSpeedModifier = new AttributeModifier(Utils.movSpeedRestrictionUUID, IguanaTweaks.RESOURCE_PREFIX + ":movSpeedMovementRestriction", -speedModifier, 1);
+		IAttributeInstance movSpeedAttribute = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+		if (movSpeedAttribute.getModifier(Utils.movSpeedRestrictionUUID) == null)
+			movSpeedAttribute.applyModifier(movSpeedModifier);
+		else if (movSpeedAttribute.getModifier(Utils.movSpeedRestrictionUUID).getAmount() != movSpeedModifier.getAmount()) {
+			movSpeedAttribute.removeModifier(Utils.movSpeedRestrictionUUID);
+			movSpeedAttribute.applyModifier(movSpeedModifier);
+		}
+		
+		AttributeModifier swimSpeedModifier = new AttributeModifier(Utils.swimSpeedRestrictionUUID, IguanaTweaks.RESOURCE_PREFIX + ":swimSpeedMovementRestriction", -speedModifier, 1);
+		IAttributeInstance swimSpeedAttribute = player.getEntityAttribute(EntityLivingBase.SWIM_SPEED);
+		if (swimSpeedAttribute.getModifier(Utils.swimSpeedRestrictionUUID) == null)
+			swimSpeedAttribute.applyModifier(swimSpeedModifier);
+		else if (swimSpeedAttribute.getModifier(Utils.swimSpeedRestrictionUUID).getAmount() != swimSpeedModifier.getAmount()) {
+			swimSpeedAttribute.removeModifier(Utils.swimSpeedRestrictionUUID);
+			swimSpeedAttribute.applyModifier(swimSpeedModifier);
 		}
 		
 		player.jumpMovementFactor = 0.02f * (1f - speedModifier);
+
+		if (player.isInWater())
+			System.out.println(player.getEntityAttribute(EntityLivingBase.SWIM_SPEED).getAttributeValue() + " " + player.jumpMovementFactor);
 		
 		Reflection.Set(Reflection.EntityPlayer_speedInAir, player, 0.02f * (1f - speedModifier));
 	}
@@ -145,7 +162,7 @@ public class ModuleMovementRestriction {
 		
 		float slownessTerrain = 0f;
 		
-		if (player.isInWater() || Properties.config.movementRestriction.terrainSlowdownPercentage == 0)
+		if (!player.onGround || Properties.config.movementRestriction.terrainSlowdownPercentage == 0)
 			return 0f;
 		BlockPos playerPos = new BlockPos(player.posX, player.posY - 1, player.posZ);
 		
@@ -234,19 +251,19 @@ public class ModuleMovementRestriction {
 
     	living.jumpMovementFactor = 0.02f * (1f - speedModifier);
 
-		AttributeModifier modifier = new AttributeModifier(Utils.movementRestrictionUUID, "movementRestriction", -speedModifier, 1);
+		AttributeModifier modifier = new AttributeModifier(Utils.movSpeedRestrictionUUID, "movementRestriction", -speedModifier, 1);
 		IAttributeInstance attribute = living.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
-		if (attribute.getModifier(Utils.movementRestrictionUUID) == null)
+		if (attribute.getModifier(Utils.movSpeedRestrictionUUID) == null)
 			attribute.applyModifier(modifier);
-		if (attribute.getModifier(Utils.movementRestrictionUUID).getAmount() != modifier.getAmount())
-			attribute.removeModifier(Utils.movementRestrictionUUID);
+		if (attribute.getModifier(Utils.movSpeedRestrictionUUID).getAmount() != modifier.getAmount())
+			attribute.removeModifier(Utils.movSpeedRestrictionUUID);
 	}
 	
 	public static float SlownessTerrainEntity(EntityLivingBase living, World world) {
 		
 		float slownessTerrain = 0f;
 		
-		if (living.isInWater() || Properties.config.movementRestriction.terrainSlowdownPercentage == 0)
+		if (Properties.config.movementRestriction.terrainSlowdownPercentage == 0)
 			return 0f;
 		BlockPos playerPos = new BlockPos(living.posX, living.posY - 1, living.posZ);
 

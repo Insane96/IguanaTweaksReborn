@@ -13,7 +13,8 @@ import net.minecraft.world.World;
 
 public class Utils {
 
-	public static final UUID movementRestrictionUUID = new UUID(22, 0x10000);
+	public static final UUID movSpeedRestrictionUUID = new UUID(22, 0x10000);
+	public static final UUID swimSpeedRestrictionUUID = new UUID(22, 0x10002);
 	public static final UUID stunUUID = new UUID(22, 0x10001);
 	
 	@SuppressWarnings("deprecation")
