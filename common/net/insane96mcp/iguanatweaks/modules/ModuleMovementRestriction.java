@@ -96,9 +96,6 @@ public class ModuleMovementRestriction {
 		
 		player.jumpMovementFactor = 0.02f * (1f - speedModifier);
 
-		if (player.isInWater())
-			System.out.println(player.getEntityAttribute(EntityLivingBase.SWIM_SPEED).getAttributeValue() + " " + player.jumpMovementFactor);
-		
 		Reflection.Set(Reflection.EntityPlayer_speedInAir, player, 0.02f * (1f - speedModifier));
 	}
 	
@@ -263,7 +260,7 @@ public class ModuleMovementRestriction {
 		
 		float slownessTerrain = 0f;
 		
-		if (Properties.config.movementRestriction.terrainSlowdownPercentage == 0)
+		if (!living.isInWater() || Properties.config.movementRestriction.terrainSlowdownPercentage == 0)
 			return 0f;
 		BlockPos playerPos = new BlockPos(living.posX, living.posY - 1, living.posZ);
 

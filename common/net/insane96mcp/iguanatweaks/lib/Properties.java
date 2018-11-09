@@ -381,10 +381,6 @@ public class Properties {
 	    	
 	    	PacketHandler.SendToClient(message, (EntityPlayerMP) event.player);
 	    }
-		
-		/*@SubscribeEvent
-		public static void EventClientDisconnectionFromServer(ClientDisconnectionFromServerEvent event) {
-	    	Properties.config = Properties.localConfig;
-		}*/
+
 	}
 }
