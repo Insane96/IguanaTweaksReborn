@@ -68,7 +68,10 @@ public class ModuleExperience {
         if (Properties.config.experience.percentageOre == 100.0f)
             return;
 
-        event.setExpToDrop(Math.round(event.getExpToDrop() * (Properties.config.experience.percentageOre / 100f)));
+        int xpToDrop = event.getExpToDrop();
+        xpToDrop *= (1f / Properties.config.experience.percentageAll / 100f) * Properties.config.experience.percentageOre / 100f;
+        
+        event.setExpToDrop(xpToDrop);
     }
     
     public static void CheckFromSpawner(LivingSpawnEvent.SpecialSpawn event) {
