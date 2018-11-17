@@ -215,7 +215,7 @@ public class ModuleHud {
 	}
 
 	public static void PrintCreativeText(RenderGameOverlayEvent.Text event) {
-		if (!Properties.config.hud.showCreativeText)
+		if (!Properties.config.hud.showCreativeText || !Properties.config.global.hud)
 			return;
 		
 		Minecraft mc = Minecraft.getMinecraft();
