@@ -9,6 +9,7 @@ import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.common.config.Config.RangeDouble;
 import net.minecraftforge.common.config.Config.RangeInt;
+import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -24,7 +25,7 @@ public class Properties {
 	private final static ConfigOptions localConfig = new ConfigOptions();
 	
 	public static class ConfigOptions {
-		
+		@RequiresMcRestart
 		public Global global = new Global();
 		
 		public static class Global {
@@ -57,10 +58,12 @@ public class Properties {
 		public static class General {
 			@Name("Less Obivious Silverfish")
 			@Comment("If true, silverfish blocks will be almost like stone")
-		    public boolean lessObviousSilverfish = true;
+			@RequiresMcRestart
+			public boolean lessObviousSilverfish = true;
 			@Name("Alter Poison")
 			@Comment("The poison effect will be changed to be deadly and drain hunger, but will damage the player 3 times slower")
-		    public boolean alterPoison = true;
+			@RequiresMcRestart
+			public boolean alterPoison = true;
 			@Name("Tick Rate Player Update")
 			@Comment("How often the speed of players are calculated (in ticks). Higher values might increase performance but may increase the chance of odd behavior")
 			@RangeInt(min = 1, max = Integer.MAX_VALUE)
@@ -104,12 +107,14 @@ public class Properties {
 		        "minecraft:diamond_ore,25",
 		        "minecraft:redstone_ore,12.0",
 		        "minecraft:lapis_ore,15",
-		        "minecraft:emerald_ore,30"
+		        "minecraft:emerald_ore,30",
+		        "minecraft:nether_quartz_ore,12.0"
 			};
 		}
 	
 		
 		@Name("Stack Sizes")
+		@RequiresMcRestart
 		public StackSizes stackSizes = new StackSizes();
 		
 		public static class StackSizes {
@@ -349,7 +354,7 @@ public class Properties {
 			@Name("Percentage Mobs From Spawner")
 			@Comment("Percentage of experience dropped from mobs spawned from Spawners.")
 			@RangeDouble(min = 0f, max = Float.MAX_VALUE)
-			public float percentageFromSpawner = 80f;
+			public float percentageFromSpawner = 75f;
 			@Name("Lifespan")
 			@Comment("Lifespan (in ticks) of xp orbs (Range: -1 -> 38000. If set to -1 the orbs will never despawn)")
 			public int lifespan = 6000;
