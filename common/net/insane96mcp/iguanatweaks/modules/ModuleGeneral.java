@@ -30,7 +30,7 @@ import net.minecraftforge.registries.IForgeRegistryModifiable;
 public class ModuleGeneral {
 
 	public static void PreventFov(FOVUpdateEvent event) {
-		if (!Properties.config.general.disableFovOnSpeedModified)
+		if (!Properties.config.misc.disableFovOnSpeedModified)
 			return;
 		
 		EntityPlayer player = event.getEntity();
@@ -55,7 +55,7 @@ public class ModuleGeneral {
 	}
 	
 	public static void ExhaustionOnBlockBreak(BreakEvent event) {
-		if (!Properties.config.general.exhaustionOnBlockBreak)
+		if (!Properties.config.misc.exhaustionOnBlockBreak)
 			return;
 		
 		IBlockState blockState = event.getState();
@@ -63,7 +63,7 @@ public class ModuleGeneral {
 		float hardness = 0f;
 		hardness = block.getBlockHardness(blockState, event.getWorld(), event.getPos());
 		
-		event.getPlayer().addExhaustion((hardness / 100f) * Properties.config.general.exhaustionMultiplier);
+		event.getPlayer().addExhaustion((hardness / 100f) * Properties.config.misc.exhaustionMultiplier);
 	}
 	
 	public static AlteredPoison alteredPoison;
@@ -79,7 +79,7 @@ public class ModuleGeneral {
 	}
 	
 	public static void ApplyPoison(EntityLivingBase living) {
-		if (!Properties.config.general.alterPoison)
+		if (!Properties.config.misc.alterPoison)
 			return;
 		
 		if (living.ticksExisted % 9 != 0)

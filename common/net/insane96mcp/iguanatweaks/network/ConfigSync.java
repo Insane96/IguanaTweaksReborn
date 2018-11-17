@@ -52,7 +52,7 @@ public class ConfigSync implements IMessage {
 
 				@Override
 				public void run() {
-					Properties.config.general.lessObviousSilverfish = message.lessObiviousSilverfish;
+					Properties.config.misc.lessObviousSilverfish = message.lessObiviousSilverfish;
 					Properties.config.hardness.multiplier = message.multiplier;
 					Properties.config.hardness.blockListIsWhitelist = message.blockListIsWhitelist;
 					if (!message.blockList.isEmpty()) {

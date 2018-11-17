@@ -53,7 +53,7 @@ public class ModuleMovementRestriction {
 		
 		EntityPlayer player = (EntityPlayer) living;
 		
-		if (player.ticksExisted % Properties.config.general.tickRatePlayerUpdate != 0)
+		if (player.ticksExisted % Properties.config.misc.tickRatePlayerUpdate != 0)
 			return;
 		
 		if (player.isCreative())
@@ -229,7 +229,7 @@ public class ModuleMovementRestriction {
 
 		float speedModifier = 1f;
 		
-		if (living.ticksExisted % Properties.config.general.tickRateEntityUpdate != 0)
+		if (living.ticksExisted % Properties.config.misc.tickRateEntityUpdate != 0)
 			return;
 		
 		float slownessTerrain = SlownessTerrainEntity(living, world);

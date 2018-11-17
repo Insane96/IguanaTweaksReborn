@@ -53,9 +53,9 @@ public class Properties {
 		}
 	
 		
-		public General general = new General();
+		public Misc misc = new Misc();
 		
-		public static class General {
+		public static class Misc {
 			@Name("Less Obivious Silverfish")
 			@Comment("If true, silverfish blocks will be almost like stone")
 			@RequiresMcRestart
@@ -378,7 +378,7 @@ public class Properties {
 	    		return;
 	    	
 	    	ConfigSync message = new ConfigSync();
-	    	message.lessObiviousSilverfish = Properties.config.general.lessObviousSilverfish;
+	    	message.lessObiviousSilverfish = Properties.config.misc.lessObviousSilverfish;
 	    	message.multiplier = Properties.config.hardness.multiplier;
 	    	message.blockListIsWhitelist = Properties.config.hardness.blockListIsWhitelist;
 	    	message.blockList = String.join("\r\n", Properties.config.hardness.blockList);
