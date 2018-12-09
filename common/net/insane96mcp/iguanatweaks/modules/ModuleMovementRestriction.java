@@ -11,7 +11,6 @@ import net.insane96mcp.iguanatweaks.network.StunMessage;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.resources.I18n;
@@ -116,7 +115,7 @@ public class ModuleMovementRestriction {
 	        Item item = stack.getItem();
 	        
 			Block block = Block.getBlockFromItem(stack.getItem());
-			IBlockState state = block.getStateFromMeta(stack.getMetadata());
+			//IBlockState state = block.getStateFromMeta(stack.getMetadata());
 			
 			if (block instanceof BlockShulkerBox) {
 				NBTTagCompound nbt = new NBTTagCompound();
