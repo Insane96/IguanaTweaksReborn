@@ -69,8 +69,7 @@ public class ModuleExperience {
             return;
 
         int xpToDrop = event.getExpToDrop();
-        xpToDrop *= (1f / Properties.config.experience.percentageAll / 100f) * Properties.config.experience.percentageOre / 100f;
-        
+        xpToDrop *= Properties.config.experience.percentageOre / 100f;
         event.setExpToDrop(xpToDrop);
     }
     

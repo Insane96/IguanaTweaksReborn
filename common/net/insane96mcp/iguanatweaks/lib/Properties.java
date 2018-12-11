@@ -344,7 +344,7 @@ public class Properties {
 		
 		public static class Experience {
 			@Name("Percentage Ore")
-			@Comment("Percentage of experience dropped by blocks. Experience dropped by blocks are not affected by 'Percentage All', unless set to 0")
+			@Comment("Percentage of experience dropped by blocks. Experience dropped by blocks are still affected by 'Percentage All'; so if you have e.g. 'Percentage All' at 50, this needs to be set to 200 to make blocks drop normal experience")
 			@RangeDouble(min = 0f, max = Float.MAX_VALUE)
 			public float percentageOre = 100f;
 			@Name("Percentage All")
