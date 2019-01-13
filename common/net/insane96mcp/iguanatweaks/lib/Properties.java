@@ -356,7 +356,8 @@ public class Properties {
 			@RangeDouble(min = 0f, max = Float.MAX_VALUE)
 			public float percentageFromSpawner = 75f;
 			@Name("Lifespan")
-			@Comment("Lifespan (in ticks) of xp orbs (Range: -1 -> 38000. If set to -1 the orbs will never despawn)")
+			@Comment("Lifespan (in ticks) of xp orbs (If set to -1 the orbs will never despawn. If set to 6000 orbs will not be modified)")
+			@RangeInt(min = -1, max = 38767)
 			public int lifespan = 6000;
 		}
 	}

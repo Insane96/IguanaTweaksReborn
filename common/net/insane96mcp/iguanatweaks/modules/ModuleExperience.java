@@ -14,13 +14,16 @@ public class ModuleExperience {
 		if (!Properties.config.global.experience)
 			return;
 		
+		if (Properties.config.experience.lifespan == 6000)
+			return;
+		
 		if (!(entity instanceof EntityXPOrb))
 			return;
 		
 		EntityXPOrb xpOrb = (EntityXPOrb)entity;
 		
 		if (Properties.config.experience.lifespan == -1)
-			xpOrb.xpOrbAge = 32768;
+			xpOrb.xpOrbAge = -32768;
 		else
 			xpOrb.xpOrbAge = 6000 - Properties.config.experience.lifespan;
     }
