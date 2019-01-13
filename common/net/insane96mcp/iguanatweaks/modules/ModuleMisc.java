@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryModifiable;
 
-public class ModuleGeneral {
+public class ModuleMisc {
 
 	public static void PreventFov(FOVUpdateEvent event) {
 		if (!Properties.config.misc.disableFovOnSpeedModified)
@@ -91,7 +91,7 @@ public class ModuleGeneral {
 			return;
 		
 		PotionEffect poison = living.getActivePotionEffect(potionPoison);
-		PotionEffect alteredPoison = new PotionEffect(ModuleGeneral.alteredPoison, poison.getDuration() * (living.world.getDifficulty().getId()), poison.getAmplifier(), poison.getIsAmbient(), poison.doesShowParticles());
+		PotionEffect alteredPoison = new PotionEffect(ModuleMisc.alteredPoison, poison.getDuration() * (living.world.getDifficulty().getId()), poison.getAmplifier(), poison.getIsAmbient(), poison.doesShowParticles());
 		living.removeActivePotionEffect(potionPoison);
 		living.addPotionEffect(alteredPoison);
 	}
@@ -158,7 +158,7 @@ public class ModuleGeneral {
         final int TOP =  9 * (player.world.getWorldInfo().isHardcoreModeEnabled() ? 5 : 0);
         final int BACKGROUND = (highlight ? 25 : 16);
         int MARGIN = 16;
-        if (player.isPotionActive(ModuleGeneral.alteredPoison))
+        if (player.isPotionActive(ModuleMisc.alteredPoison))
         	MARGIN += 36;
         float absorbRemaining = absorb;
 

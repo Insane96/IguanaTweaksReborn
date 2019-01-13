@@ -5,7 +5,7 @@ import net.insane96mcp.iguanatweaks.capabilities.PlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataStorage;
 import net.insane96mcp.iguanatweaks.integration.Integration;
 import net.insane96mcp.iguanatweaks.lib.Reflection;
-import net.insane96mcp.iguanatweaks.modules.ModuleGeneral;
+import net.insane96mcp.iguanatweaks.modules.ModuleMisc;
 import net.insane96mcp.iguanatweaks.modules.ModuleStackSizes;
 import net.insane96mcp.iguanatweaks.network.PacketHandler;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -28,7 +28,7 @@ public class CommonProxy {
 	public void PostInit(FMLPostInitializationEvent event) {
 
 		//General
-		ModuleGeneral.LessObiviousSilverfish();
+		ModuleMisc.LessObiviousSilverfish();
 		
 		//StackSizes
 		ModuleStackSizes.ProcessBlocks();

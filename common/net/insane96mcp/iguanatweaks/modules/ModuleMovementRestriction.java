@@ -1,13 +1,16 @@
 package net.insane96mcp.iguanatweaks.modules;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.insane96mcp.iguanatweaks.lib.Reflection;
-import net.insane96mcp.iguanatweaks.lib.Utils;
 import net.insane96mcp.iguanatweaks.network.PacketHandler;
 import net.insane96mcp.iguanatweaks.network.StunMessage;
+import net.insane96mcp.iguanatweaks.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.block.material.Material;
@@ -23,6 +26,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -61,16 +65,12 @@ public class ModuleMovementRestriction {
 		float slownessDamage = SlownessDamage(player, world);
 		float slownessWeight = SlownessWeight(player, world);
 		float slownessTerrain = SlownessTerrain(player, world);
-		float slownessArmor = player.getTotalArmorValue() * Properties.config.movementRestriction.armorWeight;
-		if (slownessArmor > 100f) 
-			slownessArmor = 100f;
-    	
-    	float speedModifierArmour = (100f - slownessArmor) / 100f;
+		
     	float speedModifierTerrain = (100f - slownessTerrain) / 100f;
     	float speedModifierWeight = (100f - slownessWeight) / 100f;
     	float speedModifierDamage = (100f - slownessDamage) / 100f;
     	
-    	float speedModifier = 1f - (speedModifierArmour * speedModifierTerrain * speedModifierWeight * slownessDamage);
+    	float speedModifier = 1f - (speedModifierTerrain * speedModifierWeight * slownessDamage);
     	
     	if (player.moveForward < 0f && Properties.config.movementRestriction.slowdownWhenWalkingBackwards)
     		speedModifier = 0.5f + (speedModifier / 2f);
@@ -84,7 +84,7 @@ public class ModuleMovementRestriction {
 			movSpeedAttribute.applyModifier(movSpeedModifier);
 		}
 		
-		AttributeModifier swimSpeedModifier = new AttributeModifier(Utils.swimSpeedRestrictionUUID, IguanaTweaks.RESOURCE_PREFIX + ":swimSpeedMovementRestriction", -speedModifier, 1);
+		AttributeModifier swimSpeedModifier = new AttributeModifier(Utils.swimSpeedRestrictionUUID, IguanaTweaks.RESOURCE_PREFIX + ":swimSpeedMovementRestriction", -speedModifier / 2f, 1);
 		IAttributeInstance swimSpeedAttribute = player.getEntityAttribute(EntityLivingBase.SWIM_SPEED);
 		if (swimSpeedAttribute.getModifier(Utils.swimSpeedRestrictionUUID) == null)
 			swimSpeedAttribute.applyModifier(swimSpeedModifier);
@@ -93,9 +93,48 @@ public class ModuleMovementRestriction {
 			swimSpeedAttribute.applyModifier(swimSpeedModifier);
 		}
 		
-		player.jumpMovementFactor = 0.02f * (1f - speedModifier);
+		player.jumpMovementFactor = 0.00f * (1f - speedModifier);
 
 		Reflection.Set(Reflection.EntityPlayer_speedInAir, player, 0.02f * (1f - speedModifier));
+	}
+	
+	private static float AddWeight(ItemStack stack) {
+		if (stack.isEmpty())
+			return 0;
+        float toAdd = 0f;
+        
+        Item item = stack.getItem();
+        
+		Block block = Block.getBlockFromItem(stack.getItem());
+		//IBlockState state = block.getStateFromMeta(stack.getMetadata());
+		
+		if (block instanceof BlockShulkerBox) {
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt = stack.writeToNBT(nbt);
+			NBTTagCompound blockEntityTag = nbt.getCompoundTag("tag").getCompoundTag("BlockEntityTag");
+			NBTTagList items = blockEntityTag.getTagList("Items", 10);
+			for (int i = 0; i < items.tagCount(); i++){
+				NBTTagCompound itemTags = items.getCompoundTagAt(i);
+				ItemStack stackInBox = new ItemStack(Item.getByNameOrId(itemTags.getString("id")), itemTags.getByte("Count"), itemTags.getShort("Damage"));
+				Block blockInBox = Block.getBlockFromItem(stackInBox.getItem());
+				if (!block.equals(Blocks.AIR) && !stack.getItem().equals(Items.AIR))	        
+			        toAdd += Utils.GetItemWeight(stackInBox) * stackInBox.getCount();
+				if (toAdd == 0f)
+		        	toAdd = 1f / 64f * stack.getCount();
+			}
+			toAdd *= Properties.config.movementRestriction.shulkerWeightReduction;
+		}
+		else if (!item.equals(Items.AIR)) {
+	        toAdd = Utils.GetItemWeight(stack) * stack.getCount();
+		}
+		
+		return toAdd;
+	}
+	
+	public Map<ItemArmor.ArmorMaterial, Float> armorWeights;
+	static {
+		Map<ItemArmor.ArmorMaterial, Float> mapArmorWeights = new HashMap<ItemArmor.ArmorMaterial, Float>();
+		mapArmorWeights.put(ItemArmor.ArmorMaterial.LEATHER, 1f);
 	}
 	
 	public static float SlownessWeight(EntityPlayer player, World world) {
@@ -108,42 +147,18 @@ public class ModuleMovementRestriction {
 		
 		for (ItemStack stack : player.inventory.mainInventory) 
 		{
-			if (stack.isEmpty())
-				continue;
-	        float toAdd = 0f;
-	        
-	        Item item = stack.getItem();
-	        
-			Block block = Block.getBlockFromItem(stack.getItem());
-			//IBlockState state = block.getStateFromMeta(stack.getMetadata());
-			
-			if (block instanceof BlockShulkerBox) {
-				NBTTagCompound nbt = new NBTTagCompound();
-				nbt = stack.writeToNBT(nbt);
-				NBTTagCompound blockEntityTag = nbt.getCompoundTag("tag").getCompoundTag("BlockEntityTag");
-				NBTTagList items = blockEntityTag.getTagList("Items", 10);
-				for (int i = 0; i < items.tagCount(); i++){
-					NBTTagCompound itemTags = items.getCompoundTagAt(i);
-					ItemStack stackInBox = new ItemStack(Item.getByNameOrId(itemTags.getString("id")), itemTags.getByte("Count"), itemTags.getShort("Damage"));
-					Block blockInBox = Block.getBlockFromItem(stackInBox.getItem());
-					if (!block.equals(Blocks.AIR) && !stack.getItem().equals(Items.AIR))	        
-				        toAdd += Utils.GetItemWeight(stackInBox) * stackInBox.getCount();
-					if (toAdd == 0f)
-			        	toAdd = 1f / 64f * stack.getCount();
-				}
-				toAdd *= Properties.config.movementRestriction.shulkerWeightReduction;
-			}
-			else if (!item.equals(Items.AIR)) {
-		        toAdd = Utils.GetItemWeight(stack) * stack.getCount();
-			}
-	        
-	        weight += toAdd;
+	        weight += AddWeight(stack);
 		}
+		for (ItemStack stack : player.inventory.offHandInventory) 
+		{
+	        weight += AddWeight(stack);
+		}
+		weight += player.getTotalArmorValue() * Properties.config.movementRestriction.armorWeight;
 		
 		slownessWeight = (weight / Properties.config.movementRestriction.maxCarryWeight) * 100f;
 
     	if (slownessWeight > 0)
-    		player.addExhaustion(0.0001F * Math.round(slownessWeight));
+    		player.addExhaustion(0.0001F * slownessWeight);
 		
     	IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
     	
@@ -217,6 +232,7 @@ public class ModuleMovementRestriction {
 		PacketHandler.SendToClient(new StunMessage(duration + playerDuration), (EntityPlayerMP) player);
 	}
 
+	//TODO revisit entities movement restriction since armor is now weight based
 	public static void ApplyEntity(EntityLivingBase living) {
 		if (!Properties.config.global.movementRestriction)
 			return;
@@ -233,14 +249,14 @@ public class ModuleMovementRestriction {
 		
 		float slownessTerrain = SlownessTerrainEntity(living, world);
 		
-		float slownessArmor = living.getTotalArmorValue() * Properties.config.movementRestriction.armorWeight;
+		/*float slownessArmor = living.getTotalArmorValue() * Properties.config.movementRestriction.armorWeight;
 		if (slownessArmor > 100f) 
 			slownessArmor = 100f;
     	
-    	float speedModifierArmour = (100f - slownessArmor) / 100f;
+    	float speedModifierArmour = (100f - slownessArmor) / 100f;*/
     	float speedModifierTerrain = (100f - slownessTerrain) / 100f;
     	
-    	speedModifier = 1f - (speedModifierArmour * speedModifierTerrain);
+    	speedModifier = 1f - (/*speedModifierArmour **/ speedModifierTerrain);
     	
     	if (living.moveForward < 0f)
     		speedModifier = 0.5f + (speedModifier / 2f);
@@ -293,7 +309,7 @@ public class ModuleMovementRestriction {
 		if (!Properties.config.global.movementRestriction)
 			return;
 		
-		if (Properties.config.movementRestriction.maxCarryWeight > 0 || Properties.config.movementRestriction.armorWeight > 0d) 
+		if (Properties.config.movementRestriction.maxCarryWeight > 0) 
 		{
 			Minecraft mc = Minecraft.getMinecraft();
 			EntityPlayerSP player = mc.player;
@@ -301,11 +317,6 @@ public class ModuleMovementRestriction {
 			IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 			float weight = playerData.getWeight();
 			float encumbrance = weight / Properties.config.movementRestriction.maxCarryWeight;
-
-			if (mc.gameSettings.showDebugInfo && Properties.config.movementRestriction.addEncumbranceDebugText) {
-				event.getLeft().add("");
-				event.getLeft().add(I18n.format("info.weight") + ": " + String.format("%.2f", weight) + " / " + String.format("%d", Properties.config.movementRestriction.maxCarryWeight) + " (" + String.format("%.2f", encumbrance * 100.0f) + "%)");
-			} 
 
 			if (!player.isDead && !player.capabilities.isCreativeMode && Properties.config.movementRestriction.addEncumbranceHudText)
 			{
@@ -316,46 +327,49 @@ public class ModuleMovementRestriction {
 				if (Properties.config.movementRestriction.detailedEncumbranceHudText)
 				{
 					if (encumbrance >= 0.95)
-						color = TextFormatting.BOLD;
-					else if (encumbrance >= 0.85)
 						color = TextFormatting.GRAY;
-					else if (encumbrance >= 0.40)
+					else if (encumbrance >= 0.85)
 						color = TextFormatting.RED;
-					else if (encumbrance >= 0.25)
+					else if (encumbrance >= 0.60)
 						color = TextFormatting.GOLD;
-					else if (encumbrance >= 0.10)
+					else if (encumbrance >= 0.30)
 						color = TextFormatting.YELLOW;
+					else if (encumbrance >= 0.10)
+						color = TextFormatting.GREEN;
 					
 					line = I18n.format("info.weight") + ": " + Double.toString(Math.round(weight)) + " / " + Double.toString(Math.round(Properties.config.movementRestriction.maxCarryWeight)) + " (" + String.format("%.2f", (weight / Properties.config.movementRestriction.maxCarryWeight) * 100) + "%)";
 				}
 				else
-				{
-					float totalEncumberance = Math.max(encumbrance, player.getTotalArmorValue() * Properties.config.movementRestriction.armorWeight / 20f);
-					
-					if (totalEncumberance >= 0.95)
-						color = TextFormatting.BOLD;
-					else if (totalEncumberance >= 0.85)
+				{	
+					if (encumbrance >= 0.95)
 						color = TextFormatting.GRAY;
-					else if (totalEncumberance >= 0.40)
+					else if (encumbrance >= 0.85)
 						color = TextFormatting.RED;
-					else if (totalEncumberance >= 0.25)
+					else if (encumbrance >= 0.60)
 						color = TextFormatting.GOLD;
-					else if (totalEncumberance >= 0.10)
+					else if (encumbrance >= 0.30)
 						color = TextFormatting.YELLOW;
+					else if (encumbrance >= 0.10)
+						color = TextFormatting.GREEN;
 
-					if (totalEncumberance >= 0.95)
+					if (encumbrance >= 0.95)
 						line = I18n.format("info.encumbered.fully");
-					else if (totalEncumberance >= 0.85)
+					else if (encumbrance >= 0.85)
 						line = I18n.format("info.encumbered.almost_fully");
-					else if (totalEncumberance >= 0.40)
+					else if (encumbrance >= 0.60)
 						line = I18n.format("info.encumbered.greatly");
-					else if (totalEncumberance >= 0.25)
+					else if (encumbrance >= 0.30)
 						line = I18n.format("info.encumbered.encumbered");
-					else if (totalEncumberance >= 0.10)
+					else if (encumbrance >= 0.10)
 						line = I18n.format("info.encumbered.slightly");
 				}
 				
-				if (!line.isEmpty()) event.getRight().add(color + line + "\u00A7r");
+				if (!line.isEmpty() && !mc.gameSettings.showDebugInfo) event.getRight().add(color + line + "\u00A7r");
+
+				if (mc.gameSettings.showDebugInfo && Properties.config.movementRestriction.addEncumbranceDebugText) {
+					event.getLeft().add("");
+					event.getLeft().add("[Iguana Tweaks] " + color + I18n.format("info.weight") + ": " + String.format("%.2f", weight) + " / " + String.format("%d", Properties.config.movementRestriction.maxCarryWeight) + " (" + String.format("%.2f", encumbrance * 100.0f) + "%)");
+				} 
 			}
 		}		
 	}

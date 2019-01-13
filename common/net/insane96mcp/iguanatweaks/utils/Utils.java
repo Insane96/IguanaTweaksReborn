@@ -1,7 +1,8 @@
-package net.insane96mcp.iguanatweaks.lib;
+package net.insane96mcp.iguanatweaks.utils;
 
 import java.util.UUID;
 
+import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

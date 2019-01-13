@@ -1,7 +1,7 @@
 package net.insane96mcp.iguanatweaks.events;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
-import net.insane96mcp.iguanatweaks.modules.ModuleGeneral;
+import net.insane96mcp.iguanatweaks.modules.ModuleMisc;
 import net.insane96mcp.iguanatweaks.modules.ModuleMovementRestriction;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,6 +14,6 @@ public class LivingUpdate {
 	public static void EventLivingUpdate(LivingUpdateEvent event) {
 		ModuleMovementRestriction.ApplyPlayer(event.getEntityLiving());
 		ModuleMovementRestriction.ApplyEntity(event.getEntityLiving());
-		ModuleGeneral.ApplyPoison(event.getEntityLiving());
+		ModuleMisc.ApplyPoison(event.getEntityLiving());
 	}
 }

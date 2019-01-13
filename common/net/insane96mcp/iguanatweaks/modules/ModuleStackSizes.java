@@ -2,7 +2,7 @@ package net.insane96mcp.iguanatweaks.modules;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.lib.Properties;
-import net.insane96mcp.iguanatweaks.lib.Utils;
+import net.insane96mcp.iguanatweaks.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;

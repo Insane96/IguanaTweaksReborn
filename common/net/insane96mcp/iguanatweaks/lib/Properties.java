@@ -134,7 +134,7 @@ public class Properties {
 			@RangeInt(min = 1, max = 64)
 			public int itemDivider = 2;
 			@Name("Custom Stack List")
-			@Comment("List of all the custom stacks for blocks and items. The format is 'modid:name,max_stack_size'. Going over 64 doesn't work. By default, some items that villagers can trade are set to be tradeable.")
+			@Comment("List of all the custom stacks for blocks and items. The format is 'modid:name,max_stack_size'. Going over 64 doesn't work. By default, some items are set so that villagers can trade them.")
 			@RangeInt(min = 1, max = 64)
 			public String[] customStackList = new String[] {
 					"minecraft:emerald,64",
@@ -281,9 +281,9 @@ public class Properties {
 			@Comment("Set here (one per line) block weight for each block or item. Format is 'modid:blockid:meta,weight', meta is not needed, setting no meta, means all the blocks sub-types of that block.")
 			public String[] customWeight = new String[] {};
 			@Name("Armor Weight")
-			@Comment("Percentage of slowdown for each point (half-shield) of armor (set to 0 to disable)")
-			@RangeDouble(min = 0f, max = 5f)
-			public float armorWeight = 0.5f;
+			@Comment("Weight added by each point of armor (set to 0 to disable)")
+			@RangeDouble(min = 0f, max = Float.MAX_VALUE)
+			public float armorWeight = 8f;
 			@Name("Damage Slowdown Duration")
 			@Comment("Number of ticks each heart of damage slows you down for (set to 0 to disable)")
 			@RangeInt(min = 0)

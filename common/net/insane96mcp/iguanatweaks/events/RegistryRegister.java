@@ -1,7 +1,7 @@
 package net.insane96mcp.iguanatweaks.events;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
-import net.insane96mcp.iguanatweaks.modules.ModuleGeneral;
+import net.insane96mcp.iguanatweaks.modules.ModuleMisc;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -12,6 +12,6 @@ public class RegistryRegister {
 	
 	@SubscribeEvent
 	public static void EventRegisterPotion(RegistryEvent.Register<Potion> event) {
-		ModuleGeneral.RegisterPoison(event);
+		ModuleMisc.RegisterPoison(event);
 	}
 }

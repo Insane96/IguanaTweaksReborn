@@ -39,7 +39,7 @@ public class ModuleHud {
 		if (!Properties.config.hud.hideHealthBar)
 			return false;
 		
-		if (player.isPotionActive(MobEffects.WITHER) || player.isPotionActive(ModuleGeneral.alteredPoison))
+		if (player.isPotionActive(MobEffects.WITHER) || player.isPotionActive(ModuleMisc.alteredPoison))
 			return false;
 		
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);

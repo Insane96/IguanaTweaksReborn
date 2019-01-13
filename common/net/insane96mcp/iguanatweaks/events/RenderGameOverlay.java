@@ -1,7 +1,7 @@
 package net.insane96mcp.iguanatweaks.events;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
-import net.insane96mcp.iguanatweaks.modules.ModuleGeneral;
+import net.insane96mcp.iguanatweaks.modules.ModuleMisc;
 import net.insane96mcp.iguanatweaks.modules.ModuleHud;
 import net.insane96mcp.iguanatweaks.modules.ModuleMovementRestriction;
 import net.minecraft.client.Minecraft;
@@ -24,8 +24,8 @@ public class RenderGameOverlay {
 		ElementType type = event.getType();
 		
 		
-		if (type.equals(ElementType.HEALTH) && player.isPotionActive(ModuleGeneral.alteredPoison)) {
-			ModuleGeneral.RenderPoisonedHearts(event.getResolution());
+		if (type.equals(ElementType.HEALTH) && player.isPotionActive(ModuleMisc.alteredPoison)) {
+			ModuleMisc.RenderPoisonedHearts(event.getResolution());
 			event.setCanceled(true);
 		}
 		
