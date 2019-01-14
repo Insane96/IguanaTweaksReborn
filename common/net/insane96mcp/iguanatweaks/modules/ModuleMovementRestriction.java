@@ -1,8 +1,5 @@
 package net.insane96mcp.iguanatweaks.modules;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
@@ -26,7 +23,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -131,12 +127,6 @@ public class ModuleMovementRestriction {
 		return toAdd;
 	}
 	
-	public Map<ItemArmor.ArmorMaterial, Float> armorWeights;
-	static {
-		Map<ItemArmor.ArmorMaterial, Float> mapArmorWeights = new HashMap<ItemArmor.ArmorMaterial, Float>();
-		mapArmorWeights.put(ItemArmor.ArmorMaterial.LEATHER, 1f);
-	}
-	
 	public static float SlownessWeight(EntityPlayer player, World world) {
 		float weight = 0f;
 		
@@ -232,7 +222,6 @@ public class ModuleMovementRestriction {
 		PacketHandler.SendToClient(new StunMessage(duration + playerDuration), (EntityPlayerMP) player);
 	}
 
-	//TODO revisit entities movement restriction since armor is now weight based
 	public static void ApplyEntity(EntityLivingBase living) {
 		if (!Properties.config.global.movementRestriction)
 			return;
@@ -249,14 +238,14 @@ public class ModuleMovementRestriction {
 		
 		float slownessTerrain = SlownessTerrainEntity(living, world);
 		
-		/*float slownessArmor = living.getTotalArmorValue() * Properties.config.movementRestriction.armorWeight;
+		float slownessArmor = living.getTotalArmorValue() * Properties.config.movementRestriction.armorWeightMobs;
 		if (slownessArmor > 100f) 
 			slownessArmor = 100f;
     	
-    	float speedModifierArmour = (100f - slownessArmor) / 100f;*/
+    	float speedModifierArmor = (100f - slownessArmor) / 100f;
     	float speedModifierTerrain = (100f - slownessTerrain) / 100f;
     	
-    	speedModifier = 1f - (/*speedModifierArmour **/ speedModifierTerrain);
+    	speedModifier = 1f - (speedModifierArmor * speedModifierTerrain);
     	
     	if (living.moveForward < 0f)
     		speedModifier = 0.5f + (speedModifier / 2f);

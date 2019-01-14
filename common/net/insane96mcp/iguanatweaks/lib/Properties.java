@@ -284,6 +284,10 @@ public class Properties {
 			@Comment("Weight added by each point of armor (set to 0 to disable)")
 			@RangeDouble(min = 0f, max = Float.MAX_VALUE)
 			public float armorWeight = 8f;
+			@Name("Armor Weight Mobs")
+			@Comment("Percentage Slowdown for each armor point for Mobs (set to zero to prevent mobs from slowing down when wearing armor)")
+			@RangeDouble(min = 0f, max = 5f)
+			public float armorWeightMobs = 0.5f;
 			@Name("Damage Slowdown Duration")
 			@Comment("Number of ticks each heart of damage slows you down for (set to 0 to disable)")
 			@RangeInt(min = 0)
