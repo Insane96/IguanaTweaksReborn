@@ -266,6 +266,9 @@ public class Properties {
 			@Name("Encumbrance Hud")
 			@Comment("Shows weight text on the HUD when carrying too much")
 		    public boolean addEncumbranceHudText = true;
+			@Name("Encumbrance Top-Left")
+			@Comment("Show Encumbrance Hud on Top-Left instead of Top-Right")
+			public boolean encumbranceTopLeft = false;
 			@Name("Detailed Encumbrance Hud")
 			@Comment("Weight text on the HUD will be more detailed, showing numbers")
 		    public boolean detailedEncumbranceHudText = false;

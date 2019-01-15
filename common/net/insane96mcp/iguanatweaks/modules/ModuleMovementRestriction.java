@@ -353,9 +353,14 @@ public class ModuleMovementRestriction {
 						line = I18n.format("info.encumbered.slightly");
 				}
 				
-				if (!line.isEmpty() && !mc.gameSettings.showDebugInfo) event.getRight().add(color + line + "\u00A7r");
+				if (!line.isEmpty() && !mc.gameSettings.showDebugInfo) {
+					if (Properties.config.movementRestriction.encumbranceTopLeft)
+						event.getLeft().add(color + line + "\u00A7r");
+					else 
+						event.getRight().add(color + line + "\u00A7r");
+				}
 
-				if (mc.gameSettings.showDebugInfo && Properties.config.movementRestriction.addEncumbranceDebugText) {
+				if (mc.gameSettings.showDebugInfo && !mc.gameSettings.reducedDebugInfo && Properties.config.movementRestriction.addEncumbranceDebugText) {
 					event.getLeft().add("");
 					event.getLeft().add("[Iguana Tweaks] " + color + I18n.format("info.weight") + ": " + String.format("%.2f", weight) + " / " + String.format("%d", Properties.config.movementRestriction.maxCarryWeight) + " (" + String.format("%.2f", encumbrance * 100.0f) + "%)");
 				} 
