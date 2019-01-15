@@ -18,10 +18,10 @@ public class BetterWithMods {
 		if (!IsPresent())
 			return;
 		try {
-			HCStumping = Class.forName("betterwithmods.module.hardcore.world.HCStumping");
+			HCStumping = Class.forName("betterwithmods.module.hardcore.world.stumping.HCStumping");
 			obj = HCStumping.newInstance();
-			isStump = HCStumping.getMethod("isStump", IBlockState.class);
-			isRoots = HCStumping.getMethod("isRoots", IBlockState.class);
+			isStump = HCStumping.getMethod("isStump", World.class, BlockPos.class);
+			isRoots = HCStumping.getMethod("isRoots", World.class, BlockPos.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -31,18 +31,18 @@ public class BetterWithMods {
 		return Loader.isModLoaded(name);
 	}
 	
-	private static boolean IsStump(IBlockState state) {
+	private static boolean IsStump(World world, BlockPos pos) {
 		try {
-			return (boolean) isStump.invoke(obj, state);
+			return (boolean) isStump.invoke(obj, world, pos);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
 	
-	private static boolean IsRoots(IBlockState state) {
+	private static boolean IsRoots(World world, BlockPos pos) {
 		try {
-			return (boolean) isRoots.invoke(obj, state);
+			return (boolean) isRoots.invoke(obj, world, pos);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,8 +53,7 @@ public class BetterWithMods {
 		if (BetterWithMods.IsPresent()) {
 			IBlockState down = world.getBlockState(pos.down());
 			IBlockState up = world.getBlockState(pos.up());
-			if ((BetterWithMods.IsStump(state) && BetterWithMods.IsRoots(down))
-				|| (BetterWithMods.IsRoots(state) && BetterWithMods.IsStump(up)))
+			if ((BetterWithMods.IsStump(world, pos) || BetterWithMods.IsRoots(world, pos)))
 			{
 				return true;
 			}
