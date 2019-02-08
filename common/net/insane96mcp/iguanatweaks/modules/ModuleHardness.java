@@ -77,8 +77,8 @@ public class ModuleHardness {
 				mainHand.damageItem(mainHand.getMaxDamage() - mainHand.getItemDamage() + 1, player);
 			}
 			else {
-				mainHand.shrink(1);
 				player.renderBrokenItemStack(mainHand);
+				mainHand.shrink(1);
 			}
 			textComponent = new TextComponentTranslation(Strings.Translatable.Hardness.wrong_tool);
 		}
