@@ -72,8 +72,14 @@ public class ModuleHardness {
 			textComponent = new TextComponentTranslation(Strings.Translatable.Hardness.need_tool);
 		}
 		else {
-			//TODO Fix this for 1.13, remove +1
-			mainHand.damageItem(mainHand.getMaxDamage() - mainHand.getItemDamage() + 1, player);
+			if (mainHand.isItemStackDamageable()) {
+				//TODO Fix this for 1.13, remove +1
+				mainHand.damageItem(mainHand.getMaxDamage() - mainHand.getItemDamage() + 1, player);
+			}
+			else {
+				mainHand.shrink(1);
+				player.renderBrokenItemStack(mainHand);
+			}
 			textComponent = new TextComponentTranslation(Strings.Translatable.Hardness.wrong_tool);
 		}
 		SPacketTitle title = new SPacketTitle(SPacketTitle.Type.ACTIONBAR, textComponent);
