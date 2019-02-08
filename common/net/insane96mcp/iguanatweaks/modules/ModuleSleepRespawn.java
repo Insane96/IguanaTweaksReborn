@@ -27,10 +27,10 @@ public class ModuleSleepRespawn {
 			return;
 		
 		NBTTagCompound tags = player.getEntityData();
-		boolean hasAlreadySpawned = tags.getBoolean("IguanaTweaks:spawned");
+		boolean hasAlreadySpawned = tags.getBoolean("iguanatweaks:spawned");
         if (!hasAlreadySpawned)
         {
-        	tags.setBoolean("IguanaTweaks:spawned", true);
+        	tags.setBoolean("iguanatweaks:spawned", true);
 			RespawnPlayer(player, Properties.config.sleepRespawn.spawnLocationRandomMin, Properties.config.sleepRespawn.spawnLocationRandomMax);
         }
 	}
