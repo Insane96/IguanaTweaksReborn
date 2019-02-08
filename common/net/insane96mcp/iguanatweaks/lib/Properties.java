@@ -88,6 +88,9 @@ public class Properties {
 		public Hardness hardness = new Hardness();
 		
 		public static class Hardness {
+			@Name("Punish Wrong Tool")
+			@Comment("True if the tool should break when mining the wrong block (e.g. mining Wood with a Pickaxe or mining Obsidian with an Iron Pickaxe) or if no tool in hand damage the player based on the block hardness (multiplied by the hardness multiplier).")
+			public boolean punishWrongTool = false;
 			@Name("Multiplier")
 			@Comment("Multiplier applied to the hardness of blocks (set to 1 to disable)")
 			@RangeDouble(min = 0, max = Float.MAX_VALUE)

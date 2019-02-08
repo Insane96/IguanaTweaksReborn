@@ -1,19 +1,81 @@
 package net.insane96mcp.iguanatweaks.modules;
 
+import java.util.Set;
+
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.integration.BetterWithMods;
 import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.SPacketTitle;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 
 public class ModuleHardness {
 	public static void ProcessHardness(BreakSpeed event) {
 		ProcessGlobalHardness(event);
 		ProcessSingleHardness(event);
+	}
+	
+	public static void ProcessWrongTool(BreakEvent event) {
+		if (!Properties.config.hardness.punishWrongTool)
+			return;
+		
+		World world = event.getWorld();
+		
+		if (world.isRemote)
+			return;
+		
+		EntityPlayerMP player = (EntityPlayerMP) event.getPlayer();
+		IBlockState state = event.getState();
+		Block block = state.getBlock();
+		BlockPos pos = event.getPos();
+		
+		ItemStack mainHand = player.getHeldItemMainhand();
+
+		Set<String> mainHandTool = mainHand.getItem().getToolClasses(mainHand);
+		
+		String harvestTool = block.getHarvestTool(state);
+		int harvestLevel = block.getHarvestLevel(state);
+		
+		boolean isToolEffective = false;
+		
+		isToolEffective = harvestTool == null;
+		if (!isToolEffective) {
+			for (String tool : mainHandTool) {
+				if (block.isToolEffective(tool, state) && harvestLevel <= mainHand.getItem().getHarvestLevel(mainHand, tool, player, state)) {
+					isToolEffective = true;
+					break;
+				}
+			}
+		}
+		
+		if (isToolEffective)
+			return;
+		
+		event.setCanceled(true);
+		
+		ITextComponent textComponent;
+		if (mainHand.isEmpty()) {
+			player.attackEntityFrom(DamageSource.GENERIC, state.getBlockHardness(event.getWorld(), event.getPos()) * Properties.config.hardness.multiplier);
+			textComponent = new TextComponentTranslation(Strings.Translatable.Hardness.need_tool);
+		}
+		else {
+			//TODO Fix this for 1.13, remove +1
+			mainHand.damageItem(mainHand.getMaxDamage() - mainHand.getItemDamage() + 1, player);
+			textComponent = new TextComponentTranslation(Strings.Translatable.Hardness.wrong_tool);
+		}
+		SPacketTitle title = new SPacketTitle(SPacketTitle.Type.ACTIONBAR, textComponent);
+		player.connection.sendPacket(title);
 	}
 	
 	public static void ProcessGlobalHardness(BreakSpeed event) {

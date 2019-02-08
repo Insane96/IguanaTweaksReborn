@@ -1,3 +1,6 @@
+iguanatweaks:hardness.need_tool=I might need a tool to mine this block
+iguanatweaks:hardness.wrong_tool=Ops, I may have used the wrong tool
+
 info.encumbered.slightly=Slightly Encumbered
 info.encumbered.encumbered=Encumbered
 info.encumbered.almost_fully=Almost Fully Encumbered

@@ -2,6 +2,7 @@ package net.insane96mcp.iguanatweaks.events;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.modules.ModuleExperience;
+import net.insane96mcp.iguanatweaks.modules.ModuleHardness;
 import net.insane96mcp.iguanatweaks.modules.ModuleMisc;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,5 +15,6 @@ public class Break {
 	public static void EventBreak(BreakEvent event) {
         ModuleExperience.XpDropOre(event);
         ModuleMisc.ExhaustionOnBlockBreak(event);
+        ModuleHardness.ProcessWrongTool(event);
 	}
 }
