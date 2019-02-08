@@ -1,5 +1,9 @@
 package net.insane96mcp.iguanatweaks.modules;
 
+import java.util.Collection;
+
+import com.google.common.collect.Multimap;
+
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.insane96mcp.iguanatweaks.potioneffects.AlteredPoison;
@@ -11,17 +15,25 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -204,5 +216,32 @@ public class ModuleMisc {
         }
 
         GlStateManager.disableBlend();
+	}
+
+	public static void NoItemNoKnockback(LivingAttackEvent event) {
+		if (!Properties.config.misc.noItemNoKnockback)
+			return;
+		
+		if (event.getSource().getTrueSource() instanceof EntityPlayerMP) {
+			EntityPlayerMP player = (EntityPlayerMP)event.getSource().getTrueSource();
+
+			ItemStack mainHand = player.getHeldItemMainhand();
+			Multimap<String, AttributeModifier> map = mainHand.getItem().getAttributeModifiers(EntityEquipmentSlot.MAINHAND, mainHand);
+			Collection<AttributeModifier> modifiers = map.get("generic.attackDamage");
+			float fullDamage = 1f;
+			for (AttributeModifier attributeModifier : modifiers) {
+				if (attributeModifier.getOperation() == 0)
+					fullDamage += attributeModifier.getAmount();
+				else if (attributeModifier.getOperation() == 1)
+					fullDamage *= attributeModifier.getAmount() + 1f;
+			}
+			
+			if (player.getHeldItemMainhand().isEmpty() || event.getAmount() <= fullDamage * 0.5f || fullDamage <= 1.0f) {
+				event.setCanceled(true);
+				event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 0.1f);
+				event.getEntityLiving().world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, SoundCategory.PLAYERS, 1.0f, 2.0f);
+				System.out.println(event.getEntityLiving().getHealth());
+			}
+		}
 	}
 }

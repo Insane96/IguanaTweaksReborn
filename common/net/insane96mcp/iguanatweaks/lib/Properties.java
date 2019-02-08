@@ -82,6 +82,9 @@ public class Properties {
 			@Comment("Multiply the exhaustion given to the player when breaking blocks by this value")
 			@RangeDouble(min = 0, max = Float.MAX_VALUE)
 			public float exhaustionMultiplier = 1.0f;
+			@Name("No Item No Knockback")
+			@Comment("If the player has an item that deals no bonus damage (so without a tool / weapon) the attacked mob will take almost no damage (1/20 of a heart) and no knockback. The no knockback applies even if the player attack speed cooldown is below 50%")
+			public boolean noItemNoKnockback = true;
 		}
 
 		
