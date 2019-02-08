@@ -1,12 +1,11 @@
-info.encumbered.slightly=Pouco sobrecarregado
-info.encumbered.encumbered=Sobrecarregado
-info.encumbered.almost_fully=Quase totalmente sobrecarregado
-info.encumbered.greatly=Muito sobrecarregado
-info.encumbered.fully=Totalmente sobrecarregado
-info.weight=Peso
-info.creative_mode=Modo criativo
+iguanatweaks:movement_restriction.encumbered.slightly=Pouco sobrecarregado
+iguanatweaks:movement_restriction.encumbered.encumbered=Sobrecarregado
+iguanatweaks:movement_restriction.encumbered.almost_fully=Quase totalmente sobrecarregado
+iguanatweaks:movement_restriction.encumbered.greatly=Muito sobrecarregado
+iguanatweaks:movement_restriction.encumbered.fully=Totalmente sobrecarregado
+iguanatweaks:movement_restriction.weight=Peso
 
-sleep.random_respawn=Você recuperou a consciência, confuso e sem saber onde está
-sleep.bed_destroyed=Você acorda, e encontra sua cama esmagada, em pedaços
-sleep.bed_decoration=Ninguém te contou? Camas são apenas para decoração
-sleep.enjoy_the_night=Sua localização de spawn foi definida, aproveite a noite ;)
+iguanatweaks:sleep_respawn.random_respawn=Você recuperou a consciência, confuso e sem saber onde está
+iguanatweaks:sleep_respawn.bed_destroyed=Você acorda, e encontra sua cama esmagada, em pedaços
+iguanatweaks:sleep_respawn.bed_decoration=Ninguém te contou? Camas são apenas para decoração
+iguanatweaks:sleep_respawn.enjoy_the_night=Sua localização de spawn foi definida, aproveite a noite ;)

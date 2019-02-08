@@ -223,7 +223,7 @@ public class ModuleHud {
 		
 		if (Properties.config.hud.showCreativeText && !mc.gameSettings.showDebugInfo && player.capabilities.isCreativeMode)
 		{
-			event.getLeft().add(I18n.format("info.creative_mode"));
+			event.getLeft().add(I18n.format("gameMode.creative"));
 			return;
 		}
 	}

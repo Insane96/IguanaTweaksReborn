@@ -1,12 +1,11 @@
-info.encumbered.slightly=Вы немного перегружены
-info.encumbered.encumbered=Вы перегружены
-info.encumbered.almost_fully=Вы почти перегружены
-info.encumbered.greatly=Вы сильно перегружены
-info.encumbered.fully=Вы полностью перегружены
-info.weight=Вес
-info.creative_mode=Творческий режим
+iguanatweaks:movement_restriction.encumbered.slightly=Вы немного перегружены
+iguanatweaks:movement_restriction.encumbered.encumbered=Вы перегружены
+iguanatweaks:movement_restriction.encumbered.almost_fully=Вы почти перегружены
+iguanatweaks:movement_restriction.encumbered.greatly=Вы сильно перегружены
+iguanatweaks:movement_restriction.encumbered.fully=Вы полностью перегружены
+iguanatweaks:movement_restriction.weight=Вес
 
-sleep.random_respawn=Вы пришли в сознание и не знаете, где находитесь
-sleep.bed_destroyed=Вы проснулись и обнаружили, что Ваша кровать разбита вдребезги
-sleep.bed_decoration=Никто Вам не говорил? Кровати просто для украшения
-sleep.enjoy_the_night=Место появления настроено, наслаждайтесь ночью ;)
+iguanatweaks:sleep_respawn.random_respawn=Вы пришли в сознание и не знаете, где находитесь
+iguanatweaks:sleep_respawn.bed_destroyed=Вы проснулись и обнаружили, что Ваша кровать разбита вдребезги
+iguanatweaks:sleep_respawn.bed_decoration=Никто Вам не говорил? Кровати просто для украшения
+iguanatweaks:sleep_respawn.enjoy_the_night=Место появления настроено, наслаждайтесь ночью ;)

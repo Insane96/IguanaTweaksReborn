@@ -5,6 +5,7 @@ import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.Properties;
 import net.insane96mcp.iguanatweaks.lib.Reflection;
+import net.insane96mcp.iguanatweaks.lib.Strings;
 import net.insane96mcp.iguanatweaks.network.PacketHandler;
 import net.insane96mcp.iguanatweaks.network.StunMessage;
 import net.insane96mcp.iguanatweaks.utils.Utils;
@@ -326,7 +327,7 @@ public class ModuleMovementRestriction {
 					else if (encumbrance >= 0.10)
 						color = TextFormatting.GREEN;
 					
-					line = I18n.format("info.weight") + ": " + Double.toString(Math.round(weight)) + " / " + Double.toString(Math.round(Properties.config.movementRestriction.maxCarryWeight)) + " (" + String.format("%.2f", (weight / Properties.config.movementRestriction.maxCarryWeight) * 100) + "%)";
+					line = I18n.format(Strings.Translatable.MovementRestriction.weight) + ": " + Double.toString(Math.round(weight)) + " / " + Double.toString(Math.round(Properties.config.movementRestriction.maxCarryWeight)) + " (" + String.format("%.2f", (weight / Properties.config.movementRestriction.maxCarryWeight) * 100) + "%)";
 				}
 				else
 				{	
@@ -342,15 +343,15 @@ public class ModuleMovementRestriction {
 						color = TextFormatting.GREEN;
 
 					if (encumbrance >= 0.95)
-						line = I18n.format("info.encumbered.fully");
+						line = I18n.format(Strings.Translatable.MovementRestriction.fully_encumbered);
 					else if (encumbrance >= 0.85)
-						line = I18n.format("info.encumbered.almost_fully");
+						line = I18n.format(Strings.Translatable.MovementRestriction.almost_fully_encumbered);
 					else if (encumbrance >= 0.60)
-						line = I18n.format("info.encumbered.greatly");
+						line = I18n.format(Strings.Translatable.MovementRestriction.greatly_encumbered);
 					else if (encumbrance >= 0.30)
-						line = I18n.format("info.encumbered.encumbered");
+						line = I18n.format(Strings.Translatable.MovementRestriction.encumbered);
 					else if (encumbrance >= 0.10)
-						line = I18n.format("info.encumbered.slightly");
+						line = I18n.format(Strings.Translatable.MovementRestriction.slightly_encumbered);
 				}
 				
 				if (!line.isEmpty() && !mc.gameSettings.showDebugInfo) {
@@ -362,7 +363,7 @@ public class ModuleMovementRestriction {
 
 				if (mc.gameSettings.showDebugInfo && !mc.gameSettings.reducedDebugInfo && Properties.config.movementRestriction.addEncumbranceDebugText) {
 					event.getLeft().add("");
-					event.getLeft().add("[Iguana Tweaks] " + color + I18n.format("info.weight") + ": " + String.format("%.2f", weight) + " / " + String.format("%d", Properties.config.movementRestriction.maxCarryWeight) + " (" + String.format("%.2f", encumbrance * 100.0f) + "%)");
+					event.getLeft().add("[Iguana Tweaks] " + color + I18n.format(Strings.Translatable.MovementRestriction.weight) + ": " + String.format("%.2f", weight) + " / " + String.format("%d", Properties.config.movementRestriction.maxCarryWeight) + " (" + String.format("%.2f", encumbrance * 100.0f) + "%)");
 				} 
 			}
 		}		
