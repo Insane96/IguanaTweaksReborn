@@ -26,6 +26,8 @@ public class ModuleHardness {
 		ProcessSingleHardness(event);
 	}
 	
+	public static final DamageSource BLOCK_BREAK = new DamageSource("block_break").setDamageBypassesArmor();
+	
 	public static void ProcessWrongTool(BreakEvent event) {
 		if (!Properties.config.hardness.punishWrongTool)
 			return;
@@ -66,7 +68,7 @@ public class ModuleHardness {
 		
 		ITextComponent textComponent;
 		if (mainHand.isEmpty()) {
-			player.attackEntityFrom(DamageSource.GENERIC, state.getBlockHardness(event.getWorld(), event.getPos()) * Properties.config.hardness.multiplier);
+			player.attackEntityFrom(BLOCK_BREAK, state.getBlockHardness(event.getWorld(), event.getPos()) * Properties.config.hardness.multiplier);
 			textComponent = new TextComponentTranslation(Strings.Translatable.Hardness.need_tool);
 		}
 		else {

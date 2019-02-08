@@ -236,11 +236,17 @@ public class ModuleMisc {
 					fullDamage *= attributeModifier.getAmount() + 1f;
 			}
 			
-			if (player.getHeldItemMainhand().isEmpty() || event.getAmount() <= fullDamage * 0.5f || fullDamage <= 1.0f) {
+			if (fullDamage <= 1.0f) {
 				event.setCanceled(true);
 				event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 0.1f);
 				event.getEntityLiving().world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, SoundCategory.PLAYERS, 1.0f, 2.0f);
-				System.out.println(event.getEntityLiving().getHealth());
+				mainHand.damageItem(1, player);
+			}
+			else if (event.getAmount() <= fullDamage * .75f) {
+				event.setCanceled(true);
+				event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, event.getAmount());
+				event.getEntityLiving().world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, SoundCategory.PLAYERS, 1.0f, 2.0f);
+				mainHand.damageItem(1, player);
 			}
 		}
 	}

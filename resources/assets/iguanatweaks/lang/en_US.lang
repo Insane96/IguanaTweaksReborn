@@ -14,3 +14,4 @@ iguanatweaks:sleep_respawn.bed_decoration=Has no one told you? Beds are just for
 iguanatweaks:sleep_respawn.enjoy_the_night=Spawn point has been set. Enjoy the night ;)
 
 death.attack.altered_poison=%1$s didn't know that poison was deadly
+death.attack.block_break=%1$s gave his life to mine a block with fist
