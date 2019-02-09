@@ -14,3 +14,4 @@ iguanatweaks:sleep_respawn.bed_decoration=Nessuno ti ha detto che i letti sono s
 iguanatweaks:sleep_respawn.enjoy_the_night=Punto di Spawn impostato. Buona fortuna con la notte ;)
 
 death.attack.altered_poison=%1$s non sapeva che il veleno fosse mortale
+death.attack.block_break=%1$s ha dato la sua vita per rompere il blocco a mano nuda
