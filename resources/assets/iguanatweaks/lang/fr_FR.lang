@@ -1,0 +1,17 @@
+iguanatweaks:hardness.need_tool=J'ai peut-être besoin d'un outil pour exploiter ce bloc
+iguanatweaks:hardness.wrong_tool=Oups, j'ai peut-être utilisé le mauvais outil
+
+iguanatweaks:movement_restriction.encumbered.slightly=Légèrement encombré
+iguanatweaks:movement_restriction.encumbered.encumbered=Encombré
+iguanatweaks:movement_restriction.encumbered.almost_fully=Chargé
+iguanatweaks:movement_restriction.encumbered.greatly=Très Chargé
+iguanatweaks:movement_restriction.encumbered.fully=Surchargé
+iguanatweaks:movement_restriction.weight=Poids
+
+iguanatweaks:sleep_respawn.random_respawn=Vous reprenez conscience, confus quant à l'endroit où vous vous trouvez
+iguanatweaks:sleep_respawn.bed_destroyed=Vous vous réveillez et trouvez votre lit en morceaux
+iguanatweaks:sleep_respawn.bed_decoration=Personne ne vous l'a dit ? Les lits sont juste décoratifs
+iguanatweaks:sleep_respawn.enjoy_the_night=Le point d'apparition a été défini. Profitez de la nuit ;)
+
+death.attack.altered_poison=%1$s ne savait pas que le poison était mortel
+death.attack.block_break=%1$s a perdu la vie en minant un bloc à mains nues
