@@ -222,7 +222,7 @@ public class ModuleMisc {
 		if (!Properties.config.misc.noItemNoKnockback)
 			return;
 		
-		if (event.getSource().getTrueSource() instanceof EntityPlayerMP) {
+		if (event.getSource().getImmediateSource() instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP)event.getSource().getTrueSource();
 
 			ItemStack mainHand = player.getHeldItemMainhand();
