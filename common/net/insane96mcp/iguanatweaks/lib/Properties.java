@@ -83,7 +83,7 @@ public class Properties {
 			@RangeDouble(min = 0, max = Float.MAX_VALUE)
 			public float exhaustionMultiplier = 1.0f;
 			@Name("No Item No Knockback")
-			@Comment("If the player attacks an entity without a tool / weapon, the attacked mob will take almost no damage (1/20 of a heart) and no knockback. The no knockback applies even if the player attack speed cooldown is below 75% with a tool / weapon, but in this case the damage is applied normally")
+			@Comment("If the player attacks an entity without a tool / weapon, the attacked mob will take almost no damage (1/20 of a heart) and no knockback. The no knockback applies even if the player attack speed cooldown is below 75% with a tool / weapon, but in this case the damage is applied normally.\nThis feature is disabled by default since is a little bit buggy, like no experience is dropped from the mob if it gets attacked only by No Knockbacks attacks.")
 			public boolean noItemNoKnockback = false;
 		}
 
