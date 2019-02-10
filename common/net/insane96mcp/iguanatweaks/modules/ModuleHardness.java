@@ -38,6 +38,10 @@ public class ModuleHardness {
 			return;
 		
 		EntityPlayerMP player = (EntityPlayerMP) event.getPlayer();
+		
+		if (player.isCreative())
+			return;
+		
 		IBlockState state = event.getState();
 		Block block = state.getBlock();
 		BlockPos pos = event.getPos();
