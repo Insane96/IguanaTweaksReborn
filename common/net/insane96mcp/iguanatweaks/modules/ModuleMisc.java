@@ -50,16 +50,15 @@ public class ModuleMisc {
 		float f = 1.0F;
 
         IAttributeInstance iattributeinstance = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
-        f = (float)((double)f * ((iattributeinstance.getAttributeValue() / (double)player.capabilities.getWalkSpeed() + 1.0D) / 2.0D));
+        f *= ((iattributeinstance.getAttributeValue() / (double)player.capabilities.getWalkSpeed() + 1.0D) / 2.0D);
 
         if (player.isSprinting())
         	f /= 1.23;
-        	
+
         if (player.capabilities.getWalkSpeed() == 0.0F || Float.isNaN(f) || Float.isInfinite(f))
             f = 1.0F;
-        
-        
-        event.setNewfov(event.getFov() / f);
+       
+        event.setNewfov(event.getNewfov() / f);
 	}
 
 	public static void LessObiviousSilverfish(){
