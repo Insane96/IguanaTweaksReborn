@@ -5,13 +5,11 @@ import java.util.Collection;
 import com.google.common.collect.Multimap;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
-import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.init.ModConfig;
 import net.insane96mcp.iguanatweaks.potioneffects.AlteredPoison;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -19,7 +17,6 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -29,80 +26,79 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.registries.IForgeRegistryModifiable;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModuleMisc {
 
 	public static void PreventFov(FOVUpdateEvent event) {
-		if (!Properties.config.misc.disableFovOnSpeedModified)
+		if (!ModConfig.Misc.preventFoVChangesOnSpeedModified.get())
 			return;
 		
 		EntityPlayer player = event.getEntity();
 		
 		float f = 1.0F;
 
-        IAttributeInstance iattributeinstance = player.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
-        f *= ((iattributeinstance.getAttributeValue() / (double)player.capabilities.getWalkSpeed() + 1.0D) / 2.0D);
+        IAttributeInstance iattributeinstance = player.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+        f *= ((iattributeinstance.getValue() / (double)player.abilities.getWalkSpeed() + 1.0D) / 2.0D);
 
         if (player.isSprinting())
         	f /= 1.23;
 
-        if (player.capabilities.getWalkSpeed() == 0.0F || Float.isNaN(f) || Float.isInfinite(f))
+        if (player.abilities.getWalkSpeed() == 0.0F || Float.isNaN(f) || Float.isInfinite(f))
             f = 1.0F;
        
         event.setNewfov(event.getNewfov() / f);
 	}
-
-	public static void LessObiviousSilverfish(){
-		Blocks.MONSTER_EGG.setHardness(1.4f).setResistance(10.0F).setHarvestLevel("pickaxe", 0);
-	}
 	
 	public static void ExhaustionOnBlockBreak(BreakEvent event) {
-		if (!Properties.config.misc.exhaustionOnBlockBreak)
+		if (!ModConfig.Misc.exhaustionOnBlockBreak.get())
 			return;
 		
 		IBlockState blockState = event.getState();
-		Block block = blockState.getBlock();
 		float hardness = 0f;
-		hardness = block.getBlockHardness(blockState, event.getWorld(), event.getPos());
+		hardness = blockState.getBlockHardness(event.getWorld(), event.getPos());
 		
-		event.getPlayer().addExhaustion((hardness / 100f) * Properties.config.misc.exhaustionMultiplier);
+		float exhaustion = (float) ((hardness / 100f) * ModConfig.Misc.exhaustionMultiplier.get());
+		exhaustion -= 0.005;
+		event.getPlayer().addExhaustion(exhaustion);
 	}
 	
 	public static AlteredPoison alteredPoison;
 	
 	public static void RegisterPoison(RegistryEvent.Register<Potion> event) {
-		IForgeRegistryModifiable modRegistry = (IForgeRegistryModifiable) event.getRegistry();
+		Potion vanillaPoison = ForgeRegistries.POTIONS.getValue(new ResourceLocation("minecraft:poison"));
+		
 		ResourceLocation potionName = new ResourceLocation(IguanaTweaks.MOD_ID, "altered_poison");
-		alteredPoison = new AlteredPoison(true, Potion.getPotionFromResourceLocation("minecraft:poison").getLiquidColor());
+		alteredPoison = new AlteredPoison(true, vanillaPoison.getLiquidColor());
 		alteredPoison.setRegistryName(potionName);
-		alteredPoison.setPotionName("effect.poison");
 		alteredPoison.setIconIndex(6, 0);
-		modRegistry.register(alteredPoison);
+		event.getRegistry().register(alteredPoison);
 	}
 	
 	public static void ApplyPoison(EntityLivingBase living) {
-		if (!Properties.config.misc.alterPoison)
+		if (!ModConfig.Misc.alterPoison.get())
 			return;
 		
 		if (living.ticksExisted % 9 != 0)
 			return;
 		
-		Potion potionPoison = Potion.getPotionFromResourceLocation("minecraft:poison");
+		Potion potionPoison = ForgeRegistries.POTIONS.getValue(new ResourceLocation ("minecraft:poison"));
 		
 		if (!living.isPotionActive(potionPoison))
 			return;
 		
 		PotionEffect poison = living.getActivePotionEffect(potionPoison);
-		PotionEffect alteredPoison = new PotionEffect(ModuleMisc.alteredPoison, poison.getDuration() * (living.world.getDifficulty().getId()), poison.getAmplifier(), poison.getIsAmbient(), poison.doesShowParticles());
+		PotionEffect alteredPoison = new PotionEffect(ModuleMisc.alteredPoison, poison.getDuration() * (living.world.getDifficulty().getId()), poison.getAmplifier(), poison.isAmbient(), poison.doesShowParticles());
 		living.removeActivePotionEffect(potionPoison);
 		living.addPotionEffect(alteredPoison);
 	}
@@ -113,42 +109,39 @@ public class ModuleMisc {
 	static int lastPlayerHealth = 0;
 	static long lastSystemTime;
 	
-	@SideOnly(Side.CLIENT)
-	public static void RenderPoisonedHearts(ScaledResolution scaledResolution) {
+	@OnlyIn(Dist.CLIENT)
+	public static void RenderPoisonedHearts(int width, int height) {
 		GlStateManager.enableBlend();
 		
-		GuiIngame gui = Minecraft.getMinecraft().ingameGUI;
+		GuiIngame gui = Minecraft.getInstance().ingameGUI;
 
-		int width = scaledResolution.getScaledWidth();
-		int height = scaledResolution.getScaledHeight();
-
-        EntityPlayer player = Minecraft.getMinecraft().player;
+        EntityPlayer player = Minecraft.getInstance().player;
         int health = MathHelper.ceil(player.getHealth());
 		boolean highlight = healthUpdateCounter > (long)updateCounter && (healthUpdateCounter - (long)updateCounter) / 3L %2L == 1L;
 
         if (health < playerHealth && player.hurtResistantTime > 0)
         {
-            lastSystemTime = Minecraft.getSystemTime();
+            lastSystemTime = Util.milliTime();
             healthUpdateCounter = (long)(updateCounter + 20);
         }	
         else if (health > playerHealth && player.hurtResistantTime > 0)
         {
-            lastSystemTime = Minecraft.getSystemTime();
+            lastSystemTime = Util.milliTime();
             healthUpdateCounter = (long)(updateCounter + 10);
         }
 
-        if (Minecraft.getSystemTime() - lastSystemTime > 1000L)
+        if (Util.milliTime() - lastSystemTime > 1000L)
         {
             playerHealth = health;
             lastPlayerHealth = health;
-            lastSystemTime = Minecraft.getSystemTime();
+            lastSystemTime = Util.milliTime();
         }
 
         playerHealth = health;
         int healthLast = lastPlayerHealth;
 
-        IAttributeInstance attrMaxHealth = player.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
-        float healthMax = (float)attrMaxHealth.getAttributeValue();
+        IAttributeInstance attrMaxHealth = player.getAttribute(SharedMonsterAttributes.MAX_HEALTH);
+        float healthMax = (float)attrMaxHealth.getValue();
         float absorb = MathHelper.ceil(player.getAbsorptionAmount());
 
         int healthRows = MathHelper.ceil((healthMax + absorb) / 2.0F / 10.0F);
@@ -166,7 +159,7 @@ public class ModuleMisc {
         {
             regen = updateCounter % 25;
         }
-        final int TOP =  9 * (player.world.getWorldInfo().isHardcoreModeEnabled() ? 5 : 0);
+        final int TOP =  9 * (player.world.getWorldInfo().isHardcore() ? 5 : 0);
         final int BACKGROUND = (highlight ? 25 : 16);
         int MARGIN = 16;
         if (player.isPotionActive(ModuleMisc.alteredPoison))
@@ -218,7 +211,7 @@ public class ModuleMisc {
 	}
 
 	public static void NoItemNoKnockback(LivingAttackEvent event) {
-		if (!Properties.config.misc.noItemNoKnockback)
+		if (!ModConfig.Misc.noItemNoKnockback.get())
 			return;
 		
 		if (event.getSource().getImmediateSource() instanceof EntityPlayerMP) {
@@ -237,13 +230,19 @@ public class ModuleMisc {
 			
 			if (fullDamage <= 1.0f) {
 				event.setCanceled(true);
-				event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 0.1f);
+				event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, 0.2f);
+				ObfuscationReflectionHelper.setPrivateValue(EntityLivingBase.class, event.getEntityLiving(), player, "attackingPlayer");
+				ObfuscationReflectionHelper.setPrivateValue(EntityLivingBase.class, event.getEntityLiving(), 100, "recentlyHit");
+				event.getEntityLiving().setRevengeTarget(player);
 				event.getEntityLiving().world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, SoundCategory.PLAYERS, 1.0f, 2.0f);
 				mainHand.damageItem(1, player);
 			}
 			else if (event.getAmount() <= fullDamage * .75f) {
 				event.setCanceled(true);
 				event.getEntityLiving().attackEntityFrom(DamageSource.GENERIC, event.getAmount());
+				ObfuscationReflectionHelper.setPrivateValue(EntityLivingBase.class, event.getEntityLiving(), player, "attackingPlayer");
+				ObfuscationReflectionHelper.setPrivateValue(EntityLivingBase.class, event.getEntityLiving(), 100, "recentlyHit");
+				event.getEntityLiving().setRevengeTarget(player);
 				event.getEntityLiving().world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE, SoundCategory.PLAYERS, 1.0f, 2.0f);
 				mainHand.damageItem(1, player);
 			}

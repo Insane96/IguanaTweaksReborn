@@ -2,34 +2,31 @@ package net.insane96mcp.iguanatweaks.events;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.modules.ModuleMisc;
-import net.insane96mcp.iguanatweaks.modules.ModuleHud;
-import net.insane96mcp.iguanatweaks.modules.ModuleMovementRestriction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraftforge.client.GuiIngameForge;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod.EventBusSubscriber(modid = IguanaTweaks.MOD_ID)
 public class RenderGameOverlay {
 	
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void EventRenderGameOverlay(RenderGameOverlayEvent.Pre event) {
-		EntityPlayerSP player = Minecraft.getMinecraft().player;
+		EntityPlayerSP player = Minecraft.getInstance().player;
 		ElementType type = event.getType();
 		
 		
 		if (type.equals(ElementType.HEALTH) && player.isPotionActive(ModuleMisc.alteredPoison)) {
-			ModuleMisc.RenderPoisonedHearts(event.getResolution());
+			ModuleMisc.RenderPoisonedHearts(Minecraft.getInstance().mainWindow.getScaledWidth(), Minecraft.getInstance().mainWindow.getScaledHeight());
 			event.setCanceled(true);
 		}
 		
-		boolean hideHealthBar = ModuleHud.HideHealthBar(type, player);
+		/*boolean hideHealthBar = ModuleHud.HideHealthBar(type, player);
 		boolean hideHungerBar = ModuleHud.HideHungerBar(type, player);
 		boolean hideHotbar = ModuleHud.HideHotbar(type, player);
 		boolean hideExperienceBar = ModuleHud.HideExperienceBar(type, player);
@@ -47,13 +44,13 @@ public class RenderGameOverlay {
 		if (!hideHotbar && hideExperienceBar) {
 			GuiIngameForge.left_height -= 3;
 			GuiIngameForge.right_height -= 3;
-		}
+		}*/
 	}
 	
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void onRenderGameOverlay(RenderGameOverlayEvent.Text event) {
-		ModuleMovementRestriction.PrintHudInfos(event);
-		ModuleHud.PrintCreativeText(event);
+		//ModuleMovementRestriction.PrintHudInfos(event);
+		//ModuleHud.PrintCreativeText(event);
 	}
 }

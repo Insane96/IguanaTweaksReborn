@@ -1,12 +1,7 @@
 package net.insane96mcp.iguanatweaks.proxies;
 
-import net.insane96mcp.iguanatweaks.lib.Reflection;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
-public class ClientProxy extends CommonProxy{
-
+public class ClientProxy{
+/*
 	@Override
 	public void PreInit(FMLPreInitializationEvent event) {
 		super.PreInit(event);
@@ -22,5 +17,5 @@ public class ClientProxy extends CommonProxy{
 	public void PostInit(FMLPostInitializationEvent event) {
 		super.PostInit(event);
 	}
-	
+	*/
 }

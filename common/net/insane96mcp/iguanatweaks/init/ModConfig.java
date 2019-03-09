@@ -1,93 +1,112 @@
-package net.insane96mcp.iguanatweaks.lib;
+package net.insane96mcp.iguanatweaks.init;
 
-import net.insane96mcp.iguanatweaks.IguanaTweaks;
-import net.insane96mcp.iguanatweaks.network.ConfigSync;
-import net.insane96mcp.iguanatweaks.network.PacketHandler;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraftforge.common.config.Config;
-import net.minecraftforge.common.config.Config.Comment;
-import net.minecraftforge.common.config.Config.Name;
-import net.minecraftforge.common.config.Config.RangeDouble;
-import net.minecraftforge.common.config.Config.RangeInt;
-import net.minecraftforge.common.config.Config.RequiresMcRestart;
-import net.minecraftforge.common.config.Config.Type;
-import net.minecraftforge.common.config.ConfigManager;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import java.nio.file.Path;
 
-@Config(modid = IguanaTweaks.MOD_ID, category = "", name = "IguanaTweaksReborn")
-public class Properties {
+import com.electronwill.nightconfig.core.file.CommentedFileConfig;
+import com.electronwill.nightconfig.core.io.WritingMode;
+
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+
+public class ModConfig {
+
+	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+	public static ForgeConfigSpec SPEC;
 	
-	@Name("config")
-	public static ConfigOptions config = new ConfigOptions();
-	private final static ConfigOptions localConfig = new ConfigOptions();
+	public static void Init(Path file) {
+        final CommentedFileConfig configData = CommentedFileConfig.builder(file)
+                .sync()
+                .autosave()
+                .writingMode(WritingMode.REPLACE)
+                .build();
+
+        configData.load();
+        SPEC.setConfig(configData);
+	}
 	
-	public static class ConfigOptions {
-		@RequiresMcRestart
-		public Global global = new Global();
+	public static class Global {
+		public static String name = "global";
+
+		public static ConfigValue<Boolean> drops;
+		public static ConfigValue<Boolean> experience;
+		public static ConfigValue<Boolean> hardness;
+		public static ConfigValue<Boolean> hud;
+		public static ConfigValue<Boolean> movementRestriction;
+		public static ConfigValue<Boolean> sleepRespawn;
+		public static ConfigValue<Boolean> stackSize;
 		
-		public static class Global {
-			@Name("Drops")
-			@Comment("Set to false to disable everything the Drops module does")
-			public boolean drops = true;
-			@Name("Experience")
-			@Comment("Set to false to disable everything the Experience module does")
-			public boolean experience = true;
-			@Name("Hardness")
-			@Comment("Set to false to disable everything the Hardness module does")
-			public boolean hardness = true;
-			@Name("Hud")
-			@Comment("Set to false to disable everything the Hud module does")
-			public boolean hud = true;
-			@Name("Movement Restriction")
-			@Comment("Set to false to disable everything the Movement Restriction module does")
-			public boolean movementRestriction = true;
-			@Name("Sleep & Respawn")
-			@Comment("Set to false to disable everything the Sleep & Respawn module does")
-			public boolean sleepRespawn = true;
-			@Name("Stack Size")
-			@Comment("Set to false to disable everything the Stack Size module does")
-			public boolean stackSize = true;
+		public static void Init() {
+			BUILDER.push(name);
+			drops = BUILDER
+				.comment("Set to false to disable everything from the Drops module")
+				.define("drops", true);
+			experience = BUILDER
+				.comment("Set to false to disable everything from the Experience module")
+				.define("experience", true);
+			hardness = BUILDER
+				.comment("Set to false to disable everything from the Hardness module")
+				.define("hardness", true);
+			hud = BUILDER
+				.comment("Set to false to disable everything from the Hud module")
+				.define("hud", true);
+			movementRestriction = BUILDER
+				.comment("Set to false to disable everything from the Movement Restriction module")
+				.define("movement_restriction", true);
+			sleepRespawn = BUILDER
+				.comment("Set to false to disable everything from the Sleep Respawn module")
+				.define("sleep_respawn", true);
+			stackSize = BUILDER
+				.comment("Set to false to disable everything from the Stack Size module")
+				.define("stack_size", true);
+			BUILDER.pop();
 		}
-	
-		
-		public Misc misc = new Misc();
-		
-		public static class Misc {
-			@Name("Less Obivious Silverfish")
-			@Comment("If true, silverfish blocks will be almost like stone")
-			@RequiresMcRestart
-			public boolean lessObviousSilverfish = true;
-			@Name("Alter Poison")
-			@Comment("The poison effect will be changed to be deadly and drain hunger, but will damage the player 3 times slower")
-			@RequiresMcRestart
-			public boolean alterPoison = true;
-			@Name("Tick Rate Player Update")
-			@Comment("How often the speed of players are calculated (in ticks). Higher values might increase performance but may increase the chance of odd behavior")
-			@RangeInt(min = 1, max = Integer.MAX_VALUE)
-			public int tickRatePlayerUpdate = 2;
-			@Name("Tick Rate Entity Update")
-			@Comment("How often the speed of entities (not player) are calculated (in ticks). Higher values might increase performance but may increase the chance of odd behavior")
-			@RangeInt(min = 1, max = Integer.MAX_VALUE)
-			public int tickRateEntityUpdate = 7;
-			@Name("Disable FoV on Speed Modified")
-			@Comment("Disables FoV changes when you get slowed down or sped up. Highly recommended if you have 'movement_restrictions' active.")
-			public boolean disableFovOnSpeedModified = true;
-			@Name("Exaustion Block Break Hardness Based")
-			@Comment("Minecraft normally adds 0.005 exaustion for block broken. With this at true, exhaustion will be added based on block hardness (hardness / 100). ELI5 when you break a block you lose more hunger the harder is a block to break.")
-			public boolean exhaustionOnBlockBreak = true;
-			@Name("Exaustion Multiplier on Block Break")
-			@Comment("Multiply the exhaustion given to the player when breaking blocks by this value")
-			@RangeDouble(min = 0, max = Float.MAX_VALUE)
-			public float exhaustionMultiplier = 1.0f;
-			@Name("No Item No Knockback")
-			@Comment("If the player attacks an entity without a tool / weapon, the attacked mob will take almost no damage (1/20 of a heart) and no knockback. The no knockback applies even if the player attack speed cooldown is below 75% with a tool / weapon, but in this case the damage is applied normally.\nThis feature is disabled by default since is a little bit buggy, like no experience is dropped from the mob if it gets attacked only by No Knockbacks attacks.")
-			public boolean noItemNoKnockback = false;
-		}
+	}
 
+	public static class Misc{
+		public static String name = "misc";
+
+		public static ConfigValue<Boolean> alterPoison;
+		public static ConfigValue<Integer> tickRatePlayerUpdate;
+		public static ConfigValue<Integer> tickRateEntityUpdate;
+		public static ConfigValue<Boolean> preventFoVChangesOnSpeedModified;
+		public static ConfigValue<Boolean> exhaustionOnBlockBreak;
+		public static ConfigValue<Double> exhaustionMultiplier;
+		public static ConfigValue<Boolean> noItemNoKnockback;
 		
+		public static void Init() {
+			BUILDER.push(name);
+			alterPoison = BUILDER
+				.comment("If true, the poison effect will be changed to be deadly and drain hunger, but will damage the player 3 times slower")
+				.define("alter_poison", true);
+			tickRatePlayerUpdate = BUILDER
+				.comment("How often the speed of players are calculated (in ticks). Higher values might increase performance but may increase the chance of odd behavior")
+				.defineInRange("tick_rate_player_update", 2, 1, 20);
+			tickRateEntityUpdate = BUILDER
+				.comment("How often the speed of entities (not players) are calculated (in ticks). Higher values might increase performance but may increase the chance of odd behavior")
+				.defineInRange("tick_rate_entity_update", 7, 1, 20);
+			preventFoVChangesOnSpeedModified = BUILDER
+				.comment("Disables FoV changes when you get slowed down or sped up. Highly recommended if you have Movement Restriction module active.")
+				.define("prevent_fov_changes_on_speed_modified", true);
+			exhaustionOnBlockBreak = BUILDER
+				.comment("Minecraft normally adds 0.005 exaustion for block broken. With this at true, exhaustion will be added based on block hardness (hardness / 100). ELI5 when you break a block you lose more hunger the harder is a block to break.")
+				.define("exahustion_on_block_break", true);
+			exhaustionMultiplier = BUILDER
+				.comment("Multiply the exhaustion given to the player when breaking blocks by this value")
+				.defineInRange("exhaustion_multiplier", 1.0f, 0.0f, 64f);
+			noItemNoKnockback = BUILDER
+				.comment("If the player attacks an entity without a tool / weapon, the attacked mob will take almost no damage (1/10 of a heart) and no knockback. The no knockback applies even if the player attack speed cooldown is below 75% with a tool / weapon, but in this case the damage is applied normally.\nThis feature might not work properly with modded mobs")
+				.define("no_item_no_knockback", true);
+			BUILDER.pop();
+		}
+	}
+	
+	static {
+		Global.Init();
+		Misc.Init();
+		SPEC = BUILDER.build();
+	}
+	
+	/*
 		public Hardness hardness = new Hardness();
 		
 		public static class Hardness {
@@ -396,14 +415,14 @@ public class Properties {
 	    		return;
 	    	
 	    	ConfigSync message = new ConfigSync();
-	    	message.lessObiviousSilverfish = Properties.config.misc.lessObviousSilverfish;
-	    	message.multiplier = Properties.config.hardness.multiplier;
-	    	message.blockListIsWhitelist = Properties.config.hardness.blockListIsWhitelist;
-	    	message.blockList = String.join("\r\n", Properties.config.hardness.blockList);
-	    	message.blockHardness = String.join("\r\n", Properties.config.hardness.blockHardness);
+	    	message.lessObiviousSilverfish = ModConfig.config.misc.lessObviousSilverfish;
+	    	message.multiplier = ModConfig.config.hardness.multiplier;
+	    	message.blockListIsWhitelist = ModConfig.config.hardness.blockListIsWhitelist;
+	    	message.blockList = String.join("\r\n", ModConfig.config.hardness.blockList);
+	    	message.blockHardness = String.join("\r\n", ModConfig.config.hardness.blockHardness);
 	    	
 	    	PacketHandler.SendToClient(message, (EntityPlayerMP) event.player);
 	    }
 
-	}
+	}*/
 }

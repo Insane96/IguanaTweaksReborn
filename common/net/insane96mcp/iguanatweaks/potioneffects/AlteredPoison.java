@@ -47,4 +47,9 @@ public class AlteredPoison extends Potion {
 	protected Potion setEffectiveness(double effectivenessIn) {
 		return super.setEffectiveness(0.25d);
 	}
+	
+	@Override
+	public String getName() {
+		return "effect.minecraft.poison";
+	}
 }

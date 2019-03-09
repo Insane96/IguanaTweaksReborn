@@ -1,4 +1,4 @@
-package net.insane96mcp.iguanatweaks.lib;
+package net.insane96mcp.iguanatweaks.init;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 
