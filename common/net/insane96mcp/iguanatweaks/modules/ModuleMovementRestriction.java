@@ -148,8 +148,12 @@ public class ModuleMovementRestriction {
 		
 		slownessWeight = (weight / Properties.config.movementRestriction.maxCarryWeight) * 100f;
 
-    	if (slownessWeight > 0)
-    		player.addExhaustion(0.0001F * slownessWeight);
+    	if (slownessWeight > 0 && Properties.config.movementRestriction.encumbranceExhaustionPerSecond > 0f) {
+    		float exhaustion = Properties.config.movementRestriction.encumbranceExhaustionPerSecond;
+    		exhaustion *= (slownessWeight / 100f);
+    		exhaustion /= (20 / Properties.config.misc.tickRatePlayerUpdate);
+    		player.addExhaustion(exhaustion);
+    	}
 		
     	IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
     	

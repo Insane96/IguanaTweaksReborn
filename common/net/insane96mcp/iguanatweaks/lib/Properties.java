@@ -105,7 +105,7 @@ public class Properties {
 			@Comment("Block ids (one per line) for the hardness whitelist/blacklist.\nFormat is modid:blockid;meta\nE.g. 'minecraft:stone:1' will target granite")
 			public String[] blockList = new String[] {};
 			@Name("Custom Block Hardness")
-			@Comment("Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier\nThe format is modid:blockid:meta,hardness.\nE.g. 'minecraft:stone:1,5.0' will make granite have 5 hardness. If no meta is specified, this will affect every block meta.")
+			@Comment("Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier\nThe format is modid:blockid:meta,hardness.\nE.g. 'minecraft:stone:1,5.0' will make granite have 5 hardness. If no meta is specified, this will affect every block meta.\nBy default this is set to make ores harder to mine the better they are (accounting 4x global hardness too)")
 			public String[] blockHardness = new String[] {
 				"minecraft:coal_ore,12.0",
 		        "minecraft:iron_ore,15",
@@ -350,6 +350,10 @@ public class Properties {
 			@Comment("Multiplier for items weight in shulker boxes. Set this to 0 to make items in shulker boxes not count towards weight. Set this to 1 to make items in shulker boxes weight the same as they were out of the box.")
 			@RangeDouble(min = 0f, max = 1f)
 			public float shulkerWeightReduction = 0.75f;
+			@Name("Encubrance Exhaustion per Second")
+			@Comment("How much exhaustion is given to the player each second while exaustion is 100% (e.g. at 5% encumbrance the exhaustion applied to the player will be 5% of this value)")
+			@RangeDouble(min = 0f, max = 1f)
+			public float encumbranceExhaustionPerSecond = 0.05f;
 		}
 	
 	
