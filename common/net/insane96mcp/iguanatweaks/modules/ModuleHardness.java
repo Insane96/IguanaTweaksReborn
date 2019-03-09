@@ -71,21 +71,22 @@ public class ModuleHardness {
 		event.setCanceled(true);
 		
 		ITextComponent textComponent;
-		if (mainHand.isEmpty()) {
-			player.attackEntityFrom(BLOCK_BREAK, state.getBlockHardness(event.getWorld(), event.getPos()) * Properties.config.hardness.multiplier);
-			textComponent = new TextComponentTranslation(Strings.Translatable.Hardness.need_tool);
+		/*if (mainHand.isEmpty()) {
+			
+		}
+		else {*/
+		if (mainHand.isItemStackDamageable()) {
+			//TODO Fix this for 1.13, remove +1
+			mainHand.damageItem(mainHand.getMaxDamage() - mainHand.getItemDamage() + 1, player);
 		}
 		else {
-			if (mainHand.isItemStackDamageable()) {
-				//TODO Fix this for 1.13, remove +1
-				mainHand.damageItem(mainHand.getMaxDamage() - mainHand.getItemDamage() + 1, player);
-			}
-			else {
-				player.renderBrokenItemStack(mainHand);
-				mainHand.shrink(1);
-			}
-			textComponent = new TextComponentTranslation(Strings.Translatable.Hardness.wrong_tool);
+			player.attackEntityFrom(BLOCK_BREAK, state.getBlockHardness(event.getWorld(), event.getPos()) * Properties.config.hardness.multiplier);
+			textComponent = new TextComponentTranslation(Strings.Translatable.Hardness.need_tool);
+			/*player.renderBrokenItemStack(mainHand);
+			mainHand.shrink(1);*/
 		}
+		textComponent = new TextComponentTranslation(Strings.Translatable.Hardness.wrong_tool);
+		//}
 		SPacketTitle title = new SPacketTitle(SPacketTitle.Type.ACTIONBAR, textComponent);
 		player.connection.sendPacket(title);
 	}
