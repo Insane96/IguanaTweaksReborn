@@ -1,6 +1,8 @@
 package net.insane96mcp.iguanatweaks.init;
 
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
@@ -100,74 +102,83 @@ public class ModConfig {
 		}
 	}
 	
-	static {
-		Global.Init();
-		Misc.Init();
-		SPEC = BUILDER.build();
+	public static class Hardness {
+		public static String name = "hardness";
+		
+		public static ConfigValue<Boolean> punishWrongTool;
+		public static ConfigValue<Double> multiplier;
+		public static ConfigValue<Boolean> blacklistIsWhitelist;
+		public static ConfigValue<List<? extends String>> blacklist;
+		public static ConfigValue<List<? extends String>> blocksHardness;
+		
+		public static void Init() {
+			BUILDER.push(name);
+			punishWrongTool = BUILDER
+				.comment("True if the tool should break down when mining the wrong block (e.g. mining Wood with a Pickaxe or mining Obsidian with an Iron Pickaxe) or if the player has instead no tool in hand he will be damaged based on the block hardness.")
+				.define("punish_wrong_tool", false);
+			multiplier = BUILDER
+				.comment("Multiplier applied to the hardness of blocks (set to 1 to keep normal blocks hardness)")
+				.defineInRange("multiplier", 4.0f, 0f, 128f);
+			blacklistIsWhitelist = BUILDER
+				.comment("True if hardness multiplier should only affect blocks on the list, false if all blocks are affected except those on the list")
+				.define("blacklist_is_whitelist", false);
+			blacklist = BUILDER
+				.comment("Block ids (one per line) for the hardness whitelist/blacklist.\nFormat is modid:blockid\\nE.g. 'minecraft:granite' will target granite")
+				.defineList("blacklist", Arrays.asList(""), o -> o instanceof String);
+			blocksHardness = BUILDER
+				.comment("Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier\nThe format is modid:blockid,hardness.\nE.g. 'minecraft:granite,10.0' will make granite have 10 hardness. \nBy default this is set to make ores harder to mine the better they are (accounting 4x global hardness too)")
+				.defineList("blocks_hardness", Arrays.asList(
+					"minecraft:coal_ore,12.0",
+			        "minecraft:iron_ore,16.0",
+			        "minecraft:gold_ore,20.0",
+			        "minecraft:diamond_ore,24.0",
+			        "minecraft:redstone_ore,16.0",
+			        "minecraft:lapis_ore,14.0",
+			        "minecraft:emerald_ore,28.0",
+			        "minecraft:nether_quartz_ore,14.0"
+				), o -> o instanceof String);
+		}
 	}
 	
-	/*
-		public Hardness hardness = new Hardness();
+	public static class StackSizes {
+		public static String name = "stack_sizes";
 		
-		public static class Hardness {
-			@Name("Punish Wrong Tool")
-			@Comment("True if the tool should break when mining the wrong block (e.g. mining Wood with a Pickaxe or mining Obsidian with an Iron Pickaxe) or if no tool in hand damage the player based on the block hardness (multiplied by the hardness multiplier).")
-			public boolean punishWrongTool = false;
-			@Name("Multiplier")
-			@Comment("Multiplier applied to the hardness of blocks (set to 1 to disable)")
-			@RangeDouble(min = 0, max = Float.MAX_VALUE)
-			public float multiplier = 4.0f;
-			@Name("Block List as Whitelist")
-			@Comment("True if hardness multiplier should only affect blocks on the list, false if all blocks are affected except those on the list")
-			public boolean blockListIsWhitelist = false;
-			@Name("Block Black/Whitelist")
-			@Comment("Block ids (one per line) for the hardness whitelist/blacklist.\nFormat is modid:blockid;meta\nE.g. 'minecraft:stone:1' will target granite")
-			public String[] blockList = new String[] {};
-			@Name("Custom Block Hardness")
-			@Comment("Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier\nThe format is modid:blockid:meta,hardness.\nE.g. 'minecraft:stone:1,5.0' will make granite have 5 hardness. If no meta is specified, this will affect every block meta.\nBy default this is set to make ores harder to mine the better they are (accounting 4x global hardness too)")
-			public String[] blockHardness = new String[] {
-				"minecraft:coal_ore,12.0",
-		        "minecraft:iron_ore,15",
-		        "minecraft:gold_ore,20",
-		        "minecraft:diamond_ore,25",
-		        "minecraft:redstone_ore,12.0",
-		        "minecraft:lapis_ore,15",
-		        "minecraft:emerald_ore,30",
-		        "minecraft:nether_quartz_ore,12.0"
-			};
-		}
-	
+		public static ConfigValue<Integer> blockDividerMin;
+		public static ConfigValue<Integer> blockDividerMax;
+		public static ConfigValue<Integer> itemDivider;
+		public static ConfigValue<List<? extends String>> customStackList;
 		
-		@Name("Stack Sizes")
-		@RequiresMcRestart
-		public StackSizes stackSizes = new StackSizes();
-		
-		public static class StackSizes {
-			@Name("Log changes")
-			@Comment("If true, writes in log file any change to stack sizes")
-			public boolean logChanges = false;
-			@Name("Block Stack Size Divider Min")
-			@Comment("Min stack size divider for blocks")
-			@RangeInt(min = 1, max = 64)
-			public int blockDividerMin = 2;
-			@Name("Block Stack Size Divider Max")
-			@Comment("Mia stack size divider for blocks")
-			@RangeInt(min = 1, max = 64)
-			public int blockDividerMax = 4;
-			@Name("Item Stack Size Divider")
-			@Comment("Stack size divider for items")
-			@RangeInt(min = 1, max = 64)
-			public int itemDivider = 2;
-			@Name("Custom Stack List")
-			@Comment("List of all the custom stacks for blocks and items. The format is 'modid:name,max_stack_size'. Going over 64 doesn't work. By default, some items are set so that villagers can trade them.")
-			@RangeInt(min = 1, max = 64)
-			public String[] customStackList = new String[] {
+		public static void Init() {
+			BUILDER.push(name);
+
+			blockDividerMin = BUILDER
+				.comment("Min stack size divider for blocks")
+				.defineInRange("block_divider_min", 2, 1, 64);
+			blockDividerMax = BUILDER
+				.comment("Max stack size divider for blocks")
+				.defineInRange("block_divider_max", 4, 1, 64);
+			itemDivider = BUILDER
+				.comment("Items stack size divider")
+				.defineInRange("item_divider", 2, 1, 64);
+			customStackList = BUILDER
+				.comment("List of all the custom stacks for blocks and items. The format is 'modid:itemid,max_stack_size'. Going over 64 doesn't work. By default, some items are set so that villagers can trade them")
+				.defineList("custom_stack_list", Arrays.asList(
 					"minecraft:emerald,64",
 					"minecraft:paper,36",
 					"minecraft:rotten_flesh,40"
-			};
+				), o -> o instanceof String);
+			BUILDER.pop();
 		}
+	}
 	
+	static {
+		Global.Init();
+		Misc.Init();
+		Hardness.Init();
+		StackSizes.Init();
+		SPEC = BUILDER.build();
+	}
+	/*
 		
 		@Name("Sleep & Respawn")
 		public SleepRespawn sleepRespawn = new SleepRespawn();

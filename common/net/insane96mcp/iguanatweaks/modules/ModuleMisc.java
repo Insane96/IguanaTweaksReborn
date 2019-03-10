@@ -110,6 +110,7 @@ public class ModuleMisc {
 	static long lastSystemTime;
 	
 	@OnlyIn(Dist.CLIENT)
+	//TODO check if something changed since 1.12
 	public static void RenderPoisonedHearts(int width, int height) {
 		GlStateManager.enableBlend();
 		

@@ -4,3 +4,8 @@ MISC
 	Attack with no item now deals 1/10 of a heart instead of 1/20
 	No item No Knockback is now enabled by default
 	Less Obivious silverfish has been removed, blocks now destroy instantly in vanilla
+	
+HARDNESS
+	Fixed process wrong tool ignoring global config
+	Rebalanced default ore hardness
+	Wrong tool punishment now leaves a tool with 1 durability when used wrongly

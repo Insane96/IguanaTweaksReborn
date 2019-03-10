@@ -1,18 +1,18 @@
 {
-    "iguanatweaks:hardness.need_tool": "Potrei aver bisogno di un attrezzo ...",
-    "iguanatweaks:hardness.wrong_tool": "Ops, potrei aver usato l'attrezzo sbagliato",
+    "iguanatweaksreborn:hardness.need_tool": "Potrei aver bisogno di un attrezzo ...",
+    "iguanatweaksreborn:hardness.wrong_tool": "Ops, potrei aver usato l'attrezzo sbagliato",
 
-    "iguanatweaks:movement_restriction.encumbered.slightly": "Leggermente Appesantito",
-    "iguanatweaks:movement_restriction.encumbered.encumbered": "Appesantito",
-    "iguanatweaks:movement_restriction.encumbered.almost_fully": "Quasi Completamente Appesantito",
-    "iguanatweaks:movement_restriction.encumbered.greatly": "Molto Appesantito",
-    "iguanatweaks:movement_restriction.encumbered.fully": "Completamente Appesantito",
-    "iguanatweaks:movement_restriction.weight": "Peso",
+    "iguanatweaksreborn:movement_restriction.encumbered.slightly": "Leggermente Appesantito",
+    "iguanatweaksreborn:movement_restriction.encumbered.encumbered": "Appesantito",
+    "iguanatweaksreborn:movement_restriction.encumbered.almost_fully": "Quasi Completamente Appesantito",
+    "iguanatweaksreborn:movement_restriction.encumbered.greatly": "Molto Appesantito",
+    "iguanatweaksreborn:movement_restriction.encumbered.fully": "Completamente Appesantito",
+    "iguanatweaksreborn:movement_restriction.weight": "Peso",
 
-    "iguanatweaks:sleep_respawn.random_respawn": "Recuperi la coscienza, confuso sul dove ti trovi",
-    "iguanatweaks:sleep_respawn.bed_destroyed": "Ti svegli e trovi il tuo letto distrutto, in pezzi",
-    "iguanatweaks:sleep_respawn.bed_decoration": "Nessuno ti ha detto che i letti sono solo decorativi?",
-    "iguanatweaks:sleep_respawn.enjoy_the_night": "Punto di Spawn impostato. Buona fortuna con la notte ;)",
+    "iguanatweaksreborn:sleep_respawn.random_respawn": "Recuperi la coscienza, confuso sul dove ti trovi",
+    "iguanatweaksreborn:sleep_respawn.bed_destroyed": "Ti svegli e trovi il tuo letto distrutto, in pezzi",
+    "iguanatweaksreborn:sleep_respawn.bed_decoration": "Nessuno ti ha detto che i letti sono solo decorativi?",
+    "iguanatweaksreborn:sleep_respawn.enjoy_the_night": "Punto di Spawn impostato. Buona fortuna con la notte ;)",
 
     "death.attack.altered_poison": "%1$s non sapeva che il veleno fosse mortale",
     "death.attack.block_break": "%1$s ha dato la sua vita per rompere il blocco a mano nuda"

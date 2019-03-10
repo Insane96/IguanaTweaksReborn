@@ -5,6 +5,7 @@ import java.nio.file.Paths;
 import org.apache.logging.log4j.Logger;
 
 import net.insane96mcp.iguanatweaks.init.ModConfig;
+import net.insane96mcp.iguanatweaks.modules.ModuleStackSizes;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig.Type;
@@ -26,5 +27,10 @@ public class IguanaTweaks {
 	private void setup(final FMLCommonSetupEvent event) {
        	ModLoadingContext.get().registerConfig(Type.COMMON, ModConfig.SPEC);
        	ModConfig.Init(Paths.get("config", MOD_ID + ".toml"));
+
+		//StackSizes
+		ModuleStackSizes.ProcessBlocks();
+		ModuleStackSizes.ProcessItems();
+		ModuleStackSizes.ProcessCustom();
 	}
 }
