@@ -1,5 +1,7 @@
 package net.insane96mcp.iguanatweaks.modules;
 
+import java.text.DecimalFormat;
+
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
@@ -24,6 +26,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -32,6 +35,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 public class ModuleMovementRestriction {
 	public static void ApplyPlayer(EntityLivingBase living) {
@@ -94,8 +98,9 @@ public class ModuleMovementRestriction {
 
 		Reflection.Set(Reflection.EntityPlayer_speedInAir, player, 0.02f * (1f - speedModifier));
 	}
-	
-	private static float AddWeight(ItemStack stack) {
+
+	//TODO Set tools and weapons weight based off material (or maybe attack speed and damage?)
+	private static float GetStackWeight(ItemStack stack) {
 		if (stack.isEmpty())
 			return 0;
         float toAdd = 0f;
@@ -120,12 +125,32 @@ public class ModuleMovementRestriction {
 		        	toAdd = 1f / 64f * stack.getCount();
 			}
 			toAdd *= Properties.config.movementRestriction.shulkerWeightReduction;
+			toAdd += Utils.GetItemWeight(stack) * stack.getCount();
 		}
 		else if (!item.equals(Items.AIR)) {
 	        toAdd = Utils.GetItemWeight(stack) * stack.getCount();
 		}
 		
 		return toAdd;
+	}
+	
+	public static void RenderWeightTooltip(ItemTooltipEvent event) {
+		if (!Properties.config.global.movementRestriction)
+			return;
+		
+		if (Properties.config.movementRestriction.maxCarryWeight == 0)
+			return;
+		
+		ItemStack stack = event.getItemStack();
+		float weight = GetStackWeight(stack);
+		DecimalFormat dFormat = new DecimalFormat("#.##");
+		event.getToolTip().add("Weight: " + dFormat.format(weight));
+		
+		if (stack.getItem() instanceof ItemArmor) {
+			ItemArmor item = (ItemArmor) stack.getItem();
+			float weightWhenWorn = item.damageReduceAmount * Properties.config.movementRestriction.armorWeight;
+			event.getToolTip().add("Weight when Worn: " + weightWhenWorn);
+		}
 	}
 	
 	public static float SlownessWeight(EntityPlayer player, World world) {
@@ -138,11 +163,11 @@ public class ModuleMovementRestriction {
 		
 		for (ItemStack stack : player.inventory.mainInventory) 
 		{
-	        weight += AddWeight(stack);
+	        weight += GetStackWeight(stack);
 		}
 		for (ItemStack stack : player.inventory.offHandInventory) 
 		{
-	        weight += AddWeight(stack);
+	        weight += GetStackWeight(stack);
 		}
 		weight += player.getTotalArmorValue() * Properties.config.movementRestriction.armorWeight;
 		
