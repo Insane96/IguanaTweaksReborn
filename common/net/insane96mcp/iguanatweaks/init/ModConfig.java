@@ -137,6 +137,7 @@ public class ModConfig {
 			        "minecraft:emerald_ore,28.0",
 			        "minecraft:nether_quartz_ore,14.0"
 				), o -> o instanceof String);
+			BUILDER.pop();
 		}
 	}
 	
