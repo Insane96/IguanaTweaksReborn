@@ -40,7 +40,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModuleMisc {
 
-	public static void PreventFov(FOVUpdateEvent event) {
+	public static void preventFov(FOVUpdateEvent event) {
 		if (!ModConfig.Misc.preventFoVChangesOnSpeedModified.get())
 			return;
 		
@@ -60,7 +60,7 @@ public class ModuleMisc {
         event.setNewfov(event.getNewfov() / f);
 	}
 	
-	public static void ExhaustionOnBlockBreak(BreakEvent event) {
+	public static void exhaustionOnBlockBreak(BreakEvent event) {
 		if (!ModConfig.Misc.exhaustionOnBlockBreak.get())
 			return;
 		
@@ -75,7 +75,7 @@ public class ModuleMisc {
 	
 	public static AlteredPoison alteredPoison;
 	
-	public static void RegisterPoison(RegistryEvent.Register<Potion> event) {
+	public static void registerPoison(RegistryEvent.Register<Potion> event) {
 		Potion vanillaPoison = ForgeRegistries.POTIONS.getValue(new ResourceLocation("minecraft:poison"));
 		
 		ResourceLocation potionName = new ResourceLocation(IguanaTweaks.MOD_ID, "altered_poison");
@@ -85,7 +85,7 @@ public class ModuleMisc {
 		event.getRegistry().register(alteredPoison);
 	}
 	
-	public static void ApplyPoison(EntityLivingBase living) {
+	public static void applyPoison(EntityLivingBase living) {
 		if (!ModConfig.Misc.alterPoison.get())
 			return;
 		
@@ -111,7 +111,7 @@ public class ModuleMisc {
 	
 	@OnlyIn(Dist.CLIENT)
 	//TODO check if something changed since 1.12
-	public static void RenderPoisonedHearts(int width, int height) {
+	public static void renderPoisonedHearts(int width, int height) {
 		GlStateManager.enableBlend();
 		
 		GuiIngame gui = Minecraft.getInstance().ingameGUI;
@@ -211,7 +211,7 @@ public class ModuleMisc {
         GlStateManager.disableBlend();
 	}
 
-	public static void NoItemNoKnockback(LivingAttackEvent event) {
+	public static void noItemNoKnockback(LivingAttackEvent event) {
 		if (!ModConfig.Misc.noItemNoKnockback.get())
 			return;
 		

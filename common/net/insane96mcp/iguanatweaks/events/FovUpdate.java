@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 public class FovUpdate {
 
 	@SubscribeEvent
-	public static void EventFovUpdate(FOVUpdateEvent event) {
-		ModuleMisc.PreventFov(event);
+	public static void eventFovUpdate(FOVUpdateEvent event) {
+		ModuleMisc.preventFov(event);
 	}
 }

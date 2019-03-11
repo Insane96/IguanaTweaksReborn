@@ -24,14 +24,14 @@ import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModuleHardness {
-	public static void ProcessHardness(BreakSpeed event) {
-		ProcessGlobalHardness(event);
-		ProcessSingleHardness(event);
+	public static void processHardness(BreakSpeed event) {
+		processGlobalHardness(event);
+		processSingleHardness(event);
 	}
 	
 	public static final DamageSource BLOCK_BREAK = new DamageSource("block_break").setDamageBypassesArmor();
 	
-	public static void ProcessWrongTool(BreakEvent event) {
+	public static void processWrongTool(BreakEvent event) {
 		if (!ModConfig.Global.hardness.get())
 			return;
 		
@@ -102,7 +102,7 @@ public class ModuleHardness {
 		player.connection.sendPacket(title);
 	}
 	
-	public static void ProcessGlobalHardness(BreakSpeed event) {
+	public static void processGlobalHardness(BreakSpeed event) {
 		if (!ModConfig.Global.hardness.get())
 			return;
 		
@@ -172,7 +172,7 @@ public class ModuleHardness {
 			event.setNewSpeed((float) (event.getOriginalSpeed() / ModConfig.Hardness.multiplier.get()));
 	}
 	
-	public static void ProcessSingleHardness(BreakSpeed event) {
+	public static void processSingleHardness(BreakSpeed event) {
 		if (!ModConfig.Global.hardness.get())
 			return;
 		
@@ -206,14 +206,14 @@ public class ModuleHardness {
 				float hardness = Float.parseFloat(lineSplit[1]);
 				
 				if (blockResource.equals(blockId)) {
-					event.setNewSpeed(event.getOriginalSpeed() * GetRatio(hardness, blockId, state, world, pos));
+					event.setNewSpeed(event.getOriginalSpeed() * getRatio(hardness, blockId, state, world, pos));
 					break;
 				}
 			}
 		}
 	}
 	
-	private static float GetRatio(float newHardness, ResourceLocation blockId, IBlockState state, World world, BlockPos pos) {
+	private static float getRatio(float newHardness, ResourceLocation blockId, IBlockState state, World world, BlockPos pos) {
 		Block block = ForgeRegistries.BLOCKS.getValue(blockId);
 		float originalHardness = block.getDefaultState().getBlockHardness(world, pos);
 		float ratio = originalHardness / newHardness;

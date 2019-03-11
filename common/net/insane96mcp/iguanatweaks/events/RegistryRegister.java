@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 public class RegistryRegister {
 	
 	@SubscribeEvent
-	public static void EventRegisterPotion(RegistryEvent.Register<Potion> event) {
-		ModuleMisc.RegisterPoison(event);
+	public static void eventRegisterPotion(RegistryEvent.Register<Potion> event) {
+		ModuleMisc.registerPoison(event);
 	}
 }

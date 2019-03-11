@@ -10,9 +10,9 @@ import net.minecraftforge.fml.common.Mod;
 public class LivingUpdate {
 	
 	@SubscribeEvent
-	public static void EventLivingUpdate(LivingUpdateEvent event) {
+	public static void eventLivingUpdate(LivingUpdateEvent event) {
 		//ModuleMovementRestriction.ApplyPlayer(event.getEntityLiving());
 		//ModuleMovementRestriction.ApplyEntity(event.getEntityLiving());
-		ModuleMisc.ApplyPoison(event.getEntityLiving());
+		ModuleMisc.applyPoison(event.getEntityLiving());
 	}
 }

@@ -37,7 +37,7 @@ public class ModConfig {
 		public static ConfigValue<Boolean> sleepRespawn;
 		public static ConfigValue<Boolean> stackSize;
 		
-		public static void Init() {
+		public static void init() {
 			BUILDER.push(name);
 			drops = BUILDER
 				.comment("Set to false to disable everything from the Drops module")
@@ -75,7 +75,7 @@ public class ModConfig {
 		public static ConfigValue<Double> exhaustionMultiplier;
 		public static ConfigValue<Boolean> noItemNoKnockback;
 		
-		public static void Init() {
+		public static void init() {
 			BUILDER.push(name);
 			alterPoison = BUILDER
 				.comment("If true, the poison effect will be changed to be deadly and drain hunger, but will damage the player 3 times slower")
@@ -111,7 +111,7 @@ public class ModConfig {
 		public static ConfigValue<List<? extends String>> blacklist;
 		public static ConfigValue<List<? extends String>> blocksHardness;
 		
-		public static void Init() {
+		public static void init() {
 			BUILDER.push(name);
 			punishWrongTool = BUILDER
 				.comment("True if the tool should break down when mining the wrong block (e.g. mining Wood with a Pickaxe or mining Obsidian with an Iron Pickaxe) or if the player has instead no tool in hand he will be damaged based on the block hardness.")
@@ -149,7 +149,7 @@ public class ModConfig {
 		public static ConfigValue<Integer> itemDivider;
 		public static ConfigValue<List<? extends String>> customStackList;
 		
-		public static void Init() {
+		public static void init() {
 			BUILDER.push(name);
 
 			blockDividerMin = BUILDER
@@ -172,55 +172,62 @@ public class ModConfig {
 		}
 	}
 	
+	public static class SleepRespawn {
+		public static String name = "sleep_respawn";
+
+		public static ConfigValue<Boolean> disableSleeping;
+		public static ConfigValue<Boolean> destroyBedOnRespawn;
+		public static ConfigValue<Boolean> disableSetRespawnPoint;
+		public static ConfigValue<Integer> spawnLocationRadiusMin;
+		public static ConfigValue<Integer> spawnLocationRadiusMax;
+		public static ConfigValue<Integer> respawnLocationRadiusMin;
+		public static ConfigValue<Integer> respawnLocationRadiusMax;
+		public static ConfigValue<Integer> respawnHealth;
+		public static ConfigValue<Boolean> respawnHealthDifficultyScaling;
+		
+		public static void init() {
+			BUILDER.push(name);
+			
+			disableSleeping = BUILDER
+				.comment("Prevents players from sleeping")
+				.define("disable_sleeping", true);
+			destroyBedOnRespawn = BUILDER
+				.comment("As the player respawns the bed will be destroyed. This makes bed one time respawn only")
+				.define("destroy_bed_on_respawn", true);
+			disableSetRespawnPoint = BUILDER
+				.comment("If active using a bed will not set your spawn point (requires disable_sleeping to be enabled)")
+				.define("disable_set_respawn_point", false);
+			spawnLocationRadiusMin = BUILDER
+				.comment("Upon entering the world your spawn will be randomized around the spawn point, at least at this minimum distance (set to 0 to disable)")
+				.defineInRange("spawn_location_radius_min", 0, 0, Integer.MAX_VALUE);
+			spawnLocationRadiusMax = BUILDER
+				.comment("Upon entering the world your spawn will be randomized around the spawn point, at most at this maximum distance (set to 0 to disable)")
+				.defineInRange("spawn_location_radius_max", 0, 0, Integer.MAX_VALUE);
+			respawnLocationRadiusMin = BUILDER
+				.comment("Upon respawning your location will be randomised around your respawn point, at least at this minimum distance (set to 0 to disable)")
+				.defineInRange("respawn_location_radius_min", 0, 0, Integer.MAX_VALUE);
+			respawnLocationRadiusMax = BUILDER
+				.comment("Upon respawning your location will be randomised around your respawn point, at most at this maximum distance (set to 0 to disable)")
+				.defineInRange("respawn_location_radius_max", 0, 0, Integer.MAX_VALUE);
+			respawnHealth = BUILDER
+				.comment("Amount of health you respawn with")
+				.defineInRange("respawn_health", 10, 1, 20);
+			respawnHealthDifficultyScaling = BUILDER
+				.comment("If true, the amount of health you respawn with is dependant on difficulty. (Easy x2, Normal x1, Hard x0.5)")
+				.define("respawn_health_difficulty_scaling", true);
+			BUILDER.pop();
+		}
+	}
+	
 	static {
-		Global.Init();
-		Misc.Init();
-		Hardness.Init();
-		StackSizes.Init();
+		Global.init();
+		Misc.init();
+		Hardness.init();
+		StackSizes.init();
+		SleepRespawn.init();
 		SPEC = BUILDER.build();
 	}
-	/*
-		
-		@Name("Sleep & Respawn")
-		public SleepRespawn sleepRespawn = new SleepRespawn();
-		
-		public static class SleepRespawn {
-			@Name("Disable Sleeping")
-			@Comment("Prevents players from sleeping")
-			public boolean disableSleeping = true;
-			@Name("Destroy Bed on Respawn")
-			@Comment("As the player respawns the bed will be destroyed. This makes bed one time respawn only")
-			public boolean destroyBedOnRespawn = false;
-			@Name("Disable Set Respawn Point")
-			@Comment("If active using a bed will not set your spawn point (requires disable_sleeping to be true)")
-			public boolean disableSetRespawnPoint = false;
-			@Name("Random Spawn Location Radius Min")
-			@Comment("Upon entering the world your spawn will be randomised around the spawn point, at least at this minimum distance (set to 0 to disable)")
-			@RangeInt(min = 0)
-			public int spawnLocationRandomMin = 0;
-			@Name("Random Spawn Location Radius Max")
-			@Comment("Upon entering the world your spawn will be randomised around the spawn point, at most at this maximum distance (set to 0 to disable)")
-			@RangeInt(min = 0)
-			public int spawnLocationRandomMax = 0;
-			@Name("Random Respawn Location Radius Min")
-			@Comment("Upon respawning your location will be randomised around your respawn point, at least at this minimum distance (set to 0 to disable)")
-			@RangeInt(min = 0)
-			public int respawnLocationRandomMin = 0;
-			@Name("Random Respawn Location Radius Max")
-			@Comment("Upon respawning your location will be randomised around your respawn point, at most at this maximum distance (set to 0 to disable)")
-			@RangeInt(min = 0)
-			public int respawnLocationRandomMax = 0;
-			@Name("Respawn Health")
-			@Comment("Amount of health you respawn with (with 'respawnHealthDifficultyScaling' this will be modified by difficulty)")
-			@RangeInt(min = 1)
-			public int respawnHealth = 10;
-			@Name("Respawn Health Difficulty Based")
-			@Comment("If true, the amount of health you respawn with is dependant on difficulty. (Easy x2, Normal x1, Hard x0.5)")
-			public boolean respawnHealthDifficultyScaling = true;
-		}
-
-	
-		public Hud hud = new Hud();
+	/*public Hud hud = new Hud();
 		
 		public static class Hud {
 			@Name("Hide Hotbar")

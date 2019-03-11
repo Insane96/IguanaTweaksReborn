@@ -9,8 +9,8 @@ import net.minecraftforge.fml.common.Mod;
 public class EntityJoinWorld {
 	
 	@SubscribeEvent
-	public static void EventEntityJoinWorld(EntityJoinWorldEvent event) {
-		//ModuleExperience.XpLifespan(event.getEntity());
-		//ModuleExperience.XpDropPercentage(event.getEntity());
+	public static void eventEntityJoinWorld(EntityJoinWorldEvent event) {
+		//ModuleExperience.xpLifespan(event.getEntity());
+		//ModuleExperience.xpDropPercentage(event.getEntity());
 	}
 }

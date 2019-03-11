@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = IguanaTweaks.MOD_ID)
 public class LivingSpawn {
 	@SubscribeEvent
-	public static void SpawnSpecial(LivingSpawnEvent.SpecialSpawn event) {
-		//ModuleExperience.CheckFromSpawner(event);
+	public static void spawnSpecial(LivingSpawnEvent.SpecialSpawn event) {
+		//ModuleExperience.checkFromSpawner(event);
 	}
 }

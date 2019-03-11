@@ -9,3 +9,7 @@ HARDNESS
 	Fixed process wrong tool ignoring global config
 	Rebalanced default ore hardness
 	Wrong tool punishment now leaves a tool with 1 durability when used wrongly
+	
+SLEEP_RESPAWN
+	One Time use beds is now enabled by default
+	

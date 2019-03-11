@@ -10,12 +10,12 @@ import net.minecraftforge.fml.common.Mod;
 public class LivingDrops {
 
 	@SubscribeEvent
-	public static void EventLivingDrops(LivingDropsEvent event) {
+	public static void eventLivingDrops(LivingDropsEvent event) {
 		EntityLivingBase living = event.getEntityLiving();
 		if (living == null)
 			return;
-		/*ModuleDrops.RestrictedDrops(living, event.getDrops());
-		ModuleDrops.MobDrop(living, event.getDrops());
-		ModuleDrops.PlayerDrop(living, event.getDrops());*/
+		/*ModuleDrops.restrictedDrops(living, event.getDrops());
+		ModuleDrops.mobDrop(living, event.getDrops());
+		ModuleDrops.playerDrop(living, event.getDrops());*/
 	}
 }

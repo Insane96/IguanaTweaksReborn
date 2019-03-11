@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = IguanaTweaks.MOD_ID)
 public class LivingAttack {
 	@SubscribeEvent
-	public static void EventLivingAttack(LivingAttackEvent event) {
-		ModuleMisc.NoItemNoKnockback(event);
+	public static void eventLivingAttack(LivingAttackEvent event) {
+		ModuleMisc.noItemNoKnockback(event);
 	}
 }

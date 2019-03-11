@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 public class LivingExperienceDrop {
 
 	@SubscribeEvent
-	public static void EventLivingExperienceDrop(LivingExperienceDropEvent event) {
-		//ModuleExperience.XpDropFromSpawner(event);
+	public static void eventLivingExperienceDrop(LivingExperienceDropEvent event) {
+		//ModuleExperience.xpDropFromSpawner(event);
 	}
 }

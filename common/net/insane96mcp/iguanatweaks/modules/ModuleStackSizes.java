@@ -12,7 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModuleStackSizes {
 	
-	public static void ProcessBlocks() {
+	public static void processBlocks() {
 		if (!ModConfig.Global.stackSize.get())
 			return;
 		
@@ -28,7 +28,7 @@ public class ModuleStackSizes {
     			continue;
     		
     		//TODO use state get material instead of block get material
-			float blockWeight = Utils.GetBlockWeight(block);
+			float blockWeight = Utils.getBlockWeight(block);
 	        
 			//TODO Will surely crash with some mods
 			int maxStackSize = item.getItemStackLimit(null);
@@ -55,7 +55,7 @@ public class ModuleStackSizes {
     	}
 	}
     
-	public static void ProcessItems() {
+	public static void processItems() {
 		if (!ModConfig.Global.stackSize.get())
 			return;
 		
@@ -89,7 +89,7 @@ public class ModuleStackSizes {
     	}
 	}
 	
-	public static void ProcessCustom() {
+	public static void processCustom() {
 		if (!ModConfig.Global.stackSize.get())
 			return;
 		
@@ -104,7 +104,7 @@ public class ModuleStackSizes {
 			}
 			
 			ResourceLocation id = new ResourceLocation(split[0]);
-			int stackSize = Utils.TryParseInt(split[1]);
+			int stackSize = Utils.tryParseInt(split[1]);
 			
 			if (stackSize == 0) {
 				IguanaTweaks.logger.error("[StackSizes] Invalid stack size for line: " + line);

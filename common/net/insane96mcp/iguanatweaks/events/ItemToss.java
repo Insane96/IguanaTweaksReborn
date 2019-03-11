@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ItemToss {
 	
 	@SubscribeEvent
-	public static void EventItemToss(ItemTossEvent event) {
-		//ModuleDrops.PlayerToss(event.getEntityItem());
+	public static void eventItemToss(ItemTossEvent event) {
+		//ModuleDrops.playerToss(event.getEntityItem());
 	}
 }

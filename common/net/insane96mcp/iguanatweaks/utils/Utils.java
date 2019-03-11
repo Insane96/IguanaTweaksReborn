@@ -2,6 +2,10 @@ package net.insane96mcp.iguanatweaks.utils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 
 public class Utils {
 /*
@@ -10,7 +14,7 @@ public class Utils {
 	public static final UUID stunUUID = new UUID(22, 0x10001);
 	
 	@SuppressWarnings("deprecation")
-	public static float GetItemWeight(ItemStack itemStack) {
+	public static float getItemWeight(ItemStack itemStack) {
 		Item item = itemStack.getItem();
 		int meta = itemStack.getMetadata();
 		Block block = Block.getBlockFromItem(item);
@@ -41,7 +45,7 @@ public class Utils {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static float GetBlockSlowness(World world, BlockPos pos) {
+	public static float getBlockSlowness(World world, BlockPos pos) {
 		Material blockOnMaterial = world.getBlockState(pos).getMaterial();			
 		Material blockInMaterial = world.getBlockState(pos.add(0, 1, 0)).getMaterial();
 		IBlockState state = world.getBlockState(pos);
@@ -90,7 +94,7 @@ public class Utils {
         return slowness;
 	}*/
 	
-	public static float GetBlockWeight(Block block) {
+	public static float getBlockWeight(Block block) {
 		Material blockMaterial = block.getMaterial(block.getDefaultState());
     	
         if (blockMaterial == Material.IRON || blockMaterial == Material.ANVIL) 
@@ -111,11 +115,34 @@ public class Utils {
 		
 	}
 	
-	public static int TryParseInt(String string) {
+	public static int tryParseInt(String string) {
 		try {
 			return Integer.parseInt(string);
 		} catch (NumberFormatException e) {
 			return 0;
 		}
 	}
+
+	/**
+     * Finds the highest block on the x and z coordinate that is solid or liquid, and returns its y coord.
+     */
+    public static BlockPos getTopSolidOrLiquidBlock(World world, BlockPos pos)
+    {
+        Chunk chunk = world.getChunk(pos);
+        BlockPos blockpos;
+        BlockPos blockpos1;
+
+        for (blockpos = new BlockPos(pos.getX(), chunk.getTopFilledSegment() + 16, pos.getZ()); blockpos.getY() >= 0; blockpos = blockpos1)
+        {
+            blockpos1 = blockpos.down();
+            IBlockState state = chunk.getBlockState(blockpos1);
+
+            if (state.getMaterial().blocksMovement() && !state.getMaterial().equals(Material.LEAVES) && !state.getBlock().isFoliage(state, world, blockpos1))
+            {
+                break;
+            }
+        }
+
+        return blockpos;
+    }
 }

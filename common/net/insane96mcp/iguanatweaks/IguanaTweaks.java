@@ -29,8 +29,8 @@ public class IguanaTweaks {
        	ModConfig.Init(Paths.get("config", MOD_ID + ".toml"));
 
 		//StackSizes
-		ModuleStackSizes.ProcessBlocks();
-		ModuleStackSizes.ProcessItems();
-		ModuleStackSizes.ProcessCustom();
+		ModuleStackSizes.processBlocks();
+		ModuleStackSizes.processItems();
+		ModuleStackSizes.processCustom();
 	}
 }

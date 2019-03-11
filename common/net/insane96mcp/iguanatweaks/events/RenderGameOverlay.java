@@ -16,13 +16,13 @@ public class RenderGameOverlay {
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public static void EventRenderGameOverlay(RenderGameOverlayEvent.Pre event) {
+	public static void eventRenderGameOverlay(RenderGameOverlayEvent.Pre event) {
 		EntityPlayerSP player = Minecraft.getInstance().player;
 		ElementType type = event.getType();
 		
 		
 		if (type.equals(ElementType.HEALTH) && player.isPotionActive(ModuleMisc.alteredPoison)) {
-			ModuleMisc.RenderPoisonedHearts(Minecraft.getInstance().mainWindow.getScaledWidth(), Minecraft.getInstance().mainWindow.getScaledHeight());
+			ModuleMisc.renderPoisonedHearts(Minecraft.getInstance().mainWindow.getScaledWidth(), Minecraft.getInstance().mainWindow.getScaledHeight());
 			event.setCanceled(true);
 		}
 		

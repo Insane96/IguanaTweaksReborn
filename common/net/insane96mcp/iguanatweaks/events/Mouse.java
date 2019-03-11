@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 public class Mouse {
 	/*@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public static void EventMouse(MouseEvent event) {
-		ModuleHud.HotbarCheckMouse(event.getDwheel());
+	public static void eventMouse(MouseEvent event) {
+		ModuleHud.hotbarCheckMouse(event.getDwheel());
 	}*/
 }

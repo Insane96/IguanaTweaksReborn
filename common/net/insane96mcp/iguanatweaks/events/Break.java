@@ -11,9 +11,9 @@ import net.minecraftforge.fml.common.Mod;
 public class Break {
 	
 	@SubscribeEvent
-	public static void EventBreak(BreakEvent event) {
+	public static void eventBreak(BreakEvent event) {
         //ModuleExperience.XpDropOre(event);
-        ModuleMisc.ExhaustionOnBlockBreak(event);
-        ModuleHardness.ProcessWrongTool(event);
+        ModuleMisc.exhaustionOnBlockBreak(event);
+        ModuleHardness.processWrongTool(event);
 	}
 }

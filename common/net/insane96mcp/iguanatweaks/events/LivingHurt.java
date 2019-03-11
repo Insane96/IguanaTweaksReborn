@@ -9,10 +9,10 @@ import net.minecraftforge.fml.common.Mod;
 public class LivingHurt {
 
 	@SubscribeEvent
-	public static void EventLivingHurt(LivingHurtEvent event) {
+	public static void eventLivingHurt(LivingHurtEvent event) {
 		/*if (event.getEntityLiving().world.isRemote){
-			ModuleHud.DamagedPlayer(event.getEntityLiving());
+			ModuleHud.damagedPlayer(event.getEntityLiving());
 		}
-		ModuleMovementRestriction.Stun(event.getEntityLiving(), event.getAmount());*/
+		ModuleMovementRestriction.stun(event.getEntityLiving(), event.getAmount());*/
 	}
 }

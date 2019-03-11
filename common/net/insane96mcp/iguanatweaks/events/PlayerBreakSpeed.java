@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 public class PlayerBreakSpeed {
 
 	@SubscribeEvent
-	public static void EventBreakSpeed(BreakSpeed event) {
-		ModuleHardness.ProcessHardness(event);
+	public static void eventBreakSpeed(BreakSpeed event) {
+		ModuleHardness.processHardness(event);
 	}
 }
