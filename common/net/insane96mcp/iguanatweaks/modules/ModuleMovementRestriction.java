@@ -36,6 +36,8 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModuleMovementRestriction {
 	public static void ApplyPlayer(EntityLivingBase living) {
@@ -134,6 +136,7 @@ public class ModuleMovementRestriction {
 		return toAdd;
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public static void RenderWeightTooltip(ItemTooltipEvent event) {
 		if (!Properties.config.global.movementRestriction)
 			return;
