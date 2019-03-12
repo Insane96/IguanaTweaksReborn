@@ -178,8 +178,8 @@ public class ModConfig {
 		public static ConfigValue<Boolean> disableSleeping;
 		public static ConfigValue<Boolean> destroyBedOnRespawn;
 		public static ConfigValue<Boolean> disableSetRespawnPoint;
-		public static ConfigValue<Integer> spawnLocationRadiusMin;
-		public static ConfigValue<Integer> spawnLocationRadiusMax;
+		//public static ConfigValue<Integer> spawnLocationRadiusMin;
+		//public static ConfigValue<Integer> spawnLocationRadiusMax;
 		public static ConfigValue<Integer> respawnLocationRadiusMin;
 		public static ConfigValue<Integer> respawnLocationRadiusMax;
 		public static ConfigValue<Integer> respawnHealth;
@@ -197,12 +197,12 @@ public class ModConfig {
 			disableSetRespawnPoint = BUILDER
 				.comment("If active using a bed will not set your spawn point (requires disable_sleeping to be enabled)")
 				.define("disable_set_respawn_point", false);
-			spawnLocationRadiusMin = BUILDER
+			/*spawnLocationRadiusMin = BUILDER
 				.comment("Upon entering the world your spawn will be randomized around the spawn point, at least at this minimum distance (set to 0 to disable)")
 				.defineInRange("spawn_location_radius_min", 0, 0, Integer.MAX_VALUE);
 			spawnLocationRadiusMax = BUILDER
 				.comment("Upon entering the world your spawn will be randomized around the spawn point, at most at this maximum distance (set to 0 to disable)")
-				.defineInRange("spawn_location_radius_max", 0, 0, Integer.MAX_VALUE);
+				.defineInRange("spawn_location_radius_max", 0, 0, Integer.MAX_VALUE);*/
 			respawnLocationRadiusMin = BUILDER
 				.comment("Upon respawning your location will be randomised around your respawn point, at least at this minimum distance (set to 0 to disable)")
 				.defineInRange("respawn_location_radius_min", 0, 0, Integer.MAX_VALUE);

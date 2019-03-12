@@ -1,6 +1,5 @@
 package net.insane96mcp.iguanatweaks.modules;
 
-import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.init.ModConfig;
 import net.insane96mcp.iguanatweaks.init.Strings;
 import net.insane96mcp.iguanatweaks.utils.Utils;
@@ -9,7 +8,9 @@ import net.minecraft.entity.player.EntityPlayer.SleepResult;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -22,7 +23,7 @@ import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 
 public class ModuleSleepRespawn {
 
-	public static void processSpawn(EntityPlayer player) {
+	/*public static void processSpawn(EntityPlayer player) {
 		if (!ModConfig.Global.sleepRespawn.get())
 			return;
 		
@@ -36,9 +37,12 @@ public class ModuleSleepRespawn {
         	tags.putBoolean("iguanatweaks:spawned", true);
 			respawnPlayer(player, ModConfig.SleepRespawn.spawnLocationRadiusMin.get(), ModConfig.SleepRespawn.spawnLocationRadiusMax.get());
         }
-	}
+	}*/
 	
-	public static void processRespawn(EntityPlayer player) {
+	public static void processRespawn(EntityPlayerMP player) {
+		if (player.world.isRemote)
+			return;
+		
 		if (!ModConfig.Global.sleepRespawn.get())
 			return;
 		
@@ -93,15 +97,16 @@ public class ModuleSleepRespawn {
 		
 		BlockPos newCoords = randomiseCoordinates(world, x, z, minDistance, maxDistance);
 		ChunkPos chunkPos = new ChunkPos(newCoords.getX() >> 4, newCoords.getZ() >> 4);
-		//TODO Wtf is a Consumer<Chunk>?
+		//TODO Might be useless
 		//worldserver.getChunkProvider().loadChunks(Arrays.asList(chunkPos), loadedChunkConsumer);
         //System.out.println(world.getBlockState(newCoords).isBlockNormalCube());
         while (world.getBlockState(newCoords).isBlockNormalCube()) {
         	newCoords = newCoords.add(0, 1, 0);
             //System.out.println(world.getBlockState(newCoords).isBlockNormalCube());
         }
-		player.setLocationAndAngles(newCoords.getX() + .5f, newCoords.getY() + 1.1f, newCoords.getZ() + .5f, 0.0f, 0.0f);
-        playerMP.connection.setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
+		//player.setLocationAndAngles(newCoords.getX() + .5f, newCoords.getY() + 1.1f, newCoords.getZ() + .5f, 0.0f, 0.0f);
+		player.setPositionAndUpdate(newCoords.getX() + .5f, newCoords.getY() + 1.1f, newCoords.getZ() + .5f);
+        //playerMP.connection.setPlayerLocation(player.posX, player.posY, player.posZ, player.rotationYaw, player.rotationPitch);
         
         //System.out.println(player.posX + " " + player.posY + " " + player.posZ);
 	}
@@ -134,7 +139,7 @@ public class ModuleSleepRespawn {
 			
 			if (newBlockPos.getY() >= 0) 
 			{
-				IguanaTweaks.logger.info("Good spawn found at " + newBlockPos);
+				//IguanaTweaks.logger.info("Good spawn found at " + newBlockPos);
 				break;
 			}
 		}
@@ -142,9 +147,12 @@ public class ModuleSleepRespawn {
 		return newBlockPos;
 	}
 
-	private static void playerHealth(EntityPlayer player) {
-		int respawnHealth = ModConfig.SleepRespawn.respawnHealth.get();
+	private static void playerHealth(EntityPlayerMP player) {
 		EnumDifficulty difficulty = player.getEntityWorld().getDifficulty();
+		if (difficulty.equals(EnumDifficulty.PEACEFUL))
+			return;
+		
+		int respawnHealth = ModConfig.SleepRespawn.respawnHealth.get();
 		
 		if (ModConfig.SleepRespawn.respawnHealthDifficultyScaling.get()) {
 			if (difficulty == EnumDifficulty.HARD) 
@@ -160,6 +168,10 @@ public class ModuleSleepRespawn {
 		if (difficulty == EnumDifficulty.PEACEFUL)
 			respawnHealth = (int) player.getMaxHealth();
 
+		//??
+		player.attackEntityFrom(DamageSource.OUT_OF_WORLD, respawnHealth);
+		//??
+		player.addPotionEffect(new PotionEffect(MobEffects.POISON, 30));
 		player.setHealth(respawnHealth);
 	}
 
