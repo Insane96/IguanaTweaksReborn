@@ -27,8 +27,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@SideOnly(Side.CLIENT)
 public class ModuleHud {
+	@SideOnly(Side.CLIENT)
 	public static boolean HideHealthBar(ElementType type, EntityPlayer player) {
 		if (!Properties.config.global.hud)
 			return false;
@@ -57,7 +57,8 @@ public class ModuleHud {
 			playerData.setHideHealthBarLastTimestamp(totalTime);
 		return false;
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static boolean HideHungerBar(ElementType type, EntityPlayer player) {
 		if (!Properties.config.global.hud)
 			return false;
@@ -85,6 +86,7 @@ public class ModuleHud {
 		return false;
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static boolean HideExperienceBar(ElementType type, EntityPlayerSP player) {
 		if (!Properties.config.global.hud)
 			return false;
@@ -116,7 +118,8 @@ public class ModuleHud {
 		
 		return false;
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static boolean HideArmorBar(ElementType type, EntityPlayerSP player) {
 		if (!Properties.config.global.hud)
 			return false;
@@ -151,7 +154,8 @@ public class ModuleHud {
 		PacketHandler.SendToClient(new HideArmorTimestamp(totalTime), player);
 		
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static boolean HideHotbar(ElementType type, EntityPlayer player) {
 		if (!Properties.config.global.hud)
 			return false;
@@ -173,7 +177,8 @@ public class ModuleHud {
 		
 		return false;
 	}
-	
+
+	@SideOnly(Side.CLIENT)
 	public static void HotbarCheckKeyPress(Phase phase) {
 		if (!Properties.config.global.hud)
 			return;
@@ -203,6 +208,7 @@ public class ModuleHud {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static void HotbarCheckMouse(int dwheel) {
 		if (!Properties.config.global.hud)
 			return;
@@ -214,6 +220,7 @@ public class ModuleHud {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static void PrintCreativeText(RenderGameOverlayEvent.Text event) {
 		if (!Properties.config.hud.showCreativeText || !Properties.config.global.hud)
 			return;

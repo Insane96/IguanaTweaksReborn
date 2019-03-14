@@ -1,6 +1,7 @@
 package net.insane96mcp.iguanatweaks.modules;
 
 import java.text.DecimalFormat;
+import java.util.Collection;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
@@ -17,6 +18,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -25,6 +27,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -147,12 +150,20 @@ public class ModuleMovementRestriction {
 		ItemStack stack = event.getItemStack();
 		float weight = GetStackWeight(stack);
 		DecimalFormat dFormat = new DecimalFormat("#.##");
-		event.getToolTip().add("Weight: " + dFormat.format(weight));
+		event.getToolTip().add(I18n.format(Strings.Translatable.MovementRestriction.weight) + ": " + dFormat.format(weight));
 		
 		if (stack.getItem() instanceof ItemArmor) {
 			ItemArmor item = (ItemArmor) stack.getItem();
-			float weightWhenWorn = item.damageReduceAmount * Properties.config.movementRestriction.armorWeight;
-			event.getToolTip().add("Weight when Worn: " + weightWhenWorn);
+			EntityPlayer player = event.getEntityPlayer();
+			EntityEquipmentSlot slot = EntityLiving.getSlotForItemStack(stack);
+			Collection<AttributeModifier> armorModifiers = item.getAttributeModifiers(slot, stack).get("generic.armor");
+			float armor = 0f;
+			for (AttributeModifier armorModifier : armorModifiers) {
+				if (armorModifier.getOperation() == 0)
+					armor += armorModifier.getAmount();
+			}
+			float weightWhenWorn = armor * Properties.config.movementRestriction.armorWeight;
+			event.getToolTip().add(I18n.format(Strings.Translatable.MovementRestriction.weight_when_worn) + ": " + weightWhenWorn);
 		}
 	}
 	
@@ -172,7 +183,17 @@ public class ModuleMovementRestriction {
 		{
 	        weight += GetStackWeight(stack);
 		}
-		weight += player.getTotalArmorValue() * Properties.config.movementRestriction.armorWeight;
+		
+		//Armor
+		Iterable<ItemStack> armorInventory = player.getArmorInventoryList();
+		for (ItemStack armorPiece : armorInventory) {
+			EntityEquipmentSlot slot = EntityLiving.getSlotForItemStack(armorPiece);
+			Collection<AttributeModifier> armorModifiers = armorPiece.getAttributeModifiers(slot).get("generic.armor");
+			for (AttributeModifier armorModifier : armorModifiers) {
+				if (armorModifier.getOperation() == 0)
+					weight += armorModifier.getAmount() * Properties.config.movementRestriction.armorWeight;
+			}
+		}
 		
 		slownessWeight = (weight / Properties.config.movementRestriction.maxCarryWeight) * 100f;
 

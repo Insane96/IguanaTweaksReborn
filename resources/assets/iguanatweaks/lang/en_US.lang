@@ -7,6 +7,7 @@ iguanatweaks:movement_restriction.encumbered.almost_fully=Almost Fully Encumbere
 iguanatweaks:movement_restriction.encumbered.greatly=Greatly Encumbered
 iguanatweaks:movement_restriction.encumbered.fully=Fully Encumbered
 iguanatweaks:movement_restriction.weight=Weight
+iguanatweaks:movement_restriction.weight_when_worn=Weight when Worn
 
 iguanatweaks:sleep_respawn.random_respawn=You regain consciousness, confused as to where you are
 iguanatweaks:sleep_respawn.bed_destroyed=You awake up and find your bed smashed to pieces

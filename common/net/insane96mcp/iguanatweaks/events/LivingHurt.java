@@ -12,7 +12,7 @@ public class LivingHurt {
 
 	@SubscribeEvent
 	public static void EventLivingHurt(LivingHurtEvent event) {
-		if (event.getEntityLiving().world.isRemote){
+		if (!event.getEntityLiving().world.isRemote){
 			ModuleHud.DamagedPlayer(event.getEntityLiving());
 		}
 		ModuleMovementRestriction.Stun(event.getEntityLiving(), event.getAmount());

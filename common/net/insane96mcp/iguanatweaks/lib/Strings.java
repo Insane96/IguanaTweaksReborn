@@ -22,6 +22,7 @@ public class Strings {
 			public static String greatly_encumbered = name + "encumbered.greatly";
 			public static String fully_encumbered = name + "encumbered.fully";
 			public static String weight = name + "weight";
+			public static String weight_when_worn = name + "weight_when_worn";
 		}
 		
 		public static class SleepRespawn {
