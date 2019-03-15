@@ -212,11 +212,11 @@ public class Properties {
 			public int hideHealthBarDelay = 4;
 			@Name("Hide Hunger Bar")
 			@Comment("If true, the hunger bar will be hidden when above a certain threshold")
-			public static boolean hideHungerBar = true;
+			public boolean hideHungerBar = true;
 			@Name("Hide Hunger Bar Threshold")
 			@Comment("Hunger needs to be equal to or above this before the bar will hide")
 			@RangeInt(min = 1)
-			public static int hideHungerBarThreshold = 20;
+			public int hideHungerBarThreshold = 20;
 			@Name("Hide Hunger Bar Delay")
 			@Comment("Delay (in seconds) before hiding the hunger bar")
 			@RangeInt(min = 0)
