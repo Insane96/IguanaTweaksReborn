@@ -112,12 +112,12 @@ public class ModuleHardness {
 				String[] splitLine = line.split(",");
 				if (splitLine.length < 2)
 				{
-					IguanaTweaks.logger.error("[block_hardness] Failed to parse line: " + line);
+					IguanaTweaks.logger.error("[Block Hardness] Failed to parse line: " + line);
 					continue;
 				}
 				String block = splitLine[0];
 				if (block.split(":").length < 2) {
-					IguanaTweaks.logger.error("[block_hardness] Failed to parse block " + block + " of line: " + line);
+					IguanaTweaks.logger.error("[Block Hardness] Failed to parse block " + block + " of line: " + line);
 					continue;
 				}
 				String hardness = splitLine[1];
@@ -127,7 +127,12 @@ public class ModuleHardness {
 				
 				int metadata = -1;
 				if (block.split(":").length > 2) {
-					metadata = Integer.parseInt(block.split(":")[2]);
+					try {
+						metadata = Integer.parseInt(block.split(":")[2]);
+					} catch (Exception e) {
+						IguanaTweaks.logger.error("[Block Hardness] Failed to parse metadata " + block + " of line: " + line);
+						continue;
+					}
 					if (blockResource.equals(resourceLocation) && state.getBlock().getMetaFromState(state) == metadata) {
 						shouldProcess = false;
 						break;

@@ -10,7 +10,7 @@ iguanatweaks:movement_restriction.weight=Weight
 iguanatweaks:movement_restriction.weight_when_worn=Weight when Worn
 
 iguanatweaks:sleep_respawn.random_respawn=You regain consciousness, confused as to where you are
-iguanatweaks:sleep_respawn.bed_destroyed=You awake up and find your bed smashed to pieces
+iguanatweaks:sleep_respawn.bed_destroyed=You wake up and find your bed smashed to pieces
 iguanatweaks:sleep_respawn.bed_decoration=Has no one told you? Beds are just for decoration
 iguanatweaks:sleep_respawn.enjoy_the_night=Spawn point has been set. Enjoy the night ;)
 
