@@ -15,6 +15,7 @@ import net.insane96mcp.iguanatweaks.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.resources.I18n;
@@ -33,6 +34,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumDifficulty;
@@ -217,14 +219,13 @@ public class ModuleMovementRestriction {
 		
 		float slownessTerrain = 0f;
 		
-		if (!player.onGround || Properties.config.movementRestriction.terrainSlowdownPercentage == 0)
+		if (!player.onGround || !Properties.config.movementRestriction.terrainSlowdown)
 			return 0f;
 		BlockPos playerPos = new BlockPos(player.posX, player.posY - 1, player.posZ);
 		
 		slownessTerrain = Utils.GetBlockSlowness(world, playerPos);
         
-        slownessTerrain = Math.round((float)slownessTerrain * ((float)Properties.config.movementRestriction.terrainSlowdownPercentage / 100f));
-        
+
         if (slownessTerrain > 100f)
         	slownessTerrain = 100f;
         return slownessTerrain;
@@ -316,36 +317,56 @@ public class ModuleMovementRestriction {
 	
 	public static float SlownessTerrainEntity(EntityLivingBase living, World world) {
 		
-		float slownessTerrain = 0f;
-		
-		if (!living.isInWater() || Properties.config.movementRestriction.terrainSlowdownPercentage == 0)
+		if (living.isInWater() || !Properties.config.movementRestriction.terrainSlowdown)
 			return 0f;
-		BlockPos playerPos = new BlockPos(living.posX, living.posY - 1, living.posZ);
+		BlockPos entityPos = new BlockPos(living.posX, living.posY - 1, living.posZ);
 
-		Material blockOnMaterial = world.getBlockState(playerPos).getMaterial();			
-		Material blockInMaterial = world.getBlockState(playerPos.add(0, 1, 0)).getMaterial();
+		Material blockOnMaterial = world.getBlockState(entityPos).getMaterial();			
+		Material blockInMaterial = world.getBlockState(entityPos.add(0, 1, 0)).getMaterial();
+		IBlockState state = world.getBlockState(entityPos);
+		Block block = state.getBlock();
+		int meta = block.getMetaFromState(state);
 		
-        if (blockOnMaterial == Material.GRASS || blockOnMaterial == Material.GROUND) 
-        	slownessTerrain = Properties.config.movementRestriction.terrainSlowdownOnDirt; 
-        else if (blockOnMaterial == Material.SAND) 
-        	slownessTerrain = Properties.config.movementRestriction.terrainSlowdownOnSand;
-        else if (blockOnMaterial == Material.LEAVES || blockOnMaterial == Material.PLANTS || blockOnMaterial == Material.VINE) 
-        	slownessTerrain = Properties.config.movementRestriction.terrainSlowdownOnPlant;
-        else if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
-        	slownessTerrain = Properties.config.movementRestriction.terrainSlowdownOnIce;
-        else if (blockOnMaterial == Material.SNOW || blockOnMaterial == Material.CRAFTED_SNOW)
-        	slownessTerrain = Properties.config.movementRestriction.terrainSlowdownOnSnow;
+		float slowness = -1f;
 		
+		for (String line : Properties.config.movementRestriction.terrainSlowdownCustom) {
+			String[] lineSplit = line.split(",");
+			if (lineSplit.length != 2)
+				continue;
+			
+			String[] blockSplit = lineSplit[0].split(":");
+			if (blockSplit.length < 2 || blockSplit.length > 3)
+				continue;
+			ResourceLocation blockId = new ResourceLocation(blockSplit[0], blockSplit[1]);
+			
+			int customMeta = -1;
+			if (blockSplit.length == 3)
+				customMeta = Integer.parseInt(blockSplit[2]);
+			
+			if (block.getRegistryName().equals(blockId) && (meta == customMeta || customMeta == -1))
+				slowness = Float.parseFloat(lineSplit[1]);
+		}
+		
+		if (slowness == -1f) {
+	        if (blockOnMaterial == Material.GRASS || blockOnMaterial == Material.GROUND) 
+	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnDirt; 
+	        else if (blockOnMaterial == Material.SAND) 
+	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnSand;
+	        else if (blockOnMaterial == Material.LEAVES || blockOnMaterial == Material.PLANTS || blockOnMaterial == Material.VINE) 
+	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnPlant;
+	        else if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
+	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnIce;
+	        else if (blockOnMaterial == Material.SNOW || blockOnMaterial == Material.CRAFTED_SNOW)
+	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnSnow;
+	        else
+	        	slowness = 0;
+		}
         if (blockInMaterial == Material.SNOW || blockInMaterial == Material.CRAFTED_SNOW) 
-        	slownessTerrain += Properties.config.movementRestriction.terrainSlowdownInSnow;
+        	slowness += Properties.config.movementRestriction.terrainSlowdownInSnow;
 		else if (blockInMaterial == Material.VINE || blockInMaterial == Material.PLANTS) 
-			slownessTerrain += Properties.config.movementRestriction.terrainSlowdownInPlant;
-        
-        slownessTerrain = Math.round((float)slownessTerrain * ((float)Properties.config.movementRestriction.terrainSlowdownPercentage / 100f));
-        
-        if (slownessTerrain > 100f)
-        	slownessTerrain = 100f;
-        return slownessTerrain;
+			slowness += Properties.config.movementRestriction.terrainSlowdownInPlant;
+		
+        return slowness;
 	}
 
 	public static void PrintHudInfos(RenderGameOverlayEvent.Text event) {

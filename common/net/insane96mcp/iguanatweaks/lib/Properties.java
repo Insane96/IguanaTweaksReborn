@@ -85,9 +85,6 @@ public class Properties {
 			@Name("No Item No Knockback")
 			@Comment("If the player attacks an entity without a tool / weapon, the attacked mob will take almost no damage (1/20 of a heart) and no knockback. The no knockback applies even if the player attack speed cooldown is below 75% with a tool / weapon, but in this case the damage is applied normally.\nThis feature is disabled by default since is a little bit buggy, like no experience is dropped from the mob if it gets attacked only by No Knockbacks attacks.")
 			public boolean noItemNoKnockback = false;
-			@Name("Generate Villages")
-			@Comment("Set to false to disable Villages Generation.")
-			public boolean genVillages = true;
 		}
 
 		
@@ -284,7 +281,7 @@ public class Properties {
 			@Name("Max Carry Weight")
 			@Comment("Maximum carry weight (set to 0 to disable)")
 			@RangeInt(min = 0)
-		    public int maxCarryWeight = 768;
+		    public int maxCarryWeight = 640;
 			@Name("Rock Weight")
 			@Comment("Weight of one rock block, used as a base to calculate weight of other blocks")
 			@RangeDouble(min = 0f, max = Float.MAX_VALUE)
@@ -311,10 +308,9 @@ public class Properties {
 			@Name("Damage Slowdown Difficulty Scaling")
 			@Comment("Is the duration of the slowdown dependant on difficulty?")
 			public boolean damageSlowdownDifficultyScaling = true;
-			@Name("Terrain Slowdown Percentage")
-			@Comment("Global modifier on the amount that terrain affects movement speed (set to 0 to disable)")
-			@RangeDouble(min = 0f, max = 100f)
-			public float terrainSlowdownPercentage = 10f;
+			@Name("Terrain Slowdown")
+			@Comment("Set this to false to disable terrain slowdown feature")
+			public boolean terrainSlowdown = true;
 			@Name("Terrain Slowdown on Dirt")
 			@Comment("Percentage of slowdown when walking on dirt or grass")
 			@RangeDouble(min = 0f, max = 100f)
