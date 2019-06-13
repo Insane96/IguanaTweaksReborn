@@ -87,4 +87,15 @@ public class PlayerData implements IPlayerData{
 			this.damageSlownessDuration -= Properties.config.misc.tickRatePlayerUpdate;
 	}
 
+	private int maxWeight;
+	@Override
+	public int getMaxWeight() {
+		return this.maxWeight;
+	}
+
+	@Override
+	public void setMaxWeight(int maxWeight) {
+		this.maxWeight = maxWeight;
+	}
+
 }

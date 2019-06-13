@@ -170,12 +170,24 @@ public class ModuleMovementRestriction {
 	}
 	
 	public static float SlownessWeight(EntityPlayer player, World world) {
+		if (Properties.config.movementRestriction.maxCarryWeight == 0) 
+			return 0f;
+		
+		//Has Weightless ring?
+		boolean hasRing = false;
+		for (ItemStack itemStack : player.inventory.mainInventory) {
+			if (itemStack.getItem().getRegistryName().toString().equals("iguanatweaks:weightless_ring")) {
+				setMaxCarryWeight(player, Properties.config.movementRestriction.maxCarryWeight * 2);
+				hasRing = true;
+				break;
+			}
+		}
+		if (!hasRing)
+			setMaxCarryWeight(player, Properties.config.movementRestriction.maxCarryWeight);
+		
 		float weight = 0f;
 		
 		float slownessWeight;
-		
-		if (Properties.config.movementRestriction.maxCarryWeight == 0) 
-			return 0f;
 		
 		for (ItemStack stack : player.inventory.mainInventory) 
 		{
@@ -197,7 +209,7 @@ public class ModuleMovementRestriction {
 			}
 		}
 		
-		slownessWeight = (weight / Properties.config.movementRestriction.maxCarryWeight) * 100f;
+		slownessWeight = (weight / getMaxCarryWeight(player)) * 100f;
 
     	if (slownessWeight > 0 && Properties.config.movementRestriction.encumbranceExhaustionPerSecond > 0f) {
     		float exhaustion = Properties.config.movementRestriction.encumbranceExhaustionPerSecond;
@@ -373,73 +385,91 @@ public class ModuleMovementRestriction {
 		if (!Properties.config.global.movementRestriction)
 			return;
 		
-		if (Properties.config.movementRestriction.maxCarryWeight > 0) 
+		if (Properties.config.movementRestriction.maxCarryWeight == 0) 
+			return;
+		
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayerSP player = mc.player;
+		
+		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
+		float weight = playerData.getWeight();
+		float encumbrance = weight / getMaxCarryWeight(player);
+
+		if (!player.isDead && !player.capabilities.isCreativeMode && Properties.config.movementRestriction.addEncumbranceHudText)
 		{
-			Minecraft mc = Minecraft.getMinecraft();
-			EntityPlayerSP player = mc.player;
+			TextFormatting color = TextFormatting.WHITE;
 			
-			IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
-			float weight = playerData.getWeight();
-			float encumbrance = weight / Properties.config.movementRestriction.maxCarryWeight;
-
-			if (!player.isDead && !player.capabilities.isCreativeMode && Properties.config.movementRestriction.addEncumbranceHudText)
+			String line = "";
+			
+			if (Properties.config.movementRestriction.detailedEncumbranceHudText)
 			{
-				TextFormatting color = TextFormatting.WHITE;
+				if (encumbrance >= 0.95)
+					color = TextFormatting.GRAY;
+				else if (encumbrance >= 0.85)
+					color = TextFormatting.RED;
+				else if (encumbrance >= 0.60)
+					color = TextFormatting.GOLD;
+				else if (encumbrance >= 0.30)
+					color = TextFormatting.YELLOW;
+				else if (encumbrance >= 0.10)
+					color = TextFormatting.GREEN;
 				
-				String line = "";
-				
-				if (Properties.config.movementRestriction.detailedEncumbranceHudText)
-				{
-					if (encumbrance >= 0.95)
-						color = TextFormatting.GRAY;
-					else if (encumbrance >= 0.85)
-						color = TextFormatting.RED;
-					else if (encumbrance >= 0.60)
-						color = TextFormatting.GOLD;
-					else if (encumbrance >= 0.30)
-						color = TextFormatting.YELLOW;
-					else if (encumbrance >= 0.10)
-						color = TextFormatting.GREEN;
-					
-					line = I18n.format(Strings.Translatable.MovementRestriction.weight) + ": " + Double.toString(Math.round(weight)) + " / " + Double.toString(Math.round(Properties.config.movementRestriction.maxCarryWeight)) + " (" + String.format("%.2f", (weight / Properties.config.movementRestriction.maxCarryWeight) * 100) + "%)";
-				}
-				else
-				{	
-					if (encumbrance >= 0.95)
-						color = TextFormatting.GRAY;
-					else if (encumbrance >= 0.85)
-						color = TextFormatting.RED;
-					else if (encumbrance >= 0.60)
-						color = TextFormatting.GOLD;
-					else if (encumbrance >= 0.30)
-						color = TextFormatting.YELLOW;
-					else if (encumbrance >= 0.10)
-						color = TextFormatting.GREEN;
-
-					if (encumbrance >= 0.95)
-						line = I18n.format(Strings.Translatable.MovementRestriction.fully_encumbered);
-					else if (encumbrance >= 0.85)
-						line = I18n.format(Strings.Translatable.MovementRestriction.almost_fully_encumbered);
-					else if (encumbrance >= 0.60)
-						line = I18n.format(Strings.Translatable.MovementRestriction.greatly_encumbered);
-					else if (encumbrance >= 0.30)
-						line = I18n.format(Strings.Translatable.MovementRestriction.encumbered);
-					else if (encumbrance >= 0.10)
-						line = I18n.format(Strings.Translatable.MovementRestriction.slightly_encumbered);
-				}
-				
-				if (!line.isEmpty() && !mc.gameSettings.showDebugInfo) {
-					if (Properties.config.movementRestriction.encumbranceTopLeft)
-						event.getLeft().add(color + line + "\u00A7r");
-					else 
-						event.getRight().add(color + line + "\u00A7r");
-				}
-
-				if (mc.gameSettings.showDebugInfo && !mc.gameSettings.reducedDebugInfo && Properties.config.movementRestriction.addEncumbranceDebugText) {
-					event.getLeft().add("");
-					event.getLeft().add("[Iguana Tweaks] " + color + I18n.format(Strings.Translatable.MovementRestriction.weight) + ": " + String.format("%.2f", weight) + " / " + String.format("%d", Properties.config.movementRestriction.maxCarryWeight) + " (" + String.format("%.2f", encumbrance * 100.0f) + "%)");
-				} 
+				line = I18n.format(Strings.Translatable.MovementRestriction.weight) + ": " + Double.toString(Math.round(weight)) + " / " + Double.toString(Math.round(getMaxCarryWeight(player))) + " (" + String.format("%.2f", (weight / getMaxCarryWeight(player)) * 100) + "%)";
 			}
-		}		
+			else
+			{	
+				if (encumbrance >= 0.95)
+					color = TextFormatting.GRAY;
+				else if (encumbrance >= 0.85)
+					color = TextFormatting.RED;
+				else if (encumbrance >= 0.60)
+					color = TextFormatting.GOLD;
+				else if (encumbrance >= 0.30)
+					color = TextFormatting.YELLOW;
+				else if (encumbrance >= 0.10)
+					color = TextFormatting.GREEN;
+
+				if (encumbrance >= 0.95)
+					line = I18n.format(Strings.Translatable.MovementRestriction.fully_encumbered);
+				else if (encumbrance >= 0.85)
+					line = I18n.format(Strings.Translatable.MovementRestriction.almost_fully_encumbered);
+				else if (encumbrance >= 0.60)
+					line = I18n.format(Strings.Translatable.MovementRestriction.greatly_encumbered);
+				else if (encumbrance >= 0.30)
+					line = I18n.format(Strings.Translatable.MovementRestriction.encumbered);
+				else if (encumbrance >= 0.10)
+					line = I18n.format(Strings.Translatable.MovementRestriction.slightly_encumbered);
+			}
+			
+			if (!line.isEmpty() && !mc.gameSettings.showDebugInfo) {
+				if (Properties.config.movementRestriction.encumbranceTopLeft)
+					event.getLeft().add(color + line + "\u00A7r");
+				else 
+					event.getRight().add(color + line + "\u00A7r");
+			}
+
+			if (mc.gameSettings.showDebugInfo && !mc.gameSettings.reducedDebugInfo && Properties.config.movementRestriction.addEncumbranceDebugText) {
+				event.getLeft().add("");
+				event.getLeft().add("[Iguana Tweaks] " + color + I18n.format(Strings.Translatable.MovementRestriction.weight) + ": " + String.format("%.2f", weight) + " / " + String.format("%d", getMaxCarryWeight(player)) + " (" + String.format("%.2f", encumbrance * 100.0f) + "%)");
+			} 
+		}	
+	}
+
+	private static int getMaxCarryWeight(EntityPlayer player) {
+		int maxCarryWeight = Properties.config.movementRestriction.maxCarryWeight;
+		
+		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
+		
+		if (playerData.getMaxWeight() != 0)
+			maxCarryWeight = playerData.getMaxWeight();
+		
+		return maxCarryWeight;
+	}
+	
+	private static void setMaxCarryWeight(EntityPlayer player, int maxCarryWeight) {		
+		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
+		
+		if (maxCarryWeight != 0)
+			playerData.setMaxWeight(maxCarryWeight);
 	}
 }

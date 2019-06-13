@@ -18,6 +18,9 @@ public interface IPlayerData {
 	
 	public float getWeight();
 	public void setWeight(float weight);
+	
+	public int getMaxWeight();
+	public void setMaxWeight(int maxWeight);
 
 	public int getDamageSlownessDuration();
 	public void setDamageSlownessDuration(int duration);
