@@ -101,7 +101,7 @@ public class ModuleMovementRestriction {
 			swimSpeedAttribute.applyModifier(swimSpeedModifier);
 		}
 		
-		player.jumpMovementFactor = 0.00f * (1f - speedModifier);
+		player.jumpMovementFactor = 0.02f * (1f - speedModifier);
 
 		Reflection.Set(Reflection.EntityPlayer_speedInAir, player, 0.02f * (1f - speedModifier));
 	}
