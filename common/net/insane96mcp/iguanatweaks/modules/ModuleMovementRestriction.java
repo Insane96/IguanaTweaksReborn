@@ -300,7 +300,7 @@ public class ModuleMovementRestriction {
 
 		float speedModifier = 1f;
 		
-		if (living.ticksExisted % Properties.config.misc.tickRateEntityUpdate != 0)
+		if (Properties.config.misc.tickRateEntityUpdate == 0 || living.ticksExisted % Properties.config.misc.tickRateEntityUpdate != 0)
 			return;
 		
 		float slownessTerrain = SlownessTerrainEntity(living, world);
