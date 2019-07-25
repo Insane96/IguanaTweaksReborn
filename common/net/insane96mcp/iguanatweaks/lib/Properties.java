@@ -69,7 +69,7 @@ public class Properties {
 			@RangeInt(min = 1, max = Integer.MAX_VALUE)
 			public int tickRatePlayerUpdate = 2;
 			@Name("Tick Rate Entity Update")
-			@Comment("How often the speed of entities (not player) are calculated (in ticks). Higher values might increase performance but may increase the chance of odd behavior. Set to 0 to disable movement restriction for mobs.")
+			@Comment("How often the speed of entities (not player) are calculated (in ticks). Higher values might increase performance but may increase the chance of odd behavior. Set to 0 to disable Movement Restriction for mobs.")
 			@RangeInt(min = 0, max = Integer.MAX_VALUE)
 			public int tickRateEntityUpdate = 7;
 			@Name("Disable FoV on Speed Modified")
