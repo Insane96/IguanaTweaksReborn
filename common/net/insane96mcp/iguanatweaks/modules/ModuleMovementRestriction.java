@@ -172,7 +172,7 @@ public class ModuleMovementRestriction {
 	public static float SlownessWeight(EntityPlayer player, World world) {
 		if (Properties.config.movementRestriction.maxCarryWeight == 0) 
 			return 0f;
-		
+
 		//Has Weightless ring?
 		boolean hasRing = false;
 		for (ItemStack itemStack : player.inventory.mainInventory) {
@@ -237,7 +237,8 @@ public class ModuleMovementRestriction {
 		
 		slownessTerrain = Utils.GetBlockSlowness(world, playerPos);
         
-
+        //slownessTerrain = Math.round((float)slownessTerrain * ((float)Properties.config.movementRestriction.terrainSlowdownPercentage / 100f));
+        
         if (slownessTerrain > 100f)
         	slownessTerrain = 100f;
         return slownessTerrain;
@@ -328,7 +329,6 @@ public class ModuleMovementRestriction {
 	}
 	
 	public static float SlownessTerrainEntity(EntityLivingBase living, World world) {
-		
 		if (living.isInWater() || !Properties.config.movementRestriction.terrainSlowdown)
 			return 0f;
 		BlockPos entityPos = new BlockPos(living.posX, living.posY - 1, living.posZ);
@@ -381,11 +381,12 @@ public class ModuleMovementRestriction {
         return slowness;
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static void PrintHudInfos(RenderGameOverlayEvent.Text event) {
 		if (!Properties.config.global.movementRestriction)
 			return;
 		
-		if (Properties.config.movementRestriction.maxCarryWeight == 0) 
+		if (Properties.config.movementRestriction.maxCarryWeight == 0)
 			return;
 		
 		Minecraft mc = Minecraft.getMinecraft();
@@ -452,23 +453,24 @@ public class ModuleMovementRestriction {
 				event.getLeft().add("");
 				event.getLeft().add("[Iguana Tweaks] " + color + I18n.format(Strings.Translatable.MovementRestriction.weight) + ": " + String.format("%.2f", weight) + " / " + String.format("%d", getMaxCarryWeight(player)) + " (" + String.format("%.2f", encumbrance * 100.0f) + "%)");
 			} 
-		}	
-	}
-
-	private static int getMaxCarryWeight(EntityPlayer player) {
-		int maxCarryWeight = Properties.config.movementRestriction.maxCarryWeight;
+		}
 		
-		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
-		
-		if (playerData.getMaxWeight() != 0)
-			maxCarryWeight = playerData.getMaxWeight();
-		
-		return maxCarryWeight;
 	}
 	
+	private static int getMaxCarryWeight(EntityPlayer player) {
+		int maxCarryWeight = Properties.config.movementRestriction.maxCarryWeight;
+
+		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
+
+		if (playerData.getMaxWeight() != 0)
+			maxCarryWeight = playerData.getMaxWeight();
+
+		return maxCarryWeight;
+	}
+
 	private static void setMaxCarryWeight(EntityPlayer player, int maxCarryWeight) {		
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
-		
+
 		if (maxCarryWeight != 0)
 			playerData.setMaxWeight(maxCarryWeight);
 	}
