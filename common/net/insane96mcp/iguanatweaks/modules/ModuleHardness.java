@@ -194,7 +194,7 @@ public class ModuleHardness {
 		}
 		
 		if (shouldProcess)
-			event.setNewSpeed(event.getOriginalSpeed() / Properties.config.hardness.multiplier);
+			event.setNewSpeed(event.getNewSpeed() / Properties.config.hardness.multiplier);
 	}
 	
 	public static void ProcessSingleHardness(BreakSpeed event) {
@@ -232,7 +232,7 @@ public class ModuleHardness {
 				float hardness = Float.parseFloat(lineSplit[1]);
 				
 				if (blockResource.equals(blockId) && (meta == metadata || metadata == -1)) {
-					event.setNewSpeed(event.getOriginalSpeed() * GetRatio(hardness, blockId, state, world, pos));
+					event.setNewSpeed(event.getNewSpeed() * GetRatio(hardness, blockId, state, world, pos));
 					break;
 				}
 			}
