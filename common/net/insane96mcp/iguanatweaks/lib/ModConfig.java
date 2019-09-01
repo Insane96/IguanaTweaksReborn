@@ -66,6 +66,10 @@ public class ModConfig {
 			@Name("Crop Require Water")
 			@Comment("Crops will no longer grow if Farmland is not Wet.")
 			public boolean cropRequireWater = true;
+
+			@Name("Crop Growth Speed Multiplier")
+			@Comment("Increases the time required for a plant to grow (e.g. at 2.0 the plant will take twice to grow).")
+			public float cropGrowthMultiplier = 3.0f;
 			
 			public enum NerfedBonemeal {
 				DISABLED,

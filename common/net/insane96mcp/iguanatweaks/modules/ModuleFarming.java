@@ -8,7 +8,7 @@ import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.BonemealEvent;
-import net.minecraftforge.event.world.BlockEvent.CropGrowEvent.Pre;
+import net.minecraftforge.event.world.BlockEvent.CropGrowEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class ModuleFarming {
@@ -56,7 +56,7 @@ public class ModuleFarming {
 		}
 	}
 
-	public static void cropRequireWater(Pre event) {
+	public static void cropRequireWater(CropGrowEvent.Pre event) {
 		if (!ModConfig.config.global.farming)
 			return;
 		
@@ -70,6 +70,22 @@ public class ModuleFarming {
 			
 			if (moisture < 7)
 				event.setResult(Result.DENY);
+		}
+	}
+
+	public static void cropGrowthSpeedMultiplier(CropGrowEvent.Post event) {
+		if (!ModConfig.config.global.farming)
+			return;
+		
+		if (ModConfig.config.farming.cropGrowthMultiplier == 1.0f)
+			return;
+		
+		float chance = 1f / ModConfig.config.farming.cropGrowthMultiplier;
+		
+		if (event.getWorld().rand.nextFloat() > chance) {
+			World world = event.getWorld();
+			IBlockState state = event.getOriginalState();
+			world.setBlockState(event.getPos(), state);
 		}
 	}
 	
