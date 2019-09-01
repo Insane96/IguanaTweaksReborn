@@ -1,7 +1,7 @@
 package net.insane96mcp.iguanatweaks.network;
 
 import io.netty.buffer.ByteBuf;
-import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -52,16 +52,16 @@ public class ConfigSync implements IMessage {
 
 				@Override
 				public void run() {
-					Properties.config.misc.lessObviousSilverfish = message.lessObiviousSilverfish;
-					Properties.config.hardness.multiplier = message.multiplier;
-					Properties.config.hardness.blockListIsWhitelist = message.blockListIsWhitelist;
+					ModConfig.config.misc.lessObviousSilverfish = message.lessObiviousSilverfish;
+					ModConfig.config.hardness.multiplier = message.multiplier;
+					ModConfig.config.hardness.blockListIsWhitelist = message.blockListIsWhitelist;
 					if (!message.blockList.isEmpty()) {
 						String[] blockList = message.blockList.split("\r\n");
-						Properties.config.hardness.blockList = blockList;
+						ModConfig.config.hardness.blockList = blockList;
 					}
 					if (!message.blockHardness.isEmpty()) {
 						String[] blockHardness = message.blockHardness.split("\r\n");
-						Properties.config.hardness.blockHardness = blockHardness;
+						ModConfig.config.hardness.blockHardness = blockHardness;
 					}
 				}
 				

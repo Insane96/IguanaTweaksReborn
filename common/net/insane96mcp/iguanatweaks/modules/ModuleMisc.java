@@ -5,7 +5,7 @@ import java.util.Collection;
 import com.google.common.collect.Multimap;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
-import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.ModConfig;
 import net.insane96mcp.iguanatweaks.potioneffects.AlteredPoison;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -42,7 +42,7 @@ import net.minecraftforge.registries.IForgeRegistryModifiable;
 public class ModuleMisc {
 
 	public static void PreventFov(FOVUpdateEvent event) {
-		if (!Properties.config.misc.disableFovOnSpeedModified)
+		if (!ModConfig.config.misc.disableFovOnSpeedModified)
 			return;
 		
 		EntityPlayer player = event.getEntity();
@@ -66,7 +66,7 @@ public class ModuleMisc {
 	}
 	
 	public static void ExhaustionOnBlockBreak(BreakEvent event) {
-		if (!Properties.config.misc.exhaustionOnBlockBreak)
+		if (!ModConfig.config.misc.exhaustionOnBlockBreak)
 			return;
 		
 		IBlockState blockState = event.getState();
@@ -74,7 +74,7 @@ public class ModuleMisc {
 		float hardness = 0f;
 		hardness = block.getBlockHardness(blockState, event.getWorld(), event.getPos());
 		
-		event.getPlayer().addExhaustion((hardness / 100f) * Properties.config.misc.exhaustionMultiplier);
+		event.getPlayer().addExhaustion((hardness / 100f) * ModConfig.config.misc.exhaustionMultiplier);
 	}
 	
 	public static AlteredPoison alteredPoison;
@@ -90,7 +90,7 @@ public class ModuleMisc {
 	}
 	
 	public static void ApplyPoison(EntityLivingBase living) {
-		if (!Properties.config.misc.alterPoison)
+		if (!ModConfig.config.misc.alterPoison)
 			return;
 		
 		if (living.ticksExisted % 9 != 0)
@@ -218,7 +218,7 @@ public class ModuleMisc {
 	}
 
 	public static void NoItemNoKnockback(LivingAttackEvent event) {
-		if (!Properties.config.misc.noItemNoKnockback)
+		if (!ModConfig.config.misc.noItemNoKnockback)
 			return;
 		
 		if (event.getSource().getImmediateSource() instanceof EntityPlayerMP) {

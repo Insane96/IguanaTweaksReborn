@@ -4,7 +4,7 @@ import java.util.Set;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.integration.BetterWithMods;
-import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.ModConfig;
 import net.insane96mcp.iguanatweaks.lib.Strings;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -29,7 +29,7 @@ public class ModuleHardness {
 	public static final DamageSource BLOCK_BREAK = new DamageSource("block_break").setDamageBypassesArmor();
 	
 	public static void ProcessWrongTool(BreakEvent event) {
-		if (!Properties.config.hardness.punishWrongTool)
+		if (!ModConfig.config.hardness.punishWrongTool)
 			return;
 		
 		World world = event.getWorld();
@@ -80,7 +80,7 @@ public class ModuleHardness {
 			mainHand.damageItem(mainHand.getMaxDamage() - mainHand.getItemDamage() + 1, player);
 		}
 		else {
-			player.attackEntityFrom(BLOCK_BREAK, state.getBlockHardness(event.getWorld(), event.getPos()) * Properties.config.hardness.multiplier);
+			player.attackEntityFrom(BLOCK_BREAK, state.getBlockHardness(event.getWorld(), event.getPos()) * ModConfig.config.hardness.multiplier);
 			textComponent = new TextComponentTranslation(Strings.Translatable.Hardness.need_tool);
 			/*player.renderBrokenItemStack(mainHand);
 			mainHand.shrink(1);*/
@@ -92,10 +92,10 @@ public class ModuleHardness {
 	}
 	
 	public static void ProcessGlobalHardness(BreakSpeed event) {
-		if (!Properties.config.global.hardness)
+		if (!ModConfig.config.global.hardness)
 			return;
 		
-		if (Properties.config.hardness.multiplier == 1.0f)
+		if (ModConfig.config.hardness.multiplier == 1.0f)
 			return;
 		
 		World world = event.getEntityPlayer().world;
@@ -107,8 +107,8 @@ public class ModuleHardness {
 		
 		ResourceLocation blockResource = state.getBlock().getRegistryName();
 		boolean shouldProcess = true;
-		if ((Properties.config.hardness.blockHardness.length > 1) || (Properties.config.hardness.blockHardness.length > 0 && !Properties.config.hardness.blockHardness[0].equals(""))) {
-			for (String line : Properties.config.hardness.blockHardness) {
+		if ((ModConfig.config.hardness.blockHardness.length > 1) || (ModConfig.config.hardness.blockHardness.length > 0 && !ModConfig.config.hardness.blockHardness[0].equals(""))) {
+			for (String line : ModConfig.config.hardness.blockHardness) {
 				String[] splitLine = line.split(",");
 				if (splitLine.length < 2)
 				{
@@ -149,9 +149,9 @@ public class ModuleHardness {
 		if (!shouldProcess)
 			return;
 		
-		for (String line : Properties.config.hardness.blockList) {
+		for (String line : ModConfig.config.hardness.blockList) {
 			//If is in blacklist mode
-			if (!Properties.config.hardness.blockListIsWhitelist){
+			if (!ModConfig.config.hardness.blockListIsWhitelist){
 				String[] splitLine = line.split(":");
 				if (splitLine.length < 2)
 					continue;
@@ -194,14 +194,14 @@ public class ModuleHardness {
 		}
 		
 		if (shouldProcess)
-			event.setNewSpeed(event.getNewSpeed() / Properties.config.hardness.multiplier);
+			event.setNewSpeed(event.getNewSpeed() / ModConfig.config.hardness.multiplier);
 	}
 	
 	public static void ProcessSingleHardness(BreakSpeed event) {
-		if (!Properties.config.global.hardness)
+		if (!ModConfig.config.global.hardness)
 			return;
 		
-		if (Properties.config.hardness.blockHardness.length == 0)
+		if (ModConfig.config.hardness.blockHardness.length == 0)
 			return;
 		
 		World world = event.getEntityPlayer().world;
@@ -210,8 +210,8 @@ public class ModuleHardness {
 		IBlockState state = event.getEntityPlayer().world.getBlockState(event.getPos());
 		ResourceLocation blockResource = state.getBlock().getRegistryName();
 		int meta = state.getBlock().getMetaFromState(state);
-		if ((Properties.config.hardness.blockHardness.length > 1) || (Properties.config.hardness.blockHardness.length > 0 && !Properties.config.hardness.blockHardness[0].equals(""))) {
-			for (String line : Properties.config.hardness.blockHardness) {
+		if ((ModConfig.config.hardness.blockHardness.length > 1) || (ModConfig.config.hardness.blockHardness.length > 0 && !ModConfig.config.hardness.blockHardness[0].equals(""))) {
+			for (String line : ModConfig.config.hardness.blockHardness) {
 				String[] lineSplit = line.split(",");
 				if (lineSplit.length != 2) {
 					IguanaTweaks.logger.error("[block_hardness] Failed to parse line: " + line);

@@ -1,6 +1,6 @@
 package net.insane96mcp.iguanatweaks.capabilities;
 
-import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.ModConfig;
 
 public class PlayerData implements IPlayerData{
 
@@ -84,7 +84,7 @@ public class PlayerData implements IPlayerData{
 	@Override
 	public void tickDamageSlownessDuration() {
 		if (this.damageSlownessDuration > 0)
-			this.damageSlownessDuration -= Properties.config.misc.tickRatePlayerUpdate;
+			this.damageSlownessDuration -= ModConfig.config.misc.tickRatePlayerUpdate;
 	}
 
 	private int maxWeight;

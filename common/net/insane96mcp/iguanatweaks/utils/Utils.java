@@ -2,7 +2,7 @@ package net.insane96mcp.iguanatweaks.utils;
 
 import java.util.UUID;
 
-import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.ModConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +25,7 @@ public class Utils {
 		Block block = Block.getBlockFromItem(item);
 		IBlockState state = block.getStateFromMeta(meta);
 		
-		for (String line : Properties.config.movementRestriction.customWeight) {
+		for (String line : ModConfig.config.movementRestriction.customWeight) {
 			String[] lineSplit = line.split(",");
 			if (lineSplit.length != 2)
 				continue;
@@ -46,7 +46,7 @@ public class Utils {
 			}
 		}
 
-		return GetBlockWeight(block) * Properties.config.movementRestriction.rockWeight;
+		return GetBlockWeight(block) * ModConfig.config.movementRestriction.rockWeight;
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -59,7 +59,7 @@ public class Utils {
 		
 		float slowness = -1f;
 		
-		for (String line : Properties.config.movementRestriction.terrainSlowdownCustom) {
+		for (String line : ModConfig.config.movementRestriction.terrainSlowdownCustom) {
 			String[] lineSplit = line.split(",");
 			if (lineSplit.length != 2)
 				continue;
@@ -79,22 +79,22 @@ public class Utils {
 		
 		if (slowness == -1f) {
 	        if (blockOnMaterial == Material.GRASS || blockOnMaterial == Material.GROUND) 
-	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnDirt; 
+	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnDirt; 
 	        else if (blockOnMaterial == Material.SAND) 
-	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnSand;
+	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnSand;
 	        else if (blockOnMaterial == Material.LEAVES || blockOnMaterial == Material.PLANTS || blockOnMaterial == Material.VINE) 
-	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnPlant;
+	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnPlant;
 	        else if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
-	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnIce;
+	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnIce;
 	        else if (blockOnMaterial == Material.SNOW || blockOnMaterial == Material.CRAFTED_SNOW)
-	        	slowness = Properties.config.movementRestriction.terrainSlowdownOnSnow;
+	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnSnow;
 	        else
 	        	slowness = 0;
 		}
         if (blockInMaterial == Material.SNOW || blockInMaterial == Material.CRAFTED_SNOW) 
-        	slowness += Properties.config.movementRestriction.terrainSlowdownInSnow;
+        	slowness += ModConfig.config.movementRestriction.terrainSlowdownInSnow;
 		else if (blockInMaterial == Material.VINE || blockInMaterial == Material.PLANTS) 
-			slowness += Properties.config.movementRestriction.terrainSlowdownInPlant;
+			slowness += ModConfig.config.movementRestriction.terrainSlowdownInPlant;
 
         return slowness;
 	}

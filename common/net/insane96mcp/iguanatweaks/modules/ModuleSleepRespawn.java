@@ -1,7 +1,7 @@
 package net.insane96mcp.iguanatweaks.modules;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
-import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.ModConfig;
 import net.insane96mcp.iguanatweaks.lib.Strings;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayer.SleepResult;
@@ -21,10 +21,10 @@ import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 public class ModuleSleepRespawn {
 
 	public static void ProcessSpawn(EntityPlayer player) {
-		if (!Properties.config.global.sleepRespawn)
+		if (!ModConfig.config.global.sleepRespawn)
 			return;
 		
-		if (Properties.config.sleepRespawn.spawnLocationRandomMax <= 0)
+		if (ModConfig.config.sleepRespawn.spawnLocationRandomMax <= 0)
 			return;
 		
 		NBTTagCompound tags = player.getEntityData();
@@ -32,25 +32,25 @@ public class ModuleSleepRespawn {
         if (!hasAlreadySpawned)
         {
         	tags.setBoolean("iguanatweaks:spawned", true);
-			RespawnPlayer(player, Properties.config.sleepRespawn.spawnLocationRandomMin, Properties.config.sleepRespawn.spawnLocationRandomMax);
+			RespawnPlayer(player, ModConfig.config.sleepRespawn.spawnLocationRandomMin, ModConfig.config.sleepRespawn.spawnLocationRandomMax);
         }
 	}
 	
 	public static void ProcessRespawn(EntityPlayer player) {
-		if (!Properties.config.global.sleepRespawn)
+		if (!ModConfig.config.global.sleepRespawn)
 			return;
 		
-        RespawnPlayer(player, Properties.config.sleepRespawn.respawnLocationRandomMin, Properties.config.sleepRespawn.respawnLocationRandomMax);
+        RespawnPlayer(player, ModConfig.config.sleepRespawn.respawnLocationRandomMin, ModConfig.config.sleepRespawn.respawnLocationRandomMax);
         PlayerHealth(player);
         
         DestroyBed(player);
         
-        if (Properties.config.sleepRespawn.respawnLocationRandomMax != 0)
+        if (ModConfig.config.sleepRespawn.respawnLocationRandomMax != 0)
         	player.sendMessage(new TextComponentTranslation(Strings.Translatable.SleepRespawn.random_respawn));
 	}
 	
 	private static void DestroyBed(EntityPlayer player) {
-		if (!Properties.config.sleepRespawn.destroyBedOnRespawn)
+		if (!ModConfig.config.sleepRespawn.destroyBedOnRespawn)
 			return;
 		
 		BlockPos bedPos = player.getBedLocation(player.dimension);
@@ -65,7 +65,7 @@ public class ModuleSleepRespawn {
 
         world.setBlockState(bedPos, Blocks.AIR.getDefaultState(), 3);
     	
-		if (Properties.config.sleepRespawn.respawnLocationRandomMax == 0)
+		if (ModConfig.config.sleepRespawn.respawnLocationRandomMax == 0)
 			player.sendMessage(new TextComponentTranslation(Strings.Translatable.SleepRespawn.bed_destroyed));
 	}
 
@@ -139,10 +139,10 @@ public class ModuleSleepRespawn {
 	}
 
 	private static void PlayerHealth(EntityPlayer player) {
-		int respawnHealth = Properties.config.sleepRespawn.respawnHealth;
+		int respawnHealth = ModConfig.config.sleepRespawn.respawnHealth;
 		EnumDifficulty difficulty = player.getEntityWorld().getDifficulty();
 		
-		if (Properties.config.sleepRespawn.respawnHealthDifficultyScaling) {
+		if (ModConfig.config.sleepRespawn.respawnHealthDifficultyScaling) {
 			if (difficulty == EnumDifficulty.HARD) 
 			{
 				respawnHealth = (int) Math.max(respawnHealth / 2f, 1);
@@ -160,10 +160,10 @@ public class ModuleSleepRespawn {
 	}
 
 	public static void DisabledSpawnPoint(PlayerSleepInBedEvent event) {
-		if (!Properties.config.global.sleepRespawn)
+		if (!ModConfig.config.global.sleepRespawn)
 			return;
 		
-		if (!Properties.config.sleepRespawn.disableSleeping) 
+		if (!ModConfig.config.sleepRespawn.disableSleeping) 
 			return;
 		
 		EntityPlayer player = event.getEntityPlayer();
@@ -173,7 +173,7 @@ public class ModuleSleepRespawn {
 		
 		event.setResult(SleepResult.OTHER_PROBLEM);
 		
-		if (Properties.config.sleepRespawn.disableSetRespawnPoint) {
+		if (ModConfig.config.sleepRespawn.disableSetRespawnPoint) {
 			player.sendStatusMessage(new TextComponentTranslation(Strings.Translatable.SleepRespawn.bed_decoration), true);
 		}
 		else {

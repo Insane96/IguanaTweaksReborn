@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.insane96mcp.iguanatweaks.lib.Properties;
+import net.insane96mcp.iguanatweaks.lib.ModConfig;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,17 +12,17 @@ import net.minecraft.item.ItemStack;
 
 public class ModuleDrops {
 	public static void RestrictedDrops(EntityLivingBase living, List<EntityItem> drops) {
-		if (!Properties.config.global.drops)
+		if (!ModConfig.config.global.drops)
 			return;
 		
-		if (Properties.config.drops.restrictedDrops.length == 0)
+		if (ModConfig.config.drops.restrictedDrops.length == 0)
 			return;
 		
 		if (living instanceof EntityPlayer)
 			return;
 		
 		List<EntityItem> toRemove = new ArrayList<EntityItem>();
-		List<String> restrictedDrops = Arrays.asList(Properties.config.drops.restrictedDrops);
+		List<String> restrictedDrops = Arrays.asList(ModConfig.config.drops.restrictedDrops);
 		
 		for (EntityItem item : drops) {
 			ItemStack itemStack = item.getItem();
@@ -43,42 +43,42 @@ public class ModuleDrops {
 	}
 	
 	public static void MobDrop(EntityLivingBase living, List<EntityItem> drops) {
-		if (!Properties.config.global.drops)
+		if (!ModConfig.config.global.drops)
 			return;
 		
-		if (Properties.config.drops.itemLifespanMobDeath == 6000)
+		if (ModConfig.config.drops.itemLifespanMobDeath == 6000)
 			return;
 		
 		if (living instanceof EntityPlayer)
 			return;
 		
 		for (EntityItem item : drops) {
-			item.lifespan = Properties.config.drops.itemLifespanMobDeath;
+			item.lifespan = ModConfig.config.drops.itemLifespanMobDeath;
 		}
 	}
 	
 	public static void PlayerDrop(EntityLivingBase living, List<EntityItem> drops) {
-		if (!Properties.config.global.drops)
+		if (!ModConfig.config.global.drops)
 			return;
 		
-		if (Properties.config.drops.itemLifespanPlayerDeath == 6000)
+		if (ModConfig.config.drops.itemLifespanPlayerDeath == 6000)
 			return;
 		
 		if (!(living instanceof EntityPlayer))
 			return;
 		
 		for (EntityItem item : drops) {
-			item.lifespan = Properties.config.drops.itemLifespanPlayerDeath;
+			item.lifespan = ModConfig.config.drops.itemLifespanPlayerDeath;
 		}
 	}
 	
 	public static void PlayerToss(EntityItem item) {
-		if (!Properties.config.global.drops)
+		if (!ModConfig.config.global.drops)
 			return;
 		
-		if (Properties.config.drops.itemLifespanTossed == 6000)
+		if (ModConfig.config.drops.itemLifespanTossed == 6000)
 			return;
 		
-		item.lifespan = Properties.config.drops.itemLifespanMobDeath;
+		item.lifespan = ModConfig.config.drops.itemLifespanMobDeath;
 	}
 }

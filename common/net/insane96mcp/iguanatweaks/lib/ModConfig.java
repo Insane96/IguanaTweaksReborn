@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 @Config(modid = IguanaTweaks.MOD_ID, category = "", name = "IguanaTweaksReborn")
-public class Properties {
+public class ModConfig {
 	
 	@Name("config")
 	public static ConfigOptions config = new ConfigOptions();
@@ -50,8 +50,26 @@ public class Properties {
 			@Name("Stack Size")
 			@Comment("Set to false to disable everything the Stack Size module does")
 			public boolean stackSize = true;
+			@Name("Farming")
+			@Comment("Set to false to disable everything the Farming module does")
+			public boolean farming = true;
 		}
 	
+		
+		public Farming farming = new Farming();
+		
+		public static class Farming {
+			@Name("Nerfed Bone Meal")
+			@Comment("Makes more Bone Meal required for Crops. Valid Values are\nDISABLED: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
+			public NerfedBonemeal nerfedBonemeal = NerfedBonemeal.NERFED;
+			
+			public enum NerfedBonemeal {
+				DISABLED,
+				SLIGHT,
+				NERFED
+			}
+		}
+		
 		
 		public Misc misc = new Misc();
 		
@@ -395,11 +413,11 @@ public class Properties {
 	    		return;
 	    	
 	    	ConfigSync message = new ConfigSync();
-	    	message.lessObiviousSilverfish = Properties.config.misc.lessObviousSilverfish;
-	    	message.multiplier = Properties.config.hardness.multiplier;
-	    	message.blockListIsWhitelist = Properties.config.hardness.blockListIsWhitelist;
-	    	message.blockList = String.join("\r\n", Properties.config.hardness.blockList);
-	    	message.blockHardness = String.join("\r\n", Properties.config.hardness.blockHardness);
+	    	message.lessObiviousSilverfish = ModConfig.config.misc.lessObviousSilverfish;
+	    	message.multiplier = ModConfig.config.hardness.multiplier;
+	    	message.blockListIsWhitelist = ModConfig.config.hardness.blockListIsWhitelist;
+	    	message.blockList = String.join("\r\n", ModConfig.config.hardness.blockList);
+	    	message.blockHardness = String.join("\r\n", ModConfig.config.hardness.blockHardness);
 	    	
 	    	PacketHandler.SendToClient(message, (EntityPlayerMP) event.player);
 	    }
