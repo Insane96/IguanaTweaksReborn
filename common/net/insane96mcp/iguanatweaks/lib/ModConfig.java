@@ -62,6 +62,10 @@ public class ModConfig {
 			@Name("Nerfed Bone Meal")
 			@Comment("Makes more Bone Meal required for Crops. Valid Values are\nDISABLED: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
 			public NerfedBonemeal nerfedBonemeal = NerfedBonemeal.NERFED;
+
+			@Name("Crop Require Water")
+			@Comment("Crops will no longer grow if Farmland is not Wet.")
+			public boolean cropRequireWater = true;
 			
 			public enum NerfedBonemeal {
 				DISABLED,

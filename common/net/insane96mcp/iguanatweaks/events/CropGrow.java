@@ -14,7 +14,7 @@ public class CropGrow {
 
 	@SubscribeEvent
 	public static void EventCropGrowPre(CropGrowEvent.Pre event) {
-
+		ModuleFarming.cropRequireWater(event);
 	}
 
 	@SubscribeEvent
