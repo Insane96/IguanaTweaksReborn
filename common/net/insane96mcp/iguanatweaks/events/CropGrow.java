@@ -18,6 +18,8 @@ public class CropGrow {
 	@SubscribeEvent
 	public static void EventCropGrowPre(CropGrowEvent.Post event) {
 		ModuleFarming.cropGrowthSpeedMultiplier(event);
+		ModuleFarming.reedsGrowthSpeedMultiplier(event);
+		ModuleFarming.cactusGrowthSpeedMultiplier(event);
 	}
 	
 	@SubscribeEvent

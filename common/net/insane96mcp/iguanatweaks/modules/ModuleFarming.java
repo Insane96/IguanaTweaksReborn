@@ -3,9 +3,13 @@ package net.insane96mcp.iguanatweaks.modules;
 import net.insane96mcp.iguanatweaks.lib.ModConfig;
 import net.insane96mcp.iguanatweaks.lib.ModConfig.ConfigOptions.Farming.NerfedBonemeal;
 import net.minecraft.block.BlockBeetroot;
+import net.minecraft.block.BlockCactus;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockFarmland;
+import net.minecraft.block.BlockReed;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.world.BlockEvent.CropGrowEvent;
@@ -14,6 +18,9 @@ import net.minecraftforge.fml.common.eventhandler.Event.Result;
 public class ModuleFarming {
 
 	public static void NerfBonemeal(BonemealEvent event) {
+		if (event.getWorld().isRemote)
+			return;
+		
 		if (!ModConfig.config.global.farming)
 			return;
 		
@@ -37,8 +44,12 @@ public class ModuleFarming {
 
 			if (age == maxAge)
 				return;
+
+			if (ModConfig.config.farming.nerfedBonemeal.equals(NerfedBonemeal.SLIGHT))
+				age += MathHelper.getInt(event.getWorld().rand, 1, 2);
+			else if (ModConfig.config.farming.nerfedBonemeal.equals(NerfedBonemeal.NERFED))
+				age++;
 			
-			age++;
 			if (age > maxAge)
 				age = maxAge;
 
@@ -73,20 +84,83 @@ public class ModuleFarming {
 		}
 	}
 
+	/**
+	 * Handles Crop Growth Speed Multiplier and NoSunlight Growth multiplier
+	 */
 	public static void cropGrowthSpeedMultiplier(CropGrowEvent.Post event) {
 		if (!ModConfig.config.global.farming)
 			return;
 		
-		if (ModConfig.config.farming.cropGrowthMultiplier == 1.0f)
+		if (ModConfig.config.farming.cropGrowthMultiplier == 1.0f && ModConfig.config.farming.noSunlightGrowthMultiplier == 1.0f)
+			return;
+		
+		World world = event.getWorld();
+		IBlockState state = event.getOriginalState();
+		
+		if (!(state.getBlock() instanceof BlockCrops))
 			return;
 		
 		float chance = 1f / ModConfig.config.farming.cropGrowthMultiplier;
 		
+		
+		if (world.getLightFor(EnumSkyBlock.SKY, event.getPos()) < ModConfig.config.farming.minSunlight)
+			chance *= 1f / ModConfig.config.farming.noSunlightGrowthMultiplier;
+			
+		if (ModConfig.config.farming.cropGrowthMultiplier == 0.0f)
+			chance = -1f;
+		
+		if (world.getLightFor(EnumSkyBlock.SKY, event.getPos()) < ModConfig.config.farming.minSunlight 
+				&& ModConfig.config.farming.noSunlightGrowthMultiplier == 0.0f)
+			chance = -1f;
+		
 		if (event.getWorld().rand.nextFloat() > chance) {
-			World world = event.getWorld();
-			IBlockState state = event.getOriginalState();
+			world.setBlockState(event.getPos(), state);
+		}
+	}
+
+	public static void reedsGrowthSpeedMultiplier(CropGrowEvent.Post event) {
+		if (!ModConfig.config.global.farming)
+			return;
+		
+		if (ModConfig.config.farming.reedsGrowthMultiplier == 1.0f)
+			return;
+		
+		World world = event.getWorld();
+		IBlockState state = event.getOriginalState();
+		
+		if (!(state.getBlock() instanceof BlockReed))
+			return;
+		
+		float chance = 1f / ModConfig.config.farming.reedsGrowthMultiplier;
+		
+		if (ModConfig.config.farming.reedsGrowthMultiplier == 0.0f)
+			chance = -1f;
+		
+		if (event.getWorld().rand.nextFloat() > chance) {
 			world.setBlockState(event.getPos(), state);
 		}
 	}
 	
+	public static void cactusGrowthSpeedMultiplier(CropGrowEvent.Post event) {
+		if (!ModConfig.config.global.farming)
+			return;
+		
+		if (ModConfig.config.farming.cactusGrowthMultiplier == 1.0f)
+			return;
+		
+		World world = event.getWorld();
+		IBlockState state = event.getOriginalState();
+		
+		if (!(state.getBlock() instanceof BlockCactus))
+			return;
+		
+		float chance = 1f / ModConfig.config.farming.cactusGrowthMultiplier;
+		
+		if (ModConfig.config.farming.cactusGrowthMultiplier == 0.0f)
+			chance = -1f;
+		
+		if (event.getWorld().rand.nextFloat() > chance) {
+			world.setBlockState(event.getPos(), state);
+		}
+	}
 }

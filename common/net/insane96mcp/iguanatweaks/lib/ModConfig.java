@@ -62,20 +62,36 @@ public class ModConfig {
 			@Name("Nerfed Bone Meal")
 			@Comment("Makes more Bone Meal required for Crops. Valid Values are\nDISABLED: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
 			public NerfedBonemeal nerfedBonemeal = NerfedBonemeal.NERFED;
-
-			@Name("Crop Require Water")
-			@Comment("Crops will no longer grow if Farmland is not Wet.")
-			public boolean cropRequireWater = true;
-
-			@Name("Crop Growth Speed Multiplier")
-			@Comment("Increases the time required for a plant to grow (e.g. at 2.0 the plant will take twice to grow).")
-			public float cropGrowthMultiplier = 3.0f;
 			
 			public enum NerfedBonemeal {
 				DISABLED,
 				SLIGHT,
 				NERFED
 			}
+
+			@Name("Crop Require Water")
+			@Comment("Crops will no longer grow if Farmland is not Wet.")
+			public boolean cropRequireWater = true;
+
+			@Name("Crop Growth Speed Multiplier")
+			@Comment("Increases the time required for a crop to grow (e.g. at 2.0 the plant will take twice to grow).\nSetting this to 0 will prevent crops from growing naturally.\n1.0 will make crops grow like normal.")
+			public float cropGrowthMultiplier = 3.0f;
+
+			@Name("No Sunlight Growth Multiplier")
+			@Comment("Increases the time required for a crop to grow when it's sky light level is below \"Min Sunlight\", the more sunlight is present the more near 1.0 this value will become (e.g. at 2.0 when the crop has a skylight below \"Min Sunlight\" will take twice to grow.\nSetting this to 0 will prevent crops from growing when sky light level is below \"Min Sunlight\".\n1.0 will make crops growth not affected by skylight.")
+			public float noSunlightGrowthMultiplier = 2.0f;
+
+			@Name("Min Sunlight")
+			@Comment("Minimum Sky Light level required for crops to not be affected by \"No Sunlight Growth Multiplier\".")
+			public float minSunlight = 10;
+
+			@Name("Sugar Canes Growth Speed Multiplier")
+			@Comment("Increases the time required for Sugar Canes to grow (e.g. at 2.0 Sugar Canes will take twice to grow).\nSetting this to 0 will prevent Sugar Canes from growing naturally.\n1.0 will make Sugar Canes grow like normal.")
+			public float reedsGrowthMultiplier = 2.0f;
+
+			@Name("Cactus Growth Speed Multiplier")
+			@Comment("Increases the time required for Cactuses to grow (e.g. at 2.0 Cactuses will take twice to grow).\nSetting this to 0 will prevent Cactuses from growing naturally.\n1.0 will make Cactuses grow like normal.")
+			public float cactusGrowthMultiplier = 2.0f;
 		}
 		
 		
