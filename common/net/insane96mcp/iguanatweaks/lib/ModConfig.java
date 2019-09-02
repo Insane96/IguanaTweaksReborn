@@ -136,6 +136,10 @@ public class ModConfig {
 			@Name("Punish Wrong Tool")
 			@Comment("True if the tool should break when mining the wrong block (e.g. mining Wood with a Pickaxe or mining Obsidian with an Iron Pickaxe) or if no tool in hand damage the player based on the block hardness (multiplied by the hardness multiplier).")
 			public boolean punishWrongTool = false;
+			@Name("Dimension Multiplier")
+			@Comment("List of dimensions to have a custom hardness multiplier. If a dimension is listed here that dimension will ignore the Global Multiplier.\nThe format is dimension_id,hardness_multiplier.\nE.g. -1,2.0 will make blocks in the Nether twice as hard to mine.")
+			@RangeDouble(min = 0, max = Float.MAX_VALUE)
+			public String[] dimensionMultiplier = new String[] {};
 			@Name("Multiplier")
 			@Comment("Multiplier applied to the hardness of blocks (set to 1 to disable)")
 			@RangeDouble(min = 0, max = Float.MAX_VALUE)
@@ -144,7 +148,7 @@ public class ModConfig {
 			@Comment("True if hardness multiplier should only affect blocks on the list, false if all blocks are affected except those on the list")
 			public boolean blockListIsWhitelist = false;
 			@Name("Block Black/Whitelist")
-			@Comment("Block ids (one per line) for the hardness whitelist/blacklist.\nFormat is modid:blockid;meta\nE.g. 'minecraft:stone:1' will target granite")
+			@Comment("Block ids (one per line) for the hardness whitelist/blacklist.\nFormat is modid:blockid:meta\nE.g. 'minecraft:stone:1' will target granite")
 			public String[] blockList = new String[] {};
 			@Name("Custom Block Hardness")
 			@Comment("Define for each line a custom block hardness for every block. Those blocks are not affected by the global block hardness multiplier\nThe format is modid:blockid:meta,hardness.\nE.g. 'minecraft:stone:1,5.0' will make granite have 5 hardness. If no meta is specified, this will affect every block meta.\nBy default this is set to make ores harder to mine the better they are (accounting 4x global hardness too)")

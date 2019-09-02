@@ -95,7 +95,7 @@ public class ModuleHardness {
 		if (!ModConfig.config.global.hardness)
 			return;
 		
-		if (ModConfig.config.hardness.multiplier == 1.0f)
+		if (ModConfig.config.hardness.multiplier == 1.0f && ModConfig.config.hardness.dimensionMultiplier.length == 0)
 			return;
 		
 		World world = event.getEntityPlayer().world;
@@ -192,9 +192,38 @@ public class ModuleHardness {
 				}
 			}
 		}
+		if (!shouldProcess)
+			return;
+		
+		float finalMultiplier = ModConfig.config.hardness.multiplier;
+		
+		if (ModConfig.config.hardness.dimensionMultiplier.length > 0) {
+			for (String dimension : ModConfig.config.hardness.dimensionMultiplier) {
+				String[] split = dimension.split(",");
+				if (split.length != 2) {
+					IguanaTweaks.logger.error("[Block Hardness] Failed to parse dimension multiplier line: " + dimension + "\nExpected 2 arguments, got " + split.length);
+					continue;
+				}
+				int dimensionId;
+				float multiplier;
+				try {
+					dimensionId = Integer.parseInt(split[0]);
+					multiplier = Float.parseFloat(split[1]);
+				}
+				catch (Exception e) {
+					IguanaTweaks.logger.error("[Block Hardness] Failed to parse numbers in dimension multiplier line: " + dimension);
+					continue;
+				}
+				
+				if (event.getEntityPlayer().dimension == dimensionId) {
+					finalMultiplier = multiplier;
+					break;
+				}
+			}
+		}
 		
 		if (shouldProcess)
-			event.setNewSpeed(event.getNewSpeed() / ModConfig.config.hardness.multiplier);
+			event.setNewSpeed(event.getNewSpeed() / finalMultiplier);
 	}
 	
 	public static void ProcessSingleHardness(BreakSpeed event) {
