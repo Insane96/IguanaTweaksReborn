@@ -1,6 +1,7 @@
 package net.insane96mcp.iguanatweaks.modules;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
@@ -9,6 +10,7 @@ import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
 import net.insane96mcp.iguanatweaks.lib.ModConfig;
 import net.insane96mcp.iguanatweaks.lib.Reflection;
 import net.insane96mcp.iguanatweaks.lib.Strings;
+import net.insane96mcp.iguanatweaks.modules.ModuleHardness.BlockMeta;
 import net.insane96mcp.iguanatweaks.network.PacketHandler;
 import net.insane96mcp.iguanatweaks.network.StunMessage;
 import net.insane96mcp.iguanatweaks.utils.Utils;
@@ -127,15 +129,15 @@ public class ModuleMovementRestriction {
 				ItemStack stackInBox = new ItemStack(Item.getByNameOrId(itemTags.getString("id")), itemTags.getByte("Count"), itemTags.getShort("Damage"));
 				Block blockInBox = Block.getBlockFromItem(stackInBox.getItem());
 				if (!block.equals(Blocks.AIR) && !stack.getItem().equals(Items.AIR))	        
-			        toAdd += Utils.GetItemWeight(stackInBox) * stackInBox.getCount();
+			        toAdd += getItemWeight(stackInBox) * stackInBox.getCount();
 				if (toAdd == 0f)
 		        	toAdd = 1f / 64f * stack.getCount();
 			}
 			toAdd *= ModConfig.config.movementRestriction.shulkerWeightReduction;
-			toAdd += Utils.GetItemWeight(stack) * stack.getCount();
+			toAdd += getItemWeight(stack) * stack.getCount();
 		}
 		else if (!item.equals(Items.AIR)) {
-	        toAdd = Utils.GetItemWeight(stack) * stack.getCount();
+	        toAdd = getItemWeight(stack) * stack.getCount();
 		}
 		
 		return toAdd;
@@ -227,23 +229,6 @@ public class ModuleMovementRestriction {
 		return slownessWeight;
 	}
 	
-	public static float SlownessTerrain(EntityPlayer player, World world) {
-		
-		float slownessTerrain = 0f;
-		
-		if (!player.onGround || !ModConfig.config.movementRestriction.terrainSlowdown)
-			return 0f;
-		BlockPos playerPos = new BlockPos(player.posX, player.posY - 1, player.posZ);
-		
-		slownessTerrain = Utils.GetBlockSlowness(world, playerPos);
-        
-        //slownessTerrain = Math.round((float)slownessTerrain * ((float)Properties.config.movementRestriction.terrainSlowdownPercentage / 100f));
-        
-        if (slownessTerrain > 100f)
-        	slownessTerrain = 100f;
-        return slownessTerrain;
-	}
-	
 	public static float SlownessDamage(EntityPlayer player, World world) {
 		if (ModConfig.config.movementRestriction.damageSlowdownDuration == 0)
 			return 1f;
@@ -304,7 +289,7 @@ public class ModuleMovementRestriction {
 		if (ModConfig.config.misc.tickRateEntityUpdate == 0 || living.ticksExisted % ModConfig.config.misc.tickRateEntityUpdate != 0)
 			return;
 		
-		float slownessTerrain = SlownessTerrainEntity(living, world);
+		float slownessTerrain = SlownessTerrain(living, world);
 		
 		float slownessArmor = living.getTotalArmorValue() * ModConfig.config.movementRestriction.armorWeightMobs;
 		if (slownessArmor > 100f) 
@@ -328,57 +313,12 @@ public class ModuleMovementRestriction {
 			attribute.removeModifier(Utils.movSpeedRestrictionUUID);
 	}
 	
-	public static float SlownessTerrainEntity(EntityLivingBase living, World world) {
-		if (living.isInWater() || !ModConfig.config.movementRestriction.terrainSlowdown)
+	public static float SlownessTerrain(EntityLivingBase living, World world) {
+		if (living.isInWater() || living.isInLava() || !living.onGround || !ModConfig.config.movementRestriction.terrainSlowdown)
 			return 0f;
-		BlockPos entityPos = new BlockPos(living.posX, living.posY - 1, living.posZ);
+		BlockPos entityPos = new BlockPos(living.posX, living.posY, living.posZ);
 
-		Material blockOnMaterial = world.getBlockState(entityPos).getMaterial();			
-		Material blockInMaterial = world.getBlockState(entityPos.add(0, 1, 0)).getMaterial();
-		IBlockState state = world.getBlockState(entityPos);
-		Block block = state.getBlock();
-		int meta = block.getMetaFromState(state);
-		
-		float slowness = -1f;
-		
-		for (String line : ModConfig.config.movementRestriction.terrainSlowdownCustom) {
-			String[] lineSplit = line.split(",");
-			if (lineSplit.length != 2)
-				continue;
-			
-			String[] blockSplit = lineSplit[0].split(":");
-			if (blockSplit.length < 2 || blockSplit.length > 3)
-				continue;
-			ResourceLocation blockId = new ResourceLocation(blockSplit[0], blockSplit[1]);
-			
-			int customMeta = -1;
-			if (blockSplit.length == 3)
-				customMeta = Integer.parseInt(blockSplit[2]);
-			
-			if (block.getRegistryName().equals(blockId) && (meta == customMeta || customMeta == -1))
-				slowness = Float.parseFloat(lineSplit[1]);
-		}
-		
-		if (slowness == -1f) {
-	        if (blockOnMaterial == Material.GRASS || blockOnMaterial == Material.GROUND) 
-	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnDirt; 
-	        else if (blockOnMaterial == Material.SAND) 
-	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnSand;
-	        else if (blockOnMaterial == Material.LEAVES || blockOnMaterial == Material.PLANTS || blockOnMaterial == Material.VINE) 
-	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnPlant;
-	        else if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
-	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnIce;
-	        else if (blockOnMaterial == Material.SNOW || blockOnMaterial == Material.CRAFTED_SNOW)
-	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnSnow;
-	        else
-	        	slowness = 0;
-		}
-        if (blockInMaterial == Material.SNOW || blockInMaterial == Material.CRAFTED_SNOW) 
-        	slowness += ModConfig.config.movementRestriction.terrainSlowdownInSnow;
-		else if (blockInMaterial == Material.VINE || blockInMaterial == Material.PLANTS) 
-			slowness += ModConfig.config.movementRestriction.terrainSlowdownInPlant;
-		
-        return slowness;
+		return GetBlockSlowness(world, entityPos);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -471,7 +411,213 @@ public class ModuleMovementRestriction {
 	private static void setMaxCarryWeight(EntityPlayer player, int maxCarryWeight) {		
 		IPlayerData playerData = player.getCapability(PlayerDataProvider.PLAYER_DATA_CAP, null);
 
-		if (maxCarryWeight != 0)
+		if (maxCarryWeight > 0)
 			playerData.setMaxWeight(maxCarryWeight);
+	}
+
+	/////////////////////////////////////
+	///Item Weights and Custom Weights///
+	/////////////////////////////////////
+	public static float getItemWeight(ItemStack itemStack) {
+		Item item = itemStack.getItem();
+		int meta = itemStack.getMetadata();
+		Block block = Block.getBlockFromItem(item);
+		IBlockState state = block.getStateFromMeta(meta);
+		
+		for (CustomWeight customWeight : customWeights) {
+			if (item.getRegistryName().equals(customWeight.blockMeta.id) && (meta == customWeight.blockMeta.meta || customWeight.blockMeta.meta == -1)) {
+				return customWeight.weight;
+			}
+		}
+		
+		for (String line : ModConfig.config.movementRestriction.customWeight) {
+			String[] lineSplit = line.split(",");
+			if (lineSplit.length != 2)
+				continue;
+			
+			String[] itemSplit = lineSplit[0].split(":");
+			if (itemSplit.length < 2 || itemSplit.length > 3)
+				continue;
+			ResourceLocation itemId = new ResourceLocation(itemSplit[0], itemSplit[1]);
+			
+			int customMeta = -1;
+			if (itemSplit.length == 3)
+				customMeta = Integer.parseInt(itemSplit[2]);
+			
+			float weight = Float.parseFloat(lineSplit[1]);
+			
+		}
+
+		return Utils.GetBlockWeight(block) * ModConfig.config.movementRestriction.rockWeight;
+	}
+	
+	public static ArrayList<CustomWeight> customWeights = new ArrayList<>();
+	
+	public static void loadCustomWeights() {
+		customWeights.clear();
+		for (String line : ModConfig.config.movementRestriction.customWeight) {
+        	if (line.trim().isEmpty()) {
+				IguanaTweaks.logger.warn("[Custom Weights] Empty line found. Ignoring ...");
+				continue;
+        	}
+        	
+			String[] splitLine = line.split(",");
+			if (splitLine.length != 2) {
+				IguanaTweaks.logger.error("[Custom Weights] Failed to parse line: " + line + ", expected 2 arguments, got " + splitLine.length);
+				continue;
+			}
+			
+			String item = splitLine[0];
+			BlockMeta blockMeta = Utils.parseBlock(item, "Custom Weights");
+			if (blockMeta == null)
+				return;
+			
+			float weight;
+			try {
+				weight = Float.parseFloat(splitLine[1]);
+			}
+			catch (Exception e) {
+				IguanaTweaks.logger.error("[Custom Weights] Failed to parse weight for line: " + line);
+				continue;
+			}
+			
+			CustomWeight.addCustomWeight(new CustomWeight(blockMeta, weight));
+		}
+	}
+	
+	public static class CustomWeight {
+		BlockMeta blockMeta;
+		float weight;
+		
+		public CustomWeight(ResourceLocation id, int meta, float weight) {
+			this.blockMeta = new BlockMeta(id, meta);
+			this.weight = weight;
+		}
+		
+		public CustomWeight(BlockMeta blockMeta, float weight) {
+			this.blockMeta = blockMeta;
+			this.weight = weight;
+		}
+
+		public static void addCustomWeight(CustomWeight c) {
+			boolean contains = false;
+			for (CustomWeight customWeight : customWeights) {
+				if (customWeight.blockMeta.equals(c.blockMeta)) {
+					contains = true;
+					IguanaTweaks.logger.warn("[Custom Weights] Duplicated custom weight " + c.blockMeta);
+					break;
+				}
+			}
+			
+			if (!contains)
+				customWeights.add(c);
+		}
+	}
+
+	/////////////////////////////
+	///Custom Terrain Slowdown///
+	/////////////////////////////
+
+	public static float GetBlockSlowness(World world, BlockPos pos) {
+		Material blockOnMaterial = world.getBlockState(pos.down()).getMaterial();			
+		Material blockInMaterial = world.getBlockState(pos).getMaterial();
+		IBlockState state = world.getBlockState(pos);
+		Block block = state.getBlock();
+		int meta = block.getMetaFromState(state);
+		
+		float slowdown = -1f;
+		
+		for (CustomSlowdown customSlowdown : customTerrainSlowdowns) {
+			if (block.getRegistryName().equals(customSlowdown.blockMeta.id) && (meta == customSlowdown.blockMeta.meta || customSlowdown.blockMeta.meta == -1)) {
+				slowdown = customSlowdown.slowdown;
+			}
+		}
+		
+		if (slowdown == -1f) {
+	        if (blockOnMaterial == Material.GRASS || blockOnMaterial == Material.GROUND) 
+	        	slowdown = ModConfig.config.movementRestriction.terrainSlowdownOnDirt; 
+	        else if (blockOnMaterial == Material.SAND) 
+	        	slowdown = ModConfig.config.movementRestriction.terrainSlowdownOnSand;
+	        else if (blockOnMaterial == Material.LEAVES || blockOnMaterial == Material.PLANTS || blockOnMaterial == Material.VINE) 
+	        	slowdown = ModConfig.config.movementRestriction.terrainSlowdownOnPlant;
+	        else if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
+	        	slowdown = ModConfig.config.movementRestriction.terrainSlowdownOnIce;
+	        else if (blockOnMaterial == Material.SNOW || blockOnMaterial == Material.CRAFTED_SNOW)
+	        	slowdown = ModConfig.config.movementRestriction.terrainSlowdownOnSnow;
+	        else
+	        	slowdown = 0f;
+		}
+        if (blockInMaterial == Material.SNOW || blockInMaterial == Material.CRAFTED_SNOW) 
+        	slowdown += ModConfig.config.movementRestriction.terrainSlowdownInSnow;
+		else if (blockInMaterial == Material.VINE || blockInMaterial == Material.PLANTS) 
+			slowdown += ModConfig.config.movementRestriction.terrainSlowdownInPlant;
+
+        if (slowdown > 100f)
+        	slowdown = 100f;
+        
+        return slowdown;
+	}
+	
+	public static void loadCustomTerrainSlowdown() {
+		customWeights.clear();
+		for (String line : ModConfig.config.movementRestriction.terrainSlowdownCustom) {
+        	if (line.trim().isEmpty()) {
+				IguanaTweaks.logger.warn("[Custom Terrain Slowdown] Empty line found. Ignoring ...");
+				continue;
+        	}
+        	
+        	String[] splitLine = line.split(",");
+			if (splitLine.length != 2) {
+				IguanaTweaks.logger.error("[Custom Terrain Slowdown] Failed to parse line: " + line + ", expected 2 arguments, got " + splitLine.length);
+				continue;
+			}
+				
+			String block = splitLine[0];
+			BlockMeta blockMeta = Utils.parseBlock(block, "Custom Terrain Slowdown");
+			if (blockMeta == null)
+				return;
+			
+			float slowdown;
+			try {
+				slowdown = Float.parseFloat(splitLine[1]);
+			}
+			catch (Exception e) {
+				IguanaTweaks.logger.error("[Custom Terrain Slowdown] Failed to parse slowness for line: " + line);
+				continue;
+			}
+			
+			CustomSlowdown.addCustomSlowdown(new CustomSlowdown(blockMeta, slowdown));
+		}
+	}
+	
+	public static ArrayList<CustomSlowdown> customTerrainSlowdowns = new ArrayList<>();
+	
+	public static class CustomSlowdown {
+		BlockMeta blockMeta;
+		float slowdown;
+		
+		public CustomSlowdown(ResourceLocation id, int meta, float slowdown) {
+			this.blockMeta = new BlockMeta(id, meta);
+			this.slowdown = slowdown;
+		}
+		
+		public CustomSlowdown(BlockMeta blockMeta, float slowdown) {
+			this.blockMeta = blockMeta;
+			this.slowdown = slowdown;
+		}
+
+		public static void addCustomSlowdown(CustomSlowdown c) {
+			boolean contains = false;
+			for (CustomSlowdown customSlowdown : customTerrainSlowdowns) {
+				if (customSlowdown.blockMeta.equals(c.blockMeta)) {
+					contains = true;
+					IguanaTweaks.logger.warn("[Custom Terrain Slowdown] Duplicated custom terrain slowdown " + c.blockMeta);
+					break;
+				}
+			}
+			
+			if (!contains)
+				customTerrainSlowdowns.add(c);
+		}
 	}
 }

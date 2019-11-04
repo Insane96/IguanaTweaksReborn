@@ -1,11 +1,13 @@
 package net.insane96mcp.iguanatweaks.modules;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.integration.BetterWithMods;
 import net.insane96mcp.iguanatweaks.lib.ModConfig;
 import net.insane96mcp.iguanatweaks.lib.Strings;
+import net.insane96mcp.iguanatweaks.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -21,6 +23,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 
 public class ModuleHardness {
+	
+
 	public static void ProcessHardness(BreakSpeed event) {
 		ProcessGlobalHardness(event);
 		ProcessSingleHardness(event);
@@ -106,119 +110,44 @@ public class ModuleHardness {
 			return;
 		
 		ResourceLocation blockResource = state.getBlock().getRegistryName();
+		int meta = state.getBlock().getMetaFromState(state);
 		boolean shouldProcess = true;
-		if ((ModConfig.config.hardness.blockHardness.length > 1) || (ModConfig.config.hardness.blockHardness.length > 0 && !ModConfig.config.hardness.blockHardness[0].equals(""))) {
-			for (String line : ModConfig.config.hardness.blockHardness) {
-				String[] splitLine = line.split(",");
-				if (splitLine.length < 2)
-				{
-					IguanaTweaks.logger.error("[Block Hardness] Failed to parse line: " + line);
-					continue;
-				}
-				String block = splitLine[0];
-				if (block.split(":").length < 2) {
-					IguanaTweaks.logger.error("[Block Hardness] Failed to parse block " + block + " of line: " + line);
-					continue;
-				}
-				String hardness = splitLine[1];
-				String modId = block.split(":")[0];
-				String blockId = block.split(":")[1];
-				ResourceLocation resourceLocation = new ResourceLocation(modId, blockId);
-				
-				int metadata = -1;
-				if (block.split(":").length > 2) {
-					try {
-						metadata = Integer.parseInt(block.split(":")[2]);
-					} catch (Exception e) {
-						IguanaTweaks.logger.error("[Block Hardness] Failed to parse metadata " + block + " of line: " + line);
-						continue;
-					}
-					if (blockResource.equals(resourceLocation) && state.getBlock().getMetaFromState(state) == metadata) {
-						shouldProcess = false;
-						break;
-					}
-				}
-				else {
-					if (blockResource.equals(resourceLocation)) {
-						shouldProcess = false;
-						break;
-					}
-				}
+		for (BlockHardness blockHardness : blockHardnesses) {
+			if (blockResource.equals(blockHardness.blockMeta.id) && (meta == blockHardness.blockMeta.meta || blockHardness.blockMeta.meta == -1)) {
+				shouldProcess = false;
+				break;
 			}
 		}
 		if (!shouldProcess)
 			return;
 		
-		for (String line : ModConfig.config.hardness.blockList) {
+		for (BlockMeta block : blockList) {
 			//If is in blacklist mode
-			if (!ModConfig.config.hardness.blockListIsWhitelist){
-				String[] splitLine = line.split(":");
-				if (splitLine.length < 2)
-					continue;
-				String block = splitLine[0] + ":" + splitLine[1];
-				if (splitLine.length == 3) {
-					int meta = Integer.parseInt(splitLine[2]);
-					if (block.equals(blockResource.toString()) && state.getBlock().getMetaFromState(state) == meta) {
-						shouldProcess = false;
-						break;
-					}
-				}
-				else {
-					if (block.equals(blockResource.toString())) {
-						shouldProcess = false;
-						break;
-					}
+			if (!ModConfig.config.hardness.blockListIsWhitelist) {
+				if (blockResource.equals(block.id) && (meta == block.meta || block.meta == -1)) {
+					shouldProcess = false;
+					break;
 				}
 			}
-			//If is in whitelist mode
+			//Else the list is in whitelist mode
 			else {
 				shouldProcess = false;
-				String[] splitLine = line.split(":");
-				if (splitLine.length < 2)
-					continue;
-				String block = splitLine[0] + ":" + splitLine[1];
-				if (line.split(":").length == 3) {
-					int meta = Integer.parseInt(splitLine[2]);
-					if (block.equals(blockResource.toString()) && state.getBlock().getMetaFromState(state) == meta) {
-						shouldProcess = true;
-						break;
-					}
-				}
-				else {
-					if (block.equals(blockResource.toString())) {
-						shouldProcess = true;
-						break;
-					}
+				if (blockResource.equals(block.id) && (meta == block.meta || block.meta == -1)) {
+					shouldProcess = true;
+					break;
 				}
 			}
 		}
+		
 		if (!shouldProcess)
 			return;
 		
 		float finalMultiplier = ModConfig.config.hardness.multiplier;
 		
-		if (ModConfig.config.hardness.dimensionMultiplier.length > 0) {
-			for (String dimension : ModConfig.config.hardness.dimensionMultiplier) {
-				String[] split = dimension.split(",");
-				if (split.length != 2) {
-					IguanaTweaks.logger.error("[Block Hardness] Failed to parse dimension multiplier line: " + dimension + "\nExpected 2 arguments, got " + split.length);
-					continue;
-				}
-				int dimensionId;
-				float multiplier;
-				try {
-					dimensionId = Integer.parseInt(split[0]);
-					multiplier = Float.parseFloat(split[1]);
-				}
-				catch (Exception e) {
-					IguanaTweaks.logger.error("[Block Hardness] Failed to parse numbers in dimension multiplier line: " + dimension);
-					continue;
-				}
-				
-				if (event.getEntityPlayer().dimension == dimensionId) {
-					finalMultiplier = multiplier;
-					break;
-				}
+		for (DimensionList dim : dimensionList) {
+			if (event.getEntityPlayer().dimension == dim.dimensionId) {
+				finalMultiplier = dim.multiplier;
+				break;
 			}
 		}
 		
@@ -230,7 +159,7 @@ public class ModuleHardness {
 		if (!ModConfig.config.global.hardness)
 			return;
 		
-		if (ModConfig.config.hardness.blockHardness.length == 0)
+		if (blockHardnesses.size() == 0)
 			return;
 		
 		World world = event.getEntityPlayer().world;
@@ -239,31 +168,10 @@ public class ModuleHardness {
 		IBlockState state = event.getEntityPlayer().world.getBlockState(event.getPos());
 		ResourceLocation blockResource = state.getBlock().getRegistryName();
 		int meta = state.getBlock().getMetaFromState(state);
-		if ((ModConfig.config.hardness.blockHardness.length > 1) || (ModConfig.config.hardness.blockHardness.length > 0 && !ModConfig.config.hardness.blockHardness[0].equals(""))) {
-			for (String line : ModConfig.config.hardness.blockHardness) {
-				String[] lineSplit = line.split(",");
-				if (lineSplit.length != 2) {
-					IguanaTweaks.logger.error("[block_hardness] Failed to parse line: " + line);
-					continue;
-				}
-				
-				String[] blockSplit = lineSplit[0].split(":");
-				if (blockSplit.length < 2 || blockSplit.length > 3) {
-					IguanaTweaks.logger.error("[block_hardness] Failed to parse line: " + line);
-					continue;
-				}
-				ResourceLocation blockId = new ResourceLocation(blockSplit[0], blockSplit[1]);
-				
-				int metadata = -1;
-				if (blockSplit.length == 3) 
-					metadata = Integer.parseInt(blockSplit[2]);
-				
-				float hardness = Float.parseFloat(lineSplit[1]);
-				
-				if (blockResource.equals(blockId) && (meta == metadata || metadata == -1)) {
-					event.setNewSpeed(event.getNewSpeed() * GetRatio(hardness, blockId, state, world, pos));
-					break;
-				}
+		for (BlockHardness blockHardness : blockHardnesses) {
+			if (blockResource.equals(blockHardness.blockMeta.id) && (meta == blockHardness.blockMeta.meta || blockHardness.blockMeta.meta == -1)) {
+				event.setNewSpeed(event.getNewSpeed() * GetRatio(blockHardness.hardness, blockHardness.blockMeta.id, state, world, pos));
+				break;
 			}
 		}
 	}
@@ -272,5 +180,165 @@ public class ModuleHardness {
 		float originalHardness = Block.getBlockFromName(blockId.toString()).getBlockHardness(state, world, pos);
 		float ratio = originalHardness / newHardness;
 		return ratio;
+	}
+
+	private static ArrayList<BlockHardness> blockHardnesses = new ArrayList<>();
+	private static ArrayList<BlockMeta> blockList = new ArrayList<>();
+	private static ArrayList<DimensionList> dimensionList = new ArrayList<>();
+	
+	public static void loadBlockHardnesses() {
+		blockHardnesses.clear();
+		for (String line : ModConfig.config.hardness.blockHardness) {
+        	if (line.trim().isEmpty()) {
+				IguanaTweaks.logger.warn("[Custom Block Hardness] Empty line found. Ignoring ...");
+				continue;
+        	}
+        	//Split line
+			String[] splitLine = line.split(",");
+			if (splitLine.length != 2)
+			{
+				IguanaTweaks.logger.error("[Custom Block Hardness] Failed to parse line: " + line + ", expected 2 arguments, got " + splitLine.length);
+				continue;
+			}
+			//Split block in modId blockId and meta
+			String block = splitLine[0];
+        	BlockMeta blockMeta = Utils.parseBlock(block, "Custom Block Hardness");
+        	if (blockMeta == null) 
+        		continue;
+			
+			float hardness;
+			try {
+				hardness = Float.parseFloat(splitLine[1]);
+			} catch (Exception e) {
+				IguanaTweaks.logger.error("[Custom Block Hardness] Failed to parse hardness for line: " + line);
+				continue;
+			}
+			
+			BlockHardness.addBlockHardness(new BlockHardness(blockMeta, hardness));
+		}
+	}
+	
+	public static class BlockHardness {
+		public BlockMeta blockMeta;
+		public float hardness;
+		
+		public BlockHardness(ResourceLocation id, int meta, float hardness) {
+			this.blockMeta = new BlockMeta(id, meta);
+			this.hardness = hardness;
+		}
+		
+		public BlockHardness(BlockMeta blockMeta, float hardness) {
+			this.blockMeta = blockMeta;
+			this.hardness = hardness;
+		}
+
+		public static void addBlockHardness(BlockHardness b) {
+			boolean contains = false;
+			for (BlockHardness blockHardness : blockHardnesses) {
+				if (blockHardness.blockMeta.id.equals(b.blockMeta.id) && blockHardness.blockMeta.meta == b.blockMeta.meta) {
+					contains = true;
+					IguanaTweaks.logger.warn("[Custom Block Hardness] Duplicated id for block " + b.blockMeta.id.toString() + ":" + b.blockMeta.meta);
+					break;
+				}
+			}
+			if (!contains)
+				blockHardnesses.add(b);
+		}
+	}
+	
+	public static void loadBlockList() {
+		blockList.clear();
+        for (String line : ModConfig.config.hardness.blockList) {
+        	if (line.trim().isEmpty()) {
+				IguanaTweaks.logger.warn("[Block Black/Whitelist] Empty line found. Ignoring ...");
+				continue;
+        	}
+
+        	BlockMeta blockMeta = Utils.parseBlock(line, "Block Black/Whitelist");
+        	if (blockMeta == null) 
+        		continue;
+        	
+        	BlockMeta.addBlockList(blockMeta);
+		}
+	}
+	
+	public static class BlockMeta {
+		public ResourceLocation id;
+		public int meta;
+		
+		public BlockMeta(ResourceLocation id, int meta) {
+			this.id = id;
+			this.meta = meta;
+		}
+
+		public static void addBlockList(BlockMeta b) {
+			boolean contains = false;
+			for (BlockMeta blockList : blockList) {
+				if (blockList.id.equals(b.id) && blockList.meta == b.meta) {
+					contains = true;
+					IguanaTweaks.logger.warn("[Block Black/Whitelist] Duplicated id for block " + b);
+					break;
+				}
+			}
+			
+			if (!contains)
+				blockList.add(b);
+		}
+		
+		@Override
+		public String toString() {
+			return this.id.toString() + ":" + meta;
+		}
+	}
+	
+	public static void loadDimensionMultipliers() {
+		dimensionList.clear();
+        for (String dimension : ModConfig.config.hardness.dimensionMultiplier) {
+        	if (dimension.trim().isEmpty()) {
+				IguanaTweaks.logger.warn("[Dimension Multiplier] Empty line found. Ignoring ...");
+				continue;
+        	}
+			String[] split = dimension.split(",");
+			if (split.length != 2) {
+				IguanaTweaks.logger.error("[Dimension Multiplier] Failed to parse dimension multiplier line: " + dimension + ". Expected 2 arguments, got " + split.length);
+				continue;
+			}
+			int dimensionId;
+			float dimensionMultiplier;
+			try {
+				dimensionId = Integer.parseInt(split[0]);
+				dimensionMultiplier = Float.parseFloat(split[1]);
+			}
+			catch (Exception e) {
+				IguanaTweaks.logger.error("[Dimension Multiplier] Failed to parse numbers in dimension multiplier line: " + dimension);
+				continue;
+			}
+			
+			DimensionList.addDimension(new DimensionList(dimensionId, dimensionMultiplier));
+		}
+	}
+	
+	public static class DimensionList {
+		public int dimensionId;
+		public float multiplier;
+		
+		public DimensionList(int dimensionId, float multiplier) {
+			this.dimensionId = dimensionId;
+			this.multiplier = multiplier;
+		}
+
+		public static void addDimension(DimensionList d) {
+			boolean contains = false;
+			for (DimensionList dimension : dimensionList) {
+				if (dimension.dimensionId == d.dimensionId) {
+					contains = true;
+					IguanaTweaks.logger.warn("[Dimension Multiplier] Duplicated dimension " + d.dimensionId);
+					break;
+				}
+			}
+			
+			if (!contains)
+				dimensionList.add(d);
+		}
 	}
 }

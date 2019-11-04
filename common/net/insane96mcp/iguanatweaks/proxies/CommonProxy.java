@@ -5,6 +5,7 @@ import net.insane96mcp.iguanatweaks.capabilities.PlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataStorage;
 import net.insane96mcp.iguanatweaks.integration.Integration;
 import net.insane96mcp.iguanatweaks.item.ModItems;
+import net.insane96mcp.iguanatweaks.lib.ModConfig;
 import net.insane96mcp.iguanatweaks.lib.Reflection;
 import net.insane96mcp.iguanatweaks.modules.ModuleMisc;
 import net.insane96mcp.iguanatweaks.modules.ModuleStackSizes;
@@ -26,6 +27,8 @@ public class CommonProxy {
 	
 	public void Init(FMLInitializationEvent event) {		
 		CapabilityManager.INSTANCE.register(IPlayerData.class, new PlayerDataStorage(), PlayerData.class);
+		
+		ModConfig.parseConfig();
 	}
 	
 	public void PostInit(FMLPostInitializationEvent event) {

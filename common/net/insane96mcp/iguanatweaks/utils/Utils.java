@@ -2,103 +2,20 @@ package net.insane96mcp.iguanatweaks.utils;
 
 import java.util.UUID;
 
-import net.insane96mcp.iguanatweaks.lib.ModConfig;
+import javax.annotation.Nullable;
+
+import net.insane96mcp.iguanatweaks.IguanaTweaks;
+import net.insane96mcp.iguanatweaks.modules.ModuleHardness.BlockMeta;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class Utils {
 
 	public static final UUID movSpeedRestrictionUUID = new UUID(22, 0x10000);
 	public static final UUID swimSpeedRestrictionUUID = new UUID(22, 0x10002);
 	public static final UUID stunUUID = new UUID(22, 0x10001);
-	
-	@SuppressWarnings("deprecation")
-	public static float GetItemWeight(ItemStack itemStack) {
-		Item item = itemStack.getItem();
-		int meta = itemStack.getMetadata();
-		Block block = Block.getBlockFromItem(item);
-		IBlockState state = block.getStateFromMeta(meta);
 		
-		for (String line : ModConfig.config.movementRestriction.customWeight) {
-			String[] lineSplit = line.split(",");
-			if (lineSplit.length != 2)
-				continue;
-			
-			String[] itemSplit = lineSplit[0].split(":");
-			if (itemSplit.length < 2 || itemSplit.length > 3)
-				continue;
-			ResourceLocation itemId = new ResourceLocation(itemSplit[0], itemSplit[1]);
-			
-			int customMeta = -1;
-			if (itemSplit.length == 3)
-				customMeta = Integer.parseInt(itemSplit[2]);
-			
-			float weight = Float.parseFloat(lineSplit[1]);
-			
-			if (item.getRegistryName().equals(itemId) && (meta == customMeta || customMeta == -1)) {
-				return weight;
-			}
-		}
-
-		return GetBlockWeight(block) * ModConfig.config.movementRestriction.rockWeight;
-	}
-	
-	@SuppressWarnings("deprecation")
-	public static float GetBlockSlowness(World world, BlockPos pos) {
-		Material blockOnMaterial = world.getBlockState(pos).getMaterial();			
-		Material blockInMaterial = world.getBlockState(pos.add(0, 1, 0)).getMaterial();
-		IBlockState state = world.getBlockState(pos);
-		Block block = state.getBlock();
-		int meta = block.getMetaFromState(state);
-		
-		float slowness = -1f;
-		
-		for (String line : ModConfig.config.movementRestriction.terrainSlowdownCustom) {
-			String[] lineSplit = line.split(",");
-			if (lineSplit.length != 2)
-				continue;
-			
-			String[] blockSplit = lineSplit[0].split(":");
-			if (blockSplit.length < 2 || blockSplit.length > 3)
-				continue;
-			ResourceLocation blockId = new ResourceLocation(blockSplit[0], blockSplit[1]);
-			
-			int customMeta = -1;
-			if (blockSplit.length == 3)
-				customMeta = Integer.parseInt(blockSplit[2]);
-			
-			if (block.getRegistryName().equals(blockId) && (meta == customMeta || customMeta == -1))
-				slowness = Float.parseFloat(lineSplit[1]);
-		}
-		
-		if (slowness == -1f) {
-	        if (blockOnMaterial == Material.GRASS || blockOnMaterial == Material.GROUND) 
-	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnDirt; 
-	        else if (blockOnMaterial == Material.SAND) 
-	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnSand;
-	        else if (blockOnMaterial == Material.LEAVES || blockOnMaterial == Material.PLANTS || blockOnMaterial == Material.VINE) 
-	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnPlant;
-	        else if (blockOnMaterial == Material.ICE || blockOnMaterial == Material.PACKED_ICE)
-	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnIce;
-	        else if (blockOnMaterial == Material.SNOW || blockOnMaterial == Material.CRAFTED_SNOW)
-	        	slowness = ModConfig.config.movementRestriction.terrainSlowdownOnSnow;
-	        else
-	        	slowness = 0;
-		}
-        if (blockInMaterial == Material.SNOW || blockInMaterial == Material.CRAFTED_SNOW) 
-        	slowness += ModConfig.config.movementRestriction.terrainSlowdownInSnow;
-		else if (blockInMaterial == Material.VINE || blockInMaterial == Material.PLANTS) 
-			slowness += ModConfig.config.movementRestriction.terrainSlowdownInPlant;
-
-        return slowness;
-	}
-	
 	@Deprecated
 	public static float GetBlockWeight(Block block) {
 		Material blockMaterial = block.getMaterial(block.getDefaultState());
@@ -119,5 +36,37 @@ public class Utils {
         else 
         	return 1f / 64f;
 		
+	}
+	
+	/**
+	 * Given a string will be parsed to the block id and the meta if possible. Returns null if errored
+	 */
+	@Nullable
+	public static BlockMeta parseBlock(String line, String featureError) {
+		//Split block in modId blockId and meta
+		String block = line;
+		String[] splitBlock = block.split(":");
+		
+		if (splitBlock.length < 2 || splitBlock.length > 3) {
+			IguanaTweaks.logger.error("[" + featureError + "] Failed to parse block " + block + " of line: " + line);
+			return null;
+		}
+		String modId = splitBlock[0];
+		String blockId = splitBlock[1];
+		ResourceLocation id = new ResourceLocation(modId, blockId);
+		int meta = -1;
+		if (splitBlock.length == 3) {
+			try {
+				meta = Integer.parseInt(splitBlock[2]);
+			} catch (Exception e) {
+				IguanaTweaks.logger.error("[" + featureError + "] Failed to parse metadata for block " + block + " of line: " + line);
+				return null;
+			}
+			if (meta < -1 || meta > Short.MAX_VALUE) {
+				IguanaTweaks.logger.error("[" + featureError + "] Invalid metadata for block " + block + " of line: " + line);
+				return null;
+			}
+		}
+		return new BlockMeta(id, meta);
 	}
 }

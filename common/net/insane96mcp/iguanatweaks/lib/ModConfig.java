@@ -1,6 +1,9 @@
 package net.insane96mcp.iguanatweaks.lib;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
+import net.insane96mcp.iguanatweaks.modules.ModuleHardness;
+import net.insane96mcp.iguanatweaks.modules.ModuleMovementRestriction;
+import net.insane96mcp.iguanatweaks.modules.ModuleStackSizes;
 import net.insane96mcp.iguanatweaks.network.ConfigSync;
 import net.insane96mcp.iguanatweaks.network.PacketHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -170,9 +173,6 @@ public class ModConfig {
 		public StackSizes stackSizes = new StackSizes();
 		
 		public static class StackSizes {
-			@Name("Log changes")
-			@Comment("If true, writes in log file any change to stack sizes")
-			public boolean logChanges = false;
 			@Name("Block Stack Size Divider Min")
 			@Comment("Min stack size divider for blocks")
 			@RangeInt(min = 1, max = 64)
@@ -186,7 +186,7 @@ public class ModConfig {
 			@RangeInt(min = 1, max = 64)
 			public int itemDivider = 2;
 			@Name("Custom Stack List")
-			@Comment("List of all the custom stacks for blocks and items. The format is 'modid:name,max_stack_size'. Going over 64 doesn't work. By default, some items are set so that villagers can trade them.")
+			@Comment("List of all the custom stacks for blocks and items. The format is 'modid:name,max_stack_size'.\nMeta items can't be changed (e.g. setting stone max stack to 16 will make even granite, diorite, etc. as 16).\nGoing over 64 doesn't work.\nBy default, some items are set so that villagers can trade them.")
 			@RangeInt(min = 1, max = 64)
 			public String[] customStackList = new String[] {
 					"minecraft:emerald,64",
@@ -378,11 +378,11 @@ public class ModConfig {
 			@RangeDouble(min = 0f, max = 100f)
 			public float terrainSlowdownOnSnow = 20f;
 			@Name("Terrain Slowdown in Snow")
-			@Comment("Percentage of slowdown when walking in snow")
+			@Comment("Percentage of slowdown when walking in snow, this is added to the ground slowdown")
 			@RangeDouble(min = 0f, max = 100f)
-			public float terrainSlowdownInSnow = 20f;
+			public float terrainSlowdownInSnow = 15f;
 			@Name("Terrain Slowdown in Plants")
-			@Comment("Percentage of slowdown when walking in plants")
+			@Comment("Percentage of slowdown when walking in plants, this is added to the ground slowdown")
 			@RangeDouble(min = 0f, max = 100f)
 			public float terrainSlowdownInPlant = 5f;
 			@Name("Custom Terrain Slowdown")
@@ -423,6 +423,20 @@ public class ModConfig {
 			public int lifespan = 6000;
 		}
 	}
+	
+	public static void parseConfig() {
+
+        IguanaTweaks.logger.info("Parsing Config");
+        
+        ModuleHardness.loadBlockHardnesses();
+        ModuleHardness.loadDimensionMultipliers();
+        ModuleHardness.loadBlockList();
+        ModuleStackSizes.loadCustomStackSizes();
+        ModuleMovementRestriction.loadCustomWeights();
+        ModuleMovementRestriction.loadCustomTerrainSlowdown();
+        
+        IguanaTweaks.logger.info("Config Parsed");
+	}
 
 	@Mod.EventBusSubscriber(modid = IguanaTweaks.MOD_ID)
 	private static class EventHandler{
@@ -432,6 +446,8 @@ public class ModConfig {
 	        if (event.getModID().equals(IguanaTweaks.MOD_ID))
 	        {
 	            ConfigManager.sync(IguanaTweaks.MOD_ID, Type.INSTANCE);
+	            
+	            parseConfig();
 	        }
 	    }
 	    
@@ -446,6 +462,8 @@ public class ModConfig {
 	    	message.blockListIsWhitelist = ModConfig.config.hardness.blockListIsWhitelist;
 	    	message.blockList = String.join("\r\n", ModConfig.config.hardness.blockList);
 	    	message.blockHardness = String.join("\r\n", ModConfig.config.hardness.blockHardness);
+	    	
+	    	parseConfig();
 	    	
 	    	PacketHandler.SendToClient(message, (EntityPlayerMP) event.player);
 	    }
