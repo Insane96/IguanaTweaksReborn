@@ -102,14 +102,14 @@ public class ModuleFarming {
 		
 		float chance = 1f / ModConfig.config.farming.cropGrowthMultiplier;
 		
-		
-		if (world.getLightFor(EnumSkyBlock.SKY, event.getPos()) < ModConfig.config.farming.minSunlight)
+		int skyLight = world.getLightFor(EnumSkyBlock.SKY, event.getPos());
+		if (skyLight < ModConfig.config.farming.minSunlight)
 			chance *= 1f / ModConfig.config.farming.noSunlightGrowthMultiplier;
 			
 		if (ModConfig.config.farming.cropGrowthMultiplier == 0.0f)
 			chance = -1f;
 		
-		if (world.getLightFor(EnumSkyBlock.SKY, event.getPos()) < ModConfig.config.farming.minSunlight 
+		if (skyLight < ModConfig.config.farming.minSunlight 
 				&& ModConfig.config.farming.noSunlightGrowthMultiplier == 0.0f)
 			chance = -1f;
 		

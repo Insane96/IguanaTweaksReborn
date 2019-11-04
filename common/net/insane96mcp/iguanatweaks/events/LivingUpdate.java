@@ -15,17 +15,5 @@ public class LivingUpdate {
 		ModuleMovementRestriction.ApplyPlayer(event.getEntityLiving());
 		ModuleMovementRestriction.ApplyEntity(event.getEntityLiving());
 		ModuleMisc.ApplyPoison(event.getEntityLiving());
-		/*
-		if (event.getEntityLiving() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-			if (player.getHeldItemMainhand().getItem().getRegistryName().toString().equals("minecraft:diamond_sword")) {
-				IAttributeInstance reachDistance = player.getEntityAttribute(EntityPlayer.REACH_DISTANCE);
-				reachDistance.setBaseValue(3.5d);
-			}
-			else {
-				IAttributeInstance reachDistance = player.getEntityAttribute(EntityPlayer.REACH_DISTANCE);
-				reachDistance.setBaseValue(5.0d);
-			}
-		}*/
 	}
 }
