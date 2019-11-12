@@ -18,7 +18,7 @@ What Happens:
 
 //Please send logs even if you don't have any crash, and use Pastebin or similar
 
-Logs / Crash reports:
+Logs / Crash reports (use pastebin.com):
 
 
 //If needed
