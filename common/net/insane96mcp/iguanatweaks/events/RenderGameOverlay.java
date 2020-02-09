@@ -1,8 +1,8 @@
 package net.insane96mcp.iguanatweaks.events;
 
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
-import net.insane96mcp.iguanatweaks.modules.ModuleMisc;
 import net.insane96mcp.iguanatweaks.modules.ModuleHud;
+import net.insane96mcp.iguanatweaks.modules.ModuleMisc;
 import net.insane96mcp.iguanatweaks.modules.ModuleMovementRestriction;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -48,6 +48,7 @@ public class RenderGameOverlay {
 			GuiIngameForge.left_height -= 3;
 			GuiIngameForge.right_height -= 3;
 		}
+
 	}
 	
 	@SideOnly(Side.CLIENT)
