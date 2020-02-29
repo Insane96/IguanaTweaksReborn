@@ -1,26 +1,22 @@
 package insane96mcp.iguanatweaksreborn;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
+import insane96mcp.iguanatweaksreborn.setup.ModConfig;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.stream.Collectors;
+import java.nio.file.Paths;
 
 @Mod("iguanatweaksreborn")
 public class IguanaTweaksReborn
 {
+	public static final String MOD_ID = "iguanatweaksreborn";
+	public static final String RESOURCE_PREFIX = MOD_ID + ":";
     public static final Logger LOGGER = LogManager.getLogger();
 
     public IguanaTweaksReborn() {
@@ -29,14 +25,21 @@ public class IguanaTweaksReborn
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+		ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, ModConfig.SPEC);
+		ModConfig.init(Paths.get("config", MOD_ID + ".toml"));
     }
 
-    /*
-    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
+
+	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class RegistryEvents {
         @SubscribeEvent
-    }
-    */
+		public static void onWorldJoin(PlayerEvent.PlayerLoggedInEvent event) {
+            /*Collection<Block> blocks = BlockTags.getCollection().get(new ResourceLocation("minecraft:carpets")).getAllElements();
+
+            for (Block block : blocks) {
+                LOGGER.info(block.getRegistryName());
+            }*/
+		}
+	}
+
 }

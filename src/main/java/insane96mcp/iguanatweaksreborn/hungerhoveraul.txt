@@ -1,0 +1,217 @@
+Farming
+	Livestock
+		Breeding cooldown multiplier
+		milk cooldown
+		Child Grow up speed multiplier
+		egg Lay multiplier
+	Agricolture
+		cocoa beans growth multiplier
+		netherwart grow speed multiplier
+		sapling grow speed multiplier
+
+Food
+	Make food regen health too using Well Fed Effect
+		Disable naturalRegeneration and manage health manually
+		Without eating health regen will be slooow, like 1 hp every 40 secs (800 ticks) and will consume hunger bar (not saturation), down to 6 hunger. While Well Fed is on, the cooldown for health regen is reduced by 20% per level (so 32 seconds with Well Fed I, 24 secs with II, 16 secs with III, 8 secs with IV and 0 with V)
+		Well fed duration given based off saturation gived by food while level by hunger / 2
+	Change the stack size of food to be dependant on the food's replenishment value
+	Multiplier on the stack size of food (the above must be true)
+	Change the eating animation speed to be dependant on the food's replenishment value
+	Base Health regen speed
+    wellFedDurationMultiplier
+	wellFedEffectiveness
+    Remove Wood and stone hoe recipes (if actually possible)
+   	Multiplier on tool damage taken when a hoe is used
+    	public void onUseHoe(UseHoeEvent event)
+
+
+##########################################################################################################
+# getting seeds
+#--------------------------------------------------------------------------------------------------------#
+# Options for obtaining seeds
+##########################################################################################################
+
+"getting seeds" {
+    # Adds a crafting recipe to turn 1 wheat into 1 seed [vanilla: false] [default: true]
+    B:addSeedsCraftingRecipe=true
+
+    # Each seed has an equal chance to drop (grass drops and via hoes) [vanilla: false] [default: true]
+    B:allSeedsEqual=true
+
+    # Multiplier on tool damage taken when a hoe is used ('modifyHoeUse' must be true) [vanilla: 1] [range: 1 ~ 2147483647, default: 5]
+    I:hoeToolDamageMultiplier=5
+
+    # Changes the use of hoes depending on the availability of water [vanilla: false] [default: true]
+    B:modifyHoeUse=true
+
+    # Whether wood and stone hoe recipes are removed [vanilla: false] [default: true]
+    B:removeHoeRecipes=true
+
+    # Removes seed drops when breaking tall grass [vanilla: false] [default: true]
+    B:removeTallGrassSeeds=true
+
+    # Percent chance for seed to drop from hoe use on normal difficulty ('modifyHoeUse' must be true) [vanilla: 20] [range: 0 ~ 100, default: 20]
+    I:seedChance=20
+}
+
+##########################################################################################################
+# harvesting
+#--------------------------------------------------------------------------------------------------------#
+# Options related to drops from crops
+##########################################################################################################
+
+harvesting {
+    # Multiplier on the effectiveness of bonemeal; the smaller this is, the more often bonemeal will fail to create growth. Set to 0 to disable bonemeal completely. [vanilla: 1.0] [range: 0.0 ~ 1.0, default: 0.5]
+    S:bonemealEffectiveness=0.5
+
+    # Enables/disables harvest crops by right clicking them [vanilla: false] [default: true]
+    B:enableRightClickHarvesting=true
+
+    # Reduces the amount of growth from a successful bonemeal on certain plants (uses IguanaMan's opinionated values) [vanilla: false] [default: true]
+    B:modifyBonemealGrowth=true
+
+    # Enables/disables modification of the item drops of crops when breaking them (produce and seeds) [vanilla: false] [default: true]
+    B:modifyCropDropsBreak=true
+
+    # Enables/disables modification of the item drops of crops when right clicking them (produce and seeds) [vanilla: false] [default: true]
+    B:modifyCropDropsRightClick=true
+
+    # Maximum number of produce you get when harvesting a non-tree crop by breaking it (modifyCropDrops must be true) [vanilla: 4] [range: 0 ~ 2147483647, default: 4]
+    I:producePerHarvestBreakMax=4
+
+    # Minimum number of produce you get when harvesting a non-tree crop by breaking it (modifyCropDrops must be true) [vanilla: 2] [range: 0 ~ 2147483647, default: 2]
+    I:producePerHarvestBreakMin=2
+
+    # Maximum number of produce you get when harvesting a non-tree crop with right click (modifyCropDrops must be true) [vanilla: 4] [range: 0 ~ 2147483647, default: 4]
+    I:producePerHarvestRightClickMax=4
+
+    # Minimum number of produce you get when harvesting a non-tree crop with right click (modifyCropDrops must be true) [vanilla: 2] [range: 0 ~ 2147483647, default: 2]
+    I:producePerHarvestRightClickMin=2
+
+    # Maximum number of seeds you get when harvesting a non-tree crop by breaking it (modifyCropDrops must be tree) [vanilla: 0] [range: 0 ~ 2147483647, default: 0]
+    I:seedsPerHarvestBreakMax=0
+
+    # Minimum number of seeds you get when harvesting a non-tree crop by breaking it (modifyCropDrops must be true) [vanilla: 0] [range: 0 ~ 2147483647, default: 0]
+    I:seedsPerHarvestBreakMin=0
+
+    # Maximum number of seeds you get when harvesting a non-tree crop with right click (modifyCropDrops must be true) [vanilla: 0] [range: 0 ~ 2147483647, default: 0]
+    I:seedsPerHarvestRightClickMax=0
+
+    # Minimum number of seeds you get when harvesting a non-tree crop with right click (modifyCropDrops must be true) [vanilla: 0] [range: 0 ~ 2147483647, default: 0]
+    I:seedsPerHarvestRightClickMin=0
+}
+
+
+##########################################################################################################
+# health
+#--------------------------------------------------------------------------------------------------------#
+# Options related to health
+##########################################################################################################
+
+health {
+    # Amount of health food restores is the food value divided by this number (foodRegensHealth must be true) [vanilla: 4] [range: 0 ~ 2147483647, default: 4]
+    I:foodHealDivider=4
+
+    # Eating food regenerates health [vanilla: false] [default: false]
+    B:foodRegensHealth=false
+
+    # Speed up or slow down the rate that health regenerates (0 to disable regen) [vanilla: 100] [range: 0 ~ 2147483647, default: 100]
+    I:healthRegenRatePercentage=100
+
+    # The lower your health the longer it takes to regen, modify the effect here (lower = less effect) (modifyRegenRateOnLowHealth must be true) [vanilla: 5] [range: 0 ~ 2147483647, default: 5]
+    I:lowHealthRegenRateModifier=5
+
+    # Minimum hunger level before healing starts [vanilla: 18] [range: 0 ~ 2147483647, default: 7]
+    I:minHungerToHeal=7
+
+    # The lower your health the longer it takes to regen [vanilla: false] [default: true]
+    B:modifyRegenRateOnLowHealth=true
+}
+
+
+##########################################################################################################
+# hunger
+#--------------------------------------------------------------------------------------------------------#
+# Options related to hunger
+##########################################################################################################
+
+hunger {
+    # You lose hunger (very slowly) at all times [vanilla: false] [default: true]
+    B:constantHungerLoss=true
+
+    # Amount of damage you take when hunger hits zero [vanilla: 2] [range: -2147483648 ~ 2147483647, default: 200]
+    I:damageOnStarve=200
+
+    # Disable the hunger drain when healing that was introduced in vanilla 1.6.2 [vanilla: false] [default: true]
+    B:disableHealingHungerDrain=true
+
+    # Speed up or slow down the rate that hunger drops (set to 0 to disable hunger loss) [vanilla: 100.0] [range: 0.0 ~ 3.4028235E38, default: 133.33334]
+    S:hungerLossRatePercentage=133.33334350585938
+
+    # The amount difficulty modifies the hunger value set after respawning  ('difficultyScaling' and 'difficultyScalingRespawnHunger' must be true) [vanilla: 4] [range: 0 ~ 2147483647, default: 4]
+    I:respawnHungerDifficultyModifier=4
+
+    # hunger value set after respawning for peaceful/easy difficulty [vanilla: 20] [range: 0 ~ 2147483647, default: 20]
+    I:respawnHungerValue=20
+}
+
+
+##########################################################################################################
+# low stats
+#--------------------------------------------------------------------------------------------------------#
+# Options for how to handle when the player get low health/hunger
+##########################################################################################################
+
+"low stats" {
+    # Shows onscreen text when hunger/health is low [vanilla: false] [default: true]
+    B:addGuiText=true
+
+    # Mining slowdown effect when health is low ('addLowStatEffects' must be true) [vanilla: false] [default: true]
+    B:addLowHealthMiningSlowdown=true
+
+    # Nausea effect when health is really low ('addLowStatEffects' must be true) [vanilla: false] [default: true]
+    B:addLowHealthNausea=true
+
+    # Slowness effect when health is low ('addLowStatEffects' must be true) [vanilla: false] [default: true]
+    B:addLowHealthSlowness=true
+
+    # Weakness effect when health is low ('addLowStatEffects' must be true) [vanilla: false] [default: true]
+    B:addLowHealthWeakness=true
+
+    # Mining slowdown effect when hunger is low ('addLowStatEffects' must be true) [vanilla: false] [default: true]
+    B:addLowHungerMiningSlowdown=true
+
+    # Nausea effect when hunger is really low ('addLowStatEffects' must be true) [vanilla: false] [default: true]
+    B:addLowHungerNausea=true
+
+    # Slowness effect when hunger is low ('addLowStatEffects' must be true) [vanilla: false] [default: true]
+    B:addLowHungerSlowness=true
+
+    # Weakness effect when hunger is low ('addLowStatEffects' must be true) [vanilla: false] [default: true]
+    B:addLowHungerWeakness=true
+
+    # Enables/disables all low hunger/health effects [vanilla: false] [default: true]
+    B:addLowStatEffects=true
+}
+
+
+##########################################################################################################
+# natura
+#--------------------------------------------------------------------------------------------------------#
+# Options related to Natura.
+# §cOnly works if Natura is installed!
+##########################################################################################################
+
+natura {
+    # Adds alternate recipes to turn barley/wheat into flour: 2x wheat/barley -> flour. [vanilla: false] [default: false]
+    B:addAlternateNaturaFlourCraftingRecipes=false
+
+    # Removes the default barley/wheat -> flour recipes.
+    # Note: These recipes are always removed if 'addSeedsCraftingRecipe' in 'getting seeds' is true because otherwise they'd conflict. [vanilla: false] [default: true]
+    B:removeNaturaFlourCraftingRecipes=true
+
+    # Removes the default barley/wheat flour -> bread smelting recipes. [vanilla: false] [default: true]
+    B:removeNaturaFlourSmeltingRecipe=true
+}
+
+
