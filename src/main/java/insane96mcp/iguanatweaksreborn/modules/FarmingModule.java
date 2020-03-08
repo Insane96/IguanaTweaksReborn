@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.modules;
 
+import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
 import insane96mcp.iguanatweaksreborn.utils.RandomHelper;
 import net.minecraft.block.*;
@@ -13,15 +14,14 @@ import java.util.Collections;
 
 public class FarmingModule {
 
-	//TODO Maybe expand to trees too
 	public static void nerfBonemeal(BonemealEvent event) {
 		if (event.getWorld().isRemote)
 			return;
 
-		if (!ModConfig.Modules.farming.get())
+		if (!ModConfig.Modules.farming)
 			return;
 
-		if (ModConfig.Farming.nerfedBonemeal.get().equals(ModConfig.Farming.NerfedBonemeal.DISABLED))
+		if (ModConfig.Farming.nerfedBonemeal.equals(Config.CommonConfig.Farming.NerfedBonemeal.DISABLED))
 			return;
 
 		BlockState state = event.getWorld().getBlockState(event.getPos());
@@ -36,15 +36,16 @@ public class FarmingModule {
 		if (isBeetroot) {
 			age = state.get(BeetrootBlock.BEETROOT_AGE);
 			maxAge = Collections.max(BeetrootBlock.BEETROOT_AGE.getAllowedValues());
-		} else
+		}
+		else
 			age = state.get(CropsBlock.AGE);
 
 		if (age == maxAge)
 			return;
 
-		if (ModConfig.Farming.nerfedBonemeal.get().equals(ModConfig.Farming.NerfedBonemeal.SLIGHT))
+		if (ModConfig.Farming.nerfedBonemeal.equals(Config.CommonConfig.Farming.NerfedBonemeal.SLIGHT))
 			age += RandomHelper.getInt(event.getWorld().getRandom(), 1, 2);
-		else if (ModConfig.Farming.nerfedBonemeal.get().equals(ModConfig.Farming.NerfedBonemeal.NERFED))
+		else if (ModConfig.Farming.nerfedBonemeal.equals(Config.CommonConfig.Farming.NerfedBonemeal.NERFED))
 			age++;
 
 		if (age > maxAge)
@@ -52,7 +53,8 @@ public class FarmingModule {
 
 		if (isBeetroot) {
 			state = state.with(BeetrootBlock.BEETROOT_AGE, age);
-		} else
+		}
+		else
 			state = state.with(CropsBlock.AGE, age);
 
 		event.getWorld().setBlockState(event.getPos(), state, 3);
@@ -60,10 +62,10 @@ public class FarmingModule {
 	}
 
 	public static void cropsRequireWater(BlockEvent.CropGrowEvent.Pre event) {
-		if (!ModConfig.Modules.farming.get())
+		if (!ModConfig.Modules.farming)
 			return;
 
-		if (!ModConfig.Farming.cropsRequireWater.get())
+		if (!ModConfig.Farming.cropsRequireWater)
 			return;
 
 		IWorld world = event.getWorld();
@@ -82,10 +84,10 @@ public class FarmingModule {
 	 * Handles Crop Growth Speed Multiplier and NoSunlight Growth multiplier
 	 */
 	public static void cropsGrowthSpeedMultiplier(BlockEvent.CropGrowEvent.Post event) {
-		if (!ModConfig.Modules.farming.get())
+		if (!ModConfig.Modules.farming)
 			return;
 
-		if (ModConfig.Farming.cropsGrowthMultiplier.get() == 1.0d && ModConfig.Farming.noSunlightGrowthMultiplier.get() == 1.0d)
+		if (ModConfig.Farming.cropsGrowthMultiplier == 1.0d && ModConfig.Farming.noSunlightGrowthMultiplier == 1.0d)
 			return;
 
 		IWorld world = event.getWorld();
@@ -94,17 +96,17 @@ public class FarmingModule {
 		if (!(state.getBlock() instanceof CropsBlock))
 			return;
 
-		double chance = 1d / ModConfig.Farming.cropsGrowthMultiplier.get();
+		double chance = 1d / ModConfig.Farming.cropsGrowthMultiplier;
 
 		int skyLight = world.getLightFor(LightType.SKY, event.getPos());
-		if (skyLight < ModConfig.Farming.minSunlight.get())
-			chance *= 1d / ModConfig.Farming.noSunlightGrowthMultiplier.get();
+		if (skyLight < ModConfig.Farming.minSunlight)
+			chance *= 1d / ModConfig.Farming.noSunlightGrowthMultiplier;
 
-		if (ModConfig.Farming.cropsGrowthMultiplier.get() == 0.0d)
+		if (ModConfig.Farming.cropsGrowthMultiplier == 0.0d)
 			chance = -1d;
 
-		if (skyLight < ModConfig.Farming.minSunlight.get()
-				&& ModConfig.Farming.noSunlightGrowthMultiplier.get() == 0.0d)
+		if (skyLight < ModConfig.Farming.minSunlight
+				&& ModConfig.Farming.noSunlightGrowthMultiplier == 0.0d)
 			chance = -1d;
 
 		if (event.getWorld().getRandom().nextDouble() > chance)
@@ -112,10 +114,10 @@ public class FarmingModule {
 	}
 
 	public static void sugarCaneGrowthSpeedMultiplier(BlockEvent.CropGrowEvent.Post event) {
-		if (!ModConfig.Modules.farming.get())
+		if (!ModConfig.Modules.farming)
 			return;
 
-		if (ModConfig.Farming.sugarCanesGrowthMultiplier.get() == 1.0d)
+		if (ModConfig.Farming.sugarCanesGrowthMultiplier == 1.0d)
 			return;
 
 		IWorld world = event.getWorld();
@@ -124,9 +126,9 @@ public class FarmingModule {
 		if (!(state.getBlock() instanceof SugarCaneBlock))
 			return;
 
-		double chance = 1d / ModConfig.Farming.sugarCanesGrowthMultiplier.get();
+		double chance = 1d / ModConfig.Farming.sugarCanesGrowthMultiplier;
 
-		if (ModConfig.Farming.sugarCanesGrowthMultiplier.get() == 0.0d)
+		if (ModConfig.Farming.sugarCanesGrowthMultiplier == 0.0d)
 			chance = -1d;
 
 		if (event.getWorld().getRandom().nextDouble() > chance) {
@@ -135,10 +137,10 @@ public class FarmingModule {
 	}
 
 	public static void cactusGrowthSpeedMultiplier(BlockEvent.CropGrowEvent.Post event) {
-		if (!ModConfig.Modules.farming.get())
+		if (!ModConfig.Modules.farming)
 			return;
 
-		if (ModConfig.Farming.cactusGrowthMultiplier.get() == 1.0d)
+		if (ModConfig.Farming.cactusGrowthMultiplier == 1.0d)
 			return;
 
 		IWorld world = event.getWorld();
@@ -147,9 +149,9 @@ public class FarmingModule {
 		if (!(state.getBlock() instanceof CactusBlock))
 			return;
 
-		double chance = 1d / ModConfig.Farming.cactusGrowthMultiplier.get();
+		double chance = 1d / ModConfig.Farming.cactusGrowthMultiplier;
 
-		if (ModConfig.Farming.cactusGrowthMultiplier.get() == 0.0d)
+		if (ModConfig.Farming.cactusGrowthMultiplier == 0.0d)
 			chance = -1d;
 
 		if (event.getWorld().getRandom().nextDouble() > chance) {

@@ -1,117 +1,303 @@
 package insane96mcp.iguanatweaksreborn.setup;
 
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
-import net.minecraftforge.common.ForgeConfigSpec;
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.setup.Config.CommonConfig.Farming.NerfedBonemeal;
+import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.math.NumberUtils;
 
-import java.nio.file.Path;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
+@Mod.EventBusSubscriber(modid = IguanaTweaksReborn.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModConfig {
-	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-	public static ForgeConfigSpec SPEC;
 
-	public static void init(Path file) {
-		final CommentedFileConfig configData = CommentedFileConfig.builder(file)
-				.sync()
-				.autosave()
-				.writingMode(WritingMode.REPLACE)
-				.build();
+    public static class Modules {
 
-		configData.load();
-		SPEC.setConfig(configData);
-	}
+        public static Boolean farming;
+        public static Boolean experience;
+        public static Boolean hardness;
 
-	public static class Modules {
-		public static String name = "Modules";
+        public static void load() {
+            farming = Config.COMMON.modules.farming.get();
+            experience = Config.COMMON.modules.experience.get();
+            hardness = Config.COMMON.modules.hardness.get();
+        }
+    }
 
-		public static ForgeConfigSpec.ConfigValue<Boolean> farming;
-		public static ForgeConfigSpec.ConfigValue<Boolean> experience;
+    public static class Experience {
+        public static Double oreMultiplier;
+        public static Double globalMultiplier;
+        public static Double mobsFromSpawnersMultiplier;
 
-		public static void init() {
-			BUILDER.push(name).comment("Disable entire modules");
-			farming = BUILDER
-					.comment("Set to false to disable the Farming Module")
-					.define("Farming Module", true);
-			experience = BUILDER
-					.comment("Set to false to disable the Experience Module")
-					.define("Experience Module", true);
-			BUILDER.pop();
+        public static void load() {
+            oreMultiplier = Config.COMMON.experience.oreMultiplier.get();
+            globalMultiplier = Config.COMMON.experience.globalMultiplier.get();
+            mobsFromSpawnersMultiplier = Config.COMMON.experience.mobsFromSpawnersMultiplier.get();
+        }
+    }
 
-		}
-	}
+    public static class Farming {
+        public static NerfedBonemeal nerfedBonemeal;
+        public static Boolean cropsRequireWater;
+        public static Double cropsGrowthMultiplier;
+        public static Double noSunlightGrowthMultiplier;
+        public static Integer minSunlight;
+        public static Double sugarCanesGrowthMultiplier;
+        public static Double cactusGrowthMultiplier;
 
-	public static class Experience {
-		public static String name = "Experience";
+        public static void load() {
+            nerfedBonemeal = Config.COMMON.farming.nerfedBonemeal.get();
+            cropsRequireWater = Config.COMMON.farming.cropsRequireWater.get();
+            cropsGrowthMultiplier = Config.COMMON.farming.cropsGrowthMultiplier.get();
+            noSunlightGrowthMultiplier = Config.COMMON.farming.noSunlightGrowthMultiplier.get();
+            minSunlight = Config.COMMON.farming.minSunlight.get();
+            sugarCanesGrowthMultiplier = Config.COMMON.farming.sugarCanesGrowthMultiplier.get();
+            cactusGrowthMultiplier = Config.COMMON.farming.cactusGrowthMultiplier.get();
+        }
 
-		public static ForgeConfigSpec.ConfigValue<Double> oreMultiplier;
-		public static ForgeConfigSpec.ConfigValue<Double> globalMultiplier;
-		public static ForgeConfigSpec.ConfigValue<Double> mobsFromSpawnersMultiplier;
+    }
 
-		public static void init() {
-			BUILDER.push(name).comment("For all your Experience nerfs needs");
-			oreMultiplier = BUILDER
-					.comment("Experience dropped by blocks (Ores and Spawners) will be multiplied by this multiplier. Experience dropped by blocks are still affected by 'Global Experience Multiplier'; so if you have e.g. 'Global Experience Multiplier' at 0.5, this needs to be set to 2.0 to make blocks drop normal experience\nCan be set to 0 to make blocks drop no experience")
-					.defineInRange("Experience from Blocks Multiplier", 2.5d, 0.0d, 1000d);
-			globalMultiplier = BUILDER
-					.comment("Experience dropped will be multiplied by this multiplier.\nCan be set to 0 to disable experience drop from any source.")
-					.defineInRange("Global Experience Multiplier", 1.0d, 0.0d, 1000d);
-			mobsFromSpawnersMultiplier = BUILDER
-					.comment("Experience dropped from mobs that come from spawners will be multiplied by this multiplier. Experience dropped by mobs from spawners are still affected by 'Global Experience Multiplier'; so if you have e.g. 'Global Experience Multiplier' at 0.5, this needs to be set to 2.0 to make mobs from spawners drop normal experience\nCan be set to 0 to disable experience drop from mob that come from spawners.")
-					.defineInRange("Mobs from Spawners Multiplier", 0.75d, 0.0d, 1000d);
-			BUILDER.pop();
-		}
-	}
+    public static class Hardness {
+        public static Double multiplier;
+        public static List<DimensionMultiplier> dimensionMultipliers;
+        public static List<CommonTagBlock> blacklist;
+        public static Boolean blacklistAsWhitelist;
+        public static List<BlockHardness> customHardness;
 
-	public static class Farming {
-		public static String name = "Farming";
+        public static void load() {
+            multiplier = Config.COMMON.hardness.multiplier.get();
+            dimensionMultipliers = ParseDimensionMultipliers(Config.COMMON.hardness.dimensionMultiplier.get());
+            blacklist = ParseBlacklist(Config.COMMON.hardness.blacklist.get());
+            blacklistAsWhitelist = Config.COMMON.hardness.backlistAsWhitelist.get();
+            customHardness = ParseCustomHardnesses(Config.COMMON.hardness.customHardness.get());
+        }
 
-		public enum NerfedBonemeal {
-			DISABLED,
-			SLIGHT,
-			NERFED
-		}
+        public static List<DimensionMultiplier> ParseDimensionMultipliers(List<? extends String> list) {
+            List<DimensionMultiplier> dimensionMultipliers = new ArrayList<>();
 
-		public static ForgeConfigSpec.ConfigValue<NerfedBonemeal> nerfedBonemeal;
-		public static ForgeConfigSpec.ConfigValue<Boolean> cropsRequireWater;
-		public static ForgeConfigSpec.ConfigValue<Double> cropsGrowthMultiplier;
-		public static ForgeConfigSpec.ConfigValue<Double> noSunlightGrowthMultiplier;
-		public static ForgeConfigSpec.ConfigValue<Integer> minSunlight;
-		public static ForgeConfigSpec.ConfigValue<Double> sugarCanesGrowthMultiplier;
-		public static ForgeConfigSpec.ConfigValue<Double> cactusGrowthMultiplier;
+            for (String line : list) {
+                String[] split = line.split(",");
 
-		public static void init() {
-			BUILDER.push(name).comment("For all your nerfed farming needs");
-			nerfedBonemeal = BUILDER
-					.comment("Makes more Bone Meal required for Crops. Valid Values are\nDISABLED: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
-					.define("Nerfed Bonemeal", NerfedBonemeal.NERFED);
-			cropsRequireWater = BUILDER
-					.comment("Crops will no longer grow if Farmland is not Wet.")
-					.define("Crops Require Water", true);
-			cropsGrowthMultiplier = BUILDER
-					.comment("Increases the time required for a crop to grow (e.g. at 2.0 the plant will take twice to grow).\nSetting this to 0 will prevent crops from growing naturally.\n1.0 will make crops grow like normal.")
-					.defineInRange("Crops Growth Speed Mutiplier", 2.5d, 0.0f, 1000d);
-			noSunlightGrowthMultiplier = BUILDER
-					.comment("Increases the time required for a crop to grow when it's sky light level is below \"Min Sunlight\", (e.g. at 2.0 when the crop has a skylight below \"Min Sunlight\" will take twice to grow).\nSetting this to 0 will prevent crops from growing when sky light level is below \"Min Sunlight\".\n1.0 will make crops growth not affected by skylight.")
-					.defineInRange("No Sunlight Growth Multiplier", 2.0d, 0.0f, 1000d);
-			minSunlight = BUILDER
-					.comment("Minimum Sky Light level required for crops to not be affected by \"No Sunlight Growth Multiplier\".")
-					.defineInRange("Min Sunlight", 10, 0, 15);
-			sugarCanesGrowthMultiplier = BUILDER
-					.comment("Increases the time required for Sugar Canes to grow (e.g. at 2.0 Sugar Canes will take twice to grow).\nSetting this to 0 will prevent Sugar Canes from growing naturally.\n1.0 will make Sugar Canes grow like normal.")
-					.defineInRange("Sugar Canes Growth Speed Mutiplier", 2.5d, 0.0f, 1000d);
-			cactusGrowthMultiplier = BUILDER
-					.comment("Increases the time required for Cactuses to grow (e.g. at 2.0 Cactuses will take twice to grow).\nSetting this to 0 will prevent Cactuses from growing naturally.\n1.0 will make Cactuses grow like normal.")
-					.defineInRange("Cactus Growth Speed Mutiplier", 2.5d, 0.0f, 1000d);
-			BUILDER.pop();
+                if (split.length < 1 || split.length > 2) {
+                    LogHelper.Warn("Invalid line \"%s\" for Dimension multiplier. Format must be modid:dimensionId,hardness", line);
+                    continue;
+                }
 
-		}
-	}
+                ResourceLocation dimension = Utils.AnyRL;
+                if (ResourceLocation.isResouceNameValid(split[0]))
+                    dimension = new ResourceLocation(split[0]);
+                else {
+                    LogHelper.Warn(String.format("Invalid dimension \"%s\" for Dimension multiplier", split[0]));
+                    continue;
+                }
 
-	static {
-		Modules.init();
-		Farming.init();
-		Experience.init();
+                if (!NumberUtils.isParsable(split[1])) {
+                    LogHelper.Warn(String.format("Invalid hardness \"%s\" for Dimension Multiplier", split[1]));
+                    continue;
+                }
+                Double hardness = Double.parseDouble(split[1]);
 
-		SPEC = BUILDER.build();
-	}
+                dimensionMultipliers.add(new DimensionMultiplier(dimension, hardness));
+            }
+
+            return dimensionMultipliers;
+        }
+
+        public static class DimensionMultiplier {
+            public ResourceLocation dimension;
+            public double multiplier;
+
+            public DimensionMultiplier(ResourceLocation dimension, double multiplier) {
+                this.dimension = dimension;
+                this.multiplier = multiplier;
+            }
+        }
+
+        public static List<CommonTagBlock> ParseBlacklist(List<? extends String> list) {
+            List<CommonTagBlock> commonTagBlock = new ArrayList<>();
+
+            for (String line : list) {
+                /*if (line.startsWith("#")) {
+                    String replaced = line.replace("#", "");
+                    if (!ResourceLocation.isResouceNameValid(replaced)){
+                        LogHelper.Warn("%s tag for Hardness Blacklist is not valid", replaced);
+                        continue;
+                    }
+                    ResourceLocation tag = new ResourceLocation(replaced);
+                    try {
+                        Collection<Block> blockTags = BlockTags.getCollection().get(tag).getAllElements();
+                        if (blockTags.isEmpty())
+                            LogHelper.Warn("%s tag for Hardness Blacklist seems to have no entries", replaced);
+                        for (Block block : blockTags) {
+                            ResourceLocation blockRegistryName = block.getRegistryName();
+                            r.add(blockRegistryName);
+                        }
+                    }
+                    catch (Exception e){
+                        LogHelper.Warn("%s tag for Hardness Blacklist seems to not exist", replaced);
+                    }
+                }
+                else {
+                    ResourceLocation blockRegistryName = new ResourceLocation(line);
+                    if (ForgeRegistries.BLOCKS.containsKey(blockRegistryName))
+                        r.add(blockRegistryName);
+                    else
+                        LogHelper.Warn("%s block for Hardness Blacklist seems to not exist", line);
+                }*/
+                String[] split = line.split(",");
+
+                if (split.length < 1 || split.length > 2) {
+                    LogHelper.Warn("Invalid line \"%s\" for Hardnesses Blacklist. Format must be modid:blockid,modid:dimension", line);
+                    continue;
+                }
+
+                ResourceLocation dimension = Utils.AnyRL;
+                if (split.length == 2)
+                    if (ResourceLocation.isResouceNameValid(split[1]))
+                        dimension = new ResourceLocation(split[1]);
+                    else
+                        LogHelper.Warn(String.format("Invalid dimension \"%s\" for Hardness Blacklist. Ignoring it", split[2]));
+
+                if (split[0].startsWith("#")) {
+                    String replaced = split[0].replace("#", "");
+                    if (!ResourceLocation.isResouceNameValid(replaced)) {
+                        LogHelper.Warn("%s tag for Hardness Blacklist is not valid", replaced);
+                        continue;
+                    }
+                    ResourceLocation tag = new ResourceLocation(replaced);
+                    CommonTagBlock hardness = new CommonTagBlock(null, tag, dimension);
+                    commonTagBlock.add(hardness);
+                }
+                else {
+                    if (!ResourceLocation.isResouceNameValid(split[0])) {
+                        LogHelper.Warn("%s block for Hardness Blacklist is not valid", line);
+                        continue;
+                    }
+                    ResourceLocation block = new ResourceLocation(split[0]);
+                    if (ForgeRegistries.BLOCKS.containsKey(block)) {
+                        CommonTagBlock hardness = new CommonTagBlock(block, null, dimension);
+                        commonTagBlock.add(hardness);
+                    }
+                    else
+                        LogHelper.Warn(String.format("%s block for Hardness Blacklist seems to not exist", line));
+                }
+            }
+            return commonTagBlock;
+        }
+
+        public static class CommonTagBlock {
+            public ResourceLocation block;
+            public ResourceLocation tag;
+            public ResourceLocation dimension;
+
+            public CommonTagBlock(@Nullable ResourceLocation block, @Nullable ResourceLocation tag, ResourceLocation dimension) {
+                if (block == null && tag == null) {
+                    throw new NullPointerException("block and tag can't be both null");
+                }
+                this.block = block;
+                this.tag = tag;
+                this.dimension = dimension;
+            }
+        }
+
+        public static List<BlockHardness> ParseCustomHardnesses(List<? extends String> list) {
+            ArrayList<BlockHardness> blockHardnesses = new ArrayList<>();
+
+            for (String line : list) {
+                String[] split = line.split(",");
+
+                if (split.length < 2 || split.length > 3) {
+                    LogHelper.Warn("Invalid line \"%s\" for Custom Hardnesses", line);
+                    continue;
+                }
+
+                if (!NumberUtils.isParsable(split[1])) {
+                    LogHelper.Warn(String.format("Invalid hardness \"%s\" for Custom Hardnesses", line));
+                    continue;
+                }
+                Double hardness = Double.parseDouble(split[1]);
+                ResourceLocation dimension = new ResourceLocation("any");
+                if (split.length == 3)
+                    if (ResourceLocation.isResouceNameValid(split[2]))
+                        dimension = new ResourceLocation(split[2]);
+                    else
+                        LogHelper.Warn(String.format("Invalid dimension \"%s\" for Custom Hardnesses. Ignoring it", split[2]));
+
+                /*if (split[0].startsWith("#")) {
+                    String replaced = split[0].replace("#", "");
+                    if (!ResourceLocation.isResouceNameValid(replaced)){
+                        LogHelper.Warn("%s tag for Custom Hardneses is not valid", replaced);
+                        continue;
+                    }
+                    ResourceLocation tag = new ResourceLocation(replaced);
+                    try {
+                        Collection<Block> blockTags = BlockTags.getCollection().get(tag).getAllElements();
+                        if (blockTags.isEmpty())
+                            LogHelper.Warn(String.format("%s tag for Custom Hardnesses seems to have no entries", split[0]));
+                        for (Block block : blockTags) {
+                            ResourceLocation blockRegistryName = block.getRegistryName();
+                            BlockHardness blockHardness = new BlockHardness(blockRegistryName, hardness, dimension);
+                            blockHardnesses.add(blockHardness);
+                        }
+                    }
+                    catch (Exception e){
+                        LogHelper.Warn(String.format("%s tag for Custom Hardnesses seems to not exist", split[0]));
+                    }
+                }
+                else {*/
+                if (split[0].startsWith("#")) {
+                    String replaced = split[0].replace("#", "");
+                    if (!ResourceLocation.isResouceNameValid(replaced)) {
+                        LogHelper.Warn("%s tag for Custom Hardneses is not valid", replaced);
+                        continue;
+                    }
+                    ResourceLocation tag = new ResourceLocation(replaced);
+                    BlockHardness blockHardness = new BlockHardness(null, tag, hardness, dimension);
+                    blockHardnesses.add(blockHardness);
+                }
+                else {
+                    if (!ResourceLocation.isResouceNameValid(split[0])) {
+                        LogHelper.Warn("%s block for Custom Hardneses is not valid", split[0]);
+                        continue;
+                    }
+                    ResourceLocation block = new ResourceLocation(split[0]);
+                    if (ForgeRegistries.BLOCKS.containsKey(block)) {
+                        BlockHardness blockHardness = new BlockHardness(block, null, hardness, dimension);
+                        blockHardnesses.add(blockHardness);
+                    }
+                    else
+                        LogHelper.Warn(String.format("%s block for Custom Hardnesses seems to not exist", split[0]));
+                }
+            }
+
+            return blockHardnesses;
+        }
+
+        public static class BlockHardness extends CommonTagBlock {
+            public double hardness;
+
+            public BlockHardness(@Nullable ResourceLocation block, @Nullable ResourceLocation tag, Double hardness, ResourceLocation dimension) {
+                super(block, tag, dimension);
+                this.hardness = hardness;
+            }
+        }
+    }
+
+    private static void load() {
+        Modules.load();
+        Experience.load();
+        Farming.load();
+        Hardness.load();
+    }
+
+    @SubscribeEvent
+    public static void onModConfigEvent(final net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
+        ModConfig.load();
+    }
 }

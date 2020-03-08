@@ -13,24 +13,22 @@ import net.minecraftforge.event.world.BlockEvent;
 
 public class ExperienceModule {
 	public static void oreXpDrop(BlockEvent.BreakEvent event) {
-		if (!ModConfig.Modules.experience.get())
+		if (!ModConfig.Modules.experience)
 			return;
 
-		if (ModConfig.Experience.oreMultiplier.get() == 1.0d)
+		if (ModConfig.Experience.oreMultiplier == 1.0d)
 			return;
 
 		int xpToDrop = event.getExpToDrop();
-		IguanaTweaksReborn.LOGGER.info(xpToDrop);
-		xpToDrop *= ModConfig.Experience.oreMultiplier.get(); //2.5d
-		IguanaTweaksReborn.LOGGER.info(xpToDrop);
+		xpToDrop *= ModConfig.Experience.oreMultiplier; //2.5d
 		event.setExpToDrop(xpToDrop);
 	}
 
 	public static void globalXpDrop(EntityJoinWorldEvent event) {
-		if (!ModConfig.Modules.experience.get())
+		if (!ModConfig.Modules.experience)
 			return;
 
-		if (ModConfig.Experience.globalMultiplier.get() == 1.0d)
+		if (ModConfig.Experience.globalMultiplier == 1.0d)
 			return;
 
 		if (!(event.getEntity() instanceof ExperienceOrbEntity))
@@ -38,37 +36,34 @@ public class ExperienceModule {
 
 		ExperienceOrbEntity xpOrb = (ExperienceOrbEntity) event.getEntity();
 
-		if (ModConfig.Experience.globalMultiplier.get() == 0d)
+		if (ModConfig.Experience.globalMultiplier == 0d)
 			xpOrb.remove();
 		else
-			xpOrb.xpValue *= ModConfig.Experience.globalMultiplier.get();
+			xpOrb.xpValue *= ModConfig.Experience.globalMultiplier;
 
 		if (xpOrb.xpValue == 0d)
 			xpOrb.remove();
 	}
 
 	public static void mobsFromSpawnersXpDrop(LivingExperienceDropEvent event) {
-		if (!ModConfig.Modules.experience.get())
+		if (!ModConfig.Modules.experience)
 			return;
 
-		if (ModConfig.Experience.mobsFromSpawnersMultiplier.get() == 1.0d)
+		if (ModConfig.Experience.mobsFromSpawnersMultiplier == 1.0d)
 			return;
 
 		LivingEntity living = event.getEntityLiving();
 		CompoundNBT tags = living.getPersistentData();
 
-		IguanaTweaksReborn.LOGGER.info("mobsFromSpawnersXpDrop");
-
 		if (!tags.getBoolean(IguanaTweaksReborn.RESOURCE_PREFIX + "spawnedFromSpawner"))
 			return;
 
 		int xp = event.getDroppedExperience();
-		xp *= ModConfig.Experience.mobsFromSpawnersMultiplier.get();
+		xp *= ModConfig.Experience.mobsFromSpawnersMultiplier;
 		event.setDroppedExperience(xp);
 	}
 
 	public static void checkFromSpawner(LivingSpawnEvent.CheckSpawn event) {
-		IguanaTweaksReborn.LOGGER.info(event.getSpawnReason() + "");
 		if (event.getSpawnReason() == SpawnReason.SPAWNER) {
 			event.getEntityLiving().getPersistentData().putBoolean(IguanaTweaksReborn.RESOURCE_PREFIX + "spawnedFromSpawner", true);
 		}
