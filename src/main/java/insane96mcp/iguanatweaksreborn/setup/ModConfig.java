@@ -123,33 +123,6 @@ public class ModConfig {
             List<CommonTagBlock> commonTagBlock = new ArrayList<>();
 
             for (String line : list) {
-                /*if (line.startsWith("#")) {
-                    String replaced = line.replace("#", "");
-                    if (!ResourceLocation.isResouceNameValid(replaced)){
-                        LogHelper.Warn("%s tag for Hardness Blacklist is not valid", replaced);
-                        continue;
-                    }
-                    ResourceLocation tag = new ResourceLocation(replaced);
-                    try {
-                        Collection<Block> blockTags = BlockTags.getCollection().get(tag).getAllElements();
-                        if (blockTags.isEmpty())
-                            LogHelper.Warn("%s tag for Hardness Blacklist seems to have no entries", replaced);
-                        for (Block block : blockTags) {
-                            ResourceLocation blockRegistryName = block.getRegistryName();
-                            r.add(blockRegistryName);
-                        }
-                    }
-                    catch (Exception e){
-                        LogHelper.Warn("%s tag for Hardness Blacklist seems to not exist", replaced);
-                    }
-                }
-                else {
-                    ResourceLocation blockRegistryName = new ResourceLocation(line);
-                    if (ForgeRegistries.BLOCKS.containsKey(blockRegistryName))
-                        r.add(blockRegistryName);
-                    else
-                        LogHelper.Warn("%s block for Hardness Blacklist seems to not exist", line);
-                }*/
                 String[] split = line.split(",");
 
                 if (split.length < 1 || split.length > 2) {
@@ -229,28 +202,6 @@ public class ModConfig {
                     else
                         LogHelper.Warn(String.format("Invalid dimension \"%s\" for Custom Hardnesses. Ignoring it", split[2]));
 
-                /*if (split[0].startsWith("#")) {
-                    String replaced = split[0].replace("#", "");
-                    if (!ResourceLocation.isResouceNameValid(replaced)){
-                        LogHelper.Warn("%s tag for Custom Hardneses is not valid", replaced);
-                        continue;
-                    }
-                    ResourceLocation tag = new ResourceLocation(replaced);
-                    try {
-                        Collection<Block> blockTags = BlockTags.getCollection().get(tag).getAllElements();
-                        if (blockTags.isEmpty())
-                            LogHelper.Warn(String.format("%s tag for Custom Hardnesses seems to have no entries", split[0]));
-                        for (Block block : blockTags) {
-                            ResourceLocation blockRegistryName = block.getRegistryName();
-                            BlockHardness blockHardness = new BlockHardness(blockRegistryName, hardness, dimension);
-                            blockHardnesses.add(blockHardness);
-                        }
-                    }
-                    catch (Exception e){
-                        LogHelper.Warn(String.format("%s tag for Custom Hardnesses seems to not exist", split[0]));
-                    }
-                }
-                else {*/
                 if (split[0].startsWith("#")) {
                     String replaced = split[0].replace("#", "");
                     if (!ResourceLocation.isResouceNameValid(replaced)) {
@@ -287,6 +238,10 @@ public class ModConfig {
                 this.hardness = hardness;
             }
         }
+    }
+
+    public static class HUD {
+
     }
 
     private static void load() {
