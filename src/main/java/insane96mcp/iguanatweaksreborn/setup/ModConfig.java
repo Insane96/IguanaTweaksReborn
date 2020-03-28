@@ -52,7 +52,7 @@ public class ModConfig {
 
         public static class Agriculture {
             public static FarmingModule.Agriculture.NerfedBonemeal nerfedBonemeal;
-            public static Boolean cropsRequireWater;
+            public static FarmingModule.Agriculture.CropsRequireWater cropsRequireWater;
             public static Double cropsGrowthMultiplier;
             public static Double noSunlightGrowthMultiplier;
             public static Integer minSunlight;

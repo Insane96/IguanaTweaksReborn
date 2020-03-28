@@ -103,7 +103,7 @@ public class Config {
 				public static String name = "Agriculture";
 
 				public ForgeConfigSpec.ConfigValue<FarmingModule.Agriculture.NerfedBonemeal> nerfedBonemeal;
-				public ForgeConfigSpec.ConfigValue<Boolean> cropsRequireWater;
+				public ForgeConfigSpec.ConfigValue<FarmingModule.Agriculture.CropsRequireWater> cropsRequireWater;
 				public ForgeConfigSpec.ConfigValue<Double> cropsGrowthMultiplier;
 				public ForgeConfigSpec.ConfigValue<Double> noSunlightGrowthMultiplier;
 				public ForgeConfigSpec.ConfigValue<Integer> minSunlight;
@@ -116,8 +116,8 @@ public class Config {
 							.comment("Makes more Bone Meal required for Crops. Valid Values are\nDISABLED: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
 							.defineEnum("Nerfed Bonemeal", FarmingModule.Agriculture.NerfedBonemeal.NERFED);
 					cropsRequireWater = builder
-							.comment("Crops will no longer grow if Farmland is not Wet.")
-							.define("Crops Require Water", true);
+							.comment("Set if crops require wet farmland to grow.\nValid Values:\nNO: Crops will not require water to grow\nBONEMEAL_ONLY: Crops will grow on dry farmland by only using bonemeal\nANY_CASE: Will make Crops not grow in any case when on dry farmland")
+							.defineEnum("Crops Require Water", FarmingModule.Agriculture.CropsRequireWater.ANY_CASE);
 					cropsGrowthMultiplier = builder
 							.comment("Increases the time required for a crop to grow (e.g. at 2.0 the plant will take twice to grow).\nSetting this to 0 will prevent crops from growing naturally.\n1.0 will make crops grow like normal.")
 							.defineInRange("Crops Growth Speed Mutiplier", 2.5d, 0.0f, 1000d);
