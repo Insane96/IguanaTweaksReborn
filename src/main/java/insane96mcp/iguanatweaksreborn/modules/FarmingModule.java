@@ -69,6 +69,8 @@ public class FarmingModule {
 				return;
 			if (ModConfig.Farming.Agriculture.cropsRequireWater.equals(CropsRequireWater.NO))
 				return;
+			if (!(event.getWorld().getBlockState(event.getPos()).getBlock() instanceof CropsBlock))
+				return;
 			if (!isCropOnWetFarmland(event.getWorld(), event.getPos()))
 				event.setResult(Event.Result.DENY);
 		}

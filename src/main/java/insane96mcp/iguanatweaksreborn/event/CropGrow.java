@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 public class CropGrow {
 
 	@SubscribeEvent
-	public static void cropGrowPost(BlockEvent.CropGrowEvent.Pre event) {
+	public static void cropGrowPre(BlockEvent.CropGrowEvent.Pre event) {
 		FarmingModule.Agriculture.cropsRequireWater(event);
 	}
 
@@ -26,6 +26,10 @@ public class CropGrow {
 		FarmingModule.Agriculture.plantGrowthMultiplier(event, NetherWartBlock.class, ModConfig.Farming.Agriculture.netherwartGrowthMultiplier);
 		FarmingModule.Agriculture.plantGrowthMultiplier(event, ChorusPlantBlock.class, ModConfig.Farming.Agriculture.chorusPlantGrowthMultiplier);
 		FarmingModule.Agriculture.plantGrowthMultiplier(event, SaplingBlock.class, ModConfig.Farming.Agriculture.saplingGrowthMultiplier);
+		FarmingModule.Agriculture.plantGrowthMultiplier(event, StemBlock.class, ModConfig.Farming.Agriculture.stemGrowthMultiplier);
+		FarmingModule.Agriculture.plantGrowthMultiplier(event, SweetBerryBushBlock.class, ModConfig.Farming.Agriculture.berryBushGrowthMultiplier);
+		FarmingModule.Agriculture.plantGrowthMultiplier(event, KelpTopBlock.class, ModConfig.Farming.Agriculture.kelpGrowthMultiplier);
+		FarmingModule.Agriculture.plantGrowthMultiplier(event, BambooBlock.class, ModConfig.Farming.Agriculture.bambooGrowthMultiplier);
 	}
 
 	@SubscribeEvent

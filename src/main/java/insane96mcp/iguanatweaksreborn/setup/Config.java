@@ -113,6 +113,10 @@ public class Config {
 				public ForgeConfigSpec.ConfigValue<Double> netherwartGrowthMultiplier;
 				public ForgeConfigSpec.ConfigValue<Double> chorusPlantGrowthMultiplier;
 				public ForgeConfigSpec.ConfigValue<Double> saplingGrowthMultiplier;
+				public ForgeConfigSpec.ConfigValue<Double> stemGrowthMultiplier;
+				public ForgeConfigSpec.ConfigValue<Double> berryBushGrowthMultiplier;
+				public ForgeConfigSpec.ConfigValue<Double> kelpGrowthMultiplier;
+				public ForgeConfigSpec.ConfigValue<Double> bambooGrowthMultiplier;
 
 				public Agriculture(ForgeConfigSpec.Builder builder) {
 					builder.push(name);
@@ -148,7 +152,19 @@ public class Config {
 							.defineInRange("Chorus Plants Growth Speed Mutiplier", 3.0d, 0.0d, 128d);
 					saplingGrowthMultiplier = builder
 							.comment("Increases the time required for Saplings to grow (e.g. at 2.0 Saplings will take twice to grow).\nSetting this to 0 will prevent Saplings from growing naturally.\n1.0 will make Saplings grow like normal.")
-							.defineInRange("Saplings Growth Speed Mutiplier", 3.0d, 0.0d, 128d);
+							.defineInRange("Saplings Growth Speed Mutiplier", 2.0d, 0.0d, 128d);
+					stemGrowthMultiplier = builder
+							.comment("Increases the time required for Pumpkin & Melon to grow (e.g. at 2.0 Pumpkin & Melon will take twice to grow).\nSetting this to 0 will prevent Pumpkin & Melon from growing naturally.\n1.0 will make Pumpkin & Melon grow like normal.")
+							.defineInRange("Pumpkin & Melon Growth Speed Mutiplier", 3.0d, 0.0d, 128d);
+					berryBushGrowthMultiplier = builder
+							.comment("Increases the time required for Berry Bushes to grow (e.g. at 2.0 Berry Bushes will take twice to grow).\nSetting this to 0 will prevent Berry Bushes from growing naturally.\n1.0 will make Berry Bushes grow like normal.")
+							.defineInRange("Berry Bushes Growth Speed Mutiplier", 2.5d, 0.0d, 128d);
+					kelpGrowthMultiplier = builder
+							.comment("Increases the time required for Kelp to grow (e.g. at 2.0 Kelp will take twice to grow).\nSetting this to 0 will prevent Kelp from growing naturally.\n1.0 will make Kelp grow like normal.")
+							.defineInRange("Saplings Growth Speed Mutiplier", 2.5d, 0.0d, 128d);
+					bambooGrowthMultiplier = builder
+							.comment("Increases the time required for Bamboo to grow (e.g. at 2.0 Bamboo will take twice to grow).\nSetting this to 0 will prevent Bamboo from growing naturally.\n1.0 will make Bamboo grow like normal.")
+							.defineInRange("Bamboo Growth Speed Mutiplier", 2.5d, 0.0d, 128d);
 					builder.pop();
 				}
 			}

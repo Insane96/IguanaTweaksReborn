@@ -62,6 +62,10 @@ public class ModConfig {
             public static Double netherwartGrowthMultiplier;
             public static Double chorusPlantGrowthMultiplier;
             public static Double saplingGrowthMultiplier;
+            public static Double stemGrowthMultiplier;
+            public static Double berryBushGrowthMultiplier;
+            public static Double kelpGrowthMultiplier;
+            public static Double bambooGrowthMultiplier;
 
             public static void load() {
                 nerfedBonemeal = Config.COMMON.farming.agriculture.nerfedBonemeal.get();
@@ -75,6 +79,10 @@ public class ModConfig {
                 netherwartGrowthMultiplier = Config.COMMON.farming.agriculture.netherwartGrowthMultiplier.get();
                 chorusPlantGrowthMultiplier = Config.COMMON.farming.agriculture.chorusPlantGrowthMultiplier.get();
                 saplingGrowthMultiplier = Config.COMMON.farming.agriculture.saplingGrowthMultiplier.get();
+                stemGrowthMultiplier = Config.COMMON.farming.agriculture.stemGrowthMultiplier.get();
+                berryBushGrowthMultiplier = Config.COMMON.farming.agriculture.berryBushGrowthMultiplier.get();
+                kelpGrowthMultiplier = Config.COMMON.farming.agriculture.kelpGrowthMultiplier.get();
+                bambooGrowthMultiplier = Config.COMMON.farming.agriculture.bambooGrowthMultiplier.get();
             }
         }
 
