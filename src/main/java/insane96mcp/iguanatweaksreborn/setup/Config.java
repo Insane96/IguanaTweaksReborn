@@ -168,37 +168,5 @@ public class Config {
 				builder.pop();
 			}
 		}
-
-		public static class HUD {
-			public static String name = "HUD";
-			public static String comment = "For all your interface hiding needs";
-
-			public ForgeConfigSpec.ConfigValue<Double> multiplier;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> dimensionMultiplier;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
-			public ForgeConfigSpec.ConfigValue<Boolean> backlistAsWhitelist;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> customHardness;
-
-			public HUD(ForgeConfigSpec.Builder builder) {
-				builder.comment(comment).push(name);
-				multiplier = builder
-						.comment("Multiplier applied to the hardness of blocks. E.g. with this set to 3.0 blocks will take three times more time to break.")
-						.defineInRange("Multiplier", 3.0d, 0.0d, 128d);
-				dimensionMultiplier = builder
-						.comment("A list of dimensions and their relative block hardness multiplier. Each entry has a a dimension and hardness. This overrides the global multiplier.\nE.g. [\"minecraft:overworld,2\", \"minecraft:the_nether,4\"]")
-						.defineList("Dimension Multiplier", new ArrayList<String>(), o -> o instanceof String);
-				blacklist = builder
-						.comment("Block ids or tags that will ignore the global or dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
-						.defineList("Block Blacklist", new ArrayList<String>(), o -> o instanceof String);
-				backlistAsWhitelist = builder
-						.comment("Block Blacklist will be treated as a whitelist")
-						.define("Blacklist as Whitelist", false);
-				customHardness = builder
-						.comment("Define custom blocks hardness, one string = one block/tag. Those blocks are not affected by the global block hardness multiplier.\nThe format is modid:blockid,hardness,dimensionid or #modid:tagid,hardness,dimensionid\nE.g. 'minecraft:stone,5.0' will make stone have 5 hardness in every dimension.\nE.g. '#forge:stone,5.0,minecraft:overworld' will make all the stone types have 5 hardness but only in the overworld.")
-						.defineList("Custom Hardness", Lists.newArrayList(), o -> o instanceof String);
-				builder.pop();
-			}
-		}
-
 	}
 }
