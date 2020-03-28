@@ -96,51 +96,37 @@ public class FarmingModule {
 			BlockState state = event.getOriginalState();
 			if (!(state.getBlock() instanceof CropsBlock))
 				return;
-			double chance = 1d / ModConfig.Farming.Agriculture.cropsGrowthMultiplier;
-			int skyLight = world.getLightFor(LightType.SKY, event.getPos());
-			if (skyLight < ModConfig.Farming.Agriculture.minSunlight)
-				chance *= 1d / ModConfig.Farming.Agriculture.noSunlightGrowthMultiplier;
+			double chance;
 			if (ModConfig.Farming.Agriculture.cropsGrowthMultiplier == 0.0d)
 				chance = -1d;
-			if (skyLight < ModConfig.Farming.Agriculture.minSunlight
-					&& ModConfig.Farming.Agriculture.noSunlightGrowthMultiplier == 0.0d)
-				chance = -1d;
+			else
+				chance = 1d / ModConfig.Farming.Agriculture.cropsGrowthMultiplier;
+			int skyLight = world.getLightFor(LightType.SKY, event.getPos());
+			if (skyLight < ModConfig.Farming.Agriculture.minSunlight)
+				if (ModConfig.Farming.Agriculture.noSunlightGrowthMultiplier == 0.0d)
+					chance = -1d;
+				else
+					chance *= 1d / ModConfig.Farming.Agriculture.noSunlightGrowthMultiplier;
 			if (event.getWorld().getRandom().nextDouble() > chance)
 				world.setBlockState(event.getPos(), state, 2);
 		}
 
-		public static void sugarCaneGrowthSpeedMultiplier(BlockEvent.CropGrowEvent.Post event) {
+		public static void plantGrowthMultiplier(BlockEvent.CropGrowEvent.Post event, Class<? extends Block> blockClass, double multiplier) {
 			if (!ModConfig.Modules.farming)
 				return;
-			if (ModConfig.Farming.Agriculture.sugarCanesGrowthMultiplier == 1.0d)
+			if (multiplier == 1.0d)
 				return;
 			IWorld world = event.getWorld();
 			BlockState state = event.getOriginalState();
-			if (!(state.getBlock() instanceof SugarCaneBlock))
+			if (!(state.getBlock().getClass().isInstance(blockClass)))
 				return;
-			double chance = 1d / ModConfig.Farming.Agriculture.sugarCanesGrowthMultiplier;
-			if (ModConfig.Farming.Agriculture.sugarCanesGrowthMultiplier == 0.0d)
+			double chance;
+			if (multiplier == 0.0d)
 				chance = -1d;
-			if (event.getWorld().getRandom().nextDouble() > chance) {
+			else
+				chance = 1d / multiplier;
+			if (event.getWorld().getRandom().nextDouble() > chance)
 				world.setBlockState(event.getPos(), state, 2);
-			}
-		}
-
-		public static void cactusGrowthSpeedMultiplier(BlockEvent.CropGrowEvent.Post event) {
-			if (!ModConfig.Modules.farming)
-				return;
-			if (ModConfig.Farming.Agriculture.cactusGrowthMultiplier == 1.0d)
-				return;
-			IWorld world = event.getWorld();
-			BlockState state = event.getOriginalState();
-			if (!(state.getBlock() instanceof CactusBlock))
-				return;
-			double chance = 1d / ModConfig.Farming.Agriculture.cactusGrowthMultiplier;
-			if (ModConfig.Farming.Agriculture.cactusGrowthMultiplier == 0.0d)
-				chance = -1d;
-			if (event.getWorld().getRandom().nextDouble() > chance) {
-				world.setBlockState(event.getPos(), state, 2);
-			}
 		}
 
 		public enum NerfedBonemeal {

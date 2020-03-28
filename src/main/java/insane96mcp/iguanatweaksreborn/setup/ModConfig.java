@@ -58,6 +58,10 @@ public class ModConfig {
             public static Integer minSunlight;
             public static Double sugarCanesGrowthMultiplier;
             public static Double cactusGrowthMultiplier;
+            public static Double cocoaBeansGrowthMultiplier;
+            public static Double netherwartGrowthMultiplier;
+            public static Double chorusPlantGrowthMultiplier;
+            public static Double saplingGrowthMultiplier;
 
             public static void load() {
                 nerfedBonemeal = Config.COMMON.farming.agriculture.nerfedBonemeal.get();
@@ -67,6 +71,10 @@ public class ModConfig {
                 minSunlight = Config.COMMON.farming.agriculture.minSunlight.get();
                 sugarCanesGrowthMultiplier = Config.COMMON.farming.agriculture.sugarCanesGrowthMultiplier.get();
                 cactusGrowthMultiplier = Config.COMMON.farming.agriculture.cactusGrowthMultiplier.get();
+                cocoaBeansGrowthMultiplier = Config.COMMON.farming.agriculture.cocoaBeansGrowthMultiplier.get();
+                netherwartGrowthMultiplier = Config.COMMON.farming.agriculture.netherwartGrowthMultiplier.get();
+                chorusPlantGrowthMultiplier = Config.COMMON.farming.agriculture.chorusPlantGrowthMultiplier.get();
+                saplingGrowthMultiplier = Config.COMMON.farming.agriculture.saplingGrowthMultiplier.get();
             }
         }
 

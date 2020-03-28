@@ -109,6 +109,10 @@ public class Config {
 				public ForgeConfigSpec.ConfigValue<Integer> minSunlight;
 				public ForgeConfigSpec.ConfigValue<Double> sugarCanesGrowthMultiplier;
 				public ForgeConfigSpec.ConfigValue<Double> cactusGrowthMultiplier;
+				public ForgeConfigSpec.ConfigValue<Double> cocoaBeansGrowthMultiplier;
+				public ForgeConfigSpec.ConfigValue<Double> netherwartGrowthMultiplier;
+				public ForgeConfigSpec.ConfigValue<Double> chorusPlantGrowthMultiplier;
+				public ForgeConfigSpec.ConfigValue<Double> saplingGrowthMultiplier;
 
 				public Agriculture(ForgeConfigSpec.Builder builder) {
 					builder.push(name);
@@ -120,19 +124,31 @@ public class Config {
 							.defineEnum("Crops Require Water", FarmingModule.Agriculture.CropsRequireWater.ANY_CASE);
 					cropsGrowthMultiplier = builder
 							.comment("Increases the time required for a crop to grow (e.g. at 2.0 the plant will take twice to grow).\nSetting this to 0 will prevent crops from growing naturally.\n1.0 will make crops grow like normal.")
-							.defineInRange("Crops Growth Speed Mutiplier", 2.5d, 0.0f, 1000d);
+							.defineInRange("Crops Growth Speed Mutiplier", 2.5d, 0.0d, 128d);
 					noSunlightGrowthMultiplier = builder
 							.comment("Increases the time required for a crop to grow when it's sky light level is below \"Min Sunlight\", (e.g. at 2.0 when the crop has a skylight below \"Min Sunlight\" will take twice to grow).\nSetting this to 0 will prevent crops from growing when sky light level is below \"Min Sunlight\".\n1.0 will make crops growth not affected by skylight.")
-							.defineInRange("No Sunlight Growth Multiplier", 2.0d, 0.0f, 1000d);
+							.defineInRange("No Sunlight Growth Multiplier", 2.0d, 0.0d, 128d);
 					minSunlight = builder
 							.comment("Minimum Sky Light level required for crops to not be affected by \"No Sunlight Growth Multiplier\".")
 							.defineInRange("Min Sunlight", 10, 0, 15);
 					sugarCanesGrowthMultiplier = builder
 							.comment("Increases the time required for Sugar Canes to grow (e.g. at 2.0 Sugar Canes will take twice to grow).\nSetting this to 0 will prevent Sugar Canes from growing naturally.\n1.0 will make Sugar Canes grow like normal.")
-							.defineInRange("Sugar Canes Growth Speed Mutiplier", 2.5d, 0.0f, 1000d);
+							.defineInRange("Sugar Canes Growth Speed Mutiplier", 2.5d, 0.0d, 128d);
 					cactusGrowthMultiplier = builder
 							.comment("Increases the time required for Cactuses to grow (e.g. at 2.0 Cactuses will take twice to grow).\nSetting this to 0 will prevent Cactuses from growing naturally.\n1.0 will make Cactuses grow like normal.")
-							.defineInRange("Cactus Growth Speed Mutiplier", 2.5d, 0.0f, 1000d);
+							.defineInRange("Cactus Growth Speed Mutiplier", 2.5d, 0.0d, 128d);
+					cocoaBeansGrowthMultiplier = builder
+							.comment("Increases the time required for Cocoa Beans to grow (e.g. at 2.0 Cocoa Beans will take twice to grow).\nSetting this to 0 will prevent Cocoa Beans from growing naturally.\n1.0 will make Cocoa Beans grow like normal.")
+							.defineInRange("Cocoa Beans Growth Speed Mutiplier", 3.0d, 0.0d, 128d);
+					netherwartGrowthMultiplier = builder
+							.comment("Increases the time required for Netherwart to grow (e.g. at 2.0 Netherwart will take twice to grow).\nSetting this to 0 will prevent Netherwart from growing naturally.\n1.0 will make Netherwart grow like normal.")
+							.defineInRange("Netherwart Growth Speed Mutiplier", 3.0d, 0.0d, 128d);
+					chorusPlantGrowthMultiplier = builder
+							.comment("Increases the time required for Chorus Plants to grow (e.g. at 2.0 Chorus Plants will take twice to grow).\nSetting this to 0 will prevent Chorus Plants from growing naturally.\n1.0 will make Chorus Plants grow like normal.")
+							.defineInRange("Chorus Plants Growth Speed Mutiplier", 3.0d, 0.0d, 128d);
+					saplingGrowthMultiplier = builder
+							.comment("Increases the time required for Saplings to grow (e.g. at 2.0 Saplings will take twice to grow).\nSetting this to 0 will prevent Saplings from growing naturally.\n1.0 will make Saplings grow like normal.")
+							.defineInRange("Saplings Growth Speed Mutiplier", 3.0d, 0.0d, 128d);
 					builder.pop();
 				}
 			}
