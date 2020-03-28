@@ -12,18 +12,18 @@ public class CropGrow {
 
 	@SubscribeEvent
 	public static void EventCropGrowPre(BlockEvent.CropGrowEvent.Pre event) {
-		FarmingModule.cropsRequireWater(event);
+		FarmingModule.Agriculture.cropsRequireWater(event);
 	}
 
 	@SubscribeEvent
 	public static void EventCropGrowPre(BlockEvent.CropGrowEvent.Post event) {
-		FarmingModule.cropsGrowthSpeedMultiplier(event);
-		FarmingModule.sugarCaneGrowthSpeedMultiplier(event);
-		FarmingModule.cactusGrowthSpeedMultiplier(event);
+		FarmingModule.Agriculture.cropsGrowthSpeedMultiplier(event);
+		FarmingModule.Agriculture.sugarCaneGrowthSpeedMultiplier(event);
+		FarmingModule.Agriculture.cactusGrowthSpeedMultiplier(event);
 	}
 
 	@SubscribeEvent
 	public static void eventBonemeal(BonemealEvent event) {
-		FarmingModule.nerfBonemeal(event);
+		FarmingModule.Agriculture.nerfBonemeal(event);
 	}
 }

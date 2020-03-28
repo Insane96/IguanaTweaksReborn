@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.setup;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.setup.Config.CommonConfig.Farming.NerfedBonemeal;
+import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.util.ResourceLocation;
@@ -43,22 +43,36 @@ public class ModConfig {
     }
 
     public static class Farming {
-        public static NerfedBonemeal nerfedBonemeal;
-        public static Boolean cropsRequireWater;
-        public static Double cropsGrowthMultiplier;
-        public static Double noSunlightGrowthMultiplier;
-        public static Integer minSunlight;
-        public static Double sugarCanesGrowthMultiplier;
-        public static Double cactusGrowthMultiplier;
+
+        public static class Livestock {
+
+            public static void load() {
+            }
+        }
+
+        public static class Agriculture {
+            public static FarmingModule.Agriculture.NerfedBonemeal nerfedBonemeal;
+            public static Boolean cropsRequireWater;
+            public static Double cropsGrowthMultiplier;
+            public static Double noSunlightGrowthMultiplier;
+            public static Integer minSunlight;
+            public static Double sugarCanesGrowthMultiplier;
+            public static Double cactusGrowthMultiplier;
+
+            public static void load() {
+                nerfedBonemeal = Config.COMMON.farming.agriculture.nerfedBonemeal.get();
+                cropsRequireWater = Config.COMMON.farming.agriculture.cropsRequireWater.get();
+                cropsGrowthMultiplier = Config.COMMON.farming.agriculture.cropsGrowthMultiplier.get();
+                noSunlightGrowthMultiplier = Config.COMMON.farming.agriculture.noSunlightGrowthMultiplier.get();
+                minSunlight = Config.COMMON.farming.agriculture.minSunlight.get();
+                sugarCanesGrowthMultiplier = Config.COMMON.farming.agriculture.sugarCanesGrowthMultiplier.get();
+                cactusGrowthMultiplier = Config.COMMON.farming.agriculture.cactusGrowthMultiplier.get();
+            }
+        }
 
         public static void load() {
-            nerfedBonemeal = Config.COMMON.farming.nerfedBonemeal.get();
-            cropsRequireWater = Config.COMMON.farming.cropsRequireWater.get();
-            cropsGrowthMultiplier = Config.COMMON.farming.cropsGrowthMultiplier.get();
-            noSunlightGrowthMultiplier = Config.COMMON.farming.noSunlightGrowthMultiplier.get();
-            minSunlight = Config.COMMON.farming.minSunlight.get();
-            sugarCanesGrowthMultiplier = Config.COMMON.farming.sugarCanesGrowthMultiplier.get();
-            cactusGrowthMultiplier = Config.COMMON.farming.cactusGrowthMultiplier.get();
+            Agriculture.load();
+            Livestock.load();
         }
 
     }
@@ -123,33 +137,6 @@ public class ModConfig {
             List<CommonTagBlock> commonTagBlock = new ArrayList<>();
 
             for (String line : list) {
-                /*if (line.startsWith("#")) {
-                    String replaced = line.replace("#", "");
-                    if (!ResourceLocation.isResouceNameValid(replaced)){
-                        LogHelper.Warn("%s tag for Hardness Blacklist is not valid", replaced);
-                        continue;
-                    }
-                    ResourceLocation tag = new ResourceLocation(replaced);
-                    try {
-                        Collection<Block> blockTags = BlockTags.getCollection().get(tag).getAllElements();
-                        if (blockTags.isEmpty())
-                            LogHelper.Warn("%s tag for Hardness Blacklist seems to have no entries", replaced);
-                        for (Block block : blockTags) {
-                            ResourceLocation blockRegistryName = block.getRegistryName();
-                            r.add(blockRegistryName);
-                        }
-                    }
-                    catch (Exception e){
-                        LogHelper.Warn("%s tag for Hardness Blacklist seems to not exist", replaced);
-                    }
-                }
-                else {
-                    ResourceLocation blockRegistryName = new ResourceLocation(line);
-                    if (ForgeRegistries.BLOCKS.containsKey(blockRegistryName))
-                        r.add(blockRegistryName);
-                    else
-                        LogHelper.Warn("%s block for Hardness Blacklist seems to not exist", line);
-                }*/
                 String[] split = line.split(",");
 
                 if (split.length < 1 || split.length > 2) {
@@ -229,28 +216,6 @@ public class ModConfig {
                     else
                         LogHelper.Warn(String.format("Invalid dimension \"%s\" for Custom Hardnesses. Ignoring it", split[2]));
 
-                /*if (split[0].startsWith("#")) {
-                    String replaced = split[0].replace("#", "");
-                    if (!ResourceLocation.isResouceNameValid(replaced)){
-                        LogHelper.Warn("%s tag for Custom Hardneses is not valid", replaced);
-                        continue;
-                    }
-                    ResourceLocation tag = new ResourceLocation(replaced);
-                    try {
-                        Collection<Block> blockTags = BlockTags.getCollection().get(tag).getAllElements();
-                        if (blockTags.isEmpty())
-                            LogHelper.Warn(String.format("%s tag for Custom Hardnesses seems to have no entries", split[0]));
-                        for (Block block : blockTags) {
-                            ResourceLocation blockRegistryName = block.getRegistryName();
-                            BlockHardness blockHardness = new BlockHardness(blockRegistryName, hardness, dimension);
-                            blockHardnesses.add(blockHardness);
-                        }
-                    }
-                    catch (Exception e){
-                        LogHelper.Warn(String.format("%s tag for Custom Hardnesses seems to not exist", split[0]));
-                    }
-                }
-                else {*/
                 if (split[0].startsWith("#")) {
                     String replaced = split[0].replace("#", "");
                     if (!ResourceLocation.isResouceNameValid(replaced)) {
