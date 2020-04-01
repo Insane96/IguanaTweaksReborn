@@ -67,6 +67,10 @@ public class ModConfig {
             public static Double kelpGrowthMultiplier;
             public static Double bambooGrowthMultiplier;
 
+            public static List<HoeCooldown> hoesCooldowns;
+            public static boolean disableLowTierHoes;
+            public static int hoesDamageOnUseMultiplier;
+
             public static void load() {
                 nerfedBonemeal = Config.COMMON.farming.agriculture.nerfedBonemeal.get();
                 cropsRequireWater = Config.COMMON.farming.agriculture.cropsRequireWater.get();
@@ -83,6 +87,58 @@ public class ModConfig {
                 berryBushGrowthMultiplier = Config.COMMON.farming.agriculture.berryBushGrowthMultiplier.get();
                 kelpGrowthMultiplier = Config.COMMON.farming.agriculture.kelpGrowthMultiplier.get();
                 bambooGrowthMultiplier = Config.COMMON.farming.agriculture.bambooGrowthMultiplier.get();
+                hoesCooldowns = parseHoesCooldowns(Config.COMMON.farming.agriculture.hoesCooldowns.get());
+                disableLowTierHoes = Config.COMMON.farming.agriculture.disableLowTierHoes.get();
+                hoesDamageOnUseMultiplier = Config.COMMON.farming.agriculture.hoesDamageOnUseMultiplier.get();
+            }
+
+            public static List<HoeCooldown> parseHoesCooldowns(List<? extends String> list) {
+                List<HoeCooldown> hoesCooldowns = new ArrayList<>();
+                for (String line : list) {
+                    String[] split = line.split(",");
+                    if (split.length != 2) {
+                        LogHelper.Warn("Invalid line \"%s\" for Hoe Cooldown", line);
+                        continue;
+                    }
+                    if (!NumberUtils.isParsable(split[1])) {
+                        LogHelper.Warn(String.format("Invalid chance \"%s\" for Hoe Cooldown", line));
+                        continue;
+                    }
+                    int cooldown = Integer.parseInt(split[1]);
+                    if (split[0].startsWith("#")) {
+                        String replaced = split[0].replace("#", "");
+                        if (!ResourceLocation.isResouceNameValid(replaced)) {
+                            LogHelper.Warn("%s tag for Hoe Cooldown is not valid", replaced);
+                            continue;
+                        }
+                        ResourceLocation tag = new ResourceLocation(replaced);
+                        HoeCooldown hoeCooldown = new HoeCooldown(null, tag, cooldown);
+                        hoesCooldowns.add(hoeCooldown);
+                    }
+                    else {
+                        if (!ResourceLocation.isResouceNameValid(split[0])) {
+                            LogHelper.Warn("%s item for Hoe Cooldown is not valid", split[0]);
+                            continue;
+                        }
+                        ResourceLocation block = new ResourceLocation(split[0]);
+                        if (ForgeRegistries.ITEMS.containsKey(block)) {
+                            HoeCooldown hoeCooldown = new HoeCooldown(block, null, cooldown);
+                            hoesCooldowns.add(hoeCooldown);
+                        }
+                        else
+                            LogHelper.Warn(String.format("%s item for Hoe Till Chance seems to not exist", split[0]));
+                    }
+                }
+                return hoesCooldowns;
+            }
+
+            public static class HoeCooldown extends IdTagMatcher {
+                public int cooldown;
+
+                public HoeCooldown(@Nullable ResourceLocation item, @Nullable ResourceLocation tag, int cooldown) {
+                    super(item, tag);
+                    this.cooldown = cooldown;
+                }
             }
         }
 
@@ -96,24 +152,22 @@ public class ModConfig {
     public static class Hardness {
         public static Double multiplier;
         public static List<DimensionMultiplier> dimensionMultipliers;
-        public static List<CommonTagBlock> blacklist;
+        public static List<IdTagMatcher> blacklist;
         public static Boolean blacklistAsWhitelist;
         public static List<BlockHardness> customHardness;
 
         public static void load() {
             multiplier = Config.COMMON.hardness.multiplier.get();
-            dimensionMultipliers = ParseDimensionMultipliers(Config.COMMON.hardness.dimensionMultiplier.get());
-            blacklist = ParseBlacklist(Config.COMMON.hardness.blacklist.get());
+            dimensionMultipliers = parseDimensionMultipliers(Config.COMMON.hardness.dimensionMultiplier.get());
+            blacklist = parseBlacklist(Config.COMMON.hardness.blacklist.get());
             blacklistAsWhitelist = Config.COMMON.hardness.backlistAsWhitelist.get();
-            customHardness = ParseCustomHardnesses(Config.COMMON.hardness.customHardness.get());
+            customHardness = parseCustomHardnesses(Config.COMMON.hardness.customHardness.get());
         }
 
-        public static List<DimensionMultiplier> ParseDimensionMultipliers(List<? extends String> list) {
+        public static List<DimensionMultiplier> parseDimensionMultipliers(List<? extends String> list) {
             List<DimensionMultiplier> dimensionMultipliers = new ArrayList<>();
-
             for (String line : list) {
                 String[] split = line.split(",");
-
                 if (split.length < 1 || split.length > 2) {
                     LogHelper.Warn("Invalid line \"%s\" for Dimension multiplier. Format must be modid:dimensionId,hardness", line);
                     continue;
@@ -149,17 +203,14 @@ public class ModConfig {
             }
         }
 
-        public static List<CommonTagBlock> ParseBlacklist(List<? extends String> list) {
-            List<CommonTagBlock> commonTagBlock = new ArrayList<>();
-
+        public static List<IdTagMatcher> parseBlacklist(List<? extends String> list) {
+            List<IdTagMatcher> commonTagBlock = new ArrayList<>();
             for (String line : list) {
                 String[] split = line.split(",");
-
                 if (split.length < 1 || split.length > 2) {
                     LogHelper.Warn("Invalid line \"%s\" for Hardnesses Blacklist. Format must be modid:blockid,modid:dimension", line);
                     continue;
                 }
-
                 ResourceLocation dimension = Utils.AnyRL;
                 if (split.length == 2)
                     if (ResourceLocation.isResouceNameValid(split[1]))
@@ -174,7 +225,7 @@ public class ModConfig {
                         continue;
                     }
                     ResourceLocation tag = new ResourceLocation(replaced);
-                    CommonTagBlock hardness = new CommonTagBlock(null, tag, dimension);
+                    IdTagMatcher hardness = new IdTagMatcher(null, tag, dimension);
                     commonTagBlock.add(hardness);
                 }
                 else {
@@ -184,7 +235,7 @@ public class ModConfig {
                     }
                     ResourceLocation block = new ResourceLocation(split[0]);
                     if (ForgeRegistries.BLOCKS.containsKey(block)) {
-                        CommonTagBlock hardness = new CommonTagBlock(block, null, dimension);
+                        IdTagMatcher hardness = new IdTagMatcher(block, null, dimension);
                         commonTagBlock.add(hardness);
                     }
                     else
@@ -194,27 +245,10 @@ public class ModConfig {
             return commonTagBlock;
         }
 
-        public static class CommonTagBlock {
-            public ResourceLocation block;
-            public ResourceLocation tag;
-            public ResourceLocation dimension;
-
-            public CommonTagBlock(@Nullable ResourceLocation block, @Nullable ResourceLocation tag, ResourceLocation dimension) {
-                if (block == null && tag == null) {
-                    throw new NullPointerException("block and tag can't be both null");
-                }
-                this.block = block;
-                this.tag = tag;
-                this.dimension = dimension;
-            }
-        }
-
-        public static List<BlockHardness> ParseCustomHardnesses(List<? extends String> list) {
+        public static List<BlockHardness> parseCustomHardnesses(List<? extends String> list) {
             ArrayList<BlockHardness> blockHardnesses = new ArrayList<>();
-
             for (String line : list) {
                 String[] split = line.split(",");
-
                 if (split.length < 2 || split.length > 3) {
                     LogHelper.Warn("Invalid line \"%s\" for Custom Hardnesses", line);
                     continue;
@@ -260,7 +294,7 @@ public class ModConfig {
             return blockHardnesses;
         }
 
-        public static class BlockHardness extends CommonTagBlock {
+        public static class BlockHardness extends IdTagMatcher {
             public double hardness;
 
             public BlockHardness(@Nullable ResourceLocation block, @Nullable ResourceLocation tag, Double hardness, ResourceLocation dimension) {
@@ -275,6 +309,25 @@ public class ModConfig {
         Experience.load();
         Farming.load();
         Hardness.load();
+    }
+
+    public static class IdTagMatcher {
+        public ResourceLocation id;
+        public ResourceLocation tag;
+        public ResourceLocation dimension;
+
+        public IdTagMatcher(@Nullable ResourceLocation id, @Nullable ResourceLocation tag, ResourceLocation dimension) {
+            if (id == null && tag == null) {
+                throw new NullPointerException("block and tag can't be both null");
+            }
+            this.id = id;
+            this.tag = tag;
+            this.dimension = dimension;
+        }
+
+        public IdTagMatcher(@Nullable ResourceLocation id, @Nullable ResourceLocation tag) {
+            this(id, tag, Utils.AnyRL);
+        }
     }
 
     @SubscribeEvent

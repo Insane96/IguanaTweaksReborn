@@ -1,12 +1,21 @@
 package insane96mcp.iguanatweaksreborn.modules;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
 import insane96mcp.iguanatweaksreborn.utils.RandomHelper;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.block.*;
+import net.minecraft.item.HoeItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
 import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 
@@ -141,6 +150,52 @@ public class FarmingModule {
 			NO,
 			BONEMEAL_ONLY,
 			ANY_CASE
+		}
+
+		public static void disabledHoes(UseHoeEvent event) {
+			if (!ModConfig.Modules.farming)
+				return;
+			if (event.getPlayer().world.isRemote)
+				return;
+			if (!ModConfig.Farming.Agriculture.disableLowTierHoes)
+				return;
+			if (!isHoeDisabled(event.getContext().getItem().getItem()))
+				return;
+			ItemStack hoe = event.getContext().getItem();
+			hoe.damageItem(15, event.getPlayer(), (player) -> player.sendBreakAnimation(event.getContext().getHand()));
+			event.getPlayer().sendStatusMessage(new StringTextComponent("This hoe is too weak to be used"), true);
+			event.setCanceled(true);
+		}
+
+		public static void harderTilling(UseHoeEvent event) {
+			if (!ModConfig.Modules.farming)
+				return;
+			if (event.getPlayer().world.isRemote)
+				return;
+			if (isHoeDisabled(event.getContext().getItem().getItem()))
+				return;
+			if (event.getContext().getFace() == Direction.DOWN || !event.getContext().getWorld().isAirBlock(event.getContext().getPos().up()))
+				return;
+			BlockState blockstate = HoeItem.HOE_LOOKUP.get(event.getContext().getWorld().getBlockState(event.getContext().getPos()).getBlock());
+			if (blockstate == null || blockstate.getBlock() != Blocks.FARMLAND)
+				return;
+			ItemStack stack = event.getContext().getItem();
+			int cooldown = 0;
+			for (ModConfig.Farming.Agriculture.HoeCooldown hoeCooldown : ModConfig.Farming.Agriculture.hoesCooldowns) {
+				//System.out.println(hoeTillChance.cooldown);
+				if (Utils.isInTagOrItem(hoeCooldown, stack.getItem(), null)) {
+					cooldown = hoeCooldown.cooldown;
+				}
+			}
+			if (ModConfig.Farming.Agriculture.hoesDamageOnUseMultiplier > 1)
+				stack.damageItem(ModConfig.Farming.Agriculture.hoesDamageOnUseMultiplier - 1, event.getPlayer(), (player) -> player.sendBreakAnimation(event.getContext().getHand()));
+			//if (RandomHelper.getFloat(event.getPlayer().getRNG(), 0f, 1f) >= chance)
+			//event.setCanceled(true);
+			event.getPlayer().getCooldownTracker().setCooldown(stack.getItem(), cooldown);
+		}
+
+		private static boolean isHoeDisabled(Item item) {
+			return item.getTags().contains(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "disabled_hoes"));
 		}
 	}
 }

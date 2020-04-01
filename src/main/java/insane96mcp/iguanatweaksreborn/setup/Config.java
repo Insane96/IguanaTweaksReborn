@@ -6,6 +6,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Config {
@@ -117,6 +118,9 @@ public class Config {
 				public ForgeConfigSpec.ConfigValue<Double> berryBushGrowthMultiplier;
 				public ForgeConfigSpec.ConfigValue<Double> kelpGrowthMultiplier;
 				public ForgeConfigSpec.ConfigValue<Double> bambooGrowthMultiplier;
+				public ForgeConfigSpec.ConfigValue<List<? extends String>> hoesCooldowns;
+				public ForgeConfigSpec.ConfigValue<Boolean> disableLowTierHoes;
+				public ForgeConfigSpec.ConfigValue<Integer> hoesDamageOnUseMultiplier;
 
 				public Agriculture(ForgeConfigSpec.Builder builder) {
 					builder.push(name);
@@ -135,6 +139,7 @@ public class Config {
 					minSunlight = builder
 							.comment("Minimum Sky Light level required for crops to not be affected by \"No Sunlight Growth Multiplier\".")
 							.defineInRange("Min Sunlight", 10, 0, 15);
+					//region Growth Multipliers
 					sugarCanesGrowthMultiplier = builder
 							.comment("Increases the time required for Sugar Canes to grow (e.g. at 2.0 Sugar Canes will take twice to grow).\nSetting this to 0 will prevent Sugar Canes from growing naturally.\n1.0 will make Sugar Canes grow like normal.")
 							.defineInRange("Sugar Canes Growth Speed Mutiplier", 2.5d, 0.0d, 128d);
@@ -165,6 +170,16 @@ public class Config {
 					bambooGrowthMultiplier = builder
 							.comment("Increases the time required for Bamboo to grow (e.g. at 2.0 Bamboo will take twice to grow).\nSetting this to 0 will prevent Bamboo from growing naturally.\n1.0 will make Bamboo grow like normal.")
 							.defineInRange("Bamboo Growth Speed Mutiplier", 2.5d, 0.0d, 128d);
+					//endregion
+					hoesCooldowns = builder
+							.comment("A list of hoes and ticks that a hoe will go on cooldown. The format is modid:itemid,ticks. 20 ticks = 1 second. You can even use tags as #modid:tag,ticks.")
+							.defineList("Hoes Cooldowns", Arrays.asList("minecraft:stone_hoe,30", "minecraft:iron_hoe,22", "minecraft:golden_hoe,5", "minecraft:diamond_hoe,15"), o -> o instanceof String);
+					disableLowTierHoes = builder
+							.comment("When true, Wooden Hoes will not be usable and will be heavily damaged when trying to. The list of \"unusable\" hoes can be changed with datapacks by changing the iguanatweaksreborn:disabled_hoes tag")
+							.define("Disable Low Tier Hoes", true);
+					hoesDamageOnUseMultiplier = builder
+							.comment("When an hoe is used it will lose this durability instead of 1. Set to 1 to disable")
+							.defineInRange("Hoes Damage On Use Multiplier", 3, 1, 1024);
 					builder.pop();
 				}
 			}
