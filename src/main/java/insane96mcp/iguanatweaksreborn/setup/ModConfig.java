@@ -45,8 +45,16 @@ public class ModConfig {
     public static class Farming {
 
         public static class Livestock {
+            public static double childGrowthMultiplier;
+            public static double breedingMultiplier;
+            public static double eggLayMultiplier;
+            public static int cowMilkDelay;
 
             public static void load() {
+                childGrowthMultiplier = Config.COMMON.farming.livestock.childGrowthMultiplier.get();
+                breedingMultiplier = Config.COMMON.farming.livestock.breedingMultiplier.get();
+                eggLayMultiplier = Config.COMMON.farming.livestock.eggLayMultiplier.get();
+                cowMilkDelay = Config.COMMON.farming.livestock.cowMilkDelay.get();
             }
         }
 
@@ -333,5 +341,6 @@ public class ModConfig {
     @SubscribeEvent
     public static void onModConfigEvent(final net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
         ModConfig.load();
+        //ForgeRegistries.ITEMS.getValue(new ResourceLocation("minecraft:stone")).maxStackSize = 10;
     }
 }

@@ -95,8 +95,26 @@ public class Config {
 
 			public static class Livestock {
 				public static String name = "Livestock";
+				public ForgeConfigSpec.ConfigValue<Double> childGrowthMultiplier;
+				public ForgeConfigSpec.ConfigValue<Double> breedingMultiplier;
+				public ForgeConfigSpec.ConfigValue<Double> eggLayMultiplier;
+				public ForgeConfigSpec.ConfigValue<Integer> cowMilkDelay;
 
 				public Livestock(ForgeConfigSpec.Builder builder) {
+					builder.push(name);
+					childGrowthMultiplier = builder
+							.comment("Increases the time required for Baby Animals to grow (e.g. at 2.0 Animals will take twice to grow).\n1.0 will make Animals grow like normal.")
+							.defineInRange("Childs Growth Multiplier", 2.5d, 1.0d, 128d);
+					breedingMultiplier = builder
+							.comment("Increases the time required for Animals to breed again (e.g. at 2.0 Animals will take twice to be able to breed again).\n1.0 will make Animals breed like normal.")
+							.defineInRange("Breeding Time Multiplier", 3.5d, 1.0d, 128d);
+					eggLayMultiplier = builder
+							.comment("Increases the time required for Chickens to lay an egg (e.g. at 2.0 Chickens will take twice the time to lay an egg).\n1.0 will make chickens lay eggs like normal.")
+							.defineInRange("Egg Lay Multiplier", 3.0d, 1.0d, 128d);
+					cowMilkDelay = builder
+							.comment("Ticks before a cow can be milked again (20 ticks = 1 second). This applies to Mooshroom stew too.\n0 will disable this feature.")
+							.defineInRange("Cow Milk Delay", 24000, 0, Integer.MAX_VALUE);
+					builder.pop();
 				}
 			}
 

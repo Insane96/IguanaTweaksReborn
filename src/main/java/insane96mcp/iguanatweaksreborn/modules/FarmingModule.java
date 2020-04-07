@@ -5,26 +5,143 @@ import insane96mcp.iguanatweaksreborn.setup.ModConfig;
 import insane96mcp.iguanatweaksreborn.utils.RandomHelper;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.block.*;
+import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.passive.CowEntity;
+import net.minecraft.entity.passive.MooshroomEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 
 import java.util.Collections;
+import java.util.Random;
 
 public class FarmingModule {
 
 	public static class Livestock {
+		public static void slowdownAnimalGrowth(LivingEvent.LivingUpdateEvent event) {
+			if (!ModConfig.Modules.farming)
+				return;
+			if (ModConfig.Farming.Livestock.childGrowthMultiplier == 1d)
+				return;
+			if (!(event.getEntityLiving() instanceof AnimalEntity))
+				return;
+			AgeableEntity entity = (AgeableEntity) event.getEntityLiving();
+			Random rand = event.getEntityLiving().world.rand;
+			int growingAge = entity.getGrowingAge();
+			if (growingAge >= 0)
+				return;
+			double chance = 1d / ModConfig.Farming.Livestock.childGrowthMultiplier;
+			if (rand.nextFloat() > chance)
+				entity.setGrowingAge(growingAge - 1);
+		}
 
+		public static void slowdownBreeding(LivingEvent.LivingUpdateEvent event) {
+			if (!ModConfig.Modules.farming)
+				return;
+			if (ModConfig.Farming.Livestock.breedingMultiplier == 1d)
+				return;
+			if (!(event.getEntityLiving() instanceof AnimalEntity))
+				return;
+			AgeableEntity entity = (AgeableEntity) event.getEntityLiving();
+			Random rand = event.getEntityLiving().world.rand;
+			int growingAge = entity.getGrowingAge();
+			if (growingAge <= 0)
+				return;
+			double chance = 1d / ModConfig.Farming.Livestock.breedingMultiplier;
+			if (rand.nextFloat() > chance)
+				entity.setGrowingAge(growingAge + 1);
+		}
+
+		public static void slowdownEggLay(LivingEvent.LivingUpdateEvent event) {
+			if (!ModConfig.Modules.farming)
+				return;
+			if (ModConfig.Farming.Livestock.eggLayMultiplier == 1d)
+				return;
+			if (!(event.getEntityLiving() instanceof ChickenEntity))
+				return;
+			ChickenEntity chicken = (ChickenEntity) event.getEntityLiving();
+			Random rand = event.getEntityLiving().world.rand;
+			int timeUntilNextEgg = chicken.timeUntilNextEgg;
+			if (timeUntilNextEgg < 0)
+				return;
+			double chance = 1d / ModConfig.Farming.Livestock.eggLayMultiplier;
+			if (rand.nextFloat() > chance)
+				chicken.timeUntilNextEgg += 1;
+		}
+
+		public static void cowMilkTick(LivingEvent.LivingUpdateEvent event) {
+			if (!ModConfig.Modules.farming)
+				return;
+			if (ModConfig.Farming.Livestock.cowMilkDelay == 0)
+				return;
+			if (event.getEntityLiving().ticksExisted % 20 != 0)
+				return;
+			if (!(event.getEntityLiving() instanceof CowEntity))
+				return;
+			CowEntity cow = (CowEntity) event.getEntityLiving();
+			CompoundNBT cowNBT = cow.getPersistentData();
+			int milkCooldown = cowNBT.getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "milkCooldown");
+			if (milkCooldown > 0)
+				milkCooldown -= 20;
+			cowNBT.putInt(IguanaTweaksReborn.RESOURCE_PREFIX + "milkCooldown", milkCooldown);
+		}
+
+		public static void onCowMilk(PlayerInteractEvent.EntityInteract event) {
+			if (!ModConfig.Modules.farming)
+				return;
+			if (ModConfig.Farming.Livestock.cowMilkDelay == 0)
+				return;
+			if (!(event.getTarget() instanceof CowEntity))
+				return;
+			CowEntity cow = (CowEntity) event.getTarget();
+			if (cow.getGrowingAge() < 0)
+				return;
+			PlayerEntity player = event.getPlayer();
+			Hand hand = event.getHand();
+			ItemStack equipped = player.getHeldItem(hand);
+			if (equipped.isEmpty() || equipped.getItem() == Items.AIR)
+				return;
+			Item item = equipped.getItem();
+			if ((!FluidUtil.getFluidHandler(equipped).isPresent() || !FluidStack.loadFluidStackFromNBT(equipped.getTag()).isEmpty()) && (!(cow instanceof MooshroomEntity) || item != Items.BOWL))
+				return;
+			CompoundNBT cowNBT = cow.getPersistentData();
+			int milkCooldown = cowNBT.getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "milkCooldown");
+			if (milkCooldown > 0) {
+				event.setCanceled(true);
+				if (!player.world.isRemote) {
+					cow.playSound(SoundEvents.ENTITY_COW_HURT, 0.4F, (event.getEntity().world.rand.nextFloat() - event.getEntity().world.rand.nextFloat()) * 0.2F + 1.0F);
+				}
+				String message = cow instanceof MooshroomEntity ? "Mooshroom's Milk or Stew aren't" : "Cow's Milk is not";
+				message += " yet ready";
+				player.sendStatusMessage(new StringTextComponent(message), true);
+			}
+			else {
+				milkCooldown = ModConfig.Farming.Livestock.cowMilkDelay;
+				cowNBT.putInt(IguanaTweaksReborn.RESOURCE_PREFIX + "milkCooldown", milkCooldown);
+				event.setResult(Event.Result.ALLOW);
+			}
+		}
 	}
 
 	public static class Agriculture {
@@ -189,8 +306,6 @@ public class FarmingModule {
 			}
 			if (ModConfig.Farming.Agriculture.hoesDamageOnUseMultiplier > 1)
 				stack.damageItem(ModConfig.Farming.Agriculture.hoesDamageOnUseMultiplier - 1, event.getPlayer(), (player) -> player.sendBreakAnimation(event.getContext().getHand()));
-			//if (RandomHelper.getFloat(event.getPlayer().getRNG(), 0f, 1f) >= chance)
-			//event.setCanceled(true);
 			event.getPlayer().getCooldownTracker().setCooldown(stack.getItem(), cooldown);
 		}
 
