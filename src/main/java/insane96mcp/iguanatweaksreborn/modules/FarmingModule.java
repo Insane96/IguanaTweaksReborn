@@ -149,7 +149,6 @@ public class FarmingModule {
 		/**
 		 * Handles part of crops require water too
 		 */
-		//TODO Nerf bonemeal for Cocoa Beans and Stems too
 		public static void nerfBonemeal(BonemealEvent event) {
 			if (event.getWorld().isRemote)
 				return;
@@ -163,30 +162,45 @@ public class FarmingModule {
 			if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.DISABLED))
 				return;
 			BlockState state = event.getWorld().getBlockState(event.getPos());
-			if (!(state.getBlock() instanceof CropsBlock))
-				return;
-			boolean isBeetroot = state.getBlock() instanceof BeetrootBlock;
-			int age = 0;
-			int maxAge = Collections.max(CropsBlock.AGE.getAllowedValues());
-			if (isBeetroot) {
-				age = state.get(BeetrootBlock.BEETROOT_AGE);
-				maxAge = Collections.max(BeetrootBlock.BEETROOT_AGE.getAllowedValues());
+			if (state.getBlock() instanceof CropsBlock) {
+				boolean isBeetroot = state.getBlock() instanceof BeetrootBlock;
+				int age = 0;
+				int maxAge = Collections.max(CropsBlock.AGE.getAllowedValues());
+				if (isBeetroot) {
+					age = state.get(BeetrootBlock.BEETROOT_AGE);
+					maxAge = Collections.max(BeetrootBlock.BEETROOT_AGE.getAllowedValues());
+				}
+				else
+					age = state.get(CropsBlock.AGE);
+				if (age == maxAge)
+					return;
+				if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.SLIGHT))
+					age += RandomHelper.getInt(event.getWorld().getRandom(), 1, 2);
+				else if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.NERFED))
+					age++;
+				if (age > maxAge)
+					age = maxAge;
+				if (isBeetroot) {
+					state = state.with(BeetrootBlock.BEETROOT_AGE, age);
+				}
+				else
+					state = state.with(CropsBlock.AGE, age);
+			}
+			else if (state.getBlock() instanceof StemBlock) {
+				int age = state.get(StemBlock.AGE);
+				int maxAge = Collections.max(StemBlock.AGE.getAllowedValues());
+				if (age == maxAge)
+					return;
+				if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.SLIGHT))
+					age += RandomHelper.getInt(event.getWorld().getRandom(), 1, 2);
+				else if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.NERFED))
+					age++;
+				if (age > maxAge)
+					age = maxAge;
+				state = state.with(StemBlock.AGE, age);
 			}
 			else
-				age = state.get(CropsBlock.AGE);
-			if (age == maxAge)
 				return;
-			if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.SLIGHT))
-				age += RandomHelper.getInt(event.getWorld().getRandom(), 1, 2);
-			else if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.NERFED))
-				age++;
-			if (age > maxAge)
-				age = maxAge;
-			if (isBeetroot) {
-				state = state.with(BeetrootBlock.BEETROOT_AGE, age);
-			}
-			else
-				state = state.with(CropsBlock.AGE, age);
 			event.getWorld().setBlockState(event.getPos(), state, 3);
 			event.setResult(Event.Result.ALLOW);
 		}
