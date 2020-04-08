@@ -74,7 +74,7 @@ public class Config {
 						.defineInRange("Global Experience Multiplier", 1.0d, 0.0d, 1000d);
 				mobsFromSpawnersMultiplier = builder
 						.comment("Experience dropped from mobs that come from spawners will be multiplied by this multiplier. Experience dropped by mobs from spawners are still affected by 'Global Experience Multiplier'; so if you have e.g. 'Global Experience Multiplier' at 0.5, this needs to be set to 2.0 to make mobs from spawners drop normal experience\nCan be set to 0 to disable experience drop from mob that come from spawners.")
-						.defineInRange("Mobs from Spawners Multiplier", 0.75d, 0.0d, 1000d);
+						.defineInRange("Mobs from Spawners Multiplier", 0.667d, 0.0d, 1000d);
 				builder.pop();
 			}
 		}
