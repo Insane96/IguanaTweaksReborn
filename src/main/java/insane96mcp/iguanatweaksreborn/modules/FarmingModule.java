@@ -147,15 +147,16 @@ public class FarmingModule {
 	public static class Agriculture {
 
 		/**
-		 * Handles crops require water too
+		 * Handles part of crops require water too
 		 */
+		//TODO Nerf bonemeal for Cocoa Beans and Stems too
 		public static void nerfBonemeal(BonemealEvent event) {
 			if (event.getWorld().isRemote)
 				return;
 			if (!ModConfig.Modules.farming)
 				return;
 			//If farmland is dry and cropsRequireWater is set to anycase then cancel the event
-			if (!isCropOnWetFarmland(event.getWorld(), event.getPos()) && ModConfig.Farming.Agriculture.cropsRequireWater.equals(CropsRequireWater.ANY_CASE)) {
+			if (isAffectedByFarmlandState(event.getWorld(), event.getPos()) && !isCropOnWetFarmland(event.getWorld(), event.getPos()) && ModConfig.Farming.Agriculture.cropsRequireWater.equals(CropsRequireWater.ANY_CASE)) {
 				event.setCanceled(true);
 				return;
 			}
@@ -195,10 +196,16 @@ public class FarmingModule {
 				return;
 			if (ModConfig.Farming.Agriculture.cropsRequireWater.equals(CropsRequireWater.NO))
 				return;
-			if (!(event.getWorld().getBlockState(event.getPos()).getBlock() instanceof CropsBlock))
+			if (!isAffectedByFarmlandState(event.getWorld(), event.getPos()))
 				return;
 			if (!isCropOnWetFarmland(event.getWorld(), event.getPos()))
 				event.setResult(Event.Result.DENY);
+		}
+
+		private static boolean isAffectedByFarmlandState(IWorld world, BlockPos cropPos) {
+			BlockState state = world.getBlockState(cropPos);
+			Block block = state.getBlock();
+			return block instanceof CropsBlock || block instanceof StemBlock;
 		}
 
 		private static boolean isCropOnWetFarmland(IWorld world, BlockPos cropPos) {
@@ -206,9 +213,7 @@ public class FarmingModule {
 			if (!(sustainState.getBlock() instanceof FarmlandBlock))
 				return false;
 			int moisture = sustainState.get(FarmlandBlock.MOISTURE);
-			if (moisture < 7)
-				return false;
-			return true;
+			return moisture >= 7;
 		}
 
 
