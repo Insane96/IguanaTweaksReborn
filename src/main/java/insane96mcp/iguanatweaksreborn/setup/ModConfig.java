@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.setup;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
+import insane96mcp.iguanatweaksreborn.modules.StackSizesModule;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.util.ResourceLocation;
@@ -19,14 +20,16 @@ public class ModConfig {
 
     public static class Modules {
 
-        public static Boolean farming;
-        public static Boolean experience;
-        public static Boolean hardness;
+        public static boolean farming;
+        public static boolean experience;
+        public static boolean hardness;
+        public static boolean stackSizes;
 
         public static void load() {
             farming = Config.COMMON.modules.farming.get();
             experience = Config.COMMON.modules.experience.get();
             hardness = Config.COMMON.modules.hardness.get();
+            stackSizes = Config.COMMON.modules.stackSizes.get();
         }
     }
 
@@ -312,11 +315,115 @@ public class ModConfig {
         }
     }
 
+    public static class StackSizes {
+
+        public static boolean foodStackReduction;
+        public static double foodStackMultiplier;
+        public static List<CustomStackSize> customStackList;
+        public static List<IdTagMatcher> blacklist;
+        public static boolean blacklistAsWhitelist;
+
+        public static void load() {
+            foodStackReduction = Config.COMMON.stackSizes.foodStackReduction.get();
+            foodStackMultiplier = Config.COMMON.stackSizes.foodStackMultiplier.get();
+            customStackList = parseCustomStackList(Config.COMMON.stackSizes.customStackList.get());
+            blacklist = parseBlacklist(Config.COMMON.stackSizes.blacklist.get());
+            blacklistAsWhitelist = Config.COMMON.stackSizes.blacklistAsWhitelist.get();
+            StackSizesModule.processFoodStackSizes();
+            //StackSizesModule.processCustomStackSizes();
+        }
+
+        public static class CustomStackSize extends IdTagMatcher {
+            public int stackSize;
+
+            public CustomStackSize(@Nullable ResourceLocation id, @Nullable ResourceLocation tag, int stackSize) {
+                super(id, tag);
+                this.stackSize = stackSize;
+            }
+        }
+
+        private static List<CustomStackSize> parseCustomStackList(List<? extends String> list) {
+            ArrayList<CustomStackSize> stackSizes = new ArrayList<>();
+            for (String line : list) {
+                String[] split = line.split(",");
+                if (split.length != 2) {
+                    LogHelper.Warn("Invalid line \"%s\" for Custom Stack Size", line);
+                    continue;
+                }
+                if (!NumberUtils.isParsable(split[1])) {
+                    LogHelper.Warn(String.format("Invalid stackSize \"%s\" for Custom Stack Size", line));
+                    continue;
+                }
+                int stackSize = Integer.parseInt(split[1]);
+                if (split[0].startsWith("#")) {
+                    String replaced = split[0].replace("#", "");
+                    if (!ResourceLocation.isResouceNameValid(replaced)) {
+                        LogHelper.Warn("%s tag for Custom Stack Size is not valid", replaced);
+                        continue;
+                    }
+                    ResourceLocation tag = new ResourceLocation(replaced);
+                    CustomStackSize customStackSize = new CustomStackSize(null, tag, stackSize);
+                    stackSizes.add(customStackSize);
+                }
+                else {
+                    if (!ResourceLocation.isResouceNameValid(split[0])) {
+                        LogHelper.Warn("%s item for Custom Stack Size is not valid", split[0]);
+                        continue;
+                    }
+                    ResourceLocation item = new ResourceLocation(split[0]);
+                    if (ForgeRegistries.ITEMS.containsKey(item)) {
+                        CustomStackSize customStackSize = new CustomStackSize(item, null, stackSize);
+                        stackSizes.add(customStackSize);
+                    }
+                    else
+                        LogHelper.Warn(String.format("%s item for Custom Stack Size seems to not exist", split[0]));
+                }
+            }
+            return stackSizes;
+        }
+
+        private static List<IdTagMatcher> parseBlacklist(List<? extends String> list) {
+            List<IdTagMatcher> idTagMatchers = new ArrayList<>();
+            for (String line : list) {
+                String[] split = line.split(",");
+                if (split.length != 1) {
+                    LogHelper.Warn("Invalid line \"%s\" for Item Stack Sizes Blacklist. Format must be modid:blockid", line);
+                    continue;
+                }
+                if (split[0].startsWith("#")) {
+                    String replaced = split[0].replace("#", "");
+                    if (!ResourceLocation.isResouceNameValid(replaced)) {
+                        LogHelper.Warn("%s tag for Item Stack Sizes Blacklist is not valid", replaced);
+                        continue;
+                    }
+                    ResourceLocation tag = new ResourceLocation(replaced);
+                    IdTagMatcher itemTag = new IdTagMatcher(null, tag);
+                    idTagMatchers.add(itemTag);
+                }
+                else {
+                    if (!ResourceLocation.isResouceNameValid(split[0])) {
+                        LogHelper.Warn("%s item for Item Stack Sizes Blacklist is not valid", line);
+                        continue;
+                    }
+                    ResourceLocation item = new ResourceLocation(split[0]);
+                    if (ForgeRegistries.ITEMS.containsKey(item)) {
+                        IdTagMatcher itemId = new IdTagMatcher(item, null);
+                        idTagMatchers.add(itemId);
+                    }
+                    else
+                        LogHelper.Warn(String.format("%s item for Item Stack Sizes Blacklist seems to not exist", line));
+                }
+            }
+            return idTagMatchers;
+        }
+    }
+
     private static void load() {
         Modules.load();
         Experience.load();
         Farming.load();
         Hardness.load();
+        StackSizes.load();
     }
 
     public static class IdTagMatcher {
@@ -338,9 +445,10 @@ public class ModConfig {
         }
     }
 
+    public static boolean loadedFoodChanges = false;
+
     @SubscribeEvent
     public static void onModConfigEvent(final net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
         ModConfig.load();
-        //ForgeRegistries.ITEMS.getValue(new ResourceLocation("minecraft:stone")).maxStackSize = 10;
     }
 }

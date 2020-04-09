@@ -12,11 +12,11 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class HardnessModule {
     public static void ProcessHardness(PlayerEvent.BreakSpeed event) {
-        ProcessGlobalHardness(event);
-        ProcessSingleHardness(event);
+        processGlobalHardness(event);
+        processSingleHardness(event);
     }
 
-    public static void ProcessGlobalHardness(PlayerEvent.BreakSpeed event) {
+    public static void processGlobalHardness(PlayerEvent.BreakSpeed event) {
         if (!ModConfig.Modules.hardness)
             return;
         if (ModConfig.Hardness.multiplier == 1.0d && ModConfig.Hardness.dimensionMultipliers.size() == 0)
@@ -60,13 +60,11 @@ public class HardnessModule {
         event.setNewSpeed((float) (event.getNewSpeed() / multiplier));
     }
 
-    public static void ProcessSingleHardness(PlayerEvent.BreakSpeed event) {
+    public static void processSingleHardness(PlayerEvent.BreakSpeed event) {
         if (!ModConfig.Modules.hardness)
             return;
-
         if (ModConfig.Hardness.customHardness.size() == 0)
             return;
-
         World world = event.getPlayer().world;
         Dimension dimension = world.getDimension();
         ResourceLocation dimensionId = dimension.getType().getRegistryName();
