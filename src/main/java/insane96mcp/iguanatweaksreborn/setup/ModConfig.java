@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.setup;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
+import insane96mcp.iguanatweaksreborn.modules.HungerHealthModule;
 import insane96mcp.iguanatweaksreborn.modules.StackSizesModule;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
@@ -24,12 +25,14 @@ public class ModConfig {
         public static boolean experience;
         public static boolean hardness;
         public static boolean stackSizes;
+        public static boolean hungerHealth;
 
         public static void load() {
             farming = Config.COMMON.modules.farming.get();
             experience = Config.COMMON.modules.experience.get();
             hardness = Config.COMMON.modules.hardness.get();
             stackSizes = Config.COMMON.modules.stackSizes.get();
+            hungerHealth = Config.COMMON.modules.hungerHealth.get();
         }
     }
 
@@ -330,7 +333,7 @@ public class ModConfig {
             blacklist = parseBlacklist(Config.COMMON.stackSizes.blacklist.get());
             blacklistAsWhitelist = Config.COMMON.stackSizes.blacklistAsWhitelist.get();
             StackSizesModule.processFoodStackSizes();
-            //StackSizesModule.processCustomStackSizes();
+            StackSizesModule.processCustomStackSizes();
         }
 
         public static class CustomStackSize extends IdTagMatcher {
@@ -418,11 +421,65 @@ public class ModConfig {
         }
     }
 
+    public static class HungerHealth {
+
+        public static double foodHungerMultiplier;
+        public static double foodSaturationMultiplier;
+        //public static List<CustomStackSize> customStackList;
+        public static List<IdTagMatcher> blacklist;
+        public static boolean blacklistAsWhitelist;
+
+        public static void load() {
+            foodHungerMultiplier = Config.COMMON.hungerHealth.foodHungerMultiplier.get();
+            foodSaturationMultiplier = Config.COMMON.hungerHealth.foodSaturationMultiplier.get();
+            //customStackList = parseCustomStackList(Config.COMMON.stackSizes.customStackList.get());
+            blacklist = parseBlacklist(Config.COMMON.stackSizes.blacklist.get());
+            blacklistAsWhitelist = Config.COMMON.stackSizes.blacklistAsWhitelist.get();
+            HungerHealthModule.processFoodMultipliers();
+        }
+
+        private static List<IdTagMatcher> parseBlacklist(List<? extends String> list) {
+            List<IdTagMatcher> idTagMatchers = new ArrayList<>();
+            for (String line : list) {
+                String[] split = line.split(",");
+                if (split.length != 1) {
+                    LogHelper.Warn("Invalid line \"%s\" for Food Restore Blacklist. Format must be modid:blockid", line);
+                    continue;
+                }
+                if (split[0].startsWith("#")) {
+                    String replaced = split[0].replace("#", "");
+                    if (!ResourceLocation.isResouceNameValid(replaced)) {
+                        LogHelper.Warn("%s tag for Food Restore Blacklist is not valid", replaced);
+                        continue;
+                    }
+                    ResourceLocation tag = new ResourceLocation(replaced);
+                    IdTagMatcher itemTag = new IdTagMatcher(null, tag);
+                    idTagMatchers.add(itemTag);
+                }
+                else {
+                    if (!ResourceLocation.isResouceNameValid(split[0])) {
+                        LogHelper.Warn("%s item for Food Restore Blacklist is not valid", line);
+                        continue;
+                    }
+                    ResourceLocation item = new ResourceLocation(split[0]);
+                    if (ForgeRegistries.ITEMS.containsKey(item)) {
+                        IdTagMatcher itemId = new IdTagMatcher(item, null);
+                        idTagMatchers.add(itemId);
+                    }
+                    else
+                        LogHelper.Warn(String.format("%s item for Food Restore Blacklist seems to not exist", line));
+                }
+            }
+            return idTagMatchers;
+        }
+    }
+
     private static void load() {
         Modules.load();
         Experience.load();
         Farming.load();
         Hardness.load();
+        HungerHealth.load();
         StackSizes.load();
     }
 

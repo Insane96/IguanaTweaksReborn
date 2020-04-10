@@ -26,6 +26,7 @@ public class Config {
 		public final Farming farming;
 		public final Hardness hardness;
 		public final StackSizes stackSizes;
+		public final HungerHealth hungerHealth;
 
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
 			modules = new Modules(builder);
@@ -33,6 +34,7 @@ public class Config {
 			farming = new Farming(builder);
 			hardness = new Hardness(builder);
 			stackSizes = new StackSizes(builder);
+			hungerHealth = new HungerHealth(builder);
 		}
 
 		public static class Modules {
@@ -43,6 +45,7 @@ public class Config {
 			public ForgeConfigSpec.ConfigValue<Boolean> experience;
 			public ForgeConfigSpec.ConfigValue<Boolean> hardness;
 			public ForgeConfigSpec.ConfigValue<Boolean> stackSizes;
+			public ForgeConfigSpec.ConfigValue<Boolean> hungerHealth;
 
 			public Modules(ForgeConfigSpec.Builder builder) {
 				builder.comment(comment).push(name);
@@ -58,6 +61,9 @@ public class Config {
 				stackSizes = builder
 						.comment("Set to false to disable the Stack Sizes Module")
 						.define("Stack Sizes Module", true);
+				hungerHealth = builder
+						.comment("Set to false to disable the Hunger & Health Module")
+						.define("Hunger & Health Module", true);
 				builder.pop();
 			}
 		}
@@ -262,8 +268,38 @@ public class Config {
 						.comment("Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"]")
 						.defineList("Items Blacklist", Arrays.asList("minecraft:rotten_flesh"), o -> o instanceof String);
 				customStackList = builder
-						.comment("Define custom item stack sizes, one string = one item/tag. Those items are not affected by other changes such as 'Food Stack Reduction'.\nThe format is modid:itemid,hardness or #modid:tagid,hardness\nE.g. 'minecraft:stone,16' will make stone stack up to 16.\nE.g. '#forge:stone,16' will make all the stone types stack up to 16.")
+						.comment("Define custom item stack sizes, one string = one item/tag. Those items are not affected by other changes such as 'Food Stack Reduction'.\nThe format is modid:itemid,hardness or #modid:tagid,hardness\nE.g. 'minecraft:stone,16' will make stone stack up to 16.\nE.g. '#forge:stone,16' will make all the stone types stack up to 16.\nValues over 64 or lower than 1 will not work.")
 						.defineList("Custom Stack Sizes", Lists.newArrayList(""), o -> o instanceof String);
+				blacklistAsWhitelist = builder
+						.comment("Items Blacklist will be treated as a whitelist")
+						.define("Blacklist as Whitelist", false);
+				builder.pop();
+			}
+		}
+
+		public static class HungerHealth {
+			public static String name = "Hunger & Health";
+
+			public ForgeConfigSpec.ConfigValue<Double> foodHungerMultiplier;
+			public ForgeConfigSpec.ConfigValue<Double> foodSaturationMultiplier;
+			//public ForgeConfigSpec.ConfigValue<List<? extends String>> customStackList;
+			public ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
+			public ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelist;
+
+			public HungerHealth(ForgeConfigSpec.Builder builder) {
+				builder.push(name);
+				foodHungerMultiplier = builder
+						.comment("Food hunger restored will be multiplied by this value + 0.5. E.g. With the default value a Cooked Porkchop would heal 5 hunger instead of 8. Setting to 1 will disable this feature.")
+						.defineInRange("Food Hunger Multiplier", 0.5d, 0.0d, 128d);
+				foodSaturationMultiplier = builder
+						.comment("Food saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.")
+						.defineInRange("Food Stack Multiplier", 0.8d, 0.0d, 64d);
+				/*customStackList = builder
+						.comment("Define custom item stack sizes, one string = one item/tag. Those items are not affected by other changes such as 'Food Stack Reduction'.\nThe format is modid:itemid,hardness or #modid:tagid,hardness\nE.g. 'minecraft:stone,16' will make stone stack up to 16.\nE.g. '#forge:stone,16' will make all the stone types stack up to 16.\nValues over 64 or lower than 1 will not work.")
+						.defineList("Custom Stack Sizes", Lists.newArrayList(""), o -> o instanceof String);*/
+				blacklist = builder
+						.comment("Items or tags that will ignore the food multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"]")
+						.defineList("Items Blacklist", Arrays.asList("minecraft:rotten_flesh"), o -> o instanceof String);
 				blacklistAsWhitelist = builder
 						.comment("Items Blacklist will be treated as a whitelist")
 						.define("Blacklist as Whitelist", false);

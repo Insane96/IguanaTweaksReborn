@@ -7,6 +7,8 @@ import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -48,8 +50,6 @@ public class StackSizesModule {
 			if (!isInWhitelist && ModConfig.Hardness.blacklistAsWhitelist)
 				continue;
 			Food food = item.getFood();
-			/*food.value = (int)Math.ceil((food.value * 0.5f) + 0.5f);
-			food.saturation *= 0.8f;*/
 			double stackSize = 64d / (food.value + 1);
 			stackSize *= ModConfig.StackSizes.foodStackMultiplier;
 			item.maxStackSize = (int) Math.round(stackSize);
@@ -57,6 +57,36 @@ public class StackSizesModule {
 				item.maxStackSize = 0;
 			else if (item.maxStackSize > 64)
 				item.maxStackSize = 64;
+		}
+		loadedFoodChanges = true;
+	}
+
+	public static void processCustomStackSizes() {
+		if (!ModConfig.Modules.stackSizes)
+			return;
+		if (ModConfig.StackSizes.customStackList.isEmpty())
+			return;
+		for (ModConfig.StackSizes.CustomStackSize customStackSize : ModConfig.StackSizes.customStackList) {
+			if (customStackSize.tag != null) {
+				Tag<Item> tag = ItemTags.getCollection().get(customStackSize.tag);
+				if (tag == null)
+					return;
+				tag.getAllElements().forEach(item -> {
+					item.maxStackSize = customStackSize.stackSize;
+					if (item.maxStackSize <= 0)
+						item.maxStackSize = 0;
+					else if (item.maxStackSize > 64)
+						item.maxStackSize = 64;
+				});
+			}
+			else if (customStackSize.id != null) {
+				Item item = ForgeRegistries.ITEMS.getValue(customStackSize.id);
+				item.maxStackSize = customStackSize.stackSize;
+				if (item.maxStackSize <= 0)
+					item.maxStackSize = 0;
+				else if (item.maxStackSize > 64)
+					item.maxStackSize = 64;
+			}
 		}
 		loadedFoodChanges = true;
 	}
