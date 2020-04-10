@@ -9,7 +9,7 @@ assignees: ''
 
 Follow the following guideline. Not following this will result in ignored and closed issue.
 
-// Only versions for Minecraft 1.12 and 1.14 are supported
+// Usually only latest versions are supported
 
 **Minecraft Version**:
 
@@ -25,9 +25,9 @@ Mod Version:
 **What Happens**:
 
 
-//Please send logs even if you don't have any crash, and use Pastebin or similar
+//Please send logs even if you don't have any crash, and use Gist or Pastebin
 
-**Logs / Crash reports (use pastebin.com)**:
+**Logs / Crash reports**:
 
 
 //If different from default
