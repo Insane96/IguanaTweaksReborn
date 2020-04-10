@@ -44,10 +44,8 @@ public class HungerHealthModule {
 			if (!isInWhitelist && ModConfig.HungerHealth.blacklistAsWhitelist)
 				continue;
 			Food food = item.getFood();
-			System.out.println(item.getRegistryName() + " " + food.value);
 			food.value = (int) Math.ceil((food.value * ModConfig.HungerHealth.foodHungerMultiplier) + 0.5f);
 			food.saturation *= ModConfig.HungerHealth.foodSaturationMultiplier;
-			System.out.println(food.value);
 		}
 		loadedFoodChanges = true;
 	}
