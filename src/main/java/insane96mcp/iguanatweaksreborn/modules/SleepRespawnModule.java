@@ -12,6 +12,8 @@ public class SleepRespawnModule {
 	public static void wakeUpHunger(SleepFinishedTimeEvent event) {
 		if (!ModConfig.Modules.sleepRespawn)
 			return;
+		if (ModConfig.SleepRespawn.hungerDepletedOnWakeUp == 0 && ModConfig.SleepRespawn.effectsOnWakeUp.isEmpty())
+			return;
 		event.getWorld().getPlayers().stream().filter(LivingEntity::isSleeping).collect(Collectors.toList()).forEach((player) -> {
 			player.getFoodStats().addStats(-ModConfig.SleepRespawn.hungerDepletedOnWakeUp, 1.0f);
 			for (ModConfig.SleepRespawn.EffectOnWakeUp effectOnWakeUp : ModConfig.SleepRespawn.effectsOnWakeUp) {
