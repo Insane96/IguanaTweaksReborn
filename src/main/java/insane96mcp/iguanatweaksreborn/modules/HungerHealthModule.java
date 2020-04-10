@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.setup.ModConfig;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collection;
@@ -48,5 +49,15 @@ public class HungerHealthModule {
 			food.saturation *= ModConfig.HungerHealth.foodSaturationMultiplier;
 		}
 		loadedFoodChanges = true;
+	}
+
+	public static void healOnEat(LivingEntityUseItemEvent.Finish event) {
+		if (!ModConfig.Modules.hungerHealth)
+			return;
+		if (!event.getItem().isFood())
+			return;
+		Food food = event.getItem().getItem().getFood();
+		float heal = food.value * (float) ModConfig.HungerHealth.foodHealMultiplier;
+		event.getEntityLiving().heal(heal);
 	}
 }

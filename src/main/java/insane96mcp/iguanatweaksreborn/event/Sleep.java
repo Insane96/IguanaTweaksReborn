@@ -11,6 +11,6 @@ public class Sleep {
 
 	@SubscribeEvent
 	public static void wakeUp(SleepFinishedTimeEvent event) {
-		SleepRespawnModule.wakeUpHunger(event);
+		SleepRespawnModule.wakeUpHungerAndEffects(event);
 	}
 }

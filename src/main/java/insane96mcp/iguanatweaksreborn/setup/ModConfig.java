@@ -430,13 +430,15 @@ public class ModConfig {
         //public static List<CustomStackSize> customStackList;
         public static List<IdTagMatcher> blacklist;
         public static boolean blacklistAsWhitelist;
+        public static double foodHealMultiplier;
 
         public static void load() {
             foodHungerMultiplier = Config.COMMON.hungerHealth.foodHungerMultiplier.get();
             foodSaturationMultiplier = Config.COMMON.hungerHealth.foodSaturationMultiplier.get();
             //customStackList = parseCustomStackList(Config.COMMON.stackSizes.customStackList.get());
-            blacklist = parseBlacklist(Config.COMMON.stackSizes.blacklist.get());
-            blacklistAsWhitelist = Config.COMMON.stackSizes.blacklistAsWhitelist.get();
+            blacklist = parseBlacklist(Config.COMMON.hungerHealth.blacklist.get());
+            blacklistAsWhitelist = Config.COMMON.hungerHealth.blacklistAsWhitelist.get();
+            foodHealMultiplier = Config.COMMON.hungerHealth.foodHealMultiplier.get();
             HungerHealthModule.processFoodMultipliers();
         }
 

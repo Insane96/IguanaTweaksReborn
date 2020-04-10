@@ -291,6 +291,7 @@ public class Config {
 			//public ForgeConfigSpec.ConfigValue<List<? extends String>> customStackList;
 			public ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
 			public ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelist;
+			public ForgeConfigSpec.ConfigValue<Double> foodHealMultiplier;
 
 			public HungerHealth(ForgeConfigSpec.Builder builder) {
 				builder.push(name);
@@ -309,6 +310,9 @@ public class Config {
 				blacklistAsWhitelist = builder
 						.comment("Items Blacklist will be treated as a whitelist")
 						.define("Blacklist as Whitelist", false);
+				foodHealMultiplier = builder
+						.comment("When eating you'll get healed by this percentage of hunger restored. Setting to 0 will disable this feature.")
+						.defineInRange("Food Hunger Multiplier", 0.35d, 0.0d, 128d);
 				builder.pop();
 			}
 		}
