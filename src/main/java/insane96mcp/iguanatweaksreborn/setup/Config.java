@@ -27,6 +27,7 @@ public class Config {
 		public final Hardness hardness;
 		public final StackSizes stackSizes;
 		public final HungerHealth hungerHealth;
+		public final SleepRespawn sleepRespawn;
 
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
 			modules = new Modules(builder);
@@ -35,6 +36,7 @@ public class Config {
 			hardness = new Hardness(builder);
 			stackSizes = new StackSizes(builder);
 			hungerHealth = new HungerHealth(builder);
+			sleepRespawn = new SleepRespawn(builder);
 		}
 
 		public static class Modules {
@@ -46,6 +48,7 @@ public class Config {
 			public ForgeConfigSpec.ConfigValue<Boolean> hardness;
 			public ForgeConfigSpec.ConfigValue<Boolean> stackSizes;
 			public ForgeConfigSpec.ConfigValue<Boolean> hungerHealth;
+			public ForgeConfigSpec.ConfigValue<Boolean> sleepRespawn;
 
 			public Modules(ForgeConfigSpec.Builder builder) {
 				builder.comment(comment).push(name);
@@ -64,6 +67,9 @@ public class Config {
 				hungerHealth = builder
 						.comment("Set to false to disable the Hunger & Health Module")
 						.define("Hunger & Health Module", true);
+				sleepRespawn = builder
+						.comment("Set to false to disable the Sleep & Respawn Module")
+						.define("Sleep & Respawn Module", true);
 				builder.pop();
 			}
 		}
@@ -303,6 +309,24 @@ public class Config {
 				blacklistAsWhitelist = builder
 						.comment("Items Blacklist will be treated as a whitelist")
 						.define("Blacklist as Whitelist", false);
+				builder.pop();
+			}
+		}
+
+		public static class SleepRespawn {
+			public static String name = "Sleep & Respawn";
+
+			public ForgeConfigSpec.ConfigValue<Integer> hungerDepletedOnWakeUp;
+			public ForgeConfigSpec.ConfigValue<List<? extends String>> effectsOnWakeUp;
+
+			public SleepRespawn(ForgeConfigSpec.Builder builder) {
+				builder.push(name);
+				hungerDepletedOnWakeUp = builder
+						.comment("How much the hunger bar is depleted when you wake up in the morning. Saturation depleted is based off this value times 2. Setting to 0 will disable this feature.")
+						.defineInRange("Hunger Depleted on Wake Up", 11, -20, 20);
+				effectsOnWakeUp = builder
+						.comment("A list of effects to apply to the player when he wakes up.\nThe format is modid:potion_id,duration_in_ticks,amplifier\nE.g. 'minecraft:slowness,240,1' will apply Slowness II for 12 seconds to the player.")
+						.defineList("Effects on Wake Up", Lists.newArrayList("minecraft:slowness,240,1", "minecraft:regeneration,200,1"), o -> o instanceof String);
 				builder.pop();
 			}
 		}

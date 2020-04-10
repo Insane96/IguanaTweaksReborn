@@ -26,6 +26,7 @@ public class ModConfig {
         public static boolean hardness;
         public static boolean stackSizes;
         public static boolean hungerHealth;
+        public static boolean sleepRespawn;
 
         public static void load() {
             farming = Config.COMMON.modules.farming.get();
@@ -33,6 +34,7 @@ public class ModConfig {
             hardness = Config.COMMON.modules.hardness.get();
             stackSizes = Config.COMMON.modules.stackSizes.get();
             hungerHealth = Config.COMMON.modules.hungerHealth.get();
+            sleepRespawn = Config.COMMON.modules.sleepRespawn.get();
         }
     }
 
@@ -443,7 +445,7 @@ public class ModConfig {
             for (String line : list) {
                 String[] split = line.split(",");
                 if (split.length != 1) {
-                    LogHelper.Warn("Invalid line \"%s\" for Food Restore Blacklist. Format must be modid:blockid", line);
+                    LogHelper.Warn("Invalid line \"%s\" for Food Restore Blacklist. Format must be modid:item_id", line);
                     continue;
                 }
                 if (split[0].startsWith("#")) {
@@ -474,6 +476,62 @@ public class ModConfig {
         }
     }
 
+    public static class SleepRespawn {
+
+        public static int hungerDepletedOnWakeUp;
+        public static List<EffectOnWakeUp> effectsOnWakeUp;
+
+        public static void load() {
+            hungerDepletedOnWakeUp = Config.COMMON.sleepRespawn.hungerDepletedOnWakeUp.get();
+            effectsOnWakeUp = parseEffectsOnWakeUp(Config.COMMON.sleepRespawn.effectsOnWakeUp.get());
+        }
+
+        public static class EffectOnWakeUp {
+            public ResourceLocation potionId;
+            public int duration;
+            public int amplifier;
+
+            public EffectOnWakeUp(ResourceLocation potionId, int duration, int amplifier) {
+                this.potionId = potionId;
+                this.duration = duration;
+                this.amplifier = amplifier;
+            }
+        }
+
+        private static List<EffectOnWakeUp> parseEffectsOnWakeUp(List<? extends String> list) {
+            List<EffectOnWakeUp> effectsOnWakeUp = new ArrayList<>();
+            for (String line : list) {
+                String[] split = line.split(",");
+                if (split.length != 3) {
+                    LogHelper.Warn("Invalid line \"%s\" for Effects on WakeUp. Format must be modid:potion_id,duration_in_ticks,amplifier", line);
+                    continue;
+                }
+                if (!NumberUtils.isParsable(split[1])) {
+                    LogHelper.Warn(String.format("Invalid duration \"%s\" for Effects on WakeUp", split[1]));
+                    continue;
+                }
+                int duration = Integer.parseInt(split[1]);
+                if (!NumberUtils.isParsable(split[2])) {
+                    LogHelper.Warn(String.format("Invalid amplifier \"%s\" for Effects on WakeUp", split[1]));
+                    continue;
+                }
+                int amplifier = Integer.parseInt(split[2]);
+                if (!ResourceLocation.isResouceNameValid(split[0])) {
+                    LogHelper.Warn("%s potion for Effects on WakeUp is not valid", line);
+                    continue;
+                }
+                ResourceLocation potion = new ResourceLocation(split[0]);
+                if (ForgeRegistries.POTIONS.containsKey(potion)) {
+                    EffectOnWakeUp effectOnWakeUp = new EffectOnWakeUp(potion, duration, amplifier);
+                    effectsOnWakeUp.add(effectOnWakeUp);
+                }
+                else
+                    LogHelper.Warn(String.format("%s potion for Effects on WakeUp seems to not exist", line));
+            }
+            return effectsOnWakeUp;
+        }
+    }
+
     private static void load() {
         Modules.load();
         Experience.load();
@@ -481,6 +539,7 @@ public class ModConfig {
         Hardness.load();
         HungerHealth.load();
         StackSizes.load();
+        SleepRespawn.load();
     }
 
     public static class IdTagMatcher {
