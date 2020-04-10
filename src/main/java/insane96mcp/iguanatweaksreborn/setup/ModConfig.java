@@ -123,20 +123,20 @@ public class ModConfig {
                     int cooldown = Integer.parseInt(split[1]);
                     if (split[0].startsWith("#")) {
                         String replaced = split[0].replace("#", "");
-                        if (!ResourceLocation.isResouceNameValid(replaced)) {
+                        ResourceLocation tag = ResourceLocation.tryCreate(replaced);
+                        if (tag == null) {
                             LogHelper.Warn("%s tag for Hoe Cooldown is not valid", replaced);
                             continue;
                         }
-                        ResourceLocation tag = new ResourceLocation(replaced);
                         HoeCooldown hoeCooldown = new HoeCooldown(null, tag, cooldown);
                         hoesCooldowns.add(hoeCooldown);
                     }
                     else {
-                        if (!ResourceLocation.isResouceNameValid(split[0])) {
+                        ResourceLocation block = ResourceLocation.tryCreate(split[0]);
+                        if (block == null) {
                             LogHelper.Warn("%s item for Hoe Cooldown is not valid", split[0]);
                             continue;
                         }
-                        ResourceLocation block = new ResourceLocation(split[0]);
                         if (ForgeRegistries.ITEMS.containsKey(block)) {
                             HoeCooldown hoeCooldown = new HoeCooldown(block, null, cooldown);
                             hoesCooldowns.add(hoeCooldown);
@@ -188,20 +188,16 @@ public class ModConfig {
                     LogHelper.Warn("Invalid line \"%s\" for Dimension multiplier. Format must be modid:dimensionId,hardness", line);
                     continue;
                 }
-
-                ResourceLocation dimension = Utils.AnyRL;
-                if (ResourceLocation.isResouceNameValid(split[0]))
-                    dimension = new ResourceLocation(split[0]);
-                else {
+                ResourceLocation dimension = ResourceLocation.tryCreate(split[0]);
+                if (dimension == null) {
                     LogHelper.Warn(String.format("Invalid dimension \"%s\" for Dimension multiplier", split[0]));
                     continue;
                 }
-
                 if (!NumberUtils.isParsable(split[1])) {
                     LogHelper.Warn(String.format("Invalid hardness \"%s\" for Dimension Multiplier", split[1]));
                     continue;
                 }
-                Double hardness = Double.parseDouble(split[1]);
+                double hardness = Double.parseDouble(split[1]);
 
                 dimensionMultipliers.add(new DimensionMultiplier(dimension, hardness));
             }
@@ -228,28 +224,29 @@ public class ModConfig {
                     continue;
                 }
                 ResourceLocation dimension = Utils.AnyRL;
-                if (split.length == 2)
-                    if (ResourceLocation.isResouceNameValid(split[1]))
-                        dimension = new ResourceLocation(split[1]);
-                    else
-                        LogHelper.Warn(String.format("Invalid dimension \"%s\" for Hardness Blacklist. Ignoring it", split[2]));
-
+                if (split.length == 2) {
+                    dimension = ResourceLocation.tryCreate(split[1]);
+                    if (dimension == null) {
+                        LogHelper.Warn(String.format("Invalid dimension \"%s\" for Hardness Blacklist. Ignoring it", split[1]));
+                        dimension = Utils.AnyRL;
+                    }
+                }
                 if (split[0].startsWith("#")) {
                     String replaced = split[0].replace("#", "");
-                    if (!ResourceLocation.isResouceNameValid(replaced)) {
+                    ResourceLocation tag = ResourceLocation.tryCreate(replaced);
+                    if (tag == null) {
                         LogHelper.Warn("%s tag for Hardness Blacklist is not valid", replaced);
                         continue;
                     }
-                    ResourceLocation tag = new ResourceLocation(replaced);
                     IdTagMatcher hardness = new IdTagMatcher(null, tag, dimension);
                     commonTagBlock.add(hardness);
                 }
                 else {
-                    if (!ResourceLocation.isResouceNameValid(split[0])) {
+                    ResourceLocation block = ResourceLocation.tryCreate(split[0]);
+                    if (block == null) {
                         LogHelper.Warn("%s block for Hardness Blacklist is not valid", line);
                         continue;
                     }
-                    ResourceLocation block = new ResourceLocation(split[0]);
                     if (ForgeRegistries.BLOCKS.containsKey(block)) {
                         IdTagMatcher hardness = new IdTagMatcher(block, null, dimension);
                         commonTagBlock.add(hardness);
@@ -269,35 +266,35 @@ public class ModConfig {
                     LogHelper.Warn("Invalid line \"%s\" for Custom Hardnesses", line);
                     continue;
                 }
-
                 if (!NumberUtils.isParsable(split[1])) {
                     LogHelper.Warn(String.format("Invalid hardness \"%s\" for Custom Hardnesses", line));
                     continue;
                 }
-                Double hardness = Double.parseDouble(split[1]);
-                ResourceLocation dimension = new ResourceLocation("any");
-                if (split.length == 3)
-                    if (ResourceLocation.isResouceNameValid(split[2]))
-                        dimension = new ResourceLocation(split[2]);
-                    else
+                double hardness = Double.parseDouble(split[1]);
+                ResourceLocation dimension = Utils.AnyRL;
+                if (split.length == 3) {
+                    dimension = ResourceLocation.tryCreate(split[2]);
+                    if (dimension == null) {
                         LogHelper.Warn(String.format("Invalid dimension \"%s\" for Custom Hardnesses. Ignoring it", split[2]));
-
+                        dimension = Utils.AnyRL;
+                    }
+                }
                 if (split[0].startsWith("#")) {
                     String replaced = split[0].replace("#", "");
-                    if (!ResourceLocation.isResouceNameValid(replaced)) {
+                    ResourceLocation tag = ResourceLocation.tryCreate(replaced);
+                    if (tag == null) {
                         LogHelper.Warn("%s tag for Custom Hardneses is not valid", replaced);
                         continue;
                     }
-                    ResourceLocation tag = new ResourceLocation(replaced);
                     BlockHardness blockHardness = new BlockHardness(null, tag, hardness, dimension);
                     blockHardnesses.add(blockHardness);
                 }
                 else {
-                    if (!ResourceLocation.isResouceNameValid(split[0])) {
+                    ResourceLocation block = ResourceLocation.tryCreate(split[0]);
+                    if (block == null) {
                         LogHelper.Warn("%s block for Custom Hardneses is not valid", split[0]);
                         continue;
                     }
-                    ResourceLocation block = new ResourceLocation(split[0]);
                     if (ForgeRegistries.BLOCKS.containsKey(block)) {
                         BlockHardness blockHardness = new BlockHardness(block, null, hardness, dimension);
                         blockHardnesses.add(blockHardness);
@@ -362,20 +359,20 @@ public class ModConfig {
                 int stackSize = Integer.parseInt(split[1]);
                 if (split[0].startsWith("#")) {
                     String replaced = split[0].replace("#", "");
-                    if (!ResourceLocation.isResouceNameValid(replaced)) {
+                    ResourceLocation tag = ResourceLocation.tryCreate(replaced);
+                    if (tag == null) {
                         LogHelper.Warn("%s tag for Custom Stack Size is not valid", replaced);
                         continue;
                     }
-                    ResourceLocation tag = new ResourceLocation(replaced);
                     CustomStackSize customStackSize = new CustomStackSize(null, tag, stackSize);
                     stackSizes.add(customStackSize);
                 }
                 else {
-                    if (!ResourceLocation.isResouceNameValid(split[0])) {
+                    ResourceLocation item = ResourceLocation.tryCreate(split[0]);
+                    if (item == null) {
                         LogHelper.Warn("%s item for Custom Stack Size is not valid", split[0]);
                         continue;
                     }
-                    ResourceLocation item = new ResourceLocation(split[0]);
                     if (ForgeRegistries.ITEMS.containsKey(item)) {
                         CustomStackSize customStackSize = new CustomStackSize(item, null, stackSize);
                         stackSizes.add(customStackSize);
@@ -397,20 +394,20 @@ public class ModConfig {
                 }
                 if (split[0].startsWith("#")) {
                     String replaced = split[0].replace("#", "");
-                    if (!ResourceLocation.isResouceNameValid(replaced)) {
+                    ResourceLocation tag = ResourceLocation.tryCreate(replaced);
+                    if (tag == null) {
                         LogHelper.Warn("%s tag for Item Stack Sizes Blacklist is not valid", replaced);
                         continue;
                     }
-                    ResourceLocation tag = new ResourceLocation(replaced);
                     IdTagMatcher itemTag = new IdTagMatcher(null, tag);
                     idTagMatchers.add(itemTag);
                 }
                 else {
-                    if (!ResourceLocation.isResouceNameValid(split[0])) {
+                    ResourceLocation item = ResourceLocation.tryCreate(split[0]);
+                    if (item == null) {
                         LogHelper.Warn("%s item for Item Stack Sizes Blacklist is not valid", line);
                         continue;
                     }
-                    ResourceLocation item = new ResourceLocation(split[0]);
                     if (ForgeRegistries.ITEMS.containsKey(item)) {
                         IdTagMatcher itemId = new IdTagMatcher(item, null);
                         idTagMatchers.add(itemId);
@@ -452,20 +449,20 @@ public class ModConfig {
                 }
                 if (split[0].startsWith("#")) {
                     String replaced = split[0].replace("#", "");
-                    if (!ResourceLocation.isResouceNameValid(replaced)) {
+                    ResourceLocation tag = ResourceLocation.tryCreate(replaced);
+                    if (tag == null) {
                         LogHelper.Warn("%s tag for Food Restore Blacklist is not valid", replaced);
                         continue;
                     }
-                    ResourceLocation tag = new ResourceLocation(replaced);
                     IdTagMatcher itemTag = new IdTagMatcher(null, tag);
                     idTagMatchers.add(itemTag);
                 }
                 else {
-                    if (!ResourceLocation.isResouceNameValid(split[0])) {
+                    ResourceLocation item = ResourceLocation.tryCreate(split[0]);
+                    if (item == null) {
                         LogHelper.Warn("%s item for Food Restore Blacklist is not valid", line);
                         continue;
                     }
-                    ResourceLocation item = new ResourceLocation(split[0]);
                     if (ForgeRegistries.ITEMS.containsKey(item)) {
                         IdTagMatcher itemId = new IdTagMatcher(item, null);
                         idTagMatchers.add(itemId);
@@ -518,11 +515,11 @@ public class ModConfig {
                     continue;
                 }
                 int amplifier = Integer.parseInt(split[2]);
-                if (!ResourceLocation.isResouceNameValid(split[0])) {
+                ResourceLocation potion = ResourceLocation.tryCreate(split[0]);
+                if (potion == null) {
                     LogHelper.Warn("%s potion for Effects on WakeUp is not valid", line);
                     continue;
                 }
-                ResourceLocation potion = new ResourceLocation(split[0]);
                 if (ForgeRegistries.POTIONS.containsKey(potion)) {
                     EffectOnWakeUp effectOnWakeUp = new EffectOnWakeUp(potion, duration, amplifier);
                     effectsOnWakeUp.add(effectOnWakeUp);
@@ -562,8 +559,6 @@ public class ModConfig {
             this(id, tag, Utils.AnyRL);
         }
     }
-
-    public static boolean loadedFoodChanges = false;
 
     @SubscribeEvent
     public static void onModConfigEvent(final net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
