@@ -312,7 +312,7 @@ public class Config {
 						.define("Blacklist as Whitelist", false);
 				foodHealMultiplier = builder
 						.comment("When eating you'll get healed by this percentage of hunger restored. Setting to 0 will disable this feature.")
-						.defineInRange("Food Hunger Multiplier", 0.35d, 0.0d, 128d);
+						.defineInRange("Food Heal Multiplier", 0.35d, 0.0d, 128d);
 				builder.pop();
 			}
 		}
