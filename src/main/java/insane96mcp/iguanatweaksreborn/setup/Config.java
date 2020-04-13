@@ -247,7 +247,7 @@ public class Config {
 						.define("Blacklist as Whitelist", false);
 				customHardness = builder
 						.comment("Define custom blocks hardness, one string = one block/tag. Those blocks are not affected by the global block hardness multiplier.\nThe format is modid:blockid,hardness,dimensionid or #modid:tagid,hardness,dimensionid\nE.g. 'minecraft:stone,5.0' will make stone have 5 hardness in every dimension.\nE.g. '#forge:stone,5.0,minecraft:overworld' will make all the stone types have 5 hardness but only in the overworld.")
-						.defineList("Custom Hardness", Lists.newArrayList("minecraft:obsidian,35"), o -> o instanceof String);
+						.defineList("Custom Hardness", Lists.newArrayList("minecraft:coal_ore,6", "minecraft:iron_ore,9.0", "minecraft:gold_ore,10.5", "minecraft:diamond_ore,18", "minecraft:redstone_ore,12", "minecraft:lapis_ore,12", "minecraft:emerald_ore,21", "minecraft:nether_quartz_ore,6", "minecraft:obsidian,35"), o -> o instanceof String);
 				builder.pop();
 			}
 		}
