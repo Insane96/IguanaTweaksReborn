@@ -6,6 +6,7 @@ import insane96mcp.iguanatweaksreborn.setup.ModConfig;
 import net.minecraft.block.*;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -34,6 +35,8 @@ public class CropGrow {
 
 	@SubscribeEvent
 	public static void eventBonemeal(BonemealEvent event) {
+		if (event.isCanceled() || event.getResult() == Event.Result.DENY)
+			return;
 		FarmingModule.Agriculture.nerfBonemeal(event);
 	}
 }
