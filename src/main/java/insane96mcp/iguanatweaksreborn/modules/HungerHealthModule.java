@@ -20,6 +20,7 @@ public class HungerHealthModule {
 			return;
 		if (loadedFoodChanges)
 			return;
+		loadedFoodChanges = true;
 		Collection<Item> items = ForgeRegistries.ITEMS.getValues();
 		for (Item item : items) {
 			if (!item.isFood())
@@ -50,7 +51,6 @@ public class HungerHealthModule {
 			food.saturation *= ModConfig.HungerHealth.foodSaturationMultiplier;
 			System.out.println(item.getRegistryName() + " " + food.value + " " + food.saturation);
 		}
-		loadedFoodChanges = true;
 	}
 
 	public static void healOnEat(LivingEntityUseItemEvent.Finish event) {
