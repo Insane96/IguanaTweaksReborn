@@ -322,6 +322,7 @@ public class Config {
 
 			public ForgeConfigSpec.ConfigValue<Integer> hungerDepletedOnWakeUp;
 			public ForgeConfigSpec.ConfigValue<List<? extends String>> effectsOnWakeUp;
+			public ForgeConfigSpec.ConfigValue<Boolean> noSleepIfHungry;
 
 			public SleepRespawn(ForgeConfigSpec.Builder builder) {
 				builder.push(name);
@@ -331,6 +332,9 @@ public class Config {
 				effectsOnWakeUp = builder
 						.comment("A list of effects to apply to the player when he wakes up.\nThe format is modid:potion_id,duration_in_ticks,amplifier\nE.g. 'minecraft:slowness,240,1' will apply Slowness II for 12 seconds to the player.")
 						.defineList("Effects on Wake Up", Lists.newArrayList("minecraft:slowness,240,1", "minecraft:regeneration,200,1"), o -> o instanceof String);
+				noSleepIfHungry = builder
+						.comment("If the player's hunger bar is below 'Hunger Depleted on Wake Up' he can't sleep.")
+						.define("No Sleep If Hungry", true);
 				builder.pop();
 			}
 		}

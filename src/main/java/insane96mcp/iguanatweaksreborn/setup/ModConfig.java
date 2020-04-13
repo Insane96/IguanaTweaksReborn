@@ -479,10 +479,12 @@ public class ModConfig {
 
         public static int hungerDepletedOnWakeUp;
         public static List<EffectOnWakeUp> effectsOnWakeUp;
+        public static boolean noSleepIfHungry;
 
         public static void load() {
             hungerDepletedOnWakeUp = Config.COMMON.sleepRespawn.hungerDepletedOnWakeUp.get();
             effectsOnWakeUp = parseEffectsOnWakeUp(Config.COMMON.sleepRespawn.effectsOnWakeUp.get());
+            noSleepIfHungry = Config.COMMON.sleepRespawn.noSleepIfHungry.get();
         }
 
         public static class EffectOnWakeUp {
