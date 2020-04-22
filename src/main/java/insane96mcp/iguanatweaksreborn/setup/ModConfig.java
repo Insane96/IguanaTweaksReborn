@@ -424,7 +424,7 @@ public class ModConfig {
 
         public static double foodHungerMultiplier;
         public static double foodSaturationMultiplier;
-        //public static List<CustomStackSize> customStackList;
+        public static List<CustomFoodValue> customFoodValue;
         public static List<IdTagMatcher> blacklist;
         public static boolean blacklistAsWhitelist;
         public static double foodHealMultiplier;
@@ -432,11 +432,12 @@ public class ModConfig {
         public static void load() {
             foodHungerMultiplier = Config.COMMON.hungerHealth.foodHungerMultiplier.get();
             foodSaturationMultiplier = Config.COMMON.hungerHealth.foodSaturationMultiplier.get();
-            customFoodHunger = parseCustomFoodHungerList(Config.COMMON.hungerHealth.customFoodHunger.get());
+            customFoodValue = parseCustomFoodHungerList(Config.COMMON.hungerHealth.customFoodValue.get());
             blacklist = parseBlacklist(Config.COMMON.hungerHealth.blacklist.get());
             blacklistAsWhitelist = Config.COMMON.hungerHealth.blacklistAsWhitelist.get();
             foodHealMultiplier = Config.COMMON.hungerHealth.foodHealMultiplier.get();
             HungerHealthModule.processFoodMultipliers();
+            HungerHealthModule.processCustomFoodValues();
         }
 
         private static List<IdTagMatcher> parseBlacklist(List<? extends String> list) {
@@ -472,6 +473,54 @@ public class ModConfig {
                 }
             }
             return idTagMatchers;
+        }
+
+        public static class CustomFoodValue {
+            public ResourceLocation id;
+            public int hunger;
+            public float saturation;
+
+            public CustomFoodValue(ResourceLocation id, int hunger, float saturation) {
+                this.id = id;
+                this.hunger = hunger;
+                this.saturation = saturation;
+            }
+        }
+
+        private static List<CustomFoodValue> parseCustomFoodHungerList(List<? extends String> list) {
+            ArrayList<CustomFoodValue> foodValues = new ArrayList<>();
+            for (String line : list) {
+                String[] split = line.split(",");
+                if (split.length < 2 || split.length > 3) {
+                    LogHelper.Warn("Invalid line \"%s\" for Custom Food Value", line);
+                    continue;
+                }
+                if (!NumberUtils.isParsable(split[1])) {
+                    LogHelper.Warn(String.format("Invalid hunger \"%s\" for Custom Food Value", line));
+                    continue;
+                }
+                int hunger = Integer.parseInt(split[1]);
+                float saturation = -1f;
+                if (split.length == 3) {
+                    if (!NumberUtils.isParsable(split[2])) {
+                        LogHelper.Warn(String.format("Invalid saturation \"%s\" for Custom Food Value", line));
+                        continue;
+                    }
+                    saturation = Float.parseFloat(split[1]);
+                }
+                ResourceLocation item = ResourceLocation.tryCreate(split[0]);
+                if (item == null) {
+                    LogHelper.Warn("%s item for Custom Food Value is not valid", split[0]);
+                    continue;
+                }
+                if (ForgeRegistries.ITEMS.containsKey(item) && ForgeRegistries.ITEMS.getValue(item).isFood()) {
+                    CustomFoodValue customFoodValue = new CustomFoodValue(item, hunger, saturation);
+                    foodValues.add(customFoodValue);
+                }
+                else
+                    LogHelper.Warn(String.format("%s item for Custom Food Value seems to not exist or is not a food", split[0]));
+            }
+            return foodValues;
         }
     }
 

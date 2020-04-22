@@ -11,16 +11,16 @@ import java.util.Collection;
 
 public class HungerHealthModule {
 
-	private static boolean loadedFoodChanges = false;
+	private static boolean loadedFoodMultipliers = false;
 
 	public static void processFoodMultipliers() {
 		if (!ModConfig.Modules.hungerHealth)
 			return;
 		if (ModConfig.HungerHealth.foodHungerMultiplier == 1.0d && ModConfig.HungerHealth.foodSaturationMultiplier == 1.0d)
 			return;
-		if (loadedFoodChanges)
+		if (loadedFoodMultipliers)
 			return;
-		loadedFoodChanges = true;
+		loadedFoodMultipliers = true;
 		Collection<Item> items = ForgeRegistries.ITEMS.getValues();
 		for (Item item : items) {
 			if (!item.isFood())
@@ -46,10 +46,23 @@ public class HungerHealthModule {
 			if (!isInWhitelist && ModConfig.HungerHealth.blacklistAsWhitelist)
 				continue;
 			Food food = item.getFood();
-			System.out.println(item.getRegistryName() + " " + food.value + " " + food.saturation);
 			food.value = (int) Math.ceil((food.value * ModConfig.HungerHealth.foodHungerMultiplier) + 0.5f);
 			food.saturation *= ModConfig.HungerHealth.foodSaturationMultiplier;
-			System.out.println(item.getRegistryName() + " " + food.value + " " + food.saturation);
+		}
+	}
+
+	public static void processCustomFoodValues() {
+		if (!ModConfig.Modules.hungerHealth)
+			return;
+		if (ModConfig.HungerHealth.customFoodValue.isEmpty())
+			return;
+		Collection<Item> items = ForgeRegistries.ITEMS.getValues();
+		for (ModConfig.HungerHealth.CustomFoodValue foodValue : ModConfig.HungerHealth.customFoodValue) {
+			Item item = ForgeRegistries.ITEMS.getValue(foodValue.id);
+			Food food = item.getFood();
+			food.value = foodValue.hunger;
+			if (foodValue.saturation != 1f)
+				food.saturation = foodValue.saturation;
 		}
 	}
 
