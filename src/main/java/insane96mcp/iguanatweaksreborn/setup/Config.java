@@ -299,7 +299,7 @@ public class Config {
 						.defineInRange("Food Hunger Multiplier", 0.5d, 0.0d, 128d);
 				foodSaturationMultiplier = builder
 						.comment("Food saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
-						.defineInRange("Food Stack Multiplier", 0.8d, 0.0d, 64d);
+						.defineInRange("Food Saturation Multiplier", 0.8d, 0.0d, 64d);
 				customFoodValue = builder
 						.comment("Define custom food values, one string = one item. Those items are not affected by other changes such as 'Food Hunger Multiplier'.\nThe format is modid:itemid,hunger,saturation. Saturation is optional\nE.g. 'minecraft:cooked_porkchop,16,1.0' will make cooked porkchops give 8 shranks of food and 16 saturation (actual saturation is calculated by 'saturation * 2 * hunger').")
 						.defineList("Custom Food Hunger", Lists.newArrayList(), o -> o instanceof String);
