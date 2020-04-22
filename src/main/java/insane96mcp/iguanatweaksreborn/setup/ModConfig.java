@@ -432,7 +432,7 @@ public class ModConfig {
         public static void load() {
             foodHungerMultiplier = Config.COMMON.hungerHealth.foodHungerMultiplier.get();
             foodSaturationMultiplier = Config.COMMON.hungerHealth.foodSaturationMultiplier.get();
-            //customStackList = parseCustomStackList(Config.COMMON.stackSizes.customStackList.get());
+            customFoodHunger = parseCustomFoodHungerList(Config.COMMON.hungerHealth.customFoodHunger.get());
             blacklist = parseBlacklist(Config.COMMON.hungerHealth.blacklist.get());
             blacklistAsWhitelist = Config.COMMON.hungerHealth.blacklistAsWhitelist.get();
             foodHealMultiplier = Config.COMMON.hungerHealth.foodHealMultiplier.get();

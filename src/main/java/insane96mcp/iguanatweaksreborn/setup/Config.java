@@ -275,7 +275,7 @@ public class Config {
 						.defineList("Items Blacklist", Arrays.asList("minecraft:rotten_flesh"), o -> o instanceof String);
 				customStackList = builder
 						.comment("Define custom item stack sizes, one string = one item/tag. Those items are not affected by other changes such as 'Food Stack Reduction'.\nThe format is modid:itemid,hardness or #modid:tagid,hardness\nE.g. 'minecraft:stone,16' will make stone stack up to 16.\nE.g. '#forge:stone,16' will make all the stone types stack up to 16.\nValues over 64 or lower than 1 will not work.")
-						.defineList("Custom Stack Sizes", Lists.newArrayList(""), o -> o instanceof String);
+						.defineList("Custom Stack Sizes", Lists.newArrayList(), o -> o instanceof String);
 				blacklistAsWhitelist = builder
 						.comment("Items Blacklist will be treated as a whitelist")
 						.define("Blacklist as Whitelist", false);
@@ -331,7 +331,7 @@ public class Config {
 						.defineInRange("Hunger Depleted on Wake Up", 11, -20, 20);
 				effectsOnWakeUp = builder
 						.comment("A list of effects to apply to the player when he wakes up.\nThe format is modid:potion_id,duration_in_ticks,amplifier\nE.g. 'minecraft:slowness,240,1' will apply Slowness II for 12 seconds to the player.")
-						.defineList("Effects on Wake Up", Lists.newArrayList("minecraft:slowness,240,1", "minecraft:regeneration,200,1"), o -> o instanceof String);
+						.defineList("Effects on Wake Up", Lists.newArrayList("minecraft:slowness,300,1", "minecraft:regeneration,200,1", "minecraft:weakness,300,1"), o -> o instanceof String);
 				noSleepIfHungry = builder
 						.comment("If the player's hunger bar is below 'Hunger Depleted on Wake Up' he can't sleep.")
 						.define("No Sleep If Hungry", true);
