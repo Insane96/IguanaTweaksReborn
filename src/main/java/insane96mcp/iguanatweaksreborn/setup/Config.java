@@ -209,7 +209,7 @@ public class Config {
 					//endregion
 					hoesCooldowns = builder
 							.comment("A list of hoes and ticks that a hoe will go on cooldown. The format is modid:itemid,ticks. 20 ticks = 1 second. You can even use tags as #modid:tag,ticks.")
-							.defineList("Hoes Cooldowns", Arrays.asList("minecraft:stone_hoe,30", "minecraft:iron_hoe,22", "minecraft:golden_hoe,5", "minecraft:diamond_hoe,15", "vulcanite:vulcanite_hoe,20", "carbonado:carbonado_hoe,10"), o -> o instanceof String);
+							.defineList("Hoes Cooldowns", Arrays.asList("minecraft:stone_hoe,20", "minecraft:iron_hoe,15", "minecraft:golden_hoe,4", "minecraft:diamond_hoe,10", "vulcanite:vulcanite_hoe,15", "carbonado:carbonado_hoe,6"), o -> o instanceof String);
 					disableLowTierHoes = builder
 							.comment("When true, Wooden Hoes will not be usable and will be heavily damaged when trying to. The list of \"unusable\" hoes can be changed with datapacks by changing the iguanatweaksreborn:disabled_hoes tag")
 							.define("Disable Low Tier Hoes", true);
