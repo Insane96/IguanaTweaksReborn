@@ -131,15 +131,16 @@ public class FarmingModule {
 				event.setCanceled(true);
 				if (!player.world.isRemote) {
 					cow.playSound(SoundEvents.ENTITY_COW_HURT, 0.4F, (event.getEntity().world.rand.nextFloat() - event.getEntity().world.rand.nextFloat()) * 0.2F + 1.0F);
+					String message = cow instanceof MooshroomEntity ? "Mooshroom's Milk or Stew aren't" : "Cow's Milk is not";
+					message += " yet ready";
+					player.sendStatusMessage(new StringTextComponent(message), true);
 				}
-				String message = cow instanceof MooshroomEntity ? "Mooshroom's Milk or Stew aren't" : "Cow's Milk is not";
-				message += " yet ready";
-				player.sendStatusMessage(new StringTextComponent(message), true);
 			}
 			else {
 				milkCooldown = ModConfig.Farming.Livestock.cowMilkDelay;
 				cowNBT.putInt(IguanaTweaksReborn.RESOURCE_PREFIX + "milkCooldown", milkCooldown);
 				event.setResult(Event.Result.ALLOW);
+				player.swingArm(event.getHand());
 			}
 		}
 	}
