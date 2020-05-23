@@ -27,6 +27,7 @@ public class ModConfig {
         public static boolean stackSizes;
         public static boolean hungerHealth;
         public static boolean sleepRespawn;
+        public static boolean misc;
 
         public static void load() {
             farming = Config.COMMON.modules.farming.get();
@@ -35,6 +36,7 @@ public class ModConfig {
             stackSizes = Config.COMMON.modules.stackSizes.get();
             hungerHealth = Config.COMMON.modules.hungerHealth.get();
             sleepRespawn = Config.COMMON.modules.sleepRespawn.get();
+            misc = Config.COMMON.modules.misc.get();
         }
     }
 
@@ -428,6 +430,7 @@ public class ModConfig {
         public static List<IdTagMatcher> blacklist;
         public static boolean blacklistAsWhitelist;
         public static double foodHealMultiplier;
+        public static double blockBreakExaustionMultiplier;
 
         public static void load() {
             foodHungerMultiplier = Config.COMMON.hungerHealth.foodHungerMultiplier.get();
@@ -436,6 +439,7 @@ public class ModConfig {
             blacklist = parseBlacklist(Config.COMMON.hungerHealth.blacklist.get());
             blacklistAsWhitelist = Config.COMMON.hungerHealth.blacklistAsWhitelist.get();
             foodHealMultiplier = Config.COMMON.hungerHealth.foodHealMultiplier.get();
+            blockBreakExaustionMultiplier = Config.COMMON.hungerHealth.blockBreakExaustionMultiplier.get();
             HungerHealthModule.processFoodMultipliers();
             HungerHealthModule.processCustomFoodValues();
         }
@@ -582,6 +586,14 @@ public class ModConfig {
         }
     }
 
+    public static class Misc {
+        //public static boolean muffleMobsFromSpawnersSounds;
+
+        public static void load() {
+            //muffleMobsFromSpawnersSounds = Config.COMMON.misc.muffleMobsFromSpawnersSounds.get();
+        }
+    }
+
     private static void load() {
         Modules.load();
         Experience.load();
@@ -590,6 +602,7 @@ public class ModConfig {
         HungerHealth.load();
         StackSizes.load();
         SleepRespawn.load();
+        Misc.load();
     }
 
     public static class IdTagMatcher {

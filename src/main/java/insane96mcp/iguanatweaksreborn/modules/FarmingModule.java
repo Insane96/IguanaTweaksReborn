@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.modules;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
+import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.iguanatweaksreborn.utils.RandomHelper;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.block.*;
@@ -21,7 +22,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -101,10 +104,10 @@ public class FarmingModule {
 				return;
 			CowEntity cow = (CowEntity) event.getEntityLiving();
 			CompoundNBT cowNBT = cow.getPersistentData();
-			int milkCooldown = cowNBT.getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "milkCooldown");
+			int milkCooldown = cowNBT.getInt(Strings.NBTTags.MILK_COOLDOWN);
 			if (milkCooldown > 0)
 				milkCooldown -= 20;
-			cowNBT.putInt(IguanaTweaksReborn.RESOURCE_PREFIX + "milkCooldown", milkCooldown);
+			cowNBT.putInt(Strings.NBTTags.MILK_COOLDOWN, milkCooldown);
 		}
 
 		public static void onCowMilk(PlayerInteractEvent.EntityInteract event) {
@@ -126,19 +129,20 @@ public class FarmingModule {
 			if ((!FluidUtil.getFluidHandler(equipped).isPresent() || !FluidStack.loadFluidStackFromNBT(equipped.getTag()).isEmpty()) && (!(cow instanceof MooshroomEntity) || item != Items.BOWL))
 				return;
 			CompoundNBT cowNBT = cow.getPersistentData();
-			int milkCooldown = cowNBT.getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "milkCooldown");
+			int milkCooldown = cowNBT.getInt(Strings.NBTTags.MILK_COOLDOWN);
 			if (milkCooldown > 0) {
 				event.setCanceled(true);
 				if (!player.world.isRemote) {
 					cow.playSound(SoundEvents.ENTITY_COW_HURT, 0.4F, (event.getEntity().world.rand.nextFloat() - event.getEntity().world.rand.nextFloat()) * 0.2F + 1.0F);
-					String message = cow instanceof MooshroomEntity ? "Mooshroom's Milk or Stew aren't" : "Cow's Milk is not";
-					message += " yet ready";
-					player.sendStatusMessage(new StringTextComponent(message), true);
+					String animal = cow instanceof MooshroomEntity ? Strings.Translatable.MOOSHROOM_COOLDOWN : Strings.Translatable.COW_COOLDOWN;
+					String yetReady = Strings.Translatable.YET_READY;
+					ITextComponent message = new TranslationTextComponent(animal).appendText(" ").appendSibling(new TranslationTextComponent(yetReady));
+					player.sendStatusMessage(message, true);
 				}
 			}
 			else {
 				milkCooldown = ModConfig.Farming.Livestock.cowMilkDelay;
-				cowNBT.putInt(IguanaTweaksReborn.RESOURCE_PREFIX + "milkCooldown", milkCooldown);
+				cowNBT.putInt(Strings.NBTTags.MILK_COOLDOWN, milkCooldown);
 				event.setResult(Event.Result.ALLOW);
 				player.swingArm(event.getHand());
 			}

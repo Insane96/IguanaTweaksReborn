@@ -28,6 +28,7 @@ public class Config {
 		public final StackSizes stackSizes;
 		public final HungerHealth hungerHealth;
 		public final SleepRespawn sleepRespawn;
+		public final Misc misc;
 
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
 			modules = new Modules(builder);
@@ -37,6 +38,7 @@ public class Config {
 			stackSizes = new StackSizes(builder);
 			hungerHealth = new HungerHealth(builder);
 			sleepRespawn = new SleepRespawn(builder);
+			misc = new Misc(builder);
 		}
 
 		public static class Modules {
@@ -49,6 +51,7 @@ public class Config {
 			public ForgeConfigSpec.ConfigValue<Boolean> stackSizes;
 			public ForgeConfigSpec.ConfigValue<Boolean> hungerHealth;
 			public ForgeConfigSpec.ConfigValue<Boolean> sleepRespawn;
+			public ForgeConfigSpec.ConfigValue<Boolean> misc;
 
 			public Modules(ForgeConfigSpec.Builder builder) {
 				builder.comment(comment).push(name);
@@ -70,6 +73,9 @@ public class Config {
 				sleepRespawn = builder
 						.comment("Set to false to disable the Sleep & Respawn Module")
 						.define("Sleep & Respawn Module", true);
+				misc = builder
+						.comment("Set to false to disable the Misc Module")
+						.define("Misc Module", true);
 				builder.pop();
 			}
 		}
@@ -291,6 +297,7 @@ public class Config {
 			public ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
 			public ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelist;
 			public ForgeConfigSpec.ConfigValue<Double> foodHealMultiplier;
+			public ForgeConfigSpec.ConfigValue<Double> blockBreakExaustionMultiplier;
 
 			public HungerHealth(ForgeConfigSpec.Builder builder) {
 				builder.push(name);
@@ -312,6 +319,9 @@ public class Config {
 				foodHealMultiplier = builder
 						.comment("When eating you'll get healed by this percentage of hunger restored. Setting to 0 will disable this feature.")
 						.defineInRange("Food Heal Multiplier", 0.35d, 0.0d, 128d);
+				blockBreakExaustionMultiplier = builder
+						.comment("When breaking block you'll get exaustion equal to the block hardness (block hardness multipliers are taken into account too) multiplied by this value. Setting this to 0 will default to the vanilla exaustion (0.005).")
+						.defineInRange("Block Break Exaustion Multiplier", 0.01d, 0.0d, 1024d);
 				builder.pop();
 			}
 		}
@@ -330,10 +340,23 @@ public class Config {
 						.defineInRange("Hunger Depleted on Wake Up", 11, -20, 20);
 				effectsOnWakeUp = builder
 						.comment("A list of effects to apply to the player when he wakes up.\nThe format is modid:potion_id,duration_in_ticks,amplifier\nE.g. 'minecraft:slowness,240,1' will apply Slowness II for 12 seconds to the player.")
-						.defineList("Effects on Wake Up", Lists.newArrayList("minecraft:slowness,300,1", "minecraft:regeneration,200,1", "minecraft:weakness,300,1"), o -> o instanceof String);
+						.defineList("Effects on Wake Up", Lists.newArrayList("minecraft:slowness,400,1", "minecraft:regeneration,200,1", "minecraft:weakness,300,1", "minecraft:mining_fatigue,300,1"), o -> o instanceof String);
 				noSleepIfHungry = builder
 						.comment("If the player's hunger bar is below 'Hunger Depleted on Wake Up' he can't sleep.")
 						.define("No Sleep If Hungry", true);
+				builder.pop();
+			}
+		}
+
+		public static class Misc {
+			public static String name = "Sleep & Respawn";
+			//public ForgeConfigSpec.ConfigValue<Boolean> muffleMobsFromSpawnersSounds;
+
+			public Misc(ForgeConfigSpec.Builder builder) {
+				builder.push(name);
+				/*muffleMobsFromSpawnersSounds = builder
+						.comment("If true mobs from spawners will have their volume greatly reduced.")
+						.define("Muffle Mobs From Spawners Sounds", true);*/
 				builder.pop();
 			}
 		}

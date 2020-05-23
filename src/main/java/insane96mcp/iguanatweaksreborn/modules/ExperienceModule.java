@@ -1,14 +1,12 @@
 package insane96mcp.iguanatweaksreborn.modules;
 
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
+import insane96mcp.iguanatweaksreborn.setup.Strings;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BlockEvent;
 
 public class ExperienceModule {
@@ -48,24 +46,14 @@ public class ExperienceModule {
 	public static void mobsFromSpawnersXpDrop(LivingExperienceDropEvent event) {
 		if (!ModConfig.Modules.experience)
 			return;
-
 		if (ModConfig.Experience.mobsFromSpawnersMultiplier == 1.0d)
 			return;
-
 		LivingEntity living = event.getEntityLiving();
 		CompoundNBT tags = living.getPersistentData();
-
-		if (!tags.getBoolean(IguanaTweaksReborn.RESOURCE_PREFIX + "spawnedFromSpawner"))
+		if (!tags.getBoolean(Strings.NBTTags.SPAWNED_FROM_SPANWER))
 			return;
-
 		int xp = event.getDroppedExperience();
 		xp *= ModConfig.Experience.mobsFromSpawnersMultiplier;
 		event.setDroppedExperience(xp);
-	}
-
-	public static void checkFromSpawner(LivingSpawnEvent.CheckSpawn event) {
-		if (event.getSpawnReason() == SpawnReason.SPAWNER) {
-			event.getEntityLiving().getPersistentData().putBoolean(IguanaTweaksReborn.RESOURCE_PREFIX + "spawnedFromSpawner", true);
-		}
 	}
 }

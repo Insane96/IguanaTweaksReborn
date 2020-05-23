@@ -2,9 +2,13 @@ package insane96mcp.iguanatweaksreborn.modules;
 
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collection;
@@ -69,10 +73,30 @@ public class HungerHealthModule {
 	public static void healOnEat(LivingEntityUseItemEvent.Finish event) {
 		if (!ModConfig.Modules.hungerHealth)
 			return;
+		if (ModConfig.HungerHealth.foodHealMultiplier == 0d)
+			return;
 		if (!event.getItem().isFood())
 			return;
 		Food food = event.getItem().getItem().getFood();
 		float heal = food.value * (float) ModConfig.HungerHealth.foodHealMultiplier;
 		event.getEntityLiving().heal(heal);
+	}
+
+	public static void breakExaustion(BlockEvent.BreakEvent event) {
+		if (!ModConfig.Modules.hungerHealth)
+			return;
+		if (ModConfig.HungerHealth.blockBreakExaustionMultiplier == 0d)
+			return;
+		BlockState state = event.getWorld().getBlockState(event.getPos());
+		Block block = state.getBlock();
+		ResourceLocation dimensionId = event.getWorld().getDimension().getType().getRegistryName();
+		double hardness = state.getBlockHardness(event.getWorld(), event.getPos());
+		double globalHardnessMultiplier = HardnessModule.getBlockGlobalHardness(block, dimensionId);
+		if (globalHardnessMultiplier != -1d)
+			hardness *= globalHardnessMultiplier;
+		double singleHardness = HardnessModule.getBlockSingleHardness(block, dimensionId);
+		if (singleHardness != -1d)
+			hardness = singleHardness;
+		event.getPlayer().addExhaustion((float) (hardness * ModConfig.HungerHealth.blockBreakExaustionMultiplier) - 0.005f);
 	}
 }

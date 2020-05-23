@@ -28,36 +28,10 @@ public class HardnessModule {
             dimensionId = Utils.AnyRL;
         BlockState blockState = world.getBlockState(event.getPos());
         Block block = blockState.getBlock();
-        for (ModConfig.Hardness.BlockHardness blockHardness : ModConfig.Hardness.customHardness)
-            if (Utils.isInTagOrBlock(blockHardness, block, dimensionId))
-                return;
-        boolean isInWhitelist = false;
-        for (ModConfig.IdTagMatcher blacklistEntry : ModConfig.Hardness.blacklist) {
-            if (!ModConfig.Hardness.blacklistAsWhitelist) {
-                if (Utils.isInTagOrBlock(blacklistEntry, block, dimensionId))
-                    return;
-            }
-            else {
-                if (Utils.isInTagOrBlock(blacklistEntry, block, dimensionId)) {
-                    isInWhitelist = true;
-                    break;
-                }
-            }
-        }
-
-        if (!isInWhitelist && ModConfig.Hardness.blacklistAsWhitelist)
+        double multiplier = 1d / getBlockGlobalHardness(block, dimensionId);
+        if (multiplier == 1d)
             return;
-
-        double multiplier = ModConfig.Hardness.multiplier;
-
-        for (ModConfig.Hardness.DimensionMultiplier dimensionMultiplier : ModConfig.Hardness.dimensionMultipliers) {
-            if (dimensionId.equals(dimensionMultiplier.dimension)) {
-                multiplier = dimensionMultiplier.multiplier;
-                break;
-            }
-        }
-
-        event.setNewSpeed((float) (event.getNewSpeed() / multiplier));
+        event.setNewSpeed((float) (event.getNewSpeed() * multiplier));
     }
 
     public static void processSingleHardness(PlayerEvent.BreakSpeed event) {
@@ -73,19 +47,9 @@ public class HardnessModule {
         BlockState blockState = world.getBlockState(pos);
 
         Block block = blockState.getBlock();
-
-        double hardness = -1;
-
-        for (ModConfig.Hardness.BlockHardness blockHardness : ModConfig.Hardness.customHardness) {
-            if (Utils.isInTagOrBlock(blockHardness, block, dimensionId)) {
-                hardness = blockHardness.hardness;
-                break;
-            }
-        }
-
-        if (hardness == -1)
+        double hardness = getBlockSingleHardness(block, dimensionId);
+        if (hardness == -1d)
             return;
-
         event.setNewSpeed(event.getNewSpeed() * (float) getRatio(hardness, blockState, world, pos));
     }
 
@@ -93,4 +57,47 @@ public class HardnessModule {
         return state.getBlockHardness(world, pos) / newHardness;
     }
 
+    /**
+     * Returns -1 when no changes must be made, else will return a divider for the block breaking speed (aka multiplier for block hardness)
+     */
+    public static double getBlockGlobalHardness(Block block, ResourceLocation dimensionId) {
+        for (ModConfig.Hardness.BlockHardness blockHardness : ModConfig.Hardness.customHardness)
+            if (Utils.isInTagOrBlock(blockHardness, block, dimensionId))
+                return 1d;
+        boolean isInWhitelist = false;
+        for (ModConfig.IdTagMatcher blacklistEntry : ModConfig.Hardness.blacklist) {
+            if (!ModConfig.Hardness.blacklistAsWhitelist) {
+                if (Utils.isInTagOrBlock(blacklistEntry, block, dimensionId))
+                    return 1d;
+            }
+            else {
+                if (Utils.isInTagOrBlock(blacklistEntry, block, dimensionId)) {
+                    isInWhitelist = true;
+                    break;
+                }
+            }
+        }
+        if (!isInWhitelist && ModConfig.Hardness.blacklistAsWhitelist)
+            return 1d;
+        double multiplier = ModConfig.Hardness.multiplier;
+        for (ModConfig.Hardness.DimensionMultiplier dimensionMultiplier : ModConfig.Hardness.dimensionMultipliers) {
+            if (dimensionId.equals(dimensionMultiplier.dimension)) {
+                multiplier = dimensionMultiplier.multiplier;
+                break;
+            }
+        }
+        return multiplier;
+    }
+
+    /**
+     * Returns -1 when the block has no custom hardness, the hardness otherwise
+     */
+    public static double getBlockSingleHardness(Block block, ResourceLocation dimensionId) {
+        for (ModConfig.Hardness.BlockHardness blockHardness : ModConfig.Hardness.customHardness) {
+            if (Utils.isInTagOrBlock(blockHardness, block, dimensionId)) {
+                return blockHardness.hardness;
+            }
+        }
+        return -1d;
+    }
 }
