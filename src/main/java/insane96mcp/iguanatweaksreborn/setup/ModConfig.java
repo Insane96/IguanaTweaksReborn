@@ -587,10 +587,8 @@ public class ModConfig {
     }
 
     public static class Misc {
-        //public static boolean muffleMobsFromSpawnersSounds;
-
         public static void load() {
-            //muffleMobsFromSpawnersSounds = Config.COMMON.misc.muffleMobsFromSpawnersSounds.get();
+
         }
     }
 

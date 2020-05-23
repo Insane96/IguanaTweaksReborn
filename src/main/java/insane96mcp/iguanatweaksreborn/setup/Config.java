@@ -349,14 +349,11 @@ public class Config {
 		}
 
 		public static class Misc {
-			public static String name = "Sleep & Respawn";
-			//public ForgeConfigSpec.ConfigValue<Boolean> muffleMobsFromSpawnersSounds;
+			public static String name = "Misc";
 
 			public Misc(ForgeConfigSpec.Builder builder) {
 				builder.push(name);
-				/*muffleMobsFromSpawnersSounds = builder
-						.comment("If true mobs from spawners will have their volume greatly reduced.")
-						.define("Muffle Mobs From Spawners Sounds", true);*/
+
 				builder.pop();
 			}
 		}
