@@ -1,10 +1,11 @@
 package insane96mcp.iguanatweaksreborn.modules;
 
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
+import insane96mcp.iguanatweaksreborn.setup.Strings;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.world.SleepFinishedTimeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -39,6 +40,6 @@ public class SleepRespawnModule {
 		if (event.getPlayer().getFoodStats().getFoodLevel() >= ModConfig.SleepRespawn.hungerDepletedOnWakeUp)
 			return;
 		event.setResult(PlayerEntity.SleepResult.OTHER_PROBLEM);
-		event.getPlayer().sendStatusMessage(new StringTextComponent("You're too hungry and can't fall asleep"), true);
+		event.getPlayer().sendStatusMessage(new TranslationTextComponent(Strings.Translatable.NO_FOOD_FOR_SLEEP), true);
 	}
 }

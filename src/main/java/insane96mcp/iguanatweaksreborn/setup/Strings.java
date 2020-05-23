@@ -12,5 +12,7 @@ public class Strings {
 		public static final String MOOSHROOM_COOLDOWN = "iguanatweaksreborn.mooshroom_cooldown";
 		public static final String COW_COOLDOWN = "iguanatweaksreborn.cow_cooldown";
 		public static final String YET_READY = "iguanatweaksreborn.yet_ready";
+
+		public static final String NO_FOOD_FOR_SLEEP = "iguanatweaksreborn.no_food_for_sleep";
 	}
 }
