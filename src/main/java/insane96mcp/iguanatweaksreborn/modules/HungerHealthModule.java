@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -42,8 +43,7 @@ public class HungerHealthModule {
 					if (Utils.isInTagOrItem(blacklistEntry, item, null)) {
 						isInWhitelist = true;
 						break;
-					}
-				}
+					}				}
 			}
 			if (isInBlacklist)
 				continue;
@@ -87,9 +87,10 @@ public class HungerHealthModule {
 			return;
 		if (ModConfig.HungerHealth.blockBreakExaustionMultiplier == 0d)
 			return;
-		BlockState state = event.getWorld().getBlockState(event.getPos());
+		ServerWorld world = (ServerWorld) event.getWorld();
+		BlockState state = world.getBlockState(event.getPos());
 		Block block = state.getBlock();
-		ResourceLocation dimensionId = event.getWorld().getDimension().getType().getRegistryName();
+		ResourceLocation dimensionId = world.getDimensionKey().getLocation();
 		double hardness = state.getBlockHardness(event.getWorld(), event.getPos());
 		double globalHardnessMultiplier = HardnessModule.getBlockGlobalHardness(block, dimensionId);
 		if (globalHardnessMultiplier != -1d)

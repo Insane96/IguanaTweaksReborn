@@ -7,8 +7,8 @@ import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -68,7 +68,7 @@ public class StackSizesModule {
 			return;
 		for (ModConfig.StackSizes.CustomStackSize customStackSize : ModConfig.StackSizes.customStackList) {
 			if (customStackSize.tag != null) {
-				Tag<Item> tag = ItemTags.getCollection().get(customStackSize.tag);
+				ITag<Item> tag = ItemTags.getCollection().get(customStackSize.tag);
 				if (tag == null)
 					return;
 				tag.getAllElements().forEach(item -> {

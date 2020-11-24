@@ -4,8 +4,8 @@ import insane96mcp.iguanatweaksreborn.setup.ModConfig;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -20,7 +20,7 @@ public class Utils {
         if (idTagMatcher.tag != null) {
             if (!BlockTags.getCollection().getRegisteredTags().contains(idTagMatcher.tag))
                 return false;
-            Tag<Block> blockTag = BlockTags.getCollection().get(idTagMatcher.tag);
+            ITag<Block> blockTag = BlockTags.getCollection().get(idTagMatcher.tag);
             if (blockTag == null)
                 return false;
             if (!blockTag.contains(block))
@@ -43,7 +43,7 @@ public class Utils {
         if (idTagMatcher.tag != null) {
             if (!BlockTags.getCollection().getRegisteredTags().contains(idTagMatcher.tag))
                 return false;
-            Tag<Item> itemTag = ItemTags.getCollection().get(idTagMatcher.tag);
+            ITag<Item> itemTag = ItemTags.getCollection().get(idTagMatcher.tag);
             if (itemTag == null)
                 return false;
             if (!itemTag.contains(item))

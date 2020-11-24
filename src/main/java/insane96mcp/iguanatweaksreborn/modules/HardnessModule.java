@@ -7,7 +7,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.Dimension;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class HardnessModule {
@@ -22,8 +21,8 @@ public class HardnessModule {
         if (ModConfig.Hardness.multiplier == 1.0d && ModConfig.Hardness.dimensionMultipliers.size() == 0)
             return;
         World world = event.getPlayer().world;
-        Dimension dimension = world.getDimension();
-        ResourceLocation dimensionId = dimension.getType().getRegistryName();
+        //Dimension dimension = world.getDimensionKey().getRegistryName();
+        ResourceLocation dimensionId = world.getDimensionKey().getLocation();
         if (dimensionId == null)
             dimensionId = Utils.AnyRL;
         BlockState blockState = world.getBlockState(event.getPos());
@@ -40,8 +39,8 @@ public class HardnessModule {
         if (ModConfig.Hardness.customHardness.size() == 0)
             return;
         World world = event.getPlayer().world;
-        Dimension dimension = world.getDimension();
-        ResourceLocation dimensionId = dimension.getType().getRegistryName();
+        //Dimension dimension = world.getDimensionKey().getRegistryName();
+        ResourceLocation dimensionId = world.getDimensionKey().getLocation();
 
         BlockPos pos = event.getPos();
         BlockState blockState = world.getBlockState(pos);

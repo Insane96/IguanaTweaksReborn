@@ -136,7 +136,7 @@ public class FarmingModule {
 					cow.playSound(SoundEvents.ENTITY_COW_HURT, 0.4F, (event.getEntity().world.rand.nextFloat() - event.getEntity().world.rand.nextFloat()) * 0.2F + 1.0F);
 					String animal = cow instanceof MooshroomEntity ? Strings.Translatable.MOOSHROOM_COOLDOWN : Strings.Translatable.COW_COOLDOWN;
 					String yetReady = Strings.Translatable.YET_READY;
-					ITextComponent message = new TranslationTextComponent(animal).appendText(" ").appendSibling(new TranslationTextComponent(yetReady));
+					ITextComponent message = new TranslationTextComponent(animal).appendString(" ").append(new TranslationTextComponent(yetReady));
 					player.sendStatusMessage(message, true);
 				}
 			}
