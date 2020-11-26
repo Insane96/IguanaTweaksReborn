@@ -17,7 +17,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
@@ -292,34 +291,38 @@ public class FarmingModule {
 			ANY_CASE
 		}
 
-		public static void disabledHoes(PlayerInteractEvent.RightClickBlock event) {
+		public static void disabledHoes(BlockEvent.BlockToolInteractEvent event) {
 			if (!ModConfig.Modules.farming)
 				return;
 			if (event.getPlayer().world.isRemote)
 				return;
 			if (!ModConfig.Farming.Agriculture.disableLowTierHoes)
 				return;
-			if (!isHoeDisabled(event.getItemStack().getItem()))
+			if (!isHoeDisabled(event.getHeldItemStack().getItem()))
 				return;
-			ItemStack hoe = event.getItemStack();
-			hoe.damageItem(15, event.getPlayer(), (player) -> player.sendBreakAnimation(event.getHand()));
+			ItemStack hoe = event.getHeldItemStack();
+			hoe.damageItem(15, event.getPlayer(), (player) -> player.sendBreakAnimation(event.getPlayer().getActiveHand()));
 			event.getPlayer().sendStatusMessage(new StringTextComponent("This hoe is too weak to be used"), true);
 			event.setCanceled(true);
 		}
 
-		public static void harderTilling(PlayerInteractEvent.RightClickBlock event) {
+		public static void harderTilling(BlockEvent.BlockToolInteractEvent event) {
 			if (!ModConfig.Modules.farming)
 				return;
 			if (event.getPlayer().world.isRemote)
 				return;
-			if (isHoeDisabled(event.getItemStack().getItem()))
+			if (isHoeDisabled(event.getHeldItemStack().getItem()))
 				return;
-			if (event.getFace() == Direction.DOWN || !event.getWorld().isAirBlock(event.getPos().up()))
+			if (/*event.getFace() == Direction.DOWN || */!event.getWorld().isAirBlock(event.getPos().up()))
 				return;
 			BlockState blockstate = HoeItem.HOE_LOOKUP.get(event.getWorld().getBlockState(event.getPos()).getBlock());
 			if (blockstate == null || blockstate.getBlock() != Blocks.FARMLAND)
 				return;
-			ItemStack stack = event.getItemStack();
+			ItemStack stack = event.getHeldItemStack();
+			if (!(stack.getItem() instanceof HoeItem))
+				return;
+			if (event.getPlayer().getCooldownTracker().hasCooldown(stack.getItem()))
+				return;
 			int cooldown = 0;
 			for (ModConfig.Farming.Agriculture.HoeCooldown hoeCooldown : ModConfig.Farming.Agriculture.hoesCooldowns) {
 				//System.out.println(hoeTillChance.cooldown);
@@ -327,8 +330,10 @@ public class FarmingModule {
 					cooldown = hoeCooldown.cooldown;
 				}
 			}
+
 			if (ModConfig.Farming.Agriculture.hoesDamageOnUseMultiplier > 1)
-				stack.damageItem(ModConfig.Farming.Agriculture.hoesDamageOnUseMultiplier - 1, event.getPlayer(), (player) -> player.sendBreakAnimation(event.getHand()));
+				stack.damageItem(ModConfig.Farming.Agriculture.hoesDamageOnUseMultiplier - 1, event.getPlayer(), (player) -> player.sendBreakAnimation(event.getPlayer().getActiveHand()));
+
 			event.getPlayer().getCooldownTracker().setCooldown(stack.getItem(), cooldown);
 		}
 

@@ -215,7 +215,7 @@ public class Config {
 					//endregion
 					hoesCooldowns = builder
 							.comment("A list of hoes and ticks that a hoe will go on cooldown. The format is modid:itemid,ticks. 20 ticks = 1 second. You can even use tags as #modid:tag,ticks.")
-							.defineList("Hoes Cooldowns", Arrays.asList("minecraft:stone_hoe,20", "minecraft:iron_hoe,15", "minecraft:golden_hoe,4", "minecraft:diamond_hoe,10", "vulcanite:vulcanite_hoe,15", "carbonado:carbonado_hoe,6"), o -> o instanceof String);
+							.defineList("Hoes Cooldowns", Arrays.asList("minecraft:stone_hoe,20", "minecraft:iron_hoe,15", "minecraft:golden_hoe,4", "minecraft:diamond_hoe,10", "minecraft:netherite_hoe,6", "vulcanite:vulcanite_hoe,15"), o -> o instanceof String);
 					disableLowTierHoes = builder
 							.comment("When true, Wooden Hoes will not be usable and will be heavily damaged when trying to. The list of \"unusable\" hoes can be changed with datapacks by changing the iguanatweaksreborn:disabled_hoes tag")
 							.define("Disable Low Tier Hoes", true);
@@ -253,7 +253,7 @@ public class Config {
 						.define("Blacklist as Whitelist", false);
 				customHardness = builder
 						.comment("Define custom blocks hardness, one string = one block/tag. Those blocks are not affected by the global block hardness multiplier.\nThe format is modid:blockid,hardness,dimensionid or #modid:tagid,hardness,dimensionid\nE.g. 'minecraft:stone,5.0' will make stone have 5 hardness in every dimension.\nE.g. '#forge:stone,5.0,minecraft:overworld' will make all the stone types have 5 hardness but only in the overworld.")
-						.defineList("Custom Hardness", Lists.newArrayList("minecraft:coal_ore,6", "minecraft:iron_ore,9.0", "minecraft:gold_ore,10.5", "minecraft:diamond_ore,18", "minecraft:redstone_ore,12", "minecraft:lapis_ore,12", "minecraft:emerald_ore,21", "minecraft:nether_quartz_ore,6", "minecraft:obsidian,35"), o -> o instanceof String);
+						.defineList("Custom Hardness", Lists.newArrayList("minecraft:coal_ore,6", "minecraft:iron_ore,9.0", "minecraft:gold_ore,10.5", "minecraft:diamond_ore,18", "minecraft:ancient_debris,25", "minecraft:redstone_ore,12", "minecraft:lapis_ore,12", "minecraft:emerald_ore,21", "minecraft:nether_quartz_ore,6", "minecraft:obsidian,35"), o -> o instanceof String);
 				builder.pop();
 			}
 		}
