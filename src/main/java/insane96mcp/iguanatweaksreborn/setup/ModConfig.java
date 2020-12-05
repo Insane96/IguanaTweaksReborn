@@ -327,6 +327,8 @@ public class ModConfig {
         public static List<IdTagMatcher> blacklist;
         public static boolean blacklistAsWhitelist;
         public static double itemStackMultiplier;
+        public static boolean blockStackReduction;
+        public static double blockStackMultiplier;
 
         public static void load() {
             foodStackReduction = Config.COMMON.stackSizes.foodStackReduction.get();
@@ -334,9 +336,12 @@ public class ModConfig {
             customStackList = parseCustomStackList(Config.COMMON.stackSizes.customStackList.get());
             blacklist = parseBlacklist(Config.COMMON.stackSizes.blacklist.get());
             blacklistAsWhitelist = Config.COMMON.stackSizes.blacklistAsWhitelist.get();
-            itemStackMultiplier = Config.COMMON.stackSizes.foodStackMultiplier.get();
+            itemStackMultiplier = Config.COMMON.stackSizes.itemStackMultiplier.get();
+            blockStackReduction = Config.COMMON.stackSizes.blockStackReduction.get();
+            blockStackMultiplier = Config.COMMON.stackSizes.blockStackMultiplier.get();
             StackSizesModule.processItemStackSizes();
             StackSizesModule.processFoodStackSizes();
+            StackSizesModule.processBlockStackSizes();
             StackSizesModule.processCustomStackSizes();
         }
 

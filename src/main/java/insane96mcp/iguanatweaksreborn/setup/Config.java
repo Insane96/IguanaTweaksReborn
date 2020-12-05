@@ -267,28 +267,35 @@ public class Config {
 			public ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
 			public ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelist;
 			public ForgeConfigSpec.ConfigValue<Double> itemStackMultiplier;
-			//public ForgeConfigSpec.ConfigValue<Double> blockStackModifier;
+			public ForgeConfigSpec.ConfigValue<Boolean> blockStackReduction;
+			public ForgeConfigSpec.ConfigValue<Double> blockStackMultiplier;
 
 			public StackSizes(ForgeConfigSpec.Builder builder) {
-				builder.push(name);
+				builder.comment("Changes in this section require a Minecraft Restart.").push(name);
 				foodStackReduction = builder
-						.comment("Food stack sizes will be reduced based off their hunger points restored + 1. E.g. Cooked Porkchops give 8 hunger points so their stack size will be '64 / (8 + 1) = 7' (Even foods that normally stack up to 16 will use the same formula, like Honey).\nThis is affected by Food Module's feature 'Hunger Restore Multiplier'\nNote that even soups will stack and will have eating multiple soups at once fixed.\nChanging this requires a Minecraft Restart.")
+						.comment("Food stack sizes will be reduced based off their hunger points restored + 1. E.g. Cooked Porkchops give 8 hunger points so their stack size will be '64 / (8 + 1) = 7' (Even foods that normally stack up to 16 will use the same formula, like Honey).\nThis is affected by Food Module's feature 'Hunger Restore Multiplier'\nNote that even soups will stack.")
 						.define("Food Stack Reduction", true);
 				foodStackMultiplier = builder
-						.comment("All the foods max stack sizes will be multiplied by this value to increase / decrease them. In the example with the Porkchop with this set to 2.0 Cooked Porkchops will stack up to 14.\nThis requires a Minecraft Restart.")
+						.comment("All the foods max stack sizes will be multiplied by this value to increase / decrease them. In the example with the Porkchop with this set to 2.0 Cooked Porkchops will stack up to 14.")
 						.defineInRange("Food Stack Multiplier", 1.1d, 0.01d, 64d);
 				blacklist = builder
-						.comment("Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].\nThis requires a Minecraft Restart.")
+						.comment("Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].")
 						.defineList("Items Blacklist", Arrays.asList("minecraft:rotten_flesh"), o -> o instanceof String);
 				customStackList = builder
 						.comment("Define custom item stack sizes, one string = one item/tag. Those items are not affected by other changes such as 'Food Stack Reduction'.\nThe format is modid:itemid,hardness or #modid:tagid,hardness\nE.g. 'minecraft:stone,16' will make stone stack up to 16.\nE.g. '#forge:stone,16' will make all the stone types stack up to 16.\nValues over 64 or lower than 1 will not work.")
 						.defineList("Custom Stack Sizes", Lists.newArrayList(), o -> o instanceof String);
 				blacklistAsWhitelist = builder
-						.comment("Items Blacklist will be treated as a whitelist.\nThis requires a Minecraft Restart.")
+						.comment("Items Blacklist will be treated as a whitelist.")
 						.define("Blacklist as Whitelist", false);
 				itemStackMultiplier = builder
 						.comment("Items max stack sizes (excluding blocks) will be multiplied by this value. Foods will be overridden by 'Food Stack Reduction' or 'Food Stack Multiplier' if are active. Setting to 1 will disable this feature.")
 						.defineInRange("Item Stack Multiplier", 0.5d, 0.01d, 1.0d);
+				blockStackReduction = builder
+						.comment("Blocks max stack sizes will be reduced based off their \"Weight\".")
+						.define("Block Stack Reduction", true);
+				blockStackMultiplier = builder
+						.comment("All the blocks max stack sizes will be multiplied by this value to increase / decrease them. This is applied after the reduction from 'Block Stack Reduction'.")
+						.defineInRange("Block Stack Multiplier", 1d, 0.01d, 1d);
 				builder.pop();
 			}
 		}

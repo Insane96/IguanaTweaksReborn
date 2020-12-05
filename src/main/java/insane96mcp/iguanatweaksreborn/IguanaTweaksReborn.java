@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn;
 
+import insane96mcp.iguanatweaksreborn.modules.StackSizesModule;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -18,10 +19,11 @@ public class IguanaTweaksReborn
     public IguanaTweaksReborn() {
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, Config.COMMON_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+
+		StackSizesModule.initMaterialWeight();
     }
 
     private void setup(final FMLCommonSetupEvent event)
     {
-
     }
 }
