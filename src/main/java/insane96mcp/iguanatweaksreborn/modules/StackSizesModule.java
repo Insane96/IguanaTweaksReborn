@@ -3,10 +3,7 @@ package insane96mcp.iguanatweaksreborn.modules;
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -48,7 +45,7 @@ public class StackSizesModule {
 			}
 			if (isInBlacklist)
 				continue;
-			if (!isInWhitelist && ModConfig.Hardness.blacklistAsWhitelist)
+			if (!isInWhitelist && ModConfig.StackSizes.blacklistAsWhitelist)
 				continue;
 			Food food = item.getFood();
 			double stackSize = 64d / (food.value + 1);
@@ -65,18 +62,42 @@ public class StackSizesModule {
 	public static void processItemStackSizes() {
 		if (!ModConfig.Modules.stackSizes)
 			return;
-		if (!ModConfig.StackSizes.foodStackReduction)
+		if (ModConfig.StackSizes.itemStackMultiplier == 1d)
 			return;
 		if (loadedItemChanges)
 			return;
 		Collection<Item> items = ForgeRegistries.ITEMS.getValues();
 		for (Item item : items) {
+			if (item instanceof BlockItem)
+				continue;
+			if (item.maxStackSize == 1)
+				continue;
+			boolean isInWhitelist = false;
+			boolean isInBlacklist = false;
+			for (ModConfig.IdTagMatcher blacklistEntry : ModConfig.StackSizes.blacklist) {
+				if (!ModConfig.StackSizes.blacklistAsWhitelist) {
+					if (Utils.isInTagOrItem(blacklistEntry, item, null)) {
+						isInBlacklist = true;
+						break;
+					}
+				}
+				else {
+					if (Utils.isInTagOrItem(blacklistEntry, item, null)) {
+						isInWhitelist = true;
+						break;
+					}
+				}
+			}
+			if (isInBlacklist)
+				continue;
+			if (!isInWhitelist && ModConfig.StackSizes.blacklistAsWhitelist)
+				continue;
 			double stackSize = item.maxStackSize * ModConfig.StackSizes.itemStackMultiplier;
+			if (stackSize < 1d)
+				stackSize = 1d;
+			else if (stackSize > 64d)
+				stackSize = 64d;
 			item.maxStackSize = (int) Math.round(stackSize);
-			if (item.maxStackSize <= 0)
-				item.maxStackSize = 1;
-			else if (item.maxStackSize > 64)
-				item.maxStackSize = 64;
 		}
 		loadedItemChanges = true;
 	}
