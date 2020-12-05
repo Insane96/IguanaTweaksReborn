@@ -17,6 +17,7 @@ import java.util.Collection;
 public class StackSizesModule {
 
 	private static boolean loadedFoodChanges = false;
+	private static boolean loadedItemChanges = false;
 
 	public static void processFoodStackSizes() {
 		if (!ModConfig.Modules.stackSizes)
@@ -54,11 +55,30 @@ public class StackSizesModule {
 			stackSize *= ModConfig.StackSizes.foodStackMultiplier;
 			item.maxStackSize = (int) Math.round(stackSize);
 			if (item.maxStackSize <= 0)
-				item.maxStackSize = 0;
+				item.maxStackSize = 1;
 			else if (item.maxStackSize > 64)
 				item.maxStackSize = 64;
 		}
 		loadedFoodChanges = true;
+	}
+
+	public static void processItemStackSizes() {
+		if (!ModConfig.Modules.stackSizes)
+			return;
+		if (!ModConfig.StackSizes.foodStackReduction)
+			return;
+		if (loadedItemChanges)
+			return;
+		Collection<Item> items = ForgeRegistries.ITEMS.getValues();
+		for (Item item : items) {
+			double stackSize = item.maxStackSize * ModConfig.StackSizes.itemStackMultiplier;
+			item.maxStackSize = (int) Math.round(stackSize);
+			if (item.maxStackSize <= 0)
+				item.maxStackSize = 1;
+			else if (item.maxStackSize > 64)
+				item.maxStackSize = 64;
+		}
+		loadedItemChanges = true;
 	}
 
 	public static void processCustomStackSizes() {
@@ -74,7 +94,7 @@ public class StackSizesModule {
 				tag.getAllElements().forEach(item -> {
 					item.maxStackSize = customStackSize.stackSize;
 					if (item.maxStackSize <= 0)
-						item.maxStackSize = 0;
+						item.maxStackSize = 1;
 					else if (item.maxStackSize > 64)
 						item.maxStackSize = 64;
 				});
