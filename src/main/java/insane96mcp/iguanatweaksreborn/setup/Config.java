@@ -310,6 +310,7 @@ public class Config {
 			public ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelist;
 			public ForgeConfigSpec.ConfigValue<Double> foodHealMultiplier;
 			public ForgeConfigSpec.ConfigValue<Double> blockBreakExaustionMultiplier;
+			public ForgeConfigSpec.ConfigValue<List<? extends String>> debuffs;
 
 			public HungerHealth(ForgeConfigSpec.Builder builder) {
 				builder.push(name);
@@ -334,6 +335,18 @@ public class Config {
 				blockBreakExaustionMultiplier = builder
 						.comment("When breaking block you'll get exaustion equal to the block hardness (block hardness multipliers are taken into account too) multiplied by this value. Setting this to 0 will default to the vanilla exaustion (0.005).")
 						.defineInRange("Block Break Exaustion Multiplier", 0.01d, 0.0d, 1024d);
+				debuffs = builder
+						.comment("A list of debuffs to apply to the player when has on low hunger / health. Each string must be 'stat,range,status_effect,amplifier', where stat MUST BE one of the following: HUNGER, HEALTH; range must be a range for the statistic like it's done in commands.\n" +
+								"'10' When the player has exactly ten of the specified stat.\n'10..12' When the player has between 10 and 12 (inclusive) of the specified stat.\n" +
+								"'5..' When the player has five or greater of the specified stat.\n" +
+								"'..15' When the player has 15 or less of the specified stat.\n" +
+								"effect must be a potion id, e.g. minecraft:weakness" +
+								"amplifier must be the potion level starting from 0 (0 = level I)" +
+								"Thus is called Debuffs, this can be used to give the player positive effects.")
+						.defineList("Debuffs",
+								Arrays.asList("HUNGER,..2,minecraft:mining_fatigue,0",
+										"HUNGER,..4,minecraft:slowness,0",
+										"HEALTH,..3,minecraft:slowness,0"), o -> o instanceof String);
 				builder.pop();
 			}
 		}

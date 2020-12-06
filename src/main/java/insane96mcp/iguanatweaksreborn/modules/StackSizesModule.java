@@ -204,7 +204,7 @@ public class StackSizesModule {
 		return materialWeight.get(blockMaterial);
 	}
 
-	public static HashMap<Material, Double> materialWeight = new HashMap<Material, Double>();
+	public static HashMap<Material, Double> materialWeight = new HashMap<>();
 
 	public static void initMaterialWeight() {
 		materialWeight.put(Material.ANVIL, 6d);
