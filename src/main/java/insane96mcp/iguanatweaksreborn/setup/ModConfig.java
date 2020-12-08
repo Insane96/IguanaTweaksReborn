@@ -71,6 +71,7 @@ public class ModConfig {
 
         public static class Agriculture {
             public static FarmingModule.Agriculture.NerfedBonemeal nerfedBonemeal;
+            public static Double bonemealFailChance;
             public static FarmingModule.Agriculture.CropsRequireWater cropsRequireWater;
             public static Double cropsGrowthMultiplier;
             public static Double noSunlightGrowthMultiplier;
@@ -92,6 +93,7 @@ public class ModConfig {
 
             public static void load() {
                 nerfedBonemeal = Config.COMMON.farming.agriculture.nerfedBonemeal.get();
+                bonemealFailChance = Config.COMMON.farming.agriculture.bonemealFailChance.get();
                 cropsRequireWater = Config.COMMON.farming.agriculture.cropsRequireWater.get();
                 cropsGrowthMultiplier = Config.COMMON.farming.agriculture.cropsGrowthMultiplier.get();
                 noSunlightGrowthMultiplier = Config.COMMON.farming.agriculture.noSunlightGrowthMultiplier.get();
@@ -634,7 +636,7 @@ public class ModConfig {
                 int amplifier = Integer.parseInt(split[3]);
 
                 Debuff debuff = new Debuff(stat, min, max, effect, amplifier);
-                LogHelper.Info(debuff.toString());
+                //LogHelper.Info(debuff.toString());
                 debuffs.add(debuff);
             }
 

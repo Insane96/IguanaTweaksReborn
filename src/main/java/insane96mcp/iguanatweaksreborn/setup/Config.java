@@ -146,6 +146,7 @@ public class Config {
 				public static String name = "Agriculture";
 
 				public ForgeConfigSpec.ConfigValue<FarmingModule.Agriculture.NerfedBonemeal> nerfedBonemeal;
+				public ForgeConfigSpec.ConfigValue<Double> bonemealFailChance;
 				public ForgeConfigSpec.ConfigValue<FarmingModule.Agriculture.CropsRequireWater> cropsRequireWater;
 				public ForgeConfigSpec.ConfigValue<Double> cropsGrowthMultiplier;
 				public ForgeConfigSpec.ConfigValue<Double> noSunlightGrowthMultiplier;
@@ -169,6 +170,9 @@ public class Config {
 					nerfedBonemeal = builder
 							.comment("Makes more Bone Meal required for Crops. Valid Values are\nDISABLED: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
 							.defineEnum("Nerfed Bonemeal", FarmingModule.Agriculture.NerfedBonemeal.NERFED);
+					bonemealFailChance = builder
+							.comment("Makes Bone Meal have a chance to fail to grow crops.")
+							.defineInRange("Bonemeal Fail Chance", 0d, 0.0d, 100d);
 					cropsRequireWater = builder
 							.comment("Set if crops require wet farmland to grow.\nValid Values:\nNO: Crops will not require water to grow\nBONEMEAL_ONLY: Crops will grow on dry farmland by only using bonemeal\nANY_CASE: Will make Crops not grow in any case when on dry farmland")
 							.defineEnum("Crops Require Water", FarmingModule.Agriculture.CropsRequireWater.ANY_CASE);

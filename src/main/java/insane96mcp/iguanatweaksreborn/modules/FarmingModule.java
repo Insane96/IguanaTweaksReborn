@@ -157,7 +157,7 @@ public class FarmingModule {
 				return;
 			if (!ModConfig.Modules.farming)
 				return;
-			//If farmland is dry and cropsRequireWater is set to anycase then cancel the event
+			//If farmland is dry and cropsRequireWater is set to ANY_CASE then cancel the event
 			if (isAffectedByFarmlandState(event.getWorld(), event.getPos()) && !isCropOnWetFarmland(event.getWorld(), event.getPos()) && ModConfig.Farming.Agriculture.cropsRequireWater.equals(CropsRequireWater.ANY_CASE)) {
 				event.setCanceled(true);
 				return;
@@ -177,7 +177,12 @@ public class FarmingModule {
 					age = state.get(CropsBlock.AGE);
 				if (age == maxAge)
 					return;
-				if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.SLIGHT))
+
+				if (RandomHelper.getDouble(event.getWorld().getRandom(), 0d, 100d) < ModConfig.Farming.Agriculture.bonemealFailChance) {
+					event.setResult(Event.Result.ALLOW);
+					return;
+				}
+				else if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.SLIGHT))
 					age += RandomHelper.getInt(event.getWorld().getRandom(), 1, 2);
 				else if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.NERFED))
 					age++;
@@ -194,7 +199,11 @@ public class FarmingModule {
 				int maxAge = Collections.max(StemBlock.AGE.getAllowedValues());
 				if (age == maxAge)
 					return;
-				if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.SLIGHT))
+				if (RandomHelper.getDouble(event.getWorld().getRandom(), 0d, 100d) < ModConfig.Farming.Agriculture.bonemealFailChance) {
+					event.setResult(Event.Result.ALLOW);
+					return;
+				}
+				else if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.SLIGHT))
 					age += RandomHelper.getInt(event.getWorld().getRandom(), 1, 2);
 				else if (ModConfig.Farming.Agriculture.nerfedBonemeal.equals(NerfedBonemeal.NERFED))
 					age++;

@@ -7,11 +7,11 @@ public class RandomHelper {
 		return rand.nextInt(max - min) + min;
 	}
 
-	public static float getFloat(Random rand, float min, float max) {
+	public static float getDouble(Random rand, float min, float max) {
 		return rand.nextFloat() * (max - min) + min;
 	}
 
-	public static double getFloat(Random rand, double min, double max) {
+	public static double getDouble(Random rand, double min, double max) {
 		return rand.nextFloat() * (max - min) + min;
 	}
 }

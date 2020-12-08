@@ -28,6 +28,7 @@ public class StackSizesModule {
 			return;
 		if (loadedFoodChanges)
 			return;
+		loadedFoodChanges = true;
 		Collection<Item> items = ForgeRegistries.ITEMS.getValues();
 		for (Item item : items) {
 			if (!item.isFood())
@@ -61,7 +62,6 @@ public class StackSizesModule {
 				stackSize = 64d;
 			item.maxStackSize = (int) Math.round(stackSize);
 		}
-		loadedFoodChanges = true;
 	}
 
 	public static void processItemStackSizes() {
@@ -71,6 +71,7 @@ public class StackSizesModule {
 			return;
 		if (loadedItemChanges)
 			return;
+		loadedItemChanges = true;
 		Collection<Item> items = ForgeRegistries.ITEMS.getValues();
 		for (Item item : items) {
 			if (item instanceof BlockItem)
@@ -104,7 +105,6 @@ public class StackSizesModule {
 				stackSize = 64d;
 			item.maxStackSize = (int) Math.round(stackSize);
 		}
-		loadedItemChanges = true;
 	}
 
 	public static void processBlockStackSizes() {
@@ -114,6 +114,7 @@ public class StackSizesModule {
 			return;
 		if (loadedBlockChanges)
 			return;
+		loadedBlockChanges = true;
 		Collection<Item> items = ForgeRegistries.ITEMS.getValues();
 		for (Item item : items) {
 			if (!(item instanceof BlockItem))
@@ -147,7 +148,6 @@ public class StackSizesModule {
 				stackSize = 64d;
 			item.maxStackSize = (int) Math.round(stackSize);
 		}
-		loadedBlockChanges = true;
 	}
 
 	public static void processCustomStackSizes() {
