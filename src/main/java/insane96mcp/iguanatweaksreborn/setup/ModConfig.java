@@ -560,7 +560,8 @@ public class ModConfig {
 
             public enum Stat {
                 HUNGER,
-                HEALTH
+                HEALTH,
+                EXPERIENCE_LEVEL
             }
         }
 

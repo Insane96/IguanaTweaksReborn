@@ -126,6 +126,10 @@ public class HungerHealthModule {
 						pass = true;
 					break;
 
+				case EXPERIENCE_LEVEL:
+					if (player.experienceLevel <= debuff.max && player.experienceLevel >= debuff.min)
+						pass = true;
+					break;
 				default:
 					break;
 			}
