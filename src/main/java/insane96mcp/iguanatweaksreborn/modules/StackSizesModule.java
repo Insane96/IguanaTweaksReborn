@@ -194,7 +194,7 @@ public class StackSizesModule {
 		}
 	}
 
-	//TODO Put this in it's own class
+	//TODO Put this in it's own class and make it configurable
 	public static double getBlockWeight(BlockState state) {
 		Material blockMaterial = state.getMaterial();
 

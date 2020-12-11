@@ -17,8 +17,7 @@ public class Sleep {
 
 	@SubscribeEvent
 	public static void onSleep(PlayerSleepInBedEvent event) {
-		if (event.getResultStatus() != null)
-			return;
 		SleepRespawnModule.tooHungryToSleep(event);
+		SleepRespawnModule.disableSleeping(event);
 	}
 }

@@ -362,6 +362,8 @@ public class Config {
 			public ForgeConfigSpec.ConfigValue<Integer> hungerDepletedOnWakeUp;
 			public ForgeConfigSpec.ConfigValue<List<? extends String>> effectsOnWakeUp;
 			public ForgeConfigSpec.ConfigValue<Boolean> noSleepIfHungry;
+			public ForgeConfigSpec.ConfigValue<Boolean> disableSleeping;
+			public ForgeConfigSpec.ConfigValue<Boolean> disableBedSpawn;
 
 			public SleepRespawn(ForgeConfigSpec.Builder builder) {
 				builder.push(name);
@@ -374,6 +376,12 @@ public class Config {
 				noSleepIfHungry = builder
 						.comment("If the player's hunger bar is below 'Hunger Depleted on Wake Up' he can't sleep.")
 						.define("No Sleep If Hungry", true);
+				disableSleeping = builder
+						.comment("If set to true the player will not be able to sleep in beds")
+						.define("Disable Sleeping", false);
+				disableBedSpawn = builder
+						.comment("(Requires 'Disable Sleeping' set to true) If set to true the player spawn point will not change when the player.")
+						.define("Disable Bed Spawn", false);
 				builder.pop();
 			}
 		}
