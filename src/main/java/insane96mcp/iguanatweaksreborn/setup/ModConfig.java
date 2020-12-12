@@ -5,6 +5,7 @@ import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
 import insane96mcp.iguanatweaksreborn.modules.HungerHealthModule;
 import insane96mcp.iguanatweaksreborn.modules.StackSizesModule;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.potion.Effect;
 import net.minecraft.util.ResourceLocation;
@@ -228,12 +229,12 @@ public class ModConfig {
                     LogHelper.Warn("Invalid line \"%s\" for Hardnesses Blacklist. Format must be modid:blockid,modid:dimension", line);
                     continue;
                 }
-                ResourceLocation dimension = Utils.AnyRL;
+                ResourceLocation dimension = MCUtils.AnyRL;
                 if (split.length == 2) {
                     dimension = ResourceLocation.tryCreate(split[1]);
                     if (dimension == null) {
                         LogHelper.Warn(String.format("Invalid dimension \"%s\" for Hardness Blacklist. Ignoring it", split[1]));
-                        dimension = Utils.AnyRL;
+                        dimension = MCUtils.AnyRL;
                     }
                 }
                 if (split[0].startsWith("#")) {
@@ -276,12 +277,12 @@ public class ModConfig {
                     continue;
                 }
                 double hardness = Double.parseDouble(split[1]);
-                ResourceLocation dimension = Utils.AnyRL;
+                ResourceLocation dimension = MCUtils.AnyRL;
                 if (split.length == 3) {
                     dimension = ResourceLocation.tryCreate(split[2]);
                     if (dimension == null) {
                         LogHelper.Warn(String.format("Invalid dimension \"%s\" for Custom Hardnesses. Ignoring it", split[2]));
-                        dimension = Utils.AnyRL;
+                        dimension = MCUtils.AnyRL;
                     }
                 }
                 if (split[0].startsWith("#")) {
@@ -738,7 +739,7 @@ public class ModConfig {
         }
 
         public IdTagMatcher(@Nullable ResourceLocation id, @Nullable ResourceLocation tag) {
-            this(id, tag, Utils.AnyRL);
+            this(id, tag, MCUtils.AnyRL);
         }
     }
 

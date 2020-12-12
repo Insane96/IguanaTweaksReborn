@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.modules;
 
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
-import insane96mcp.iguanatweaksreborn.utils.Utils;
+import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -37,13 +37,13 @@ public class HungerHealthModule {
 			boolean isInBlacklist = false;
 			for (ModConfig.IdTagMatcher blacklistEntry : ModConfig.HungerHealth.blacklist) {
 				if (!ModConfig.HungerHealth.blacklistAsWhitelist) {
-					if (Utils.isInTagOrItem(blacklistEntry, item, null)) {
+					if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
 						isInBlacklist = true;
 						break;
 					}
 				}
 				else {
-					if (Utils.isInTagOrItem(blacklistEntry, item, null)) {
+					if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
 						isInWhitelist = true;
 						break;
 					}				}

@@ -12,5 +12,14 @@ public class EntityInteract {
 	@SubscribeEvent
 	public static void entityInteractEvent(PlayerInteractEvent.EntityInteract event) {
 		FarmingModule.Livestock.onCowMilk(event);
+
+		/*if (event.getTarget() instanceof LivingEntity) {
+			LivingEntity entity = (LivingEntity) event.getTarget();
+			entity.startSleeping(event.getTarget().getPosition());
+			if (!entity.getBedPosition().map((p_241350_1_) -> ForgeEventFactory.fireSleepingLocationCheck(entity, p_241350_1_)).orElse(false))
+				entity.wakeUp();
+			else
+				((MobEntity)entity).setNoAI(true);
+		}*/
 	}
 }

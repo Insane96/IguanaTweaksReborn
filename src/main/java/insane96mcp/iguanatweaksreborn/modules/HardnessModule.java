@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.modules;
 
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
-import insane96mcp.iguanatweaksreborn.utils.Utils;
+import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.ResourceLocation;
@@ -24,7 +24,7 @@ public class HardnessModule {
         //Dimension dimension = world.getDimensionKey().getRegistryName();
         ResourceLocation dimensionId = world.getDimensionKey().getLocation();
         if (dimensionId == null)
-            dimensionId = Utils.AnyRL;
+            dimensionId = MCUtils.AnyRL;
         BlockState blockState = world.getBlockState(event.getPos());
         Block block = blockState.getBlock();
         double multiplier = 1d / getBlockGlobalHardness(block, dimensionId);
@@ -61,16 +61,16 @@ public class HardnessModule {
      */
     public static double getBlockGlobalHardness(Block block, ResourceLocation dimensionId) {
         for (ModConfig.Hardness.BlockHardness blockHardness : ModConfig.Hardness.customHardness)
-            if (Utils.isInTagOrBlock(blockHardness, block, dimensionId))
+            if (MCUtils.isInTagOrBlock(blockHardness, block, dimensionId))
                 return 1d;
         boolean isInWhitelist = false;
         for (ModConfig.IdTagMatcher blacklistEntry : ModConfig.Hardness.blacklist) {
             if (!ModConfig.Hardness.blacklistAsWhitelist) {
-                if (Utils.isInTagOrBlock(blacklistEntry, block, dimensionId))
+                if (MCUtils.isInTagOrBlock(blacklistEntry, block, dimensionId))
                     return 1d;
             }
             else {
-                if (Utils.isInTagOrBlock(blacklistEntry, block, dimensionId)) {
+                if (MCUtils.isInTagOrBlock(blacklistEntry, block, dimensionId)) {
                     isInWhitelist = true;
                     break;
                 }
@@ -93,7 +93,7 @@ public class HardnessModule {
      */
     public static double getBlockSingleHardness(Block block, ResourceLocation dimensionId) {
         for (ModConfig.Hardness.BlockHardness blockHardness : ModConfig.Hardness.customHardness) {
-            if (Utils.isInTagOrBlock(blockHardness, block, dimensionId)) {
+            if (MCUtils.isInTagOrBlock(blockHardness, block, dimensionId)) {
                 return blockHardness.hardness;
             }
         }

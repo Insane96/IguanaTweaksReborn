@@ -3,8 +3,8 @@ package insane96mcp.iguanatweaksreborn.modules;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
+import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.iguanatweaksreborn.utils.RandomHelper;
-import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.block.*;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -335,7 +335,7 @@ public class FarmingModule {
 			int cooldown = 0;
 			for (ModConfig.Farming.Agriculture.HoeCooldown hoeCooldown : ModConfig.Farming.Agriculture.hoesCooldowns) {
 				//System.out.println(hoeTillChance.cooldown);
-				if (Utils.isInTagOrItem(hoeCooldown, stack.getItem(), null)) {
+				if (MCUtils.isInTagOrItem(hoeCooldown, stack.getItem(), null)) {
 					cooldown = hoeCooldown.cooldown;
 				}
 			}
