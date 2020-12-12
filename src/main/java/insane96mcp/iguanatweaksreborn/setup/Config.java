@@ -24,7 +24,7 @@ public class Config {
 		public final Modules modules;
 		public final Experience experience;
 		public final Farming farming;
-		public final Hardness hardness;
+		public final Mining mining;
 		public final StackSizes stackSizes;
 		public final HungerHealth hungerHealth;
 		public final SleepRespawn sleepRespawn;
@@ -34,7 +34,7 @@ public class Config {
 			modules = new Modules(builder);
 			experience = new Experience(builder);
 			farming = new Farming(builder);
-			hardness = new Hardness(builder);
+			mining = new Mining(builder);
 			stackSizes = new StackSizes(builder);
 			hungerHealth = new HungerHealth(builder);
 			sleepRespawn = new SleepRespawn(builder);
@@ -231,27 +231,26 @@ public class Config {
 			}
 		}
 
-		public static class Hardness {
-			public static String name = "Hardness";
-			public static String comment = "For all your Hardness increase needs";
+		public static class Mining {
+			public static String name = "Mining";
 
-			public ForgeConfigSpec.ConfigValue<Double> multiplier;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> dimensionMultiplier;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
+			public ForgeConfigSpec.ConfigValue<Double> hardnessMultiplier;
+			public ForgeConfigSpec.ConfigValue<List<? extends String>> dimensionHardnessMultiplier;
+			public ForgeConfigSpec.ConfigValue<List<? extends String>> hardnessBlacklist;
 			public ForgeConfigSpec.ConfigValue<Boolean> backlistAsWhitelist;
 			public ForgeConfigSpec.ConfigValue<List<? extends String>> customHardness;
 
-			public Hardness(ForgeConfigSpec.Builder builder) {
-				builder.comment(comment).push(name);
-				multiplier = builder
+			public Mining(ForgeConfigSpec.Builder builder) {
+				builder.push(name);
+				hardnessMultiplier = builder
 						.comment("Multiplier applied to the hardness of blocks. E.g. with this set to 3.0 blocks will take three times more time to break.")
-						.defineInRange("Multiplier", 3.0d, 0.0d, 128d);
-				dimensionMultiplier = builder
+						.defineInRange("Hardness Multiplier", 3.0d, 0.0d, 128d);
+				dimensionHardnessMultiplier = builder
 						.comment("A list of dimensions and their relative block hardness multiplier. Each entry has a a dimension and hardness. This overrides the global multiplier.\nE.g. [\"minecraft:overworld,2\", \"minecraft:the_nether,4\"]")
-						.defineList("Dimension Multiplier", new ArrayList<String>(), o -> o instanceof String);
-				blacklist = builder
+						.defineList("Dimension Hardness Multiplier", new ArrayList<>(), o -> o instanceof String);
+				hardnessBlacklist = builder
 						.comment("Block ids or tags that will ignore the global or dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
-						.defineList("Block Blacklist", new ArrayList<String>(), o -> o instanceof String);
+						.defineList("Block Hardnesss Blacklist", new ArrayList<>(), o -> o instanceof String);
 				backlistAsWhitelist = builder
 						.comment("Block Blacklist will be treated as a whitelist")
 						.define("Blacklist as Whitelist", false);

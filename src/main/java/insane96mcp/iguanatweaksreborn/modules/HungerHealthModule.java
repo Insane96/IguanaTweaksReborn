@@ -95,10 +95,10 @@ public class HungerHealthModule {
 		Block block = state.getBlock();
 		ResourceLocation dimensionId = world.getDimensionKey().getLocation();
 		double hardness = state.getBlockHardness(event.getWorld(), event.getPos());
-		double globalHardnessMultiplier = HardnessModule.getBlockGlobalHardness(block, dimensionId);
+		double globalHardnessMultiplier = MiningModule.getBlockGlobalHardness(block, dimensionId);
 		if (globalHardnessMultiplier != -1d)
 			hardness *= globalHardnessMultiplier;
-		double singleHardness = HardnessModule.getBlockSingleHardness(block, dimensionId);
+		double singleHardness = MiningModule.getBlockSingleHardness(block, dimensionId);
 		if (singleHardness != -1d)
 			hardness = singleHardness;
 		event.getPlayer().addExhaustion((float) (hardness * ModConfig.HungerHealth.blockBreakExaustionMultiplier) - 0.005f);

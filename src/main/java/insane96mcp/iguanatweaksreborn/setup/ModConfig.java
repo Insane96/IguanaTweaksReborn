@@ -171,23 +171,23 @@ public class ModConfig {
 
     }
 
-    public static class Hardness {
-        public static Double multiplier;
-        public static List<DimensionMultiplier> dimensionMultipliers;
-        public static List<IdTagMatcher> blacklist;
+    public static class Mining {
+        public static Double hardnessMultiplier;
+        public static List<DimensionHardnessMultiplier> dimensionHardnessMultiplier;
+        public static List<IdTagMatcher> hardnessBlacklist;
         public static Boolean blacklistAsWhitelist;
         public static List<BlockHardness> customHardness;
 
         public static void load() {
-            multiplier = Config.COMMON.hardness.multiplier.get();
-            dimensionMultipliers = parseDimensionMultipliers(Config.COMMON.hardness.dimensionMultiplier.get());
-            blacklist = parseBlacklist(Config.COMMON.hardness.blacklist.get());
-            blacklistAsWhitelist = Config.COMMON.hardness.backlistAsWhitelist.get();
-            customHardness = parseCustomHardnesses(Config.COMMON.hardness.customHardness.get());
+            hardnessMultiplier = Config.COMMON.mining.hardnessMultiplier.get();
+            dimensionHardnessMultiplier = parseDimensionHardnessMultipliers(Config.COMMON.mining.dimensionHardnessMultiplier.get());
+            hardnessBlacklist = parseHardnessBlacklist(Config.COMMON.mining.hardnessBlacklist.get());
+            blacklistAsWhitelist = Config.COMMON.mining.backlistAsWhitelist.get();
+            customHardness = parseCustomHardnesses(Config.COMMON.mining.customHardness.get());
         }
 
-        public static List<DimensionMultiplier> parseDimensionMultipliers(List<? extends String> list) {
-            List<DimensionMultiplier> dimensionMultipliers = new ArrayList<>();
+        public static List<DimensionHardnessMultiplier> parseDimensionHardnessMultipliers(List<? extends String> list) {
+            List<DimensionHardnessMultiplier> dimensionHardnessMultipliers = new ArrayList<>();
             for (String line : list) {
                 String[] split = line.split(",");
                 if (split.length < 1 || split.length > 2) {
@@ -205,23 +205,23 @@ public class ModConfig {
                 }
                 double hardness = Double.parseDouble(split[1]);
 
-                dimensionMultipliers.add(new DimensionMultiplier(dimension, hardness));
+                dimensionHardnessMultipliers.add(new DimensionHardnessMultiplier(dimension, hardness));
             }
 
-            return dimensionMultipliers;
+            return dimensionHardnessMultipliers;
         }
 
-        public static class DimensionMultiplier {
+        public static class DimensionHardnessMultiplier {
             public ResourceLocation dimension;
             public double multiplier;
 
-            public DimensionMultiplier(ResourceLocation dimension, double multiplier) {
+            public DimensionHardnessMultiplier(ResourceLocation dimension, double multiplier) {
                 this.dimension = dimension;
                 this.multiplier = multiplier;
             }
         }
 
-        public static List<IdTagMatcher> parseBlacklist(List<? extends String> list) {
+        public static List<IdTagMatcher> parseHardnessBlacklist(List<? extends String> list) {
             List<IdTagMatcher> commonTagBlock = new ArrayList<>();
             for (String line : list) {
                 String[] split = line.split(",");
@@ -717,7 +717,7 @@ public class ModConfig {
         Modules.load();
         Experience.load();
         Farming.load();
-        Hardness.load();
+        Mining.load();
         HungerHealth.load();
         StackSizes.load();
         SleepRespawn.load();

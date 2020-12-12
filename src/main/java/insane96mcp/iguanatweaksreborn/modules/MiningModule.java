@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
-public class HardnessModule {
+public class MiningModule {
     public static void ProcessHardness(PlayerEvent.BreakSpeed event) {
         processGlobalHardness(event);
         processSingleHardness(event);
@@ -18,7 +18,7 @@ public class HardnessModule {
     public static void processGlobalHardness(PlayerEvent.BreakSpeed event) {
         if (!ModConfig.Modules.hardness)
             return;
-        if (ModConfig.Hardness.multiplier == 1.0d && ModConfig.Hardness.dimensionMultipliers.size() == 0)
+        if (ModConfig.Mining.hardnessMultiplier == 1.0d && ModConfig.Mining.dimensionHardnessMultiplier.size() == 0)
             return;
         World world = event.getPlayer().world;
         //Dimension dimension = world.getDimensionKey().getRegistryName();
@@ -36,7 +36,7 @@ public class HardnessModule {
     public static void processSingleHardness(PlayerEvent.BreakSpeed event) {
         if (!ModConfig.Modules.hardness)
             return;
-        if (ModConfig.Hardness.customHardness.size() == 0)
+        if (ModConfig.Mining.customHardness.size() == 0)
             return;
         World world = event.getPlayer().world;
         //Dimension dimension = world.getDimensionKey().getRegistryName();
@@ -60,12 +60,12 @@ public class HardnessModule {
      * Returns -1 when no changes must be made, else will return a divider for the block breaking speed (aka multiplier for block hardness)
      */
     public static double getBlockGlobalHardness(Block block, ResourceLocation dimensionId) {
-        for (ModConfig.Hardness.BlockHardness blockHardness : ModConfig.Hardness.customHardness)
+        for (ModConfig.Mining.BlockHardness blockHardness : ModConfig.Mining.customHardness)
             if (MCUtils.isInTagOrBlock(blockHardness, block, dimensionId))
                 return 1d;
         boolean isInWhitelist = false;
-        for (ModConfig.IdTagMatcher blacklistEntry : ModConfig.Hardness.blacklist) {
-            if (!ModConfig.Hardness.blacklistAsWhitelist) {
+        for (ModConfig.IdTagMatcher blacklistEntry : ModConfig.Mining.hardnessBlacklist) {
+            if (!ModConfig.Mining.blacklistAsWhitelist) {
                 if (MCUtils.isInTagOrBlock(blacklistEntry, block, dimensionId))
                     return 1d;
             }
@@ -76,12 +76,12 @@ public class HardnessModule {
                 }
             }
         }
-        if (!isInWhitelist && ModConfig.Hardness.blacklistAsWhitelist)
+        if (!isInWhitelist && ModConfig.Mining.blacklistAsWhitelist)
             return 1d;
-        double multiplier = ModConfig.Hardness.multiplier;
-        for (ModConfig.Hardness.DimensionMultiplier dimensionMultiplier : ModConfig.Hardness.dimensionMultipliers) {
-            if (dimensionId.equals(dimensionMultiplier.dimension)) {
-                multiplier = dimensionMultiplier.multiplier;
+        double multiplier = ModConfig.Mining.hardnessMultiplier;
+        for (ModConfig.Mining.DimensionHardnessMultiplier dimensionHardnessMultiplier : ModConfig.Mining.dimensionHardnessMultiplier) {
+            if (dimensionId.equals(dimensionHardnessMultiplier.dimension)) {
+                multiplier = dimensionHardnessMultiplier.multiplier;
                 break;
             }
         }
@@ -92,7 +92,7 @@ public class HardnessModule {
      * Returns -1 when the block has no custom hardness, the hardness otherwise
      */
     public static double getBlockSingleHardness(Block block, ResourceLocation dimensionId) {
-        for (ModConfig.Hardness.BlockHardness blockHardness : ModConfig.Hardness.customHardness) {
+        for (ModConfig.Mining.BlockHardness blockHardness : ModConfig.Mining.customHardness) {
             if (MCUtils.isInTagOrBlock(blockHardness, block, dimensionId)) {
                 return blockHardness.hardness;
             }
