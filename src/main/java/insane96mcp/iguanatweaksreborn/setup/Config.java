@@ -379,7 +379,7 @@ public class Config {
 						.comment("If set to true the player will not be able to sleep in beds")
 						.define("Disable Sleeping", false);
 				disableBedSpawn = builder
-						.comment("(Requires 'Disable Sleeping' set to true) If set to true the player spawn point will not change when the player.")
+						.comment("If set to true the player spawn point will not change when the player. Requires 'Disable Sleeping' enabled.")
 						.define("Disable Bed Spawn", false);
 				builder.pop();
 			}
