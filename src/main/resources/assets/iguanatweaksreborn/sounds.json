@@ -1,0 +1,12 @@
+{
+  "creeper_cena_fuse": {
+    "category": "hostile",
+    "subtitle": "iguanatweaksreborn.subtitle.creeper_cena_fuse",
+    "sounds": [ "iguanatweaksreborn:creeper_cena_fuse" ]
+  },
+  "creeper_cena_explode": {
+    "category": "hostile",
+    "subtitle": "iguanatweaksreborn.subtitle.creeper_cena_explode",
+    "sounds": [ "iguanatweaksreborn:creeper_cena_explode" ]
+  }
+}

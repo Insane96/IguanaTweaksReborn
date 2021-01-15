@@ -3,6 +3,8 @@ package insane96mcp.iguanatweaksreborn.other;
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.utils.MCUtils;
+import insane96mcp.iguanatweaksreborn.utils.Reflection;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.Block;
@@ -14,6 +16,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
@@ -142,7 +145,20 @@ public class ITExplosion extends Explosion {
             //double blockDensity = getBlockDensity(this.getPosition(), entity);
             //entity.sendMessage(new StringTextComponent("block den: " + blockDensity), entity.getUniqueID());
             double d10 = (1.0D - distanceRatio) * blockDensity;
-            entity.attackEntityFrom(this.getDamageSource(), (float)((int)((d10 * d10 + d10) / 2.0D * 7.0D * (double)affectedEntitiesRadius + 1.0D)));
+            DamageSource source = this.getDamageSource();
+            source.isUnblockable = true;
+            float damageAmount = (float)((int)((d10 * d10 + d10) / 2.0D * 7.0D * (double)affectedEntitiesRadius + 1.0D));
+            if (entity instanceof ServerPlayerEntity) {
+                ServerPlayerEntity player = (ServerPlayerEntity) entity;
+                if (damageAmount > 0.0F && MCUtils.canBlockDamageSource(source, player)) {
+                    damageAmount *= 0.5f;
+                    d10 *= 0.5f;
+                    Reflection.PlayerEntity_damageShield(player, damageAmount);
+                    player.world.setEntityState(player, (byte)29);
+                    //player.blockUsingShield((LivingEntity)entity);
+                }
+            }
+            entity.attackEntityFrom(source, damageAmount);
             double d11 = d10;
             if (entity instanceof LivingEntity) {
                 d11 = getBlastDamageReduction((LivingEntity)entity, d10);
