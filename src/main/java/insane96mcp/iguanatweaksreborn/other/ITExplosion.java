@@ -4,16 +4,16 @@ import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
+import insane96mcp.iguanatweaksreborn.utils.RandomHelper;
 import insane96mcp.iguanatweaksreborn.utils.Reflection;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.block.AbstractFireBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.*;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -70,12 +70,10 @@ public class ITExplosion extends Explosion {
         Set<BlockPos> set = Sets.newHashSet();
         int i = 16;
 
-        int rays = 0;
         for(int j = 0; j < 16; ++j) {
             for(int k = 0; k < 16; ++k) {
                 for(int l = 0; l < 16; ++l) {
                     if (j == 0 || j == 15 || k == 0 || k == 15 || l == 0 || l == 15) {
-                        rays++;
                         double d0 = (float)j / 15.0F * 2.0F - 1.0F;
                         double d1 = (float)k / 15.0F * 2.0F - 1.0F;
                         double d2 = (float)l / 15.0F * 2.0F - 1.0F;
@@ -112,6 +110,22 @@ public class ITExplosion extends Explosion {
             }
         }
         this.getAffectedBlockPositions().addAll(set);
+
+        for(BlockPos blockpos : this.getAffectedBlockPositions()) {
+            BlockState blockstate = this.world.getBlockState(blockpos);
+            Block block = blockstate.getBlock();
+            if (!blockstate.isAir(this.world, blockpos) && !(block instanceof TNTBlock)) {
+                BlockPos blockpos1 = blockpos.toImmutable();
+                this.world.getProfiler().startSection("falling_blocks_explosions");
+
+                this.world.setBlockState(blockpos1, Blocks.AIR.getDefaultState());
+                FallingBlockEntity fallingBlockEntity = new FallingBlockEntity(this.world, blockpos1.getX() + 0.5f, blockpos1.getY() + 2.0625f, blockpos1.getZ() + 0.5f, blockstate);
+                fallingBlockEntity.fallTime = 1;
+                this.world.addEntity(fallingBlockEntity);
+                this.world.getProfiler().endSection();
+            }
+        }
+        this.clearAffectedBlockPositions();
 
         float affectedEntitiesRadius = this.size * 2.0F;
         int x1 = MathHelper.floor(this.getPosition().getX() - (double)affectedEntitiesRadius - 1.0D);
@@ -163,7 +177,7 @@ public class ITExplosion extends Explosion {
             if (entity instanceof LivingEntity) {
                 d11 = getBlastDamageReduction((LivingEntity)entity, d10);
             }
-            d11 *= this.size;
+            //d11 *= this.size;
             d11 = Math.max(d11, this.size * 0.1);
 
             entity.setMotion(entity.getMotion().add(xDistance * d11, yDistance * d11, zDistance * d11));
@@ -176,7 +190,7 @@ public class ITExplosion extends Explosion {
         }
     }
 
-    /*public void doExplosionB(boolean spawnParticles) {
+    public void doExplosionB(boolean spawnParticles) {
         if (this.world.isRemote) {
             this.world.playSound(this.getPosition().x, this.getPosition().y, this.getPosition().z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F, false);
         }
@@ -229,7 +243,7 @@ public class ITExplosion extends Explosion {
                 }
             }
         }
-    }*/
+    }
 
     public static float getBlockDensity(Vector3d explosionVector, Entity entity) {
         AxisAlignedBB axisalignedbb = entity.getBoundingBox();
