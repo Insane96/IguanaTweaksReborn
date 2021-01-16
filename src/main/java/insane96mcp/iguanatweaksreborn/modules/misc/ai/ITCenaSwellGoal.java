@@ -13,7 +13,7 @@ public class ITCenaSwellGoal extends ITCreeperSwellGoal {
      * Called each tick, if false calls resetTask, if true calls tick and if it's first time executing calls startExecuting
      */
     public void startExecuting() {
-        this.startExecuting();
+        super.startExecuting();
         this.swellingCreeper.playSound(ModSounds.CREEPER_CENA_FUSE.get(), 3.0f, 1.0f);
     }
 }
