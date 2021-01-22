@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.other;
+package insane96mcp.iguanatweaksreborn.modules.misc.other;
 
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
@@ -42,33 +42,12 @@ import java.util.Set;
 
 public class ITExplosion extends Explosion {
 
-    public ITExplosion(World worldIn, @Nullable Entity entityIn, double x, double y, double z, float size, List<BlockPos> affectedPositions) {
-        super(worldIn, entityIn, x, y, z, size, affectedPositions);
-    }
-
-    public ITExplosion(World worldIn, @Nullable Entity exploderIn, double xIn, double yIn, double zIn, float sizeIn, boolean causesFireIn, Mode modeIn, List<BlockPos> affectedBlockPositionsIn) {
-        super(worldIn, exploderIn, xIn, yIn, zIn, sizeIn, causesFireIn, modeIn, affectedBlockPositionsIn);
-    }
-
-    public ITExplosion(World worldIn, @Nullable Entity exploderIn, double xIn, double yIn, double zIn, float sizeIn, boolean causesFireIn, Mode modeIn) {
-        super(worldIn, exploderIn, xIn, yIn, zIn, sizeIn, causesFireIn, modeIn);
-    }
-
     public ITExplosion(World world, @Nullable Entity exploder, @Nullable DamageSource source, @Nullable ExplosionContext context, double x, double y, double z, float size, boolean causesFire, Mode mode) {
         super(world, exploder, source, context, x, y, z, size, causesFire, mode);
     }
 
-    /*
-        Creates an IguanaTweaks Explosion from an already existing Explosion
-     */
-    public ITExplosion(Explosion explosion) {
-        //super(explosion.world, explosion.exploder, explosion.getDamageSource(), explosion.context, explosion.getPosition().x, explosion.getPosition().y + explosion.exploder.getSize(explosion.exploder.getPose()).height / 2, explosion.getPosition().z, explosion.size, explosion.causesFire, explosion.mode);
-        super(explosion.world, explosion.exploder, explosion.getDamageSource(), explosion.context, explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z, explosion.size, explosion.causesFire, explosion.mode);
-    }
-
-    public void doExplosionA() {
+    public void gatherAffectedBlocks() {
         Set<BlockPos> set = Sets.newHashSet();
-        int i = 16;
 
         for(int j = 0; j < 16; ++j) {
             for(int k = 0; k < 16; ++k) {
@@ -110,23 +89,26 @@ public class ITExplosion extends Explosion {
             }
         }
         this.getAffectedBlockPositions().addAll(set);
+    }
 
+    public void fallingBlocks() {
         for(BlockPos blockpos : this.getAffectedBlockPositions()) {
             BlockState blockstate = this.world.getBlockState(blockpos);
             Block block = blockstate.getBlock();
-            if (!blockstate.isAir(this.world, blockpos) && !(block instanceof TNTBlock)) {
-                BlockPos blockpos1 = blockpos.toImmutable();
-                this.world.getProfiler().startSection("falling_blocks_explosions");
+            if (blockstate.isAir(this.world, blockpos) || block instanceof TNTBlock)
+                continue;
 
-                this.world.setBlockState(blockpos1, Blocks.AIR.getDefaultState());
-                FallingBlockEntity fallingBlockEntity = new FallingBlockEntity(this.world, blockpos1.getX() + 0.5f, blockpos1.getY() + 2.0625f, blockpos1.getZ() + 0.5f, blockstate);
-                fallingBlockEntity.fallTime = 1;
-                this.world.addEntity(fallingBlockEntity);
-                this.world.getProfiler().endSection();
-            }
+            BlockPos blockpos1 = blockpos.toImmutable();
+
+            this.world.setBlockState(blockpos1, Blocks.AIR.getDefaultState());
+            FallingBlockEntity fallingBlockEntity = new FallingBlockEntity(this.world, blockpos1.getX() + 0.5f, blockpos1.getY() + 2.0625f, blockpos1.getZ() + 0.5f, blockstate);
+            fallingBlockEntity.fallTime = 1;
+            this.world.addEntity(fallingBlockEntity);
         }
         this.clearAffectedBlockPositions();
+    }
 
+    public void processEntities() {
         float affectedEntitiesRadius = this.size * 2.0F;
         int x1 = MathHelper.floor(this.getPosition().getX() - (double)affectedEntitiesRadius - 1.0D);
         int x2 = MathHelper.floor(this.getPosition().getX() + (double)affectedEntitiesRadius + 1.0D);
@@ -190,21 +172,8 @@ public class ITExplosion extends Explosion {
         }
     }
 
-    public void doExplosionB(boolean spawnParticles) {
-        if (this.world.isRemote) {
-            this.world.playSound(this.getPosition().x, this.getPosition().y, this.getPosition().z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F, false);
-        }
-
-        boolean flag = this.mode != Explosion.Mode.NONE;
-        if (spawnParticles) {
-            if (!(this.size < 2.0F) && flag) {
-                this.world.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getPosition().x, this.getPosition().y, this.getPosition().z, 1.0D, 0.0D, 0.0D);
-            } else {
-                this.world.addParticle(ParticleTypes.EXPLOSION, this.getPosition().x, this.getPosition().y, this.getPosition().z, 1.0D, 0.0D, 0.0D);
-            }
-        }
-
-        if (flag) {
+    public void destroyBlocks() {
+        if (this.mode != Explosion.Mode.NONE) {
             ObjectArrayList<Pair<ItemStack, BlockPos>> objectarraylist = new ObjectArrayList<>();
             Collections.shuffle(this.getAffectedBlockPositions(), this.world.rand);
 
@@ -233,14 +202,6 @@ public class ITExplosion extends Explosion {
 
             for(Pair<ItemStack, BlockPos> pair : objectarraylist) {
                 Block.spawnAsEntity(this.world, pair.getSecond(), pair.getFirst());
-            }
-        }
-
-        if (this.causesFire) {
-            for(BlockPos blockpos2 : this.getAffectedBlockPositions()) {
-                if (this.random.nextInt(3) == 0 && this.world.getBlockState(blockpos2).isAir() && this.world.getBlockState(blockpos2.down()).isOpaqueCube(this.world, blockpos2.down())) {
-                    this.world.setBlockState(blockpos2, AbstractFireBlock.getFireForPlacement(this.world, blockpos2));
-                }
             }
         }
     }

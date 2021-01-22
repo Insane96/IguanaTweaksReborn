@@ -9,15 +9,9 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = IguanaTweaksReborn.MOD_ID)
 public class Sleep {
-
-	@SubscribeEvent
-	public static void wakeUp(SleepFinishedTimeEvent event) {
-		SleepRespawnModule.wakeUpHungerAndEffects(event);
-	}
-
 	@SubscribeEvent
 	public static void onSleep(PlayerSleepInBedEvent event) {
-		SleepRespawnModule.tooHungryToSleep(event);
-		SleepRespawnModule.disableSleeping(event);
+		//SleepRespawnModule.tooHungryToSleep(event);
+		//SleepRespawnModule.disableSleeping(event);
 	}
 }

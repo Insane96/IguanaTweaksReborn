@@ -28,7 +28,7 @@ public class ModConfig {
         public static boolean hardness;
         public static boolean stackSizes;
         public static boolean hungerHealth;
-        public static boolean sleepRespawn;
+        //public static boolean sleepRespawn;
         public static boolean misc;
 
         public static void load() {
@@ -37,7 +37,7 @@ public class ModConfig {
             hardness = Config.COMMON.modules.hardness.get();
             stackSizes = Config.COMMON.modules.stackSizes.get();
             hungerHealth = Config.COMMON.modules.hungerHealth.get();
-            sleepRespawn = Config.COMMON.modules.sleepRespawn.get();
+            //sleepRespawn = Config.COMMON.modules.sleepRespawn.get();
             misc = Config.COMMON.modules.misc.get();
         }
     }
@@ -647,7 +647,7 @@ public class ModConfig {
 
     public static class SleepRespawn {
 
-        public static int hungerDepletedOnWakeUp;
+        /*public static int hungerDepletedOnWakeUp;
         public static List<EffectOnWakeUp> effectsOnWakeUp;
         public static boolean noSleepIfHungry;
         public static boolean disableSleeping;
@@ -704,7 +704,7 @@ public class ModConfig {
                     LogHelper.Warn(String.format("%s potion for Effects on WakeUp seems to not exist", line));
             }
             return effectsOnWakeUp;
-        }
+        }*/
     }
 
     public static class Misc {
@@ -720,7 +720,7 @@ public class ModConfig {
         Mining.load();
         HungerHealth.load();
         StackSizes.load();
-        SleepRespawn.load();
+        //SleepRespawn.load();
         Misc.load();
     }
 

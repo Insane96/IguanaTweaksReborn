@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.setup;
 
 import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
+import insane96mcp.iguanatweaksreborn.modules.sleeprespawn.SleepRespawnModule;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -13,8 +14,11 @@ public class Config {
 	public static final ForgeConfigSpec COMMON_SPEC;
 	public static final CommonConfig COMMON;
 
+	public static final ForgeConfigSpec.Builder builder;
+
 	static {
-		final Pair<CommonConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(CommonConfig::new);
+		builder = new ForgeConfigSpec.Builder();
+		final Pair<CommonConfig, ForgeConfigSpec> specPair = builder.configure(CommonConfig::new);
 		COMMON = specPair.getLeft();
 		COMMON_SPEC = specPair.getRight();
 	}
@@ -27,7 +31,7 @@ public class Config {
 		public final Mining mining;
 		public final StackSizes stackSizes;
 		public final HungerHealth hungerHealth;
-		public final SleepRespawn sleepRespawn;
+		//public final SleepRespawn sleepRespawn;
 		public final Misc misc;
 
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
@@ -37,7 +41,8 @@ public class Config {
 			mining = new Mining(builder);
 			stackSizes = new StackSizes(builder);
 			hungerHealth = new HungerHealth(builder);
-			sleepRespawn = new SleepRespawn(builder);
+			//sleepRespawn = new SleepRespawn(builder);
+			SleepRespawnModule.init();
 			misc = new Misc(builder);
 		}
 
@@ -355,7 +360,7 @@ public class Config {
 			}
 		}
 
-		public static class SleepRespawn {
+		/*public static class SleepRespawn {
 			public static String name = "Sleep & Respawn";
 
 			public ForgeConfigSpec.ConfigValue<Integer> hungerDepletedOnWakeUp;
@@ -383,7 +388,7 @@ public class Config {
 						.define("Disable Bed Spawn", false);
 				builder.pop();
 			}
-		}
+		}*/
 
 		public static class Misc {
 			public static String name = "Misc";
