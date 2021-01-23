@@ -2,18 +2,17 @@ package insane96mcp.iguanatweaksreborn.modules.misc.other;
 
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.modules.misc.entity.ITFallingBlockEntity;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
-import insane96mcp.iguanatweaksreborn.utils.RandomHelper;
 import insane96mcp.iguanatweaksreborn.utils.Reflection;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.enchantment.ProtectionEnchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.FallingBlockEntity;
 import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -21,14 +20,10 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.ExplosionContext;
 import net.minecraft.world.World;
@@ -95,14 +90,17 @@ public class ITExplosion extends Explosion {
         for(BlockPos blockpos : this.getAffectedBlockPositions()) {
             BlockState blockstate = this.world.getBlockState(blockpos);
             Block block = blockstate.getBlock();
-            if (blockstate.isAir(this.world, blockpos) || block instanceof TNTBlock)
+            if (blockstate.isAir(this.world, blockpos))
                 continue;
+
+            block.onExplosionDestroy(this.world, new BlockPos(this.getPosition()), this);
 
             BlockPos blockpos1 = blockpos.toImmutable();
 
             this.world.setBlockState(blockpos1, Blocks.AIR.getDefaultState());
-            FallingBlockEntity fallingBlockEntity = new FallingBlockEntity(this.world, blockpos1.getX() + 0.5f, blockpos1.getY() + 2.0625f, blockpos1.getZ() + 0.5f, blockstate);
+            ITFallingBlockEntity fallingBlockEntity = new ITFallingBlockEntity(this.world, blockpos1.getX() + 0.5f, blockpos1.getY() + 2.0625f, blockpos1.getZ() + 0.5f, blockstate);
             fallingBlockEntity.fallTime = 1;
+            fallingBlockEntity.exploder = this.exploder;
             this.world.addEntity(fallingBlockEntity);
         }
         this.clearAffectedBlockPositions();
