@@ -4,11 +4,13 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
 import insane96mcp.iguanatweaksreborn.modules.HungerHealthModule;
 import insane96mcp.iguanatweaksreborn.modules.StackSizesModule;
+import insane96mcp.iguanatweaksreborn.modules.sleeprespawn.SleepRespawnModule;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.potion.Effect;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -23,21 +25,23 @@ public class ModConfig {
 
     public static class Modules {
 
+        public static SleepRespawnModule sleepRespawnModule;
+
         public static boolean farming;
         public static boolean experience;
         public static boolean hardness;
         public static boolean stackSizes;
         public static boolean hungerHealth;
-        //public static boolean sleepRespawn;
         public static boolean misc;
 
         public static void load() {
+            sleepRespawnModule = new SleepRespawnModule();
+
             farming = Config.COMMON.modules.farming.get();
             experience = Config.COMMON.modules.experience.get();
             hardness = Config.COMMON.modules.hardness.get();
             stackSizes = Config.COMMON.modules.stackSizes.get();
             hungerHealth = Config.COMMON.modules.hungerHealth.get();
-            //sleepRespawn = Config.COMMON.modules.sleepRespawn.get();
             misc = Config.COMMON.modules.misc.get();
         }
     }
@@ -645,68 +649,6 @@ public class ModConfig {
         }
     }
 
-    public static class SleepRespawn {
-
-        /*public static int hungerDepletedOnWakeUp;
-        public static List<EffectOnWakeUp> effectsOnWakeUp;
-        public static boolean noSleepIfHungry;
-        public static boolean disableSleeping;
-        public static boolean disableBedSpawn;
-
-        public static void load() {
-            hungerDepletedOnWakeUp = Config.COMMON.sleepRespawn.hungerDepletedOnWakeUp.get();
-            effectsOnWakeUp = parseEffectsOnWakeUp(Config.COMMON.sleepRespawn.effectsOnWakeUp.get());
-            noSleepIfHungry = Config.COMMON.sleepRespawn.noSleepIfHungry.get();
-            disableSleeping = Config.COMMON.sleepRespawn.disableSleeping.get();
-            disableBedSpawn = Config.COMMON.sleepRespawn.disableBedSpawn.get();
-        }
-
-        public static class EffectOnWakeUp {
-            public ResourceLocation potionId;
-            public int duration;
-            public int amplifier;
-
-            public EffectOnWakeUp(ResourceLocation potionId, int duration, int amplifier) {
-                this.potionId = potionId;
-                this.duration = duration;
-                this.amplifier = amplifier;
-            }
-        }
-
-        private static List<EffectOnWakeUp> parseEffectsOnWakeUp(List<? extends String> list) {
-            List<EffectOnWakeUp> effectsOnWakeUp = new ArrayList<>();
-            for (String line : list) {
-                String[] split = line.split(",");
-                if (split.length != 3) {
-                    LogHelper.Warn("Invalid line \"%s\" for Effects on WakeUp. Format must be modid:potion_id,duration_in_ticks,amplifier", line);
-                    continue;
-                }
-                if (!NumberUtils.isParsable(split[1])) {
-                    LogHelper.Warn(String.format("Invalid duration \"%s\" for Effects on WakeUp", split[1]));
-                    continue;
-                }
-                int duration = Integer.parseInt(split[1]);
-                if (!NumberUtils.isParsable(split[2])) {
-                    LogHelper.Warn(String.format("Invalid amplifier \"%s\" for Effects on WakeUp", split[1]));
-                    continue;
-                }
-                int amplifier = Integer.parseInt(split[2]);
-                ResourceLocation potion = ResourceLocation.tryCreate(split[0]);
-                if (potion == null) {
-                    LogHelper.Warn("%s potion for Effects on WakeUp is not valid", line);
-                    continue;
-                }
-                if (ForgeRegistries.POTIONS.containsKey(potion)) {
-                    EffectOnWakeUp effectOnWakeUp = new EffectOnWakeUp(potion, duration, amplifier);
-                    effectsOnWakeUp.add(effectOnWakeUp);
-                }
-                else
-                    LogHelper.Warn(String.format("%s potion for Effects on WakeUp seems to not exist", line));
-            }
-            return effectsOnWakeUp;
-        }*/
-    }
-
     public static class Misc {
         public static void load() {
 
@@ -720,7 +662,6 @@ public class ModConfig {
         Mining.load();
         HungerHealth.load();
         StackSizes.load();
-        //SleepRespawn.load();
         Misc.load();
     }
 
@@ -730,9 +671,9 @@ public class ModConfig {
         public ResourceLocation dimension;
 
         public IdTagMatcher(@Nullable ResourceLocation id, @Nullable ResourceLocation tag, ResourceLocation dimension) {
-            if (id == null && tag == null) {
-                throw new NullPointerException("block and tag can't be both null");
-            }
+            if (id == null && tag == null)
+                throw new NullPointerException("'block' and 'tag' can't be both null");
+
             this.id = id;
             this.tag = tag;
             this.dimension = dimension;

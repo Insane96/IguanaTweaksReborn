@@ -25,24 +25,25 @@ public class Config {
 
 	public static class CommonConfig {
 
+		public final SleepRespawnModule sleepRespawnModule;
+
 		public final Modules modules;
 		public final Experience experience;
 		public final Farming farming;
 		public final Mining mining;
 		public final StackSizes stackSizes;
 		public final HungerHealth hungerHealth;
-		//public final SleepRespawn sleepRespawn;
 		public final Misc misc;
 
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
+			sleepRespawnModule = new SleepRespawnModule();
+
 			modules = new Modules(builder);
 			experience = new Experience(builder);
 			farming = new Farming(builder);
 			mining = new Mining(builder);
 			stackSizes = new StackSizes(builder);
 			hungerHealth = new HungerHealth(builder);
-			//sleepRespawn = new SleepRespawn(builder);
-			SleepRespawnModule.init();
 			misc = new Misc(builder);
 		}
 
@@ -55,7 +56,6 @@ public class Config {
 			public ForgeConfigSpec.ConfigValue<Boolean> hardness;
 			public ForgeConfigSpec.ConfigValue<Boolean> stackSizes;
 			public ForgeConfigSpec.ConfigValue<Boolean> hungerHealth;
-			public ForgeConfigSpec.ConfigValue<Boolean> sleepRespawn;
 			public ForgeConfigSpec.ConfigValue<Boolean> misc;
 
 			public Modules(ForgeConfigSpec.Builder builder) {
@@ -75,9 +75,6 @@ public class Config {
 				hungerHealth = builder
 						.comment("Set to false to disable the Hunger & Health Module")
 						.define("Hunger & Health Module", true);
-				sleepRespawn = builder
-						.comment("Set to false to disable the Sleep & Respawn Module")
-						.define("Sleep & Respawn Module", true);
 				misc = builder
 						.comment("Set to false to disable the Misc Module")
 						.define("Misc Module", true);
@@ -359,36 +356,6 @@ public class Config {
 				builder.pop();
 			}
 		}
-
-		/*public static class SleepRespawn {
-			public static String name = "Sleep & Respawn";
-
-			public ForgeConfigSpec.ConfigValue<Integer> hungerDepletedOnWakeUp;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> effectsOnWakeUp;
-			public ForgeConfigSpec.ConfigValue<Boolean> noSleepIfHungry;
-			public ForgeConfigSpec.ConfigValue<Boolean> disableSleeping;
-			public ForgeConfigSpec.ConfigValue<Boolean> disableBedSpawn;
-
-			public SleepRespawn(ForgeConfigSpec.Builder builder) {
-				builder.push(name);
-				hungerDepletedOnWakeUp = builder
-						.comment("How much the hunger bar is depleted when you wake up in the morning. Saturation depleted is based off this value times 2. Setting to 0 will disable this feature.")
-						.defineInRange("Hunger Depleted on Wake Up", 11, -20, 20);
-				effectsOnWakeUp = builder
-						.comment("A list of effects to apply to the player when he wakes up.\nThe format is modid:potion_id,duration_in_ticks,amplifier\nE.g. 'minecraft:slowness,240,1' will apply Slowness II for 12 seconds to the player.")
-						.defineList("Effects on Wake Up", Lists.newArrayList("minecraft:slowness,400,1", "minecraft:regeneration,200,1", "minecraft:weakness,300,1", "minecraft:mining_fatigue,300,1"), o -> o instanceof String);
-				noSleepIfHungry = builder
-						.comment("If the player's hunger bar is below 'Hunger Depleted on Wake Up' he can't sleep.")
-						.define("No Sleep If Hungry", true);
-				disableSleeping = builder
-						.comment("If set to true the player will not be able to sleep in beds")
-						.define("Disable Sleeping", false);
-				disableBedSpawn = builder
-						.comment("If set to true the player spawn point will not change when the player. Requires 'Disable Sleeping' enabled.")
-						.define("Disable Bed Spawn", false);
-				builder.pop();
-			}
-		}*/
 
 		public static class Misc {
 			public static String name = "Misc";

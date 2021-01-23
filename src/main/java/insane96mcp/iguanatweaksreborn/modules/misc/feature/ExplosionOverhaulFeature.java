@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ExplosionOverhaulFeature extends ITFeature{
 
     ExplosionOverhaulFeature() {
-        super("Explosion Overhaul", "Various changes to explosions from knockback to shielding.");
+        super("Explosion Overhaul", "Various changes to explosions from knockback to shielding.", null);
     }
 
     @SubscribeEvent

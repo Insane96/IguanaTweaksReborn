@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.base;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.setup.Config;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -8,24 +9,37 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import static insane96mcp.iguanatweaksreborn.setup.Config.builder;
-
 public class ITFeature {
     private final String name;
     private final String description;
-    private ForgeConfigSpec.ConfigValue<Boolean> enabled;
+    private ForgeConfigSpec.ConfigValue<Boolean> enabledConfig;
+    private ITModule module;
 
-    public ITFeature(String name, String description) {
+    public ITFeature(String name, String description, ITModule module, boolean enabledByDefault) {
         this.name = name;
         this.description = description;
-        this.loadConfig();
+        this.module = module;
+
+        enabledConfig = Config.builder.comment(getDescription()).define("Enable " + getName(), enabledByDefault);
+
         this.registerEvents();
+    }
+
+    public ITFeature(String name, String description, ITModule module) {
+        this(name, description, module, true);
     }
 
     //public void setEnabled(boolean enabled) { this.enabled = enabled; }
 
+    public void loadCommonConfig() {
+    }
+
     public boolean isEnabled() {
-        return enabled.get();
+        return enabledConfig.get();
+    }
+
+    public boolean isModuleEnabled() {
+        return this.module.isEnabled();
     }
 
     public String getName() {
@@ -37,44 +51,10 @@ public class ITFeature {
     }
 
     public void loadConfig() {
-        enabled = builder.comment(getDescription()).define("Enable " + getName(), true);
 
-        boolean hasConfig = false;
-        for (Field field : this.getClass().getDeclaredFields()) {
-            if (!field.isAnnotationPresent(ITConfig.class))
-                continue;
-
-            if (!hasConfig){
-                builder.push(this.getName());
-                hasConfig = true;
-            }
-
-            ITConfig config = field.getAnnotation(ITConfig.class);
-            field.setAccessible(true);
-
-            try {
-                if (field.isAnnotationPresent(ConfigInt.class)) {
-                    ConfigInt numeric = field.getAnnotation(ConfigInt.class);
-                    field.set(null, builder
-                            .comment(config.description())
-                            .defineInRange(config.name(), (int)field.get(null), numeric.min(), numeric.max()).get()
-                    );
-                }
-                else {
-                    field.set(null, builder
-                            .comment(config.description())
-                            .define(config.name(), field.get(null)).get()
-                    );
-                }
-            } catch (IllegalAccessException e) {
-                IguanaTweaksReborn.LOGGER.error(e.getMessage());
-            }
-        }
     }
 
     public void registerEvents() {
-        enabled = builder.comment(getDescription()).define("Enable " + getName(), true);
-
         for (Method method : this.getClass().getDeclaredMethods()) {
             if (!method.isAnnotationPresent(SubscribeEvent.class))
                 return;
