@@ -6,7 +6,9 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class ITModule {
     private final String name;
     private final String description;
-    private ForgeConfigSpec.ConfigValue<Boolean> enabledConfig;
+    private final ForgeConfigSpec.ConfigValue<Boolean> enabledConfig;
+
+    private boolean enabled;
 
     public ITModule(String name, String description) {
         this.name = name;
@@ -16,7 +18,7 @@ public class ITModule {
     }
 
     public boolean isEnabled() {
-        return enabledConfig.get();
+        return enabled;
     }
 
     public String getName() {
@@ -28,6 +30,6 @@ public class ITModule {
     }
 
     public void loadConfig() {
-
+        this.enabled = enabledConfig.get();
     }
 }

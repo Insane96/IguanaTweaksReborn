@@ -1,25 +1,20 @@
 package insane96mcp.iguanatweaksreborn.modules.sleeprespawn.feature;
 
 import com.google.common.collect.Lists;
-import insane96mcp.iguanatweaksreborn.base.ConfigInt;
-import insane96mcp.iguanatweaksreborn.base.ITConfig;
 import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.base.ITModule;
 import insane96mcp.iguanatweaksreborn.modules.sleeprespawn.classutils.EffectOnWakeUp;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.world.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +48,9 @@ public class SleepingEffectsFeature extends ITFeature {
         Config.builder.pop();
     }
 
+    @Override
     public void loadConfig() {
+        super.loadConfig();
         this.hungerDepletedOnWakeUp = this.hungerDepletedOnWakeUpConfig.get();
         this.effectsOnWakeUp = parseEffectsOnWakeUp(this.effectsOnWakeUpConfig.get());
         this.noSleepIfHungry = this.noSleepIfHungryConfig.get();

@@ -1,19 +1,19 @@
 package insane96mcp.iguanatweaksreborn.base;
 
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class ITFeature {
     private final String name;
     private final String description;
-    private ForgeConfigSpec.ConfigValue<Boolean> enabledConfig;
-    private ITModule module;
+    private final ForgeConfigSpec.ConfigValue<Boolean> enabledConfig;
+    private final ITModule module;
+
+    private boolean enabled;
 
     public ITFeature(String name, String description, ITModule module, boolean enabledByDefault) {
         this.name = name;
@@ -29,13 +29,8 @@ public class ITFeature {
         this(name, description, module, true);
     }
 
-    //public void setEnabled(boolean enabled) { this.enabled = enabled; }
-
-    public void loadCommonConfig() {
-    }
-
     public boolean isEnabled() {
-        return enabledConfig.get();
+        return enabled;
     }
 
     public boolean isModuleEnabled() {
@@ -51,7 +46,7 @@ public class ITFeature {
     }
 
     public void loadConfig() {
-
+        this.enabled = enabledConfig.get();
     }
 
     public void registerEvents() {
