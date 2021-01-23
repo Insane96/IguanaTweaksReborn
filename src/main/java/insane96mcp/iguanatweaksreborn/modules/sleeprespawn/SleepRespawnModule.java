@@ -7,11 +7,11 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 
 public class SleepRespawnModule extends ITModule {
 
-    SleepingEffectsFeature sleepingEffectsFeature;
-    DisableSleepingFeature disableSleepingFeature;
+    public SleepingEffectsFeature sleepingEffectsFeature;
+    public DisableSleepingFeature disableSleepingFeature;
 
     public SleepRespawnModule() {
-        super("Sleep & Respawn", "For all your Sleeping and Respawning needs");
+        super("Sleep & Respawn", "");
         Config.builder.comment(this.getDescription()).push(this.getName());
         sleepingEffectsFeature = new SleepingEffectsFeature(this);
         disableSleepingFeature = new DisableSleepingFeature(this);

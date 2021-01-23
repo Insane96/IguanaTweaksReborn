@@ -4,7 +4,6 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 
 public class Strings {
 	public static class NBTTags {
-		public static final String SPAWNED_FROM_SPANWER = IguanaTweaksReborn.RESOURCE_PREFIX + "spawnedFromSpawner";
 		public static final String MILK_COOLDOWN = IguanaTweaksReborn.RESOURCE_PREFIX + "milkCooldown";
 	}
 

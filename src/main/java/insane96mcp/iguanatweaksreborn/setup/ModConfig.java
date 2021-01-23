@@ -4,13 +4,11 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
 import insane96mcp.iguanatweaksreborn.modules.HungerHealthModule;
 import insane96mcp.iguanatweaksreborn.modules.StackSizesModule;
-import insane96mcp.iguanatweaksreborn.modules.sleeprespawn.SleepRespawnModule;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.potion.Effect;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,36 +23,19 @@ public class ModConfig {
 
     public static class Modules {
 
-        public static SleepRespawnModule sleepRespawnModule;
-
         public static boolean farming;
-        public static boolean experience;
         public static boolean hardness;
         public static boolean stackSizes;
         public static boolean hungerHealth;
         public static boolean misc;
 
         public static void load() {
-            sleepRespawnModule = new SleepRespawnModule();
 
             farming = Config.COMMON.modules.farming.get();
-            experience = Config.COMMON.modules.experience.get();
             hardness = Config.COMMON.modules.hardness.get();
             stackSizes = Config.COMMON.modules.stackSizes.get();
             hungerHealth = Config.COMMON.modules.hungerHealth.get();
             misc = Config.COMMON.modules.misc.get();
-        }
-    }
-
-    public static class Experience {
-        public static Double oreMultiplier;
-        public static Double globalMultiplier;
-        public static Double mobsFromSpawnersMultiplier;
-
-        public static void load() {
-            oreMultiplier = Config.COMMON.experience.oreMultiplier.get();
-            globalMultiplier = Config.COMMON.experience.globalMultiplier.get();
-            mobsFromSpawnersMultiplier = Config.COMMON.experience.mobsFromSpawnersMultiplier.get();
         }
     }
 
@@ -657,7 +638,6 @@ public class ModConfig {
 
     private static void load() {
         Modules.load();
-        Experience.load();
         Farming.load();
         Mining.load();
         HungerHealth.load();
@@ -687,5 +667,7 @@ public class ModConfig {
     @SubscribeEvent
     public static void onModConfigEvent(final net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
         ModConfig.load();
+        Config.COMMON.sleepRespawnModule.loadConfig();
+        Config.COMMON.experienceModule.loadConfig();
     }
 }

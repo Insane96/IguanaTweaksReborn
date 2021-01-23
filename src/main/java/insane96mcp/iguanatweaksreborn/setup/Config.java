@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.setup;
 
 import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
+import insane96mcp.iguanatweaksreborn.modules.experience.ExperienceModule;
 import insane96mcp.iguanatweaksreborn.modules.sleeprespawn.SleepRespawnModule;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
@@ -26,9 +27,9 @@ public class Config {
 	public static class CommonConfig {
 
 		public final SleepRespawnModule sleepRespawnModule;
+		public final ExperienceModule experienceModule;
 
 		public final Modules modules;
-		public final Experience experience;
 		public final Farming farming;
 		public final Mining mining;
 		public final StackSizes stackSizes;
@@ -37,9 +38,9 @@ public class Config {
 
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
 			sleepRespawnModule = new SleepRespawnModule();
+			experienceModule = new ExperienceModule();
 
 			modules = new Modules(builder);
-			experience = new Experience(builder);
 			farming = new Farming(builder);
 			mining = new Mining(builder);
 			stackSizes = new StackSizes(builder);
@@ -78,29 +79,6 @@ public class Config {
 				misc = builder
 						.comment("Set to false to disable the Misc Module")
 						.define("Misc Module", true);
-				builder.pop();
-			}
-		}
-
-		public static class Experience {
-			public static String name = "Experience";
-			public static String comment = "For all your Experience nerfs needs";
-
-			public ForgeConfigSpec.ConfigValue<Double> oreMultiplier;
-			public ForgeConfigSpec.ConfigValue<Double> globalMultiplier;
-			public ForgeConfigSpec.ConfigValue<Double> mobsFromSpawnersMultiplier;
-
-			public Experience(ForgeConfigSpec.Builder builder) {
-				builder.comment(comment).push(name);
-				oreMultiplier = builder
-						.comment("Experience dropped by blocks (Ores and Spawners) will be multiplied by this multiplier. Experience dropped by blocks are still affected by 'Global Experience Multiplier'; so if you have e.g. 'Global Experience Multiplier' at 0.5, this needs to be set to 2.0 to make blocks drop normal experience\nCan be set to 0 to make blocks drop no experience")
-						.defineInRange("Experience from Blocks Multiplier", 2.5d, 0.0d, 1000d);
-				globalMultiplier = builder
-						.comment("Experience dropped will be multiplied by this multiplier.\nCan be set to 0 to disable experience drop from any source.")
-						.defineInRange("Global Experience Multiplier", 1.0d, 0.0d, 1000d);
-				mobsFromSpawnersMultiplier = builder
-						.comment("Experience dropped from mobs that come from spawners will be multiplied by this multiplier. Experience dropped by mobs from spawners are still affected by 'Global Experience Multiplier'; so if you have e.g. 'Global Experience Multiplier' at 0.5, this needs to be set to 2.0 to make mobs from spawners drop normal experience\nCan be set to 0 to disable experience drop from mob that come from spawners.")
-						.defineInRange("Mobs from Spawners Multiplier", 0.667d, 0.0d, 1000d);
 				builder.pop();
 			}
 		}

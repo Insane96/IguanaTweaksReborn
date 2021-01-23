@@ -1,7 +1,6 @@
 package insane96mcp.iguanatweaksreborn.event;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.modules.ExperienceModule;
 import insane96mcp.iguanatweaksreborn.modules.misc.ai.ITCenaSwellGoal;
 import insane96mcp.iguanatweaksreborn.modules.misc.ai.ITCreeperSwellGoal;
 import net.minecraft.entity.ai.goal.CreeperSwellGoal;
@@ -19,8 +18,6 @@ public class EntityJoinWorld {
 
 	@SubscribeEvent
 	public static void eventEntityJoinWorld(EntityJoinWorldEvent event) {
-		ExperienceModule.globalXpDrop(event);
-
 		if (event.getEntity() instanceof CreeperEntity){
 			CreeperEntity creeper = (CreeperEntity) event.getEntity();
 

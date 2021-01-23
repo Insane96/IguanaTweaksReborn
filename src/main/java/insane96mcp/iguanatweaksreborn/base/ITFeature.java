@@ -37,6 +37,10 @@ public class ITFeature {
         return this.module.isEnabled();
     }
 
+    public ITModule getModule() {
+        return module;
+    }
+
     public String getName() {
         return name;
     }
@@ -52,7 +56,7 @@ public class ITFeature {
     public void registerEvents() {
         for (Method method : this.getClass().getDeclaredMethods()) {
             if (!method.isAnnotationPresent(SubscribeEvent.class))
-                return;
+                continue;
 
             MinecraftForge.EVENT_BUS.register(this);
         }

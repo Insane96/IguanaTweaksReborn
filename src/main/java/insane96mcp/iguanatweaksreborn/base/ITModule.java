@@ -10,11 +10,15 @@ public class ITModule {
 
     private boolean enabled;
 
-    public ITModule(String name, String description) {
+    public ITModule(String name, String description, boolean enabledByDefault) {
         this.name = name;
         this.description = description;
 
-        enabledConfig = Config.builder.comment(this.description).define("Enable " + this.name, true);
+        enabledConfig = Config.builder.comment(this.description).define("Enable " + this.name + " module", enabledByDefault);
+    }
+
+    public ITModule(String name, String description) {
+        this(name, description, true);
     }
 
     public boolean isEnabled() {

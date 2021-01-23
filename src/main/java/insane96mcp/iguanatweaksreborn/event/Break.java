@@ -1,13 +1,9 @@
 package insane96mcp.iguanatweaksreborn.event;
 
-import insane96mcp.iguanatweaksreborn.modules.misc.other.ITExplosion;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.modules.ExperienceModule;
 import insane96mcp.iguanatweaksreborn.modules.HungerHealthModule;
 import insane96mcp.iguanatweaksreborn.setup.ModSounds;
 import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.play.server.SExplosionPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.server.ServerWorld;
@@ -22,7 +18,6 @@ public class Break {
 
     @SubscribeEvent
     public static void eventBreak(BlockEvent.BreakEvent event) {
-        ExperienceModule.oreXpDrop(event);
         HungerHealthModule.breakExaustion(event);
     }
 
