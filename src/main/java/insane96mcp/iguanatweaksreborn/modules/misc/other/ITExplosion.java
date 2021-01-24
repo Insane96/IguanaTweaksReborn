@@ -6,9 +6,7 @@ import insane96mcp.iguanatweaksreborn.modules.misc.entity.ITFallingBlockEntity;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.iguanatweaksreborn.utils.Reflection;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -20,6 +18,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
+import net.minecraft.tileentity.PistonTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.*;
@@ -93,6 +92,17 @@ public class ITExplosion extends Explosion {
             if (blockstate.isAir(this.world, blockpos))
                 continue;
 
+            if (block instanceof TNTBlock) {
+                block.onExplosionDestroy(this.world, new BlockPos(this.getPosition()), this);
+                continue;
+            }
+
+            if (block instanceof MovingPistonBlock) {
+                PistonTileEntity tileEntity = (PistonTileEntity) this.world.getTileEntity(blockpos);
+                blockstate = tileEntity.getPistonState();
+                block = blockstate.getBlock();
+            }
+//142 62 128
             block.onExplosionDestroy(this.world, new BlockPos(this.getPosition()), this);
 
             BlockPos blockpos1 = blockpos.toImmutable();

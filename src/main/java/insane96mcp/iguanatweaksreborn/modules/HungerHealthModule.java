@@ -1,5 +1,7 @@
 package insane96mcp.iguanatweaksreborn.modules;
 
+import insane96mcp.iguanatweaksreborn.base.Modules;
+import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.block.Block;
@@ -35,7 +37,7 @@ public class HungerHealthModule {
 				continue;
 			boolean isInWhitelist = false;
 			boolean isInBlacklist = false;
-			for (ModConfig.IdTagMatcher blacklistEntry : ModConfig.HungerHealth.blacklist) {
+			for (IdTagMatcher blacklistEntry : ModConfig.HungerHealth.blacklist) {
 				if (!ModConfig.HungerHealth.blacklistAsWhitelist) {
 					if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
 						isInBlacklist = true;
@@ -95,10 +97,10 @@ public class HungerHealthModule {
 		Block block = state.getBlock();
 		ResourceLocation dimensionId = world.getDimensionKey().getLocation();
 		double hardness = state.getBlockHardness(event.getWorld(), event.getPos());
-		double globalHardnessMultiplier = MiningModule.getBlockGlobalHardness(block, dimensionId);
+		double globalHardnessMultiplier = Modules.miningModule.globalHardnessFeature.getBlockGlobalHardness(block, dimensionId);
 		if (globalHardnessMultiplier != -1d)
 			hardness *= globalHardnessMultiplier;
-		double singleHardness = MiningModule.getBlockSingleHardness(block, dimensionId);
+		double singleHardness = Modules.miningModule.customHardnessFeature.getBlockSingleHardness(block, dimensionId);
 		if (singleHardness != -1d)
 			hardness = singleHardness;
 		event.getPlayer().addExhaustion((float) (hardness * ModConfig.HungerHealth.blockBreakExaustionMultiplier) - 0.005f);

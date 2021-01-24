@@ -1,16 +1,17 @@
 package insane96mcp.iguanatweaksreborn.setup;
 
 import com.google.common.collect.Lists;
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
-import insane96mcp.iguanatweaksreborn.modules.experience.ExperienceModule;
-import insane96mcp.iguanatweaksreborn.modules.sleeprespawn.SleepRespawnModule;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Mod.EventBusSubscriber(modid = IguanaTweaksReborn.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Config {
 	public static final ForgeConfigSpec COMMON_SPEC;
 	public static final CommonConfig COMMON;
@@ -25,24 +26,17 @@ public class Config {
 	}
 
 	public static class CommonConfig {
-
-		public final SleepRespawnModule sleepRespawnModule;
-		public final ExperienceModule experienceModule;
-
 		public final Modules modules;
 		public final Farming farming;
-		public final Mining mining;
 		public final StackSizes stackSizes;
 		public final HungerHealth hungerHealth;
 		public final Misc misc;
 
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
-			sleepRespawnModule = new SleepRespawnModule();
-			experienceModule = new ExperienceModule();
+			insane96mcp.iguanatweaksreborn.base.Modules.init();
 
 			modules = new Modules(builder);
 			farming = new Farming(builder);
-			mining = new Mining(builder);
 			stackSizes = new StackSizes(builder);
 			hungerHealth = new HungerHealth(builder);
 			misc = new Misc(builder);
@@ -54,7 +48,6 @@ public class Config {
 
 			public ForgeConfigSpec.ConfigValue<Boolean> farming;
 			public ForgeConfigSpec.ConfigValue<Boolean> experience;
-			public ForgeConfigSpec.ConfigValue<Boolean> hardness;
 			public ForgeConfigSpec.ConfigValue<Boolean> stackSizes;
 			public ForgeConfigSpec.ConfigValue<Boolean> hungerHealth;
 			public ForgeConfigSpec.ConfigValue<Boolean> misc;
@@ -67,9 +60,6 @@ public class Config {
 				experience = builder
 						.comment("Set to false to disable the Experience Module")
 						.define("Experience Module", true);
-				hardness = builder
-						.comment("Set to false to disable the Hardness Module")
-						.define("Hardness Module", true);
 				stackSizes = builder
 						.comment("Set to false to disable the Stack Sizes Module")
 						.define("Stack Sizes Module", true);
@@ -211,36 +201,6 @@ public class Config {
 			}
 		}
 
-		public static class Mining {
-			public static String name = "Mining";
-
-			public ForgeConfigSpec.ConfigValue<Double> hardnessMultiplier;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> dimensionHardnessMultiplier;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> hardnessBlacklist;
-			public ForgeConfigSpec.ConfigValue<Boolean> backlistAsWhitelist;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> customHardness;
-
-			public Mining(ForgeConfigSpec.Builder builder) {
-				builder.push(name);
-				hardnessMultiplier = builder
-						.comment("Multiplier applied to the hardness of blocks. E.g. with this set to 3.0 blocks will take three times more time to break.")
-						.defineInRange("Hardness Multiplier", 3.0d, 0.0d, 128d);
-				dimensionHardnessMultiplier = builder
-						.comment("A list of dimensions and their relative block hardness multiplier. Each entry has a a dimension and hardness. This overrides the global multiplier.\nE.g. [\"minecraft:overworld,2\", \"minecraft:the_nether,4\"]")
-						.defineList("Dimension Hardness Multiplier", new ArrayList<>(), o -> o instanceof String);
-				hardnessBlacklist = builder
-						.comment("Block ids or tags that will ignore the global or dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
-						.defineList("Block Hardnesss Blacklist", new ArrayList<>(), o -> o instanceof String);
-				backlistAsWhitelist = builder
-						.comment("Block Blacklist will be treated as a whitelist")
-						.define("Blacklist as Whitelist", false);
-				customHardness = builder
-						.comment("Define custom blocks hardness, one string = one block/tag. Those blocks are not affected by the global block hardness multiplier.\nThe format is modid:blockid,hardness,dimensionid or #modid:tagid,hardness,dimensionid\nE.g. 'minecraft:stone,5.0' will make stone have 5 hardness in every dimension.\nE.g. '#forge:stone,5.0,minecraft:overworld' will make all the stone types have 5 hardness but only in the overworld.")
-						.defineList("Custom Hardness", Lists.newArrayList("minecraft:coal_ore,6", "minecraft:iron_ore,9.0", "minecraft:gold_ore,10.5", "minecraft:diamond_ore,18", "minecraft:ancient_debris,50", "minecraft:redstone_ore,12", "minecraft:lapis_ore,12", "minecraft:emerald_ore,18", "minecraft:nether_quartz_ore,6", "minecraft:nether_gold_ore,9", "minecraft:obsidian,40"), o -> o instanceof String);
-				builder.pop();
-			}
-		}
-
 		public static class StackSizes {
 			public static String name = "Stack Sizes";
 
@@ -265,7 +225,7 @@ public class Config {
 						.comment("Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].")
 						.defineList("Items Blacklist", Arrays.asList("minecraft:rotten_flesh"), o -> o instanceof String);
 				customStackList = builder
-						.comment("Define custom item stack sizes, one string = one item/tag. Those items are not affected by other changes such as 'Food Stack Reduction'.\nThe format is modid:itemid,hardness or #modid:tagid,hardness\nE.g. 'minecraft:stone,16' will make stone stack up to 16.\nE.g. '#forge:stone,16' will make all the stone types stack up to 16.\nValues over 64 or lower than 1 will not work.")
+						.comment("Define custom item stack sizes, one string = one item/tag. Those items are not affected by other changes such as 'Food Stack Reduction'.\nThe format is modid:itemid,stack_size or #modid:tagid,stack_size\nE.g. 'minecraft:stone,16' will make stone stack up to 16.\nE.g. '#forge:stone,16' will make all the stone types stack up to 16.\nValues over 64 or lower than 1 will not work.")
 						.defineList("Custom Stack Sizes", Lists.newArrayList(), o -> o instanceof String);
 				blacklistAsWhitelist = builder
 						.comment("Items Blacklist will be treated as a whitelist.")
@@ -344,5 +304,12 @@ public class Config {
 				builder.pop();
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public static void onModConfigEvent(final net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
+		ModConfig.load();
+		insane96mcp.iguanatweaksreborn.base.Modules.sleepRespawnModule.loadConfig();
+		insane96mcp.iguanatweaksreborn.base.Modules.experienceModule.loadConfig();
 	}
 }

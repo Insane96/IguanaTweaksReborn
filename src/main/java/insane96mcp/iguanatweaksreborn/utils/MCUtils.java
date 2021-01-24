@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.utils;
 
-import insane96mcp.iguanatweaksreborn.setup.ModConfig;
+import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 public class MCUtils {
 	public static final ResourceLocation AnyRL = new ResourceLocation("any");
 
-	public static boolean isInTagOrBlock(ModConfig.IdTagMatcher idTagMatcher, Block block, @Nullable ResourceLocation dimensionId) {
+	public static boolean isInTagOrBlock(IdTagMatcher idTagMatcher, Block block, @Nullable ResourceLocation dimensionId) {
 		if (dimensionId == null)
 			dimensionId = AnyRL;
 		ResourceLocation blockId = block.getRegistryName();
@@ -41,7 +41,7 @@ public class MCUtils {
 		return false;
 	}
 
-	public static boolean isInTagOrItem(ModConfig.IdTagMatcher idTagMatcher, Item item, @Nullable ResourceLocation dimensionId) {
+	public static boolean isInTagOrItem(IdTagMatcher idTagMatcher, Item item, @Nullable ResourceLocation dimensionId) {
 		if (dimensionId == null)
 			dimensionId = AnyRL;
 		ResourceLocation itemId = item.getRegistryName();

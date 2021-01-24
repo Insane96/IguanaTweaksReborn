@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.base;
 
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,9 +16,13 @@ public class ITFeature {
 
     private boolean enabled;
 
-    public ITFeature(String name, String description, ITModule module, boolean enabledByDefault) {
-        this.name = name;
-        this.description = description;
+    public ITFeature(ITModule module, boolean enabledByDefault) {
+        if (!this.getClass().isAnnotationPresent(Label.class))
+            LogHelper.Error(String.format("%s is missign the Label Annotation.", this.getClass().getName()));
+
+        this.name = this.getClass().getAnnotation(Label.class).name();
+        this.description = this.getClass().getAnnotation(Label.class).name();
+
         this.module = module;
 
         enabledConfig = Config.builder.comment(getDescription()).define("Enable " + getName(), enabledByDefault);
@@ -25,8 +30,8 @@ public class ITFeature {
         this.registerEvents();
     }
 
-    public ITFeature(String name, String description, ITModule module) {
-        this(name, description, module, true);
+    public ITFeature(ITModule module) {
+        this(module, true);
     }
 
     public boolean isEnabled() {
@@ -37,9 +42,9 @@ public class ITFeature {
         return this.module.isEnabled();
     }
 
-    public ITModule getModule() {
+    /*public ITModule getModule() {
         return module;
-    }
+    }*/
 
     public String getName() {
         return name;

@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.modules.sleeprespawn.feature;
 import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.base.ITModule;
+import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.sleeprespawn.classutils.EffectOnWakeUp;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Label(name = "Sleeping Effects", description = "Prevents the player from sleeping if has not enough Hunger and gives him effects on wake up")
 public class SleepingEffectsFeature extends ITFeature {
 
     private final ForgeConfigSpec.ConfigValue<Integer> hungerDepletedOnWakeUpConfig;
@@ -33,7 +35,7 @@ public class SleepingEffectsFeature extends ITFeature {
     public boolean noSleepIfHungry = true;
 
     public SleepingEffectsFeature(ITModule module) {
-        super("Sleeping Effects", "Prevents the player from sleeping if has not enough Hunger and gives him effects on wake up.", module);
+        super(module);
 
         Config.builder.comment(this.getDescription()).push(this.getName());
         hungerDepletedOnWakeUpConfig = Config.builder

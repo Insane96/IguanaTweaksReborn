@@ -1,24 +1,29 @@
 package insane96mcp.iguanatweaksreborn.base;
 
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ITModule {
-    private final String name;
-    private final String description;
     private final ForgeConfigSpec.ConfigValue<Boolean> enabledConfig;
 
     private boolean enabled;
 
-    public ITModule(String name, String description, boolean enabledByDefault) {
-        this.name = name;
-        this.description = description;
+    private final String name;
+    private final String description;
 
-        enabledConfig = Config.builder.comment(this.description).define("Enable " + this.name + " module", enabledByDefault);
+    public ITModule(boolean enabledByDefault) {
+        if (!this.getClass().isAnnotationPresent(Label.class))
+            LogHelper.Error(String.format("%s is missign the Label Annotation.", this.getClass().getName()));
+
+        this.name = this.getClass().getAnnotation(Label.class).name();
+        this.description = this.getClass().getAnnotation(Label.class).name();
+
+        enabledConfig = Config.builder.comment(this.getDescription()).define("Enable " + this.getName() + " module", enabledByDefault);
     }
 
-    public ITModule(String name, String description) {
-        this(name, description, true);
+    public ITModule() {
+        this(true);
     }
 
     public boolean isEnabled() {
@@ -26,7 +31,7 @@ public class ITModule {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getDescription() {

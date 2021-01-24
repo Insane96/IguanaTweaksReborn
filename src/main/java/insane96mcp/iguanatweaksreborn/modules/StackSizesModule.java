@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.modules;
 
+import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.block.Block;
@@ -35,7 +36,7 @@ public class StackSizesModule {
 				continue;
 			boolean isInWhitelist = false;
 			boolean isInBlacklist = false;
-			for (ModConfig.IdTagMatcher blacklistEntry : ModConfig.StackSizes.blacklist) {
+			for (IdTagMatcher blacklistEntry : ModConfig.StackSizes.blacklist) {
 				if (!ModConfig.StackSizes.blacklistAsWhitelist) {
 					if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
 						isInBlacklist = true;
@@ -80,7 +81,7 @@ public class StackSizesModule {
 				continue;
 			boolean isInWhitelist = false;
 			boolean isInBlacklist = false;
-			for (ModConfig.IdTagMatcher blacklistEntry : ModConfig.StackSizes.blacklist) {
+			for (IdTagMatcher blacklistEntry : ModConfig.StackSizes.blacklist) {
 				if (!ModConfig.StackSizes.blacklistAsWhitelist) {
 					if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
 						isInBlacklist = true;
@@ -121,7 +122,7 @@ public class StackSizesModule {
 				continue;
 			boolean isInWhitelist = false;
 			boolean isInBlacklist = false;
-			for (ModConfig.IdTagMatcher blacklistEntry : ModConfig.StackSizes.blacklist) {
+			for (IdTagMatcher blacklistEntry : ModConfig.StackSizes.blacklist) {
 				if (!ModConfig.StackSizes.blacklistAsWhitelist) {
 					if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
 						isInBlacklist = true;

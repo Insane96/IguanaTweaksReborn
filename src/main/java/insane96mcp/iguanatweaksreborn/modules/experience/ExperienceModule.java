@@ -1,11 +1,13 @@
 package insane96mcp.iguanatweaksreborn.modules.experience;
 
 import insane96mcp.iguanatweaksreborn.base.ITModule;
+import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.experience.feature.BlockExperienceFeature;
 import insane96mcp.iguanatweaksreborn.modules.experience.feature.GlobalExperienceFeature;
 import insane96mcp.iguanatweaksreborn.modules.experience.feature.SpawnerMobsExperienceFeature;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 
+@Label(name = "Experience")
 public class ExperienceModule extends ITModule {
 
     public GlobalExperienceFeature globalExperienceFeature;
@@ -13,7 +15,6 @@ public class ExperienceModule extends ITModule {
     public SpawnerMobsExperienceFeature spawnerMobsExperienceFeature;
 
     public ExperienceModule() {
-        super("Experience", "");
         Config.builder.comment(this.getDescription()).push(this.getName());
         globalExperienceFeature = new GlobalExperienceFeature(this);
         blockExperienceFeature = new BlockExperienceFeature(this);

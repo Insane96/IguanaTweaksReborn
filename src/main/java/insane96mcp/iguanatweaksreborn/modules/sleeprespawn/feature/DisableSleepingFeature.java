@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.modules.sleeprespawn.feature;
 
 import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.base.ITModule;
+import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,6 +12,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+@Label(name = "Disable Sleeping", description = "Makes sleeping impossible while begin able to set (or not) the spawn point")
 public class DisableSleepingFeature extends ITFeature {
 
     private final ForgeConfigSpec.ConfigValue<Boolean> disableBedSpawnConfig;
@@ -18,7 +20,7 @@ public class DisableSleepingFeature extends ITFeature {
     public boolean disableBedSpawn = false;
 
     public DisableSleepingFeature(ITModule module) {
-        super("Disable Sleeping", "Makes sleeping impossible while begin able to set (or not) the spawn point", module, false);
+        super(module, false);
         
         Config.builder.comment(this.getDescription()).push(this.getName());
         disableBedSpawnConfig = Config.builder

@@ -1,15 +1,14 @@
 package insane96mcp.iguanatweaksreborn.setup;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
 import insane96mcp.iguanatweaksreborn.modules.HungerHealthModule;
 import insane96mcp.iguanatweaksreborn.modules.StackSizesModule;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
-import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.potion.Effect;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -32,7 +31,6 @@ public class ModConfig {
         public static void load() {
 
             farming = Config.COMMON.modules.farming.get();
-            hardness = Config.COMMON.modules.hardness.get();
             stackSizes = Config.COMMON.modules.stackSizes.get();
             hungerHealth = Config.COMMON.modules.hungerHealth.get();
             misc = Config.COMMON.modules.misc.get();
@@ -154,158 +152,6 @@ public class ModConfig {
             Livestock.load();
         }
 
-    }
-
-    public static class Mining {
-        public static Double hardnessMultiplier;
-        public static List<DimensionHardnessMultiplier> dimensionHardnessMultiplier;
-        public static List<IdTagMatcher> hardnessBlacklist;
-        public static Boolean blacklistAsWhitelist;
-        public static List<BlockHardness> customHardness;
-
-        public static void load() {
-            hardnessMultiplier = Config.COMMON.mining.hardnessMultiplier.get();
-            dimensionHardnessMultiplier = parseDimensionHardnessMultipliers(Config.COMMON.mining.dimensionHardnessMultiplier.get());
-            hardnessBlacklist = parseHardnessBlacklist(Config.COMMON.mining.hardnessBlacklist.get());
-            blacklistAsWhitelist = Config.COMMON.mining.backlistAsWhitelist.get();
-            customHardness = parseCustomHardnesses(Config.COMMON.mining.customHardness.get());
-        }
-
-        public static List<DimensionHardnessMultiplier> parseDimensionHardnessMultipliers(List<? extends String> list) {
-            List<DimensionHardnessMultiplier> dimensionHardnessMultipliers = new ArrayList<>();
-            for (String line : list) {
-                String[] split = line.split(",");
-                if (split.length < 1 || split.length > 2) {
-                    LogHelper.Warn("Invalid line \"%s\" for Dimension multiplier. Format must be modid:dimensionId,hardness", line);
-                    continue;
-                }
-                ResourceLocation dimension = ResourceLocation.tryCreate(split[0]);
-                if (dimension == null) {
-                    LogHelper.Warn(String.format("Invalid dimension \"%s\" for Dimension multiplier", split[0]));
-                    continue;
-                }
-                if (!NumberUtils.isParsable(split[1])) {
-                    LogHelper.Warn(String.format("Invalid hardness \"%s\" for Dimension Multiplier", split[1]));
-                    continue;
-                }
-                double hardness = Double.parseDouble(split[1]);
-
-                dimensionHardnessMultipliers.add(new DimensionHardnessMultiplier(dimension, hardness));
-            }
-
-            return dimensionHardnessMultipliers;
-        }
-
-        public static class DimensionHardnessMultiplier {
-            public ResourceLocation dimension;
-            public double multiplier;
-
-            public DimensionHardnessMultiplier(ResourceLocation dimension, double multiplier) {
-                this.dimension = dimension;
-                this.multiplier = multiplier;
-            }
-        }
-
-        public static List<IdTagMatcher> parseHardnessBlacklist(List<? extends String> list) {
-            List<IdTagMatcher> commonTagBlock = new ArrayList<>();
-            for (String line : list) {
-                String[] split = line.split(",");
-                if (split.length < 1 || split.length > 2) {
-                    LogHelper.Warn("Invalid line \"%s\" for Hardnesses Blacklist. Format must be modid:blockid,modid:dimension", line);
-                    continue;
-                }
-                ResourceLocation dimension = MCUtils.AnyRL;
-                if (split.length == 2) {
-                    dimension = ResourceLocation.tryCreate(split[1]);
-                    if (dimension == null) {
-                        LogHelper.Warn(String.format("Invalid dimension \"%s\" for Hardness Blacklist. Ignoring it", split[1]));
-                        dimension = MCUtils.AnyRL;
-                    }
-                }
-                if (split[0].startsWith("#")) {
-                    String replaced = split[0].replace("#", "");
-                    ResourceLocation tag = ResourceLocation.tryCreate(replaced);
-                    if (tag == null) {
-                        LogHelper.Warn("%s tag for Hardness Blacklist is not valid", replaced);
-                        continue;
-                    }
-                    IdTagMatcher hardness = new IdTagMatcher(null, tag, dimension);
-                    commonTagBlock.add(hardness);
-                }
-                else {
-                    ResourceLocation block = ResourceLocation.tryCreate(split[0]);
-                    if (block == null) {
-                        LogHelper.Warn("%s block for Hardness Blacklist is not valid", line);
-                        continue;
-                    }
-                    if (ForgeRegistries.BLOCKS.containsKey(block)) {
-                        IdTagMatcher hardness = new IdTagMatcher(block, null, dimension);
-                        commonTagBlock.add(hardness);
-                    }
-                    else
-                        LogHelper.Warn(String.format("%s block for Hardness Blacklist seems to not exist", line));
-                }
-            }
-            return commonTagBlock;
-        }
-
-        public static List<BlockHardness> parseCustomHardnesses(List<? extends String> list) {
-            ArrayList<BlockHardness> blockHardnesses = new ArrayList<>();
-            for (String line : list) {
-                String[] split = line.split(",");
-                if (split.length < 2 || split.length > 3) {
-                    LogHelper.Warn("Invalid line \"%s\" for Custom Hardnesses", line);
-                    continue;
-                }
-                if (!NumberUtils.isParsable(split[1])) {
-                    LogHelper.Warn(String.format("Invalid hardness \"%s\" for Custom Hardnesses", line));
-                    continue;
-                }
-                double hardness = Double.parseDouble(split[1]);
-                ResourceLocation dimension = MCUtils.AnyRL;
-                if (split.length == 3) {
-                    dimension = ResourceLocation.tryCreate(split[2]);
-                    if (dimension == null) {
-                        LogHelper.Warn(String.format("Invalid dimension \"%s\" for Custom Hardnesses. Ignoring it", split[2]));
-                        dimension = MCUtils.AnyRL;
-                    }
-                }
-                if (split[0].startsWith("#")) {
-                    String replaced = split[0].replace("#", "");
-                    ResourceLocation tag = ResourceLocation.tryCreate(replaced);
-                    if (tag == null) {
-                        LogHelper.Warn("%s tag for Custom Hardneses is not valid", replaced);
-                        continue;
-                    }
-                    BlockHardness blockHardness = new BlockHardness(null, tag, hardness, dimension);
-                    blockHardnesses.add(blockHardness);
-                }
-                else {
-                    ResourceLocation block = ResourceLocation.tryCreate(split[0]);
-                    if (block == null) {
-                        LogHelper.Warn("%s block for Custom Hardneses is not valid", split[0]);
-                        continue;
-                    }
-                    if (ForgeRegistries.BLOCKS.containsKey(block)) {
-                        BlockHardness blockHardness = new BlockHardness(block, null, hardness, dimension);
-                        blockHardnesses.add(blockHardness);
-                    }
-                    else
-                        LogHelper.Warn(String.format("%s block for Custom Hardnesses seems to not exist", split[0]));
-                }
-            }
-
-            return blockHardnesses;
-        }
-
-        public static class BlockHardness extends IdTagMatcher {
-            public double hardness;
-
-            public BlockHardness(@Nullable ResourceLocation block, @Nullable ResourceLocation tag, Double hardness, ResourceLocation dimension) {
-                super(block, tag, dimension);
-                this.hardness = hardness;
-            }
-        }
     }
 
     public static class StackSizes {
@@ -630,44 +476,10 @@ public class ModConfig {
         }
     }
 
-    public static class Misc {
-        public static void load() {
-
-        }
-    }
-
-    private static void load() {
+    public static void load() {
         Modules.load();
         Farming.load();
-        Mining.load();
         HungerHealth.load();
         StackSizes.load();
-        Misc.load();
-    }
-
-    public static class IdTagMatcher {
-        public ResourceLocation id;
-        public ResourceLocation tag;
-        public ResourceLocation dimension;
-
-        public IdTagMatcher(@Nullable ResourceLocation id, @Nullable ResourceLocation tag, ResourceLocation dimension) {
-            if (id == null && tag == null)
-                throw new NullPointerException("'block' and 'tag' can't be both null");
-
-            this.id = id;
-            this.tag = tag;
-            this.dimension = dimension;
-        }
-
-        public IdTagMatcher(@Nullable ResourceLocation id, @Nullable ResourceLocation tag) {
-            this(id, tag, MCUtils.AnyRL);
-        }
-    }
-
-    @SubscribeEvent
-    public static void onModConfigEvent(final net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
-        ModConfig.load();
-        Config.COMMON.sleepRespawnModule.loadConfig();
-        Config.COMMON.experienceModule.loadConfig();
     }
 }
