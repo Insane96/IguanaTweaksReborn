@@ -34,8 +34,11 @@ public class ITFeature {
         this(module, true);
     }
 
+    /**
+     * @return true if both the feature and the module are enabled
+     */
     public boolean isEnabled() {
-        return enabled;
+        return enabled && this.isModuleEnabled();
     }
 
     public boolean isModuleEnabled() {

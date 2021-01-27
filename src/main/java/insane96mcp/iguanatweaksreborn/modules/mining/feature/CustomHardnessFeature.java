@@ -56,8 +56,6 @@ public class CustomHardnessFeature extends ITFeature {
 
     @SubscribeEvent
     public void processSingleHardness(PlayerEvent.BreakSpeed event) {
-        if (!this.isModuleEnabled())
-            return;
         if (!this.isEnabled())
             return;
 

@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.event;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.modules.HungerHealthModule;
+import insane96mcp.iguanatweaksreborn.modules.HHModule;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 public class PlayerTick {
 	@SubscribeEvent
 	public static void playerTickEvent(TickEvent.PlayerTickEvent event) {
-		HungerHealthModule.debuffsOnLowStats(event);
+		HHModule.debuffsOnLowStats(event);
 		/*if (event.player.world.isRemote())
 			return;
 

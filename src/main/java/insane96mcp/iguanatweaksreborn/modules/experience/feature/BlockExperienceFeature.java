@@ -32,8 +32,6 @@ public class BlockExperienceFeature extends ITFeature {
 
     @SubscribeEvent
     public void onBlockXPDrop(BlockEvent.BreakEvent event) {
-        if (!this.isModuleEnabled())
-            return;
         if (!this.isEnabled())
             return;
         if (this.oreMultiplier == 1.0d)

@@ -85,8 +85,6 @@ public class GlobalHardnessFeature extends ITFeature {
 
     @SubscribeEvent
     public void processGlobalHardness(PlayerEvent.BreakSpeed event) {
-        if (!this.isModuleEnabled())
-            return;
         if (!this.isEnabled())
             return;
 

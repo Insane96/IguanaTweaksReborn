@@ -60,8 +60,6 @@ public class SleepingEffectsFeature extends ITFeature {
 
     @SubscribeEvent
     public void wakeUpHungerAndEffects(SleepFinishedTimeEvent event) {
-        if (!this.isModuleEnabled())
-            return;
         if (!this.isEnabled())
             return;
         if (hungerDepletedOnWakeUp == 0 && effectsOnWakeUp.isEmpty())
@@ -80,8 +78,6 @@ public class SleepingEffectsFeature extends ITFeature {
 
     @SubscribeEvent
     public void tooHungryToSleep(PlayerSleepInBedEvent event) {
-        if (!this.isModuleEnabled())
-            return;
         if (!this.isEnabled())
             return;
         if (!this.noSleepIfHungry)

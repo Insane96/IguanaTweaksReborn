@@ -3,7 +3,6 @@ package insane96mcp.iguanatweaksreborn.setup;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
-import insane96mcp.iguanatweaksreborn.modules.HungerHealthModule;
 import insane96mcp.iguanatweaksreborn.modules.StackSizesModule;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
@@ -23,7 +22,6 @@ public class ModConfig {
     public static class Modules {
 
         public static boolean farming;
-        public static boolean hardness;
         public static boolean stackSizes;
         public static boolean hungerHealth;
         public static boolean misc;
@@ -267,111 +265,17 @@ public class ModConfig {
 
     public static class HungerHealth {
 
-        public static double foodHungerMultiplier;
-        public static double foodSaturationMultiplier;
-        public static List<CustomFoodValue> customFoodValue;
-        public static List<IdTagMatcher> blacklist;
-        public static boolean blacklistAsWhitelist;
-        public static double foodHealMultiplier;
+
         public static double blockBreakExaustionMultiplier;
         public static List<Debuff> debuffs;
 
         public static void load() {
-            foodHungerMultiplier = Config.COMMON.hungerHealth.foodHungerMultiplier.get();
-            foodSaturationMultiplier = Config.COMMON.hungerHealth.foodSaturationMultiplier.get();
-            customFoodValue = parseCustomFoodHungerList(Config.COMMON.hungerHealth.customFoodValue.get());
-            blacklist = parseBlacklist(Config.COMMON.hungerHealth.blacklist.get());
-            blacklistAsWhitelist = Config.COMMON.hungerHealth.blacklistAsWhitelist.get();
-            foodHealMultiplier = Config.COMMON.hungerHealth.foodHealMultiplier.get();
+
             blockBreakExaustionMultiplier = Config.COMMON.hungerHealth.blockBreakExaustionMultiplier.get();
             debuffs = parseDebuffs(Config.COMMON.hungerHealth.debuffs.get());
-
-            HungerHealthModule.processFoodMultipliers();
-            HungerHealthModule.processCustomFoodValues();
         }
 
-        private static List<IdTagMatcher> parseBlacklist(List<? extends String> list) {
-            List<IdTagMatcher> idTagMatchers = new ArrayList<>();
-            for (String line : list) {
-                String[] split = line.split(",");
-                if (split.length != 1) {
-                    LogHelper.Warn("Invalid line \"%s\" for Food Restore Blacklist. Format must be modid:item_id", line);
-                    continue;
-                }
-                if (split[0].startsWith("#")) {
-                    String replaced = split[0].replace("#", "");
-                    ResourceLocation tag = ResourceLocation.tryCreate(replaced);
-                    if (tag == null) {
-                        LogHelper.Warn("%s tag for Food Restore Blacklist is not valid", replaced);
-                        continue;
-                    }
-                    IdTagMatcher itemTag = new IdTagMatcher(null, tag);
-                    idTagMatchers.add(itemTag);
-                }
-                else {
-                    ResourceLocation item = ResourceLocation.tryCreate(split[0]);
-                    if (item == null) {
-                        LogHelper.Warn("%s item for Food Restore Blacklist is not valid", line);
-                        continue;
-                    }
-                    if (ForgeRegistries.ITEMS.containsKey(item)) {
-                        IdTagMatcher itemId = new IdTagMatcher(item, null);
-                        idTagMatchers.add(itemId);
-                    }
-                    else
-                        LogHelper.Warn(String.format("%s item for Food Restore Blacklist seems to not exist", line));
-                }
-            }
-            return idTagMatchers;
-        }
 
-        public static class CustomFoodValue {
-            public ResourceLocation id;
-            public int hunger;
-            public float saturation;
-
-            public CustomFoodValue(ResourceLocation id, int hunger, float saturation) {
-                this.id = id;
-                this.hunger = hunger;
-                this.saturation = saturation;
-            }
-        }
-
-        private static List<CustomFoodValue> parseCustomFoodHungerList(List<? extends String> list) {
-            ArrayList<CustomFoodValue> foodValues = new ArrayList<>();
-            for (String line : list) {
-                String[] split = line.split(",");
-                if (split.length < 2 || split.length > 3) {
-                    LogHelper.Warn("Invalid line \"%s\" for Custom Food Value", line);
-                    continue;
-                }
-                if (!NumberUtils.isParsable(split[1])) {
-                    LogHelper.Warn(String.format("Invalid hunger \"%s\" for Custom Food Value", line));
-                    continue;
-                }
-                int hunger = Integer.parseInt(split[1]);
-                float saturation = -1f;
-                if (split.length == 3) {
-                    if (!NumberUtils.isParsable(split[2])) {
-                        LogHelper.Warn(String.format("Invalid saturation \"%s\" for Custom Food Value", line));
-                        continue;
-                    }
-                    saturation = Float.parseFloat(split[1]);
-                }
-                ResourceLocation item = ResourceLocation.tryCreate(split[0]);
-                if (item == null) {
-                    LogHelper.Warn("%s item for Custom Food Value is not valid", split[0]);
-                    continue;
-                }
-                if (ForgeRegistries.ITEMS.containsKey(item) && ForgeRegistries.ITEMS.getValue(item).isFood()) {
-                    CustomFoodValue customFoodValue = new CustomFoodValue(item, hunger, saturation);
-                    foodValues.add(customFoodValue);
-                }
-                else
-                    LogHelper.Warn(String.format("%s item for Custom Food Value seems to not exist or is not a food", split[0]));
-            }
-            return foodValues;
-        }
 
         public static class Debuff {
             public Stat stat;
@@ -468,7 +372,6 @@ public class ModConfig {
                 int amplifier = Integer.parseInt(split[3]);
 
                 Debuff debuff = new Debuff(stat, min, max, effect, amplifier);
-                //LogHelper.Info(debuff.toString());
                 debuffs.add(debuff);
             }
 

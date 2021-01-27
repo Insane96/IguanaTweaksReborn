@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.event;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.modules.HungerHealthModule;
+import insane96mcp.iguanatweaksreborn.modules.HHModule;
 import insane96mcp.iguanatweaksreborn.modules.misc.ai.ITCenaSwellGoal;
 import insane96mcp.iguanatweaksreborn.modules.misc.ai.ITCreeperSwellGoal;
 import insane96mcp.iguanatweaksreborn.modules.misc.other.ITExplosion;
@@ -30,7 +30,7 @@ public class Break {
 
     @SubscribeEvent
     public static void eventBreak(BlockEvent.BreakEvent event) {
-        HungerHealthModule.breakExaustion(event);
+        HHModule.breakExaustion(event);
     }
 
     @SubscribeEvent

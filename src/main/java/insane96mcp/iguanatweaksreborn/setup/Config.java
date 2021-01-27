@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.setup;
 
 import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.base.Modules;
 import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,7 +31,6 @@ public class Config {
 		public final Farming farming;
 		public final StackSizes stackSizes;
 		public final HungerHealth hungerHealth;
-		public final Misc misc;
 
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
 			insane96mcp.iguanatweaksreborn.base.Modules.init();
@@ -39,7 +39,6 @@ public class Config {
 			farming = new Farming(builder);
 			stackSizes = new StackSizes(builder);
 			hungerHealth = new HungerHealth(builder);
-			misc = new Misc(builder);
 		}
 
 		public static class Modules {
@@ -246,35 +245,12 @@ public class Config {
 		public static class HungerHealth {
 			public static String name = "Hunger & Health";
 
-			public ForgeConfigSpec.ConfigValue<Double> foodHungerMultiplier;
-			public ForgeConfigSpec.ConfigValue<Double> foodSaturationMultiplier;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> customFoodValue;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
-			public ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelist;
-			public ForgeConfigSpec.ConfigValue<Double> foodHealMultiplier;
 			public ForgeConfigSpec.ConfigValue<Double> blockBreakExaustionMultiplier;
 			public ForgeConfigSpec.ConfigValue<List<? extends String>> debuffs;
 
 			public HungerHealth(ForgeConfigSpec.Builder builder) {
 				builder.push(name);
-				foodHungerMultiplier = builder
-						.comment("Food hunger restored will be multiplied by this value + 0.5. E.g. With the default value a Cooked Porkchop would heal 5 hunger instead of 8. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
-						.defineInRange("Food Hunger Multiplier", 0.5d, 0.0d, 128d);
-				foodSaturationMultiplier = builder
-						.comment("Food saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
-						.defineInRange("Food Saturation Multiplier", 0.8d, 0.0d, 64d);
-				customFoodValue = builder
-						.comment("Define custom food values, one string = one item. Those items are not affected by other changes such as 'Food Hunger Multiplier'.\nThe format is modid:itemid,hunger,saturation. Saturation is optional\nE.g. 'minecraft:cooked_porkchop,16,1.0' will make cooked porkchops give 8 shranks of food and 16 saturation (actual saturation is calculated by 'saturation * 2 * hunger').")
-						.defineList("Custom Food Hunger", Lists.newArrayList(), o -> o instanceof String);
-				blacklist = builder
-						.comment("Items or tags that will ignore the food multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].\nThis requires a Minecraft Restart.")
-						.defineList("Items Blacklist", Arrays.asList("minecraft:rotten_flesh"), o -> o instanceof String);
-				blacklistAsWhitelist = builder
-						.comment("Items Blacklist will be treated as a whitelist.\nThis requires a Minecraft Restart.")
-						.define("Blacklist as Whitelist", false);
-				foodHealMultiplier = builder
-						.comment("When eating you'll get healed by this percentage of hunger restored. Setting to 0 will disable this feature.")
-						.defineInRange("Food Heal Multiplier", 0.35d, 0.0d, 128d);
+
 				blockBreakExaustionMultiplier = builder
 						.comment("When breaking block you'll get exaustion equal to the block hardness (block hardness multipliers are taken into account too) multiplied by this value. Setting this to 0 will default to the vanilla exaustion (0.005).")
 						.defineInRange("Block Break Exaustion Multiplier", 0.01d, 0.0d, 1024d);
@@ -294,22 +270,14 @@ public class Config {
 				builder.pop();
 			}
 		}
-
-		public static class Misc {
-			public static String name = "Misc";
-
-			public Misc(ForgeConfigSpec.Builder builder) {
-				builder.push(name);
-
-				builder.pop();
-			}
-		}
 	}
 
 	@SubscribeEvent
 	public static void onModConfigEvent(final net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
 		ModConfig.load();
-		insane96mcp.iguanatweaksreborn.base.Modules.sleepRespawnModule.loadConfig();
-		insane96mcp.iguanatweaksreborn.base.Modules.experienceModule.loadConfig();
+		Modules.sleepRespawnModule.loadConfig();
+		Modules.experienceModule.loadConfig();
+		Modules.miningModule.loadConfig();
+		Modules.hungerHealthModule.loadConfig();
 	}
 }

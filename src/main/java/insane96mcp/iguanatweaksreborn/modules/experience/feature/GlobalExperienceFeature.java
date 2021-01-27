@@ -33,8 +33,6 @@ public class GlobalExperienceFeature extends ITFeature {
 
     @SubscribeEvent
     public void onXPOrbDrop(EntityJoinWorldEvent event) {
-        if (!this.isModuleEnabled())
-            return;
         if (!this.isEnabled())
             return;
         if (this.globalMultiplier == 1.0d)

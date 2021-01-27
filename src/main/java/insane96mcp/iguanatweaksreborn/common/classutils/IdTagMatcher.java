@@ -30,14 +30,14 @@ public class IdTagMatcher {
     public static IdTagMatcher parseLine(String line) {
         String[] split = line.split(",");
         if (split.length < 1 || split.length > 2) {
-            LogHelper.Warn("Invalid line \"%s\" for Hardnesses Blacklist. Format must be modid:blockid,modid:dimension", line);
+            LogHelper.Warn("Invalid line \"%s\". Format must be modid:blockid,modid:dimension", line);
             return null;
         }
         ResourceLocation dimension = MCUtils.AnyRL;
         if (split.length == 2) {
             dimension = ResourceLocation.tryCreate(split[1]);
             if (dimension == null) {
-                LogHelper.Warn(String.format("Invalid dimension \"%s\" for Hardness Blacklist. Ignoring it", split[1]));
+                LogHelper.Warn(String.format("Invalid dimension \"%s\". Ignoring it", split[1]));
                 dimension = MCUtils.AnyRL;
             }
         }
@@ -45,24 +45,22 @@ public class IdTagMatcher {
             String replaced = split[0].replace("#", "");
             ResourceLocation tag = ResourceLocation.tryCreate(replaced);
             if (tag == null) {
-                LogHelper.Warn("%s tag for Hardness Blacklist is not valid", replaced);
+                LogHelper.Warn("%s tag is not valid", replaced);
                 return null;
             }
-            IdTagMatcher hardness = new IdTagMatcher(null, tag, dimension);
-            return hardness;
+            return new IdTagMatcher(null, tag, dimension);
         }
         else {
             ResourceLocation block = ResourceLocation.tryCreate(split[0]);
             if (block == null) {
-                LogHelper.Warn("%s block for Hardness Blacklist is not valid", line);
+                LogHelper.Warn("%s block is not valid", line);
                 return null;
             }
             if (ForgeRegistries.BLOCKS.containsKey(block)) {
-                IdTagMatcher hardness = new IdTagMatcher(block, null, dimension);
-                return hardness;
+                return new IdTagMatcher(block, null, dimension);
             }
             else {
-                LogHelper.Warn(String.format("%s block for Hardness Blacklist seems to not exist", line));
+                LogHelper.Warn(String.format("%s block seems to not exist", line));
                 return null;
             }
         }

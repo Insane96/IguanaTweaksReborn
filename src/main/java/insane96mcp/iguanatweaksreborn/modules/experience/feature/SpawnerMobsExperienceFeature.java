@@ -39,8 +39,6 @@ public class SpawnerMobsExperienceFeature extends ITFeature {
 
     @SubscribeEvent
     public void onXPDropSpawnerMobs(LivingExperienceDropEvent event) {
-        if (!this.isModuleEnabled())
-            return;
         if (!this.isEnabled())
             return;
         if (this.mobsFromSpawnersMultiplier == 1.0d)

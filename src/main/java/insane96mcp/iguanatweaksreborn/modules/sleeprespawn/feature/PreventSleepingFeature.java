@@ -12,14 +12,14 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Disable Sleeping", description = "Makes sleeping impossible while begin able to set (or not) the spawn point")
-public class DisableSleepingFeature extends ITFeature {
+@Label(name = "Prevent Sleeping", description = "Makes sleeping impossible while begin able to set (or not) the spawn point")
+public class PreventSleepingFeature extends ITFeature {
 
     private final ForgeConfigSpec.ConfigValue<Boolean> disableBedSpawnConfig;
 
     public boolean disableBedSpawn = false;
 
-    public DisableSleepingFeature(ITModule module) {
+    public PreventSleepingFeature(ITModule module) {
         super(module, false);
         
         Config.builder.comment(this.getDescription()).push(this.getName());
@@ -29,10 +29,14 @@ public class DisableSleepingFeature extends ITFeature {
         Config.builder.pop();
     }
 
+    @Override
+    public void loadConfig() {
+        super.loadConfig();
+        this.disableBedSpawn = this.disableBedSpawnConfig.get();
+    }
+
     @SubscribeEvent
     public void disableSleeping(PlayerSleepInBedEvent event) {
-        if (!this.isModuleEnabled())
-            return;
         if (!this.isEnabled())
             return;
 
