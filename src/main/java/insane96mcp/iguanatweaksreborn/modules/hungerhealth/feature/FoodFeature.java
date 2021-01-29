@@ -22,12 +22,12 @@ import java.util.List;
 @Label(name = "Food Overhaul", description = "Change food's hunger and saturation given, also makes food heal you by a bit")
 public class FoodFeature extends ITFeature {
 
-    public ForgeConfigSpec.ConfigValue<Double> foodHungerMultiplierConfig;
-    public ForgeConfigSpec.ConfigValue<Double> foodSaturationMultiplierConfig;
-    public ForgeConfigSpec.ConfigValue<List<? extends String>> blacklistConfig;
-    public ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelistConfig;
-    public ForgeConfigSpec.ConfigValue<Double> foodHealMultiplierConfig;
-    public ForgeConfigSpec.ConfigValue<List<? extends String>> customFoodValueConfig;
+    private final ForgeConfigSpec.ConfigValue<Double> foodHungerMultiplierConfig;
+    private final ForgeConfigSpec.ConfigValue<Double> foodSaturationMultiplierConfig;
+    private final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklistConfig;
+    private final ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelistConfig;
+    private final ForgeConfigSpec.ConfigValue<Double> foodHealMultiplierConfig;
+    private final ForgeConfigSpec.ConfigValue<List<? extends String>> customFoodValueConfig;
 
     private List<String> blackListDefault = Arrays.asList("minecraft:rotten_flesh", "minecraft:potion");
 

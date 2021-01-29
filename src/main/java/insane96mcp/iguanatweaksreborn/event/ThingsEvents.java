@@ -1,7 +1,6 @@
 package insane96mcp.iguanatweaksreborn.event;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.modules.HHModule;
 import insane96mcp.iguanatweaksreborn.modules.misc.ai.ITCenaSwellGoal;
 import insane96mcp.iguanatweaksreborn.modules.misc.ai.ITCreeperSwellGoal;
 import insane96mcp.iguanatweaksreborn.modules.misc.other.ITExplosion;
@@ -18,7 +17,6 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,12 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.ArrayList;
 
 @Mod.EventBusSubscriber(modid = IguanaTweaksReborn.MOD_ID)
-public class Break {
-
-    @SubscribeEvent
-    public static void eventBreak(BlockEvent.BreakEvent event) {
-        HHModule.breakExaustion(event);
-    }
+public class ThingsEvents {
 
     @SubscribeEvent
     public static void explosionStartEvent(ExplosionEvent.Detonate event) {

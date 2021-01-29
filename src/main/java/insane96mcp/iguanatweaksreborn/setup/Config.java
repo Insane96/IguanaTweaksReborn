@@ -30,7 +30,6 @@ public class Config {
 		public final Modules modules;
 		public final Farming farming;
 		public final StackSizes stackSizes;
-		public final HungerHealth hungerHealth;
 
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
 			insane96mcp.iguanatweaksreborn.base.Modules.init();
@@ -38,7 +37,6 @@ public class Config {
 			modules = new Modules(builder);
 			farming = new Farming(builder);
 			stackSizes = new StackSizes(builder);
-			hungerHealth = new HungerHealth(builder);
 		}
 
 		public static class Modules {
@@ -46,9 +44,7 @@ public class Config {
 			public static String comment = "Disable entire modules with just a 'false'";
 
 			public ForgeConfigSpec.ConfigValue<Boolean> farming;
-			public ForgeConfigSpec.ConfigValue<Boolean> experience;
 			public ForgeConfigSpec.ConfigValue<Boolean> stackSizes;
-			public ForgeConfigSpec.ConfigValue<Boolean> hungerHealth;
 			public ForgeConfigSpec.ConfigValue<Boolean> misc;
 
 			public Modules(ForgeConfigSpec.Builder builder) {
@@ -56,15 +52,9 @@ public class Config {
 				farming = builder
 						.comment("Set to false to disable the Farming Module")
 						.define("Farming Module", true);
-				experience = builder
-						.comment("Set to false to disable the Experience Module")
-						.define("Experience Module", true);
 				stackSizes = builder
 						.comment("Set to false to disable the Stack Sizes Module")
 						.define("Stack Sizes Module", true);
-				hungerHealth = builder
-						.comment("Set to false to disable the Hunger & Health Module")
-						.define("Hunger & Health Module", true);
 				misc = builder
 						.comment("Set to false to disable the Misc Module")
 						.define("Misc Module", true);
@@ -242,34 +232,6 @@ public class Config {
 			}
 		}
 
-		public static class HungerHealth {
-			public static String name = "Hunger & Health";
-
-			public ForgeConfigSpec.ConfigValue<Double> blockBreakExaustionMultiplier;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> debuffs;
-
-			public HungerHealth(ForgeConfigSpec.Builder builder) {
-				builder.push(name);
-
-				blockBreakExaustionMultiplier = builder
-						.comment("When breaking block you'll get exaustion equal to the block hardness (block hardness multipliers are taken into account too) multiplied by this value. Setting this to 0 will default to the vanilla exaustion (0.005).")
-						.defineInRange("Block Break Exaustion Multiplier", 0.01d, 0.0d, 1024d);
-				debuffs = builder
-						.comment("A list of debuffs to apply to the player when has on low hunger / health. Each string must be 'stat,range,status_effect,amplifier', where stat MUST BE one of the following: HUNGER, HEALTH, EXPERIENCE_LEVEL; range must be a range for the statistic like it's done in commands.\n" +
-								"'10' When the player has exactly ten of the specified stat.\n" +
-								"'10..12' When the player has between 10 and 12 (inclusive) of the specified stat.\n" +
-								"'5..' When the player has five or greater of the specified stat.\n" +
-								"'..15' When the player has 15 or less of the specified stat.\n" +
-								"effect must be a potion id, e.g. minecraft:weakness\n" +
-								"amplifier must be the potion level starting from 0 (0 = level I)\n" +
-								"Thus is called Debuffs, this can be used to give the player positive effects.")
-						.defineList("Debuffs",
-								Arrays.asList("HUNGER,..2,minecraft:mining_fatigue,0",
-										"HUNGER,..4,minecraft:slowness,0",
-										"HEALTH,..3,minecraft:slowness,0"), o -> o instanceof String);
-				builder.pop();
-			}
-		}
 	}
 
 	@SubscribeEvent

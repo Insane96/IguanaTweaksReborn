@@ -2,6 +2,8 @@ package insane96mcp.iguanatweaksreborn.modules.hungerhealth;
 
 import insane96mcp.iguanatweaksreborn.base.ITModule;
 import insane96mcp.iguanatweaksreborn.base.Label;
+import insane96mcp.iguanatweaksreborn.modules.hungerhealth.feature.DebuffFeature;
+import insane96mcp.iguanatweaksreborn.modules.hungerhealth.feature.ExaustionIncreaseFeature;
 import insane96mcp.iguanatweaksreborn.modules.hungerhealth.feature.FoodFeature;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 
