@@ -3,7 +3,8 @@ package insane96mcp.iguanatweaksreborn.setup;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
-import insane96mcp.iguanatweaksreborn.modules.StackSizesModule;
+import insane96mcp.iguanatweaksreborn.modules.SSModule;
+import insane96mcp.iguanatweaksreborn.modules.stacksize.classutils.CustomStackSize;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -150,8 +151,6 @@ public class ModConfig {
 
     public static class StackSizes {
 
-        public static boolean foodStackReduction;
-        public static double foodStackMultiplier;
         public static List<CustomStackSize> customStackList;
         public static List<IdTagMatcher> blacklist;
         public static boolean blacklistAsWhitelist;
@@ -160,28 +159,17 @@ public class ModConfig {
         public static double blockStackMultiplier;
 
         public static void load() {
-            foodStackReduction = Config.COMMON.stackSizes.foodStackReduction.get();
-            foodStackMultiplier = Config.COMMON.stackSizes.foodStackMultiplier.get();
-            customStackList = parseCustomStackList(Config.COMMON.stackSizes.customStackList.get());
             blacklist = parseBlacklist(Config.COMMON.stackSizes.blacklist.get());
             blacklistAsWhitelist = Config.COMMON.stackSizes.blacklistAsWhitelist.get();
+            customStackList = parseCustomStackList(Config.COMMON.stackSizes.customStackList.get());
             itemStackMultiplier = Config.COMMON.stackSizes.itemStackMultiplier.get();
             blockStackReduction = Config.COMMON.stackSizes.blockStackReduction.get();
             blockStackMultiplier = Config.COMMON.stackSizes.blockStackMultiplier.get();
-            StackSizesModule.processItemStackSizes();
-            StackSizesModule.processFoodStackSizes();
-            StackSizesModule.processBlockStackSizes();
-            StackSizesModule.processCustomStackSizes();
+            SSModule.processItemStackSizes();
+            SSModule.processBlockStackSizes();
+            SSModule.processCustomStackSizes();
         }
 
-        public static class CustomStackSize extends IdTagMatcher {
-            public int stackSize;
-
-            public CustomStackSize(@Nullable ResourceLocation id, @Nullable ResourceLocation tag, int stackSize) {
-                super(id, tag);
-                this.stackSize = stackSize;
-            }
-        }
 
         private static List<CustomStackSize> parseCustomStackList(List<? extends String> list) {
             ArrayList<CustomStackSize> stackSizes = new ArrayList<>();

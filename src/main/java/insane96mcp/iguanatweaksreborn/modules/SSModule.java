@@ -2,66 +2,22 @@ package insane96mcp.iguanatweaksreborn.modules;
 
 import insane96mcp.iguanatweaksreborn.common.Weight;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
+import insane96mcp.iguanatweaksreborn.modules.stacksize.classutils.CustomStackSize;
 import insane96mcp.iguanatweaksreborn.setup.ModConfig;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collection;
 
-public class StackSizesModule {
+public class SSModule {
 
 	private static boolean loadedItemChanges = false;
-	private static boolean loadedFoodChanges = false;
 	private static boolean loadedBlockChanges = false;
-
-	public static void processFoodStackSizes() {
-		if (!ModConfig.Modules.stackSizes)
-			return;
-		if (!ModConfig.StackSizes.foodStackReduction)
-			return;
-		if (loadedFoodChanges)
-			return;
-		loadedFoodChanges = true;
-		Collection<Item> items = ForgeRegistries.ITEMS.getValues();
-		for (Item item : items) {
-			if (!item.isFood())
-				continue;
-			boolean isInWhitelist = false;
-			boolean isInBlacklist = false;
-			for (IdTagMatcher blacklistEntry : ModConfig.StackSizes.blacklist) {
-				if (!ModConfig.StackSizes.blacklistAsWhitelist) {
-					if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
-						isInBlacklist = true;
-						break;
-					}
-				}
-				else {
-					if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
-						isInWhitelist = true;
-						break;
-					}
-				}
-			}
-			if (isInBlacklist)
-				continue;
-			if (!isInWhitelist && ModConfig.StackSizes.blacklistAsWhitelist)
-				continue;
-			Food food = item.getFood();
-			double stackSize = 64d / (food.value + 1);
-			stackSize *= ModConfig.StackSizes.foodStackMultiplier;
-			if (stackSize < 1d)
-				stackSize = 1d;
-			else if (stackSize > 64d)
-				stackSize = 64d;
-			item.maxStackSize = (int) Math.round(stackSize);
-		}
-	}
 
 	public static void processItemStackSizes() {
 		if (!ModConfig.Modules.stackSizes)
@@ -154,7 +110,7 @@ public class StackSizesModule {
 			return;
 		if (ModConfig.StackSizes.customStackList.isEmpty())
 			return;
-		for (ModConfig.StackSizes.CustomStackSize customStackSize : ModConfig.StackSizes.customStackList) {
+		for (CustomStackSize customStackSize : ModConfig.StackSizes.customStackList) {
 			if (customStackSize.tag != null) {
 				ITag<Item> tag = ItemTags.getCollection().get(customStackSize.tag);
 				if (tag == null)
@@ -176,20 +132,7 @@ public class StackSizesModule {
 					item.maxStackSize = 64;
 			}
 		}
-		loadedFoodChanges = true;
 	}
 
-	public static void fixStackedSoupsEating(LivingEntityUseItemEvent.Finish event) {
-		if (event.getEntity() instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) event.getEntity();
-			ItemStack original = event.getItem();
-			ItemStack result = event.getResultStack();
-			if (original.getCount() > 1 && (result.getItem() == Items.BOWL || result.getItem() == Items.BUCKET)) {
-				ItemStack newResult = original.copy();
-				newResult.setCount(original.getCount() - 1);
-				event.setResultStack(newResult);
-				player.addItemStackToInventory(result);
-			}
-		}
-	}
+
 }
