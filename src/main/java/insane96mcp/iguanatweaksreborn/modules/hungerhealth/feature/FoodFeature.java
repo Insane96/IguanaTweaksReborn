@@ -6,6 +6,7 @@ import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.modules.hungerhealth.classutils.FoodValue;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
@@ -111,6 +112,7 @@ public class FoodFeature extends ITFeature {
 
             Food food = item.getFood();
             defaultFoodValues.add(new FoodValue(item.getRegistryName(), food.value, food.saturation));
+            LogHelper.Info("item: " + item.getRegistryName() + " hunger: " + food.value + " saturation: " + food.saturation);
         }
 
         return defaultFoodValues;
@@ -144,8 +146,10 @@ public class FoodFeature extends ITFeature {
             if (!isInWhitelist && blacklistAsWhitelist)
                 continue;
             Food food = item.getFood();
+            LogHelper.Info("item: " + item.getRegistryName() + " hunger: " + defaultFood.hunger + " saturation: " + defaultFood.saturation);
             food.value = (int) Math.ceil((defaultFood.hunger * foodHungerMultiplier) + 0.5f);
             food.saturation = (float) (defaultFood.saturation * foodSaturationMultiplier);
+            LogHelper.Info("item: " + item.getRegistryName() + " hunger: " + food.value + " saturation: " + food.saturation);
         }
     }
 

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//TODO Move to Misc Module
 @Label(name = "Debuffing", description = "Apply potion effects on certain hunger / health / experience level")
 public class DebuffFeature extends ITFeature {
     private final ForgeConfigSpec.ConfigValue<List<? extends String>> debuffsConfig;

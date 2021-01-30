@@ -31,7 +31,8 @@ public class Debuff {
     public enum Stat {
         HUNGER,
         HEALTH,
-        EXPERIENCE_LEVEL
+        EXPERIENCE_LEVEL,
+        TIREDNESS
     }
 
     @Nullable

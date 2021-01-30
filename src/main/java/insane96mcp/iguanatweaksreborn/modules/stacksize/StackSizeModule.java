@@ -3,7 +3,8 @@ package insane96mcp.iguanatweaksreborn.modules.stacksize;
 import insane96mcp.iguanatweaksreborn.base.ITModule;
 import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.stacksize.classutils.CustomStackSize;
-import insane96mcp.iguanatweaksreborn.modules.stacksize.feature.FoodStackReductionFeature;
+import insane96mcp.iguanatweaksreborn.modules.stacksize.feature.CustomStackSizeFeature;
+import insane96mcp.iguanatweaksreborn.modules.stacksize.feature.StackReductionFeature;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -14,15 +15,16 @@ import java.util.Collection;
 @Label(name = "Stack Size")
 public class StackSizeModule extends ITModule {
 
-    public FoodStackReductionFeature foodStackReductionFeature;
+    public StackReductionFeature stackReductionFeature;
+    public CustomStackSizeFeature customStackSizeFeature;
 
     public StackSizeModule() {
         super();
         Config.builder.comment(this.getDescription()).push(this.getName());
-        foodStackReductionFeature = new FoodStackReductionFeature(this);
+        stackReductionFeature = new StackReductionFeature(this);
+        customStackSizeFeature = new CustomStackSizeFeature(this);
         Config.builder.pop();
     }
-
 
     public ArrayList<CustomStackSize> defaultStackSizes = new ArrayList<>();
 
@@ -33,7 +35,8 @@ public class StackSizeModule extends ITModule {
         if (defaultStackSizes.isEmpty())
             defaultStackSizes = saveDefaultStackSizes();
 
-        foodStackReductionFeature.loadConfig();
+        stackReductionFeature.loadConfig();
+        customStackSizeFeature.loadConfig();
     }
 
     private ArrayList<CustomStackSize> saveDefaultStackSizes() {

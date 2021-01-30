@@ -1,6 +1,5 @@
 package insane96mcp.iguanatweaksreborn.setup;
 
-import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.base.Modules;
 import insane96mcp.iguanatweaksreborn.modules.FarmingModule;
@@ -29,14 +28,12 @@ public class Config {
 	public static class CommonConfig {
 		public final Modules modules;
 		public final Farming farming;
-		public final StackSizes stackSizes;
 
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
 			insane96mcp.iguanatweaksreborn.base.Modules.init();
 
 			modules = new Modules(builder);
 			farming = new Farming(builder);
-			stackSizes = new StackSizes(builder);
 		}
 
 		public static class Modules {
@@ -187,44 +184,6 @@ public class Config {
 							.defineInRange("Hoes Damage On Use Multiplier", 3, 1, 1024);
 					builder.pop();
 				}
-			}
-		}
-
-		public static class StackSizes {
-			public static String name = "Stack Sizes";
-
-			//Food Stack Reduction & Blacklist
-			//Item Stack Reduction & Blacklist
-			//Block Stack Reduction & Blacklist
-			//Custom Stack List
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> customStackList;
-			public ForgeConfigSpec.ConfigValue<List<? extends String>> blacklist;
-			public ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelist;
-			public ForgeConfigSpec.ConfigValue<Double> itemStackMultiplier;
-			public ForgeConfigSpec.ConfigValue<Boolean> blockStackReduction;
-			public ForgeConfigSpec.ConfigValue<Double> blockStackMultiplier;
-
-			public StackSizes(ForgeConfigSpec.Builder builder) {
-				builder.comment("Changes in this section require a Minecraft Restart.").push(name);
-				blacklist = builder
-						.comment("Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].")
-						.defineList("Items Blacklist", Arrays.asList("minecraft:rotten_flesh"), o -> o instanceof String);
-				blacklistAsWhitelist = builder
-						.comment("Items Blacklist will be treated as a whitelist.")
-						.define("Blacklist as Whitelist", false);
-				customStackList = builder
-						.comment("Define custom item stack sizes, one string = one item/tag. Those items are not affected by other changes such as 'Food Stack Reduction'.\nThe format is modid:itemid,stack_size or #modid:tagid,stack_size\nE.g. 'minecraft:stone,16' will make stone stack up to 16.\nE.g. '#forge:stone,16' will make all the stone types stack up to 16.\nValues over 64 or lower than 1 will not work.")
-						.defineList("Custom Stack Sizes", Lists.newArrayList(), o -> o instanceof String);
-				itemStackMultiplier = builder
-						.comment("Items max stack sizes (excluding blocks) will be multiplied by this value. Foods will be overridden by 'Food Stack Reduction' or 'Food Stack Multiplier' if are active. Setting to 1 will disable this feature.")
-						.defineInRange("Item Stack Multiplier", 0.5d, 0.01d, 1.0d);
-				blockStackReduction = builder
-						.comment("Blocks max stack sizes will be reduced based off their \"Weight\".")
-						.define("Block Stack Reduction", true);
-				blockStackMultiplier = builder
-						.comment("All the blocks max stack sizes will be multiplied by this value to increase / decrease them. This is applied after the reduction from 'Block Stack Reduction'.")
-						.defineInRange("Block Stack Multiplier", 1d, 0.01d, 1d);
-				builder.pop();
 			}
 		}
 

@@ -102,7 +102,7 @@ public class ITExplosion extends Explosion {
                 blockstate = tileEntity.getPistonState();
                 block = blockstate.getBlock();
             }
-//142 62 128
+
             block.onExplosionDestroy(this.world, new BlockPos(this.getPosition()), this);
 
             BlockPos blockpos1 = blockpos.toImmutable();
