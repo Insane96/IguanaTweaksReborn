@@ -35,5 +35,6 @@ public class Config {
 		Modules.hungerHealthModule.loadConfig();
 		Modules.stackSizeModule.loadConfig();
 		Modules.farmingModule.loadConfig();
+		Modules.miscModule.loadConfig();
 	}
 }

@@ -16,11 +16,11 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ITFallingBlockEntity extends FallingBlockEntity {
+public class ExplosionFallingBlockEntity extends FallingBlockEntity {
 
     public Entity exploder;
 
-    public ITFallingBlockEntity(World worldIn, double x, double y, double z, BlockState fallingBlockState) {
+    public ExplosionFallingBlockEntity(World worldIn, double x, double y, double z, BlockState fallingBlockState) {
         super(worldIn, x, y, z, fallingBlockState);
     }
 

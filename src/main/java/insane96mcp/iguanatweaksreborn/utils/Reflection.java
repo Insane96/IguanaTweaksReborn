@@ -27,7 +27,6 @@ public class Reflection {
     public static void init() {
         try {
             damageShieldMethod = ObfuscationReflectionHelper.findMethod(PlayerEntity.class, "func_184590_k", float.class);
-            //damageShieldMethod.setAccessible(true);
             damageShieldMH = lookup.unreflect(damageShieldMethod);
         } catch (IllegalAccessException e) {
             IguanaTweaksReborn.LOGGER.error(e.toString());
