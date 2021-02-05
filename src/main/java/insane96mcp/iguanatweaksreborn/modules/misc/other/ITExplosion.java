@@ -145,7 +145,7 @@ public class ITExplosion extends Explosion {
                 continue;
 
             double xDistance = entity.getPosX() - this.getPosition().x;
-            double yDistance = (entity instanceof TNTEntity ? entity.getPosY() : entity.getPosYEye()) - this.getPosition().y;
+            double yDistance = ((entity instanceof TNTEntity ? entity.getPosY() : (entity.getPosYEye())) - this.getPosition().y) / 2d;
             double zDistance = entity.getPosZ() - this.getPosition().z;
             double d13 = (double)MathHelper.sqrt(xDistance * xDistance + yDistance * yDistance + zDistance * zDistance);
             if (d13 == 0.00)
@@ -170,6 +170,7 @@ public class ITExplosion extends Explosion {
                 }
             }
             entity.attackEntityFrom(source, damageAmount);
+
             double d11 = d10;
             if (entity instanceof LivingEntity) {
                 d11 = getBlastDamageReduction((LivingEntity) entity, d10);
