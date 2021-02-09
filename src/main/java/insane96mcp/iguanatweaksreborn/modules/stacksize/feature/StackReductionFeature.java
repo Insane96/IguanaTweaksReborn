@@ -175,7 +175,7 @@ public class StackReductionFeature extends ITFeature {
                 continue;
             Block block = ((BlockItem) item).getBlock();
             double weight = Weight.getBlockWeight(block.getDefaultState());
-            double stackSize = defaultStackSize.stackSize / weight;
+            double stackSize = (defaultStackSize.stackSize / weight) * blockStackMultiplier;
             stackSize = Utils.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
         }

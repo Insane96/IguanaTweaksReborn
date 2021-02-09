@@ -46,7 +46,7 @@ public class ExplosionOverhaulFeature extends ITFeature {
                 .comment("While enabled knockback is greatly increased by explosion size")
                 .define("Knockback Scales With Size", knockbackScalesWithSize);
         enableFlyingBlocksConfig = Config.builder
-                .comment("EXPERIMENTAL! This will make explosion blast blocks away.")
+                .comment("EXPERIMENTAL! This will make explosion blast blocks away. Blocks that can't land will drop the block as a TNT would have destroyed it.")
                 .define("Enable Flying Blocks", enableFlyingBlocks);
         Config.builder.pop();
     }
@@ -110,7 +110,7 @@ public class ExplosionOverhaulFeature extends ITFeature {
             if (this.enableFlyingBlocks)
                 explosion.fallingBlocks();
             explosion.destroyBlocks();
-            explosion.processEntities(this.blockingDamageScaling, this.knockbackScalesWithSize);
+            //explosion.processEntities(this.blockingDamageScaling, this.knockbackScalesWithSize);
             explosion.playSound();
             explosion.spawnParticles();
             explosion.processFire();

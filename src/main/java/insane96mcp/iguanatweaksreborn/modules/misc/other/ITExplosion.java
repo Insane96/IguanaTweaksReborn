@@ -145,7 +145,7 @@ public class ITExplosion extends Explosion {
                 continue;
 
             double xDistance = entity.getPosX() - this.getPosition().x;
-            double yDistance = ((entity instanceof TNTEntity ? entity.getPosY() : (entity.getPosYEye())) - this.getPosition().y) / 2d;
+            double yDistance = ((entity instanceof TNTEntity ? entity.getPosY() : (entity.getPosYEye())) - this.getPosition().y) * 0.6667d;
             double zDistance = entity.getPosZ() - this.getPosition().z;
             double d13 = (double)MathHelper.sqrt(xDistance * xDistance + yDistance * yDistance + zDistance * zDistance);
             if (d13 == 0.00)
@@ -173,10 +173,12 @@ public class ITExplosion extends Explosion {
 
             double d11 = d10;
             if (entity instanceof LivingEntity) {
-                d11 = getBlastDamageReduction((LivingEntity) entity, d10);
+                d11 = getBlastDamageReduction((LivingEntity) entity, d11);
             }
             if (knockbackScaleWithSize)
                 d11 *= this.size;
+
+            d11 = Math.max(d11, this.size * 0.05d);
 
             entity.setMotion(entity.getMotion().add(xDistance * d11, yDistance * d11, zDistance * d11));
             if (entity instanceof PlayerEntity) {
