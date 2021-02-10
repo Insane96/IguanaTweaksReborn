@@ -36,7 +36,7 @@ public class CropsGrowthFeature extends ITFeature {
 				.defineEnum("Crops Require Water", cropsRequireWater);
 		cropsGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for a crop to grow (e.g. at 2.0 the plant will take twice to grow).\nSetting this to 0 will prevent crops from growing naturally.\n1.0 will make crops grow like normal.")
-				.defineInRange("Crops Growth Speed Mutiplier", cropsGrowthMultiplier, 0.0d, 128d);
+				.defineInRange("Crops Growth Speed Multiplier", cropsGrowthMultiplier, 0.0d, 128d);
 		noSunlightGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for a crop to grow when it's sky light level is below \"Min Sunlight\", (e.g. at 2.0 when the crop has a skylight below \"Min Sunlight\" will take twice to grow).\nSetting this to 0 will prevent crops from growing when sky light level is below \"Min Sunlight\".\n1.0 will make crops growth not affected by skylight.")
 				.defineInRange("No Sunlight Growth Multiplier", noSunLightGrowthMultiplier, 0.0d, 128d);
