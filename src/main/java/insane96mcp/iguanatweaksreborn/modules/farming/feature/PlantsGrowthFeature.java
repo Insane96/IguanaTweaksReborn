@@ -40,34 +40,34 @@ public class PlantsGrowthFeature extends ITFeature {
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		sugarCanesGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Sugar Canes to grow (e.g. at 2.0 Sugar Canes will take twice to grow).\nSetting this to 0 will prevent Sugar Canes from growing naturally.\n1.0 will make Sugar Canes grow like normal.")
-				.defineInRange("Sugar Canes Growth Speed Mutiplier", sugarCanesGrowthMultiplier, 0.0d, 128d);
+				.defineInRange("Sugar Canes Growth Speed Multiplier", sugarCanesGrowthMultiplier, 0.0d, 128d);
 		cactusGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Cactuses to grow (e.g. at 2.0 Cactuses will take twice to grow).\nSetting this to 0 will prevent Cactuses from growing naturally.\n1.0 will make Cactuses grow like normal.")
-				.defineInRange("Cactus Growth Speed Mutiplier", cactusGrowthMultiplier, 0.0d, 128d);
+				.defineInRange("Cactus Growth Speed Multiplier", cactusGrowthMultiplier, 0.0d, 128d);
 		cocoaBeansGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Cocoa Beans to grow (e.g. at 2.0 Cocoa Beans will take twice to grow).\nSetting this to 0 will prevent Cocoa Beans from growing naturally.\n1.0 will make Cocoa Beans grow like normal.")
-				.defineInRange("Cocoa Beans Growth Speed Mutiplier", cocoaBeansGrowthMultiplier, 0.0d, 128d);
+				.defineInRange("Cocoa Beans Growth Speed Multiplier", cocoaBeansGrowthMultiplier, 0.0d, 128d);
 		netherwartGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Netherwart to grow (e.g. at 2.0 Netherwart will take twice to grow).\nSetting this to 0 will prevent Netherwart from growing naturally.\n1.0 will make Netherwart grow like normal.")
-				.defineInRange("Netherwart Growth Speed Mutiplier", netherwartGrowthMultiplier, 0.0d, 128d);
+				.defineInRange("Netherwart Growth Speed Multiplier", netherwartGrowthMultiplier, 0.0d, 128d);
 		chorusPlantGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Chorus Plants to grow (e.g. at 2.0 Chorus Plants will take twice to grow).\nSetting this to 0 will prevent Chorus Plants from growing naturally.\n1.0 will make Chorus Plants grow like normal.")
-				.defineInRange("Chorus Plants Growth Speed Mutiplier", chorusPlantGrowthMultiplier, 0.0d, 128d);
+				.defineInRange("Chorus Plants Growth Speed Multiplier", chorusPlantGrowthMultiplier, 0.0d, 128d);
 		saplingGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Saplings to grow (e.g. at 2.0 Saplings will take twice to grow).\nSetting this to 0 will prevent Saplings from growing naturally.\n1.0 will make Saplings grow like normal.")
-				.defineInRange("Saplings Growth Speed Mutiplier", saplingGrowthMultiplier, 0.0d, 128d);
+				.defineInRange("Saplings Growth Speed Multiplier", saplingGrowthMultiplier, 0.0d, 128d);
 		stemGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Pumpkin & Melon to grow (e.g. at 2.0 Pumpkin & Melon will take twice to grow).\nSetting this to 0 will prevent Pumpkin & Melon from growing naturally.\n1.0 will make Pumpkin & Melon grow like normal.")
-				.defineInRange("Pumpkin & Melon Growth Speed Mutiplier", stemGrowthMultiplier, 0.0d, 128d);
+				.defineInRange("Pumpkin & Melon Growth Speed Multiplier", stemGrowthMultiplier, 0.0d, 128d);
 		berryBushGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Berry Bushes to grow (e.g. at 2.0 Berry Bushes will take twice to grow).\nSetting this to 0 will prevent Berry Bushes from growing naturally.\n1.0 will make Berry Bushes grow like normal.")
-				.defineInRange("Berry Bushes Growth Speed Mutiplier", berryBushGrowthMultiplier, 0.0d, 128d);
+				.defineInRange("Berry Bushes Growth Speed Multiplier", berryBushGrowthMultiplier, 0.0d, 128d);
 		kelpGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Kelp to grow (e.g. at 2.0 Kelp will take twice to grow).\nSetting this to 0 will prevent Kelp from growing naturally.\n1.0 will make Kelp grow like normal.")
-				.defineInRange("Saplings Growth Speed Mutiplier", kelpGrowthMultiplier, 0.0d, 128d);
+				.defineInRange("Saplings Growth Speed Multiplier", kelpGrowthMultiplier, 0.0d, 128d);
 		bambooGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Bamboo to grow (e.g. at 2.0 Bamboo will take twice to grow).\nSetting this to 0 will prevent Bamboo from growing naturally.\n1.0 will make Bamboo grow like normal.")
-				.defineInRange("Bamboo Growth Speed Mutiplier", bambooGrowthMultiplier, 0.0d, 128d);
+				.defineInRange("Bamboo Growth Speed Multiplier", bambooGrowthMultiplier, 0.0d, 128d);
 		Config.builder.pop();
 	}
 
