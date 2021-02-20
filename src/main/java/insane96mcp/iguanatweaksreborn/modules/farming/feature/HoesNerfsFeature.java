@@ -92,7 +92,7 @@ public class HoesNerfsFeature extends ITFeature {
 			return;
 		if (event.getPlayer().world.isRemote)
 			return;
-		if (isHoeDisabled(event.getHeldItemStack().getItem()))
+		if (isHoeDisabled(event.getHeldItemStack().getItem()) && disableLowTierHoes)
 			return;
 		if (/*event.getFace() == Direction.DOWN || */!event.getWorld().isAirBlock(event.getPos().up()))
 			return;
