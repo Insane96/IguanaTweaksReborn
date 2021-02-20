@@ -14,7 +14,7 @@ public class ITModule {
 
     public ITModule(boolean enabledByDefault) {
         if (!this.getClass().isAnnotationPresent(Label.class))
-            LogHelper.Error(String.format("%s is missign the Label Annotation.", this.getClass().getName()));
+            LogHelper.Error(String.format("%s is missing the Label Annotation.", this.getClass().getName()));
 
         this.name = this.getClass().getAnnotation(Label.class).name();
         this.description = this.getClass().getAnnotation(Label.class).name();
