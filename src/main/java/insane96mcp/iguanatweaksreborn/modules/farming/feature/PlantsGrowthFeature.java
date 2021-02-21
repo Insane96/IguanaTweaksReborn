@@ -28,7 +28,7 @@ public class PlantsGrowthFeature extends ITFeature {
 	public double cactusGrowthMultiplier = 2.5d;
 	public double cocoaBeansGrowthMultiplier = 3.0d;
 	public double netherwartGrowthMultiplier = 3.0d;
-	public double chorusPlantGrowthMultiplier = 3.5d;
+	public double chorusPlantGrowthMultiplier = 3.0d;
 	public double saplingGrowthMultiplier = 2.0d;
 	public double stemGrowthMultiplier = 2.0d;
 	public double berryBushGrowthMultiplier = 2.5d;

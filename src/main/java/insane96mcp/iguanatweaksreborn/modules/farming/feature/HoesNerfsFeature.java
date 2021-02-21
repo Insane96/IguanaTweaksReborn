@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Hoes Nerfs", description = "Hoes nerfs")
+@Label(name = "Hoes Nerfs", description = "Slower Hoes and more fragile")
 public class HoesNerfsFeature extends ITFeature {
 
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> hoesCooldownsConfig;
