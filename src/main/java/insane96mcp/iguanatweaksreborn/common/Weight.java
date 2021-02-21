@@ -29,7 +29,7 @@ public class Weight {
         materialWeight.put(Material.CLAY, 3d);
         materialWeight.put(Material.CORAL, 2d);
         materialWeight.put(Material.DRAGON_EGG, 1d);
-        materialWeight.put(Material.EARTH, 3d);
+        materialWeight.put(Material.EARTH, 2d);
         materialWeight.put(Material.GLASS, 2d);
         materialWeight.put(Material.GOURD, 2d);
         materialWeight.put(Material.ICE, 3d);
