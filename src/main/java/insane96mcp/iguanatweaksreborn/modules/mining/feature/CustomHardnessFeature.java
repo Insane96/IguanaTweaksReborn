@@ -20,7 +20,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-@Label(name = "Custom Hardness", description = "Change specific blocks hardness as well as white and blacklist")
+@Label(name = "Custom Hardness", description = "Change specific blocks hardness as well as black and whitelist")
 public class CustomHardnessFeature extends ITFeature {
 
     private final ForgeConfigSpec.ConfigValue<List<? extends String>> customHardnessConfig;
@@ -72,17 +72,19 @@ public class CustomHardnessFeature extends ITFeature {
         BlockState blockState = world.getBlockState(pos);
 
         Block block = blockState.getBlock();
-        double hardness = getBlockSingleHardness(block, dimensionId);
-        if (hardness == -1d)
+        double customHardness = getBlockSingleHardness(block, dimensionId);
+        if (customHardness == -1d)
             return;
-        double ratio = getRatio(hardness, blockState, world, pos);
+        double ratio = getRatio(customHardness, blockState, world, pos);
         event.setNewSpeed(event.getNewSpeed() * (float) ratio);
     }
 
     private static double getRatio(double newHardness, BlockState state, World world, BlockPos pos) {
         //Add depth dimension multiplier
-        double multiplier = 1d + Modules.miningModule.globalHardnessFeature.getDepthHardnessMultiplier(state.getBlock(), world.getDimensionKey().getLocation(), pos);
-        return state.getBlockHardness(world, pos) / (newHardness * multiplier);
+        double depthMultiplier = Modules.miningModule.globalHardnessFeature.getDepthHardnessMultiplier(state.getBlock(), world.getDimensionKey().getLocation(), pos, true);
+        double ratio = state.getBlockHardness(world, pos) / newHardness;
+        double multiplier = (1d / ratio) + depthMultiplier;
+        return 1d / multiplier;
     }
 
     /**
