@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.base.ITModule;
 import insane96mcp.iguanatweaksreborn.base.Label;
+import insane96mcp.iguanatweaksreborn.base.Modules;
 import insane96mcp.iguanatweaksreborn.modules.mining.classutils.BlockHardness;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
@@ -22,7 +23,9 @@ import java.util.List;
 @Label(name = "Custom Hardness", description = "Change specific blocks hardness as well as white and blacklist")
 public class CustomHardnessFeature extends ITFeature {
 
-    public ForgeConfigSpec.ConfigValue<List<? extends String>> customHardnessConfig;
+    private final ForgeConfigSpec.ConfigValue<List<? extends String>> customHardnessConfig;
+
+    private static final ArrayList<String> customHardnessDefault = Lists.newArrayList("minecraft:coal_ore,6", "minecraft:iron_ore,9.0", "minecraft:gold_ore,10.5", "minecraft:diamond_ore,18", "minecraft:ancient_debris,50", "minecraft:redstone_ore,12", "minecraft:lapis_ore,12", "minecraft:emerald_ore,18", "minecraft:nether_quartz_ore,6", "minecraft:nether_gold_ore,9", "minecraft:obsidian,40");
 
     public ArrayList<BlockHardness> customHardness;
 
@@ -32,7 +35,7 @@ public class CustomHardnessFeature extends ITFeature {
         Config.builder.comment(this.getDescription()).push(this.getName());
         customHardnessConfig = Config.builder
                 .comment("Define custom blocks hardness, one string = one block/tag. Those blocks are not affected by the global block hardness multiplier.\nThe format is modid:blockid,hardness,dimensionid or #modid:tagid,hardness,dimensionid\nE.g. 'minecraft:stone,5.0' will make stone have 5 hardness in every dimension.\nE.g. '#forge:stone,5.0,minecraft:overworld' will make all the stone types have 5 hardness but only in the overworld.")
-                .defineList("Custom Hardness", Lists.newArrayList("minecraft:coal_ore,6", "minecraft:iron_ore,9.0", "minecraft:gold_ore,10.5", "minecraft:diamond_ore,18", "minecraft:ancient_debris,50", "minecraft:redstone_ore,12", "minecraft:lapis_ore,12", "minecraft:emerald_ore,18", "minecraft:nether_quartz_ore,6", "minecraft:nether_gold_ore,9", "minecraft:obsidian,40"), o -> o instanceof String);
+                .defineList("Custom Hardness", customHardnessDefault, o -> o instanceof String);
         Config.builder.pop();
     }
 
@@ -72,11 +75,14 @@ public class CustomHardnessFeature extends ITFeature {
         double hardness = getBlockSingleHardness(block, dimensionId);
         if (hardness == -1d)
             return;
-        event.setNewSpeed(event.getNewSpeed() * (float) getRatio(hardness, blockState, world, pos));
+        double ratio = getRatio(hardness, blockState, world, pos);
+        event.setNewSpeed(event.getNewSpeed() * (float) ratio);
     }
 
     private static double getRatio(double newHardness, BlockState state, World world, BlockPos pos) {
-        return state.getBlockHardness(world, pos) / newHardness;
+        //Add depth dimension multiplier
+        double multiplier = 1d + Modules.miningModule.globalHardnessFeature.getDepthHardnessMultiplier(state.getBlock(), world.getDimensionKey().getLocation(), pos);
+        return state.getBlockHardness(world, pos) / (newHardness * multiplier);
     }
 
     /**

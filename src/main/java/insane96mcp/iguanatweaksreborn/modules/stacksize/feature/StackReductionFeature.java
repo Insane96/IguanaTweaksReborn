@@ -84,7 +84,7 @@ public class StackReductionFeature extends ITFeature {
 
         foodStackReduction = foodStackReductionConfig.get();
         foodStackMultiplier = foodStackMultiplierConfig.get();
-        blacklist = parseBlacklist(blacklistConfig.get());
+        blacklist = IdTagMatcher.parseStringList(blacklistConfig.get());
         blacklistAsWhitelist = blacklistAsWhitelistConfig.get();
         itemStackMultiplier = itemStackMultiplierConfig.get();
         blockStackReduction = blockStackReductionConfig.get();

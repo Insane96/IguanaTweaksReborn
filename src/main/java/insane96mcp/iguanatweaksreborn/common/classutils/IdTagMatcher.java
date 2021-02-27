@@ -7,6 +7,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IdTagMatcher {
     public ResourceLocation id;
@@ -64,5 +66,15 @@ public class IdTagMatcher {
                 return null;
             }
         }
+    }
+
+    public static ArrayList<IdTagMatcher> parseStringList(List<? extends String> list) {
+        ArrayList<IdTagMatcher> commonTagBlock = new ArrayList<>();
+        for (String line : list) {
+            IdTagMatcher idTagMatcher = IdTagMatcher.parseLine(line);
+            if (idTagMatcher != null)
+                commonTagBlock.add(idTagMatcher);
+        }
+        return commonTagBlock;
     }
 }

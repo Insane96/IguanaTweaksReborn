@@ -71,7 +71,7 @@ public class FoodFeature extends ITFeature {
         foodHungerMultiplier = foodHungerMultiplierConfig.get();
         foodSaturationMultiplier = foodSaturationMultiplierConfig.get();
         customFoodValues = parseCustomFoodHungerList(customFoodValueConfig.get());
-        blacklist = parseBlacklist(blacklistConfig.get());
+        blacklist = IdTagMatcher.parseStringList(blacklistConfig.get());
         blacklistAsWhitelist = blacklistAsWhitelistConfig.get();
         foodHealMultiplier = foodHealMultiplierConfig.get();
 
@@ -80,16 +80,6 @@ public class FoodFeature extends ITFeature {
 
         processFoodMultipliers();
         processCustomFoodValues();
-    }
-
-    private ArrayList<IdTagMatcher> parseBlacklist(List<? extends String> list) {
-        ArrayList<IdTagMatcher> idTagMatchers = new ArrayList<>();
-        for (String line : list) {
-            IdTagMatcher idTagMatcher = IdTagMatcher.parseLine(line);
-            if (idTagMatcher != null)
-                idTagMatchers.add(idTagMatcher);
-        }
-        return idTagMatchers;
     }
 
     private ArrayList<FoodValue> parseCustomFoodHungerList(List<? extends String> list) {
