@@ -563,7 +563,7 @@ public class ModuleMovementRestriction {
 	}
 	
 	public static void loadCustomTerrainSlowdown() {
-		customWeights.clear();
+		customTerrainSlowdowns.clear();
 		for (String line : ModConfig.config.movementRestriction.terrainSlowdownCustom) {
         	if (line.trim().isEmpty()) {
 				IguanaTweaks.logger.warn("[Custom Terrain Slowdown] Empty line found. Ignoring ...");
