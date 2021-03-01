@@ -1,9 +1,5 @@
 package net.insane96mcp.iguanatweaks.modules;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import net.insane96mcp.iguanatweaks.IguanaTweaks;
 import net.insane96mcp.iguanatweaks.capabilities.IPlayerData;
 import net.insane96mcp.iguanatweaks.capabilities.PlayerDataProvider;
@@ -45,6 +41,10 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class ModuleMovementRestriction {
 	public static void ApplyPlayer(EntityLivingBase living) {
@@ -153,8 +153,10 @@ public class ModuleMovementRestriction {
 		
 		ItemStack stack = event.getItemStack();
 		float weight = GetStackWeight(stack);
-		DecimalFormat dFormat = new DecimalFormat("#.##");
-		event.getToolTip().add(I18n.format(Strings.Translatable.MovementRestriction.weight) + ": " + dFormat.format(weight));
+		if (weight > 0.0f) {
+			DecimalFormat dFormat = new DecimalFormat("#.##");
+			event.getToolTip().add(I18n.format(Strings.Translatable.MovementRestriction.weight) + ": " + dFormat.format(weight));
+		}
 		
 		if (stack.getItem() instanceof ItemArmor) {
 			ItemArmor item = (ItemArmor) stack.getItem();
@@ -167,7 +169,9 @@ public class ModuleMovementRestriction {
 					armor += armorModifier.getAmount();
 			}
 			float weightWhenWorn = armor * ModConfig.config.movementRestriction.armorWeight;
-			event.getToolTip().add(I18n.format(Strings.Translatable.MovementRestriction.weight_when_worn) + ": " + weightWhenWorn);
+			if (weightWhenWorn > 0.0f) {
+				event.getToolTip().add(I18n.format(Strings.Translatable.MovementRestriction.weight_when_worn) + ": " + weightWhenWorn);
+			}
 		}
 	}
 	

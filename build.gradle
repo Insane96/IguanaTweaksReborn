@@ -20,13 +20,6 @@ archivesBaseName = "IguanaTweaksReborn"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
-sourceSets {
-    main {
-        java { srcDirs = ["$projectDir/common"] }
-        resources { srcDirs = ["$projectDir/resources"] }
-    }
-}
-
 minecraft {
     // The mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   Snapshot are built nightly.
