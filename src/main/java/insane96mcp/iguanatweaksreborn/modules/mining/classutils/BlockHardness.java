@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 
 public class BlockHardness extends IdTagMatcher {
     public double hardness;
+    public boolean has0Hardness;
 
     public BlockHardness(@Nullable ResourceLocation block, @Nullable ResourceLocation tag, Double hardness, ResourceLocation dimension) {
         super(block, tag, dimension);

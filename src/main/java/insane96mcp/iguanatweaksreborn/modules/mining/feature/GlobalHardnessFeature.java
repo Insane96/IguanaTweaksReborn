@@ -34,7 +34,7 @@ public class GlobalHardnessFeature extends ITFeature {
     private final ForgeConfigSpec.ConfigValue<List<? extends String>> depthMultiplierBlacklistConfig;
     private final ForgeConfigSpec.ConfigValue<Boolean> depthMultiplierBlacklistAsWhitelistConfig;
 
-    private static final List<String> depthMultiplierDimensionDefault = Arrays.asList("minecraft:overworld,0.03,63,16");
+    private static final List<String> depthMultiplierDimensionDefault = Arrays.asList("minecraft:overworld,0.04,63,16");
     private static final List<String> depthMultiplierBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
 
     public double hardnessMultiplier = 3.0d;
@@ -62,7 +62,7 @@ public class GlobalHardnessFeature extends ITFeature {
                 .comment("Block Blacklist will be treated as a whitelist")
                 .define("Blacklist as Whitelist", this.blacklistAsWhitelist);
         depthMultiplierDimensionConfig = Config.builder
-                .comment("A list of dimensions and their relative block hardness multiplier per blocks below the set Y level. Each entry has a a dimension, a multiplier, a Y Level (where the increased hardness starts applying) and a Y Level cap (where the increase should stop).\nE.g. with the default configurations increases the global (or dimension) multiplier of the overworld by 0.075 for each block below the sea level (63); so at Y = 32 you'll get a multiplier of 3.0 (global multiplier) + 0.075 * (63 - 32) = 5.325 hardness multiplier. Below Y = 16 the increase applied is always the same (the cap)\nNOTE: This multiplier increase applies to Custom Hardness too.")
+                .comment("A list of dimensions and their relative block hardness multiplier per blocks below the set Y level. Each entry has a a dimension, a multiplier, a Y Level (where the increased hardness starts applying) and a Y Level cap (where the increase should stop).\nE.g. with the default configurations increases the global (or dimension) multiplier of the overworld by 0.04 for each block below the sea level (63); so at Y = 32 you'll get a multiplier of 3.0 (global multiplier) + 0.04 * (63 - 32) = 4.24 hardness multiplier. Below Y = 16 the increase applied is always the same (the cap)\nNOTE: This multiplier increase applies to blocks in Custom Hardness too.")
                 .defineList("Depth Multiplier Dimension", depthMultiplierDimensionDefault, o -> o instanceof String);
         depthMultiplierBlacklistConfig = Config.builder
                 .comment("Block ids or tags that will ignore the depth multiplier. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
