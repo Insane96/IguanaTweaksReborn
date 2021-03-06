@@ -54,6 +54,8 @@ public class CustomHardnessFeature extends ITFeature {
     }
 
     public void resetHardness() {
+        if (customHardness == null)
+            return;
         //Reset the 0 hardness blocks
         for (BlockHardness blockHardness : this.customHardness) {
             List<Block> blocksToProcess = new ArrayList<>();

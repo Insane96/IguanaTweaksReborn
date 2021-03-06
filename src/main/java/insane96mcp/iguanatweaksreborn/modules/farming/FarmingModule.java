@@ -16,6 +16,7 @@ public class FarmingModule extends ITModule {
 	public CropsGrowthFeature cropsGrowthFeature;
 	public PlantsGrowthFeature plantsGrowthFeature;
 	public HoesNerfsFeature hoesNerfsFeature;
+	public HarderCrops harderCrops;
 
 	public FarmingModule() {
 		Config.builder.comment(this.getDescription()).push(this.getName());
@@ -24,6 +25,7 @@ public class FarmingModule extends ITModule {
 		cropsGrowthFeature = new CropsGrowthFeature(this);
 		plantsGrowthFeature = new PlantsGrowthFeature(this);
 		hoesNerfsFeature = new HoesNerfsFeature(this);
+		harderCrops = new HarderCrops(this);
 		Config.builder.pop();
 	}
 
@@ -35,6 +37,7 @@ public class FarmingModule extends ITModule {
 		cropsGrowthFeature.loadConfig();
 		plantsGrowthFeature.loadConfig();
 		hoesNerfsFeature.loadConfig();
+		harderCrops.loadConfig();
 	}
 
 	/**

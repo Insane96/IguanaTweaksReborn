@@ -42,10 +42,10 @@ public class HoesNerfsFeature extends ITFeature {
 				.comment("A list of hoes and ticks that a hoe will go on cooldown. The format is modid:itemid,ticks. 20 ticks = 1 second. You can even use tags as #modid:tag,ticks.")
 				.defineList("Hoes Cooldowns", hoesCooldownsDefault, o -> o instanceof String);
 		disableLowTierHoesConfig = Config.builder
-				.comment("When true, Wooden Hoes will not be usable and will be heavily damaged when trying to. The list of \"unusable\" hoes can be changed with datapacks by changing the iguanatweaksreborn:disabled_hoes tag")
+				.comment("When true, Wooden and Stone Hoes will not be usable to till dirt and will be heavily damaged when trying to. The list of \"unusable\" hoes can be changed with datapacks by changing the iguanatweaksreborn:disabled_hoes tag")
 				.define("Disable Low Tier Hoes", true);
 		hoesDamageOnUseMultiplierConfig = Config.builder
-				.comment("When an hoe is used it will lose this durability instead of 1. Set to 1 to disable")
+				.comment("When an hoe is used to till dirt it will lose this durability instead of 1. Set to 1 to disable")
 				.defineInRange("Hoes Damage On Use Multiplier", 3, 1, 1024);
 		Config.builder.pop();
 	}
