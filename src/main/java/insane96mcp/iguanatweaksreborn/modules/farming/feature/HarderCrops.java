@@ -51,7 +51,7 @@ public class HarderCrops extends ITFeature {
 		applyHardness();
 	}
 
-	private ArrayList<Block> affectedBlocks = new ArrayList<>();
+	private final ArrayList<Block> affectedBlocks = new ArrayList<>();
 
 	public void applyHardness() {
 		if (!this.isEnabled())
@@ -92,7 +92,7 @@ public class HarderCrops extends ITFeature {
 		if (!(heldStack.getItem() instanceof TieredItem))
 			return;
 		TieredItem heldItem = (TieredItem) heldStack.getItem();
-		if (!heldItem.getToolTypes(heldStack).contains(ToolType.HOE))
+		if (!heldItem.getToolTypes(heldStack).contains(ToolType.HOE) && !heldItem.getToolTypes(heldStack).contains(ToolType.AXE))
 			return;
 		Block block = event.getState().getBlock();
 		boolean isInWhitelist = false;
@@ -112,6 +112,10 @@ public class HarderCrops extends ITFeature {
 				efficiency += (float) (efficiencyLevel * efficiencyLevel + 1);
 			}
 		}
-		event.setNewSpeed(event.getNewSpeed() * efficiency);
+		if (heldItem.getToolTypes(heldStack).contains(ToolType.HOE))
+			event.setNewSpeed(event.getNewSpeed() * efficiency);
+		else
+			event.setNewSpeed(event.getNewSpeed() / efficiency);
+
 	}
 }
