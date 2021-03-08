@@ -19,7 +19,7 @@ public class WeightFeature extends ITFeature {
 
     private final ForgeConfigSpec.ConfigValue<List<? extends String>> materialsWeightConfig;
 
-    private final List<String> materialsWeightDefault = Arrays.asList("ANVIL,6", "BAMBOO,2", "BAMBOO_SAPLING,2", "BARRIER,1", "CACTUS,2", "CAKE,2", "CARPET,2", "CLAY,3", "CORAL,2", "DRAGON_EGG,1", "EARTH,2", "GLASS,2", "GOURD,2", "ICE,3", "IRON,6", "LEAVES,2", "MISCELLANEOUS,2", "NETHER_PLANTS,2", "NETHER_WOOD,3", "OCEAN_PLANT,2", "ORGANIC,3", "PACKED_ICE,4", "PISTON,2", "PLANTS,2", "REDSTONE_LIGHT,2", "ROCK,4", "SAND,2", "SEA_GRASS,2", "SHULKER,1", "SNOW,2", "SNOW_BLOCK,3", "SPONGE,2", "TALL_PLANTS,2", "TNT,2", "WEB,2", "WOOD,3", "WOOL,4");
+    private static final List<String> materialsWeightDefault = Arrays.asList("ANVIL,6", "BAMBOO,2", "BAMBOO_SAPLING,2", "BARRIER,1", "CACTUS,2", "CAKE,2", "CARPET,2", "CLAY,3", "CORAL,2", "DRAGON_EGG,1", "EARTH,2", "GLASS,2", "GOURD,2", "ICE,3", "IRON,6", "LEAVES,2", "MISCELLANEOUS,2", "NETHER_PLANTS,2", "NETHER_WOOD,3", "OCEAN_PLANT,2", "ORGANIC,3", "PACKED_ICE,4", "PISTON,2", "PLANTS,2", "REDSTONE_LIGHT,2", "ROCK,4", "SAND,2", "SEA_GRASS,2", "SHULKER,1", "SNOW,2", "SNOW_BLOCK,3", "SPONGE,2", "TALL_PLANTS,2", "TNT,2", "WEB,2", "WOOD,3", "WOOL,4");
 
     public static HashMap<Material, Double> materialWeight = new HashMap<>();
 
