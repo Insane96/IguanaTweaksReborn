@@ -4,8 +4,8 @@ import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.base.ITModule;
 import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.base.Modules;
-import insane96mcp.iguanatweaksreborn.common.Weight;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
+import insane96mcp.iguanatweaksreborn.modules.misc.feature.WeightFeature;
 import insane96mcp.iguanatweaksreborn.modules.stacksize.classutils.CustomStackSize;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
@@ -64,7 +64,7 @@ public class StackReductionFeature extends ITFeature {
                 .comment("Items max stack sizes (excluding blocks) will be multiplied by this value. Foods will be overridden by 'Food Stack Reduction' or 'Food Stack Multiplier' if are active. Setting to 1 will disable this feature.")
                 .defineInRange("Item Stack Multiplier", itemStackMultiplier, 0.01d, 1.0d);
         blockStackReductionConfig = Config.builder
-                .comment("Blocks max stack sizes will be reduced based off their \"Weight\".")
+				.comment("Blocks max stack sizes will be reduced based off their \"Weight\". The Material Weights can be configured in the Misc module.")
                 .define("Block Stack Reduction", blockStackReduction);
         blockStackMultiplierConfig = Config.builder
                 .comment("All the blocks max stack sizes will be multiplied by this value to increase / decrease them. This is applied after the reduction from 'Block Stack Reduction'.")
@@ -173,9 +173,9 @@ public class StackReductionFeature extends ITFeature {
             }
             if (isInBlacklist || (!isInWhitelist && blacklistAsWhitelist))
                 continue;
-            Block block = ((BlockItem) item).getBlock();
-            double weight = Weight.getBlockWeight(block.getDefaultState());
-            double stackSize = (defaultStackSize.stackSize / weight) * blockStackMultiplier;
+			Block block = ((BlockItem) item).getBlock();
+			double weight = WeightFeature.getStateWeight(block.getDefaultState());
+			double stackSize = (defaultStackSize.stackSize / weight) * blockStackMultiplier;
             stackSize = Utils.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
         }

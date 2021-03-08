@@ -1,6 +1,5 @@
 package insane96mcp.iguanatweaksreborn;
 
-import insane96mcp.iguanatweaksreborn.common.Weight;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.ModSounds;
 import insane96mcp.iguanatweaksreborn.utils.Reflection;
@@ -21,8 +20,6 @@ public class IguanaTweaksReborn
     public IguanaTweaksReborn() {
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, Config.COMMON_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-
-		Weight.initMaterialWeight();
 
         Reflection.init();
 
