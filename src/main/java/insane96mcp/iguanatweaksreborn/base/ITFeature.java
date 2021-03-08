@@ -21,7 +21,7 @@ public class ITFeature {
             LogHelper.Error(String.format("%s is missing the Label Annotation.", this.getClass().getName()));
 
         this.name = this.getClass().getAnnotation(Label.class).name();
-        this.description = this.getClass().getAnnotation(Label.class).name();
+        this.description = this.getClass().getAnnotation(Label.class).description();
 
         this.module = module;
 

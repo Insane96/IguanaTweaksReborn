@@ -17,7 +17,7 @@ public class ITModule {
             LogHelper.Error(String.format("%s is missing the Label Annotation.", this.getClass().getName()));
 
         this.name = this.getClass().getAnnotation(Label.class).name();
-        this.description = this.getClass().getAnnotation(Label.class).name();
+        this.description = this.getClass().getAnnotation(Label.class).description();
 
         enabledConfig = Config.builder.comment(this.getDescription()).define("Enable " + this.getName() + " module", enabledByDefault);
     }
