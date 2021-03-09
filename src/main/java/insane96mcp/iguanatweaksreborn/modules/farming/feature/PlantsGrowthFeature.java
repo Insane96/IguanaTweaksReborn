@@ -20,7 +20,7 @@ public class PlantsGrowthFeature extends ITFeature {
 	private final ForgeConfigSpec.ConfigValue<Double> chorusPlantGrowthMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> saplingGrowthMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> stemGrowthMultiplierConfig;
-	private final ForgeConfigSpec.ConfigValue<Double> berryBushGrowthMultiplierConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> bushGrowthMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> kelpGrowthMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> bambooGrowthMultiplierConfig;
 
@@ -31,7 +31,7 @@ public class PlantsGrowthFeature extends ITFeature {
 	public double chorusPlantGrowthMultiplier = 3.0d;
 	public double saplingGrowthMultiplier = 2.0d;
 	public double stemGrowthMultiplier = 2.0d;
-	public double berryBushGrowthMultiplier = 2.5d;
+	public double bushGrowthMultiplier = 2.5d;
 	public double kelpGrowthMultiplier = 2.5d;
 	public double bambooGrowthMultiplier = 2.5d;
 
@@ -59,9 +59,9 @@ public class PlantsGrowthFeature extends ITFeature {
 		stemGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Pumpkin & Melon to grow (e.g. at 2.0 Pumpkin & Melon will take twice to grow).\nSetting this to 0 will prevent Pumpkin & Melon from growing naturally.\n1.0 will make Pumpkin & Melon grow like normal.")
 				.defineInRange("Pumpkin & Melon Growth Speed Multiplier", stemGrowthMultiplier, 0.0d, 128d);
-		berryBushGrowthMultiplierConfig = Config.builder
-				.comment("Increases the time required for Berry Bushes to grow (e.g. at 2.0 Berry Bushes will take twice to grow).\nSetting this to 0 will prevent Berry Bushes from growing naturally.\n1.0 will make Berry Bushes grow like normal.")
-				.defineInRange("Berry Bushes Growth Speed Multiplier", berryBushGrowthMultiplier, 0.0d, 128d);
+		bushGrowthMultiplierConfig = Config.builder
+				.comment("Increases the time required for Bushes (blocks that inherit from BushBlock) to grow (e.g. at 2.0 Berry Bushes or Simple Farming's Bushes will take twice to grow).\nSetting this to 0 will prevent Berry Bushes from growing naturally.\n1.0 will make Berry Bushes grow like normal.")
+				.defineInRange("Bushes Growth Speed Multiplier", bushGrowthMultiplier, 0.0d, 128d);
 		kelpGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Kelp to grow (e.g. at 2.0 Kelp will take twice to grow).\nSetting this to 0 will prevent Kelp from growing naturally.\n1.0 will make Kelp grow like normal.")
 				.defineInRange("Saplings Growth Speed Multiplier", kelpGrowthMultiplier, 0.0d, 128d);
@@ -81,7 +81,7 @@ public class PlantsGrowthFeature extends ITFeature {
 		this.chorusPlantGrowthMultiplier = this.chorusPlantGrowthMultiplierConfig.get();
 		this.saplingGrowthMultiplier = this.saplingGrowthMultiplierConfig.get();
 		this.stemGrowthMultiplier = this.stemGrowthMultiplierConfig.get();
-		this.berryBushGrowthMultiplier = this.berryBushGrowthMultiplierConfig.get();
+		this.bushGrowthMultiplier = this.bushGrowthMultiplierConfig.get();
 		this.kelpGrowthMultiplier = this.kelpGrowthMultiplierConfig.get();
 		this.bambooGrowthMultiplier = this.bambooGrowthMultiplierConfig.get();
 	}
@@ -97,7 +97,7 @@ public class PlantsGrowthFeature extends ITFeature {
 		plantGrowthMultiplier(event, ChorusPlantBlock.class, this.chorusPlantGrowthMultiplier);
 		plantGrowthMultiplier(event, SaplingBlock.class, this.saplingGrowthMultiplier);
 		plantGrowthMultiplier(event, StemBlock.class, this.stemGrowthMultiplier);
-		plantGrowthMultiplier(event, SweetBerryBushBlock.class, this.berryBushGrowthMultiplier);
+		plantGrowthMultiplier(event, BushBlock.class, this.bushGrowthMultiplier);
 		plantGrowthMultiplier(event, KelpTopBlock.class, this.kelpGrowthMultiplier);
 		plantGrowthMultiplier(event, BambooBlock.class, this.bambooGrowthMultiplier);
 	}

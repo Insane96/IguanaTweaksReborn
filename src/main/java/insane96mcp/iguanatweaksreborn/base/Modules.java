@@ -10,23 +10,23 @@ import insane96mcp.iguanatweaksreborn.modules.sleeprespawn.SleepRespawnModule;
 import insane96mcp.iguanatweaksreborn.modules.stacksize.StackSizeModule;
 
 public class Modules {
-    public static SleepRespawnModule sleepRespawnModule;
-    public static ExperienceModule experienceModule;
+	public static MiscModule miscModule;
+	public static SleepRespawnModule sleepRespawnModule;
+	public static ExperienceModule experienceModule;
 	public static MiningModule miningModule;
 	public static MovementModule movementModule;
 	public static HungerHealthModule hungerHealthModule;
-    public static StackSizeModule stackSizeModule;
-    public static FarmingModule farmingModule;
-    public static MiscModule miscModule;
+	public static StackSizeModule stackSizeModule;
+	public static FarmingModule farmingModule;
 
-    public static void init() {
-        sleepRespawnModule = new SleepRespawnModule();
-        experienceModule = new ExperienceModule();
+	public static void init() {
+		miscModule = new MiscModule();
+		sleepRespawnModule = new SleepRespawnModule();
+		experienceModule = new ExperienceModule();
 		miningModule = new MiningModule();
 		movementModule = new MovementModule();
 		hungerHealthModule = new HungerHealthModule();
-        stackSizeModule = new StackSizeModule();
-        farmingModule = new FarmingModule();
-        miscModule = new MiscModule();
-    }
+		stackSizeModule = new StackSizeModule();
+		farmingModule = new FarmingModule();
+	}
 }

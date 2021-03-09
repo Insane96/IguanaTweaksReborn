@@ -29,6 +29,7 @@ public class Config {
 
 	@SubscribeEvent
 	public static void onModConfigEvent(final net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
+		Modules.miscModule.loadConfig();
 		Modules.sleepRespawnModule.loadConfig();
 		Modules.experienceModule.loadConfig();
 		Modules.miningModule.loadConfig();
@@ -36,6 +37,5 @@ public class Config {
 		Modules.hungerHealthModule.loadConfig();
 		Modules.stackSizeModule.loadConfig();
 		Modules.farmingModule.loadConfig();
-		Modules.miscModule.loadConfig();
 	}
 }
