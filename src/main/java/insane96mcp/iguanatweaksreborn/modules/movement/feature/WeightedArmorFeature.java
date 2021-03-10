@@ -15,6 +15,8 @@ import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.TickEvent;
@@ -118,6 +120,7 @@ public class WeightedArmorFeature extends ITFeature {
         playerEntity.jumpMovementFactor = (float) (0.02f * (movementSpeed.getValue() / movementSpeed.getBaseValue()));
     }
 
+    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void debugScreen(RenderGameOverlayEvent.Text event) {
         Minecraft mc = Minecraft.getInstance();
