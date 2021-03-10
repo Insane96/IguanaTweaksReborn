@@ -6,6 +6,7 @@ import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.CowEntity;
@@ -33,11 +34,13 @@ import java.util.Random;
 public class LivestockSlowdownFeature extends ITFeature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> childGrowthMultiplierConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> childGrowthVillagersConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> breedingMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> eggLayMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Integer> cowMilkDelayConfig;
 
 	public double childGrowthMultiplier = 3.0d;
+	public boolean childGrowthVillagers = true;
 	public double breedingMultiplier = 3.5d;
 	public double eggLayMultiplier = 3.0d;
 	public int cowMilkDelay = 1200;
@@ -48,6 +51,9 @@ public class LivestockSlowdownFeature extends ITFeature {
 		childGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Baby Animals to grow (e.g. at 2.0 Animals will take twice to grow).\n1.0 will make Animals grow like normal.")
 				.defineInRange("Childs Growth Multiplier", childGrowthMultiplier, 1.0d, 128d);
+		childGrowthVillagersConfig = Config.builder
+				.comment("If true, 'Childs Growth Multiplier' will be applied to villagers too.")
+				.define("Childs Growth Villagers", childGrowthVillagers);
 		breedingMultiplierConfig = Config.builder
 				.comment("Increases the time required for Animals to breed again (e.g. at 2.0 Animals will take twice to be able to breed again).\n1.0 will make Animals breed like normal.")
 				.defineInRange("Breeding Time Multiplier", breedingMultiplier, 1.0d, 128d);
@@ -75,7 +81,9 @@ public class LivestockSlowdownFeature extends ITFeature {
 			return;
 		if (this.childGrowthMultiplier == 1d)
 			return;
-		if (!(event.getEntityLiving() instanceof AnimalEntity))
+		if (!(event.getEntityLiving() instanceof AnimalEntity) && !(event.getEntityLiving() instanceof AbstractVillagerEntity))
+			return;
+		if (event.getEntityLiving() instanceof AbstractVillagerEntity && !this.childGrowthVillagers)
 			return;
 		AgeableEntity entity = (AgeableEntity) event.getEntityLiving();
 		Random rand = event.getEntityLiving().world.rand;
