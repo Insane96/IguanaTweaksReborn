@@ -7,6 +7,7 @@ import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.movement.classutils.ArmorMaterialWeight;
 import insane96mcp.iguanatweaksreborn.modules.movement.utils.Armor;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -15,6 +16,7 @@ import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -96,7 +98,10 @@ public class WeightedArmorFeature extends ITFeature {
                 double maxArmor = Armor.getTotalDamageReduction(armor.getArmorMaterial());
                 double pieceArmor = armor.getArmorMaterial().getDamageReductionAmount(armor.getEquipmentSlot());
                 double ratio = pieceArmor / maxArmor;
-                slowdown += -(armorMaterialWeight.totalWeight * ratio) / 100;
+                double armorPieceSlowdown = armorMaterialWeight.totalWeight * ratio;
+                int lightweightLevel = MCUtils.getEnchantmentLevel(new ResourceLocation("elenaidodge2", "lightweight"), stack);
+                armorPieceSlowdown *= 1 - (lightweightLevel * 0.2);
+                slowdown += -(armorPieceSlowdown) / 100;
                 break;
             }
         }

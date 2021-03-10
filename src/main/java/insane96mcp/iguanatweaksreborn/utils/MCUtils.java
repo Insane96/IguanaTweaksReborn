@@ -6,11 +6,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 
 import javax.annotation.Nullable;
@@ -85,7 +89,20 @@ public class MCUtils {
 				}
 			}
 		}
-
 		return false;
+	}
+
+	public static int getEnchantmentLevel(ResourceLocation enchID, ItemStack stack) {
+		if (stack.isEmpty())
+			return 0;
+		ListNBT listnbt = stack.getEnchantmentTagList();
+		for (int i = 0; i < listnbt.size(); ++i) {
+			CompoundNBT compoundnbt = listnbt.getCompound(i);
+			ResourceLocation itemEnchantment = ResourceLocation.tryCreate(compoundnbt.getString("id"));
+			if (itemEnchantment != null && itemEnchantment.equals(enchID)) {
+				return MathHelper.clamp(compoundnbt.getInt("lvl"), 0, 255);
+			}
+		}
+		return 0;
 	}
 }
