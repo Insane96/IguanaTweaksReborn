@@ -102,7 +102,8 @@ public class ITExplosion extends Explosion {
                 continue;
 
             if (block instanceof TNTBlock) {
-                block.onExplosionDestroy(this.world, new BlockPos(this.getPosition()), this);
+                block.onExplosionDestroy(this.world, blockpos, this);
+                this.world.setBlockState(blockpos, Blocks.AIR.getDefaultState());
                 continue;
             }
 
@@ -143,21 +144,20 @@ public class ITExplosion extends Explosion {
             double distanceRatio = (MathHelper.sqrt(entity.getDistanceSq(this.getPosition())) / affectedEntitiesRadius);
             if (distanceRatio > 1.0D)
                 continue;
-
             double xDistance = entity.getPosX() - this.getPosition().x;
             double yDistance = ((entity instanceof TNTEntity ? entity.getPosY() : (entity.getPosYEye())) - this.getPosition().y) * 0.6667d;
             double zDistance = entity.getPosZ() - this.getPosition().z;
-            double d13 = (double)MathHelper.sqrt(xDistance * xDistance + yDistance * yDistance + zDistance * zDistance);
+            double d13 = (double) MathHelper.sqrt(xDistance * xDistance + yDistance * yDistance + zDistance * zDistance);
             if (d13 == 0.00)
                 continue;
-
             //xDistance = xDistance / d13;
-            yDistance = yDistance / d13;
+            if (!(entity instanceof ExplosionFallingBlockEntity))
+                yDistance = yDistance / d13;
             //zDistance = zDistance / d13;
             double blockDensity = getBlockDensity(this.getPosition(), entity);
             double d10 = (1.0D - distanceRatio) * blockDensity;
             DamageSource source = this.getDamageSource();
-            float damageAmount = (float)((int)((d10 * d10 + d10) / 2.0D * 7.0D * (double)affectedEntitiesRadius + 1.0D));
+            float damageAmount = (float) ((int) ((d10 * d10 + d10) / 2.0D * 7.0D * (double) affectedEntitiesRadius + 1.0D));
             if (entity instanceof ServerPlayerEntity && blockingDamageReduction > 0d) {
                 ServerPlayerEntity player = (ServerPlayerEntity) entity;
                 if (damageAmount > 0.0F && MCUtils.canBlockDamageSource(source, player)) {
@@ -181,7 +181,7 @@ public class ITExplosion extends Explosion {
             d11 = Math.max(d11, this.size * 0.05d);
 
             if (entity instanceof ExplosionFallingBlockEntity)
-                d11 *= 0.15d;
+                d11 = Math.min(d11, 0.5d);
 
             entity.setMotion(entity.getMotion().add(xDistance * d11, yDistance * d11, zDistance * d11));
             if (entity instanceof PlayerEntity) {

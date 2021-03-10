@@ -8,6 +8,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -47,7 +48,13 @@ public class ExplosionFallingBlockEntity extends FallingBlockEntity {
             else
                 this.world.addEntity(itemEntity);
         }
-
         return null;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.world instanceof ServerWorld)
+            ((ServerWorld) this.world).spawnParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, this.getPosX(), this.getPosY() + 0.5, this.getPosZ(), 1, 0, 0, 0, 0);
     }
 }
