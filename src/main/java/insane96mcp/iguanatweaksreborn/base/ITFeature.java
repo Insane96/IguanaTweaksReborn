@@ -19,14 +19,13 @@ public class ITFeature {
     public ITFeature(ITModule module, boolean enabledByDefault) {
         if (!this.getClass().isAnnotationPresent(Label.class))
             LogHelper.Error(String.format("%s is missing the Label Annotation.", this.getClass().getName()));
-
         this.name = this.getClass().getAnnotation(Label.class).name();
         this.description = this.getClass().getAnnotation(Label.class).description();
-
         this.module = module;
-
-        enabledConfig = Config.builder.comment(getDescription()).define("Enable " + getName(), enabledByDefault);
-
+        if (description.equals(""))
+            enabledConfig = Config.builder.comment(getDescription()).define("Enable " + getName(), enabledByDefault);
+        else
+            enabledConfig = Config.builder.define("Enable " + getName(), enabledByDefault);
         this.registerEvents();
     }
 
