@@ -14,7 +14,7 @@ public class MovementModule extends ITModule {
 
 	public MovementModule() {
 		super();
-		Config.builder.comment(this.getDescription()).push(this.getName());
+		pushConfig();
 		weightedArmorFeature = new WeightedArmorFeature(this);
 		noPillaringFeature = new NoPillaringFeature(this);
 		Config.builder.pop();

@@ -14,7 +14,7 @@ public class MiningModule extends ITModule {
 
     public MiningModule() {
         super();
-        Config.builder.comment(this.getDescription()).push(this.getName());
+        pushConfig();
         globalHardnessFeature = new GlobalHardnessFeature(this);
         customHardnessFeature = new CustomHardnessFeature(this);
         Config.builder.pop();

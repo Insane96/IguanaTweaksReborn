@@ -22,7 +22,7 @@ public class ITFeature {
         this.name = this.getClass().getAnnotation(Label.class).name();
         this.description = this.getClass().getAnnotation(Label.class).description();
         this.module = module;
-        if (description.equals(""))
+        if (!description.equals(""))
             enabledConfig = Config.builder.comment(getDescription()).define("Enable " + getName(), enabledByDefault);
         else
             enabledConfig = Config.builder.define("Enable " + getName(), enabledByDefault);

@@ -14,7 +14,7 @@ public class HungerHealthModule extends ITModule {
 
     public HungerHealthModule() {
         super();
-        Config.builder.comment(this.getDescription()).push(this.getName());
+        pushConfig();
         foodFeature = new FoodFeature(this);
         exaustionIncreaseFeature = new ExaustionIncreaseFeature(this);
         Config.builder.pop();

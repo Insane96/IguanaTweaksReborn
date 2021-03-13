@@ -17,7 +17,7 @@ public class ITModule {
             LogHelper.Error(String.format("%s is missing the Label Annotation.", this.getClass().getName()));
         this.name = this.getClass().getAnnotation(Label.class).name();
         this.description = this.getClass().getAnnotation(Label.class).description();
-        if (description.equals(""))
+        if (!description.equals(""))
             enabledConfig = Config.builder.comment(this.description).define("Enable " + this.name + " module", enabledByDefault);
         else
             enabledConfig = Config.builder.define("Enable " + this.name, enabledByDefault);
@@ -41,5 +41,12 @@ public class ITModule {
 
     public void loadConfig() {
         this.enabled = enabledConfig.get();
+    }
+
+    public void pushConfig() {
+        if (!description.equals(""))
+            Config.builder.comment(this.getDescription()).push(this.getName());
+        else
+            Config.builder.push(this.getName());
     }
 }

@@ -14,7 +14,7 @@ public class SleepRespawnModule extends ITModule {
 
     public SleepRespawnModule() {
         super();
-        Config.builder.comment(this.getDescription()).push(this.getName());
+        pushConfig();
         sleepingEffectsFeature = new SleepingEffectsFeature(this);
         preventSleepingFeature = new PreventSleepingFeature(this);
         Config.builder.pop();

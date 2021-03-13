@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.base.ITModule;
 import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.DebuffFeature;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.ExplosionOverhaulFeature;
+import insane96mcp.iguanatweaksreborn.modules.misc.feature.ToolNerfFeature;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.WeightFeature;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 
@@ -13,13 +14,15 @@ public class MiscModule extends ITModule {
 	public ExplosionOverhaulFeature explosionOverhaulFeature;
 	public DebuffFeature debuffFeature;
 	public WeightFeature weightFeature;
+	public ToolNerfFeature toolNerfFeature;
 
 	public MiscModule() {
 		super();
-		Config.builder.comment(this.getDescription()).push(this.getName());
+		pushConfig();
 		explosionOverhaulFeature = new ExplosionOverhaulFeature(this);
 		debuffFeature = new DebuffFeature(this);
 		weightFeature = new WeightFeature(this);
+		toolNerfFeature = new ToolNerfFeature(this);
 		Config.builder.pop();
 	}
 
@@ -29,6 +32,7 @@ public class MiscModule extends ITModule {
 		explosionOverhaulFeature.loadConfig();
 		debuffFeature.loadConfig();
 		weightFeature.loadConfig();
+		toolNerfFeature.loadConfig();
 	}
 
 }

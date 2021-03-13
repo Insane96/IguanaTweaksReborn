@@ -20,7 +20,7 @@ public class StackSizeModule extends ITModule {
 
     public StackSizeModule() {
         super();
-        Config.builder.comment(this.getDescription()).push(this.getName());
+        pushConfig();
         stackReductionFeature = new StackReductionFeature(this);
         customStackSizeFeature = new CustomStackSizeFeature(this);
         Config.builder.pop();

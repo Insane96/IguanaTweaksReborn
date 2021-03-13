@@ -15,7 +15,8 @@ public class ExperienceModule extends ITModule {
     public SpawnerMobsExperienceFeature spawnerMobsExperienceFeature;
 
     public ExperienceModule() {
-        Config.builder.comment(this.getDescription()).push(this.getName());
+        super();
+        pushConfig();
         globalExperienceFeature = new GlobalExperienceFeature(this);
         blockExperienceFeature = new BlockExperienceFeature(this);
         spawnerMobsExperienceFeature = new SpawnerMobsExperienceFeature(this);

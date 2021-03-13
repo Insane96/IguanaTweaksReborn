@@ -12,7 +12,7 @@ public class CombatModule extends ITModule {
 
 	public CombatModule() {
 		super();
-		Config.builder.comment(this.getDescription()).push(this.getName());
+		pushConfig();
 		noItemNoKnockback = new NoItemNoKnockbackFeature(this);
 		Config.builder.pop();
 	}

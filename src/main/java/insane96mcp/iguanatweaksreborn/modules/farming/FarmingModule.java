@@ -19,7 +19,7 @@ public class FarmingModule extends ITModule {
 	public HarderCrops harderCrops;
 
 	public FarmingModule() {
-		Config.builder.comment(this.getDescription()).push(this.getName());
+		pushConfig();
 		liveStockSlowdownFeature = new LivestockSlowdownFeature(this);
 		nerfedBonemealFeature = new NerfedBonemealFeature(this);
 		cropsGrowthFeature = new CropsGrowthFeature(this);
