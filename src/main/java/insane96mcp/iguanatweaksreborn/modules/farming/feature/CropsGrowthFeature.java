@@ -1,11 +1,11 @@
 package insane96mcp.iguanatweaksreborn.modules.farming.feature;
 
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.farming.FarmingModule;
 import insane96mcp.iguanatweaksreborn.modules.farming.classutils.CropsRequireWater;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.world.IWorld;
@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Crops Growth", description = "Slower Crops growing based off various factors")
-public class CropsGrowthFeature extends ITFeature {
+public class CropsGrowthFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<CropsRequireWater> cropsRequireWaterConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> cropsGrowthMultiplierConfig;
@@ -28,8 +28,8 @@ public class CropsGrowthFeature extends ITFeature {
 	public double noSunLightGrowthMultiplier = 2.0d;
 	public int minSunlight = 10;
 
-	public CropsGrowthFeature(ITModule module) {
-		super(module);
+	public CropsGrowthFeature(Module module) {
+		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		cropsRequireWaterConfig = Config.builder
 				.comment("Set if crops require wet farmland to grow.\nValid Values:\nNO: Crops will not require water to grow\nBONEMEAL_ONLY: Crops will grow on dry farmland by only using bonemeal\nANY_CASE: Will make Crops not grow in any case when on dry farmland")

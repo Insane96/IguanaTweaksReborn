@@ -20,11 +20,11 @@ public class HoeCooldown extends IdTagMatcher {
 	public static HoeCooldown parseLine(String line) {
 		String[] split = line.split(",");
 		if (split.length != 2) {
-			LogHelper.Warn("Invalid line \"%s\" for Hoe Cooldown", line);
+			LogHelper.warn("Invalid line \"%s\" for Hoe Cooldown", line);
 			return null;
 		}
 		if (!NumberUtils.isParsable(split[1])) {
-			LogHelper.Warn(String.format("Invalid chance \"%s\" for Hoe Cooldown", line));
+			LogHelper.warn(String.format("Invalid chance \"%s\" for Hoe Cooldown", line));
 			return null;
 		}
 		int cooldown = Integer.parseInt(split[1]);
@@ -32,7 +32,7 @@ public class HoeCooldown extends IdTagMatcher {
 			String replaced = split[0].replace("#", "");
 			ResourceLocation tag = ResourceLocation.tryCreate(replaced);
 			if (tag == null) {
-				LogHelper.Warn("%s tag for Hoe Cooldown is not valid", replaced);
+				LogHelper.warn("%s tag for Hoe Cooldown is not valid", replaced);
 				return null;
 			}
 			return new HoeCooldown(null, tag, cooldown);
@@ -40,14 +40,14 @@ public class HoeCooldown extends IdTagMatcher {
 		else {
 			ResourceLocation block = ResourceLocation.tryCreate(split[0]);
 			if (block == null) {
-				LogHelper.Warn("%s item for Hoe Cooldown is not valid", split[0]);
+				LogHelper.warn("%s item for Hoe Cooldown is not valid", split[0]);
 				return null;
 			}
 			if (ForgeRegistries.ITEMS.containsKey(block)) {
 				return new HoeCooldown(block, null, cooldown);
 			}
 			else {
-				LogHelper.Warn(String.format("%s item for Hoe Till Chance seems to not exist", split[0]));
+				LogHelper.warn(String.format("%s item for Hoe Till Chance seems to not exist", split[0]));
 				return null;
 			}
 		}

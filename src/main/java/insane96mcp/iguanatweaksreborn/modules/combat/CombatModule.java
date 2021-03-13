@@ -1,18 +1,18 @@
 package insane96mcp.iguanatweaksreborn.modules.combat;
 
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.combat.feature.NoItemNoKnockbackFeature;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 
 @Label(name = "Combat")
-public class CombatModule extends ITModule {
+public class CombatModule extends Module {
 
 	public NoItemNoKnockbackFeature noItemNoKnockback;
 
 	public CombatModule() {
-		super();
-		pushConfig();
+		super(Config.builder);
+		pushConfig(Config.builder);
 		noItemNoKnockback = new NoItemNoKnockbackFeature(this);
 		Config.builder.pop();
 	}

@@ -1,10 +1,10 @@
 package insane96mcp.iguanatweaksreborn.modules.misc.feature;
 
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Label(name = "Weight", description = "Not really a feature, more like \"I don't know where to put this config since it's used by multiple modules\"")
-public class WeightFeature extends ITFeature {
+public class WeightFeature extends Feature {
 
     private final ForgeConfigSpec.ConfigValue<List<? extends String>> materialsWeightConfig;
 
@@ -23,8 +23,8 @@ public class WeightFeature extends ITFeature {
 
     public static HashMap<Material, Double> materialWeight = new HashMap<>();
 
-    public WeightFeature(ITModule module) {
-        super(module);
+    public WeightFeature(Module module) {
+        super(Config.builder, module);
         Config.builder.comment(this.getDescription()).push(this.getName());
         materialsWeightConfig = Config.builder
                 .comment("A list of materials and weights used by the Movement and Stack Reduction Modules. Names MUST be all upper case.")
@@ -42,20 +42,20 @@ public class WeightFeature extends ITFeature {
         for (String line : list) {
             String[] split = line.split(",");
             if (split.length != 2) {
-                LogHelper.Warn("Invalid line \"%s\" for Material Weight", line);
+                LogHelper.warn("Invalid line \"%s\" for Material Weight", line);
                 continue;
             }
             Material material = null;
             try {
                 material = (Material) Material.class.getField(split[0]).get(null);
             } catch (Exception e) {
-                LogHelper.Warn("Invalid material \"%s\" for Material Weight", line);
+                LogHelper.warn("Invalid material \"%s\" for Material Weight", line);
                 continue;
             }
             if (material == null)
                 continue;
             if (!NumberUtils.isParsable(split[1])) {
-                LogHelper.Warn("Invalid weight \"%s\" for Material Weight", line);
+                LogHelper.warn("Invalid weight \"%s\" for Material Weight", line);
                 continue;
             }
             double weight = Double.parseDouble(split[1]);

@@ -1,10 +1,10 @@
 package insane96mcp.iguanatweaksreborn.modules.farming.feature;
 
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -31,7 +31,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import java.util.Random;
 
 @Label(name = "Livestock Slowdown", description = "Slower breeding, Growing, Egging and Milking")
-public class LivestockSlowdownFeature extends ITFeature {
+public class LivestockSlowdownFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> childGrowthMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> childGrowthVillagersConfig;
@@ -45,8 +45,8 @@ public class LivestockSlowdownFeature extends ITFeature {
 	public double eggLayMultiplier = 3.0d;
 	public int cowMilkDelay = 1200;
 
-	public LivestockSlowdownFeature(ITModule module) {
-		super(module);
+	public LivestockSlowdownFeature(Module module) {
+		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		childGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Baby Animals to grow (e.g. at 2.0 Animals will take twice to grow).\n1.0 will make Animals grow like normal.")
@@ -70,6 +70,7 @@ public class LivestockSlowdownFeature extends ITFeature {
 	public void loadConfig() {
 		super.loadConfig();
 		this.childGrowthMultiplier = this.childGrowthMultiplierConfig.get();
+		this.childGrowthVillagers = this.childGrowthVillagersConfig.get();
 		this.breedingMultiplier = this.breedingMultiplierConfig.get();
 		this.eggLayMultiplier = this.eggLayMultiplierConfig.get();
 		this.cowMilkDelay = this.cowMilkDelayConfig.get();

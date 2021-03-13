@@ -1,10 +1,10 @@
 package insane96mcp.iguanatweaksreborn.modules.misc.feature;
 
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.misc.other.ITExplosion;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.play.server.SExplosionPacket;
 import net.minecraft.particles.ParticleTypes;
@@ -16,32 +16,32 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Explosion Overhaul", description = "Various changes to explosions from knockback to shielding.")
-public class ExplosionOverhaulFeature extends ITFeature {
+public class ExplosionOverhaulFeature extends Feature {
 
-    private final ForgeConfigSpec.ConfigValue<Boolean> disableExplosionRandomnessConfig;
-    private final ForgeConfigSpec.ConfigValue<Boolean> enablePoofParticlesConfig;
-    private final ForgeConfigSpec.ConfigValue<Double> blockingDamageScalingConfig;
-    private final ForgeConfigSpec.ConfigValue<Boolean> knockbackScalesWithSizeConfig;
-    private final ForgeConfigSpec.ConfigValue<Boolean> enableFlyingBlocksConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> disableExplosionRandomnessConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> enablePoofParticlesConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> blockingDamageScalingConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> knockbackScalesWithSizeConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> enableFlyingBlocksConfig;
 
-    public boolean disableExplosionRandomness = true;
-    public boolean enablePoofParticles = false;
-    public double blockingDamageScaling = 0.5d;
-    public boolean knockbackScalesWithSize = true;
-    public boolean enableFlyingBlocks = false;
+	public boolean disableExplosionRandomness = true;
+	public boolean enablePoofParticles = false;
+	public double blockingDamageScaling = 0.5d;
+	public boolean knockbackScalesWithSize = true;
+	public boolean enableFlyingBlocks = false;
 
-    public ExplosionOverhaulFeature(ITModule module) {
-        super(module);
-        Config.builder.comment(this.getDescription()).push(this.getName());
-        disableExplosionRandomnessConfig = Config.builder
-                .comment("Vanilla Explosions use a random number that changes the explosion power. With this enabled the ray strength will be as the explosion size.")
-                .define("Disable Explosion Randomness", disableExplosionRandomness);
-        enablePoofParticlesConfig = Config.builder
-                .comment("Somewhere around 1.15 Mojang (for performance issues) removed the poof particles from Explosions. Disable them if you have a low end PC.")
-                .define("Enable Poof Particles", enablePoofParticles);
-        blockingDamageScalingConfig = Config.builder
-                .comment("How much damage and knockback will the player take when blocking an explosion with a shield. Putting 0 shields will block like Vanilla.")
-                .defineInRange("Blocking Damage Scaling", blockingDamageScaling, 0.0d, 1.0d);
+	public ExplosionOverhaulFeature(Module module) {
+		super(Config.builder, module);
+		Config.builder.comment(this.getDescription()).push(this.getName());
+		disableExplosionRandomnessConfig = Config.builder
+				.comment("Vanilla Explosions use a random number that changes the explosion power. With this enabled the ray strength will be as the explosion size.")
+				.define("Disable Explosion Randomness", disableExplosionRandomness);
+		enablePoofParticlesConfig = Config.builder
+				.comment("Somewhere around 1.15 Mojang (for performance issues) removed the poof particles from Explosions. Disable them if you have a low end PC.")
+				.define("Enable Poof Particles", enablePoofParticles);
+		blockingDamageScalingConfig = Config.builder
+				.comment("How much damage and knockback will the player take when blocking an explosion with a shield. Putting 0 shields will block like Vanilla.")
+				.defineInRange("Blocking Damage Scaling", blockingDamageScaling, 0.0d, 1.0d);
         knockbackScalesWithSizeConfig = Config.builder
                 .comment("While enabled knockback is greatly increased by explosion size")
                 .define("Knockback Scales With Size", knockbackScalesWithSize);

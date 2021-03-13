@@ -1,10 +1,10 @@
 package insane96mcp.iguanatweaksreborn.modules.misc.feature;
 
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.hungerhealth.classutils.Debuff;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -16,25 +16,25 @@ import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Debuffing", description = "Apply potion effects on certain hunger / health / experience level")
-public class DebuffFeature extends ITFeature {
-    private final ForgeConfigSpec.ConfigValue<List<? extends String>> debuffsConfig;
+public class DebuffFeature extends Feature {
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> debuffsConfig;
 
-    private final List<String> debuffsDefault = Arrays.asList("HUNGER,..2,minecraft:mining_fatigue,0", "HUNGER,..4,minecraft:slowness,0", "HEALTH,..3,minecraft:slowness,0");
+	private final List<String> debuffsDefault = Arrays.asList("HUNGER,..2,minecraft:mining_fatigue,0", "HUNGER,..4,minecraft:slowness,0", "HEALTH,..3,minecraft:slowness,0");
 
-    public ArrayList<Debuff> debuffs;
+	public ArrayList<Debuff> debuffs;
 
-    public DebuffFeature(ITModule module) {
-        super(module);
-        Config.builder.comment(this.getDescription()).push(this.getName());
-        debuffsConfig = Config.builder
-                .comment("A list of debuffs to apply to the player when has on low hunger / health. Each string must be 'stat,range,status_effect,amplifier', where stat MUST BE one of the following: HUNGER, HEALTH, EXPERIENCE_LEVEL; range must be a range for the statistic like it's done in commands.\n" +
-                        "'10' When the player has exactly ten of the specified stat.\n" +
-                        "'10..12' When the player has between 10 and 12 (inclusive) of the specified stat.\n" +
-                        "'5..' When the player has five or greater of the specified stat.\n" +
-                        "'..15' When the player has 15 or less of the specified stat.\n" +
-                        "effect must be a potion id, e.g. minecraft:weakness\n" +
-                        "amplifier must be the potion level starting from 0 (0 = level I)\n" +
-                        "Thus is called Debuffs, this can be used to give the player positive effects.")
+	public DebuffFeature(Module module) {
+		super(Config.builder, module);
+		Config.builder.comment(this.getDescription()).push(this.getName());
+		debuffsConfig = Config.builder
+				.comment("A list of debuffs to apply to the player when has on low hunger / health. Each string must be 'stat,range,status_effect,amplifier', where stat MUST BE one of the following: HUNGER, HEALTH, EXPERIENCE_LEVEL; range must be a range for the statistic like it's done in commands.\n" +
+						"'10' When the player has exactly ten of the specified stat.\n" +
+						"'10..12' When the player has between 10 and 12 (inclusive) of the specified stat.\n" +
+						"'5..' When the player has five or greater of the specified stat.\n" +
+						"'..15' When the player has 15 or less of the specified stat.\n" +
+						"effect must be a potion id, e.g. minecraft:weakness\n" +
+						"amplifier must be the potion level starting from 0 (0 = level I)\n" +
+						"Thus is called Debuffs, this can be used to give the player positive effects.")
                 .defineList("Debuffs", debuffsDefault, o -> o instanceof String);
         Config.builder.pop();
     }

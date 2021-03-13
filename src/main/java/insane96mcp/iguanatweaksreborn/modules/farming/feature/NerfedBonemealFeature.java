@@ -1,14 +1,14 @@
 package insane96mcp.iguanatweaksreborn.modules.farming.feature;
 
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.base.Modules;
 import insane96mcp.iguanatweaksreborn.modules.farming.FarmingModule;
 import insane96mcp.iguanatweaksreborn.modules.farming.classutils.CropsRequireWater;
 import insane96mcp.iguanatweaksreborn.modules.farming.classutils.NerfedBonemeal;
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.utils.RandomHelper;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.utils.RandomHelper;
 import net.minecraft.block.BeetrootBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
@@ -21,7 +21,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.Collections;
 
 @Label(name = "Nerfed Bonemeal", description = "Bonemeal is no longer so OP")
-public class NerfedBonemealFeature extends ITFeature {
+public class NerfedBonemealFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<NerfedBonemeal> nerfedBonemealConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> bonemealFailChanceConfig;
@@ -29,8 +29,8 @@ public class NerfedBonemealFeature extends ITFeature {
 	public NerfedBonemeal nerfedBonemeal = NerfedBonemeal.NERFED;
 	public double bonemealFailChance = 0d;
 
-	public NerfedBonemealFeature(ITModule module) {
-		super(module);
+	public NerfedBonemealFeature(Module module) {
+		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		nerfedBonemealConfig = Config.builder
 				.comment("Makes more Bone Meal required for Crops. Valid Values are\nDISABLED: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")

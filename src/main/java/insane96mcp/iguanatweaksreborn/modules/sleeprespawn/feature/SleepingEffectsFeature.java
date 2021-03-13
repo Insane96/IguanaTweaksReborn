@@ -1,12 +1,12 @@
 package insane96mcp.iguanatweaksreborn.modules.sleeprespawn.feature;
 
 import com.google.common.collect.Lists;
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.sleeprespawn.classutils.EffectOnWakeUp;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
@@ -22,30 +22,29 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Label(name = "Sleeping Effects", description = "Prevents the player from sleeping if has not enough Hunger and gives him effects on wake up")
-public class SleepingEffectsFeature extends ITFeature {
+public class SleepingEffectsFeature extends Feature {
 
-    private final ForgeConfigSpec.ConfigValue<Integer> hungerDepletedOnWakeUpConfig;
-    private final ForgeConfigSpec.ConfigValue<List<? extends String>> effectsOnWakeUpConfig;
-    private final ForgeConfigSpec.ConfigValue<Boolean> noSleepIfHungryConfig;
+	private final ForgeConfigSpec.ConfigValue<Integer> hungerDepletedOnWakeUpConfig;
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> effectsOnWakeUpConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> noSleepIfHungryConfig;
 
-    private final List<String> effectsOnWakeUpDefault = Lists.newArrayList("minecraft:slowness,400,1", "minecraft:regeneration,200,1", "minecraft:weakness,300,1", "minecraft:mining_fatigue,300,1");
+	private final List<String> effectsOnWakeUpDefault = Lists.newArrayList("minecraft:slowness,400,1", "minecraft:regeneration,200,1", "minecraft:weakness,300,1", "minecraft:mining_fatigue,300,1");
 
-    public int hungerDepletedOnWakeUp = 11;
-    public ArrayList<EffectOnWakeUp> effectsOnWakeUp;
-    public boolean noSleepIfHungry = true;
+	public int hungerDepletedOnWakeUp = 11;
+	public ArrayList<EffectOnWakeUp> effectsOnWakeUp;
+	public boolean noSleepIfHungry = true;
 
-    public SleepingEffectsFeature(ITModule module) {
-        super(module);
-
-        Config.builder.comment(this.getDescription()).push(this.getName());
-        hungerDepletedOnWakeUpConfig = Config.builder
-                .comment("How much the hunger bar is depleted when you wake up in the morning. Saturation depleted is based off this value times 2. Setting to 0 will disable this feature.")
-                .defineInRange("Hunger Depleted on Wake Up", this.hungerDepletedOnWakeUp, -20, 20);
-        effectsOnWakeUpConfig = Config.builder
-                .comment("A list of effects to apply to the player when he wakes up.\nThe format is modid:potion_id,duration_in_ticks,amplifier\nE.g. 'minecraft:slowness,240,1' will apply Slowness II for 12 seconds to the player.")
-                .defineList("Effects on Wake Up", this.effectsOnWakeUpDefault, o -> o instanceof String);
-        noSleepIfHungryConfig = Config.builder
-                .comment("If the player's hunger bar is below 'Hunger Depleted on Wake Up' he can't sleep.")
+	public SleepingEffectsFeature(Module module) {
+		super(Config.builder, module);
+		Config.builder.comment(this.getDescription()).push(this.getName());
+		hungerDepletedOnWakeUpConfig = Config.builder
+				.comment("How much the hunger bar is depleted when you wake up in the morning. Saturation depleted is based off this value times 2. Setting to 0 will disable this feature.")
+				.defineInRange("Hunger Depleted on Wake Up", this.hungerDepletedOnWakeUp, -20, 20);
+		effectsOnWakeUpConfig = Config.builder
+				.comment("A list of effects to apply to the player when he wakes up.\nThe format is modid:potion_id,duration_in_ticks,amplifier\nE.g. 'minecraft:slowness,240,1' will apply Slowness II for 12 seconds to the player.")
+				.defineList("Effects on Wake Up", this.effectsOnWakeUpDefault, o -> o instanceof String);
+		noSleepIfHungryConfig = Config.builder
+				.comment("If the player's hunger bar is below 'Hunger Depleted on Wake Up' he can't sleep.")
                 .define("No Sleep If Hungry", true);
         Config.builder.pop();
     }

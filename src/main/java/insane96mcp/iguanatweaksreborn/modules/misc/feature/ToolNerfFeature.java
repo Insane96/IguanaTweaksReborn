@@ -1,10 +1,10 @@
 package insane96mcp.iguanatweaksreborn.modules.misc.feature;
 
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.misc.classutils.ToolDurability;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.item.TieredItem;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -14,28 +14,28 @@ import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Tool Nerf", description = "Less durable tools")
-public class ToolNerfFeature extends ITFeature {
-    private final ForgeConfigSpec.ConfigValue<List<? extends String>> toolsDurabilityConfig;
+public class ToolNerfFeature extends Feature {
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> toolsDurabilityConfig;
 
-    private final List<String> toolsDurabilityDefault = Arrays.asList(
-            "minecraft:wooden_sword,1", "minecraft:wooden_pickaxe,1", "minecraft:wooden_shovel,1", "minecraft:wooden_hoe,1", "minecraft:wooden_axe,10",
-            "minecraft:stone_sword,6", "minecraft:stone_pickaxe,6", "minecraft:stone_shovel,50", "minecraft:stone_hoe,6", "minecraft:stone_axe,50"
-    );
+	private final List<String> toolsDurabilityDefault = Arrays.asList(
+			"minecraft:wooden_sword,1", "minecraft:wooden_pickaxe,1", "minecraft:wooden_shovel,1", "minecraft:wooden_hoe,1", "minecraft:wooden_axe,10",
+			"minecraft:stone_sword,6", "minecraft:stone_pickaxe,6", "minecraft:stone_shovel,50", "minecraft:stone_hoe,6", "minecraft:stone_axe,50"
+	);
 
-    public ArrayList<ToolDurability> toolsDurability;
+	public ArrayList<ToolDurability> toolsDurability;
 
-    public ToolNerfFeature(ITModule module) {
-        super(module);
-        Config.builder.comment(this.getDescription()).push(this.getName());
-        toolsDurabilityConfig = Config.builder
-                .comment("A list of items which should have their durability changed.\n" +
-                        "Format is 'modid:itemid,durability'")
-                .defineList("Debuffs", toolsDurabilityDefault, o -> o instanceof String);
-        Config.builder.pop();
-    }
+	public ToolNerfFeature(Module module) {
+		super(Config.builder, module);
+		Config.builder.comment(this.getDescription()).push(this.getName());
+		toolsDurabilityConfig = Config.builder
+				.comment("A list of items which should have their durability changed.\n" +
+						"Format is 'modid:itemid,durability'")
+				.defineList("Debuffs", toolsDurabilityDefault, o -> o instanceof String);
+		Config.builder.pop();
+	}
 
-    @Override
-    public void loadConfig() {
+	@Override
+	public void loadConfig() {
         super.loadConfig();
         toolsDurability = parseDurabilities(toolsDurabilityConfig.get());
         for (ToolDurability toolDurability : vanillaDurabilities) {

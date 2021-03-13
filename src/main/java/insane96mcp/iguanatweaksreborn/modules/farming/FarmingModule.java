@@ -1,15 +1,15 @@
 package insane96mcp.iguanatweaksreborn.modules.farming;
 
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.farming.feature.*;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.block.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 
 @Label(name = "Farming")
-public class FarmingModule extends ITModule {
+public class FarmingModule extends Module {
 
 	public LivestockSlowdownFeature liveStockSlowdownFeature;
 	public NerfedBonemealFeature nerfedBonemealFeature;
@@ -19,7 +19,8 @@ public class FarmingModule extends ITModule {
 	public HarderCrops harderCrops;
 
 	public FarmingModule() {
-		pushConfig();
+		super(Config.builder);
+		pushConfig(Config.builder);
 		liveStockSlowdownFeature = new LivestockSlowdownFeature(this);
 		nerfedBonemealFeature = new NerfedBonemealFeature(this);
 		cropsGrowthFeature = new CropsGrowthFeature(this);

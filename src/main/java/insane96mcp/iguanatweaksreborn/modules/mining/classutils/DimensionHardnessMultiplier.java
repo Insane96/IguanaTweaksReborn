@@ -19,16 +19,16 @@ public class DimensionHardnessMultiplier {
     public static DimensionHardnessMultiplier parseLine(String line) {
         String[] split = line.split(",");
         if (split.length < 1 || split.length > 2) {
-            LogHelper.Warn("Invalid line \"%s\" for Dimension multiplier. Format must be modid:dimensionId,hardness", line);
+            LogHelper.warn("Invalid line \"%s\" for Dimension multiplier. Format must be modid:dimensionId,hardness", line);
             return null;
         }
         ResourceLocation dimension = ResourceLocation.tryCreate(split[0]);
         if (dimension == null) {
-            LogHelper.Warn(String.format("Invalid dimension \"%s\" for Dimension multiplier", split[0]));
+            LogHelper.warn(String.format("Invalid dimension \"%s\" for Dimension multiplier", split[0]));
             return null;
         }
         if (!NumberUtils.isParsable(split[1])) {
-            LogHelper.Warn(String.format("Invalid hardness \"%s\" for Dimension Multiplier", split[1]));
+            LogHelper.warn(String.format("Invalid hardness \"%s\" for Dimension Multiplier", split[1]));
             return null;
         }
         double hardness = Double.parseDouble(split[1]);

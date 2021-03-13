@@ -1,9 +1,9 @@
 package insane96mcp.iguanatweaksreborn.modules.farming.feature;
 
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.block.*;
 import net.minecraft.world.IWorld;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -11,7 +11,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Plants Growth", description = "Slower Plants growing")
-public class PlantsGrowthFeature extends ITFeature {
+public class PlantsGrowthFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> sugarCanesGrowthMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> cactusGrowthMultiplierConfig;
@@ -35,8 +35,8 @@ public class PlantsGrowthFeature extends ITFeature {
 	public double kelpGrowthMultiplier = 2.5d;
 	public double bambooGrowthMultiplier = 2.5d;
 
-	public PlantsGrowthFeature(ITModule module) {
-		super(module);
+	public PlantsGrowthFeature(Module module) {
+		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		sugarCanesGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for Sugar Canes to grow (e.g. at 2.0 Sugar Canes will take twice to grow).\nSetting this to 0 will prevent Sugar Canes from growing naturally.\n1.0 will make Sugar Canes grow like normal.")

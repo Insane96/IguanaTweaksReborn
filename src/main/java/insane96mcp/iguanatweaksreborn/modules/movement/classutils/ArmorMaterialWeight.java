@@ -20,12 +20,12 @@ public class ArmorMaterialWeight {
 	public static ArmorMaterialWeight parseLine(String line) {
 		String[] split = line.split(",");
 		if (split.length != 2) {
-			LogHelper.Warn("Invalid ArmorMaterialWeight \"%s\". Format must be material,total_weight", line);
+			LogHelper.warn("Invalid ArmorMaterialWeight \"%s\". Format must be material,total_weight", line);
 			return null;
 		}
 		String id = split[0];
 		if (!NumberUtils.isParsable(split[1])) {
-			LogHelper.Warn(String.format("Invalid Total Weight \"%s\" for ArmorMaterialWeight", line));
+			LogHelper.warn(String.format("Invalid Total Weight \"%s\" for ArmorMaterialWeight", line));
 			return null;
 		}
 		double totalWeight = Double.parseDouble(split[1]);

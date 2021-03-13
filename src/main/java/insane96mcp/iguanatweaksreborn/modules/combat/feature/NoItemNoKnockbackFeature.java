@@ -1,11 +1,11 @@
 package insane96mcp.iguanatweaksreborn.modules.combat.feature;
 
 import com.google.common.collect.Multimap;
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -21,23 +21,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Label(name = "No Item No Knockback", description = "Player will deal no knockback if attacking with a non-weapon")
-public class NoItemNoKnockbackFeature extends ITFeature {
-    private final ForgeConfigSpec.ConfigValue<List<? extends String>> customNoKnockbackItemsConfig;
+public class NoItemNoKnockbackFeature extends Feature {
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> customNoKnockbackItemsConfig;
 
-    public ArrayList<IdTagMatcher> customNoKnockbackItems;
+	public ArrayList<IdTagMatcher> customNoKnockbackItems;
 
-    public NoItemNoKnockbackFeature(ITModule module) {
-        super(module);
-        Config.builder.comment(this.getDescription()).push(this.getName());
-        customNoKnockbackItemsConfig = Config.builder
-                .comment("A list of items and tags that should deal no knockback when attacking.")
-                .defineList("Custom No Knockback Items", ArrayList::new, o -> o instanceof String);
-        Config.builder.pop();
-    }
+	public NoItemNoKnockbackFeature(Module module) {
+		super(Config.builder, module);
+		Config.builder.comment(this.getDescription()).push(this.getName());
+		customNoKnockbackItemsConfig = Config.builder
+				.comment("A list of items and tags that should deal no knockback when attacking.")
+				.defineList("Custom No Knockback Items", ArrayList::new, o -> o instanceof String);
+		Config.builder.pop();
+	}
 
-    @Override
-    public void loadConfig() {
-        super.loadConfig();
+	@Override
+	public void loadConfig() {
+		super.loadConfig();
         customNoKnockbackItems = IdTagMatcher.parseStringList(customNoKnockbackItemsConfig.get());
     }
 

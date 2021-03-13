@@ -21,20 +21,20 @@ public class ToolDurability extends IdTagMatcher {
 	public static ToolDurability parseLine(String line) {
 		String[] split = line.split(",");
 		if (split.length != 2) {
-			LogHelper.Warn("Invalid line \"%s\" for Custom Tool Durability", line);
+			LogHelper.warn("Invalid line \"%s\" for Custom Tool Durability", line);
 			return null;
 		}
 		ResourceLocation item = ResourceLocation.tryCreate(split[0]);
 		if (item == null) {
-			LogHelper.Warn("%s item for Tool Durability is not valid", split[0]);
+			LogHelper.warn("%s item for Tool Durability is not valid", split[0]);
 			return null;
 		}
 		if (!ForgeRegistries.ITEMS.containsKey(item)) {
-			LogHelper.Warn(String.format("%s item for Tool Durability seems to not exist", split[0]));
+			LogHelper.warn(String.format("%s item for Tool Durability seems to not exist", split[0]));
 			return null;
 		}
 		if (!NumberUtils.isParsable(split[1])) {
-			LogHelper.Warn(String.format("Invalid durability \"%s\" for Tool Durability", line));
+			LogHelper.warn(String.format("Invalid durability \"%s\" for Tool Durability", line));
 			return null;
 		}
 		int durability = Integer.parseInt(split[1]);

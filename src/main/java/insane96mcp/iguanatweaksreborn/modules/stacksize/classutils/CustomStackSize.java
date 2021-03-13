@@ -21,11 +21,11 @@ public class CustomStackSize extends IdTagMatcher {
     public static CustomStackSize parseLine(String line) {
         String[] split = line.split(",");
         if (split.length != 2) {
-            LogHelper.Warn("Invalid line \"%s\" for Custom Stack Size", line);
+            LogHelper.warn("Invalid line \"%s\" for Custom Stack Size", line);
             return null;
         }
         if (!NumberUtils.isParsable(split[1])) {
-            LogHelper.Warn(String.format("Invalid stackSize \"%s\" for Custom Stack Size", line));
+            LogHelper.warn(String.format("Invalid stackSize \"%s\" for Custom Stack Size", line));
             return null;
         }
         int stackSize = Integer.parseInt(split[1]);
@@ -33,7 +33,7 @@ public class CustomStackSize extends IdTagMatcher {
             String replaced = split[0].replace("#", "");
             ResourceLocation tag = ResourceLocation.tryCreate(replaced);
             if (tag == null) {
-                LogHelper.Warn("%s tag for Custom Stack Size is not valid", replaced);
+                LogHelper.warn("%s tag for Custom Stack Size is not valid", replaced);
                 return null;
             }
             return new CustomStackSize(null, tag, stackSize);
@@ -41,11 +41,11 @@ public class CustomStackSize extends IdTagMatcher {
         else {
             ResourceLocation item = ResourceLocation.tryCreate(split[0]);
             if (item == null) {
-                LogHelper.Warn("%s item for Custom Stack Size is not valid", split[0]);
+                LogHelper.warn("%s item for Custom Stack Size is not valid", split[0]);
                 return null;
             }
             if (!ForgeRegistries.ITEMS.containsKey(item)) {
-                LogHelper.Warn(String.format("%s item for Custom Stack Size seems to not exist", split[0]));
+                LogHelper.warn(String.format("%s item for Custom Stack Size seems to not exist", split[0]));
                 return null;
             }
 

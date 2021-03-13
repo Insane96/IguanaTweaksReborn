@@ -1,10 +1,10 @@
 package insane96mcp.iguanatweaksreborn.modules.farming.feature;
 
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.block.Block;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Label(name = "Harder Crops", description = "Crops are no longer insta-minable")
-public class HarderCrops extends ITFeature {
+public class HarderCrops extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> hardnessConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> whitelistConfig;
@@ -28,8 +28,8 @@ public class HarderCrops extends ITFeature {
 	public double hardness = 1.0f;
 	public ArrayList<IdTagMatcher> whitelist;
 
-	public HarderCrops(ITModule module) {
-		super(module);
+	public HarderCrops(Module module) {
+		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		hardnessConfig = Config.builder
 				.comment("Makes crop no longer instantly break. Using an hoe will speed up the break process.\n" +

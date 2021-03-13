@@ -22,11 +22,11 @@ public class BlockHardness extends IdTagMatcher {
     public static BlockHardness parseLine(String line) {
         String[] split = line.split(",");
         if (split.length < 2 || split.length > 3) {
-            LogHelper.Warn("Invalid line \"%s\" for Custom Hardnesses", line);
+            LogHelper.warn("Invalid line \"%s\" for Custom Hardnesses", line);
             return null;
         }
         if (!NumberUtils.isParsable(split[1])) {
-            LogHelper.Warn(String.format("Invalid hardness \"%s\" for Custom Hardnesses", line));
+            LogHelper.warn(String.format("Invalid hardness \"%s\" for Custom Hardnesses", line));
             return null;
         }
         double hardness = Double.parseDouble(split[1]);
@@ -34,15 +34,15 @@ public class BlockHardness extends IdTagMatcher {
         if (split.length == 3) {
             dimension = ResourceLocation.tryCreate(split[2]);
             if (dimension == null) {
-				LogHelper.Warn(String.format("Invalid dimension \"%s\" for Custom Hardnesses. Ignoring it", split[2]));
-				dimension = AnyRL;
+                LogHelper.warn(String.format("Invalid dimension \"%s\" for Custom Hardnesses. Ignoring it", split[2]));
+                dimension = AnyRL;
             }
         }
         if (split[0].startsWith("#")) {
             String replaced = split[0].replace("#", "");
             ResourceLocation tag = ResourceLocation.tryCreate(replaced);
             if (tag == null) {
-                LogHelper.Warn("%s tag for Custom Hardneses is not valid", replaced);
+                LogHelper.warn("%s tag for Custom Hardneses is not valid", replaced);
                 return null;
             }
             return new BlockHardness(null, tag, hardness, dimension);
@@ -50,14 +50,14 @@ public class BlockHardness extends IdTagMatcher {
         else {
             ResourceLocation block = ResourceLocation.tryCreate(split[0]);
             if (block == null) {
-                LogHelper.Warn("%s block for Custom Hardneses is not valid", split[0]);
+                LogHelper.warn("%s block for Custom Hardneses is not valid", split[0]);
                 return null;
             }
             if (ForgeRegistries.BLOCKS.containsKey(block)) {
                 return new BlockHardness(block, null, hardness, dimension);
             }
             else {
-                LogHelper.Warn(String.format("%s block for Custom Hardnesses seems to not exist", split[0]));
+                LogHelper.warn(String.format("%s block for Custom Hardnesses seems to not exist", split[0]));
                 return null;
             }
         }

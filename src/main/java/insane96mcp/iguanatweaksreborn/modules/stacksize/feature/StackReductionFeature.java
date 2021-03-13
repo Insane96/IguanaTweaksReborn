@@ -1,13 +1,13 @@
 package insane96mcp.iguanatweaksreborn.modules.stacksize.feature;
 
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.base.Modules;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.WeightFeature;
 import insane96mcp.iguanatweaksreborn.modules.stacksize.classutils.CustomStackSize;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -25,42 +25,41 @@ import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Stack Reduction", description = "Make food, items and blocks less stackable")
-public class StackReductionFeature extends ITFeature {
+public class StackReductionFeature extends Feature {
 
-    //Food
-    private final ForgeConfigSpec.ConfigValue<Boolean> foodStackReductionConfig;
-    private final ForgeConfigSpec.ConfigValue<Double> foodStackMultiplierConfig;
-    //Items
-    private final ForgeConfigSpec.ConfigValue<Double> itemStackMultiplierConfig;
-    //Blocks
-    private final ForgeConfigSpec.ConfigValue<Boolean> blockStackReductionConfig;
-    private final ForgeConfigSpec.ConfigValue<Double> blockStackMultiplierConfig;
-    //Blacklist
+	//Food
+	private final ForgeConfigSpec.ConfigValue<Boolean> foodStackReductionConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> foodStackMultiplierConfig;
+	//Items
+	private final ForgeConfigSpec.ConfigValue<Double> itemStackMultiplierConfig;
+	//Blocks
+	private final ForgeConfigSpec.ConfigValue<Boolean> blockStackReductionConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> blockStackMultiplierConfig;
+	//Blacklist
     private final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklistConfig;
     private final ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelistConfig;
 
-    private static final List<String> blacklistDefault = Arrays.asList("minecraft:rotten_flesh", "minecraft:potion");
+	private static final List<String> blacklistDefault = Arrays.asList("minecraft:rotten_flesh", "minecraft:potion");
 
-    public boolean foodStackReduction = true;
-    public double foodStackMultiplier = 0.5d;
-    public double itemStackMultiplier = 0.5d;
-    public boolean blockStackReduction = true;
-    public double blockStackMultiplier = 1.0d;
-    public List<IdTagMatcher> blacklist;
-    public boolean blacklistAsWhitelist = false;
+	public boolean foodStackReduction = true;
+	public double foodStackMultiplier = 0.5d;
+	public double itemStackMultiplier = 0.5d;
+	public boolean blockStackReduction = true;
+	public double blockStackMultiplier = 1.0d;
+	public List<IdTagMatcher> blacklist;
+	public boolean blacklistAsWhitelist = false;
 
-    public StackReductionFeature(ITModule module) {
-        super(module);
-
-        Config.builder.comment(this.getDescription()).push(this.getName());
-        foodStackReductionConfig = Config.builder
-                .comment("Food stack sizes will be reduced based off their hunger restored and saturation multiplier. The formula is '(1/MAX(saturation, 1))*(3*(-hunger)+64-SQRT(hunger))'. E.g. Cooked Porkchops give 8 hunger points and have a 1.6 saturation multiplier so their stack size will be '(1/MAX(1.6, 1))*(3*(-8)+64-SQRT(8))' = 23 (Even foods that don't usually stack up to 16 or that don't stack at all will use the same formula, like Honey or Stews).\nThis is affected by Food Module's feature 'Hunger Restore Multiplier' & 'Saturation Restore multiplier'")
-                .define("Food Stack Reduction", foodStackReduction);
-        foodStackMultiplierConfig = Config.builder
-                .comment("All the foods max stack sizes will be multiplied by this value to increase / decrease them (after Food Stack Reduction). In the example with the Porkchop with this set to 0.5 Cooked Porkchops will stack up to 12.")
-                .defineInRange("Food Stack Multiplier", foodStackMultiplier, 0.01d, 64d);
-        itemStackMultiplierConfig = Config.builder
-                .comment("Items max stack sizes (excluding blocks) will be multiplied by this value. Foods will be overridden by 'Food Stack Reduction' or 'Food Stack Multiplier' if are active. Setting to 1 will disable this feature.")
+	public StackReductionFeature(Module module) {
+		super(Config.builder, module);
+		Config.builder.comment(this.getDescription()).push(this.getName());
+		foodStackReductionConfig = Config.builder
+				.comment("Food stack sizes will be reduced based off their hunger restored and saturation multiplier. The formula is '(1/MAX(saturation, 1))*(3*(-hunger)+64-SQRT(hunger))'. E.g. Cooked Porkchops give 8 hunger points and have a 1.6 saturation multiplier so their stack size will be '(1/MAX(1.6, 1))*(3*(-8)+64-SQRT(8))' = 23 (Even foods that don't usually stack up to 16 or that don't stack at all will use the same formula, like Honey or Stews).\nThis is affected by Food Module's feature 'Hunger Restore Multiplier' & 'Saturation Restore multiplier'")
+				.define("Food Stack Reduction", foodStackReduction);
+		foodStackMultiplierConfig = Config.builder
+				.comment("All the foods max stack sizes will be multiplied by this value to increase / decrease them (after Food Stack Reduction). In the example with the Porkchop with this set to 0.5 Cooked Porkchops will stack up to 12.")
+				.defineInRange("Food Stack Multiplier", foodStackMultiplier, 0.01d, 64d);
+		itemStackMultiplierConfig = Config.builder
+				.comment("Items max stack sizes (excluding blocks) will be multiplied by this value. Foods will be overridden by 'Food Stack Reduction' or 'Food Stack Multiplier' if are active. Setting to 1 will disable this feature.")
                 .defineInRange("Item Stack Multiplier", itemStackMultiplier, 0.01d, 1.0d);
         blockStackReductionConfig = Config.builder
 				.comment("Blocks max stack sizes will be reduced based off their \"Weight\". The Material Weights can be configured in the Misc module.")

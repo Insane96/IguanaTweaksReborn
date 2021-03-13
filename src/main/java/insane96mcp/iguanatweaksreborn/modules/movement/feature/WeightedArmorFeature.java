@@ -1,13 +1,13 @@
 package insane96mcp.iguanatweaksreborn.modules.movement.feature;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.movement.classutils.ArmorMaterialWeight;
 import insane96mcp.iguanatweaksreborn.modules.movement.utils.Armor;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -31,31 +31,31 @@ import java.util.List;
 import java.util.UUID;
 
 @Label(name = "Weighted Armor", description = "Armor slows down the player based off the Armor and Toughness given.")
-public class WeightedArmorFeature extends ITFeature {
+public class WeightedArmorFeature extends Feature {
 
-    private final ForgeConfigSpec.ConfigValue<Double> slownessPerArmorConfig;
-    private final ForgeConfigSpec.ConfigValue<Double> percentagePerToughnessConfig;
-    private final ForgeConfigSpec.ConfigValue<List<? extends String>> materialWeightConfig;
-    //private final ForgeConfigSpec.ConfigValue<List<? extends String>> customWeightConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> slownessPerArmorConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> percentagePerToughnessConfig;
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> materialWeightConfig;
+	//private final ForgeConfigSpec.ConfigValue<List<? extends String>> customWeightConfig;
 
-    private static final List<String> materialWeightDefault = Arrays.asList("leather,4.0", "chainmail,12.0", "golden,8.0", "iron,16.0", "diamond,30.0", "netherite,40.0");
+	private static final List<String> materialWeightDefault = Arrays.asList("leather,4.0", "chainmail,12.0", "golden,8.0", "iron,16.0", "diamond,30.0", "netherite,40.0");
 
-    public double slownessPerArmor = 2d;
-    public double percentagePerToughness = 0.04d;
-    public ArrayList<ArmorMaterialWeight> materialWeight;
+	public double slownessPerArmor = 2d;
+	public double percentagePerToughness = 0.04d;
+	public ArrayList<ArmorMaterialWeight> materialWeight;
 
-    public WeightedArmorFeature(ITModule module) {
-        super(module);
-        Config.builder.comment(this.getDescription()).push(this.getName());
-        slownessPerArmorConfig = Config.builder
-                .comment("Percentage slowdown per point of armor the player is wearing.")
-                .defineInRange("Slowdown per Armor", slownessPerArmor, 0.0d, 128d);
-        percentagePerToughnessConfig = Config.builder
-                .comment("This value times the Armor Toughness worn by the player is a percentage increase of the Slowdown per Armor.\n" +
-                        "Total percentage slowdown is '(slowness_per_armor * armor_points) * (1 + (toughness * percentage_per_toughness))'" +
-                        "E.g. with 'Slowness per Armor' set to 2 and this set to 0.04 and the player wearing Diamond Armor the slowdown is '(2 * 20) * (1 + (8 * 0.04))' = '(2 * 20) + 32%' = '40 + 32%' ~= -53% Speed applied to the player")
-                .defineInRange("Percentage Increase per Toughness", percentagePerToughness, 0.0d, 128.0d);
-        materialWeightConfig = Config.builder
+	public WeightedArmorFeature(Module module) {
+		super(Config.builder, module);
+		Config.builder.comment(this.getDescription()).push(this.getName());
+		slownessPerArmorConfig = Config.builder
+				.comment("Percentage slowdown per point of armor the player is wearing.")
+				.defineInRange("Slowdown per Armor", slownessPerArmor, 0.0d, 128d);
+		percentagePerToughnessConfig = Config.builder
+				.comment("This value times the Armor Toughness worn by the player is a percentage increase of the Slowdown per Armor.\n" +
+						"Total percentage slowdown is '(slowness_per_armor * armor_points) * (1 + (toughness * percentage_per_toughness))'" +
+						"E.g. with 'Slowness per Armor' set to 2 and this set to 0.04 and the player wearing Diamond Armor the slowdown is '(2 * 20) * (1 + (8 * 0.04))' = '(2 * 20) + 32%' = '40 + 32%' ~= -53% Speed applied to the player")
+				.defineInRange("Percentage Increase per Toughness", percentagePerToughness, 0.0d, 128.0d);
+		materialWeightConfig = Config.builder
                 .comment("Define here a list of total slowdown percentage (with full armor) per material. Material's names are the names in the armor's ids. E.g. Gold Armor is 'golden'.\n" +
                         "Format is material,total_slowdown")
                 .defineList("Material Weight", materialWeightDefault, o -> o instanceof String);

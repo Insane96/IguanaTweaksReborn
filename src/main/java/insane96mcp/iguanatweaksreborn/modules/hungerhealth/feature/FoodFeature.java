@@ -1,11 +1,11 @@
 package insane96mcp.iguanatweaksreborn.modules.hungerhealth.feature;
 
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.modules.hungerhealth.classutils.FoodValue;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -19,37 +19,37 @@ import java.util.Collection;
 import java.util.List;
 
 @Label(name = "Food Overhaul", description = "Change food's hunger and saturation given, also makes food heal you by a bit")
-public class FoodFeature extends ITFeature {
+public class FoodFeature extends Feature {
 
-    private final ForgeConfigSpec.ConfigValue<Double> foodHungerMultiplierConfig;
-    private final ForgeConfigSpec.ConfigValue<Double> foodSaturationMultiplierConfig;
-    private final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklistConfig;
-    private final ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelistConfig;
-    private final ForgeConfigSpec.ConfigValue<Double> foodHealMultiplierConfig;
-    private final ForgeConfigSpec.ConfigValue<List<? extends String>> customFoodValueConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> foodHungerMultiplierConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> foodSaturationMultiplierConfig;
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklistConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelistConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> foodHealMultiplierConfig;
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> customFoodValueConfig;
 
-    private List<String> blackListDefault = Arrays.asList("minecraft:rotten_flesh", "minecraft:potion");
+	private List<String> blackListDefault = Arrays.asList("minecraft:rotten_flesh", "minecraft:potion");
 
-    public double foodHungerMultiplier = 0.5d;
-    public double foodSaturationMultiplier = 1.0d;
-    public ArrayList<IdTagMatcher> blacklist;
-    public boolean blacklistAsWhitelist = false;
-    public double foodHealMultiplier = 0.33333d;
-    public ArrayList<FoodValue> customFoodValues;
+	public double foodHungerMultiplier = 0.5d;
+	public double foodSaturationMultiplier = 1.0d;
+	public ArrayList<IdTagMatcher> blacklist;
+	public boolean blacklistAsWhitelist = false;
+	public double foodHealMultiplier = 0.33333d;
+	public ArrayList<FoodValue> customFoodValues;
 
 
-    public FoodFeature(ITModule module) {
-        super(module);
-        Config.builder.comment(this.getDescription()).push(this.getName());
-        foodHungerMultiplierConfig = Config.builder
-                .comment("Food's hunger restored will be multiplied by this value + 0.5. E.g. With this set to 0.5 a Cooked Porkchop would heal 5 hunger instead of 8. Setting to 1 will disable this feature.")
-                .defineInRange("Food Hunger Multiplier", foodHungerMultiplier, 0.0d, 128d);
-        foodSaturationMultiplierConfig = Config.builder
-                .comment("Food's saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
-                .defineInRange("Food Saturation Multiplier", foodSaturationMultiplier, 0.0d, 64d);
-        blacklistConfig = Config.builder
-                .comment("Items or tags that will ignore the food multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].")
-                .defineList("Items Blacklist", blackListDefault, o -> o instanceof String);
+	public FoodFeature(Module module) {
+		super(Config.builder, module);
+		Config.builder.comment(this.getDescription()).push(this.getName());
+		foodHungerMultiplierConfig = Config.builder
+				.comment("Food's hunger restored will be multiplied by this value + 0.5. E.g. With this set to 0.5 a Cooked Porkchop would heal 5 hunger instead of 8. Setting to 1 will disable this feature.")
+				.defineInRange("Food Hunger Multiplier", foodHungerMultiplier, 0.0d, 128d);
+		foodSaturationMultiplierConfig = Config.builder
+				.comment("Food's saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
+				.defineInRange("Food Saturation Multiplier", foodSaturationMultiplier, 0.0d, 64d);
+		blacklistConfig = Config.builder
+				.comment("Items or tags that will ignore the food multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].")
+				.defineList("Items Blacklist", blackListDefault, o -> o instanceof String);
         blacklistAsWhitelistConfig = Config.builder
                 .comment("Items Blacklist will be treated as a whitelist.")
                 .define("Blacklist as Whitelist", blacklistAsWhitelist);

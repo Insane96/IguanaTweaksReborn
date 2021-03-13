@@ -1,15 +1,15 @@
 package insane96mcp.iguanatweaksreborn.modules.misc;
 
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.DebuffFeature;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.ExplosionOverhaulFeature;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.ToolNerfFeature;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.WeightFeature;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 
 @Label(name = "Miscellaneous")
-public class MiscModule extends ITModule {
+public class MiscModule extends Module {
 
 	public ExplosionOverhaulFeature explosionOverhaulFeature;
 	public DebuffFeature debuffFeature;
@@ -17,8 +17,8 @@ public class MiscModule extends ITModule {
 	public ToolNerfFeature toolNerfFeature;
 
 	public MiscModule() {
-		super();
-		pushConfig();
+		super(Config.builder);
+		pushConfig(Config.builder);
 		explosionOverhaulFeature = new ExplosionOverhaulFeature(this);
 		debuffFeature = new DebuffFeature(this);
 		weightFeature = new WeightFeature(this);

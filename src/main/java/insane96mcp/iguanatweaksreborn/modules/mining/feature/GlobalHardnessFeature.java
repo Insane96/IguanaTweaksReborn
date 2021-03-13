@@ -1,14 +1,14 @@
 package insane96mcp.iguanatweaksreborn.modules.mining.feature;
 
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.base.Modules;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.modules.mining.classutils.BlockHardness;
 import insane96mcp.iguanatweaksreborn.modules.mining.classutils.DepthHardnessDimension;
 import insane96mcp.iguanatweaksreborn.modules.mining.classutils.DimensionHardnessMultiplier;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.ResourceLocation;
@@ -23,39 +23,38 @@ import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Global Hardness", description = "Change all the blocks hardness")
-public class GlobalHardnessFeature extends ITFeature {
+public class GlobalHardnessFeature extends Feature {
 
-    private final ForgeConfigSpec.ConfigValue<Double> hardnessMultiplierConfig;
-    private final ForgeConfigSpec.ConfigValue<List<? extends String>> dimensionHardnessMultiplierConfig;
-    private final ForgeConfigSpec.ConfigValue<List<? extends String>> hardnessBlacklistConfig;
-    private final ForgeConfigSpec.ConfigValue<Boolean> backlistAsWhitelistConfig;
-    private final ForgeConfigSpec.ConfigValue<List<? extends String>> depthMultiplierDimensionConfig;
-    private final ForgeConfigSpec.ConfigValue<List<? extends String>> depthMultiplierBlacklistConfig;
-    private final ForgeConfigSpec.ConfigValue<Boolean> depthMultiplierBlacklistAsWhitelistConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> hardnessMultiplierConfig;
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> dimensionHardnessMultiplierConfig;
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> hardnessBlacklistConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> backlistAsWhitelistConfig;
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> depthMultiplierDimensionConfig;
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> depthMultiplierBlacklistConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> depthMultiplierBlacklistAsWhitelistConfig;
 
-    private static final List<String> depthMultiplierDimensionDefault = Arrays.asList("minecraft:overworld,0.04,63,16");
-    private static final List<String> depthMultiplierBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
+	private static final List<String> depthMultiplierDimensionDefault = Arrays.asList("minecraft:overworld,0.04,63,16");
+	private static final List<String> depthMultiplierBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
 
-    public double hardnessMultiplier = 3.0d;
-    public ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier;
-    public ArrayList<IdTagMatcher> hardnessBlacklist;
-    public Boolean blacklistAsWhitelist = false;
-    public ArrayList<DepthHardnessDimension> depthMultiplierDimension;
-    public ArrayList<IdTagMatcher> depthMultiplierBlacklist;
-    public Boolean depthMultiplierBlacklistAsWhitelist = false;
+	public double hardnessMultiplier = 3.0d;
+	public ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier;
+	public ArrayList<IdTagMatcher> hardnessBlacklist;
+	public Boolean blacklistAsWhitelist = false;
+	public ArrayList<DepthHardnessDimension> depthMultiplierDimension;
+	public ArrayList<IdTagMatcher> depthMultiplierBlacklist;
+	public Boolean depthMultiplierBlacklistAsWhitelist = false;
 
-    public GlobalHardnessFeature(ITModule module) {
-        super(module);
-        
-        Config.builder.comment(this.getDescription()).push(this.getName());
-        hardnessMultiplierConfig = Config.builder
-                .comment("Multiplier applied to the hardness of blocks. E.g. with this set to 3.0 blocks will take 3x more time to break.")
-                .defineInRange("Hardness Multiplier", this.hardnessMultiplier, 0.0d, 128d);
-        dimensionHardnessMultiplierConfig = Config.builder
-                .comment("A list of dimensions and their relative block hardness multiplier. Each entry has a a dimension and hardness. This overrides the global multiplier.\nE.g. [\"minecraft:overworld,2\", \"minecraft:the_nether,4\"]")
-                .defineList("Dimension Hardness Multiplier", new ArrayList<>(), o -> o instanceof String);
-        hardnessBlacklistConfig = Config.builder
-                .comment("Block ids or tags that will ignore the global and dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
+	public GlobalHardnessFeature(Module module) {
+		super(Config.builder, module);
+		Config.builder.comment(this.getDescription()).push(this.getName());
+		hardnessMultiplierConfig = Config.builder
+				.comment("Multiplier applied to the hardness of blocks. E.g. with this set to 3.0 blocks will take 3x more time to break.")
+				.defineInRange("Hardness Multiplier", this.hardnessMultiplier, 0.0d, 128d);
+		dimensionHardnessMultiplierConfig = Config.builder
+				.comment("A list of dimensions and their relative block hardness multiplier. Each entry has a a dimension and hardness. This overrides the global multiplier.\nE.g. [\"minecraft:overworld,2\", \"minecraft:the_nether,4\"]")
+				.defineList("Dimension Hardness Multiplier", new ArrayList<>(), o -> o instanceof String);
+		hardnessBlacklistConfig = Config.builder
+				.comment("Block ids or tags that will ignore the global and dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
                 .defineList("Block Hardnesss Blacklist", new ArrayList<>(), o -> o instanceof String);
         backlistAsWhitelistConfig = Config.builder
                 .comment("Block Blacklist will be treated as a whitelist")

@@ -1,11 +1,11 @@
 package insane96mcp.iguanatweaksreborn.modules.farming.feature;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.base.ITFeature;
-import insane96mcp.iguanatweaksreborn.base.ITModule;
-import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.farming.classutils.HoeCooldown;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.HoeItem;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Hoes Nerfs", description = "Slower Hoes and more fragile")
-public class HoesNerfsFeature extends ITFeature {
+public class HoesNerfsFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> hoesCooldownsConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> disableLowTierHoesConfig;
@@ -34,8 +34,8 @@ public class HoesNerfsFeature extends ITFeature {
 	public boolean disableLowTierHoes;
 	public int hoesDamageOnUseMultiplier;
 
-	public HoesNerfsFeature(ITModule module) {
-		super(module);
+	public HoesNerfsFeature(Module module) {
+		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		hoesCooldownsConfig = Config.builder
 				.comment("A list of hoes and ticks that a hoe will go on cooldown. The format is modid:itemid,ticks. 20 ticks = 1 second. You can even use tags as #modid:tag,ticks.")

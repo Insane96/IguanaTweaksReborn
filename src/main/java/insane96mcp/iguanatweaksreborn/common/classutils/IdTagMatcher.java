@@ -36,14 +36,14 @@ public class IdTagMatcher {
     public static IdTagMatcher parseLine(String line) {
         String[] split = line.split(",");
         if (split.length < 1 || split.length > 2) {
-            LogHelper.Warn("Invalid line \"%s\". Format must be modid:item_or_block_id,modid:dimension", line);
+            LogHelper.warn("Invalid line \"%s\". Format must be modid:item_or_block_id,modid:dimension", line);
             return null;
         }
         ResourceLocation dimension = AnyRL;
         if (split.length == 2) {
             dimension = ResourceLocation.tryCreate(split[1]);
             if (dimension == null) {
-                LogHelper.Warn(String.format("Invalid dimension \"%s\". Ignoring it", split[1]));
+                LogHelper.warn(String.format("Invalid dimension \"%s\". Ignoring it", split[1]));
                 dimension = AnyRL;
             }
         }
@@ -51,7 +51,7 @@ public class IdTagMatcher {
             String replaced = split[0].replace("#", "");
             ResourceLocation tag = ResourceLocation.tryCreate(replaced);
             if (tag == null) {
-                LogHelper.Warn("%s tag is not valid", replaced);
+                LogHelper.warn("%s tag is not valid", replaced);
                 return null;
             }
             return new IdTagMatcher(null, tag, dimension);
@@ -59,14 +59,14 @@ public class IdTagMatcher {
         else {
             ResourceLocation id = ResourceLocation.tryCreate(split[0]);
             if (id == null) {
-                LogHelper.Warn("%s id is not valid", line);
+                LogHelper.warn("%s id is not valid", line);
                 return null;
             }
             if (ForgeRegistries.BLOCKS.containsKey(id) || ForgeRegistries.ITEMS.containsKey(id)) {
                 return new IdTagMatcher(id, null, dimension);
             }
             else {
-                LogHelper.Warn(String.format("%s id seems to not exist", line));
+                LogHelper.warn(String.format("%s id seems to not exist", line));
                 return null;
             }
         }
