@@ -8,13 +8,13 @@ import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.WeightFeature;
 import insane96mcp.iguanatweaksreborn.modules.stacksize.classutils.CustomStackSize;
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -138,7 +138,7 @@ public class StackReductionFeature extends ITFeature {
             if (isInBlacklist || (!isInWhitelist && blacklistAsWhitelist))
                 continue;
             double stackSize = defaultStackSize.stackSize * itemStackMultiplier;
-            stackSize = Utils.clamp(stackSize, 1, 64);
+            stackSize = MathHelper.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
         }
     }
@@ -175,7 +175,7 @@ public class StackReductionFeature extends ITFeature {
 			Block block = ((BlockItem) item).getBlock();
 			double weight = WeightFeature.getStateWeight(block.getDefaultState());
 			double stackSize = (defaultStackSize.stackSize / weight) * blockStackMultiplier;
-            stackSize = Utils.clamp(stackSize, 1, 64);
+            stackSize = MathHelper.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
         }
     }
@@ -217,7 +217,7 @@ public class StackReductionFeature extends ITFeature {
             double saturation = item.getFood().saturation;
             double stackSize = (1d / Math.max(saturation * 2d, 1d)) * (3d * (-hunger) + 64d - Math.sqrt(hunger));
             stackSize *= foodStackMultiplier;
-            stackSize = Utils.clamp(stackSize, 1, 64);
+            stackSize = MathHelper.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
         }
     }

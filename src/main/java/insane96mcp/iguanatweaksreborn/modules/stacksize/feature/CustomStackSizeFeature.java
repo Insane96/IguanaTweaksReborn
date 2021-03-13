@@ -6,10 +6,10 @@ import insane96mcp.iguanatweaksreborn.base.ITModule;
 import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.stacksize.classutils.CustomStackSize;
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -63,12 +63,12 @@ public class CustomStackSizeFeature extends ITFeature {
                 if (tag == null)
                     continue;
                 tag.getAllElements().forEach(item -> {
-                    item.maxStackSize = Utils.clamp(customStackSize.stackSize, 1, 64);
+                    item.maxStackSize = MathHelper.clamp(customStackSize.stackSize, 1, 64);
                 });
             }
             else if (customStackSize.id != null) {
                 Item item = ForgeRegistries.ITEMS.getValue(customStackSize.id);
-                item.maxStackSize = Utils.clamp(customStackSize.stackSize, 1, 64);
+                item.maxStackSize = MathHelper.clamp(customStackSize.stackSize, 1, 64);
             }
         }
     }
