@@ -25,7 +25,7 @@ public class ExplosionOverhaulFeature extends ITFeature {
     private final ForgeConfigSpec.ConfigValue<Boolean> enableFlyingBlocksConfig;
 
     public boolean disableExplosionRandomness = true;
-    public boolean enablePoofParticles = true;
+    public boolean enablePoofParticles = false;
     public double blockingDamageScaling = 0.5d;
     public boolean knockbackScalesWithSize = true;
     public boolean enableFlyingBlocks = false;
