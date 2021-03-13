@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.base;
 
+import insane96mcp.iguanatweaksreborn.modules.combat.CombatModule;
 import insane96mcp.iguanatweaksreborn.modules.experience.ExperienceModule;
 import insane96mcp.iguanatweaksreborn.modules.farming.FarmingModule;
 import insane96mcp.iguanatweaksreborn.modules.hungerhealth.HungerHealthModule;
@@ -14,6 +15,7 @@ public class Modules {
 	public static SleepRespawnModule sleepRespawnModule;
 	public static ExperienceModule experienceModule;
 	public static MiningModule miningModule;
+	public static CombatModule combatModule;
 	public static MovementModule movementModule;
 	public static HungerHealthModule hungerHealthModule;
 	public static StackSizeModule stackSizeModule;
@@ -24,6 +26,7 @@ public class Modules {
 		sleepRespawnModule = new SleepRespawnModule();
 		experienceModule = new ExperienceModule();
 		miningModule = new MiningModule();
+		combatModule = new CombatModule();
 		movementModule = new MovementModule();
 		hungerHealthModule = new HungerHealthModule();
 		stackSizeModule = new StackSizeModule();

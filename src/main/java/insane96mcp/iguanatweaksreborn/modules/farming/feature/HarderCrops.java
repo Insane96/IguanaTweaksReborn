@@ -5,7 +5,6 @@ import insane96mcp.iguanatweaksreborn.base.ITModule;
 import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -66,7 +65,7 @@ public class HarderCrops extends ITFeature {
 		for (Block block : ForgeRegistries.BLOCKS.getValues()) {
 			boolean isInWhitelist = false;
 			for (IdTagMatcher blacklistEntry : this.whitelist) {
-				if (MCUtils.isInTagOrBlock(blacklistEntry, block, null)) {
+				if (blacklistEntry.isInTagOrBlock(block, null)) {
 					isInWhitelist = true;
 					break;
 				}
@@ -97,7 +96,7 @@ public class HarderCrops extends ITFeature {
 		Block block = event.getState().getBlock();
 		boolean isInWhitelist = false;
 		for (IdTagMatcher blacklistEntry : this.whitelist) {
-			if (MCUtils.isInTagOrBlock(blacklistEntry, block, null)) {
+			if (blacklistEntry.isInTagOrBlock(block, null)) {
 				isInWhitelist = true;
 				break;
 			}

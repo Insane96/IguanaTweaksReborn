@@ -6,7 +6,6 @@ import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.modules.hungerhealth.classutils.FoodValue;
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -117,13 +116,13 @@ public class FoodFeature extends ITFeature {
             boolean isInBlacklist = false;
             for (IdTagMatcher blacklistEntry : blacklist) {
                 if (!blacklistAsWhitelist) {
-                    if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
+                    if (blacklistEntry.isInTagOrItem(item, null)) {
                         isInBlacklist = true;
                         break;
                     }
                 }
                 else {
-                    if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
+                    if (blacklistEntry.isInTagOrItem(item, null)) {
                         isInWhitelist = true;
                         break;
                     }

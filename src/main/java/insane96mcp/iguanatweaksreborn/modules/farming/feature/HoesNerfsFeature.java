@@ -6,7 +6,6 @@ import insane96mcp.iguanatweaksreborn.base.ITModule;
 import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.modules.farming.classutils.HoeCooldown;
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.HoeItem;
@@ -106,7 +105,7 @@ public class HoesNerfsFeature extends ITFeature {
 			return;
 		int cooldown = 0;
 		for (HoeCooldown hoeCooldown : this.hoesCooldowns) {
-			if (MCUtils.isInTagOrItem(hoeCooldown, stack.getItem(), null)) {
+			if (hoeCooldown.isInTagOrItem(stack.getItem(), null)) {
 				cooldown = hoeCooldown.cooldown;
 			}
 		}

@@ -33,6 +33,7 @@ public class Config {
 		Modules.sleepRespawnModule.loadConfig();
 		Modules.experienceModule.loadConfig();
 		Modules.miningModule.loadConfig();
+		Modules.combatModule.loadConfig();
 		Modules.movementModule.loadConfig();
 		Modules.hungerHealthModule.loadConfig();
 		Modules.stackSizeModule.loadConfig();

@@ -2,7 +2,11 @@ package insane96mcp.iguanatweaksreborn.common.classutils;
 
 
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
-import insane96mcp.iguanatweaksreborn.utils.MCUtils;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -25,7 +29,7 @@ public class IdTagMatcher {
     }
 
     public IdTagMatcher(@Nullable ResourceLocation id, @Nullable ResourceLocation tag) {
-        this(id, tag, MCUtils.AnyRL);
+        this(id, tag, AnyRL);
     }
 
     @Nullable
@@ -35,12 +39,12 @@ public class IdTagMatcher {
             LogHelper.Warn("Invalid line \"%s\". Format must be modid:item_or_block_id,modid:dimension", line);
             return null;
         }
-        ResourceLocation dimension = MCUtils.AnyRL;
+        ResourceLocation dimension = AnyRL;
         if (split.length == 2) {
             dimension = ResourceLocation.tryCreate(split[1]);
             if (dimension == null) {
                 LogHelper.Warn(String.format("Invalid dimension \"%s\". Ignoring it", split[1]));
-                dimension = MCUtils.AnyRL;
+                dimension = AnyRL;
             }
         }
         if (split[0].startsWith("#")) {
@@ -76,5 +80,53 @@ public class IdTagMatcher {
                 commonTagBlock.add(idTagMatcher);
         }
         return commonTagBlock;
+    }
+
+    public static final ResourceLocation AnyRL = new ResourceLocation("any");
+
+    public boolean isInTagOrBlock(Block block, @Nullable ResourceLocation dimensionId) {
+        if (dimensionId == null)
+            dimensionId = AnyRL;
+        ResourceLocation blockId = block.getRegistryName();
+        if (this.tag != null) {
+            if (!BlockTags.getCollection().getRegisteredTags().contains(this.tag))
+                return false;
+            ITag<Block> blockTag = BlockTags.getCollection().get(this.tag);
+            if (blockTag == null)
+                return false;
+            if (!blockTag.contains(block))
+                return false;
+            if (this.dimension.equals(AnyRL) || this.dimension.equals(dimensionId))
+                return true;
+        }
+        else {
+            if (blockId.equals(this.id))
+                if (this.dimension.equals(AnyRL) || this.dimension.equals(dimensionId))
+                    return true;
+        }
+        return false;
+    }
+
+    public boolean isInTagOrItem(Item item, @Nullable ResourceLocation dimensionId) {
+        if (dimensionId == null)
+            dimensionId = AnyRL;
+        ResourceLocation itemId = item.getRegistryName();
+        if (this.tag != null) {
+            if (!ItemTags.getCollection().getRegisteredTags().contains(this.tag))
+                return false;
+            ITag<Item> itemTag = ItemTags.getCollection().get(this.tag);
+            if (itemTag == null)
+                return false;
+            if (!itemTag.contains(item))
+                return false;
+            if (this.dimension.equals(AnyRL) || this.dimension.equals(dimensionId))
+                return true;
+        }
+        else {
+            if (itemId.equals(this.id))
+                if (this.dimension.equals(AnyRL) || this.dimension.equals(dimensionId))
+                    return true;
+        }
+        return false;
     }
 }

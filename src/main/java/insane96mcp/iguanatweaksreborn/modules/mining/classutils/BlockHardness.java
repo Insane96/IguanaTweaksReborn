@@ -3,7 +3,6 @@ package insane96mcp.iguanatweaksreborn.modules.mining.classutils;
 
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
-import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -31,12 +30,12 @@ public class BlockHardness extends IdTagMatcher {
             return null;
         }
         double hardness = Double.parseDouble(split[1]);
-        ResourceLocation dimension = MCUtils.AnyRL;
+		ResourceLocation dimension = AnyRL;
         if (split.length == 3) {
             dimension = ResourceLocation.tryCreate(split[2]);
             if (dimension == null) {
-                LogHelper.Warn(String.format("Invalid dimension \"%s\" for Custom Hardnesses. Ignoring it", split[2]));
-                dimension = MCUtils.AnyRL;
+				LogHelper.Warn(String.format("Invalid dimension \"%s\" for Custom Hardnesses. Ignoring it", split[2]));
+				dimension = AnyRL;
             }
         }
         if (split[0].startsWith("#")) {

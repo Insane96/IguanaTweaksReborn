@@ -8,7 +8,6 @@ import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.WeightFeature;
 import insane96mcp.iguanatweaksreborn.modules.stacksize.classutils.CustomStackSize;
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
@@ -124,13 +123,13 @@ public class StackReductionFeature extends ITFeature {
             boolean isInBlacklist = false;
             for (IdTagMatcher blacklistEntry : blacklist) {
                 if (!blacklistAsWhitelist) {
-                    if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
+                    if (blacklistEntry.isInTagOrItem(item, null)) {
                         isInBlacklist = true;
                         break;
                     }
                 }
                 else {
-                    if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
+                    if (blacklistEntry.isInTagOrItem(item, null)) {
                         isInWhitelist = true;
                         break;
                     }
@@ -159,13 +158,13 @@ public class StackReductionFeature extends ITFeature {
             boolean isInBlacklist = false;
             for (IdTagMatcher blacklistEntry : blacklist) {
                 if (!blacklistAsWhitelist) {
-                    if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
+                    if (blacklistEntry.isInTagOrItem(item, null)) {
                         isInBlacklist = true;
                         break;
                     }
                 }
                 else {
-                    if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
+                    if (blacklistEntry.isInTagOrItem(item, null)) {
                         isInWhitelist = true;
                         break;
                     }
@@ -198,13 +197,13 @@ public class StackReductionFeature extends ITFeature {
             boolean isInBlacklist = false;
             for (IdTagMatcher blacklistEntry : blacklist) {
                 if (!blacklistAsWhitelist) {
-                    if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
+                    if (blacklistEntry.isInTagOrItem(item, null)) {
                         isInBlacklist = true;
                         break;
                     }
                 }
                 else {
-                    if (MCUtils.isInTagOrItem(blacklistEntry, item, null)) {
+                    if (blacklistEntry.isInTagOrItem(item, null)) {
                         isInWhitelist = true;
                         break;
                     }

@@ -7,7 +7,6 @@ import insane96mcp.iguanatweaksreborn.base.Label;
 import insane96mcp.iguanatweaksreborn.base.Modules;
 import insane96mcp.iguanatweaksreborn.modules.mining.classutils.BlockHardness;
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.tags.BlockTags;
@@ -144,7 +143,7 @@ public class CustomHardnessFeature extends ITFeature {
      */
     public double getBlockSingleHardness(Block block, ResourceLocation dimensionId) {
         for (BlockHardness blockHardness : this.customHardness) {
-            if (MCUtils.isInTagOrBlock(blockHardness, block, dimensionId)) {
+            if (blockHardness.isInTagOrBlock(block, dimensionId)) {
                 return blockHardness.hardness;
             }
         }

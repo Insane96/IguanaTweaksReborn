@@ -9,7 +9,6 @@ import insane96mcp.iguanatweaksreborn.modules.mining.classutils.BlockHardness;
 import insane96mcp.iguanatweaksreborn.modules.mining.classutils.DepthHardnessDimension;
 import insane96mcp.iguanatweaksreborn.modules.mining.classutils.DimensionHardnessMultiplier;
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.ResourceLocation;
@@ -129,16 +128,16 @@ public class GlobalHardnessFeature extends ITFeature {
      */
     public double getBlockGlobalHardness(Block block, ResourceLocation dimensionId) {
         for (BlockHardness blockHardness : Modules.miningModule.customHardnessFeature.customHardness)
-            if (MCUtils.isInTagOrBlock(blockHardness, block, dimensionId))
+            if (blockHardness.isInTagOrBlock(block, dimensionId))
                 return 1d;
         boolean isInWhitelist = false;
         for (IdTagMatcher blacklistEntry : this.hardnessBlacklist) {
             if (!this.blacklistAsWhitelist) {
-                if (MCUtils.isInTagOrBlock(blacklistEntry, block, dimensionId))
+                if (blacklistEntry.isInTagOrBlock(block, dimensionId))
                     return 1d;
             }
             else {
-                if (MCUtils.isInTagOrBlock(blacklistEntry, block, dimensionId)) {
+                if (blacklistEntry.isInTagOrBlock(block, dimensionId)) {
                     isInWhitelist = true;
                     break;
                 }
@@ -162,16 +161,16 @@ public class GlobalHardnessFeature extends ITFeature {
     public double getDepthHardnessMultiplier(Block block, ResourceLocation dimensionId, BlockPos pos, boolean processCustomHardness) {
         if (!processCustomHardness)
             for (BlockHardness blockHardness : Modules.miningModule.customHardnessFeature.customHardness)
-                if (MCUtils.isInTagOrBlock(blockHardness, block, dimensionId))
+                if (blockHardness.isInTagOrBlock(block, dimensionId))
                     return 0d;
         boolean isInWhitelist = false;
         for (IdTagMatcher blacklistEntry : this.depthMultiplierBlacklist) {
             if (!this.depthMultiplierBlacklistAsWhitelist) {
-                if (MCUtils.isInTagOrBlock(blacklistEntry, block, dimensionId))
+                if (blacklistEntry.isInTagOrBlock(block, dimensionId))
                     return 0d;
             }
             else {
-                if (MCUtils.isInTagOrBlock(blacklistEntry, block, dimensionId)) {
+                if (blacklistEntry.isInTagOrBlock(block, dimensionId)) {
                     isInWhitelist = true;
                     break;
                 }
