@@ -25,7 +25,8 @@ Mod Version:
 **What Happens**:
 
 
-//Please send logs even if you don't have any crash, and use Gist or Pastebin
+//Please send logs even if you don't have any crash
+//**Use Gist or Pastebin**
 
 **Logs / Crash reports**:
 
