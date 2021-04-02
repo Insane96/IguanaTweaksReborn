@@ -9,15 +9,12 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,16 +53,7 @@ public class CustomHardnessFeature extends Feature {
             return;
         //Reset the 0 hardness blocks
         for (BlockHardness blockHardness : this.customHardness) {
-            List<Block> blocksToProcess = new ArrayList<>();
-            if (blockHardness.id != null) {
-                Block block = ForgeRegistries.BLOCKS.getValue(blockHardness.id);
-                if (block != null)
-                    blocksToProcess.add(block);
-            }
-            else {
-                ITag<Block> blockTag = BlockTags.getCollection().get(blockHardness.tag);
-                blocksToProcess.addAll(blockTag.getAllElements());
-            }
+            List<Block> blocksToProcess = blockHardness.getAllBlocks();
             for (Block block : blocksToProcess) {
                 block.getStateContainer().getValidStates().forEach(blockState -> {
                     if (blockHardness.has0Hardness) {
@@ -84,16 +72,7 @@ public class CustomHardnessFeature extends Feature {
                 continue;
             blockHardnesses.add(blockHardness);
             //If the block's hardness is 0 I replace the hardness
-            List<Block> blocksToProcess = new ArrayList<>();
-            if (blockHardness.id != null) {
-                Block block = ForgeRegistries.BLOCKS.getValue(blockHardness.id);
-                if (block != null)
-                    blocksToProcess.add(block);
-            }
-            else {
-                ITag<Block> blockTag = BlockTags.getCollection().get(blockHardness.tag);
-                blocksToProcess.addAll(blockTag.getAllElements());
-            }
+            List<Block> blocksToProcess = blockHardness.getAllBlocks();
             for (Block block : blocksToProcess) {
                 block.getStateContainer().getValidStates().forEach(blockState -> {
                     if (blockState.hardness == 0f || blockHardness.has0Hardness) {

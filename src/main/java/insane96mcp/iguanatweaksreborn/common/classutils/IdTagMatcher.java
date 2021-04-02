@@ -129,4 +129,34 @@ public class IdTagMatcher {
         }
         return false;
     }
+
+    public List<Block> getAllBlocks() {
+        List<Block> blocks = new ArrayList<>();
+        if (this.id != null) {
+            Block block = ForgeRegistries.BLOCKS.getValue(this.id);
+            if (block != null)
+                blocks.add(block);
+        }
+        else {
+            ITag<Block> blockTag = BlockTags.getCollection().get(this.tag);
+            if (blockTag != null)
+                blocks.addAll(blockTag.getAllElements());
+        }
+        return blocks;
+    }
+
+    public List<Item> getAllItems() {
+        List<Item> items = new ArrayList<>();
+        if (this.id != null) {
+            Item item = ForgeRegistries.ITEMS.getValue(this.id);
+            if (item != null)
+                items.add(item);
+        }
+        else {
+            ITag<Item> itemTag = ItemTags.getCollection().get(this.tag);
+            if (itemTag != null)
+                items.addAll(itemTag.getAllElements());
+        }
+        return items;
+    }
 }
