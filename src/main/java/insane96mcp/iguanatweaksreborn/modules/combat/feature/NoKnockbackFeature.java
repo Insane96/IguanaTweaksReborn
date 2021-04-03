@@ -7,7 +7,6 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.utils.LogHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -57,6 +56,17 @@ public class NoKnockbackFeature extends Feature {
 		attackCooldownNoKnockback = attackCooldownNoKnockbackConfig.get();
 	}
 
+	/*@SubscribeEvent
+	public void onAttributeEvent(ItemAttributeModifierEvent event) {
+		if (event.getSlotType() != EquipmentSlotType.MAINHAND)
+			return;
+
+		if (event.getItemStack().getItem() instanceof SwordItem || event.getItemStack().getItem() instanceof AxeItem || event.getItemStack().getItem() instanceof TridentItem) {
+			AttributeModifier modifier = new AttributeModifier(IguanaTweaksReborn.RESOURCE_PREFIX + "weapon_nerf", -1.0f, AttributeModifier.Operation.ADDITION);
+			event.addModifier(Attributes.ATTACK_DAMAGE, modifier);
+		}
+	}*/
+
 	@SubscribeEvent
 	public void onPlayerAttackEvent(AttackEntityEvent event) {
 		if (!this.isEnabled())
@@ -92,7 +102,6 @@ public class NoKnockbackFeature extends Feature {
 		}
 		int ticksSinceLastSwing = player.getPersistentData().getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "ticksSinceLastSwing");
 		float cooldown = MathHelper.clamp((ticksSinceLastSwing + 0.5f) / player.getCooldownPeriod(), 0.0F, 1.0F);
-		LogHelper.info(IguanaTweaksReborn.LOGGER, "%d (%f)", ticksSinceLastSwing, cooldown);
 		if (cooldown <= this.attackCooldownNoKnockback)
 			preventKnockback = true;
 		if (preventKnockback)
