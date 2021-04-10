@@ -36,19 +36,21 @@ public class ToolNerfFeature extends Feature {
 
 	@Override
 	public void loadConfig() {
-        super.loadConfig();
-        toolsDurability = parseDurabilities(toolsDurabilityConfig.get());
-        for (ToolDurability toolDurability : vanillaDurabilities) {
-            TieredItem item = (TieredItem) ForgeRegistries.ITEMS.getValue(toolDurability.id);
-            item.maxDamage = toolDurability.durability;
-        }
-        vanillaDurabilities.clear();
-        for (ToolDurability toolDurability : toolsDurability) {
-            TieredItem item = (TieredItem) ForgeRegistries.ITEMS.getValue(toolDurability.id);
-            vanillaDurabilities.add(new ToolDurability(toolDurability.id, item.maxDamage));
-            item.maxDamage = toolDurability.durability;
-        }
-    }
+		super.loadConfig();
+		toolsDurability = parseDurabilities(toolsDurabilityConfig.get());
+		for (ToolDurability toolDurability : vanillaDurabilities) {
+			TieredItem item = (TieredItem) ForgeRegistries.ITEMS.getValue(toolDurability.id);
+			item.maxDamage = toolDurability.durability;
+		}
+		vanillaDurabilities.clear();
+		if (!this.isEnabled())
+			return;
+		for (ToolDurability toolDurability : toolsDurability) {
+			TieredItem item = (TieredItem) ForgeRegistries.ITEMS.getValue(toolDurability.id);
+			vanillaDurabilities.add(new ToolDurability(toolDurability.id, item.maxDamage));
+			item.maxDamage = toolDurability.durability;
+		}
+	}
 
     private final ArrayList<ToolDurability> vanillaDurabilities = new ArrayList<>();
 
