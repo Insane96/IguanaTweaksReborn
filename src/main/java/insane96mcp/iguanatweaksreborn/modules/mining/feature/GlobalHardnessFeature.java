@@ -126,19 +126,20 @@ public class GlobalHardnessFeature extends Feature {
      * Returns 1d when no changes must be made, else will return a multiplier for block hardness
      */
     public double getBlockGlobalHardness(Block block, ResourceLocation dimensionId) {
-        for (BlockHardness blockHardness : Modules.miningModule.customHardnessFeature.customHardness)
-            if (blockHardness.isInTagOrBlock(block, dimensionId))
-                return 1d;
-        boolean isInWhitelist = false;
-        for (IdTagMatcher blacklistEntry : this.hardnessBlacklist) {
-            if (!this.blacklistAsWhitelist) {
-                if (blacklistEntry.isInTagOrBlock(block, dimensionId))
-                    return 1d;
-            }
-            else {
-                if (blacklistEntry.isInTagOrBlock(block, dimensionId)) {
-                    isInWhitelist = true;
-                    break;
+		if (Modules.miningModule.customHardnessFeature.isEnabled())
+			for (BlockHardness blockHardness : Modules.miningModule.customHardnessFeature.customHardness)
+				if (blockHardness.isInTagOrBlock(block, dimensionId))
+					return 1d;
+		boolean isInWhitelist = false;
+		for (IdTagMatcher blacklistEntry : this.hardnessBlacklist) {
+			if (!this.blacklistAsWhitelist) {
+				if (blacklistEntry.isInTagOrBlock(block, dimensionId))
+					return 1d;
+			}
+			else {
+				if (blacklistEntry.isInTagOrBlock(block, dimensionId)) {
+					isInWhitelist = true;
+					break;
                 }
             }
         }
