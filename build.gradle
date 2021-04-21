@@ -14,7 +14,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.5.1-mc1.12.x'
+version = '1.5.2-mc1.12.x'
 group = "net.insane96mcp.iguanatweaksreborn" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "IguanaTweaksReborn"
 

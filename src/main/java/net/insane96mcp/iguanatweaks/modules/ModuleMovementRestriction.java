@@ -525,7 +525,7 @@ public class ModuleMovementRestriction {
 	public static float GetBlockSlowness(World world, BlockPos pos) {
 		Material blockOnMaterial = world.getBlockState(pos.down()).getMaterial();			
 		Material blockInMaterial = world.getBlockState(pos).getMaterial();
-		IBlockState state = world.getBlockState(pos);
+		IBlockState state = world.getBlockState(pos.down());
 		Block block = state.getBlock();
 		int meta = block.getMetaFromState(state);
 		
