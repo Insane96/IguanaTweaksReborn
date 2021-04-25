@@ -149,8 +149,8 @@ public class FoodFeature extends Feature {
             Item item = ForgeRegistries.ITEMS.getValue(foodValue.id);
             Food food = item.getFood();
             food.value = foodValue.hunger;
-            if (foodValue.saturation != 1f)
-                food.saturation = foodValue.saturation;
+            if (foodValue.saturation != -1f)
+				food.saturation = foodValue.saturation;
         }
     }
 

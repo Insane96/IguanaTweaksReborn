@@ -36,7 +36,7 @@ public class FoodValue {
                 LogHelper.warn(String.format("Invalid saturation \"%s\" for Custom Food Value", line));
                 return null;
             }
-            saturation = Float.parseFloat(split[1]);
+            saturation = Float.parseFloat(split[2]);
         }
         ResourceLocation item = ResourceLocation.tryCreate(split[0]);
         if (item == null) {
@@ -47,7 +47,15 @@ public class FoodValue {
             LogHelper.warn(String.format("%s item for Custom Food Value seems to not exist or is not a food", split[0]));
             return null;
         }
-
         return new FoodValue(item, hunger, saturation);
+    }
+
+    @Override
+    public String toString() {
+        return "FoodValue{" +
+                "id=" + id +
+                ", hunger=" + hunger +
+                ", saturation=" + saturation +
+                '}';
     }
 }
