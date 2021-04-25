@@ -38,7 +38,7 @@ public class NoPillaringFeature extends Feature {
 		BlockPos placedPos = event.getPos().offset(event.getFace());
 		Vector3d placedBlock = new Vector3d(placedPos.getX() + 0.5d, placedPos.getY() + 0.5d, placedPos.getZ() + 0.5d);
 		double distance = placedBlock.distanceTo(playerEntity.getPositionVec());
-		double allowedDistance = 1.1d;
+		double allowedDistance = 1.36d;
 		if (playerEntity.isPotionActive(Effects.JUMP_BOOST))
 			allowedDistance *= 1 + ((playerEntity.getActivePotionEffect(Effects.JUMP_BOOST).getAmplifier() + 1) * 0.5);
 		boolean isSolidBlock = true;

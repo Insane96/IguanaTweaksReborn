@@ -4,14 +4,14 @@ license="MIT License"
 issueTrackerURL="https://github.com/Insane96/IguanaTweaksReborn/issues"
 [[mods]]
 modId="iguanatweaksreborn"
-version="${file.jarVersion}"
-displayName="IguanaTweaks Reborn"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/iguanatweaks-reborn"
-credits="Thanks to Iguana for the original Mod"
-authors="Insane96MCP"
-description='''
+version = "${file.jarVersion}"
+displayName = "IguanaTweaks Reborn"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/iguanatweaks-reborn"
+credits = "Thanks to Iguana for the original Mod"
+authors = "Insane96MCP"
+description = '''
 Multiple changes to make Minecraft Harder.
-Movement Restrictions, Farming, Mining, and much more.
+Movement Restrictions, Farming, Mining, Explosions and much more.
 '''
 [[dependencies.iguanatweaksreborn]]
 modId = "forge"
