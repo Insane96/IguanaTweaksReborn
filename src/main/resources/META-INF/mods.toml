@@ -3,7 +3,7 @@ loaderVersion="[32,)"
 license="MIT License"
 issueTrackerURL="https://github.com/Insane96/IguanaTweaksReborn/issues"
 [[mods]]
-modId="iguanatweaksreborn"
+modId = "iguanatweaksreborn"
 version = "${file.jarVersion}"
 displayName = "IguanaTweaks Reborn"
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/iguanatweaks-reborn"
@@ -13,6 +13,11 @@ description = '''
 Multiple changes to make Minecraft Harder.
 Movement Restrictions, Farming, Mining, Explosions and much more.
 '''
+# Catalogue icon
+itemIcon = "minecraft:golden_hoe"
+# Configured background
+configBackground = "minecraft:textures/block/cobblestone.png"
+
 [[dependencies.iguanatweaksreborn]]
 modId = "forge"
 mandatory = true
