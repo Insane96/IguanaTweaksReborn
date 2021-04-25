@@ -8,6 +8,7 @@ import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -17,14 +18,16 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -114,30 +117,55 @@ public class WeightedArmorFeature extends Feature {
         }
         if (slowdown == 0d) {
             if (modifier != null)
-                movementSpeed.removeModifier(modifier);
-            return;
-        }
-        if (modifier == null || modifier.getAmount() != slowdown) {
-            modifier = new AttributeModifier(armorSlowdownModifierUUID, IguanaTweaksReborn.RESOURCE_PREFIX + "armor_slowdown", slowdown, AttributeModifier.Operation.MULTIPLY_BASE);
-            movementSpeed.removeModifier(armorSlowdownModifierUUID);
-            movementSpeed.applyNonPersistentModifier(modifier);
-        }
-        playerEntity.jumpMovementFactor = (float) (0.02f * (movementSpeed.getValue() / movementSpeed.getBaseValue()));
-    }
+				movementSpeed.removeModifier(modifier);
+			return;
+		}
+		if (modifier == null || modifier.getAmount() != slowdown) {
+			modifier = new AttributeModifier(armorSlowdownModifierUUID, IguanaTweaksReborn.RESOURCE_PREFIX + "armor_slowdown", slowdown, AttributeModifier.Operation.MULTIPLY_BASE);
+			movementSpeed.removeModifier(armorSlowdownModifierUUID);
+			movementSpeed.applyNonPersistentModifier(modifier);
+		}
+		playerEntity.jumpMovementFactor = (float) (0.02f * (movementSpeed.getValue() / movementSpeed.getBaseValue()));
+	}
 
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public void debugScreen(RenderGameOverlayEvent.Text event) {
-        Minecraft mc = Minecraft.getInstance();
-        ClientPlayerEntity playerEntity = mc.player;
-        if (playerEntity == null)
-            return;
-        ModifiableAttributeInstance movementSpeed = playerEntity.getAttribute(Attributes.MOVEMENT_SPEED);
-        if (movementSpeed == null)
-            return;
-        AttributeModifier modifier = movementSpeed.getModifier(armorSlowdownModifierUUID);
-        if (mc.gameSettings.showDebugInfo && modifier != null) {
-            event.getLeft().add(String.format("Armor Slowdown: %s%%", new DecimalFormat("#.##").format(Math.abs(modifier.getAmount()) * 100f)));
+	@SubscribeEvent
+	public void onTooltip(ItemTooltipEvent event) {
+		if (!this.isEnabled())
+			return;
+		ItemStack stack = event.getItemStack();
+		for (ArmorMaterialWeight armorMaterialWeight : this.materialWeight) {
+			if (!stack.getItem().getRegistryName().getPath().contains(armorMaterialWeight.id))
+				continue;
+			if (!(stack.getItem() instanceof ArmorItem))
+				continue;
+			ArmorItem armor = (ArmorItem) stack.getItem();
+			double maxArmor = Armor.getTotalDamageReduction(armor.getArmorMaterial());
+			double pieceArmor = armor.getArmorMaterial().getDamageReductionAmount(armor.getEquipmentSlot());
+			double ratio = pieceArmor / maxArmor;
+			double armorPieceSlowdown = armorMaterialWeight.totalWeight * ratio;
+			int lightweightLevel = MCUtils.getEnchantmentLevel(new ResourceLocation("elenaidodge2:lightweight"), stack);
+			armorPieceSlowdown *= 1 - (lightweightLevel * 0.2);
+			event.getToolTip().add((new StringTextComponent(String.format("Slowdown: %s%%", Utils.formatDecimal(armorPieceSlowdown, "#.#")))).mergeStyle(TextFormatting.RED));
+			//slowdown += -(armorPieceSlowdown) / 100;
+			break;
+		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public void debugScreen(RenderGameOverlayEvent.Text event) {
+		if (!this.isEnabled())
+			return;
+		Minecraft mc = Minecraft.getInstance();
+		ClientPlayerEntity playerEntity = mc.player;
+		if (playerEntity == null)
+			return;
+		ModifiableAttributeInstance movementSpeed = playerEntity.getAttribute(Attributes.MOVEMENT_SPEED);
+		if (movementSpeed == null)
+			return;
+		AttributeModifier modifier = movementSpeed.getModifier(armorSlowdownModifierUUID);
+		if (mc.gameSettings.showDebugInfo && modifier != null) {
+			event.getLeft().add(String.format("Armor Slowdown: %s%%", Utils.formatDecimal(Math.abs(modifier.getAmount()) * 100f, "#.#")));
         }
     }
 }
