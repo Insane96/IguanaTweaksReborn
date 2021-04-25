@@ -14,6 +14,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.CombatEntry;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
@@ -86,6 +87,9 @@ public class NoKnockbackFeature extends Feature {
 			return;
 		PlayerEntity player = (PlayerEntity) attacker;
 		if (player.abilities.isCreativeMode)
+			return;
+		List<CombatEntry> combatEntries = event.getEntityLiving().getCombatTracker().combatEntries;
+		if (combatEntries.size() > 0 && !(combatEntries.get(combatEntries.size() - 1).getDamageSrc().getImmediateSource() instanceof PlayerEntity))
 			return;
 		ItemStack itemStack = player.getHeldItemMainhand();
 		boolean isInList = false;
