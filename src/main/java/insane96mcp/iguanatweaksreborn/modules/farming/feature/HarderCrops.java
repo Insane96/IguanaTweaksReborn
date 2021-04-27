@@ -34,7 +34,7 @@ public class HarderCrops extends Feature {
 		hardnessConfig = Config.builder
 				.comment("Makes crop no longer instantly break. Using an hoe will speed up the break process.\n" +
 						"Tecnicality: this applies to any plant that is instance of net.minecraft.block.CropBlock that can be insta-mined (has 0 hardness)\n" +
-						"Crops hardness is affected by the hardness module.")
+						"Crops hardness is still affected by the hardness module.")
 				.defineInRange("Hardness", hardness, 0.0d, 128d);
 		whitelistConfig = Config.builder
 				.comment("Block ids or tags that will have the hardness and hoe efficiency applied. Each entry has a block or tag. This still only applies to blocks that have 0 hardness.")

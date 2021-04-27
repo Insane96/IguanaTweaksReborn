@@ -84,6 +84,10 @@ public class IdTagMatcher {
 
     public static final ResourceLocation AnyRL = new ResourceLocation("any");
 
+    public boolean isInTagOrBlock(Block block) {
+        return isInTagOrBlock(block, null);
+    }
+
     public boolean isInTagOrBlock(Block block, @Nullable ResourceLocation dimensionId) {
         if (dimensionId == null)
             dimensionId = AnyRL;
@@ -105,6 +109,10 @@ public class IdTagMatcher {
                     return true;
         }
         return false;
+    }
+
+    public boolean isInTagOrItem(Item item) {
+        return isInTagOrItem(item, null);
     }
 
     public boolean isInTagOrItem(Item item, @Nullable ResourceLocation dimensionId) {
