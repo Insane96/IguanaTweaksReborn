@@ -24,9 +24,11 @@ public class HarderCrops extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> hardnessConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> whitelistConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> onlyFullyGrownConfig;
 
 	public double hardness = 1.0f;
 	public ArrayList<IdTagMatcher> whitelist;
+	public boolean onlyFullyGrown = true;
 
 	public HarderCrops(Module module) {
 		super(Config.builder, module);
@@ -39,6 +41,11 @@ public class HarderCrops extends Feature {
 		whitelistConfig = Config.builder
 				.comment("Block ids or tags that will have the hardness and hoe efficiency applied. Each entry has a block or tag. This still only applies to blocks that have 0 hardness.")
 				.defineList("Whitelist", new ArrayList<>(), o -> o instanceof String);
+		onlyFullyGrownConfig = Config.builder
+				.comment("Makes crop no longer instantly break. Using an hoe will speed up the break process.\n" +
+						"Tecnicality: this applies to any plant that is instance of net.minecraft.block.CropBlock that can be insta-mined (has 0 hardness)\n" +
+						"Crops hardness is still affected by the hardness module.")
+				.define("Only fully grown", onlyFullyGrown);
 		Config.builder.pop();
 	}
 
@@ -57,9 +64,7 @@ public class HarderCrops extends Feature {
 			return;
 		//Reset affected blocks to hardness 0f
 		for (Block block : affectedBlocks) {
-			block.getStateContainer().getValidStates().forEach(blockState -> {
-				blockState.hardness = 0f;
-			});
+			block.getStateContainer().getValidStates().forEach(blockState -> blockState.hardness = 0f);
 		}
 		affectedBlocks.clear();
 		for (Block block : ForgeRegistries.BLOCKS.getValues()) {
@@ -72,17 +77,22 @@ public class HarderCrops extends Feature {
 			}
 			if (!(block instanceof CropsBlock) && !isInWhitelist)
 				continue;
-			block.getStateContainer().getValidStates().forEach(blockState -> {
-				if (blockState.hardness == 0f) {
-					blockState.hardness = (float) this.hardness;
-				}
-			});
+			if (onlyFullyGrown) {
+				//I have doubts that this always takes the fully grown crop
+				block.getStateContainer().getValidStates().get(block.getStateContainer().getValidStates().size() - 1).hardness = (float) this.hardness;
+			}
+			else {
+				block.getStateContainer().getValidStates().forEach(blockState -> {
+					if (blockState.hardness == 0f)
+						blockState.hardness = (float) this.hardness;
+				});
+			}
 			affectedBlocks.add(block);
 		}
 	}
 
 	@SubscribeEvent
-	public void processSingleHardness(PlayerEvent.BreakSpeed event) {
+	public void onCropBreaking(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled())
 			return;
 		if (this.hardness == 0d)
