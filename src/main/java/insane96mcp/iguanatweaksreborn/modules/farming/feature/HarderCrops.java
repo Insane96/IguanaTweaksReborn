@@ -70,7 +70,7 @@ public class HarderCrops extends Feature {
 		for (Block block : ForgeRegistries.BLOCKS.getValues()) {
 			boolean isInWhitelist = false;
 			for (IdTagMatcher blacklistEntry : this.whitelist) {
-				if (blacklistEntry.isInTagOrBlock(block, null)) {
+				if (blacklistEntry.matchesBlock(block, null)) {
 					isInWhitelist = true;
 					break;
 				}
@@ -106,7 +106,7 @@ public class HarderCrops extends Feature {
 		Block block = event.getState().getBlock();
 		boolean isInWhitelist = false;
 		for (IdTagMatcher blacklistEntry : this.whitelist) {
-			if (blacklistEntry.isInTagOrBlock(block, null)) {
+			if (blacklistEntry.matchesBlock(block, null)) {
 				isInWhitelist = true;
 				break;
 			}

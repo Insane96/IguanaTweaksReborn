@@ -94,7 +94,7 @@ public class NoKnockbackFeature extends Feature {
 		ItemStack itemStack = player.getHeldItemMainhand();
 		boolean isInList = false;
 		for (IdTagMatcher idTagMatcher : this.customNoKnockbackItems) {
-			if (idTagMatcher.isInTagOrItem(itemStack.getItem(), null)) {
+			if (idTagMatcher.matchesItem(itemStack.getItem(), null)) {
 				isInList = true;
 				break;
 			}

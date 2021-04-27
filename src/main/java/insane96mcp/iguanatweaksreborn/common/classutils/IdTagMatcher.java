@@ -84,11 +84,11 @@ public class IdTagMatcher {
 
     public static final ResourceLocation AnyRL = new ResourceLocation("any");
 
-    public boolean isInTagOrBlock(Block block) {
-        return isInTagOrBlock(block, null);
+    public boolean matchesBlock(Block block) {
+        return matchesBlock(block, null);
     }
 
-    public boolean isInTagOrBlock(Block block, @Nullable ResourceLocation dimensionId) {
+    public boolean matchesBlock(Block block, @Nullable ResourceLocation dimensionId) {
         if (dimensionId == null)
             dimensionId = AnyRL;
         ResourceLocation blockId = block.getRegistryName();
@@ -111,11 +111,11 @@ public class IdTagMatcher {
         return false;
     }
 
-    public boolean isInTagOrItem(Item item) {
-        return isInTagOrItem(item, null);
+    public boolean matchesItem(Item item) {
+        return matchesItem(item, null);
     }
 
-    public boolean isInTagOrItem(Item item, @Nullable ResourceLocation dimensionId) {
+    public boolean matchesItem(Item item, @Nullable ResourceLocation dimensionId) {
         if (dimensionId == null)
             dimensionId = AnyRL;
         ResourceLocation itemId = item.getRegistryName();

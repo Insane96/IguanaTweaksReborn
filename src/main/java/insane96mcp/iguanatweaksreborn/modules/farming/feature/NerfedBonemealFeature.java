@@ -70,7 +70,7 @@ public class NerfedBonemealFeature extends Feature {
 		if (event.getWorld().isRemote)
 			return;
 		for (IdTagMatcher idTagMatcher : itemBlacklist) {
-			if (idTagMatcher.isInTagOrItem(event.getStack().getItem()))
+			if (idTagMatcher.matchesItem(event.getStack().getItem()))
 				return;
 		}
 		//If farmland is dry and cropsRequireWater is set to ANY_CASE then cancel the event

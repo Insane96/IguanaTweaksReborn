@@ -121,7 +121,7 @@ public class CustomHardnessFeature extends Feature {
      */
     public double getBlockSingleHardness(Block block, ResourceLocation dimensionId) {
         for (BlockHardness blockHardness : this.customHardness) {
-            if (blockHardness.isInTagOrBlock(block, dimensionId)) {
+            if (blockHardness.matchesBlock(block, dimensionId)) {
                 return blockHardness.hardness;
             }
         }

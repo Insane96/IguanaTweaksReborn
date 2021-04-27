@@ -128,20 +128,20 @@ public class GlobalHardnessFeature extends Feature {
     public double getBlockGlobalHardness(Block block, ResourceLocation dimensionId) {
 		if (Modules.miningModule.customHardnessFeature.isEnabled())
 			for (BlockHardness blockHardness : Modules.miningModule.customHardnessFeature.customHardness)
-				if (blockHardness.isInTagOrBlock(block, dimensionId))
+				if (blockHardness.matchesBlock(block, dimensionId))
 					return 1d;
 		boolean isInWhitelist = false;
 		for (IdTagMatcher blacklistEntry : this.hardnessBlacklist) {
 			if (!this.blacklistAsWhitelist) {
-				if (blacklistEntry.isInTagOrBlock(block, dimensionId))
+				if (blacklistEntry.matchesBlock(block, dimensionId))
 					return 1d;
 			}
 			else {
-				if (blacklistEntry.isInTagOrBlock(block, dimensionId)) {
+				if (blacklistEntry.matchesBlock(block, dimensionId)) {
 					isInWhitelist = true;
 					break;
-                }
-            }
+				}
+			}
         }
         if (!isInWhitelist && this.blacklistAsWhitelist)
             return 1d;
@@ -161,19 +161,19 @@ public class GlobalHardnessFeature extends Feature {
     public double getDepthHardnessMultiplier(Block block, ResourceLocation dimensionId, BlockPos pos, boolean processCustomHardness) {
         if (!processCustomHardness)
             for (BlockHardness blockHardness : Modules.miningModule.customHardnessFeature.customHardness)
-                if (blockHardness.isInTagOrBlock(block, dimensionId))
-                    return 0d;
+				if (blockHardness.matchesBlock(block, dimensionId))
+					return 0d;
         boolean isInWhitelist = false;
         for (IdTagMatcher blacklistEntry : this.depthMultiplierBlacklist) {
             if (!this.depthMultiplierBlacklistAsWhitelist) {
-                if (blacklistEntry.isInTagOrBlock(block, dimensionId))
-                    return 0d;
+				if (blacklistEntry.matchesBlock(block, dimensionId))
+					return 0d;
             }
             else {
-                if (blacklistEntry.isInTagOrBlock(block, dimensionId)) {
-                    isInWhitelist = true;
-                    break;
-                }
+				if (blacklistEntry.matchesBlock(block, dimensionId)) {
+					isInWhitelist = true;
+					break;
+				}
             }
         }
         if (!isInWhitelist && this.depthMultiplierBlacklistAsWhitelist)

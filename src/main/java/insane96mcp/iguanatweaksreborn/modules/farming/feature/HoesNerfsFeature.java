@@ -105,7 +105,7 @@ public class HoesNerfsFeature extends Feature {
 			return;
 		int cooldown = 0;
 		for (HoeCooldown hoeCooldown : this.hoesCooldowns) {
-			if (hoeCooldown.isInTagOrItem(stack.getItem(), null)) {
+			if (hoeCooldown.matchesItem(stack.getItem(), null)) {
 				cooldown = hoeCooldown.cooldown;
 			}
 		}

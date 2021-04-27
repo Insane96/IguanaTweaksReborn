@@ -116,16 +116,16 @@ public class FoodFeature extends Feature {
             boolean isInBlacklist = false;
             for (IdTagMatcher blacklistEntry : blacklist) {
                 if (!blacklistAsWhitelist) {
-                    if (blacklistEntry.isInTagOrItem(item, null)) {
-                        isInBlacklist = true;
-                        break;
-                    }
+                    if (blacklistEntry.matchesItem(item, null)) {
+						isInBlacklist = true;
+						break;
+					}
                 }
                 else {
-                    if (blacklistEntry.isInTagOrItem(item, null)) {
-                        isInWhitelist = true;
-                        break;
-                    }
+					if (blacklistEntry.matchesItem(item, null)) {
+						isInWhitelist = true;
+						break;
+					}
                 }
             }
             if (isInBlacklist)
