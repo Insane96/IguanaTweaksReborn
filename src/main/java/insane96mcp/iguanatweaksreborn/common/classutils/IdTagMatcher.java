@@ -9,6 +9,7 @@ import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -135,6 +136,32 @@ public class IdTagMatcher {
                 if (this.dimension.equals(AnyRL) || this.dimension.equals(dimensionId))
                     return true;
         }
+        return false;
+    }
+
+    /**
+     * Checks if the registry entry (either potion, enchantment, etc) is in the IdTagMatcher
+     *
+     * @param entry
+     * @return true if entry's registry name matches the tag's itemId
+     */
+    public boolean matchesGeneric(ForgeRegistryEntry entry) {
+        return matchesGeneric(entry, null);
+    }
+
+    /**
+     * Checks if the registry entry (either potion, enchantment, etc) is in the IdTagMatcher
+     *
+     * @param entry
+     * @param dimensionId
+     * @return true if entry's registry name matches the tag's itemId and if the dimension matches
+     */
+    public boolean matchesGeneric(ForgeRegistryEntry entry, @Nullable ResourceLocation dimensionId) {
+        if (dimensionId == null)
+            dimensionId = AnyRL;
+        ResourceLocation itemId = entry.getRegistryName();
+        if (itemId.equals(this.id))
+            return this.dimension.equals(AnyRL) || this.dimension.equals(dimensionId);
         return false;
     }
 
