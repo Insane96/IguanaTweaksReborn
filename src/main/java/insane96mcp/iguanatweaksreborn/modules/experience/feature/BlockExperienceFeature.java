@@ -13,7 +13,7 @@ public class BlockExperienceFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> oreMultiplierConfig;
 
-	public double oreMultiplier = 2.5d;
+	public double oreMultiplier = 3.0d;
 
 	public BlockExperienceFeature(Module module) {
 		super(Config.builder, module, true);
