@@ -227,7 +227,7 @@ public class StackReductionFeature extends Feature {
             PlayerEntity player = (PlayerEntity) event.getEntity();
             ItemStack original = event.getItem();
             ItemStack result = event.getResultStack();
-            if (original.getCount() > 1 && (result.getItem() == Items.BOWL || result.getItem() == Items.BUCKET)) {
+            if (original.getCount() > 1 && (result.getItem() == Items.BOWL || result.getItem() == Items.BUCKET || result.getItem() == Items.GLASS_BOTTLE)) {
                 ItemStack newResult = original.copy();
                 newResult.setCount(original.getCount() - 1);
                 event.setResultStack(newResult);
