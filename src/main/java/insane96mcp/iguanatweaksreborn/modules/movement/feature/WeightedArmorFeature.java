@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.modules.movement.feature;
 
+import com.google.common.collect.Multimap;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.modules.movement.classutils.ArmorEnchantmentWeight;
 import insane96mcp.iguanatweaksreborn.modules.movement.classutils.ArmorMaterialWeight;
@@ -12,13 +13,13 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
@@ -45,7 +46,7 @@ public class WeightedArmorFeature extends Feature {
 
 	private static final List<String> materialWeightDefault = Arrays.asList("leather,4.0", "chainmail,12.0", "golden,8.0", "iron,16.0", "diamond,30.0", "netherite,40.0");
 
-	private static final List<String> enchantmentsListDefault = Arrays.asList("minecraft:feather_falling,5", "elenaidodge2:lightweight,15,5");
+	private static final List<String> enchantmentsListDefault = Arrays.asList("minecraft:feather_falling,10", "elenaidodge2:lightweight,15,5");
 
 	public double slownessPerArmor = 2d;
 	public double percentagePerToughness = 0.04d;
@@ -70,7 +71,7 @@ public class WeightedArmorFeature extends Feature {
 		enchantmentsListConfig = Config.builder
 				.comment("Define here a list of Enchantments that will reduce the slowdown on the armor piece having the enchantment.\n" +
 						"Format is modid:enchantmentid,reductionPerLevel,flatReduction\n" +
-						"Where reduction per level is the percentage slowdown reduction per level, while flatReduction (optional) is a flat percentage slowdown reduction. E.g. 'elenaidodge2:lightweight,15,5' means that you'll get 5% less slowdown on armor plus 15% per level, so at Lightweight II you'll get (5+15*2) = 35% reduction.")
+						"Where reduction per level is the percentage slowdown reduction per level, while flatReduction (optional) is a flat percentage slowdown reduction. E.g. 'elenaidodge2:lightweight,15,5' means that you'll get 5% less slowdown on armor plus 15% per level, so at Lightweight II you'll get (5+15*2) = 35% reduction on that piece of armor.")
 				.defineList("Enchantments Weight Reduction", enchantmentsListDefault, o -> o instanceof String);
 		Config.builder.pop();
 	}
@@ -97,45 +98,23 @@ public class WeightedArmorFeature extends Feature {
         AttributeModifier modifier = movementSpeed.getModifier(armorSlowdownModifierUUID);
         if (!this.isEnabled()) {
             //If the feature has been disabled remove the slowdown from the player
-            if (modifier != null)
-                movementSpeed.removeModifier(modifier);
-            return;
-        }
-        double slowdown = 0d;
+			if (modifier != null)
+				movementSpeed.removeModifier(modifier);
+			return;
+		}
+		double slowdown = 0d;
 		//TODO add a method to get armor slowdown since this doesn't work. If wearing a material in the list the non materials get no slowdown ...
-        for (ItemStack stack : playerEntity.getArmorInventoryList()) {
-            for (ArmorMaterialWeight armorMaterialWeight : this.materialWeight) {
-				if (!stack.getItem().getRegistryName().getPath().contains(armorMaterialWeight.id))
-					continue;
-				if (!(stack.getItem() instanceof ArmorItem))
-					continue;
-				ArmorItem armor = (ArmorItem) stack.getItem();
-				//TODO stack.getAttributeModifiers(armor.getEquipSlot);
-				double maxArmor = Armor.getTotalDamageReduction(armor.getArmorMaterial());
-				double pieceArmor = armor.getArmorMaterial().getDamageReductionAmount(armor.getEquipmentSlot());
-				double ratio = pieceArmor / maxArmor;
-				double armorPieceSlowdown = armorMaterialWeight.totalWeight * ratio;
-				double enchantmentSlowdown = 0d;
-				for (ArmorEnchantmentWeight enchantmentWeight : enchantmentsList) {
-					int enchantmentLevel = MCUtils.getEnchantmentLevel(enchantmentWeight.id, stack);
-					if (enchantmentLevel == 0)
-						continue;
-					enchantmentSlowdown += (enchantmentWeight.flatSlownessReduction + (enchantmentWeight.slownessReductionPerLevel * enchantmentLevel));
-				}
-				enchantmentSlowdown /= 100d;
-				armorPieceSlowdown *= 1 - enchantmentSlowdown;
-				slowdown += -(armorPieceSlowdown) / 100;
-				break;
-			}
+		for (ItemStack stack : playerEntity.getArmorInventoryList()) {
+			slowdown += getArmorSlowdown(stack);
 		}
 		//If no armor material weight was found then apply armor and toughness weight
-		if (slowdown == 0d) {
+		/*if (slowdown == 0d) {
 			double armorSlowdown = playerEntity.getAttribute(Attributes.ARMOR).getValue();
 			armorSlowdown *= this.slownessPerArmor;
 			double toughnessSlowdown = playerEntity.getAttribute(Attributes.ARMOR_TOUGHNESS).getValue();
 			toughnessSlowdown *= this.percentagePerToughness;
 			slowdown = -(armorSlowdown * (1 + toughnessSlowdown)) / 100d;
-		}
+		}*/
 		//If it's still 0 then there's no slowdown appliable
 		if (slowdown == 0d) {
 			if (modifier != null)
@@ -150,28 +129,60 @@ public class WeightedArmorFeature extends Feature {
 		playerEntity.jumpMovementFactor = (float) (0.02f * (movementSpeed.getValue() / movementSpeed.getBaseValue()));
 	}
 
+	private double getArmorSlowdown(ItemStack itemStack) {
+		if (!(itemStack.getItem() instanceof ArmorItem))
+			return 0d;
+		double slowdown = 0d;
+		for (ArmorMaterialWeight armorMaterialWeight : this.materialWeight) {
+			if (!itemStack.getItem().getRegistryName().getPath().contains(armorMaterialWeight.id))
+				continue;
+			ArmorItem armor = (ArmorItem) itemStack.getItem();
+			double maxArmor = Armor.getTotalDamageReduction(armor.getArmorMaterial());
+			double pieceArmor = armor.getArmorMaterial().getDamageReductionAmount(armor.getEquipmentSlot());
+			double ratio = pieceArmor / maxArmor;
+			double armorPieceSlowdown = armorMaterialWeight.totalWeight * ratio;
+			double enchantmentSlowdownReduction = 0d;
+			for (ArmorEnchantmentWeight enchantmentWeight : enchantmentsList) {
+				int enchantmentLevel = MCUtils.getEnchantmentLevel(enchantmentWeight.id, itemStack);
+				if (enchantmentLevel == 0)
+					continue;
+				enchantmentSlowdownReduction += (enchantmentWeight.flatSlownessReduction + (enchantmentWeight.slownessReductionPerLevel * enchantmentLevel));
+			}
+			enchantmentSlowdownReduction /= 100d;
+			armorPieceSlowdown *= 1 - enchantmentSlowdownReduction;
+			slowdown = -(armorPieceSlowdown) / 100;
+			break;
+		}
+		if (slowdown != 0d)
+			return slowdown;
+		ArmorItem armorItem = (ArmorItem) itemStack.getItem();
+		Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(armorItem.getEquipmentSlot());
+		double armor = 0d;
+		for (AttributeModifier attributeModifier : attributeModifiers.get(Attributes.ARMOR)) {
+			if (!attributeModifier.getOperation().equals(AttributeModifier.Operation.ADDITION))
+				continue;
+			armor += attributeModifier.getAmount();
+		}
+		double armorToughness = 0d;
+		for (AttributeModifier attributeModifier : attributeModifiers.get(Attributes.ARMOR_TOUGHNESS)) {
+			if (!attributeModifier.getOperation().equals(AttributeModifier.Operation.ADDITION))
+				continue;
+			armorToughness += attributeModifier.getAmount();
+		}
+		double armorSlowdown = armor * this.slownessPerArmor;
+		double toughnessSlowdown = armorToughness * this.percentagePerToughness;
+		slowdown = -(armorSlowdown * (1 + toughnessSlowdown)) / 100d;
+		return slowdown;
+	}
+
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled())
 			return;
 		ItemStack stack = event.getItemStack();
-		for (ArmorMaterialWeight armorMaterialWeight : this.materialWeight) {
-			if (!stack.getItem().getRegistryName().getPath().contains(armorMaterialWeight.id))
-				continue;
-			if (!(stack.getItem() instanceof ArmorItem))
-				continue;
-			ArmorItem armor = (ArmorItem) stack.getItem();
-			double maxArmor = Armor.getTotalDamageReduction(armor.getArmorMaterial());
-			double pieceArmor = armor.getArmorMaterial().getDamageReductionAmount(armor.getEquipmentSlot());
-			double ratio = pieceArmor / maxArmor;
-			double armorPieceSlowdown = armorMaterialWeight.totalWeight * ratio;
-			int lightweightLevel = MCUtils.getEnchantmentLevel(new ResourceLocation("elenaidodge2:lightweight"), stack);
-			armorPieceSlowdown *= 1 - (lightweightLevel * 0.2);
-			event.getToolTip().add((new StringTextComponent(String.format("Slowdown: %s%%", Utils.formatDecimal(armorPieceSlowdown, "#.#")))).mergeStyle(TextFormatting.RED));
-			//slowdown += -(armorPieceSlowdown) / 100;
-			break;
-		}
+		double slowdown = -getArmorSlowdown(stack) * 100d;
+		event.getToolTip().add((new StringTextComponent(String.format("Slowdown: %s%%", Utils.formatDecimal(slowdown, "#.#")))).mergeStyle(TextFormatting.RED));
 	}
 
 	@OnlyIn(Dist.CLIENT)

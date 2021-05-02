@@ -102,6 +102,7 @@ public class PlantsGrowthFeature extends Feature {
 		plantGrowthMultiplier(event, BambooBlock.class, this.bambooGrowthMultiplier);
 	}
 
+	//TODO Pre vs Post?
 	public static void plantGrowthMultiplier(BlockEvent.CropGrowEvent.Post event, Class<? extends Block> blockClass, double multiplier) {
 		if (multiplier == 1.0d)
 			return;
