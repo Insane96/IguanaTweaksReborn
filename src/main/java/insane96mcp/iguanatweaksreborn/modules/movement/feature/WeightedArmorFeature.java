@@ -173,6 +173,8 @@ public class WeightedArmorFeature extends Feature {
 			return;
 		ItemStack stack = event.getItemStack();
 		double slowdown = -getArmorSlowdown(stack) * 100d;
+		if (slowdown == 0d)
+			return;
 		event.getToolTip().add((new StringTextComponent(String.format("Slowdown: %s%%", Utils.formatDecimal(slowdown, "#.#")))).mergeStyle(TextFormatting.RED));
 	}
 
