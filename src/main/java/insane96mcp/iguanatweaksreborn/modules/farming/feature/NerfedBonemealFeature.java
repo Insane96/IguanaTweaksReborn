@@ -55,7 +55,7 @@ public class NerfedBonemealFeature extends Feature {
 		blockBlacklsitConfig = Config.builder
 				.comment("Blocks or block tags that will not be affected by the bonemeal nerf. Can be used with any item that inherits the properties of vanilla bonemeal (and it's properly implemented).\n" +
 						"Each entry has an item or tag. The format is modid:item_id or #modid:item_tag.")
-				.defineList("Item Blacklist", new ArrayList<>(), o -> o instanceof String);
+				.defineList("Block Blacklist", new ArrayList<>(), o -> o instanceof String);
 		Config.builder.pop();
 	}
 
