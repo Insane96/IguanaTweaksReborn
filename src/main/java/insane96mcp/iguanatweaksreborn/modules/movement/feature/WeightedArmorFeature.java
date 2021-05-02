@@ -103,18 +103,9 @@ public class WeightedArmorFeature extends Feature {
 			return;
 		}
 		double slowdown = 0d;
-		//TODO add a method to get armor slowdown since this doesn't work. If wearing a material in the list the non materials get no slowdown ...
 		for (ItemStack stack : playerEntity.getArmorInventoryList()) {
 			slowdown += getArmorSlowdown(stack);
 		}
-		//If no armor material weight was found then apply armor and toughness weight
-		/*if (slowdown == 0d) {
-			double armorSlowdown = playerEntity.getAttribute(Attributes.ARMOR).getValue();
-			armorSlowdown *= this.slownessPerArmor;
-			double toughnessSlowdown = playerEntity.getAttribute(Attributes.ARMOR_TOUGHNESS).getValue();
-			toughnessSlowdown *= this.percentagePerToughness;
-			slowdown = -(armorSlowdown * (1 + toughnessSlowdown)) / 100d;
-		}*/
 		//If it's still 0 then there's no slowdown appliable
 		if (slowdown == 0d) {
 			if (modifier != null)

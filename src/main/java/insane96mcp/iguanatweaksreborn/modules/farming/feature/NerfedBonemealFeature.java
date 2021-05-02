@@ -20,6 +20,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,10 +30,14 @@ public class NerfedBonemealFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<NerfedBonemeal> nerfedBonemealConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> bonemealFailChanceConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> itemBlacklistConfig;
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> blockBlacklsitConfig;
+
+	private static final List<String> blockBlacklsitDefault = Arrays.asList("#iguanatweaksreborn:bonemeal_unaffected_crops");
 
 	public NerfedBonemeal nerfedBonemeal = NerfedBonemeal.NERFED;
 	public double bonemealFailChance = 0d;
 	public List<IdTagMatcher> itemBlacklist;
+	public List<IdTagMatcher> blockBlacklist;
 
 	public NerfedBonemealFeature(Module module) {
 		super(Config.builder, module);
@@ -44,9 +49,13 @@ public class NerfedBonemealFeature extends Feature {
 				.comment("Makes Bone Meal have a chance to fail to grow crops. 0 to disable, 100 to disable bonemeal.")
 				.defineInRange("Bonemeal Fail Chance", bonemealFailChance, 0.0d, 100d);
 		itemBlacklistConfig = Config.builder
-				.comment("Items or tags that will ignore the feature. Can be used with any item that inherits the properties of vanilla bonemeal (and it's properly implemented).\n" +
+				.comment("Items or item tags that will ignore the feature. Can be used with any item that inherits the properties of vanilla bonemeal (and it's properly implemented).\n" +
 						"Each entry has an item or tag. The format is modid:item_id or #modid:item_tag.")
-				.defineList("Blacklist", new ArrayList<>(), o -> o instanceof String);
+				.defineList("Item Blacklist", new ArrayList<>(), o -> o instanceof String);
+		blockBlacklsitConfig = Config.builder
+				.comment("Blocks or block tags that will not be affected by the bonemeal nerf. Can be used with any item that inherits the properties of vanilla bonemeal (and it's properly implemented).\n" +
+						"Each entry has an item or tag. The format is modid:item_id or #modid:item_tag.")
+				.defineList("Item Blacklist", new ArrayList<>(), o -> o instanceof String);
 		Config.builder.pop();
 	}
 
@@ -56,6 +65,7 @@ public class NerfedBonemealFeature extends Feature {
 		this.nerfedBonemeal = this.nerfedBonemealConfig.get();
 		this.bonemealFailChance = this.bonemealFailChanceConfig.get();
 		this.itemBlacklist = IdTagMatcher.parseStringList(this.itemBlacklistConfig.get());
+		this.blockBlacklist = IdTagMatcher.parseStringList(this.itemBlacklistConfig.get());
 	}
 
 	/**
@@ -71,6 +81,10 @@ public class NerfedBonemealFeature extends Feature {
 			return;
 		for (IdTagMatcher idTagMatcher : itemBlacklist) {
 			if (idTagMatcher.matchesItem(event.getStack().getItem()))
+				return;
+		}
+		for (IdTagMatcher idTagMatcher : blockBlacklist) {
+			if (idTagMatcher.matchesBlock(event.getBlock().getBlock()))
 				return;
 		}
 		//If farmland is dry and cropsRequireWater is set to ANY_CASE then cancel the event
