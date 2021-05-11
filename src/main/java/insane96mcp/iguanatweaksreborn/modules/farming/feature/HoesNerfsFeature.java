@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -99,7 +100,7 @@ public class HoesNerfsFeature extends Feature {
 		if (blockstate == null || blockstate.getBlock() != Blocks.FARMLAND)
 			return;
 		ItemStack stack = event.getHeldItemStack();
-		if (!(stack.getItem() instanceof HoeItem))
+		if (!stack.getToolTypes().contains(ToolType.HOE))
 			return;
 		if (event.getPlayer().getCooldownTracker().hasCooldown(stack.getItem()))
 			return;
