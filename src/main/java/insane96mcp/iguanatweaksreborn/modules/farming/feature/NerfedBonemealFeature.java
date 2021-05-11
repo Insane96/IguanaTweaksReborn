@@ -65,7 +65,7 @@ public class NerfedBonemealFeature extends Feature {
 		this.nerfedBonemeal = this.nerfedBonemealConfig.get();
 		this.bonemealFailChance = this.bonemealFailChanceConfig.get();
 		this.itemBlacklist = IdTagMatcher.parseStringList(this.itemBlacklistConfig.get());
-		this.blockBlacklist = IdTagMatcher.parseStringList(this.itemBlacklistConfig.get());
+		this.blockBlacklist = IdTagMatcher.parseStringList(this.blockBlacklsitConfig.get());
 	}
 
 	/**
