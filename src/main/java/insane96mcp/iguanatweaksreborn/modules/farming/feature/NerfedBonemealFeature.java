@@ -32,7 +32,7 @@ public class NerfedBonemealFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> itemBlacklistConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> blockBlacklsitConfig;
 
-	private static final List<String> blockBlacklsitDefault = Arrays.asList("#iguanatweaksreborn:bonemeal_unaffected_crops");
+	private static final List<String> blockBlacklsitDefault = Arrays.asList("#iguanatweaksreborn:bonemeal_nerf_unaffected_crops");
 
 	public NerfedBonemeal nerfedBonemeal = NerfedBonemeal.NERFED;
 	public double bonemealFailChance = 0d;
@@ -53,8 +53,8 @@ public class NerfedBonemealFeature extends Feature {
 						"Each entry has an item or tag. The format is modid:item_id or #modid:item_tag.")
 				.defineList("Item Blacklist", new ArrayList<>(), o -> o instanceof String);
 		blockBlacklsitConfig = Config.builder
-				.comment("Blocks or block tags that will not be affected by the bonemeal nerf. Can be used with any item that inherits the properties of vanilla bonemeal (and it's properly implemented).\n" +
-						"Each entry has an item or tag. The format is modid:item_id or #modid:item_tag.")
+				.comment("Blocks or block tags that will not be affected by the bonemeal nerf.\n" +
+						"Each entry has a block or a block tag. The format is modid:block_id or #modid:block_tag.")
 				.defineList("Block Blacklist", new ArrayList<>(), o -> o instanceof String);
 		Config.builder.pop();
 	}
