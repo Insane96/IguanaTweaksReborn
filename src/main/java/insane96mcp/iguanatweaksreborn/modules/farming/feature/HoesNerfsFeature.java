@@ -108,13 +108,13 @@ public class HoesNerfsFeature extends Feature {
 		for (HoeCooldown hoeCooldown : this.hoesCooldowns) {
 			if (hoeCooldown.matchesItem(stack.getItem(), null)) {
 				cooldown = hoeCooldown.cooldown;
+				break;
 			}
 		}
-
 		if (this.hoesDamageOnUseMultiplier > 1)
 			stack.damageItem(this.hoesDamageOnUseMultiplier - 1, event.getPlayer(), (player) -> player.sendBreakAnimation(event.getPlayer().getActiveHand()));
-
-		event.getPlayer().getCooldownTracker().setCooldown(stack.getItem(), cooldown);
+		if (cooldown != 0)
+			event.getPlayer().getCooldownTracker().setCooldown(stack.getItem(), cooldown);
 	}
 
 	private static boolean isHoeDisabled(Item item) {
