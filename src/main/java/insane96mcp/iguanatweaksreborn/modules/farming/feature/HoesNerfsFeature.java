@@ -86,7 +86,6 @@ public class HoesNerfsFeature extends Feature {
 	}
 
 	@SubscribeEvent
-	//TODO Replace with PlayerInteractEvent.RightClickBlock
 	public void harderTilling(BlockEvent.BlockToolInteractEvent event) {
 		if (!this.isEnabled())
 			return;
