@@ -6,7 +6,6 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
@@ -35,7 +34,7 @@ public class CropsGrowthFeature extends Feature {
 				.comment("Set if crops require wet farmland to grow.\nValid Values:\nNO: Crops will not require water to grow\nBONEMEAL_ONLY: Crops will grow on dry farmland by only using bonemeal\nANY_CASE: Will make Crops not grow in any case when on dry farmland")
 				.defineEnum("Crops Require Water", cropsRequireWater);
 		cropsGrowthMultiplierConfig = Config.builder
-				.comment("Increases the time required for a crop (stems included) to grow (e.g. at 2.0 the crop will take twice to grow).\nSetting this to 0 will prevent crops from growing naturally.\n1.0 will make crops grow like normal.")
+				.comment("Increases the time required for a crop (stems NOT included) to grow (e.g. at 2.0 the crop will take twice to grow).\nSetting this to 0 will prevent crops from growing naturally.\n1.0 will make crops grow like normal.")
 				.defineInRange("Crops Growth Speed Multiplier", cropsGrowthMultiplier, 0.0d, 128d);
 		noSunlightGrowthMultiplierConfig = Config.builder
 				.comment("Increases the time required for a crop to grow when it's sky light level is below \"Min Sunlight\", (e.g. at 2.0 when the crop has a skylight below \"Min Sunlight\" will take twice to grow).\nSetting this to 0 will prevent crops from growing when sky light level is below \"Min Sunlight\".\n1.0 will make crops growth not affected by skylight.")
@@ -59,26 +58,31 @@ public class CropsGrowthFeature extends Feature {
 	public void cropsRequireWater(BlockEvent.CropGrowEvent.Pre event) {
 		if (!this.isEnabled())
 			return;
+		if (event.getResult().equals(Event.Result.DENY))
+			return;
 		if (this.cropsRequireWater.equals(CropsRequireWater.NO))
 			return;
 		if (!FarmingModule.isAffectedByFarmlandState(event.getWorld(), event.getPos()))
 			return;
-		if (!FarmingModule.isCropOnWetFarmland(event.getWorld(), event.getPos()))
+		if (!FarmingModule.isCropOnWetFarmland(event.getWorld(), event.getPos())) {
 			event.setResult(Event.Result.DENY);
+		}
 	}
 
 	/**
 	 * Handles Crop Growth Speed Multiplier and NoSunlight Growth multiplier
 	 */
+
 	@SubscribeEvent
-	public void cropsGrowthSpeedMultiplier(BlockEvent.CropGrowEvent.Post event) {
+	public void cropsGrowthSpeedMultiplier(BlockEvent.CropGrowEvent.Pre event) {
 		if (!this.isEnabled())
+			return;
+		if (event.getResult().equals(Event.Result.DENY))
 			return;
 		if (this.cropsGrowthMultiplier == 1.0d && this.noSunLightGrowthMultiplier == 1.0d)
 			return;
 		IWorld world = event.getWorld();
-		BlockState state = event.getOriginalState();
-		if (!(state.getBlock() instanceof CropsBlock))
+		if (!(event.getState().getBlock() instanceof CropsBlock))
 			return;
 		double chance;
 		if (this.cropsGrowthMultiplier == 0.0d)
@@ -91,7 +95,7 @@ public class CropsGrowthFeature extends Feature {
 				chance = -1d;
 			else
 				chance *= 1d / this.noSunLightGrowthMultiplier;
-		if (event.getWorld().getRandom().nextDouble() > chance)
-			world.setBlockState(event.getPos(), state, 2);
+		if (world.getRandom().nextDouble() > chance)
+			event.setResult(Event.Result.DENY);
 	}
 }
