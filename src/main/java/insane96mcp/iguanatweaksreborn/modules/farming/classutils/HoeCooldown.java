@@ -24,7 +24,7 @@ public class HoeCooldown extends IdTagMatcher {
 			return null;
 		}
 		if (!NumberUtils.isParsable(split[1])) {
-			LogHelper.warn(String.format("Invalid chance \"%s\" for Hoe Cooldown", line));
+			LogHelper.warn(String.format("Invalid cooldown \"%s\" for Hoe Cooldown", line));
 			return null;
 		}
 		int cooldown = Integer.parseInt(split[1]);
