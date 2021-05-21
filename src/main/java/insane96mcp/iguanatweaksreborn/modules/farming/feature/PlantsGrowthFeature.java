@@ -5,10 +5,7 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.utils.LogHelper;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -68,11 +65,6 @@ public class PlantsGrowthFeature extends Feature {
 	public void cropGrowPost(BlockEvent.CropGrowEvent.Pre event) {
 		if (!this.isEnabled())
 			return;
-		if (event.getState().getBlock().getRegistryName().equals(new ResourceLocation("minecraft:air"))) {
-			event.getWorld().setBlockState(event.getPos(), Blocks.BEDROCK.getDefaultState(), 3);
-			LogHelper.info("pos: " + event.getPos());
-			return;
-		}
 		if (this.plantsList.isEmpty())
 			return;
 		BlockState state = event.getState();
