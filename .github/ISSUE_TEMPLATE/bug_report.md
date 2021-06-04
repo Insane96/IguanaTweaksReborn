@@ -10,12 +10,11 @@ assignees: ''
 Follow the following guideline. Not following this will result in ignored and closed issue.  
 Please make sure you're using the latest versions before sending a report.
 
-```
-Minecraft Version: 
-IguanaTweaks Version: 
-InsaneLib Version: 
-Forge Version: 
-```
+**Versions**:
+* Minecraft:  
+* Forge: 
+* IguanaTweaks Reborn: 
+* InsaneLib: 
 
 **What Happens**:  
 Explain what's the problem
