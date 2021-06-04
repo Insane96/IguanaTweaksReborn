@@ -7,32 +7,27 @@ assignees: ''
 
 ---
 
-Follow the following guideline. Not following this will result in ignored and closed issue.
+Follow the following guideline. Not following this will result in ignored and closed issue.  
+Please make sure you're using the latest versions before sending a report.
 
-// Usually only latest versions are supported
+```
+Minecraft Version: 
+IguanaTweaks Version: 
+InsaneLib Version: 
+Forge Version: 
+```
 
-**Minecraft Version**:
+**What Happens**:  
+Explain what's the problem
 
-
-// Please make sure you're using the latest version before sending a report
-
-Mod Version:
-
-
-**Forge Version**:
-
-
-**What Happens**:
-
-
-//Please send logs even if you don't have any crash
-//**Use Gist or Pastebin**
-
-**Logs / Crash reports**:
-
+//Please send logs even if you don't have any crash  
+//**Use Gist or Pastebin**  
+**Logs / Crash reports**:  
+E.g. https://pastebin.com/1AbCDEFG
 
 //If different from default
-**Config**:
+**Config**:  
+E.g. https://pastebin.com/1AbCDEFG
 
-
-**List of mods installed / modpack**:
+**Can be reproduced with IguanaTweaks Reborn + InsaneLib only?**:  
+Yes/No
