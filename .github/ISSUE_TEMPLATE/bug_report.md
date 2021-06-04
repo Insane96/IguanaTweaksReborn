@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Found a nasty bug like Kelp Generating Bedrock? This is for you!
 title: ''
 labels: bug
 assignees: ''
