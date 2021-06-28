@@ -14,6 +14,9 @@ import net.minecraft.block.BeetrootBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.block.StemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -79,25 +82,37 @@ public class NerfedBonemealFeature extends Feature {
 			return;
 		if (event.getWorld().isRemote)
 			return;
+		BonemealResult result = applyBonemeal(event.getWorld(), event.getStack(), event.getBlock(), event.getPos());
+		if (result == BonemealResult.ALLOW)
+			event.setResult(Event.Result.ALLOW);
+		else if (result == BonemealResult.CANCEL)
+			event.setCanceled(true);
+	}
+
+	public enum BonemealResult {
+		NONE,
+		CANCEL,
+		ALLOW
+	}
+
+	public BonemealResult applyBonemeal(World world, ItemStack stack, BlockState state, BlockPos pos) {
 		for (IdTagMatcher idTagMatcher : itemBlacklist) {
-			if (idTagMatcher.matchesItem(event.getStack().getItem()))
-				return;
+			if (idTagMatcher.matchesItem(stack.getItem()))
+				return BonemealResult.NONE;
 		}
 		for (IdTagMatcher idTagMatcher : blockBlacklist) {
-			if (idTagMatcher.matchesBlock(event.getBlock().getBlock()))
-				return;
+			if (idTagMatcher.matchesBlock(state.getBlock()))
+				return BonemealResult.NONE;
 		}
 		//If farmland is dry and cropsRequireWater is set to ANY_CASE then cancel the event
-		if (FarmingModule.isAffectedByFarmlandState(event.getWorld(), event.getPos()) && !FarmingModule.isCropOnWetFarmland(event.getWorld(), event.getPos()) && Modules.farmingModule.cropsGrowthFeature.cropsRequireWater.equals(CropsRequireWater.ANY_CASE)) {
-			event.setCanceled(true);
-			return;
+		if (FarmingModule.isAffectedByFarmlandState(world, pos) && !FarmingModule.isCropOnWetFarmland(world, pos) && Modules.farmingModule.cropsGrowthFeature.cropsRequireWater.equals(CropsRequireWater.ANY_CASE)) {
+			return BonemealResult.CANCEL;
 		}
 		if (this.nerfedBonemeal.equals(NerfedBonemeal.DISABLED))
-			return;
-		BlockState state = event.getWorld().getBlockState(event.getPos());
+			return BonemealResult.NONE;
 		if (state.getBlock() instanceof CropsBlock) {
 			boolean isBeetroot = state.getBlock() instanceof BeetrootBlock;
-			int age = 0;
+			int age;
 			int maxAge = Collections.max(CropsBlock.AGE.getAllowedValues());
 			if (isBeetroot) {
 				age = state.get(BeetrootBlock.BEETROOT_AGE);
@@ -106,14 +121,12 @@ public class NerfedBonemealFeature extends Feature {
 			else
 				age = state.get(CropsBlock.AGE);
 			if (age == maxAge)
-				return;
-
-			if (RandomHelper.getDouble(event.getWorld().getRandom(), 0d, 100d) < this.bonemealFailChance) {
-				event.setResult(Event.Result.ALLOW);
-				return;
+				return BonemealResult.NONE;
+			if (RandomHelper.getDouble(world.getRandom(), 0d, 100d) < this.bonemealFailChance) {
+				return BonemealResult.ALLOW;
 			}
 			else if (this.nerfedBonemeal.equals(NerfedBonemeal.SLIGHT))
-				age += RandomHelper.getInt(event.getWorld().getRandom(), 1, 2);
+				age += RandomHelper.getInt(world.getRandom(), 1, 2);
 			else if (this.nerfedBonemeal.equals(NerfedBonemeal.NERFED))
 				age++;
 			if (age > maxAge)
@@ -128,13 +141,12 @@ public class NerfedBonemealFeature extends Feature {
 			int age = state.get(StemBlock.AGE);
 			int maxAge = Collections.max(StemBlock.AGE.getAllowedValues());
 			if (age == maxAge)
-				return;
-			if (RandomHelper.getDouble(event.getWorld().getRandom(), 0d, 100d) < this.bonemealFailChance) {
-				event.setResult(Event.Result.ALLOW);
-				return;
+				return BonemealResult.NONE;
+			if (RandomHelper.getDouble(world.getRandom(), 0d, 100d) < this.bonemealFailChance) {
+				return BonemealResult.ALLOW;
 			}
 			else if (this.nerfedBonemeal.equals(NerfedBonemeal.SLIGHT))
-				age += RandomHelper.getInt(event.getWorld().getRandom(), 1, 2);
+				age += RandomHelper.getInt(world.getRandom(), 1, 2);
 			else if (this.nerfedBonemeal.equals(NerfedBonemeal.NERFED))
 				age++;
 			if (age > maxAge)
@@ -142,8 +154,8 @@ public class NerfedBonemealFeature extends Feature {
 			state = state.with(StemBlock.AGE, age);
 		}
 		else
-			return;
-		event.getWorld().setBlockState(event.getPos(), state, 3);
-		event.setResult(Event.Result.ALLOW);
+			return BonemealResult.NONE;
+		world.setBlockState(pos, state, 3);
+		return BonemealResult.ALLOW;
 	}
 }
