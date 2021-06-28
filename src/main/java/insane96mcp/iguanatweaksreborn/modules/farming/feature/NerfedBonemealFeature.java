@@ -49,8 +49,8 @@ public class NerfedBonemealFeature extends Feature {
 				.comment("Makes more Bone Meal required for Crops. Valid Values are\nDISABLED: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
 				.defineEnum("Nerfed Bonemeal", nerfedBonemeal);
 		bonemealFailChanceConfig = Config.builder
-				.comment("Makes Bone Meal have a chance to fail to grow crops. 0 to disable, 100 to disable bonemeal.")
-				.defineInRange("Bonemeal Fail Chance", bonemealFailChance, 0.0d, 100d);
+				.comment("Makes Bone Meal have a chance to fail to grow crops. 0 to disable, 1 to disable bonemeal.")
+				.defineInRange("Bonemeal Fail Chance", bonemealFailChance, 0d, 1d);
 		itemBlacklistConfig = Config.builder
 				.comment("Items or item tags that will ignore the feature. Can be used with any item that inherits the properties of vanilla bonemeal (and it's properly implemented).\n" +
 						"Each entry has an item or tag. The format is modid:item_id or #modid:item_tag.")
@@ -122,7 +122,7 @@ public class NerfedBonemealFeature extends Feature {
 				age = state.get(CropsBlock.AGE);
 			if (age == maxAge)
 				return BonemealResult.NONE;
-			if (RandomHelper.getDouble(world.getRandom(), 0d, 100d) < this.bonemealFailChance) {
+			if (world.getRandom().nextDouble() < this.bonemealFailChance) {
 				return BonemealResult.ALLOW;
 			}
 			else if (this.nerfedBonemeal.equals(NerfedBonemeal.SLIGHT))

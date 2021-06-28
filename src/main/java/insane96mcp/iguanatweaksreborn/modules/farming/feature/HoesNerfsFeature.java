@@ -32,8 +32,8 @@ public class HoesNerfsFeature extends Feature {
 	private static final List<String> hoesCooldownsDefault = Arrays.asList("minecraft:stone_hoe,20", "minecraft:iron_hoe,15", "minecraft:golden_hoe,4", "minecraft:diamond_hoe,10", "minecraft:netherite_hoe,6", "vulcanite:vulcanite_hoe,15");
 
 	public ArrayList<HoeCooldown> hoesCooldowns;
-	public boolean disableLowTierHoes;
-	public int hoesDamageOnUseMultiplier;
+	public boolean disableLowTierHoes = true;
+	public int hoesDamageOnUseMultiplier = 3;
 
 	public HoesNerfsFeature(Module module) {
 		super(Config.builder, module);
@@ -43,10 +43,10 @@ public class HoesNerfsFeature extends Feature {
 				.defineList("Hoes Cooldowns", hoesCooldownsDefault, o -> o instanceof String);
 		disableLowTierHoesConfig = Config.builder
 				.comment("When true, Wooden and Stone Hoes will not be usable to till dirt and will be heavily damaged when trying to. The list of \"unusable\" hoes can be changed with datapacks by changing the iguanatweaksreborn:disabled_hoes tag")
-				.define("Disable Low Tier Hoes", true);
+				.define("Disable Low Tier Hoes", disableLowTierHoes);
 		hoesDamageOnUseMultiplierConfig = Config.builder
 				.comment("When an hoe is used to till dirt it will lose this durability instead of 1. Set to 1 to disable")
-				.defineInRange("Hoes Damage On Use Multiplier", 3, 1, 1024);
+				.defineInRange("Hoes Damage On Use Multiplier", hoesDamageOnUseMultiplier, 1, 1024);
 		Config.builder.pop();
 	}
 

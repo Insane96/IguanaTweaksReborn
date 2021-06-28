@@ -29,7 +29,7 @@ public class NoPillaringFeature extends Feature {
 	}
 
 	@SubscribeEvent
-    public void playerTick(PlayerInteractEvent.RightClickBlock event) {
+	public void playerRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		if (!this.isEnabled())
 			return;
 		PlayerEntity playerEntity = event.getPlayer();
