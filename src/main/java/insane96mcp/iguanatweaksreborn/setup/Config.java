@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.setup;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.base.Modules;
+import insane96mcp.iguanatweaksreborn.modules.Modules;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -23,20 +23,12 @@ public class Config {
 
 	public static class CommonConfig {
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
-			insane96mcp.iguanatweaksreborn.base.Modules.init();
+			Modules.init();
 		}
 	}
 
 	@SubscribeEvent
 	public static void onModConfigEvent(final net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
-		Modules.miscModule.loadConfig();
-		Modules.sleepRespawnModule.loadConfig();
-		Modules.experienceModule.loadConfig();
-		Modules.miningModule.loadConfig();
-		Modules.combatModule.loadConfig();
-		Modules.movementModule.loadConfig();
-		Modules.hungerHealthModule.loadConfig();
-		Modules.stackSizeModule.loadConfig();
-		Modules.farmingModule.loadConfig();
+		Modules.loadConfig();
 	}
 }

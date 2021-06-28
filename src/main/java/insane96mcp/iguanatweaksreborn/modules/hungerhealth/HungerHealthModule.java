@@ -9,22 +9,22 @@ import insane96mcp.insanelib.base.Module;
 @Label(name = "Hunger")
 public class HungerHealthModule extends Module {
 
-	public FoodFeature foodFeature;
-	public ExaustionIncreaseFeature exaustionIncreaseFeature;
+	public FoodFeature food;
+	public ExaustionIncreaseFeature exaustionIncrease;
 
 	public HungerHealthModule() {
 		super(Config.builder);
 		pushConfig(Config.builder);
-		foodFeature = new FoodFeature(this);
-		exaustionIncreaseFeature = new ExaustionIncreaseFeature(this);
+		food = new FoodFeature(this);
+		exaustionIncrease = new ExaustionIncreaseFeature(this);
 		Config.builder.pop();
 	}
 
-    @Override
+	@Override
     public void loadConfig() {
-        super.loadConfig();
-        foodFeature.loadConfig();
-        exaustionIncreaseFeature.loadConfig();
-    }
+		super.loadConfig();
+		food.loadConfig();
+		exaustionIncrease.loadConfig();
+	}
 
 }

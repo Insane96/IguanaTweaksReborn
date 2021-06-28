@@ -15,29 +15,27 @@ import java.util.Collection;
 @Label(name = "Stack Size")
 public class StackSizeModule extends Module {
 
-	public StackReductionFeature stackReductionFeature;
-	public CustomStackSizeFeature customStackSizeFeature;
+	public StackReductionFeature stackReduction;
+	public CustomStackSizeFeature customStackSize;
 
 	public StackSizeModule() {
 		super(Config.builder);
 		pushConfig(Config.builder);
-		stackReductionFeature = new StackReductionFeature(this);
-		customStackSizeFeature = new CustomStackSizeFeature(this);
+		stackReduction = new StackReductionFeature(this);
+		customStackSize = new CustomStackSizeFeature(this);
 		Config.builder.pop();
 	}
 
-    public ArrayList<CustomStackSize> defaultStackSizes = new ArrayList<>();
+	public ArrayList<CustomStackSize> defaultStackSizes = new ArrayList<>();
 
     @Override
     public void loadConfig() {
-        super.loadConfig();
-
-        if (defaultStackSizes.isEmpty())
-            defaultStackSizes = saveDefaultStackSizes();
-
-        stackReductionFeature.loadConfig();
-        customStackSizeFeature.loadConfig();
-    }
+		super.loadConfig();
+		if (defaultStackSizes.isEmpty())
+			defaultStackSizes = saveDefaultStackSizes();
+		stackReduction.loadConfig();
+		customStackSize.loadConfig();
+	}
 
     private ArrayList<CustomStackSize> saveDefaultStackSizes() {
         ArrayList<CustomStackSize> defaultStackSizes = new ArrayList<>();

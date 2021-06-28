@@ -9,22 +9,22 @@ import insane96mcp.insanelib.base.Module;
 @Label(name = "Movement")
 public class MovementModule extends Module {
 
-	public WeightedArmorFeature weightedArmorFeature;
-	public NoPillaringFeature noPillaringFeature;
+	public WeightedArmorFeature weightedArmor;
+	public NoPillaringFeature noPillaring;
 
 	public MovementModule() {
 		super(Config.builder);
 		pushConfig(Config.builder);
-		weightedArmorFeature = new WeightedArmorFeature(this);
-		noPillaringFeature = new NoPillaringFeature(this);
+		weightedArmor = new WeightedArmorFeature(this);
+		noPillaring = new NoPillaringFeature(this);
 		Config.builder.pop();
 	}
 
 	@Override
 	public void loadConfig() {
 		super.loadConfig();
-		weightedArmorFeature.loadConfig();
-		noPillaringFeature.loadConfig();
+		weightedArmor.loadConfig();
+		noPillaring.loadConfig();
 	}
 
 }

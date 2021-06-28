@@ -9,21 +9,21 @@ import insane96mcp.insanelib.base.Module;
 @Label(name = "Mining")
 public class MiningModule extends Module {
 
-	public GlobalHardnessFeature globalHardnessFeature;
-	public CustomHardnessFeature customHardnessFeature;
+	public GlobalHardnessFeature globalHardness;
+	public CustomHardnessFeature customHardness;
 
 	public MiningModule() {
 		super(Config.builder);
 		pushConfig(Config.builder);
-		globalHardnessFeature = new GlobalHardnessFeature(this);
-		customHardnessFeature = new CustomHardnessFeature(this);
+		globalHardness = new GlobalHardnessFeature(this);
+		customHardness = new CustomHardnessFeature(this);
 		Config.builder.pop();
 	}
 
-    @Override
+	@Override
     public void loadConfig() {
-        super.loadConfig();
-        globalHardnessFeature.loadConfig();
-        customHardnessFeature.loadConfig();
-    }
+		super.loadConfig();
+		globalHardness.loadConfig();
+		customHardness.loadConfig();
+	}
 }

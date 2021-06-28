@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.modules.mining.feature;
 
-import insane96mcp.iguanatweaksreborn.base.Modules;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
+import insane96mcp.iguanatweaksreborn.modules.Modules;
 import insane96mcp.iguanatweaksreborn.modules.mining.classutils.BlockHardness;
 import insane96mcp.iguanatweaksreborn.modules.mining.classutils.DepthHardnessDimension;
 import insane96mcp.iguanatweaksreborn.modules.mining.classutils.DimensionHardnessMultiplier;
@@ -126,8 +126,8 @@ public class GlobalHardnessFeature extends Feature {
      * Returns 1d when no changes must be made, else will return a multiplier for block hardness
      */
     public double getBlockGlobalHardness(Block block, ResourceLocation dimensionId) {
-		if (Modules.miningModule.customHardnessFeature.isEnabled())
-			for (BlockHardness blockHardness : Modules.miningModule.customHardnessFeature.customHardness)
+		if (Modules.mining.customHardness.isEnabled())
+			for (BlockHardness blockHardness : Modules.mining.customHardness.customHardness)
 				if (blockHardness.matchesBlock(block, dimensionId))
 					return 1d;
 		boolean isInWhitelist = false;
@@ -160,7 +160,7 @@ public class GlobalHardnessFeature extends Feature {
      */
     public double getDepthHardnessMultiplier(Block block, ResourceLocation dimensionId, BlockPos pos, boolean processCustomHardness) {
         if (!processCustomHardness)
-            for (BlockHardness blockHardness : Modules.miningModule.customHardnessFeature.customHardness)
+			for (BlockHardness blockHardness : Modules.mining.customHardness.customHardness)
 				if (blockHardness.matchesBlock(block, dimensionId))
 					return 0d;
         boolean isInWhitelist = false;

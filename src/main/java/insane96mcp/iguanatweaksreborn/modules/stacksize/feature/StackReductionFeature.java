@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.modules.stacksize.feature;
 
-import insane96mcp.iguanatweaksreborn.base.Modules;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
+import insane96mcp.iguanatweaksreborn.modules.Modules;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.WeightFeature;
 import insane96mcp.iguanatweaksreborn.modules.stacksize.classutils.CustomStackSize;
 import insane96mcp.iguanatweaksreborn.setup.Config;
@@ -111,8 +111,7 @@ public class StackReductionFeature extends Feature {
 
         if (itemStackMultiplier == 1d)
             return;
-
-        for (CustomStackSize defaultStackSize : Modules.stackSizeModule.defaultStackSizes) {
+        for (CustomStackSize defaultStackSize : Modules.stackSize.defaultStackSizes) {
             Item item = ForgeRegistries.ITEMS.getValue(defaultStackSize.id);
             if (item instanceof BlockItem)
                 continue;
@@ -148,8 +147,7 @@ public class StackReductionFeature extends Feature {
             return;
         if (!blockStackReduction)
             return;
-
-        for (CustomStackSize defaultStackSize : Modules.stackSizeModule.defaultStackSizes) {
+        for (CustomStackSize defaultStackSize : Modules.stackSize.defaultStackSizes) {
             Item item = ForgeRegistries.ITEMS.getValue(defaultStackSize.id);
             if (!(item instanceof BlockItem))
                 continue;
@@ -186,10 +184,8 @@ public class StackReductionFeature extends Feature {
 
         if (!foodStackReduction)
             return;
-
-        for (CustomStackSize defaultStackSize : Modules.stackSizeModule.defaultStackSizes) {
+        for (CustomStackSize defaultStackSize : Modules.stackSize.defaultStackSizes) {
             Item item = ForgeRegistries.ITEMS.getValue(defaultStackSize.id);
-
             if (!item.isFood())
                 continue;
             boolean isInWhitelist = false;

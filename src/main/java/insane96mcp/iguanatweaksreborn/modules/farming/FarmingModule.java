@@ -11,33 +11,33 @@ import net.minecraft.world.IWorld;
 @Label(name = "Farming")
 public class FarmingModule extends Module {
 
-	public LivestockSlowdownFeature liveStockSlowdownFeature;
-	public NerfedBonemealFeature nerfedBonemealFeature;
-	public CropsGrowthFeature cropsGrowthFeature;
-	public PlantsGrowthFeature plantsGrowthFeature;
-	public HoesNerfsFeature hoesNerfsFeature;
-	public HarderCrops harderCrops;
+	public LivestockSlowdownFeature liveStockSlowdown;
+	public NerfedBonemealFeature nerfedBonemeal;
+	public CropsGrowthFeature cropsGrowth;
+	public PlantsGrowthFeature plantsGrowth;
+	public HoesNerfsFeature hoesNerfs;
+	public HarderCropsFeature harderCrops;
 
 	public FarmingModule() {
 		super(Config.builder);
 		pushConfig(Config.builder);
-		liveStockSlowdownFeature = new LivestockSlowdownFeature(this);
-		nerfedBonemealFeature = new NerfedBonemealFeature(this);
-		cropsGrowthFeature = new CropsGrowthFeature(this);
-		plantsGrowthFeature = new PlantsGrowthFeature(this);
-		hoesNerfsFeature = new HoesNerfsFeature(this);
-		harderCrops = new HarderCrops(this);
+		liveStockSlowdown = new LivestockSlowdownFeature(this);
+		nerfedBonemeal = new NerfedBonemealFeature(this);
+		cropsGrowth = new CropsGrowthFeature(this);
+		plantsGrowth = new PlantsGrowthFeature(this);
+		hoesNerfs = new HoesNerfsFeature(this);
+		harderCrops = new HarderCropsFeature(this);
 		Config.builder.pop();
 	}
 
 	@Override
 	public void loadConfig() {
 		super.loadConfig();
-		liveStockSlowdownFeature.loadConfig();
-		nerfedBonemealFeature.loadConfig();
-		cropsGrowthFeature.loadConfig();
-		plantsGrowthFeature.loadConfig();
-		hoesNerfsFeature.loadConfig();
+		liveStockSlowdown.loadConfig();
+		nerfedBonemeal.loadConfig();
+		cropsGrowth.loadConfig();
+		plantsGrowth.loadConfig();
+		hoesNerfs.loadConfig();
 		harderCrops.loadConfig();
 	}
 

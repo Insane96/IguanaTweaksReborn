@@ -9,21 +9,21 @@ import insane96mcp.insanelib.base.Module;
 @Label(name = "Sleep & Respawn")
 public class SleepRespawnModule extends Module {
 
-	public SleepingEffectsFeature sleepingEffectsFeature;
-	public PreventSleepingFeature preventSleepingFeature;
+	public SleepingEffectsFeature sleepingEffects;
+	public PreventSleepingFeature preventSleeping;
 
 	public SleepRespawnModule() {
 		super(Config.builder);
 		pushConfig(Config.builder);
-		sleepingEffectsFeature = new SleepingEffectsFeature(this);
-		preventSleepingFeature = new PreventSleepingFeature(this);
+		sleepingEffects = new SleepingEffectsFeature(this);
+		preventSleeping = new PreventSleepingFeature(this);
 		Config.builder.pop();
 	}
 
-    @Override
+	@Override
     public void loadConfig() {
-        super.loadConfig();
-        sleepingEffectsFeature.loadConfig();
-        preventSleepingFeature.loadConfig();
-    }
+		super.loadConfig();
+		sleepingEffects.loadConfig();
+		preventSleeping.loadConfig();
+	}
 }

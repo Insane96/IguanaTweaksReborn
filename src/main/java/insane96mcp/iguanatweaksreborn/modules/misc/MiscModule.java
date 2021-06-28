@@ -10,28 +10,28 @@ import insane96mcp.insanelib.base.Module;
 @Label(name = "Miscellaneous")
 public class MiscModule extends Module {
 
-	public ExplosionOverhaulFeature explosionOverhaulFeature;
-	public DebuffFeature debuffFeature;
+	public ExplosionOverhaulFeature explosionOverhaul;
+	public DebuffFeature debuff;
 	//public WeightFeature weightFeature;
-	public ToolNerfFeature toolNerfFeature;
+	public ToolNerfFeature toolNerf;
 
 	public MiscModule() {
 		super(Config.builder);
 		pushConfig(Config.builder);
-		explosionOverhaulFeature = new ExplosionOverhaulFeature(this);
-		debuffFeature = new DebuffFeature(this);
+		explosionOverhaul = new ExplosionOverhaulFeature(this);
+		debuff = new DebuffFeature(this);
 		//weightFeature = new WeightFeature(this);
-		toolNerfFeature = new ToolNerfFeature(this);
+		toolNerf = new ToolNerfFeature(this);
 		Config.builder.pop();
 	}
 
 	@Override
 	public void loadConfig() {
 		super.loadConfig();
-		explosionOverhaulFeature.loadConfig();
-		debuffFeature.loadConfig();
+		explosionOverhaul.loadConfig();
+		debuff.loadConfig();
 		//weightFeature.loadConfig();
-		toolNerfFeature.loadConfig();
+		toolNerf.loadConfig();
 	}
 
 }

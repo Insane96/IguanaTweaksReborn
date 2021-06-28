@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.modules.mining.feature;
 
 import com.google.common.collect.Lists;
-import insane96mcp.iguanatweaksreborn.base.Modules;
+import insane96mcp.iguanatweaksreborn.modules.Modules;
 import insane96mcp.iguanatweaksreborn.modules.mining.classutils.BlockHardness;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
@@ -110,7 +110,7 @@ public class CustomHardnessFeature extends Feature {
 
     private static double getRatio(double newHardness, BlockState state, World world, BlockPos pos) {
         //Add depth dimension multiplier
-        double depthMultiplier = Modules.miningModule.globalHardnessFeature.getDepthHardnessMultiplier(state.getBlock(), world.getDimensionKey().getLocation(), pos, true);
+        double depthMultiplier = Modules.mining.globalHardness.getDepthHardnessMultiplier(state.getBlock(), world.getDimensionKey().getLocation(), pos, true);
         double ratio = state.getBlockHardness(world, pos) / newHardness;
         double multiplier = (1d / ratio) + depthMultiplier;
         return 1d / multiplier;

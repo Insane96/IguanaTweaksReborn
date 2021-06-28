@@ -10,24 +10,24 @@ import insane96mcp.insanelib.base.Module;
 @Label(name = "Experience")
 public class ExperienceModule extends Module {
 
-    public GlobalExperienceFeature globalExperienceFeature;
-    public BlockExperienceFeature blockExperienceFeature;
-    public SpawnerMobsExperienceFeature spawnerMobsExperienceFeature;
+    public GlobalExperienceFeature globalExperience;
+    public BlockExperienceFeature blockExperience;
+    public SpawnerMobsExperienceFeature spawnerMobsExperience;
 
     public ExperienceModule() {
         super(Config.builder);
         pushConfig(Config.builder);
-        globalExperienceFeature = new GlobalExperienceFeature(this);
-        blockExperienceFeature = new BlockExperienceFeature(this);
-        spawnerMobsExperienceFeature = new SpawnerMobsExperienceFeature(this);
+        globalExperience = new GlobalExperienceFeature(this);
+        blockExperience = new BlockExperienceFeature(this);
+        spawnerMobsExperience = new SpawnerMobsExperienceFeature(this);
         Config.builder.pop();
     }
 
     @Override
     public void loadConfig() {
         super.loadConfig();
-        globalExperienceFeature.loadConfig();
-        blockExperienceFeature.loadConfig();
-        spawnerMobsExperienceFeature.loadConfig();
+        globalExperience.loadConfig();
+        blockExperience.loadConfig();
+        spawnerMobsExperience.loadConfig();
     }
 }

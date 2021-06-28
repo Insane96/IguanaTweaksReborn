@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Label(name = "Harder Crops", description = "Crops are no longer insta-minable")
-public class HarderCrops extends Feature {
+public class HarderCropsFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> hardnessConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> whitelistConfig;
@@ -30,7 +30,7 @@ public class HarderCrops extends Feature {
 	public ArrayList<IdTagMatcher> whitelist;
 	public boolean onlyFullyGrown = true;
 
-	public HarderCrops(Module module) {
+	public HarderCropsFeature(Module module) {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		hardnessConfig = Config.builder

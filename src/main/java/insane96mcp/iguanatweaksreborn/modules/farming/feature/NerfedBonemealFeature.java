@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.modules.farming.feature;
 
-import insane96mcp.iguanatweaksreborn.base.Modules;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
+import insane96mcp.iguanatweaksreborn.modules.Modules;
 import insane96mcp.iguanatweaksreborn.modules.farming.FarmingModule;
 import insane96mcp.iguanatweaksreborn.modules.farming.classutils.CropsRequireWater;
 import insane96mcp.iguanatweaksreborn.modules.farming.classutils.NerfedBonemeal;
@@ -105,7 +105,7 @@ public class NerfedBonemealFeature extends Feature {
 				return BonemealResult.NONE;
 		}
 		//If farmland is dry and cropsRequireWater is set to ANY_CASE then cancel the event
-		if (FarmingModule.isAffectedByFarmlandState(world, pos) && !FarmingModule.isCropOnWetFarmland(world, pos) && Modules.farmingModule.cropsGrowthFeature.cropsRequireWater.equals(CropsRequireWater.ANY_CASE)) {
+		if (FarmingModule.isAffectedByFarmlandState(world, pos) && !FarmingModule.isCropOnWetFarmland(world, pos) && Modules.farming.cropsGrowth.cropsRequireWater.equals(CropsRequireWater.ANY_CASE)) {
 			return BonemealResult.CANCEL;
 		}
 		if (this.nerfedBonemeal.equals(NerfedBonemeal.DISABLED))
