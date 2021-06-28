@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.modules.movement.classutils;
 
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import net.minecraft.util.math.MathHelper;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.annotation.Nullable;
@@ -29,6 +30,9 @@ public class ArmorMaterialWeight {
 			return null;
 		}
 		double totalWeight = Double.parseDouble(split[1]);
+		if (totalWeight < 0d || totalWeight > 1d)
+			LogHelper.warn(String.format("Total Weight \"%s\" for ArmorMaterialWeight has been clamped between 0.0 and 1.0", line));
+		totalWeight = MathHelper.clamp(totalWeight, 0d, 1d);
 		return new ArmorMaterialWeight(id, totalWeight);
 	}
 

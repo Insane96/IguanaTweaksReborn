@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.modules.movement.classutils;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -45,6 +46,9 @@ public class ArmorEnchantmentWeight extends IdTagMatcher {
 			return null;
 		}
 		double slownessReductionPerLevel = Double.parseDouble(split[1]);
+		if (slownessReductionPerLevel < 0d || slownessReductionPerLevel > 1d)
+			LogHelper.warn(String.format("Slowness reduction per level \"%s\" for Armor Enchantment Weight has been clamped between 0.0 and 1.0", line));
+		slownessReductionPerLevel = MathHelper.clamp(slownessReductionPerLevel, 0d, 1d);
 		double flatSlownessReduction = 0d;
 		if (split.length >= 3) {
 			if (!NumberUtils.isParsable(split[2])) {
@@ -52,6 +56,9 @@ public class ArmorEnchantmentWeight extends IdTagMatcher {
 				return null;
 			}
 			flatSlownessReduction = Double.parseDouble(split[2]);
+			if (flatSlownessReduction < 0d || flatSlownessReduction > 1d)
+				LogHelper.warn(String.format("Flat slowness reduction \"%s\" for Armor Enchantment Weight has been clamped between 0.0 and 1.0", line));
+			flatSlownessReduction = MathHelper.clamp(flatSlownessReduction, 0d, 1d);
 		}
 		return new ArmorEnchantmentWeight(enchantment, slownessReductionPerLevel, flatSlownessReduction);
 	}
