@@ -156,28 +156,29 @@ public class ITExplosion extends Explosion {
             //zDistance = zDistance / d13;
             double blockDensity = getBlockDensity(this.getPosition(), entity);
             double d10 = (1.0D - distanceRatio) * blockDensity;
-            DamageSource source = this.getDamageSource();
-            float damageAmount = (float) ((int) ((d10 * d10 + d10) / 2.0D * 7.0D * (double) affectedEntitiesRadius + 1.0D));
-            if (entity instanceof ServerPlayerEntity && blockingDamageReduction > 0d) {
-                ServerPlayerEntity player = (ServerPlayerEntity) entity;
-                if (damageAmount > 0.0F && MCUtils.canBlockDamageSource(source, player)) {
-                    source.isUnblockable = true;
-                    damageAmount *= blockingDamageReduction;
-                    d10 *= blockingDamageReduction;
-                    Reflection.PlayerEntity_damageShield(player, damageAmount);
-                    player.world.setEntityState(player, (byte)29);
-                    //player.blockUsingShield((LivingEntity)entity);
+            //Damage Entities in the explosion radius
+            if (blockDensity > 0d) {
+                DamageSource source = this.getDamageSource();
+                float damageAmount = (float) ((int) ((d10 * d10 + d10) / 2.0D * 7.0D * (double) affectedEntitiesRadius + 1.0D));
+                if (entity instanceof ServerPlayerEntity && blockingDamageReduction > 0d) {
+                    ServerPlayerEntity player = (ServerPlayerEntity) entity;
+                    if (damageAmount > 0.0F && MCUtils.canBlockDamageSource(source, player)) {
+                        source.isUnblockable = true;
+                        damageAmount *= blockingDamageReduction;
+                        d10 *= blockingDamageReduction;
+                        Reflection.PlayerEntity_damageShield(player, damageAmount);
+                        player.world.setEntityState(player, (byte) 29);
+                        //player.blockUsingShield((LivingEntity)entity);
+                    }
                 }
+                entity.attackEntityFrom(source, damageAmount);
             }
-            entity.attackEntityFrom(source, damageAmount);
-
             double d11 = d10;
             if (entity instanceof LivingEntity) {
                 d11 = getBlastDamageReduction((LivingEntity) entity, d11);
             }
             if (knockbackScaleWithSize)
                 d11 *= this.size;
-
             d11 = Math.max(d11, this.size * 0.05d);
 
             if (entity instanceof ExplosionFallingBlockEntity)
