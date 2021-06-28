@@ -27,26 +27,28 @@ import java.util.List;
 @Label(name = "Stack Reduction", description = "Make food, items and blocks less stackable")
 public class StackReductionFeature extends Feature {
 
-	//Food
-	private final ForgeConfigSpec.ConfigValue<Boolean> foodStackReductionConfig;
-	private final ForgeConfigSpec.ConfigValue<Double> foodStackMultiplierConfig;
-	//Items
-	private final ForgeConfigSpec.ConfigValue<Double> itemStackMultiplierConfig;
-	//Blocks
-	private final ForgeConfigSpec.ConfigValue<Boolean> blockStackReductionConfig;
-	private final ForgeConfigSpec.ConfigValue<Double> blockStackMultiplierConfig;
-	//Blacklist
+    //Food
+    private final ForgeConfigSpec.ConfigValue<Boolean> foodStackReductionConfig;
+    private final ForgeConfigSpec.ConfigValue<Double> foodStackMultiplierConfig;
+    //Items
+    private final ForgeConfigSpec.ConfigValue<Double> itemStackMultiplierConfig;
+    //Blocks
+    private final ForgeConfigSpec.ConfigValue<Boolean> blockStackReductionConfig;
+    private final ForgeConfigSpec.ConfigValue<Double> blockStackMultiplierConfig;
+    private final ForgeConfigSpec.ConfigValue<Boolean> blockStackAffectedByMaterialConfig;
+    //Blacklist
     private final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklistConfig;
     private final ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelistConfig;
 
-	private static final List<String> blacklistDefault = Arrays.asList("minecraft:rotten_flesh", "minecraft:potion");
+    private static final List<String> blacklistDefault = Arrays.asList("minecraft:rotten_flesh", "minecraft:potion");
 
-	public boolean foodStackReduction = true;
-	public double foodStackMultiplier = 0.5d;
-	public double itemStackMultiplier = 0.5d;
-	public boolean blockStackReduction = true;
-	public double blockStackMultiplier = 1.0d;
-	public List<IdTagMatcher> blacklist;
+    public boolean foodStackReduction = true;
+    public double foodStackMultiplier = 0.5d;
+    public double itemStackMultiplier = 0.5d;
+    public boolean blockStackReduction = true;
+    public double blockStackMultiplier = 1.0d;
+    public boolean blockStackAffectedByMaterial = true;
+    public List<IdTagMatcher> blacklist;
 	public boolean blacklistAsWhitelist = false;
 
 	public StackReductionFeature(Module module) {
@@ -57,16 +59,19 @@ public class StackReductionFeature extends Feature {
 				.define("Food Stack Reduction", foodStackReduction);
 		foodStackMultiplierConfig = Config.builder
 				.comment("All the foods max stack sizes will be multiplied by this value to increase / decrease them (after Food Stack Reduction). In the example with the Porkchop with this set to 0.5 Cooked Porkchops will stack up to 12.")
-				.defineInRange("Food Stack Multiplier", foodStackMultiplier, 0.01d, 64d);
-		itemStackMultiplierConfig = Config.builder
-				.comment("Items max stack sizes (excluding blocks) will be multiplied by this value. Foods will be overridden by 'Food Stack Reduction' or 'Food Stack Multiplier' if are active. Setting to 1 will disable this feature.")
+                .defineInRange("Food Stack Multiplier", foodStackMultiplier, 0.01d, 64d);
+        itemStackMultiplierConfig = Config.builder
+                .comment("Items max stack sizes (excluding blocks) will be multiplied by this value. Foods will be overridden by 'Food Stack Reduction' or 'Food Stack Multiplier' if are active. Setting to 1 will disable this feature.")
                 .defineInRange("Item Stack Multiplier", itemStackMultiplier, 0.01d, 1.0d);
         blockStackReductionConfig = Config.builder
-				.comment("Blocks max stack sizes will be reduced based off their \"Weight\". The Material Weights can be configured in the Misc module.")
+                .comment("Blocks max stack sizes will be reduced based off their material.")
                 .define("Block Stack Reduction", blockStackReduction);
         blockStackMultiplierConfig = Config.builder
                 .comment("All the blocks max stack sizes will be multiplied by this value to increase / decrease them. This is applied after the reduction from 'Block Stack Reduction'.")
                 .defineInRange("Block Stack Multiplier", blockStackMultiplier, 0.01d, 64d);
+        blockStackAffectedByMaterialConfig = Config.builder
+                .comment("When true, block stacks are affected by both their material type and the block stack multiplier. If false, block stacks will be affected by the multiplier only.")
+                .define("Block Stack Affected by Material", blockStackAffectedByMaterial);
         blacklistConfig = Config.builder
                 .comment("Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"#minecraft:fishes\", \"minecraft:stone\"].")
                 .defineList("Items Blacklist", blacklistDefault, o -> o instanceof String);
@@ -79,15 +84,14 @@ public class StackReductionFeature extends Feature {
     @Override
     public void loadConfig() {
         super.loadConfig();
-
-        foodStackReduction = foodStackReductionConfig.get();
-        foodStackMultiplier = foodStackMultiplierConfig.get();
-        blacklist = IdTagMatcher.parseStringList(blacklistConfig.get());
-        blacklistAsWhitelist = blacklistAsWhitelistConfig.get();
-        itemStackMultiplier = itemStackMultiplierConfig.get();
-        blockStackReduction = blockStackReductionConfig.get();
-        blockStackMultiplier = blockStackMultiplierConfig.get();
-
+        this.foodStackReduction = this.foodStackReductionConfig.get();
+        this.foodStackMultiplier = this.foodStackMultiplierConfig.get();
+        this.blacklist = IdTagMatcher.parseStringList(this.blacklistConfig.get());
+        this.blacklistAsWhitelist = this.blacklistAsWhitelistConfig.get();
+        this.itemStackMultiplier = this.itemStackMultiplierConfig.get();
+        this.blockStackReduction = this.blockStackReductionConfig.get();
+        this.blockStackMultiplier = this.blockStackMultiplierConfig.get();
+        this.blockStackAffectedByMaterial = this.blockStackAffectedByMaterialConfig.get();
         processItemStackSizes();
         processBlockStackSizes();
         processFoodStackSizes();
@@ -169,9 +173,11 @@ public class StackReductionFeature extends Feature {
             }
             if (isInBlacklist || (!isInWhitelist && blacklistAsWhitelist))
                 continue;
-			Block block = ((BlockItem) item).getBlock();
-			double weight = WeightFeature.getStateWeight(block.getDefaultState());
-			double stackSize = (defaultStackSize.stackSize / weight) * blockStackMultiplier;
+            Block block = ((BlockItem) item).getBlock();
+            double weight = WeightFeature.getStateWeight(block.getDefaultState());
+            if (!this.blockStackAffectedByMaterial)
+                weight = 1d;
+            double stackSize = (defaultStackSize.stackSize / weight) * blockStackMultiplier;
             stackSize = MathHelper.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
         }
