@@ -1,38 +1,32 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Found a nasty bug like Kelp Generating Bedrock? This is for you!
 title: ''
 labels: bug
 assignees: ''
 
 ---
 
-Follow the following guideline. Not following this will result in ignored and closed issue.
+Follow the following guideline. Not following this will result in ignored and closed issue.  
+Please make sure you're using the latest versions before sending a report.
 
-// Usually only latest versions are supported
+**Versions**:
+* Minecraft:  
+* Forge: 
+* IguanaTweaks Reborn: 
+* InsaneLib: 
 
-**Minecraft Version**:
+**What Happens**:  
+Explain what's the problem
 
-
-// Please make sure you're using the latest version before sending a report
-
-Mod Version:
-
-
-**Forge Version**:
-
-
-**What Happens**:
-
-
-//Please send logs even if you don't have any crash
-//**Use Gist or Pastebin**
-
-**Logs / Crash reports**:
-
+//Please send logs even if you don't have any crash  
+//**Use Gist or Pastebin**  
+**Logs / Crash reports**:  
+E.g. https://pastebin.com/1AbCDEFG
 
 //If different from default
-**Config**:
+**Config**:  
+E.g. https://pastebin.com/1AbCDEFG
 
-
-**List of mods installed / modpack**:
+**Can be reproduced with IguanaTweaks Reborn + InsaneLib only?**:  
+Yes/No
