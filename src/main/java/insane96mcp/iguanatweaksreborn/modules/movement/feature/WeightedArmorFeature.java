@@ -132,25 +132,26 @@ public class WeightedArmorFeature extends Feature {
 			slowdown = -armorPieceSlowdown;
 			break;
 		}
-		if (slowdown != 0d)
-			return slowdown;
-		ArmorItem armorItem = (ArmorItem) itemStack.getItem();
-		Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(armorItem.getEquipmentSlot());
-		double armor = 0d;
-		for (AttributeModifier attributeModifier : attributeModifiers.get(Attributes.ARMOR)) {
-			if (!attributeModifier.getOperation().equals(AttributeModifier.Operation.ADDITION))
-				continue;
-			armor += attributeModifier.getAmount();
+		//If no slowdown was found in the material weight
+		if (slowdown == 0d) {
+			ArmorItem armorItem = (ArmorItem) itemStack.getItem();
+			Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(armorItem.getEquipmentSlot());
+			double armor = 0d;
+			for (AttributeModifier attributeModifier : attributeModifiers.get(Attributes.ARMOR)) {
+				if (!attributeModifier.getOperation().equals(AttributeModifier.Operation.ADDITION))
+					continue;
+				armor += attributeModifier.getAmount();
+			}
+			double armorToughness = 0d;
+			for (AttributeModifier attributeModifier : attributeModifiers.get(Attributes.ARMOR_TOUGHNESS)) {
+				if (!attributeModifier.getOperation().equals(AttributeModifier.Operation.ADDITION))
+					continue;
+				armorToughness += attributeModifier.getAmount();
+			}
+			double armorSlowdown = armor * this.slownessPerArmor;
+			double toughnessSlowdown = armorToughness * this.percentagePerToughness;
+			slowdown = -(armorSlowdown * (1 + toughnessSlowdown));
 		}
-		double armorToughness = 0d;
-		for (AttributeModifier attributeModifier : attributeModifiers.get(Attributes.ARMOR_TOUGHNESS)) {
-			if (!attributeModifier.getOperation().equals(AttributeModifier.Operation.ADDITION))
-				continue;
-			armorToughness += attributeModifier.getAmount();
-		}
-		double armorSlowdown = armor * this.slownessPerArmor;
-		double toughnessSlowdown = armorToughness * this.percentagePerToughness;
-		slowdown = -(armorSlowdown * (1 + toughnessSlowdown));
 		double enchantmentSlowdownReduction = 0d;
 		for (ArmorEnchantmentWeight enchantmentWeight : enchantmentsList) {
 			int enchantmentLevel = MCUtils.getEnchantmentLevel(enchantmentWeight.id, itemStack);
@@ -169,7 +170,7 @@ public class WeightedArmorFeature extends Feature {
 			return;
 		ItemStack stack = event.getItemStack();
 		double slowdown = -getArmorSlowdown(stack) * 100d;
-		if (slowdown >= 0d)
+		if (slowdown <= 0d)
 			return;
 		event.getToolTip().add((new StringTextComponent(String.format("Slowdown: %s%%", Utils.formatDecimal(slowdown, "#.#")))).mergeStyle(TextFormatting.RED));
 	}
