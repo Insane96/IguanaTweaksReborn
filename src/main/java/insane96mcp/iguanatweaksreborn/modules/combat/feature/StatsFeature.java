@@ -24,11 +24,9 @@ import java.util.List;
 public class StatsFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> reduceWeaponsDamageConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> armorAdjustmentsConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> disableProtectionEnchantmentConfig;
 
 	public boolean reduceWeaponDamage = true;
 	public boolean armorAdjustments = true;
-	public boolean disableProtectionEnchantment = true;
 
 	public StatsFeature(Module module) {
 		super(Config.builder, module);
@@ -37,11 +35,8 @@ public class StatsFeature extends Feature {
 				.comment("If true, Swords, Axes and Tridents get a -1 damage.")
 				.define("Reduced Weapon Damage", reduceWeaponDamage);
 		armorAdjustmentsConfig = Config.builder
-				.comment("If true, Diamond armor will get -1.5 toughness and Netherite gets a total of +2 armor points")
+				.comment("If true, Diamond armor will get -1.5 toughness, Netherite gets a total of +2 armor points and Protection Enchantment gets disabled.")
 				.define("Armor Adjustments", armorAdjustments);
-		disableProtectionEnchantmentConfig = Config.builder
-				.comment("If true, Protection enchantment can no longer be obtained.")
-				.define("Disable Protection Enchantment", disableProtectionEnchantment);
 		Config.builder.pop();
 	}
 
@@ -50,7 +45,6 @@ public class StatsFeature extends Feature {
 		super.loadConfig();
 		this.reduceWeaponDamage = this.reduceWeaponsDamageConfig.get();
 		this.armorAdjustments = this.armorAdjustmentsConfig.get();
-		this.disableProtectionEnchantment = this.disableProtectionEnchantmentConfig.get();
 	}
 
 	@SubscribeEvent

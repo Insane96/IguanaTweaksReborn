@@ -1,0 +1,10 @@
+{
+	"required": true,
+	"package": "insane96mcp.iguanatweaksreborn.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"refmap": "iguanatweaksreborn.refmap.json",
+	"mixins": [
+		"EnchantmentMixin"
+	],
+	"minVersion": "0.8"
+}
