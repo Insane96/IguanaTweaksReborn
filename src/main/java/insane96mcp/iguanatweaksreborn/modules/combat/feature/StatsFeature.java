@@ -12,6 +12,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.TridentItem;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -58,30 +59,36 @@ public class StatsFeature extends Feature {
 		armorAdjustments(event);
 	}
 
+	public static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = Arrays.asList(
+			new ItemAttributeModifier((ResourceLocation) null, SwordItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier((ResourceLocation) null, AxeItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier((ResourceLocation) null, TridentItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION)
+	);
+
 	private void weaponDamageReduction(ItemAttributeModifierEvent event) {
 		if (!this.reduceWeaponDamage)
 			return;
-		if (event.getSlotType() != EquipmentSlotType.MAINHAND)
-			return;
-		if (event.getItemStack().getItem() instanceof SwordItem || event.getItemStack().getItem() instanceof AxeItem || event.getItemStack().getItem() instanceof TridentItem) {
-			AttributeModifier modifier = new AttributeModifier(Strings.AttributeModifiers.WEAPON_NERF_UUID, Strings.AttributeModifiers.WEAPON_NERF, -1.0f, AttributeModifier.Operation.ADDITION);
-			event.addModifier(Attributes.ATTACK_DAMAGE, modifier);
+		for (ItemAttributeModifier itemAttributeModifier : CLASS_ATTRIBUTE_MODIFIER) {
+			if (itemAttributeModifier.itemClass.equals(event.getItemStack().getItem().getClass()) && itemAttributeModifier.slot.equals(event.getSlotType())) {
+				AttributeModifier modifier = new AttributeModifier(Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER_UUID, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
+				event.addModifier(itemAttributeModifier.attribute, modifier);
+			}
 		}
 	}
 
-	public static final List<ItemAttributeModifier> ITEM_ATTRIBUTE_MODIFIERS = Arrays.asList(
-			new ItemAttributeModifier("minecraft:diamond_helmet", EquipmentSlotType.HEAD, Attributes.ARMOR_TOUGHNESS, -1.25f, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier("minecraft:diamond_chestplate", EquipmentSlotType.CHEST, Attributes.ARMOR_TOUGHNESS, -1.25f, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier("minecraft:diamond_leggings", EquipmentSlotType.LEGS, Attributes.ARMOR_TOUGHNESS, -1.25f, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier("minecraft:diamond_boots", EquipmentSlotType.FEET, Attributes.ARMOR_TOUGHNESS, -1.25f, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier("minecraft:netherite_helmet", EquipmentSlotType.HEAD, Attributes.ARMOR, 1f, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier("minecraft:netherite_boots", EquipmentSlotType.FEET, Attributes.ARMOR, 1f, AttributeModifier.Operation.ADDITION)
+	public static final List<ItemAttributeModifier> ITEM_ATTRIBUTE_MODIFIER = Arrays.asList(
+			new ItemAttributeModifier("minecraft:diamond_helmet", null, EquipmentSlotType.HEAD, Attributes.ARMOR_TOUGHNESS, -1.25f, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier("minecraft:diamond_chestplate", null, EquipmentSlotType.CHEST, Attributes.ARMOR_TOUGHNESS, -1.25f, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier("minecraft:diamond_leggings", null, EquipmentSlotType.LEGS, Attributes.ARMOR_TOUGHNESS, -1.25f, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier("minecraft:diamond_boots", null, EquipmentSlotType.FEET, Attributes.ARMOR_TOUGHNESS, -1.25f, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier("minecraft:netherite_helmet", null, EquipmentSlotType.HEAD, Attributes.ARMOR, 1f, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier("minecraft:netherite_boots", null, EquipmentSlotType.FEET, Attributes.ARMOR, 1f, AttributeModifier.Operation.ADDITION)
 	);
 
 	private void armorAdjustments(ItemAttributeModifierEvent event) {
 		if (!this.armorAdjustments)
 			return;
-		for (ItemAttributeModifier itemAttributeModifier : ITEM_ATTRIBUTE_MODIFIERS) {
+		for (ItemAttributeModifier itemAttributeModifier : ITEM_ATTRIBUTE_MODIFIER) {
 			if (itemAttributeModifier.itemId.equals(event.getItemStack().getItem().getRegistryName()) && itemAttributeModifier.slot.equals(event.getSlotType())) {
 				AttributeModifier modifier = new AttributeModifier(Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER_UUID, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
 				event.addModifier(itemAttributeModifier.attribute, modifier);
