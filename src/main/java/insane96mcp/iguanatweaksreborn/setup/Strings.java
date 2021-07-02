@@ -12,6 +12,10 @@ public class Strings {
 	public static class AttributeModifiers {
 		public static final UUID ARMOR_SLOWDOWN_UUID = UUID.fromString("8588420e-ce50-4e4e-a3e4-974dfc8a98ec");
 		public static final String ARMOR_SLOWDOWN = IguanaTweaksReborn.RESOURCE_PREFIX + "armor_slowdown";
+		public static final UUID WEAPON_NERF_UUID = UUID.fromString("fd34181b-4664-41cc-a86e-0c7979eee129");
+		public static final String WEAPON_NERF = IguanaTweaksReborn.RESOURCE_PREFIX + "weapon_nerf";
+		public static final UUID GENERIC_ITEM_MODIFIER_UUID = UUID.fromString("8ba29557-f4dd-449d-a1b8-396ed980d042");
+		public static final String GENERIC_ITEM_MODIFIER = IguanaTweaksReborn.RESOURCE_PREFIX + "item_modifier";
 	}
 
 	public static class Translatable {
