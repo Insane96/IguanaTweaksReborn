@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.modules.misc;
 
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.DebuffFeature;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.ExplosionOverhaulFeature;
+import insane96mcp.iguanatweaksreborn.modules.misc.feature.TempSpawnerFeature;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.ToolNerfFeature;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Label;
@@ -14,6 +15,7 @@ public class MiscModule extends Module {
 	public DebuffFeature debuff;
 	//public WeightFeature weightFeature;
 	public ToolNerfFeature toolNerf;
+	public TempSpawnerFeature tempSpawner;
 
 	public MiscModule() {
 		super(Config.builder);
@@ -22,6 +24,7 @@ public class MiscModule extends Module {
 		debuff = new DebuffFeature(this);
 		//weightFeature = new WeightFeature(this);
 		toolNerf = new ToolNerfFeature(this);
+		tempSpawner = new TempSpawnerFeature(this);
 		Config.builder.pop();
 	}
 
@@ -32,6 +35,7 @@ public class MiscModule extends Module {
 		debuff.loadConfig();
 		//weightFeature.loadConfig();
 		toolNerf.loadConfig();
+		tempSpawner.loadConfig();
 	}
 
 }
