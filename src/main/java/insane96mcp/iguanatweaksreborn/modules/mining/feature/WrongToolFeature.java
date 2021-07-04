@@ -5,9 +5,12 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -52,18 +55,18 @@ public class WrongToolFeature extends Feature {
 		BlockState blockState = world.getBlockState(event.getPos());
 		if (blockState.hardness == 0f)
 			return;
-		if (requiredTool(blockState) || efficientTool(blockState, event.getPlayer().getHeldItemMainhand()))
+		if (requiredTool(blockState, event.getPlayer(), event.getPlayer().world, event.getPos()) || efficientTool(blockState, event.getPlayer().getHeldItemMainhand()))
 			event.setNewSpeed(-1);
 	}
 
-	private boolean requiredTool(BlockState blockState) {
+	private boolean requiredTool(BlockState blockState, PlayerEntity player, World world, BlockPos pos) {
 		if (!this.disableMiningWrongTool)
 			return false;
-		return blockState.getRequiresTool();
+		return !ForgeHooks.canHarvestBlock(blockState, player, world, pos);
 	}
 
 	private boolean efficientTool(BlockState blockState, ItemStack itemStack) {
-		if (!this.requireEfficientTool)
+		if (!this.requireEfficientTool || blockState.getHarvestTool() == null)
 			return false;
 		Set<ToolType> toolTypes = itemStack.getToolTypes();
 		for (ToolType toolType : toolTypes) {

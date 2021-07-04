@@ -5,8 +5,10 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import java.util.UUID;
 
 public class Strings {
-	public static class NBTTags {
-		public static final String MILK_COOLDOWN = IguanaTweaksReborn.RESOURCE_PREFIX + "milkCooldown";
+	public static class Tags {
+		public static final String MILK_COOLDOWN = IguanaTweaksReborn.RESOURCE_PREFIX + "milk_cooldown";
+		public static final String SPAWNED_MOBS = IguanaTweaksReborn.RESOURCE_PREFIX + "spawned_mobs";
+		public static final String TEMPORARY_SPAWNER = IguanaTweaksReborn.RESOURCE_PREFIX + "temporary_spawner";
 	}
 
 	public static class AttributeModifiers {

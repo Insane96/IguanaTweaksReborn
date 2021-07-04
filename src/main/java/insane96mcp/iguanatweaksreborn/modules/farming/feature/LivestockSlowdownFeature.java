@@ -144,10 +144,10 @@ public class LivestockSlowdownFeature extends Feature {
 			return;
 		CowEntity cow = (CowEntity) event.getEntityLiving();
 		CompoundNBT cowNBT = cow.getPersistentData();
-		int milkCooldown = cowNBT.getInt(Strings.NBTTags.MILK_COOLDOWN);
+		int milkCooldown = cowNBT.getInt(Strings.Tags.MILK_COOLDOWN);
 		if (milkCooldown > 0)
 			milkCooldown -= 20;
-		cowNBT.putInt(Strings.NBTTags.MILK_COOLDOWN, milkCooldown);
+		cowNBT.putInt(Strings.Tags.MILK_COOLDOWN, milkCooldown);
 	}
 
 	@SubscribeEvent
@@ -170,7 +170,7 @@ public class LivestockSlowdownFeature extends Feature {
 		if ((!FluidUtil.getFluidHandler(equipped).isPresent() || !FluidStack.loadFluidStackFromNBT(equipped.getTag()).isEmpty()) && (!(cow instanceof MooshroomEntity) || item != Items.BOWL))
 			return;
 		CompoundNBT cowNBT = cow.getPersistentData();
-		int milkCooldown = cowNBT.getInt(Strings.NBTTags.MILK_COOLDOWN);
+		int milkCooldown = cowNBT.getInt(Strings.Tags.MILK_COOLDOWN);
 		if (milkCooldown > 0) {
 			event.setCanceled(true);
 			if (!player.world.isRemote) {
@@ -183,7 +183,7 @@ public class LivestockSlowdownFeature extends Feature {
 		}
 		else {
 			milkCooldown = this.cowMilkDelay * 20;
-			cowNBT.putInt(Strings.NBTTags.MILK_COOLDOWN, milkCooldown);
+			cowNBT.putInt(Strings.Tags.MILK_COOLDOWN, milkCooldown);
 			event.setResult(Event.Result.ALLOW);
 			player.swingArm(event.getHand());
 		}
