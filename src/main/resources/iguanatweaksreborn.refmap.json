@@ -4,7 +4,9 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "iguanatweaksreborn.refmap.json",
 	"mixins": [
-		"EnchantmentMixin"
+		"EnchantmentMixin",
+		"ProtectionEnchantmentMixin",
+		"PlayerEntityMixin"
 	],
 	"minVersion": "0.8"
 }
