@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Label(name = "Experience From Spawners' Mobs", description = "Decrease (or Increase) experience dropped mobs spawned by Spawners")
 public class SpawnerMobsExperienceFeature extends Feature {
 
-	public static final String SPAWNED_FROM_SPANWER = IguanaTweaksReborn.RESOURCE_PREFIX + "spawnedFromSpawner";
+	public static final String SPAWNED_FROM_SPANWER = IguanaTweaksReborn.RESOURCE_PREFIX + "spawned_from_spawner";
 
 	private final ForgeConfigSpec.ConfigValue<Double> mobsFromSpawnersMultiplierConfig;
 
