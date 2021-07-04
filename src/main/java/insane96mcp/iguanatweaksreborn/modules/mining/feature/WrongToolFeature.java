@@ -45,7 +45,7 @@ public class WrongToolFeature extends Feature {
 	}
 
 	@SubscribeEvent
-	public void processGlobalHardness(PlayerEvent.BreakSpeed event) {
+	public void disableMining(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled())
 			return;
 		World world = event.getPlayer().world;
