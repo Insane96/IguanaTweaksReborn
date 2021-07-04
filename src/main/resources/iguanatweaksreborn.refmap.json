@@ -6,7 +6,8 @@
 	"mixins": [
 		"EnchantmentMixin",
 		"ProtectionEnchantmentMixin",
-		"PlayerEntityMixin"
+		"PlayerEntityMixin",
+		"MobSpawnerTileEntityMixin"
 	],
 	"minVersion": "0.8"
 }
