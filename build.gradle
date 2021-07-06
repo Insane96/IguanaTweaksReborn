@@ -46,7 +46,7 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '-mixin.config=iguanatweaksreborn.refmap.json'
+            args '-mixin.config=iguanatweaksreborn.mixins.json'
 
             mods {
                 iguanatweaksreborn {
@@ -64,7 +64,7 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '-mixin.config=iguanatweaksreborn.refmap.json'
+            args '-mixin.config=iguanatweaksreborn.mixins.json'
 
             mods {
                 iguanatweaksreborn {
@@ -116,6 +116,8 @@ dependencies {
     // You may put jars on which you depend on in ./libs or you may define them like so..
     compile fg.deobf("blank:InsaneLib:${lib_version}-mc${mc_version}")
     // compile "some.group:artifact:version"
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
 
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env

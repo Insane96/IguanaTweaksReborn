@@ -5,9 +5,9 @@
 	"refmap": "iguanatweaksreborn.refmap.json",
 	"mixins": [
 		"EnchantmentMixin",
-		"ProtectionEnchantmentMixin",
+		"MobSpawnerTileEntityMixin",
 		"PlayerEntityMixin",
-		"MobSpawnerTileEntityMixin"
+		"ProtectionEnchantmentMixin"
 	],
 	"minVersion": "0.8"
 }

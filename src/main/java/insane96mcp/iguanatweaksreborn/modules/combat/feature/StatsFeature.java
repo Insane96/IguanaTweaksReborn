@@ -1,11 +1,14 @@
 package insane96mcp.iguanatweaksreborn.modules.combat.feature;
 
+import insane96mcp.iguanatweaksreborn.modules.Modules;
 import insane96mcp.iguanatweaksreborn.modules.combat.classutils.ItemAttributeModifier;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -88,5 +91,9 @@ public class StatsFeature extends Feature {
 				event.addModifier(itemAttributeModifier.attribute, modifier);
 			}
 		}
+	}
+
+	public boolean disableEnchantment(Enchantment enchantment) {
+		return enchantment == Enchantments.PROTECTION && Modules.combat.stats.armorAdjustments;
 	}
 }

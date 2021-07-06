@@ -2,7 +2,6 @@ package insane96mcp.iguanatweaksreborn.mixin;
 
 import insane96mcp.iguanatweaksreborn.modules.Modules;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,14 +13,14 @@ public class EnchantmentMixin {
 	@Inject(at = @At("RETURN"), method = "canApply(Lnet/minecraft/item/ItemStack;)Z", cancellable = true)
 	private void canApply(ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
 		Enchantment enchantment = (Enchantment) (Object) this;
-		if (enchantment == Enchantments.PROTECTION && Modules.combat.stats.armorAdjustments)
+		if (Modules.combat.stats.disableEnchantment(enchantment))
 			callback.setReturnValue(false);
 	}
 
-	@Inject(at = @At("RETURN"), method = "canApplyAtEnchantingTable(Lnet/minecraft/item/ItemStack;)Z", cancellable = true)
+	@Inject(at = @At("RETURN"), method = "canApplyAtEnchantingTable(Lnet/minecraft/item/ItemStack;)Z", cancellable = true, remap = false)
 	private void canApplyAtEnchantingTable(ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
 		Enchantment enchantment = (Enchantment) (Object) this;
-		if (enchantment == Enchantments.PROTECTION && Modules.combat.stats.armorAdjustments)
+		if (Modules.combat.stats.disableEnchantment(enchantment))
 			callback.setReturnValue(false);
 	}
 }

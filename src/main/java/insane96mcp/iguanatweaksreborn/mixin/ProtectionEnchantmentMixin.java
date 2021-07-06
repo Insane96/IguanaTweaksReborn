@@ -30,14 +30,14 @@ public abstract class ProtectionEnchantmentMixin extends Enchantment {
 	@Override
 	public boolean canVillagerTrade() {
 		if (this.protectionType == ProtectionEnchantment.Type.ALL && Modules.combat.stats.armorAdjustments)
-			return true;
-		return super.isTreasureEnchantment();
+			return false;
+		return super.canVillagerTrade();
 	}
 
 	@Override
 	public boolean canGenerateInLoot() {
 		if (this.protectionType == ProtectionEnchantment.Type.ALL && Modules.combat.stats.armorAdjustments)
-			return true;
-		return super.isTreasureEnchantment();
+			return false;
+		return super.canGenerateInLoot();
 	}
 }
