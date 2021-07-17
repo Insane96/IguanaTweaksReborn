@@ -30,7 +30,7 @@ public class ToolNerfFeature extends Feature {
 		toolsDurabilityConfig = Config.builder
 				.comment("A list of items which should have their durability changed.\n" +
 						"Format is 'modid:itemid,durability'")
-				.defineList("Debuffs", toolsDurabilityDefault, o -> o instanceof String);
+				.defineList("Tools Durability", toolsDurabilityDefault, o -> o instanceof String);
 		Config.builder.pop();
 	}
 

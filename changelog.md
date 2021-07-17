@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.6.1
+
+* Fixed wrong config option name for Tool Nerf
+
 ## 2.6.0
 
 * Combat
