@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.modules.hungerhealth;
 
 import insane96mcp.iguanatweaksreborn.modules.hungerhealth.feature.ExhaustionIncreaseFeature;
 import insane96mcp.iguanatweaksreborn.modules.hungerhealth.feature.FoodFeature;
+import insane96mcp.iguanatweaksreborn.modules.hungerhealth.feature.HealthRegenFeature;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -10,6 +11,7 @@ import insane96mcp.insanelib.base.Module;
 public class HungerHealthModule extends Module {
 
 	public FoodFeature food;
+	public HealthRegenFeature healthRegen;
 	public ExhaustionIncreaseFeature exhaustionIncrease;
 
 	public HungerHealthModule() {
@@ -17,6 +19,7 @@ public class HungerHealthModule extends Module {
 		pushConfig(Config.builder);
 		food = new FoodFeature(this);
 		exhaustionIncrease = new ExhaustionIncreaseFeature(this);
+		healthRegen = new HealthRegenFeature(this);
 		Config.builder.pop();
 	}
 
@@ -25,6 +28,7 @@ public class HungerHealthModule extends Module {
 		super.loadConfig();
 		food.loadConfig();
 		exhaustionIncrease.loadConfig();
+		healthRegen.loadConfig();
 	}
 
 }

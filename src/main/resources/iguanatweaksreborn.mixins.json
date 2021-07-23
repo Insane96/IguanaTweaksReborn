@@ -5,6 +5,7 @@
 	"refmap": "iguanatweaksreborn.refmap.json",
 	"mixins": [
 		"EnchantmentMixin",
+		"FoodStatsMixin",
 		"MobSpawnerTileEntityMixin",
 		"PlayerEntityMixin",
 		"ProtectionEnchantmentMixin"
