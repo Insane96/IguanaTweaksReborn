@@ -6,32 +6,69 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Food;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameRules;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Health Regen", description = "Makes Health regen work like in Combat Test snapshots")
+@Label(name = "Health Regen", description = "Makes Health regen work differently, like in Combat Test snapshots or similar to Hunger Overhaul")
 public class HealthRegenFeature extends Feature {
-	//private final ForgeConfigSpec.ConfigValue<Double> blockBreakExhaustionMultiplierConfig;
-	//public double blockBreakExhaustionMultiplier = 0d;
+
+	private final ForgeConfigSpec.ConfigValue<HealthRegenType> healthRegenTypeConfig;
+
+	public HealthRegenType healthRegenType = HealthRegenType.IGUANA_TWEAKS;
 
 	public HealthRegenFeature(Module module) {
 		super(Config.builder, module);
-		/*Config.builder.comment(this.getDescription()).push(this.getName());
-		blockBreakExhaustionMultiplierConfig = Config.builder
-				.comment("When you break a block you'll get exhaustion equal to the block hardness multiplied by this value. Setting this to 0 will default to the vanilla exaustion (0.005). (It's not affected by the Mining Hardness Features)")
-				.defineInRange("Block Break Exhaustion Multiplier", blockBreakExhaustionMultiplier, 0.0d, 1024d);
-		Config.builder.pop();*/
+		Config.builder.comment(this.getDescription()).push(this.getName());
+		healthRegenTypeConfig = Config.builder
+				.comment("Changes how health regen works:\n" +
+						"VANILLA: no changes,\n" +
+						"COMBAT_TEST: health regeneration works like the Combat Tests Shapshots," +
+						"IGUANA_TWEAKS: health regen is slow (1 hp every 10 secs) and also the player can have Bleeding and Well Fed effects that slow down / speed up the health regen.")
+				.defineEnum("Health Regen Type", healthRegenType);
+		Config.builder.pop();
 	}
 
 	@Override
 	public void loadConfig() {
 		super.loadConfig();
-		//this.blockBreakExhaustionMultiplier = this.blockBreakExhaustionMultiplierConfig.get();
-		//this.exhaustionOnBlockBreaking = this.exhaustionOnBlockBreakingConfig.get();
+		this.healthRegenType = this.healthRegenTypeConfig.get();
+	}
+
+	@SubscribeEvent
+	public void onPlayerDamaged(LivingHurtEvent event) {
+		if (!this.isEnabled())
+			return;
+		if (!this.healthRegenType.equals(HealthRegenType.IGUANA_TWEAKS))
+			return;
+		if (!(event.getEntityLiving() instanceof PlayerEntity))
+			return;
+		PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
+		playerEntity.addPotionEffect(new EffectInstance(ITEffects.BLEEDING.get(), (int) (event.getAmount() * 4 * 20), 0, true, false, true));
+	}
+
+	@SubscribeEvent
+	public void onPlayerEat(LivingEntityUseItemEvent.Finish event) {
+		if (!this.isEnabled())
+			return;
+		if (!this.healthRegenType.equals(HealthRegenType.IGUANA_TWEAKS))
+			return;
+		if (!event.getItem().getItem().isFood())
+			return;
+		if (!(event.getEntityLiving() instanceof PlayerEntity))
+			return;
+		PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
+		Food food = event.getItem().getItem().getFood();
+		playerEntity.addPotionEffect(new EffectInstance(ITEffects.WELL_FED.get(), (int) (food.saturation * food.value * 4 * 20), food.value / 2, true, false, true));
 	}
 
 	public void tickFoodStats(FoodStats foodStats, PlayerEntity player) {
@@ -46,6 +83,11 @@ public class HealthRegenFeature extends Feature {
 				foodStats.foodLevel = Math.max(foodStats.foodLevel - 1, 0);
 			}
 		}
+		//if (healthRegenType.equals(HealthRegenType.COMBAT_TEST))
+		tickCombatTest(foodStats, player, difficulty);
+	}
+
+	private void tickCombatTest(FoodStats foodStats, PlayerEntity player, Difficulty difficulty) {
 		//Changes (basically the combat snapshots changes):
 		// player no longer has the strong regen effect when full hunger bar and has saturation
 		// player can heal when hunger is >= 7 (3.5 shranks)
@@ -89,20 +131,26 @@ public class HealthRegenFeature extends Feature {
 		foodStats.foodLevel = MathHelper.clamp(foodStats.foodLevel + hunger, 0, 20);
 	}
 
-	final int BASE_REGEN = 40;
-
 	private int getRegenSpeed(PlayerEntity player) {
-		int speed = BASE_REGEN;
+		int speed = this.healthRegenType.equals(HealthRegenType.COMBAT_TEST) ? 40 : 200;
 		EffectInstance bleeding = player.getActivePotionEffect(ITEffects.BLEEDING.get());
 		if (bleeding != null)
 			speed *= 1 + ((bleeding.getAmplifier() + 1) * 0.2d);
 		EffectInstance wellFed = player.getActivePotionEffect(ITEffects.WELL_FED.get());
-		if (wellFed != null)
-			speed *= 1 - ((wellFed.getAmplifier() + 1) * 0.2d);
+		if (wellFed != null) {
+			speed *= 1 - (Math.log10(0.6d + (wellFed.getAmplifier() + 1) * 0.8d));
+			player.sendStatusMessage(new StringTextComponent(" calculus: " + (Math.log10(0.6d + (wellFed.getAmplifier() + 1) * 0.8d))), false);
+		}
+		player.sendStatusMessage(new StringTextComponent("regenSpeed: " + speed), false);
 		return speed;
 	}
 
 	private int getStarveSpeed(PlayerEntity player) {
 		return 80;
+	}
+
+	private enum HealthRegenType {
+		COMBAT_TEST,
+		IGUANA_TWEAKS
 	}
 }

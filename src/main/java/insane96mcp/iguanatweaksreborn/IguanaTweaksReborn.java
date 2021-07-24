@@ -4,7 +4,6 @@ import insane96mcp.iguanatweaksreborn.modules.misc.capability.SpawnerCapability;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.WeightFeature;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.ITEffects;
-import insane96mcp.iguanatweaksreborn.setup.ITSounds;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.iguanatweaksreborn.utils.Reflection;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
@@ -33,7 +32,6 @@ public class IguanaTweaksReborn
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         Reflection.init();
         WeightFeature.initMaterialWeight();
-        ITSounds.SOUND_EVENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEffects.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
