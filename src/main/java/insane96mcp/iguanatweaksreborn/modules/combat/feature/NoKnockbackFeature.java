@@ -4,6 +4,7 @@ import com.google.common.collect.Multimap;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -105,7 +106,7 @@ public class NoKnockbackFeature extends Feature {
 		if ((!attributeModifiers.containsKey(Attributes.ATTACK_DAMAGE) && this.noItemNoKnockback) || isInList) {
 			preventKnockback = true;
 		}
-		int ticksSinceLastSwing = player.getPersistentData().getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "ticksSinceLastSwing");
+		int ticksSinceLastSwing = player.getPersistentData().getInt(Strings.Tags.TIME_SINCE_LAST_SWING);
 		float cooldown = MathHelper.clamp((ticksSinceLastSwing + 0.5f) / player.getCooldownPeriod(), 0.0F, 1.0F);
 		if (cooldown <= this.attackCooldownNoKnockback)
 			preventKnockback = true;
