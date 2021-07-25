@@ -5,13 +5,15 @@
 * Hunger Health
     * Added Health Regen feature
         * Has two presets and a huge list of config options
-            * Combat Test Preset Health and Hunger work like the Combat Test Snapshots
-            * IguanaTweaks Preset Health regen boost is removed when hunger at max and the player has saturation. Hunger
-              consumption is continuous when regenerating health instead of only when regenerating one hp. Health regens
-              when hunger >= 4. Health regens one hp every 10 seconds, increased / decreased by Well Fed / Bleeding
-              effects obtained when eating / taking damage. You start taking Starve damage from hunger 3 instead of 0,
-              also less hunger = faster starvation, also also on hard you take damage faster while in easy/peaceful
-              slower. Also also also (lol) you can die out of starvation at any difficulty.
+            * Combat Test Preset  
+              Health and Hunger work like the Combat Test Snapshots
+            * IguanaTweaks Preset  
+              Health regen boost is removed when hunger at max and the player has saturation. Hunger consumption is
+              continuous when regenerating health instead of only when regenerating one hp. Health regens when hunger >=
+              4. Health regens one hp every 10 seconds, increased / decreased by Well Fed / Bleeding effects obtained
+              when eating / taking damage. You start taking Starve damage from hunger 3 instead of 0, also less hunger =
+              faster starvation, also also on hard you take damage faster while in easy/peaceful slower. Also also
+              also (lol) you can die out of starvation at any difficulty.
     * Rotten Flesh and potions are no longer blacklisted from saturation and hunger reductions
 * Milk can no longer cure Debuff Feature's effects
 * Fixed wrong config option name for Tool Nerf
