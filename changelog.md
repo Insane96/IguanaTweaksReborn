@@ -1,7 +1,19 @@
 # Changelog
 
-## 2.6.1
+## Alpha 2.7.0 to Alpha 2.7.1
 
+* Hunger Health
+    * Added Health Regen feature
+        * Has two presets and a huge list of config options
+            * Combat Test Preset Health and Hunger work like the Combat Test Snapshots
+            * IguanaTweaks Preset Health regen boost is removed when hunger at max and the player has saturation. Hunger
+              consumption is continuous when regenerating health instead of only when regenerating one hp. Health regens
+              when hunger >= 4. Health regens one hp every 10 seconds, increased / decreased by Well Fed / Bleeding
+              effects obtained when eating / taking damage. You start taking Starve damage from hunger 3 instead of 0,
+              also less hunger = faster starvation, also also on hard you take damage faster while in easy/peaceful
+              slower. Also also also (lol) you can die out of starvation at any difficulty.
+    * Rotten Flesh and potions are no longer blacklisted from saturation and hunger reductions
+* Milk can no longer cure Debuff Feature's effects
 * Fixed wrong config option name for Tool Nerf
 
 ## 2.6.0
@@ -12,7 +24,7 @@
       points and the Protection enchantment is disabled.
 * Mining
     * Added Wrong Tool Feature  
-      Disabled by default prevents the player from Mining blocks without a proper tool. Mostly for modpack developers
+      Disabled by default, prevents the player from Mining blocks without a proper tool. Mostly for modpack developers
 * Experience
     * Added Player Experience Feature  
       Experience required to level up now scales less exponentially (vanilla level 30 requires 1392 experience, with
@@ -25,5 +37,5 @@
 * Misc
     * Added Temporary Spawners  
       Spawners will be disabled after some mobs spawned. The farther from world spawn, the more mobs the spawner will be
-      able to generate before deactivating. Also when broken, now spawners give bonus experience the farther from world
+      able to generate before deactivating. Also, when broken, now spawners give bonus experience the farther from world
       spawn

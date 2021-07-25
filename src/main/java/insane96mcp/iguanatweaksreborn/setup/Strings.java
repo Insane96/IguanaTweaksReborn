@@ -9,6 +9,7 @@ public class Strings {
 		public static final String MILK_COOLDOWN = IguanaTweaksReborn.RESOURCE_PREFIX + "milk_cooldown";
 		public static final String SPAWNED_MOBS = IguanaTweaksReborn.RESOURCE_PREFIX + "spawned_mobs";
 		public static final String TEMPORARY_SPAWNER = IguanaTweaksReborn.RESOURCE_PREFIX + "temporary_spawner";
+		public static final String TIME_SINCE_LAST_SWING = IguanaTweaksReborn.RESOURCE_PREFIX + "ticks_since_last_swing";
 	}
 
 	public static class AttributeModifiers {

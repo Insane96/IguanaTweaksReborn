@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn;
 
 import insane96mcp.iguanatweaksreborn.modules.misc.capability.SpawnerCapability;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.WeightFeature;
+import insane96mcp.iguanatweaksreborn.network.SyncHandler;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.ITEffects;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
@@ -46,5 +47,6 @@ public class IguanaTweaksReborn
 
     private void setup(final FMLCommonSetupEvent event) {
         SpawnerCapability.register();
+        SyncHandler.init();
     }
 }
