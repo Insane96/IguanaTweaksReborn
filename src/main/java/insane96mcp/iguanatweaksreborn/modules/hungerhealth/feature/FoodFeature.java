@@ -14,8 +14,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Label(name = "Food Overhaul", description = "Change food's hunger and saturation given, also makes food heal you by a bit")
@@ -28,7 +28,7 @@ public class FoodFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Double> foodHealMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> customFoodValueConfig;
 
-	private List<String> blackListDefault = Arrays.asList("minecraft:rotten_flesh", "minecraft:potion");
+	private final List<String> blackListDefault = Collections.emptyList();
 
 	public double foodHungerMultiplier = 0.5d;
 	public double foodSaturationMultiplier = 1.0d;
