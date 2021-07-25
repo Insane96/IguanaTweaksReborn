@@ -6,10 +6,14 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+
+import java.util.ArrayList;
 
 public class MCUtils {
 
@@ -17,7 +21,7 @@ public class MCUtils {
 		Entity entity = damageSourceIn.getImmediateSource();
 		boolean flag = false;
 		if (entity instanceof AbstractArrowEntity) {
-			AbstractArrowEntity abstractarrowentity = (AbstractArrowEntity)entity;
+			AbstractArrowEntity abstractarrowentity = (AbstractArrowEntity) entity;
 			if (abstractarrowentity.getPierceLevel() > 0) {
 				flag = true;
 			}
@@ -49,5 +53,12 @@ public class MCUtils {
 			}
 		}
 		return 0;
+	}
+
+	public static EffectInstance createEffectInstance(Effect potion, int duration, int amplifier, boolean ambient, boolean showParticles, boolean showIcon, boolean canBeCured) {
+		EffectInstance effectInstance = new EffectInstance(potion, duration, amplifier, ambient, showParticles, showIcon);
+		if (!canBeCured)
+			effectInstance.setCurativeItems(new ArrayList<>());
+		return effectInstance;
 	}
 }

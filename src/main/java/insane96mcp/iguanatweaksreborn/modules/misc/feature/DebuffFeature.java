@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.modules.misc.feature;
 
 import insane96mcp.iguanatweaksreborn.modules.hungerhealth.classutils.Debuff;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -93,7 +94,7 @@ public class DebuffFeature extends Feature {
                     break;
             }
             if (pass) {
-                EffectInstance effectInstance = new EffectInstance(debuff.effect, 30, debuff.amplifier, true, true, false);
+				EffectInstance effectInstance = MCUtils.createEffectInstance(debuff.effect, 30, debuff.amplifier, true, true, false, false);
                 player.addPotionEffect(effectInstance);
             }
         }
