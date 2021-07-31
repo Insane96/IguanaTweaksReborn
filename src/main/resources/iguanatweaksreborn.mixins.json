@@ -6,9 +6,14 @@
 	"mixins": [
 		"EnchantmentMixin",
 		"FoodStatsMixin",
+		"HoneyBottleItemMixin",
+		"MilkBucketItemMixin",
 		"MobSpawnerTileEntityMixin",
 		"PlayerEntityMixin",
-		"ProtectionEnchantmentMixin"
+		"PotionItemMixin",
+		"ProtectionEnchantmentMixin",
+		"SoupItemMixin",
+		"SuspiciousStewItemMixin"
 	],
 	"minVersion": "0.8"
 }
