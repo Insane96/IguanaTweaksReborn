@@ -119,8 +119,8 @@ public class HealthRegenFeature extends Feature {
 				break;
 			case IGUANA_TWEAKS:
 				this.healthRegenSpeed = 200;
-				this.regenWhenFoodAbove = 3;
-				this.starveSpeed = 40;
+				this.regenWhenFoodAbove = 6;
+				this.starveSpeed = 50;
 				this.starveDamage = 1;
 				this.disableSaturationRegenBoost = true;
 				this.consumeHungerOnly = false;
@@ -230,7 +230,7 @@ public class HealthRegenFeature extends Feature {
 				foodStats.foodTimer = 0;
 			}
 		}
-		else if (foodStats.foodLevel <= 3) {
+		else if (foodStats.foodLevel <= 4) {
 			++foodStats.foodTimer;
 			if (foodStats.foodTimer >= getStarveSpeed(player, difficulty)) {
 				player.attackEntityFrom(DamageSource.STARVE, this.starveDamage);
@@ -267,7 +267,7 @@ public class HealthRegenFeature extends Feature {
 			else if (difficulty == Difficulty.HARD)
 				speed *= 0.75d;
 			int playerHunger = player.getFoodStats().foodLevel;
-			speed -= (3 - playerHunger) * 5;
+			speed -= (4 - playerHunger) * 4;
 			return speed;
 		}
 	}
