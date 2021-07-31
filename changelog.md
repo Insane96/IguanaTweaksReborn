@@ -1,6 +1,6 @@
 # Changelog
 
-## Alpha 2.7.0 to Alpha 2.7.1
+## Alpha 2.7.0 to Alpha 2.7.2
 
 * Hunger Health
     * Added Health Regen feature
@@ -14,7 +14,10 @@
               when eating / taking damage. You start taking Starve damage from hunger 3 instead of 0, also less hunger =
               faster starvation, also also on hard you take damage faster while in easy/peaceful slower. Also also
               also (lol) you can die out of starvation at any difficulty.
+    * Added Faster Consuming Feature
+        * Makes Liquids be consumed faster much like the Combat Test Snapshots
     * Rotten Flesh and potions are no longer blacklisted from saturation and hunger reductions
+    * Soups no longer stack
 * Milk can no longer cure Debuff Feature's effects
 * Fixed wrong config option name for Tool Nerf
 
