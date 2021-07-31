@@ -27,9 +27,11 @@ import java.util.List;
 public class StatsFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> reduceWeaponsDamageConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> armorAdjustmentsConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> disableProtectionEnchConfig;
 
 	public boolean reduceWeaponDamage = true;
 	public boolean armorAdjustments = true;
+	public boolean disableProtectionEnch = false;
 
 	public StatsFeature(Module module) {
 		super(Config.builder, module);
@@ -38,8 +40,11 @@ public class StatsFeature extends Feature {
 				.comment("If true, Swords, Axes and Tridents get a -1 damage.")
 				.define("Reduced Weapon Damage", reduceWeaponDamage);
 		armorAdjustmentsConfig = Config.builder
-				.comment("If true, Diamond armor will get -1.5 toughness, Netherite gets a total of +2 armor points and Protection Enchantment gets disabled.")
+				.comment("If true, Diamond armor will get -1.5 toughness, Netherite gets a total of +2 armor points and Protection Enchantment max level gets rediced to 3.")
 				.define("Armor Adjustments", armorAdjustments);
+		disableProtectionEnchConfig = Config.builder
+				.comment("If true protection will be completely disabled.")
+				.define("Disable Protection Enchantment", this.disableProtectionEnch);
 		Config.builder.pop();
 	}
 
@@ -48,6 +53,7 @@ public class StatsFeature extends Feature {
 		super.loadConfig();
 		this.reduceWeaponDamage = this.reduceWeaponsDamageConfig.get();
 		this.armorAdjustments = this.armorAdjustmentsConfig.get();
+		this.disableProtectionEnch = this.disableProtectionEnchConfig.get();
 	}
 
 	@SubscribeEvent
@@ -57,9 +63,9 @@ public class StatsFeature extends Feature {
 	}
 
 	public static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = Arrays.asList(
-			new ItemAttributeModifier((ResourceLocation) null, SwordItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier((ResourceLocation) null, AxeItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier((ResourceLocation) null, TridentItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION)
+		new ItemAttributeModifier((ResourceLocation) null, SwordItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
+		new ItemAttributeModifier((ResourceLocation) null, AxeItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
+		new ItemAttributeModifier((ResourceLocation) null, TridentItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION)
 	);
 
 	private void weaponDamageReduction(ItemAttributeModifierEvent event) {
@@ -94,6 +100,6 @@ public class StatsFeature extends Feature {
 	}
 
 	public boolean disableEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.PROTECTION && Modules.combat.stats.armorAdjustments;
+		return enchantment == Enchantments.PROTECTION && Modules.combat.stats.disableProtectionEnch;
 	}
 }

@@ -40,4 +40,12 @@ public abstract class ProtectionEnchantmentMixin extends Enchantment {
 			return false;
 		return super.canGenerateInLoot();
 	}
+
+	@Override
+	public int getMaxLevel() {
+		if (this.protectionType == ProtectionEnchantment.Type.ALL && Modules.combat.stats.armorAdjustments)
+			return 3;
+		else
+			return 4;
+	}
 }
