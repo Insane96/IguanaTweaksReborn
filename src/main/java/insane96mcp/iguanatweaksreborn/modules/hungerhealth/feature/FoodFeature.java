@@ -34,7 +34,7 @@ public class FoodFeature extends Feature {
 	public double foodSaturationMultiplier = 1.0d;
 	public ArrayList<IdTagMatcher> blacklist;
 	public boolean blacklistAsWhitelist = false;
-	public double foodHealMultiplier = 0.33333d;
+	public double foodHealMultiplier = 0.25d;
 	public ArrayList<FoodValue> customFoodValues;
 
 
