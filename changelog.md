@@ -1,7 +1,6 @@
 # Changelog
 
-## Alpha 2.7.0 to Alpha 2.7.2
-
+## Alpha 2.7.2
 * Hunger Health
     * Added Health Regen feature
         * Has two presets and a huge list of config options
@@ -18,7 +17,6 @@
 * Fixed wrong config option name for Tool Nerf
 
 ## 2.6.0
-
 * Combat
     * Added Stats Feature  
       Swords, Axes and Tridents get -1 damage, Diamond armor gets -1.5 toughness, Netherite gets a total of +2 armor
