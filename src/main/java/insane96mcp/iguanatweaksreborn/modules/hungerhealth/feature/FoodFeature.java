@@ -34,7 +34,7 @@ public class FoodFeature extends Feature {
 	public double foodSaturationMultiplier = 1.0d;
 	public ArrayList<IdTagMatcher> blacklist;
 	public boolean blacklistAsWhitelist = false;
-	public double foodHealMultiplier = 0.25d;
+	public double foodHealMultiplier = 0.1d;
 	public ArrayList<FoodValue> customFoodValues;
 
 
@@ -54,8 +54,8 @@ public class FoodFeature extends Feature {
                 .comment("Items Blacklist will be treated as a whitelist.")
                 .define("Blacklist as Whitelist", blacklistAsWhitelist);
         foodHealMultiplierConfig = Config.builder
-                .comment("When eating you'll get healed by this percentage of hunger restored. Setting to 0 will disable this feature.")
-                .defineInRange("Food Heal Multiplier", foodHealMultiplier, 0.0d, 128d);
+                .comment("When eating you'll get healed by this percentage of (hunger + saturation) restored. Setting to 0 will disable this feature.")
+                .defineInRange("Food Heal Multiplier", this.foodHealMultiplier, 0.0d, 128d);
         customFoodValueConfig = Config.builder
                 .comment("Define custom food values, one string = one item. Those items are not affected by other changes such as 'Food Hunger Multiplier'.\nThe format is modid:itemid,hunger,saturation. Saturation is optional\nE.g. 'minecraft:cooked_porkchop,16,1.0' will make cooked porkchops give 8 shranks of food and 16 saturation (actual saturation is calculated by 'saturation * 2 * hunger').")
                 .defineList("Custom Food Hunger", new ArrayList<>(), o -> o instanceof String);
@@ -159,12 +159,12 @@ public class FoodFeature extends Feature {
         if (!this.isEnabled())
             return;
 
-        if (foodHealMultiplier == 0d)
+        if (this.foodHealMultiplier == 0d)
             return;
         if (!event.getItem().isFood())
             return;
         Food food = event.getItem().getItem().getFood();
-        float heal = food.value * (float) foodHealMultiplier;
-        event.getEntityLiving().heal(heal);
+        double heal = (food.getHealing() + (food.getHealing() * food.getSaturation() * 2)) * this.foodHealMultiplier;
+        event.getEntityLiving().heal((float) heal);
     }
 }
