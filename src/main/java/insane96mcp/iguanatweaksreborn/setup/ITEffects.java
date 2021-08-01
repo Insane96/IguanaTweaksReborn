@@ -12,6 +12,6 @@ public class ITEffects {
 
 	public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, IguanaTweaksReborn.MOD_ID);
 
-	public static final RegistryObject<Effect> BLEEDING = EFFECTS.register("bleeding", () -> new ITEffect(EffectType.HARMFUL, 0xbb0a1e, false));
+	public static final RegistryObject<Effect> INJURED = EFFECTS.register("injured", () -> new ITEffect(EffectType.HARMFUL, 0xbb0a1e, false));
 	public static final RegistryObject<Effect> WELL_FED = EFFECTS.register("well_fed", () -> new ITEffect(EffectType.BENEFICIAL, 0x632e00, false));
 }

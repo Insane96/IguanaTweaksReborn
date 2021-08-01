@@ -38,7 +38,7 @@ public class HealthRegenFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> consumeHungerOnlyConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> hungerConsumptionChanceConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> enableWellFedConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> enableBleedingConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> enableInjuredConfig;
 
 	public HealthRegenPreset healthRegenPreset = HealthRegenPreset.IGUANA_TWEAKS;
 	public int healthRegenSpeed = 80;
@@ -49,7 +49,7 @@ public class HealthRegenFeature extends Feature {
 	public boolean consumeHungerOnly = false;
 	public double hungerConsumptionChance = 0;
 	public boolean enableWellFed = false;
-	public boolean enableBleeding = false;
+	public boolean enableInjured = false;
 
 	public HealthRegenFeature(Module module) {
 		super(Config.builder, module);
@@ -84,9 +84,9 @@ public class HealthRegenFeature extends Feature {
 		enableWellFedConfig = Config.builder
 				.comment("Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats (disabled for Vanilla and Combat Test; enabled for Iguana Tweaks preset).")
 				.define("Enable Well Fed", this.enableWellFed);
-		enableBleedingConfig = Config.builder
-				.comment("Set to true to enable Bleeding, a new effect that slows down health regen and is applied whenever the player is damaged (disabled for Vanilla and Combat Test; enabled for Iguana Tweaks preset).")
-				.define("Enable Bleeding", this.enableBleeding);
+		enableInjuredConfig = Config.builder
+				.comment("Set to true to enable Injured, a new effect that slows down health regen and is applied whenever the player is damaged (disabled for Vanilla and Combat Test; enabled for Iguana Tweaks preset).")
+				.define("Enable Injured", this.enableInjured);
 		Config.builder.pop();
 	}
 
@@ -104,7 +104,7 @@ public class HealthRegenFeature extends Feature {
 				this.consumeHungerOnly = this.consumeHungerOnlyConfig.get();
 				this.hungerConsumptionChance = this.hungerConsumptionChanceConfig.get();
 				this.enableWellFed = this.enableWellFedConfig.get();
-				this.enableBleeding = this.enableBleedingConfig.get();
+				this.enableInjured = this.enableInjuredConfig.get();
 				break;
 			case COMBAT_TEST:
 				this.healthRegenSpeed = 40;
@@ -115,7 +115,7 @@ public class HealthRegenFeature extends Feature {
 				this.consumeHungerOnly = true;
 				this.hungerConsumptionChance = 0.5d;
 				this.enableWellFed = false;
-				this.enableBleeding = false;
+				this.enableInjured = false;
 				break;
 			case IGUANA_TWEAKS:
 				this.healthRegenSpeed = 200;
@@ -126,7 +126,7 @@ public class HealthRegenFeature extends Feature {
 				this.consumeHungerOnly = false;
 				this.hungerConsumptionChance = 0d;
 				this.enableWellFed = true;
-				this.enableBleeding = true;
+				this.enableInjured = true;
 				break;
 		}
 	}
@@ -135,15 +135,15 @@ public class HealthRegenFeature extends Feature {
 	public void onPlayerDamaged(LivingDamageEvent event) {
 		if (!this.isEnabled())
 			return;
-		if (!this.enableBleeding)
+		if (!this.enableInjured)
 			return;
 		if (!(event.getEntityLiving() instanceof PlayerEntity))
 			return;
 		PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
 		int duration = (int) (event.getAmount() * 4 * 20);
-		if (playerEntity.isPotionActive(ITEffects.BLEEDING.get()))
-			duration += playerEntity.getActivePotionEffect(ITEffects.BLEEDING.get()).getDuration();
-		playerEntity.addPotionEffect(MCUtils.createEffectInstance(ITEffects.BLEEDING.get(), duration, 0, true, false, true, false));
+		if (playerEntity.isPotionActive(ITEffects.INJURED.get()))
+			duration += playerEntity.getActivePotionEffect(ITEffects.INJURED.get()).getDuration();
+		playerEntity.addPotionEffect(MCUtils.createEffectInstance(ITEffects.INJURED.get(), duration, 0, true, false, true, false));
 	}
 
 	@SubscribeEvent
@@ -248,9 +248,9 @@ public class HealthRegenFeature extends Feature {
 
 	private int getRegenSpeed(PlayerEntity player) {
 		int speed = this.healthRegenSpeed;
-		EffectInstance bleeding = player.getActivePotionEffect(ITEffects.BLEEDING.get());
-		if (bleeding != null)
-			speed *= 1 + ((bleeding.getAmplifier() + 1) * 0.2d);
+		EffectInstance injured = player.getActivePotionEffect(ITEffects.INJURED.get());
+		if (injured != null)
+			speed *= 1 + ((injured.getAmplifier() + 1) * 0.2d);
 		EffectInstance wellFed = player.getActivePotionEffect(ITEffects.WELL_FED.get());
 		if (wellFed != null)
 			speed *= 1 - (Math.log10(0.6d + (wellFed.getAmplifier() + 1) * 0.8d));

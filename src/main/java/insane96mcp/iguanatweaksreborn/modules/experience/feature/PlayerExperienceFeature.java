@@ -13,7 +13,7 @@ public class PlayerExperienceFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Double> droppedExperienceOnDeathConfig;
 
 	public boolean betterScalingLevels = true;
-	public double droppedExperienceOnDeath = 0.5d;
+	public double droppedExperienceOnDeath = 0.80d;
 
 	public PlayerExperienceFeature(Module module) {
 		super(Config.builder, module, true);
