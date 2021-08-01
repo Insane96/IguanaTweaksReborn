@@ -14,6 +14,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.FoodStats;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameRules;
 import net.minecraftforge.api.distmarker.Dist;
@@ -119,8 +120,8 @@ public class HealthRegenFeature extends Feature {
 				break;
 			case IGUANA_TWEAKS:
 				this.healthRegenSpeed = 200;
-				this.regenWhenFoodAbove = 6;
-				this.starveSpeed = 50;
+				this.regenWhenFoodAbove = 4;
+				this.starveSpeed = 600;
 				this.starveDamage = 1;
 				this.disableSaturationRegenBoost = true;
 				this.consumeHungerOnly = false;
@@ -234,6 +235,7 @@ public class HealthRegenFeature extends Feature {
 		}
 		else if (foodStats.foodLevel <= 4) {
 			++foodStats.foodTimer;
+			player.sendStatusMessage(new StringTextComponent("starveSpeed: " + getStarveSpeed(player, difficulty)), true);
 			if (foodStats.foodTimer >= getStarveSpeed(player, difficulty)) {
 				player.attackEntityFrom(DamageSource.STARVE, this.starveDamage);
 				foodStats.foodTimer = 0;
@@ -269,7 +271,7 @@ public class HealthRegenFeature extends Feature {
 			else if (difficulty == Difficulty.HARD)
 				speed *= 0.75d;
 			int playerHunger = player.getFoodStats().foodLevel;
-			speed -= (4 - playerHunger) * 4;
+			speed *= (playerHunger + 1) / 5d;
 			return speed;
 		}
 	}
