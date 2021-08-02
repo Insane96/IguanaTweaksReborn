@@ -43,7 +43,7 @@ public abstract class ProtectionEnchantmentMixin extends Enchantment {
 
 	@Override
 	public int getMaxLevel() {
-		if (this.protectionType == ProtectionEnchantment.Type.ALL && Modules.combat.stats.armorAdjustments)
+		if (this.protectionType == ProtectionEnchantment.Type.ALL && Modules.combat.stats.nerfProtectionEnch)
 			return 3;
 		else
 			return 4;

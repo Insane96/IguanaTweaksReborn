@@ -10,13 +10,13 @@
               Health regen boost is removed when hunger at max and the player has saturation.  
               Hunger consumption is continuous when regenerating health instead of only when regenerating one hp.  
               Health regens when hunger >= 7. Health regens one hp every 10 seconds, increased / decreased by Well Fed / Injured effects obtained when eating / taking damage.  
-              You start taking Starve damage from hunger 4 instead of 0 (1 damage every 10 seconds at 4 hunge in normal difficulty), less hunger = faster starvation, also in hard you take damage faster while in easy/peaceful slower. Also also you can die out of starvation at any difficulty.  
+              You start taking Starve damage from hunger 4 instead of 0 (1 damage every 10 seconds at 4 hunger in normal difficulty), less hunger = faster starvation, also in hard you take damage faster while in easy/peaceful slower. Also also you can die out of starvation at any difficulty.  
     * Added Food Consuming Feature
         * Food is consumed slower based on hunger + saturation given
         * Makes Potions and Milk be consumed faster much like the Combat Test Snapshots
     * Food now heals less (33% of hunger restored -> 15% of hunger + saturation restored)
     * Rotten Flesh and potions are no longer blacklisted from saturation and hunger reductions
-* Protection enchantment is no longer disabled, instead the max level has been reduced to 3
+* Protection enchantment can have the max level reduced to 3 (disabled by deafult)
 * Increased experience dropped on Death (50% -> 80%)
 * Milk can no longer cure Debuff Feature's effects
 * Fixed wrong config option name for Tool Nerf

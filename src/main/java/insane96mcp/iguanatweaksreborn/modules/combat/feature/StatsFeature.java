@@ -1,6 +1,5 @@
 package insane96mcp.iguanatweaksreborn.modules.combat.feature;
 
-import insane96mcp.iguanatweaksreborn.modules.Modules;
 import insane96mcp.iguanatweaksreborn.modules.combat.classutils.ItemAttributeModifier;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
@@ -27,11 +26,11 @@ import java.util.List;
 public class StatsFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> reduceWeaponsDamageConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> armorAdjustmentsConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> disableProtectionEnchConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> nerfProtectionEnchConfig;
 
 	public boolean reduceWeaponDamage = true;
 	public boolean armorAdjustments = true;
-	public boolean disableProtectionEnch = false;
+	public boolean nerfProtectionEnch = false;
 
 	public StatsFeature(Module module) {
 		super(Config.builder, module);
@@ -40,11 +39,11 @@ public class StatsFeature extends Feature {
 				.comment("If true, Swords, Axes and Tridents get a -1 damage.")
 				.define("Reduced Weapon Damage", reduceWeaponDamage);
 		armorAdjustmentsConfig = Config.builder
-				.comment("If true, Diamond armor will get -1.5 toughness, Netherite gets a total of +2 armor points and Protection Enchantment max level gets rediced to 3.")
+				.comment("If true, Diamond armor will get -1.5 toughness, Netherite gets a total of +2 armor points and Protection is disabled.")
 				.define("Armor Adjustments", armorAdjustments);
-		disableProtectionEnchConfig = Config.builder
-				.comment("If true protection will be completely disabled.")
-				.define("Disable Protection Enchantment", this.disableProtectionEnch);
+		nerfProtectionEnchConfig = Config.builder
+				.comment("If true and 'Armor Adjustments' is active, Protection will be re-enabled but with max level set to 3.")
+				.define("Nerf Protection Enchantment", this.nerfProtectionEnch);
 		Config.builder.pop();
 	}
 
@@ -53,7 +52,7 @@ public class StatsFeature extends Feature {
 		super.loadConfig();
 		this.reduceWeaponDamage = this.reduceWeaponsDamageConfig.get();
 		this.armorAdjustments = this.armorAdjustmentsConfig.get();
-		this.disableProtectionEnch = this.disableProtectionEnchConfig.get();
+		this.nerfProtectionEnch = this.nerfProtectionEnchConfig.get();
 	}
 
 	@SubscribeEvent
@@ -100,6 +99,6 @@ public class StatsFeature extends Feature {
 	}
 
 	public boolean disableEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.PROTECTION && Modules.combat.stats.disableProtectionEnch;
+		return enchantment == Enchantments.PROTECTION && this.armorAdjustments && !this.nerfProtectionEnch;
 	}
 }
