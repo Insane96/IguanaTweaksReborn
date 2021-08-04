@@ -23,9 +23,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Label(name = "Temporary Spawners", description = "Spawners will no longer spawn mobs infinitely")
 public class TempSpawnerFeature extends Feature {
 
-    //TODO (mixin?) Add "disabled particles"
     private final ForgeConfigSpec.ConfigValue<Integer> minSpawnableMobsConfig;
     private final ForgeConfigSpec.ConfigValue<Double> spawnableMobsMultiplierConfig;
+    //TODO Add a mob + dimension blacklist (dimension optional)
     private final ForgeConfigSpec.ConfigValue<Boolean> bonusExperienceWhenFarFromSpawnConfig;
 
     public int minSpawnableMobs = 25;
@@ -36,7 +36,7 @@ public class TempSpawnerFeature extends Feature {
         super(Config.builder, module);
         Config.builder.comment(this.getDescription()).push(this.getName());
         minSpawnableMobsConfig = Config.builder
-                .comment("The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn.")
+                .comment("The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn. The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
                 .defineInRange("Spawnable mobs multiplier", minSpawnableMobs, 0, Integer.MAX_VALUE);
         spawnableMobsMultiplierConfig = Config.builder
                 .comment("This multiplier increases the max mobs spawned.")
