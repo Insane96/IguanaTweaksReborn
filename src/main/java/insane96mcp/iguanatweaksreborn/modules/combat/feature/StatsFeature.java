@@ -68,6 +68,8 @@ public class StatsFeature extends Feature {
 	);
 
 	private void weaponDamageReduction(ItemAttributeModifierEvent event) {
+		if (!this.isEnabled())
+			return;
 		if (!this.reduceWeaponDamage)
 			return;
 		for (ItemAttributeModifier itemAttributeModifier : CLASS_ATTRIBUTE_MODIFIER) {
@@ -88,6 +90,8 @@ public class StatsFeature extends Feature {
 	);
 
 	private void armorAdjustments(ItemAttributeModifierEvent event) {
+		if (!this.isEnabled())
+			return;
 		if (!this.armorAdjustments)
 			return;
 		for (ItemAttributeModifier itemAttributeModifier : ITEM_ATTRIBUTE_MODIFIER) {
