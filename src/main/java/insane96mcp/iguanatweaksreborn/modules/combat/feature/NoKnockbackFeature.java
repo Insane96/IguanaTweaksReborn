@@ -1,7 +1,6 @@
 package insane96mcp.iguanatweaksreborn.modules.combat.feature;
 
 import com.google.common.collect.Multimap;
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
@@ -65,7 +64,7 @@ public class NoKnockbackFeature extends Feature {
 		PlayerEntity player = event.getPlayer();
 		if (player.abilities.isCreativeMode)
 			return;
-		player.getPersistentData().putInt(IguanaTweaksReborn.RESOURCE_PREFIX + "ticksSinceLastSwing", player.ticksSinceLastSwing);
+		player.getPersistentData().putInt(Strings.Tags.TIME_SINCE_LAST_SWING, player.ticksSinceLastSwing);
 	}
 
 	@SubscribeEvent
