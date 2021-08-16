@@ -81,9 +81,7 @@ public class StatsFeature extends Feature {
 		if (this.disableCritArrows)
 			arrow.setIsCritical(false);
 
-		if (this.nerfPower) {
-			if (!(arrow.func_234616_v_() instanceof LivingEntity))
-				return;
+		if (this.nerfPower && arrow.func_234616_v_() instanceof LivingEntity) {
 			int powerLevel = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, (LivingEntity) arrow.func_234616_v_());
 			arrow.setDamage(arrow.getDamage() - (powerLevel * 0.25 + 0.25));
 		}
