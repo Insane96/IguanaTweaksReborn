@@ -18,7 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.CombatEntry;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -57,17 +56,6 @@ public class NoKnockbackFeature extends Feature {
 		customNoKnockbackItems = IdTagMatcher.parseStringList(customNoKnockbackItemsConfig.get());
 		noItemNoKnockback = noItemNoKnockbackConfig.get();
 		attackCooldownNoKnockback = attackCooldownNoKnockbackConfig.get();
-	}
-
-	@SubscribeEvent
-	public void onAttributeEvent(ItemAttributeModifierEvent event) {
-		/*if (event.getSlotType() != EquipmentSlotType.MAINHAND)
-			return;
-
-		if (event.getItemStack().getItem() instanceof SwordItem || event.getItemStack().getItem() instanceof AxeItem || event.getItemStack().getItem() instanceof TridentItem) {
-			AttributeModifier modifier = new AttributeModifier(UUID.fromString("fd34181b-4664-41cc-a86e-0c7979eee129"), IguanaTweaksReborn.RESOURCE_PREFIX + "weapon_nerf", -1.0f, AttributeModifier.Operation.ADDITION);
-			event.addModifier(Attributes.ATTACK_DAMAGE, modifier);
-		}*/
 	}
 
 	@SubscribeEvent

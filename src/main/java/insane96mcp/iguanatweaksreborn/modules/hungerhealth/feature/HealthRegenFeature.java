@@ -40,6 +40,7 @@ public class HealthRegenFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Double> hungerConsumptionChanceConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> enableWellFedConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> enableInjuredConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> foodHealMultiplierConfig;
 
 	public HealthRegenPreset healthRegenPreset = HealthRegenPreset.IGUANA_TWEAKS;
 	public int healthRegenSpeed = 80;
@@ -51,6 +52,7 @@ public class HealthRegenFeature extends Feature {
 	public double hungerConsumptionChance = 0;
 	public boolean enableWellFed = false;
 	public boolean enableInjured = false;
+	public double foodHealMultiplier = 0d;
 
 	public HealthRegenFeature(Module module) {
 		super(Config.builder, module);
@@ -88,6 +90,9 @@ public class HealthRegenFeature extends Feature {
 		enableInjuredConfig = Config.builder
 				.comment("Set to true to enable Injured, a new effect that slows down health regen and is applied whenever the player is damaged (disabled for Vanilla and Combat Test; enabled for Iguana Tweaks preset).")
 				.define("Enable Injured", this.enableInjured);
+		foodHealMultiplierConfig = Config.builder
+				.comment("When eating you'll get healed by this percentage of (hunger + saturation) restored.")
+				.defineInRange("Food Heal Multiplier", this.foodHealMultiplier, 0.0d, 128d);
 		Config.builder.pop();
 	}
 
@@ -106,6 +111,7 @@ public class HealthRegenFeature extends Feature {
 				this.hungerConsumptionChance = this.hungerConsumptionChanceConfig.get();
 				this.enableWellFed = this.enableWellFedConfig.get();
 				this.enableInjured = this.enableInjuredConfig.get();
+				this.foodHealMultiplier = this.foodHealMultiplierConfig.get();
 				break;
 			case COMBAT_TEST:
 				this.healthRegenSpeed = 40;
@@ -117,6 +123,7 @@ public class HealthRegenFeature extends Feature {
 				this.hungerConsumptionChance = 0.5d;
 				this.enableWellFed = false;
 				this.enableInjured = false;
+				this.foodHealMultiplier = 0d;
 				break;
 			case IGUANA_TWEAKS:
 				this.healthRegenSpeed = 200;
@@ -128,6 +135,7 @@ public class HealthRegenFeature extends Feature {
 				this.hungerConsumptionChance = 0d;
 				this.enableWellFed = true;
 				this.enableInjured = true;
+				this.foodHealMultiplier = 0.1d;
 				break;
 		}
 	}
@@ -153,19 +161,33 @@ public class HealthRegenFeature extends Feature {
 	public void onPlayerEat(LivingEntityUseItemEvent.Finish event) {
 		if (!this.isEnabled())
 			return;
-		if (!this.enableWellFed)
-			return;
-		if (!event.getItem().getItem().isFood())
+		if (!event.getItem().isFood())
 			return;
 		if (!(event.getEntityLiving() instanceof PlayerEntity))
 			return;
+
+		processWellFed(event);
+		healOnEat(event);
+	}
+
+	private void processWellFed(LivingEntityUseItemEvent.Finish event) {
+		if (!this.enableWellFed)
+			return;
 		PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
 		Food food = event.getItem().getItem().getFood();
-		int duration = (int) (food.saturation * food.value * 6 * 20);
+		int duration = (int) ((food.getHealing() * food.getSaturation() * 2) * 5 * 20);
 		if (playerEntity.isPotionActive(ITEffects.WELL_FED.get()))
 			duration += playerEntity.getActivePotionEffect(ITEffects.WELL_FED.get()).getDuration();
 		int amplifier = Math.max(food.value / 2 - 1, 0);
 		playerEntity.addPotionEffect(MCUtils.createEffectInstance(ITEffects.WELL_FED.get(), duration, amplifier, true, false, true, false));
+	}
+
+	public void healOnEat(LivingEntityUseItemEvent.Finish event) {
+		if (this.foodHealMultiplier == 0d)
+			return;
+		Food food = event.getItem().getItem().getFood();
+		double heal = (food.getHealing() + (food.getHealing() * food.getSaturation() * 2)) * this.foodHealMultiplier;
+		event.getEntityLiving().heal((float) heal);
 	}
 
 	public void tickFoodStats(FoodStats foodStats, PlayerEntity player) {

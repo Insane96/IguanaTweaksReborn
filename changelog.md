@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.7.x
+## Upcoming
 * Hunger Health
     * Added Health Regen feature
         * Has two presets and a huge list of config options
@@ -14,7 +14,7 @@
     * Added Food Consuming Feature
         * Food is consumed slower based on hunger + saturation given
         * Makes Potions and Milk be consumed faster like the Combat Test Snapshots
-    * Food now heals less (33% of hunger restored -> 15% of hunger + saturation restored)
+    * Food healing has been moved to Health Regen Feature. Also the healing formula has changed (33% of hunger restored -> 10% of hunger + saturation restored)
     * Rotten Flesh and potions are no longer blacklisted from saturation and hunger reductions
 * Protection enchantment can have the max level reduced to 3 (disabled by deafult)
 * Increased experience dropped on Death (50% -> 80%)
