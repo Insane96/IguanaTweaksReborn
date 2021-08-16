@@ -12,6 +12,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
 
@@ -60,5 +62,34 @@ public class MCUtils {
 		if (!canBeCured)
 			effectInstance.setCurativeItems(new ArrayList<>());
 		return effectInstance;
+	}
+
+	public static EffectInstance parseEffectInstance(String s) {
+		String[] split = s.split(",");
+		if (split.length != 3) {
+			LogHelper.warn("Invalid line \"%s\" for EffectInstance. Format must be modid:potion_id,duration_ticks,amplifier", s);
+			return null;
+		}
+		if (!NumberUtils.isParsable(split[1])) {
+			LogHelper.warn(String.format("Invalid duration \"%s\" for EffectInstance", split[1]));
+			return null;
+		}
+		int duration = Integer.parseInt(split[1]);
+		if (!NumberUtils.isParsable(split[2])) {
+			LogHelper.warn(String.format("Invalid amplifier \"%s\" for EffectInstance", split[1]));
+			return null;
+		}
+		int amplifier = Integer.parseInt(split[2]);
+		ResourceLocation potion = ResourceLocation.tryCreate(split[0]);
+		if (potion == null) {
+			LogHelper.warn("%s potion for EffectInstance is not valid", s);
+			return null;
+		}
+		if (!ForgeRegistries.POTIONS.containsKey(potion)) {
+			LogHelper.warn(String.format("%s potion for EffectInstance seems to not exist", s));
+			return null;
+		}
+
+		return new EffectInstance(ForgeRegistries.POTIONS.getValue(potion), duration, amplifier, true, true);
 	}
 }

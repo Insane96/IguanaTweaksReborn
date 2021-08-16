@@ -1,12 +1,12 @@
 # Changelog
 
-## Upcoming
+## 2.7.4
 * Hunger Health
     * Added Health Regen feature
         * Has two presets and a huge list of config options
             * Combat Test Preset  
               Health and Hunger work like the Combat Test Snapshots
-            * IguanaTweaks Preset
+            * IguanaTweaks Preset (default)
               Health regen boost is removed when hunger at max and the player has saturation.  
               Hunger consumption is continuous when regenerating health instead of only when regenerating one hp.  
               Health regens when hunger >= 7. Health regens one hp every 10 seconds, increased / decreased by Well Fed / Injured effects obtained when eating / taking damage.  
@@ -16,6 +16,10 @@
         * Makes Potions and Milk be consumed faster like the Combat Test Snapshots
     * Food healing has been moved to Health Regen Feature. Also the healing formula has changed (33% of hunger restored -> 10% of hunger + saturation restored)
     * Rotten Flesh and potions are no longer blacklisted from saturation and hunger reductions
+* Combat
+    * Stats Feature
+        * Added Power and Arrows nerf
+          Power deals half damage and arrows no longer randomly critically strike
 * Protection enchantment can have the max level reduced to 3 (disabled by deafult)
 * Increased experience dropped on Death (50% -> 80%)
 * Milk can no longer cure Debuff Feature's effects
