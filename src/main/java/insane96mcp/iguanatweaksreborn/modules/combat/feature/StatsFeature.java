@@ -53,7 +53,7 @@ public class StatsFeature extends Feature {
 				.comment("If true, Arrows will no longer randomly crit.")
 				.define("Disable Arrow Crits", this.disableCritArrows);
 		armorAdjustmentsConfig = Config.builder
-				.comment("If true, Diamond armor will get -1.5 toughness, Netherite gets a total of +2 armor points and Protection is disabled.")
+				.comment("If true, Diamond armor will get -1 toughness, Netherite gets a total of +2 armor points and Protection is disabled.")
 				.define("Armor Adjustments", armorAdjustments);
 		nerfProtectionEnchConfig = Config.builder
 				.comment("If true and 'Armor Adjustments' is active, Protection will be re-enabled but with max level set to 3.")
@@ -113,10 +113,10 @@ public class StatsFeature extends Feature {
 	}
 
 	public static final List<ItemAttributeModifier> ITEM_ATTRIBUTE_MODIFIER = Arrays.asList(
-			new ItemAttributeModifier("minecraft:diamond_helmet", null, EquipmentSlotType.HEAD, Attributes.ARMOR_TOUGHNESS, -1.25f, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier("minecraft:diamond_chestplate", null, EquipmentSlotType.CHEST, Attributes.ARMOR_TOUGHNESS, -1.25f, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier("minecraft:diamond_leggings", null, EquipmentSlotType.LEGS, Attributes.ARMOR_TOUGHNESS, -1.25f, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier("minecraft:diamond_boots", null, EquipmentSlotType.FEET, Attributes.ARMOR_TOUGHNESS, -1.25f, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier("minecraft:diamond_helmet", null, EquipmentSlotType.HEAD, Attributes.ARMOR_TOUGHNESS, -1f, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier("minecraft:diamond_chestplate", null, EquipmentSlotType.CHEST, Attributes.ARMOR_TOUGHNESS, -1f, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier("minecraft:diamond_leggings", null, EquipmentSlotType.LEGS, Attributes.ARMOR_TOUGHNESS, -1f, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier("minecraft:diamond_boots", null, EquipmentSlotType.FEET, Attributes.ARMOR_TOUGHNESS, -1f, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier("minecraft:netherite_helmet", null, EquipmentSlotType.HEAD, Attributes.ARMOR, 1f, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier("minecraft:netherite_boots", null, EquipmentSlotType.FEET, Attributes.ARMOR, 1f, AttributeModifier.Operation.ADDITION)
 	);
