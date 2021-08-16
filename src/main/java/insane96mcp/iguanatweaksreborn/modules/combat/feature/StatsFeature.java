@@ -7,9 +7,12 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.SwordItem;
@@ -17,6 +20,7 @@ import net.minecraft.item.TridentItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.Arrays;
@@ -25,10 +29,14 @@ import java.util.List;
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction")
 public class StatsFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> reduceWeaponsDamageConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> nerfPowerConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> disableCritArrowsConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> armorAdjustmentsConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> nerfProtectionEnchConfig;
 
 	public boolean reduceWeaponDamage = true;
+	public boolean nerfPower = true;
+	public boolean disableCritArrows = true;
 	public boolean armorAdjustments = true;
 	public boolean nerfProtectionEnch = false;
 
@@ -38,6 +46,12 @@ public class StatsFeature extends Feature {
 		reduceWeaponsDamageConfig = Config.builder
 				.comment("If true, Swords, Axes and Tridents get a -1 damage.")
 				.define("Reduced Weapon Damage", reduceWeaponDamage);
+		nerfPowerConfig = Config.builder
+				.comment("If true, Power Enchantment will be nerfed to deal half damage.")
+				.define("Nerf Power", this.nerfPower);
+		disableCritArrowsConfig = Config.builder
+				.comment("If true, Arrows will no longer randomly crit.")
+				.define("Disable Arrow Crits", this.disableCritArrows);
 		armorAdjustmentsConfig = Config.builder
 				.comment("If true, Diamond armor will get -1.5 toughness, Netherite gets a total of +2 armor points and Protection is disabled.")
 				.define("Armor Adjustments", armorAdjustments);
@@ -53,6 +67,26 @@ public class StatsFeature extends Feature {
 		this.reduceWeaponDamage = this.reduceWeaponsDamageConfig.get();
 		this.armorAdjustments = this.armorAdjustmentsConfig.get();
 		this.nerfProtectionEnch = this.nerfProtectionEnchConfig.get();
+	}
+
+	@SubscribeEvent
+	public void onArrowSpawn(EntityJoinWorldEvent event) {
+		if (!this.isEnabled())
+			return;
+		if (!(event.getEntity() instanceof AbstractArrowEntity))
+			return;
+
+		AbstractArrowEntity arrow = (AbstractArrowEntity) event.getEntity();
+
+		if (this.disableCritArrows)
+			arrow.setIsCritical(false);
+
+		if (this.nerfPower) {
+			if (!(arrow.func_234616_v_() instanceof LivingEntity))
+				return;
+			int powerLevel = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, (LivingEntity) arrow.func_234616_v_());
+			arrow.setDamage(arrow.getDamage() - (powerLevel * 0.25 + 0.25));
+		}
 	}
 
 	@SubscribeEvent
