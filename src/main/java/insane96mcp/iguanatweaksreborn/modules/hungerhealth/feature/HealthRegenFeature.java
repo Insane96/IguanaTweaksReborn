@@ -190,7 +190,12 @@ public class HealthRegenFeature extends Feature {
 		event.getEntityLiving().heal((float) heal);
 	}
 
-	public void tickFoodStats(FoodStats foodStats, PlayerEntity player) {
+	/**
+	 * Returns true if overrides the vanilla tick, otherwise false
+	 */
+	public boolean tickFoodStats(FoodStats foodStats, PlayerEntity player) {
+		if (!this.isEnabled())
+			return false;
 		Difficulty difficulty = player.world.getDifficulty();
 		foodStats.prevFoodLevel = foodStats.foodLevel;
 		if (foodStats.foodExhaustionLevel > 4.0F) {
@@ -206,6 +211,8 @@ public class HealthRegenFeature extends Feature {
 			tick(foodStats, player, difficulty);
 		else if (healthRegenPreset.equals(HealthRegenPreset.IGUANA_TWEAKS))
 			tickIguanaTweaks(foodStats, player, difficulty);
+
+		return true;
 	}
 
 	private void tick(FoodStats foodStats, PlayerEntity player, Difficulty difficulty) {
