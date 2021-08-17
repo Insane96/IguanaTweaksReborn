@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Reduced Diamond Armor nerf (-1.25 -> -1 toughness)
+* Fixed starveSpeed showing up on action bar when hunger <= 4
+
 ## 2.7.4
 * Hunger Health
     * Added Health Regen feature

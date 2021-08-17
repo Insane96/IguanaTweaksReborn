@@ -65,6 +65,8 @@ public class StatsFeature extends Feature {
 	public void loadConfig() {
 		super.loadConfig();
 		this.reduceWeaponDamage = this.reduceWeaponsDamageConfig.get();
+		this.nerfPower = this.nerfPowerConfig.get();
+		this.disableCritArrows = this.disableCritArrowsConfig.get();
 		this.armorAdjustments = this.armorAdjustmentsConfig.get();
 		this.nerfProtectionEnch = this.nerfProtectionEnchConfig.get();
 	}
