@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.7.5
 * Reduced Diamond Armor nerf (-1.25 -> -1 toughness)
 * Fixed starveSpeed showing up on action bar when hunger <= 4
 
