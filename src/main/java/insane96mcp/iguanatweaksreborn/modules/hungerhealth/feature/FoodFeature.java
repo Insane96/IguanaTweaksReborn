@@ -101,6 +101,7 @@ public class FoodFeature extends Feature {
         if (!this.isEnabled())
             return;
 
+
         for (FoodValue defaultFood : defaultFoodValues) {
             Item item = ForgeRegistries.ITEMS.getValue(defaultFood.id);
 
@@ -125,7 +126,8 @@ public class FoodFeature extends Feature {
             if (!isInWhitelist && blacklistAsWhitelist)
                 continue;
             Food food = item.getFood();
-            food.value = (int) Math.ceil((defaultFood.hunger * foodHungerMultiplier) + 0.5f);
+			if (this.foodHungerMultiplier != 1d)
+            	food.value = (int) Math.ceil((defaultFood.hunger * foodHungerMultiplier) + 0.5f);
             food.saturation = (float) (defaultFood.saturation * foodSaturationMultiplier);
         }
     }

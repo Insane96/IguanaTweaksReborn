@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed Food hunger multiplier set to 1 changing food hunger anyway
+
 ## 2.7.5
 * Reduced Diamond Armor nerf (-1.25 -> -1 toughness)
 * Fixed starveSpeed showing up on action bar when hunger <= 4
