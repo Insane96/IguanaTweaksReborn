@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.modules.misc.other;
+package insane96mcp.iguanatweaksreborn.modules.misc.world;
 
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
@@ -147,9 +147,9 @@ public class ITExplosion extends Explosion {
 			double blockDensity = getBlockDensity(this.getPosition(), entity);
 			double d10 = (1.0D - distanceRatio) * blockDensity;
 			//Damage Entities in the explosion radius
+			float damageAmount = (float) ((int) ((d10 * d10 + d10) / 2.0D * 7.0D * (double) affectedEntitiesRadius + 1.0D));
 			if (blockDensity > 0d) {
 				DamageSource source = this.getDamageSource();
-				float damageAmount = (float) ((int) ((d10 * d10 + d10) / 2.0D * 7.0D * (double) affectedEntitiesRadius + 1.0D));
 				if (entity instanceof ServerPlayerEntity && blockingDamageReduction > 0d) {
 					ServerPlayerEntity player = (ServerPlayerEntity) entity;
 					if (damageAmount > 0.0F && MCUtils.canBlockDamageSource(source, player)) {
@@ -162,21 +162,22 @@ public class ITExplosion extends Explosion {
 					}
 				}
 				entity.attackEntityFrom(source, damageAmount);
-			}
-			double d11 = d10;
-			if (entity instanceof LivingEntity) {
-				d11 = getBlastDamageReduction((LivingEntity) entity, d11);
-			}
-			if (knockbackScaleWithSize)
-				d11 *= this.size;
-			d11 = Math.max(d11, this.size * 0.05d);
-			if (entity instanceof ExplosionFallingBlockEntity)
-				d11 = Math.min(d11, 0.5d);
-			entity.setMotion(entity.getMotion().add(xDistance * d11, yDistance * d11, zDistance * d11));
-			if (entity instanceof PlayerEntity) {
-				PlayerEntity playerentity = (PlayerEntity)entity;
-				if (!playerentity.isSpectator() && (!playerentity.isCreative() || !playerentity.abilities.isFlying)) {
-					this.getPlayerKnockbackMap().put(playerentity, new Vector3d(xDistance * d11, yDistance * d11, zDistance * d11));
+
+				double d11 = d10;
+				if (entity instanceof LivingEntity) {
+					d11 = getBlastDamageReduction((LivingEntity) entity, d11);
+				}
+				if (knockbackScaleWithSize)
+					d11 *= this.size;
+				d11 = Math.max(d11, this.size * 0.05d);
+				if (entity instanceof ExplosionFallingBlockEntity)
+					d11 = Math.min(d11, 0.5d);
+				entity.setMotion(entity.getMotion().add(xDistance * d11, yDistance * d11, zDistance * d11));
+				if (entity instanceof PlayerEntity) {
+					PlayerEntity playerentity = (PlayerEntity)entity;
+					if (!playerentity.isSpectator() && (!playerentity.isCreative() || !playerentity.abilities.isFlying)) {
+						this.getPlayerKnockbackMap().put(playerentity, new Vector3d(xDistance * d11, yDistance * d11, zDistance * d11));
+					}
 				}
 			}
 		}

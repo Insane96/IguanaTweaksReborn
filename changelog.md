@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Explosions now generate in the middle of the entity instead of at the bottom
+* Explosions no longer give knockback if the entity is behind a (non-destroyed) wall
 * Fixed Food hunger multiplier set to 1 changing food hunger anyway
 
 ## 2.7.5

@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.modules.misc.feature;
 
-import insane96mcp.iguanatweaksreborn.modules.misc.other.ITExplosion;
+import insane96mcp.iguanatweaksreborn.modules.misc.world.ITExplosion;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -22,12 +22,14 @@ public class ExplosionOverhaulFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> enablePoofParticlesConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> blockingDamageScalingConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> knockbackScalesWithSizeConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> explosionAtHalfEntityConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> enableFlyingBlocksConfig;
 
 	public boolean disableExplosionRandomness = true;
 	public boolean enablePoofParticles = false;
 	public double blockingDamageScaling = 0.5d;
 	public boolean knockbackScalesWithSize = true;
+	public boolean explosionAtHalfEntity = true;
 	public boolean enableFlyingBlocks = false;
 
 	public ExplosionOverhaulFeature(Module module) {
@@ -45,9 +47,12 @@ public class ExplosionOverhaulFeature extends Feature {
         knockbackScalesWithSizeConfig = Config.builder
                 .comment("While enabled knockback is greatly increased by explosion size")
                 .define("Knockback Scales With Size", knockbackScalesWithSize);
-        enableFlyingBlocksConfig = Config.builder
-                .comment("EXPERIMENTAL! This will make explosion blast blocks away. Blocks that can't land will drop the block as a TNT would have destroyed it.")
-                .define("Enable Flying Blocks", enableFlyingBlocks);
+		explosionAtHalfEntityConfig = Config.builder
+				.comment("Explosions will start from the middle of the entity instead of feets.")
+				.define("Explosions at Half Entity", explosionAtHalfEntity);
+		enableFlyingBlocksConfig = Config.builder
+				.comment("EXPERIMENTAL! This will make explosion blast blocks away. Blocks that can't land will drop the block as a TNT would have destroyed it.")
+				.define("Enable Flying Blocks", enableFlyingBlocks);
         Config.builder.pop();
     }
 
@@ -58,6 +63,7 @@ public class ExplosionOverhaulFeature extends Feature {
         this.enablePoofParticles = this.enablePoofParticlesConfig.get();
         this.blockingDamageScaling = this.blockingDamageScalingConfig.get();
         this.knockbackScalesWithSize = this.knockbackScalesWithSizeConfig.get();
+        this.explosionAtHalfEntity = this.explosionAtHalfEntityConfig.get();
         this.enableFlyingBlocks = this.enableFlyingBlocksConfig.get();
     }
 
@@ -85,7 +91,10 @@ public class ExplosionOverhaulFeature extends Feature {
 
         event.setCanceled(true);
         Explosion e = event.getExplosion();
-        ITExplosion explosion = new ITExplosion(e.world, e.exploder, e.getDamageSource(), e.context, e.getPosition().x, e.getPosition().y, e.getPosition().z, e.size, e.causesFire, e.mode);
+        double y = e.getPosition().y;
+        if (e.exploder != null && this.explosionAtHalfEntity)
+        	y += e.exploder.getHeight() / 2d;
+        ITExplosion explosion = new ITExplosion(e.world, e.exploder, e.getDamageSource(), e.context, e.getPosition().x, y, e.getPosition().z, e.size, e.causesFire, e.mode);
 
         if (!event.getWorld().isRemote) {
             ServerWorld world = (ServerWorld) event.getWorld();
