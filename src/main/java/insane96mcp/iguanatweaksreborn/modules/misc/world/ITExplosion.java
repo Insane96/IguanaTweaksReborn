@@ -155,7 +155,7 @@ public class ITExplosion extends Explosion {
 					if (damageAmount > 0.0F && MCUtils.canBlockDamageSource(source, player)) {
 						source.isUnblockable = true;
 						damageAmount *= blockingDamageReduction;
-						d10 *= blockingDamageReduction;
+						///d10 *= blockingDamageReduction;
 						Reflection.PlayerEntity_damageShield(player, damageAmount);
 						player.world.setEntityState(player, (byte) 29);
 						//player.blockUsingShield((LivingEntity)entity);
