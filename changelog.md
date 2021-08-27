@@ -1,10 +1,11 @@
 # Changelog
 
-## Upcoming
-* Explosions now generate in the middle of the entity instead of at the bottom
+## 2.7.6
+* Explosions now generate in the middle of the entity instead of at the bottom (with this, holes made by creepers will change)
 * Explosions no longer give knockback if the entity is behind a (non-destroyed) wall
 * Shields no longer decrease explosions' knockback
 * Fixed Food hunger multiplier set to 1 changing food hunger anyway
+* Fixed NONE health regen preset disabling health regen
 
 ## 2.7.5
 * Reduced Diamond Armor nerf (-1.25 -> -1 toughness)
