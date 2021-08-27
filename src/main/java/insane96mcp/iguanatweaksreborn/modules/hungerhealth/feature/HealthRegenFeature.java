@@ -206,10 +206,11 @@ public class HealthRegenFeature extends Feature {
 				foodStats.foodLevel = Math.max(foodStats.foodLevel - 1, 0);
 			}
 		}
-		if (healthRegenPreset.equals(HealthRegenPreset.COMBAT_TEST))
-			tick(foodStats, player, difficulty);
-		else if (healthRegenPreset.equals(HealthRegenPreset.IGUANA_TWEAKS))
+		if (healthRegenPreset.equals(HealthRegenPreset.IGUANA_TWEAKS))
 			tickIguanaTweaks(foodStats, player, difficulty);
+		else
+			tick(foodStats, player, difficulty);
+
 
 		return true;
 	}
