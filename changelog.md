@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Now requires InsaneLib 1.2.1
+* Diamond armor no longer gets -1 Toughness. Iron Armor now gets +0.5 toughness
 * Fixed material Armor weight set to 0 still calculating default armor weight
 
 ## 2.7.6
