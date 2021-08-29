@@ -121,6 +121,7 @@ public class WeightedArmorFeature extends Feature {
 		if (!(itemStack.getItem() instanceof ArmorItem))
 			return 0d;
 		double slowdown = 0d;
+		boolean noSlowdown = false;
 		for (ArmorMaterialWeight armorMaterialWeight : this.materialWeight) {
 			if (!itemStack.getItem().getRegistryName().getPath().contains(armorMaterialWeight.id))
 				continue;
@@ -129,11 +130,13 @@ public class WeightedArmorFeature extends Feature {
 			double pieceArmor = armor.getArmorMaterial().getDamageReductionAmount(armor.getEquipmentSlot());
 			double ratio = pieceArmor / maxArmor;
 			double armorPieceSlowdown = armorMaterialWeight.totalWeight * ratio;
+			if (armorMaterialWeight.totalWeight == 0d)
+				noSlowdown = true;
 			slowdown = -armorPieceSlowdown;
 			break;
 		}
 		//If no slowdown was found in the material weight
-		if (slowdown == 0d) {
+		if (slowdown == 0d && !noSlowdown) {
 			ArmorItem armorItem = (ArmorItem) itemStack.getItem();
 			Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(armorItem.getEquipmentSlot());
 			double armor = 0d;

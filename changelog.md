@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed material Armor weight set to 0 still calculating default armor weight
+
 ## 2.7.6
 * Explosions now generate in the middle of the entity instead of at the bottom (with this, holes made by creepers will change)
 * Explosions no longer give knockback if the entity is behind a (non-destroyed) wall
