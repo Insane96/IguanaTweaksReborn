@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Now requires InsaneLib 1.2.1
 * Fixed material Armor weight set to 0 still calculating default armor weight
 
 ## 2.7.6

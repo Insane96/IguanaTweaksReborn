@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.modules.farming.classutils;
 
-import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import insane96mcp.insanelib.utils.IdTagMatcher;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.math.NumberUtils;

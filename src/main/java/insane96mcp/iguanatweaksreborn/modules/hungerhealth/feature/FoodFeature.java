@@ -1,11 +1,11 @@
 package insane96mcp.iguanatweaksreborn.modules.hungerhealth.feature;
 
-import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.modules.hungerhealth.classutils.FoodValue;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.utils.IdTagMatcher;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;

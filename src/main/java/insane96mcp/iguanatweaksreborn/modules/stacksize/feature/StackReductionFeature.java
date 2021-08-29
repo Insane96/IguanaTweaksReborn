@@ -1,6 +1,5 @@
 package insane96mcp.iguanatweaksreborn.modules.stacksize.feature;
 
-import insane96mcp.iguanatweaksreborn.common.classutils.IdTagMatcher;
 import insane96mcp.iguanatweaksreborn.modules.Modules;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.WeightFeature;
 import insane96mcp.iguanatweaksreborn.modules.stacksize.classutils.CustomStackSize;
@@ -8,6 +7,7 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.utils.IdTagMatcher;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
