@@ -34,9 +34,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 			callback.setReturnValue(3 * (this.experienceLevel + 1));
 	}
 
-	@Inject(at = @At("RETURN"), method = "getExperiencePoints(Lnet/minecraft/entity/player/PlayerEntity;)I", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "getExperiencePoints(Lnet/minecraft/entity/player/PlayerEntity;)I", cancellable = true)
 	private void getExperiencePoints(PlayerEntity player, CallbackInfoReturnable<Integer> callback) {
-		if (!this.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY) && !this.isSpectator() && Modules.experience.playerExperience.droppedExperienceOnDeath > 0d)
+		if (!this.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY) && !this.isSpectator() && Modules.experience.playerExperience.droppedExperienceOnDeath >= 0d)
 			callback.setReturnValue((int) (this.experienceTotal * Modules.experience.playerExperience.droppedExperienceOnDeath));
 	}
 }
