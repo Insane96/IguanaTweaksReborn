@@ -15,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -70,16 +71,16 @@ public class HoesNerfsFeature extends Feature {
 
 	@SubscribeEvent
 	//TODO Replace with PlayerInteractEvent.RightClickBlock
-	public void disabledHoes(BlockEvent.BlockToolInteractEvent event) {
+	public void disabledHoes(PlayerInteractEvent.RightClickBlock event) {
 		if (!this.isEnabled())
 			return;
 		if (event.getPlayer().world.isRemote)
 			return;
 		if (!this.disableLowTierHoes)
 			return;
-		if (!isHoeDisabled(event.getHeldItemStack().getItem()))
+		if (!isHoeDisabled(event.getItemStack().getItem()))
 			return;
-		ItemStack hoe = event.getHeldItemStack();
+		ItemStack hoe = event.getItemStack();
 		hoe.damageItem(hoe.getMaxDamage() - 1, event.getPlayer(), (player) -> player.sendBreakAnimation(event.getPlayer().getActiveHand()));
 		event.getPlayer().sendStatusMessage(new StringTextComponent("This hoe is too weak to be used"), true);
 		event.setCanceled(true);
