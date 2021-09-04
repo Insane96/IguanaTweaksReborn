@@ -19,32 +19,30 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.ArrayList;
 import java.util.List;
 
-@Label(name = "Harder Crops", description = "Crops are no longer insta-minable")
+@Label(name = "Harder Crops", description = "Crops are no longer insta-minable. This applies only to blocks that are instances of net.minecraft.world.level.block.CropBlock.\n" +
+		"Crops hardness is still affected by the Hardness module.\n" +
+		"Changing anything requires a minecraft restart.")
 public class HarderCropsFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> hardnessConfig;
-	private final ForgeConfigSpec.ConfigValue<List<? extends String>> whitelistConfig;
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> moreBlocksListConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> onlyFullyGrownConfig;
 
 	public double hardness = 1.0f;
-	public ArrayList<IdTagMatcher> whitelist;
+	public ArrayList<IdTagMatcher> moreBlocksList;
 	public boolean onlyFullyGrown = true;
 
 	public HarderCropsFeature(Module module) {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		hardnessConfig = Config.builder
-				.comment("Makes crop no longer instantly break. Using an hoe will speed up the break process.\n" +
-						"Tecnicality: this applies to any plant that is instance of net.minecraft.block.CropBlock that can be insta-mined (has 0 hardness)\n" +
-						"Crops hardness is still affected by the hardness module.")
+				.comment("How hard to break are plants? For comparison, dirt has an hardness of 0.5")
 				.defineInRange("Hardness", hardness, 0.0d, 128d);
-		whitelistConfig = Config.builder
+		moreBlocksListConfig = Config.builder
 				.comment("Block ids or tags that will have the hardness and hoe efficiency applied. Each entry has a block or tag. This still only applies to blocks that have 0 hardness.")
-				.defineList("Whitelist", new ArrayList<>(), o -> o instanceof String);
+				.defineList("Other affected blocks", new ArrayList<>(), o -> o instanceof String);
 		onlyFullyGrownConfig = Config.builder
-				.comment("Makes crop no longer instantly break. Using an hoe will speed up the break process.\n" +
-						"Tecnicality: this applies to any plant that is instance of net.minecraft.block.CropBlock that can be insta-mined (has 0 hardness)\n" +
-						"Crops hardness is still affected by the hardness module.")
+				.comment("If the hardness should be applied to mature crops only.")
 				.define("Only fully grown", onlyFullyGrown);
 		Config.builder.pop();
 	}
@@ -53,23 +51,22 @@ public class HarderCropsFeature extends Feature {
 	public void loadConfig() {
 		super.loadConfig();
 		this.hardness = this.hardnessConfig.get();
-		this.whitelist = IdTagMatcher.parseStringList(this.whitelistConfig.get());
+		this.moreBlocksList = IdTagMatcher.parseStringList(this.moreBlocksListConfig.get());
+		this.onlyFullyGrown = this.onlyFullyGrownConfig.get();
 		applyHardness();
 	}
 
-	private final ArrayList<Block> affectedBlocks = new ArrayList<>();
 
-	public void applyHardness() {
+	private boolean hardnessApplied = false;
+	private void applyHardness() {
 		if (!this.isEnabled())
 			return;
-		//Reset affected blocks to hardness 0f
-		for (Block block : affectedBlocks) {
-			block.getStateContainer().getValidStates().forEach(blockState -> blockState.hardness = 0f);
-		}
-		affectedBlocks.clear();
+		if (hardnessApplied)
+			return;
+
 		for (Block block : ForgeRegistries.BLOCKS.getValues()) {
 			boolean isInWhitelist = false;
-			for (IdTagMatcher blacklistEntry : this.whitelist) {
+			for (IdTagMatcher blacklistEntry : this.moreBlocksList) {
 				if (blacklistEntry.matchesBlock(block, null)) {
 					isInWhitelist = true;
 					break;
@@ -87,8 +84,8 @@ public class HarderCropsFeature extends Feature {
 						blockState.hardness = (float) this.hardness;
 				});
 			}
-			affectedBlocks.add(block);
 		}
+		hardnessApplied = true;
 	}
 
 	@SubscribeEvent
@@ -105,7 +102,7 @@ public class HarderCropsFeature extends Feature {
 			return;
 		Block block = event.getState().getBlock();
 		boolean isInWhitelist = false;
-		for (IdTagMatcher blacklistEntry : this.whitelist) {
+		for (IdTagMatcher blacklistEntry : this.moreBlocksList) {
 			if (blacklistEntry.matchesBlock(block, null)) {
 				isInWhitelist = true;
 				break;
