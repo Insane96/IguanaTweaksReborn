@@ -1,12 +1,11 @@
 package insane96mcp.iguanatweaksreborn.modules.stacksize.feature;
 
-import insane96mcp.iguanatweaksreborn.modules.Modules;
 import insane96mcp.iguanatweaksreborn.modules.misc.feature.WeightFeature;
-import insane96mcp.iguanatweaksreborn.modules.stacksize.classutils.CustomStackSize;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.config.BlacklistConfig;
 import insane96mcp.insanelib.utils.IdTagMatcher;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,7 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Stack Reduction", description = "Make food, items and blocks less stackable")
+@Label(name = "Stack Reduction", description = "Make food, items and blocks less stackable. Changes in this section require a Minecraft restart")
 public class StackReductionFeature extends Feature {
 
     //Food
@@ -34,8 +33,7 @@ public class StackReductionFeature extends Feature {
     private final ForgeConfigSpec.ConfigValue<Double> blockStackMultiplierConfig;
     private final ForgeConfigSpec.ConfigValue<Boolean> blockStackAffectedByMaterialConfig;
     //Blacklist
-    private final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklistConfig;
-    private final ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelistConfig;
+    private final BlacklistConfig blacklistConfig;
 
     private static final List<String> blacklistDefault = Arrays.asList("minecraft:rotten_flesh", "minecraft:potion");
 
@@ -73,12 +71,7 @@ public class StackReductionFeature extends Feature {
         blockStackAffectedByMaterialConfig = Config.builder
                 .comment("When true, block stacks are affected by both their material type and the block stack multiplier. If false, block stacks will be affected by the multiplier only.")
                 .define("Block Stack Affected by Material", blockStackAffectedByMaterial);
-        blacklistConfig = Config.builder
-                .comment("Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"#minecraft:fishes\", \"minecraft:stone\"].")
-                .defineList("Items Blacklist", blacklistDefault, o -> o instanceof String);
-        blacklistAsWhitelistConfig = Config.builder
-                .comment("Items Blacklist will be treated as a whitelist.")
-                .define("Blacklist as Whitelist", blacklistAsWhitelist);
+        blacklistConfig = new BlacklistConfig(Config.builder, "Blacklist", "Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"#minecraft:fishes\", \"minecraft:stone\"].", blacklistDefault, this.blacklistAsWhitelist);
         Config.builder.pop();
     }
 
@@ -88,8 +81,8 @@ public class StackReductionFeature extends Feature {
         this.foodStackReduction = this.foodStackReductionConfig.get();
         this.foodStackMultiplier = this.foodStackMultiplierConfig.get();
         this.stackableSoups = this.stackableSoupsConfig.get();
-        this.blacklist = IdTagMatcher.parseStringList(this.blacklistConfig.get());
-        this.blacklistAsWhitelist = this.blacklistAsWhitelistConfig.get();
+        this.blacklist = IdTagMatcher.parseStringList(this.blacklistConfig.listConfig.get());
+        this.blacklistAsWhitelist = this.blacklistConfig.listAsWhitelistConfig.get();
         this.itemStackMultiplier = this.itemStackMultiplierConfig.get();
         this.blockStackReduction = this.blockStackReductionConfig.get();
         this.blockStackMultiplier = this.blockStackMultiplierConfig.get();
@@ -99,125 +92,129 @@ public class StackReductionFeature extends Feature {
         processFoodStackSizes();
     }
 
+    private boolean processedItems = false;
+    private boolean processedBlocks = false;
+    private boolean processedFood = false;
+
     //Items
     public void processItemStackSizes() {
         if (!this.isEnabled())
             return;
-
         if (itemStackMultiplier == 1d)
             return;
-        for (CustomStackSize defaultStackSize : Modules.stackSize.defaultStackSizes) {
-            Item item = ForgeRegistries.ITEMS.getValue(defaultStackSize.id);
+        if (processedItems)
+            return;
+
+        for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (item instanceof BlockItem)
                 continue;
             if (item.maxStackSize == 1)
                 continue;
+
+            //Check for item black/whitelist
             boolean isInWhitelist = false;
             boolean isInBlacklist = false;
-            for (IdTagMatcher blacklistEntry : blacklist) {
-                if (!blacklistAsWhitelist) {
-                    if (blacklistEntry.matchesItem(item, null)) {
+            for (IdTagMatcher blacklistEntry : this.blacklist) {
+                if (blacklistEntry.matchesItem(item)) {
+                    if (!this.blacklistAsWhitelist)
                         isInBlacklist = true;
-                        break;
-                    }
-                }
-                else {
-                    if (blacklistEntry.matchesItem(item, null)) {
+                    else
                         isInWhitelist = true;
-                        break;
-                    }
+                    break;
                 }
             }
-            if (isInBlacklist || (!isInWhitelist && blacklistAsWhitelist))
+            if (isInBlacklist || (!isInWhitelist && this.blacklistAsWhitelist))
                 continue;
-            double stackSize = defaultStackSize.stackSize * itemStackMultiplier;
+
+            double stackSize = item.maxStackSize * itemStackMultiplier;
             stackSize = MathHelper.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
         }
+
+        processedItems = true;
     }
 
     //Blocks
     public void processBlockStackSizes() {
         if (!this.isEnabled())
             return;
+        if (processedBlocks)
+            return;
         if (!blockStackReduction)
             return;
-        for (CustomStackSize defaultStackSize : Modules.stackSize.defaultStackSizes) {
-            Item item = ForgeRegistries.ITEMS.getValue(defaultStackSize.id);
+
+        for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!(item instanceof BlockItem))
                 continue;
+
+            //Check for blocks black/whitelist
             boolean isInWhitelist = false;
             boolean isInBlacklist = false;
-            for (IdTagMatcher blacklistEntry : blacklist) {
-                if (!blacklistAsWhitelist) {
-                    if (blacklistEntry.matchesItem(item, null)) {
+            for (IdTagMatcher blacklistEntry : this.blacklist) {
+                if (blacklistEntry.matchesItem(item)) {
+                    if (!this.blacklistAsWhitelist)
                         isInBlacklist = true;
-                        break;
-                    }
-                }
-                else {
-                    if (blacklistEntry.matchesItem(item, null)) {
+                    else
                         isInWhitelist = true;
-                        break;
-                    }
+                    break;
                 }
             }
-            if (isInBlacklist || (!isInWhitelist && blacklistAsWhitelist))
+            if (isInBlacklist || (!isInWhitelist && this.blacklistAsWhitelist))
                 continue;
             Block block = ((BlockItem) item).getBlock();
             double weight = WeightFeature.getStateWeight(block.getDefaultState());
             if (!this.blockStackAffectedByMaterial)
                 weight = 1d;
-            double stackSize = (defaultStackSize.stackSize / weight) * blockStackMultiplier;
+            double stackSize = (item.maxStackSize / weight) * blockStackMultiplier;
             stackSize = MathHelper.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
         }
+        processedBlocks = true;
     }
 
     //Food
     public void processFoodStackSizes() {
         if (!this.isEnabled())
             return;
-
+        if (processedFood)
+            return;
         if (!foodStackReduction)
             return;
-        for (CustomStackSize defaultStackSize : Modules.stackSize.defaultStackSizes) {
-            Item item = ForgeRegistries.ITEMS.getValue(defaultStackSize.id);
+        for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!item.isFood())
                 continue;
             if ((item instanceof SoupItem || item instanceof SuspiciousStewItem) && !this.stackableSoups)
                 continue;
+            //Check for food black/whitelist
             boolean isInWhitelist = false;
             boolean isInBlacklist = false;
-            for (IdTagMatcher blacklistEntry : blacklist) {
-                if (!blacklistAsWhitelist) {
-                    if (blacklistEntry.matchesItem(item, null)) {
+            for (IdTagMatcher blacklistEntry : this.blacklist) {
+                if (blacklistEntry.matchesItem(item)) {
+                    if (!this.blacklistAsWhitelist)
                         isInBlacklist = true;
-                        break;
-                    }
-                }
-                else {
-                    if (blacklistEntry.matchesItem(item, null)) {
+                    else
                         isInWhitelist = true;
-                        break;
-                    }
+                    break;
                 }
             }
-            if (isInBlacklist)
-                continue;
-            if (!isInWhitelist && blacklistAsWhitelist)
+            if (isInBlacklist || (!isInWhitelist && this.blacklistAsWhitelist))
                 continue;
             int hunger = item.getFood().value;
             double saturation = item.getFood().saturation;
+            //TODO check if something can be done for this monstrosity
             double stackSize = (1d / Math.max(saturation * 2d, 1d)) * (3d * (-hunger) + 64d - Math.sqrt(hunger));
             stackSize *= foodStackMultiplier;
             stackSize = MathHelper.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
         }
+        processedFood = true;
     }
 
+    /**
+     * Fixes soups, potions, etc. consuming that don't work properly when stacked
+     */
     @SubscribeEvent
-    public void fixStackedSoupsEating(LivingEntityUseItemEvent.Finish event) {
+    public void fixUnstackableItemsEat(LivingEntityUseItemEvent.Finish event) {
         if (event.getEntity() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntity();
             ItemStack original = event.getItem();
