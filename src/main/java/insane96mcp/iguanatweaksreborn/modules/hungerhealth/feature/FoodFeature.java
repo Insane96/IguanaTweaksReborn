@@ -5,6 +5,7 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.config.BlacklistConfig;
 import insane96mcp.insanelib.utils.IdTagMatcher;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
@@ -21,11 +22,8 @@ public class FoodFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> foodHungerMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> foodSaturationMultiplierConfig;
-	private final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklistConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> blacklistAsWhitelistConfig;
+	private final BlacklistConfig blacklistConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> customFoodValueConfig;
-
-	private final List<String> blackListDefault = Collections.emptyList();
 
 	public double foodHungerMultiplier = 0.5d;
 	public double foodSaturationMultiplier = 1.0d;
@@ -43,12 +41,7 @@ public class FoodFeature extends Feature {
 		foodSaturationMultiplierConfig = Config.builder
 				.comment("Food's saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
 				.defineInRange("Food Saturation Multiplier", foodSaturationMultiplier, 0.0d, 64d);
-		blacklistConfig = Config.builder
-				.comment("Items or tags that will ignore the food multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].")
-				.defineList("Items Blacklist", blackListDefault, o -> o instanceof String);
-        blacklistAsWhitelistConfig = Config.builder
-                .comment("Items Blacklist will be treated as a whitelist.")
-                .define("Blacklist as Whitelist", blacklistAsWhitelist);
+		blacklistConfig = new BlacklistConfig(Config.builder, "Food Blacklist", "Items or tags that will ignore the food multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].", Collections.emptyList(), this.blacklistAsWhitelist);
         customFoodValueConfig = Config.builder
                 .comment("Define custom food values, one string = one item. Those items are not affected by other changes such as 'Food Hunger Multiplier'.\nThe format is modid:itemid,hunger,saturation. Saturation is optional\nE.g. 'minecraft:cooked_porkchop,16,1.0' will make cooked porkchops give 8 shranks of food and 16 saturation (actual saturation is calculated by 'saturation * 2 * hunger').")
                 .defineList("Custom Food Hunger", new ArrayList<>(), o -> o instanceof String);
@@ -62,9 +55,9 @@ public class FoodFeature extends Feature {
         super.loadConfig();
         this.foodHungerMultiplier = this.foodHungerMultiplierConfig.get();
         this.foodSaturationMultiplier = this.foodSaturationMultiplierConfig.get();
-        this.customFoodValues = parseCustomFoodHungerList(customFoodValueConfig.get());
-        this.blacklist = IdTagMatcher.parseStringList(blacklistConfig.get());
-        this.blacklistAsWhitelist = this.blacklistAsWhitelistConfig.get();
+        this.customFoodValues = parseCustomFoodHungerList(this.customFoodValueConfig.get());
+        this.blacklist = IdTagMatcher.parseStringList(this.blacklistConfig.listConfig.get());
+        this.blacklistAsWhitelist = this.blacklistConfig.listAsWhitelistConfig.get();
 
         if (this.defaultFoodValues.isEmpty())
             this.defaultFoodValues = saveDefaultFoodValues();
