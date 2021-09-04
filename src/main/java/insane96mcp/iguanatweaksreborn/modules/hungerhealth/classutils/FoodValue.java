@@ -6,6 +6,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FoodValue {
     public ResourceLocation id;
@@ -48,6 +50,16 @@ public class FoodValue {
             return null;
         }
         return new FoodValue(item, hunger, saturation);
+    }
+
+    public static ArrayList<FoodValue> parseList(List<? extends String> list) {
+        ArrayList<FoodValue> foodValues = new ArrayList<>();
+        for (String line : list) {
+            FoodValue customFoodValue = FoodValue.parseLine(line);
+            if (customFoodValue != null)
+                foodValues.add(customFoodValue);
+        }
+        return foodValues;
     }
 
     @Override
