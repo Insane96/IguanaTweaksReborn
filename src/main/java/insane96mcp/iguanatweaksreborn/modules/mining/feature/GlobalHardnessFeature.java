@@ -33,7 +33,7 @@ public class GlobalHardnessFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> depthMultiplierBlacklistConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> depthMultiplierBlacklistAsWhitelistConfig;
 
-	private static final List<String> depthMultiplierDimensionDefault = Arrays.asList("minecraft:overworld,0.04,63,16");
+	private static final List<String> depthMultiplierDimensionDefault = Arrays.asList("minecraft:overworld,0.04,63,12");
 	private static final List<String> depthMultiplierBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
 
 	public double hardnessMultiplier = 4.0d;
