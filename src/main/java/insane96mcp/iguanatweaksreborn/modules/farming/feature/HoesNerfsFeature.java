@@ -70,7 +70,6 @@ public class HoesNerfsFeature extends Feature {
 	}
 
 	@SubscribeEvent
-	//TODO Replace with PlayerInteractEvent.RightClickBlock
 	public void disabledHoes(PlayerInteractEvent.RightClickBlock event) {
 		if (!this.isEnabled())
 			return;
@@ -80,8 +79,13 @@ public class HoesNerfsFeature extends Feature {
 			return;
 		if (!isHoeDisabled(event.getItemStack().getItem()))
 			return;
+		if (!event.getWorld().isAirBlock(event.getPos().up()))
+			return;
+		BlockState blockstate = HoeItem.HOE_LOOKUP.get(event.getWorld().getBlockState(event.getPos()).getBlock());
+		if (blockstate == null || blockstate.getBlock() != Blocks.FARMLAND)
+			return;
 		ItemStack hoe = event.getItemStack();
-		hoe.damageItem(hoe.getMaxDamage() - 1, event.getPlayer(), (player) -> player.sendBreakAnimation(event.getPlayer().getActiveHand()));
+		hoe.damageItem(hoe.getMaxDamage(), event.getPlayer(), (player) -> player.sendBreakAnimation(event.getPlayer().getActiveHand()));
 		event.getPlayer().sendStatusMessage(new StringTextComponent("This hoe is too weak to be used"), true);
 		event.setCanceled(true);
 	}
@@ -94,7 +98,7 @@ public class HoesNerfsFeature extends Feature {
 			return;
 		if (isHoeDisabled(event.getHeldItemStack().getItem()) && disableLowTierHoes)
 			return;
-		if (/*event.getFace() == Direction.DOWN || */!event.getWorld().isAirBlock(event.getPos().up()))
+		if (!event.getWorld().isAirBlock(event.getPos().up()))
 			return;
 		BlockState blockstate = HoeItem.HOE_LOOKUP.get(event.getWorld().getBlockState(event.getPos()).getBlock());
 		if (blockstate == null || blockstate.getBlock() != Blocks.FARMLAND)
