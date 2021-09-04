@@ -8,6 +8,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockHardness extends IdTagMatcher {
     public double hardness;
@@ -61,5 +63,17 @@ public class BlockHardness extends IdTagMatcher {
                 return null;
             }
         }
+    }
+
+    public static ArrayList<BlockHardness> parseList(List<? extends String> list) {
+        ArrayList<BlockHardness> blockHardnesses = new ArrayList<>();
+        for (String line : list) {
+            BlockHardness blockHardness = BlockHardness.parseLine(line);
+            if (blockHardness == null)
+                continue;
+            blockHardnesses.add(blockHardness);
+        }
+
+        return blockHardnesses;
     }
 }

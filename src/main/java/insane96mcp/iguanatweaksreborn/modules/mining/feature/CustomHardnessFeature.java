@@ -19,7 +19,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-@Label(name = "Custom Hardness", description = "Change specific blocks hardness as well as black and whitelist")
+@Label(name = "Custom Hardness", description = "Change specific blocks hardness as well as black and whitelist. Zero hardness blocks changes require a Minecraft restart.")
 public class CustomHardnessFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> customHardnessConfig;
@@ -44,33 +44,18 @@ public class CustomHardnessFeature extends Feature {
     @Override
     public void loadConfig() {
         super.loadConfig();
-        resetHardness();
-        customHardness = parseCustomHardnesses(this.customHardnessConfig.get());
+        customHardness = BlockHardness.parseList(this.customHardnessConfig.get());
+        processZeroHardness();
     }
 
-    public void resetHardness() {
-        if (customHardness == null)
+    private boolean processedZeroHardness = false;
+
+    public void processZeroHardness() {
+        if (!this.isEnabled())
             return;
-        //Reset the 0 hardness blocks
-        for (BlockHardness blockHardness : this.customHardness) {
-            List<Block> blocksToProcess = blockHardness.getAllBlocks();
-            for (Block block : blocksToProcess) {
-                block.getStateContainer().getValidStates().forEach(blockState -> {
-                    if (blockHardness.has0Hardness) {
-                        blockState.hardness = 0f;
-                    }
-                });
-            }
-        }
-    }
-
-    public static ArrayList<BlockHardness> parseCustomHardnesses(List<? extends String> list) {
-        ArrayList<BlockHardness> blockHardnesses = new ArrayList<>();
-        for (String line : list) {
-            BlockHardness blockHardness = BlockHardness.parseLine(line);
-            if (blockHardness == null)
-                continue;
-            blockHardnesses.add(blockHardness);
+        if (processedZeroHardness)
+            return;
+	    for (BlockHardness blockHardness : this.customHardness) {
             //If the block's hardness is 0 I replace the hardness
             List<Block> blocksToProcess = blockHardness.getAllBlocks();
             for (Block block : blocksToProcess) {
@@ -82,8 +67,7 @@ public class CustomHardnessFeature extends Feature {
                 });
             }
         }
-
-        return blockHardnesses;
+	    processedZeroHardness = true;
     }
 
     @SubscribeEvent
