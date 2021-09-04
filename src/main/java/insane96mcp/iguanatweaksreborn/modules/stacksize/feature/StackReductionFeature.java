@@ -51,7 +51,7 @@ public class StackReductionFeature extends Feature {
         super(Config.builder, module);
         Config.builder.comment(this.getDescription()).push(this.getName());
         foodStackReductionConfig = Config.builder
-                .comment("Food stack sizes will be reduced based off their hunger restored and saturation multiplier. The formula is '(1/MAX(saturation, 1))*(3*(-hunger)+64-SQRT(hunger))'. E.g. Cooked Porkchops give 8 hunger points and have a 1.6 saturation multiplier so their stack size will be '(1/MAX(1.6, 1))*(3*(-8)+64-SQRT(8))' = 23 (Even foods that don't usually stack up to 16 or that don't stack at all will use the same formula, like Honey or Stews).\nThis is affected by Food Module's feature 'Hunger Restore Multiplier' & 'Saturation Restore multiplier'")
+                .comment("Food stack sizes will be reduced based off their hunger restored and saturation multiplier. The formula is '(1 - (effective_quality - 1) / 32) * 64'. E.g. Cooked Porkchops give 8 hunger points and have a 0.8 saturation multiplier so their stack size will be '(1 - (20.8 - 1) / 32) * 64' = 24 (Even foods that don't usually stack up to 16 or that don't stack at all will use the same formula, like Honey or Stews).\nThis is affected by Food Module's feature 'Hunger Restore Multiplier' & 'Saturation Restore multiplier'")
                 .define("Food Stack Reduction", foodStackReduction);
         foodStackMultiplierConfig = Config.builder
                 .comment("All the foods max stack sizes will be multiplied by this value to increase / decrease them (after Food Stack Reduction). In the example with the Porkchop with this set to 0.5 Cooked Porkchops will stack up to 12.")
@@ -201,8 +201,8 @@ public class StackReductionFeature extends Feature {
                 continue;
             int hunger = item.getFood().value;
             double saturation = item.getFood().saturation;
-            //TODO check if something can be done for this monstrosity
-            double stackSize = (1d / Math.max(saturation * 2d, 1d)) * (3d * (-hunger) + 64d - Math.sqrt(hunger));
+            double effectiveQuality = hunger + (hunger * saturation * 2d);
+            double stackSize = (1 - (effectiveQuality - 1) / 32) * 64;
             stackSize *= foodStackMultiplier;
             stackSize = MathHelper.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
