@@ -21,7 +21,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Label(name = "Global Hardness", description = "Change all the blocks hardness")
@@ -33,6 +32,7 @@ public class GlobalHardnessFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> depthMultiplierDimensionConfig;
 	private final BlacklistConfig depthMultiplierBlacklistConfig;
 
+	private static final List<String> hardnessBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
 	private static final List<String> depthMultiplierDimensionDefault = Arrays.asList("minecraft:overworld,0.04,63,12");
 	private static final List<String> depthMultiplierBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
 
@@ -53,7 +53,7 @@ public class GlobalHardnessFeature extends Feature {
 		dimensionHardnessMultiplierConfig = Config.builder
 				.comment("A list of dimensions and their relative block hardness multiplier. Each entry has a a dimension and hardness. This overrides the global multiplier.\nE.g. [\"minecraft:overworld,2\", \"minecraft:the_nether,4\"]")
 				.defineList("Dimension Hardness Multiplier", new ArrayList<>(), o -> o instanceof String);
-		hardnessBlacklistConfig = new BlacklistConfig(Config.builder, "Block Hardnesss Blacklist", "Block ids or tags that will ignore the global and dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]", Collections.emptyList(), this.hardnessBlacklistAsWhitelist);
+		hardnessBlacklistConfig = new BlacklistConfig(Config.builder, "Block Hardnesss Blacklist", "Block ids or tags that will ignore the global and dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]", hardnessBlacklistDefault, this.hardnessBlacklistAsWhitelist);
         depthMultiplierDimensionConfig = Config.builder
                 .comment("A list of dimensions and their relative block hardness multiplier per blocks below the set Y level. Each entry has a a dimension, a multiplier, a Y Level (where the increased hardness starts applying) and a Y Level cap (where the increase should stop).\nE.g. with the default configurations increases the global (or dimension) multiplier of the overworld by 0.04 for each block below the sea level (63); so at Y = 32 you'll get a multiplier of 3.0 (global multiplier) + 0.04 * (63 - 32) = 4.24 hardness multiplier. Below Y = 16 the increase applied is always the same (the cap)\nNOTE: This multiplier increase applies to blocks in Custom Hardness too.")
                 .defineList("Depth Multiplier Dimension", depthMultiplierDimensionDefault, o -> o instanceof String);
@@ -116,12 +116,10 @@ public class GlobalHardnessFeature extends Feature {
      * Returns 1d when no changes must be made, else will return a multiplier for block hardness
      */
     public double getBlockGlobalHardness(Block block, ResourceLocation dimensionId) {
-    	//If it's in custom hardness then it's not affected by global hardness
-		//TODO Change this to affect custom hardness
-		if (Modules.mining.customHardness.isEnabled())
+		/*if (Modules.mining.customHardness.isEnabled())
 			for (BlockHardness blockHardness : Modules.mining.customHardness.customHardness)
 				if (blockHardness.matchesBlock(block, dimensionId))
-					return 1d;
+					return 1d;*/
 
 		//Check for block black/whitelist
 		boolean isInWhitelist = false;

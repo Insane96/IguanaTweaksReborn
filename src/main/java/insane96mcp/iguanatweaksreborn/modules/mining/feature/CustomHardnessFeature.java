@@ -24,7 +24,7 @@ public class CustomHardnessFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> customHardnessConfig;
 
-	private static final ArrayList<String> customHardnessDefault = Lists.newArrayList("minecraft:coal_ore,6", "minecraft:iron_ore,9.0", "minecraft:gold_ore,10.5", "minecraft:diamond_ore,15", "minecraft:ancient_debris,50", "minecraft:redstone_ore,12", "minecraft:lapis_ore,12", "minecraft:emerald_ore,15", "minecraft:nether_quartz_ore,6", "minecraft:nether_gold_ore,9", "minecraft:obsidian,40");
+	private static final ArrayList<String> customHardnessDefault = Lists.newArrayList("minecraft:coal_ore,3", "minecraft:iron_ore,3.5", "minecraft:gold_ore,4.0", "minecraft:diamond_ore,4.5", "minecraft:ancient_debris,10", "minecraft:redstone_ore,3.5", "minecraft:lapis_ore,3.5", "minecraft:emerald_ore,4.5", "minecraft:nether_quartz_ore,3", "minecraft:nether_gold_ore,3", "#iguanatweaksreborn:obsidians,40");
 
 	public ArrayList<BlockHardness> customHardness;
 
@@ -32,9 +32,9 @@ public class CustomHardnessFeature extends Feature {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		customHardnessConfig = Config.builder
-				.comment("Define custom blocks hardness, one string = one block/tag. Those blocks are not affected by the global block hardness multiplier.\n" +
+				.comment("Define custom blocks hardness, one string = one block/tag. Those blocks ARE AFFECTED by the global block hardness multiplier, unless put in the blacklisst.\n" +
 						"The format is modid:blockid,hardness,dimensionid or #modid:tagid,hardness,dimensionid\n" +
-						"E.g. 'minecraft:stone,5.0' will make stone have 5 hardness in every dimension.\n" +
+						"E.g. 'minecraft:stone,5.0' will make stone have 5 hardness in every dimension (multiplied by Global Hardness).\n" +
 						"E.g. '#forge:stone,5.0,minecraft:overworld' will make all the stone types have 5 hardness but only in the overworld.\n" +
 						"As of 2.4.0 this now works with blocks that instantly break too (e.g. Torches)")
 				.defineList("Custom Hardness", customHardnessDefault, o -> o instanceof String);
