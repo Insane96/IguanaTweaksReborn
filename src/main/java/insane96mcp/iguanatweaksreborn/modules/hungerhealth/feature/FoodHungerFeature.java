@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Label(name = "Food Overhaul", description = "Change food's hunger and saturation given, also makes food heal you by a bit. Changing anything requires a Minecraft restart.")
-public class FoodFeature extends Feature {
+@Label(name = "Food Hunger", description = "Change food's hunger and saturation given, also makes food heal you by a bit. Changing anything requires a Minecraft restart.")
+public class FoodHungerFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> foodHungerMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> foodSaturationMultiplierConfig;
@@ -32,7 +32,7 @@ public class FoodFeature extends Feature {
 	public ArrayList<FoodValue> customFoodValues;
 
 
-	public FoodFeature(Module module) {
+	public FoodHungerFeature(Module module) {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		foodHungerMultiplierConfig = Config.builder

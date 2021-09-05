@@ -1,9 +1,25 @@
 # Changelog
 
-## Upcoming
+## Alpha 2.8.0
 * Now requires InsaneLib 1.2.1
-* Diamond armor no longer gets -1 Toughness. Iron Armor now gets +0.5 toughness
-* Fixed material Armor weight set to 0 still calculating default armor weight
+* Some features (Harder Crops, Stack Reduction, Food Hunger, Custom Hardness and Tool Nerf) now require a Minecraft restart if changing the config.
+* Stats Feature
+    * Diamond armor no longer gets -1 Toughness. Iron Armor now gets +0.5 toughness
+* Armor Weight
+    * Fixed material Armor weight set to 0 still calculating default armor weight
+* Player Experience
+    * Hopefully fixed a dupe bug and fixed 0 experience drop on player death not working
+* Nerfed Bonemeal
+    * Added Blacklist as whitelist config option
+* Food Hunger (renamed from Food Overhaul)
+    * Food hunger multiplier increased (0.5 -> 0.63) and now applies without adding +0.5
+* Food Conusming
+    * Speed multiplier decreased (0.25 -> 0.18)
+* Global Hardness
+    * Depth Hardness in the overworld now increased down to y 12 instead of 16
+    * **Now affects Custom hardness too**
+* Stack Reduction
+    * Food Stack Reduction formula is now much simpler and can also be slightly configured.
 
 ## 2.7.6
 * Explosions now generate in the middle of the entity instead of at the bottom (with this, holes made by creepers will change)
