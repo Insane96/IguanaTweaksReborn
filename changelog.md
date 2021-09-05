@@ -3,6 +3,7 @@
 ## Alpha 2.8.0
 * Now requires InsaneLib 1.2.1
 * Some features (Harder Crops, Stack Reduction, Food Hunger, Custom Hardness and Tool Nerf) now require a Minecraft restart if changing the config.
+* Added Weather Slowdown Feature. Disabled by default
 * Stats Feature
     * Diamond armor no longer gets -1 Toughness. Iron Armor now gets +0.5 toughness
 * Armor Weight
