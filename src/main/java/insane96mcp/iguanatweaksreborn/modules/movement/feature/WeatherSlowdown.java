@@ -71,6 +71,7 @@ public class WeatherSlowdown extends Feature {
 			slowdown = this.slowdownInRain;
 		if (playerEntity.world.isThundering())
 			slowdown = this.slowdownInThunder;
+
 		//If it's 0 then there's no slowdown appliable
 		if (slowdown == 0d) {
 			if (modifier != null)
@@ -82,6 +83,7 @@ public class WeatherSlowdown extends Feature {
 			movementSpeed.removeModifier(Strings.AttributeModifiers.WEATHER_SLOWDOWN_UUID);
 			movementSpeed.applyNonPersistentModifier(modifier);
 		}
+		//TODO Make this a global feature
 		playerEntity.jumpMovementFactor = (float) (0.02f * (movementSpeed.getValue() / movementSpeed.getBaseValue()));
 	}
 }
