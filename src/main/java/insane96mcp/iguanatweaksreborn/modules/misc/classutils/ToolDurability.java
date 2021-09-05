@@ -8,6 +8,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ToolDurability extends IdTagMatcher {
 	public int durability;
@@ -39,5 +41,15 @@ public class ToolDurability extends IdTagMatcher {
 		}
 		int durability = Integer.parseInt(split[1]);
 		return new ToolDurability(item, durability);
+	}
+
+	public static ArrayList<ToolDurability> parseList(List<? extends String> list) {
+		ArrayList<ToolDurability> toolDurabilities = new ArrayList<>();
+		for (String line : list) {
+			ToolDurability toolDurability = ToolDurability.parseLine(line);
+			if (toolDurability != null)
+				toolDurabilities.add(toolDurability);
+		}
+		return toolDurabilities;
 	}
 }

@@ -2,10 +2,11 @@ package insane96mcp.iguanatweaksreborn.modules.misc.feature;
 
 import insane96mcp.iguanatweaksreborn.modules.misc.classutils.ToolDurability;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import net.minecraft.item.TieredItem;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Tool Nerf", description = "Less durable tools")
+@Label(name = "Tool Nerf", description = "Less durable tools. Changing this config options requires a Minecraft restart")
 public class ToolNerfFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> toolsDurabilityConfig;
 
@@ -34,33 +35,25 @@ public class ToolNerfFeature extends Feature {
 		Config.builder.pop();
 	}
 
+	private boolean durabilityApplied = false;
+
 	@Override
 	public void loadConfig() {
 		super.loadConfig();
-		toolsDurability = parseDurabilities(toolsDurabilityConfig.get());
-		for (ToolDurability toolDurability : vanillaDurabilities) {
-			TieredItem item = (TieredItem) ForgeRegistries.ITEMS.getValue(toolDurability.id);
-			item.maxDamage = toolDurability.durability;
-		}
-		vanillaDurabilities.clear();
+		toolsDurability = ToolDurability.parseList(toolsDurabilityConfig.get());
 		if (!this.isEnabled())
 			return;
+		if (durabilityApplied)
+			return;
 		for (ToolDurability toolDurability : toolsDurability) {
-			TieredItem item = (TieredItem) ForgeRegistries.ITEMS.getValue(toolDurability.id);
-			vanillaDurabilities.add(new ToolDurability(toolDurability.id, item.maxDamage));
+			Item item = ForgeRegistries.ITEMS.getValue(toolDurability.id);
+			if (item == null) {
+				LogHelper.info("In Tool Nerf the item %s doesn't exist", toolDurability.id);
+				continue;
+			}
 			item.maxDamage = toolDurability.durability;
 		}
+
+		durabilityApplied = true;
 	}
-
-    private final ArrayList<ToolDurability> vanillaDurabilities = new ArrayList<>();
-
-    private static ArrayList<ToolDurability> parseDurabilities(List<? extends String> list) {
-        ArrayList<ToolDurability> toolDurabilities = new ArrayList<>();
-        for (String line : list) {
-            ToolDurability toolDurability = ToolDurability.parseLine(line);
-            if (toolDurability != null)
-                toolDurabilities.add(toolDurability);
-        }
-        return toolDurabilities;
-    }
 }
