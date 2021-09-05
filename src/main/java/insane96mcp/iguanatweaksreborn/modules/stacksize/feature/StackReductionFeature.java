@@ -39,8 +39,8 @@ public class StackReductionFeature extends Feature {
     private static final List<String> blacklistDefault = Arrays.asList("minecraft:rotten_flesh", "minecraft:potion");
 
     public boolean foodStackReduction = true;
-    public double foodQualityDivider = 20;
-    public double foodStackMultiplier = 1.0d;
+    public double foodQualityDivider = 18.5;
+    public double foodStackMultiplier = 0.5d;
     public boolean stackableSoups = true;
     public double itemStackMultiplier = 0.5d;
     public boolean blockStackReduction = true;
