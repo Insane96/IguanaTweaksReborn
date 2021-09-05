@@ -106,9 +106,10 @@ public class StackReductionFeature extends Feature {
     public void processItemStackSizes() {
         if (!this.isEnabled())
             return;
-        if (itemStackMultiplier == 1d)
-            return;
         if (processedItems)
+            return;
+        processedItems = true;
+        if (itemStackMultiplier == 1d)
             return;
 
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
@@ -137,7 +138,6 @@ public class StackReductionFeature extends Feature {
             item.maxStackSize = (int) Math.round(stackSize);
         }
 
-        processedItems = true;
     }
 
     //Blocks
@@ -146,6 +146,7 @@ public class StackReductionFeature extends Feature {
             return;
         if (processedBlocks)
             return;
+        processedBlocks = true;
         if (!blockStackReduction)
             return;
 
@@ -175,7 +176,6 @@ public class StackReductionFeature extends Feature {
             stackSize = MathHelper.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
         }
-        processedBlocks = true;
     }
 
     //Food
@@ -184,8 +184,10 @@ public class StackReductionFeature extends Feature {
             return;
         if (processedFood)
             return;
+        processedFood = true;
         if (!foodStackReduction)
             return;
+
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!item.isFood())
                 continue;
@@ -213,7 +215,6 @@ public class StackReductionFeature extends Feature {
             stackSize = MathHelper.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
         }
-        processedFood = true;
     }
 
     /**

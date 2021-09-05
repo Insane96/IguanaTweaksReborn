@@ -56,13 +56,14 @@ public class HarderCropsFeature extends Feature {
 		applyHardness();
 	}
 
-
 	private boolean hardnessApplied = false;
+
 	private void applyHardness() {
 		if (!this.isEnabled())
 			return;
 		if (hardnessApplied)
 			return;
+		hardnessApplied = true;
 
 		for (Block block : ForgeRegistries.BLOCKS.getValues()) {
 			boolean isInWhitelist = false;
@@ -85,7 +86,6 @@ public class HarderCropsFeature extends Feature {
 				});
 			}
 		}
-		hardnessApplied = true;
 	}
 
 	@SubscribeEvent

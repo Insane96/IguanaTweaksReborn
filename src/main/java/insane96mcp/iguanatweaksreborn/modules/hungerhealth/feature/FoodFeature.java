@@ -69,6 +69,7 @@ public class FoodFeature extends Feature {
             return;
 		if (processedFoodMultipliers)
 			return;
+		processedFoodMultipliers = true;
 
 		for (Item item : ForgeRegistries.ITEMS.getValues()) {
 			if (!item.isFood())
@@ -95,7 +96,6 @@ public class FoodFeature extends Feature {
 			food.saturation = (float) (item.getFood().getSaturation() * foodSaturationMultiplier);
 		}
 
-        processedFoodMultipliers = true;
     }
 
     public void processCustomFoodValues() {
@@ -103,6 +103,7 @@ public class FoodFeature extends Feature {
             return;
         if (processedCustomFoodValues)
         	return;
+		processedCustomFoodValues = true;
         if (customFoodValues.isEmpty())
             return;
 
@@ -122,6 +123,5 @@ public class FoodFeature extends Feature {
 				food.saturation = foodValue.saturation;
         }
 
-        processedCustomFoodValues = true;
     }
 }

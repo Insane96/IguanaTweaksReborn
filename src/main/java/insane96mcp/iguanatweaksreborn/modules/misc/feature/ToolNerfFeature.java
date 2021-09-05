@@ -45,6 +45,7 @@ public class ToolNerfFeature extends Feature {
 			return;
 		if (durabilityApplied)
 			return;
+		durabilityApplied = true;
 		for (ToolDurability toolDurability : toolsDurability) {
 			Item item = ForgeRegistries.ITEMS.getValue(toolDurability.id);
 			if (item == null) {
@@ -53,7 +54,5 @@ public class ToolNerfFeature extends Feature {
 			}
 			item.maxDamage = toolDurability.durability;
 		}
-
-		durabilityApplied = true;
 	}
 }
