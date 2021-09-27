@@ -1,5 +1,10 @@
 # Changelog
 
+## Alpha 2.8.1
+* Now requires InsaneLib 1.3.0
+* Armor Slowdown is now showed as kilograms instead of %
+* Fixed armor with material weight not applying weight correctly if the armor points were changed
+
 ## Alpha 2.8.0
 * Now requires InsaneLib 1.2.1
 * Some features (Harder Crops, Stack Reduction, Food Hunger, Custom Hardness and Tool Nerf) now require a Minecraft restart if changing the config.
