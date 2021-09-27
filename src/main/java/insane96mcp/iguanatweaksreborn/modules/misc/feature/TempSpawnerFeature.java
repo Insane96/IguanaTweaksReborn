@@ -61,6 +61,8 @@ public class TempSpawnerFeature extends Feature {
             return;
         if (!event.getSpawnReason().equals(SpawnReason.SPAWNER))
             return;
+        if (event.getSpawner() == null)
+            return;
         BlockPos spawnerPos = event.getSpawner().getSpawnerPosition();
         ServerWorld world = (ServerWorld) event.getWorld();
         MobSpawnerTileEntity mobSpawner = (MobSpawnerTileEntity) world.getTileEntity(spawnerPos);
