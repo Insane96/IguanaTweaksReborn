@@ -40,7 +40,7 @@ public class StackReductionFeature extends Feature {
 
     public boolean foodStackReduction = true;
     public double foodQualityDivider = 18.5;
-    public double foodStackMultiplier = 0.5d;
+    public double foodStackMultiplier = 0.6d;
     public boolean stackableSoups = true;
     public double itemStackMultiplier = 0.5d;
     public boolean blockStackReduction = true;
