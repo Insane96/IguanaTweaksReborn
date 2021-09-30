@@ -103,6 +103,7 @@ public class ExplosionOverhaulFeature extends Feature {
                 explosion.fallingBlocks();
             explosion.destroyBlocks();
             explosion.processEntities(this.blockingDamageScaling, this.knockbackScalesWithSize);
+            explosion.destroyLateBlocks();
             explosion.dropItems();
             explosion.processFire();
             if (explosion.mode == Explosion.Mode.NONE) {
@@ -120,6 +121,7 @@ public class ExplosionOverhaulFeature extends Feature {
                 explosion.fallingBlocks();
             explosion.destroyBlocks();
             //explosion.processEntities(this.blockingDamageScaling, this.knockbackScalesWithSize);
+			explosion.destroyLateBlocks();
             explosion.playSound();
             explosion.spawnParticles();
             explosion.processFire();
