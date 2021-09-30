@@ -2,8 +2,10 @@
 
 ## Alpha 2.8.1
 * Now requires InsaneLib 1.3.0
+  * Jump slowdown is now calculated globally
 * Armor Slowdown is now showed as kilograms instead of %
 * Fixed armor with material weight not applying weight correctly if the armor points were changed
+* Fixed explosions not working with Savage and Ravage "no block destruction" config
 
 ## Alpha 2.8.0
 * Now requires InsaneLib 1.2.1

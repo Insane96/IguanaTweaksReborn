@@ -101,6 +101,7 @@ repositories {
     flatDir {
         dirs "libs"
     }
+    maven { url "https://www.cursemaven.com" }
 }
 
 mixin {
@@ -111,13 +112,16 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.16.5-36.1.16'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.6'
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     compile fg.deobf("blank:InsaneLib:${lib_version}-mc${mc_version}")
     // compile "some.group:artifact:version"
 
     annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+
+    implementation fg.deobf("curse.maven:savage-and-ravage-381736:3226442")
+    implementation fg.deobf("curse.maven:abnormals_core-382216:3457851")
 
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env

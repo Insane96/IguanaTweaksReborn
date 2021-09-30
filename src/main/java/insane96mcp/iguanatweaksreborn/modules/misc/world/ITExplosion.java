@@ -120,14 +120,7 @@ public class ITExplosion extends Explosion {
 
 	public void processEntities(double blockingDamageReduction, boolean knockbackScaleWithSize) {
 		float affectedEntitiesRadius = this.size * 2.0F;
-		int x1 = MathHelper.floor(this.getPosition().getX() - (double)affectedEntitiesRadius - 1.0D);
-		int x2 = MathHelper.floor(this.getPosition().getX() + (double)affectedEntitiesRadius + 1.0D);
-		int y1 = MathHelper.floor(this.getPosition().getY() - (double)affectedEntitiesRadius - 1.0D);
-		int y2 = MathHelper.floor(this.getPosition().getY() + (double)affectedEntitiesRadius + 1.0D);
-		int z1 = MathHelper.floor(this.getPosition().getZ() - (double)affectedEntitiesRadius - 1.0D);
-		int z2 = MathHelper.floor(this.getPosition().getZ() + (double)affectedEntitiesRadius + 1.0D);
-		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this.exploder, new AxisAlignedBB(x1, y1, z1, x2, y2, z2));
-		net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.world, this, list, affectedEntitiesRadius);
+		List<Entity> list = gatherAffectedEntities(affectedEntitiesRadius);
 		for(Entity entity : list) {
 			if (entity.isImmuneToExplosions())
 				continue;
@@ -137,7 +130,7 @@ public class ITExplosion extends Explosion {
 			double xDistance = entity.getPosX() - this.getPosition().x;
 			double yDistance = ((entity instanceof TNTEntity ? entity.getPosY() : (entity.getPosYEye())) - this.getPosition().y) * 0.6667d;
 			double zDistance = entity.getPosZ() - this.getPosition().z;
-			double d13 = (double) MathHelper.sqrt(xDistance * xDistance + yDistance * yDistance + zDistance * zDistance);
+			double d13 = MathHelper.sqrt(xDistance * xDistance + yDistance * yDistance + zDistance * zDistance);
 			if (d13 == 0.00)
 				continue;
 			//xDistance = xDistance / d13;
@@ -184,6 +177,7 @@ public class ITExplosion extends Explosion {
 	}
 
 	public void destroyBlocks() {
+		net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.world, this, gatherAffectedEntities(this.size * 2.0F), this.size * 2.0F);
 		if (this.mode == Explosion.Mode.NONE)
 			return;
 		Collections.shuffle(this.getAffectedBlockPositions(), this.world.rand);
@@ -237,6 +231,16 @@ public class ITExplosion extends Explosion {
 				}
 			}
 		}
+	}
+
+	private List<Entity> gatherAffectedEntities(float affectedRadius) {
+		int x1 = MathHelper.floor(this.getPosition().getX() - (double)affectedRadius - 1.0D);
+		int x2 = MathHelper.floor(this.getPosition().getX() + (double)affectedRadius + 1.0D);
+		int y1 = MathHelper.floor(this.getPosition().getY() - (double)affectedRadius - 1.0D);
+		int y2 = MathHelper.floor(this.getPosition().getY() + (double)affectedRadius + 1.0D);
+		int z1 = MathHelper.floor(this.getPosition().getZ() - (double)affectedRadius - 1.0D);
+		int z2 = MathHelper.floor(this.getPosition().getZ() + (double)affectedRadius + 1.0D);
+		return this.world.getEntitiesWithinAABBExcludingEntity(this.exploder, new AxisAlignedBB(x1, y1, z1, x2, y2, z2));
 	}
 
 	/*
