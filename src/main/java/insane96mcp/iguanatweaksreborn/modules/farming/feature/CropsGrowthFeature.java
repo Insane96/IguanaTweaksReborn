@@ -1,22 +1,27 @@
 package insane96mcp.iguanatweaksreborn.modules.farming.feature;
 
 import insane96mcp.iguanatweaksreborn.modules.farming.FarmingModule;
-import insane96mcp.iguanatweaksreborn.modules.farming.classutils.CropsRequireWater;
+import insane96mcp.iguanatweaksreborn.modules.farming.classutils.PlantGrowthModifier;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import net.minecraft.block.Block;
 import net.minecraft.block.CropsBlock;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.LightType;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
 
 @Label(name = "Crops Growth", description = "Slower Crops growing based off various factors")
 public class CropsGrowthFeature extends Feature {
 
+	//TODO Wrong Biome Multiplier
+	//TODO Convert to Datapack
 	private final ForgeConfigSpec.ConfigValue<CropsRequireWater> cropsRequireWaterConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> cropsGrowthMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> noSunlightGrowthMultiplierConfig;
@@ -28,6 +33,8 @@ public class CropsGrowthFeature extends Feature {
 	public double noSunLightGrowthMultiplier = 2.0d;
 	public double nightTimeGrowthMultiplier = 1d;
 	public int minSunlight = 10;
+
+	public ArrayList<PlantGrowthModifier> plantGrowthModifiers = new ArrayList<>();
 
 	public CropsGrowthFeature(Module module) {
 		super(Config.builder, module);
@@ -62,6 +69,14 @@ public class CropsGrowthFeature extends Feature {
 		this.noSunLightGrowthMultiplier = this.noSunlightGrowthMultiplierConfig.get();
 		this.nightTimeGrowthMultiplier = this.nightTimeGrowthMultiplierConfig.get();
 		this.minSunlight = this.minSunlightConfig.get();
+		if (plantGrowthModifiers.isEmpty()) {
+			for (Block block : ForgeRegistries.BLOCKS.getValues()) {
+				if (!(block instanceof CropsBlock))
+					continue;
+				PlantGrowthModifier plantGrowthModifier = new PlantGrowthModifier(block.getRegistryName(), null).growthMultiplier(this.cropsGrowthMultiplier).noSunlightGrowthMultiplier(this.noSunLightGrowthMultiplier).minSunlightRequired(this.minSunlight).nightTimeGrowthMultiplier(this.nightTimeGrowthMultiplier);
+				plantGrowthModifiers.add(plantGrowthModifier);
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -88,29 +103,29 @@ public class CropsGrowthFeature extends Feature {
 			return;
 		if (event.getResult().equals(Event.Result.DENY))
 			return;
-		if (this.cropsGrowthMultiplier == 1.0d && this.noSunLightGrowthMultiplier == 1.0d && this.nightTimeGrowthMultiplier == 1.0d)
+		if (!(event.getWorld() instanceof World))
 			return;
-		IWorld world = event.getWorld();
-		if (!(event.getState().getBlock() instanceof CropsBlock))
+		World world = (World) event.getWorld();
+		double multiplier = 1d;
+		for (PlantGrowthModifier plantGrowthModifier : plantGrowthModifiers) {
+			multiplier = plantGrowthModifier.getMultiplier(event.getState().getBlock(), world, event.getPos());
+			if (multiplier != -1d)
+				break;
+		}
+		if (multiplier == 0d) {
+			event.setResult(Event.Result.DENY);
 			return;
-		double chance;
-		if (this.cropsGrowthMultiplier == 0.0d)
-			chance = -1d;
-		else
-			chance = 1d / this.cropsGrowthMultiplier;
-		int skyLight = world.getLightFor(LightType.SKY, event.getPos());
-		if (skyLight < this.minSunlight)
-			if (this.noSunLightGrowthMultiplier == 0.0d)
-				chance = -1d;
-			else
-				chance *= 1d / this.noSunLightGrowthMultiplier;
-		int dayTime = (int) (world.func_241851_ab() % 24000);
-		if (dayTime >= 12786 && dayTime < 23216)
-			if (this.nightTimeGrowthMultiplier == 0.0d)
-				chance = -1d;
-			else
-				chance *= 1d / this.noSunLightGrowthMultiplier;
+		}
+		if (multiplier == 1d || multiplier == -1d)
+			return;
+		double chance = 1d / multiplier;
 		if (world.getRandom().nextDouble() > chance)
 			event.setResult(Event.Result.DENY);
+	}
+
+	public enum CropsRequireWater {
+		NO,
+		BONEMEAL_ONLY,
+		ANY_CASE
 	}
 }

@@ -1,11 +1,11 @@
 package insane96mcp.iguanatweaksreborn.modules.farming.feature;
 
-import insane96mcp.iguanatweaksreborn.modules.farming.classutils.PlantGrowthMultiplier;
+import insane96mcp.iguanatweaksreborn.modules.farming.classutils.PlantGrowthModifier;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -15,11 +15,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Plants Growth", description = "Slower Plants growing")
+@Label(name = "Plants Growth", description = "Slower Plants (non-crops) growing")
 public class PlantsGrowthFeature extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> plantsListConfig;
 
+	//TODO Convert to Datapack
 	private static final List<String> plantsListDefault = Arrays.asList(
 			"minecraft:sugar_cane,2.5",
 			"minecraft:cactus,2.5",
@@ -34,7 +35,7 @@ public class PlantsGrowthFeature extends Feature {
 			"minecraft:bamboo,2.5"
 	);
 
-	public ArrayList<PlantGrowthMultiplier> plantsList;
+	public ArrayList<PlantGrowthModifier> plantsList;
 
 	public PlantsGrowthFeature(Module module) {
 		super(Config.builder, module);
@@ -51,14 +52,14 @@ public class PlantsGrowthFeature extends Feature {
 		this.plantsList = parsePlantsGrowthMultiplier(this.plantsListConfig.get());
 	}
 
-	public static ArrayList<PlantGrowthMultiplier> parsePlantsGrowthMultiplier(List<? extends String> list) {
-		ArrayList<PlantGrowthMultiplier> plantsGrowthMultiplier = new ArrayList<>();
+	public static ArrayList<PlantGrowthModifier> parsePlantsGrowthMultiplier(List<? extends String> list) {
+		ArrayList<PlantGrowthModifier> plantsGrowthModifier = new ArrayList<>();
 		for (String line : list) {
-			PlantGrowthMultiplier plantGrowthMultiplier = PlantGrowthMultiplier.parseLine(line);
+			PlantGrowthModifier plantGrowthMultiplier = PlantGrowthModifier.parseSimpleLine(line);
 			if (plantGrowthMultiplier != null)
-				plantsGrowthMultiplier.add(plantGrowthMultiplier);
+				plantsGrowthModifier.add(plantGrowthMultiplier);
 		}
-		return plantsGrowthMultiplier;
+		return plantsGrowthModifier;
 	}
 
 	@SubscribeEvent
@@ -67,15 +68,17 @@ public class PlantsGrowthFeature extends Feature {
 			return;
 		if (this.plantsList.isEmpty())
 			return;
-		BlockState state = event.getState();
 		double multiplier = 1d;
-		for (PlantGrowthMultiplier plantGrowthMultiplier : this.plantsList) {
-			if (plantGrowthMultiplier.matchesBlock(state.getBlock())) {
-				multiplier = plantGrowthMultiplier.multiplier;
+		for (PlantGrowthModifier plantGrowthModifier : this.plantsList) {
+			multiplier = plantGrowthModifier.getMultiplier(event.getState().getBlock(), (World) event.getWorld(), event.getPos());
+			if (multiplier != -1d)
 				break;
-			}
 		}
-		if (multiplier == 1.0d)
+		if (multiplier == 0d) {
+			event.setResult(Event.Result.DENY);
+			return;
+		}
+		if (multiplier == 1.0d || multiplier == -1d)
 			return;
 		double chance = 1d / multiplier;
 		if (event.getWorld().getRandom().nextDouble() > chance)

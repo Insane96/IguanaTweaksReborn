@@ -2,8 +2,7 @@ package insane96mcp.iguanatweaksreborn.modules.farming.feature;
 
 import insane96mcp.iguanatweaksreborn.modules.Modules;
 import insane96mcp.iguanatweaksreborn.modules.farming.FarmingModule;
-import insane96mcp.iguanatweaksreborn.modules.farming.classutils.CropsRequireWater;
-import insane96mcp.iguanatweaksreborn.modules.farming.classutils.NerfedBonemeal;
+import insane96mcp.iguanatweaksreborn.modules.farming.feature.CropsGrowthFeature.CropsRequireWater;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -181,5 +180,11 @@ public class NerfedBonemealFeature extends Feature {
 			return BonemealResult.NONE;
 		world.setBlockState(pos, state, 3);
 		return BonemealResult.ALLOW;
+	}
+
+	public enum NerfedBonemeal {
+		DISABLED,
+		SLIGHT,
+		NERFED
 	}
 }
