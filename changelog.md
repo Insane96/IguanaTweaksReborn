@@ -8,6 +8,7 @@
 * Temporary Spawners
   * Added entity and dimension black/whitelist
   * Fixed missing 'Minimum Spawnable Mobs' config option and begin wrongly set to 1
+  * If spawnable mobs amount has changed then spawners are re-enabled
   * On feature disable spawners from temporary spawners get re-enabled
 * Container contents are no longer destroyed with explosions
 * Fixed armor with material weight not applying weight correctly if the armor points were changed

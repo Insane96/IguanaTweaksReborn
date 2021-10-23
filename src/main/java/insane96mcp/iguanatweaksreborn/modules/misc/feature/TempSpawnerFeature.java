@@ -18,6 +18,7 @@ import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.spawner.AbstractSpawner;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -104,9 +105,7 @@ public class TempSpawnerFeature extends Feature {
         double distance = Math.sqrt(spawnerPos.distanceSq(world.getSpawnPoint()));
         int maxSpawned = (int) ((this.minSpawnableMobs + (distance / 8d)) * this.spawnableMobsMultiplier);
         if (spawnerCap.getSpawnedMobs() >= maxSpawned) {
-            nbt.putShort("MaxNearbyEntities", (short) 0);
-            nbt.putShort("RequiredPlayerRange", (short) 0);
-            event.getSpawner().read(nbt);
+            disableSpawner(event.getSpawner());
         }
     }
 
@@ -126,30 +125,56 @@ public class TempSpawnerFeature extends Feature {
     public void onTick(MobSpawnerTileEntity spawner) {
         //If the feature is disabled then reactivate disabled spawners and prevent further processing
         if (!this.isEnabled()) {
-            CompoundNBT nbt = new CompoundNBT();
-            spawner.getSpawnerBaseLogic().write(nbt);
-            if (nbt.getShort("MaxNearbyEntities") == (short) 0 && nbt.getShort("RequiredPlayerRange") == (short) 0) {
-                nbt.putShort("MaxNearbyEntities", (short) 6);
-                nbt.putShort("RequiredPlayerRange", (short) 16);
-                spawner.getSpawnerBaseLogic().read(nbt);
-            }
+            if (isDisabled(spawner.getSpawnerBaseLogic()))
+                enableSpawner(spawner.getSpawnerBaseLogic());
             return;
+        }
+        //If spawnable mobs amount has changed then re-enable the spawner
+        if (spawner.getWorld() instanceof ServerWorld) {
+            ServerWorld world = (ServerWorld) spawner.getWorld();
+            ISpawner spawnerCap = spawner.getCapability(SpawnerCapability.SPAWNER).orElse(null);
+            if (spawnerCap == null)
+                LogHelper.error("Something's wrong. The spawner has no capability");
+            double distance = Math.sqrt(spawner.getPos().distanceSq(world.getSpawnPoint()));
+            int maxSpawned = (int) ((this.minSpawnableMobs + (distance / 8d)) * this.spawnableMobsMultiplier);
+            if (spawnerCap.getSpawnedMobs() < maxSpawned && isDisabled(spawner.getSpawnerBaseLogic())) {
+                enableSpawner(spawner.getSpawnerBaseLogic());
+            }
         }
         World world = spawner.getWorld();
         CompoundNBT nbt = new CompoundNBT();
         spawner.write(nbt);
-        if (nbt.getShort("MaxNearbyEntities") != (short) 0 || nbt.getShort("RequiredPlayerRange") != (short) 0)
+        if (!isDisabled(spawner.getSpawnerBaseLogic()))
             return;
         if (world == null)
             return;
         BlockPos blockpos = spawner.getPos();
         if (!(world instanceof ServerWorld)) {
             for (int i = 0; i < 10; i++) {
-                double d3 = (double) blockpos.getX() + world.rand.nextDouble();
-                double d4 = (double) blockpos.getY() + world.rand.nextDouble();
-                double d5 = (double) blockpos.getZ() + world.rand.nextDouble();
-                world.addParticle(ParticleTypes.SMOKE, d3, d4, d5, 0.0D, 0.0D, 0.0D);
+                world.addParticle(ParticleTypes.SMOKE, blockpos.getX() + world.rand.nextDouble(), blockpos.getY() + world.rand.nextDouble(), blockpos.getZ() + world.rand.nextDouble(), 0.0D, 0.0D, 0.0D);
             }
         }
+    }
+
+    private static void disableSpawner(AbstractSpawner spawner) {
+        CompoundNBT nbt = new CompoundNBT();
+        spawner.write(nbt);
+        nbt.putShort("MaxNearbyEntities", (short) 0);
+        nbt.putShort("RequiredPlayerRange", (short) 0);
+        spawner.read(nbt);
+    }
+
+    private static void enableSpawner(AbstractSpawner spawner) {
+        CompoundNBT nbt = new CompoundNBT();
+        spawner.write(nbt);
+        nbt.putShort("MaxNearbyEntities", (short) 6);
+        nbt.putShort("RequiredPlayerRange", (short) 16);
+        spawner.read(nbt);
+    }
+
+    private static boolean isDisabled(AbstractSpawner spawner) {
+        CompoundNBT nbt = new CompoundNBT();
+        spawner.write(nbt);
+        return nbt.getShort("MaxNearbyEntities") == (short) 0 && nbt.getShort("RequiredPlayerRange") == (short) 0;
     }
 }
