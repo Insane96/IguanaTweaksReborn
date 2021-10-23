@@ -11,6 +11,8 @@ import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -36,7 +38,10 @@ public class CustomStackSizeFeature extends Feature {
         super.loadConfig();
 
         customStackList = parseCustomStackList(customStackListConfig.get());
+    }
 
+    @SubscribeEvent
+    public void onPlayerLoggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
         processCustomStackSizes();
     }
 
@@ -50,11 +55,17 @@ public class CustomStackSizeFeature extends Feature {
         return stackSizes;
     }
 
+    private boolean processed = false;
+
     public void processCustomStackSizes() {
         if (!this.isEnabled())
             return;
         if (customStackList.isEmpty())
             return;
+        if (processed)
+            return;
+
+        processed = true;
 
         for (CustomStackSize customStackSize : customStackList) {
             if (customStackSize.tag != null) {
