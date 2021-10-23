@@ -1,13 +1,18 @@
 # Changelog
 
 ## Alpha 2.8.1
-* Now requires InsaneLib 1.3.0
+* Now requires InsaneLib 1.3.2
   * Jump slowdown is now calculated and set globally
 * Armor Slowdown is now showed as kilograms instead of %.  
   Also changed default armor weight (4/12/8/16/30/40 -> 4/12/8/15/25/33.3 Kg for leather/chainmail/gold/iron/diamnond/netherite) (2 -> 1.5 Kg per armor point) (+4% -> +3% weight per toughness)
+* Temporary Spawners
+  * Added entity and dimension black/whitelist
+  * Fixed missing 'Minimum Spawnable Mobs' config option and begin wrongly set to 1
+  * On feature disable spawners from temporary spawners get re-enabled
 * Container contents are no longer destroyed with explosions
 * Fixed armor with material weight not applying weight correctly if the armor points were changed
 * Fixed explosions not working with Savage and Ravage "no block destruction" config
+* Internal refactoring of plants growth multiplier
 
 ## Alpha 2.8.0
 * Now requires InsaneLib 1.2.1
