@@ -13,6 +13,7 @@
 * Container contents are no longer destroyed with explosions
 * Fixed armor with material weight not applying weight correctly if the armor points were changed
 * Fixed explosions not working with Savage and Ravage "no block destruction" config
+* Fixed tags not working for custom stack sizes
 * Internal refactoring of plants growth multiplier
 
 ## Alpha 2.8.0
