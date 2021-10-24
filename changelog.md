@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed entity black/whitelist in temp spawners not taking into account dimensions
+
 ## Alpha 2.8.1
 * Now requires InsaneLib 1.3.2
   * Jump slowdown is now calculated and set globally

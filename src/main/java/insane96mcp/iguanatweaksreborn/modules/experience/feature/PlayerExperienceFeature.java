@@ -20,7 +20,8 @@ public class PlayerExperienceFeature extends Feature {
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		betterScalingLevelsConfig = Config.builder
 				.comment("Instead of using the vanilla formula, the experience required to level up will be less exponential.\n" +
-						"The formula used to calculate the xp required for next level is (3 * (current_level + 1))")
+						"The formula used to calculate the xp required for next level is (3 * (current_level + 1))\n" +
+						"Obviously incompatible with Allurement's 'Remove level Scaling'")
 				.define("Better Scaling XP to next level", this.betterScalingLevels);
 		droppedExperienceOnDeathConfig = Config.builder
 				.comment("On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this.")

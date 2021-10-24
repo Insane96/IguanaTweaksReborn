@@ -92,7 +92,7 @@ public class TempSpawnerFeature extends Feature {
         boolean isInWhitelist = false;
         boolean isInBlacklist = false;
         for (IdTagMatcher blacklistEntry : this.entityBlacklist) {
-            if (blacklistEntry.matchesEntity(optional.get())) {
+            if (blacklistEntry.matchesEntity(optional.get(), world.getDimensionKey().getLocation())) {
                 if (!this.entityBlacklistAsWhitelist)
                     isInBlacklist = true;
                 else
