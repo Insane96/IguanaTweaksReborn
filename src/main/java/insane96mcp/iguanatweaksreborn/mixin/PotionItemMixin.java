@@ -12,7 +12,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class PotionItemMixin {
 	@Inject(at = @At("RETURN"), method = "getUseDuration(Lnet/minecraft/item/ItemStack;)I", cancellable = true)
 	public void getUseDuration(ItemStack stack, CallbackInfoReturnable<Integer> callbackInfo) {
-		if (Modules.hungerHealth.foodConsuming.fasterPotionConsuming)
-			callbackInfo.setReturnValue(20);
+		if (!Modules.hungerHealth.foodConsuming.fasterPotionConsuming || !Modules.hungerHealth.foodConsuming.isEnabled())
+			return;
+
+		callbackInfo.setReturnValue(20);
 	}
 }

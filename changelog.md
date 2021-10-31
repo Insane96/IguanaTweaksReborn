@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Shields now give -20% movement speed
+* Fixed disabling Food Consuming Feature actually disabling nothing.
 * Fixed entity black/whitelist in temp spawners not taking into account dimensions
 
 ## Alpha 2.8.1
