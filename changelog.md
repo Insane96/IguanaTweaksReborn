@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Shields now give -20% movement speed
+* Reduced and renamed Eating Speed Multiplier (now Eating Time Multiplier) (0.18 -> 0.15) 
 * Fixed disabling Food Consuming Feature actually disabling nothing.
 * Fixed entity black/whitelist in temp spawners not taking into account dimensions
 

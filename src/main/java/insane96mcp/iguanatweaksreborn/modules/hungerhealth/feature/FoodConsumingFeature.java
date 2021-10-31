@@ -14,12 +14,12 @@ public class FoodConsumingFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> fasterPotionConsumingConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> fasterMilkConsumingConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> eatingSpeedBasedOffFoodConfig;
-	private final ForgeConfigSpec.ConfigValue<Double> eatingSpeedMultiplierConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> eatingTimeMultiplierConfig;
 
 	public boolean fasterPotionConsuming = true;
 	public boolean fasterMilkConsuming = true;
 	public boolean eatingSpeedBasedOffFood = true;
-	public double eatingSpeedMultiplier = 0.18d;
+	public double eatingTimeMultiplier = 0.15d;
 
 	public FoodConsumingFeature(Module module) {
 		super(Config.builder, module);
@@ -33,9 +33,9 @@ public class FoodConsumingFeature extends Feature {
 		eatingSpeedBasedOffFoodConfig = Config.builder
 				.comment("Makes the speed for eating food based off the hunger and saturation they provide. At 2 (hunger + saturation) the speed is vanilla, higher / lower (hunger + saturation) will lower / raise the speed. Minimum 16 ticks.")
 				.define("Eating Speed Based Off Food Config", this.eatingSpeedBasedOffFood);
-		eatingSpeedMultiplierConfig = Config.builder
+		eatingTimeMultiplierConfig = Config.builder
 				.comment("Multiplier for the time taken to eat. Only applied if 'Eating Speed Based Off Food Config' is active.")
-				.defineInRange("Eating Speed Multiplier", this.eatingSpeedMultiplier, 0, Double.MAX_VALUE);
+				.defineInRange("Eating Time Multiplier", this.eatingTimeMultiplier, 0, Double.MAX_VALUE);
 		Config.builder.pop();
 	}
 
@@ -45,7 +45,7 @@ public class FoodConsumingFeature extends Feature {
 		this.fasterPotionConsuming = this.fasterPotionConsumingConfig.get();
 		this.fasterMilkConsuming = this.fasterMilkConsumingConfig.get();
 		this.eatingSpeedBasedOffFood = this.eatingSpeedBasedOffFoodConfig.get();
-		this.eatingSpeedMultiplier = this.eatingSpeedMultiplierConfig.get();
+		this.eatingTimeMultiplier = this.eatingTimeMultiplierConfig.get();
 	}
 
 	public int getFoodConsumingTime(ItemStack stack) {
@@ -53,7 +53,7 @@ public class FoodConsumingFeature extends Feature {
 		float time = 32 * ((food.getHealing() + (food.getHealing() * food.getSaturation() * 2)));
 		if (food.isFastEating())
 			time /= 2;
-		time *= this.eatingSpeedMultiplier;
+		time *= this.eatingTimeMultiplier;
 
 		int minTime = food.isFastEating() ? 16 : 32;
 		return (int) Math.max(time, minTime);
