@@ -15,6 +15,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
+import net.minecraft.item.ShieldItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.TridentItem;
 import net.minecraft.util.ResourceLocation;
@@ -98,7 +99,9 @@ public class StatsFeature extends Feature {
 	public static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = Arrays.asList(
 		new ItemAttributeModifier((ResourceLocation) null, SwordItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
 		new ItemAttributeModifier((ResourceLocation) null, AxeItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
-		new ItemAttributeModifier((ResourceLocation) null, TridentItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION)
+		new ItemAttributeModifier((ResourceLocation) null, TridentItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
+		new ItemAttributeModifier((ResourceLocation) null, ShieldItem.class, EquipmentSlotType.MAINHAND, Attributes.MOVEMENT_SPEED, -0.2d, AttributeModifier.Operation.MULTIPLY_BASE),
+		new ItemAttributeModifier((ResourceLocation) null, ShieldItem.class, EquipmentSlotType.OFFHAND, Attributes.MOVEMENT_SPEED, -0.2d, AttributeModifier.Operation.MULTIPLY_BASE)
 	);
 
 	private void weaponDamageReduction(ItemAttributeModifierEvent event) {

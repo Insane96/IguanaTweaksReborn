@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Shields now give -20% movement speed
 * Fixed entity black/whitelist in temp spawners not taking into account dimensions
 
 ## Alpha 2.8.1
