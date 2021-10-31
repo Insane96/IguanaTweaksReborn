@@ -1,11 +1,13 @@
 package insane96mcp.iguanatweaksreborn.modules.combat.feature;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.modules.combat.classutils.ItemAttributeModifier;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.utils.LogHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -22,6 +24,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.Arrays;
@@ -32,12 +35,14 @@ public class StatsFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> reduceWeaponsDamageConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> nerfPowerConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> disableCritArrowsConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> adjustCrossbowDamageConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> armorAdjustmentsConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> nerfProtectionEnchConfig;
 
 	public boolean reduceWeaponDamage = true;
 	public boolean nerfPower = true;
 	public boolean disableCritArrows = true;
+	public boolean adjustCrossbowDamage = true;
 	public boolean armorAdjustments = true;
 	public boolean nerfProtectionEnch = false;
 
@@ -51,8 +56,11 @@ public class StatsFeature extends Feature {
 				.comment("If true, Power Enchantment will be nerfed to deal half damage.")
 				.define("Nerf Power", this.nerfPower);
 		disableCritArrowsConfig = Config.builder
-				.comment("If true, Arrows will no longer randomly crit.")
+				.comment("If true, Arrows from Bows will no longer randomly crit (basically disables the random bonus damage given when firing a fully charged arrow).")
 				.define("Disable Arrow Crits", this.disableCritArrows);
+		adjustCrossbowDamageConfig = Config.builder
+				.comment("If true, Arrows from Crossbows will no longer deal random damage, but a set amount of damage (about 9 at a medium distance).")
+				.define("Adjust Crossbow Damage", this.adjustCrossbowDamage);
 		armorAdjustmentsConfig = Config.builder
 				.comment("If true, Iron armor gets +0.5 toughness, Netherite gets a total of +2 armor points and Protection is disabled.")
 				.define("Armor Adjustments", armorAdjustments);
@@ -68,6 +76,7 @@ public class StatsFeature extends Feature {
 		this.reduceWeaponDamage = this.reduceWeaponsDamageConfig.get();
 		this.nerfPower = this.nerfPowerConfig.get();
 		this.disableCritArrows = this.disableCritArrowsConfig.get();
+		this.adjustCrossbowDamage = this.adjustCrossbowDamageConfig.get();
 		this.armorAdjustments = this.armorAdjustmentsConfig.get();
 		this.nerfProtectionEnch = this.nerfProtectionEnchConfig.get();
 	}
@@ -81,6 +90,13 @@ public class StatsFeature extends Feature {
 
 		AbstractArrowEntity arrow = (AbstractArrowEntity) event.getEntity();
 
+		if (!arrow.getShotFromCrossbow())
+			processBow(arrow);
+		else
+			processCrossbow(arrow);
+	}
+
+	private void processBow(AbstractArrowEntity arrow) {
 		if (this.disableCritArrows)
 			arrow.setIsCritical(false);
 
@@ -88,6 +104,18 @@ public class StatsFeature extends Feature {
 			int powerLevel = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, (LivingEntity) arrow.func_234616_v_());
 			arrow.setDamage(arrow.getDamage() - (powerLevel * 0.25 + 0.25));
 		}
+	}
+
+	private void processCrossbow(AbstractArrowEntity arrow) {
+		if (this.adjustCrossbowDamage) {
+			arrow.setIsCritical(false);
+			arrow.setDamage(2.8d);
+		}
+	}
+
+	@SubscribeEvent
+	public void onAttributeEvent(LivingDamageEvent event) {
+		LogHelper.info(IguanaTweaksReborn.LOGGER, "damage: %s", event.getAmount());
 	}
 
 	@SubscribeEvent

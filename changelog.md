@@ -1,7 +1,9 @@
 # Changelog
 
 ## Upcoming
-* Shields now give -20% movement speed
+* Stats Feature
+  * Added Crossbow adjustment. Crossbows no longer deal random damage but always ~9 like Bedrock Edition.
+  * Shields now give -20% movement speed
 * Reduced and renamed Eating Speed Multiplier (now Eating Time Multiplier) (0.18 -> 0.15) 
 * Fixed disabling Food Consuming Feature actually disabling nothing.
 * Fixed entity black/whitelist in temp spawners not taking into account dimensions
