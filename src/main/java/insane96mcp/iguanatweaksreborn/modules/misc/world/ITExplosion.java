@@ -44,9 +44,6 @@ import java.util.Set;
 public class ITExplosion extends Explosion {
 
 	ObjectArrayList<Pair<ItemStack, BlockPos>> droppedItems = new ObjectArrayList<>();
-	//Blocks to destroy later
-	private final List<BlockPos> affectedLateBlockPositions = Lists.newArrayList();
-
 
 	public ITExplosion(World world, @Nullable Entity exploder, @Nullable DamageSource source, @Nullable ExplosionContext context, double x, double y, double z, float size, boolean causesFire, Mode mode) {
 		super(world, exploder, source, context, x, y, z, size, causesFire, mode);
@@ -186,36 +183,6 @@ public class ITExplosion extends Explosion {
 			return;
 		Collections.shuffle(this.getAffectedBlockPositions(), this.world.rand);
 		for(BlockPos blockpos : this.getAffectedBlockPositions()) {
-			BlockState blockstate = this.world.getBlockState(blockpos);
-			Block block = blockstate.getBlock();
-			if (world.getTileEntity(blockpos) != null) {
-				affectedLateBlockPositions.add(blockpos);
-				continue;
-			}
-			if (!blockstate.isAir(this.world, blockpos)) {
-				BlockPos blockpos1 = blockpos.toImmutable();
-				this.world.getProfiler().startSection("explosion_blocks");
-				if (blockstate.canDropFromExplosion(this.world, blockpos, this) && this.world instanceof ServerWorld) {
-					TileEntity tileentity = blockstate.hasTileEntity() ? this.world.getTileEntity(blockpos) : null;
-					LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerWorld)this.world)).withRandom(this.world.rand).withParameter(LootParameters.field_237457_g_, Vector3d.copyCentered(blockpos)).withParameter(LootParameters.TOOL, ItemStack.EMPTY).withNullableParameter(LootParameters.BLOCK_ENTITY, tileentity).withNullableParameter(LootParameters.THIS_ENTITY, this.exploder);
-					if (this.mode == Explosion.Mode.DESTROY) {
-						lootcontext$builder.withParameter(LootParameters.EXPLOSION_RADIUS, this.size);
-					}
-					blockstate.getDrops(lootcontext$builder).forEach((stack) -> {
-						handleExplosionDrops(droppedItems, stack, blockpos1);
-					});
-				}
-				blockstate.onBlockExploded(this.world, blockpos, this);
-				this.world.getProfiler().endSection();
-			}
-		}
-	}
-
-	public void destroyLateBlocks() {
-		if (this.mode == Explosion.Mode.NONE)
-			return;
-		Collections.shuffle(this.getAffectedBlockPositions(), this.world.rand);
-		for(BlockPos blockpos : this.affectedLateBlockPositions) {
 			BlockState blockstate = this.world.getBlockState(blockpos);
 			if (!blockstate.isAir(this.world, blockpos)) {
 				BlockPos blockpos1 = blockpos.toImmutable();
