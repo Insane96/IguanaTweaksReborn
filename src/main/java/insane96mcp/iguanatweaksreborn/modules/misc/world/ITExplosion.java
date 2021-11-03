@@ -167,6 +167,8 @@ public class ITExplosion extends Explosion {
 				d11 = Math.max(d11, this.size * 0.05d);
 				if (entity instanceof ExplosionFallingBlockEntity)
 					d11 = Math.min(d11, 0.5d);
+				else if (!(entity instanceof LivingEntity))
+					d11 *= 0.3d;
 				entity.setMotion(entity.getMotion().add(xDistance * d11, yDistance * d11, zDistance * d11));
 				if (entity instanceof PlayerEntity) {
 					PlayerEntity playerentity = (PlayerEntity)entity;
