@@ -23,6 +23,7 @@ public class ExplosionOverhaulFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Double> blockingDamageScalingConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> knockbackScalesWithSizeConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> explosionAtHalfEntityConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> affectJustSpawnedEntitiesConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> enableFlyingBlocksConfig;
 
 	public boolean disableExplosionRandomness = true;
@@ -30,6 +31,7 @@ public class ExplosionOverhaulFeature extends Feature {
 	public double blockingDamageScaling = 0.5d;
 	public boolean knockbackScalesWithSize = true;
 	public boolean explosionAtHalfEntity = true;
+	public boolean affectJustSpawnedEntities = false;
 	public boolean enableFlyingBlocks = false;
 
 	public ExplosionOverhaulFeature(Module module) {
@@ -50,6 +52,9 @@ public class ExplosionOverhaulFeature extends Feature {
 		explosionAtHalfEntityConfig = Config.builder
 				.comment("Explosions will start from the middle of the entity instead of feets.")
 				.define("Explosions at Half Entity", explosionAtHalfEntity);
+		affectJustSpawnedEntitiesConfig = Config.builder
+				.comment("Explosions affect even entities spawned by the explosions, like TnTs or chests content. BE AWARE that containers content will most likely get destroyed.")
+				.define("Explosion Affect Just Spawed Entities", this.affectJustSpawnedEntities);
 		enableFlyingBlocksConfig = Config.builder
 				.comment("EXPERIMENTAL! This will make explosion blast blocks away. Blocks that can't land will drop the block as a TNT would have destroyed it.")
 				.define("Enable Flying Blocks", enableFlyingBlocks);
@@ -64,6 +69,7 @@ public class ExplosionOverhaulFeature extends Feature {
         this.blockingDamageScaling = this.blockingDamageScalingConfig.get();
         this.knockbackScalesWithSize = this.knockbackScalesWithSizeConfig.get();
         this.explosionAtHalfEntity = this.explosionAtHalfEntityConfig.get();
+        this.affectJustSpawnedEntities = this.affectJustSpawnedEntitiesConfig.get();
         this.enableFlyingBlocks = this.enableFlyingBlocksConfig.get();
     }
 

@@ -1,8 +1,8 @@
 package insane96mcp.iguanatweaksreborn.modules.misc.world;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
+import insane96mcp.iguanatweaksreborn.modules.Modules;
 import insane96mcp.iguanatweaksreborn.modules.misc.entity.ExplosionFallingBlockEntity;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.iguanatweaksreborn.utils.Reflection;
@@ -12,7 +12,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -123,13 +122,15 @@ public class ITExplosion extends Explosion {
 		float affectedEntitiesRadius = this.size * 2.0F;
 		List<Entity> list = gatherAffectedEntities(affectedEntitiesRadius);
 		for(Entity entity : list) {
+			if (entity.ticksExisted == 0 && !Modules.misc.explosionOverhaul.affectJustSpawnedEntities)
+				continue;
 			if (entity.isImmuneToExplosions())
 				continue;
 			double distanceRatio = (MathHelper.sqrt(entity.getDistanceSq(this.getPosition())) / affectedEntitiesRadius);
 			if (distanceRatio > 1.0D)
 				continue;
 			double xDistance = entity.getPosX() - this.getPosition().x;
-			double yDistance = ((entity instanceof TNTEntity ? entity.getPosY() : (entity.getPosYEye())) - this.getPosition().y) * 0.6667d;
+			double yDistance = (entity.getPosYEye() - this.getPosition().y) * 0.6667d;
 			double zDistance = entity.getPosZ() - this.getPosition().z;
 			double d13 = MathHelper.sqrt(xDistance * xDistance + yDistance * yDistance + zDistance * zDistance);
 			if (d13 == 0.00)
@@ -185,7 +186,7 @@ public class ITExplosion extends Explosion {
 		for(BlockPos blockpos : this.getAffectedBlockPositions()) {
 			BlockState blockstate = this.world.getBlockState(blockpos);
 			if (!blockstate.isAir(this.world, blockpos)) {
-				BlockPos blockpos1 = blockpos.toImmutable();
+				BlockPos immutableBlockPos = blockpos.toImmutable();
 				this.world.getProfiler().startSection("explosion_blocks");
 				if (blockstate.canDropFromExplosion(this.world, blockpos, this) && this.world instanceof ServerWorld) {
 					TileEntity tileentity = blockstate.hasTileEntity() ? this.world.getTileEntity(blockpos) : null;
@@ -193,9 +194,7 @@ public class ITExplosion extends Explosion {
 					if (this.mode == Explosion.Mode.DESTROY) {
 						lootcontext$builder.withParameter(LootParameters.EXPLOSION_RADIUS, this.size);
 					}
-					blockstate.getDrops(lootcontext$builder).forEach((stack) -> {
-						handleExplosionDrops(droppedItems, stack, blockpos1);
-					});
+					blockstate.getDrops(lootcontext$builder).forEach((stack) -> handleExplosionDrops(droppedItems, stack, immutableBlockPos));
 				}
 				blockstate.onBlockExploded(this.world, blockpos, this);
 				this.world.getProfiler().endSection();
