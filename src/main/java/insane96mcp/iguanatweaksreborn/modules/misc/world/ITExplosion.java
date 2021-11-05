@@ -32,6 +32,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.ExplosionContext;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.entity.PartEntity;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -121,8 +122,9 @@ public class ITExplosion extends Explosion {
 	public void processEntities(double blockingDamageReduction, boolean knockbackScaleWithSize) {
 		float affectedEntitiesRadius = this.size * 2.0F;
 		List<Entity> list = gatherAffectedEntities(affectedEntitiesRadius);
+		net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.world, this, list, affectedEntitiesRadius);
 		for(Entity entity : list) {
-			if (entity.ticksExisted == 0 && !Modules.misc.explosionOverhaul.affectJustSpawnedEntities)
+			if (entity.ticksExisted == 0 && !(entity instanceof PartEntity<?>)  && !Modules.misc.explosionOverhaul.affectJustSpawnedEntities)
 				continue;
 			if (entity.isImmuneToExplosions())
 				continue;
@@ -181,7 +183,6 @@ public class ITExplosion extends Explosion {
 	}
 
 	public void destroyBlocks() {
-		net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.world, this, gatherAffectedEntities(this.size * 2.0F), this.size * 2.0F);
 		if (this.mode == Explosion.Mode.NONE)
 			return;
 		Collections.shuffle(this.getAffectedBlockPositions(), this.world.rand);
