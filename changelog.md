@@ -3,13 +3,15 @@
 ## Upcoming
 * Stats
   * Added Crossbow adjustment. Crossbows no longer deal random damage but always ~9 like Bedrock Edition
-  * Shields now give -20% movement speed
+  * Shields now give -20% movement speed. You like begin immune to anything for just one Iron Ingot uh?
 * Explosions Overhaul
   * Fixed explosions causing newly spawned entities to be processed (e.g. Tnts spawned via Explosions or chest content)  
     This can be re-enabled in the config
   * Fixed explosions not dealing damage to entities behind Tile Entities
-  * Reduced knockback taken by non-Living Entities
+  * Reduced knockback taken by non-Living Entities to be about like vanilla
 * Reduced and renamed Eating Speed Multiplier (now Eating Time Multiplier) (0.18 -> 0.15) 
+* Fixed disabling Player Experience feature not disabling it
+* Fixed experience duplicating when dieying after consuming levels
 * Fixed disabling Food Consuming Feature actually disabling nothing
 * Fixed entity black/whitelist in temp spawners not taking into account dimensions
 

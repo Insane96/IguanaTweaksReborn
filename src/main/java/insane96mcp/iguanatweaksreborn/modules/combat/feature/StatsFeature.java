@@ -1,13 +1,11 @@
 package insane96mcp.iguanatweaksreborn.modules.combat.feature;
 
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.modules.combat.classutils.ItemAttributeModifier;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.utils.LogHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -24,7 +22,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.Arrays;
@@ -111,11 +108,6 @@ public class StatsFeature extends Feature {
 			arrow.setIsCritical(false);
 			arrow.setDamage(2.8d);
 		}
-	}
-
-	@SubscribeEvent
-	public void onAttributeEvent(LivingDamageEvent event) {
-		LogHelper.info(IguanaTweaksReborn.LOGGER, "damage: %s", event.getAmount());
 	}
 
 	@SubscribeEvent
