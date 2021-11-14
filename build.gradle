@@ -115,7 +115,8 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.6'
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
-    compile fg.deobf("blank:InsaneLib:${lib_version}-mc${mc_version}")
+    implementation fg.deobf("blank:InsaneLib:${lib_version}-mc${mc_version}")
+    implementation fg.deobf("blank:EvalEx:2.6")
     // compile "some.group:artifact:version"
 
     annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
