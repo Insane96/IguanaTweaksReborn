@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Added Tagging feature
+  * Players hit by a mob (directly or not) will be slowed down by 30% (Slowness II) for 0.15 seconds per half heart of damage (e.g. if you take 3 hearts of damage you get slowed down for 0.9 seconds)
 * Stats
   * Added Crossbow adjustment. Crossbows no longer deal random damage but always ~9 like Bedrock Edition
   * Shields now give -20% movement speed. You like begin immune to anything for just one Iron Ingot uh?
