@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class CropsGrowthFeature extends Feature {
 
 	//TODO Wrong Biome Multiplier
-	//TODO Convert to Datapack
+	//TODO Convert to Datapack-like like MPR
 	private final ForgeConfigSpec.ConfigValue<CropsRequireWater> cropsRequireWaterConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> cropsGrowthMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> noSunlightGrowthMultiplierConfig;

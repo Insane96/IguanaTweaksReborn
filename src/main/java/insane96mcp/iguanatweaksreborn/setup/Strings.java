@@ -29,5 +29,7 @@ public class Strings {
 		public static final String NO_FOOD_FOR_SLEEP = "iguanatweaksreborn.no_food_for_sleep";
 		public static final String DECORATIVE_BEDS = "iguanatweaksreborn.decorative_beds";
 		public static final String ENJOY_THE_NIGHT = "iguanatweaksreborn.enjoy_the_night";
+
+		public static final String ARMOR_SLOWDOWN = "iguanatweaksreborn.armor_slowdown";
 	}
 }

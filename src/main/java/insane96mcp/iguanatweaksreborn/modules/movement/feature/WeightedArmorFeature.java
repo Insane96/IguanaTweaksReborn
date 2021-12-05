@@ -20,8 +20,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -93,6 +93,7 @@ public class WeightedArmorFeature extends Feature {
 		this.enchantmentsList = ArmorEnchantmentWeight.parseEnchantmentStringList(this.enchantmentsListConfig.get());
     }
 
+	//Can't use ItemAttributeModifierEvent as I need all the modifiers of the item (ItemStack#getAttributeModifiers) and that causes a loop
     @SubscribeEvent
     public void playerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END)
@@ -181,7 +182,7 @@ public class WeightedArmorFeature extends Feature {
 		double slowdown = -getArmorSlowdown(stack) * 100d;
 		if (slowdown <= 0d)
 			return;
-		event.getToolTip().add((new StringTextComponent(String.format("%s Kg", Utils.formatDecimal(slowdown, "#.#")))).mergeStyle(TextFormatting.RED));
+		event.getToolTip().add(new TranslationTextComponent(Strings.Translatable.ARMOR_SLOWDOWN, Utils.formatDecimal(slowdown, "#.#")).mergeStyle(TextFormatting.RED));
 	}
 
 	@OnlyIn(Dist.CLIENT)
