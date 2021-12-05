@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.8.2
 * Added Tagging feature
   * Players hit by a mob (directly or not) will be slowed down by 30% (Slowness II) for 0.15 seconds per half heart of damage (e.g. if you take 3 hearts of damage you get slowed down for 0.9 seconds)
 * Stats

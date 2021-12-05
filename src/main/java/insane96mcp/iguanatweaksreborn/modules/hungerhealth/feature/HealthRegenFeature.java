@@ -148,7 +148,7 @@ public class HealthRegenFeature extends Feature {
 		if (!(event.getEntityLiving() instanceof PlayerEntity))
 			return;
 		PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
-		if (event.getSource().damageType.equals("starve") || event.getSource().damageType.equals("drown"))
+		if (event.getSource().equals(DamageSource.STARVE) || event.getSource().equals(DamageSource.DROWN))
 			return;
 		int duration = (int) (event.getAmount() * 4 * 20);
 		if (playerEntity.isPotionActive(ITEffects.INJURED.get()))
