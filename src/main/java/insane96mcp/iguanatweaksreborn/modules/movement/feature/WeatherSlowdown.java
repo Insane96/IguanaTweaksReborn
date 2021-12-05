@@ -83,7 +83,5 @@ public class WeatherSlowdown extends Feature {
 			movementSpeed.removeModifier(Strings.AttributeModifiers.WEATHER_SLOWDOWN_UUID);
 			movementSpeed.applyNonPersistentModifier(modifier);
 		}
-		//TODO Make this a global feature
-		playerEntity.jumpMovementFactor = (float) (0.02f * (movementSpeed.getValue() / movementSpeed.getBaseValue()));
 	}
 }
