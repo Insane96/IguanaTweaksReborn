@@ -10,6 +10,7 @@
   * Fixed explosions not dealing damage to entities behind Tile Entities
   * Reduced knockback taken by non-Living Entities to be about like vanilla
 * Reduced and renamed Eating Speed Multiplier (now Eating Time Multiplier) (0.18 -> 0.15) 
+* Added reagent to re-enable spawners. Disabled by default
 * Fixed disabling Player Experience feature not disabling it
 * Fixed experience duplicating when dieying after consuming levels
 * Fixed disabling Food Consuming Feature actually disabling nothing

@@ -12,17 +12,22 @@ import insane96mcp.insanelib.utils.IdTagMatcher;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.spawner.AbstractSpawner;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,11 +39,13 @@ public class TempSpawnerFeature extends Feature {
     private final ForgeConfigSpec.ConfigValue<Integer> minSpawnableMobsConfig;
     private final ForgeConfigSpec.ConfigValue<Double> spawnableMobsMultiplierConfig;
     private final ForgeConfigSpec.ConfigValue<Boolean> bonusExperienceWhenFarFromSpawnConfig;
+    private final ForgeConfigSpec.ConfigValue<String> reagentItemConfig;
     private final BlacklistConfig entityBlacklistConfig;
 
     public int minSpawnableMobs = 25;
     public double spawnableMobsMultiplier = 1.0d;
     public boolean bonusExperienceWhenFarFromSpawn = true;
+    public Item reagentItem = null;
     public List<IdTagMatcher> entityBlacklist;
     public boolean entityBlacklistAsWhitelist = false;
 
@@ -54,6 +61,9 @@ public class TempSpawnerFeature extends Feature {
         bonusExperienceWhenFarFromSpawnConfig = Config.builder
                 .comment("If true, the spawner will drop more experience when broken based of distance from spawn. +100% every 1024 blocks from spawn. The multiplier from 'Experience From Blocks' Feature still applies.")
                 .define("Bonus experience the farther from spawn", bonusExperienceWhenFarFromSpawn);
+        reagentItemConfig = Config.builder
+                .comment("Set here an item that can be used on spawners and let you re-enable them.")
+                .define("Reagent Item", "");
         entityBlacklistConfig = new BlacklistConfig(Config.builder, "Entity Blacklist", "A list of mobs (and optionally dimensions) that shouldn't have their spawner disabled. Each entry has an entity or entity tag and optionally a dimension. E.g. [\"minecraft:zombie\", \"minecraft:blaze,minecraft:the_nether\"]", Collections.emptyList(), false);
         Config.builder.pop();
     }
@@ -64,6 +74,13 @@ public class TempSpawnerFeature extends Feature {
         this.minSpawnableMobs = this.minSpawnableMobsConfig.get();
         this.spawnableMobsMultiplier = this.spawnableMobsMultiplierConfig.get();
         this.bonusExperienceWhenFarFromSpawn = this.bonusExperienceWhenFarFromSpawnConfig.get();
+
+        ResourceLocation rl = ResourceLocation.tryCreate(this.reagentItemConfig.get());
+        if (rl != null && ForgeRegistries.ITEMS.containsKey(rl))
+            this.reagentItem = ForgeRegistries.ITEMS.getValue(rl);
+        else
+            LogHelper.warn("Reagent item %s not valid or does not exist", this.reagentItemConfig.get());
+
         this.entityBlacklist = IdTagMatcher.parseStringList(this.entityBlacklistConfig.listConfig.get());
         this.entityBlacklistAsWhitelist = this.entityBlacklistConfig.listAsWhitelistConfig.get();
     }
@@ -105,8 +122,30 @@ public class TempSpawnerFeature extends Feature {
         double distance = Math.sqrt(spawnerPos.distanceSq(world.getSpawnPoint()));
         int maxSpawned = (int) ((this.minSpawnableMobs + (distance / 8d)) * this.spawnableMobsMultiplier);
         if (spawnerCap.getSpawnedMobs() >= maxSpawned) {
-            disableSpawner(event.getSpawner());
+            disableSpawner(mobSpawner);
         }
+    }
+
+    @SubscribeEvent
+    public void onItemUse(PlayerInteractEvent.RightClickBlock event) {
+        if (!this.isEnabled())
+            return;
+        if (this.reagentItem == null)
+            return;
+
+        if (event.getWorld().getBlockState(event.getHitVec().getPos()).getBlock() != Blocks.SPAWNER)
+            return;
+
+        MobSpawnerTileEntity spawner = (MobSpawnerTileEntity) event.getWorld().getTileEntity(event.getHitVec().getPos());
+        if (spawner == null)
+            return;
+        if (!isDisabled(spawner))
+            return;
+
+        event.setUseItem(Event.Result.ALLOW);
+        event.getItemStack().shrink(1);
+        event.getPlayer().swing(event.getHand(), true);
+        resetSpawner(spawner);
     }
 
     @SubscribeEvent
@@ -125,8 +164,8 @@ public class TempSpawnerFeature extends Feature {
     public void onTick(MobSpawnerTileEntity spawner) {
         //If the feature is disabled then reactivate disabled spawners and prevent further processing
         if (!this.isEnabled()) {
-            if (isDisabled(spawner.getSpawnerBaseLogic()))
-                enableSpawner(spawner.getSpawnerBaseLogic());
+            if (isDisabled(spawner))
+                enableSpawner(spawner);
             return;
         }
         //If spawnable mobs amount has changed then re-enable the spawner
@@ -137,14 +176,14 @@ public class TempSpawnerFeature extends Feature {
                 LogHelper.error("Something's wrong. The spawner has no capability");
             double distance = Math.sqrt(spawner.getPos().distanceSq(world.getSpawnPoint()));
             int maxSpawned = (int) ((this.minSpawnableMobs + (distance / 8d)) * this.spawnableMobsMultiplier);
-            if (spawnerCap.getSpawnedMobs() < maxSpawned && isDisabled(spawner.getSpawnerBaseLogic())) {
-                enableSpawner(spawner.getSpawnerBaseLogic());
+            if (spawnerCap.getSpawnedMobs() < maxSpawned && isDisabled(spawner)) {
+                enableSpawner(spawner);
             }
         }
         World world = spawner.getWorld();
         CompoundNBT nbt = new CompoundNBT();
         spawner.write(nbt);
-        if (!isDisabled(spawner.getSpawnerBaseLogic()))
+        if (!isDisabled(spawner))
             return;
         if (world == null)
             return;
@@ -156,25 +195,36 @@ public class TempSpawnerFeature extends Feature {
         }
     }
 
-    private static void disableSpawner(AbstractSpawner spawner) {
+    private static void disableSpawner(MobSpawnerTileEntity spawner) {
+        AbstractSpawner abstractSpawner = spawner.getSpawnerBaseLogic();
         CompoundNBT nbt = new CompoundNBT();
-        spawner.write(nbt);
+        abstractSpawner.write(nbt);
         nbt.putShort("MaxNearbyEntities", (short) 0);
         nbt.putShort("RequiredPlayerRange", (short) 0);
-        spawner.read(nbt);
+        abstractSpawner.read(nbt);
     }
 
-    private static void enableSpawner(AbstractSpawner spawner) {
+    private static void enableSpawner(MobSpawnerTileEntity spawner) {
+        AbstractSpawner abstractSpawner = spawner.getSpawnerBaseLogic();
         CompoundNBT nbt = new CompoundNBT();
-        spawner.write(nbt);
+        abstractSpawner.write(nbt);
         nbt.putShort("MaxNearbyEntities", (short) 6);
         nbt.putShort("RequiredPlayerRange", (short) 16);
-        spawner.read(nbt);
+        abstractSpawner.read(nbt);
     }
 
-    private static boolean isDisabled(AbstractSpawner spawner) {
+    private static void resetSpawner(MobSpawnerTileEntity spawner) {
+        enableSpawner(spawner);
+        ISpawner spawnerCap = spawner.getCapability(SpawnerCapability.SPAWNER).orElse(null);
+        if (spawnerCap == null)
+            LogHelper.error("Something's wrong. The spawner has no capability");
+        spawnerCap.setSpawnedMobs(0);
+    }
+
+    private static boolean isDisabled(MobSpawnerTileEntity spawner) {
+        AbstractSpawner abstractSpawner = spawner.getSpawnerBaseLogic();
         CompoundNBT nbt = new CompoundNBT();
-        spawner.write(nbt);
+        abstractSpawner.write(nbt);
         return nbt.getShort("MaxNearbyEntities") == (short) 0 && nbt.getShort("RequiredPlayerRange") == (short) 0;
     }
 }
