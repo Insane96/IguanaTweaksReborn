@@ -78,7 +78,7 @@ public class TempSpawnerFeature extends Feature {
         ResourceLocation rl = ResourceLocation.tryCreate(this.reagentItemConfig.get());
         if (rl != null && ForgeRegistries.ITEMS.containsKey(rl))
             this.reagentItem = ForgeRegistries.ITEMS.getValue(rl);
-        else
+        else if (!this.reagentItemConfig.get().equals(""))
             LogHelper.warn("Reagent item %s not valid or does not exist", this.reagentItemConfig.get());
 
         this.entityBlacklist = IdTagMatcher.parseStringList(this.entityBlacklistConfig.listConfig.get());
