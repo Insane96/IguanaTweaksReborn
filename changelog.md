@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Furter reduced Movement Speed with shields (-20% -> -25%)
 * Fixed reagent item causing warning when not set
 * Fixed Creeper Cena sounds still registered giving a warning
 

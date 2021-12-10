@@ -42,6 +42,7 @@ public class StatsFeature extends Feature {
 	public boolean adjustCrossbowDamage = true;
 	public boolean armorAdjustments = true;
 	public boolean nerfProtectionEnch = false;
+	//TODO Add shield config option? Or rename reduceWeaponDamage to class nerfs
 
 	public StatsFeature(Module module) {
 		super(Config.builder, module);
@@ -120,8 +121,8 @@ public class StatsFeature extends Feature {
 		new ItemAttributeModifier((ResourceLocation) null, SwordItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
 		new ItemAttributeModifier((ResourceLocation) null, AxeItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
 		new ItemAttributeModifier((ResourceLocation) null, TridentItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
-		new ItemAttributeModifier((ResourceLocation) null, ShieldItem.class, EquipmentSlotType.MAINHAND, Attributes.MOVEMENT_SPEED, -0.2d, AttributeModifier.Operation.MULTIPLY_BASE),
-		new ItemAttributeModifier((ResourceLocation) null, ShieldItem.class, EquipmentSlotType.OFFHAND, Attributes.MOVEMENT_SPEED, -0.2d, AttributeModifier.Operation.MULTIPLY_BASE)
+		new ItemAttributeModifier((ResourceLocation) null, ShieldItem.class, EquipmentSlotType.MAINHAND, Attributes.MOVEMENT_SPEED, -0.25d, AttributeModifier.Operation.MULTIPLY_BASE),
+		new ItemAttributeModifier((ResourceLocation) null, ShieldItem.class, EquipmentSlotType.OFFHAND, Attributes.MOVEMENT_SPEED, -0.25d, AttributeModifier.Operation.MULTIPLY_BASE)
 	);
 
 	private void weaponDamageReduction(ItemAttributeModifierEvent event) {

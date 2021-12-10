@@ -116,11 +116,6 @@ public class GlobalHardnessFeature extends Feature {
      * Returns 1d when no changes must be made, else will return a multiplier for block hardness
      */
     public double getBlockGlobalHardness(Block block, ResourceLocation dimensionId) {
-		/*if (Modules.mining.customHardness.isEnabled())
-			for (BlockHardness blockHardness : Modules.mining.customHardness.customHardness)
-				if (blockHardness.matchesBlock(block, dimensionId))
-					return 1d;*/
-
 		//Check for block black/whitelist
 		boolean isInWhitelist = false;
 		boolean isInBlacklist = false;
