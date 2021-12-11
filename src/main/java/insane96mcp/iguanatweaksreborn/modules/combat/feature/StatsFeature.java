@@ -24,7 +24,7 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction")
@@ -34,6 +34,7 @@ public class StatsFeature extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> disableCritArrowsConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> adjustCrossbowDamageConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> armorAdjustmentsConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> shieldSlowdownConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> nerfProtectionEnchConfig;
 
 	public boolean reduceWeaponDamage = true;
@@ -41,15 +42,15 @@ public class StatsFeature extends Feature {
 	public boolean disableCritArrows = true;
 	public boolean adjustCrossbowDamage = true;
 	public boolean armorAdjustments = true;
+	public boolean shieldSlowdown = true;
 	public boolean nerfProtectionEnch = false;
-	//TODO Add shield config option? Or rename reduceWeaponDamage to class nerfs
 
 	public StatsFeature(Module module) {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		reduceWeaponsDamageConfig = Config.builder
 				.comment("If true, Swords, Axes and Tridents get a -1 damage.")
-				.define("Reduced Weapon Damage", reduceWeaponDamage);
+				.define("Reduce Weapon Damage", reduceWeaponDamage);
 		nerfPowerConfig = Config.builder
 				.comment("If true, Power Enchantment will be nerfed to deal half damage.")
 				.define("Nerf Power", this.nerfPower);
@@ -62,6 +63,9 @@ public class StatsFeature extends Feature {
 		armorAdjustmentsConfig = Config.builder
 				.comment("If true, Iron armor gets +0.5 toughness, Netherite gets a total of +2 armor points and Protection is disabled.")
 				.define("Armor Adjustments", armorAdjustments);
+		shieldSlowdownConfig = Config.builder
+				.comment("If true, Shields will slowdown the player by 25%.")
+				.define("Shield Slowdown", shieldSlowdown);
 		nerfProtectionEnchConfig = Config.builder
 				.comment("If true and 'Armor Adjustments' is active, Protection will be re-enabled but with max level set to 3.")
 				.define("Nerf Protection Enchantment", this.nerfProtectionEnch);
@@ -76,7 +80,29 @@ public class StatsFeature extends Feature {
 		this.disableCritArrows = this.disableCritArrowsConfig.get();
 		this.adjustCrossbowDamage = this.adjustCrossbowDamageConfig.get();
 		this.armorAdjustments = this.armorAdjustmentsConfig.get();
+		this.shieldSlowdown = this.shieldSlowdownConfig.get();
 		this.nerfProtectionEnch = this.nerfProtectionEnchConfig.get();
+
+		CLASS_ATTRIBUTE_MODIFIER.clear();
+		if (this.reduceWeaponDamage) {
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier((ResourceLocation) null, SwordItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier((ResourceLocation) null, AxeItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier((ResourceLocation) null, TridentItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
+		}
+		if (this.shieldSlowdown) {
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier((ResourceLocation) null, ShieldItem.class, EquipmentSlotType.MAINHAND, Attributes.MOVEMENT_SPEED, -0.25d, AttributeModifier.Operation.MULTIPLY_BASE));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier((ResourceLocation) null, ShieldItem.class, EquipmentSlotType.OFFHAND, Attributes.MOVEMENT_SPEED, -0.25d, AttributeModifier.Operation.MULTIPLY_BASE));
+		}
+
+		ITEM_ATTRIBUTE_MODIFIER.clear();
+		if (this.armorAdjustments) {
+			ITEM_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier("minecraft:iron_helmet", null, EquipmentSlotType.HEAD, Attributes.ARMOR_TOUGHNESS, 0.5f, AttributeModifier.Operation.ADDITION));
+			ITEM_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier("minecraft:iron_chestplate", null, EquipmentSlotType.CHEST, Attributes.ARMOR_TOUGHNESS, 0.5f, AttributeModifier.Operation.ADDITION));
+			ITEM_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier("minecraft:iron_leggings", null, EquipmentSlotType.LEGS, Attributes.ARMOR_TOUGHNESS, 0.5f, AttributeModifier.Operation.ADDITION));
+			ITEM_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier("minecraft:iron_boots", null, EquipmentSlotType.FEET, Attributes.ARMOR_TOUGHNESS, 0.5f, AttributeModifier.Operation.ADDITION));
+			ITEM_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier("minecraft:netherite_helmet", null, EquipmentSlotType.HEAD, Attributes.ARMOR, 1f, AttributeModifier.Operation.ADDITION));
+			ITEM_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier("minecraft:netherite_boots", null, EquipmentSlotType.FEET, Attributes.ARMOR, 1f, AttributeModifier.Operation.ADDITION));
+		}
 	}
 
 	@SubscribeEvent
@@ -113,23 +139,16 @@ public class StatsFeature extends Feature {
 
 	@SubscribeEvent
 	public void onAttributeEvent(ItemAttributeModifierEvent event) {
-		weaponDamageReduction(event);
-		armorAdjustments(event);
-	}
-
-	public static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = Arrays.asList(
-		new ItemAttributeModifier((ResourceLocation) null, SwordItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
-		new ItemAttributeModifier((ResourceLocation) null, AxeItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
-		new ItemAttributeModifier((ResourceLocation) null, TridentItem.class, EquipmentSlotType.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
-		new ItemAttributeModifier((ResourceLocation) null, ShieldItem.class, EquipmentSlotType.MAINHAND, Attributes.MOVEMENT_SPEED, -0.25d, AttributeModifier.Operation.MULTIPLY_BASE),
-		new ItemAttributeModifier((ResourceLocation) null, ShieldItem.class, EquipmentSlotType.OFFHAND, Attributes.MOVEMENT_SPEED, -0.25d, AttributeModifier.Operation.MULTIPLY_BASE)
-	);
-
-	private void weaponDamageReduction(ItemAttributeModifierEvent event) {
 		if (!this.isEnabled())
 			return;
-		if (!this.reduceWeaponDamage)
-			return;
+
+		classAttributeModifiers(event);
+		itemAttributeModifiers(event);
+	}
+
+	public static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = new ArrayList<>();
+
+	private void classAttributeModifiers(ItemAttributeModifierEvent event) {
 		for (ItemAttributeModifier itemAttributeModifier : CLASS_ATTRIBUTE_MODIFIER) {
 			if (itemAttributeModifier.itemClass.equals(event.getItemStack().getItem().getClass()) && itemAttributeModifier.slot.equals(event.getSlotType())) {
 				AttributeModifier modifier = new AttributeModifier(Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER_UUID, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
@@ -138,20 +157,9 @@ public class StatsFeature extends Feature {
 		}
 	}
 
-	public static final List<ItemAttributeModifier> ITEM_ATTRIBUTE_MODIFIER = Arrays.asList(
-		new ItemAttributeModifier("minecraft:iron_helmet", null, EquipmentSlotType.HEAD, Attributes.ARMOR_TOUGHNESS, 0.5f, AttributeModifier.Operation.ADDITION),
-		new ItemAttributeModifier("minecraft:iron_chestplate", null, EquipmentSlotType.CHEST, Attributes.ARMOR_TOUGHNESS, 0.5f, AttributeModifier.Operation.ADDITION),
-		new ItemAttributeModifier("minecraft:iron_leggings", null, EquipmentSlotType.LEGS, Attributes.ARMOR_TOUGHNESS, 0.5f, AttributeModifier.Operation.ADDITION),
-		new ItemAttributeModifier("minecraft:iron_boots", null, EquipmentSlotType.FEET, Attributes.ARMOR_TOUGHNESS, 0.5f, AttributeModifier.Operation.ADDITION),
-		new ItemAttributeModifier("minecraft:netherite_helmet", null, EquipmentSlotType.HEAD, Attributes.ARMOR, 1f, AttributeModifier.Operation.ADDITION),
-		new ItemAttributeModifier("minecraft:netherite_boots", null, EquipmentSlotType.FEET, Attributes.ARMOR, 1f, AttributeModifier.Operation.ADDITION)
-	);
+	public static final List<ItemAttributeModifier> ITEM_ATTRIBUTE_MODIFIER = new ArrayList<>();
 
-	private void armorAdjustments(ItemAttributeModifierEvent event) {
-		if (!this.isEnabled())
-			return;
-		if (!this.armorAdjustments)
-			return;
+	private void itemAttributeModifiers(ItemAttributeModifierEvent event) {
 		for (ItemAttributeModifier itemAttributeModifier : ITEM_ATTRIBUTE_MODIFIER) {
 			if (itemAttributeModifier.itemId.equals(event.getItemStack().getItem().getRegistryName()) && itemAttributeModifier.slot.equals(event.getSlotType())) {
 				AttributeModifier modifier = new AttributeModifier(Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER_UUID, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
