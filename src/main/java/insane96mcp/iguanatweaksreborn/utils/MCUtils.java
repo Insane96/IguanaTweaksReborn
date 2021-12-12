@@ -92,12 +92,4 @@ public class MCUtils {
 
 		return new EffectInstance(ForgeRegistries.POTIONS.getValue(potion), duration, amplifier, true, true);
 	}
-
-	public static boolean hurtIgnoreInvuln(LivingEntity hurtEntity, DamageSource source, float amount) {
-		int hurtResistantTime = hurtEntity.hurtResistantTime;
-		hurtEntity.hurtResistantTime = 0;
-		boolean attacked = hurtEntity.attackEntityFrom(source, amount);
-		hurtEntity.hurtResistantTime = hurtResistantTime;
-		return attacked;
-	}
 }
