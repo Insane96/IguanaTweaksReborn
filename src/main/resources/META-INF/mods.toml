@@ -1,12 +1,12 @@
-modLoader = "javafml"
-loaderVersion = "[36,)"
-license = "MIT License"
-issueTrackerURL="https://github.com/Insane96/IguanaTweaksReborn/issues"
+modLoader="javafml"
+loaderVersion="[39,)"
+license="All rights reserved"
 [[mods]]
-modId = "iguanatweaksreborn"
-version = "${file.jarVersion}"
-displayName = "IguanaTweaks Reborn"
-displayURL = "https://www.curseforge.com/minecraft/mc-mods/iguanatweaks-reborn"
+modId="iguanatweaksreborn"
+version="${file.jarVersion}"
+displayName="Iguana Tweaks Reborn"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/iguanatweaks-reborn"
+#logoFile="examplemod.png"
 credits = "Thanks to Iguana for the original Mod"
 authors = "Insane96MCP"
 description = '''
@@ -19,20 +19,15 @@ itemIcon = "minecraft:golden_hoe"
 configBackground = "minecraft:textures/block/cobblestone.png"
 
 [[dependencies.iguanatweaksreborn]]
-modId = "forge"
-mandatory = true
-versionRange = "[36,)"
-ordering = "NONE"
-side = "BOTH"
+    modId="forge"
+    mandatory=true
+    versionRange="[39,)"
+    ordering="NONE"
+    side="BOTH"
+
 [[dependencies.iguanatweaksreborn]]
-modId = "insanelib"
-mandatory = true
-versionRange = "[1.3.2,)"
-ordering = "NONE"
-side = "BOTH"
-[[dependencies.iguanatweaksreborn]]
-modId = "minecraft"
-mandatory = true
-versionRange = "[1.16.5,)"
-ordering = "NONE"
-side = "BOTH"
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18.1,1.19)"
+    ordering="NONE"
+    side="BOTH"

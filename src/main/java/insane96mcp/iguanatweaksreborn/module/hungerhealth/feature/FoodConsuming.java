@@ -1,16 +1,15 @@
-package insane96mcp.iguanatweaksreborn.modules.hungerhealth.feature;
+package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import net.minecraft.item.Food;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 @Label(name = "Food Consuming", description = "Changes to the speed on how food is eaten or how items are consumed.")
-public class FoodConsumingFeature extends Feature {
-
+public class FoodConsuming extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> fasterPotionConsumingConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> fasterMilkConsumingConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> eatingSpeedBasedOffFoodConfig;
@@ -21,7 +20,7 @@ public class FoodConsumingFeature extends Feature {
 	public boolean eatingSpeedBasedOffFood = true;
 	public double eatingTimeMultiplier = 0.15d;
 
-	public FoodConsumingFeature(Module module) {
+	public FoodConsuming(Module module) {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		fasterPotionConsumingConfig = Config.builder
@@ -49,13 +48,13 @@ public class FoodConsumingFeature extends Feature {
 	}
 
 	public int getFoodConsumingTime(ItemStack stack) {
-		Food food = stack.getItem().getFood();
-		float time = 32 * ((food.getHealing() + (food.getHealing() * food.getSaturation() * 2)));
-		if (food.isFastEating())
+		FoodProperties food = stack.getItem().getFoodProperties();
+		float time = 32 * ((food.getNutrition() + (food.getNutrition() * food.getSaturationModifier() * 2)));
+		if (food.isFastFood())
 			time /= 2;
 		time *= this.eatingTimeMultiplier;
 
-		int minTime = food.isFastEating() ? 16 : 32;
+		int minTime = food.isFastFood() ? 16 : 32;
 		return (int) Math.max(time, minTime);
 	}
 }
