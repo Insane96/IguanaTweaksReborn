@@ -2,7 +2,9 @@
 
 ## Alpha 3.0.0
 * Porting to 1.18
-* Added back the Hunger & Health module, still missing all the other modules
+* Experience
+  * Global Experience
+    * Fixed experience multiplier applying every time a xp orb is loaded
 
 ## 2.8.3
 * Furter reduced Movement Speed with shields (-20% -> -25%)

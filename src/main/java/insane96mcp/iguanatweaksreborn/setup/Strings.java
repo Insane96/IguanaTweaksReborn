@@ -10,6 +10,8 @@ public class Strings {
 		public static final String SPAWNED_MOBS = IguanaTweaksReborn.RESOURCE_PREFIX + "spawned_mobs";
 		public static final String TEMPORARY_SPAWNER = IguanaTweaksReborn.RESOURCE_PREFIX + "temporary_spawner";
 		public static final String TIME_SINCE_LAST_SWING = IguanaTweaksReborn.RESOURCE_PREFIX + "ticks_since_last_swing";
+
+		public static final String XP_PROCESSED = IguanaTweaksReborn.RESOURCE_PREFIX + "xp_processed";
 	}
 
 	public static class AttributeModifiers {

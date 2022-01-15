@@ -7,6 +7,7 @@
 		"FoodDataMixin",
 		"ItemMixin",
 		"MilkBucketItemMixin",
+		"PlayerMixin",
 		"PotionItemMixin"
 	],
 	"minVersion": "0.8"
