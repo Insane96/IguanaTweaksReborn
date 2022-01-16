@@ -1,16 +1,18 @@
 # Changelog
 
-## Alpha 3.0.0
-* Porting to 1.18
+## Upcoming
+* Port to 1.18, requires InsaneLib 1.4.3
+* Misc
+    * Tool Nerf
+      * Added nerf to Tools Efficiency. Reduces Wooden and Stone tools efficiency by 25% and Diamond tools by 10%
+    * Explosion Overhaul
+        * Lowered particles from Enable Poof Particles
 * Experience
   * Global Experience
     * Fixed experience multiplier applying every time a xp orb is loaded
-* Misc
-  * Explosion Overhaul
-    * Lowered particles from Enable Poof Particles
 
 ## 2.8.3
-* Furter reduced Movement Speed with shields (-20% -> -25%)
+* Reduced even more Movement Speed with shields (-20% -> -25%)
 * Shield slowdown can now be properly disabled instead of being disabled via 'Reduce Weapon Damage'
 * Fixed reagent item causing warning when not set
 * Fixed Creeper Cena sounds still registered giving a warning
