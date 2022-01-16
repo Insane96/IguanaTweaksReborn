@@ -4,11 +4,12 @@
 * Port to 1.18, requires InsaneLib 1.4.3
 * Misc
     * Tool Nerf
-      * Added nerf to Tools Efficiency. Reduces Wooden and Stone tools efficiency by 25% and Diamond tools by 10%
+      * Added nerf to Tools Efficiency. Reduces Wooden and Stone tools efficiency by 25% and Iron and Diamond tools by 10%
       * Decreased Wooden Axe durability (10 -> 8)
       * Decreased Stone Axe and Shovel Durability (50 -> 48)
       * Decreased Stone Hoe durability (6 -> 3)
       * Increased Stone Pickaxe Durability (6 -> 7)
+      * Iron Tools and Sword have increased durability (250 -> 375)
     * Explosion Overhaul
         * Lowered particles from Enable Poof Particles
 * Experience

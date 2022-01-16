@@ -18,26 +18,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Tool Nerf", description = "Less durable and efficient tools. Changing this config options requires a Minecraft restart")
-public class ToolNerf extends Feature {
+@Label(name = "Tool Stats", description = "Less durable and efficient tools. Changing this config's options requires a Minecraft restart")
+public class ToolStats extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> toolsDurabilityConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> toolsEfficiencyConfig;
 
 	private final List<String> toolsDurabilityDefault = Arrays.asList(
 			"minecraft:wooden_sword,1", "minecraft:wooden_pickaxe,1", "minecraft:wooden_shovel,1", "minecraft:wooden_hoe,1", "minecraft:wooden_axe,8",
-			"minecraft:stone_sword,6", "minecraft:stone_pickaxe,7", "minecraft:stone_shovel,48", "minecraft:stone_hoe,3", "minecraft:stone_axe,48"
+			"minecraft:stone_sword,6", "minecraft:stone_pickaxe,7", "minecraft:stone_shovel,48", "minecraft:stone_hoe,3", "minecraft:stone_axe,48",
+			"minecraft:iron_sword,375", "minecraft:iron_pickaxe,375", "minecraft:iron_shovel,375", "minecraft:iron_hoe,375", "minecraft:iron_axe,375"
 	);
 
 	private final List<String> toolEfficiencyDefault = Arrays.asList(
 			"minecraft:wooden_pickaxe,0.75", "minecraft:wooden_shovel,0.75", "minecraft:wooden_hoe,0.75", "minecraft:wooden_axe,0.75",
 			"minecraft:stone_pickaxe,0.75", "minecraft:stone_shovel,0.75", "minecraft:stone_hoe,0.75", "minecraft:stone_axe,0.75",
+			"minecraft:iron_pickaxe,0.9", "minecraft:iron_shovel,0.9", "minecraft:iron_hoe,0.9", "minecraft:iron_axe,0.9",
 			"minecraft:diamond_pickaxe,0.9", "minecraft:diamond_shovel,0.9", "minecraft:diamond_hoe,0.9", "minecraft:diamond_axe,0.9"
 	);
 
 	public ArrayList<ToolDurabilityModifier> toolDurabilityModifiers;
 	public ArrayList<ToolEfficiencyModifier> toolEfficiencyModifiers;
 
-	public ToolNerf(Module module) {
+	public ToolStats(Module module) {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		toolsDurabilityConfig = Config.builder
