@@ -5,6 +5,9 @@
 * Experience
   * Global Experience
     * Fixed experience multiplier applying every time a xp orb is loaded
+* Misc
+  * Explosion Overhaul
+    * Lowered particles from Enable Poof Particles
 
 ## 2.8.3
 * Furter reduced Movement Speed with shields (-20% -> -25%)
