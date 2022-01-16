@@ -24,8 +24,8 @@ public class ToolNerf extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> toolsEfficiencyConfig;
 
 	private final List<String> toolsDurabilityDefault = Arrays.asList(
-			"minecraft:wooden_sword,1", "minecraft:wooden_pickaxe,1", "minecraft:wooden_shovel,1", "minecraft:wooden_hoe,1", "minecraft:wooden_axe,10",
-			"minecraft:stone_sword,6", "minecraft:stone_pickaxe,6", "minecraft:stone_shovel,50", "minecraft:stone_hoe,6", "minecraft:stone_axe,50"
+			"minecraft:wooden_sword,1", "minecraft:wooden_pickaxe,1", "minecraft:wooden_shovel,1", "minecraft:wooden_hoe,1", "minecraft:wooden_axe,8",
+			"minecraft:stone_sword,6", "minecraft:stone_pickaxe,7", "minecraft:stone_shovel,48", "minecraft:stone_hoe,3", "minecraft:stone_axe,48"
 	);
 
 	private final List<String> toolEfficiencyDefault = Arrays.asList(
