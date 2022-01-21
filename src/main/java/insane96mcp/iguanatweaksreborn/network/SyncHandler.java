@@ -26,18 +26,26 @@ public class SyncHandler {
 
 	public static void init() {
 		CHANNEL.registerMessage(1, MessageExhaustionSync.class, MessageExhaustionSync::encode, MessageExhaustionSync::decode, MessageExhaustionSync::handle);
+		CHANNEL.registerMessage(2, MessageSaturationSync.class, MessageSaturationSync::encode, MessageSaturationSync::decode, MessageSaturationSync::handle);
 		MinecraftForge.EVENT_BUS.register(new SyncHandler());
 	}
 
 	/*
-	 * Sync exhaustion (vanilla MC does not sync it)
+	 * Sync exhaustion & saturation
 	 */
 	private static final Map<UUID, Float> lastExhaustionLevels = new HashMap<>();
+	private static final Map<UUID, Float> lastSaturationLevels = new HashMap<>();
 
 	@SubscribeEvent
 	public void onLivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
 		if (!(event.getEntity() instanceof ServerPlayer player))
 			return;
+		Float lastSaturationLevel = lastSaturationLevels.get(player.getUUID());
+		if (lastSaturationLevel == null || lastSaturationLevel != player.getFoodData().getSaturationLevel()) {
+			Object msg = new MessageSaturationSync(player.getFoodData().getSaturationLevel());
+			CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+			lastSaturationLevels.put(player.getUUID(), player.getFoodData().getSaturationLevel());
+		}
 		Float lastExhaustionLevel = lastExhaustionLevels.get(player.getUUID());
 		float exhaustionLevel = player.getFoodData().exhaustionLevel;
 		if (lastExhaustionLevel == null || Math.abs(lastExhaustionLevel - exhaustionLevel) >= 0.01f) {
@@ -52,5 +60,6 @@ public class SyncHandler {
 		if (!(event.getPlayer() instanceof ServerPlayer))
 			return;
 		lastExhaustionLevels.remove(event.getPlayer().getUUID());
+		lastSaturationLevels.remove(event.getPlayer().getUUID());
 	}
 }
