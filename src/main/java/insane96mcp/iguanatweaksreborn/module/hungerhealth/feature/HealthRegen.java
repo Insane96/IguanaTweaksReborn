@@ -36,6 +36,7 @@ public class HealthRegen extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Integer> starveDamageConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> disableSaturationRegenBoostConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> consumeHungerOnlyConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> maxExhaustionConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> hungerConsumptionChanceConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> enableWellFedConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> enableInjuredConfig;
@@ -48,6 +49,7 @@ public class HealthRegen extends Feature {
 	public int starveDamage = 1;
 	public boolean disableSaturationRegenBoost = false;
 	public boolean consumeHungerOnly = false;
+	public double maxExhaustion = 4.0;
 	public double hungerConsumptionChance = 0;
 	public boolean enableWellFed = false;
 	public boolean enableInjured = false;
@@ -77,6 +79,9 @@ public class HealthRegen extends Feature {
 		consumeHungerOnlyConfig = Config.builder
 				.comment("Set to true to consume Hunger only (and not saturation) when regenerating health (false for Vanilla and Iguana Tweaks presets; true for Combat Test).")
 				.define("Consume Hunger Only", this.consumeHungerOnly);
+		maxExhaustionConfig = Config.builder
+				.comment("Vanilla consumes 1 saturation or hunger whenever Exhaustion reaches 4.0. You can change that value with this config option.")
+				.defineInRange("Max Exhaustion", this.maxExhaustion, 0d, Double.MAX_VALUE);
 		disableSaturationRegenBoostConfig = Config.builder
 				.comment("Set to true to disable the health regen boost given when max hunger and saturation (false for Vanilla; true for Combat Test and IguanaTweaks Presets).")
 				.define("Disable Saturation Regen Boost", this.disableSaturationRegenBoost);
@@ -107,6 +112,7 @@ public class HealthRegen extends Feature {
 				this.starveDamage = this.starveDamageConfig.get();
 				this.disableSaturationRegenBoost = this.disableSaturationRegenBoostConfig.get();
 				this.consumeHungerOnly = this.consumeHungerOnlyConfig.get();
+				this.maxExhaustion = this.maxExhaustionConfig.get();
 				this.hungerConsumptionChance = this.hungerConsumptionChanceConfig.get();
 				this.enableWellFed = this.enableWellFedConfig.get();
 				this.enableInjured = this.enableInjuredConfig.get();
@@ -119,6 +125,7 @@ public class HealthRegen extends Feature {
 				this.starveDamage = 1;
 				this.disableSaturationRegenBoost = true;
 				this.consumeHungerOnly = true;
+				this.maxExhaustion = 4d;
 				this.hungerConsumptionChance = 0.5d;
 				this.enableWellFed = false;
 				this.enableInjured = false;
@@ -131,6 +138,7 @@ public class HealthRegen extends Feature {
 				this.starveDamage = 1;
 				this.disableSaturationRegenBoost = true;
 				this.consumeHungerOnly = false;
+				this.maxExhaustion = 4d;
 				this.hungerConsumptionChance = 0d;
 				this.enableWellFed = true;
 				this.enableInjured = true;
@@ -196,8 +204,8 @@ public class HealthRegen extends Feature {
 			return false;
 		Difficulty difficulty = player.level.getDifficulty();
 		foodStats.lastFoodLevel = foodStats.getFoodLevel();
-		if (foodStats.exhaustionLevel > 4.0F) {
-			foodStats.exhaustionLevel -= 4.0F;
+		if (foodStats.exhaustionLevel > this.maxExhaustion) {
+			foodStats.exhaustionLevel -= this.maxExhaustion;
 			if (foodStats.saturationLevel > 0.0F) {
 				foodStats.saturationLevel = Math.max(foodStats.saturationLevel - 1.0F, 0.0F);
 			}
@@ -225,7 +233,7 @@ public class HealthRegen extends Feature {
 				foodStats.tickTimer = 0;
 			}
 		}
-		if (naturalRegen && foodStats.foodLevel > this.regenWhenFoodAbove /*>= 18*/ && player.isHurt()) {
+		else if (naturalRegen && foodStats.foodLevel > this.regenWhenFoodAbove /*>= 18*/ && player.isHurt()) {
 			++foodStats.tickTimer;
 			if (foodStats.tickTimer >= getRegenSpeed(player) /*80*/) {
 				player.heal(1.0F);
