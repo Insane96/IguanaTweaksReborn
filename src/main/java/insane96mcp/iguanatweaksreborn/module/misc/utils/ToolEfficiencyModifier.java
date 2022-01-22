@@ -44,7 +44,7 @@ public class ToolEfficiencyModifier extends IdTagMatcher {
 		return new ToolEfficiencyModifier(item, efficiencyMultiplier);
 	}
 
-	public static ArrayList<ToolEfficiencyModifier> parseList(List<? extends String> list) {
+	public static ArrayList<? extends IdTagMatcher> parseStringList(List<? extends String> list) {
 		ArrayList<ToolEfficiencyModifier> toolEfficiencyModifiers = new ArrayList<>();
 		for (String line : list) {
 			ToolEfficiencyModifier toolEfficiencyModifier = ToolEfficiencyModifier.parseLine(line);

@@ -51,8 +51,8 @@ public class FoodHunger extends Feature {
 		super.loadConfig();
 		this.foodHungerMultiplier = this.foodHungerMultiplierConfig.get();
 		this.foodSaturationMultiplier = this.foodSaturationMultiplierConfig.get();
-		this.customFoodValues = CustomFoodProperties.parseList(this.customFoodValueConfig.get());
-		this.foodBlacklist = IdTagMatcher.parseStringList(this.foodBlacklistConfig.listConfig.get());
+		this.customFoodValues = CustomFoodProperties.parseStringList(this.customFoodValueConfig.get());
+		this.foodBlacklist = (ArrayList<IdTagMatcher>) IdTagMatcher.parseStringList(this.foodBlacklistConfig.listConfig.get());
 		this.foodBlacklistAsWhitelist = this.foodBlacklistConfig.listAsWhitelistConfig.get();
 
 		processFoodMultipliers();

@@ -44,7 +44,7 @@ public class ToolDurabilityModifier extends IdTagMatcher {
 		return new ToolDurabilityModifier(item, durability);
 	}
 
-	public static ArrayList<ToolDurabilityModifier> parseList(List<? extends String> list) {
+	public static ArrayList<? extends IdTagMatcher> parseStringList(List<? extends String> list) {
 		ArrayList<ToolDurabilityModifier> toolDurabilityModifiers = new ArrayList<>();
 		for (String line : list) {
 			ToolDurabilityModifier toolDurabilityModifier = ToolDurabilityModifier.parseLine(line);

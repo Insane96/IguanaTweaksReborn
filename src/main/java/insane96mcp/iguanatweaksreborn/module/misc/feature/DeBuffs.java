@@ -43,7 +43,7 @@ public class DeBuffs extends Feature {
 	@Override
 	public void loadConfig() {
 		super.loadConfig();
-		deBuffs = DeBuff.parseStringList(deBuffsConfig.get());
+		deBuffs = (ArrayList<DeBuff>) DeBuff.parseStringList(deBuffsConfig.get());
 	}
 
 	@SubscribeEvent

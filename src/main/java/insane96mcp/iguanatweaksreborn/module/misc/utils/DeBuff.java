@@ -107,7 +107,7 @@ public class DeBuff {
 		return new DeBuff(stat, min, max, effect, amplifier);
 	}
 
-	public static ArrayList<DeBuff> parseStringList(List<? extends String> list) {
+	public static ArrayList<? extends DeBuff> parseStringList(List<? extends String> list) {
 		ArrayList<DeBuff> deBuffs = new ArrayList<>();
 		for (String line : list) {
 			DeBuff deBuff = DeBuff.parseLine(line);
