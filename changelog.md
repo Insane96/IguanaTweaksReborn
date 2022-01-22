@@ -31,7 +31,7 @@
     * Added a Max Exhaustion config option
 * Movement
   * Tagging
-    * Increased slowdown duration when hit (3 -> 5 ticks for each half health of damage taken)
+    * Increased slowdown duration when hit (0.15 -> 0.25 seconds for each half heart of damage taken)
 * Experience
   * Global Experience
     * Fixed experience multiplier applying every time a xp orb is loaded
