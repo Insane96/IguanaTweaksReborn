@@ -230,11 +230,12 @@ public class HealthRegenFeature extends Feature {
 			++foodStats.foodTimer;
 			if (foodStats.foodTimer >= getRegenSpeed(player) /*80*/) {
 				player.heal(1.0F);
-				if (this.consumeHungerOnly)
+				if (this.consumeHungerOnly) {
 					if (player.world.rand.nextDouble() < 0.5d)
 						addHunger(foodStats, -1);
-					else
-						foodStats.addExhaustion(6.0F);
+				}
+				else
+					foodStats.addExhaustion(6.0F);
 				foodStats.foodTimer = 0;
 			}
 		}

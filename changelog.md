@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed a bug where the Combat Update preset would consume Saturation to regenerate health.
+
 ## 2.8.3
 * Furter reduced Movement Speed with shields (-20% -> -25%)
 * Shield slowdown can now be properly disabled instead of being disabled via 'Reduce Weapon Damage'
