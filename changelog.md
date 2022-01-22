@@ -20,6 +20,8 @@
   * Explosion Overhaul
     * Lowered particles from Enable Poof Particles
 * Mining
+  * Added Insta-Mine Silverfish
+    * Makes Infested blocks insta-mine like pre-1.17
   * Global Hardness
     * Reduced Global Hardness Multiplier (4x in every dimension -> 2.5x in the Overworld and 4x in other dimensions)
     * Changed Depth hardness in the Overworld (0.04x per block below sea level down to Y=12 -> 0.02x per block below sea level down to Y=0)
