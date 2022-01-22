@@ -18,7 +18,7 @@ public class FoodConsuming extends Feature {
 	public boolean fasterPotionConsuming = true;
 	public boolean fasterMilkConsuming = true;
 	public boolean eatingSpeedBasedOffFood = true;
-	public double eatingTimeMultiplier = 0.125d;
+	public double eatingTimeMultiplier = 0.13d;
 
 	public FoodConsuming(Module module) {
 		super(Config.builder, module);

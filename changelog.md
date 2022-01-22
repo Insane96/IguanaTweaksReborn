@@ -1,6 +1,7 @@
 # Changelog
 
-## Upcoming
+## Upcoming 
+(Lines with [1.16] at the end will be backported to 1.16)
 * Port to 1.18, requires InsaneLib 1.4.3
 * Added a DataPack to get more features
   * Raw Iron smelts to nuggets, so you must find more Iron Ore to get your first Iron Tools (Iron Ore still smelts to 1 ingot, this makes Silk touch the enchantment for Iron)
@@ -24,6 +25,7 @@
   * Food Consuming
     * Sped up eating speed (Reduced eating time multiplier (0.15 -> 0.13))
   * Health Regen
+    * Fixed a bug where with the Combat Update preset would consume Saturation to regenerate health. [1.16]
     * Added a Max Exhaustion config option
 * Experience
   * Global Experience

@@ -52,7 +52,7 @@ public class CustomFoodProperties {
 		return new CustomFoodProperties(item, nutrition, saturationModifier);
 	}
 
-	public static ArrayList<CustomFoodProperties> parseList(List<? extends String> list) {
+	public static ArrayList<CustomFoodProperties> parseStringList(List<? extends String> list) {
 		ArrayList<CustomFoodProperties> foodValues = new ArrayList<>();
 		for (String line : list) {
 			CustomFoodProperties customFoodValue = CustomFoodProperties.parseLine(line);
