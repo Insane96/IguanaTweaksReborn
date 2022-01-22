@@ -2,7 +2,6 @@ package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.ITEffects;
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -205,7 +204,6 @@ public class HealthRegen extends Feature {
 			return false;
 		Difficulty difficulty = player.level.getDifficulty();
 		foodStats.lastFoodLevel = foodStats.getFoodLevel();
-		LogHelper.info("%s %s %s", foodStats.foodLevel, foodStats.saturationLevel, foodStats.exhaustionLevel);
 		if (foodStats.exhaustionLevel > this.maxExhaustion) {
 			foodStats.exhaustionLevel -= this.maxExhaustion;
 			if (foodStats.saturationLevel > 0.0F) {

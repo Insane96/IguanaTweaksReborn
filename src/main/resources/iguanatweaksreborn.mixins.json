@@ -4,11 +4,13 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "iguanatweaksreborn.refmap.json",
 	"mixins": [
+		"EnchantmentMixin",
 		"FoodDataMixin",
 		"ItemMixin",
 		"MilkBucketItemMixin",
 		"PlayerMixin",
-		"PotionItemMixin"
+		"PotionItemMixin",
+		"ProtectionEnchantmentMixin"
 	],
 	"minVersion": "0.8"
 }

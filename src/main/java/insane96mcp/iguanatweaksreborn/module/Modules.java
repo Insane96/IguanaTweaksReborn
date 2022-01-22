@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module;
 
+import insane96mcp.iguanatweaksreborn.module.combat.Combat;
 import insane96mcp.iguanatweaksreborn.module.experience.Experience;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.HungerHealth;
 import insane96mcp.iguanatweaksreborn.module.mining.Mining;
@@ -11,12 +12,14 @@ public class Modules {
 	public static Experience experience;
 	public static Misc misc;
 	public static Mining mining;
+	public static Combat combat;
 
 	public static void init() {
 		hungerHealth = new HungerHealth();
 		experience = new Experience();
 		misc = new Misc();
 		mining = new Mining();
+		combat = new Combat();
 	}
 
 	public static void loadConfig() {
@@ -24,5 +27,6 @@ public class Modules {
 		experience.loadConfig();
 		misc.loadConfig();
 		mining.loadConfig();
+		combat.loadConfig();
 	}
 }
