@@ -59,6 +59,9 @@ public class DeBuffs extends Feature {
 
 		ServerPlayer player = (ServerPlayer) event.player;
 
+		if (!player.isAlive())
+			return;
+
 		if (player.tickCount % 20 != 0)
 			return;
 
