@@ -31,6 +31,6 @@ public class TaggingFeature extends Feature {
 			return;
 		PlayerEntity playerEntity = (PlayerEntity) event.getEntity();
 		if (event.getSource().getTrueSource() instanceof LivingEntity)
-			playerEntity.addPotionEffect(new EffectInstance(Effects.SLOWNESS, (int) (event.getAmount() * 3), 1, false, false, true));
+			playerEntity.addPotionEffect(new EffectInstance(Effects.SLOWNESS, (int) (event.getAmount() * 5), 1, false, false, true));
 	}
 }

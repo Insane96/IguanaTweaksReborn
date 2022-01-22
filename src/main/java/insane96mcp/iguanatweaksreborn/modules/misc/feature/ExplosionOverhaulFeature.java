@@ -84,7 +84,7 @@ public class ExplosionOverhaulFeature extends Feature {
         Explosion e = event.getExplosion();
         if (e.world instanceof ServerWorld && !e.getAffectedBlockPositions().isEmpty()) {
             ServerWorld world = (ServerWorld) e.world;
-            int particleCount = (int)(e.size * 200);
+            int particleCount = (int)(e.size * 150);
             world.spawnParticle(ParticleTypes.POOF, e.getPosition().x, e.getPosition().y, e.getPosition().z, particleCount, e.size / 4f, e.size / 4f, e.size / 4f, 0.33D);
         }
     }
