@@ -1,12 +1,14 @@
 # Changelog
 
 ## Upcoming 
-(Lines with [1.16] at the end will be backported to 1.16)
 * Port to 1.18, requires InsaneLib 1.4.3
 * Added a DataPack to get more features
   * Raw Iron smelts to nuggets, so you must find more Iron Ore to get your first Iron Tools (Iron Ore still smelts to 1 ingot, this makes Silk touch the enchantment for Iron)
   * Chain recipe requires 3 nuggets instead of 2 nuggets and 1 ingot
   * Chainmail armor can be crafted with Chains and Leather
+* Combat
+  * Stats
+    * Item stats can now be manually set via config (E.g. 'Armor Adjustments' is no longer a thing, instead armor modifiers are defined in 'Item Modifiers')
 * Misc
   * Tool Nerf
     * Added nerf to 'Tools Efficiency'. Reduces Wooden and Stone tools efficiency by 25% and Iron and Diamond tools by 10%
@@ -25,8 +27,11 @@
   * Food Consuming
     * Sped up eating speed (Reduced eating time multiplier (0.15 -> 0.13))
   * Health Regen
-    * Fixed a bug where with the Combat Update preset would consume Saturation to regenerate health. [1.16]
+    * Fixed a bug where with the Combat Update preset would consume Saturation to regenerate health.
     * Added a Max Exhaustion config option
+* Movement
+  * Tagging
+    * Increased slowdown duration when hit (3 -> 5 ticks for each half health of damage taken)
 * Experience
   * Global Experience
     * Fixed experience multiplier applying every time a xp orb is loaded
