@@ -1,6 +1,8 @@
 package insane96mcp.iguanatweaksreborn.module.farming;
 
+import insane96mcp.iguanatweaksreborn.module.farming.feature.CropsGrowth;
 import insane96mcp.iguanatweaksreborn.module.farming.feature.HoesNerfs;
+import insane96mcp.iguanatweaksreborn.module.farming.feature.PlantsGrowth;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -17,8 +19,8 @@ public class Farming extends Module {
 
 	//public LivestockSlowdown liveStockSlowdown;
 	//public NerfedBonemeal nerfedBonemeal;
-	//public CropsGrowth cropsGrowth;
-	//public PlantsGrowth plantsGrowth;
+	public CropsGrowth cropsGrowth;
+	public PlantsGrowth plantsGrowth;
 	public HoesNerfs hoesNerfs;
 	//public HarderCrops harderCrops;
 
@@ -27,8 +29,8 @@ public class Farming extends Module {
 		pushConfig(Config.builder);
 		//liveStockSlowdown = new LivestockSlowdown(this);
 		//nerfedBonemeal = new NerfedBonemeal(this);
-		//cropsGrowth = new CropsGrowth(this);
-		//plantsGrowth = new PlantsGrowth(this);
+		cropsGrowth = new CropsGrowth(this);
+		plantsGrowth = new PlantsGrowth(this);
 		hoesNerfs = new HoesNerfs(this);
 		//harderCrops = new HarderCrops(this);
 		Config.builder.pop();
@@ -39,8 +41,8 @@ public class Farming extends Module {
 		super.loadConfig();
 		//liveStockSlowdown.loadConfig();
 		//nerfedBonemeal.loadConfig();
-		//cropsGrowth.loadConfig();
-		//plantsGrowth.loadConfig();
+		cropsGrowth.loadConfig();
+		plantsGrowth.loadConfig();
 		hoesNerfs.loadConfig();
 		//harderCrops.loadConfig();
 	}
