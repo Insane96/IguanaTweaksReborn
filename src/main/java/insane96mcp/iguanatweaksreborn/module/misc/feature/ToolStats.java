@@ -26,7 +26,8 @@ public class ToolStats extends Feature {
 	private final List<String> toolsDurabilityDefault = Arrays.asList(
 			"minecraft:wooden_sword,1", "minecraft:wooden_pickaxe,1", "minecraft:wooden_shovel,1", "minecraft:wooden_hoe,1", "minecraft:wooden_axe,8",
 			"minecraft:stone_sword,6", "minecraft:stone_pickaxe,7", "minecraft:stone_shovel,48", "minecraft:stone_hoe,3", "minecraft:stone_axe,48",
-			"minecraft:iron_sword,375", "minecraft:iron_pickaxe,375", "minecraft:iron_shovel,375", "minecraft:iron_hoe,375", "minecraft:iron_axe,375"
+			"minecraft:iron_sword,375", "minecraft:iron_pickaxe,375", "minecraft:iron_shovel,375", "minecraft:iron_hoe,375", "minecraft:iron_axe,375",
+			"minecraft:elytra,144"
 	);
 
 	private final List<String> toolEfficiencyDefault = Arrays.asList(
