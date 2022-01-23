@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.farming;
 
 import insane96mcp.iguanatweaksreborn.module.farming.feature.CropsGrowth;
+import insane96mcp.iguanatweaksreborn.module.farming.feature.HarderCrops;
 import insane96mcp.iguanatweaksreborn.module.farming.feature.HoesNerfs;
 import insane96mcp.iguanatweaksreborn.module.farming.feature.PlantsGrowth;
 import insane96mcp.iguanatweaksreborn.setup.Config;
@@ -22,7 +23,7 @@ public class Farming extends Module {
 	public CropsGrowth cropsGrowth;
 	public PlantsGrowth plantsGrowth;
 	public HoesNerfs hoesNerfs;
-	//public HarderCrops harderCrops;
+	public HarderCrops harderCrops;
 
 	public Farming() {
 		super(Config.builder);
@@ -32,7 +33,7 @@ public class Farming extends Module {
 		cropsGrowth = new CropsGrowth(this);
 		plantsGrowth = new PlantsGrowth(this);
 		hoesNerfs = new HoesNerfs(this);
-		//harderCrops = new HarderCrops(this);
+		harderCrops = new HarderCrops(this);
 		Config.builder.pop();
 	}
 
@@ -44,7 +45,7 @@ public class Farming extends Module {
 		cropsGrowth.loadConfig();
 		plantsGrowth.loadConfig();
 		hoesNerfs.loadConfig();
-		//harderCrops.loadConfig();
+		harderCrops.loadConfig();
 	}
 
 	/**
