@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming 
+## 2.9.0 
 * Port to 1.18, requires InsaneLib 1.4.3.  
   [Missing Features](https://github.com/Insane96/IguanaTweaksReborn/issues/204): Whole Stack Size module, Wrong Tool Feature, Weather Slowdown feature, previously missing features from 1.12.
 * Added a DataPack to get more features
