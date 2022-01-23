@@ -6,6 +6,7 @@ import insane96mcp.iguanatweaksreborn.module.hungerhealth.HungerHealth;
 import insane96mcp.iguanatweaksreborn.module.mining.Mining;
 import insane96mcp.iguanatweaksreborn.module.misc.Misc;
 import insane96mcp.iguanatweaksreborn.module.movement.Movement;
+import insane96mcp.iguanatweaksreborn.module.sleeprespawn.SleepRespawn;
 
 public class Modules {
 
@@ -15,6 +16,7 @@ public class Modules {
 	public static Mining mining;
 	public static Combat combat;
 	public static Movement movement;
+	public static SleepRespawn sleepRespawn;
 
 	public static void init() {
 		hungerHealth = new HungerHealth();
@@ -23,6 +25,7 @@ public class Modules {
 		mining = new Mining();
 		combat = new Combat();
 		movement = new Movement();
+		sleepRespawn = new SleepRespawn();
 	}
 
 	public static void loadConfig() {
@@ -32,5 +35,7 @@ public class Modules {
 		mining.loadConfig();
 		combat.loadConfig();
 		movement.loadConfig();
+		sleepRespawn.loadConfig();
 	}
+
 }
