@@ -1,9 +1,12 @@
 package insane96mcp.iguanatweaksreborn;
 
+import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerProvider;
 import insane96mcp.iguanatweaksreborn.network.SyncHandler;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.ITEffects;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -22,20 +25,16 @@ public class IguanaTweaksReborn
 
     public IguanaTweaksReborn() {
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, Config.COMMON_SPEC);
-        //MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        //Reflection.init();
-        //WeightFeature.initMaterialWeight();
         ITEffects.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     @SubscribeEvent
-    public void attachCapabilitiesEntity(final AttachCapabilitiesEvent<BlockEntity> event) {
-        //if (event.getObject() instanceof MobSpawnerTileEntity) {
-        //    SpawnerCapability spawnerCapability = new SpawnerCapability();
-        //    event.addCapability(new ResourceLocation(Strings.Tags.TEMPORARY_SPAWNER), spawnerCapability);
-        //    event.addListener(spawnerCapability::invalidate);
-        //}
+    public void attachCapBlockEntity(final AttachCapabilitiesEvent<BlockEntity> event)
+    {
+        if (event.getObject() instanceof SpawnerBlockEntity)
+            event.addCapability(SpawnerProvider.IDENTIFIER, new SpawnerProvider());
     }
 
     private void setup(final FMLCommonSetupEvent event) {

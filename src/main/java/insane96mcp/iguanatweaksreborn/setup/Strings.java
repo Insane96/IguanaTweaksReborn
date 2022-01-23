@@ -12,6 +12,8 @@ public class Strings {
 		public static final String TIME_SINCE_LAST_SWING = IguanaTweaksReborn.RESOURCE_PREFIX + "ticks_since_last_swing";
 
 		public static final String XP_PROCESSED = IguanaTweaksReborn.RESOURCE_PREFIX + "xp_processed";
+
+		public static final String SPAWNER_CAP = IguanaTweaksReborn.RESOURCE_PREFIX + "spawner_cap";
 	}
 
 	public static class AttributeModifiers {
