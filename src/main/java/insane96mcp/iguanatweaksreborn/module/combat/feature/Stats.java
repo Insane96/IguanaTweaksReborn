@@ -100,7 +100,7 @@ public class Stats extends Feature {
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShieldItem.class, EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, -0.25d, AttributeModifier.Operation.MULTIPLY_BASE));
 		}
 
-		itemModifiers = (List<ItemAttributeModifier>) ItemAttributeModifier.parseStringList(this.itemModifiersConfig.get());
+		itemModifiers = ItemAttributeModifier.parseStringList(this.itemModifiersConfig.get());
 	}
 
 	@SubscribeEvent

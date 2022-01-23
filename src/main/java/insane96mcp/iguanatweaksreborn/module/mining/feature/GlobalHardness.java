@@ -67,10 +67,10 @@ public class GlobalHardness extends Feature {
 		super.loadConfig();
 
 		this.hardnessMultiplier = this.hardnessMultiplierConfig.get();
-		this.dimensionHardnessMultiplier = parseDimensionHardnessMultipliers(this.dimensionHardnessMultiplierConfig.get());
+		this.dimensionHardnessMultiplier = (ArrayList<DimensionHardnessMultiplier>) DimensionHardnessMultiplier.parseStringList(this.dimensionHardnessMultiplierConfig.get());
 		this.hardnessBlacklist = (ArrayList<IdTagMatcher>) IdTagMatcher.parseStringList(this.hardnessBlacklistConfig.listConfig.get());
 		this.hardnessBlacklistAsWhitelist = this.hardnessBlacklistConfig.listAsWhitelistConfig.get();
-		this.depthMultiplierDimension = parseDepthMultiplierDimension(this.depthMultiplierDimensionConfig.get());
+		this.depthMultiplierDimension = DepthHardnessDimension.parseStringList(this.depthMultiplierDimensionConfig.get());
 		this.depthMultiplierBlacklist = (ArrayList<IdTagMatcher>) IdTagMatcher.parseStringList(this.depthMultiplierBlacklistConfig.listConfig.get());
 		this.depthMultiplierBlacklistAsWhitelist = this.depthMultiplierBlacklistConfig.listAsWhitelistConfig.get();
 	}

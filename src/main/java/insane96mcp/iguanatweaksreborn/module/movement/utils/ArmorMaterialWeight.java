@@ -36,7 +36,7 @@ public class ArmorMaterialWeight {
 		return new ArmorMaterialWeight(id, totalWeight);
 	}
 
-	public static ArrayList<? extends ArmorMaterialWeight> parseStringList(List<? extends String> list) {
+	public static ArrayList<ArmorMaterialWeight> parseStringList(List<? extends String> list) {
 		ArrayList<ArmorMaterialWeight> armorMaterialWeights = new ArrayList<>();
 		for (String line : list) {
 			ArmorMaterialWeight armorMaterialWeight = ArmorMaterialWeight.parseLine(line);

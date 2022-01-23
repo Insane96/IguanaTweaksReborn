@@ -64,7 +64,7 @@ public class BlockHardness extends IdTagMatcher {
 		}
 	}
 
-	public static ArrayList<? extends IdTagMatcher> parseStringList(List<? extends String> list) {
+	public static ArrayList<BlockHardness> parseStringList(List<? extends String> list) {
 		ArrayList<BlockHardness> blockHardnesses = new ArrayList<>();
 		for (String line : list) {
 			BlockHardness blockHardness = BlockHardness.parseLine(line);

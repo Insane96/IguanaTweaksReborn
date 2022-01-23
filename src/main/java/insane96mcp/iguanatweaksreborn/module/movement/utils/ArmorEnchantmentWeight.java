@@ -63,7 +63,7 @@ public class ArmorEnchantmentWeight extends IdTagMatcher {
 		return new ArmorEnchantmentWeight(enchantment, slownessReductionPerLevel, flatSlownessReduction);
 	}
 
-	public static ArrayList<? extends ArmorEnchantmentWeight> parseStringList(List<? extends String> list) {
+	public static ArrayList<ArmorEnchantmentWeight> parseStringList(List<? extends String> list) {
 		ArrayList<ArmorEnchantmentWeight> armorEnchantmentWeight = new ArrayList<>();
 		for (String line : list) {
 			ArmorEnchantmentWeight idTagMatcher = ArmorEnchantmentWeight.parseLine(line);

@@ -89,8 +89,8 @@ public class WeightedArmor extends Feature {
 		super.loadConfig();
 		this.slownessPerArmor = this.slownessPerArmorConfig.get();
 		this.percentagePerToughness = this.percentagePerToughnessConfig.get();
-		this.materialWeight = (ArrayList<ArmorMaterialWeight>) ArmorMaterialWeight.parseStringList(this.materialWeightConfig.get());
-		this.enchantmentsList = (ArrayList<ArmorEnchantmentWeight>) ArmorEnchantmentWeight.parseStringList(this.enchantmentsListConfig.get());
+		this.materialWeight = ArmorMaterialWeight.parseStringList(this.materialWeightConfig.get());
+		this.enchantmentsList = ArmorEnchantmentWeight.parseStringList(this.enchantmentsListConfig.get());
 	}
 
 	//Can't use ItemAttributeModifierEvent as I need all the modifiers of the item (ItemStack#getAttributeModifiers) and that causes a loop

@@ -1,7 +1,8 @@
 # Changelog
 
 ## Upcoming 
-* Port to 1.18, requires InsaneLib 1.4.3
+* Port to 1.18, requires InsaneLib 1.4.3.  
+  [Missing Features](https://github.com/Insane96/IguanaTweaksReborn/issues/204): Whole Stack Size module, Wrong Tool Feature, Weather Slowdown feature, previously missing features from 1.12.
 * Added a DataPack to get more features
   * Raw Iron smelts to nuggets, so you must find more Iron Ore to get your first Iron Tools (Iron Ore still smelts to 1 ingot, this makes Silk touch the enchantment for Iron)
   * Chain recipe requires 3 nuggets instead of 2 nuggets and 1 ingot

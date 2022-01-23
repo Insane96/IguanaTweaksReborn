@@ -56,7 +56,7 @@ public class DepthHardnessDimension extends DimensionHardnessMultiplier {
 		return new DepthHardnessDimension(dimension, hardness, applyBelowY, capY);
 	}
 
-	public static ArrayList<? extends DimensionHardnessMultiplier> parseStringList(List<? extends String> list) {
+	public static ArrayList<DepthHardnessDimension> parseStringList(List<? extends String> list) {
 		ArrayList<DepthHardnessDimension> depthHardnessDimensions = new ArrayList<>();
 		for (String line : list) {
 			DepthHardnessDimension depthHardnessDimension = DepthHardnessDimension.parseLine(line);

@@ -58,8 +58,8 @@ public class ToolStats extends Feature {
 	@Override
 	public void loadConfig() {
 		super.loadConfig();
-		toolEfficiencyModifiers = (ArrayList<ToolEfficiencyModifier>) ToolEfficiencyModifier.parseStringList(toolsEfficiencyConfig.get());
-		toolDurabilityModifiers = (ArrayList<ToolDurabilityModifier>) ToolDurabilityModifier.parseStringList(toolsDurabilityConfig.get());
+		toolEfficiencyModifiers = ToolEfficiencyModifier.parseStringList(toolsEfficiencyConfig.get());
+		toolDurabilityModifiers = ToolDurabilityModifier.parseStringList(toolsDurabilityConfig.get());
 		if (!this.isEnabled())
 			return;
 		if (durabilityApplied)

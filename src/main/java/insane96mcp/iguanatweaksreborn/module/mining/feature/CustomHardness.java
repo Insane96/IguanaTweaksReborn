@@ -44,7 +44,7 @@ public class CustomHardness extends Feature {
 	@Override
 	public void loadConfig() {
 		super.loadConfig();
-		customHardness = (ArrayList<BlockHardness>) BlockHardness.parseStringList(this.customHardnessConfig.get());
+		customHardness = BlockHardness.parseStringList(this.customHardnessConfig.get());
 		processZeroHardness();
 	}
 

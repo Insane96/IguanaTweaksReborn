@@ -102,7 +102,7 @@ public class ItemAttributeModifier {
 		return new ItemAttributeModifier(id, tag, slot, attribute, amount, operation);
 	}
 
-	public static ArrayList<? extends ItemAttributeModifier> parseStringList(List<? extends String> list) {
+	public static ArrayList<ItemAttributeModifier> parseStringList(List<? extends String> list) {
 		ArrayList<ItemAttributeModifier> itemAttributeModifiers = new ArrayList<>();
 		for (String line : list) {
 			ItemAttributeModifier itemAttributeModifier = ItemAttributeModifier.parseLine(line);
