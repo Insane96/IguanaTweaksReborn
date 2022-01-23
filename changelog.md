@@ -4,6 +4,7 @@
 * Fixed a bug where the Combat Update preset would consume Saturation to regenerate health.
 * Increased slowdown duration when hit (0.15 -> 0.25 seconds for each half heart of damage taken)
 * Reduced Explosion Poof Particles amount
+* Fixed begin able to re-enable spawners by just right-clicking on them
 
 ## 2.8.3
 * Furter reduced Movement Speed with shields (-20% -> -25%)

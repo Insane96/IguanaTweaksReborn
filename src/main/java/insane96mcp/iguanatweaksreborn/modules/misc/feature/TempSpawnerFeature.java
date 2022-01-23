@@ -132,6 +132,8 @@ public class TempSpawnerFeature extends Feature {
             return;
         if (this.reagentItem == null)
             return;
+        if (!event.getItemStack().getItem().equals(this.reagentItem))
+            return;
 
         if (event.getWorld().getBlockState(event.getHitVec().getPos()).getBlock() != Blocks.SPAWNER)
             return;
