@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 @Label(name = "Farming")
 public class Farming extends Module {
 
-	//public LivestockSlowdown liveStockSlowdown;
+	public LivestockSlowdown liveStockSlowdown;
 	public NerfedBonemeal nerfedBonemeal;
 	public CropsGrowth cropsGrowth;
 	public PlantsGrowth plantsGrowth;
@@ -25,7 +25,7 @@ public class Farming extends Module {
 	public Farming() {
 		super(Config.builder);
 		pushConfig(Config.builder);
-		//liveStockSlowdown = new LivestockSlowdown(this);
+		liveStockSlowdown = new LivestockSlowdown(this);
 		nerfedBonemeal = new NerfedBonemeal(this);
 		cropsGrowth = new CropsGrowth(this);
 		plantsGrowth = new PlantsGrowth(this);
@@ -37,7 +37,7 @@ public class Farming extends Module {
 	@Override
 	public void loadConfig() {
 		super.loadConfig();
-		//liveStockSlowdown.loadConfig();
+		liveStockSlowdown.loadConfig();
 		nerfedBonemeal.loadConfig();
 		cropsGrowth.loadConfig();
 		plantsGrowth.loadConfig();
