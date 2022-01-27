@@ -1,9 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.misc;
 
-import insane96mcp.iguanatweaksreborn.module.misc.feature.DeBuffs;
-import insane96mcp.iguanatweaksreborn.module.misc.feature.ExplosionOverhaul;
-import insane96mcp.iguanatweaksreborn.module.misc.feature.TempSpawner;
-import insane96mcp.iguanatweaksreborn.module.misc.feature.ToolStats;
+import insane96mcp.iguanatweaksreborn.module.misc.feature.*;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -15,6 +12,7 @@ public class Misc extends Module {
 	public ToolStats toolStats;
 	public DeBuffs deBuffs;
 	public TempSpawner tempSpawner;
+	public VillagerNerf villagerNerf;
 
 	public Misc() {
 		super(Config.builder);
@@ -23,6 +21,7 @@ public class Misc extends Module {
 		toolStats = new ToolStats(this);
 		deBuffs = new DeBuffs(this);
 		tempSpawner = new TempSpawner(this);
+		villagerNerf = new VillagerNerf(this);
 		Config.builder.pop();
 	}
 
@@ -33,5 +32,6 @@ public class Misc extends Module {
 		toolStats.loadConfig();
 		deBuffs.loadConfig();
 		tempSpawner.loadConfig();
+		villagerNerf.loadConfig();
 	}
 }

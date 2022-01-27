@@ -1,6 +1,15 @@
 # Changelog
 
-## 2.9.0 
+## Alpha 2.9.1
+* Misc
+  * Added Villager Nerf Feature
+    * Lock Trades: As soon as a Villager gets a profession, his trades will get locked and will not change by destroying/placing the Workstation
+    * Always Convert Zombie: Villagers will always convert to zombie villager at any difficulty
+    * Max Discount Percentage: A percentage between 0% and 100% setting the max discount a trade can get
+    * Iron from Golems only when killed by Player
+    * Clamp Negative Demand: in short, the demand will not go below a certain value to prevent an infinite amount of trades where the price will never increase
+
+## Alpha 2.9.0 
 * Port to 1.18, requires InsaneLib 1.4.3.  
   [Missing Features](https://github.com/Insane96/IguanaTweaksReborn/issues/204): Whole Stack Size module, Wrong Tool Feature, Weather Slowdown feature, previously missing features from 1.12.
 * Added a DataPack to get more features

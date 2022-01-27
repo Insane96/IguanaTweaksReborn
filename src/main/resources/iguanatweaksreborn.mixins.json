@@ -4,14 +4,17 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "iguanatweaksreborn.refmap.json",
 	"mixins": [
+		"AssignProfessionFromJobSiteMixin",
 		"BaseSpawnerMixin",
 		"EnchantmentMixin",
 		"FoodDataMixin",
 		"ItemMixin",
+		"MerchantOfferMixin",
 		"MilkBucketItemMixin",
 		"PlayerMixin",
 		"PotionItemMixin",
-		"ProtectionEnchantmentMixin"
+		"ProtectionEnchantmentMixin",
+		"ZombieMixin"
 	],
 	"minVersion": "0.8"
 }
