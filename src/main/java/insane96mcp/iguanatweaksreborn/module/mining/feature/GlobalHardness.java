@@ -52,7 +52,7 @@ public class GlobalHardness extends Feature {
 				.comment("Multiplier applied to the hardness of blocks. E.g. with this set to 3.0 blocks will take 3x more time to break.")
 				.defineInRange("Hardness Multiplier", this.hardnessMultiplier, 0.0d, 128d);
 		dimensionHardnessMultiplierConfig = Config.builder
-				.comment("A list of dimensions and their relative block hardness multiplier. Each entry has a a dimension and hardness. This overrides the global multiplier.\nE.g. [\"minecraft:overworld,2\", \"minecraft:the_nether,4\"]")
+				.comment("A list of dimensions and their relative block hardness multiplier. Each entry has a a dimension and hardness. This overrides the global multiplier.")
 				.defineList("Dimension Hardness Multiplier", dimensionHardnessMultiplierDefault, o -> o instanceof String);
 		hardnessBlacklistConfig = new BlacklistConfig(Config.builder, "Block Hardness Blacklist", "Block ids or tags that will ignore the global and dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]", hardnessBlacklistDefault, this.hardnessBlacklistAsWhitelist);
 		depthMultiplierDimensionConfig = Config.builder
@@ -73,27 +73,6 @@ public class GlobalHardness extends Feature {
 		this.depthMultiplierDimension = DepthHardnessDimension.parseStringList(this.depthMultiplierDimensionConfig.get());
 		this.depthMultiplierBlacklist = (ArrayList<IdTagMatcher>) IdTagMatcher.parseStringList(this.depthMultiplierBlacklistConfig.listConfig.get());
 		this.depthMultiplierBlacklistAsWhitelist = this.depthMultiplierBlacklistConfig.listAsWhitelistConfig.get();
-	}
-
-	public static ArrayList<DimensionHardnessMultiplier> parseDimensionHardnessMultipliers(List<? extends String> list) {
-		ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultipliers = new ArrayList<>();
-		for (String line : list) {
-			DimensionHardnessMultiplier dimensionHardnessMultiplier = DimensionHardnessMultiplier.parseLine(line);
-			if (dimensionHardnessMultiplier != null)
-				dimensionHardnessMultipliers.add(dimensionHardnessMultiplier);
-		}
-
-		return dimensionHardnessMultipliers;
-	}
-
-	public static ArrayList<DepthHardnessDimension> parseDepthMultiplierDimension(List<? extends String> list) {
-		ArrayList<DepthHardnessDimension> depthHardnessDimensions = new ArrayList<>();
-		for (String line : list) {
-			DepthHardnessDimension depthHardnessDimension = DepthHardnessDimension.parseLine(line);
-			if (depthHardnessDimension != null)
-				depthHardnessDimensions.add(depthHardnessDimension);
-		}
-		return depthHardnessDimensions;
 	}
 
 	@SubscribeEvent
@@ -132,12 +111,12 @@ public class GlobalHardness extends Feature {
 		if (isInBlacklist || (!isInWhitelist && this.hardnessBlacklistAsWhitelist))
 			return 1d;
 
-		//If there's a dimension multipler present return that
+		//If there's a dimension multiplier present return that
 		for (DimensionHardnessMultiplier dimensionHardnessMultiplier : this.dimensionHardnessMultiplier)
 			if (dimensionId.equals(dimensionHardnessMultiplier.dimension))
 				return dimensionHardnessMultiplier.multiplier;
 
-		//Otherwise return the global multiplier
+		//Otherwise, return the global multiplier
 		return this.hardnessMultiplier;
 	}
 
@@ -166,11 +145,12 @@ public class GlobalHardness extends Feature {
 		if (isInBlacklist || (!isInWhitelist && this.depthMultiplierBlacklistAsWhitelist))
 			return 0d;
 
+		double hardness = 0d;
 		for (DepthHardnessDimension depthHardnessDimension : this.depthMultiplierDimension) {
 			if (dimensionId.equals(depthHardnessDimension.dimension)) {
-				return depthHardnessDimension.multiplier * Math.max(depthHardnessDimension.applyBelowY - Math.max(pos.getY(), depthHardnessDimension.capY), 0);
+				hardness += depthHardnessDimension.multiplier * Math.max(depthHardnessDimension.applyBelowY - Math.max(pos.getY(), depthHardnessDimension.capY), 0);
 			}
 		}
-		return 0d;
+		return hardness;
 	}
 }
