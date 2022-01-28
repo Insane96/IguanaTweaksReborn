@@ -8,6 +8,11 @@
     * Max Discount Percentage: A percentage between 0% and 100% setting the max discount a trade can get
     * Iron from Golems only when killed by Player
     * Clamp Negative Demand: in short, the demand will not go below a certain value to prevent an infinite amount of trades where the price will never increase
+* Added back Stack Size Module
+  * Items now stack more (32 -> 48)
+  * Blocks now stack more (about 16~32 -> 32~48 for most of them)
+* Food Hunger
+  * Rotten flesh now heals only 2 hunger instead of 4
 
 ## Alpha 2.9.0 
 * Port to 1.18, requires InsaneLib 1.4.3.  

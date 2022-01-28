@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerProvider;
 import insane96mcp.iguanatweaksreborn.network.SyncHandler;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.ITEffects;
+import insane96mcp.iguanatweaksreborn.utils.Weights;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraftforge.common.MinecraftForge;
@@ -28,6 +29,7 @@ public class IguanaTweaksReborn
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         ITEffects.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        Weights.initMaterialWeight();
     }
 
     @SubscribeEvent

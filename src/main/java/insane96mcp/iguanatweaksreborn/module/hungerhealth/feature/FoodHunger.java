@@ -14,6 +14,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class FoodHunger extends Feature {
 		foodBlacklistConfig = new BlacklistConfig(Config.builder, "Food Blacklist", "Items or tags that will ignore the food multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].", Collections.emptyList(), this.foodBlacklistAsWhitelist);
 		customFoodValueConfig = Config.builder
 				.comment("Define custom food values, one string = one item. Those items are not affected by other changes such as 'Food Hunger Multiplier'.\nThe format is modid:itemid,hunger,saturation. Saturation is optional\nE.g. 'minecraft:cooked_porkchop,16,1.0' will make cooked porkchops give 8 shranks of food and 16 saturation (actual saturation is calculated by 'saturation * 2 * hunger').")
-				.defineList("Custom Food Hunger", new ArrayList<>(), o -> o instanceof String);
+				.defineList("Custom Food Hunger", Arrays.asList("minecraft:rotten_flesh,2"), o -> o instanceof String);
 		Config.builder.pop();
 	}
 
