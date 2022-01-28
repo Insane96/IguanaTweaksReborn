@@ -11,6 +11,9 @@
 * Added back Stack Size Module
   * Items now stack more (32 -> 48)
   * Blocks now stack more (about 16~32 -> 32~48 for most of them)
+* Global Hardness
+  * Changed Depth Hardness (0.025 -> 0.03 multiplier increase per block below sea level down to 0 -> 5. [NEW] Multiplier reduced by 1.24 below Y = 5 (Deepslate will no longer be that hard to break))
+    * Basically at Y = 5 multiplier will be 4.24 (global hardness added too) and from Y = 4 and below multiplier will be 3
 * Food Hunger
   * Rotten flesh now heals only 2 hunger instead of 4
 

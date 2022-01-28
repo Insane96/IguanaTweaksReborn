@@ -34,7 +34,7 @@ public class GlobalHardness extends Feature {
 
 	private static final List<String> hardnessBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
 	private static final List<String> dimensionHardnessMultiplierDefault = Arrays.asList("minecraft:the_nether,4", "minecraft:the_end,4");
-	private static final List<String> depthMultiplierDimensionDefault = Arrays.asList("minecraft:overworld,0.025,63,-64");
+	private static final List<String> depthMultiplierDimensionDefault = Arrays.asList("minecraft:overworld,0.03,63,-64", "minecraft:overworld,-1.24,5,4");
 	private static final List<String> depthMultiplierBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
 
 	public double hardnessMultiplier = 2.5d;
