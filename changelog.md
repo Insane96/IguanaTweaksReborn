@@ -1,6 +1,6 @@
 # Changelog
 
-## Alpha 2.9.1
+## Beta 2.9.1
 * Misc
   * Added Villager Nerf Feature
     * Lock Trades: As soon as a Villager gets a profession, his trades will get locked and will not change by destroying/placing the Workstation
@@ -10,10 +10,10 @@
     * Clamp Negative Demand: in short, the demand will not go below a certain value to prevent an infinite amount of trades where the price will never increase
 * Added back Stack Size Module
   * Items now stack more (32 -> 48)
-  * Blocks now stack more (about 16~32 -> 32~48 for most of them)
+  * Blocks now stack more (16~32 -> 32~48 for most blocks)
 * Global Hardness
   * Changed Depth Hardness (0.025 -> 0.03 multiplier increase per block below sea level down to 0 -> 5. [NEW] Multiplier reduced by 1.24 below Y = 5 (Deepslate will no longer be that hard to break))
-    * Basically at Y = 5 multiplier will be 4.24 (global hardness added too) and from Y = 4 and below multiplier will be 3
+    * Basically at Y = 5 multiplier will be 4.24 (global hardness added too) and from Y = 4 and below multiplier will be 3 (since deepslate is harder)
 * Food Hunger
   * Rotten flesh now heals only 2 hunger instead of 4
 
