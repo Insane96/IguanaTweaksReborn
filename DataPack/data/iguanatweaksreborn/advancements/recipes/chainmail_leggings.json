@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "minecraft:chainmail_leggings"
+    ]
+  },
+  "criteria": {
+    "has_chain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:chain"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:chainmail_leggings"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_chain",
+      "has_the_recipe"
+    ]
+  ]
+}

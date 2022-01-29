@@ -20,7 +20,7 @@ public class BlockExperience extends Feature {
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		blockMultiplierConfig = Config.builder
 				.comment("Experience dropped by blocks (Ores and Spawners) will be multiplied by this multiplier. Experience dropped by blocks are still affected by 'Global Experience Multiplier'\nCan be set to 0 to make blocks drop no experience")
-				.defineInRange("Experience from Blocks Multiplier", this.blockMultiplier, 0.0d, 1000d);
+				.defineInRange("Experience from Blocks Multiplier", this.blockMultiplier, 0.0d, 1024d);
 		Config.builder.pop();
 	}
 

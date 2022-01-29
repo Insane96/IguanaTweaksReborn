@@ -1,5 +1,14 @@
 # Changelog
 
+## Upcoming
+* Experience
+  * Added Other Experience Feature. Lets you change other experience sources
+    * Bottle o' enchanting will now give on average 30 xp instead of 7
+  * Players now pickup experience faster
+* Data Pack
+  * Shield recipe has changed to require Logs and Leather
+  * Chain armor recipe is now unlocked when the player obtains chains
+
 ## Beta 2.9.1
 * Misc
   * Added Villager Nerf Feature

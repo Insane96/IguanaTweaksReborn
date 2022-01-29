@@ -14,6 +14,7 @@
 		"PlayerMixin",
 		"PotionItemMixin",
 		"ProtectionEnchantmentMixin",
+		"ThrownExperienceBottleMixin",
 		"ZombieMixin"
 	],
 	"minVersion": "0.8"

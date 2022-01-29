@@ -1,9 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.experience;
 
-import insane96mcp.iguanatweaksreborn.module.experience.feature.BlockExperience;
-import insane96mcp.iguanatweaksreborn.module.experience.feature.GlobalExperience;
-import insane96mcp.iguanatweaksreborn.module.experience.feature.PlayerExperience;
-import insane96mcp.iguanatweaksreborn.module.experience.feature.SpawnerMobsExperience;
+import insane96mcp.iguanatweaksreborn.module.experience.feature.*;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -15,6 +12,7 @@ public class Experience extends Module {
 	public BlockExperience blockExperience;
 	public SpawnerMobsExperience spawnerMobsExperience;
 	public PlayerExperience playerExperience;
+	public OtherExperience otherExperience;
 
 	public Experience() {
 		super(Config.builder);
@@ -23,6 +21,7 @@ public class Experience extends Module {
 		blockExperience = new BlockExperience(this);
 		spawnerMobsExperience = new SpawnerMobsExperience(this);
 		playerExperience = new PlayerExperience(this);
+		otherExperience = new OtherExperience(this);
 		Config.builder.pop();
 	}
 
@@ -33,5 +32,6 @@ public class Experience extends Module {
 		blockExperience.loadConfig();
 		spawnerMobsExperience.loadConfig();
 		playerExperience.loadConfig();
+		otherExperience.loadConfig();
 	}
 }

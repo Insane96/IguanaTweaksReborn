@@ -7,15 +7,19 @@ import insane96mcp.insanelib.base.Module;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Player Experience", description = "Changes the experience lost on death and xp per level required.")
 public class PlayerExperience extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Boolean> betterScalingLevelsConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> droppedExperienceOnDeathConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> pickUpFasterConfig;
 
 	public boolean betterScalingLevels = true;
 	public double droppedExperienceOnDeath = 0.80d;
+	public boolean pickUpFaster = true;
 
 	public PlayerExperience(Module module) {
 		super(Config.builder, module, true);
@@ -29,6 +33,9 @@ public class PlayerExperience extends Feature {
 				.comment("On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this." +
 						"Due to Minecraft limitations this is incompatible with other mods that change the level scaling (e.g. Allurement's 'Remove level Scaling')")
 				.defineInRange("Experience Dropped on Death", this.droppedExperienceOnDeath, -1d, 1d);
+		pickUpFasterConfig = Config.builder
+				.comment("Players will pick up experience faster")
+				.define("Pickup XP Faster", this.pickUpFaster);
 		Config.builder.pop();
 	}
 
@@ -37,6 +44,19 @@ public class PlayerExperience extends Feature {
 		super.loadConfig();
 		this.betterScalingLevels = this.betterScalingLevelsConfig.get();
 		this.droppedExperienceOnDeath = this.droppedExperienceOnDeathConfig.get();
+		this.pickUpFaster = this.pickUpFasterConfig.get();
+	}
+
+	@SubscribeEvent
+	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		if (!this.pickUpFaster)
+			return;
+
+		if (event.player.takeXpDelay > 0)
+			event.player.takeXpDelay--;
 	}
 
 	/**
