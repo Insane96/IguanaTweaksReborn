@@ -69,7 +69,7 @@ public class ToolStats extends Feature {
 		for (ToolDurabilityModifier toolDurabilityModifier : toolDurabilityModifiers) {
 			Item item = ForgeRegistries.ITEMS.getValue(toolDurabilityModifier.id);
 			if (item == null) {
-				LogHelper.info("In Tool Durability Modifier the item %s doesn't exist", toolDurabilityModifier.id);
+				LogHelper.warn("In Tool Durability Modifier the item %s doesn't exist", toolDurabilityModifier.id);
 				continue;
 			}
 			item.maxDamage = toolDurabilityModifier.durability;

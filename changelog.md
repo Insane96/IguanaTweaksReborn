@@ -8,6 +8,7 @@
 * Data Pack
   * Shield recipe has changed to require Logs and Leather
   * Chain armor recipe is now unlocked when the player obtains chains
+* Removed some leftover logging
 
 ## Beta 2.9.1
 * Misc

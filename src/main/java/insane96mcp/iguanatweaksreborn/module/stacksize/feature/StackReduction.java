@@ -1,7 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.stacksize.feature;
 
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.Weights;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -12,7 +11,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -100,7 +98,7 @@ public class StackReduction extends Feature {
         processItemStackSizes();
         processBlockStackSizes();
         processFoodStackSizes();
-        for (Item item : ForgeRegistries.ITEMS.getValues()) {
+        /*for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!(item instanceof BlockItem))
                 continue;
 
@@ -115,7 +113,7 @@ public class StackReduction extends Feature {
                         return false;
                     })
                     .findFirst().ifPresentOrElse(m -> LogHelper.info("%s %s", item.getRegistryName(), m.getName()), () -> LogHelper.info("%s %s", item.getRegistryName(), "Nope"));
-        }
+        }*/
     }
 
     private boolean processedItems = false;

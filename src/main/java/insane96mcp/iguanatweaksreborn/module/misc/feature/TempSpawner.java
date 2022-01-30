@@ -116,7 +116,7 @@ public class TempSpawner extends Feature {
 			return;
 		double distance = Math.sqrt(spawnerPos.distSqr(level.getSharedSpawnPos()));
 		int maxSpawned = (int) ((this.minSpawnableMobs + (distance / 8d)) * this.spawnableMobsMultiplier);
-		LogHelper.info("%s", maxSpawned);
+
 		if (spawnerCap.getSpawnedMobs() >= maxSpawned) {
 			disableSpawner(mobSpawner);
 		}
