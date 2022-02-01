@@ -7,6 +7,7 @@ import insane96mcp.insanelib.base.Module;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,9 +17,11 @@ public class ExhaustionIncrease extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> blockBreakExhaustionMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> exhaustionOnBlockBreakingConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> passiveExhaustionConfig;
 
 	public double blockBreakExhaustionMultiplier = 0d;
 	public double exhaustionOnBlockBreaking = 0.005d;
+	public double passiveExhaustion = 0.005d;
 
 	public ExhaustionIncrease(Module module) {
 		super(Config.builder, module);
@@ -29,6 +32,9 @@ public class ExhaustionIncrease extends Feature {
 		exhaustionOnBlockBreakingConfig = Config.builder
 				.comment("When breaking block you'll get exhaustion every tick during the breaking.")
 				.defineInRange("Exhaustion per tick when breaking a block", exhaustionOnBlockBreaking, 0.0d, 1024d);
+		passiveExhaustionConfig = Config.builder
+				.comment("Every second the player will get this exhaustion.")
+				.defineInRange("Passive Exhaustion", this.passiveExhaustion, 0.0d, 1024d);
 		Config.builder.pop();
 	}
 
@@ -37,6 +43,7 @@ public class ExhaustionIncrease extends Feature {
 		super.loadConfig();
 		this.blockBreakExhaustionMultiplier = this.blockBreakExhaustionMultiplierConfig.get();
 		this.exhaustionOnBlockBreaking = this.exhaustionOnBlockBreakingConfig.get();
+		this.passiveExhaustion = this.passiveExhaustionConfig.get();
 	}
 
 	@SubscribeEvent
@@ -60,5 +67,17 @@ public class ExhaustionIncrease extends Feature {
 		if (this.exhaustionOnBlockBreaking == 0d)
 			return;
 		event.getPlayer().causeFoodExhaustion((float) this.exhaustionOnBlockBreaking);
+	}
+
+	@SubscribeEvent
+	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+		if (!this.isEnabled())
+			return;
+		if (this.passiveExhaustion == 0d)
+			return;
+		if (event.player.tickCount % 20 != 0)
+			return;
+
+		event.player.causeFoodExhaustion((float) this.passiveExhaustion);
 	}
 }

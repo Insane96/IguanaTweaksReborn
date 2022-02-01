@@ -19,8 +19,6 @@ public class NoPillaring extends Feature {
 
 	public NoPillaring(Module module) {
 		super(Config.builder, module);
-		//Config.builder.comment(this.getDescription()).push(this.getName());
-		//Config.builder.pop();
 	}
 
 	@Override

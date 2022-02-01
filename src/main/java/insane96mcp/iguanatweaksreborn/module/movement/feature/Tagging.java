@@ -23,12 +23,14 @@ public class Tagging extends Feature {
 
 	public Tagging(Module module) {
 		super(Config.builder, module);
+		this.pushConfig(Config.builder);
 		slownessLevelConfig = Config.builder
 				.comment("Which level of Slowness is applied to the player (level 0 is Slowness I).")
 				.defineInRange("Slowness level", this.slownessLevel, 0, 10);
 		durationMultiplierConfig = Config.builder
 				.comment("Slowness is applied for damage_taken * this_value ticks.")
 				.defineInRange("Duration multiplier", this.durationMultiplier, 0, 100);
+		Config.builder.pop();
 	}
 
 	@Override
