@@ -73,6 +73,10 @@ public class ExhaustionIncrease extends Feature {
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled())
 			return;
+		if (event.phase != TickEvent.Phase.END)
+			return;
+		if (event.player.level.isClientSide)
+			return;
 		if (this.passiveExhaustion == 0d)
 			return;
 		if (event.player.tickCount % 20 != 0)

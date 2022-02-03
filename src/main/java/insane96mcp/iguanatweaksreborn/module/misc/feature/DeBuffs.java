@@ -51,6 +51,9 @@ public class DeBuffs extends Feature {
 		if (!this.isEnabled())
 			return;
 
+		if (event.phase != TickEvent.Phase.START)
+			return;
+
 		if (deBuffs.isEmpty())
 			return;
 

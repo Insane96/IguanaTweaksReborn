@@ -80,8 +80,8 @@ public class HealthRegen extends Feature {
 				.comment("Set to true to consume Hunger only (and not saturation) when regenerating health (false for Vanilla and Iguana Tweaks presets; true for Combat Test).")
 				.define("Consume Hunger Only", this.consumeHungerOnly);
 		maxExhaustionConfig = Config.builder
-				.comment("Vanilla consumes 1 saturation or hunger whenever Exhaustion reaches 4.0. You can change that value with this config option.")
-				.defineInRange("Max Exhaustion", this.maxExhaustion, 0d, Double.MAX_VALUE);
+				.comment("Vanilla consumes 1 saturation or hunger whenever Exhaustion reaches 4.0. You can change that value with this config option. NOTE that Minecraft caps this value to 40")
+				.defineInRange("Max Exhaustion", this.maxExhaustion, 0d, 40d);
 		disableSaturationRegenBoostConfig = Config.builder
 				.comment("Set to true to disable the health regen boost given when max hunger and saturation (false for Vanilla; true for Combat Test and IguanaTweaks Presets).")
 				.define("Disable Saturation Regen Boost", this.disableSaturationRegenBoost);

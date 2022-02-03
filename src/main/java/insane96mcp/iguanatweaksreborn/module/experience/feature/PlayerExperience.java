@@ -52,6 +52,9 @@ public class PlayerExperience extends Feature {
 		if (!this.isEnabled())
 			return;
 
+		if (event.phase != TickEvent.Phase.START)
+			return;
+
 		if (!this.pickUpFaster)
 			return;
 
