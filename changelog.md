@@ -11,6 +11,7 @@
   * Added Backwards Slowdown
     * Walking backwards will slowdown the player by 25%
 * Added Passive exhaustion, each second players will get 0.005 exhaustion
+* Reduced Well Fed duration
 * Tagging has now config options. Also increased slowdown duration (0.25 -> 0.30 seconds for each half heart of damage taken)
 * Data Pack
   * Shield recipe has changed to require Logs and Leather

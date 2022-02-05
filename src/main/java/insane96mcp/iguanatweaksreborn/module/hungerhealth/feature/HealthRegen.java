@@ -181,7 +181,7 @@ public class HealthRegen extends Feature {
 			return;
 		Player playerEntity = (Player) event.getEntityLiving();
 		FoodProperties food = event.getItem().getItem().getFoodProperties();
-		int duration = (int) ((food.getNutrition() * food.getSaturationModifier() * 2) * 5 * 20);
+		int duration = (int) ((food.getNutrition() * food.getSaturationModifier() * 2) * 4 * 20);
 		if (playerEntity.hasEffect(ITEffects.WELL_FED.get()))
 			duration += playerEntity.getEffect(ITEffects.WELL_FED.get()).getDuration();
 		int amplifier = Math.max(food.getNutrition() / 2 - 1, 0);
