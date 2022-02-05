@@ -5,6 +5,10 @@
   * Added Other Experience Feature. Lets you change other experience sources
     * Bottle o' enchanting will now give on average 30 xp instead of 7
   * Players now pickup experience faster
+* Movement
+  * Added Terrain Slowdown
+    * Based on the terrain you're walking on, you'll get slowed down a bit
+  * 
 * Added Passive exhaustion, each second players will get 0.005 exhaustion
 * Tagging has now config options. Also increased slowdown duration (0.25 -> 0.30 seconds for each half heart of damage taken)
 * Data Pack

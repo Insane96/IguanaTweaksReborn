@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.utils;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 
 public class Weights {
@@ -57,5 +58,52 @@ public class Weights {
 		if (!materialWeight.containsKey(blockMaterial))
 			return 1d;
 		return materialWeight.get(blockMaterial);
+	}
+
+	@Nullable
+	public static Material getMaterialFromString(String s) {
+		switch (s) {
+			case "amethyst" -> { return Material.AMETHYST; }
+			case "bamboo_sapling" -> { return Material.BAMBOO_SAPLING; }
+			case "bamboo" -> { return Material.BAMBOO; }
+			case "barrier" -> { return Material.BARRIER; }
+			case "buildable_glass" -> { return Material.BUILDABLE_GLASS; }
+			case "cactus" -> { return Material.CACTUS; }
+			case "cake" -> { return Material.CAKE; }
+			case "clay" -> { return Material.CLAY; }
+			case "cloth_decoration" -> { return Material.CLOTH_DECORATION; }
+			case "decoration" -> { return Material.DECORATION; }
+			case "dirt" -> { return Material.DIRT; }
+			case "egg" -> { return Material.EGG; }
+			case "explosive" -> { return Material.EXPLOSIVE; }
+			case "glass" -> { return Material.GLASS; }
+			case "grass" -> { return Material.GRASS; }
+			case "heavy_metal" -> { return Material.HEAVY_METAL; }
+			case "ice_solid" -> { return Material.ICE_SOLID; }
+			case "ice" -> { return Material.ICE; }
+			case "leaves" -> { return Material.LEAVES; }
+			case "metal" -> { return Material.METAL; }
+			case "moss" -> { return Material.MOSS; }
+			case "nether_wood" -> { return Material.NETHER_WOOD; }
+			case "piston" -> { return Material.PISTON; }
+			case "plant" -> { return Material.PLANT; }
+			case "powder_snow" -> { return Material.POWDER_SNOW; }
+			case "replaceable_fireproof_plant" -> { return Material.REPLACEABLE_FIREPROOF_PLANT; }
+			case "replaceable_plant" -> { return Material.REPLACEABLE_PLANT; }
+			case "replaceable_water_plant" -> { return Material.REPLACEABLE_WATER_PLANT; }
+			case "sand" -> { return Material.SAND; }
+			case "sculk" -> { return Material.SCULK; }
+			case "shulker_shell" -> { return Material.SHULKER_SHELL; }
+			case "snow" -> { return Material.SNOW; }
+			case "sponge" -> { return Material.SPONGE; }
+			case "stone" -> { return Material.STONE; }
+			case "top_snow" -> { return Material.TOP_SNOW; }
+			case "vegetable" -> { return Material.VEGETABLE; }
+			case "water_plant" -> { return Material.WATER_PLANT; }
+			case "web" -> { return Material.WEB; }
+			case "wood" -> { return Material.WOOD; }
+			case "wool" -> { return Material.WOOL; }
+			default -> { return null; }
+		}
 	}
 }

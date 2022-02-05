@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.movement;
 
 import insane96mcp.iguanatweaksreborn.module.movement.feature.NoPillaring;
 import insane96mcp.iguanatweaksreborn.module.movement.feature.Tagging;
+import insane96mcp.iguanatweaksreborn.module.movement.feature.TerrainSlowdown;
 import insane96mcp.iguanatweaksreborn.module.movement.feature.WeightedArmor;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Label;
@@ -13,6 +14,7 @@ public class Movement extends Module {
 	public WeightedArmor weightedArmor;
 	public NoPillaring noPillaring;
 	public Tagging tagging;
+	public TerrainSlowdown terrainSlowdown;
 
 	public Movement() {
 		super(Config.builder);
@@ -20,6 +22,7 @@ public class Movement extends Module {
 		weightedArmor = new WeightedArmor(this);
 		noPillaring = new NoPillaring(this);
 		tagging = new Tagging(this);
+		terrainSlowdown = new TerrainSlowdown(this);
 		Config.builder.pop();
 	}
 
@@ -29,5 +32,6 @@ public class Movement extends Module {
 		weightedArmor.loadConfig();
 		noPillaring.loadConfig();
 		tagging.loadConfig();
+		terrainSlowdown.loadConfig();
 	}
 }
