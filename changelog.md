@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.9.2
 * Experience
   * Added Other Experience Feature. Lets you change other experience sources
     * Bottle o' enchanting will now give on average 30 xp instead of 7
