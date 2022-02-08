@@ -13,6 +13,7 @@ public class Misc extends Module {
 	public DeBuffs deBuffs;
 	public TempSpawner tempSpawner;
 	public VillagerNerf villagerNerf;
+	public Nerf nerf;
 
 	public Misc() {
 		super(Config.builder);
@@ -22,6 +23,7 @@ public class Misc extends Module {
 		deBuffs = new DeBuffs(this);
 		tempSpawner = new TempSpawner(this);
 		villagerNerf = new VillagerNerf(this);
+		nerf = new Nerf(this);
 		Config.builder.pop();
 	}
 
@@ -33,5 +35,6 @@ public class Misc extends Module {
 		deBuffs.loadConfig();
 		tempSpawner.loadConfig();
 		villagerNerf.loadConfig();
+		nerf.loadConfig();
 	}
 }

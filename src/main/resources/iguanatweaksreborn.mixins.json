@@ -6,6 +6,7 @@
 	"mixins": [
 		"AssignProfessionFromJobSiteMixin",
 		"BaseSpawnerMixin",
+		"BoatMixin",
 		"EnchantmentMixin",
 		"FoodDataMixin",
 		"ItemMixin",

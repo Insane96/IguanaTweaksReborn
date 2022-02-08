@@ -9,8 +9,12 @@
   * Added Terrain Slowdown
     * Based on the terrain you're walking on, you'll get slowed down a bit
   * Added Backwards Slowdown
-    * Walking backwards will slowdown the player by 25%
+    * Walking backwards will slow down the player by 25%
 * Added Passive exhaustion, each second players will get 0.005 exhaustion
+* Added Nerf feature
+  * Sheep no longer drop wool when killed
+  * Boats no longer go stupidly fast on ice
+  * Iron from golems only when killed by players has been moved here from Villager Nerf feature
 * Reduced Well Fed duration
 * Tagging has now config options. Also increased slowdown duration (0.25 -> 0.30 seconds for each half heart of damage taken)
 * Data Pack

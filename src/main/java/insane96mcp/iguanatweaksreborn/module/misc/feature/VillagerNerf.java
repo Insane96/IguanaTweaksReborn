@@ -13,16 +13,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.gossip.GossipType;
-import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.ZombieVillager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -38,14 +34,12 @@ public class VillagerNerf extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> alwaysConvertZombieConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> maxDiscountConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> preventCureDiscountConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> ironRequiresPlayerConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> clampNegativeDemandConfig;
 
 	public boolean lockTrades = true;
 	public boolean alwaysConvertZombie = true;
 	public double maxDiscount = 0.5d;
 	public boolean preventCureDiscount = true;
-	public boolean ironRequiresPlayer = true;
 	public boolean clampNegativeDemand = true;
 
 	public VillagerNerf(Module module) {
@@ -63,9 +57,6 @@ public class VillagerNerf extends Feature {
 		preventCureDiscountConfig = Config.builder
 				.comment("If true, villagers will no longer get the discount when cured from Zombies to prevent over discounting.")
 				.define("Prevent Cure Discount", this.preventCureDiscount);
-		ironRequiresPlayerConfig = Config.builder
-				.comment("If true, Iron golems will only drop Iron when killed by the player.")
-				.define("Iron from Golems only when killed by Player", this.ironRequiresPlayer);
 		clampNegativeDemandConfig = Config.builder
 				.comment("When villagers restock, they update the 'demand'. Demand is a trade modifier that increases the price whenever a trade is done many times, BUT when a trade is not performed, at each restock the 'demand' goes negative, making possible for a trade to never increase it's price due to high negative demand. With this to true, negative demand will be capped at -max_uses of the trade (e.g. Carrot trade from a farmer will have it's minimum demand set to -16).")
 				.define("Clamp Negative Demand", this.clampNegativeDemand);
@@ -79,7 +70,6 @@ public class VillagerNerf extends Feature {
 		this.alwaysConvertZombie = this.alwaysConvertZombieConfig.get();
 		this.maxDiscount = this.maxDiscountConfig.get();
 		this.preventCureDiscount = this.preventCureDiscountConfig.get();
-		this.ironRequiresPlayer = this.ironRequiresPlayerConfig.get();
 		this.clampNegativeDemand = this.clampNegativeDemandConfig.get();
 	}
 
@@ -103,23 +93,6 @@ public class VillagerNerf extends Feature {
 			villager.getGossips().remove(uuid, GossipType.MINOR_POSITIVE);
 		}));
 		villager.getPersistentData().putBoolean(CURE_DISCOUNT_REMOVED, true);
-	}
-
-	@SubscribeEvent
-	public void onLivingDrop(LivingDropsEvent event) {
-		if (!this.isEnabled())
-			return;
-
-		if (!this.ironRequiresPlayer)
-			return;
-
-		if (!(event.getEntityLiving() instanceof IronGolem))
-			return;
-
-		if (event.getSource().getDirectEntity() instanceof Player)
-			return;
-
-		event.getDrops().removeIf(itemEntity -> itemEntity.getItem().getItem() == Items.IRON_INGOT);
 	}
 
 	public int clampSpecialPrice(int specialPriceDiff, final ItemStack baseCostA) {
