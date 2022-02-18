@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.8.5
+* Temp-spawners no longer lag the game if disabled
+
 ## 2.8.4
 * Fixed a bug where the Combat Update preset would consume Saturation to regenerate health.
 * Increased slowdown duration when hit (0.15 -> 0.25 seconds for each half heart of damage taken)

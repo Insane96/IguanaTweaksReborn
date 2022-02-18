@@ -99,8 +99,6 @@ public class TempSpawnerFeature extends Feature {
         ServerWorld world = (ServerWorld) event.getWorld();
         MobSpawnerTileEntity mobSpawner = (MobSpawnerTileEntity) world.getTileEntity(spawnerPos);
         ISpawner spawnerCap = mobSpawner.getCapability(SpawnerCapability.SPAWNER).orElse(null);
-        if (spawnerCap == null)
-            LogHelper.error("Something's wrong. The spawner has no capability");
         spawnerCap.addSpawnedMobs(1);
         //If it's in the black/whitelist don't disable the spawner
         Optional<EntityType<?>> optional = EntityType.readEntityType(nbt.getCompound("SpawnData"));
@@ -128,8 +126,8 @@ public class TempSpawnerFeature extends Feature {
 
     @SubscribeEvent
     public void onItemUse(PlayerInteractEvent.RightClickBlock event) {
-        if (!this.isEnabled())
-            return;
+        //if (!this.isEnabled())
+            //return;
         if (this.reagentItem == null)
             return;
         if (!event.getItemStack().getItem().equals(this.reagentItem))
@@ -166,16 +164,14 @@ public class TempSpawnerFeature extends Feature {
     public void onTick(MobSpawnerTileEntity spawner) {
         //If the feature is disabled then reactivate disabled spawners and prevent further processing
         if (!this.isEnabled()) {
-            if (isDisabled(spawner))
-                enableSpawner(spawner);
+            //if (isDisabled(spawner))
+                //enableSpawner(spawner);
             return;
         }
         //If spawnable mobs amount has changed then re-enable the spawner
         if (spawner.getWorld() instanceof ServerWorld) {
             ServerWorld world = (ServerWorld) spawner.getWorld();
             ISpawner spawnerCap = spawner.getCapability(SpawnerCapability.SPAWNER).orElse(null);
-            if (spawnerCap == null)
-                LogHelper.error("Something's wrong. The spawner has no capability");
             double distance = Math.sqrt(spawner.getPos().distanceSq(world.getSpawnPoint()));
             int maxSpawned = (int) ((this.minSpawnableMobs + (distance / 8d)) * this.spawnableMobsMultiplier);
             if (spawnerCap.getSpawnedMobs() < maxSpawned && isDisabled(spawner)) {
@@ -218,8 +214,6 @@ public class TempSpawnerFeature extends Feature {
     private static void resetSpawner(MobSpawnerTileEntity spawner) {
         enableSpawner(spawner);
         ISpawner spawnerCap = spawner.getCapability(SpawnerCapability.SPAWNER).orElse(null);
-        if (spawnerCap == null)
-            LogHelper.error("Something's wrong. The spawner has no capability");
         spawnerCap.setSpawnedMobs(0);
     }
 
