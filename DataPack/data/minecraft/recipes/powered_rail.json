@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"NSN",
+		"NRN",
+		"NNN"
+	],
+	"key": {
+		"R": {
+			"item": "minecraft:rail"
+		},
+		"S": {
+			"item": "minecraft:redstone"
+		},
+		"N": {
+			"item": "minecraft:gold_nugget"
+		}
+	},
+	"result": {
+		"item": "minecraft:powered_rail",
+		"count": 1
+	}
+}

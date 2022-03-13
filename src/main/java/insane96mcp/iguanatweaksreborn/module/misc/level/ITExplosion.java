@@ -46,9 +46,15 @@ import java.util.Set;
 
 public class ITExplosion extends Explosion {
 	ObjectArrayList<Pair<ItemStack, BlockPos>> droppedItems = new ObjectArrayList<>();
+	boolean dealsKnockback;
 
 	public ITExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction) {
+		this(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true);
+	}
+
+	public ITExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean dealsKnockback) {
 		super(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction);
+		this.dealsKnockback = dealsKnockback;
 	}
 
 	public void gatherAffectedBlocks(boolean randomize) {
@@ -159,21 +165,23 @@ public class ITExplosion extends Explosion {
 				}
 				entity.hurt(source, damageAmount);
 
-				double d11 = d10;
-				if (entity instanceof LivingEntity) {
-					d11 = getBlastKnockbackReduction((LivingEntity) entity, d11);
-				}
-				if (knockbackScaleWithSize)
-					d11 *= this.radius;
-				d11 = Math.max(d11, this.radius * 0.05d);
-				if (entity instanceof ExplosionFallingBlockEntity)
-					d11 = Math.min(d11, 0.5d);
-				else if (!(entity instanceof LivingEntity))
-					d11 *= 0.3d;
-				entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, yDistance * d11, zDistance * d11));
-				if (entity instanceof Player player) {
-					if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
-						this.getHitPlayers().put(player, new Vec3(xDistance * d11, yDistance * d11, zDistance * d11));
+				if (this.dealsKnockback) {
+					double d11 = d10;
+					if (entity instanceof LivingEntity) {
+						d11 = getBlastKnockbackReduction((LivingEntity) entity, d11);
+					}
+					if (knockbackScaleWithSize)
+						d11 *= this.radius;
+					d11 = Math.max(d11, this.radius * 0.05d);
+					if (entity instanceof ExplosionFallingBlockEntity)
+						d11 = Math.min(d11, 0.5d);
+					else if (!(entity instanceof LivingEntity))
+						d11 *= 0.3d;
+					entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, yDistance * d11, zDistance * d11));
+					if (entity instanceof Player player) {
+						if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
+							this.getHitPlayers().put(player, new Vec3(xDistance * d11, yDistance * d11, zDistance * d11));
+						}
 					}
 				}
 			}

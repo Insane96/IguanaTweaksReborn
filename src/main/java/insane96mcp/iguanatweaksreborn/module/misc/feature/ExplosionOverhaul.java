@@ -41,7 +41,7 @@ public class ExplosionOverhaul extends Feature {
 				.comment("Vanilla Explosions use a random number that changes the explosion power. With this enabled the ray strength will be as the explosion size.")
 				.define("Disable Explosion Randomness", disableExplosionRandomness);
 		enablePoofParticlesConfig = Config.builder
-				.comment("Somewhere around 1.15 Mojang (for performance issues) removed the poof particles from Explosions. Disable them if you have a low end PC.")
+				.comment("Somewhere around 1.15 Mojang (for performance issues) removed the poof particles from Explosions. Keep them disabled if you have a low end PC.")
 				.define("Enable Poof Particles", enablePoofParticles);
 		blockingDamageScalingConfig = Config.builder
 				.comment("How much damage and knockback will the player take when blocking an explosion with a shield. Putting 0 shields will block like Vanilla.")

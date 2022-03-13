@@ -1,5 +1,21 @@
 # Changelog
 
+## Upcoming
+* Misc
+  * ITExplosions can now deal no knockback
+* Data Pack
+  * Stone now has 10% chance (+1.67% per level of looting) to drop iron nugget
+  * Basalt  now has 10% chance (+1.67% per level of looting) to drop gold nugget
+  * Cake now drops if not eaten when broken
+  * Silverfishes now drop 0-2 iron nuggets
+  * Crossbows can no longer be crafted, must be obtained from pillagers / Outposts
+  * Rails are simpler and slightly less expensive to craft
+  * Beetroot soups now require only 3 beetroots to be crafted
+  * Sandstone and Red Sandstone recipes now output 2 instead of 1
+  * Dark Prismarine is now crafted with Prismarine instead of shards
+  * Clay can be broken down to balls in the crafting table
+  * Sticky Pistons and Leads can now be crafted with Honey
+
 ## 2.9.2
 * Experience
   * Added Other Experience Feature. Lets you change other experience sources
