@@ -1,6 +1,9 @@
 # Changelog
 
 ## Upcoming
+* Farming
+  * Nerfed Bonemeal
+    * Fixed Bonemeal not working on dry crops when crops growth feature was disabled 
 * Misc
   * ITExplosions can now deal no knockback
 * Data Pack
