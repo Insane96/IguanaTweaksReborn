@@ -128,7 +128,7 @@ public class NerfedBonemealFeature extends Feature {
 			return BonemealResult.NONE;
 
 		//If farmland is dry and cropsRequireWater is set to ANY_CASE then cancel the event
-		if (FarmingModule.isAffectedByFarmlandState(world, pos) && !FarmingModule.isCropOnWetFarmland(world, pos) && Modules.farming.cropsGrowth.cropsRequireWater.equals(CropsRequireWater.ANY_CASE)) {
+		if (Modules.farming.cropsGrowth.isEnabled() && FarmingModule.isAffectedByFarmlandState(world, pos) && !FarmingModule.isCropOnWetFarmland(world, pos) && Modules.farming.cropsGrowth.cropsRequireWater.equals(CropsRequireWater.ANY_CASE)) {
 			return BonemealResult.CANCEL;
 		}
 		if (this.nerfedBonemeal.equals(NerfedBonemeal.DISABLED))
