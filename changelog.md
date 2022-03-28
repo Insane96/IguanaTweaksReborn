@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.9.3
 * Farming
   * Nerfed Bonemeal
     * Fixed Bonemeal not working on dry crops when crops growth feature was disabled 
