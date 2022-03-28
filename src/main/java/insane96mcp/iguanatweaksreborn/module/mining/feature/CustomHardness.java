@@ -24,7 +24,7 @@ public class CustomHardness extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> customHardnessConfig;
 
-	private static final ArrayList<String> customHardnessDefault = Lists.newArrayList("minecraft:coal_ore,3", "minecraft:iron_ore,3.5", "minecraft:gold_ore,4.0", "minecraft:diamond_ore,4.5", "minecraft:ancient_debris,10", "minecraft:redstone_ore,3.5", "minecraft:lapis_ore,3.5", "minecraft:emerald_ore,4.5","minecraft:deepslate_coal_ore,4.5", "minecraft:deepslate_iron_ore,5.25", "minecraft:deepslate_gold_ore,6.0", "minecraft:deepslate_diamond_ore,6.75", "minecraft:deepslate_redstone_ore,5.25", "minecraft:deepslate_lapis_ore,5.25", "minecraft:deepslate_emerald_ore,6.75","minecraft:nether_quartz_ore,3", "minecraft:nether_gold_ore,3", "#iguanatweaksreborn:obsidians,40");
+	private static final ArrayList<String> customHardnessDefault = Lists.newArrayList("minecraft:coal_ore,3", "minecraft:iron_ore,3.5", "minecraft:gold_ore,4.0", "minecraft:diamond_ore,4.5", "minecraft:ancient_debris,10", "minecraft:redstone_ore,3.5", "minecraft:lapis_ore,3.5", "minecraft:emerald_ore,4.5","minecraft:deepslate_coal_ore,4.5", "minecraft:deepslate_iron_ore,5.25", "minecraft:deepslate_gold_ore,6.0", "minecraft:deepslate_diamond_ore,6.75", "minecraft:deepslate_redstone_ore,5.25", "minecraft:deepslate_lapis_ore,5.25", "minecraft:deepslate_emerald_ore,6.75","minecraft:nether_quartz_ore,3", "minecraft:nether_gold_ore,3", "#iguanatweaksreborn:obsidians,33");
 
 	public ArrayList<BlockHardness> customHardness;
 
@@ -89,14 +89,20 @@ public class CustomHardness extends Feature {
 		if (customHardness == -1d)
 			return;
 		double ratio = getRatio(customHardness, blockState, level, pos);
-		event.setNewSpeed(event.getNewSpeed() * (float) ratio);
+		if (ratio == -1d)
+			event.setNewSpeed(Float.MAX_VALUE);
+		else
+			event.setNewSpeed(event.getNewSpeed() * (float) ratio);
 	}
 
+	//Returns -1 if it's hardness 0 (so instabreak)
 	private static double getRatio(double newHardness, BlockState state, Level level, BlockPos pos) {
 		//Add depth dimension multiplier
 		double depthMultiplier = Modules.mining.globalHardness.getDepthHardnessMultiplier(state.getBlock(), level.dimension().location(), pos, true);
 		double ratio = state.getDestroySpeed(level, pos) / newHardness;
 		double multiplier = (1d / ratio) + depthMultiplier;
+		if (multiplier == 0d)
+			return -1d;
 		return 1d / multiplier;
 	}
 

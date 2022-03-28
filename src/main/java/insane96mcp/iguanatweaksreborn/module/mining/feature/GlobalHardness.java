@@ -124,6 +124,9 @@ public class GlobalHardness extends Feature {
 	 * Returns an additive multiplier based off the depth of the block broken
 	 */
 	public double getDepthHardnessMultiplier(Block block, ResourceLocation dimensionId, BlockPos pos, boolean processCustomHardness) {
+		if (!this.isEnabled())
+			return 0d;
+
 		if (!processCustomHardness)
 			for (BlockHardness blockHardness : Modules.mining.customHardness.customHardness)
 				if (blockHardness.matchesBlock(block, dimensionId))

@@ -6,9 +6,13 @@
     * Fixed Bonemeal not working on dry crops when crops growth feature was disabled 
 * Misc
   * ITExplosions can now deal no knockback
+* Mining
+  * Obsidian now matches Bedrock Edition Hardness
+  * Fixed a bug where Custom Hardness would still check for Global Hardness
+  * Fixed a bug where instabreak would fail on Custom Hardness when breaking the block with efficient tool
 * Data Pack
   * Stone now has 10% chance (+1.67% per level of looting) to drop iron nugget
-  * Basalt  now has 10% chance (+1.67% per level of looting) to drop gold nugget
+  * Basalt now has 10% chance (+1.67% per level of looting) to drop gold nugget
   * Cake now drops if not eaten when broken
   * Silverfishes now drop 0-2 iron nuggets
   * Crossbows can no longer be crafted, must be obtained from pillagers / Outposts
