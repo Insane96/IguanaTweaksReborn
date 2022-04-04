@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.movement.utils;
 
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
-import insane96mcp.insanelib.utils.IdTagMatcher;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.registries.ForgeRegistries;

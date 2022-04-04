@@ -74,7 +74,7 @@ public class HoesNerfs extends Feature {
 			return;
 		if (!this.disableLowTierHoes)
 			return;
-		if (!isHoeDisabled(event.getItemStack().getItem()))
+		if (!isHoeDisabled(event.getItemStack()))
 			return;
 		if (!event.getWorld().isEmptyBlock(event.getPos().above()))
 			return;
@@ -94,7 +94,7 @@ public class HoesNerfs extends Feature {
 		if (event.getPlayer().level.isClientSide)
 			return;
 		ItemStack itemStack = event.getContext().getItemInHand();
-		if (isHoeDisabled(itemStack.getItem()) && disableLowTierHoes)
+		if (isHoeDisabled(itemStack) && disableLowTierHoes)
 			return;
 		if (!event.getContext().getLevel().isEmptyBlock(event.getContext().getClickedPos().above()))
 			return;
@@ -120,7 +120,7 @@ public class HoesNerfs extends Feature {
 			event.getPlayer().getCooldowns().addCooldown(itemStack.getItem(), cooldown);
 	}
 
-	private static boolean isHoeDisabled(Item item) {
-		return item.getTags().contains(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "disabled_hoes"));
+	private static boolean isHoeDisabled(ItemStack item) {
+		return item.getTags().anyMatch(tag -> tag.equals(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "disabled_hoes")));
 	}
 }

@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.misc.utils;
 
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
-import insane96mcp.insanelib.utils.Utils;
+import insane96mcp.insanelib.util.Utils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.registries.ForgeRegistries;

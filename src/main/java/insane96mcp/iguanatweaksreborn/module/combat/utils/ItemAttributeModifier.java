@@ -1,7 +1,8 @@
 package insane96mcp.iguanatweaksreborn.module.combat.utils;
 
 import com.google.common.base.Enums;
-import insane96mcp.insanelib.utils.LogHelper;
+import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.util.LogHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -114,7 +115,7 @@ public class ItemAttributeModifier {
 
 	public boolean matchesItem(Item item) {
 		if (this.itemTag != null)
-			return ItemTags.getAllTags().getTag(this.itemTag).contains(item);
+			return new IdTagMatcher(null, this.itemTag).getAllItems().contains(item);
 		if (this.itemId != null)
 			return item.getRegistryName().equals(this.itemId);
 		return item.getClass().equals(this.itemClass);
