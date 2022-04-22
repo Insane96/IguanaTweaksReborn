@@ -10,12 +10,11 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.tags.ITag;
@@ -71,57 +70,52 @@ public class HoesNerfs extends Feature {
 	}
 
 	@SubscribeEvent
-	public void disabledHoes(PlayerInteractEvent.RightClickBlock event) {
+	public void onHoeUse(BlockEvent.BlockToolModificationEvent event) {
 		if (!this.isEnabled())
 			return;
-		if (event.getPlayer().level.isClientSide)
+		if (event.getPlayer() == null || (event.getPlayer() != null && event.getPlayer().level.isClientSide))
 			return;
+		if (event.isSimulated())
+			return;
+		if (event.getToolAction() != ToolActions.HOE_TILL)
+			return;
+		if (event.getState().getBlock().getToolModifiedState(event.getState(), event.getContext(), event.getToolAction(), true) == null)
+			return;
+
+		boolean isHoeDisabled = disabledHoes(event);
+		if (!isHoeDisabled)
+			harderTilling(event);
+	}
+
+	public boolean disabledHoes(BlockEvent.BlockToolModificationEvent event) {
+		ItemStack hoe = event.getHeldItemStack();
+
 		if (!this.disableLowTierHoes)
-			return;
-		if (!isHoeDisabled(event.getItemStack().getItem()))
-			return;
-		if (!event.getWorld().isEmptyBlock(event.getPos().above()))
-			return;
-		if (HoeItem.TILLABLES.get(event.getWorld().getBlockState(event.getPos()).getBlock()) == null)
-			return;
-		ItemStack hoe = event.getItemStack();
+			return false;
+		if (!isHoeDisabled(event.getHeldItemStack().getItem()))
+			return false;
+
 		hoe.hurtAndBreak(hoe.getMaxDamage(), event.getPlayer(), (player) -> player.broadcastBreakEvent(event.getPlayer().getUsedItemHand()));
 		event.getPlayer().displayClientMessage(new TextComponent("This hoe is too weak to be used"), true);
 		event.setCanceled(true);
+		return true;
 	}
 
-	@SubscribeEvent
-	//TODO Move to BlockInteractionEvent when removed
-	public void harderTilling(UseHoeEvent event) {
-		if (!this.isEnabled())
-			return;
-		if (event.getPlayer().level.isClientSide)
-			return;
-		ItemStack itemStack = event.getContext().getItemInHand();
-		if (isHoeDisabled(itemStack.getItem()) && disableLowTierHoes)
-			return;
-		if (!event.getContext().getLevel().isEmptyBlock(event.getContext().getClickedPos().above()))
-			return;
-		if (HoeItem.TILLABLES.get(event.getContext().getLevel().getBlockState(event.getContext().getClickedPos()).getBlock()) == null)
-			return;
-		//TODO Replace with below when implemented
-		if (!(itemStack.getItem() instanceof HoeItem))
-			return;
-		//if (!stack.canPerformAction(ToolActions.TILL))
-			//return;
-		if (event.getPlayer().getCooldowns().isOnCooldown(itemStack.getItem()))
+	public void harderTilling(BlockEvent.BlockToolModificationEvent event) {
+		ItemStack hoe = event.getHeldItemStack();
+		if (event.getPlayer().getCooldowns().isOnCooldown(hoe.getItem()))
 			return;
 		int cooldown = 0;
 		for (HoeCooldown hoeCooldown : this.hoesCooldowns) {
-			if (hoeCooldown.matchesItem(itemStack.getItem(), null)) {
+			if (hoeCooldown.matchesItem(hoe.getItem(), null)) {
 				cooldown = hoeCooldown.cooldown;
 				break;
 			}
 		}
 		if (this.hoesDamageOnUseMultiplier > 1)
-			itemStack.hurtAndBreak(this.hoesDamageOnUseMultiplier - 1, event.getPlayer(), (player) -> player.broadcastBreakEvent(event.getPlayer().getUsedItemHand()));
+			hoe.hurtAndBreak(this.hoesDamageOnUseMultiplier - 1, event.getPlayer(), (player) -> player.broadcastBreakEvent(event.getPlayer().getUsedItemHand()));
 		if (cooldown != 0)
-			event.getPlayer().getCooldowns().addCooldown(itemStack.getItem(), cooldown);
+			event.getPlayer().getCooldowns().addCooldown(hoe.getItem(), cooldown);
 	}
 
 	private static final ResourceLocation DISABLED_HOES = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "disabled_hoes");
