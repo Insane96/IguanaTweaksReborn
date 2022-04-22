@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.farming.utils;
 
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
-import insane96mcp.insanelib.utils.IdTagMatcher;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;

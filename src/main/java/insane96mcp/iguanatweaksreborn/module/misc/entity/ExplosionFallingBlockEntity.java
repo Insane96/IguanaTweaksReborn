@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.misc.entity;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +22,15 @@ public class ExplosionFallingBlockEntity extends FallingBlockEntity {
 	public Entity source;
 
 	public ExplosionFallingBlockEntity(Level level, double x, double y, double z, BlockState fallingBlockState) {
-		super(level, x, y, z, fallingBlockState);
+		super(EntityType.FALLING_BLOCK, level);
+		this.blockState = fallingBlockState;
+		this.blocksBuilding = true;
+		this.setPos(x, y, z);
+		this.setDeltaMovement(Vec3.ZERO);
+		this.xo = x;
+		this.yo = y;
+		this.zo = z;
+		this.setStartPos(this.blockPosition());
 	}
 
 	@Nullable

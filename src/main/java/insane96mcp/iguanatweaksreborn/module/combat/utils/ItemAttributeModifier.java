@@ -1,14 +1,16 @@
 package insane96mcp.iguanatweaksreborn.module.combat.utils;
 
 import com.google.common.base.Enums;
-import insane96mcp.insanelib.utils.LogHelper;
+import insane96mcp.insanelib.util.LogHelper;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITag;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.annotation.Nullable;
@@ -113,9 +115,12 @@ public class ItemAttributeModifier {
 	}
 
 	public boolean matchesItem(Item item) {
-		if (this.itemTag != null)
-			return ItemTags.getAllTags().getTag(this.itemTag).contains(item);
-		if (this.itemId != null)
+		if (this.itemTag != null) {
+			TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, this.itemTag);
+			ITag<Item> itemTag = ForgeRegistries.ITEMS.tags().getTag(tagKey);
+			return itemTag.contains(item);
+		}
+		else if (this.itemId != null)
 			return item.getRegistryName().equals(this.itemId);
 		return item.getClass().equals(this.itemClass);
 	}

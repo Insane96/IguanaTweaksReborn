@@ -4,7 +4,7 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.setup.Strings;
+import insane96mcp.insanelib.setup.ILStrings;
 import net.minecraft.world.entity.Mob;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -35,9 +35,9 @@ public class SpawnerMobsExperience extends Feature {
 	public void markFromSpawner(EntityJoinWorldEvent event) {
 		if (!(event.getEntity() instanceof Mob mob))
 			return;
-		if (!mob.getPersistentData().getBoolean(Strings.Tags.SPAWNED_FROM_SPAWNER))
+		if (!mob.getPersistentData().getBoolean(ILStrings.Tags.SPAWNED_FROM_SPAWNER))
 			return;
 
-		mob.getPersistentData().putDouble(Strings.Tags.EXPERIENCE_MULTIPLIER, this.mobsFromSpawnersMultiplier);
+		mob.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, this.mobsFromSpawnersMultiplier);
 	}
 }

@@ -6,8 +6,10 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -15,6 +17,8 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITag;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -120,7 +124,11 @@ public class HoesNerfs extends Feature {
 			event.getPlayer().getCooldowns().addCooldown(itemStack.getItem(), cooldown);
 	}
 
+	private static final ResourceLocation DISABLED_HOES = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "disabled_hoes");
+
 	private static boolean isHoeDisabled(Item item) {
-		return item.getTags().contains(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "disabled_hoes"));
+		TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, DISABLED_HOES);
+		ITag<Item> itemTag = ForgeRegistries.ITEMS.tags().getTag(tagKey);
+		return itemTag.contains(item);
 	}
 }

@@ -6,14 +6,15 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.core.Registry;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITag;
 
 import java.util.List;
 
@@ -58,10 +59,9 @@ public class CustomStackSize extends Feature {
 
         for (ItemStackSize customStackSize : customStackList) {
             if (customStackSize.tag != null) {
-                Tag<Item> tag = ItemTags.getAllTags().getTag(customStackSize.tag);
-                if (tag == null)
-                    continue;
-                tag.getValues().forEach(item -> item.maxStackSize = Mth.clamp(customStackSize.stackSize, 1, 64));
+                TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, customStackSize.tag);
+                ITag<Item> itemTag = ForgeRegistries.ITEMS.tags().getTag(tagKey);
+                itemTag.stream().forEach(item -> item.maxStackSize = Mth.clamp(customStackSize.stackSize, 1, 64));
             }
             else {
                 Item item = ForgeRegistries.ITEMS.getValue(customStackSize.id);
