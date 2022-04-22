@@ -53,7 +53,7 @@ public class BackwardsSlowdown extends Feature {
 			if (modifier == null) {
 				MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, BACKWARD_WALK_SLOWDOWN, "backward slowdown", -this.slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
 			}
-			else if (modifier.getAmount() != slowdown) {
+			else if (modifier.getAmount() != -slowdown) {
 				event.player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(BACKWARD_WALK_SLOWDOWN);
 				MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, BACKWARD_WALK_SLOWDOWN, "backward slowdown", -this.slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
 			}
