@@ -160,6 +160,8 @@ public class TempSpawner extends Feature {
 	}
 
 	public void onServerTick(BaseSpawner spawner) {
+		if (!(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity))
+			return;
 		SpawnerBlockEntity spawnerBlockEntity = (SpawnerBlockEntity) spawner.getSpawnerBlockEntity();
 		//If the feature is disabled then reactivate disabled spawners and prevent further processing
 		if (!this.isEnabled()) {
@@ -181,6 +183,8 @@ public class TempSpawner extends Feature {
 	}
 
 	public void onClientTick(BaseSpawner spawner) {
+		if (!(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity))
+			return;
 		SpawnerBlockEntity spawnerBlockEntity = (SpawnerBlockEntity) spawner.getSpawnerBlockEntity();
 		Level level = spawnerBlockEntity.getLevel();
 		if (level == null)
