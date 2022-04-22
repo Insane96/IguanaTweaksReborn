@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.9.4
+* Ported to 1.18.2
+
 ## 2.9.3
 * Farming
   * Nerfed Bonemeal
