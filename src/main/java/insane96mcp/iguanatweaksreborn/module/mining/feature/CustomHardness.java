@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -32,11 +33,11 @@ public class CustomHardness extends Feature {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		customHardnessConfig = Config.builder
-				.comment("Define custom blocks hardness, one string = one block/tag. Those blocks ARE AFFECTED by the global block hardness multiplier, unless put in the blacklisst.\n" +
-						"The format is modid:blockid,hardness,dimensionid or #modid:tagid,hardness,dimensionid\n" +
-						"E.g. 'minecraft:stone,5.0' will make stone have 5 hardness in every dimension (multiplied by Global Hardness).\n" +
-						"E.g. '#forge:stone,5.0,minecraft:overworld' will make all the stone types have 5 hardness but only in the overworld.\n" +
-						"As of 2.4.0 this now works with blocks that instantly break too (e.g. Torches)")
+				.comment("""
+						Define custom blocks hardness, one string = one block/tag. Those blocks ARE AFFECTED by the global block hardness multiplier, unless put in the blacklist.
+						The format is modid:blockid,hardness,dimensionid or #modid:tagid,hardness,dimensionid
+						E.g. 'minecraft:stone,5.0' will make stone have 5 hardness in every dimension (multiplied by Global Hardness).
+						E.g. '#forge:stone,5.0,minecraft:overworld' will make all the stone types have 5 hardness but only in the overworld.""")
 				.defineList("Custom Hardness", customHardnessDefault, o -> o instanceof String);
 		Config.builder.pop();
 	}
@@ -70,7 +71,7 @@ public class CustomHardness extends Feature {
 		processedZeroHardness = true;
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void processSingleHardness(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled())
 			return;
