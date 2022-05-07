@@ -23,7 +23,7 @@ public class ProtectionEnchantmentMixin extends Enchantment {
 
 	@Override
 	public boolean isTreasureOnly() {
-		if (this.type == ProtectionEnchantment.Type.ALL && Modules.combat.stats.protectionNerf == Stats.ProtectionNerf.DISABLE)
+		if (this.type == ProtectionEnchantment.Type.ALL && Modules.combat != null && Modules.combat.stats.protectionNerf == Stats.ProtectionNerf.DISABLE)
 			return true;
 		return super.isTreasureOnly();
 	}
@@ -37,14 +37,14 @@ public class ProtectionEnchantmentMixin extends Enchantment {
 
 	@Override
 	public boolean isDiscoverable() {
-		if (this.type == ProtectionEnchantment.Type.ALL && Modules.combat.stats.protectionNerf == Stats.ProtectionNerf.DISABLE)
+		if (this.type == ProtectionEnchantment.Type.ALL && Modules.combat != null && Modules.combat.stats.protectionNerf == Stats.ProtectionNerf.DISABLE)
 			return false;
 		return super.isDiscoverable();
 	}
 
 	@Override
 	public int getMaxLevel() {
-		if (this.type == ProtectionEnchantment.Type.ALL && Modules.combat.stats.protectionNerf != Stats.ProtectionNerf.NONE)
+		if (this.type == ProtectionEnchantment.Type.ALL && Modules.combat != null && Modules.combat.stats.protectionNerf != Stats.ProtectionNerf.NONE)
 			return 3;
 
 		return 4;
