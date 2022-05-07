@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.9.5
+* Added a priority to Hardness (should fix a problem with Tinkers Construct where you could mine blocks even if your mining speed was 0)
+* Fixed Forge not begin able to show the "missing dependency" screen due to Protection mixin (Thanks Mrbysco)
+
 ## 2.9.4
 * Ported to 1.18.2
 
