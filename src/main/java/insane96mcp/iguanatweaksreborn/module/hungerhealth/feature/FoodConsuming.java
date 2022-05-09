@@ -4,9 +4,13 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Food Consuming", description = "Changes to the speed on how food is eaten or how items are consumed.")
 public class FoodConsuming extends Feature {
@@ -14,11 +18,13 @@ public class FoodConsuming extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> fasterMilkConsumingConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> eatingSpeedBasedOffFoodConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> eatingTimeMultiplierConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> stopConsumingOnHitConfig;
 
 	public boolean fasterPotionConsuming = true;
 	public boolean fasterMilkConsuming = true;
 	public boolean eatingSpeedBasedOffFood = true;
 	public double eatingTimeMultiplier = 0.13d;
+	public boolean stopConsumingOnHit = true;
 
 	public FoodConsuming(Module module) {
 		super(Config.builder, module);
@@ -35,6 +41,9 @@ public class FoodConsuming extends Feature {
 		eatingTimeMultiplierConfig = Config.builder
 				.comment("Multiplier for the time taken to eat. Only applied if 'Eating Speed Based Off Food Config' is active.")
 				.defineInRange("Eating Time Multiplier", this.eatingTimeMultiplier, 0, Double.MAX_VALUE);
+		stopConsumingOnHitConfig = Config.builder
+				.comment("If true, eating/drinking stops when the player's hit.")
+				.define("Stop consuming on hit", this.stopConsumingOnHit);
 		Config.builder.pop();
 	}
 
@@ -45,6 +54,7 @@ public class FoodConsuming extends Feature {
 		this.fasterMilkConsuming = this.fasterMilkConsumingConfig.get();
 		this.eatingSpeedBasedOffFood = this.eatingSpeedBasedOffFoodConfig.get();
 		this.eatingTimeMultiplier = this.eatingTimeMultiplierConfig.get();
+		this.stopConsumingOnHit = this.stopConsumingOnHitConfig.get();
 	}
 
 	public int getFoodConsumingTime(ItemStack stack) {
@@ -56,5 +66,22 @@ public class FoodConsuming extends Feature {
 
 		int minTime = food.isFastFood() ? 16 : 32;
 		return (int) Math.max(time, minTime);
+	}
+
+	@SubscribeEvent
+	public void onPlayerHit(LivingDamageEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		if (!this.stopConsumingOnHit)
+			return;
+
+		if (!(event.getEntityLiving() instanceof Player player))
+			return;
+
+		if (!player.getUseItem().getUseAnimation().equals(UseAnim.EAT) && !player.getUseItem().getUseAnimation().equals(UseAnim.DRINK))
+			return;
+
+		player.stopUsingItem();
 	}
 }
