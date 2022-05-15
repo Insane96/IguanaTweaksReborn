@@ -7,6 +7,7 @@
   * Explosion Overhaul
     * Wither and Dragon are no longer knockbacked so much by explosions. Added a blacklist that takes reduced knockback from explosions
     * Added entity blacklist. Entities in this list will not use the mod's explosion
+    * Reduced poof particles
 
 ## 2.9.5
 * Added a priority to Hardness (should fix a problem with Tinkers Construct where you could mine blocks even if your mining speed was 0)

@@ -105,7 +105,7 @@ public class ExplosionOverhaul extends Feature {
 
 		Explosion e = event.getExplosion();
 		if (e.level instanceof ServerLevel level && !e.getToBlow().isEmpty()) {
-			int particleCount = (int)(e.radius * 150);
+			int particleCount = (int)(e.radius * 100);
 			level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.33D);
 		}
 	}
