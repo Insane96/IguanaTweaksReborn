@@ -45,10 +45,10 @@ public class WeightedEquipment extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Double> percentagePerToughnessConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> materialWeightConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> enchantmentsListConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> shieldSlowdownConfig;
+	private final ForgeConfigSpec.ConfigValue<Double> shieldSlowdownConfig;
 	//private final ForgeConfigSpec.ConfigValue<List<? extends String>> customWeightConfig;
 
-	private static final List<String> materialWeightDefault = Arrays.asList("leather,0.04", "chainmail,0.12", "golden,0.08", "iron,0.15", "diamond,0.25", "netherite,0.333");
+	private static final List<String> materialWeightDefault = Arrays.asList("leather,0.04", "chainmail,0.10", "golden,0.07", "iron,0.13", "diamond,0.18", "netherite,0.25");
 
 	private static final List<String> enchantmentsListDefault = Arrays.asList("minecraft:feather_falling,0.10", "elenaidodge2:lightweight,0.15,5");
 
@@ -56,7 +56,7 @@ public class WeightedEquipment extends Feature {
 	public double percentagePerToughness = 0.03d;
 	public ArrayList<ArmorMaterialWeight> materialWeight;
 	public ArrayList<ArmorEnchantmentWeight> enchantmentsList;
-	public boolean shieldSlowdown = true;
+	public double shieldSlowdown = 0.18d;
 
 	// 11 - 16 - 15 - 13
 	private final HashMap<EquipmentSlot, Double> armorDurabilityRatio = new HashMap<>();
@@ -81,11 +81,12 @@ public class WeightedEquipment extends Feature {
 				.comment("""
 						Define here a list of Enchantments that will reduce the slowdown on the armor piece having the enchantment.
 						Format is modid:enchantmentid,reductionPerLevel,flatReduction
-						Where reduction per level is the percentage slowdown reduction per level, while flatReduction (optional) is a flat percentage slowdown reduction. E.g. 'elenaidodge2:lightweight,0.15,0.05' means that you'll get 5% less slowdown on armor plus 15% per level, so at Lightweight II you'll get (5+15*2) = 35% reduction on that piece of armor.""")
+						Where reduction per level is the percentage slowdown reduction per level, while flatReduction (optional) is a flat percentage slowdown reduction. E.g. 'elenaidodge2:lightweight,0.15,0.05' means that you'll get 5% less slowdown on armor plus 15% per level, so at Lightweight II you'll get (5+15*2) = 35% reduction on that piece of armor.
+						Note that the percentage reduction is on the percentage slowdown, and not a flat reduction. E.g. With Feather Falling II on a full chainmail armor you get slowed down by 8% instead of 10%.""")
 				.defineList("Enchantments Weight Reduction", enchantmentsListDefault, o -> o instanceof String);
 		shieldSlowdownConfig = Config.builder
-				.comment("If true, Shields will slowdown the player by 25%.")
-				.define("Shield Slowdown", shieldSlowdown);
+				.comment("If true, Shields will slowdown the player by this percentage.")
+				.defineInRange("Shield Slowdown", this.shieldSlowdown, 0d, 1d);
 		Config.builder.pop();
 
 		armorDurabilityRatio.put(EquipmentSlot.HEAD, 0.2d);
@@ -102,9 +103,9 @@ public class WeightedEquipment extends Feature {
 		this.materialWeight = ArmorMaterialWeight.parseStringList(this.materialWeightConfig.get());
 		this.enchantmentsList = ArmorEnchantmentWeight.parseStringList(this.enchantmentsListConfig.get());
 		this.shieldSlowdown = this.shieldSlowdownConfig.get();
-		if (this.shieldSlowdown) {
-			Stats.CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShieldItem.class, EquipmentSlot.MAINHAND, Attributes.MOVEMENT_SPEED, -0.18d, AttributeModifier.Operation.MULTIPLY_BASE));
-			Stats.CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShieldItem.class, EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, -0.18d, AttributeModifier.Operation.MULTIPLY_BASE));
+		if (this.shieldSlowdown > 0d) {
+			Stats.CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShieldItem.class, EquipmentSlot.MAINHAND, Attributes.MOVEMENT_SPEED, -this.shieldSlowdown, AttributeModifier.Operation.MULTIPLY_BASE));
+			Stats.CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShieldItem.class, EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, -this.shieldSlowdown, AttributeModifier.Operation.MULTIPLY_BASE));
 		}
 	}
 
