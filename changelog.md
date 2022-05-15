@@ -1,6 +1,10 @@
 # Changelog
 
 ## Upcoming
+* Iron armor Toughness increased (~~2~~ -> 4 total)
+* Weighted Equipment (renamed from Weighted Armor) 
+  * Shield Slowdown moved from Stats to Weighted Equipment 
+  * Shield slowdown reduced (25% -> 18% slowdown)
 * Taking damage from non-entities (e.g. falling, poison) will no longer stop eating/drinking
 
 ## 2.9.6

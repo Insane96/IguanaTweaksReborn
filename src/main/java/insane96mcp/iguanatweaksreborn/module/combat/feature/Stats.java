@@ -13,7 +13,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -33,17 +32,15 @@ public class Stats extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> nerfPowerConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> disableCritArrowsConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> adjustCrossbowDamageConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> shieldSlowdownConfig;
 	private final ForgeConfigSpec.ConfigValue<ProtectionNerf> protectionNerfConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> itemModifiersConfig;
 
-	private static final ArrayList<String> itemModifiersDefault = Lists.newArrayList("minecraft:iron_helmet,HEAD,minecraft:generic.armor_toughness,0.5,ADDITION", "minecraft:iron_chestplate,CHEST,minecraft:generic.armor_toughness,0.5,ADDITION", "minecraft:iron_leggings,LEGS,minecraft:generic.armor_toughness,0.5,ADDITION", "minecraft:iron_boots,FEET,minecraft:generic.armor_toughness,0.5,ADDITION", "minecraft:netherite_helmet,HEAD,minecraft:generic.armor,1,ADDITION", "minecraft:netherite_boots,FEET,minecraft:generic.armor,1,ADDITION");
+	private static final ArrayList<String> itemModifiersDefault = Lists.newArrayList("minecraft:iron_helmet,HEAD,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_chestplate,CHEST,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_leggings,LEGS,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_boots,FEET,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:netherite_helmet,HEAD,minecraft:generic.armor,1,ADDITION", "minecraft:netherite_boots,FEET,minecraft:generic.armor,1,ADDITION");
 
 	public boolean reduceWeaponDamage = true;
 	public boolean nerfPower = true;
 	public boolean disableCritArrows = true;
 	public boolean adjustCrossbowDamage = true;
-	public boolean shieldSlowdown = true;
 	public ProtectionNerf protectionNerf = ProtectionNerf.DISABLE;
 	public List<ItemAttributeModifier> itemModifiers;
 
@@ -62,19 +59,18 @@ public class Stats extends Feature {
 		adjustCrossbowDamageConfig = Config.builder
 				.comment("If true, Arrows from Crossbows will no longer deal random damage, but a set amount of damage (about 9 at a medium distance).")
 				.define("Adjust Crossbow Damage", this.adjustCrossbowDamage);
-		shieldSlowdownConfig = Config.builder
-				.comment("If true, Shields will slowdown the player by 25%.")
-				.define("Shield Slowdown", shieldSlowdown);
 		protectionNerfConfig = Config.builder
-				.comment("DISABLE: Disables protection enchantment.\n" +
-						"NERF: Sets max protection level to 3 instead of 4\n" +
-						"NONE: no changes to protection are done")
+				.comment("""
+						DISABLE: Disables protection enchantment.
+						NERF: Sets max protection level to 3 instead of 4
+						NONE: no changes to protection are done""")
 				.defineEnum("Nerf Protection Enchantment", this.protectionNerf);
 		itemModifiersConfig = Config.builder
-				.comment("Define Attribute Modifiers to apply to single items, one string = one item/tag.\n" +
-						"The format is modid:itemid,slot,attribute,amount,operation (or tag instead of itemid #modid:tagid,...)\n" +
-						"- slot can be: MAIN_HAND,OFF_HAND,HEAD,CHEST,LEGS,FEET\n" +
-						"- operation can be: ADDITION, MULTIPLY_BASE, MULTIPLY_TOTAL")
+				.comment("""
+						Define Attribute Modifiers to apply to single items, one string = one item/tag.
+						The format is modid:itemid,slot,attribute,amount,operation (or tag instead of itemid #modid:tagid,...)
+						- slot can be: MAIN_HAND,OFF_HAND,HEAD,CHEST,LEGS,FEET
+						- operation can be: ADDITION, MULTIPLY_BASE, MULTIPLY_TOTAL""")
 				.defineList("Item Modifiers", itemModifiersDefault, o -> o instanceof String);
 		Config.builder.pop();
 	}
@@ -86,7 +82,6 @@ public class Stats extends Feature {
 		this.nerfPower = this.nerfPowerConfig.get();
 		this.disableCritArrows = this.disableCritArrowsConfig.get();
 		this.adjustCrossbowDamage = this.adjustCrossbowDamageConfig.get();
-		this.shieldSlowdown = this.shieldSlowdownConfig.get();
 		this.protectionNerf = this.protectionNerfConfig.get();
 
 		CLASS_ATTRIBUTE_MODIFIER.clear();
@@ -94,10 +89,6 @@ public class Stats extends Feature {
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(SwordItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
-		}
-		if (this.shieldSlowdown) {
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShieldItem.class, EquipmentSlot.MAINHAND, Attributes.MOVEMENT_SPEED, -0.25d, AttributeModifier.Operation.MULTIPLY_BASE));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShieldItem.class, EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, -0.25d, AttributeModifier.Operation.MULTIPLY_BASE));
 		}
 
 		itemModifiers = ItemAttributeModifier.parseStringList(this.itemModifiersConfig.get());

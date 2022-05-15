@@ -8,7 +8,7 @@ import insane96mcp.insanelib.base.Module;
 @Label(name = "Movement")
 public class Movement extends Module {
 
-	public WeightedArmor weightedArmor;
+	public WeightedEquipment weightedEquipment;
 	public NoPillaring noPillaring;
 	public Tagging tagging;
 	public TerrainSlowdown terrainSlowdown;
@@ -17,7 +17,7 @@ public class Movement extends Module {
 	public Movement() {
 		super(Config.builder);
 		pushConfig(Config.builder);
-		weightedArmor = new WeightedArmor(this);
+		weightedEquipment = new WeightedEquipment(this);
 		noPillaring = new NoPillaring(this);
 		tagging = new Tagging(this);
 		terrainSlowdown = new TerrainSlowdown(this);
@@ -28,7 +28,7 @@ public class Movement extends Module {
 	@Override
 	public void loadConfig() {
 		super.loadConfig();
-		weightedArmor.loadConfig();
+		weightedEquipment.loadConfig();
 		noPillaring.loadConfig();
 		tagging.loadConfig();
 		terrainSlowdown.loadConfig();

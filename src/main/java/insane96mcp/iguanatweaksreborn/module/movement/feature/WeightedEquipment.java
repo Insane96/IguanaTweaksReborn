@@ -1,6 +1,8 @@
 package insane96mcp.iguanatweaksreborn.module.movement.feature;
 
 import com.google.common.collect.Multimap;
+import insane96mcp.iguanatweaksreborn.module.combat.feature.Stats;
+import insane96mcp.iguanatweaksreborn.module.combat.utils.ItemAttributeModifier;
 import insane96mcp.iguanatweaksreborn.module.movement.utils.ArmorEnchantmentWeight;
 import insane96mcp.iguanatweaksreborn.module.movement.utils.ArmorMaterialWeight;
 import insane96mcp.iguanatweaksreborn.setup.Config;
@@ -22,6 +24,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -35,13 +38,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-@Label(name = "Weighted Armor", description = "Armor slows down the player based off the Armor and Toughness given.")
-public class WeightedArmor extends Feature {
+@Label(name = "Weighted Equipment", description = "Armor and Shield slows down the player.")
+public class WeightedEquipment extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> slownessPerArmorConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> percentagePerToughnessConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> materialWeightConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> enchantmentsListConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> shieldSlowdownConfig;
 	//private final ForgeConfigSpec.ConfigValue<List<? extends String>> customWeightConfig;
 
 	private static final List<String> materialWeightDefault = Arrays.asList("leather,0.04", "chainmail,0.12", "golden,0.08", "iron,0.15", "diamond,0.25", "netherite,0.333");
@@ -52,30 +56,36 @@ public class WeightedArmor extends Feature {
 	public double percentagePerToughness = 0.03d;
 	public ArrayList<ArmorMaterialWeight> materialWeight;
 	public ArrayList<ArmorEnchantmentWeight> enchantmentsList;
+	public boolean shieldSlowdown = true;
 
 	// 11 - 16 - 15 - 13
 	private final HashMap<EquipmentSlot, Double> armorDurabilityRatio = new HashMap<>();
 
-	public WeightedArmor(Module module) {
+	public WeightedEquipment(Module module) {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		slownessPerArmorConfig = Config.builder
 				.comment("Percentage slowdown per point of armor the player is wearing.")
 				.defineInRange("Slowdown per Armor", slownessPerArmor, 0d, 1d);
 		percentagePerToughnessConfig = Config.builder
-				.comment("This value times the Armor Toughness worn by the player is a percentage increase of the Slowdown per Armor.\n" +
-						"Total percentage slowdown is '(slowness_per_armor * armor_points) * (1 + (toughness * percentage_per_toughness))'\n" +
-						"E.g. with 'Slowness per Armor' set to 0.02 and this set to 0.04 and the player wearing Diamond Armor the slowdown is '(0.02 * 20) * (1 + (8 * 0.04))' = '0.4 * 1.32'= '0.528' = -52.8% Speed applied to the player.")
+				.comment("""
+						This value times the Armor Toughness worn by the player is a percentage increase of the Slowdown per Armor.
+						Total percentage slowdown is '(slowness_per_armor * armor_points) * (1 + (toughness * percentage_per_toughness))'
+						E.g. with 'Slowness per Armor' set to 0.02 and this set to 0.04 and the player wearing Diamond Armor the slowdown is '(0.02 * 20) * (1 + (8 * 0.04))' = '0.4 * 1.32'= '0.528' = -52.8% Speed applied to the player.""")
 				.defineInRange("Percentage Increase per Toughness", percentagePerToughness, 0d, 1d);
 		materialWeightConfig = Config.builder
 				.comment("Define here a list of total slowdown percentage (with full armor) per material. This has priority over 'Slowdown per Armor' and 'Percentage Increase per Toughness'. Material's names are the names in the armor's ids. E.g. Gold Armor is 'golden' as the ids are like 'golden_chestplate'.\n" +
 						"Format is material,total_slowdown")
 				.defineList("Material Weight", materialWeightDefault, o -> o instanceof String);
 		enchantmentsListConfig = Config.builder
-				.comment("Define here a list of Enchantments that will reduce the slowdown on the armor piece having the enchantment.\n" +
-						"Format is modid:enchantmentid,reductionPerLevel,flatReduction\n" +
-						"Where reduction per level is the percentage slowdown reduction per level, while flatReduction (optional) is a flat percentage slowdown reduction. E.g. 'elenaidodge2:lightweight,0.15,0.05' means that you'll get 5% less slowdown on armor plus 15% per level, so at Lightweight II you'll get (5+15*2) = 35% reduction on that piece of armor.")
+				.comment("""
+						Define here a list of Enchantments that will reduce the slowdown on the armor piece having the enchantment.
+						Format is modid:enchantmentid,reductionPerLevel,flatReduction
+						Where reduction per level is the percentage slowdown reduction per level, while flatReduction (optional) is a flat percentage slowdown reduction. E.g. 'elenaidodge2:lightweight,0.15,0.05' means that you'll get 5% less slowdown on armor plus 15% per level, so at Lightweight II you'll get (5+15*2) = 35% reduction on that piece of armor.""")
 				.defineList("Enchantments Weight Reduction", enchantmentsListDefault, o -> o instanceof String);
+		shieldSlowdownConfig = Config.builder
+				.comment("If true, Shields will slowdown the player by 25%.")
+				.define("Shield Slowdown", shieldSlowdown);
 		Config.builder.pop();
 
 		armorDurabilityRatio.put(EquipmentSlot.HEAD, 0.2d);
@@ -91,6 +101,11 @@ public class WeightedArmor extends Feature {
 		this.percentagePerToughness = this.percentagePerToughnessConfig.get();
 		this.materialWeight = ArmorMaterialWeight.parseStringList(this.materialWeightConfig.get());
 		this.enchantmentsList = ArmorEnchantmentWeight.parseStringList(this.enchantmentsListConfig.get());
+		this.shieldSlowdown = this.shieldSlowdownConfig.get();
+		if (this.shieldSlowdown) {
+			Stats.CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShieldItem.class, EquipmentSlot.MAINHAND, Attributes.MOVEMENT_SPEED, -0.18d, AttributeModifier.Operation.MULTIPLY_BASE));
+			Stats.CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShieldItem.class, EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, -0.18d, AttributeModifier.Operation.MULTIPLY_BASE));
+		}
 	}
 
 	//Can't use ItemAttributeModifierEvent as I need all the modifiers of the item (ItemStack#getAttributeModifiers) and that causes a loop
