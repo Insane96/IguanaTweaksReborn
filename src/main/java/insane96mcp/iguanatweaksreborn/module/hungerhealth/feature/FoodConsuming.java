@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
@@ -74,6 +75,9 @@ public class FoodConsuming extends Feature {
 			return;
 
 		if (!this.stopConsumingOnHit)
+			return;
+
+		if (!(event.getSource().getEntity() instanceof LivingEntity))
 			return;
 
 		if (!(event.getEntityLiving() instanceof Player player))
