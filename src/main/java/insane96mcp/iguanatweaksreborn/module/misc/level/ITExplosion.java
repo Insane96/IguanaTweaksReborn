@@ -175,8 +175,8 @@ public class ITExplosion extends Explosion {
 					d11 = Math.max(d11, this.radius * 0.05d);
 					if (entity instanceof ExplosionFallingBlockEntity)
 						d11 = Math.min(d11, 0.5d);
-					else if (!(entity instanceof LivingEntity))
-						d11 *= 0.3d;
+					else if (Modules.misc.explosionOverhaul.shouldTakeReducedKnockback(entity))
+						d11 *= 0.25d;
 					entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, yDistance * d11, zDistance * d11));
 					if (entity instanceof Player player) {
 						if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {

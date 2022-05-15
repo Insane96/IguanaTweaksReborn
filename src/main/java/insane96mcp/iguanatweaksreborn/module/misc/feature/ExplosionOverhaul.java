@@ -5,15 +5,22 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.config.BlacklistConfig;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundExplodePacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Explosion;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Label(name = "Explosion Overhaul", description = "Various changes to explosions from knockback to shielding.")
 public class ExplosionOverhaul extends Feature {
@@ -25,6 +32,9 @@ public class ExplosionOverhaul extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> explosionAtHalfEntityConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> affectJustSpawnedEntitiesConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> enableFlyingBlocksConfig;
+	private final BlacklistConfig knockbackBlacklistConfig;
+
+	private static final List<String> knockbackBlacklistDefault = Arrays.asList("minecraft:ender_dragon", "minecraft:wither");
 
 	public boolean disableExplosionRandomness = true;
 	public boolean enablePoofParticles = false;
@@ -33,6 +43,8 @@ public class ExplosionOverhaul extends Feature {
 	public boolean explosionAtHalfEntity = true;
 	public boolean affectJustSpawnedEntities = false;
 	public boolean enableFlyingBlocks = false;
+	public List<IdTagMatcher> knockbackBlacklist;
+	public boolean knockbackBlacklistAsWhitelist = false;
 
 	public ExplosionOverhaul(Module module) {
 		super(Config.builder, module);
@@ -58,6 +70,7 @@ public class ExplosionOverhaul extends Feature {
 		enableFlyingBlocksConfig = Config.builder
 				.comment("EXPERIMENTAL! This will make explosion blast blocks away. Blocks that can't land will drop the block as a TNT would have destroyed it.")
 				.define("Enable Flying Blocks", enableFlyingBlocks);
+		knockbackBlacklistConfig = new BlacklistConfig(Config.builder, "Knockback Blacklist", "A list of mobs (and optionally dimensions) that should take reduced knockback. Non-living entities are blacklisted by default.", knockbackBlacklistDefault, false);
 		Config.builder.pop();
 	}
 
@@ -71,6 +84,8 @@ public class ExplosionOverhaul extends Feature {
 		this.explosionAtHalfEntity = this.explosionAtHalfEntityConfig.get();
 		this.affectJustSpawnedEntities = this.affectJustSpawnedEntitiesConfig.get();
 		this.enableFlyingBlocks = this.enableFlyingBlocksConfig.get();
+		this.knockbackBlacklist = (List<IdTagMatcher>) IdTagMatcher.parseStringList(this.knockbackBlacklistConfig.listConfig.get());
+		this.knockbackBlacklistAsWhitelist = this.knockbackBlacklistConfig.listAsWhitelistConfig.get();
 	}
 
 	@SubscribeEvent
@@ -129,5 +144,24 @@ public class ExplosionOverhaul extends Feature {
 			explosion.processFire();
 			explosion.finalizeExplosion(true);
 		}
+	}
+
+	public boolean shouldTakeReducedKnockback(Entity entity) {
+		if (!(entity instanceof LivingEntity))
+			return true;
+
+		boolean isInWhitelist = false;
+		boolean isInBlacklist = false;
+		for (IdTagMatcher blacklistEntry : this.knockbackBlacklist) {
+			if (blacklistEntry.matchesEntity(entity.getType(), entity.level.dimension().location())) {
+				if (!this.knockbackBlacklistAsWhitelist)
+					isInBlacklist = true;
+				else
+					isInWhitelist = true;
+				break;
+			}
+		}
+
+		return isInBlacklist || (!isInWhitelist && this.knockbackBlacklistAsWhitelist);
 	}
 }

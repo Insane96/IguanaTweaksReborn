@@ -3,6 +3,10 @@
 ## Upcoming
 * Food Consuming
   * Added Stop consuming on hit. When the player is hit eating/drinking will reset
+* Misc
+  * Explosion Overhaul
+    * Wither and Dragon are no longer knockbacked so much by explosions. Added a blacklist that takes reduced knockback from explosions
+    * 
 
 ## 2.9.5
 * Added a priority to Hardness (should fix a problem with Tinkers Construct where you could mine blocks even if your mining speed was 0)
