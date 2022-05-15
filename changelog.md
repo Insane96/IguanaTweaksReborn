@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.9.6
 * Food Consuming
   * Added Stop consuming on hit. When the player is hit eating/drinking will reset
 * Misc
