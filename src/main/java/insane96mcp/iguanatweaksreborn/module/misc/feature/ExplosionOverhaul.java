@@ -20,6 +20,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Label(name = "Explosion Overhaul", description = "Various changes to explosions from knockback to shielding.")
@@ -33,6 +34,7 @@ public class ExplosionOverhaul extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> affectJustSpawnedEntitiesConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> enableFlyingBlocksConfig;
 	private final BlacklistConfig knockbackBlacklistConfig;
+	private final BlacklistConfig entityBlacklistConfig;
 
 	private static final List<String> knockbackBlacklistDefault = Arrays.asList("minecraft:ender_dragon", "minecraft:wither");
 
@@ -45,6 +47,8 @@ public class ExplosionOverhaul extends Feature {
 	public boolean enableFlyingBlocks = false;
 	public List<IdTagMatcher> knockbackBlacklist;
 	public boolean knockbackBlacklistAsWhitelist = false;
+	public List<IdTagMatcher> entityBlacklist;
+	public boolean entityBlacklistAsWhitelist = false;
 
 	public ExplosionOverhaul(Module module) {
 		super(Config.builder, module);
@@ -71,6 +75,7 @@ public class ExplosionOverhaul extends Feature {
 				.comment("EXPERIMENTAL! This will make explosion blast blocks away. Blocks that can't land will drop the block as a TNT would have destroyed it.")
 				.define("Enable Flying Blocks", enableFlyingBlocks);
 		knockbackBlacklistConfig = new BlacklistConfig(Config.builder, "Knockback Blacklist", "A list of mobs (and optionally dimensions) that should take reduced knockback. Non-living entities are blacklisted by default.", knockbackBlacklistDefault, false);
+		entityBlacklistConfig = new BlacklistConfig(Config.builder, "Entity Blacklist", "A list of entities that should not use the mod's explosion.", Collections.emptyList(), false);
 		Config.builder.pop();
 	}
 
@@ -86,6 +91,8 @@ public class ExplosionOverhaul extends Feature {
 		this.enableFlyingBlocks = this.enableFlyingBlocksConfig.get();
 		this.knockbackBlacklist = (List<IdTagMatcher>) IdTagMatcher.parseStringList(this.knockbackBlacklistConfig.listConfig.get());
 		this.knockbackBlacklistAsWhitelist = this.knockbackBlacklistConfig.listAsWhitelistConfig.get();
+		this.entityBlacklist = (List<IdTagMatcher>) IdTagMatcher.parseStringList(this.entityBlacklistConfig.listConfig.get());
+		this.entityBlacklistAsWhitelist = this.entityBlacklistConfig.listAsWhitelistConfig.get();
 	}
 
 	@SubscribeEvent
@@ -107,6 +114,9 @@ public class ExplosionOverhaul extends Feature {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onExplosionStart(ExplosionEvent.Start event) {
 		if (!this.isEnabled())
+			return;
+
+		if (event.getExplosion().getExploder() != null && this.isBlacklisted(event.getExplosion().getExploder()))
 			return;
 
 		event.setCanceled(true);
@@ -163,5 +173,21 @@ public class ExplosionOverhaul extends Feature {
 		}
 
 		return isInBlacklist || (!isInWhitelist && this.knockbackBlacklistAsWhitelist);
+	}
+
+	public boolean isBlacklisted(Entity entity) {
+		boolean isInWhitelist = false;
+		boolean isInBlacklist = false;
+		for (IdTagMatcher blacklistEntry : this.entityBlacklist) {
+			if (blacklistEntry.matchesEntity(entity.getType(), entity.level.dimension().location())) {
+				if (!this.entityBlacklistAsWhitelist)
+					isInBlacklist = true;
+				else
+					isInWhitelist = true;
+				break;
+			}
+		}
+
+		return isInBlacklist || (!isInWhitelist && this.entityBlacklistAsWhitelist);
 	}
 }
