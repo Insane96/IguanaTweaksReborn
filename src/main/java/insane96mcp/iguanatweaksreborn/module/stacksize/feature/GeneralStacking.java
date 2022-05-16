@@ -19,8 +19,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Stack Reduction", description = "Make food, items and blocks less stackable. Changes in this section require a Minecraft restart")
-public class StackReduction extends Feature {
+@Label(name = "General Stacking", description = "Make food, items and blocks less stackable. These are disabled by default. Changes in this section require a Minecraft restart")
+public class GeneralStacking extends Feature {
 
     private final Object mutex = new Object();
 
@@ -28,7 +28,7 @@ public class StackReduction extends Feature {
     private final ForgeConfigSpec.ConfigValue<Boolean> foodStackReductionConfig;
     private final ForgeConfigSpec.ConfigValue<Double> foodQualityDividerConfig;
     private final ForgeConfigSpec.ConfigValue<Double> foodStackMultiplierConfig;
-    private final ForgeConfigSpec.ConfigValue<Boolean> stackableSoupsConfig;
+    private final ForgeConfigSpec.ConfigValue<Integer> stackableSoupsConfig;
     //Items
     private final ForgeConfigSpec.ConfigValue<Double> itemStackMultiplierConfig;
     //Blocks
@@ -38,24 +38,24 @@ public class StackReduction extends Feature {
     //Blacklist
     private final BlacklistConfig blacklistConfig;
 
-    private static final List<String> blacklistDefault = Arrays.asList("minecraft:rotten_flesh", "minecraft:potion");
+    private static final List<String> blacklistDefault = Arrays.asList("minecraft:rotten_flesh");
 
     public boolean foodStackReduction = true;
     public double foodQualityDivider = 18.5;
     public double foodStackMultiplier = 0.6d;
-    public boolean stackableSoups = true;
-    public double itemStackMultiplier = 0.75d;
-    public boolean blockStackReduction = true;
+    public int stackableSoups = 16;
+    public double itemStackMultiplier = 1d;
+    public boolean blockStackReduction = false;
     public double blockStackMultiplier = 1.0d;
     public boolean blockStackAffectedByMaterial = true;
     public List<IdTagMatcher> blacklist;
 	public boolean blacklistAsWhitelist = false;
 
-	public StackReduction(Module module) {
+	public GeneralStacking(Module module) {
         super(Config.builder, module);
         Config.builder.comment(this.getDescription()).push(this.getName());
         foodStackReductionConfig = Config.builder
-                .comment("Food stack sizes will be reduced based off their hunger restored and saturation multiplier. The formula is '(1 - (effective_quality - 1) / Food Quality Divider) * 64' where effective_quality is hunger+saturation restored. E.g. Cooked Porkchops give 8 hunger points and have a 0.8 saturation multiplier so their stack size will be '(1 - (20.8 - 1) / 18.5) * 64' = 24 (Even foods that don't usually stack up to 16 or that don't stack at all will use the same formula, like Honey or Stews).\nThis is affected by Food Module's feature 'Hunger Restore Multiplier' & 'Saturation Restore multiplier'")
+                .comment("Food stack sizes will be reduced based off their hunger restored and saturation multiplier. The formula is '(1 - (effective_quality - 1) / Food Quality Divider) * 64' where effective_quality is hunger+saturation restored. E.g. Cooked Porkchops give 8 hunger points and have a 0.8 saturation multiplier so their stack size will be '(1 - (20.8 - 1) / 18.5) * 64' = 24 (Even foods that usually stack up to 16 or that don't stack at all will use the same formula, like Honey or Stews).\nThis is affected by Food Module's feature 'Hunger Restore Multiplier' & 'Saturation Restore multiplier'")
                 .define("Food Stack Reduction", foodStackReduction);
         foodQualityDividerConfig = Config.builder
                 .comment("Used in the 'Food Stack Reduction' formula. Increase this if there are foods that are better than vanilla ones, otherwise they will all stack to 1. Set this to 21.8 if you disable 'Hunger Restore Multiplier'")
@@ -64,8 +64,8 @@ public class StackReduction extends Feature {
                 .comment("All the foods max stack sizes will be multiplied by this value to increase / decrease them (after Food Stack Reduction).")
                 .defineInRange("Food Stack Multiplier", foodStackMultiplier, 0.01d, 64d);
         stackableSoupsConfig = Config.builder
-                .comment("If true, soups will stack like normal food.")
-                .define("Stackable Soups", this.stackableSoups);
+                .comment("Stews will stack up to this number. It's overridden by 'foodStackReduction' if enabled. Still affected by black/whitelist")
+                .defineInRange("Stackable Stews", this.stackableSoups, 1, 64);
         itemStackMultiplierConfig = Config.builder
                 .comment("Items max stack sizes (excluding blocks) will be multiplied by this value. Foods will be overridden by 'Food Stack Reduction' or 'Food Stack Multiplier' if are active. Setting to 1 will disable this feature.")
                 .defineInRange("Item Stack Multiplier", itemStackMultiplier, 0.01d, 1.0d);
@@ -97,6 +97,7 @@ public class StackReduction extends Feature {
         this.blockStackAffectedByMaterial = this.blockStackAffectedByMaterialConfig.get();
         processItemStackSizes();
         processBlockStackSizes();
+        processStewStackSizes();
         processFoodStackSizes();
         /*for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!(item instanceof BlockItem))
@@ -119,6 +120,7 @@ public class StackReduction extends Feature {
     private boolean processedItems = false;
     private boolean processedBlocks = false;
     private boolean processedFood = false;
+    private boolean processedStews = false;
 
     //Items
     public void processItemStackSizes() {
@@ -199,6 +201,40 @@ public class StackReduction extends Feature {
         }
     }
 
+    //Stews
+    public void processStewStackSizes() {
+        if (!this.isEnabled())
+            return;
+        synchronized (mutex) {
+            if (processedStews)
+                return;
+            processedStews = true;
+        }
+        if (this.stackableSoups == 1)
+            return;
+
+        for (Item item : ForgeRegistries.ITEMS.getValues()) {
+            if (!item.isEdible() && !(item instanceof BowlFoodItem || item instanceof SuspiciousStewItem))
+                continue;
+            //Check for food black/whitelist
+            boolean isInWhitelist = false;
+            boolean isInBlacklist = false;
+            for (IdTagMatcher blacklistEntry : this.blacklist) {
+                if (blacklistEntry.matchesItem(item)) {
+                    if (!this.blacklistAsWhitelist)
+                        isInBlacklist = true;
+                    else
+                        isInWhitelist = true;
+                    break;
+                }
+            }
+            if (isInBlacklist || (!isInWhitelist && this.blacklistAsWhitelist))
+                continue;
+            int stackSize = this.stackableSoups;
+            item.maxStackSize = Math.round(stackSize);
+        }
+    }
+
     //Food
     public void processFoodStackSizes() {
         if (!this.isEnabled())
@@ -213,8 +249,6 @@ public class StackReduction extends Feature {
 
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!item.isEdible())
-                continue;
-            if ((item instanceof BowlFoodItem || item instanceof SuspiciousStewItem) && !this.stackableSoups)
                 continue;
             //Check for food black/whitelist
             boolean isInWhitelist = false;

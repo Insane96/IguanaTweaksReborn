@@ -1,22 +1,22 @@
 {
-	"required": true,
-	"package": "insane96mcp.iguanatweaksreborn.mixin",
-	"compatibilityLevel": "JAVA_8",
-	"refmap": "iguanatweaksreborn.refmap.json",
-	"mixins": [
-		"AssignProfessionFromJobSiteMixin",
-		"BaseSpawnerMixin",
-		"BoatMixin",
-		"EnchantmentMixin",
-		"FoodDataMixin",
-		"ItemMixin",
-		"MerchantOfferMixin",
-		"MilkBucketItemMixin",
-		"PlayerMixin",
-		"PotionItemMixin",
-		"ProtectionEnchantmentMixin",
-		"ThrownExperienceBottleMixin",
-		"ZombieMixin"
-	],
-	"minVersion": "0.8"
+    "required": true,
+    "package": "insane96mcp.iguanatweaksreborn.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "refmap": "iguanatweaksreborn.refmap.json",
+    "mixins": [
+        "AssignProfessionFromJobSiteMixin",
+        "BaseSpawnerMixin",
+        "BoatMixin",
+        "EnchantmentMixin",
+        "FoodDataMixin",
+        "ItemMixin",
+        "MerchantOfferMixin",
+        "MilkBucketItemMixin",
+        "PlayerMixin",
+        "PotionItemMixin",
+        "ProtectionEnchantmentMixin",
+        "ThrownExperienceBottleMixin",
+        "ZombieMixin"
+    ],
+    "minVersion": "0.8"
 }
