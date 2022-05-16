@@ -6,6 +6,7 @@
   * Shield Slowdown moved from Stats to Weighted Equipment and the slowdown is now configurable
   * Shield slowdown reduced (25% -> 18% slowdown)
   * Reduced armor slowdown 
+* Soups are now drinked instead of eaten
 * Taking damage from non-entities (e.g. falling, poison) will no longer stop eating/drinking
 
 ## 2.9.6
