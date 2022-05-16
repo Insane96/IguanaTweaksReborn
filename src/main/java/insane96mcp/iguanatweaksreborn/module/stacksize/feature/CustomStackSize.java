@@ -22,7 +22,7 @@ import java.util.List;
 public class CustomStackSize extends Feature {
 
     private final ForgeConfigSpec.ConfigValue<List<? extends String>> customStackListConfig;
-    private static final List<String> customStackDefault = Arrays.asList("minecraft:potion,16", "minecraft:minecart,16", "minecraft:chest_minecart,16", "minecraft:hopper_minecart,16", "minecraft:furnace_minecart,16", "minecraft:tnt_minecart,16", "minecraft:snowball,64", "minecraft:egg,64", "minecraft:saddle,8");
+    private static final List<String> customStackDefault = Arrays.asList("minecraft:potion,16", "minecraft:minecart,16", "minecraft:chest_minecart,16", "minecraft:hopper_minecart,16", "minecraft:furnace_minecart,16", "minecraft:tnt_minecart,16", "minecraft:snowball,64",  "minecraft:saddle,8");
     public List<ItemStackSize> customStackList;
 
     public CustomStackSize(Module module) {

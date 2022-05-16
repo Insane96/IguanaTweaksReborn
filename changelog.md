@@ -10,6 +10,10 @@
   * General Stacking (renamed from Stack Reduction)
     * Items and Blocks less stacking is now disabled by default
     * Stews now stack up to 16 if Food Stack Reduction is disabled, configurable
+  * Custom Stacking
+    * Potions, Minecarts, Minecarts (and variants) now stack up to 16
+    * Snowballs now stack up to 64
+    * Saddles now stack up to 8
 * Soups are now drinked instead of eaten
 * Taking damage from non-entities (e.g. falling, poison) will no longer stop eating/drinking
 
