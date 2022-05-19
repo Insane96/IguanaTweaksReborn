@@ -19,7 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "General Stacking", description = "Make food, items and blocks less stackable. These are disabled by default. Changes in this section require a Minecraft restart")
+@Label(name = "General Stacking", description = "Make food, items and blocks less stackable. Items and Blocks are disabled by default. Changes in this section require a Minecraft restart")
 public class GeneralStacking extends Feature {
 
     private final Object mutex = new Object();
