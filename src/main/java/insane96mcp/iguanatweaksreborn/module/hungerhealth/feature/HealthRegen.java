@@ -42,7 +42,7 @@ public class HealthRegen extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> enableInjuredConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> foodHealMultiplierConfig;
 
-	public HealthRegenPreset healthRegenPreset = HealthRegenPreset.IGUANA_TWEAKS;
+	public HealthRegenPreset healthRegenPreset = HealthRegenPreset.COMBAT_TEST;
 	public int healthRegenSpeed = 80;
 	public int regenWhenFoodAbove = 17;
 	public int starveSpeed = 80;

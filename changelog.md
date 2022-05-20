@@ -11,13 +11,14 @@
     * Items and Blocks less stacking is now disabled by default
     * Stews now stack up to 16 if Food Stack Reduction is disabled, configurable
   * Custom Stacking
-    * Potions, Minecarts, Minecarts (and variants) now stack up to 16
+    * Potions, Minecarts (and variants) now stack up to 16
     * Snowballs now stack up to 64
     * Saddles now stack up to 8
 * Sleeping Slowness is now I instead of II
 * Reduced Elytra durability (144 -> 102)
 * Soups are now drinked instead of eaten
 * Taking damage from non-entities (e.g. falling, poison) will no longer stop eating/drinking
+* Combat test is now the default Health Regeneration preset
 
 ## 2.9.6
 * Food Consuming
