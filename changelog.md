@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.9.7
 * Iron armor Toughness increased (~~2~~ -> 4 total)
 * Weighted Equipment (renamed from Weighted Armor) 
   * Shield Slowdown moved from Stats to Weighted Equipment and the slowdown is now configurable
