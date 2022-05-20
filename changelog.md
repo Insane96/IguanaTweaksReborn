@@ -15,7 +15,6 @@
     * Snowballs now stack up to 64
     * Saddles now stack up to 8
 * Sleeping Slowness is now I instead of II
-* Reduced Elytra durability (144 -> 102)
 * Soups are now drinked instead of eaten
 * Taking damage from non-entities (e.g. falling, poison) will no longer stop eating/drinking
 * Combat test is now the default Health Regeneration preset
