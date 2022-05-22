@@ -5,6 +5,7 @@ import insane96mcp.iguanatweaksreborn.module.mining.utils.BlockHardness;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.DepthHardnessDimension;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.DimensionHardnessMultiplier;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -34,7 +35,7 @@ public class GlobalHardness extends Feature {
 
 	private static final List<String> hardnessBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
 	private static final List<String> dimensionHardnessMultiplierDefault = Arrays.asList("minecraft:the_nether,4", "minecraft:the_end,4");
-	private static final List<String> depthMultiplierDimensionDefault = Arrays.asList("minecraft:overworld,0.03,63,-64", "minecraft:overworld,-1.24,5,4");
+	private static final List<String> depthMultiplierDimensionDefault = Arrays.asList("minecraft:overworld,0.025,63,-64", "minecraft:overworld,-1.25,5,4");
 	private static final List<String> depthMultiplierBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
 
 	public double hardnessMultiplier = 2.5d;
@@ -56,7 +57,7 @@ public class GlobalHardness extends Feature {
 				.defineList("Dimension Hardness Multiplier", dimensionHardnessMultiplierDefault, o -> o instanceof String);
 		hardnessBlacklistConfig = new BlacklistConfig(Config.builder, "Block Hardness Blacklist", "Block ids or tags that will ignore the global and dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]", hardnessBlacklistDefault, this.hardnessBlacklistAsWhitelist);
 		depthMultiplierDimensionConfig = Config.builder
-				.comment("A list of dimensions and their relative block hardness multiplier per blocks below the set Y level. Each entry has a a dimension, a multiplier, a Y Level (where the increased hardness starts applying) and a Y Level cap (where the increase should stop).\nE.g. with the default configurations increases the overworld hardness multiplier by 0.03 for each block below the sea level (63); so at Y = 32 you'll get a multiplier of 2.0 (global multiplier) + 0.03 * (63 - 32) = 2.93 hardness multiplier.\nNOTE: This multiplier increase applies to blocks in Custom Hardness too.")
+				.comment("A list of dimensions and their relative block hardness multiplier per blocks below the set Y level. Each entry has a a dimension, a multiplier, a Y Level (where the increased hardness starts applying) and a Y Level cap (where the increase should stop).\nE.g. with the default configurations increases the overworld hardness multiplier by 0.025 for each block below the sea level (63); so at Y = 32 you'll get a multiplier of 2.5 (global multiplier) + 0.025 * (63 - 32) = 3.3 hardness multiplier.\nNOTE: This multiplier increase applies to blocks in Custom Hardness too.")
 				.defineList("Depth Multiplier Dimension", depthMultiplierDimensionDefault, o -> o instanceof String);
 		depthMultiplierBlacklistConfig = new BlacklistConfig(Config.builder, "Depth Multiplier Blacklist", "Block ids or tags that will ignore the depth multiplier. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]", depthMultiplierBlacklistDefault, this.depthMultiplierBlacklistAsWhitelist);
 		Config.builder.pop();
@@ -154,6 +155,7 @@ public class GlobalHardness extends Feature {
 				hardness += depthHardnessDimension.multiplier * Math.max(depthHardnessDimension.applyBelowY - Math.max(pos.getY(), depthHardnessDimension.capY), 0);
 			}
 		}
+		LogHelper.info("%s", hardness);
 		return hardness;
 	}
 }

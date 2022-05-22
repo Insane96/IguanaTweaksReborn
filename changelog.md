@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Reduced Depth Hardness (~~+0.03x~~ -> +0.025x per block below sea level)
 * Fixed all foods stacking up to 16 if food stack reduction was disabled
 
 ## 2.9.7
