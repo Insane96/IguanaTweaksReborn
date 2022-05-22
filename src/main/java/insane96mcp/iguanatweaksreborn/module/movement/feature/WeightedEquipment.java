@@ -56,7 +56,7 @@ public class WeightedEquipment extends Feature {
 	public double percentagePerToughness = 0.03d;
 	public ArrayList<ArmorMaterialWeight> materialWeight;
 	public ArrayList<ArmorEnchantmentWeight> enchantmentsList;
-	public double shieldSlowdown = 0.18d;
+	public double shieldSlowdown = 0.15d;
 
 	// 11 - 16 - 15 - 13
 	private final HashMap<EquipmentSlot, Double> armorDurabilityRatio = new HashMap<>();
@@ -85,7 +85,7 @@ public class WeightedEquipment extends Feature {
 						Note that the percentage reduction is on the percentage slowdown, and not a flat reduction. E.g. With Feather Falling II on a full chainmail armor you get slowed down by 8% instead of 10%.""")
 				.defineList("Enchantments Weight Reduction", enchantmentsListDefault, o -> o instanceof String);
 		shieldSlowdownConfig = Config.builder
-				.comment("If true, Shields will slowdown the player by this percentage.")
+				.comment("Shields will slowdown the player by this percentage.")
 				.defineInRange("Shield Slowdown", this.shieldSlowdown, 0d, 1d);
 		Config.builder.pop();
 
