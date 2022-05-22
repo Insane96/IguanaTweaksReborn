@@ -214,7 +214,7 @@ public class GeneralStacking extends Feature {
             return;
 
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
-            if (!item.isEdible() && !(item instanceof BowlFoodItem || item instanceof SuspiciousStewItem))
+            if (!(item instanceof BowlFoodItem) && !(item instanceof SuspiciousStewItem))
                 continue;
             //Check for food black/whitelist
             boolean isInWhitelist = false;

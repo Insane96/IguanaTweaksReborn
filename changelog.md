@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed all foods stacking up to 16 if food stack reduction was disabled
+
 ## 2.9.7
 * Iron armor Toughness increased (~~2~~ -> 4 total)
 * Weighted Equipment (renamed from Weighted Armor) 
