@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.9.8
 * Reduced Depth Hardness (~~+0.03x~~ -> +0.025x per block below sea level)
 * Reduced Deepslate ores custom hardness (about 12% less harder)
 * Reduced Shield Slowdown (18% -> 15%)
