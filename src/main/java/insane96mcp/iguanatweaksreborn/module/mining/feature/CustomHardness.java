@@ -25,7 +25,10 @@ public class CustomHardness extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> customHardnessConfig;
 
-	private static final ArrayList<String> customHardnessDefault = Lists.newArrayList("minecraft:coal_ore,3", "minecraft:iron_ore,3.5", "minecraft:gold_ore,4.0", "minecraft:diamond_ore,4.5", "minecraft:ancient_debris,10", "minecraft:redstone_ore,3.5", "minecraft:lapis_ore,3.5", "minecraft:emerald_ore,4.5","minecraft:deepslate_coal_ore,4.5", "minecraft:deepslate_iron_ore,5.25", "minecraft:deepslate_gold_ore,6.0", "minecraft:deepslate_diamond_ore,6.75", "minecraft:deepslate_redstone_ore,5.25", "minecraft:deepslate_lapis_ore,5.25", "minecraft:deepslate_emerald_ore,6.75","minecraft:nether_quartz_ore,3", "minecraft:nether_gold_ore,3", "#iguanatweaksreborn:obsidians,33");
+	private static final ArrayList<String> customHardnessDefault = Lists.newArrayList(
+			"minecraft:coal_ore,3", "minecraft:iron_ore,3.5", "minecraft:gold_ore,4.0", "minecraft:diamond_ore,4.5", "minecraft:redstone_ore,3.5", "minecraft:lapis_ore,3.5", "minecraft:emerald_ore,4.5",
+			"minecraft:deepslate_coal_ore,4.5", "minecraft:deepslate_iron_ore,5", "minecraft:deepslate_gold_ore,5.5", "minecraft:deepslate_diamond_ore,6", "minecraft:deepslate_redstone_ore,5", "minecraft:deepslate_lapis_ore,5", "minecraft:deepslate_emerald_ore,6",
+			"minecraft:ancient_debris,10", "#iguanatweaksreborn:obsidians,33");
 
 	public ArrayList<BlockHardness> customHardness;
 
