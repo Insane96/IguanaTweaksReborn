@@ -17,6 +17,8 @@
     * Heads and skulls can now be insta-mined too
 * Hunger & Health
   * Health Regen
+    * Well-fed is now applied for x seconds equal to the total hunger and saturation restored. Always applied at level I, no longer based off hunger restored.
+    * Well-fed now increases regen speed by 25% (was a log10 calc), Injured reduces regen speed by 20% (UNCHANGED)
     * Removed Iguana Tweaks preset, the combat test is pretty balanced. Well Fed and Injured can be enabled/disabled with Combat Snapshot too.
 * Reduced backward slowdown (~~25%~~ -> 20%) and fixed slowdown applying when flying
 

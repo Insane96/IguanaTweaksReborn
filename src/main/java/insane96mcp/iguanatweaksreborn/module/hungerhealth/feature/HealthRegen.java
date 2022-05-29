@@ -89,10 +89,10 @@ public class HealthRegen extends Feature {
 				.comment("If 'Consume Hunger Only' is true then this is the chance to consume an hunger whenever the player is healed (vanilla ignores this; Combat Test has this set to 0.5).")
 				.defineInRange("Hunger Consumption Chance", this.hungerConsumptionChance, 0d, 1d);
 		enableWellFedConfig = Config.builder
-				.comment("Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats.")
+				.comment("Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats. The effect speeds up health regen by 25% per level.")
 				.define("Enable Well Fed", this.enableWellFed);
 		enableInjuredConfig = Config.builder
-				.comment("Set to true to enable Injured, a new effect that slows down health regen and is applied whenever the player is damaged.")
+				.comment("Set to true to enable Injured, a new effect that slows down health regen and is applied whenever the player is damaged. The effect slows down health regen by 20% per level.")
 				.define("Enable Injured", this.enableInjured);
 		foodHealMultiplierConfig = Config.builder
 				.comment("When eating you'll get healed by this percentage of (hunger + saturation) restored.")
@@ -166,10 +166,10 @@ public class HealthRegen extends Feature {
 			return;
 		Player playerEntity = (Player) event.getEntityLiving();
 		FoodProperties food = event.getItem().getItem().getFoodProperties();
-		int duration = (int) ((food.getNutrition() * food.getSaturationModifier() * 2) * 4 * 20);
+		int duration = (int) ((food.getNutrition() * food.getSaturationModifier() * 2) * 20);
 		if (playerEntity.hasEffect(ITEffects.WELL_FED.get()))
 			duration += playerEntity.getEffect(ITEffects.WELL_FED.get()).getDuration();
-		int amplifier = Math.max(food.getNutrition() / 2 - 1, 0);
+		int amplifier = 0;//Math.max(food.getNutrition() / 2 - 1, 0);
 		playerEntity.addEffect(MCUtils.createEffectInstance(ITEffects.WELL_FED.get(), duration, amplifier, true, false, true, false));
 	}
 
@@ -246,14 +246,14 @@ public class HealthRegen extends Feature {
 	}
 
 	private int getRegenSpeed(Player player) {
-		int speed = this.healthRegenSpeed;
+		int ticksToRegen = this.healthRegenSpeed;
 		MobEffectInstance injured = player.getEffect(ITEffects.INJURED.get());
 		if (injured != null)
-			speed *= 1 + ((injured.getAmplifier() + 1) * 0.2d);
+			ticksToRegen *= 1 + ((injured.getAmplifier() + 1) * 0.2d);
 		MobEffectInstance wellFed = player.getEffect(ITEffects.WELL_FED.get());
 		if (wellFed != null)
-			speed *= 1 - (Math.log10(0.6d + (wellFed.getAmplifier() + 1) * 0.8d));
-		return speed;
+			ticksToRegen *= 1 - ((wellFed.getAmplifier() + 1) * 0.25d);
+		return ticksToRegen;
 	}
 
 	private enum HealthRegenPreset {
