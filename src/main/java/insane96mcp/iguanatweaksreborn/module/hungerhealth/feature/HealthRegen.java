@@ -26,8 +26,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.text.DecimalFormat;
 
-//TODO Rework/Remove Iguana Preset
-@Label(name = "Health Regen", description = "Makes Health regen work differently, like in Combat Test snapshots or similar to Hunger Overhaul")
+@Label(name = "Health Regen", description = "Makes Health regen work differently, like in Combat Test snapshots. Can be customized. Also adds Well Fed and Injured effects.")
 public class HealthRegen extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<HealthRegenPreset> healthRegenPresetConfig;
@@ -52,8 +51,8 @@ public class HealthRegen extends Feature {
 	public boolean consumeHungerOnly = false;
 	public double maxExhaustion = 4.0;
 	public double hungerConsumptionChance = 0;
-	public boolean enableWellFed = false;
-	public boolean enableInjured = false;
+	public boolean enableWellFed = true;
+	public boolean enableInjured = true;
 	public double foodHealMultiplier = 0d;
 
 	public HealthRegen(Module module) {
@@ -63,37 +62,37 @@ public class HealthRegen extends Feature {
 				.comment("""
 						Sets the other config options to some default values (actual config is not changed, but custom values are ignored):
 						NONE: Use custom values
-						COMBAT_TEST: health regeneration works like the Combat Tests Shapshots,IGUANA_TWEAKS: health regen is slow (1 hp every 10 secs) and also the player can have Bleeding and Well Fed effects that slow down / speed up the health regen.""")
+						COMBAT_TEST: health regeneration works like the Combat Tests Snapshots""")
 				.defineEnum("Health Regen Preset", this.healthRegenPreset);
 		healthRegenSpeedConfig = Config.builder
-				.comment("Sets how many ticks between the health regeneration happens (vanilla is 80; Combat Test Snapshot is 40; Iguana Tweaks preset is 200).")
+				.comment("Sets how many ticks between the health regeneration happens (vanilla is 80; Combat Test is 40).")
 				.defineInRange("Health Regen Speed", this.healthRegenSpeed, 0, Integer.MAX_VALUE);
 		regenWhenFoodAboveConfig = Config.builder
-				.comment("Sets how much hunger the player must have to regen health (vanilla is >17; Combat Test Snapshot; Iguana Tweaks preset is >3).")
+				.comment("Sets how much hunger the player must have to regen health (vanilla is >17; Combat Test is >3).")
 				.defineInRange("Regen when Hunger Above", this.regenWhenFoodAbove, 0, Integer.MAX_VALUE);
 		starveSpeedConfig = Config.builder
-				.comment("Sets how many ticks between starve damage happens (vanilla and Combat Test Snapshot is 80; Iguana Tweaks preset is 40, but you start talking damage when hunger <= 3 and less hunger = faster starve, also in hard is faster and in easy is slower).")
+				.comment("Sets how many ticks between starve damage happens (vanilla and Combat Test is 80).")
 				.defineInRange("Starve Speed", this.starveSpeed, 0, Integer.MAX_VALUE);
 		starveDamageConfig = Config.builder
-				.comment("Sets how many ticks between the health regeneration happens (vanilla, Combat Test and IguanaTweaks preset are all 1).")
+				.comment("Set how much damage is dealt when starving (vanilla and Combat Test are 1).")
 				.defineInRange("Starve Damage", this.starveDamage, 0, Integer.MAX_VALUE);
 		consumeHungerOnlyConfig = Config.builder
-				.comment("Set to true to consume Hunger only (and not saturation) when regenerating health (false for Vanilla and Iguana Tweaks presets; true for Combat Test).")
+				.comment("Set to true to consume Hunger only (and not saturation) when regenerating health (false for Vanilla; true for Combat Test).")
 				.define("Consume Hunger Only", this.consumeHungerOnly);
 		maxExhaustionConfig = Config.builder
 				.comment("Vanilla consumes 1 saturation or hunger whenever Exhaustion reaches 4.0. You can change that value with this config option. NOTE that Minecraft caps this value to 40")
 				.defineInRange("Max Exhaustion", this.maxExhaustion, 0d, 40d);
 		disableSaturationRegenBoostConfig = Config.builder
-				.comment("Set to true to disable the health regen boost given when max hunger and saturation (false for Vanilla; true for Combat Test and IguanaTweaks Presets).")
+				.comment("Set to true to disable the health regen boost given when max hunger and saturation (false in Vanilla; true for Combat Test).")
 				.define("Disable Saturation Regen Boost", this.disableSaturationRegenBoost);
 		hungerConsumptionChanceConfig = Config.builder
-				.comment("If 'Consume Hunger Only' is true then this is the chance to consume an hunger whenever the player is healed (vanilla and Iguanatweaks ignore this; Combat Test has this set to 0.5).")
+				.comment("If 'Consume Hunger Only' is true then this is the chance to consume an hunger whenever the player is healed (vanilla ignores this; Combat Test has this set to 0.5).")
 				.defineInRange("Hunger Consumption Chance", this.hungerConsumptionChance, 0d, 1d);
 		enableWellFedConfig = Config.builder
-				.comment("Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats (disabled for Vanilla and Combat Test; enabled for Iguana Tweaks preset).")
+				.comment("Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats.")
 				.define("Enable Well Fed", this.enableWellFed);
 		enableInjuredConfig = Config.builder
-				.comment("Set to true to enable Injured, a new effect that slows down health regen and is applied whenever the player is damaged (disabled for Vanilla and Combat Test; enabled for Iguana Tweaks preset).")
+				.comment("Set to true to enable Injured, a new effect that slows down health regen and is applied whenever the player is damaged.")
 				.define("Enable Injured", this.enableInjured);
 		foodHealMultiplierConfig = Config.builder
 				.comment("When eating you'll get healed by this percentage of (hunger + saturation) restored.")
@@ -105,6 +104,8 @@ public class HealthRegen extends Feature {
 	public void loadConfig() {
 		super.loadConfig();
 		this.healthRegenPreset = this.healthRegenPresetConfig.get();
+		this.enableWellFed = this.enableWellFedConfig.get();
+		this.enableInjured = this.enableInjuredConfig.get();
 		switch (this.healthRegenPreset) {
 			case NONE -> {
 				this.healthRegenSpeed = this.healthRegenSpeedConfig.get();
@@ -115,8 +116,6 @@ public class HealthRegen extends Feature {
 				this.consumeHungerOnly = this.consumeHungerOnlyConfig.get();
 				this.maxExhaustion = this.maxExhaustionConfig.get();
 				this.hungerConsumptionChance = this.hungerConsumptionChanceConfig.get();
-				this.enableWellFed = this.enableWellFedConfig.get();
-				this.enableInjured = this.enableInjuredConfig.get();
 				this.foodHealMultiplier = this.foodHealMultiplierConfig.get();
 			}
 			case COMBAT_TEST -> {
@@ -128,22 +127,7 @@ public class HealthRegen extends Feature {
 				this.consumeHungerOnly = true;
 				this.maxExhaustion = 4d;
 				this.hungerConsumptionChance = 0.5d;
-				this.enableWellFed = false;
-				this.enableInjured = false;
 				this.foodHealMultiplier = 0d;
-			}
-			case IGUANA_TWEAKS -> {
-				this.healthRegenSpeed = 200;
-				this.regenWhenFoodAbove = 4;
-				this.starveSpeed = 600;
-				this.starveDamage = 1;
-				this.disableSaturationRegenBoost = true;
-				this.consumeHungerOnly = false;
-				this.maxExhaustion = 4d;
-				this.hungerConsumptionChance = 0d;
-				this.enableWellFed = true;
-				this.enableInjured = true;
-				this.foodHealMultiplier = 0.1d;
 			}
 		}
 	}
@@ -214,11 +198,7 @@ public class HealthRegen extends Feature {
 				foodStats.foodLevel = Math.max(foodStats.foodLevel - 1, 0);
 			}
 		}
-		if (healthRegenPreset.equals(HealthRegenPreset.IGUANA_TWEAKS))
-			tickIguanaTweaks(foodStats, player, difficulty);
-		else
-			tick(foodStats, player, difficulty);
-
+		tick(foodStats, player, difficulty);
 
 		return true;
 	}
@@ -249,32 +229,10 @@ public class HealthRegen extends Feature {
 		}
 		else if (foodStats.foodLevel <= 0) {
 			++foodStats.tickTimer;
-			if (foodStats.tickTimer >= getStarveSpeed(player, difficulty)) {
+			if (foodStats.tickTimer >= this.starveSpeed) {
 				if (player.getHealth() > 10.0F || difficulty == Difficulty.HARD || player.getHealth() > 1.0F && difficulty == Difficulty.NORMAL) {
 					player.hurt(DamageSource.STARVE, this.starveDamage);
 				}
-				foodStats.tickTimer = 0;
-			}
-		}
-		else {
-			foodStats.tickTimer = 0;
-		}
-	}
-
-	private void tickIguanaTweaks(FoodData foodStats, Player player, Difficulty difficulty) {
-		boolean naturalRegen = player.level.getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION);
-		if (naturalRegen && foodStats.foodLevel > this.regenWhenFoodAbove && player.isHurt()) {
-			++foodStats.tickTimer;
-			foodStats.addExhaustion(0.03F);
-			if (foodStats.tickTimer >= getRegenSpeed(player)) {
-				player.heal(1.0F);
-				foodStats.tickTimer = 0;
-			}
-		}
-		else if (foodStats.foodLevel <= 4) {
-			++foodStats.tickTimer;
-			if (foodStats.tickTimer >= getStarveSpeed(player, difficulty)) {
-				player.hurt(DamageSource.STARVE, this.starveDamage);
 				foodStats.tickTimer = 0;
 			}
 		}
@@ -298,25 +256,9 @@ public class HealthRegen extends Feature {
 		return speed;
 	}
 
-	private int getStarveSpeed(Player player, Difficulty difficulty) {
-		if (this.healthRegenPreset != HealthRegenPreset.IGUANA_TWEAKS)
-			return this.starveSpeed;
-		else {
-			int speed = this.starveSpeed;
-			if (difficulty == Difficulty.EASY || difficulty == Difficulty.PEACEFUL)
-				speed *= 2;
-			else if (difficulty == Difficulty.HARD)
-				speed *= 0.75d;
-			int playerHunger = player.getFoodData().foodLevel;
-			speed *= (playerHunger + 1) / 5d;
-			return speed;
-		}
-	}
-
 	private enum HealthRegenPreset {
 		NONE,
-		COMBAT_TEST,
-		IGUANA_TWEAKS
+		COMBAT_TEST
 	}
 
 	@OnlyIn(Dist.CLIENT)

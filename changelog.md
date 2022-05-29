@@ -15,6 +15,9 @@
 * Mining
   * Renamed Insta-Mine Silverfish to Misc
     * Heads and skulls can now be insta-mined too
+* Hunger & Health
+  * Health Regen
+    * Removed Iguana Tweaks preset, the combat test is pretty balanced. Well Fed and Injured can be enabled/disabled with Combat Snapshot too.
 * Reduced backward slowdown (~~25%~~ -> 20%) and fixed slowdown applying when flying
 
 ## 2.9.8
