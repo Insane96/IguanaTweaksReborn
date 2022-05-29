@@ -26,7 +26,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.text.DecimalFormat;
 
-//Rework/Remove Iguana Preset
+//TODO Rework/Remove Iguana Preset
 @Label(name = "Health Regen", description = "Makes Health regen work differently, like in Combat Test snapshots or similar to Hunger Overhaul")
 public class HealthRegen extends Feature {
 
@@ -60,10 +60,10 @@ public class HealthRegen extends Feature {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		healthRegenPresetConfig = Config.builder
-				.comment("Sets the other config options to some default values (actual config is not changed, but custom values are ignored):\n" +
-						"NONE: Use custom values\n" +
-						"COMBAT_TEST: health regeneration works like the Combat Tests Shapshots," +
-						"IGUANA_TWEAKS: health regen is slow (1 hp every 10 secs) and also the player can have Bleeding and Well Fed effects that slow down / speed up the health regen.")
+				.comment("""
+						Sets the other config options to some default values (actual config is not changed, but custom values are ignored):
+						NONE: Use custom values
+						COMBAT_TEST: health regeneration works like the Combat Tests Shapshots,IGUANA_TWEAKS: health regen is slow (1 hp every 10 secs) and also the player can have Bleeding and Well Fed effects that slow down / speed up the health regen.""")
 				.defineEnum("Health Regen Preset", this.healthRegenPreset);
 		healthRegenSpeedConfig = Config.builder
 				.comment("Sets how many ticks between the health regeneration happens (vanilla is 80; Combat Test Snapshot is 40; Iguana Tweaks preset is 200).")

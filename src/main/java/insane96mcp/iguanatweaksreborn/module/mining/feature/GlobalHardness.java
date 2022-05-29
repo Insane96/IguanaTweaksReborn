@@ -5,7 +5,6 @@ import insane96mcp.iguanatweaksreborn.module.mining.utils.BlockHardness;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.DepthHardnessDimension;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.DimensionHardnessMultiplier;
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -155,7 +154,6 @@ public class GlobalHardness extends Feature {
 				hardness += depthHardnessDimension.multiplier * Math.max(depthHardnessDimension.applyBelowY - Math.max(pos.getY(), depthHardnessDimension.capY), 0);
 			}
 		}
-		LogHelper.info("%s", hardness);
 		return hardness;
 	}
 }
