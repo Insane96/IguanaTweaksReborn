@@ -1,6 +1,17 @@
 # Changelog
 
 ## Upcoming
+* Misc
+  * Added Beacon Feature. Beacon range is now calculated based off the blocks that make the pyramid. Can reach much higher ranges. Full iron block pyramid gives about the same range as vanilla.
+    * Full Iron pyramid: 51 range
+    * Full Emerald pyramid: 59.2 range
+    * Full Gold Pyramid: 83.8 range
+    * Full Diamond Pyramid: 136 range
+    * Full Netherite Pyramid: 178 range
+    * Full Cobalt (TiCon 3) Pyramid: 102.4 range
+    * Full Queen's Slime (TiCon 3) Pyramid: 136 range
+    * Full Hepatizon (TiCon 3) Pyramid: 123.4 range
+    * Full Manyullyn (TiCon 3) Pyramid: 148.6 range
 * Reduced backward slowdown (~~25%~~ -> 20%) and fixed slowdown applying when flying
 
 ## 2.9.8
