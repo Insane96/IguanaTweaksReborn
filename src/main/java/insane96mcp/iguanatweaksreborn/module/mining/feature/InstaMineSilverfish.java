@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.InfestedBlock;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+//TODO Change to misc and add skulls insta mining
 @Label(name = "Insta-mine Silverfish", description = "Makes silverfishes blocks insta-mine like pre-1.17")
 public class InstaMineSilverfish extends Feature {
 

@@ -26,6 +26,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.text.DecimalFormat;
 
+//Rework/Remove Iguana Preset
 @Label(name = "Health Regen", description = "Makes Health regen work differently, like in Combat Test snapshots or similar to Hunger Overhaul")
 public class HealthRegen extends Feature {
 
