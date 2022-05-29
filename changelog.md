@@ -12,6 +12,9 @@
     * Full Queen's Slime (TiCon 3) Pyramid: 136 range
     * Full Hepatizon (TiCon 3) Pyramid: 123.4 range
     * Full Manyullyn (TiCon 3) Pyramid: 148.6 range
+* Mining
+  * Renamed Insta-Mine Silverfish to Misc
+    * Heads and skulls can now be insta-mined too
 * Reduced backward slowdown (~~25%~~ -> 20%) and fixed slowdown applying when flying
 
 ## 2.9.8
