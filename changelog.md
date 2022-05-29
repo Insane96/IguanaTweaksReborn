@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Reduced backward slowdown (~~25%~~ -> 20%) and fixed slowdown applying when flying
+
 ## 2.9.8
 * Reduced Depth Hardness (~~+0.03x~~ -> +0.025x per block below sea level)
 * Reduced Deepslate ores custom hardness (about 12% less harder)

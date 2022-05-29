@@ -20,7 +20,7 @@ public class BackwardsSlowdown extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> slowdownConfig;
 
-	public double slowdown = 0.25d;
+	public double slowdown = 0.2d;
 
 	public BackwardsSlowdown(Module module) {
 		super(Config.builder, module);
@@ -46,6 +46,9 @@ public class BackwardsSlowdown extends Feature {
 			return;
 
 		if (this.slowdown == 0d)
+			return;
+
+		if (event.player.getAbilities().flying)
 			return;
 
 		AttributeModifier modifier = event.player.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(BACKWARD_WALK_SLOWDOWN);
