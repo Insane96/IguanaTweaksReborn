@@ -10,6 +10,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
@@ -23,7 +24,6 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
@@ -170,6 +170,7 @@ public class LivestockSlowdown extends Feature {
 		int milkCooldown = cowNBT.getInt(Strings.Tags.MILK_COOLDOWN);
 		if (milkCooldown > 0) {
 			event.setCanceled(true);
+			event.setCancellationResult(InteractionResult.SUCCESS);
 			if (!player.level.isClientSide) {
 				cow.playSound(SoundEvents.COW_HURT, 0.4F, (event.getEntity().level.random.nextFloat() - event.getEntity().level.random.nextFloat()) * 0.2F + 1.2F);
 				String animal = cow instanceof MushroomCow ? Strings.Translatable.MOOSHROOM_COOLDOWN : Strings.Translatable.COW_COOLDOWN;
@@ -177,11 +178,12 @@ public class LivestockSlowdown extends Feature {
 				MutableComponent message = new TranslatableComponent(animal).append(" ").append(new TranslatableComponent(yetReady));
 				player.displayClientMessage(message, true);
 			}
+			else
+				event.setCancellationResult(InteractionResult.SUCCESS);
 		}
 		else {
 			milkCooldown = this.cowMilkDelay * 20;
 			cowNBT.putInt(Strings.Tags.MILK_COOLDOWN, milkCooldown);
-			event.setResult(Event.Result.ALLOW);
 			player.swing(event.getHand());
 		}
 	}
