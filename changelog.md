@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.10.0
 * Misc
   * Added Beacon Feature. Beacon range is now calculated based off the blocks that make the pyramid. Can reach much higher ranges. Full iron block pyramid gives about the same range as vanilla.
     * Full Iron pyramid: 51 range

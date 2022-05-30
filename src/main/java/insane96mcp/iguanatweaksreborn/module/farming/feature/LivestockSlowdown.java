@@ -170,7 +170,6 @@ public class LivestockSlowdown extends Feature {
 		int milkCooldown = cowNBT.getInt(Strings.Tags.MILK_COOLDOWN);
 		if (milkCooldown > 0) {
 			event.setCanceled(true);
-			event.setCancellationResult(InteractionResult.SUCCESS);
 			if (!player.level.isClientSide) {
 				cow.playSound(SoundEvents.COW_HURT, 0.4F, (event.getEntity().level.random.nextFloat() - event.getEntity().level.random.nextFloat()) * 0.2F + 1.2F);
 				String animal = cow instanceof MushroomCow ? Strings.Translatable.MOOSHROOM_COOLDOWN : Strings.Translatable.COW_COOLDOWN;
