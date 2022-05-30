@@ -25,6 +25,7 @@ public class TerrainSlowdown extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> materialOnSlowdownConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> materialInSlowdownConfig;
+	//TODO Implement custom terrain slowdown and make paths (maybe other blocks too?) go faster
 	//private final ForgeConfigSpec.ConfigValue<List<? extends String>> customTerrainSlowdownConfig;
 
 	private final List<String> materialOnSlowdownDefault = Arrays.asList(

@@ -48,7 +48,7 @@ public class Stats extends Feature {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		reduceWeaponsDamageConfig = Config.builder
-				.comment("If true, Swords, Axes and Tridents get a -1 damage.")
+				.comment("If true, Swords and Tridents get -1 damage and Axes get -1.5 damage.")
 				.define("Reduce Weapon Damage", reduceWeaponDamage);
 		nerfPowerConfig = Config.builder
 				.comment("If true, Power Enchantment will be nerfed to deal half damage.")
@@ -87,7 +87,7 @@ public class Stats extends Feature {
 		CLASS_ATTRIBUTE_MODIFIER.clear();
 		if (this.reduceWeaponDamage) {
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(SwordItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1.5d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
 		}
 
