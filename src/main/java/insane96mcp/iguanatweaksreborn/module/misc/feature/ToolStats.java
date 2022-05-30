@@ -32,7 +32,7 @@ public class ToolStats extends Feature {
 
 	private final List<String> toolEfficiencyDefault = Arrays.asList(
 			"minecraft:wooden_pickaxe,0.75", "minecraft:wooden_shovel,0.75", "minecraft:wooden_hoe,0.75", "minecraft:wooden_axe,0.75",
-			"minecraft:stone_pickaxe,0.75", "minecraft:stone_shovel,0.75", "minecraft:stone_hoe,0.75", "minecraft:stone_axe,0.75",
+			"minecraft:stone_pickaxe,0.85", "minecraft:stone_shovel,0.85", "minecraft:stone_hoe,0.85", "minecraft:stone_axe,0.85",
 			"minecraft:iron_pickaxe,0.9", "minecraft:iron_shovel,0.9", "minecraft:iron_hoe,0.9", "minecraft:iron_axe,0.9",
 			"minecraft:diamond_pickaxe,0.9", "minecraft:diamond_shovel,0.9", "minecraft:diamond_hoe,0.9", "minecraft:diamond_axe,0.9"
 	);
