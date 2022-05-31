@@ -39,6 +39,9 @@ public class PreventSleeping extends Feature {
 		if (!this.isEnabled())
 			return;
 
+		if (event.getResultStatus() != null)
+			return;
+
 		if (event.getPlayer().level.isClientSide)
 			return;
 		ServerPlayer player = (ServerPlayer) event.getPlayer();

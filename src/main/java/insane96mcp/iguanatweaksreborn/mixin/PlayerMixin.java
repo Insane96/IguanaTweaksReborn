@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Player.class)
@@ -19,9 +20,6 @@ public abstract class PlayerMixin extends LivingEntity {
 	protected PlayerMixin(EntityType<? extends LivingEntity> type, Level level) {
 		super(type, level);
 	}
-
-	@Shadow
-	public abstract boolean isSpectator();
 
 	@Inject(at = @At("RETURN"), method = "getXpNeededForNextLevel", cancellable = true)
 	private void xpBarCap(CallbackInfoReturnable<Integer> callback) {
@@ -35,5 +33,10 @@ public abstract class PlayerMixin extends LivingEntity {
 		int exp = Modules.experience.playerExperience.getExperienceOnDeath((Player) (Object) this);
 		if (exp != -1)
 			callback.setReturnValue(exp);
+	}
+
+	@ModifyVariable(method = "causeFoodExhaustion", argsOnly = true, at = @At("HEAD"))
+	private float applyHungerToFoodExhaustion(float amount) {
+		return Modules.hungerHealth.exhaustionIncrease.increaseHungerEffectiviness((Player) (Object) this, amount);
 	}
 }

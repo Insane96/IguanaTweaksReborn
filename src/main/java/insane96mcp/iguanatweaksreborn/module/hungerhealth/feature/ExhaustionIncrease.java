@@ -5,6 +5,8 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.TickEvent;
@@ -18,16 +20,18 @@ public class ExhaustionIncrease extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Double> blockBreakExhaustionMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> exhaustionOnBlockBreakingConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> passiveExhaustionConfig;
+	private final ForgeConfigSpec.ConfigValue<Boolean> effectiveHungerConfig;
 
 	public double blockBreakExhaustionMultiplier = 0d;
 	public double exhaustionOnBlockBreaking = 0.005d;
 	public double passiveExhaustion = 0.005d;
+	public boolean effectiveHunger = true;
 
 	public ExhaustionIncrease(Module module) {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		blockBreakExhaustionMultiplierConfig = Config.builder
-				.comment("When you break a block you'll get exhaustion equal to the block hardness multiplied by this value. Setting this to 0 will default to the vanilla exhaustion (0.005). (It's not affected by the Mining Hardness Features)")
+				.comment("When you break a block you'll get exhaustion equal to the block hardness multiplied by this value. Setting this to 0 will default to the vanilla exhaustion (0.005). (It's not affected by the Global Hardness Features)")
 				.defineInRange("Block Break Exhaustion Multiplier", blockBreakExhaustionMultiplier, 0.0d, 1024d);
 		exhaustionOnBlockBreakingConfig = Config.builder
 				.comment("When breaking block you'll get exhaustion every tick during the breaking.")
@@ -35,6 +39,9 @@ public class ExhaustionIncrease extends Feature {
 		passiveExhaustionConfig = Config.builder
 				.comment("Every second the player will get this exhaustion.")
 				.defineInRange("Passive Exhaustion", this.passiveExhaustion, 0.0d, 1024d);
+		effectiveHungerConfig = Config.builder
+				.comment("When affected by the hunger effect ANY action will give you 100% more exhaustion per level.")
+				.define("Effective Hunger", this.effectiveHunger);
 		Config.builder.pop();
 	}
 
@@ -44,6 +51,7 @@ public class ExhaustionIncrease extends Feature {
 		this.blockBreakExhaustionMultiplier = this.blockBreakExhaustionMultiplierConfig.get();
 		this.exhaustionOnBlockBreaking = this.exhaustionOnBlockBreakingConfig.get();
 		this.passiveExhaustion = this.passiveExhaustionConfig.get();
+		this.effectiveHunger = this.effectiveHungerConfig.get();
 	}
 
 	@SubscribeEvent
@@ -83,5 +91,19 @@ public class ExhaustionIncrease extends Feature {
 			return;
 
 		event.player.causeFoodExhaustion((float) this.passiveExhaustion);
+	}
+
+	public float increaseHungerEffectiviness(Player player, float amount) {
+		if (!this.isEnabled())
+			return amount;
+
+		if (!this.effectiveHunger)
+			return amount;
+
+		if (!player.hasEffect(MobEffects.HUNGER))
+			return amount;
+
+		int amp = player.getEffect(MobEffects.HUNGER).getAmplifier() + 1;
+		return amount * (amp * 1f + 1);
 	}
 }

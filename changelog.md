@@ -1,5 +1,11 @@
 # Changelog
 
+## Upcoming
+* Added Effective Hunger
+  * Amplifies hunger consumption when under the Hunger effect
+* Reduced Depth Hardness
+* Sped up stone tools
+
 ## 2.10.0
 * Misc
   * Added Beacon Feature. Beacon range is now calculated based off the blocks that make the pyramid. Can reach much higher ranges. Full iron block pyramid gives about the same range as vanilla.
