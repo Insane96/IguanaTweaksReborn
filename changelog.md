@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.10.1
 * Added Effective Hunger
   * Amplifies hunger consumption when under the Hunger effect
 * Reduced Depth Hardness
