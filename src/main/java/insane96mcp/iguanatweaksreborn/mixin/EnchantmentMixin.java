@@ -12,15 +12,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class EnchantmentMixin {
 	@Inject(at = @At("RETURN"), method = "canEnchant", cancellable = true)
 	private void canApply(ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
-		Enchantment enchantment = (Enchantment) (Object) this;
-		if (Modules.combat.stats.disableEnchantment(enchantment))
+		if (Modules.combat.stats.disableEnchantment((Enchantment) (Object) this))
 			callback.setReturnValue(false);
 	}
 
 	@Inject(at = @At("RETURN"), method = "canApplyAtEnchantingTable", cancellable = true, remap = false)
 	private void canApplyAtEnchantingTable(ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
-		Enchantment enchantment = (Enchantment) (Object) this;
-		if (Modules.combat.stats.disableEnchantment(enchantment))
+		if (Modules.combat.stats.disableEnchantment((Enchantment) (Object) this))
 			callback.setReturnValue(false);
 	}
 }

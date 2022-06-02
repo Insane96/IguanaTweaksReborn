@@ -12,8 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class FoodDataMixin {
 	@Inject(at = @At("HEAD"), method = "tick", cancellable = true)
 	public void tick(Player player, CallbackInfo callbackInfo) {
-		FoodData $this = (FoodData) (Object) this;
-		if (Modules.hungerHealth.healthRegen.tickFoodStats($this, player))
+		if (Modules.hungerHealth.healthRegen.tickFoodStats((FoodData) (Object) this, player))
 			callbackInfo.cancel();
 	}
 }

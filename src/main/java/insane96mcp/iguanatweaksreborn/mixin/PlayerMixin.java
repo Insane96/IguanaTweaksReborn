@@ -10,9 +10,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Player.class)
+@Mixin(value = Player.class)
 public abstract class PlayerMixin extends LivingEntity {
 	@Shadow
 	public int experienceLevel;
@@ -38,5 +39,10 @@ public abstract class PlayerMixin extends LivingEntity {
 	@ModifyVariable(method = "causeFoodExhaustion", argsOnly = true, at = @At("HEAD"))
 	private float applyHungerToFoodExhaustion(float amount) {
 		return Modules.hungerHealth.exhaustionIncrease.increaseHungerEffectiviness((Player) (Object) this, amount);
+	}
+
+	@Inject(at = @At("HEAD"), method = "causeFoodExhaustion")
+	private void tiredness(float amount, CallbackInfo ci) {
+		//Modules.sleepRespawn.tiredness.applyTiredness((Player) (Object) this, amount);
 	}
 }
