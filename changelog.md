@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed depth hardness default making blocks around Y 16 harder than blocks below Y 0
+
 ## 2.10.1
 * Added Effective Hunger
   * Amplifies hunger consumption when under the Hunger effect
