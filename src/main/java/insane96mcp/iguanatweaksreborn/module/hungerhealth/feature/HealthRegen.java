@@ -142,7 +142,7 @@ public class HealthRegen extends Feature {
 			return;
 		if (event.getSource().equals(DamageSource.STARVE) || event.getSource().equals(DamageSource.DROWN))
 			return;
-		int duration = (int) (event.getAmount() * 4 * 20);
+		int duration = (int) (event.getAmount() * 2 * 20);
 		if (playerEntity.hasEffect(ITEffects.INJURED.get()))
 			duration += playerEntity.getEffect(ITEffects.INJURED.get()).getDuration();
 		playerEntity.addEffect(MCUtils.createEffectInstance(ITEffects.INJURED.get(), duration, 0, true, false, true, false));
@@ -167,8 +167,6 @@ public class HealthRegen extends Feature {
 		Player playerEntity = (Player) event.getEntityLiving();
 		FoodProperties food = event.getItem().getItem().getFoodProperties();
 		int duration = (int) ((food.getNutrition() * food.getSaturationModifier() * 2) * 20);
-		if (playerEntity.hasEffect(ITEffects.WELL_FED.get()))
-			duration += playerEntity.getEffect(ITEffects.WELL_FED.get()).getDuration();
 		int amplifier = 0;//Math.max(food.getNutrition() / 2 - 1, 0);
 		playerEntity.addEffect(MCUtils.createEffectInstance(ITEffects.WELL_FED.get(), duration, amplifier, true, false, true, false));
 	}

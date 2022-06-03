@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.potion;
+package insane96mcp.iguanatweaksreborn.effect;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -21,9 +21,6 @@ public class ITMobEffect extends MobEffect {
 
 	@Override
 	public List<ItemStack> getCurativeItems() {
-		if (!canBeCured)
-			return new ArrayList<>();
-		else
-			return super.getCurativeItems();
+		return !canBeCured ? new ArrayList<>() : super.getCurativeItems();
 	}
 }
