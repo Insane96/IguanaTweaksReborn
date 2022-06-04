@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.10.2
 * Halved injured duration
 * Well fed duration no longer stacks when eating multiple foods
 * Fixed depth hardness default making blocks around Y 16 harder than blocks below Y 0
