@@ -10,7 +10,10 @@ import insane96mcp.iguanatweaksreborn.module.misc.Misc;
 import insane96mcp.iguanatweaksreborn.module.movement.Movement;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.SleepRespawn;
 import insane96mcp.iguanatweaksreborn.module.stacksize.StackSize;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ClientModules {
     public static ClientModule client;
 

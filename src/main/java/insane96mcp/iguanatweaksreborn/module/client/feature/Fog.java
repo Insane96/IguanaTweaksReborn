@@ -14,6 +14,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+@OnlyIn(Dist.CLIENT)
 @Label(name = "Fog", description = "Makes fog less invasive in some contexts")
 public class Fog extends Feature {
     public Fog(Module module) {
