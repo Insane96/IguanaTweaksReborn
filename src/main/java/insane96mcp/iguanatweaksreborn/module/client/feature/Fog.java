@@ -18,6 +18,8 @@ public class Fog extends Feature {
         super(ITClientConfig.builder, module);
     }
 
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
     public void onFog(EntityViewRenderEvent.RenderFogEvent event) {
         if (!this.isEnabled())
             return;
