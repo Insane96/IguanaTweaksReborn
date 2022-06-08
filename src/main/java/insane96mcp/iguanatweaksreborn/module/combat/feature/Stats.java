@@ -46,7 +46,7 @@ public class Stats extends Feature {
 
 	public Stats(Module module) {
 		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
+		this.pushConfig(Config.builder);
 		reduceWeaponsDamageConfig = Config.builder
 				.comment("If true, Swords and Tridents get -1 damage and Axes get -1.5 damage.")
 				.define("Reduce Weapon Damage", reduceWeaponDamage);

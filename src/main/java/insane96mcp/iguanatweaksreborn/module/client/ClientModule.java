@@ -1,24 +1,27 @@
 package insane96mcp.iguanatweaksreborn.module.client;
 
 import insane96mcp.iguanatweaksreborn.module.client.feature.Fog;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.module.client.feature.Light;
+import insane96mcp.iguanatweaksreborn.setup.ITClientConfig;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@Label(name = "Client", description = "Various client side changes")
+@Label(name = "Client")
 public class ClientModule extends Module {
-    public static Fog fog;
+    public Fog fog;
+    public Light light;
 
     public ClientModule() {
-        super(Config.builder);
-        pushConfig(Config.builder);
+        super(ITClientConfig.builder);
+        pushConfig(ITClientConfig.builder);
         fog = new Fog(this);
-        Config.builder.pop();
+        light = new Light(this);
+        ITClientConfig.builder.pop();
     }
 
     public void loadConfig() {
+        super.loadConfig();
         fog.loadConfig();
+        light.loadConfig();
     }
 }

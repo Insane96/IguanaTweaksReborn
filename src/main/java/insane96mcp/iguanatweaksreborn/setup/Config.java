@@ -10,7 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 @Mod.EventBusSubscriber(modid = IguanaTweaksReborn.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Config {
-	public static final ForgeConfigSpec COMMON_SPEC;
+	public static final ForgeConfigSpec CONFIG_SPEC;
 	public static final CommonConfig COMMON;
 
 	public static final ForgeConfigSpec.Builder builder;
@@ -19,7 +19,7 @@ public class Config {
 		builder = new ForgeConfigSpec.Builder();
 		final Pair<CommonConfig, ForgeConfigSpec> specPair = builder.configure(CommonConfig::new);
 		COMMON = specPair.getLeft();
-		COMMON_SPEC = specPair.getRight();
+		CONFIG_SPEC = specPair.getRight();
 	}
 
 	public static class CommonConfig {

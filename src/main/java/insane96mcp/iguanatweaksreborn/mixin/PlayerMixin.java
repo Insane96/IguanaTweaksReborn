@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(value = Player.class)
+@Mixin(Player.class)
 public abstract class PlayerMixin extends LivingEntity {
 	@Shadow
 	public int experienceLevel;

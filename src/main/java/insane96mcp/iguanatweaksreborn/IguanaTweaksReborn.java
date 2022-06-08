@@ -27,8 +27,8 @@ public class IguanaTweaksReborn
     public static final Logger LOGGER = LogManager.getLogger();
 
     public IguanaTweaksReborn() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ITClientConfig.CLIENT_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.CONFIG_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ITClientConfig.CONFIG_SPEC);
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         ITEffects.EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
