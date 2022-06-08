@@ -7,7 +7,6 @@ import insane96mcp.insanelib.base.Module;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 @Label(name = "Client", description = "Various client side changes")
 public class ClientModule extends Module {
     public static Fog fog;
