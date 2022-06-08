@@ -4,6 +4,7 @@
 * Added Fog and Light Feature in a brand new Client Module
   * Fog feature increases visibility in the Nether and also in lava when the player has Fire Resistance
   * Light feature disables the Night vision blinking effect. The Night vision will just fade out on the last second of the effect
+* Fixed Mining Misc not reloading config properly
 
 ## 2.10.2
 * Halved injured duration

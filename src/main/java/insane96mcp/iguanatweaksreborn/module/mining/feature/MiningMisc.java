@@ -30,6 +30,14 @@ public class MiningMisc extends Feature {
 		Config.builder.pop();
 	}
 
+	@Override
+	public void loadConfig() {
+		super.loadConfig();
+
+		this.instaMineSilverfish = this.instaMineSilverfishConfig.get();
+		this.instaMineHeads = this.instaMineHeadsConfig.get();
+	}
+
 	@SubscribeEvent
 	public void onBreak(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled())
