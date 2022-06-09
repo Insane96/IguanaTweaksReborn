@@ -8,8 +8,7 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.config.BlacklistConfig;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.config.Blacklist;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
@@ -28,9 +27,9 @@ public class GlobalHardness extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> hardnessMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> dimensionHardnessMultiplierConfig;
-	private final BlacklistConfig hardnessBlacklistConfig;
+	private final Blacklist.Config hardnessBlacklistConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> depthMultiplierDimensionConfig;
-	private final BlacklistConfig depthMultiplierBlacklistConfig;
+	private final Blacklist.Config depthMultiplierBlacklistConfig;
 
 	private static final List<String> hardnessBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
 	private static final List<String> dimensionHardnessMultiplierDefault = Arrays.asList("minecraft:the_nether,4", "minecraft:the_end,4");
@@ -39,11 +38,9 @@ public class GlobalHardness extends Feature {
 
 	public double hardnessMultiplier = 2.5d;
 	public ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier;
-	public ArrayList<IdTagMatcher> hardnessBlacklist;
-	public Boolean hardnessBlacklistAsWhitelist = false;
+	public Blacklist hardnessBlacklist;
 	public ArrayList<DepthHardnessDimension> depthMultiplierDimension;
-	public ArrayList<IdTagMatcher> depthMultiplierBlacklist;
-	public Boolean depthMultiplierBlacklistAsWhitelist = false;
+	public Blacklist depthMultiplierBlacklist;
 
 	public GlobalHardness(Module module) {
 		super(Config.builder, module);
@@ -54,11 +51,17 @@ public class GlobalHardness extends Feature {
 		dimensionHardnessMultiplierConfig = Config.builder
 				.comment("A list of dimensions and their relative block hardness multiplier. Each entry has a a dimension and hardness. This overrides the global multiplier.")
 				.defineList("Dimension Hardness Multiplier", dimensionHardnessMultiplierDefault, o -> o instanceof String);
-		hardnessBlacklistConfig = new BlacklistConfig(Config.builder, "Block Hardness Blacklist", "Block ids or tags that will ignore the global and dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]", hardnessBlacklistDefault, this.hardnessBlacklistAsWhitelist);
+		hardnessBlacklistConfig = new Blacklist.Config(Config.builder, "Block Hardness Blacklist", "Block ids or tags that will ignore the global and dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
+				.setDefaultList(hardnessBlacklistDefault)
+				.setIsDefaultWhitelist(false)
+				.build();
 		depthMultiplierDimensionConfig = Config.builder
 				.comment("A list of dimensions and their relative block hardness multiplier per blocks below the set Y level. Each entry has a a dimension, a multiplier, a Y Level (where the increased hardness starts applying) and a Y Level cap (where the increase should stop).\nE.g. with the default configurations increases the overworld hardness multiplier by 0.025 for each block below the sea level (63); so at Y = 32 you'll get a multiplier of 2.5 (global multiplier) + 0.025 * (63 - 32) = 3.3 hardness multiplier.\nNOTE: This multiplier increase applies to blocks in Custom Hardness too.")
 				.defineList("Depth Multiplier Dimension", depthMultiplierDimensionDefault, o -> o instanceof String);
-		depthMultiplierBlacklistConfig = new BlacklistConfig(Config.builder, "Depth Multiplier Blacklist", "Block ids or tags that will ignore the depth multiplier. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]", depthMultiplierBlacklistDefault, this.depthMultiplierBlacklistAsWhitelist);
+		depthMultiplierBlacklistConfig = new Blacklist.Config(Config.builder, "Depth Multiplier Blacklist", "Block ids or tags that will ignore the depth multiplier. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
+				.setDefaultList(depthMultiplierBlacklistDefault)
+				.setIsDefaultWhitelist(false)
+				.build();
 		Config.builder.pop();
 	}
 
@@ -68,11 +71,9 @@ public class GlobalHardness extends Feature {
 
 		this.hardnessMultiplier = this.hardnessMultiplierConfig.get();
 		this.dimensionHardnessMultiplier = (ArrayList<DimensionHardnessMultiplier>) DimensionHardnessMultiplier.parseStringList(this.dimensionHardnessMultiplierConfig.get());
-		this.hardnessBlacklist = (ArrayList<IdTagMatcher>) IdTagMatcher.parseStringList(this.hardnessBlacklistConfig.listConfig.get());
-		this.hardnessBlacklistAsWhitelist = this.hardnessBlacklistConfig.listAsWhitelistConfig.get();
+		this.hardnessBlacklist = this.hardnessBlacklistConfig.get();
 		this.depthMultiplierDimension = DepthHardnessDimension.parseStringList(this.depthMultiplierDimensionConfig.get());
-		this.depthMultiplierBlacklist = (ArrayList<IdTagMatcher>) IdTagMatcher.parseStringList(this.depthMultiplierBlacklistConfig.listConfig.get());
-		this.depthMultiplierBlacklistAsWhitelist = this.depthMultiplierBlacklistConfig.listAsWhitelistConfig.get();
+		this.depthMultiplierBlacklist = this.depthMultiplierBlacklistConfig.get();
 	}
 
 	@SubscribeEvent
@@ -96,19 +97,7 @@ public class GlobalHardness extends Feature {
 	 * Returns 1d when no changes must be made, else will return a multiplier for block hardness
 	 */
 	public double getBlockGlobalHardness(Block block, ResourceLocation dimensionId) {
-		//Check for block black/whitelist
-		boolean isInWhitelist = false;
-		boolean isInBlacklist = false;
-		for (IdTagMatcher blacklistEntry : this.hardnessBlacklist) {
-			if (blacklistEntry.matchesBlock(block, dimensionId)) {
-				if (!this.hardnessBlacklistAsWhitelist)
-					isInBlacklist = true;
-				else
-					isInWhitelist = true;
-				break;
-			}
-		}
-		if (isInBlacklist || (!isInWhitelist && this.hardnessBlacklistAsWhitelist))
+		if (this.hardnessBlacklist.isBlackWhiteListed(block))
 			return 1d;
 
 		//If there's a dimension multiplier present return that
@@ -132,20 +121,7 @@ public class GlobalHardness extends Feature {
 				if (blockHardness.matchesBlock(block, dimensionId))
 					return 0d;
 
-
-		//Check for block black/whitelist
-		boolean isInWhitelist = false;
-		boolean isInBlacklist = false;
-		for (IdTagMatcher blacklistEntry : this.depthMultiplierBlacklist) {
-			if (blacklistEntry.matchesBlock(block, dimensionId)) {
-				if (!this.depthMultiplierBlacklistAsWhitelist)
-					isInBlacklist = true;
-				else
-					isInWhitelist = true;
-				break;
-			}
-		}
-		if (isInBlacklist || (!isInWhitelist && this.depthMultiplierBlacklistAsWhitelist))
+		if (this.depthMultiplierBlacklist.isBlackWhiteListed(block))
 			return 0d;
 
 		double hardness = 0d;

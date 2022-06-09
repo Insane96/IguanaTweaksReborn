@@ -2,10 +2,10 @@ package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
 import insane96mcp.iguanatweaksreborn.module.misc.utils.DeBuff;
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.common.ForgeConfigSpec;

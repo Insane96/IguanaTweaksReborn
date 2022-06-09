@@ -2,10 +2,10 @@ package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.ITEffects;
-import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;

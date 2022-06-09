@@ -6,15 +6,13 @@ import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.config.BlacklistConfig;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.config.Blacklist;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,13 +20,12 @@ import java.util.List;
 public class FoodHunger extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Double> foodHungerMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> foodSaturationMultiplierConfig;
-	private final BlacklistConfig foodBlacklistConfig;
+	private final Blacklist.Config foodBlacklistConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> customFoodValueConfig;
 
 	public double foodHungerMultiplier = 0.63d;
 	public double foodSaturationMultiplier = 1.0d;
-	public ArrayList<IdTagMatcher> foodBlacklist;
-	public boolean foodBlacklistAsWhitelist = false;
+	public Blacklist foodBlacklist;
 	public ArrayList<CustomFoodProperties> customFoodValues;
 
 	public FoodHunger(Module module) {
@@ -40,10 +37,13 @@ public class FoodHunger extends Feature {
 		foodSaturationMultiplierConfig = Config.builder
 				.comment("Food's saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
 				.defineInRange("Food Saturation Multiplier", foodSaturationMultiplier, 0.0d, 64d);
-		foodBlacklistConfig = new BlacklistConfig(Config.builder, "Food Blacklist", "Items or tags that will ignore the food multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].", Collections.emptyList(), this.foodBlacklistAsWhitelist);
+		foodBlacklistConfig = new Blacklist.Config(Config.builder, "Food Blacklist", "Items or tags that will ignore the food multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].")
+				.setDefaultList(Collections.emptyList())
+				.setIsDefaultWhitelist(false)
+				.build();
 		customFoodValueConfig = Config.builder
 				.comment("Define custom food values, one string = one item. Those items are not affected by other changes such as 'Food Hunger Multiplier'.\nThe format is modid:itemid,hunger,saturation. Saturation is optional\nE.g. 'minecraft:cooked_porkchop,16,1.0' will make cooked porkchops give 8 shranks of food and 16 saturation (actual saturation is calculated by 'saturation * 2 * hunger').")
-				.defineList("Custom Food Hunger", Arrays.asList("minecraft:rotten_flesh,2"), o -> o instanceof String);
+				.defineList("Custom Food Hunger", List.of("minecraft:rotten_flesh,2"), o -> o instanceof String);
 		Config.builder.pop();
 	}
 
@@ -53,8 +53,7 @@ public class FoodHunger extends Feature {
 		this.foodHungerMultiplier = this.foodHungerMultiplierConfig.get();
 		this.foodSaturationMultiplier = this.foodSaturationMultiplierConfig.get();
 		this.customFoodValues = CustomFoodProperties.parseStringList(this.customFoodValueConfig.get());
-		this.foodBlacklist = (ArrayList<IdTagMatcher>) IdTagMatcher.parseStringList(this.foodBlacklistConfig.listConfig.get());
-		this.foodBlacklistAsWhitelist = this.foodBlacklistConfig.listAsWhitelistConfig.get();
+		this.foodBlacklist = this.foodBlacklistConfig.get();
 
 		processFoodMultipliers();
 		processCustomFoodValues();
@@ -63,6 +62,7 @@ public class FoodHunger extends Feature {
 	private boolean processedFoodMultipliers = false;
 	private boolean processedCustomFoodValues = false;
 
+	@SuppressWarnings("ConstantConditions")
 	public void processFoodMultipliers() {
 		if (!this.isEnabled())
 			return;
@@ -74,19 +74,7 @@ public class FoodHunger extends Feature {
 			if (!item.isEdible())
 				continue;
 
-			//Check for item black/whitelist
-			boolean isInWhitelist = false;
-			boolean isInBlacklist = false;
-			for (IdTagMatcher blacklistEntry : this.foodBlacklist) {
-				if (blacklistEntry.matchesItem(item)) {
-					if (!this.foodBlacklistAsWhitelist)
-						isInBlacklist = true;
-					else
-						isInWhitelist = true;
-					break;
-				}
-			}
-			if (isInBlacklist || (!isInWhitelist && this.foodBlacklistAsWhitelist))
+			if (this.foodBlacklist.isBlackWhiteListed(item))
 				continue;
 
 			FoodProperties food = item.getFoodProperties();
@@ -97,6 +85,7 @@ public class FoodHunger extends Feature {
 
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	public void processCustomFoodValues() {
 		if (!this.isEnabled())
 			return;
@@ -112,6 +101,7 @@ public class FoodHunger extends Feature {
 				continue;
 			}
 			Item item = ForgeRegistries.ITEMS.getValue(foodValue.id);
+			//noinspection ConstantConditions
 			if (!item.isEdible()) {
 				LogHelper.warn("In Custom Food Value %s is not a food", foodValue.id);
 				continue;

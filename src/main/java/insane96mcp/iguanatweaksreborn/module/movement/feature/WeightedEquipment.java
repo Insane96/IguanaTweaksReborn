@@ -7,10 +7,10 @@ import insane96mcp.iguanatweaksreborn.module.movement.utils.ArmorEnchantmentWeig
 import insane96mcp.iguanatweaksreborn.module.movement.utils.ArmorMaterialWeight;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
-import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.insanelib.util.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

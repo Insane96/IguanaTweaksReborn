@@ -7,8 +7,7 @@ import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.config.BlacklistConfig;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.config.Blacklist;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -29,7 +28,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collections;
-import java.util.List;
 
 @Label(name = "Temporary Spawners", description = "Spawners will no longer spawn mobs infinitely")
 public class TempSpawner extends Feature {
@@ -38,14 +36,13 @@ public class TempSpawner extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Double> spawnableMobsMultiplierConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> bonusExperienceWhenFarFromSpawnConfig;
 	private final ForgeConfigSpec.ConfigValue<String> reagentItemConfig;
-	private final BlacklistConfig entityBlacklistConfig;
+	private final Blacklist.Config entityBlacklistConfig;
 
 	public int minSpawnableMobs = 25;
 	public double spawnableMobsMultiplier = 1.0d;
 	public boolean bonusExperienceWhenFarFromSpawn = true;
 	public Item reagentItem = null;
-	public List<IdTagMatcher> entityBlacklist;
-	public boolean entityBlacklistAsWhitelist = false;
+	public Blacklist entityBlacklist;
 
 	public TempSpawner(Module module) {
 		super(Config.builder, module);
@@ -62,8 +59,11 @@ public class TempSpawner extends Feature {
 		reagentItemConfig = Config.builder
 				.comment("Set here an item that can be used on spawners and let you re-enable them.")
 				.define("Reagent Item", "");
-		entityBlacklistConfig = new BlacklistConfig(Config.builder, "Entity Blacklist", "A list of mobs (and optionally dimensions) that shouldn't have their spawner disabled. Each entry has an entity or entity tag and optionally a dimension. E.g. [\"minecraft:zombie\", \"minecraft:blaze,minecraft:the_nether\"]", Collections.emptyList(), false);
 		Config.builder.pop();
+		entityBlacklistConfig = new Blacklist.Config(Config.builder, "Entity Blacklist", "A list of mobs (and optionally dimensions) that shouldn't have their spawner disabled. Each entry has an entity or entity tag and optionally a dimension. E.g. [\"minecraft:zombie\", \"minecraft:blaze,minecraft:the_nether\"]")
+				.setDefaultList(Collections.emptyList())
+				.setIsDefaultWhitelist(false)
+				.build();
 	}
 
 	@Override
@@ -79,8 +79,7 @@ public class TempSpawner extends Feature {
 		else if (!this.reagentItemConfig.get().equals(""))
 			LogHelper.warn("Reagent item %s not valid or does not exist", this.reagentItemConfig.get());
 
-		this.entityBlacklist = (List<IdTagMatcher>) IdTagMatcher.parseStringList(this.entityBlacklistConfig.listConfig.get());
-		this.entityBlacklistAsWhitelist = this.entityBlacklistConfig.listAsWhitelistConfig.get();
+		this.entityBlacklist = this.entityBlacklistConfig.get();
 	}
 
 	@SubscribeEvent
@@ -100,19 +99,7 @@ public class TempSpawner extends Feature {
 		if (spawnerCap == null)
 			LogHelper.error("Something's wrong. The spawner has no capability");
 		spawnerCap.addSpawnedMobs(1);
-		//If it's in the black/whitelist don't disable the spawner
-		boolean isInWhitelist = false;
-		boolean isInBlacklist = false;
-		for (IdTagMatcher blacklistEntry : this.entityBlacklist) {
-			if (blacklistEntry.matchesEntity(event.getEntityLiving().getType(), level.dimension().location())) {
-				if (!this.entityBlacklistAsWhitelist)
-					isInBlacklist = true;
-				else
-					isInWhitelist = true;
-				break;
-			}
-		}
-		if (isInBlacklist || (!isInWhitelist && this.entityBlacklistAsWhitelist))
+		if (this.entityBlacklist.isBlackWhiteListed(event.getEntityLiving().getType()))
 			return;
 		double distance = Math.sqrt(spawnerPos.distSqr(level.getSharedSpawnPos()));
 		int maxSpawned = (int) ((this.minSpawnableMobs + (distance / 8d)) * this.spawnableMobsMultiplier);

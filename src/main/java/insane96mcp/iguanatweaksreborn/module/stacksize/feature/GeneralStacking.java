@@ -5,8 +5,7 @@ import insane96mcp.iguanatweaksreborn.utils.Weights;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.config.BlacklistConfig;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.config.Blacklist;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -36,7 +35,7 @@ public class GeneralStacking extends Feature {
     private final ForgeConfigSpec.ConfigValue<Double> blockStackMultiplierConfig;
     private final ForgeConfigSpec.ConfigValue<Boolean> blockStackAffectedByMaterialConfig;
     //Blacklist
-    private final BlacklistConfig blacklistConfig;
+    private final Blacklist.Config blacklistConfig;
 
     private static final List<String> blacklistDefault = Arrays.asList("minecraft:rotten_flesh");
 
@@ -48,8 +47,7 @@ public class GeneralStacking extends Feature {
     public boolean blockStackReduction = false;
     public double blockStackMultiplier = 1.0d;
     public boolean blockStackAffectedByMaterial = true;
-    public List<IdTagMatcher> blacklist;
-	public boolean blacklistAsWhitelist = false;
+    public Blacklist blacklist;
 
 	public GeneralStacking(Module module) {
         super(Config.builder, module);
@@ -78,7 +76,10 @@ public class GeneralStacking extends Feature {
         blockStackAffectedByMaterialConfig = Config.builder
                 .comment("When true, block stacks are affected by both their material type and the block stack multiplier. If false, block stacks will be affected by the multiplier only.")
                 .define("Block Stack Affected by Material", blockStackAffectedByMaterial);
-        blacklistConfig = new BlacklistConfig(Config.builder, "Blacklist", "Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"#minecraft:fishes\", \"minecraft:stone\"].", blacklistDefault, this.blacklistAsWhitelist);
+        blacklistConfig = new Blacklist.Config(Config.builder, "Blacklist", "Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"#minecraft:fishes\", \"minecraft:stone\"].")
+                .setDefaultList(blacklistDefault)
+                .setIsDefaultWhitelist(false)
+                .build();
         Config.builder.pop();
     }
 
@@ -89,8 +90,7 @@ public class GeneralStacking extends Feature {
         this.foodQualityDivider = this.foodQualityDividerConfig.get();
         this.foodStackMultiplier = this.foodStackMultiplierConfig.get();
         this.stackableSoups = this.stackableSoupsConfig.get();
-        this.blacklist = (List<IdTagMatcher>) IdTagMatcher.parseStringList(this.blacklistConfig.listConfig.get());
-        this.blacklistAsWhitelist = this.blacklistConfig.listAsWhitelistConfig.get();
+        this.blacklist = this.blacklistConfig.get();
         this.itemStackMultiplier = this.itemStackMultiplierConfig.get();
         this.blockStackReduction = this.blockStackReductionConfig.get();
         this.blockStackMultiplier = this.blockStackMultiplierConfig.get();
@@ -99,22 +99,6 @@ public class GeneralStacking extends Feature {
         processBlockStackSizes();
         processStewStackSizes();
         processFoodStackSizes();
-        /*for (Item item : ForgeRegistries.ITEMS.getValues()) {
-            if (!(item instanceof BlockItem))
-                continue;
-
-            Block block = ((BlockItem) item).getBlock();
-            Arrays.stream(Material.class.getFields())
-                    .filter(m -> {
-                        try {
-                            return m.get(null).equals(block.defaultBlockState().getMaterial());
-                        } catch (IllegalAccessException e) {
-                            LogHelper.error("%s", e.toString());
-                        }
-                        return false;
-                    })
-                    .findFirst().ifPresentOrElse(m -> LogHelper.info("%s %s", item.getRegistryName(), m.getName()), () -> LogHelper.info("%s %s", item.getRegistryName(), "Nope"));
-        }*/
     }
 
     private boolean processedItems = false;
@@ -139,20 +123,7 @@ public class GeneralStacking extends Feature {
                 continue;
             if (item.maxStackSize == 1)
                 continue;
-
-            //Check for item black/whitelist
-            boolean isInWhitelist = false;
-            boolean isInBlacklist = false;
-            for (IdTagMatcher blacklistEntry : this.blacklist) {
-                if (blacklistEntry.matchesItem(item)) {
-                    if (!this.blacklistAsWhitelist)
-                        isInBlacklist = true;
-                    else
-                        isInWhitelist = true;
-                    break;
-                }
-            }
-            if (isInBlacklist || (!isInWhitelist && this.blacklistAsWhitelist))
+            if (this.blacklist.isBlackWhiteListed(item))
                 continue;
 
             double stackSize = item.maxStackSize * itemStackMultiplier;
@@ -176,21 +147,9 @@ public class GeneralStacking extends Feature {
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!(item instanceof BlockItem))
                 continue;
-
-            //Check for blocks black/whitelist
-            boolean isInWhitelist = false;
-            boolean isInBlacklist = false;
-            for (IdTagMatcher blacklistEntry : this.blacklist) {
-                if (blacklistEntry.matchesItem(item)) {
-                    if (!this.blacklistAsWhitelist)
-                        isInBlacklist = true;
-                    else
-                        isInWhitelist = true;
-                    break;
-                }
-            }
-            if (isInBlacklist || (!isInWhitelist && this.blacklistAsWhitelist))
+            if (this.blacklist.isBlackWhiteListed(item))
                 continue;
+
             Block block = ((BlockItem) item).getBlock();
             double weight = Weights.getStateWeight(block.defaultBlockState());
             if (!this.blockStackAffectedByMaterial)
@@ -216,20 +175,9 @@ public class GeneralStacking extends Feature {
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!(item instanceof BowlFoodItem) && !(item instanceof SuspiciousStewItem))
                 continue;
-            //Check for food black/whitelist
-            boolean isInWhitelist = false;
-            boolean isInBlacklist = false;
-            for (IdTagMatcher blacklistEntry : this.blacklist) {
-                if (blacklistEntry.matchesItem(item)) {
-                    if (!this.blacklistAsWhitelist)
-                        isInBlacklist = true;
-                    else
-                        isInWhitelist = true;
-                    break;
-                }
-            }
-            if (isInBlacklist || (!isInWhitelist && this.blacklistAsWhitelist))
+            if (this.blacklist.isBlackWhiteListed(item))
                 continue;
+
             int stackSize = this.stackableSoups;
             item.maxStackSize = Math.round(stackSize);
         }
@@ -250,20 +198,9 @@ public class GeneralStacking extends Feature {
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!item.isEdible())
                 continue;
-            //Check for food black/whitelist
-            boolean isInWhitelist = false;
-            boolean isInBlacklist = false;
-            for (IdTagMatcher blacklistEntry : this.blacklist) {
-                if (blacklistEntry.matchesItem(item)) {
-                    if (!this.blacklistAsWhitelist)
-                        isInBlacklist = true;
-                    else
-                        isInWhitelist = true;
-                    break;
-                }
-            }
-            if (isInBlacklist || (!isInWhitelist && this.blacklistAsWhitelist))
+            if (this.blacklist.isBlackWhiteListed(item))
                 continue;
+
             int hunger = item.getFoodProperties().getNutrition();
             double saturation = item.getFoodProperties().getSaturationModifier();
             double effectiveQuality = hunger + (hunger * saturation * 2d);
