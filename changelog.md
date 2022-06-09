@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Beta 2.11.0
 * Requires InsaneLib 1.5.0
 * Added Fog and Light Feature in a brand new Client Module
   * Fog feature increases visibility in the Nether and also in lava when the player has Fire Resistance
