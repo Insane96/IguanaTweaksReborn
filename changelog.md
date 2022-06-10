@@ -6,6 +6,8 @@
 * Unusable hoes no longer instantly destroy
 * Slightly increased wooden tools efficiency
 * Tagging slowness level is now I instead of II, but it's applied for 1 tick per damage more
+* Fixed higher levels of well fed not behaving properly (well fed 4 was insta-heal)
+* Added more knockup speed on explosions
 
 ## Beta 2.11.0
 * Requires InsaneLib 1.5.0

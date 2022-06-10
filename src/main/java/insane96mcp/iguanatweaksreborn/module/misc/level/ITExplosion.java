@@ -139,7 +139,7 @@ public class ITExplosion extends Explosion {
 			if (distanceRatio > 1.0D)
 				continue;
 			double xDistance = entity.getX() - this.getPosition().x;
-			double yDistance = (entity.getEyeY() - this.getPosition().y) * 0.6667d;
+			double yDistance = (entity.getEyeY() - this.getPosition().y);// * 0.6667d;
 			double zDistance = entity.getZ() - this.getPosition().z;
 			double d13 = Mth.sqrt((float) (xDistance * xDistance + yDistance * yDistance + zDistance * zDistance));
 			if (d13 == 0.00)

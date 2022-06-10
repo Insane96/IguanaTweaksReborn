@@ -250,7 +250,7 @@ public class HealthRegen extends Feature {
 			ticksToRegen *= 1 + ((injured.getAmplifier() + 1) * 0.2d);
 		MobEffectInstance wellFed = player.getEffect(ITEffects.WELL_FED.get());
 		if (wellFed != null)
-			ticksToRegen *= 1 - ((wellFed.getAmplifier() + 1) * 0.25d);
+			ticksToRegen *= 1 / (((wellFed.getAmplifier() + 1) * 0.25d) + 1);
 		return ticksToRegen;
 	}
 
