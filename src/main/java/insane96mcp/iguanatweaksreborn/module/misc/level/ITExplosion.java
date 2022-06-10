@@ -156,7 +156,6 @@ public class ITExplosion extends Explosion {
 				DamageSource source = this.getDamageSource();
 				if (entity instanceof ServerPlayer player && blockingDamageReduction > 0d) {
 					if (damageAmount > 0.0F && player.isDamageSourceBlocked(source)) {
-						source.bypassArmor = true;
 						damageAmount *= blockingDamageReduction;
 						player.hurtCurrentlyUsedShield(damageAmount);
 						player.level.broadcastEntityEvent(player, (byte) 29);

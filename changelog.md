@@ -1,13 +1,17 @@
 # Changelog
 
 ## Upcoming
-* Added 'Remove Shield Windup'
+* Combat > Stats
+  * Shields now only block up to 5 damage
+  * Added 'Remove Shield Windup'
+* Explosion Overhaul
+  * Fixed a huge bug where when blocking with a shield the explosion damage would bypass armor
+  * Added more knockup speed on explosions
 * Increased Stone Pickaxe durability (~~7~~ -> 8)
 * Unusable hoes no longer instantly destroy
 * Slightly increased wooden tools efficiency
 * Tagging slowness level is now I instead of II, but it's applied for 1 tick per damage more
 * Fixed higher levels of well fed not behaving properly (well fed 4 was insta-heal)
-* Added more knockup speed on explosions
 
 ## Beta 2.11.0
 * Requires InsaneLib 1.5.0
