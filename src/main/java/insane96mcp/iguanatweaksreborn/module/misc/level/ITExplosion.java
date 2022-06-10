@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.entity.ExplosionFallingBlockEntity;
-import insane96mcp.insanelib.util.MCUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -156,7 +155,7 @@ public class ITExplosion extends Explosion {
 			if (blockDensity > 0d) {
 				DamageSource source = this.getDamageSource();
 				if (entity instanceof ServerPlayer player && blockingDamageReduction > 0d) {
-					if (damageAmount > 0.0F && MCUtils.isDamageSourceBlocked(source, player)) {
+					if (damageAmount > 0.0F && player.isDamageSourceBlocked(source)) {
 						source.bypassArmor = true;
 						damageAmount *= blockingDamageReduction;
 						player.hurtCurrentlyUsedShield(damageAmount);
