@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Added 'Remove Shield Windup'
 * Increased Stone Pickaxe durability (~~7~~ -> 8)
 * Unusable hoes no longer instantly destroy
 * Slightly increased wooden tools efficiency

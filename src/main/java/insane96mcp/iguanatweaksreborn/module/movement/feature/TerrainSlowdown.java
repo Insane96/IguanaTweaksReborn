@@ -14,7 +14,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,10 +27,10 @@ public class TerrainSlowdown extends Feature {
 	//TODO Implement custom terrain slowdown and make paths and stone bricks (tag) go faster
 	//private final ForgeConfigSpec.ConfigValue<List<? extends String>> customTerrainSlowdownConfig;
 
-	private final List<String> materialOnSlowdownDefault = Arrays.asList(
+	private final List<String> materialOnSlowdownDefault = List.of(
 			"amethyst,0.1","bamboo_sapling,0","bamboo,0.1","barrier,0","buildable_glass,0","cactus,0","cake,0","clay,0.15","cloth_decoration,0","decoration,0","dirt,0.1","egg,0","explosive,0","glass,0","grass,0.1","heavy_metal,0","ice_solid,0.5","ice,0.35","leaves,0.15","metal,0","moss,0.15","nether_wood,0","piston,0","plant,0","powder_snow,0","replaceable_fireproof_plant,0","replaceable_plant,0","replaceable_water_plant,0","sand,0.15","sculk,0","shulker_shell,0","snow,0.2","sponge,0","stone,0","top_snow,0","vegetable,0","water_plant,0","web,0","wood,0","wool,0.2"
 	);
-	private final List<String> materialInSlowdownDefault = Arrays.asList(
+	private final List<String> materialInSlowdownDefault = List.of(
 			"amethyst,0.1","bamboo_sapling,0.15","bamboo,0","barrier,0","buildable_glass,0","cactus,0","cake,0","clay,0","cloth_decoration,0","decoration,0","dirt,0","egg,0","explosive,0","glass,0","grass,0","heavy_metal,0","ice_solid,0","ice,0","leaves,0","metal,0","moss,0","nether_wood,0","piston,0","plant,0.15","powder_snow,0","replaceable_fireproof_plant,0.1","replaceable_plant,0.1","replaceable_water_plant,0.1","sand,0","sculk,0","shulker_shell,0","snow,0","sponge,0","stone,0","top_snow,0.1","vegetable,0","water_plant,0.1","web,0","wood,0","wool,0"
 	);
 

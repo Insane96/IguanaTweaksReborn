@@ -11,6 +11,7 @@
         "EnchantmentMixin",
         "FoodDataMixin",
         "ItemMixin",
+        "LivingEntityMixin",
         "MerchantOfferMixin",
         "MilkBucketItemMixin",
         "PlayerMixin",
