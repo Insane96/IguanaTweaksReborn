@@ -1,9 +1,10 @@
 # Changelog
 
 ## Upcoming
-* Combat > Stats
-  * Shields now only block up to 5 damage
-  * Added 'Remove Shield Windup'
+* Added Shields Feature in Combat
+  * Shields now only block up to 5 damage. Explosion overhaul halved explosion damage applies before the -5.
+  * Shields now always disable with Axes for 1.6 seconds, like Combat Test Snapshots
+  * Shields no longer start working after .25 seconds
 * Explosion Overhaul
   * Fixed a huge bug where when blocking with a shield the explosion damage would bypass armor
   * Added more knockup speed on explosions
@@ -13,7 +14,7 @@
 * Tagging slowness level is now I instead of II, but it's applied for 1 tick per damage more
 * Fixed higher levels of well fed not behaving properly (well fed 4 was insta-heal)
 
-## Beta 2.11.0
+## Alpha 2.11.0
 * Requires InsaneLib 1.5.0
 * Added Fog and Light Feature in a brand new Client Module
   * Fog feature increases visibility in the Nether and also in lava when the player has Fire Resistance

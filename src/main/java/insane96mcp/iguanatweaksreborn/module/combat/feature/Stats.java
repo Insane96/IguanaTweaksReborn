@@ -28,11 +28,10 @@ import java.util.List;
 
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction")
 public class Stats extends Feature {
-	private final ForgeConfigSpec.ConfigValue<Boolean> reduceWeaponsDamageConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> nerfPowerConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> disableCritArrowsConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> adjustCrossbowDamageConfig;
-	private final ForgeConfigSpec.BooleanValue removeShieldWindupConfig;
+	private final ForgeConfigSpec.BooleanValue reduceWeaponsDamageConfig;
+	private final ForgeConfigSpec.BooleanValue nerfPowerConfig;
+	private final ForgeConfigSpec.BooleanValue disableCritArrowsConfig;
+	private final ForgeConfigSpec.BooleanValue adjustCrossbowDamageConfig;
 	private final ForgeConfigSpec.ConfigValue<ProtectionNerf> protectionNerfConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> itemModifiersConfig;
 
@@ -42,7 +41,6 @@ public class Stats extends Feature {
 	public boolean nerfPower = true;
 	public boolean disableCritArrows = true;
 	public boolean adjustCrossbowDamage = true;
-	public boolean removeShieldWindup = true;
 	public ProtectionNerf protectionNerf = ProtectionNerf.DISABLE;
 	public List<ItemAttributeModifier> itemModifiers;
 
@@ -61,9 +59,6 @@ public class Stats extends Feature {
 		adjustCrossbowDamageConfig = Config.builder
 				.comment("If true, Arrows from Crossbows will no longer deal random damage, but a set amount of damage (about 9 at a medium distance).")
 				.define("Adjust Crossbow Damage", this.adjustCrossbowDamage);
-		removeShieldWindupConfig = Config.builder
-				.comment("In vanilla when you start blocking with a shield, there's a 0.25 seconds window where you are still not blocking. If true this windup time is removed.")
-				.define("Remove Shield Windup", this.removeShieldWindup);
 		protectionNerfConfig = Config.builder
 				.comment("""
 						DISABLE: Disables protection enchantment.
@@ -87,7 +82,6 @@ public class Stats extends Feature {
 		this.nerfPower = this.nerfPowerConfig.get();
 		this.disableCritArrows = this.disableCritArrowsConfig.get();
 		this.adjustCrossbowDamage = this.adjustCrossbowDamageConfig.get();
-		this.removeShieldWindup = this.removeShieldWindupConfig.get();
 		this.protectionNerf = this.protectionNerfConfig.get();
 
 		CLASS_ATTRIBUTE_MODIFIER.clear();

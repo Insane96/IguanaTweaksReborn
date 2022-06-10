@@ -18,7 +18,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyConstant(constant = @Constant(intValue = 5), method = "isBlocking")
 	private int blockingWindupTime(int ticks) {
-		return Modules.combat.stats.removeShieldWindup ? 0 : ticks;
+		return Modules.combat.shields.shouldRemoveShieldWindup() ? 0 : ticks;
 	}
 
 	/*@Inject(at = @At(value = "JUMP", target = "Lnet/minecraft/world/entity/LivingEntity;playHurtSound(Lnet/minecraft/world/damagesource/DamageSource;)V"), method = "hurt", cancellable = true)
