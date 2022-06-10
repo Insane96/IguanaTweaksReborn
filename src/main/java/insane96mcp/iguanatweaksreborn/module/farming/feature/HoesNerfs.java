@@ -95,7 +95,7 @@ public class HoesNerfs extends Feature {
 		if (!isHoeDisabled(event.getHeldItemStack().getItem()))
 			return false;
 
-		hoe.hurtAndBreak(hoe.getMaxDamage(), event.getPlayer(), (player) -> player.broadcastBreakEvent(event.getPlayer().getUsedItemHand()));
+		hoe.hurtAndBreak(1, event.getPlayer(), (player) -> player.broadcastBreakEvent(event.getPlayer().getUsedItemHand()));
 		event.getPlayer().displayClientMessage(new TextComponent("This hoe is too weak to be used"), true);
 		event.setCanceled(true);
 		return true;

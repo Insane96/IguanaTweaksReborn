@@ -1,5 +1,11 @@
 # Changelog
 
+## Upcoming
+* Increased Stone Pickaxe durability (~~7~~ -> 8)
+* Unusable hoes no longer instantly destroy
+* Slightly increased wooden tools efficiency
+* Tagging slowness level is now I instead of II, but it's applied for 1 tick per damage more
+
 ## Beta 2.11.0
 * Requires InsaneLib 1.5.0
 * Added Fog and Light Feature in a brand new Client Module

@@ -18,8 +18,8 @@ public class Tagging extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Integer> slownessLevelConfig;
 	private final ForgeConfigSpec.ConfigValue<Integer> durationMultiplierConfig;
 
-	public int slownessLevel = 1;
-	public int durationMultiplier = 6;
+	public int slownessLevel = 0;
+	public int durationMultiplier = 7;
 
 	public Tagging(Module module) {
 		super(Config.builder, module);
