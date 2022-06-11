@@ -2,9 +2,16 @@
 
 ## Upcoming
 * Added Shields Feature in Combat
-  * Shields now only block up to 5 damage. Explosion overhaul halved explosion damage applies before the -5.
+  * Shields now only block up to 5 damage. Explosion overhaul shield reduced damage is now 0.6 and no longer 0.5.
   * Shields now always disable with Axes for 1.6 seconds, like Combat Test Snapshots
   * Shields no longer start working after .25 seconds
+* Added Tiredness in Sleep & Respawn
+  * Player can only sleep when he's tired enough.  
+    If too tired a blindness effect gets applied now and then.  
+    Tiredness is gained at the same rate as Exhaustion.  
+    Sleeping resets tiredness
+* Debuffs
+  * If tiredness > 400 player now gets slowness effect
 * Explosion Overhaul
   * Fixed a huge bug where when blocking with a shield the explosion damage would bypass armor
   * Added more knockup speed on explosions

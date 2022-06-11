@@ -2,10 +2,16 @@
 	"iguanatweaksreborn.mooshroom_cooldown": "Il latte o la zuppa della mooshroom non",
 	"iguanatweaksreborn.cow_cooldown": "Il latte della mucca non",
 	"iguanatweaksreborn.yet_ready": "è ancora pronto",
+
 	"iguanatweaksreborn.no_food_for_sleep": "Sei troppo affamato e non riesci a prendere sonno",
 	"iguanatweaksreborn.decorative_beds": "I letti sono solo una decorazione. Dormire non è permesso",
 	"iguanatweaksreborn.enjoy_the_night": "Il tuo punto di rinascita è stato impostato. Goditi la notte!",
+	"iguanatweaksreborn.not_tired": "Non sei abbastanza stanco/a per dormire",
+	"iguanatweaksreborn.tired_enough": "Inizi a sentirti stanco/a",
+	"iguanatweaksreborn.too_tired": "Sei molto stanco/a, dovresti dormire",
+
 	"iguanatweaksreborn.armor_slowdown": "-%s%% Velocità",
+
 	"effect.iguanatweaksreborn.injured": "Ferito",
 	"effect.iguanatweaksreborn.well_fed": "Ben Nutrito"
 }

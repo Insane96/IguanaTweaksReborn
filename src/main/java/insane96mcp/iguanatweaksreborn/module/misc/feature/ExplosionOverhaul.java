@@ -39,7 +39,7 @@ public class ExplosionOverhaul extends Feature {
 
 	public boolean disableExplosionRandomness = true;
 	public boolean enablePoofParticles = false;
-	public double blockingDamageScaling = 0.5d;
+	public double blockingDamageScaling = 0.6d;
 	public boolean knockbackScalesWithSize = true;
 	public boolean explosionAtHalfEntity = true;
 	public boolean affectJustSpawnedEntities = false;
@@ -57,7 +57,7 @@ public class ExplosionOverhaul extends Feature {
 				.comment("Somewhere around 1.15 Mojang (for performance issues) removed the poof particles from Explosions. Keep them disabled if you have a low end PC.")
 				.define("Enable Poof Particles", enablePoofParticles);
 		blockingDamageScalingConfig = Config.builder
-				.comment("How much damage and knockback will the player take when blocking an explosion with a shield. Putting 0 shields will block like Vanilla.")
+				.comment("How much damage will the player take when blocking an explosion with a shield. Putting 0 shields will block like Vanilla.")
 				.defineInRange("Blocking Damage Scaling", blockingDamageScaling, 0.0d, 1.0d);
 		knockbackScalesWithSizeConfig = Config.builder
 				.comment("While enabled knockback is greatly increased by explosion size")

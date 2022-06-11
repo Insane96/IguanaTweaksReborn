@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
 import insane96mcp.iguanatweaksreborn.module.misc.utils.DeBuff;
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -20,7 +21,7 @@ import java.util.List;
 public class DeBuffs extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> deBuffsConfig;
 
-	private final List<String> deBuffsDefault = Arrays.asList("HUNGER,..2,minecraft:mining_fatigue,0", "HUNGER,..4,minecraft:slowness,0", "HEALTH,..3,minecraft:slowness,0");
+	private final List<String> deBuffsDefault = Arrays.asList("HUNGER,..2,minecraft:mining_fatigue,0", "HUNGER,..4,minecraft:slowness,0", "HEALTH,..3,minecraft:slowness,0", "TIREDNESS,400..,minecraft:slowness,0");
 
 	public ArrayList<DeBuff> deBuffs;
 
@@ -28,7 +29,7 @@ public class DeBuffs extends Feature {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		deBuffsConfig = Config.builder
-				.comment("A list of DeBuffs to apply to the player when has on low hunger / health / experience level. Each string must be 'stat,range,status_effect,amplifier', where stat MUST BE one of the following: HUNGER, HEALTH, EXPERIENCE_LEVEL; range must be a range for the statistic like it's done in commands.\n" +
+				.comment("A list of DeBuffs to apply to the player when has on low hunger / health / experience level. Each string must be 'stat,range,status_effect,amplifier', where stat MUST BE one of the following: HUNGER, HEALTH, EXPERIENCE_LEVEL, TIREDNESS; range must be a range for the statistic like it's done in commands.\n" +
 						"'10' When the player has exactly ten of the specified stat.\n" +
 						"'10..12' When the player has between 10 and 12 (inclusive) of the specified stat.\n" +
 						"'5..' When the player has five or greater of the specified stat.\n" +
@@ -83,6 +84,12 @@ public class DeBuffs extends Feature {
 
 				case EXPERIENCE_LEVEL:
 					if (player.experienceLevel <= deBuff.max && player.experienceLevel >= deBuff.min)
+						pass = true;
+					break;
+
+				case TIREDNESS:
+					float tiredness = player.getPersistentData().getFloat(Strings.Tags.TIREDNESS);
+					if (tiredness <= deBuff.max && tiredness >= deBuff.min)
 						pass = true;
 					break;
 				default:

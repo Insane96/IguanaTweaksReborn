@@ -14,7 +14,8 @@ public class Strings {
 		public static final String XP_PROCESSED = IguanaTweaksReborn.RESOURCE_PREFIX + "xp_processed";
 
 		public static final String SPAWNER_CAP = IguanaTweaksReborn.RESOURCE_PREFIX + "spawner_cap";
-	}
+		public static final String TIREDNESS = IguanaTweaksReborn.RESOURCE_PREFIX + "tiredness";
+    }
 
 	public static class AttributeModifiers {
 		public static final UUID ARMOR_SLOWDOWN_UUID = UUID.fromString("8588420e-ce50-4e4e-a3e4-974dfc8a98ec");
@@ -31,9 +32,12 @@ public class Strings {
 		public static final String YET_READY = "iguanatweaksreborn.yet_ready";
 
 		public static final String NO_FOOD_FOR_SLEEP = "iguanatweaksreborn.no_food_for_sleep";
+		public static final String NOT_TIRED = "iguanatweaksreborn.not_tired";
+		public static final String TIRED_ENOUGH = "iguanatweaksreborn.tired_enough";
+		public static final String TOO_TIRED = "iguanatweaksreborn.too_tired";
 		public static final String DECORATIVE_BEDS = "iguanatweaksreborn.decorative_beds";
 		public static final String ENJOY_THE_NIGHT = "iguanatweaksreborn.enjoy_the_night";
 
 		public static final String ARMOR_SLOWDOWN = "iguanatweaksreborn.armor_slowdown";
-	}
+    }
 }

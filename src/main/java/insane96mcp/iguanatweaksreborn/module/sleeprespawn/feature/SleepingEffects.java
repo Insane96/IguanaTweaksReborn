@@ -14,11 +14,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.world.SleepFinishedTimeEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Label(name = "Sleeping Effects", description = "Prevents the player from sleeping if has not enough Hunger and gives him effects on wake up")
 public class SleepingEffects extends Feature {
@@ -62,7 +62,7 @@ public class SleepingEffects extends Feature {
 			return;
 		if (hungerDepletedOnWakeUp == 0 && effectsOnWakeUp.isEmpty())
 			return;
-		event.getWorld().players().stream().filter(LivingEntity::isSleeping).collect(Collectors.toList()).forEach((player) -> {
+		event.getWorld().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> {
 			player.getFoodData().eat(-hungerDepletedOnWakeUp, 1.0f);
 			//For some reasons saturation can go below 0, so I get it back up to 0
 			if (player.getFoodData().getSaturationLevel() < 0.0f)
@@ -73,7 +73,7 @@ public class SleepingEffects extends Feature {
 		});
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void tooHungryToSleep(PlayerSleepInBedEvent event) {
 		if (!this.isEnabled())
 			return;

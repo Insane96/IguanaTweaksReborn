@@ -37,6 +37,11 @@ public abstract class PlayerMixin extends LivingEntity {
 			callback.setReturnValue(exp);
 	}
 
+	@Inject(at = @At("HEAD"), method = "causeFoodExhaustion")
+	private void causeFoodExhaustion(float amount, CallbackInfo ci) {
+		Modules.sleepRespawn.tiredness.onFoodExhaustion((Player) (Object) this, amount);
+	}
+
 	@ModifyVariable(method = "causeFoodExhaustion", argsOnly = true, at = @At("HEAD"))
 	private float applyHungerToFoodExhaustion(float amount) {
 		return Modules.hungerHealth.exhaustionIncrease.increaseHungerEffectiviness((Player) (Object) this, amount);
@@ -49,11 +54,6 @@ public abstract class PlayerMixin extends LivingEntity {
 			this.getCooldowns().addCooldown(this.getUseItem().getItem(), 32);
 			this.stopUsingItem();
 		}
-	}
-
-	@Inject(at = @At("HEAD"), method = "causeFoodExhaustion")
-	private void tiredness(float amount, CallbackInfo ci) {
-		//Modules.sleepRespawn.tiredness.applyTiredness((Player) (Object) this, amount);
 	}
 
 	@Shadow

@@ -53,7 +53,6 @@ public class PreventSleeping extends Feature {
 		}
 		else {
 			player.displayClientMessage(new TranslatableComponent(Strings.Translatable.ENJOY_THE_NIGHT), false);
-			//ServerPlayerEntity#setPlayerSpawn
 			player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, false);
 		}
 	}
