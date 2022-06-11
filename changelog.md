@@ -3,6 +3,7 @@
 ## Upcoming
 * Tiredness
   * Spawn point is not set by default if not tired enough. Can now be configured
+  * Begin too tired now gives you Mining Fatigue too
 
 ## Beta 2.11.1
 * Added Shields Feature in Combat

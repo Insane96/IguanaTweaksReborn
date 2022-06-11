@@ -21,7 +21,7 @@ import java.util.List;
 public class DeBuffs extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> deBuffsConfig;
 
-	private final List<String> deBuffsDefault = Arrays.asList("HUNGER,..2,minecraft:mining_fatigue,0", "HUNGER,..4,minecraft:slowness,0", "HEALTH,..3,minecraft:slowness,0", "TIREDNESS,400..,minecraft:slowness,0");
+	private final List<String> deBuffsDefault = Arrays.asList("HUNGER,..2,minecraft:mining_fatigue,0", "HUNGER,..4,minecraft:slowness,0", "HEALTH,..3,minecraft:slowness,0", "TIREDNESS,400..,minecraft:slowness,0", "TIREDNESS,400..,minecraft:mining_fatigue,0");
 
 	public ArrayList<DeBuff> deBuffs;
 
