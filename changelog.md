@@ -2,8 +2,9 @@
 
 ## Upcoming
 * Tiredness
-  * Spawn point is not set by default if not tired enough. Can now be configured
+  * Spawn point is now set by default if not tired enough. Can now be configured
   * Begin too tired now gives you Mining Fatigue too
+* Fixed a bug where Item and Block stack reduction wouldn't work
 
 ## Beta 2.11.1
 * Added Shields Feature in Combat

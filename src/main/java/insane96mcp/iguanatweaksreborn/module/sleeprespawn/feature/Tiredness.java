@@ -24,7 +24,7 @@ public class Tiredness extends Feature {
 	private final ForgeConfigSpec.BooleanValue shouldPreventSpawnPointConfig;
 
 	public double tirednessGainMultiplier = 1d;
-	public boolean shouldPreventSpawnPoint = true;
+	public boolean shouldPreventSpawnPoint = false;
 
 	public Tiredness(Module module) {
 		super(Config.builder, module);

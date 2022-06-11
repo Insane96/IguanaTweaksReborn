@@ -51,7 +51,7 @@ public class GeneralStacking extends Feature {
 
 	public GeneralStacking(Module module) {
         super(Config.builder, module);
-        Config.builder.comment(this.getDescription()).push(this.getName());
+        this.pushConfig(Config.builder);
         foodStackReductionConfig = Config.builder
                 .comment("Food stack sizes will be reduced based off their hunger restored and saturation multiplier. The formula is '(1 - (effective_quality - 1) / Food Quality Divider) * 64' where effective_quality is hunger+saturation restored. E.g. Cooked Porkchops give 8 hunger points and have a 0.8 saturation multiplier so their stack size will be '(1 - (20.8 - 1) / 18.5) * 64' = 24 (Even foods that usually stack up to 16 or that don't stack at all will use the same formula, like Honey or Stews).\nThis is affected by Food Module's feature 'Hunger Restore Multiplier' & 'Saturation Restore multiplier'")
                 .define("Food Stack Reduction", foodStackReduction);
@@ -110,13 +110,13 @@ public class GeneralStacking extends Feature {
     public void processItemStackSizes() {
         if (!this.isEnabled())
             return;
+        if (itemStackMultiplier == 1d)
+            return;
         synchronized (mutex) {
             if (processedItems)
                 return;
             processedItems = true;
         }
-        if (itemStackMultiplier == 1d)
-            return;
 
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (item instanceof BlockItem)
@@ -136,13 +136,13 @@ public class GeneralStacking extends Feature {
     public void processBlockStackSizes() {
         if (!this.isEnabled())
             return;
+        if (!blockStackReduction)
+            return;
         synchronized (mutex) {
             if (processedBlocks)
                 return;
             processedBlocks = true;
         }
-        if (!blockStackReduction)
-            return;
 
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!(item instanceof BlockItem))
@@ -164,13 +164,13 @@ public class GeneralStacking extends Feature {
     public void processStewStackSizes() {
         if (!this.isEnabled())
             return;
+        if (this.stackableSoups == 1)
+            return;
         synchronized (mutex) {
             if (processedStews)
                 return;
             processedStews = true;
         }
-        if (this.stackableSoups == 1)
-            return;
 
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!(item instanceof BowlFoodItem) && !(item instanceof SuspiciousStewItem))
@@ -187,13 +187,13 @@ public class GeneralStacking extends Feature {
     public void processFoodStackSizes() {
         if (!this.isEnabled())
             return;
+        if (!foodStackReduction)
+            return;
         synchronized (mutex) {
             if (processedFood)
                 return;
             processedFood = true;
         }
-        if (!foodStackReduction)
-            return;
 
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!item.isEdible())

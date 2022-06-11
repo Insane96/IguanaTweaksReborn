@@ -31,10 +31,10 @@ public class GlobalHardness extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> depthMultiplierDimensionConfig;
 	private final Blacklist.Config depthMultiplierBlacklistConfig;
 
-	private static final List<String> hardnessBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
+	private static final List<String> hardnessBlacklistDefault = List.of("#iguanatweaksreborn:obsidians");
 	private static final List<String> dimensionHardnessMultiplierDefault = Arrays.asList("minecraft:the_nether,4", "minecraft:the_end,4");
 	private static final List<String> depthMultiplierDimensionDefault = Arrays.asList("minecraft:overworld,0.01,63,-64", "minecraft:overworld,-0.64,4,3");
-	private static final List<String> depthMultiplierBlacklistDefault = Arrays.asList("#iguanatweaksreborn:obsidians");
+	private static final List<String> depthMultiplierBlacklistDefault = List.of("#iguanatweaksreborn:obsidians");
 
 	public double hardnessMultiplier = 2.5d;
 	public ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier;
@@ -85,7 +85,7 @@ public class GlobalHardness extends Feature {
 		ResourceLocation dimensionId = level.dimension().location();
 		BlockState blockState = level.getBlockState(event.getPos());
 		Block block = blockState.getBlock();
-		double blockGlobalHardness = getBlockGlobalHardness(block, dimensionId);
+		double blockGlobalHardness = getBlockGlobalHardnessMultiplier(block, dimensionId);
 		blockGlobalHardness += getDepthHardnessMultiplier(block, dimensionId, event.getPos(), false);
 		if (blockGlobalHardness == 1d)
 			return;
@@ -96,7 +96,7 @@ public class GlobalHardness extends Feature {
 	/**
 	 * Returns 1d when no changes must be made, else will return a multiplier for block hardness
 	 */
-	public double getBlockGlobalHardness(Block block, ResourceLocation dimensionId) {
+	public double getBlockGlobalHardnessMultiplier(Block block, ResourceLocation dimensionId) {
 		if (this.hardnessBlacklist.isBlackWhiteListed(block))
 			return 1d;
 
