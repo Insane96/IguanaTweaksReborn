@@ -20,9 +20,11 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Label(name = "Tiredness", description = "Prevents sleeping if the player is not tired. Tiredness is gained by gaining exhaustion")
 public class Tiredness extends Feature {
 
-	private final ForgeConfigSpec.ConfigValue<Double> tirednessGainMultiplierConfig;
+	private final ForgeConfigSpec.DoubleValue tirednessGainMultiplierConfig;
+	private final ForgeConfigSpec.BooleanValue shouldPreventSpawnPointConfig;
 
 	public double tirednessGainMultiplier = 1d;
+	public boolean shouldPreventSpawnPoint = true;
 
 	public Tiredness(Module module) {
 		super(Config.builder, module);
@@ -30,6 +32,9 @@ public class Tiredness extends Feature {
 		tirednessGainMultiplierConfig = Config.builder
 				.comment("Multiply the tiredness gained by this value. Normally you gain tiredness equal to the exhaustion gained. 'Effective Hunger' doesn't affect the exhaustion gained.")
 				.defineInRange("Tiredness gained multiplier", this.tirednessGainMultiplier, 0d, 128d);
+		shouldPreventSpawnPointConfig = Config.builder
+				.comment("If true the player will not set the spawn point if he/she can't sleep.")
+				.define("Prevent Spawn Point", this.shouldPreventSpawnPoint);
 		Config.builder.pop();
 	}
 
@@ -37,6 +42,7 @@ public class Tiredness extends Feature {
 	public void loadConfig() {
 		super.loadConfig();
 		this.tirednessGainMultiplier = this.tirednessGainMultiplierConfig.get();
+		this.shouldPreventSpawnPoint = this.shouldPreventSpawnPointConfig.get();
 	}
 
 	public void onFoodExhaustion(Player player, float amount) {
@@ -64,11 +70,18 @@ public class Tiredness extends Feature {
 
 	@SubscribeEvent
 	public void notTiredToSleep(PlayerSleepInBedEvent event) {
-		if (!this.isEnabled() || event.getResultStatus() != null)
+		if (!this.isEnabled()
+				|| event.getResultStatus() != null
+				|| event.getPlayer().level.isClientSide)
 			return;
-		if (event.getPlayer().getPersistentData().getFloat(Strings.Tags.TIREDNESS) < 320f) {
+
+		ServerPlayer player = (ServerPlayer) event.getPlayer();
+
+		if (player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) < 320f) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
-			event.getPlayer().displayClientMessage(new TranslatableComponent(Strings.Translatable.NOT_TIRED), true);
+			player.displayClientMessage(new TranslatableComponent(Strings.Translatable.NOT_TIRED), true);
+			if (!this.shouldPreventSpawnPoint)
+				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, false);
 		}
 	}
 

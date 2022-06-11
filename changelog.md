@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Tiredness
+  * Spawn point is not set by default if not tired enough. Can now be configured
+
 ## Beta 2.11.1
 * Added Shields Feature in Combat
   * Shields now only block up to 5 damage. Explosion overhaul shield reduced damage is now 0.6 and no longer 0.5.

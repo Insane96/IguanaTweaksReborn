@@ -36,14 +36,11 @@ public class PreventSleeping extends Feature {
 
 	@SubscribeEvent
 	public void disableSleeping(PlayerSleepInBedEvent event) {
-		if (!this.isEnabled())
+		if (!this.isEnabled()
+				|| event.getResultStatus() != null
+				|| event.getPlayer().level.isClientSide)
 			return;
 
-		if (event.getResultStatus() != null)
-			return;
-
-		if (event.getPlayer().level.isClientSide)
-			return;
 		ServerPlayer player = (ServerPlayer) event.getPlayer();
 
 		event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
