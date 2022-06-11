@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Beta 2.11.1
 * Added Shields Feature in Combat
   * Shields now only block up to 5 damage. Explosion overhaul shield reduced damage is now 0.6 and no longer 0.5.
   * Shields now always disable with Axes for 1.6 seconds, like Combat Test Snapshots
