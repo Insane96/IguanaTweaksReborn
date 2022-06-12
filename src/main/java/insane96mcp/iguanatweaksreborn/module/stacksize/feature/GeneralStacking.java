@@ -15,7 +15,6 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "General Stacking", description = "Make food, items and blocks less stackable. Items and Blocks are disabled by default. Changes in this section require a Minecraft restart")
@@ -37,7 +36,7 @@ public class GeneralStacking extends Feature {
     //Blacklist
     private final Blacklist.Config blacklistConfig;
 
-    private static final List<String> blacklistDefault = Arrays.asList("minecraft:rotten_flesh");
+    private static final List<String> blacklistDefault = List.of("minecraft:rotten_flesh");
 
     public boolean foodStackReduction = true;
     public double foodQualityDivider = 18.5;

@@ -13,5 +13,6 @@
 	"iguanatweaksreborn.armor_slowdown": "-%s%% Velocità",
 
 	"effect.iguanatweaksreborn.injured": "Ferito",
-	"effect.iguanatweaksreborn.well_fed": "Ben Nutrito"
+	"effect.iguanatweaksreborn.well_fed": "Ben Nutrito",
+	"effect.iguanatweaksreborn.tired": "Stanco"
 }

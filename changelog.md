@@ -2,8 +2,12 @@
 
 ## Upcoming
 * Tiredness
+  * Tiredness > 400 now gives Tired effect. Every 20 more tiredness gives one more level. 
+    Slows you down by 8% per level and slows down attack speed by 5% per level.
+    Tired II decreases the view distance down to 8 blocks at Tired V (max level)
+  * You can now sleep during daytime if you're tired
   * Spawn point is now set by default if not tired enough. Can now be configured
-  * Begin too tired now gives you Mining Fatigue too
+* Removed Tiredness from Debuff
 * Fixed a bug where Item and Block stack reduction wouldn't work
 
 ## Beta 2.11.1

@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
 import insane96mcp.iguanatweaksreborn.setup.Config;
-import insane96mcp.iguanatweaksreborn.setup.ITEffects;
+import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -143,9 +143,9 @@ public class HealthRegen extends Feature {
 		if (event.getSource().equals(DamageSource.STARVE) || event.getSource().equals(DamageSource.DROWN))
 			return;
 		int duration = (int) (event.getAmount() * 2 * 20);
-		if (playerEntity.hasEffect(ITEffects.INJURED.get()))
-			duration += playerEntity.getEffect(ITEffects.INJURED.get()).getDuration();
-		playerEntity.addEffect(MCUtils.createEffectInstance(ITEffects.INJURED.get(), duration, 0, true, false, true, false));
+		if (playerEntity.hasEffect(ITMobEffects.INJURED.get()))
+			duration += playerEntity.getEffect(ITMobEffects.INJURED.get()).getDuration();
+		playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.INJURED.get(), duration, 0, true, false, true, false));
 	}
 
 	@SubscribeEvent
@@ -168,7 +168,7 @@ public class HealthRegen extends Feature {
 		FoodProperties food = event.getItem().getItem().getFoodProperties();
 		int duration = (int) ((food.getNutrition() * food.getSaturationModifier() * 2) * 20);
 		int amplifier = 0;//Math.max(food.getNutrition() / 2 - 1, 0);
-		playerEntity.addEffect(MCUtils.createEffectInstance(ITEffects.WELL_FED.get(), duration, amplifier, true, false, true, false));
+		playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.WELL_FED.get(), duration, amplifier, true, false, true, false));
 	}
 
 	public void healOnEat(LivingEntityUseItemEvent.Finish event) {
@@ -245,10 +245,10 @@ public class HealthRegen extends Feature {
 
 	private int getRegenSpeed(Player player) {
 		int ticksToRegen = this.healthRegenSpeed;
-		MobEffectInstance injured = player.getEffect(ITEffects.INJURED.get());
+		MobEffectInstance injured = player.getEffect(ITMobEffects.INJURED.get());
 		if (injured != null)
 			ticksToRegen *= 1 + ((injured.getAmplifier() + 1) * 0.2d);
-		MobEffectInstance wellFed = player.getEffect(ITEffects.WELL_FED.get());
+		MobEffectInstance wellFed = player.getEffect(ITMobEffects.WELL_FED.get());
 		if (wellFed != null)
 			ticksToRegen *= 1 / (((wellFed.getAmplifier() + 1) * 0.25d) + 1);
 		return ticksToRegen;

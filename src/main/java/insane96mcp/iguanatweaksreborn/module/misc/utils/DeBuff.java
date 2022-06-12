@@ -33,8 +33,7 @@ public class DeBuff {
 	public enum Stat {
 		HUNGER,
 		HEALTH,
-		EXPERIENCE_LEVEL,
-		TIREDNESS
+		EXPERIENCE_LEVEL
 	}
 
 	@Nullable

@@ -35,7 +35,7 @@ public class SleepingEffects extends Feature {
 
 	public SleepingEffects(Module module) {
 		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
+		this.pushConfig(Config.builder);
 		hungerDepletedOnWakeUpConfig = Config.builder
 				.comment("How much the hunger bar is depleted when you wake up in the morning. Saturation depleted is based off this value times 2. Setting to 0 will disable this feature.")
 				.defineInRange("Hunger Depleted on Wake Up", this.hungerDepletedOnWakeUp, -20, 20);
@@ -75,13 +75,11 @@ public class SleepingEffects extends Feature {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void tooHungryToSleep(PlayerSleepInBedEvent event) {
-		if (!this.isEnabled())
-			return;
-		if (!this.noSleepIfHungry)
-			return;
-		if (this.hungerDepletedOnWakeUp == 0)
-			return;
-		if (event.getPlayer().getFoodData().getFoodLevel() >= this.hungerDepletedOnWakeUp)
+		if (!this.isEnabled()
+				|| event.getResultStatus() != null
+				|| !this.noSleepIfHungry
+				|| this.hungerDepletedOnWakeUp == 0
+				|| event.getPlayer().getFoodData().getFoodLevel() >= this.hungerDepletedOnWakeUp)
 			return;
 		event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 		event.getPlayer().displayClientMessage(new TranslatableComponent(Strings.Translatable.NO_FOOD_FOR_SLEEP), true);

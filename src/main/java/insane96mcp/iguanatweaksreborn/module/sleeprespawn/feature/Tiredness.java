@@ -1,20 +1,27 @@
 package insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature;
 
 import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
+import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.event.world.SleepFinishedTimeEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Tiredness", description = "Prevents sleeping if the player is not tired. Tiredness is gained by gaining exhaustion")
@@ -60,11 +67,8 @@ public class Tiredness extends Feature {
 		if (tiredness < 320 && tiredness + amount >= 320) {
 			serverPlayer.displayClientMessage(new TranslatableComponent(Strings.Translatable.TIRED_ENOUGH), false);
 		}
-		else if (tiredness >= 400) {
-			if (player.getRandom().nextDouble() < Math.min((tiredness - 400) * 0.001d, 0.02d) && !player.hasEffect(MobEffects.BLINDNESS)) {
-				serverPlayer.displayClientMessage(new TranslatableComponent(Strings.Translatable.TOO_TIRED), true);
-				serverPlayer.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 25, 0, false, false, false));
-			}
+		else if (tiredness >= 400 && player.tickCount % 20 == 0) {
+			serverPlayer.addEffect(new MobEffectInstance(ITMobEffects.TIRED.get(), 25, Math.min((int) ((tiredness - 400) / 20), 4), true, false, true));
 		}
 	}
 
@@ -83,6 +87,11 @@ public class Tiredness extends Feature {
 			if (!this.shouldPreventSpawnPoint)
 				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, false);
 		}
+		else {
+			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
+			player.startSleeping(event.getPos());
+			((ServerLevel)player.level).updateSleepingPlayerList();
+		}
 	}
 
 	@SubscribeEvent
@@ -90,5 +99,51 @@ public class Tiredness extends Feature {
 		if (!this.isEnabled())
 			return;
 		event.getWorld().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, 0f));
+	}
+
+	@SubscribeEvent
+	public void resetTirednessOnWakeUp(SleepingTimeCheckEvent event) {
+		if (!this.isEnabled()
+				|| event.getPlayer().getPersistentData().getFloat(Strings.Tags.TIREDNESS) < 320f)
+			return;
+		event.setResult(Event.Result.ALLOW);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public void onFog(EntityViewRenderEvent.RenderFogEvent event) {
+		if (!this.isEnabled()
+				|| event.getCamera().getEntity().isSpectator()
+				|| !(event.getCamera().getEntity() instanceof LivingEntity livingEntity)
+				|| !livingEntity.hasEffect(ITMobEffects.TIRED.get()))
+			return;
+
+		int amplifier = livingEntity.getEffect(ITMobEffects.TIRED.get()).getAmplifier();
+		if (amplifier < 1)
+			return;
+		float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
+		float near = -8;
+		float far = Math.min(48f, renderDistance) - ((amplifier - 1) * 10);
+		event.setNearPlaneDistance(near);
+		event.setFarPlaneDistance(far);
+		event.setCanceled(true);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public void onFog(EntityViewRenderEvent.FogColors event) {
+		if (!this.isEnabled()
+				|| event.getCamera().getEntity().isSpectator()
+				|| !(event.getCamera().getEntity() instanceof LivingEntity livingEntity)
+				|| !livingEntity.hasEffect(ITMobEffects.TIRED.get()))
+			return;
+
+		int amplifier = livingEntity.getEffect(ITMobEffects.TIRED.get()).getAmplifier();
+		if (amplifier < 1)
+			return;
+		float color = 0f;
+		event.setRed(color);
+		event.setGreen(color);
+		event.setBlue(color);
 	}
 }
