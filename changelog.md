@@ -2,9 +2,9 @@
 
 ## 2.11.2
 * Tiredness
-  * Tiredness > 400 now gives Tired effect. Every 20 more tiredness gives one more level. 
-    Slows you down by 8% per level and slows down attack speed by 5% per level.
-    From Tired II view distance is decreased down to 8 blocks at Tired V (max level)
+  * Tiredness > 400 now gives Tired effect. Every 20 more tiredness gives one more level.  
+    Slows you down by 8% per level and slows down attack speed by 5% per level.  
+    From Tired II view distance is decreased down to 8 blocks at Tired V (max level at tiredness >= 500)
   * You can now sleep during daytime if you're tired
   * You can now configure tiredness required to sleep, effect and per effect level
   * Spawn point is now set by default if not tired enough. Can now be configured
