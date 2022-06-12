@@ -29,9 +29,15 @@ public class Tiredness extends Feature {
 
 	private final ForgeConfigSpec.DoubleValue tirednessGainMultiplierConfig;
 	private final ForgeConfigSpec.BooleanValue shouldPreventSpawnPointConfig;
+	private final ForgeConfigSpec.DoubleValue tirednessToSleepConfig;
+	private final ForgeConfigSpec.DoubleValue tirednessToEffectConfig;
+	private final ForgeConfigSpec.DoubleValue tirednessPerLevelConfig;
 
 	public double tirednessGainMultiplier = 1d;
 	public boolean shouldPreventSpawnPoint = false;
+	public double tirednessToSleep = 320d;
+	public double tirednessToEffect = 400d;
+	public double tirednessPerLevel = 20d;
 
 	public Tiredness(Module module) {
 		super(Config.builder, module);
@@ -42,6 +48,15 @@ public class Tiredness extends Feature {
 		shouldPreventSpawnPointConfig = Config.builder
 				.comment("If true the player will not set the spawn point if he/she can't sleep.")
 				.define("Prevent Spawn Point", this.shouldPreventSpawnPoint);
+		tirednessToSleepConfig = Config.builder
+				.comment("Tiredness required to be able to sleep.")
+				.defineInRange("Tiredness to sleep", this.tirednessToSleep, 0d, Double.MAX_VALUE);
+		tirednessToEffectConfig = Config.builder
+				.comment("Tiredness required to get the Tired effect.")
+				.defineInRange("Tiredness for effect", this.tirednessToEffect, 0d, Double.MAX_VALUE);
+		tirednessPerLevelConfig = Config.builder
+				.comment("Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
+				.defineInRange("Tiredness per level", this.tirednessPerLevel, 0d, Double.MAX_VALUE);
 		Config.builder.pop();
 	}
 
@@ -50,6 +65,9 @@ public class Tiredness extends Feature {
 		super.loadConfig();
 		this.tirednessGainMultiplier = this.tirednessGainMultiplierConfig.get();
 		this.shouldPreventSpawnPoint = this.shouldPreventSpawnPointConfig.get();
+		this.tirednessToSleep = this.tirednessToSleepConfig.get();
+		this.tirednessToEffect = this.tirednessToEffectConfig.get();
+		this.tirednessPerLevel = this.tirednessPerLevelConfig.get();
 	}
 
 	public void onFoodExhaustion(Player player, float amount) {
@@ -64,11 +82,11 @@ public class Tiredness extends Feature {
 		CompoundTag persistentData = serverPlayer.getPersistentData();
 		float tiredness = persistentData.getFloat(Strings.Tags.TIREDNESS);
 		persistentData.putFloat(Strings.Tags.TIREDNESS, tiredness + amount);
-		if (tiredness < 320 && tiredness + amount >= 320) {
+		if (tiredness < this.tirednessToSleep && tiredness + amount >= this.tirednessToSleep) {
 			serverPlayer.displayClientMessage(new TranslatableComponent(Strings.Translatable.TIRED_ENOUGH), false);
 		}
-		else if (tiredness >= 400 && player.tickCount % 20 == 0) {
-			serverPlayer.addEffect(new MobEffectInstance(ITMobEffects.TIRED.get(), 25, Math.min((int) ((tiredness - 400) / 20), 4), true, false, true));
+		else if (tiredness >= this.tirednessToEffect && player.tickCount % 20 == 0) {
+			serverPlayer.addEffect(new MobEffectInstance(ITMobEffects.TIRED.get(), 25, Math.min((int) ((tiredness - this.tirednessToEffect) / this.tirednessPerLevel), 4), true, false, true));
 		}
 	}
 
@@ -81,7 +99,7 @@ public class Tiredness extends Feature {
 
 		ServerPlayer player = (ServerPlayer) event.getPlayer();
 
-		if (player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) < 320f) {
+		if (player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) < this.tirednessToSleep) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.displayClientMessage(new TranslatableComponent(Strings.Translatable.NOT_TIRED), true);
 			if (!this.shouldPreventSpawnPoint)
@@ -104,7 +122,7 @@ public class Tiredness extends Feature {
 	@SubscribeEvent
 	public void resetTirednessOnWakeUp(SleepingTimeCheckEvent event) {
 		if (!this.isEnabled()
-				|| event.getPlayer().getPersistentData().getFloat(Strings.Tags.TIREDNESS) < 320f)
+				|| event.getPlayer().getPersistentData().getFloat(Strings.Tags.TIREDNESS) < this.tirednessToSleep)
 			return;
 		event.setResult(Event.Result.ALLOW);
 	}

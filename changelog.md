@@ -6,6 +6,7 @@
     Slows you down by 8% per level and slows down attack speed by 5% per level.
     Tired II decreases the view distance down to 8 blocks at Tired V (max level)
   * You can now sleep during daytime if you're tired
+  * You can now configure tiredness required to sleep, effect and per effect level
   * Spawn point is now set by default if not tired enough. Can now be configured
 * Removed Tiredness from Debuff
 * Fixed a bug where Item and Block stack reduction wouldn't work
