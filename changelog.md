@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Explosion Overhaul
+  * Shields no longer block damage from explosions by default (still blocking 5 damage from the Shield Feature)
+
 ## 2.11.2
 * Tiredness
   * Tiredness > 400 now gives Tired effect. Every 20 more tiredness gives one more level.  

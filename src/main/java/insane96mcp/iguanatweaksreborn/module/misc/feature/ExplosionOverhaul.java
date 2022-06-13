@@ -57,7 +57,7 @@ public class ExplosionOverhaul extends Feature {
 				.comment("Somewhere around 1.15 Mojang (for performance issues) removed the poof particles from Explosions. Keep them disabled if you have a low end PC.")
 				.define("Enable Poof Particles", enablePoofParticles);
 		blockingDamageScalingConfig = Config.builder
-				.comment("How much damage will the player take when blocking an explosion with a shield. Putting 0 shields will block like Vanilla.")
+				.comment("How much damage will the player take when blocking an explosion with a shield. Putting 0 shields will block all the damage like Vanilla, while putting 1 shields will block no damage.")
 				.defineInRange("Blocking Damage Scaling", blockingDamageScaling, 0.0d, 1.0d);
 		knockbackScalesWithSizeConfig = Config.builder
 				.comment("While enabled knockback is greatly increased by explosion size")
@@ -66,8 +66,8 @@ public class ExplosionOverhaul extends Feature {
 				.comment("Explosions will start from the middle of the entity instead of feets.")
 				.define("Explosions at Half Entity", explosionAtHalfEntity);
 		affectJustSpawnedEntitiesConfig = Config.builder
-				.comment("Explosions affect even entities spawned by the explosions, like TnTs or chests content. BE AWARE that containers content will most likely get destroyed.")
-				.define("Explosion Affect Just Spawed Entities", this.affectJustSpawnedEntities);
+				.comment("Explosions affect even entities spawned by the explosions, like TnTs or chests content. BE AWARE that containers content will get destroyed.")
+				.define("Explosion Affect Just Spawned Entities", this.affectJustSpawnedEntities);
 		enableFlyingBlocksConfig = Config.builder
 				.comment("EXPERIMENTAL! This will make explosion blast blocks away. Blocks that can't land will drop the block as a TNT would have destroyed it.")
 				.define("Enable Flying Blocks", enableFlyingBlocks);
