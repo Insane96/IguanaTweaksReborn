@@ -231,9 +231,9 @@ public class ITExplosion extends Explosion {
 
 	public void processFire() {
 		if (this.fire) {
-			for(BlockPos blockpos2 : this.getToBlow()) {
-				if (this.random.nextInt(3) == 0 && this.level.getBlockState(blockpos2).isAir() && this.level.getBlockState(blockpos2.below()).isSolidRender(this.level, blockpos2.below())) {
-					this.level.setBlockAndUpdate(blockpos2, BaseFireBlock.getState(this.level, blockpos2));
+			for(BlockPos blockPos : this.getToBlow()) {
+				if (this.random.nextInt(3) == 0 && this.level.getBlockState(blockPos).isAir() && this.level.getBlockState(blockPos.below()).isSolidRender(this.level, blockPos.below())) {
+					this.level.setBlockAndUpdate(blockPos, BaseFireBlock.getState(this.level, blockPos));
 				}
 			}
 		}

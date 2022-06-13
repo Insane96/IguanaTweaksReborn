@@ -25,21 +25,21 @@ import java.util.List;
 @Label(name = "Explosion Overhaul", description = "Various changes to explosions from knockback to shielding.")
 public class ExplosionOverhaul extends Feature {
 
-	private final ForgeConfigSpec.ConfigValue<Boolean> disableExplosionRandomnessConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> enablePoofParticlesConfig;
-	private final ForgeConfigSpec.ConfigValue<Double> blockingDamageScalingConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> knockbackScalesWithSizeConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> explosionAtHalfEntityConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> affectJustSpawnedEntitiesConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> enableFlyingBlocksConfig;
+	private final ForgeConfigSpec.BooleanValue disableExplosionRandomnessConfig;
+	private final ForgeConfigSpec.BooleanValue enablePoofParticlesConfig;
+	private final ForgeConfigSpec.DoubleValue blockingDamageScalingConfig;
+	private final ForgeConfigSpec.BooleanValue knockbackScalesWithSizeConfig;
+	private final ForgeConfigSpec.BooleanValue explosionAtHalfEntityConfig;
+	private final ForgeConfigSpec.BooleanValue affectJustSpawnedEntitiesConfig;
+	private final ForgeConfigSpec.BooleanValue enableFlyingBlocksConfig;
 	private final Blacklist.Config knockbackBlacklistConfig;
 	private final Blacklist.Config entityBlacklistConfig;
 
-	private static final List<String> knockbackBlacklistDefault = Arrays.asList("minecraft:ender_dragon", "minecraft:wither");
+	private static final List<String> knockbackBlacklistDefault = List.of("minecraft:ender_dragon", "minecraft:wither");
 
 	public boolean disableExplosionRandomness = true;
 	public boolean enablePoofParticles = false;
-	public double blockingDamageScaling = 0.6d;
+	public double blockingDamageScaling = 1d;
 	public boolean knockbackScalesWithSize = true;
 	public boolean explosionAtHalfEntity = true;
 	public boolean affectJustSpawnedEntities = false;
@@ -54,7 +54,8 @@ public class ExplosionOverhaul extends Feature {
 				.comment("Vanilla Explosions use a random number that changes the explosion power. With this enabled the ray strength will be as the explosion size.")
 				.define("Disable Explosion Randomness", disableExplosionRandomness);
 		enablePoofParticlesConfig = Config.builder
-				.comment("Somewhere around 1.15 Mojang (for performance issues) removed the poof particles from Explosions. Keep them disabled if you have a low end PC.")
+				.comment("Somewhere around 1.15 Mojang (for performance issues) removed the poof particles from Explosions. Keep them disabled if you have a low end PC.\n" +
+						"These particles aren't shown when explosion power is <= 1")
 				.define("Enable Poof Particles", enablePoofParticles);
 		blockingDamageScalingConfig = Config.builder
 				.comment("How much damage will the player take when blocking an explosion with a shield. Putting 0 shields will block all the damage like Vanilla, while putting 1 shields will block no damage.")
@@ -105,13 +106,13 @@ public class ExplosionOverhaul extends Feature {
 			return;
 
 		Explosion e = event.getExplosion();
-		if (e.level instanceof ServerLevel level && !e.getToBlow().isEmpty() && e.radius > 1) {
+		if (e.level instanceof ServerLevel level && !e.getToBlow().isEmpty() && e.radius >= 2) {
 			int particleCount = (int)(e.radius * 125);
 			level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.33D);
 		}
 	}
 
-	//Setting low priority so other mods can change explosions params before creating the ITExplosion
+	//Setting the lowest priority so other mods can change explosions params before creating the ITExplosion
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onExplosionStart(ExplosionEvent.Start event) {
 		if (!this.isEnabled())
