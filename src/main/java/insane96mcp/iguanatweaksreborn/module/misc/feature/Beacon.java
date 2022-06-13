@@ -50,7 +50,7 @@ public class Beacon extends Feature {
         this.blocksList = IdTagValue.parseStringList(this.blocksListConfig.get());
     }
 
-    public boolean beaconApplyEffect(Level level, BlockPos blockPos, int layers, MobEffect effectPrimary, MobEffect effectSecondary) {
+    public boolean beaconApplyEffects(Level level, BlockPos blockPos, int layers, MobEffect effectPrimary, MobEffect effectSecondary) {
         if (!this.isEnabled())
             return false;
 

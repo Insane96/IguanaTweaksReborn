@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Boat.class)
 public class BoatMixin {
-
 	@Inject(at = @At("RETURN"), method = "getGroundFriction", cancellable = true)
 	public void getGroundFriction(CallbackInfoReturnable<Float> callbackInfo) {
 		callbackInfo.setReturnValue(Modules.misc.nerf.getBoatFriction(callbackInfo.getReturnValueF()));

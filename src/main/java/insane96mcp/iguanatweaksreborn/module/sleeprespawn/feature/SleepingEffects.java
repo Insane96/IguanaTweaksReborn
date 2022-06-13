@@ -1,6 +1,5 @@
 package insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature;
 
-import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.utils.EffectOnWakeUp;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
@@ -27,7 +26,7 @@ public class SleepingEffects extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> effectsOnWakeUpConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> noSleepIfHungryConfig;
 
-	private final List<String> effectsOnWakeUpDefault = Lists.newArrayList("minecraft:slowness,400,0", "minecraft:regeneration,200,1", "minecraft:weakness,300,1", "minecraft:mining_fatigue,300,1");
+	private final List<String> effectsOnWakeUpDefault = List.of("minecraft:slowness,400,0", "minecraft:regeneration,200,1", "minecraft:weakness,300,1", "minecraft:mining_fatigue,300,1");
 
 	public int hungerDepletedOnWakeUp = 11;
 	public ArrayList<MobEffectInstance> effectsOnWakeUp;
@@ -38,7 +37,7 @@ public class SleepingEffects extends Feature {
 		this.pushConfig(Config.builder);
 		hungerDepletedOnWakeUpConfig = Config.builder
 				.comment("How much the hunger bar is depleted when you wake up in the morning. Saturation depleted is based off this value times 2. Setting to 0 will disable this feature.")
-				.defineInRange("Hunger Depleted on Wake Up", this.hungerDepletedOnWakeUp, -20, 20);
+				.defineInRange("Hunger Depleted on Wake Up", this.hungerDepletedOnWakeUp, 0, 20);
 		effectsOnWakeUpConfig = Config.builder
 				.comment("A list of effects to apply to the player when he wakes up.\nThe format is modid:potion_id,duration_in_ticks,amplifier\nE.g. 'minecraft:slowness,240,1' will apply Slowness II for 12 seconds to the player.")
 				.defineList("Effects on Wake Up", this.effectsOnWakeUpDefault, o -> o instanceof String);

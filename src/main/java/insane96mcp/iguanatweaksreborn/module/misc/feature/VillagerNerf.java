@@ -25,6 +25,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.Map;
 import java.util.UUID;
 
+//Rename to Villagers
 @Label(name = "Villager Nerfs", description = "Small changes to villagers to make them less OP")
 public class VillagerNerf extends Feature {
 
@@ -96,9 +97,8 @@ public class VillagerNerf extends Feature {
 	}
 
 	public int clampSpecialPrice(int specialPriceDiff, final ItemStack baseCostA) {
-		if (!this.isEnabled())
-			return specialPriceDiff;
-		if (this.maxDiscount == 1d)
+		if (!this.isEnabled()
+				|| this.maxDiscount == 1d)
 			return specialPriceDiff;
 
 		if (specialPriceDiff < 0 && Mth.abs(specialPriceDiff) > baseCostA.getCount() * this.maxDiscount)
@@ -108,19 +108,16 @@ public class VillagerNerf extends Feature {
 	}
 
 	public int clampDemand(int demand, int maxUses) {
-		if (!this.isEnabled())
-			return demand;
-		if (!this.clampNegativeDemand)
+		if (!this.isEnabled()
+				|| !this.clampNegativeDemand)
 			return demand;
 
 		return Math.max(demand, -maxUses);
 	}
 
 	public void lockTrades(Villager villager) {
-		if (!this.isEnabled())
-			return;
-
-		if (!this.lockTrades)
+		if (!this.isEnabled()
+				|| !this.lockTrades)
 			return;
 
 		if (villager.getVillagerData().getProfession() != VillagerProfession.NONE && villager.getVillagerXp() == 0)
@@ -128,12 +125,10 @@ public class VillagerNerf extends Feature {
 	}
 
 	public void onZombieKillEntity(Zombie zombie, ServerLevel level, LivingEntity killedEntity) {
-		if (!this.isEnabled())
-			return;
-		if (!this.alwaysConvertZombie)
-			return;
-		//If removed should mean that the Zombie Villager has already spawned
-		if (killedEntity.isRemoved())
+		if (!this.isEnabled()
+				|| !this.alwaysConvertZombie
+				//If removed should mean that the Zombie Villager has already been converted
+				|| killedEntity.isRemoved())
 			return;
 
 		if (killedEntity instanceof Villager villager && net.minecraftforge.event.ForgeEventFactory.canLivingConvert(killedEntity, EntityType.ZOMBIE_VILLAGER, (timer) -> {})) {

@@ -25,7 +25,7 @@ public class Fog extends Feature {
 
     public boolean betterFireResistanceLavaFog = true;
     public boolean betterNetherFog = true;
-    public double netherFogRatio = 0.7d;
+    public double netherFogRatio = 0.75d;
 
     public Fog(Module module) {
         super(ITClientConfig.builder, module);
@@ -61,13 +61,9 @@ public class Fog extends Feature {
     }
 
     public void lavaFog(EntityViewRenderEvent.RenderFogEvent event) {
-        if (!this.betterFireResistanceLavaFog)
-            return;
-
-        if (event.getCamera().getFluidInCamera() != FogType.LAVA)
-            return;
-
-        if (event.getCamera().getEntity().isSpectator())
+        if (!this.betterFireResistanceLavaFog
+                || event.getCamera().getFluidInCamera() != FogType.LAVA
+                || event.getCamera().getEntity().isSpectator())
             return;
 
         Entity entity = event.getCamera().getEntity();
@@ -80,10 +76,8 @@ public class Fog extends Feature {
     }
 
     public void netherFog(EntityViewRenderEvent.RenderFogEvent event) {
-        if (!this.betterNetherFog)
-            return;
-
-        if (event.isCanceled())
+        if (!this.betterNetherFog
+                || event.isCanceled())
             return;
 
         Entity entity = event.getCamera().getEntity();

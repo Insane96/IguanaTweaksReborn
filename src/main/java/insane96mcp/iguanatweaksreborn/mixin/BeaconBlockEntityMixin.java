@@ -15,7 +15,7 @@ public class BeaconBlockEntityMixin {
 
 	@Inject(at = @At("HEAD"), method = "applyEffects", cancellable = true)
 	private static void applyEffects(Level level, BlockPos blockPos, int layers, MobEffect effectPrimary, MobEffect effectSecondary, CallbackInfo ci) {
-		if (Modules.misc.beacon.beaconApplyEffect(level, blockPos, layers, effectPrimary, effectSecondary))
+		if (Modules.misc.beacon.beaconApplyEffects(level, blockPos, layers, effectPrimary, effectSecondary))
 			ci.cancel();
 	}
 }
