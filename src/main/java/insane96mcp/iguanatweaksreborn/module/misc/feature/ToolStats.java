@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Tool Stats", description = "Less durable and efficient tools. Changing this config's options requires a Minecraft restart")
+@Label(name = "Tool Stats", description = "Less durable and efficient tools")
 public class ToolStats extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> toolsDurabilityConfig;
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> toolsEfficiencyConfig;
@@ -43,11 +43,12 @@ public class ToolStats extends Feature {
 	public ToolStats(Module module) {
 		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
-		toolsDurabilityConfig = Config.builder
+		this.toolsDurabilityConfig = Config.builder
 				.comment("A list of items which should have their durability changed.\n" +
 						"Format is 'modid:itemid,durability'")
+				.worldRestart()
 				.defineList("Tools Durability", toolsDurabilityDefault, o -> o instanceof String);
-		toolsEfficiencyConfig = Config.builder
+		this.toolsEfficiencyConfig = Config.builder
 				.comment("A list of items and multipliers that will apply to mining speed when breaking blocks with that item.\n" +
 						"Format is 'modid:itemid,efficiency_multiplier'")
 				.defineList("Tools Efficiency", toolEfficiencyDefault, o -> o instanceof String);
@@ -59,14 +60,14 @@ public class ToolStats extends Feature {
 	@Override
 	public void loadConfig() {
 		super.loadConfig();
-		toolEfficiencyModifiers = ToolEfficiencyModifier.parseStringList(toolsEfficiencyConfig.get());
-		toolDurabilityModifiers = ToolDurabilityModifier.parseStringList(toolsDurabilityConfig.get());
+		this.toolEfficiencyModifiers = ToolEfficiencyModifier.parseStringList(toolsEfficiencyConfig.get());
+		this.toolDurabilityModifiers = ToolDurabilityModifier.parseStringList(toolsDurabilityConfig.get());
 		if (!this.isEnabled())
 			return;
 		if (durabilityApplied)
 			return;
 		durabilityApplied = true;
-		for (ToolDurabilityModifier toolDurabilityModifier : toolDurabilityModifiers) {
+		for (ToolDurabilityModifier toolDurabilityModifier : this.toolDurabilityModifiers) {
 			Item item = ForgeRegistries.ITEMS.getValue(toolDurabilityModifier.id);
 			if (item == null) {
 				LogHelper.warn("In Tool Durability Modifier the item %s doesn't exist", toolDurabilityModifier.id);

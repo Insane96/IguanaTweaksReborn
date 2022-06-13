@@ -5,6 +5,7 @@ import insane96mcp.iguanatweaksreborn.module.ClientModules;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -30,6 +31,8 @@ public class ITClientConfig {
 
 	@SubscribeEvent
 	public static void onModConfigEvent(final ModConfigEvent event) {
-		ClientModules.loadConfig();
+		if (event.getConfig().getModId().equals(IguanaTweaksReborn.MOD_ID) && event.getConfig().getType() == ModConfig.Type.CLIENT) {
+			ClientModules.loadConfig();
+		}
 	}
 }

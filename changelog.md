@@ -1,6 +1,7 @@
 # Changelog
 
-## Upcoming
+## 2.11.3
+* Fixed various features not begin activable/deactivable due to config load
 * Explosion Overhaul
   * Shields no longer block damage from explosions by default (still blocking 5 damage from the Shield Feature)
 
@@ -33,7 +34,7 @@
 * Increased Stone Pickaxe durability (~~7~~ -> 8)
 * Unusable hoes no longer instantly destroy
 * Slightly increased wooden tools efficiency
-* Tagging slowness level is now I instead of II, but it's applied for 1 tick per damage more
+* Tagging slowness level is now I instead of II, but it's applied for 1 more tick per point of damage
 * Fixed higher levels of well fed not behaving properly (well fed 4 was insta-heal)
 
 ## Alpha 2.11.0

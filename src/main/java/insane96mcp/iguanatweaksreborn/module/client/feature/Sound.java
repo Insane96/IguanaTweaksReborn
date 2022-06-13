@@ -18,7 +18,7 @@ public class Sound extends Feature {
         this.pushConfig(ITClientConfig.builder);
         fixShieldBlockingSoundConfig = ITClientConfig.builder
                 .comment("If true the entity hit will no longer play the hurt sound if blocking with a shield.")
-                .define("No Night Vision Flashing", fixShieldBlockingSound);
+                .define("Fix shield blocking sound", fixShieldBlockingSound);
         ITClientConfig.builder.pop();
     }
 
