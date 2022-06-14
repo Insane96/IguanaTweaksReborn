@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-Follow the following guideline. Not following this will result in ignored and closed issue.  
+Not following this guidline will result in ignored and closed issue.  
 Please make sure you're using the latest versions before sending a report.
 
 **Versions**:
