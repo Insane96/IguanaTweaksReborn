@@ -6,6 +6,7 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
@@ -72,7 +73,11 @@ public class CropsGrowth extends Feature {
 			for (Block block : ForgeRegistries.BLOCKS.getValues()) {
 				if (!(block instanceof CropBlock))
 					continue;
-				PlantGrowthModifier plantGrowthModifier = new PlantGrowthModifier(block.getRegistryName(), null).growthMultiplier(this.cropsGrowthMultiplier).noSunlightGrowthMultiplier(this.noSunLightGrowthMultiplier).minSunlightRequired(this.minSunlight).nightTimeGrowthMultiplier(this.nightTimeGrowthMultiplier);
+				PlantGrowthModifier plantGrowthModifier = new PlantGrowthModifier(IdTagMatcher.Type.ID, block.getRegistryName())
+						.growthMultiplier(this.cropsGrowthMultiplier)
+						.noSunlightGrowthMultiplier(this.noSunLightGrowthMultiplier)
+						.minSunlightRequired(this.minSunlight)
+						.nightTimeGrowthMultiplier(this.nightTimeGrowthMultiplier);
 				plantGrowthModifiers.add(plantGrowthModifier);
 			}
 		}

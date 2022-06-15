@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.11.4
+* Requires InsaneLib 1.5.1. Fix tags not working for blacklists.
+
 ## 2.11.3
 * Fixed various features not begin activable/deactivable due to config load
 * Explosion Overhaul

@@ -25,8 +25,8 @@ public class PlantGrowthModifier {
 	private List<BiomeDictionary.Type> biomes = new ArrayList<>();
 	private double wrongBiomeMultiplier = 1d;
 
-	public PlantGrowthModifier(@Nullable ResourceLocation plantId, @Nullable ResourceLocation plantTag) {
-		this.plantId = new IdTagMatcher(plantId, plantTag);
+	public PlantGrowthModifier(IdTagMatcher.Type type, ResourceLocation location) {
+		this.plantId = new IdTagMatcher(type, location);
 	}
 
 	public PlantGrowthModifier growthMultiplier(double growthMultiplier) {
@@ -98,7 +98,7 @@ public class PlantGrowthModifier {
 				LogHelper.warn("%s tag for Plant Growth Modification is not valid", replaced);
 				return null;
 			}
-			return new PlantGrowthModifier(null, tag).growthMultiplier(multiplier);
+			return new PlantGrowthModifier(IdTagMatcher.Type.TAG, tag).growthMultiplier(multiplier);
 		}
 		else {
 			ResourceLocation block = ResourceLocation.tryParse(split[0]);
@@ -107,7 +107,7 @@ public class PlantGrowthModifier {
 				return null;
 			}
 			if (ForgeRegistries.BLOCKS.containsKey(block)) {
-				return new PlantGrowthModifier(block, null).growthMultiplier(multiplier);
+				return new PlantGrowthModifier(IdTagMatcher.Type.ID, block).growthMultiplier(multiplier);
 			}
 			else {
 				LogHelper.warn(String.format("%s block for Plant Growth Modification seems to not exist", split[0]));

@@ -13,8 +13,8 @@ import java.util.List;
 public class ToolEfficiencyModifier extends IdTagMatcher {
 	public float efficiencyMultiplier;
 
-	public ToolEfficiencyModifier(@Nullable ResourceLocation item, float efficiencyMultiplier) {
-		super(item, null);
+	public ToolEfficiencyModifier(ResourceLocation location, float efficiencyMultiplier) {
+		super(Type.ID, location);
 		this.efficiencyMultiplier = efficiencyMultiplier;
 	}
 

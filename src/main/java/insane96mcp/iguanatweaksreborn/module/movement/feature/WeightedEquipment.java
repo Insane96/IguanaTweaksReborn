@@ -180,7 +180,7 @@ public class WeightedEquipment extends Feature {
 		}
 		double enchantmentSlowdownReduction = 0d;
 		for (ArmorEnchantmentWeight enchantmentWeight : enchantmentsList) {
-			int enchantmentLevel = MCUtils.getEnchantmentLevel(enchantmentWeight.id, itemStack);
+			int enchantmentLevel = MCUtils.getEnchantmentLevel(enchantmentWeight.location, itemStack);
 			if (enchantmentLevel == 0)
 				continue;
 			enchantmentSlowdownReduction += (enchantmentWeight.flatSlownessReduction + (enchantmentWeight.slownessReductionPerLevel * enchantmentLevel));

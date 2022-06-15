@@ -122,7 +122,7 @@ public class GeneralStacking extends Feature {
                 continue;
             if (item.maxStackSize == 1)
                 continue;
-            if (this.blacklist.isBlackWhiteListed(item))
+            if (this.blacklist.isItemBlackOrNotWhiteListed(item))
                 continue;
 
             double stackSize = item.maxStackSize * itemStackMultiplier;
@@ -146,7 +146,7 @@ public class GeneralStacking extends Feature {
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!(item instanceof BlockItem))
                 continue;
-            if (this.blacklist.isBlackWhiteListed(item))
+            if (this.blacklist.isItemBlackOrNotWhiteListed(item))
                 continue;
 
             Block block = ((BlockItem) item).getBlock();
@@ -174,7 +174,7 @@ public class GeneralStacking extends Feature {
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!(item instanceof BowlFoodItem) && !(item instanceof SuspiciousStewItem))
                 continue;
-            if (this.blacklist.isBlackWhiteListed(item))
+            if (this.blacklist.isItemBlackOrNotWhiteListed(item))
                 continue;
 
             int stackSize = this.stackableSoups;
@@ -197,7 +197,7 @@ public class GeneralStacking extends Feature {
         for (Item item : ForgeRegistries.ITEMS.getValues()) {
             if (!item.isEdible())
                 continue;
-            if (this.blacklist.isBlackWhiteListed(item))
+            if (this.blacklist.isItemBlackOrNotWhiteListed(item))
                 continue;
 
             int hunger = item.getFoodProperties().getNutrition();

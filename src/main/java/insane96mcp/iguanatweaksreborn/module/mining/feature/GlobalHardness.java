@@ -97,7 +97,7 @@ public class GlobalHardness extends Feature {
 	 * Returns 1d when no changes must be made, else will return a multiplier for block hardness
 	 */
 	public double getBlockGlobalHardnessMultiplier(Block block, ResourceLocation dimensionId) {
-		if (this.hardnessBlacklist.isBlackWhiteListed(block))
+		if (this.hardnessBlacklist.isBlockBlackOrNotWhiteListed(block))
 			return 1d;
 
 		//If there's a dimension multiplier present return that
@@ -121,7 +121,7 @@ public class GlobalHardness extends Feature {
 				if (blockHardness.matchesBlock(block, dimensionId))
 					return 0d;
 
-		if (this.depthMultiplierBlacklist.isBlackWhiteListed(block))
+		if (this.depthMultiplierBlacklist.isBlockBlackOrNotWhiteListed(block))
 			return 0d;
 
 		double hardness = 0d;

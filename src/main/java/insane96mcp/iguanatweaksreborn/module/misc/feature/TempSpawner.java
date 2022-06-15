@@ -99,7 +99,7 @@ public class TempSpawner extends Feature {
 		if (spawnerCap == null)
 			LogHelper.error("Something's wrong. The spawner has no capability");
 		spawnerCap.addSpawnedMobs(1);
-		if (this.entityBlacklist.isBlackWhiteListed(event.getEntityLiving().getType()))
+		if (this.entityBlacklist.isEntityBlackOrNotWhitelist(event.getEntityLiving()))
 			return;
 		double distance = Math.sqrt(spawnerPos.distSqr(level.getSharedSpawnPos()));
 		int maxSpawned = (int) ((this.minSpawnableMobs + (distance / 8d)) * this.spawnableMobsMultiplier);

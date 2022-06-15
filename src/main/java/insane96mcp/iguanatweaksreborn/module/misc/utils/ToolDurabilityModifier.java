@@ -13,8 +13,8 @@ import java.util.List;
 public class ToolDurabilityModifier extends IdTagMatcher {
 	public int durability;
 
-	public ToolDurabilityModifier(@Nullable ResourceLocation item, int durability) {
-		super(item, null);
+	public ToolDurabilityModifier(ResourceLocation location, int durability) {
+		super(Type.ID, location);
 		this.durability = durability;
 	}
 

@@ -7,8 +7,8 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.config.Blacklist;
-import insane96mcp.insanelib.util.RandomHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeetrootBlock;
@@ -97,7 +97,7 @@ public class NerfedBonemeal extends Feature {
 	}
 
 	public BonemealResult applyBonemeal(Level level, ItemStack stack, BlockState state, BlockPos pos) {
-		if (this.itemBlacklist.isBlackWhiteListed(stack.getItem()) || this.blockBlacklist.isBlackWhiteListed(state.getBlock()))
+		if (this.itemBlacklist.isItemBlackOrNotWhiteListed(stack.getItem()) || this.blockBlacklist.isBlockBlackOrNotWhiteListed(state.getBlock()))
 			return BonemealResult.NONE;
 
 		//If farmland is dry and cropsRequireWater is set to ANY_CASE then cancel the event
@@ -122,7 +122,7 @@ public class NerfedBonemeal extends Feature {
 				return BonemealResult.ALLOW;
 			}
 			else if (this.nerfedBonemeal.equals(BonemealNerf.SLIGHT))
-				age += RandomHelper.getInt(level.getRandom(), 1, 2);
+				age += Mth.nextInt(level.getRandom(), 1, 2);
 			else if (this.nerfedBonemeal.equals(BonemealNerf.NERFED))
 				age++;
 			if (age > maxAge)
@@ -138,11 +138,11 @@ public class NerfedBonemeal extends Feature {
 			int maxAge = Collections.max(StemBlock.AGE.getPossibleValues());
 			if (age == maxAge)
 				return BonemealResult.NONE;
-			if (RandomHelper.getDouble(level.getRandom(), 0d, 100d) < this.bonemealFailChance) {
+			if (Mth.nextDouble(level.getRandom(), 0d, 100d) < this.bonemealFailChance) {
 				return BonemealResult.ALLOW;
 			}
 			else if (this.nerfedBonemeal.equals(BonemealNerf.SLIGHT))
-				age += RandomHelper.getInt(level.getRandom(), 1, 2);
+				age += Mth.nextInt(level.getRandom(), 1, 2);
 			else if (this.nerfedBonemeal.equals(BonemealNerf.NERFED))
 				age++;
 			if (age > maxAge)

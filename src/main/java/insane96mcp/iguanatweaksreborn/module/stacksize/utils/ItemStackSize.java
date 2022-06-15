@@ -13,8 +13,8 @@ import java.util.List;
 public class ItemStackSize extends IdTagMatcher {
 	public int stackSize;
 
-	public ItemStackSize(@Nullable ResourceLocation id, @Nullable ResourceLocation tag, int stackSize) {
-		super(id, tag);
+	public ItemStackSize(Type type, ResourceLocation location, int stackSize) {
+		super(type, location);
 		this.stackSize = stackSize;
 	}
 
@@ -37,7 +37,7 @@ public class ItemStackSize extends IdTagMatcher {
 				LogHelper.warn("%s tag for Custom Stack Size is not valid", replaced);
 				return null;
 			}
-			return new ItemStackSize(null, tag, stackSize);
+			return new ItemStackSize(Type.TAG, tag, stackSize);
 		}
 		else {
 			ResourceLocation item = ResourceLocation.tryParse(split[0]);
@@ -49,7 +49,7 @@ public class ItemStackSize extends IdTagMatcher {
 				LogHelper.warn(String.format("%s item for Custom Stack Size seems to not exist", split[0]));
 				return null;
 			}
-			return new ItemStackSize(item, null, stackSize);
+			return new ItemStackSize(Type.ID, item, stackSize);
 		}
 	}
 

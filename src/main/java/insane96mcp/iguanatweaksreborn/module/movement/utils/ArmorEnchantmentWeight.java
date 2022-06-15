@@ -15,8 +15,8 @@ public class ArmorEnchantmentWeight extends IdTagMatcher {
 	public double slownessReductionPerLevel;
 	public double flatSlownessReduction;
 
-	public ArmorEnchantmentWeight(@Nullable ResourceLocation item, double slownessReductionPerLevel, double flatSlownessReduction) {
-		super(item, null);
+	public ArmorEnchantmentWeight(ResourceLocation location, double slownessReductionPerLevel, double flatSlownessReduction) {
+		super(Type.ID, location);
 		this.slownessReductionPerLevel = slownessReductionPerLevel;
 		this.flatSlownessReduction = flatSlownessReduction;
 	}

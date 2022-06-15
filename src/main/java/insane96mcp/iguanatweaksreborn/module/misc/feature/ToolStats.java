@@ -68,9 +68,9 @@ public class ToolStats extends Feature {
 			return;
 		durabilityApplied = true;
 		for (ToolDurabilityModifier toolDurabilityModifier : this.toolDurabilityModifiers) {
-			Item item = ForgeRegistries.ITEMS.getValue(toolDurabilityModifier.id);
+			Item item = ForgeRegistries.ITEMS.getValue(toolDurabilityModifier.location);
 			if (item == null) {
-				LogHelper.warn("In Tool Durability Modifier the item %s doesn't exist", toolDurabilityModifier.id);
+				LogHelper.warn("In Tool Durability Modifier the item %s doesn't exist", toolDurabilityModifier.location);
 				continue;
 			}
 			item.maxDamage = toolDurabilityModifier.durability;
@@ -84,7 +84,7 @@ public class ToolStats extends Feature {
 
 		Player player = event.getPlayer();
 		for (ToolEfficiencyModifier toolEfficiencyModifier : this.toolEfficiencyModifiers) {
-			if (!player.getMainHandItem().getItem().getRegistryName().equals(toolEfficiencyModifier.id))
+			if (!player.getMainHandItem().getItem().getRegistryName().equals(toolEfficiencyModifier.location))
 				continue;
 			if (!player.getMainHandItem().getItem().isCorrectToolForDrops(event.getState()))
 				return;

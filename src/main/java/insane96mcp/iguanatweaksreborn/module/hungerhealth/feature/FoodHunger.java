@@ -74,7 +74,7 @@ public class FoodHunger extends Feature {
 			if (!item.isEdible())
 				continue;
 
-			if (this.foodBlacklist.isBlackWhiteListed(item))
+			if (this.foodBlacklist.isItemBlackOrNotWhiteListed(item))
 				continue;
 
 			FoodProperties food = item.getFoodProperties();

@@ -18,7 +18,6 @@ import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -162,10 +161,10 @@ public class ExplosionOverhaul extends Feature {
 		if (!(entity instanceof LivingEntity))
 			return true;
 
-		return this.knockbackBlacklist.isBlackWhiteListed(entity.getType());
+		return this.knockbackBlacklist.isEntityBlackOrNotWhitelist(entity.getType());
 	}
 
 	public boolean isBlacklisted(Entity entity) {
-		return this.entityBlacklist.isBlackWhiteListed(entity.getType());
+		return this.entityBlacklist.isEntityBlackOrNotWhitelist(entity.getType());
 	}
 }

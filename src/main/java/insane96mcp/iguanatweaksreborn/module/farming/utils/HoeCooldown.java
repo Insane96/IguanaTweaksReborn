@@ -13,8 +13,8 @@ import java.util.List;
 public class HoeCooldown extends IdTagMatcher {
 	public int cooldown;
 
-	public HoeCooldown(@Nullable ResourceLocation item, @Nullable ResourceLocation tag, int cooldown) {
-		super(item, tag);
+	public HoeCooldown(Type type, ResourceLocation location, int cooldown) {
+		super(type, location);
 		this.cooldown = cooldown;
 	}
 
@@ -37,7 +37,7 @@ public class HoeCooldown extends IdTagMatcher {
 				LogHelper.warn("%s tag for Hoe Cooldown is not valid", replaced);
 				return null;
 			}
-			return new HoeCooldown(null, tag, cooldown);
+			return new HoeCooldown(Type.TAG, tag, cooldown);
 		}
 		else {
 			ResourceLocation block = ResourceLocation.tryParse(split[0]);
@@ -46,7 +46,7 @@ public class HoeCooldown extends IdTagMatcher {
 				return null;
 			}
 			if (ForgeRegistries.ITEMS.containsKey(block)) {
-				return new HoeCooldown(block, null, cooldown);
+				return new HoeCooldown(Type.ID, block, cooldown);
 			}
 			else {
 				LogHelper.warn(String.format("%s item for Hoe Till Chance seems to not exist", split[0]));

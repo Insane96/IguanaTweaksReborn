@@ -14,8 +14,8 @@ public class BlockHardness extends IdTagMatcher {
 	public double hardness;
 	public boolean has0Hardness;
 
-	public BlockHardness(@Nullable ResourceLocation block, @Nullable ResourceLocation tag, Double hardness, ResourceLocation dimension) {
-		super(block, tag, dimension);
+	public BlockHardness(Type type, ResourceLocation location, Double hardness, ResourceLocation dimension) {
+		super(type, location, dimension);
 		this.hardness = hardness;
 	}
 
@@ -31,12 +31,11 @@ public class BlockHardness extends IdTagMatcher {
 			return null;
 		}
 		double hardness = Double.parseDouble(split[1]);
-		ResourceLocation dimension = AnyRL;
+		ResourceLocation dimension = null;
 		if (split.length == 3) {
 			dimension = ResourceLocation.tryParse(split[2]);
 			if (dimension == null) {
-				LogHelper.warn(String.format("Invalid dimension \"%s\" for Custom Hardness. Ignoring it", split[2]));
-				dimension = AnyRL;
+				LogHelper.info(String.format("Invalid dimension \"%s\" for Custom Hardness. Ignoring it", split[2]));
 			}
 		}
 		if (split[0].startsWith("#")) {
@@ -46,7 +45,7 @@ public class BlockHardness extends IdTagMatcher {
 				LogHelper.warn("%s tag for Custom Hardness is not valid", replaced);
 				return null;
 			}
-			return new BlockHardness(null, tag, hardness, dimension);
+			return new BlockHardness(Type.TAG, tag, hardness, dimension);
 		}
 		else {
 			ResourceLocation block = ResourceLocation.tryParse(split[0]);
@@ -55,7 +54,7 @@ public class BlockHardness extends IdTagMatcher {
 				return null;
 			}
 			if (ForgeRegistries.BLOCKS.containsKey(block)) {
-				return new BlockHardness(block, null, hardness, dimension);
+				return new BlockHardness(Type.ID, block, hardness, dimension);
 			}
 			else {
 				LogHelper.warn(String.format("%s block for Custom Hardness seems to not exist", split[0]));
