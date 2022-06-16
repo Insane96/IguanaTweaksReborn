@@ -31,6 +31,7 @@ public class ExplosionOverhaul extends Feature {
 	private final ForgeConfigSpec.BooleanValue explosionAtHalfEntityConfig;
 	private final ForgeConfigSpec.BooleanValue affectJustSpawnedEntitiesConfig;
 	private final ForgeConfigSpec.BooleanValue enableFlyingBlocksConfig;
+	private final ForgeConfigSpec.BooleanValue creeperCollateralConfig;
 	private final Blacklist.Config knockbackBlacklistConfig;
 	private final Blacklist.Config entityBlacklistConfig;
 
@@ -43,6 +44,7 @@ public class ExplosionOverhaul extends Feature {
 	public boolean explosionAtHalfEntity = true;
 	public boolean affectJustSpawnedEntities = false;
 	public boolean enableFlyingBlocks = false;
+	public boolean creeperCollateral = false;
 	public Blacklist knockbackBlacklist;
 	public Blacklist entityBlacklist;
 
@@ -71,6 +73,9 @@ public class ExplosionOverhaul extends Feature {
 		enableFlyingBlocksConfig = Config.builder
 				.comment("EXPERIMENTAL! This will make explosion blast blocks away. Blocks that can't land will drop the block as a TNT would have destroyed it.")
 				.define("Enable Flying Blocks", enableFlyingBlocks);
+		creeperCollateralConfig = Config.builder
+				.comment("If true, creepers explosions will drop no blocks.")
+				.define("Creeper collateral", this.creeperCollateral);
 		knockbackBlacklistConfig = new Blacklist.Config(Config.builder, "Knockback Blacklist", "A list of mobs (and optionally dimensions) that should take reduced knockback. Non-living entities are blacklisted by default.")
 				.setDefaultList(knockbackBlacklistDefault)
 				.setIsDefaultWhitelist(false)
@@ -92,6 +97,7 @@ public class ExplosionOverhaul extends Feature {
 		this.explosionAtHalfEntity = this.explosionAtHalfEntityConfig.get();
 		this.affectJustSpawnedEntities = this.affectJustSpawnedEntitiesConfig.get();
 		this.enableFlyingBlocks = this.enableFlyingBlocksConfig.get();
+		this.creeperCollateral = this.creeperCollateralConfig.get();
 		this.knockbackBlacklist = this.knockbackBlacklistConfig.get();
 		this.entityBlacklist = this.entityBlacklistConfig.get();
 	}
@@ -125,7 +131,7 @@ public class ExplosionOverhaul extends Feature {
 		double y = e.getPosition().y;
 		if (e.source != null && this.explosionAtHalfEntity)
 			y += e.source.getBbHeight() / 2d;
-		ITExplosion explosion = new ITExplosion(e.level, e.source, e.getDamageSource(), e.damageCalculator, e.getPosition().x, y, e.getPosition().z, e.radius, e.fire, e.blockInteraction);
+		ITExplosion explosion = new ITExplosion(e.level, e.source, e.getDamageSource(), e.damageCalculator, e.getPosition().x, y, e.getPosition().z, e.radius, e.fire, e.blockInteraction, this.creeperCollateral);
 
 		if (!event.getWorld().isClientSide) {
 			ServerLevel world = (ServerLevel) event.getWorld();

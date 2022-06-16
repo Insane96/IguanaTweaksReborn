@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Added Creeper Collateral option. Disabled by default. If enabled will make creepers' explosion drop no blocks.
+
 ## 2.11.4
 * Requires InsaneLib 1.5.1. Fix tags not working for blacklists.
 

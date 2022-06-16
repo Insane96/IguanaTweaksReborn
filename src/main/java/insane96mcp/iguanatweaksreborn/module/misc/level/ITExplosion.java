@@ -46,14 +46,16 @@ import java.util.Set;
 public class ITExplosion extends Explosion {
 	ObjectArrayList<Pair<ItemStack, BlockPos>> droppedItems = new ObjectArrayList<>();
 	boolean dealsKnockback;
+	boolean creeperCollateral;
 
-	public ITExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction) {
-		this(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true);
+	public ITExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean creeperCollateral) {
+		this(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true, creeperCollateral);
 	}
 
-	public ITExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean dealsKnockback) {
+	public ITExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean dealsKnockback, boolean creeperCollateral) {
 		super(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction);
 		this.dealsKnockback = dealsKnockback;
+		this.creeperCollateral = creeperCollateral;
 	}
 
 	public void gatherAffectedBlocks(boolean randomize) {
@@ -195,7 +197,7 @@ public class ITExplosion extends Explosion {
 			if (!blockstate.isAir()) {
 				BlockPos immutableBlockPos = blockpos.immutable();
 				this.level.getProfiler().push("explosion_blocks");
-				if (blockstate.canDropFromExplosion(this.level, blockpos, this) && this.level instanceof ServerLevel) {
+				if (!this.creeperCollateral && blockstate.canDropFromExplosion(this.level, blockpos, this) && this.level instanceof ServerLevel) {
 					BlockEntity blockEntity = blockstate.hasBlockEntity() ? this.level.getBlockEntity(blockpos) : null;
 					LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withRandom(this.level.getRandom()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockpos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, this.source);
 					if (this.blockInteraction == Explosion.BlockInteraction.DESTROY) {
