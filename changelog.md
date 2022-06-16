@@ -2,6 +2,8 @@
 
 ## Upcoming
 * Added Creeper Collateral option. Disabled by default. If enabled will make creepers' explosion drop no blocks.
+* Updated effects icons
+* Food is now eaten slightly faster
 
 ## 2.11.4
 * Requires InsaneLib 1.5.1. Fix tags not working for blacklists.
