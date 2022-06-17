@@ -50,7 +50,7 @@ public class PreventSleeping extends Feature {
 		}
 		else {
 			player.displayClientMessage(new TranslatableComponent(Strings.Translatable.ENJOY_THE_NIGHT), false);
-			player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, false);
+			player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, true);
 		}
 	}
 }

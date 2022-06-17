@@ -103,7 +103,7 @@ public class Tiredness extends Feature {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.displayClientMessage(new TranslatableComponent(Strings.Translatable.NOT_TIRED), true);
 			if (!this.shouldPreventSpawnPoint)
-				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, false);
+				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, true);
 		}
 		else {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
