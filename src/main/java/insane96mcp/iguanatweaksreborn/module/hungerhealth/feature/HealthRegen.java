@@ -134,15 +134,14 @@ public class HealthRegen extends Feature {
 
 	@SubscribeEvent
 	public void onPlayerDamaged(LivingDamageEvent event) {
-		if (!this.isEnabled())
-			return;
-		if (!this.enableInjured)
-			return;
-		if (!(event.getEntityLiving() instanceof Player playerEntity))
-			return;
-		if (event.getSource().equals(DamageSource.STARVE) || event.getSource().equals(DamageSource.DROWN))
+		if (!this.isEnabled()
+				|| !this.enableInjured
+				|| !(event.getEntityLiving() instanceof Player playerEntity)
+				|| event.getSource().equals(DamageSource.STARVE) || event.getSource().equals(DamageSource.DROWN) || event.getSource().equals(DamageSource.FREEZE))
 			return;
 		int duration = (int) (event.getAmount() * 2 * 20);
+		if (duration == 0)
+			return;
 		if (playerEntity.hasEffect(ITMobEffects.INJURED.get()))
 			duration += playerEntity.getEffect(ITMobEffects.INJURED.get()).getDuration();
 		playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.INJURED.get(), duration, 0, true, false, true, false));
@@ -167,6 +166,8 @@ public class HealthRegen extends Feature {
 		Player playerEntity = (Player) event.getEntityLiving();
 		FoodProperties food = event.getItem().getItem().getFoodProperties();
 		int duration = (int) ((food.getNutrition() * food.getSaturationModifier() * 2) * 20);
+		if (duration == 0)
+			return;
 		int amplifier = 0;//Math.max(food.getNutrition() / 2 - 1, 0);
 		playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.WELL_FED.get(), duration, amplifier, true, false, true, false));
 	}

@@ -46,7 +46,10 @@ public class Tagging extends Feature {
 			return;
 		if (!(event.getEntity() instanceof Player playerEntity))
 			return;
-		if (event.getSource().getEntity() instanceof LivingEntity)
-			playerEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (event.getAmount() * this.durationMultiplier), this.slownessLevel, false, false, true));
+		if (event.getSource().getEntity() instanceof LivingEntity) {
+			int duration = (int) (event.getAmount() * this.durationMultiplier);
+			if (duration > 0)
+				playerEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, duration, this.slownessLevel, false, false, true));
+		}
 	}
 }
