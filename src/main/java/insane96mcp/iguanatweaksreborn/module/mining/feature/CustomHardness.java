@@ -12,7 +12,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import java.util.ArrayList;
 import java.util.List;
 
-@Label(name = "Custom Hardness", description = "Change specific blocks hardness as well as black and whitelist. Requires a Minecraft restart.")
+@Label(name = "Custom Hardness", description = "Change specific blocks hardness as well as black and whitelist. Requires a Minecraft restart if you remove a block from the list.")
 public class CustomHardness extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> customHardnessConfig;

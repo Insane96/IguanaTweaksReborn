@@ -100,7 +100,6 @@ public class GeneralStacking extends Feature {
 
     private final Object mutex = new Object();
 
-
     //Items
     public void processItemStackSizes() {
         if (!this.isEnabled())

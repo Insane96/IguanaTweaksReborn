@@ -41,20 +41,17 @@ public class CustomStackSize extends Feature {
         processCustomStackSizes();
     }
 
-    private boolean processed = false;
+    private final Object mutex = new Object();
 
     public void processCustomStackSizes() {
-        if (!this.isEnabled())
-            return;
-        if (customStackList.isEmpty())
-            return;
-        if (processed)
+        if (!this.isEnabled()
+            || customStackList.isEmpty())
             return;
 
-        processed = true;
-
-        for (ItemStackSize customStackSize : customStackList) {
-            customStackSize.getAllItems().forEach(item -> item.maxStackSize = Mth.clamp(customStackSize.stackSize, 1, 64));
+        synchronized (mutex) {
+            for (ItemStackSize customStackSize : customStackList) {
+                customStackSize.getAllItems().forEach(item -> item.maxStackSize = Mth.clamp(customStackSize.stackSize, 1, 64));
+            }
         }
     }
 }
