@@ -24,7 +24,9 @@ import net.minecraftforge.event.world.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Tiredness", description = "Prevents sleeping if the player is not tired. Tiredness is gained by gaining exhaustion")
+import java.text.DecimalFormat;
+
+@Label(name = "Tiredness", description = "Prevents sleeping if the player is not tired. Tiredness is gained by gaining exhaustion. Allows you to sleep during daytime if too tired")
 public class Tiredness extends Feature {
 
 	private final ForgeConfigSpec.DoubleValue tirednessGainMultiplierConfig;
@@ -81,8 +83,9 @@ public class Tiredness extends Feature {
 
 		CompoundTag persistentData = serverPlayer.getPersistentData();
 		float tiredness = persistentData.getFloat(Strings.Tags.TIREDNESS);
-		persistentData.putFloat(Strings.Tags.TIREDNESS, tiredness + amount);
-		if (tiredness < this.tirednessToSleep && tiredness + amount >= this.tirednessToSleep) {
+		float newTiredness = tiredness + amount;
+		persistentData.putFloat(Strings.Tags.TIREDNESS, newTiredness);
+		if (tiredness < this.tirednessToSleep && newTiredness >= this.tirednessToSleep) {
 			serverPlayer.displayClientMessage(new TranslatableComponent(Strings.Translatable.TIRED_ENOUGH), false);
 		}
 		else if (tiredness >= this.tirednessToEffect && player.tickCount % 20 == 0) {
@@ -122,7 +125,7 @@ public class Tiredness extends Feature {
 	@SubscribeEvent
 	public void resetTirednessOnWakeUp(SleepingTimeCheckEvent event) {
 		if (!this.isEnabled()
-				|| event.getPlayer().getPersistentData().getFloat(Strings.Tags.TIREDNESS) < this.tirednessToSleep)
+				|| event.getPlayer().getPersistentData().getFloat(Strings.Tags.TIREDNESS) < this.tirednessToEffect)
 			return;
 		event.setResult(Event.Result.ALLOW);
 	}
