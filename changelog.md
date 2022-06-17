@@ -7,6 +7,7 @@
 * Freeze no longer applies injured
 * Effects are no longer applied if duration is 0
 * When setting spawn point but can't sleep (not tired or sleeping disabled) the "Respawn point set" message will now show up
+* Fixed global and custom hardness being applied in the wrong order
 
 ## 2.11.4
 * Requires InsaneLib 1.5.1. Fix tags not working for blacklists.

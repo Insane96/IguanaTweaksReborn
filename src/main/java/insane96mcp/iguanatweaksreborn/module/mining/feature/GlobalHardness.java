@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class GlobalHardness extends Feature {
 		this.depthMultiplierBlacklist = this.depthMultiplierBlacklistConfig.get();
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void processGlobalHardness(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled())
 			return;

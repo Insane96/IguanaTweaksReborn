@@ -74,7 +74,7 @@ public class CustomHardness extends Feature {
 		processedZeroHardness = true;
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void processSingleHardness(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled())
 			return;
