@@ -16,9 +16,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class SyncHandler {
-	private static final String PROTOCOL_VERSION = Integer.toString(1);
+	private static final String PROTOCOL_VERSION = Integer.toString(2);
 	public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder
-			.named(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "hunger_sync"))
+			.named(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "network_channel"))
 			.clientAcceptedVersions(s -> true)
 			.serverAcceptedVersions(s -> true)
 			.networkProtocolVersion(() -> PROTOCOL_VERSION)
@@ -27,6 +27,7 @@ public class SyncHandler {
 	public static void init() {
 		CHANNEL.registerMessage(1, MessageExhaustionSync.class, MessageExhaustionSync::encode, MessageExhaustionSync::decode, MessageExhaustionSync::handle);
 		CHANNEL.registerMessage(2, MessageSaturationSync.class, MessageSaturationSync::encode, MessageSaturationSync::decode, MessageSaturationSync::handle);
+		CHANNEL.registerMessage(3, MessageTirednessSync.class, MessageTirednessSync::encode, MessageTirednessSync::decode, MessageTirednessSync::handle);
 		MinecraftForge.EVENT_BUS.register(new SyncHandler());
 	}
 

@@ -1,5 +1,9 @@
 package insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.network.MessageTirednessSync;
+import insane96mcp.iguanatweaksreborn.network.SyncHandler;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
@@ -7,22 +11,33 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.event.world.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 import java.text.DecimalFormat;
 
@@ -91,6 +106,9 @@ public class Tiredness extends Feature {
 		else if (tiredness >= this.tirednessToEffect && player.tickCount % 20 == 0) {
 			serverPlayer.addEffect(new MobEffectInstance(ITMobEffects.TIRED.get(), 25, Math.min((int) ((tiredness - this.tirednessToEffect) / this.tirednessPerLevel), 4), true, false, true));
 		}
+
+		Object msg = new MessageTirednessSync(newTiredness);
+		SyncHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -130,11 +148,11 @@ public class Tiredness extends Feature {
 	public void resetTirednessOnWakeUp(SleepFinishedTimeEvent event) {
 		if (!this.isEnabled())
 			return;
-		event.getWorld().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, 0f));
+		event.getWorld().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, Mth.nextFloat(player.getRandom(), 0f, (float) (this.tirednessToSleep * 0.05f))));
 	}
 
 	@SubscribeEvent
-	public void resetTirednessOnWakeUp(SleepingTimeCheckEvent event) {
+	public void allowSleepAtDay(SleepingTimeCheckEvent event) {
 		if (!this.isEnabled()
 				|| event.getPlayer().getPersistentData().getFloat(Strings.Tags.TIREDNESS) < this.tirednessToEffect)
 			return;
@@ -177,5 +195,69 @@ public class Tiredness extends Feature {
 		event.setRed(color);
 		event.setGreen(color);
 		event.setBlue(color);
+	}
+
+	public static final ResourceLocation GUI_ICONS = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "textures/gui/icons.png");
+
+	public void registerGui() {
+		OverlayRegistry.registerOverlayAbove(ForgeIngameGui.FOOD_LEVEL_ELEMENT, "Tiredness", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+			boolean isMounted = Minecraft.getInstance().player.getVehicle() instanceof LivingEntity;
+			if (this.isEnabled() && !isMounted && !Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements())
+			{
+				gui.setupOverlayRenderState(true, false, GUI_ICONS);
+				int left = screenWidth / 2 + 91;
+				int top = screenHeight - gui.right_height;
+				renderTiredness(gui, mStack, left, top);
+				gui.right_height += 10;
+			}
+		});
+	}
+
+	private static final Vec2 UV_NOT_TIRED = new Vec2(0, 0);
+	private static final Vec2 UV_SLEEPY = new Vec2(9, 0);
+	private static final Vec2 UV_TIRED = new Vec2(18, 0);
+
+	private void renderTiredness(Gui gui, PoseStack matrixStack, int left, int top) {
+		Player player = (Player)Minecraft.getInstance().getCameraEntity();
+		float tiredness = player.getPersistentData().getFloat(Strings.Tags.TIREDNESS);
+		int numberOfZ = 0;
+		if (tiredness < this.tirednessToSleep) {
+			numberOfZ += tiredness / (this.tirednessToSleep / 6);
+		}
+		else if (tiredness < this.tirednessToEffect) {
+			float tirednessBetweenSleepEffect = (float) (this.tirednessToEffect - this.tirednessToSleep);
+			numberOfZ += 6 + ((tiredness - this.tirednessToSleep) / (tirednessBetweenSleepEffect / 2));
+		}
+		else {
+			float tirednessToBlind = (float) (this.tirednessPerLevel * 5);
+			numberOfZ += 8 + ((tiredness - this.tirednessToEffect) / (tirednessToBlind / 2));
+		}
+		numberOfZ = Mth.clamp(numberOfZ, 0, 10);
+		Minecraft.getInstance().getProfiler().push("tiredness");
+		for(int i = 0; i < numberOfZ; ++i) {
+			Vec2 uv = UV_NOT_TIRED;
+			if (i >= 8)
+				uv = UV_TIRED;
+			else if (i >= 6)
+				uv = UV_SLEEPY;
+
+			int x = left - (i * 8) - 9;
+			gui.blit(matrixStack, x, top, (int) uv.x, (int) uv.y, 9, 9);
+		}
+		Minecraft.getInstance().getProfiler().pop();
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public void debugScreen(RenderGameOverlayEvent.Text event) {
+		if (!this.isEnabled())
+			return;
+		Minecraft mc = Minecraft.getInstance();
+		LocalPlayer playerEntity = mc.player;
+		if (playerEntity == null)
+			return;
+		if (mc.options.renderDebug) {
+			event.getLeft().add(String.format("Tiredness: %s", new DecimalFormat("#.#").format(playerEntity.getPersistentData().getFloat(Strings.Tags.TIREDNESS))));
+		}
 	}
 }

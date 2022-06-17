@@ -3,6 +3,8 @@
 ## Upcoming
 * Added Creeper Collateral option. Disabled by default. If enabled will make creepers' explosion drop no blocks.
 * Tiredness
+  * Tiredness is now shown as Zs above the hunger bar. Light blue means not tired enough, Blue means can sleep and red mean Tired effect.  
+    Also shown in the debug screen
   * You can now sleep during daytime only if you have the Tired effect and not if you're tired
   * Tired effect now slows player's mining speed by 5% per level
 * Updated effects icons
