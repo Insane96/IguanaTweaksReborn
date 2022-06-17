@@ -4,6 +4,7 @@
 * Added Creeper Collateral option. Disabled by default. If enabled will make creepers' explosion drop no blocks.
 * Tiredness
   * You can now sleep during daytime only if you have the Tired effect and not if you're tired
+  * Tired effect now slows player's mining speed by 5% per level
 * Updated effects icons
 * Food is now eaten slightly faster
 * Freeze no longer applies injured

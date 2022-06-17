@@ -93,6 +93,17 @@ public class Tiredness extends Feature {
 		}
 	}
 
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onTiredBreakSpeed(PlayerEvent.BreakSpeed event) {
+		if (!this.isEnabled()
+				|| !event.getPlayer().hasEffect(ITMobEffects.TIRED.get()))
+			return;
+
+		//noinspection ConstantConditions
+		int level = event.getPlayer().getEffect(ITMobEffects.TIRED.get()).getAmplifier() + 1;
+		event.setNewSpeed(event.getNewSpeed() * (1 - (level * 0.05f)));
+	}
+
 	@SubscribeEvent
 	public void notTiredToSleep(PlayerSleepInBedEvent event) {
 		if (!this.isEnabled()
