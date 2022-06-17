@@ -20,8 +20,6 @@ import java.util.List;
 @Label(name = "General Stacking", description = "Make food, items and blocks less stackable. Items and Blocks are disabled by default. Changes in this section require a Minecraft restart")
 public class GeneralStacking extends Feature {
 
-    private final Object mutex = new Object();
-
     //Food
     private final ForgeConfigSpec.ConfigValue<Boolean> foodStackReductionConfig;
     private final ForgeConfigSpec.ConfigValue<Double> foodQualityDividerConfig;
@@ -100,10 +98,8 @@ public class GeneralStacking extends Feature {
         processFoodStackSizes();
     }
 
-    private boolean processedItems = false;
-    private boolean processedBlocks = false;
-    private boolean processedFood = false;
-    private boolean processedStews = false;
+    private final Object mutex = new Object();
+
 
     //Items
     public void processItemStackSizes() {
@@ -112,22 +108,18 @@ public class GeneralStacking extends Feature {
         if (itemStackMultiplier == 1d)
             return;
         synchronized (mutex) {
-            if (processedItems)
-                return;
-            processedItems = true;
-        }
+            for (Item item : ForgeRegistries.ITEMS.getValues()) {
+                if (item instanceof BlockItem)
+                    continue;
+                if (item.maxStackSize == 1)
+                    continue;
+                if (this.blacklist.isItemBlackOrNotWhiteListed(item))
+                    continue;
 
-        for (Item item : ForgeRegistries.ITEMS.getValues()) {
-            if (item instanceof BlockItem)
-                continue;
-            if (item.maxStackSize == 1)
-                continue;
-            if (this.blacklist.isItemBlackOrNotWhiteListed(item))
-                continue;
-
-            double stackSize = item.maxStackSize * itemStackMultiplier;
-            stackSize = Mth.clamp(stackSize, 1, 64);
-            item.maxStackSize = (int) Math.round(stackSize);
+                double stackSize = item.maxStackSize * itemStackMultiplier;
+                stackSize = Mth.clamp(stackSize, 1, 64);
+                item.maxStackSize = (int) Math.round(stackSize);
+            }
         }
     }
 
@@ -138,24 +130,20 @@ public class GeneralStacking extends Feature {
         if (!blockStackReduction)
             return;
         synchronized (mutex) {
-            if (processedBlocks)
-                return;
-            processedBlocks = true;
-        }
+            for (Item item : ForgeRegistries.ITEMS.getValues()) {
+                if (!(item instanceof BlockItem))
+                    continue;
+                if (this.blacklist.isItemBlackOrNotWhiteListed(item))
+                    continue;
 
-        for (Item item : ForgeRegistries.ITEMS.getValues()) {
-            if (!(item instanceof BlockItem))
-                continue;
-            if (this.blacklist.isItemBlackOrNotWhiteListed(item))
-                continue;
-
-            Block block = ((BlockItem) item).getBlock();
-            double weight = Weights.getStateWeight(block.defaultBlockState());
-            if (!this.blockStackAffectedByMaterial)
-                weight = 1d;
-            double stackSize = (item.maxStackSize / weight) * blockStackMultiplier;
-            stackSize = Mth.clamp(stackSize, 1, 64);
-            item.maxStackSize = (int) Math.round(stackSize);
+                Block block = ((BlockItem) item).getBlock();
+                double weight = Weights.getStateWeight(block.defaultBlockState());
+                if (!this.blockStackAffectedByMaterial)
+                    weight = 1d;
+                double stackSize = (item.maxStackSize / weight) * blockStackMultiplier;
+                stackSize = Mth.clamp(stackSize, 1, 64);
+                item.maxStackSize = (int) Math.round(stackSize);
+            }
         }
     }
 
@@ -166,19 +154,15 @@ public class GeneralStacking extends Feature {
         if (this.stackableSoups == 1)
             return;
         synchronized (mutex) {
-            if (processedStews)
-                return;
-            processedStews = true;
-        }
+            for (Item item : ForgeRegistries.ITEMS.getValues()) {
+                if (!(item instanceof BowlFoodItem) && !(item instanceof SuspiciousStewItem))
+                    continue;
+                if (this.blacklist.isItemBlackOrNotWhiteListed(item))
+                    continue;
 
-        for (Item item : ForgeRegistries.ITEMS.getValues()) {
-            if (!(item instanceof BowlFoodItem) && !(item instanceof SuspiciousStewItem))
-                continue;
-            if (this.blacklist.isItemBlackOrNotWhiteListed(item))
-                continue;
-
-            int stackSize = this.stackableSoups;
-            item.maxStackSize = Math.round(stackSize);
+                int stackSize = this.stackableSoups;
+                item.maxStackSize = Math.round(stackSize);
+            }
         }
     }
 
@@ -189,24 +173,20 @@ public class GeneralStacking extends Feature {
         if (!foodStackReduction)
             return;
         synchronized (mutex) {
-            if (processedFood)
-                return;
-            processedFood = true;
-        }
+            for (Item item : ForgeRegistries.ITEMS.getValues()) {
+                if (!item.isEdible())
+                    continue;
+                if (this.blacklist.isItemBlackOrNotWhiteListed(item))
+                    continue;
 
-        for (Item item : ForgeRegistries.ITEMS.getValues()) {
-            if (!item.isEdible())
-                continue;
-            if (this.blacklist.isItemBlackOrNotWhiteListed(item))
-                continue;
-
-            int hunger = item.getFoodProperties().getNutrition();
-            double saturation = item.getFoodProperties().getSaturationModifier();
-            double effectiveQuality = hunger + (hunger * saturation * 2d);
-            double stackSize = (1 - (effectiveQuality - 1) / this.foodQualityDivider) * 64;
-            stackSize *= foodStackMultiplier;
-            stackSize = Mth.clamp(stackSize, 1, 64);
-            item.maxStackSize = (int) Math.round(stackSize);
+                int hunger = item.getFoodProperties().getNutrition();
+                double saturation = item.getFoodProperties().getSaturationModifier();
+                double effectiveQuality = hunger + (hunger * saturation * 2d);
+                double stackSize = (1 - (effectiveQuality - 1) / this.foodQualityDivider) * 64;
+                stackSize *= foodStackMultiplier;
+                stackSize = Mth.clamp(stackSize, 1, 64);
+                item.maxStackSize = (int) Math.round(stackSize);
+            }
         }
     }
 

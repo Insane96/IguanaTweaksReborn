@@ -1,26 +1,18 @@
 package insane96mcp.iguanatweaksreborn.module.mining.feature;
 
 import com.google.common.collect.Lists;
-import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.BlockHardness;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Label(name = "Custom Hardness", description = "Change specific blocks hardness as well as black and whitelist. Zero hardness blocks changes require a Minecraft restart.")
+@Label(name = "Custom Hardness", description = "Change specific blocks hardness as well as black and whitelist. Requires a Minecraft restart.")
 public class CustomHardness extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> customHardnessConfig;
@@ -49,32 +41,27 @@ public class CustomHardness extends Feature {
 	public void loadConfig() {
 		super.loadConfig();
 		customHardness = BlockHardness.parseStringList(this.customHardnessConfig.get());
-		processZeroHardness();
+		processBlockHardness();
 	}
+	private final Object mutex = new Object();
 
-	private boolean processedZeroHardness = false;
+	public void processBlockHardness() {
+		if (!this.isEnabled()
+				|| this.customHardness.isEmpty())
+			return;
 
-	public void processZeroHardness() {
-		if (!this.isEnabled())
-			return;
-		if (processedZeroHardness)
-			return;
-		for (BlockHardness blockHardness : this.customHardness) {
-			//If the block's hardness is 0 I replace the hardness
-			List<Block> blocksToProcess = blockHardness.getAllBlocks();
-			for (Block block : blocksToProcess) {
-				block.getStateDefinition().getPossibleStates().forEach(blockState -> {
-					if (blockState.destroySpeed == 0f || blockHardness.has0Hardness) {
-						blockState.destroySpeed = (float) blockHardness.hardness;
-						blockHardness.has0Hardness = true;
-					}
-				});
+		synchronized (mutex) {
+			for (BlockHardness blockHardness : this.customHardness) {
+				//If the block's hardness is 0 I replace the hardness
+				List<Block> blocksToProcess = blockHardness.getAllBlocks();
+				for (Block block : blocksToProcess) {
+					block.getStateDefinition().getPossibleStates().forEach(blockState -> blockState.destroySpeed = (float) blockHardness.hardness);
+				}
 			}
 		}
-		processedZeroHardness = true;
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW)
+	/*@SubscribeEvent(priority = EventPriority.LOW)
 	public void processSingleHardness(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled())
 			return;
@@ -113,12 +100,12 @@ public class CustomHardness extends Feature {
 	/**
 	 * Returns -1 when the block has no custom hardness, the hardness otherwise
 	 */
-	public double getBlockSingleHardness(Block block, ResourceLocation dimensionId) {
+	/*public double getBlockSingleHardness(Block block, ResourceLocation dimensionId) {
 		for (BlockHardness blockHardness : this.customHardness) {
 			if (blockHardness.matchesBlock(block, dimensionId)) {
 				return blockHardness.hardness;
 			}
 		}
 		return -1d;
-	}
+	}*/
 }

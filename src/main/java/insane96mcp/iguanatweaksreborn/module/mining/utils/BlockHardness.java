@@ -12,7 +12,6 @@ import java.util.List;
 
 public class BlockHardness extends IdTagMatcher {
 	public double hardness;
-	public boolean has0Hardness;
 
 	public BlockHardness(Type type, ResourceLocation location, Double hardness, ResourceLocation dimension) {
 		super(type, location, dimension);

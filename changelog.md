@@ -7,6 +7,7 @@
 * Freeze no longer applies injured
 * Effects are no longer applied if duration is 0
 * When setting spawn point but can't sleep (not tired or sleeping disabled) the "Respawn point set" message will now show up
+* Custom Hardness now actually changes blocks hardness instead of using the BreakSpeed event
 * Fixed global and custom hardness being applied in the wrong order
 
 ## 2.11.4
