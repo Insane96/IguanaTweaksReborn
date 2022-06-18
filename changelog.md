@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed begin able to sleep during the day but waking up instantly if not Tired
+
 ## 2.11.5
 * Added Creeper Collateral option. Disabled by default. If enabled will make creepers' explosion drop no blocks.
 * Tiredness

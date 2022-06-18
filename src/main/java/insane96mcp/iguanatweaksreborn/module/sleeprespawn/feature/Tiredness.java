@@ -137,7 +137,7 @@ public class Tiredness extends Feature {
 			if (!this.shouldPreventSpawnPoint)
 				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, true);
 		}
-		else {
+		else if (player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) > this.tirednessToEffect) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.startSleeping(event.getPos());
 			((ServerLevel)player.level).updateSleepingPlayerList();
