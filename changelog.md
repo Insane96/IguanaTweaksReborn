@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.11.5
 * Added Creeper Collateral option. Disabled by default. If enabled will make creepers' explosion drop no blocks.
 * Tiredness
   * Tiredness is now shown as Zs above the hunger bar. Light blue means not tired enough, Blue means can sleep and red mean Tired effect.  
