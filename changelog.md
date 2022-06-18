@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Reduced slowness per armor and toughness to be in line with the vanilla armors
 * Fixed begin able to sleep during the day but waking up instantly if not Tired
 
 ## 2.11.5

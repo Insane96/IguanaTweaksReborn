@@ -52,8 +52,8 @@ public class WeightedEquipment extends Feature {
 
 	private static final List<String> enchantmentsListDefault = Arrays.asList("minecraft:feather_falling,0.10", "elenaidodge2:lightweight,0.15,5");
 
-	public double slownessPerArmor = 0.015d;
-	public double percentagePerToughness = 0.03d;
+	public double slownessPerArmor = 0.01d;
+	public double percentagePerToughness = 0.025d;
 	public ArrayList<ArmorMaterialWeight> materialWeight;
 	public ArrayList<ArmorEnchantmentWeight> enchantmentsList;
 	public double shieldSlowdown = 0.15d;
