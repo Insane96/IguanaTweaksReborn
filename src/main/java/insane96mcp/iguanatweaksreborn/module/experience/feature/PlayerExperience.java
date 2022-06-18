@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.experience.feature;
 
+import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -25,13 +26,16 @@ public class PlayerExperience extends Feature {
 		super(Config.builder, module, true);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		betterScalingLevelsConfig = Config.builder
-				.comment("The experience required to level up will be linear insteaed of exponential like vanilla.\n" +
-						"The formula used to calculate the xp required for next level is (3 * (current_level + 1))\n" +
-						"Obviously incompatible with Allurement's 'Remove level Scaling'")
+				.comment("""
+						The experience required to level up will be linear insteaed of exponential like vanilla.
+						The formula used to calculate the xp required for next level is (3 * (current_level + 1))
+						Obviously incompatible with Allurement's 'Remove level Scaling'""")
 				.define("Better Scaling XP to next level", this.betterScalingLevels);
 		droppedExperienceOnDeathConfig = Config.builder
-				.comment("On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this." +
-						"Due to Minecraft limitations this is incompatible with other mods that change the level scaling (e.g. Allurement's 'Remove level Scaling')")
+				.comment("""
+						On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this.
+						Due to Minecraft limitations this is incompatible with other mods that change the level scaling (e.g. Allurement's 'Remove level Scaling').
+						NOTE that this is incompatible with Global Experience and will be disabled if Global experience is enabled to prevent Exp duping.""")
 				.defineInRange("Experience Dropped on Death", this.droppedExperienceOnDeath, -1d, 1d);
 		pickUpFasterConfig = Config.builder
 				.comment("Players will pick up experience faster")
@@ -101,13 +105,10 @@ public class PlayerExperience extends Feature {
 	 * Returns -1 when the module/feature is not enabled, otherwise the experience dropped on death
 	 */
 	public int getExperienceOnDeath(Player player) {
-		if (!this.isEnabled())
-			return -1;
-
-		if (this.droppedExperienceOnDeath == -1)
-			return -1;
-
-		if (player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY) && !player.isSpectator())
+		if (!this.isEnabled()
+				|| this.droppedExperienceOnDeath < 0
+				|| (Modules.experience.globalExperience.isEnabled() && Modules.experience.globalExperience.globalMultiplier != 1d)
+				|| (player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY) && !player.isSpectator()))
 			return -1;
 
 		return (int) (getTotalExperience(player) * this.droppedExperienceOnDeath);
