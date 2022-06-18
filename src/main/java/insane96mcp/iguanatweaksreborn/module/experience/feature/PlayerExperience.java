@@ -27,15 +27,14 @@ public class PlayerExperience extends Feature {
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		betterScalingLevelsConfig = Config.builder
 				.comment("""
-						The experience required to level up will be linear insteaed of exponential like vanilla.
+						The experience required to level up will be linear instead of exponential like vanilla.
 						The formula used to calculate the xp required for next level is (3 * (current_level + 1))
 						Obviously incompatible with Allurement's 'Remove level Scaling'""")
 				.define("Better Scaling XP to next level", this.betterScalingLevels);
 		droppedExperienceOnDeathConfig = Config.builder
 				.comment("""
 						On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this.
-						Due to Minecraft limitations this is incompatible with other mods that change the level scaling (e.g. Allurement's 'Remove level Scaling').
-						NOTE that this is incompatible with Global Experience and will be disabled if Global experience is enabled to prevent Exp duping.""")
+						Due to Minecraft limitations this is incompatible with other mods that change the level scaling (e.g. Allurement's 'Remove level Scaling').""")
 				.defineInRange("Experience Dropped on Death", this.droppedExperienceOnDeath, -1d, 1d);
 		pickUpFasterConfig = Config.builder
 				.comment("Players will pick up experience faster")
@@ -86,6 +85,9 @@ public class PlayerExperience extends Feature {
 			totalExp += getXpNeededForNextLevel(i);
 		}
 		totalExp += player.getXpNeededForNextLevel() * player.experienceProgress;
+		//Take into account global experience to prevent XP duping
+		if (Modules.experience.globalExperience.isEnabled() && Modules.experience.globalExperience.globalMultiplier != 1d)
+			totalExp *= (1d / Modules.experience.globalExperience.globalMultiplier);
 		return totalExp;
 	}
 
@@ -106,8 +108,7 @@ public class PlayerExperience extends Feature {
 	 */
 	public int getExperienceOnDeath(Player player) {
 		if (!this.isEnabled()
-				|| this.droppedExperienceOnDeath < 0
-				|| (Modules.experience.globalExperience.isEnabled() && Modules.experience.globalExperience.globalMultiplier != 1d)
+				|| (this.droppedExperienceOnDeath < 0 && !Modules.experience.globalExperience.isEnabled())
 				|| (player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY) && !player.isSpectator()))
 			return -1;
 

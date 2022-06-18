@@ -2,7 +2,10 @@
 
 ## Upcoming
 * Reduced slowness per armor and toughness to be in line with the vanilla armors
-* Experience Dropped on Death is now disabled if Global experience is enabled
+* Experience 
+  * Global experience is now enabled by default with 25% more experience from any source
+  * 
+  * Fixed Global Experience duping player's experience
 * Datapack is now included in the mod and can be disabled via command or on world creation screen
   * Crossbows are no longer craftable
   * Shields require leather and more iron to be crafted
