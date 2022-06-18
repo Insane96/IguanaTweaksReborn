@@ -14,7 +14,7 @@ public class OtherExperience extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Integer> xpBottleBonusConfig;
 
-	public int xpBottleBonus = 23;
+	public int xpBottleBonus = 18;
 
 	public OtherExperience(Module module) {
 		super(Config.builder, module, true);

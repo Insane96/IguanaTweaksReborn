@@ -19,7 +19,7 @@ public class PlayerExperience extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> pickUpFasterConfig;
 
 	public boolean betterScalingLevels = true;
-	public double droppedExperienceOnDeath = 0.80d;
+	public double droppedExperienceOnDeath = 0.85d;
 	public boolean pickUpFaster = true;
 
 	public PlayerExperience(Module module) {

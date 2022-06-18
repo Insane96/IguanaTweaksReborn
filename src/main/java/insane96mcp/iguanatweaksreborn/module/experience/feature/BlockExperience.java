@@ -13,7 +13,7 @@ public class BlockExperience extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> blockMultiplierConfig;
 
-	public double blockMultiplier = 3.0d;
+	public double blockMultiplier = 2.2d;
 
 	public BlockExperience(Module module) {
 		super(Config.builder, module, true);

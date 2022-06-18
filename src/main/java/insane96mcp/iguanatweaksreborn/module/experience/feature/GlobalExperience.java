@@ -16,10 +16,10 @@ public class GlobalExperience extends Feature {
 
 	private final ForgeConfigSpec.ConfigValue<Double> globalMultiplierConfig;
 
-	public double globalMultiplier = 1.0d;
+	public double globalMultiplier = 1.25d;
 
 	public GlobalExperience(Module module) {
-		super(Config.builder, module, false);
+		super(Config.builder, module);
 		Config.builder.comment(this.getDescription()).push(this.getName());
 		globalMultiplierConfig = Config.builder
 				.comment("Experience dropped will be multiplied by this multiplier.\nCan be set to 0 to disable experience drop from any source.")

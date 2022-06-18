@@ -4,7 +4,10 @@
 * Reduced slowness per armor and toughness to be in line with the vanilla armors
 * Experience 
   * Global experience is now enabled by default with 25% more experience from any source
-  * 
+  * Decreased Block Dropped Experience (+200% -> +120%)
+  * Decreased Mobs from Spawners Experience (-33.3% -> -50%)
+  * Reduced bonus experience from xp bottles (23 -> 18)
+  * Increased Player dropped experience (80% -> 85%)
   * Fixed Global Experience duping player's experience
 * Datapack is now included in the mod and can be disabled via command or on world creation screen
   * Crossbows are no longer craftable
