@@ -130,11 +130,3 @@ publishing {
         }
     }
 }
-
-tasks.register('zipDataPack', Zip) {
-    archiveFileName = "IT Reborn DataPack-${mod_version}-mc${mc_version}.zip"
-    destinationDirectory = layout.buildDirectory.dir("libs")
-    from layout.projectDirectory.dir("DataPack")
-}
-
-build.dependsOn(zipDataPack)

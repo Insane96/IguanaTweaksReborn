@@ -3,6 +3,12 @@
 ## Upcoming
 * Reduced slowness per armor and toughness to be in line with the vanilla armors
 * Fixed begin able to sleep during the day but waking up instantly if not Tired
+* Datapack is now included in the mod and can be disabled via command or on world creation screen
+  * Crossbows are no longer craftable
+  * Shields require leather and more iron to be crafted
+  * Dark Prismarine requires less dye to be crafted
+  * Clay block can be crafted to 4 balls
+  * Leads and Sticky Pistons can be crafted with honey
 
 ## 2.11.5
 * Added Creeper Collateral option. Disabled by default. If enabled will make creepers' explosion drop no blocks.
