@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Reduced movement speed reduction from Tired (8% -> 6% per level)
+
 ## 2.11.6
 * Reduced slowness per armor and toughness to be in line with the vanilla armors
 * Experience 
