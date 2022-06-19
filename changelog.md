@@ -16,6 +16,7 @@
   * Clay block can be crafted to 4 balls
   * Leads and Sticky Pistons can be crafted with honey
 * Fixed begin able to sleep during the day but waking up instantly if not Tired
+* Fixed server crash on startup
 
 ## 2.11.5
 * Added Creeper Collateral option. Disabled by default. If enabled will make creepers' explosion drop no blocks.

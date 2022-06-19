@@ -199,6 +199,7 @@ public class Tiredness extends Feature {
 
 	public static final ResourceLocation GUI_ICONS = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "textures/gui/icons.png");
 
+	@OnlyIn(Dist.CLIENT)
 	public void registerGui() {
 		OverlayRegistry.registerOverlayAbove(ForgeIngameGui.FOOD_LEVEL_ELEMENT, "Tiredness", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
 			boolean isMounted = Minecraft.getInstance().player.getVehicle() instanceof LivingEntity;
@@ -217,6 +218,7 @@ public class Tiredness extends Feature {
 	private static final Vec2 UV_SLEEPY = new Vec2(9, 0);
 	private static final Vec2 UV_TIRED = new Vec2(18, 0);
 
+	@OnlyIn(Dist.CLIENT)
 	private void renderTiredness(Gui gui, PoseStack matrixStack, int left, int top) {
 		Player player = (Player)Minecraft.getInstance().getCameraEntity();
 		float tiredness = player.getPersistentData().getFloat(Strings.Tags.TIREDNESS);
