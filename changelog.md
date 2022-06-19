@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.11.6
 * Reduced slowness per armor and toughness to be in line with the vanilla armors
 * Experience 
   * Global experience is now enabled by default with 25% more experience from any source
