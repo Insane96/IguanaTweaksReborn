@@ -7,6 +7,7 @@ import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.iguanatweaksreborn.setup.ITClientConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.utils.Weights;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
@@ -30,6 +31,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
 
 @Mod("iguanatweaksreborn")
 public class IguanaTweaksReborn
@@ -57,7 +60,6 @@ public class IguanaTweaksReborn
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        //SpawnerCapability.register();
         SyncHandler.init();
     }
 
@@ -65,27 +67,46 @@ public class IguanaTweaksReborn
         Modules.sleepRespawn.tiredness.registerGui();
     }
 
-    @SubscribeEvent
     public void addPackFinders(AddPackFindersEvent event)
     {
-        if (event.getPackType() != PackType.SERVER_DATA)
-            return;
-        try
-        {
-            var resourcePath = ModList.get().getModFileById(MOD_ID).getFile().findResource("tweaks");
-            var pack = new PathResourcePack(ModList.get().getModFileById(MOD_ID).getFile().getFileName() + ":" + resourcePath, resourcePath);
-            var metadataSection = pack.getMetadataSection(PackMetadataSection.SERIALIZER);
-            if (metadataSection != null)
+        for (IntegratedDataPack dp : IntegratedDataPack.INTEGRATED_DATA_PACKS) {
+            if (event.getPackType() != dp.packType)
+                continue;
+
+            try
             {
-                event.addRepositorySource((packConsumer, packConstructor) ->
-                        packConsumer.accept(packConstructor.create(
-                                MOD_ID + "/vanilla_tweaks", new TextComponent("IT Reborn Vanilla Tweaks"), false,
-                                () -> pack, metadataSection, Pack.Position.BOTTOM, PackSource.BUILT_IN, false)));
+                Path resourcePath = ModList.get().getModFileById(MOD_ID).getFile().findResource("integrated_packs/" + dp.path);
+                PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(MOD_ID).getFile().getFileName() + ":" + resourcePath, resourcePath);
+                PackMetadataSection metadataSection = pack.getMetadataSection(PackMetadataSection.SERIALIZER);
+                if (metadataSection != null)
+                {
+                    event.addRepositorySource((packConsumer, packConstructor) ->
+                            packConsumer.accept(packConstructor.create(
+                                    MOD_ID + "/" + dp.path, dp.description, false,
+                                    () -> pack, metadataSection, Pack.Position.BOTTOM, PackSource.BUILT_IN, false)));
+                }
+            }
+            catch(IOException ex)
+            {
+                throw new RuntimeException(ex);
             }
         }
-        catch(IOException ex)
-        {
-            throw new RuntimeException(ex);
+    }
+
+    private static class IntegratedDataPack {
+        PackType packType;
+        String path;
+        Component description;
+
+        public static final List<IntegratedDataPack> INTEGRATED_DATA_PACKS = List.of(
+                new IntegratedDataPack(PackType.SERVER_DATA, "vanilla_tweaks", new TextComponent("IT Reborn Vanilla Tweaks")),
+                new IntegratedDataPack(PackType.SERVER_DATA, "cheaper_chains", new TextComponent("IT Reborn Cheaper Chains"))
+        );
+
+        public IntegratedDataPack(PackType packType, String path, Component description) {
+            this.packType = packType;
+            this.path = path;
+            this.description = description;
         }
     }
 }
