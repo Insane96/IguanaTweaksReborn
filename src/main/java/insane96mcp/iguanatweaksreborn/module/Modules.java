@@ -12,37 +12,37 @@ import insane96mcp.iguanatweaksreborn.module.stacksize.StackSize;
 
 public class Modules {
 
-	public static HungerHealth hungerHealth;
-	public static Experience experience;
-	public static Misc misc;
-	public static Mining mining;
 	public static Combat combat;
+	public static Experience experience;
+	public static Farming farming;
+	public static HungerHealth hungerHealth;
+	public static Mining mining;
+	public static Misc misc;
 	public static Movement movement;
 	public static SleepRespawn sleepRespawn;
-	public static Farming farming;
 	public static StackSize stackSize;
 
 	public static void init() {
-		hungerHealth = new HungerHealth();
-		experience = new Experience();
-		misc = new Misc();
-		mining = new Mining();
 		combat = new Combat();
+		experience = new Experience();
+		farming = new Farming();
+		hungerHealth = new HungerHealth();
+		mining = new Mining();
+		misc = new Misc();
 		movement = new Movement();
 		sleepRespawn = new SleepRespawn();
-		farming = new Farming();
 		stackSize = new StackSize();
 	}
 
 	public static void loadConfig() {
-		hungerHealth.loadConfig();
-		experience.loadConfig();
-		misc.loadConfig();
-		mining.loadConfig();
 		combat.loadConfig();
+		experience.loadConfig();
+		farming.loadConfig();
+		hungerHealth.loadConfig();
+		mining.loadConfig();
+		misc.loadConfig();
 		movement.loadConfig();
 		sleepRespawn.loadConfig();
-		farming.loadConfig();
 		stackSize.loadConfig();
 	}
 

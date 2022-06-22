@@ -1,7 +1,12 @@
 # Changelog
 
 ## Upcoming
+* Added new Data pack
+  * Cheaper Chains
+    * Chains are cheaper to craft (3 nuggets instead of 2 nuggets + 1 ingot)
+    * Also changes Tinkers' Construct recipes to prevent iron duping
 * Reduced movement speed reduction from Tired (8% -> 6% per level)
+* Re-ordered modules in alphabetical order
 
 ## 2.11.6
 * Reduced slowness per armor and toughness to be in line with the vanilla armors
@@ -12,12 +17,13 @@
   * Reduced bonus experience from xp bottles (23 -> 18)
   * Increased Player dropped experience (80% -> 85%)
   * Fixed Global Experience duping player's experience
-* Datapack is now included in the mod and can be disabled via command or on world creation screen
+* Data pack is now included in the mod and can be disabled via command or on world creation screen
   * Crossbows are no longer craftable
   * Shields require leather and more iron to be crafted
   * Dark Prismarine requires less dye to be crafted
   * Clay block can be crafted to 4 balls
   * Leads and Sticky Pistons can be crafted with honey
+  * Silverfishes can drop an Iron Nugget
 * Fixed begin able to sleep during the day but waking up instantly if not Tired
 * Fixed server crash on startup
 
