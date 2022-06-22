@@ -6,6 +6,12 @@ buildscript {
         }
         maven { url = 'https://maven.minecraftforge.net' }
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        maven {
+            url "https://cursemaven.com"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
         mavenCentral()
     }
     dependencies {
@@ -95,8 +101,10 @@ dependencies {
     implementation fg.deobf("blank:InsaneLib:${lib_version}-mc${mc_version}")
 
     // Copypasted from materialis. Still no shame.
-    implementation fg.deobf("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}")
-    implementation fg.deobf("slimeknights.tconstruct:TConstruct:${mc_version}-${tic_version}")
+    // implementation fg.deobf("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}")
+    // implementation fg.deobf("slimeknights.tconstruct:TConstruct:${mc_version}-${tic_version}")
+
+    // implementation fg.deobf("curse.maven:immersive_weathering-592449:3815045")
 
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 }
