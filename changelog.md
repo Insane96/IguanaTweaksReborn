@@ -1,10 +1,13 @@
 # Changelog
 
 ## Upcoming
-* Added new Data pack
-  * Cheaper Chains
+* Data packs
+  * Added Cheaper Chains
     * Chains are cheaper to craft (3 nuggets instead of 2 nuggets + 1 ingot)
     * Also changes Tinkers' Construct recipes to prevent iron duping
+  * Vanilla Tweaks
+    * Torches now require shears to be created or Fire Charges (crafts more)
+    * Torches can be created on a campfire (takes a while)
 * Reduced movement speed reduction from Tired (8% -> 6% per level)
 * Re-ordered modules in alphabetical order
 
