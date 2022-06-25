@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Data packs
+  * Integrated datapacks are temporarily removed until I figure out a way to make them controlled by config
   * Added Cheaper Chains
     * Chains are cheaper to craft (3 nuggets instead of 2 nuggets + 1 ingot)
     * Also changes Tinkers' Construct recipes to prevent iron duping
