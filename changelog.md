@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Food Heal Multiplier can now be configured even if Combat Test preset it enabled
+
 ## 2.11.7
 * Data packs
   * Integrated datapacks are temporarily removed until I figure out a way to make them controlled by config.  

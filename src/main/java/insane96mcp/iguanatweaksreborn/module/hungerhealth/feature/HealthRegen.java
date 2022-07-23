@@ -127,7 +127,6 @@ public class HealthRegen extends Feature {
 				this.consumeHungerOnly = true;
 				this.maxExhaustion = 4d;
 				this.hungerConsumptionChance = 0.5d;
-				this.foodHealMultiplier = 0d;
 			}
 		}
 	}

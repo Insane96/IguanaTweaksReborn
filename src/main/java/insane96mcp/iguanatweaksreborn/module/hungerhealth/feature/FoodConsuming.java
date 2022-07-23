@@ -38,7 +38,7 @@ public class FoodConsuming extends Feature {
 				.define("Faster Milk Consuming", this.fasterMilkConsuming);
 		eatingSpeedBasedOffFoodConfig = Config.builder
 				.comment("Makes the speed for eating food based off the hunger and saturation they provide. At 2 (hunger + saturation) the speed is vanilla, higher / lower (hunger + saturation) will lower / raise the speed. Minimum 16 ticks.")
-				.define("Eating Speed Based Off Food Config", this.eatingSpeedBasedOffFood);
+				.define("Eating Speed Based Off Food Restored", this.eatingSpeedBasedOffFood);
 		eatingTimeMultiplierConfig = Config.builder
 				.comment("Multiplier for the time taken to eat. Only applied if 'Eating Speed Based Off Food Config' is active.")
 				.defineInRange("Eating Time Multiplier", this.eatingTimeMultiplier, 0, Double.MAX_VALUE);
