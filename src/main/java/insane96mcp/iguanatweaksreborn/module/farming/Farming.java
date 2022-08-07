@@ -48,12 +48,11 @@ public class Farming extends Module {
 	/**
 	 * @return true if the block is affected by the block below
 	 */
-	public static boolean isAffectedByFarmlandState(LevelAccessor levelAccessor, BlockPos cropPos) {
+	public static boolean isAffectedByFarmland(LevelAccessor levelAccessor, BlockPos cropPos) {
 		BlockState state = levelAccessor.getBlockState(cropPos);
 		Block block = state.getBlock();
 		return block instanceof CropBlock || block instanceof StemBlock;
 	}
-
 
 	/**
 	 * @return true if the block is on wet farmland
@@ -64,5 +63,14 @@ public class Farming extends Module {
 			return false;
 		int moisture = sustainState.getValue(FarmBlock.MOISTURE);
 		return moisture >= 7;
+	}
+
+
+	/**
+	 * @return true if the block is on farmland
+	 */
+	public static boolean isCropOnFarmland(LevelAccessor levelAccessor, BlockPos cropPos) {
+		BlockState sustainState = levelAccessor.getBlockState(cropPos.below());
+		return sustainState.getBlock() instanceof FarmBlock;
 	}
 }

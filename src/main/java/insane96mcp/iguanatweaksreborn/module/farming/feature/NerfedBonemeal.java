@@ -1,7 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.module.farming.Farming;
 import insane96mcp.iguanatweaksreborn.setup.Config;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -100,10 +99,11 @@ public class NerfedBonemeal extends Feature {
 		if (this.itemBlacklist.isItemBlackOrNotWhiteListed(stack.getItem()) || this.blockBlacklist.isBlockBlackOrNotWhiteListed(state.getBlock()))
 			return BonemealResult.NONE;
 
-		//If farmland is dry and cropsRequireWater is set to ANY_CASE then cancel the event
-		if (Modules.farming.cropsGrowth.isEnabled() && Modules.farming.cropsGrowth.cropsRequireWater.equals(CropsGrowth.CropsRequireWater.ANY_CASE) && Farming.isAffectedByFarmlandState(level, pos) && !Farming.isCropOnWetFarmland(level, pos)) {
+		//If farmland is dry and cropsRequireWater is enabled then cancel the event
+		if (Modules.farming.cropsGrowth.requiresWetFarmland(level, pos) && !Modules.farming.cropsGrowth.hasWetFarmland(level, pos)) {
 			return BonemealResult.CANCEL;
 		}
+
 		if (this.nerfedBonemeal.equals(BonemealNerf.DISABLED))
 			return BonemealResult.NONE;
 		if (state.getBlock() instanceof CropBlock) {
