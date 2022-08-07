@@ -153,10 +153,14 @@ public class Tiredness extends Feature {
 
 	@SubscribeEvent
 	public void allowSleepAtDay(SleepingTimeCheckEvent event) {
-		if (!this.isEnabled()
-				|| event.getPlayer().getPersistentData().getFloat(Strings.Tags.TIREDNESS) < this.tirednessToEffect)
+		if (!this.canSleepDuringDay(event.getPlayer()))
 			return;
 		event.setResult(Event.Result.ALLOW);
+	}
+
+	public boolean canSleepDuringDay(Player player) {
+		return this.isEnabled()
+				&& player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) < this.tirednessToEffect;
 	}
 
 	@OnlyIn(Dist.CLIENT)
