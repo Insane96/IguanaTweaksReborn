@@ -7,8 +7,9 @@ import insane96mcp.insanelib.base.Module;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 
-@Label(name = "Shields", description = "Various changes to Shields")
+@Label(name = "Shields", description = "Various changes to Shields. Disabled if Shields+ is installed.")
 public class Shields extends Feature {
 	private final ForgeConfigSpec.BooleanValue removeShieldWindupConfig;
 	private final ForgeConfigSpec.DoubleValue shieldBlockDamageConfig;
@@ -41,6 +42,11 @@ public class Shields extends Feature {
 		this.combatTestShieldDisabling = this.combatTestShieldDisablingConfig.get();
 	}
 
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled() && !ModList.get().isLoaded("shieldsplus");
+	}
+
 	@SubscribeEvent
 	public void onShieldBlock(ShieldBlockEvent event) {
 		if (!this.isEnabled() || this.shieldBlockDamage == 0)
@@ -50,10 +56,10 @@ public class Shields extends Feature {
 	}
 
 	public boolean shouldRemoveShieldWindup() {
-		return this.isEnabled() && this.removeShieldWindup;
+		return this.isEnabled() && this.removeShieldWindup && !ModList.get().isLoaded("shieldsplus");
 	}
 
 	public boolean combatTestShieldDisabling() {
-		return this.isEnabled() && this.combatTestShieldDisabling;
+		return this.isEnabled() && this.combatTestShieldDisabling && !ModList.get().isLoaded("shieldsplus");
 	}
 }
