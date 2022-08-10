@@ -75,6 +75,7 @@ public class TerrainSlowdown extends Feature {
 				|| event.phase != TickEvent.Phase.START)
 			return;
 
+		//TODO Maybe re-enable this
 		//if (event.player.tickCount % 2 != 0)
 			//return;
 
