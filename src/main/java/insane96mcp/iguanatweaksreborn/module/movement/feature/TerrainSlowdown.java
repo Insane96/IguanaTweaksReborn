@@ -90,9 +90,15 @@ public class TerrainSlowdown extends Feature {
 				if (state.isAir())
 					continue;
 				double blockSlowdown = 0d;
-				//TODO custom slowdown
+				for (IdTagValue idTagValue : this.customTerrainSlowdown) {
+					if (idTagValue.idTagMatcher.matchesBlock(state.getBlock())) {
+						blockSlowdown = idTagValue.value;
+						blocks++;
+						break;
+					}
+				}
 				if (blockSlowdown == 0d) {
-					for (MaterialSlowdown materialOn : materialOnSlowdown) {
+					for (MaterialSlowdown materialOn : this.materialOnSlowdown) {
 						if (materialOn.material.equals(state.getMaterial())) {
 							blockSlowdown = materialOn.slowdown;
 							blocks++;
