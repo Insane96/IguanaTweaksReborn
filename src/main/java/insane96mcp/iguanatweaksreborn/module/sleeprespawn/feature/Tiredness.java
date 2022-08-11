@@ -148,7 +148,10 @@ public class Tiredness extends Feature {
 	public void resetTirednessOnWakeUp(SleepFinishedTimeEvent event) {
 		if (!this.isEnabled())
 			return;
-		event.getWorld().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, Mth.nextFloat(player.getRandom(), 0f, (float) (this.tirednessToSleep * 0.05f))));
+		event.getWorld().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> {
+			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) - (float) this.tirednessToEffect, 0, Float.MAX_VALUE);
+			player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, tirednessOnWakeUp);
+		});
 	}
 
 	@SubscribeEvent

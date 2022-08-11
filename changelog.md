@@ -3,6 +3,7 @@
 ## Upcoming
 * Renamed `Prevent Sleeping` to `Sleeping`
   * You can now sleep during day, waking up at dusk
+* When you're too tired and sleep, you'll carry over the excess tiredness on wake up
 * `Food Heal Multiplier` can now be configured even if Combat Test preset is enabled
 * `Terrain Slowdown` now checks every block the player is on instead of just the block exactly below
   * Takes all the blocks the player's on and makes an average of slowdowns
