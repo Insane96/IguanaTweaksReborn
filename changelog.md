@@ -1,12 +1,12 @@
 # Changelog
 
-## Upcoming
+## 2.12.0
 * Renamed `Prevent Sleeping` to `Sleeping`
   * You can now sleep during day, waking up at dusk
 * When you're too tired and sleep, you'll carry over the excess tiredness on wake up
 * `Food Heal Multiplier` can now be configured even if Combat Test preset is enabled
-* `Terrain Slowdown` now checks every block the player is on instead of just the block exactly below
-  * Takes all the blocks the player's on and makes an average of slowdowns
+* `Terrain Slowdown` now checks every block the player is on and in instead of just the block exactly below and in
+  * Takes all the blocks and makes an average of slowdowns
 * `Crops Require Water` no longer affects crops that aren't on farmland (e.g. Farmer's Delight rice)
 * `Combat.Shields` now disables itself when Shields+ is disabled
 
