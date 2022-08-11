@@ -160,7 +160,7 @@ public class Tiredness extends Feature {
 
 	public boolean canSleepDuringDay(Player player) {
 		return this.isEnabled()
-				&& player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) < this.tirednessToEffect;
+				&& player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) > this.tirednessToEffect;
 	}
 
 	@OnlyIn(Dist.CLIENT)
