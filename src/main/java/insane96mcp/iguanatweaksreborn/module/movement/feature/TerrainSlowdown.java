@@ -110,17 +110,31 @@ public class TerrainSlowdown extends Feature {
 				onTerrainSlowdown += blockSlowdown;
 			}
 		}
-		onTerrainSlowdown /= blocks;
+		if (blocks != 0)
+			onTerrainSlowdown /= blocks;
 
 		double inTerrainSlowdown = 0d;
 		blocks = 0;
-		BlockState stateIn = event.player.level.getBlockState(event.player.blockPosition());
-		for (MaterialSlowdown materialIn : materialInSlowdown) {
-			if (materialIn.material.equals(stateIn.getMaterial())) {
-				inTerrainSlowdown += materialIn.slowdown;
-				break;
+		for (int x2 = mX; x2 < bb.maxX; x2++) {
+			for (int y2 = mY; y2 < bb.maxY; y2++) {
+				for (int z2 = mZ; z2 < bb.maxZ; z2++) {
+					BlockState state = event.player.level.getBlockState(new BlockPos(x2, y2, z2));
+					if (state.isAir())
+						continue;
+					double blockSlowdown = 0d;
+					for (MaterialSlowdown materialIn : this.materialInSlowdown) {
+						if (materialIn.material.equals(state.getMaterial())) {
+							blockSlowdown = materialIn.slowdown;
+							blocks++;
+							break;
+						}
+					}
+					inTerrainSlowdown += blockSlowdown;
+				}
 			}
 		}
+		if (blocks != 0)
+			inTerrainSlowdown /= blocks;
 
 		double slowdown = onTerrainSlowdown + inTerrainSlowdown;
 
