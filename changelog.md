@@ -1,8 +1,9 @@
 # Changelog
 
 ## Upcoming
-* Added `Eating Time Minimum` config option, defaulting to 20 (from 32)
+* Added `Eating Time Minimum` config option, defaulting to 24 (from 32)
 * Power enchantment power can now be configured
+* Fixed bonemeal begin usable on non-wet farmland
 * Fixed temp spawners' entity blacklist config begin outside
 
 ## 2.12.0

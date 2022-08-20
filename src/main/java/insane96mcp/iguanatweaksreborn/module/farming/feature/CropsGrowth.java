@@ -128,7 +128,7 @@ public class CropsGrowth extends Feature {
 	}
 
 	public boolean hasWetFarmland(Level level, BlockPos blockPos) {
-		return Farming.isCropOnFarmland(level, blockPos) && !Farming.isCropOnWetFarmland(level, blockPos);
+		return Farming.isCropOnFarmland(level, blockPos) && Farming.isCropOnWetFarmland(level, blockPos);
 	}
 
 	/**
