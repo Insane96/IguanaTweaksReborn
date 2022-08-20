@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.12.1
 * Added `Eating Time Minimum` config option, defaulting to 24 (from 32)
 * Power enchantment power can now be configured
 * Fixed bonemeal begin usable on non-wet farmland
