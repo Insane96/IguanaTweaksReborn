@@ -1,8 +1,9 @@
 # Changelog
 
 ## Upcoming
+* Added `Eating Time Minimum` config option, defaulting to 20 (from 32)
 * Power enchantment power can now be configured
-* Fixed temp spawners entity blacklist config begin outside
+* Fixed temp spawners' entity blacklist config begin outside
 
 ## 2.12.0
 * Renamed `Prevent Sleeping` to `Sleeping`

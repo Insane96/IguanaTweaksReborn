@@ -19,12 +19,14 @@ public class FoodConsuming extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> fasterMilkConsumingConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> eatingSpeedBasedOffFoodConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> eatingTimeMultiplierConfig;
+	private final ForgeConfigSpec.IntValue eatingTimeMinConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> stopConsumingOnHitConfig;
 
 	public boolean fasterPotionConsuming = true;
 	public boolean fasterMilkConsuming = true;
 	public boolean eatingSpeedBasedOffFood = true;
 	public double eatingTimeMultiplier = 0.115d;
+	public int eatingTimeMin = 20;
 	public boolean stopConsumingOnHit = true;
 
 	public FoodConsuming(Module module) {
@@ -42,6 +44,9 @@ public class FoodConsuming extends Feature {
 		eatingTimeMultiplierConfig = Config.builder
 				.comment("Multiplier for the time taken to eat. Only applied if 'Eating Speed Based Off Food Config' is active.")
 				.defineInRange("Eating Time Multiplier", this.eatingTimeMultiplier, 0, Double.MAX_VALUE);
+		eatingTimeMinConfig = Config.builder
+				.comment("The minimum speed a food will take to eat. \"Fast Food\" items have this value halved. Vanilla time is 32/16")
+				.defineInRange("Eating Time Minimum", this.eatingTimeMin, 0, Integer.MAX_VALUE);
 		stopConsumingOnHitConfig = Config.builder
 				.comment("If true, eating/drinking stops when the player's hit.")
 				.define("Stop consuming on hit", this.stopConsumingOnHit);
@@ -55,6 +60,7 @@ public class FoodConsuming extends Feature {
 		this.fasterMilkConsuming = this.fasterMilkConsumingConfig.get();
 		this.eatingSpeedBasedOffFood = this.eatingSpeedBasedOffFoodConfig.get();
 		this.eatingTimeMultiplier = this.eatingTimeMultiplierConfig.get();
+		this.eatingTimeMin = this.eatingTimeMinConfig.get();
 		this.stopConsumingOnHit = this.stopConsumingOnHitConfig.get();
 	}
 
@@ -65,7 +71,7 @@ public class FoodConsuming extends Feature {
 			time /= 2;
 		time *= this.eatingTimeMultiplier;
 
-		int minTime = food.isFastFood() ? 16 : 32;
+		int minTime = food.isFastFood() ? this.eatingTimeMin / 2 : this.eatingTimeMin;
 		return (int) Math.max(time, minTime);
 	}
 
