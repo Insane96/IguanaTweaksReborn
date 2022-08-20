@@ -59,11 +59,11 @@ public class TempSpawner extends Feature {
 		reagentItemConfig = Config.builder
 				.comment("Set here an item that can be used on spawners and let you re-enable them.")
 				.define("Reagent Item", "");
-		Config.builder.pop();
 		entityBlacklistConfig = new Blacklist.Config(Config.builder, "Entity Blacklist", "A list of mobs (and optionally dimensions) that shouldn't have their spawner disabled. Each entry has an entity or entity tag and optionally a dimension. E.g. [\"minecraft:zombie\", \"minecraft:blaze,minecraft:the_nether\"]")
 				.setDefaultList(Collections.emptyList())
 				.setIsDefaultWhitelist(false)
 				.build();
+		Config.builder.pop();
 	}
 
 	@Override

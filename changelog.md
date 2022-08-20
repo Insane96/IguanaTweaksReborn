@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed temp spawners entity blacklist config begin outside
+
 ## 2.12.0
 * Renamed `Prevent Sleeping` to `Sleeping`
   * You can now sleep during day, waking up at dusk
