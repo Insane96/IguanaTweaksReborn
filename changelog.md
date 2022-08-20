@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Power enchantment power can now be configured
 * Fixed temp spawners entity blacklist config begin outside
 
 ## 2.12.0

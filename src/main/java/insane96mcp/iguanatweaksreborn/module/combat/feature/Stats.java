@@ -29,7 +29,7 @@ import java.util.List;
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction")
 public class Stats extends Feature {
 	private final ForgeConfigSpec.BooleanValue reduceWeaponsDamageConfig;
-	private final ForgeConfigSpec.BooleanValue nerfPowerConfig;
+	private final ForgeConfigSpec.DoubleValue powerPowerConfig;
 	private final ForgeConfigSpec.BooleanValue disableCritArrowsConfig;
 	private final ForgeConfigSpec.BooleanValue adjustCrossbowDamageConfig;
 	private final ForgeConfigSpec.ConfigValue<ProtectionNerf> protectionNerfConfig;
@@ -38,7 +38,7 @@ public class Stats extends Feature {
 	private static final ArrayList<String> itemModifiersDefault = Lists.newArrayList("minecraft:iron_helmet,HEAD,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_chestplate,CHEST,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_leggings,LEGS,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_boots,FEET,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:netherite_helmet,HEAD,minecraft:generic.armor,1,ADDITION", "minecraft:netherite_boots,FEET,minecraft:generic.armor,1,ADDITION");
 
 	public boolean reduceWeaponDamage = true;
-	public boolean nerfPower = true;
+	public double powerPower = 0.3d;
 	public boolean disableCritArrows = true;
 	public boolean adjustCrossbowDamage = true;
 	public ProtectionNerf protectionNerf = ProtectionNerf.DISABLE;
@@ -50,9 +50,9 @@ public class Stats extends Feature {
 		reduceWeaponsDamageConfig = Config.builder
 				.comment("If true, Swords and Tridents get -1 damage and Axes get -1.5 damage.")
 				.define("Reduce Weapon Damage", reduceWeaponDamage);
-		nerfPowerConfig = Config.builder
-				.comment("If true, Power Enchantment will be nerfed to deal half damage.")
-				.define("Nerf Power", this.nerfPower);
+		powerPowerConfig = Config.builder
+				.comment("Set the power of the Power enchantment (vanilla is 0.5).")
+				.defineInRange("Power Power", this.powerPower, 0, 100);
 		disableCritArrowsConfig = Config.builder
 				.comment("If true, Arrows from Bows will no longer randomly crit (basically disables the random bonus damage given when firing a fully charged arrow).")
 				.define("Disable Arrow Crits", this.disableCritArrows);
@@ -79,7 +79,7 @@ public class Stats extends Feature {
 	public void loadConfig() {
 		super.loadConfig();
 		this.reduceWeaponDamage = this.reduceWeaponsDamageConfig.get();
-		this.nerfPower = this.nerfPowerConfig.get();
+		this.powerPower = this.powerPowerConfig.get();
 		this.disableCritArrows = this.disableCritArrowsConfig.get();
 		this.adjustCrossbowDamage = this.adjustCrossbowDamageConfig.get();
 		this.protectionNerf = this.protectionNerfConfig.get();
@@ -110,9 +110,9 @@ public class Stats extends Feature {
 		if (this.disableCritArrows)
 			arrow.setCritArrow(false);
 
-		if (this.nerfPower && arrow.getOwner() instanceof LivingEntity) {
+		if (this.powerPower != 0.5d && arrow.getOwner() instanceof LivingEntity) {
 			int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
-			arrow.setBaseDamage(arrow.getBaseDamage() - (powerLevel * 0.25 + 0.25));
+			arrow.setBaseDamage(arrow.getBaseDamage() - (powerLevel * this.powerPower + this.powerPower));
 		}
 	}
 
