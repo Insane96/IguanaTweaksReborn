@@ -13,5 +13,7 @@
 
 	"effect.iguanatweaksreborn.injured": "Ferito",
 	"effect.iguanatweaksreborn.well_fed": "Ben Nutrito",
-	"effect.iguanatweaksreborn.tired": "Stanco"
+	"effect.iguanatweaksreborn.tired": "Stanco",
+
+	"container.repair.free": "Nessun costo"
 }

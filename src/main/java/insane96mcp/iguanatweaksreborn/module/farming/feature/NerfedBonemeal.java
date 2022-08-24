@@ -19,19 +19,18 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 @Label(name = "Nerfed Bonemeal", description = "Bonemeal is no longer so OP")
 public class NerfedBonemeal extends Feature {
 
-	private final ForgeConfigSpec.ConfigValue<BonemealNerf> nerfedBonemealConfig;
-	private final ForgeConfigSpec.ConfigValue<Double> bonemealFailChanceConfig;
+	private final ForgeConfigSpec.EnumValue<BonemealNerf> nerfedBonemealConfig;
+	private final ForgeConfigSpec.DoubleValue bonemealFailChanceConfig;
 	private final Blacklist.Config itemBlacklistConfig;
 	private final Blacklist.Config blockBlacklistConfig;
 
-	private static final List<String> blockBlacklistDefault = Arrays.asList("supplementaries:flax");
+	private static final List<String> blockBlacklistDefault = List.of("supplementaries:flax");
 
 	public BonemealNerf nerfedBonemeal = BonemealNerf.NERFED;
 	public double bonemealFailChance = 0d;
