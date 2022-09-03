@@ -90,7 +90,7 @@ public class Sleeping extends Feature {
 	public void sleepDuringDay(SleepingTimeCheckEvent event) {
 		if (!this.isEnabled()
 				|| !this.allowDaySleep
-				|| !Modules.sleepRespawn.tiredness.canSleepDuringDay(event.getPlayer()))
+				|| (Modules.sleepRespawn.tiredness.isEnabled() && !Modules.sleepRespawn.tiredness.canSleepDuringDay(event.getPlayer())))
 			return;
 		event.setResult(Event.Result.ALLOW);
 	}
@@ -101,6 +101,9 @@ public class Sleeping extends Feature {
 				|| !this.allowDaySleep
 				/*|| !Modules.sleepRespawn.tiredness.canSleepDuringDay(event.get())*/)
 			return;
-		event.setTimeAddition(event.getNewTime() - 11000);
+		int toSub = 11458;
+		if (event.getWorld().getLevelData().isRaining())
+			toSub = 11990;
+		event.setTimeAddition(event.getNewTime() - toSub);
 	}
 }

@@ -4,6 +4,7 @@
 * Added some Anvil chances in Other Experience feature
   * Added "Remove Too Expensive". As the name suggests, removes the 39 levels cap from the anvil
   * Added "Remove rename cost". Renaming items is now always free
+* Fixed sleeping at the start of the night setting the time to night
 
 ## 2.12.1
 * Added `Eating Time Minimum` config option, defaulting to 24 (from 32)
