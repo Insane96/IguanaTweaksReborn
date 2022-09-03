@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.12.2
 * Added some Anvil chances in Other Experience feature
   * Added "Anvil Repair Cap". Sets the maximum cost of an item to repair (default 2048, vanilla is 40)
   * Added "Remove rename cost". Renaming items is now always free
