@@ -13,11 +13,11 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class OtherExperience extends Feature {
 
 	private final ForgeConfigSpec.IntValue xpBottleBonusConfig;
-	private final ForgeConfigSpec.BooleanValue removeTooExpensiveConfig;
+	private final ForgeConfigSpec.IntValue anvilRepairCapConfig;
 	private final ForgeConfigSpec.BooleanValue freeRenamingConfig;
 
 	public int xpBottleBonus = 18;
-	public boolean removeTooExpensive = true;
+	public int anvilRepairCap = 2048;
 	public boolean freeRenaming = true;
 
 	public OtherExperience(Module module) {
@@ -26,9 +26,9 @@ public class OtherExperience extends Feature {
 		xpBottleBonusConfig = Config.builder
 				.comment("Bottle o' enchanting will drop this more XP. Experience is still affected by 'Global Experience Multiplier'\nCan be set to 0 to make Bottle o' enchanting drop no experience")
 				.defineInRange("Bottle o' Enchanting Bonus XP", this.xpBottleBonus, 0, 1024);
-		removeTooExpensiveConfig = Config.builder
-				.comment("Removes the \"Too Expensive\" in the anvil")
-				.define("Remove Too Expensive", this.removeTooExpensive);
+		anvilRepairCapConfig = Config.builder
+				.comment("Set the cap for repairing items in the anvil (vanilla is 40)")
+				.defineInRange("Anvil Repair Cap", this.anvilRepairCap, 1, Integer.MAX_VALUE);
 		freeRenamingConfig = Config.builder
 				.comment("Removes cost of renaming items in Anvil")
 				.define("Remove rename cost", this.freeRenaming);
@@ -39,7 +39,7 @@ public class OtherExperience extends Feature {
 	public void loadConfig() {
 		super.loadConfig();
 		this.xpBottleBonus = this.xpBottleBonusConfig.get();
-		this.removeTooExpensive = this.removeTooExpensiveConfig.get();
+		this.anvilRepairCap = this.anvilRepairCapConfig.get();
 		this.freeRenaming = this.freeRenamingConfig.get();
 	}
 
@@ -55,15 +55,7 @@ public class OtherExperience extends Feature {
 		}
 	}
 
-	public boolean isTooExpensiveRemoved() {
-		return this.isEnabled() && this.removeTooExpensive;
-	}
-
 	public boolean isFreeRenaming() {
 		return this.isEnabled() && this.freeRenaming;
-	}
-
-	public boolean shouldMixinAnvil() {
-		return super.isEnabled() && (this.removeTooExpensive || this.freeRenaming);
 	}
 }

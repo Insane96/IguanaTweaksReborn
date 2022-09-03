@@ -57,7 +57,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			cancellable = true
 	)
 	public void createResult(CallbackInfo ci) {
-		if (!Modules.experience.otherExperience.shouldMixinAnvil())
+		if (!Modules.experience.otherExperience.isEnabled())
 			return;
 
 		ItemStack itemstack0 = this.inputSlots.getItem(0);
@@ -206,9 +206,8 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 				this.cost.set(0);
 			}
 
-			//Remove Too Expensive
-			//if (this.cost.get() >= 40 && !this.player.getAbilities().instabuild) {
-			if (this.cost.get() >= 40 && !this.player.getAbilities().instabuild && !Modules.experience.otherExperience.isTooExpensiveRemoved()) {
+			//Set Too Expensive cap
+			if (this.cost.get() >= Modules.experience.otherExperience.anvilRepairCap && !this.player.getAbilities().instabuild) {
 				itemstack0copy = ItemStack.EMPTY;
 			}
 

@@ -2,7 +2,7 @@
 
 ## Upcoming
 * Added some Anvil chances in Other Experience feature
-  * Added "Remove Too Expensive". As the name suggests, removes the 39 levels cap from the anvil
+  * Added "Anvil Repair Cap". Sets the maximum cost of an item to repair (default 2048, vanilla is 40)
   * Added "Remove rename cost". Renaming items is now always free
 * Fixed sleeping at the start of the night setting the time to night
 

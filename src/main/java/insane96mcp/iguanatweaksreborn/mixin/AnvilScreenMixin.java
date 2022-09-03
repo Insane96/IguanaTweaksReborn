@@ -7,7 +7,6 @@ import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AnvilMenu;
@@ -15,8 +14,9 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 //Shamelessly stolen to Charm
 
@@ -31,16 +31,13 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 		super(p_98901_, p_98902_, p_98903_, p_98904_);
 	}
 
-	//Removes too expensive server side
-	@Redirect(
+	//Set too expensive client side
+	@ModifyConstant(
 			method = "renderLabels",
-			at = @At(
-					value = "FIELD",
-					target = "Lnet/minecraft/world/entity/player/Abilities;instabuild:Z"
-			)
+			constant = @Constant(intValue = 40)
 	)
-	private boolean onInstabuildCheck(Abilities abilities) {
-		return Modules.experience.otherExperience.isTooExpensiveRemoved() || abilities.instabuild;
+	private int tooExpensiveCap(int cap) {
+		return Modules.experience.otherExperience.anvilRepairCap;
 	}
 
 	//Show no cost text
