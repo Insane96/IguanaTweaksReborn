@@ -88,6 +88,8 @@ public class PlayerExperience extends Feature {
 		//Take into account global experience to prevent XP duping
 		if (Modules.experience.globalExperience.isEnabled() && Modules.experience.globalExperience.globalMultiplier != 1d)
 			totalExp *= (1d / Modules.experience.globalExperience.globalMultiplier);
+		if (totalExp > 247700)
+			totalExp = 247700;
 		return totalExp;
 	}
 

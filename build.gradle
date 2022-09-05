@@ -106,6 +106,8 @@ dependencies {
 
     // implementation fg.deobf("curse.maven:immersive_weathering-592449:3815045")
 
+    implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3820503")
+
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 }
 
