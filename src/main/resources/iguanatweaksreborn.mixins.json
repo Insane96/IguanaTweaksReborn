@@ -1,29 +1,30 @@
 {
-	"required": true,
-	"package": "insane96mcp.iguanatweaksreborn.mixin",
-	"compatibilityLevel": "JAVA_8",
-	"refmap": "iguanatweaksreborn.refmap.json",
-	"mixins": [
-		"AnvilMenuMixin",
-		"AssignProfessionFromJobSiteMixin",
-		"BaseSpawnerMixin",
-		"BeaconBlockEntityMixin",
-		"BoatMixin",
-		"EnchantmentMixin",
-		"FoodDataMixin",
-		"ItemMixin",
-		"LivingEntityMixin",
-		"MerchantOfferMixin",
-		"MilkBucketItemMixin",
-		"PlayerMixin",
-		"PotionItemMixin",
-		"ProtectionEnchantmentMixin",
-		"ThrownExperienceBottleMixin",
-		"ZombieMixin"
-	],
-	"minVersion": "0.8",
-	"client": [
-		"AnvilScreenMixin",
-		"GameRendererMixin"
+    "required": true,
+    "package": "insane96mcp.iguanatweaksreborn.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "refmap": "iguanatweaksreborn.refmap.json",
+    "mixins": [
+        "AnvilMenuMixin",
+        "AssignProfessionFromJobSiteMixin",
+        "BaseSpawnerMixin",
+        "BeaconBlockEntityMixin",
+        "BoatMixin",
+        "EnchantmentMixin",
+        "ExperienceOrbMixin",
+        "FoodDataMixin",
+        "ItemMixin",
+        "LivingEntityMixin",
+        "MerchantOfferMixin",
+        "MilkBucketItemMixin",
+        "PlayerMixin",
+        "PotionItemMixin",
+        "ProtectionEnchantmentMixin",
+        "ThrownExperienceBottleMixin",
+        "ZombieMixin"
+    ],
+    "minVersion": "0.8",
+    "client": [
+        "AnvilScreenMixin",
+        "GameRendererMixin"
 	]
 }

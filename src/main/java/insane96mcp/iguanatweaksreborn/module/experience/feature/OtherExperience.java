@@ -7,7 +7,12 @@ import insane96mcp.insanelib.base.Module;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.projectile.ThrownExperienceBottle;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.event.entity.player.AnvilRepairEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Other Experience", description = "Change other experience sources")
 public class OtherExperience extends Feature {
@@ -15,10 +20,14 @@ public class OtherExperience extends Feature {
 	private final ForgeConfigSpec.IntValue xpBottleBonusConfig;
 	private final ForgeConfigSpec.IntValue anvilRepairCapConfig;
 	private final ForgeConfigSpec.BooleanValue freeRenamingConfig;
+	private final ForgeConfigSpec.BooleanValue unmendingConfig;
+	private final ForgeConfigSpec.IntValue unmendingCapConfig;
 
 	public int xpBottleBonus = 18;
 	public int anvilRepairCap = 2048;
 	public boolean freeRenaming = true;
+	public boolean unmending = true;
+	public int unmendingCap = 20;
 
 	public OtherExperience(Module module) {
 		super(Config.builder, module, true);
@@ -32,6 +41,12 @@ public class OtherExperience extends Feature {
 		freeRenamingConfig = Config.builder
 				.comment("Removes cost of renaming items in Anvil")
 				.define("Remove rename cost", this.freeRenaming);
+		unmendingConfig = Config.builder
+				.comment("Replaces the default Mending enchantment. Mending sets the repair cost of an item to 'Unmending Cap' and will stop it from increasing. No longer repairs items with xp.")
+				.define("Unmending", this.unmending);
+		unmendingCapConfig = Config.builder
+				.comment("Set the cap repair cost set by Unmending")
+				.defineInRange("Unmending Cap", this.unmendingCap, 1, Integer.MAX_VALUE);
 		Config.builder.pop();
 	}
 
@@ -41,6 +56,8 @@ public class OtherExperience extends Feature {
 		this.xpBottleBonus = this.xpBottleBonusConfig.get();
 		this.anvilRepairCap = this.anvilRepairCapConfig.get();
 		this.freeRenaming = this.freeRenamingConfig.get();
+		this.unmending = this.unmendingConfig.get();
+		this.unmendingCap = this.unmendingCapConfig.get();
 	}
 
 	public void onXpBottleHit(ThrownExperienceBottle xpBottle) {
@@ -58,4 +75,30 @@ public class OtherExperience extends Feature {
 	public boolean isFreeRenaming() {
 		return this.isEnabled() && this.freeRenaming;
 	}
+
+	@SubscribeEvent
+	public void onAnvilUse(AnvilRepairEvent event) {
+		if (!this.isEnabled()
+				|| !this.unmending)
+			return;
+		ItemStack output = event.getItemResult();
+		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, output) > 0 && output.getBaseRepairCost() > 15) {
+			output.setRepairCost(this.unmendingCap);
+		}
+	}
+
+	/*@SubscribeEvent
+	public void onAnvilUpdate(AnvilUpdateEvent event) {
+		if (!this.isEnabled()
+				|| !this.unmending)
+			return;
+
+		ItemStack left = event.getLeft();
+		ItemStack right = event.getRight();
+		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, left) > 0
+				|| EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, right) > 0) {
+			if (!event.getOutput().isEmpty())
+				event.getOutput().setRepairCost(15);
+		}
+	}*/
 }
