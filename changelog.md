@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.12.3
 * Added Unmending
   * Changes how mending works: instead of repairing items, it caps the repair cost of an item to 20 levels
 * Experience dropped by players is now capped (to about 300 levels)
