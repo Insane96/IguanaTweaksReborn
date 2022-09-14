@@ -38,7 +38,7 @@ public class Stats extends Feature {
 	private static final ArrayList<String> itemModifiersDefault = Lists.newArrayList("minecraft:iron_helmet,HEAD,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_chestplate,CHEST,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_leggings,LEGS,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_boots,FEET,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:netherite_helmet,HEAD,minecraft:generic.armor,1,ADDITION", "minecraft:netherite_boots,FEET,minecraft:generic.armor,1,ADDITION");
 
 	public boolean reduceWeaponDamage = true;
-	public double powerPower = 0.45d;
+	public double powerPower = 0.35d;
 	public boolean disableCritArrows = true;
 	public boolean adjustCrossbowDamage = true;
 	public ProtectionNerf protectionNerf = ProtectionNerf.DISABLE;
