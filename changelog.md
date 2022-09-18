@@ -4,7 +4,7 @@
 * Added Unmending
   * Changes how mending works: instead of repairing items, it caps the repair cost of an item to 20 levels
 * Experience dropped by players is now capped (to about 300 levels)
-* Fixed power nerf actually acting as a subtraction instead of an absolute value
+* Fixed power nerf actually acting as a subtraction instead of an absolute value, also slightly increased (0.3 -> 0.35)
 
 ## 2.12.2
 * Added some Anvil changes in Other Experience feature
