@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Knockback reduction attribute now works on Explosion Overhaul too
+* Added JEED support (I think)
 
 ## 2.12.3
 * Added Unmending
