@@ -15,6 +15,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -168,7 +169,7 @@ public class ITExplosion extends Explosion {
 				if (this.dealsKnockback) {
 					double d11 = d10;
 					if (entity instanceof LivingEntity) {
-						d11 = getBlastKnockbackReduction((LivingEntity) entity, d11);
+						d11 = getKnockbackReduction((LivingEntity) entity, d11);
 					}
 					if (knockbackScaleWithSize)
 						d11 *= this.radius;
@@ -176,7 +177,7 @@ public class ITExplosion extends Explosion {
 					if (entity instanceof ExplosionFallingBlockEntity)
 						d11 = Math.min(d11, 0.5d);
 					else if (Modules.misc.explosionOverhaul.shouldTakeReducedKnockback(entity))
-						d11 *= 0.25d;
+						d11 *= 0.2d;
 					entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, yDistance * d11, zDistance * d11));
 					if (entity instanceof Player player) {
 						if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
@@ -252,13 +253,21 @@ public class ITExplosion extends Explosion {
 	}
 
 	/*
-	   Since Mojang decided to round down the damage and use the same method for both Knockback and Damage, the latter doesn't work as it's always rounded down to 0
+	   Since Mojang decided to round down the damage and used the same method for both Knockback and Damage, the latter doesn't work as it's always rounded down to 0
 	 */
-	public static double getBlastKnockbackReduction(LivingEntity entityLivingBaseIn, double knockback) {
-		int i = EnchantmentHelper.getEnchantmentLevel(Enchantments.BLAST_PROTECTION, entityLivingBaseIn);
-		if (i > 0) {
-			knockback -= knockback * (double)((float)i * 0.15F);
+	public static double getKnockbackReduction(LivingEntity livingEntity, double knockback) {
+		double knockbackReduction = 0d;
+		int blastProtLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.BLAST_PROTECTION, livingEntity);
+		if (blastProtLevel > 0) {
+			knockbackReduction += blastProtLevel * 0.15d;
 		}
+
+		if (livingEntity.getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null) {
+			//noinspection ConstantConditions
+			knockbackReduction += livingEntity.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue();
+		}
+
+		knockback -= knockback * knockbackReduction;
 		return knockback;
 	}
 }

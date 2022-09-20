@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Knockback reduction attribute now works on Explosion Overhaul too
+
 ## 2.12.3
 * Added Unmending
   * Changes how mending works: instead of repairing items, it caps the repair cost of an item to 20 levels
