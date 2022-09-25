@@ -134,7 +134,7 @@ public class ITExplosion extends Explosion {
 		List<Entity> list = gatherAffectedEntities(affectedEntitiesRadius);
 		net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.level, this, list, affectedEntitiesRadius);
 		for(Entity entity : list) {
-			if (entity.tickCount == 0 && !(entity instanceof PartEntity<?>)  && !Modules.misc.explosionOverhaul.affectJustSpawnedEntities)
+			if (entity.tickCount == 0 && !(entity instanceof PartEntity<?>)  && !(entity instanceof ExplosionFallingBlockEntity)  && !Modules.misc.explosionOverhaul.affectJustSpawnedEntities)
 				continue;
 			if (entity.ignoreExplosion())
 				continue;
@@ -174,9 +174,7 @@ public class ITExplosion extends Explosion {
 					if (knockbackScaleWithSize)
 						d11 *= this.radius;
 					d11 = Math.max(d11, this.radius * 0.05d);
-					if (entity instanceof ExplosionFallingBlockEntity)
-						d11 = Math.min(d11, 0.5d);
-					else if (Modules.misc.explosionOverhaul.shouldTakeReducedKnockback(entity))
+					if (entity instanceof ExplosionFallingBlockEntity || Modules.misc.explosionOverhaul.shouldTakeReducedKnockback(entity))
 						d11 *= 0.2d;
 					entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, yDistance * d11, zDistance * d11));
 					if (entity instanceof Player player) {

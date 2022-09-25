@@ -1,6 +1,5 @@
 package insane96mcp.iguanatweaksreborn.module.misc.entity;
 
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -62,7 +61,5 @@ public class ExplosionFallingBlockEntity extends FallingBlockEntity {
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.level instanceof ServerLevel)
-			((ServerLevel) this.level).sendParticles(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, this.getX(), this.getY() + 0.5, this.getZ(), 1, 0, 0, 0, 0);
 	}
 }
