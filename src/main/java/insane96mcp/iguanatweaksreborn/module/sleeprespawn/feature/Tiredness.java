@@ -58,7 +58,8 @@ public class Tiredness extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> energyBoostItemsConfig;
 
 	private static final List<String> energyBoostItemsDefault = List.of(
-			"#iguanatweaksreborn:energy_boost"
+			"#iguanatweaksreborn:energy_boost",
+			"farmersdelight:hot_cocoa,80,0"
 	);
 
 	public double tirednessGainMultiplier = 1d;
@@ -121,7 +122,7 @@ public class Tiredness extends Feature {
 		CompoundTag persistentData = serverPlayer.getPersistentData();
 		float tiredness = persistentData.getFloat(Strings.Tags.TIREDNESS);
 		int effectLevel = serverPlayer.getEffect(ITMobEffects.ENERGY_BOOST.get()).getAmplifier() + 1;
-		float newTiredness = Math.max(tiredness - effectLevel, 0);
+		float newTiredness = Math.max(tiredness - (0.05f * effectLevel), 0);
 		persistentData.putFloat(Strings.Tags.TIREDNESS, newTiredness);
 
 		if (serverPlayer.tickCount % 20 == 0) {
