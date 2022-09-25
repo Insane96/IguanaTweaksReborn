@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.12.4
 * Tiredness
   * Added Energy Boost  
     When eating certain foods you'll get this effect (in vanilla just Cookies).  
