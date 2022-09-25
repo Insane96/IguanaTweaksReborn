@@ -163,8 +163,8 @@ public class HealthRegen extends Feature {
 		if (!this.enableWellFed)
 			return;
 		Player playerEntity = (Player) event.getEntityLiving();
-		FoodProperties food = event.getItem().getItem().getFoodProperties();
-		int duration = (int) ((food.getNutrition() * food.getSaturationModifier() * 2) * 20);
+		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
+		int duration = (int) ((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20);
 		if (duration == 0)
 			return;
 		int amplifier = 0;//Math.max(food.getNutrition() / 2 - 1, 0);
@@ -174,8 +174,8 @@ public class HealthRegen extends Feature {
 	public void healOnEat(LivingEntityUseItemEvent.Finish event) {
 		if (this.foodHealMultiplier == 0d)
 			return;
-		FoodProperties food = event.getItem().getItem().getFoodProperties();
-		double heal = (food.getNutrition() + (food.getNutrition() * food.getSaturationModifier() * 2)) * this.foodHealMultiplier;
+		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), event.getEntityLiving());
+		double heal = (food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * this.foodHealMultiplier;
 		event.getEntityLiving().heal((float) heal);
 	}
 
