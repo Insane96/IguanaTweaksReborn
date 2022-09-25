@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.module.sleeprespawn.utils.EnergyBoostItem;
 import insane96mcp.iguanatweaksreborn.network.MessageTirednessSync;
 import insane96mcp.iguanatweaksreborn.network.SyncHandler;
 import insane96mcp.iguanatweaksreborn.setup.Config;
@@ -10,6 +11,7 @@ import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.player.LocalPlayer;
@@ -22,6 +24,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -30,6 +33,8 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
@@ -40,6 +45,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 @Label(name = "Tiredness", description = "Prevents sleeping if the player is not tired. Tiredness is gained by gaining exhaustion. Allows you to sleep during daytime if too tired")
 public class Tiredness extends Feature {
@@ -49,12 +55,18 @@ public class Tiredness extends Feature {
 	private final ForgeConfigSpec.DoubleValue tirednessToSleepConfig;
 	private final ForgeConfigSpec.DoubleValue tirednessToEffectConfig;
 	private final ForgeConfigSpec.DoubleValue tirednessPerLevelConfig;
+	private final ForgeConfigSpec.ConfigValue<List<? extends String>> energyBoostItemsConfig;
+
+	private static final List<String> energyBoostItemsDefault = List.of(
+			"#iguanatweaksreborn:energy_boost"
+	);
 
 	public double tirednessGainMultiplier = 1d;
 	public boolean shouldPreventSpawnPoint = false;
 	public double tirednessToSleep = 320d;
 	public double tirednessToEffect = 400d;
 	public double tirednessPerLevel = 20d;
+	public List<EnergyBoostItem> energyBoostItems;
 
 	public Tiredness(Module module) {
 		super(Config.builder, module);
@@ -74,6 +86,13 @@ public class Tiredness extends Feature {
 		tirednessPerLevelConfig = Config.builder
 				.comment("Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
 				.defineInRange("Tiredness per level", this.tirednessPerLevel, 0d, Double.MAX_VALUE);
+		energyBoostItemsConfig = Config.builder
+				.comment("""
+						A list of items that when consumed will give the Energy Boost effect.
+						You can specify the item/tag only and the duration will be calculated from the hunger restored or you can include duration,amplifier for customs.
+						The iguanatweaksreborn:energy_boost item tag can be used to add items without a custom duration
+						Format is 'modid:item_id' / '#modid:item_tag' or 'modid:item_id,duration,amplifier' / '#modid:item_tag,duration,amplifier'.""")
+				.defineList("Plants Growth Multiplier", energyBoostItemsDefault, o -> o instanceof String);
 		Config.builder.pop();
 	}
 
@@ -85,6 +104,58 @@ public class Tiredness extends Feature {
 		this.tirednessToSleep = this.tirednessToSleepConfig.get();
 		this.tirednessToEffect = this.tirednessToEffectConfig.get();
 		this.tirednessPerLevel = this.tirednessPerLevelConfig.get();
+		this.energyBoostItems = EnergyBoostItem.parseStringList(this.energyBoostItemsConfig.get());
+	}
+
+	@SubscribeEvent
+	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+		if (!this.isEnabled()
+				|| event.player.level.isClientSide
+				|| event.phase == TickEvent.Phase.START)
+			return;
+
+		ServerPlayer serverPlayer = (ServerPlayer) event.player;
+		if (!serverPlayer.hasEffect(ITMobEffects.ENERGY_BOOST.get()))
+			return;
+
+		CompoundTag persistentData = serverPlayer.getPersistentData();
+		float tiredness = persistentData.getFloat(Strings.Tags.TIREDNESS);
+		int effectLevel = serverPlayer.getEffect(ITMobEffects.ENERGY_BOOST.get()).getAmplifier() + 1;
+		float newTiredness = Math.max(tiredness - effectLevel, 0);
+		persistentData.putFloat(Strings.Tags.TIREDNESS, newTiredness);
+
+		if (serverPlayer.tickCount % 20 == 0) {
+			Object msg = new MessageTirednessSync(newTiredness);
+			SyncHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+		}
+	}
+
+	@SubscribeEvent
+	public void onItemFinishUse(LivingEntityUseItemEvent.Finish event) {
+		if (!this.isEnabled()
+				|| !event.getItem().isEdible())
+			return;
+		EnergyBoostItem energyBoostItem = null;
+		for (EnergyBoostItem energyBoostItem1 : energyBoostItems) {
+			if (energyBoostItem1.matchesItem(event.getItem().getItem()))
+				energyBoostItem = energyBoostItem1;
+		}
+		if (energyBoostItem == null)
+			return;
+
+		Player playerEntity = (Player) event.getEntityLiving();
+		int duration, amplifier;
+		if (energyBoostItem.duration == 0) {
+			FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
+			duration = (int) ((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20);
+			amplifier = 0;
+		}
+		else {
+			duration = energyBoostItem.duration;
+			amplifier = energyBoostItem.amplifier;
+		}
+
+		playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.ENERGY_BOOST.get(), duration, amplifier, true, false, true, false));
 	}
 
 	public void onFoodExhaustion(Player player, float amount) {

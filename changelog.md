@@ -1,8 +1,13 @@
 # Changelog
 
 ## Upcoming
-* Knockback reduction attribute now works on Explosion Overhaul too
+* Tiredness
+  * Added Energy Boost  
+    When eating certain foods you'll get this effect (in vanilla just Cookies).  
+    Each second the effect is active, Tiredness will be reduced by 1 point.
 * Added JEED support (I think)
+* Knockback reduction attribute now works on Explosion Overhaul too
+* Fixed Well fed calculating duration wrongly
 
 ## 2.12.3
 * Added Unmending
