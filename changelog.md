@@ -5,6 +5,7 @@
   * Removed smoke particles
   * Reduced knockback taken by flying blocks
   * Fixed Flying blocks not flying
+  * Now obeys mob_griefing gamerule
 
 ## 2.12.4
 * Tiredness

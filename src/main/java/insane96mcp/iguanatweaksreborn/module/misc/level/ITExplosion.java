@@ -103,6 +103,8 @@ public class ITExplosion extends Explosion {
 	}
 
 	public void fallingBlocks() {
+		if (this.blockInteraction == BlockInteraction.NONE)
+			return;
 		for(BlockPos blockpos : this.getToBlow()) {
 			BlockState blockstate = this.level.getBlockState(blockpos);
 			Block block = blockstate.getBlock();
