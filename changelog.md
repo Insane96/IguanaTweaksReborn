@@ -1,7 +1,7 @@
 # Changelog
 
-## Upcoming
-* Experimental Flying blocks explosion changes 
+## 2.12.5
+* Flying blocks explosion changes 
   * Removed smoke particles
   * Reduced knockback taken by flying blocks
   * Fixed Flying blocks not flying

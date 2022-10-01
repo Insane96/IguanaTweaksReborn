@@ -190,7 +190,7 @@ public class ITExplosion extends Explosion {
 	}
 
 	public void destroyBlocks() {
-		if (this.blockInteraction == Explosion.BlockInteraction.NONE)
+		if (this.blockInteraction == BlockInteraction.NONE)
 			return;
 		Collections.shuffle(this.getToBlow(), this.level.getRandom());
 		for(BlockPos blockpos : this.getToBlow()) {
