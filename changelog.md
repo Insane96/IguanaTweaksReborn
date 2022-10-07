@@ -1,5 +1,11 @@
 # Changelog
 
+## Upcoming
+* Changed Beacon ranges for some blocks
+  * Diamond Block (3 -> 2.5)
+  * Cobalt Block (TiCon) (2.2 -> 2.4)
+* Fixed error when using bonemeal on Farmers' Delight Tomato crops
+
 ## 2.12.5
 * Flying blocks explosion changes 
   * Removed smoke particles

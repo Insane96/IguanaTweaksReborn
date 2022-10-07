@@ -103,7 +103,8 @@ public class NerfedBonemeal extends Feature {
 			return BonemealResult.CANCEL;
 		}
 
-		if (this.nerfedBonemeal.equals(BonemealNerf.DISABLED))
+		if (this.nerfedBonemeal.equals(BonemealNerf.DISABLED)
+				|| (state.getValues().containsKey(CropBlock.AGE) && state.getValues().containsKey(BeetrootBlock.AGE)))
 			return BonemealResult.NONE;
 		if (state.getBlock() instanceof CropBlock) {
 			boolean isBeetroot = state.getBlock() instanceof BeetrootBlock;

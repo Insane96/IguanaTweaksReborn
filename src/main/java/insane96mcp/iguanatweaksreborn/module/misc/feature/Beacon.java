@@ -17,19 +17,19 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.*;
 
-@Label(name = "Beacon", description = "Beacon Range varying based of blocks of the pyramid")
+@Label(name = "Beacon & Conduit", description = "Beacon Range varying based of blocks of the pyramid")
 public class Beacon extends Feature {
     private final ForgeConfigSpec.ConfigValue<Double> baseRangeConfig;
     private final ForgeConfigSpec.ConfigValue<List<? extends String>> blocksListConfig;
 
-    private static final List<String> blocksListDefault = Arrays.asList("minecraft:iron_block,1","minecraft:emerald_block,1.2","minecraft:gold_block,1.8","minecraft:diamond_block,3.0","minecraft:netherite_block,4.0", "tconstruct:cobalt_block,2.2", "tconstruct:queens_slime_block,3.0", "tconstruct:hepatizon_block,2.7", "tconstruct:manyullyn_block,3.3");
+    private static final List<String> blocksListDefault = Arrays.asList("minecraft:iron_block,1","minecraft:emerald_block,1.2","minecraft:gold_block,1.8","minecraft:diamond_block,2.5","minecraft:netherite_block,4.0", "tconstruct:cobalt_block,2.4", "tconstruct:queens_slime_block,3.0", "tconstruct:hepatizon_block,2.7", "tconstruct:manyullyn_block,3.3");
 
     public double baseRange = 10;
     public ArrayList<IdTagValue> blocksList;
 
     public Beacon(Module module) {
         super(Config.builder, module);
-        Config.builder.comment(this.getDescription()).push(this.getName());
+        this.pushConfig(Config.builder);
         baseRangeConfig = Config.builder
                 .comment("Base range of the beacon")
                 .defineInRange("Base Range", this.baseRange, 0d, 256d);
