@@ -1,9 +1,12 @@
 # Changelog
 
 ## Upcoming
-* Changed Beacon ranges for some blocks
-  * Diamond Block (3 -> 2.5)
-  * Cobalt Block (TiCon) (2.2 -> 2.4)
+* Renamed Beacon in Beacon & Conduit
+  * Added Better Conduit Protection  
+    Increases the range (by half the Conduit Power range, vanilla is 8) and damage (up to 6, min 2) to mobs around the conduit
+  * Changed Beacon ranges for some blocks
+    * Diamond Block (3 -> 2.5)
+    * Cobalt Block (TiCon) (2.2 -> 2.4)
 * Fixed error when using bonemeal on Farmers' Delight Tomato crops
 
 ## 2.12.5

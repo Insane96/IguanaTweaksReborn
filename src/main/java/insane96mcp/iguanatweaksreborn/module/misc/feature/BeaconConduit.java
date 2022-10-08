@@ -6,28 +6,40 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.ConduitBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.*;
 
-@Label(name = "Beacon & Conduit", description = "Beacon Range varying based of blocks of the pyramid")
-public class Beacon extends Feature {
+@Label(name = "Beacon & Conduit", description = "Beacon Range varying based of blocks of the pyramid and better conduit killing mobs")
+public class BeaconConduit extends Feature {
     private final ForgeConfigSpec.ConfigValue<Double> baseRangeConfig;
     private final ForgeConfigSpec.ConfigValue<List<? extends String>> blocksListConfig;
+
+    private final ForgeConfigSpec.BooleanValue betterConduitProtectionConfig;
 
     private static final List<String> blocksListDefault = Arrays.asList("minecraft:iron_block,1","minecraft:emerald_block,1.2","minecraft:gold_block,1.8","minecraft:diamond_block,2.5","minecraft:netherite_block,4.0", "tconstruct:cobalt_block,2.4", "tconstruct:queens_slime_block,3.0", "tconstruct:hepatizon_block,2.7", "tconstruct:manyullyn_block,3.3");
 
     public double baseRange = 10;
     public ArrayList<IdTagValue> blocksList;
 
-    public Beacon(Module module) {
+    public boolean betterConduitProtection = true;
+
+    public BeaconConduit(Module module) {
         super(Config.builder, module);
         this.pushConfig(Config.builder);
         baseRangeConfig = Config.builder
@@ -40,6 +52,10 @@ public class Beacon extends Feature {
                         E.g. a beacon with 1 layer full Iron blocks will give 9 range (+ base range), while with 2 layers (34 range / 2) = 17.
                         """)
                 .defineList("Blocks Range", blocksListDefault, o -> o instanceof String);
+
+        betterConduitProtectionConfig = Config.builder
+                .comment("Increases the range and damage of the conduit")
+                .define("Better Conduit Protection", this.betterConduitProtection);
         Config.builder.pop();
     }
 
@@ -48,6 +64,8 @@ public class Beacon extends Feature {
         super.loadConfig();
         this.baseRange = this.baseRangeConfig.get();
         this.blocksList = IdTagValue.parseStringList(this.blocksListConfig.get());
+
+        this.betterConduitProtection = this.betterConduitProtectionConfig.get();
     }
 
     public boolean beaconApplyEffects(Level level, BlockPos blockPos, int layers, MobEffect effectPrimary, MobEffect effectSecondary) {
@@ -60,7 +78,7 @@ public class Beacon extends Feature {
         if (level.isClientSide || effectPrimary == null)
             return false;
 
-        double blocksRange = this.getRange(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), layers);
+        double blocksRange = this.getBeaconRange(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), layers);
 
         double range = blocksRange + this.baseRange;
         int i = 0;
@@ -85,7 +103,7 @@ public class Beacon extends Feature {
         return true;
     }
 
-    private double getRange(Level level, int x, int y, int z, int layers) {
+    private double getBeaconRange(Level level, int x, int y, int z, int layers) {
         Map<Block, Integer> blocksCount = new HashMap<>();
 
         for (int layer = 1; layer <= layers; layer++) {
@@ -112,5 +130,37 @@ public class Beacon extends Feature {
         }
 
         return range;
+    }
+
+    float MIN_DAMAGE = 2f;
+    float MAX_DAMAGE = 6f;
+
+    public boolean conduitUpdateDestroyEnemies(Level level, BlockPos blockPos, BlockState state, List<BlockPos> blocks, ConduitBlockEntity conduit) {
+        if (!this.isEnabled()
+                || !this.betterConduitProtection)
+            return false;
+
+        List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, getRange(blockPos, blocks),
+                (living) -> living instanceof Enemy && living.isInWaterOrRain());
+
+        for (LivingEntity entity : list) {
+            level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.CONDUIT_ATTACK_TARGET, SoundSource.BLOCKS, 1.0F, 1.0F);
+            double distance = entity.position().distanceTo(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()));
+            float damage;
+            if (distance < 8d)
+                damage = MAX_DAMAGE;
+            else
+                damage = (float) (((40d - (distance - 8d)) / 40d) * (MAX_DAMAGE - MIN_DAMAGE) + MIN_DAMAGE);
+            entity.hurt(DamageSource.MAGIC, damage);
+        }
+        return true;
+    }
+
+    private AABB getRange(BlockPos blockPos, List<BlockPos> blocks) {
+        double range = blocks.size() / 7d * 8d;
+        int x = blockPos.getX();
+        int y = blockPos.getY();
+        int z = blockPos.getZ();
+        return (new AABB(x, y, z, x + 1, y + 1, z + 1)).inflate(range);
     }
 }

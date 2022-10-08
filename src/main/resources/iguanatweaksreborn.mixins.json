@@ -9,6 +9,7 @@
         "BaseSpawnerMixin",
         "BeaconBlockEntityMixin",
         "BoatMixin",
+        "ConduitBlockEntityMixin",
         "EnchantmentMixin",
         "ExperienceOrbMixin",
         "FoodDataMixin",

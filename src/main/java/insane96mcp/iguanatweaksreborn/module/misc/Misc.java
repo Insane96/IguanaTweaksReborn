@@ -14,7 +14,7 @@ public class Misc extends Module {
 	public TempSpawner tempSpawner;
 	public VillagerNerf villagerNerf;
 	public Nerf nerf;
-	public Beacon beacon;
+	public BeaconConduit beaconConduit;
 
 	public Misc() {
 		super(Config.builder);
@@ -25,7 +25,7 @@ public class Misc extends Module {
 		tempSpawner = new TempSpawner(this);
 		villagerNerf = new VillagerNerf(this);
 		nerf = new Nerf(this);
-		beacon = new Beacon(this);
+		beaconConduit = new BeaconConduit(this);
 		Config.builder.pop();
 	}
 
@@ -38,6 +38,6 @@ public class Misc extends Module {
 		tempSpawner.loadConfig();
 		villagerNerf.loadConfig();
 		nerf.loadConfig();
-		beacon.loadConfig();
+		beaconConduit.loadConfig();
 	}
 }
