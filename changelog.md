@@ -7,7 +7,9 @@
   * Changed Beacon ranges for some blocks
     * Diamond Block (3 -> 2.5)
     * Cobalt Block (TiCon) (2.2 -> 2.4)
-* Fixed error when using bonemeal on Farmers' Delight Tomato crops
+* Nerfed bonemeal now should work on any crop block
+  * Fixes error when using bonemeal on Farmers' Delight tomato crop
+  * Fixes Bonemeal fail chance not working on stem blocks (pumpkin/melons)
 
 ## 2.12.5
 * Flying blocks explosion changes 

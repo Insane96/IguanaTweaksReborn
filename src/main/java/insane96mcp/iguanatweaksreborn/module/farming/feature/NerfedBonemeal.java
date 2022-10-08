@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BeetrootBlock;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -103,50 +102,44 @@ public class NerfedBonemeal extends Feature {
 			return BonemealResult.CANCEL;
 		}
 
-		if (this.nerfedBonemeal.equals(BonemealNerf.DISABLED)
-				|| (state.getValues().containsKey(CropBlock.AGE) && state.getValues().containsKey(BeetrootBlock.AGE)))
+		if (this.nerfedBonemeal.equals(BonemealNerf.DISABLED))
 			return BonemealResult.NONE;
-		if (state.getBlock() instanceof CropBlock) {
-			boolean isBeetroot = state.getBlock() instanceof BeetrootBlock;
-			int age;
-			int maxAge = Collections.max(CropBlock.AGE.getPossibleValues());
-			if (isBeetroot) {
-				age = state.getValue(BeetrootBlock.AGE);
-				maxAge = Collections.max(BeetrootBlock.AGE.getPossibleValues());
-			}
-			else
-				age = state.getValue(CropBlock.AGE);
-			if (age == maxAge)
+		if (state.getBlock() instanceof CropBlock cropBlock) {
+			int age = state.getValue(cropBlock.getAgeProperty());
+			int maxAge = Collections.max(cropBlock.getAgeProperty().getPossibleValues());
+			if (age == maxAge) {
 				return BonemealResult.NONE;
+			}
+
 			if (level.getRandom().nextDouble() < this.bonemealFailChance) {
 				return BonemealResult.ALLOW;
 			}
-			else if (this.nerfedBonemeal.equals(BonemealNerf.SLIGHT))
+			else if (this.nerfedBonemeal.equals(BonemealNerf.SLIGHT)) {
 				age += Mth.nextInt(level.getRandom(), 1, 2);
-			else if (this.nerfedBonemeal.equals(BonemealNerf.NERFED))
-				age++;
-			if (age > maxAge)
-				age = maxAge;
-			if (isBeetroot) {
-				state = state.setValue(BeetrootBlock.AGE, age);
 			}
-			else
-				state = state.setValue(CropBlock.AGE, age);
+			else if (this.nerfedBonemeal.equals(BonemealNerf.NERFED)) {
+				age++;
+			}
+			age = Mth.clamp(age, 0, maxAge);
+			state = state.setValue(cropBlock.getAgeProperty(), age);
 		}
 		else if (state.getBlock() instanceof StemBlock) {
 			int age = state.getValue(StemBlock.AGE);
 			int maxAge = Collections.max(StemBlock.AGE.getPossibleValues());
-			if (age == maxAge)
+			if (age == maxAge) {
 				return BonemealResult.NONE;
-			if (Mth.nextDouble(level.getRandom(), 0d, 100d) < this.bonemealFailChance) {
+			}
+
+			if (level.getRandom().nextDouble() < this.bonemealFailChance) {
 				return BonemealResult.ALLOW;
 			}
-			else if (this.nerfedBonemeal.equals(BonemealNerf.SLIGHT))
+			else if (this.nerfedBonemeal.equals(BonemealNerf.SLIGHT)) {
 				age += Mth.nextInt(level.getRandom(), 1, 2);
-			else if (this.nerfedBonemeal.equals(BonemealNerf.NERFED))
+			}
+			else if (this.nerfedBonemeal.equals(BonemealNerf.NERFED)) {
 				age++;
-			if (age > maxAge)
-				age = maxAge;
+			}
+			age = Mth.clamp(age, 0, maxAge);
 			state = state.setValue(StemBlock.AGE, age);
 		}
 		else
