@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.12.6
 * Renamed Beacon in Beacon & Conduit
   * Added Better Conduit Protection  
     Increases the range (by half the Conduit Power range, vanilla is 8) and damage (up to 6, min 2) to mobs around the conduit
