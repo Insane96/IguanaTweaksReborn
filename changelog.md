@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Halved Injured duration
+
 ## 2.12.6
 * Renamed Beacon in Beacon & Conduit
   * Added Better Conduit Protection  

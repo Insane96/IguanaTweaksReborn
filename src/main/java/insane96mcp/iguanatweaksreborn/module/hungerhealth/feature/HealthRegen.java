@@ -138,7 +138,7 @@ public class HealthRegen extends Feature {
 				|| !(event.getEntityLiving() instanceof Player playerEntity)
 				|| event.getSource().equals(DamageSource.STARVE) || event.getSource().equals(DamageSource.DROWN) || event.getSource().equals(DamageSource.FREEZE))
 			return;
-		int duration = (int) (event.getAmount() * 2 * 20);
+		int duration = (int) (event.getAmount() * 20);
 		if (duration == 0)
 			return;
 		if (playerEntity.hasEffect(ITMobEffects.INJURED.get()))
