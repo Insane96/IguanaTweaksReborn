@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.12.7
 * Well Fed and Injured can now be configured (Duration and effectiveness)
   * Halved Injured duration
 * Food Heal Multiplier can now be used with combat test too
@@ -17,7 +17,7 @@
   * Fixes Bonemeal fail chance not working on stem blocks (pumpkin/melons)
 
 ## 2.12.5
-* Flying blocks explosion changes 
+* Flying blocks' explosion changes 
   * Removed smoke particles
   * Reduced knockback taken by flying blocks
   * Fixed Flying blocks not flying
