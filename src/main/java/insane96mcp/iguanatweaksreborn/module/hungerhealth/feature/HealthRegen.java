@@ -38,9 +38,14 @@ public class HealthRegen extends Feature {
 	private final ForgeConfigSpec.ConfigValue<Boolean> consumeHungerOnlyConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> maxExhaustionConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> hungerConsumptionChanceConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> enableWellFedConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> enableInjuredConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> foodHealMultiplierConfig;
+	//Effects
+	private final ForgeConfigSpec.BooleanValue enableWellFedConfig;
+	private final ForgeConfigSpec.DoubleValue wellFedDurationMultiplierConfig;
+	private final ForgeConfigSpec.DoubleValue wellFedEffectivenessConfig;
+	private final ForgeConfigSpec.BooleanValue enableInjuredConfig;
+	private final ForgeConfigSpec.DoubleValue injuredDurationMultiplierConfig;
+	private final ForgeConfigSpec.DoubleValue injuredEffectivenessConfig;
 
 	public HealthRegenPreset healthRegenPreset = HealthRegenPreset.COMBAT_TEST;
 	public int healthRegenSpeed = 80;
@@ -51,13 +56,18 @@ public class HealthRegen extends Feature {
 	public boolean consumeHungerOnly = false;
 	public double maxExhaustion = 4.0;
 	public double hungerConsumptionChance = 0;
-	public boolean enableWellFed = true;
-	public boolean enableInjured = true;
 	public double foodHealMultiplier = 0d;
+	//Effects
+	public boolean enableWellFed = true;
+	public double wellFedDurationMultiplier = 1.0d;
+	public double wellFedEffectiveness = 0.25d;
+	public boolean enableInjured = true;
+	public double injuredDurationMultiplier = 1.0d;
+	public double injuredEffectiveness = 0.2d;
 
 	public HealthRegen(Module module) {
 		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
+		this.pushConfig(Config.builder);
 		healthRegenPresetConfig = Config.builder
 				.comment("""
 						Sets the other config options to some default values (actual config is not changed, but custom values are ignored):
@@ -88,15 +98,32 @@ public class HealthRegen extends Feature {
 		hungerConsumptionChanceConfig = Config.builder
 				.comment("If 'Consume Hunger Only' is true then this is the chance to consume an hunger whenever the player is healed (vanilla ignores this; Combat Test has this set to 0.5).")
 				.defineInRange("Hunger Consumption Chance", this.hungerConsumptionChance, 0d, 1d);
-		enableWellFedConfig = Config.builder
-				.comment("Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats. The effect speeds up health regen by 25% per level.")
-				.define("Enable Well Fed", this.enableWellFed);
-		enableInjuredConfig = Config.builder
-				.comment("Set to true to enable Injured, a new effect that slows down health regen and is applied whenever the player is damaged. The effect slows down health regen by 20% per level.")
-				.define("Enable Injured", this.enableInjured);
 		foodHealMultiplierConfig = Config.builder
 				.comment("When eating you'll get healed by this percentage of (hunger + saturation) restored.")
 				.defineInRange("Food Heal Multiplier", this.foodHealMultiplier, 0.0d, 128d);
+
+		Config.builder.push("Effects");
+		this.enableWellFedConfig = Config.builder
+				.comment("Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats.")
+				.define("Enable Well Fed", this.enableWellFed);
+		this.wellFedDurationMultiplierConfig = Config.builder
+				.comment("Multiplies the base duration of Well Fed by this value. Base duration is 1 second per food effectiveness (hunger + saturation).")
+				.defineInRange("Well Fed Duration Multiplier", this.wellFedDurationMultiplier, 0.0d, 128d);
+		this.wellFedEffectivenessConfig = Config.builder
+				.comment("How much does health regen Well Fed increases per level. (This is inversely proportional, a value of 0.25 makes makes time to regen lower by 20%. A value of 1.0 makes time to regen lower by 50%.")
+				.defineInRange("Well Fed Effectiveness", this.wellFedEffectiveness, 0.0d, 10.0d);
+
+		this.enableInjuredConfig = Config.builder
+				.comment("Set to true to enable Injured, a new effect that slows down health regen and is applied whenever the player is damaged. The effect slows down health regen by 20% per level.")
+				.define("Enable Injured", this.enableInjured);
+		this.injuredDurationMultiplierConfig = Config.builder
+				.comment("Multiplies the base duration of Injured by this value. Base duration is 1 second per point of damage taken.")
+				.defineInRange("Injured Duration Multiplier", this.injuredDurationMultiplier, 0.0d, 128d);
+		this.injuredEffectivenessConfig = Config.builder
+				.comment("How much does health regen Injured decreases per level.")
+				.defineInRange("Injured Effectiveness", this.injuredEffectiveness, 0.0d, 10.0d);
+		Config.builder.pop();
+
 		Config.builder.pop();
 	}
 
@@ -104,8 +131,6 @@ public class HealthRegen extends Feature {
 	public void loadConfig() {
 		super.loadConfig();
 		this.healthRegenPreset = this.healthRegenPresetConfig.get();
-		this.enableWellFed = this.enableWellFedConfig.get();
-		this.enableInjured = this.enableInjuredConfig.get();
 		switch (this.healthRegenPreset) {
 			case NONE -> {
 				this.healthRegenSpeed = this.healthRegenSpeedConfig.get();
@@ -116,7 +141,6 @@ public class HealthRegen extends Feature {
 				this.consumeHungerOnly = this.consumeHungerOnlyConfig.get();
 				this.maxExhaustion = this.maxExhaustionConfig.get();
 				this.hungerConsumptionChance = this.hungerConsumptionChanceConfig.get();
-				this.foodHealMultiplier = this.foodHealMultiplierConfig.get();
 			}
 			case COMBAT_TEST -> {
 				this.healthRegenSpeed = 40;
@@ -129,6 +153,15 @@ public class HealthRegen extends Feature {
 				this.hungerConsumptionChance = 0.5d;
 			}
 		}
+
+		this.foodHealMultiplier = this.foodHealMultiplierConfig.get();
+		//Effects
+		this.enableWellFed = this.enableWellFedConfig.get();
+		this.wellFedDurationMultiplier = this.wellFedDurationMultiplierConfig.get();
+		this.wellFedEffectiveness = this.wellFedEffectivenessConfig.get();
+		this.enableInjured = this.enableInjuredConfig.get();
+		this.injuredDurationMultiplier = this.injuredDurationMultiplierConfig.get();
+		this.injuredEffectiveness = this.injuredEffectivenessConfig.get();
 	}
 
 	@SubscribeEvent
@@ -138,7 +171,7 @@ public class HealthRegen extends Feature {
 				|| !(event.getEntityLiving() instanceof Player playerEntity)
 				|| event.getSource().equals(DamageSource.STARVE) || event.getSource().equals(DamageSource.DROWN) || event.getSource().equals(DamageSource.FREEZE))
 			return;
-		int duration = (int) (event.getAmount() * 20);
+		int duration = (int) ((event.getAmount() * 20) * this.injuredDurationMultiplier);
 		if (duration == 0)
 			return;
 		if (playerEntity.hasEffect(ITMobEffects.INJURED.get()))
@@ -164,10 +197,10 @@ public class HealthRegen extends Feature {
 			return;
 		Player playerEntity = (Player) event.getEntityLiving();
 		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
-		int duration = (int) ((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20);
+		int duration = (int) (((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20) * this.wellFedDurationMultiplier);
 		if (duration == 0)
 			return;
-		int amplifier = 0;//Math.max(food.getNutrition() / 2 - 1, 0);
+		int amplifier = 0;
 		playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.WELL_FED.get(), duration, amplifier, true, false, true, false));
 	}
 
@@ -247,10 +280,10 @@ public class HealthRegen extends Feature {
 		int ticksToRegen = this.healthRegenSpeed;
 		MobEffectInstance injured = player.getEffect(ITMobEffects.INJURED.get());
 		if (injured != null)
-			ticksToRegen *= 1 + ((injured.getAmplifier() + 1) * 0.2d);
+			ticksToRegen *= 1 + ((injured.getAmplifier() + 1) * this.injuredEffectiveness);
 		MobEffectInstance wellFed = player.getEffect(ITMobEffects.WELL_FED.get());
 		if (wellFed != null)
-			ticksToRegen *= 1 / (((wellFed.getAmplifier() + 1) * 0.25d) + 1);
+			ticksToRegen *= 1 / (((wellFed.getAmplifier() + 1) * this.wellFedEffectiveness) + 1);
 		return ticksToRegen;
 	}
 

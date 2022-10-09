@@ -1,7 +1,9 @@
 # Changelog
 
 ## Upcoming
-* Halved Injured duration
+* Well Fed and Injured can now be configured (Duration and effectiveness)
+  * Halved Injured duration
+* Food Heal Multiplier can now be used with combat test too
 
 ## 2.12.6
 * Renamed Beacon in Beacon & Conduit
