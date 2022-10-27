@@ -61,10 +61,8 @@ public class OtherExperience extends Feature {
 	}
 
 	public void onXpBottleHit(ThrownExperienceBottle xpBottle) {
-		if (!this.isEnabled())
-			return;
-
-		if (this.xpBottleBonus == 0)
+		if (!this.isEnabled()
+				|| this.xpBottleBonus == 0)
 			return;
 
 		if (xpBottle.level instanceof ServerLevel) {
@@ -87,18 +85,7 @@ public class OtherExperience extends Feature {
 		}
 	}
 
-	/*@SubscribeEvent
-	public void onAnvilUpdate(AnvilUpdateEvent event) {
-		if (!this.isEnabled()
-				|| !this.unmending)
-			return;
-
-		ItemStack left = event.getLeft();
-		ItemStack right = event.getRight();
-		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, left) > 0
-				|| EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, right) > 0) {
-			if (!event.getOutput().isEmpty())
-				event.getOutput().setRepairCost(15);
-		}
-	}*/
+	public boolean isUnmendingEnabled() {
+		return this.isEnabled() && this.unmending;
+	}
 }

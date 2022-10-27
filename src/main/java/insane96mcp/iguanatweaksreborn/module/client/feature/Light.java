@@ -17,7 +17,7 @@ public class Light extends Feature {
         super(ITClientConfig.builder, module);
         this.pushConfig(ITClientConfig.builder);
         noNightVisionFlashingConfig = ITClientConfig.builder
-                .comment("If true night vision will no longer flash 10 seconds before expiring.")
+                .comment("If true night vision will no longer flash 10 seconds before expiring, instead will slowly fade out 4 seconds before expiring.")
                 .define("No Night Vision Flashing", noNightVisionFlashing);
         ITClientConfig.builder.pop();
     }

@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ExperienceOrbMixin {
 	@Inject(at = @At("HEAD"), method = "repairPlayerItems", cancellable = true)
 	public void repairPlayerItems(Player player, int p_147094_, CallbackInfoReturnable<Integer> callbackInfo) {
-		if (Modules.experience.otherExperience.isEnabled() && Modules.experience.otherExperience.unmending)
+		if (Modules.experience.otherExperience.isUnmendingEnabled())
 			callbackInfo.setReturnValue(p_147094_);
 	}
 }

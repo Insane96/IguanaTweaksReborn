@@ -12,6 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,12 +23,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
-//Shamelessly stolen to Charm
+//Shamelessly stolen from Charm
 
 @Mixin(AnvilMenu.class)
 public class AnvilMenuMixin extends ItemCombinerMenu {
 
-	@Shadow @Final private static int COST_RENAME;
+	@Shadow
+	@Final
+	private static int COST_RENAME;
+
 	@Shadow
 	@Final
 	private DataSlot cost;
@@ -149,20 +153,12 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 								}
 
 								map.put(enchantment1, j2);
-								int k3 = 0;
-								switch(enchantment1.getRarity()) {
-									case COMMON:
-										k3 = 1;
-										break;
-									case UNCOMMON:
-										k3 = 2;
-										break;
-									case RARE:
-										k3 = 4;
-										break;
-									case VERY_RARE:
-										k3 = 8;
-								}
+								int k3 = switch (enchantment1.getRarity()) {
+									case COMMON -> 1;
+									case UNCOMMON -> 2;
+									case RARE -> 4;
+									case VERY_RARE -> 8;
+								};
 
 								if (isEnchantedBook) {
 									k3 = Math.max(1, k3 / 2);
@@ -232,16 +228,16 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 	}
 
 	@Shadow
-	protected boolean mayPickup(Player p_39798_, boolean p_39799_) {
+	protected boolean mayPickup(@NotNull Player p_39798_, boolean p_39799_) {
 		return false;
 	}
 
 	@Shadow
-	protected void onTake(Player p_150601_, ItemStack p_150602_) {
+	protected void onTake(@NotNull Player p_150601_, @NotNull ItemStack p_150602_) {
 	}
 
 	@Shadow
-	protected boolean isValidBlock(BlockState p_39788_) {
+	protected boolean isValidBlock(@NotNull BlockState p_39788_) {
 		return false;
 	}
 
