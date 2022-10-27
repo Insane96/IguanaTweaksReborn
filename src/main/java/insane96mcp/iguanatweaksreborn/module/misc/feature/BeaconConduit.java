@@ -13,6 +13,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -27,6 +28,7 @@ import java.util.*;
 
 @Label(name = "Beacon & Conduit", description = "Beacon Range varying based of blocks of the pyramid and better conduit killing mobs")
 public class BeaconConduit extends Feature {
+    private final ForgeConfigSpec.BooleanValue affectPetsConfig;
     private final ForgeConfigSpec.ConfigValue<Double> baseRangeConfig;
     private final ForgeConfigSpec.ConfigValue<List<? extends String>> blocksListConfig;
 
@@ -34,6 +36,7 @@ public class BeaconConduit extends Feature {
 
     private static final List<String> blocksListDefault = Arrays.asList("minecraft:iron_block,1","minecraft:emerald_block,1.2","minecraft:gold_block,1.8","minecraft:diamond_block,2.5","minecraft:netherite_block,4.0", "tconstruct:cobalt_block,2.4", "tconstruct:queens_slime_block,3.0", "tconstruct:hepatizon_block,2.7", "tconstruct:manyullyn_block,3.3");
 
+    public boolean affectPets = true;
     public double baseRange = 10;
     public ArrayList<IdTagValue> blocksList;
 
@@ -42,6 +45,9 @@ public class BeaconConduit extends Feature {
     public BeaconConduit(Module module) {
         super(ITCommonConfig.builder, module);
         this.pushConfig(ITCommonConfig.builder);
+        affectPetsConfig = ITCommonConfig.builder
+                .comment("If true, pets will also get the beacon effects")
+                .define("Affect Pets", this.affectPets);
         baseRangeConfig = ITCommonConfig.builder
                 .comment("Base range of the beacon")
                 .defineInRange("Base Range", this.baseRange, 0d, 256d);
@@ -97,6 +103,18 @@ public class BeaconConduit extends Feature {
         if (layers >= 4 && effectPrimary != effectSecondary && effectSecondary != null) {
             for(Player player : list) {
                 player.addEffect(new MobEffectInstance(effectSecondary, j, 0, true, true));
+            }
+        }
+
+        List<TamableAnimal> list2 = level.getEntitiesOfClass(TamableAnimal.class, aabb, TamableAnimal::isTame);
+
+        for (TamableAnimal animal : list2) {
+            animal.addEffect(new MobEffectInstance(effectPrimary, j, i, true, true));
+        }
+
+        if (layers >= 4 && effectPrimary != effectSecondary && effectSecondary != null) {
+            for(TamableAnimal animal : list2) {
+                animal.addEffect(new MobEffectInstance(effectSecondary, j, 0, true, true));
             }
         }
 
