@@ -7,12 +7,12 @@ import net.minecraft.world.entity.monster.Zombie;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Zombie.class)
 public class ZombieMixin {
-	@Inject(at = @At("TAIL"), method = "killed")
-	private void killed(ServerLevel level, LivingEntity killedEntity, CallbackInfo callbackInfo) {
+	@Inject(at = @At("TAIL"), method = "wasKilled")
+	private void killed(ServerLevel level, LivingEntity killedEntity, CallbackInfoReturnable<Boolean> callbackInfo) {
 		Modules.misc.villagerNerf.onZombieKillEntity((Zombie) (Object) this, level, killedEntity);
 	}
 }

@@ -5,7 +5,6 @@ import insane96mcp.iguanatweaksreborn.module.Modules;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -50,7 +49,7 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 	public void renderLabels(PoseStack poseStack, int p_97891_, int p_97892_, CallbackInfo ci) {
 		if (this.menu.getCost() == 0 && this.menu.getSlot(2).hasItem()) {
 			int j = 8453920;
-			Component component = new TranslatableComponent("container.repair.free");
+			Component component = Component.translatable("container.repair.free");
 			if (!this.menu.getSlot(2).mayPickup(this.player)) {
 				j = 16736352;
 			}

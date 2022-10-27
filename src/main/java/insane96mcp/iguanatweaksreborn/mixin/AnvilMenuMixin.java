@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -187,7 +187,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 				}
 			} else if (!this.itemName.equals(itemstack0.getHoverName().getString())) {
 				isRenaming = true;
-				itemstack0copy.setHoverName(new TextComponent(this.itemName));
+				itemstack0copy.setHoverName(Component.literal(this.itemName));
 			}
 			if (isEnchantedBook && !itemstack0copy.isBookEnchantable(itemStack1)) itemstack0copy = ItemStack.EMPTY;
 

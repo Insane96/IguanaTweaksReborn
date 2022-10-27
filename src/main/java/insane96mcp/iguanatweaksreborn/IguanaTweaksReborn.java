@@ -25,7 +25,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.resource.PathResourcePack;
+import net.minecraftforge.resource.PathPackResources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -75,14 +75,14 @@ public class IguanaTweaksReborn
             try
             {
                 Path resourcePath = ModList.get().getModFileById(MOD_ID).getFile().findResource("integrated_packs/" + dp.path);
-                PathResourcePack pack = new PathResourcePack(ModList.get().getModFileById(MOD_ID).getFile().getFileName() + ":" + resourcePath, resourcePath);
-                PackMetadataSection metadataSection = pack.getMetadataSection(PackMetadataSection.SERIALIZER);
-                if (metadataSection != null)
-                {
-                    event.addRepositorySource((packConsumer, packConstructor) ->
-                            packConsumer.accept(packConstructor.create(
-                                    MOD_ID + "/" + dp.path, dp.description, false,
-                                    () -> pack, metadataSection, Pack.Position.BOTTOM, PackSource.BUILT_IN, false)));
+                try (PathPackResources pack = new PathPackResources(ModList.get().getModFileById(MOD_ID).getFile().getFileName() + ":" + resourcePath, resourcePath)) {
+                    PackMetadataSection metadataSection = pack.getMetadataSection(PackMetadataSection.SERIALIZER);
+                    if (metadataSection != null) {
+                        event.addRepositorySource((packConsumer, packConstructor) ->
+                                packConsumer.accept(packConstructor.create(
+                                        MOD_ID + "/" + dp.path, dp.description, false,
+                                        () -> pack, metadataSection, Pack.Position.BOTTOM, PackSource.BUILT_IN, false)));
+                    }
                 }
             }
             catch(IOException ex)
