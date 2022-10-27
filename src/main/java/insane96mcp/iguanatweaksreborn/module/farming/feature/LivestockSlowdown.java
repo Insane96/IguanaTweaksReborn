@@ -6,8 +6,8 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -27,8 +27,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-
-import java.util.Random;
 
 @Label(name = "Livestock Slowdown", description = "Slower breeding, Growing, Egging and Milking")
 public class LivestockSlowdown extends Feature {
@@ -77,69 +75,66 @@ public class LivestockSlowdown extends Feature {
 	}
 
 	@SubscribeEvent
-	public void slowdownAnimalGrowth(LivingEvent.LivingUpdateEvent event) {
+	public void slowdownAnimalGrowth(LivingEvent.LivingTickEvent event) {
 		if (!this.isEnabled())
 			return;
 		if (this.childGrowthMultiplier == 1d)
 			return;
-		if (!(event.getEntityLiving() instanceof Animal) && !(event.getEntityLiving() instanceof AbstractVillager))
+		if (!(event.getEntity() instanceof Animal) && !(event.getEntity() instanceof AbstractVillager))
 			return;
-		if (event.getEntityLiving() instanceof AbstractVillager && !this.childGrowthVillagers)
+		if (event.getEntity() instanceof AbstractVillager && !this.childGrowthVillagers)
 			return;
-		AgeableMob entity = (AgeableMob) event.getEntityLiving();
-		Random rand = event.getEntityLiving().level.random;
+		AgeableMob entity = (AgeableMob) event.getEntity();
 		int growingAge = entity.getAge();
 		if (growingAge >= 0)
 			return;
 		double chance = 1d / this.childGrowthMultiplier;
-		if (rand.nextFloat() > chance)
+		if (entity.getRandom().nextFloat() > chance)
 			entity.setAge(growingAge - 1);
 	}
 
 	@SubscribeEvent
-	public void slowdownBreeding(LivingEvent.LivingUpdateEvent event) {
+	public void slowdownBreeding(LivingEvent.LivingTickEvent event) {
 		if (!this.isEnabled())
 			return;
 		if (this.breedingMultiplier == 1d)
 			return;
-		if (!(event.getEntityLiving() instanceof Animal))
+		if (!(event.getEntity() instanceof Animal))
 			return;
-		AgeableMob entity = (AgeableMob) event.getEntityLiving();
-		Random rand = event.getEntityLiving().level.random;
+		AgeableMob entity = (AgeableMob) event.getEntity();
 		int growingAge = entity.getAge();
 		if (growingAge <= 0)
 			return;
 		double chance = 1d / this.breedingMultiplier;
-		if (rand.nextFloat() > chance)
+		if (entity.getRandom().nextFloat() > chance)
 			entity.setAge(growingAge + 1);
 	}
 
 	@SubscribeEvent
-	public void slowdownEggLay(LivingEvent.LivingUpdateEvent event) {
+	public void slowdownEggLay(LivingEvent.LivingTickEvent event) {
 		if (!this.isEnabled())
 			return;
 		if (this.eggLayMultiplier == 1d)
 			return;
-		if (!(event.getEntityLiving() instanceof Chicken chicken))
+		if (!(event.getEntity() instanceof Chicken chicken))
 			return;
-		Random rand = event.getEntityLiving().level.random;
 		int timeUntilNextEgg = chicken.eggTime;
 		if (timeUntilNextEgg < 0)
 			return;
 		double chance = 1d / this.eggLayMultiplier;
-		if (rand.nextFloat() > chance)
+		if (chicken.getRandom().nextFloat() > chance)
 			chicken.eggTime += 1;
 	}
 
 	@SubscribeEvent
-	public void cowMilkTick(LivingEvent.LivingUpdateEvent event) {
+	public void cowMilkTick(LivingEvent.LivingTickEvent event) {
 		if (!this.isEnabled())
 			return;
 		if (this.cowMilkDelay == 0)
 			return;
-		if (event.getEntityLiving().tickCount % 20 != 0)
+		if (event.getEntity().tickCount % 20 != 0)
 			return;
-		if (!(event.getEntityLiving() instanceof Cow cow))
+		if (!(event.getEntity() instanceof Cow cow))
 			return;
 		CompoundTag cowNBT = cow.getPersistentData();
 		int milkCooldown = cowNBT.getInt(Strings.Tags.MILK_COOLDOWN);
@@ -158,7 +153,7 @@ public class LivestockSlowdown extends Feature {
 			return;
 		if (cow.getAge() < 0)
 			return;
-		Player player = event.getPlayer();
+		Player player = event.getEntity();
 		InteractionHand hand = event.getHand();
 		ItemStack equipped = player.getItemInHand(hand);
 		if (equipped.isEmpty() || equipped.getItem() == Items.AIR)
@@ -174,7 +169,7 @@ public class LivestockSlowdown extends Feature {
 				cow.playSound(SoundEvents.COW_HURT, 0.4F, (event.getEntity().level.random.nextFloat() - event.getEntity().level.random.nextFloat()) * 0.2F + 1.2F);
 				String animal = cow instanceof MushroomCow ? Strings.Translatable.MOOSHROOM_COOLDOWN : Strings.Translatable.COW_COOLDOWN;
 				String yetReady = Strings.Translatable.YET_READY;
-				MutableComponent message = new TranslatableComponent(animal).append(" ").append(new TranslatableComponent(yetReady));
+				MutableComponent message = Component.translatable(animal).append(" ").append(Component.translatable(yetReady));
 				player.displayClientMessage(message, true);
 			}
 			else

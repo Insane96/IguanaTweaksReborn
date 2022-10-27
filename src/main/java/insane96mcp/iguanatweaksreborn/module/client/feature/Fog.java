@@ -8,11 +8,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FogType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -52,7 +52,7 @@ public class Fog extends Feature {
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    public void onFog(EntityViewRenderEvent.RenderFogEvent event) {
+    public void onFog(ViewportEvent.RenderFog event) {
         if (!this.isEnabled())
             return;
 
@@ -60,7 +60,7 @@ public class Fog extends Feature {
         netherFog(event);
     }
 
-    public void lavaFog(EntityViewRenderEvent.RenderFogEvent event) {
+    public void lavaFog(ViewportEvent.RenderFog event) {
         if (!this.betterFireResistanceLavaFog
                 || event.getCamera().getFluidInCamera() != FogType.LAVA
                 || event.getCamera().getEntity().isSpectator())
@@ -75,13 +75,13 @@ public class Fog extends Feature {
         event.setCanceled(true);
     }
 
-    public void netherFog(EntityViewRenderEvent.RenderFogEvent event) {
+    public void netherFog(ViewportEvent.RenderFog event) {
         if (!this.betterNetherFog
                 || event.isCanceled())
             return;
 
         Entity entity = event.getCamera().getEntity();
-        if (entity.level.dimension().location().equals(DimensionType.NETHER_LOCATION.location())) {
+        if (entity.level.dimension() == Level.NETHER) {
             float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
             event.setNearPlaneDistance((float) (renderDistance * this.netherFogRatio / 10f));
             event.setFarPlaneDistance((float) (renderDistance * this.netherFogRatio));

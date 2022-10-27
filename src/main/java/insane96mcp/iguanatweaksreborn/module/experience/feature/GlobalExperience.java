@@ -8,7 +8,7 @@ import insane96mcp.insanelib.base.Module;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Global Experience", description = "Decrease / Increase every experience point dropped in the world")
@@ -34,7 +34,7 @@ public class GlobalExperience extends Feature {
 	}
 
 	@SubscribeEvent
-	public void onXPOrbDrop(EntityJoinWorldEvent event) {
+	public void onXPOrbDrop(EntityJoinLevelEvent event) {
 		if (!this.isEnabled())
 			return;
 		if (this.globalMultiplier == 1.0d)

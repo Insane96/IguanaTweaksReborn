@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -113,10 +113,10 @@ public class CropsGrowth extends Feature {
 				|| this.cropsRequireWater.equals(CropsRequireWater.NO)
 				|| event.getResult().equals(Event.Result.DENY)
 				//|| this.cropsRequireWaterBlacklist.isBlockBlackOrNotWhiteListed(event.getState().getBlock())
-				|| !Farming.isAffectedByFarmland(event.getWorld(), event.getPos()))
+				|| !Farming.isAffectedByFarmland(event.getLevel(), event.getPos()))
 			return;
 		// Denies the growth if the crop is on farmland and the farmland is wet. If it's not on farmland the growth is not denied (e.g. Farmer's Delight rice)
-		if (Farming.isCropOnFarmland(event.getWorld(), event.getPos()) && !Farming.isCropOnWetFarmland(event.getWorld(), event.getPos())) {
+		if (Farming.isCropOnFarmland(event.getLevel(), event.getPos()) && !Farming.isCropOnWetFarmland(event.getLevel(), event.getPos())) {
 			event.setResult(Event.Result.DENY);
 		}
 	}
@@ -139,7 +139,7 @@ public class CropsGrowth extends Feature {
 		if (!this.isEnabled()
 				|| event.getResult().equals(Event.Result.DENY))
 			return;
-		Level level = (Level) event.getWorld();
+		Level level = (Level) event.getLevel();
 		double multiplier = 1d;
 		for (PlantGrowthModifier plantGrowthModifier : plantGrowthModifiers) {
 			multiplier = plantGrowthModifier.getMultiplier(event.getState().getBlock(), level, event.getPos());

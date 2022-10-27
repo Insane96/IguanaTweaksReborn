@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.setup.ILStrings;
 import net.minecraft.world.entity.Mob;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Experience From Spawners' Mobs", description = "Decrease / Increase experience dropped mobs spawned by Spawners")
@@ -35,7 +35,7 @@ public class SpawnerMobsExperience extends Feature {
 	}
 
 	@SubscribeEvent
-	public void markFromSpawner(EntityJoinWorldEvent event) {
+	public void markFromSpawner(EntityJoinLevelEvent event) {
 		if (!(event.getEntity() instanceof Mob mob))
 			return;
 		if (!mob.getPersistentData().getBoolean(ILStrings.Tags.SPAWNED_FROM_SPAWNER))

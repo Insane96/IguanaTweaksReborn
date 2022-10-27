@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -69,7 +69,7 @@ public class PlantsGrowth extends Feature {
 			return;
 		double multiplier = 1d;
 		for (PlantGrowthModifier plantGrowthModifier : this.plantsList) {
-			multiplier = plantGrowthModifier.getMultiplier(event.getState().getBlock(), (Level) event.getWorld(), event.getPos());
+			multiplier = plantGrowthModifier.getMultiplier(event.getState().getBlock(), (Level) event.getLevel(), event.getPos());
 			if (multiplier != -1d)
 				break;
 		}
@@ -80,7 +80,7 @@ public class PlantsGrowth extends Feature {
 		if (multiplier == 1.0d || multiplier == -1d)
 			return;
 		double chance = 1d / multiplier;
-		if (event.getWorld().getRandom().nextDouble() > chance)
+		if (event.getLevel().getRandom().nextDouble() > chance)
 			event.setResult(Event.Result.DENY);
 	}
 }

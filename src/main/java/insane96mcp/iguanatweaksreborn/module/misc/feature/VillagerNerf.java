@@ -75,7 +75,7 @@ public class VillagerNerf extends Feature {
 	}
 
 	@SubscribeEvent
-	public void onLivingTick(LivingEvent.LivingUpdateEvent event) {
+	public void onLivingTick(LivingEvent.LivingTickEvent event) {
 		if (!this.isEnabled())
 			return;
 

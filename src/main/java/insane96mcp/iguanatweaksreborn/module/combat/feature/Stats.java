@@ -20,7 +20,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -95,7 +95,7 @@ public class Stats extends Feature {
 	}
 
 	@SubscribeEvent
-	public void onArrowSpawn(EntityJoinWorldEvent event) {
+	public void onArrowSpawn(EntityJoinLevelEvent event) {
 		if (!this.isEnabled())
 			return;
 		if (!(event.getEntity() instanceof AbstractArrow arrow))

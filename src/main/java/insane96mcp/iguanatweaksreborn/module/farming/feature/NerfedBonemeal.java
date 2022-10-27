@@ -78,9 +78,9 @@ public class NerfedBonemeal extends Feature {
 			return;
 		if (!this.isEnabled())
 			return;
-		if (event.getWorld().isClientSide)
+		if (event.getLevel().isClientSide)
 			return;
-		BonemealResult result = applyBonemeal(event.getWorld(), event.getStack(), event.getBlock(), event.getPos());
+		BonemealResult result = applyBonemeal(event.getLevel(), event.getStack(), event.getBlock(), event.getPos());
 		if (result == BonemealResult.ALLOW)
 			event.setResult(Event.Result.ALLOW);
 		else if (result == BonemealResult.CANCEL)

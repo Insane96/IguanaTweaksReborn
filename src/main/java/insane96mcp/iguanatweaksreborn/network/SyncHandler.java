@@ -38,7 +38,7 @@ public class SyncHandler {
 	private static final Map<UUID, Float> lastSaturationLevels = new HashMap<>();
 
 	@SubscribeEvent
-	public void onLivingUpdateEvent(LivingEvent.LivingTickEvent event) {
+	public void onLivingTickEvent(LivingEvent.LivingTickEvent event) {
 		if (!(event.getEntity() instanceof ServerPlayer player))
 			return;
 		Float lastSaturationLevel = lastSaturationLevels.get(player.getUUID());
