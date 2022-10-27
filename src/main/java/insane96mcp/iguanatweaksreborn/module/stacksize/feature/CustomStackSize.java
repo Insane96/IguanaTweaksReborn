@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.stacksize.feature;
 
 import insane96mcp.iguanatweaksreborn.module.stacksize.utils.ItemStackSize;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -21,12 +21,12 @@ public class CustomStackSize extends Feature {
     public List<ItemStackSize> customStackList;
 
     public CustomStackSize(Module module) {
-        super(Config.builder, module);
-        Config.builder.comment(this.getDescription()).push(this.getName());
-        customStackListConfig = Config.builder
+        super(ITCommonConfig.builder, module);
+        ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+        customStackListConfig = ITCommonConfig.builder
                 .comment("Define custom item stack sizes, one string = one item/tag. Those items are not affected by other changes such as 'Food Stack Reduction'.\nThe format is modid:itemid,stack_size or #modid:tagid,stack_size\nE.g. 'minecraft:stone,16' will make stone stack up to 16.\nE.g. '#forge:stone,16' will make all the stone types stack up to 16.\nValues over 64 or lower than 1 will not work.")
                 .defineList("Custom Stack Sizes", customStackDefault, o -> o instanceof String);
-        Config.builder.pop();
+        ITCommonConfig.builder.pop();
     }
 
     @Override

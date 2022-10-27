@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.misc;
 
 import insane96mcp.iguanatweaksreborn.module.misc.feature.*;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 
@@ -17,8 +17,8 @@ public class Misc extends Module {
 	public BeaconConduit beaconConduit;
 
 	public Misc() {
-		super(Config.builder);
-		pushConfig(Config.builder);
+		super(ITCommonConfig.builder);
+		pushConfig(ITCommonConfig.builder);
 		explosionOverhaul = new ExplosionOverhaul(this);
 		toolStats = new ToolStats(this);
 		deBuffs = new DeBuffs(this);
@@ -26,7 +26,7 @@ public class Misc extends Module {
 		villagerNerf = new VillagerNerf(this);
 		nerf = new Nerf(this);
 		beaconConduit = new BeaconConduit(this);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

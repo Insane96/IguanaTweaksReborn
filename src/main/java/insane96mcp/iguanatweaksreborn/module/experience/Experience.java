@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.experience;
 
 import insane96mcp.iguanatweaksreborn.module.experience.feature.*;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 
@@ -15,14 +15,14 @@ public class Experience extends Module {
 	public OtherExperience otherExperience;
 
 	public Experience() {
-		super(Config.builder);
-		pushConfig(Config.builder);
+		super(ITCommonConfig.builder);
+		pushConfig(ITCommonConfig.builder);
 		globalExperience = new GlobalExperience(this);
 		blockExperience = new BlockExperience(this);
 		spawnerMobsExperience = new SpawnerMobsExperience(this);
 		playerExperience = new PlayerExperience(this);
 		otherExperience = new OtherExperience(this);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

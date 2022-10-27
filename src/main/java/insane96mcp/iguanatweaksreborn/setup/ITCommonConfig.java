@@ -10,7 +10,7 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 @Mod.EventBusSubscriber(modid = IguanaTweaksReborn.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class Config {
+public class ITCommonConfig {
 	public static final ForgeConfigSpec CONFIG_SPEC;
 	public static final CommonConfig COMMON;
 

@@ -4,7 +4,7 @@ import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.BlockHardness;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.DepthHardnessDimension;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.DimensionHardnessMultiplier;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -44,26 +44,26 @@ public class GlobalHardness extends Feature {
 	public Blacklist depthMultiplierBlacklist;
 
 	public GlobalHardness(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		hardnessMultiplierConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		hardnessMultiplierConfig = ITCommonConfig.builder
 				.comment("Multiplier applied to the hardness of blocks. E.g. with this set to 3.0 blocks will take 3x more time to break.")
 				.defineInRange("Hardness Multiplier", this.hardnessMultiplier, 0.0d, 128d);
-		dimensionHardnessMultiplierConfig = Config.builder
+		dimensionHardnessMultiplierConfig = ITCommonConfig.builder
 				.comment("A list of dimensions and their relative block hardness multiplier. Each entry has a a dimension and hardness. This overrides the global multiplier.")
 				.defineList("Dimension Hardness Multiplier", dimensionHardnessMultiplierDefault, o -> o instanceof String);
-		hardnessBlacklistConfig = new Blacklist.Config(Config.builder, "Block Hardness Blacklist", "Block ids or tags that will ignore the global and dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
+		hardnessBlacklistConfig = new Blacklist.Config(ITCommonConfig.builder, "Block Hardness Blacklist", "Block ids or tags that will ignore the global and dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
 				.setDefaultList(hardnessBlacklistDefault)
 				.setIsDefaultWhitelist(false)
 				.build();
-		depthMultiplierDimensionConfig = Config.builder
+		depthMultiplierDimensionConfig = ITCommonConfig.builder
 				.comment("A list of dimensions and their relative block hardness multiplier per blocks below the set Y level. Each entry has a a dimension, a multiplier, a Y Level (where the increased hardness starts applying) and a Y Level cap (where the increase should stop).\nE.g. with the default configurations increases the overworld hardness multiplier by 0.025 for each block below the sea level (63); so at Y = 32 you'll get a multiplier of 2.5 (global multiplier) + 0.025 * (63 - 32) = 3.3 hardness multiplier.\nNOTE: This multiplier increase applies to blocks in Custom Hardness too.")
 				.defineList("Depth Multiplier Dimension", depthMultiplierDimensionDefault, o -> o instanceof String);
-		depthMultiplierBlacklistConfig = new Blacklist.Config(Config.builder, "Depth Multiplier Blacklist", "Block ids or tags that will ignore the depth multiplier. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
+		depthMultiplierBlacklistConfig = new Blacklist.Config(ITCommonConfig.builder, "Depth Multiplier Blacklist", "Block ids or tags that will ignore the depth multiplier. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
 				.setDefaultList(depthMultiplierBlacklistDefault)
 				.setIsDefaultWhitelist(false)
 				.build();
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

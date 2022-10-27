@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -44,24 +44,24 @@ public class VillagerNerf extends Feature {
 	public boolean clampNegativeDemand = true;
 
 	public VillagerNerf(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		lockTradesConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		lockTradesConfig = ITCommonConfig.builder
 				.comment("If true, villagers will be given 1 trading experience as soon as they choose their job to lock the trades.")
 				.define("Lock Trades", this.lockTrades);
-		alwaysConvertZombieConfig = Config.builder
+		alwaysConvertZombieConfig = ITCommonConfig.builder
 				.comment("If true, villagers will always be transformed into Zombies, no matter the difficulty.")
 				.define("Always Convert Zombie", this.alwaysConvertZombie);
-		maxDiscountConfig = Config.builder
+		maxDiscountConfig = ITCommonConfig.builder
 				.comment("Define a max percentage discount that villagers can give.")
 				.defineInRange("Max Discount Percentage", this.maxDiscount, 0d, 1d);
-		preventCureDiscountConfig = Config.builder
+		preventCureDiscountConfig = ITCommonConfig.builder
 				.comment("If true, villagers will no longer get the discount when cured from Zombies to prevent over discounting.")
 				.define("Prevent Cure Discount", this.preventCureDiscount);
-		clampNegativeDemandConfig = Config.builder
+		clampNegativeDemandConfig = ITCommonConfig.builder
 				.comment("When villagers restock, they update the 'demand'. Demand is a trade modifier that increases the price whenever a trade is done many times, BUT when a trade is not performed, at each restock the 'demand' goes negative, making possible for a trade to never increase it's price due to high negative demand. With this to true, negative demand will be capped at -max_uses of the trade (e.g. Carrot trade from a farmer will have it's minimum demand set to -16).")
 				.define("Clamp Negative Demand", this.clampNegativeDemand);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
 import insane96mcp.iguanatweaksreborn.module.farming.utils.PlantGrowthModifier;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -37,12 +37,12 @@ public class PlantsGrowth extends Feature {
 	public ArrayList<PlantGrowthModifier> plantsList;
 
 	public PlantsGrowth(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		plantsListConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		plantsListConfig = ITCommonConfig.builder
 				.comment("A list of blocks that will take more time to grow and the multiplier that increases the time to grow. Format is 'modid:blockid,multiplier' or '#modid:blocktag,multiplier'.")
 				.defineList("Plants Growth Multiplier", plantsListDefault, o -> o instanceof String);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

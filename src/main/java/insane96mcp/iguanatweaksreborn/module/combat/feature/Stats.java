@@ -2,7 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.combat.feature;
 
 import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.module.combat.utils.ItemAttributeModifier;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -45,34 +45,34 @@ public class Stats extends Feature {
 	public List<ItemAttributeModifier> itemModifiers;
 
 	public Stats(Module module) {
-		super(Config.builder, module);
-		this.pushConfig(Config.builder);
-		reduceWeaponsDamageConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		this.pushConfig(ITCommonConfig.builder);
+		reduceWeaponsDamageConfig = ITCommonConfig.builder
 				.comment("If true, Swords and Tridents get -1 damage and Axes get -1.5 damage.")
 				.define("Reduce Weapon Damage", reduceWeaponDamage);
-		powerPowerConfig = Config.builder
+		powerPowerConfig = ITCommonConfig.builder
 				.comment("Set the power of the Power enchantment (vanilla is 0.5).")
 				.defineInRange("Power Power", this.powerPower, 0, 10);
-		disableCritArrowsConfig = Config.builder
+		disableCritArrowsConfig = ITCommonConfig.builder
 				.comment("If true, Arrows from Bows will no longer randomly crit (basically disables the random bonus damage given when firing a fully charged arrow).")
 				.define("Disable Arrow Crits", this.disableCritArrows);
-		adjustCrossbowDamageConfig = Config.builder
+		adjustCrossbowDamageConfig = ITCommonConfig.builder
 				.comment("If true, Arrows from Crossbows will no longer deal random damage, but a set amount of damage (about 9 at a medium distance).")
 				.define("Adjust Crossbow Damage", this.adjustCrossbowDamage);
-		protectionNerfConfig = Config.builder
+		protectionNerfConfig = ITCommonConfig.builder
 				.comment("""
 						DISABLE: Disables protection enchantment.
 						NERF: Sets max protection level to 3 instead of 4
 						NONE: no changes to protection are done""")
 				.defineEnum("Nerf Protection Enchantment", this.protectionNerf);
-		itemModifiersConfig = Config.builder
+		itemModifiersConfig = ITCommonConfig.builder
 				.comment("""
 						Define Attribute Modifiers to apply to single items, one string = one item/tag.
 						The format is modid:itemid,slot,attribute,amount,operation (or tag instead of itemid #modid:tagid,...)
 						- slot can be: MAIN_HAND,OFF_HAND,HEAD,CHEST,LEGS,FEET
 						- operation can be: ADDITION, MULTIPLY_BASE, MULTIPLY_TOTAL""")
 				.defineList("Item Modifiers", itemModifiersDefault, o -> o instanceof String);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

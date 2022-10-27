@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -25,18 +25,18 @@ public class Nerf extends Feature {
 	public boolean noIceBoat = true;
 
 	public Nerf(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		noSheepWoolConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		noSheepWoolConfig = ITCommonConfig.builder
 				.comment("If true, sheep will no longer drop Wool on death.")
 				.define("No Sheep Death Wool", this.noSheepWool);
-		ironRequiresPlayerConfig = Config.builder
+		ironRequiresPlayerConfig = ITCommonConfig.builder
 				.comment("If true, Iron golems will only drop Iron when killed by the player.")
 				.define("Iron from Golems only when killed by Player", this.ironRequiresPlayer);
-		noIceBoatConfig = Config.builder
+		noIceBoatConfig = ITCommonConfig.builder
 				.comment("If true, boats will no longer go stupidly fast on ice.")
 				.define("No Ice Boats", this.noIceBoat);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

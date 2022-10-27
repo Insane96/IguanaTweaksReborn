@@ -2,7 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.stacksize;
 
 import insane96mcp.iguanatweaksreborn.module.stacksize.feature.CustomStackSize;
 import insane96mcp.iguanatweaksreborn.module.stacksize.feature.GeneralStacking;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 
@@ -13,11 +13,11 @@ public class StackSize extends Module {
 	public CustomStackSize customStackSize;
 
 	public StackSize() {
-		super(Config.builder);
-		pushConfig(Config.builder);
+		super(ITCommonConfig.builder);
+		pushConfig(ITCommonConfig.builder);
 		generalStacking = new GeneralStacking(this);
 		customStackSize = new CustomStackSize(this);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

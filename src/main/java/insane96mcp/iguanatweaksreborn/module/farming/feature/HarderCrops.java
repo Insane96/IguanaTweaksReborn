@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -33,18 +33,18 @@ public class HarderCrops extends Feature {
 	public boolean onlyFullyGrown = true;
 
 	public HarderCrops(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		hardnessConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		hardnessConfig = ITCommonConfig.builder
 				.comment("How hard to break are plants? For comparison, dirt has an hardness of 0.5")
 				.defineInRange("Hardness", hardness, 0.0d, 128d);
-		moreBlocksListConfig = Config.builder
+		moreBlocksListConfig = ITCommonConfig.builder
 				.comment("Block ids or tags that will have the hardness and hoe efficiency applied. Each entry has a block or tag. This still only applies to blocks that have 0 hardness.")
 				.defineList("Other affected blocks", new ArrayList<>(), o -> o instanceof String);
-		onlyFullyGrownConfig = Config.builder
+		onlyFullyGrownConfig = ITCommonConfig.builder
 				.comment("If the hardness should be applied to mature crops only.")
 				.define("Only fully grown", onlyFullyGrown);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

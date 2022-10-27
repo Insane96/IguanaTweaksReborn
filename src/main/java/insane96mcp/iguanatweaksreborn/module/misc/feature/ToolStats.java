@@ -2,7 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
 import insane96mcp.iguanatweaksreborn.module.misc.utils.ToolDurabilityModifier;
 import insane96mcp.iguanatweaksreborn.module.misc.utils.ToolEfficiencyModifier;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -41,18 +41,18 @@ public class ToolStats extends Feature {
 	public ArrayList<ToolEfficiencyModifier> toolEfficiencyModifiers;
 
 	public ToolStats(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		this.toolsDurabilityConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		this.toolsDurabilityConfig = ITCommonConfig.builder
 				.comment("A list of items which should have their durability changed.\n" +
 						"Format is 'modid:itemid,durability'")
 				.worldRestart()
 				.defineList("Tools Durability", toolsDurabilityDefault, o -> o instanceof String);
-		this.toolsEfficiencyConfig = Config.builder
+		this.toolsEfficiencyConfig = ITCommonConfig.builder
 				.comment("A list of items and multipliers that will apply to mining speed when breaking blocks with that item.\n" +
 						"Format is 'modid:itemid,efficiency_multiplier'")
 				.defineList("Tools Efficiency", toolEfficiencyDefault, o -> o instanceof String);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	private boolean durabilityApplied = false;

@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.movement.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -18,7 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class NoPillaring extends Feature {
 
 	public NoPillaring(Module module) {
-		super(Config.builder, module);
+		super(ITCommonConfig.builder, module);
 	}
 
 	@Override

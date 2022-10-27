@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -66,65 +66,65 @@ public class HealthRegen extends Feature {
 	public double injuredEffectiveness = 0.2d;
 
 	public HealthRegen(Module module) {
-		super(Config.builder, module);
-		this.pushConfig(Config.builder);
-		healthRegenPresetConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		this.pushConfig(ITCommonConfig.builder);
+		healthRegenPresetConfig = ITCommonConfig.builder
 				.comment("""
 						Sets the other config options to some default values (actual config is not changed, but custom values are ignored):
 						NONE: Use custom values
 						COMBAT_TEST: health regeneration works like the Combat Tests Snapshots""")
 				.defineEnum("Health Regen Preset", this.healthRegenPreset);
-		healthRegenSpeedConfig = Config.builder
+		healthRegenSpeedConfig = ITCommonConfig.builder
 				.comment("Sets how many ticks between the health regeneration happens (vanilla is 80; Combat Test is 40).")
 				.defineInRange("Health Regen Speed", this.healthRegenSpeed, 0, Integer.MAX_VALUE);
-		regenWhenFoodAboveConfig = Config.builder
+		regenWhenFoodAboveConfig = ITCommonConfig.builder
 				.comment("Sets how much hunger the player must have to regen health (vanilla is >17; Combat Test is >3).")
 				.defineInRange("Regen when Hunger Above", this.regenWhenFoodAbove, 0, Integer.MAX_VALUE);
-		starveSpeedConfig = Config.builder
+		starveSpeedConfig = ITCommonConfig.builder
 				.comment("Sets how many ticks between starve damage happens (vanilla and Combat Test is 80).")
 				.defineInRange("Starve Speed", this.starveSpeed, 0, Integer.MAX_VALUE);
-		starveDamageConfig = Config.builder
+		starveDamageConfig = ITCommonConfig.builder
 				.comment("Set how much damage is dealt when starving (vanilla and Combat Test are 1).")
 				.defineInRange("Starve Damage", this.starveDamage, 0, Integer.MAX_VALUE);
-		consumeHungerOnlyConfig = Config.builder
+		consumeHungerOnlyConfig = ITCommonConfig.builder
 				.comment("Set to true to consume Hunger only (and not saturation) when regenerating health (false for Vanilla; true for Combat Test).")
 				.define("Consume Hunger Only", this.consumeHungerOnly);
-		maxExhaustionConfig = Config.builder
+		maxExhaustionConfig = ITCommonConfig.builder
 				.comment("Vanilla consumes 1 saturation or hunger whenever Exhaustion reaches 4.0. You can change that value with this config option. NOTE that Minecraft caps this value to 40")
 				.defineInRange("Max Exhaustion", this.maxExhaustion, 0d, 40d);
-		disableSaturationRegenBoostConfig = Config.builder
+		disableSaturationRegenBoostConfig = ITCommonConfig.builder
 				.comment("Set to true to disable the health regen boost given when max hunger and saturation (false in Vanilla; true for Combat Test).")
 				.define("Disable Saturation Regen Boost", this.disableSaturationRegenBoost);
-		hungerConsumptionChanceConfig = Config.builder
+		hungerConsumptionChanceConfig = ITCommonConfig.builder
 				.comment("If 'Consume Hunger Only' is true then this is the chance to consume an hunger whenever the player is healed (vanilla ignores this; Combat Test has this set to 0.5).")
 				.defineInRange("Hunger Consumption Chance", this.hungerConsumptionChance, 0d, 1d);
-		foodHealMultiplierConfig = Config.builder
+		foodHealMultiplierConfig = ITCommonConfig.builder
 				.comment("When eating you'll get healed by this percentage of (hunger + saturation) restored.")
 				.defineInRange("Food Heal Multiplier", this.foodHealMultiplier, 0.0d, 128d);
 
-		Config.builder.push("Effects");
-		this.enableWellFedConfig = Config.builder
+		ITCommonConfig.builder.push("Effects");
+		this.enableWellFedConfig = ITCommonConfig.builder
 				.comment("Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats.")
 				.define("Enable Well Fed", this.enableWellFed);
-		this.wellFedDurationMultiplierConfig = Config.builder
+		this.wellFedDurationMultiplierConfig = ITCommonConfig.builder
 				.comment("Multiplies the base duration of Well Fed by this value. Base duration is 1 second per food effectiveness (hunger + saturation).")
 				.defineInRange("Well Fed Duration Multiplier", this.wellFedDurationMultiplier, 0.0d, 128d);
-		this.wellFedEffectivenessConfig = Config.builder
+		this.wellFedEffectivenessConfig = ITCommonConfig.builder
 				.comment("How much does health regen Well Fed increases per level. (This is inversely proportional, a value of 0.25 makes makes time to regen lower by 20%. A value of 1.0 makes time to regen lower by 50%.")
 				.defineInRange("Well Fed Effectiveness", this.wellFedEffectiveness, 0.0d, 10.0d);
 
-		this.enableInjuredConfig = Config.builder
+		this.enableInjuredConfig = ITCommonConfig.builder
 				.comment("Set to true to enable Injured, a new effect that slows down health regen and is applied whenever the player is damaged. The effect slows down health regen by 20% per level.")
 				.define("Enable Injured", this.enableInjured);
-		this.injuredDurationMultiplierConfig = Config.builder
+		this.injuredDurationMultiplierConfig = ITCommonConfig.builder
 				.comment("Multiplies the base duration of Injured by this value. Base duration is 1 second per point of damage taken.")
 				.defineInRange("Injured Duration Multiplier", this.injuredDurationMultiplier, 0.0d, 128d);
-		this.injuredEffectivenessConfig = Config.builder
+		this.injuredEffectivenessConfig = ITCommonConfig.builder
 				.comment("How much does health regen Injured decreases per level.")
 				.defineInRange("Injured Effectiveness", this.injuredEffectiveness, 0.0d, 10.0d);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

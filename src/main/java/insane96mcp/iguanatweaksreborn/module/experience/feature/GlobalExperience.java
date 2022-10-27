@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.experience.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -19,12 +19,12 @@ public class GlobalExperience extends Feature {
 	public double globalMultiplier = 1.25d;
 
 	public GlobalExperience(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		globalMultiplierConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		globalMultiplierConfig = ITCommonConfig.builder
 				.comment("Experience dropped will be multiplied by this multiplier.\nCan be set to 0 to disable experience drop from any source.")
 				.defineInRange("Global Experience Multiplier", this.globalMultiplier, 0.0d, 1000d);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

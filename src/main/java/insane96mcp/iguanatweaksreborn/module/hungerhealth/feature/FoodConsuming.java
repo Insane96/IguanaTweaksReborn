@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -30,27 +30,27 @@ public class FoodConsuming extends Feature {
 	public boolean stopConsumingOnHit = true;
 
 	public FoodConsuming(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		fasterPotionConsumingConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		fasterPotionConsumingConfig = ITCommonConfig.builder
 				.comment("Makes potion faster to drink, 1 second instead of 1.6.")
 				.define("Faster Potion Consuming", this.fasterPotionConsuming);
-		fasterMilkConsumingConfig = Config.builder
+		fasterMilkConsumingConfig = ITCommonConfig.builder
 				.comment("Makes milk faster to drink, 1 second instead of 1.6.")
 				.define("Faster Milk Consuming", this.fasterMilkConsuming);
-		eatingSpeedBasedOffFoodConfig = Config.builder
+		eatingSpeedBasedOffFoodConfig = ITCommonConfig.builder
 				.comment("Makes the speed for eating food based off the hunger and saturation they provide. At 2 (hunger + saturation) the speed is vanilla, higher / lower (hunger + saturation) will lower / raise the speed. Minimum 16 ticks.")
 				.define("Eating Speed Based Off Food Restored", this.eatingSpeedBasedOffFood);
-		eatingTimeMultiplierConfig = Config.builder
+		eatingTimeMultiplierConfig = ITCommonConfig.builder
 				.comment("Multiplier for the time taken to eat. Only applied if 'Eating Speed Based Off Food Config' is active.")
 				.defineInRange("Eating Time Multiplier", this.eatingTimeMultiplier, 0, Double.MAX_VALUE);
-		eatingTimeMinConfig = Config.builder
+		eatingTimeMinConfig = ITCommonConfig.builder
 				.comment("The minimum speed a food will take to eat. \"Fast Food\" items have this value halved. Vanilla time is 32/16")
 				.defineInRange("Eating Time Minimum", this.eatingTimeMin, 0, Integer.MAX_VALUE);
-		stopConsumingOnHitConfig = Config.builder
+		stopConsumingOnHitConfig = ITCommonConfig.builder
 				.comment("If true, eating/drinking stops when the player's hit.")
 				.define("Stop consuming on hit", this.stopConsumingOnHit);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.combat.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -20,18 +20,18 @@ public class Shields extends Feature {
 	public boolean combatTestShieldDisabling = true;
 
 	public Shields(Module module) {
-		super(Config.builder, module);
-		this.pushConfig(Config.builder);
-		removeShieldWindupConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		this.pushConfig(ITCommonConfig.builder);
+		removeShieldWindupConfig = ITCommonConfig.builder
 				.comment("In vanilla when you start blocking with a shield, there's a 0.25 seconds window where you are still not blocking. If true this windup time is removed.")
 				.define("Remove Shield Windup", this.removeShieldWindup);
-		shieldBlockDamageConfig = Config.builder
+		shieldBlockDamageConfig = ITCommonConfig.builder
 				.comment("Shields will only block this amount of damage. Setting to 0 will make shield block like vanilla")
 				.defineInRange("Shield Damage Blocked", this.shieldBlockDamage, 0d, 128d);
-		combatTestShieldDisablingConfig = Config.builder
+		combatTestShieldDisablingConfig = ITCommonConfig.builder
 				.comment("Makes shields always disable for 1.6 seconds like Combat Test snapshots.")
 				.define("Combat Test shield disabling", this.combatTestShieldDisabling);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

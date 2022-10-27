@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -28,21 +28,21 @@ public class ExhaustionIncrease extends Feature {
 	public boolean effectiveHunger = true;
 
 	public ExhaustionIncrease(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		blockBreakExhaustionMultiplierConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		blockBreakExhaustionMultiplierConfig = ITCommonConfig.builder
 				.comment("When you break a block you'll get exhaustion equal to the block hardness multiplied by this value. Setting this to 0 will default to the vanilla exhaustion (0.005). (It's not affected by the Global Hardness Features)")
 				.defineInRange("Block Break Exhaustion Multiplier", blockBreakExhaustionMultiplier, 0.0d, 1024d);
-		exhaustionOnBlockBreakingConfig = Config.builder
+		exhaustionOnBlockBreakingConfig = ITCommonConfig.builder
 				.comment("When breaking block you'll get exhaustion every tick during the breaking.")
 				.defineInRange("Exhaustion per tick when breaking a block", exhaustionOnBlockBreaking, 0.0d, 1024d);
-		passiveExhaustionConfig = Config.builder
+		passiveExhaustionConfig = ITCommonConfig.builder
 				.comment("Every second the player will get this exhaustion.")
 				.defineInRange("Passive Exhaustion", this.passiveExhaustion, 0.0d, 1024d);
-		effectiveHungerConfig = Config.builder
+		effectiveHungerConfig = ITCommonConfig.builder
 				.comment("When affected by the hunger effect ANY action will give you 100% more exhaustion per level.")
 				.define("Effective Hunger", this.effectiveHunger);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

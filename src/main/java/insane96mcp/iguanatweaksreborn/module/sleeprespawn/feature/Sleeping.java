@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -29,18 +29,18 @@ public class Sleeping extends Feature {
 	public boolean allowDaySleep = true;
 
 	public Sleeping(Module module) {
-		super(Config.builder, module);
-		this.pushConfig(Config.builder);
-		disableSleepingConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		this.pushConfig(ITCommonConfig.builder);
+		disableSleepingConfig = ITCommonConfig.builder
 				.comment("If set to true the player will not be able to sleep.")
 				.define("Disable Sleeping", this.disableSleeping);
-		disableBedSpawnConfig = Config.builder
+		disableBedSpawnConfig = ITCommonConfig.builder
 				.comment("If set to true the player spawn point will not change when the player cannot sleep. Has no effect if the player can sleep.")
 				.define("Disable Bed Spawn", this.disableBedSpawn);
-		allowDaySleepConfig = Config.builder
+		allowDaySleepConfig = ITCommonConfig.builder
 				.comment("If set to true the player will be able to sleep during day time. On wake up it will be night time")
 				.define("Allow Sleeping During Day", this.allowDaySleep);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

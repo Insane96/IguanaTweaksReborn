@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.movement;
 
 import insane96mcp.iguanatweaksreborn.module.movement.feature.*;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 
@@ -15,14 +15,14 @@ public class Movement extends Module {
 	public BackwardsSlowdown backwardsSlowdown;
 
 	public Movement() {
-		super(Config.builder);
-		pushConfig(Config.builder);
+		super(ITCommonConfig.builder);
+		pushConfig(ITCommonConfig.builder);
 		weightedEquipment = new WeightedEquipment(this);
 		noPillaring = new NoPillaring(this);
 		tagging = new Tagging(this);
 		terrainSlowdown = new TerrainSlowdown(this);
 		backwardsSlowdown = new BackwardsSlowdown(this);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

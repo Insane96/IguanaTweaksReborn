@@ -2,7 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.farming.utils.HoeCooldown;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -37,18 +37,18 @@ public class HoesNerfs extends Feature {
 	public int hoesDamageOnUseMultiplier = 3;
 
 	public HoesNerfs(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		hoesCooldownsConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		hoesCooldownsConfig = ITCommonConfig.builder
 				.comment("A list of hoes and ticks that a hoe will go on cooldown. The format is modid:itemid,ticks. 20 ticks = 1 second. You can even use tags as #modid:tag,ticks.")
 				.defineList("Hoes Cooldowns", hoesCooldownsDefault, o -> o instanceof String);
-		disableLowTierHoesConfig = Config.builder
+		disableLowTierHoesConfig = ITCommonConfig.builder
 				.comment("When true, Wooden and Stone Hoes will not be usable to till dirt and will be heavily damaged when trying to. The list of \"unusable\" hoes can be changed with datapacks by changing the iguanatweaksreborn:disabled_hoes tag")
 				.define("Disable Low Tier Hoes", disableLowTierHoes);
-		hoesDamageOnUseMultiplierConfig = Config.builder
+		hoesDamageOnUseMultiplierConfig = ITCommonConfig.builder
 				.comment("When an hoe is used to till dirt it will lose this durability instead of 1. Set to 1 to disable")
 				.defineInRange("Hoes Damage On Use Multiplier", hoesDamageOnUseMultiplier, 1, 1024);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

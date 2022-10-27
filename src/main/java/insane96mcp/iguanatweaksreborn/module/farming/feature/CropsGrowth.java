@@ -2,7 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
 import insane96mcp.iguanatweaksreborn.module.farming.Farming;
 import insane96mcp.iguanatweaksreborn.module.farming.utils.PlantGrowthModifier;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -42,10 +42,10 @@ public class CropsGrowth extends Feature {
 	public ArrayList<PlantGrowthModifier> plantGrowthModifiers = new ArrayList<>();
 
 	public CropsGrowth(Module module) {
-		super(Config.builder, module);
-		this.pushConfig(Config.builder);
+		super(ITCommonConfig.builder, module);
+		this.pushConfig(ITCommonConfig.builder);
 		//Config.builder.push("Crops Require Water");
-		cropsRequireWaterConfig = Config.builder
+		cropsRequireWaterConfig = ITCommonConfig.builder
 				.comment("""
 						Set if crops require wet farmland to grow.
 						Valid Values:
@@ -60,28 +60,28 @@ public class CropsGrowth extends Feature {
 				.setIsDefaultWhitelist(false)
 				.build();
 		Config.builder.pop();*/
-		cropsGrowthMultiplierConfig = Config.builder
+		cropsGrowthMultiplierConfig = ITCommonConfig.builder
 				.comment("""
 						Increases the time required for a crop (stems NOT included) to grow (e.g. at 2.0 the crop will take twice to grow).
 						Setting this to 0 will prevent crops from growing naturally.
 						1.0 will make crops grow like normal.""")
 				.defineInRange("Crops Growth Speed Multiplier", cropsGrowthMultiplier, 0.0d, 128d);
-		noSunlightGrowthMultiplierConfig = Config.builder
+		noSunlightGrowthMultiplierConfig = ITCommonConfig.builder
 				.comment("""
 						Increases the time required for a crop to grow when it's sky light level is below "Min Sunlight", (e.g. at 2.0 when the crop has a skylight below "Min Sunlight" will take twice to grow).
 						Setting this to 0 will prevent crops from growing when sky light level is below "Min Sunlight".
 						1.0 will make crops growth not affected by skylight.""")
 				.defineInRange("No Sunlight Growth Multiplier", noSunLightGrowthMultiplier, 0.0d, 128d);
-		nightTimeGrowthMultiplierConfig = Config.builder
+		nightTimeGrowthMultiplierConfig = ITCommonConfig.builder
 				.comment("""
 						Increases the time required for a crop to grow when it's night time.
 						Setting this to 0 will prevent crops from growing when it's night time.
 						1.0 will make crops growth not affected by night.""")
 				.defineInRange("Night Time Growth Multiplier", nightTimeGrowthMultiplier, 0.0d, 128d);
-		minSunlightConfig = Config.builder
+		minSunlightConfig = ITCommonConfig.builder
 				.comment("Minimum Sky Light level required for crops to not be affected by \"No Sunlight Growth Multiplier\".")
 				.defineInRange("Min Sunlight", minSunlight, 0, 15);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

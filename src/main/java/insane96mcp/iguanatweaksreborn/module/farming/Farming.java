@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.farming;
 
 import insane96mcp.iguanatweaksreborn.module.farming.feature.*;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import net.minecraft.core.BlockPos;
@@ -23,15 +23,15 @@ public class Farming extends Module {
 	public HarderCrops harderCrops;
 
 	public Farming() {
-		super(Config.builder);
-		pushConfig(Config.builder);
+		super(ITCommonConfig.builder);
+		pushConfig(ITCommonConfig.builder);
 		liveStockSlowdown = new LivestockSlowdown(this);
 		nerfedBonemeal = new NerfedBonemeal(this);
 		cropsGrowth = new CropsGrowth(this);
 		plantsGrowth = new PlantsGrowth(this);
 		hoesNerfs = new HoesNerfs(this);
 		harderCrops = new HarderCrops(this);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

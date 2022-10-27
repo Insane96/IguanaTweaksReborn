@@ -3,7 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.sleeprespawn;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature.Sleeping;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature.SleepingEffects;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature.Tiredness;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 
@@ -15,12 +15,12 @@ public class SleepRespawn extends Module {
 	public Tiredness tiredness;
 
 	public SleepRespawn() {
-		super(Config.builder);
-		pushConfig(Config.builder);
+		super(ITCommonConfig.builder);
+		pushConfig(ITCommonConfig.builder);
 		sleepingEffects = new SleepingEffects(this);
 		sleeping = new Sleeping(this);
 		tiredness = new Tiredness(this);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

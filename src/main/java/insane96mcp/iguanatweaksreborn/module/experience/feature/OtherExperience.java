@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.experience.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -30,24 +30,24 @@ public class OtherExperience extends Feature {
 	public int unmendingCap = 20;
 
 	public OtherExperience(Module module) {
-		super(Config.builder, module, true);
-		this.pushConfig(Config.builder);
-		xpBottleBonusConfig = Config.builder
+		super(ITCommonConfig.builder, module, true);
+		this.pushConfig(ITCommonConfig.builder);
+		xpBottleBonusConfig = ITCommonConfig.builder
 				.comment("Bottle o' enchanting will drop this more XP. Experience is still affected by 'Global Experience Multiplier'\nCan be set to 0 to make Bottle o' enchanting drop no experience")
 				.defineInRange("Bottle o' Enchanting Bonus XP", this.xpBottleBonus, 0, 1024);
-		anvilRepairCapConfig = Config.builder
+		anvilRepairCapConfig = ITCommonConfig.builder
 				.comment("Set the cap for repairing items in the anvil (vanilla is 40)")
 				.defineInRange("Anvil Repair Cap", this.anvilRepairCap, 1, Integer.MAX_VALUE);
-		freeRenamingConfig = Config.builder
+		freeRenamingConfig = ITCommonConfig.builder
 				.comment("Removes cost of renaming items in Anvil")
 				.define("Remove rename cost", this.freeRenaming);
-		unmendingConfig = Config.builder
+		unmendingConfig = ITCommonConfig.builder
 				.comment("Replaces the default Mending enchantment. Mending sets the repair cost of an item to 'Unmending Cap' and will stop it from increasing. No longer repairs items with xp.")
 				.define("Unmending", this.unmending);
-		unmendingCapConfig = Config.builder
+		unmendingCapConfig = ITCommonConfig.builder
 				.comment("Set the cap repair cost set by Unmending")
 				.defineInRange("Unmending Cap", this.unmendingCap, 1, Integer.MAX_VALUE);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

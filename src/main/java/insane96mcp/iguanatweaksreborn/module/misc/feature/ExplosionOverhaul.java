@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
 import insane96mcp.iguanatweaksreborn.module.misc.level.ITExplosion;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -49,42 +49,42 @@ public class ExplosionOverhaul extends Feature {
 	public Blacklist entityBlacklist;
 
 	public ExplosionOverhaul(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		disableExplosionRandomnessConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		disableExplosionRandomnessConfig = ITCommonConfig.builder
 				.comment("Vanilla Explosions use a random number that changes the explosion power. With this enabled the ray strength will be as the explosion size.")
 				.define("Disable Explosion Randomness", disableExplosionRandomness);
-		enablePoofParticlesConfig = Config.builder
+		enablePoofParticlesConfig = ITCommonConfig.builder
 				.comment("Somewhere around 1.15 Mojang (for performance issues) removed the poof particles from Explosions. Keep them disabled if you have a low end PC.\n" +
 						"These particles aren't shown when explosion power is <= 1")
 				.define("Enable Poof Particles", enablePoofParticles);
-		blockingDamageScalingConfig = Config.builder
+		blockingDamageScalingConfig = ITCommonConfig.builder
 				.comment("How much damage will the player take when blocking an explosion with a shield. Putting 0 shields will block all the damage like Vanilla, while putting 1 shields will block no damage.")
 				.defineInRange("Blocking Damage Scaling", blockingDamageScaling, 0.0d, 1.0d);
-		knockbackScalesWithSizeConfig = Config.builder
+		knockbackScalesWithSizeConfig = ITCommonConfig.builder
 				.comment("While enabled knockback is greatly increased by explosion size")
 				.define("Knockback Scales With Size", knockbackScalesWithSize);
-		explosionAtHalfEntityConfig = Config.builder
+		explosionAtHalfEntityConfig = ITCommonConfig.builder
 				.comment("Explosions will start from the middle of the entity instead of feets.")
 				.define("Explosions at Half Entity", explosionAtHalfEntity);
-		affectJustSpawnedEntitiesConfig = Config.builder
+		affectJustSpawnedEntitiesConfig = ITCommonConfig.builder
 				.comment("Explosions affect even entities spawned by the explosions, like TnTs or chests content. BE AWARE that containers content will get destroyed.")
 				.define("Explosion Affect Just Spawned Entities", this.affectJustSpawnedEntities);
-		enableFlyingBlocksConfig = Config.builder
+		enableFlyingBlocksConfig = ITCommonConfig.builder
 				.comment("EXPERIMENTAL! This will make explosion blast blocks away. Blocks that can't land will drop the block as a TNT would have destroyed it.")
 				.define("Enable Flying Blocks", enableFlyingBlocks);
-		creeperCollateralConfig = Config.builder
+		creeperCollateralConfig = ITCommonConfig.builder
 				.comment("If true, creepers explosions will drop no blocks.")
 				.define("Creeper collateral", this.creeperCollateral);
-		knockbackBlacklistConfig = new Blacklist.Config(Config.builder, "Knockback Blacklist", "A list of mobs (and optionally dimensions) that should take reduced knockback. Non-living entities are blacklisted by default.")
+		knockbackBlacklistConfig = new Blacklist.Config(ITCommonConfig.builder, "Knockback Blacklist", "A list of mobs (and optionally dimensions) that should take reduced knockback. Non-living entities are blacklisted by default.")
 				.setDefaultList(knockbackBlacklistDefault)
 				.setIsDefaultWhitelist(false)
 				.build();
-		entityBlacklistConfig = new Blacklist.Config(Config.builder, "Entity Blacklist", "A list of entities that should not use the mod's explosion.")
+		entityBlacklistConfig = new Blacklist.Config(ITCommonConfig.builder, "Entity Blacklist", "A list of entities that should not use the mod's explosion.")
 				.setDefaultList(Collections.emptyList())
 				.setIsDefaultWhitelist(false)
 				.build();
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

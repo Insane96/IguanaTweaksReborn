@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.experience.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -16,12 +16,12 @@ public class BlockExperience extends Feature {
 	public double blockMultiplier = 2.2d;
 
 	public BlockExperience(Module module) {
-		super(Config.builder, module, true);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		blockMultiplierConfig = Config.builder
+		super(ITCommonConfig.builder, module, true);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		blockMultiplierConfig = ITCommonConfig.builder
 				.comment("Experience dropped by blocks (Ores and Spawners) will be multiplied by this multiplier. Experience dropped by blocks are still affected by 'Global Experience Multiplier'\nCan be set to 0 to make blocks drop no experience")
 				.defineInRange("Experience from Blocks Multiplier", this.blockMultiplier, 0.0d, 1024d);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

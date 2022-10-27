@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -37,27 +37,27 @@ public class NerfedBonemeal extends Feature {
 	public Blacklist blockBlacklist;
 
 	public NerfedBonemeal(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		nerfedBonemealConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		nerfedBonemealConfig = ITCommonConfig.builder
 				.comment("Makes more Bone Meal required for Crops. Valid Values are\nDISABLED: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
 				.defineEnum("Nerfed Bonemeal", this.nerfedBonemeal);
-		bonemealFailChanceConfig = Config.builder
+		bonemealFailChanceConfig = ITCommonConfig.builder
 				.comment("Makes Bone Meal have a chance to fail to grow crops. 0 to disable, 1 to disable bonemeal.")
 				.defineInRange("Bonemeal Fail Chance", bonemealFailChance, 0d, 1d);
-		itemBlacklistConfig = new Blacklist.Config(Config.builder, "Item Blacklist",
+		itemBlacklistConfig = new Blacklist.Config(ITCommonConfig.builder, "Item Blacklist",
 				"Items or item tags that will ignore the feature. Can be used with any item that inherits the properties of vanilla bonemeal (and it's properly implemented).\n" +
 						"Each entry has an item or tag. The format is modid:item_id or #modid:item_tag.")
 				.setDefaultList(Collections.emptyList())
 				.setIsDefaultWhitelist(false)
 				.build();
-		blockBlacklistConfig = new Blacklist.Config(Config.builder, "Block Blacklist",
+		blockBlacklistConfig = new Blacklist.Config(ITCommonConfig.builder, "Block Blacklist",
 				"Blocks or block tags that will not be affected by the bonemeal nerf.\n" +
 						"Each entry has a block or a block tag. The format is modid:block_id or #modid:block_tag.")
 				.setDefaultList(blockBlacklistDefault)
 				.setIsDefaultWhitelist(false)
 				.build();
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

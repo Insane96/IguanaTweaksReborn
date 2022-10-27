@@ -2,7 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.movement.feature;
 
 import insane96mcp.iguanatweaksreborn.module.misc.utils.IdTagValue;
 import insane96mcp.iguanatweaksreborn.module.movement.utils.MaterialSlowdown;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -47,18 +47,18 @@ public class TerrainSlowdown extends Feature {
 	public ArrayList<IdTagValue> customTerrainSlowdown;
 
 	public TerrainSlowdown(Module module) {
-		super(Config.builder, module);
-		this.pushConfig(Config.builder);
-		materialOnSlowdownConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		this.pushConfig(ITCommonConfig.builder);
+		materialOnSlowdownConfig = ITCommonConfig.builder
 				.comment("Slowdown percentage when walking on certain materials. Material names are fixed and cannot be changed. Materials per block list here: https://docs.google.com/spreadsheets/d/1XZ2iTC4nqit_GxvKurRp8NpW3tNaeaZsvfv4EGPoQxw/edit?usp=sharing")
 				.defineList("Material On Slowdown", this.materialOnSlowdownDefault, o -> o instanceof String);
-		materialInSlowdownConfig = Config.builder
+		materialInSlowdownConfig = ITCommonConfig.builder
 				.comment("Slowdown percentage when walking in certain materials. Material names are fixed and cannot be changed. Materials per block list here: https://docs.google.com/spreadsheets/d/1XZ2iTC4nqit_GxvKurRp8NpW3tNaeaZsvfv4EGPoQxw/edit?usp=sharing")
 				.defineList("Material In Slowdown", this.materialInSlowdownDefault, o -> o instanceof String);
-		customTerrainSlowdownConfig = Config.builder
+		customTerrainSlowdownConfig = ITCommonConfig.builder
 				.comment("List of blocks and percentage slowdown when on that block/block tag. This overrides slowdown given by Material On Slowdown")
 				.defineList("Custom Terrain slowdown", this.customTerrainSlowdownDefault, o -> o instanceof String);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

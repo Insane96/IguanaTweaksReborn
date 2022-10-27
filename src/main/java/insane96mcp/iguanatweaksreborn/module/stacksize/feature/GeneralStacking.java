@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.stacksize.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.utils.Weights;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -47,37 +47,37 @@ public class GeneralStacking extends Feature {
     public Blacklist blacklist;
 
 	public GeneralStacking(Module module) {
-        super(Config.builder, module);
-        this.pushConfig(Config.builder);
-        foodStackReductionConfig = Config.builder
+        super(ITCommonConfig.builder, module);
+        this.pushConfig(ITCommonConfig.builder);
+        foodStackReductionConfig = ITCommonConfig.builder
                 .comment("Food stack sizes will be reduced based off their hunger restored and saturation multiplier. The formula is '(1 - (effective_quality - 1) / Food Quality Divider) * 64' where effective_quality is hunger+saturation restored. E.g. Cooked Porkchops give 8 hunger points and have a 0.8 saturation multiplier so their stack size will be '(1 - (20.8 - 1) / 18.5) * 64' = 24 (Even foods that usually stack up to 16 or that don't stack at all will use the same formula, like Honey or Stews).\nThis is affected by Food Module's feature 'Hunger Restore Multiplier' & 'Saturation Restore multiplier'")
                 .define("Food Stack Reduction", foodStackReduction);
-        foodQualityDividerConfig = Config.builder
+        foodQualityDividerConfig = ITCommonConfig.builder
                 .comment("Used in the 'Food Stack Reduction' formula. Increase this if there are foods that are better than vanilla ones, otherwise they will all stack to 1. Set this to 21.8 if you disable 'Hunger Restore Multiplier'")
                 .defineInRange("Food Quality Divider", this.foodQualityDivider, 1d, 40d);
-        foodStackMultiplierConfig = Config.builder
+        foodStackMultiplierConfig = ITCommonConfig.builder
                 .comment("All the foods max stack sizes will be multiplied by this value to increase / decrease them (after Food Stack Reduction).")
                 .defineInRange("Food Stack Multiplier", foodStackMultiplier, 0.01d, 64d);
-        stackableSoupsConfig = Config.builder
+        stackableSoupsConfig = ITCommonConfig.builder
                 .comment("Stews will stack up to this number. It's overridden by 'foodStackReduction' if enabled. Still affected by black/whitelist")
                 .defineInRange("Stackable Stews", this.stackableSoups, 1, 64);
-        itemStackMultiplierConfig = Config.builder
+        itemStackMultiplierConfig = ITCommonConfig.builder
                 .comment("Items max stack sizes (excluding blocks) will be multiplied by this value. Foods will be overridden by 'Food Stack Reduction' or 'Food Stack Multiplier' if are active. Setting to 1 will disable this feature.")
                 .defineInRange("Item Stack Multiplier", itemStackMultiplier, 0.01d, 1.0d);
-        blockStackReductionConfig = Config.builder
+        blockStackReductionConfig = ITCommonConfig.builder
                 .comment("Blocks max stack sizes will be reduced based off their material.")
                 .define("Block Stack Reduction", blockStackReduction);
-        blockStackMultiplierConfig = Config.builder
+        blockStackMultiplierConfig = ITCommonConfig.builder
                 .comment("All the blocks max stack sizes will be multiplied by this value to increase / decrease them. This is applied after the reduction from 'Block Stack Reduction'.")
                 .defineInRange("Block Stack Multiplier", blockStackMultiplier, 0.01d, 64d);
-        blockStackAffectedByMaterialConfig = Config.builder
+        blockStackAffectedByMaterialConfig = ITCommonConfig.builder
                 .comment("When true, block stacks are affected by both their material type and the block stack multiplier. If false, block stacks will be affected by the multiplier only.")
                 .define("Block Stack Affected by Material", blockStackAffectedByMaterial);
-        blacklistConfig = new Blacklist.Config(Config.builder, "Blacklist", "Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"#minecraft:fishes\", \"minecraft:stone\"].")
+        blacklistConfig = new Blacklist.Config(ITCommonConfig.builder, "Blacklist", "Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"#minecraft:fishes\", \"minecraft:stone\"].")
                 .setDefaultList(blacklistDefault)
                 .setIsDefaultWhitelist(false)
                 .build();
-        Config.builder.pop();
+        ITCommonConfig.builder.pop();
     }
 
     @Override

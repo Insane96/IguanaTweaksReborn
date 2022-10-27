@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
 import insane96mcp.iguanatweaksreborn.module.misc.utils.DeBuff;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -25,9 +25,9 @@ public class DeBuffs extends Feature {
 	public ArrayList<DeBuff> deBuffs;
 
 	public DeBuffs(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		deBuffsConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		deBuffsConfig = ITCommonConfig.builder
 				.comment("A list of DeBuffs to apply to the player when has on low hunger / health / experience level. Each string must be 'stat,range,status_effect,amplifier', where stat MUST BE one of the following: HUNGER, HEALTH, EXPERIENCE_LEVEL; range must be a range for the statistic like it's done in commands.\n" +
 						"'10' When the player has exactly ten of the specified stat.\n" +
 						"'10..12' When the player has between 10 and 12 (inclusive) of the specified stat.\n" +
@@ -37,7 +37,7 @@ public class DeBuffs extends Feature {
 						"amplifier must be the potion level starting from 0 (0 = level I)\n" +
 						"")
 				.defineList("DeBuffs", deBuffsDefault, o -> o instanceof String);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.movement.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -23,12 +23,12 @@ public class BackwardsSlowdown extends Feature {
 	public double slowdown = 0.2d;
 
 	public BackwardsSlowdown(Module module) {
-		super(Config.builder, module);
-		this.pushConfig(Config.builder);
-		slowdownConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		this.pushConfig(ITCommonConfig.builder);
+		slowdownConfig = ITCommonConfig.builder
 				.comment("How much slower will the player go when walking backwards.")
 				.defineInRange("Slowdown", this.slowdown, 0d, 1d);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

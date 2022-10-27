@@ -2,7 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.mining.feature;
 
 import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.BlockHardness;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -25,16 +25,16 @@ public class CustomHardness extends Feature {
 	public ArrayList<BlockHardness> customHardness;
 
 	public CustomHardness(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		customHardnessConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		customHardnessConfig = ITCommonConfig.builder
 				.comment("""
 						Define custom blocks hardness, one string = one block/tag. Those blocks ARE AFFECTED by the global block hardness multiplier, unless put in the blacklist.
 						The format is modid:blockid,hardness,dimensionid or #modid:tagid,hardness,dimensionid
 						E.g. 'minecraft:stone,5.0' will make stone have 5 hardness in every dimension (multiplied by Global Hardness).
 						E.g. '#forge:stone,5.0,minecraft:overworld' will make all the stone types have 5 hardness but only in the overworld.""")
 				.defineList("Custom Hardness", customHardnessDefault, o -> o instanceof String);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

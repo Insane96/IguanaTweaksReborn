@@ -3,7 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.mining;
 import insane96mcp.iguanatweaksreborn.module.mining.feature.CustomHardness;
 import insane96mcp.iguanatweaksreborn.module.mining.feature.GlobalHardness;
 import insane96mcp.iguanatweaksreborn.module.mining.feature.MiningMisc;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 
@@ -15,12 +15,12 @@ public class Mining extends Module {
 	public MiningMisc miningMisc;
 
 	public Mining() {
-		super(Config.builder);
-		pushConfig(Config.builder);
+		super(ITCommonConfig.builder);
+		pushConfig(ITCommonConfig.builder);
 		globalHardness = new GlobalHardness(this);
 		customHardness = new CustomHardness(this);
 		miningMisc = new MiningMisc(this);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

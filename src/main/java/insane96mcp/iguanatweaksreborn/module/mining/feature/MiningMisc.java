@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.mining.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -19,15 +19,15 @@ public class MiningMisc extends Feature {
 	public boolean instaMineHeads = true;
 
 	public MiningMisc(Module module) {
-		super(Config.builder, module);
-		this.pushConfig(Config.builder);
-		this.instaMineSilverfishConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		this.pushConfig(ITCommonConfig.builder);
+		this.instaMineSilverfishConfig = ITCommonConfig.builder
 				.comment("Silverfish blocks will insta-mine like pre-1.17")
 				.define("Insta-Mine Silverfish", this.instaMineSilverfish);
-		this.instaMineHeadsConfig = Config.builder
+		this.instaMineHeadsConfig = ITCommonConfig.builder
 				.comment("Heads will insta-break")
 				.define("Insta-Mine Heads", this.instaMineHeads);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

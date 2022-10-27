@@ -5,7 +5,7 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.utils.EnergyBoostItem;
 import insane96mcp.iguanatweaksreborn.network.MessageTirednessSync;
 import insane96mcp.iguanatweaksreborn.network.SyncHandler;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
@@ -70,31 +70,31 @@ public class Tiredness extends Feature {
 	public List<EnergyBoostItem> energyBoostItems;
 
 	public Tiredness(Module module) {
-		super(Config.builder, module);
-		this.pushConfig(Config.builder);
-		tirednessGainMultiplierConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		this.pushConfig(ITCommonConfig.builder);
+		tirednessGainMultiplierConfig = ITCommonConfig.builder
 				.comment("Multiply the tiredness gained by this value. Normally you gain tiredness equal to the exhaustion gained. 'Effective Hunger' doesn't affect the exhaustion gained.")
 				.defineInRange("Tiredness gained multiplier", this.tirednessGainMultiplier, 0d, 128d);
-		shouldPreventSpawnPointConfig = Config.builder
+		shouldPreventSpawnPointConfig = ITCommonConfig.builder
 				.comment("If true the player will not set the spawn point if he/she can't sleep.")
 				.define("Prevent Spawn Point", this.shouldPreventSpawnPoint);
-		tirednessToSleepConfig = Config.builder
+		tirednessToSleepConfig = ITCommonConfig.builder
 				.comment("Tiredness required to be able to sleep.")
 				.defineInRange("Tiredness to sleep", this.tirednessToSleep, 0d, Double.MAX_VALUE);
-		tirednessToEffectConfig = Config.builder
+		tirednessToEffectConfig = ITCommonConfig.builder
 				.comment("Tiredness required to get the Tired effect.")
 				.defineInRange("Tiredness for effect", this.tirednessToEffect, 0d, Double.MAX_VALUE);
-		tirednessPerLevelConfig = Config.builder
+		tirednessPerLevelConfig = ITCommonConfig.builder
 				.comment("Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
 				.defineInRange("Tiredness per level", this.tirednessPerLevel, 0d, Double.MAX_VALUE);
-		energyBoostItemsConfig = Config.builder
+		energyBoostItemsConfig = ITCommonConfig.builder
 				.comment("""
 						A list of items that when consumed will give the Energy Boost effect.
 						You can specify the item/tag only and the duration will be calculated from the hunger restored or you can include duration,amplifier for customs.
 						The iguanatweaksreborn:energy_boost item tag can be used to add items without a custom duration
 						Format is 'modid:item_id' / '#modid:item_tag' or 'modid:item_id,duration,amplifier' / '#modid:item_tag,duration,amplifier'.""")
 				.defineList("Plants Growth Multiplier", energyBoostItemsDefault, o -> o instanceof String);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

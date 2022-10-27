@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
 import insane96mcp.iguanatweaksreborn.module.misc.utils.IdTagValue;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -40,12 +40,12 @@ public class BeaconConduit extends Feature {
     public boolean betterConduitProtection = true;
 
     public BeaconConduit(Module module) {
-        super(Config.builder, module);
-        this.pushConfig(Config.builder);
-        baseRangeConfig = Config.builder
+        super(ITCommonConfig.builder, module);
+        this.pushConfig(ITCommonConfig.builder);
+        baseRangeConfig = ITCommonConfig.builder
                 .comment("Base range of the beacon")
                 .defineInRange("Base Range", this.baseRange, 0d, 256d);
-        blocksListConfig = Config.builder
+        blocksListConfig = ITCommonConfig.builder
                 .comment("""
                         A list of blocks and the range increase on the beacon. Each entry represent a block or block tag plus the range increase in blocks of the beacon base.
                         Each block in the pyramid will increase the range of the beacon. After the blocks have been summed the final value is divided by the number of layers of the beacon.
@@ -53,10 +53,10 @@ public class BeaconConduit extends Feature {
                         """)
                 .defineList("Blocks Range", blocksListDefault, o -> o instanceof String);
 
-        betterConduitProtectionConfig = Config.builder
+        betterConduitProtectionConfig = ITCommonConfig.builder
                 .comment("Increases the range and damage of the conduit")
                 .define("Better Conduit Protection", this.betterConduitProtection);
-        Config.builder.pop();
+        ITCommonConfig.builder.pop();
     }
 
     @Override

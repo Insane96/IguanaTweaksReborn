@@ -2,7 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
 import insane96mcp.iguanatweaksreborn.module.misc.capability.ISpawner;
 import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerCap;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -45,25 +45,25 @@ public class TempSpawner extends Feature {
 	public Blacklist entityBlacklist;
 
 	public TempSpawner(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		minSpawnableMobsConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		minSpawnableMobsConfig = ITCommonConfig.builder
 				.comment("The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn. The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
 				.defineInRange("Minimum Spawnable Mobs", minSpawnableMobs, 0, Integer.MAX_VALUE);
-		spawnableMobsMultiplierConfig = Config.builder
+		spawnableMobsMultiplierConfig = ITCommonConfig.builder
 				.comment("This multiplier increases the max mobs spawned.")
 				.defineInRange("Spawnable mobs multiplier", spawnableMobsMultiplier, 0d, Double.MAX_VALUE);
-		bonusExperienceWhenFarFromSpawnConfig = Config.builder
+		bonusExperienceWhenFarFromSpawnConfig = ITCommonConfig.builder
 				.comment("If true, the spawner will drop more experience when broken based of distance from spawn. +100% every 1024 blocks from spawn. The multiplier from 'Experience From Blocks' Feature still applies.")
 				.define("Bonus experience the farther from spawn", bonusExperienceWhenFarFromSpawn);
-		reagentItemConfig = Config.builder
+		reagentItemConfig = ITCommonConfig.builder
 				.comment("Set here an item that can be used on spawners and let you re-enable them.")
 				.define("Reagent Item", "");
-		entityBlacklistConfig = new Blacklist.Config(Config.builder, "Entity Blacklist", "A list of mobs (and optionally dimensions) that shouldn't have their spawner disabled. Each entry has an entity or entity tag and optionally a dimension. E.g. [\"minecraft:zombie\", \"minecraft:blaze,minecraft:the_nether\"]")
+		entityBlacklistConfig = new Blacklist.Config(ITCommonConfig.builder, "Entity Blacklist", "A list of mobs (and optionally dimensions) that shouldn't have their spawner disabled. Each entry has an entity or entity tag and optionally a dimension. E.g. [\"minecraft:zombie\", \"minecraft:blaze,minecraft:the_nether\"]")
 				.setDefaultList(Collections.emptyList())
 				.setIsDefaultWhitelist(false)
 				.build();
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -46,24 +46,24 @@ public class LivestockSlowdown extends Feature {
 	public int cowMilkDelay = 1200;
 
 	public LivestockSlowdown(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		childGrowthMultiplierConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		childGrowthMultiplierConfig = ITCommonConfig.builder
 				.comment("Increases the time required for Baby Animals to grow (e.g. at 2.0 Animals will take twice to grow).\n1.0 will make Animals grow like normal.")
 				.defineInRange("Childs Growth Multiplier", childGrowthMultiplier, 1.0d, 128d);
-		childGrowthVillagersConfig = Config.builder
+		childGrowthVillagersConfig = ITCommonConfig.builder
 				.comment("If true, 'Childs Growth Multiplier' will be applied to villagers too.")
 				.define("Childs Growth Villagers", childGrowthVillagers);
-		breedingMultiplierConfig = Config.builder
+		breedingMultiplierConfig = ITCommonConfig.builder
 				.comment("Increases the time required for Animals to breed again (e.g. at 2.0 Animals will take twice to be able to breed again).\n1.0 will make Animals breed like normal.")
 				.defineInRange("Breeding Time Multiplier", breedingMultiplier, 1.0d, 128d);
-		eggLayMultiplierConfig = Config.builder
+		eggLayMultiplierConfig = ITCommonConfig.builder
 				.comment("Increases the time required for Chickens to lay an egg (e.g. at 2.0 Chickens will take twice the time to lay an egg).\n1.0 will make chickens lay eggs like normal.")
 				.defineInRange("Egg Lay Multiplier", 3.0d, 1.0d, 128d);
-		cowMilkDelayConfig = Config.builder
+		cowMilkDelayConfig = ITCommonConfig.builder
 				.comment("Seconds before a cow can be milked again. This applies to Mooshroom stew too.\n0 will disable this feature.")
 				.defineInRange("Cow Milk Delay", cowMilkDelay, 0, Integer.MAX_VALUE);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

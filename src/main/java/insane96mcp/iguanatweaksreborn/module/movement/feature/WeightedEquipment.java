@@ -5,7 +5,7 @@ import insane96mcp.iguanatweaksreborn.module.combat.feature.Stats;
 import insane96mcp.iguanatweaksreborn.module.combat.utils.ItemAttributeModifier;
 import insane96mcp.iguanatweaksreborn.module.movement.utils.ArmorEnchantmentWeight;
 import insane96mcp.iguanatweaksreborn.module.movement.utils.ArmorMaterialWeight;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -62,32 +62,32 @@ public class WeightedEquipment extends Feature {
 	private final HashMap<EquipmentSlot, Double> armorDurabilityRatio = new HashMap<>();
 
 	public WeightedEquipment(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		slownessPerArmorConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		slownessPerArmorConfig = ITCommonConfig.builder
 				.comment("Percentage slowdown per point of armor the player is wearing.")
 				.defineInRange("Slowdown per Armor", slownessPerArmor, 0d, 1d);
-		percentagePerToughnessConfig = Config.builder
+		percentagePerToughnessConfig = ITCommonConfig.builder
 				.comment("""
 						This value times the Armor Toughness worn by the player is a percentage increase of the Slowdown per Armor.
 						Total percentage slowdown is '(slowness_per_armor * armor_points) * (1 + (toughness * percentage_per_toughness))'
 						E.g. with 'Slowness per Armor' set to 0.02 and this set to 0.04 and the player wearing Diamond Armor the slowdown is '(0.02 * 20) * (1 + (8 * 0.04))' = '0.4 * 1.32'= '0.528' = -52.8% Speed applied to the player.""")
 				.defineInRange("Percentage Increase per Toughness", percentagePerToughness, 0d, 1d);
-		materialWeightConfig = Config.builder
+		materialWeightConfig = ITCommonConfig.builder
 				.comment("Define here a list of total slowdown percentage (with full armor) per material. This has priority over 'Slowdown per Armor' and 'Percentage Increase per Toughness'. Material's names are the names in the armor's ids. E.g. Gold Armor is 'golden' as the ids are like 'golden_chestplate'.\n" +
 						"Format is material,total_slowdown")
 				.defineList("Material Weight", materialWeightDefault, o -> o instanceof String);
-		enchantmentsListConfig = Config.builder
+		enchantmentsListConfig = ITCommonConfig.builder
 				.comment("""
 						Define here a list of Enchantments that will reduce the slowdown on the armor piece having the enchantment.
 						Format is modid:enchantmentid,reductionPerLevel,flatReduction
 						Where reduction per level is the percentage slowdown reduction per level, while flatReduction (optional) is a flat percentage slowdown reduction. E.g. 'elenaidodge2:lightweight,0.15,0.05' means that you'll get 5% less slowdown on armor plus 15% per level, so at Lightweight II you'll get (5+15*2) = 35% reduction on that piece of armor.
 						Note that the percentage reduction is on the percentage slowdown, and not a flat reduction. E.g. With Feather Falling II on a full chainmail armor you get slowed down by 8% instead of 10%.""")
 				.defineList("Enchantments Weight Reduction", enchantmentsListDefault, o -> o instanceof String);
-		shieldSlowdownConfig = Config.builder
+		shieldSlowdownConfig = ITCommonConfig.builder
 				.comment("Shields will slowdown the player by this percentage.")
 				.defineInRange("Shield Slowdown", this.shieldSlowdown, 0d, 1d);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 
 		armorDurabilityRatio.put(EquipmentSlot.HEAD, 0.2d);
 		armorDurabilityRatio.put(EquipmentSlot.CHEST, 0.290909091d);

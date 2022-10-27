@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.movement.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -22,15 +22,15 @@ public class Tagging extends Feature {
 	public int durationMultiplier = 7;
 
 	public Tagging(Module module) {
-		super(Config.builder, module);
-		this.pushConfig(Config.builder);
-		slownessLevelConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		this.pushConfig(ITCommonConfig.builder);
+		slownessLevelConfig = ITCommonConfig.builder
 				.comment("Which level of Slowness is applied to the player (level 0 is Slowness I).")
 				.defineInRange("Slowness level", this.slownessLevel, 0, 10);
-		durationMultiplierConfig = Config.builder
+		durationMultiplierConfig = ITCommonConfig.builder
 				.comment("Slowness is applied for damage_taken * this_value ticks.")
 				.defineInRange("Duration multiplier", this.durationMultiplier, 0, 100);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

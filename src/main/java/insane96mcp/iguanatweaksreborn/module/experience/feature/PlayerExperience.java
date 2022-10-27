@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.experience.feature;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -23,23 +23,23 @@ public class PlayerExperience extends Feature {
 	public boolean pickUpFaster = true;
 
 	public PlayerExperience(Module module) {
-		super(Config.builder, module, true);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		betterScalingLevelsConfig = Config.builder
+		super(ITCommonConfig.builder, module, true);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		betterScalingLevelsConfig = ITCommonConfig.builder
 				.comment("""
 						The experience required to level up will be linear instead of exponential like vanilla.
 						The formula used to calculate the xp required for next level is (3 * (current_level + 1))
 						Obviously incompatible with Allurement's 'Remove level Scaling'""")
 				.define("Better Scaling XP to next level", this.betterScalingLevels);
-		droppedExperienceOnDeathConfig = Config.builder
+		droppedExperienceOnDeathConfig = ITCommonConfig.builder
 				.comment("""
 						On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this.
 						Due to Minecraft limitations this is incompatible with other mods that change the level scaling (e.g. Allurement's 'Remove level Scaling').""")
 				.defineInRange("Experience Dropped on Death", this.droppedExperienceOnDeath, -1d, 1d);
-		pickUpFasterConfig = Config.builder
+		pickUpFasterConfig = ITCommonConfig.builder
 				.comment("Players will pick up experience faster")
 				.define("Pickup XP Faster", this.pickUpFaster);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override

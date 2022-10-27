@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.combat.feature;
 
 import com.google.common.collect.Multimap;
-import insane96mcp.iguanatweaksreborn.setup.Config;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -35,18 +35,18 @@ public class NoKnockback extends Feature {
 	public double attackCooldownNoKnockback = 0.925d;
 
 	public NoKnockback(Module module) {
-		super(Config.builder, module);
-		Config.builder.comment(this.getDescription()).push(this.getName());
-		customNoKnockbackItemsConfig = Config.builder
+		super(ITCommonConfig.builder, module);
+		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
+		customNoKnockbackItemsConfig = ITCommonConfig.builder
 				.comment("A list of items and tags that should deal no knockback when attacking.")
 				.defineList("Custom No Knockback Items", ArrayList::new, o -> o instanceof String);
-		attackCooldownNoKnockbackConfig = Config.builder
+		attackCooldownNoKnockbackConfig = ITCommonConfig.builder
 				.comment("When the attack cooldown is below this percentage the player will deal no knockback. (Between 0 and 1, where 1 is the attack fully charged)")
 				.defineInRange("Attack Cooldown No Knockback", this.attackCooldownNoKnockback, 0.0d, 1.0d);
-		noItemNoKnockbackConfig = Config.builder
+		noItemNoKnockbackConfig = ITCommonConfig.builder
 				.comment("If true the player will deal no knockback when not using a tool / weapon")
 				.define("No Item No Knockback", this.noItemNoKnockback);
-		Config.builder.pop();
+		ITCommonConfig.builder.pop();
 	}
 
 	@Override
