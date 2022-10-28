@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.hungerhealth.feature.FoodConsuming;
+import insane96mcp.insanelib.base.Feature;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MilkBucketItem;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MilkBucketItemMixin {
 	@Inject(at = @At("RETURN"), method = "getUseDuration", cancellable = true)
 	public void getUseDuration(ItemStack stack, CallbackInfoReturnable<Integer> callbackInfo) {
-		if (!Modules.hungerHealth.foodConsuming.fasterMilkConsuming || !Modules.hungerHealth.foodConsuming.isEnabled())
+		if (!FoodConsuming.fasterMilkConsuming || !Feature.isEnabled(FoodConsuming.class))
 			return;
 
 		callbackInfo.setReturnValue(20);

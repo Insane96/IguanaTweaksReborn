@@ -3,7 +3,6 @@ package insane96mcp.iguanatweaksreborn.module.combat.feature;
 import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.utils.ItemAttributeModifier;
-import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -65,7 +64,7 @@ public class Stats extends Feature {
 	@Override
 	public void loadConfigOptions() {
 		super.loadConfigOptions();
-		itemModifiersConfig = ITCommonConfig.builder
+		itemModifiersConfig = this.getBuilder()
 				.comment("""
 						Define Attribute Modifiers to apply to single items, one string = one item/tag.
 						The format is modid:itemid,slot,attribute,amount,operation (or tag instead of itemid #modid:tagid,...)

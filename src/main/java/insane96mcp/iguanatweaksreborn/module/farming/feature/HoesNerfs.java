@@ -3,7 +3,6 @@ package insane96mcp.iguanatweaksreborn.module.farming.feature;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.farming.utils.HoeCooldown;
-import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -50,7 +49,7 @@ public class HoesNerfs extends Feature {
 	@Override
 	public void loadConfigOptions() {
 		super.loadConfigOptions();
-		hoesCooldownsConfig = ITCommonConfig.builder
+		hoesCooldownsConfig = this.getBuilder()
 				.comment("A list of hoes and ticks that a hoe will go on cooldown. The format is modid:itemid,ticks. 20 ticks = 1 second. You can even use tags as #modid:tag,ticks.")
 				.defineList("Hoes Cooldowns", hoesCooldownsDefault, o -> o instanceof String);
 	}

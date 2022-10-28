@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.hungerhealth.feature.FoodConsuming;
+import insane96mcp.insanelib.base.Feature;
 import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -14,17 +15,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ItemMixin {
 	@Inject(at = @At("HEAD"), method = "getUseDuration", cancellable = true)
 	public void getUseDuration(ItemStack stack, CallbackInfoReturnable<Integer> callbackInfo) {
-		if (!Modules.hungerHealth.foodConsuming.eatingSpeedBasedOffFood || !Modules.hungerHealth.foodConsuming.isEnabled())
+		if (!FoodConsuming.eatingSpeedBasedOffFood || !Feature.isEnabled(FoodConsuming.class))
 			return;
 
 		if (stack.getItem().isEdible()) {
-			callbackInfo.setReturnValue(Modules.hungerHealth.foodConsuming.getFoodConsumingTime(stack));
+			callbackInfo.setReturnValue(FoodConsuming.getFoodConsumingTime(stack));
 		}
 	}
 
 	@Inject(at = @At("RETURN"), method = "getUseAnimation", cancellable = true)
 	public void getUseAnimation(ItemStack stack, CallbackInfoReturnable<UseAnim> callbackInfo) {
-		if (!Modules.hungerHealth.foodConsuming.isEnabled())
+		if (!Feature.isEnabled(FoodConsuming.class))
 			return;
 
 		if (stack.getItem() instanceof BowlFoodItem) {
