@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.combat.feature.Shields;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,7 +18,7 @@ public abstract class LivingEntityMixin extends Entity {
 
 	@ModifyConstant(constant = @Constant(intValue = 5), method = "isBlocking")
 	private int blockingWindupTime(int ticks) {
-		return Modules.combat.shields.shouldRemoveShieldWindup() ? 0 : ticks;
+		return Shields.shouldRemoveShieldWindup() ? 0 : ticks;
 	}
 
 	/*@Inject(at = @At(value = "JUMP", target = "Lnet/minecraft/world/entity/LivingEntity;playHurtSound(Lnet/minecraft/world/damagesource/DamageSource;)V"), method = "hurt", cancellable = true)
