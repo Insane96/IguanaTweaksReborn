@@ -1,34 +1,25 @@
 package insane96mcp.iguanatweaksreborn.module.client.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.ITClientConfig;
+import insane96mcp.iguanatweaksreborn.module.ClientModules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import net.minecraftforge.common.ForgeConfigSpec;
+import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
 
 @Label(name = "Light", description = "Changes to light")
+@LoadFeature(module = ClientModules.Ids.CLIENT)
 public class Light extends Feature {
 
-    private final ForgeConfigSpec.BooleanValue noNightVisionFlashingConfig;
+    @Config
+    @Label(name = "No Night Vision Flashing", description = "If true night vision will no longer flash 10 seconds before expiring, instead will slowly fade out 4 seconds before expiring.")
+    public static Boolean noNightVisionFlashing = true;
 
-    public boolean noNightVisionFlashing = true;
-
-    public Light(Module module) {
-        super(ITClientConfig.builder, module);
-        this.pushConfig(ITClientConfig.builder);
-        noNightVisionFlashingConfig = ITClientConfig.builder
-                .comment("If true night vision will no longer flash 10 seconds before expiring, instead will slowly fade out 4 seconds before expiring.")
-                .define("No Night Vision Flashing", noNightVisionFlashing);
-        ITClientConfig.builder.pop();
+    public Light(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+        super(module, enabledByDefault, canBeDisabled);
     }
 
-    @Override
-    public void loadConfig() {
-        super.loadConfig();
-        this.noNightVisionFlashing = this.noNightVisionFlashingConfig.get();
-    }
-
-    public boolean shouldDisableNightVisionFlashing() {
-        return this.isEnabled() && this.noNightVisionFlashing;
+    public static boolean shouldDisableNightVisionFlashing() {
+        return isEnabled(Light.class) && noNightVisionFlashing;
     }
 }

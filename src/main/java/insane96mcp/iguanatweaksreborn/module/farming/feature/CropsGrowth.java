@@ -1,6 +1,5 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
-import insane96mcp.iguanatweaksreborn.module.farming.Farming;
 import insane96mcp.iguanatweaksreborn.module.farming.utils.PlantGrowthModifier;
 import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;

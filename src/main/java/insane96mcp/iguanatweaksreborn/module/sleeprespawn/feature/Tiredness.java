@@ -16,7 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,8 +28,8 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -38,7 +38,7 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
-import net.minecraftforge.event.world.SleepFinishedTimeEvent;
+import net.minecraftforge.event.level.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -144,7 +144,7 @@ public class Tiredness extends Feature {
 		if (energyBoostItem == null)
 			return;
 
-		Player playerEntity = (Player) event.getEntityLiving();
+		Player playerEntity = (Player) event.getEntity();
 		int duration, amplifier;
 		if (energyBoostItem.duration == 0) {
 			FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
@@ -173,7 +173,7 @@ public class Tiredness extends Feature {
 		float newTiredness = tiredness + amount;
 		persistentData.putFloat(Strings.Tags.TIREDNESS, newTiredness);
 		if (tiredness < this.tirednessToSleep && newTiredness >= this.tirednessToSleep) {
-			serverPlayer.displayClientMessage(new TranslatableComponent(Strings.Translatable.TIRED_ENOUGH), false);
+			serverPlayer.displayClientMessage(Component.translatable(Strings.Translatable.TIRED_ENOUGH), false);
 		}
 		else if (tiredness >= this.tirednessToEffect && player.tickCount % 20 == 0) {
 			serverPlayer.addEffect(new MobEffectInstance(ITMobEffects.TIRED.get(), 25, Math.min((int) ((tiredness - this.tirednessToEffect) / this.tirednessPerLevel), 4), true, false, true));
@@ -186,11 +186,11 @@ public class Tiredness extends Feature {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onTiredBreakSpeed(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled()
-				|| !event.getPlayer().hasEffect(ITMobEffects.TIRED.get()))
+				|| !event.getEntity().hasEffect(ITMobEffects.TIRED.get()))
 			return;
 
 		//noinspection ConstantConditions
-		int level = event.getPlayer().getEffect(ITMobEffects.TIRED.get()).getAmplifier() + 1;
+		int level = event.getEntity().getEffect(ITMobEffects.TIRED.get()).getAmplifier() + 1;
 		event.setNewSpeed(event.getNewSpeed() * (1 - (level * 0.05f)));
 	}
 
@@ -198,14 +198,14 @@ public class Tiredness extends Feature {
 	public void notTiredToSleep(PlayerSleepInBedEvent event) {
 		if (!this.isEnabled()
 				|| event.getResultStatus() != null
-				|| event.getPlayer().level.isClientSide)
+				|| event.getEntity().level.isClientSide)
 			return;
 
-		ServerPlayer player = (ServerPlayer) event.getPlayer();
+		ServerPlayer player = (ServerPlayer) event.getEntity();
 
 		if (player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) < this.tirednessToSleep) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
-			player.displayClientMessage(new TranslatableComponent(Strings.Translatable.NOT_TIRED), true);
+			player.displayClientMessage(Component.translatable(Strings.Translatable.NOT_TIRED), true);
 			if (!this.shouldPreventSpawnPoint)
 				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, true);
 		}
@@ -220,7 +220,7 @@ public class Tiredness extends Feature {
 	public void resetTirednessOnWakeUp(SleepFinishedTimeEvent event) {
 		if (!this.isEnabled())
 			return;
-		event.getWorld().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> {
+		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> {
 			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) - (float) this.tirednessToEffect, 0, Float.MAX_VALUE);
 			player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, tirednessOnWakeUp);
 		});
@@ -228,7 +228,7 @@ public class Tiredness extends Feature {
 
 	@SubscribeEvent
 	public void allowSleepAtDay(SleepingTimeCheckEvent event) {
-		if (!this.canSleepDuringDay(event.getPlayer()))
+		if (!this.canSleepDuringDay(event.getEntity()))
 			return;
 		event.setResult(Event.Result.ALLOW);
 	}
@@ -240,7 +240,7 @@ public class Tiredness extends Feature {
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public void onFog(EntityViewRenderEvent.RenderFogEvent event) {
+	public void onFog(ViewportEvent.RenderFog event) {
 		if (!this.isEnabled()
 				|| event.getCamera().getEntity().isSpectator()
 				|| !(event.getCamera().getEntity() instanceof LivingEntity livingEntity)
@@ -260,7 +260,7 @@ public class Tiredness extends Feature {
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public void onFog(EntityViewRenderEvent.FogColors event) {
+	public void onFog(ViewportEvent.ComputeFogColor event) {
 		if (!this.isEnabled()
 				|| event.getCamera().getEntity().isSpectator()
 				|| !(event.getCamera().getEntity() instanceof LivingEntity livingEntity)
@@ -279,10 +279,10 @@ public class Tiredness extends Feature {
 	public static final ResourceLocation GUI_ICONS = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "textures/gui/icons.png");
 
 	@OnlyIn(Dist.CLIENT)
-	public void registerGui() {
+	public static void registerGui() {
 		OverlayRegistry.registerOverlayAbove(ForgeIngameGui.FOOD_LEVEL_ELEMENT, "Tiredness", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
 			boolean isMounted = Minecraft.getInstance().player.getVehicle() instanceof LivingEntity;
-			if (this.isEnabled() && !isMounted && !Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements())
+			if (isEnabled(Tiredness.class) && !isMounted && !Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements())
 			{
 				gui.setupOverlayRenderState(true, false, GUI_ICONS);
 				int left = screenWidth / 2 + 91;

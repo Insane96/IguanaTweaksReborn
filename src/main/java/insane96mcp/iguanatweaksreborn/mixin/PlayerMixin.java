@@ -1,6 +1,8 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.combat.feature.Shields;
+import insane96mcp.iguanatweaksreborn.module.experience.feature.PlayerExperience;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,8 +33,8 @@ public abstract class PlayerMixin extends LivingEntity {
 	}
 
 	@Inject(at = @At("HEAD"), method = "getExperienceReward", cancellable = true)
-	private void getExperiencePoints(Player player, CallbackInfoReturnable<Integer> callback) {
-		int exp = Modules.experience.playerExperience.getExperienceOnDeath((Player) (Object) this);
+	private void getExperiencePoints(CallbackInfoReturnable<Integer> callback) {
+		int exp = PlayerExperience.getExperienceOnDeath((Player) (Object) this);
 		if (exp != -1)
 			callback.setReturnValue(exp);
 	}
@@ -49,7 +51,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@Inject(method = "disableShield", at = @At("HEAD"), cancellable = true)
 	private void disableShield(boolean efficiencyAffected, CallbackInfo callbackInfo) {
-		if (Modules.combat.shields.combatTestShieldDisabling()) {
+		if (Shields.combatTestShieldDisabling()) {
 			callbackInfo.cancel();
 			this.getCooldowns().addCooldown(this.getUseItem().getItem(), 32);
 			this.stopUsingItem();

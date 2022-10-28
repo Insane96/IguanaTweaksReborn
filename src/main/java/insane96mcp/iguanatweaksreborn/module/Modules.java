@@ -1,49 +1,42 @@
 package insane96mcp.iguanatweaksreborn.module;
 
-import insane96mcp.iguanatweaksreborn.module.combat.Combat;
-import insane96mcp.iguanatweaksreborn.module.experience.Experience;
-import insane96mcp.iguanatweaksreborn.module.farming.Farming;
-import insane96mcp.iguanatweaksreborn.module.hungerhealth.HungerHealth;
-import insane96mcp.iguanatweaksreborn.module.mining.Mining;
-import insane96mcp.iguanatweaksreborn.module.misc.Misc;
-import insane96mcp.iguanatweaksreborn.module.movement.Movement;
-import insane96mcp.iguanatweaksreborn.module.sleeprespawn.SleepRespawn;
-import insane96mcp.iguanatweaksreborn.module.stacksize.StackSize;
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
+import insane96mcp.insanelib.base.Module;
 
 public class Modules {
 
-	public static Combat combat;
-	public static Experience experience;
-	public static Farming farming;
-	public static HungerHealth hungerHealth;
-	public static Mining mining;
-	public static Misc misc;
-	public static Movement movement;
-	public static SleepRespawn sleepRespawn;
-	public static StackSize stackSize;
+	public static Module combat;
+	public static Module experience;
+	public static Module farming;
+	public static Module hungerHealth;
+	public static Module mining;
+	public static Module misc;
+	public static Module movement;
+	public static Module sleepRespawn;
+	public static Module stackSize;
 
 	public static void init() {
-		combat = new Combat();
-		experience = new Experience();
-		farming = new Farming();
-		hungerHealth = new HungerHealth();
-		mining = new Mining();
-		misc = new Misc();
-		movement = new Movement();
-		sleepRespawn = new SleepRespawn();
-		stackSize = new StackSize();
+		combat = Module.Builder.create(ITCommonConfig.builder, Ids.COMBAT, "Combat").build();
+		experience = Module.Builder.create(ITCommonConfig.builder, Ids.EXPERIENCE, "Experience").build();
+		farming = Module.Builder.create(ITCommonConfig.builder, Ids.FARMING, "Farming").build();
+		hungerHealth = Module.Builder.create(ITCommonConfig.builder, Ids.HUNGER_HEALTH, "Hunger & Health").build();
+		mining = Module.Builder.create(ITCommonConfig.builder, Ids.MINING, "Mining").build();
+		misc = Module.Builder.create(ITCommonConfig.builder, Ids.MISC, "Miscellaneous").build();
+		movement = Module.Builder.create(ITCommonConfig.builder, Ids.MOVEMENT, "Movement").build();
+		sleepRespawn = Module.Builder.create(ITCommonConfig.builder, Ids.SLEEP_RESPAWN, "Sleep & Respawn").build();
+		stackSize = Module.Builder.create(ITCommonConfig.builder, Ids.STACK_SIZE, "Stack Sizes").build();
 	}
 
-	public static void loadConfig() {
-		combat.loadConfig();
-		experience.loadConfig();
-		farming.loadConfig();
-		hungerHealth.loadConfig();
-		mining.loadConfig();
-		misc.loadConfig();
-		movement.loadConfig();
-		sleepRespawn.loadConfig();
-		stackSize.loadConfig();
+	public static class Ids {
+		public static final String COMBAT = IguanaTweaksReborn.RESOURCE_PREFIX + "combat";
+		public static final String EXPERIENCE = IguanaTweaksReborn.RESOURCE_PREFIX + "experience";
+		public static final String FARMING = IguanaTweaksReborn.RESOURCE_PREFIX + "farming";
+		public static final String HUNGER_HEALTH = IguanaTweaksReborn.RESOURCE_PREFIX + "hunger_health";
+		public static final String MINING = IguanaTweaksReborn.RESOURCE_PREFIX + "mining";
+		public static final String MISC = IguanaTweaksReborn.RESOURCE_PREFIX + "misc";
+		public static final String MOVEMENT = IguanaTweaksReborn.RESOURCE_PREFIX + "movement";
+		public static final String SLEEP_RESPAWN = IguanaTweaksReborn.RESOURCE_PREFIX + "sleep_respawn";
+		public static final String STACK_SIZE = IguanaTweaksReborn.RESOURCE_PREFIX + "stack_size";
 	}
-
 }

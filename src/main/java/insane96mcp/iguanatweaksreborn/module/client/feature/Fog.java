@@ -1,9 +1,11 @@
 package insane96mcp.iguanatweaksreborn.module.client.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.ITClientConfig;
+import insane96mcp.iguanatweaksreborn.module.ClientModules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -13,41 +15,24 @@ import net.minecraft.world.level.material.FogType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ViewportEvent;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Fog", description = "Makes fog less invasive in some contexts")
+@LoadFeature(module = ClientModules.Ids.CLIENT)
 public class Fog extends Feature {
 
-    private final ForgeConfigSpec.BooleanValue betterFireResistanceLavaFogConfig;
-    private final ForgeConfigSpec.BooleanValue betterNetherFogConfig;
-    private final ForgeConfigSpec.DoubleValue netherFogRatioConfig;
+    @Config
+    @Label(name = "Better visibility in Lava with Fire Resistance Lava", description = "If true you'll be able to see better in lava when with the Fire Resistance Effect.")
+    public static Boolean betterFireResistanceLavaFog = true;
+    @Config
+    @Label(name = "Better Nether Fog", description = "If true Nether Fog is no longer limited to 12 chunks.")
+    public static Boolean betterNetherFog = true;
+    @Config(min = 0d, max = 1d)
+    @Label(name = "Nether Fog Ratio", description = "Render distance is multiplied by this value in the Nether. Vanilla is 0.5.")
+    public static Double netherFogRatio = 0.75d;
 
-    public boolean betterFireResistanceLavaFog = true;
-    public boolean betterNetherFog = true;
-    public double netherFogRatio = 0.75d;
-
-    public Fog(Module module) {
-        super(ITClientConfig.builder, module);
-        this.pushConfig(ITClientConfig.builder);
-        betterFireResistanceLavaFogConfig = ITClientConfig.builder
-                .comment("If true you'll be able to see better in lava when with the Fire Resistance Effect.")
-                .define("Better visibility in Lava with Fire Resistance Lava", betterFireResistanceLavaFog);
-        betterNetherFogConfig = ITClientConfig.builder
-                .comment("If true Nether Fog is no longer limited to 12 chunks.")
-                .define("Better Nether Fog", betterNetherFog);
-        netherFogRatioConfig = ITClientConfig.builder
-                .comment("Render distance is multiplied by this value in the Nether. Vanilla is 0.5.")
-                .defineInRange("Nether Fog Ratio", netherFogRatio, 0d, 1d);
-        ITClientConfig.builder.pop();
-    }
-
-    @Override
-    public void loadConfig() {
-        super.loadConfig();
-        this.betterFireResistanceLavaFog = this.betterFireResistanceLavaFogConfig.get();
-        this.betterNetherFog = this.betterNetherFogConfig.get();
-        this.netherFogRatio = this.netherFogRatioConfig.get();
+    public Fog(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+        super(module, enabledByDefault, canBeDisabled);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -61,7 +46,7 @@ public class Fog extends Feature {
     }
 
     public void lavaFog(ViewportEvent.RenderFog event) {
-        if (!this.betterFireResistanceLavaFog
+        if (!betterFireResistanceLavaFog
                 || event.getCamera().getFluidInCamera() != FogType.LAVA
                 || event.getCamera().getEntity().isSpectator())
             return;
@@ -76,15 +61,15 @@ public class Fog extends Feature {
     }
 
     public void netherFog(ViewportEvent.RenderFog event) {
-        if (!this.betterNetherFog
+        if (!betterNetherFog
                 || event.isCanceled())
             return;
 
         Entity entity = event.getCamera().getEntity();
         if (entity.level.dimension() == Level.NETHER) {
             float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
-            event.setNearPlaneDistance((float) (renderDistance * this.netherFogRatio / 10f));
-            event.setFarPlaneDistance((float) (renderDistance * this.netherFogRatio));
+            event.setNearPlaneDistance((float) (renderDistance * netherFogRatio / 10f));
+            event.setFarPlaneDistance((float) (renderDistance * netherFogRatio));
         }
         event.setCanceled(true);
     }

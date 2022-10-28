@@ -1,34 +1,25 @@
 package insane96mcp.iguanatweaksreborn.module.client.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.ITClientConfig;
+import insane96mcp.iguanatweaksreborn.module.ClientModules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import net.minecraftforge.common.ForgeConfigSpec;
+import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
 
 @Label(name = "Sound", description = "Changes to sounds")
+@LoadFeature(module = ClientModules.Ids.CLIENT)
 public class Sound extends Feature {
 
-    private final ForgeConfigSpec.BooleanValue fixShieldBlockingSoundConfig;
+    @Config
+    @Label(name = "Fix shield blocking sound", description = "If true the entity hit will no longer play the hurt sound if blocking with a shield.")
+    public static Boolean fixShieldBlockingSound = true;
 
-    public boolean fixShieldBlockingSound = true;
-
-    public Sound(Module module) {
-        super(ITClientConfig.builder, module);
-        this.pushConfig(ITClientConfig.builder);
-        fixShieldBlockingSoundConfig = ITClientConfig.builder
-                .comment("If true the entity hit will no longer play the hurt sound if blocking with a shield.")
-                .define("Fix shield blocking sound", fixShieldBlockingSound);
-        ITClientConfig.builder.pop();
+    public Sound(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+        super(module, enabledByDefault, canBeDisabled);
     }
 
-    @Override
-    public void loadConfig() {
-        super.loadConfig();
-        this.fixShieldBlockingSound = this.fixShieldBlockingSoundConfig.get();
-    }
-
-    public boolean shouldPreventShieldSoundPlay() {
-        return this.isEnabled() && this.fixShieldBlockingSound;
+    public static boolean shouldPreventShieldSoundPlay() {
+        return isEnabled(Sound.class) && fixShieldBlockingSound;
     }
 }

@@ -2,11 +2,9 @@ package insane96mcp.iguanatweaksreborn.setup;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.insanelib.base.Module;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 @Mod.EventBusSubscriber(modid = IguanaTweaksReborn.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -26,13 +24,7 @@ public class ITCommonConfig {
 	public static class CommonConfig {
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
 			Modules.init();
-		}
-	}
-
-	@SubscribeEvent
-	public static void onModConfigEvent(final ModConfigEvent event) {
-		if (event.getConfig().getModId().equals(IguanaTweaksReborn.MOD_ID) && event.getConfig().getType() == ModConfig.Type.COMMON) {
-			Modules.loadConfig();
+			Module.loadFeatures(IguanaTweaksReborn.MOD_ID, this.getClass().getClassLoader());
 		}
 	}
 }

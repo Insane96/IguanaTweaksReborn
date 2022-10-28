@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn;
 
-import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerProvider;
+import insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature.Tiredness;
 import insane96mcp.iguanatweaksreborn.network.SyncHandler;
 import insane96mcp.iguanatweaksreborn.setup.ITClientConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
@@ -63,7 +63,7 @@ public class IguanaTweaksReborn
     }
 
     public void clientSetup(final FMLClientSetupEvent event) {
-        Modules.sleepRespawn.tiredness.registerGui();
+        Tiredness.registerGui();
     }
 
     public void addPackFinders(AddPackFindersEvent event)
