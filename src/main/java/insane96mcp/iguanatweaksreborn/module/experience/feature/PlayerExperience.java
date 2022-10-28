@@ -1,65 +1,43 @@
 package insane96mcp.iguanatweaksreborn.module.experience.feature;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Player Experience", description = "Changes the experience lost on death and xp per level required.")
+@LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class PlayerExperience extends Feature {
-
-	private final ForgeConfigSpec.ConfigValue<Boolean> betterScalingLevelsConfig;
-	private final ForgeConfigSpec.ConfigValue<Double> droppedExperienceOnDeathConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> pickUpFasterConfig;
-
-	public boolean betterScalingLevels = true;
-	public double droppedExperienceOnDeath = 0.85d;
-	public boolean pickUpFaster = true;
-
-	public PlayerExperience(Module module) {
-		super(ITCommonConfig.builder, module, true);
-		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
-		betterScalingLevelsConfig = ITCommonConfig.builder
-				.comment("""
+	@Config
+	@Label(name = "Better Scaling XP to next level", description = """
 						The experience required to level up will be linear instead of exponential like vanilla.
 						The formula used to calculate the xp required for next level is (3 * (current_level + 1))
 						Obviously incompatible with Allurement's 'Remove level Scaling'""")
-				.define("Better Scaling XP to next level", this.betterScalingLevels);
-		droppedExperienceOnDeathConfig = ITCommonConfig.builder
-				.comment("""
+	public static Boolean betterScalingLevels = true;
+	@Config(min = -1d, max = 1d)
+	@Label(name = "Better Scaling XP to next level", description = """
 						On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this.
 						Due to Minecraft limitations this is incompatible with other mods that change the level scaling (e.g. Allurement's 'Remove level Scaling').""")
-				.defineInRange("Experience Dropped on Death", this.droppedExperienceOnDeath, -1d, 1d);
-		pickUpFasterConfig = ITCommonConfig.builder
-				.comment("Players will pick up experience faster")
-				.define("Pickup XP Faster", this.pickUpFaster);
-		ITCommonConfig.builder.pop();
-	}
+	public static Double droppedExperienceOnDeath = 0.85d;
+	@Config(min = -1d, max = 1d)
+	@Label(name = "Pickup XP Faster", description = "Players will pick up experience faster")
+	public static Boolean pickUpFaster = true;
 
-	@Override
-	public void loadConfig() {
-		super.loadConfig();
-		this.betterScalingLevels = this.betterScalingLevelsConfig.get();
-		this.droppedExperienceOnDeath = this.droppedExperienceOnDeathConfig.get();
-		this.pickUpFaster = this.pickUpFasterConfig.get();
+	public PlayerExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+		super(module, enabledByDefault, canBeDisabled);
 	}
 
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-		if (!this.isEnabled())
-			return;
-
-		if (event.phase != TickEvent.Phase.START)
-			return;
-
-		if (!this.pickUpFaster)
-			return;
+		if (!this.isEnabled()
+				|| event.phase != TickEvent.Phase.START
+				|| !pickUpFaster) return;
 
 		if (event.player.takeXpDelay > 0)
 			event.player.takeXpDelay--;
@@ -69,10 +47,8 @@ public class PlayerExperience extends Feature {
 	 * Returns -1 when the module/feature is not enabled, otherwise the calculated experience required to level up
 	 */
 	public int getBetterScalingLevel(int experienceLevel) {
-		if (!this.isEnabled())
-			return -1;
-
-		if (!this.betterScalingLevels)
+		if (!this.isEnabled()
+				|| !betterScalingLevels)
 			return -1;
 
 		return 3 * (experienceLevel + 1);
@@ -86,8 +62,8 @@ public class PlayerExperience extends Feature {
 		}
 		totalExp += player.getXpNeededForNextLevel() * player.experienceProgress;
 		//Take into account global experience to prevent XP duping
-		if (Modules.experience.globalExperience.isEnabled() && Modules.experience.globalExperience.globalMultiplier != 1d)
-			totalExp *= (1d / Modules.experience.globalExperience.globalMultiplier);
+		if (Feature.isEnabled(GlobalExperience.class) && GlobalExperience.globalMultiplier != 1d)
+			totalExp *= (1d / GlobalExperience.globalMultiplier);
 		if (totalExp > 247700)
 			totalExp = 247700;
 		return totalExp;
@@ -110,10 +86,10 @@ public class PlayerExperience extends Feature {
 	 */
 	public int getExperienceOnDeath(Player player) {
 		if (!this.isEnabled()
-				|| (this.droppedExperienceOnDeath < 0 && !Modules.experience.globalExperience.isEnabled())
+				|| (droppedExperienceOnDeath < 0 && !GlobalExperience.isEnabled(GlobalExperience.class))
 				|| (player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY) && !player.isSpectator()))
 			return -1;
 
-		return (int) (getTotalExperience(player) * this.droppedExperienceOnDeath);
+		return (int) (getTotalExperience(player) * droppedExperienceOnDeath);
 	}
 }

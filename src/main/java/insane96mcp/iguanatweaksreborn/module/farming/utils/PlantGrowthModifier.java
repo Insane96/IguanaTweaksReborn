@@ -7,14 +7,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class PlantGrowthModifier {
 	public IdTagMatcher plantId;
@@ -22,8 +18,8 @@ public class PlantGrowthModifier {
 	private double noSunlightGrowthMultiplier = 1d;
 	private int minSunlightRequired = 0;
 	private double nightTimeGrowthMultiplier = 1d;
-	private List<BiomeDictionary.Type> biomes = new ArrayList<>();
-	private double wrongBiomeMultiplier = 1d;
+	/*private List<Tags.Biomes.Type> biomes = new ArrayList<>();
+	private double wrongBiomeMultiplier = 1d;*/
 
 	public PlantGrowthModifier(IdTagMatcher.Type type, ResourceLocation location) {
 		this.plantId = new IdTagMatcher(type, location);
@@ -49,15 +45,15 @@ public class PlantGrowthModifier {
 		return this;
 	}
 
-	public PlantGrowthModifier addBiomes(BiomeDictionary.Type... biomeType) {
-		this.biomes.addAll(Arrays.asList(biomeType));
+	/*public PlantGrowthModifier addBiomes(BiomeDictionary.Type... biomeType) {
+		this.biomes.addAll(List.of(biomeType));
 		return this;
 	}
 
 	public PlantGrowthModifier wrongBiomeMultiplier(double wrongBiomeMultiplier) {
 		this.wrongBiomeMultiplier = wrongBiomeMultiplier;
 		return this;
-	}
+	}*/
 
 	/**
 	 * Returns -1 when the block doesn't match the PlantGrowthModifier

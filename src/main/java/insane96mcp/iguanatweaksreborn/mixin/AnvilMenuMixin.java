@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.experience.feature.OtherExperience;
+import insane96mcp.insanelib.base.Feature;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -61,7 +62,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			cancellable = true
 	)
 	public void createResult(CallbackInfo ci) {
-		if (!Modules.experience.otherExperience.isEnabled())
+		if (!Feature.isEnabled(OtherExperience.class))
 			return;
 
 		ItemStack itemstack0 = this.inputSlots.getItem(0);
@@ -192,18 +193,18 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			if (isEnchantedBook && !itemstack0copy.isBookEnchantable(itemStack1)) itemstack0copy = ItemStack.EMPTY;
 
 			this.cost.set(baseCost + cost);
-			if (isRenaming && !Modules.experience.otherExperience.isFreeRenaming())
+			if (isRenaming && !OtherExperience.isFreeRenaming())
 				this.cost.set(this.cost.get() + COST_RENAME);
 			if (cost <= 0 && !isRenaming) {
 				itemstack0copy = ItemStack.EMPTY;
 			}
 
-			if (isRenaming && Modules.experience.otherExperience.isFreeRenaming() && cost <= 0) {
+			if (isRenaming && OtherExperience.isFreeRenaming() && cost <= 0) {
 				this.cost.set(0);
 			}
 
 			//Set Too Expensive cap
-			if (this.cost.get() >= Modules.experience.otherExperience.anvilRepairCap && !this.player.getAbilities().instabuild) {
+			if (this.cost.get() >= OtherExperience.anvilRepairCap && !this.player.getAbilities().instabuild) {
 				itemstack0copy = ItemStack.EMPTY;
 			}
 

@@ -1,10 +1,12 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
+import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -21,7 +23,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,112 +30,81 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
 @Label(name = "Livestock Slowdown", description = "Slower breeding, Growing, Egging and Milking")
+@LoadFeature(module = Modules.Ids.FARMING)
 public class LivestockSlowdown extends Feature {
+	@Config(min = 1d, max = 128d)
+	@Label(name = "Childs Growth Multiplier", description = "Increases the time required for Baby Animals to grow (e.g. at 2.0 Animals will take twice to grow).\n1.0 will make Animals grow like normal.")
+	public static Double childGrowthMultiplier = 3.0d;
+	@Config
+	@Label(name = "Childs Growth Villagers", description = "If true, 'Childs Growth Multiplier' will be applied to villagers too.")
+	public static Boolean childGrowthVillagers = true;
+	@Config(min = 1d, max = 128d)
+	@Label(name = "Breeding Time Multiplier", description = "Increases the time required for Animals to breed again (e.g. at 2.0 Animals will take twice to be able to breed again).\n1.0 will make Animals breed like normal.")
+	public static Double breedingMultiplier = 3.5d;
+	@Config(min = 1d, max = 128d)
+	@Label(name = "Egg Lay Multiplier", description = "Increases the time required for Chickens to lay an egg (e.g. at 2.0 Chickens will take twice the time to lay an egg).\n1.0 will make chickens lay eggs like normal.")
+	public static Double eggLayMultiplier = 3.0d;
+	@Config(min = 0)
+	@Label(name = "Cow Milk Delay", description = "Seconds before a cow can be milked again. This applies to Mooshroom stew too.\n0 will disable this feature.")
+	public static Integer cowMilkDelay = 1200;
 
-	private final ForgeConfigSpec.ConfigValue<Double> childGrowthMultiplierConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> childGrowthVillagersConfig;
-	private final ForgeConfigSpec.ConfigValue<Double> breedingMultiplierConfig;
-	private final ForgeConfigSpec.ConfigValue<Double> eggLayMultiplierConfig;
-	private final ForgeConfigSpec.ConfigValue<Integer> cowMilkDelayConfig;
-
-	public double childGrowthMultiplier = 3.0d;
-	public boolean childGrowthVillagers = true;
-	public double breedingMultiplier = 3.5d;
-	public double eggLayMultiplier = 3.0d;
-	public int cowMilkDelay = 1200;
-
-	public LivestockSlowdown(Module module) {
-		super(ITCommonConfig.builder, module);
-		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
-		childGrowthMultiplierConfig = ITCommonConfig.builder
-				.comment("Increases the time required for Baby Animals to grow (e.g. at 2.0 Animals will take twice to grow).\n1.0 will make Animals grow like normal.")
-				.defineInRange("Childs Growth Multiplier", childGrowthMultiplier, 1.0d, 128d);
-		childGrowthVillagersConfig = ITCommonConfig.builder
-				.comment("If true, 'Childs Growth Multiplier' will be applied to villagers too.")
-				.define("Childs Growth Villagers", childGrowthVillagers);
-		breedingMultiplierConfig = ITCommonConfig.builder
-				.comment("Increases the time required for Animals to breed again (e.g. at 2.0 Animals will take twice to be able to breed again).\n1.0 will make Animals breed like normal.")
-				.defineInRange("Breeding Time Multiplier", breedingMultiplier, 1.0d, 128d);
-		eggLayMultiplierConfig = ITCommonConfig.builder
-				.comment("Increases the time required for Chickens to lay an egg (e.g. at 2.0 Chickens will take twice the time to lay an egg).\n1.0 will make chickens lay eggs like normal.")
-				.defineInRange("Egg Lay Multiplier", 3.0d, 1.0d, 128d);
-		cowMilkDelayConfig = ITCommonConfig.builder
-				.comment("Seconds before a cow can be milked again. This applies to Mooshroom stew too.\n0 will disable this feature.")
-				.defineInRange("Cow Milk Delay", cowMilkDelay, 0, Integer.MAX_VALUE);
-		ITCommonConfig.builder.pop();
-	}
-
-	@Override
-	public void loadConfig() {
-		super.loadConfig();
-		this.childGrowthMultiplier = this.childGrowthMultiplierConfig.get();
-		this.childGrowthVillagers = this.childGrowthVillagersConfig.get();
-		this.breedingMultiplier = this.breedingMultiplierConfig.get();
-		this.eggLayMultiplier = this.eggLayMultiplierConfig.get();
-		this.cowMilkDelay = this.cowMilkDelayConfig.get();
+	public LivestockSlowdown(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+		super(module, enabledByDefault, canBeDisabled);
 	}
 
 	@SubscribeEvent
 	public void slowdownAnimalGrowth(LivingEvent.LivingTickEvent event) {
-		if (!this.isEnabled())
-			return;
-		if (this.childGrowthMultiplier == 1d)
+		if (!this.isEnabled()
+				|| childGrowthMultiplier == 1d)
 			return;
 		if (!(event.getEntity() instanceof Animal) && !(event.getEntity() instanceof AbstractVillager))
 			return;
-		if (event.getEntity() instanceof AbstractVillager && !this.childGrowthVillagers)
+		if (event.getEntity() instanceof AbstractVillager && !childGrowthVillagers)
 			return;
 		AgeableMob entity = (AgeableMob) event.getEntity();
 		int growingAge = entity.getAge();
 		if (growingAge >= 0)
 			return;
-		double chance = 1d / this.childGrowthMultiplier;
+		double chance = 1d / childGrowthMultiplier;
 		if (entity.getRandom().nextFloat() > chance)
 			entity.setAge(growingAge - 1);
 	}
 
 	@SubscribeEvent
 	public void slowdownBreeding(LivingEvent.LivingTickEvent event) {
-		if (!this.isEnabled())
-			return;
-		if (this.breedingMultiplier == 1d)
-			return;
-		if (!(event.getEntity() instanceof Animal))
+		if (!this.isEnabled()
+				|| breedingMultiplier == 1d
+				|| !(event.getEntity() instanceof Animal))
 			return;
 		AgeableMob entity = (AgeableMob) event.getEntity();
 		int growingAge = entity.getAge();
 		if (growingAge <= 0)
 			return;
-		double chance = 1d / this.breedingMultiplier;
+		double chance = 1d / breedingMultiplier;
 		if (entity.getRandom().nextFloat() > chance)
 			entity.setAge(growingAge + 1);
 	}
 
 	@SubscribeEvent
 	public void slowdownEggLay(LivingEvent.LivingTickEvent event) {
-		if (!this.isEnabled())
-			return;
-		if (this.eggLayMultiplier == 1d)
-			return;
-		if (!(event.getEntity() instanceof Chicken chicken))
+		if (!this.isEnabled()
+				|| eggLayMultiplier == 1d
+				|| !(event.getEntity() instanceof Chicken chicken))
 			return;
 		int timeUntilNextEgg = chicken.eggTime;
 		if (timeUntilNextEgg < 0)
 			return;
-		double chance = 1d / this.eggLayMultiplier;
+		double chance = 1d / eggLayMultiplier;
 		if (chicken.getRandom().nextFloat() > chance)
 			chicken.eggTime += 1;
 	}
 
 	@SubscribeEvent
 	public void cowMilkTick(LivingEvent.LivingTickEvent event) {
-		if (!this.isEnabled())
-			return;
-		if (this.cowMilkDelay == 0)
-			return;
-		if (event.getEntity().tickCount % 20 != 0)
-			return;
-		if (!(event.getEntity() instanceof Cow cow))
+		if (!this.isEnabled()
+				|| cowMilkDelay == 0
+				|| event.getEntity().tickCount % 20 != 0
+				|| !(event.getEntity() instanceof Cow cow))
 			return;
 		CompoundTag cowNBT = cow.getPersistentData();
 		int milkCooldown = cowNBT.getInt(Strings.Tags.MILK_COOLDOWN);
@@ -145,13 +115,10 @@ public class LivestockSlowdown extends Feature {
 
 	@SubscribeEvent
 	public void onCowMilk(PlayerInteractEvent.EntityInteract event) {
-		if (!this.isEnabled())
-			return;
-		if (this.cowMilkDelay == 0)
-			return;
-		if (!(event.getTarget() instanceof Cow cow))
-			return;
-		if (cow.getAge() < 0)
+		if (!this.isEnabled()
+				|| cowMilkDelay == 0
+				|| !(event.getTarget() instanceof Cow cow)
+				|| cow.getAge() < 0)
 			return;
 		Player player = event.getEntity();
 		InteractionHand hand = event.getHand();
@@ -176,7 +143,7 @@ public class LivestockSlowdown extends Feature {
 				event.setCancellationResult(InteractionResult.SUCCESS);
 		}
 		else {
-			milkCooldown = this.cowMilkDelay * 20;
+			milkCooldown = cowMilkDelay * 20;
 			cowNBT.putInt(Strings.Tags.MILK_COOLDOWN, milkCooldown);
 			player.swing(event.getHand());
 		}

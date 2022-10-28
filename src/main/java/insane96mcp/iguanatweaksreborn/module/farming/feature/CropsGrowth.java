@@ -1,106 +1,78 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
+import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.farming.FarmingUtils;
 import insane96mcp.iguanatweaksreborn.module.farming.utils.PlantGrowthModifier;
-import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 
 @Label(name = "Crops Growth", description = "Slower Crops growing based off various factors")
+@LoadFeature(module = Modules.Ids.FARMING)
 public class CropsGrowth extends Feature {
 
-	//TODO Wrong Biome Multiplier
-	private final ForgeConfigSpec.ConfigValue<CropsRequireWater> cropsRequireWaterConfig;
-	//private final Blacklist.Config cropsRequireWaterBlacklistConfig;
-	private final ForgeConfigSpec.ConfigValue<Double> cropsGrowthMultiplierConfig;
-	private final ForgeConfigSpec.ConfigValue<Double> noSunlightGrowthMultiplierConfig;
-	private final ForgeConfigSpec.ConfigValue<Double> nightTimeGrowthMultiplierConfig;
-	private final ForgeConfigSpec.ConfigValue<Integer> minSunlightConfig;
-
-	//private static final List<String> cropsRequireWaterBlacklistDefault = List.of("farmersdelight:rice_panicles");
-
-	public CropsRequireWater cropsRequireWater = CropsRequireWater.ANY_CASE;
-	//public Blacklist cropsRequireWaterBlacklist;
-	public double cropsGrowthMultiplier = 2.5d;
-	public double noSunLightGrowthMultiplier = 2.0d;
-	public double nightTimeGrowthMultiplier = 1d;
-	public int minSunlight = 10;
-
-	public ArrayList<PlantGrowthModifier> plantGrowthModifiers = new ArrayList<>();
-
-	public CropsGrowth(Module module) {
-		super(ITCommonConfig.builder, module);
-		this.pushConfig(ITCommonConfig.builder);
-		//Config.builder.push("Crops Require Water");
-		cropsRequireWaterConfig = ITCommonConfig.builder
-				.comment("""
+	@Config
+	@Label(name = "Crops Require Water", description = """
 						Set if crops require wet farmland to grow.
 						Valid Values:
 						NO: Crops will not require water to grow
 						BONEMEAL_ONLY: Crops will grow on dry farmland by only using bonemeal
 						ANY_CASE: Will make Crops not grow in any case when on dry farmland""")
-				.defineEnum("Crops Require Water", cropsRequireWater);
-		/*cropsRequireWaterBlacklistConfig = new Blacklist.Config(Config.builder, "Block Blacklist",
-				"Blocks or block tags that will not be affected by Crops Require Water.\n" +
-						"Each entry has a block or a block tag. The format is modid:block_id or #modid:block_tag.")
-				.setDefaultList(Collections.emptyList())
-				.setIsDefaultWhitelist(false)
-				.build();
-		Config.builder.pop();*/
-		cropsGrowthMultiplierConfig = ITCommonConfig.builder
-				.comment("""
+	public static CropsRequireWater cropsRequireWater = CropsRequireWater.ANY_CASE;
+	@Config(min = 0d, max = 128d)
+	@Label(name = "Crops Growth Speed Multiplier", description = """
 						Increases the time required for a crop (stems NOT included) to grow (e.g. at 2.0 the crop will take twice to grow).
 						Setting this to 0 will prevent crops from growing naturally.
 						1.0 will make crops grow like normal.""")
-				.defineInRange("Crops Growth Speed Multiplier", cropsGrowthMultiplier, 0.0d, 128d);
-		noSunlightGrowthMultiplierConfig = ITCommonConfig.builder
-				.comment("""
+	public static Double cropsGrowthMultiplier = 2.5d;
+	@Config(min = 0d, max = 128d)
+	@Label(name = "No Sunlight Growth Multiplier", description = """
 						Increases the time required for a crop to grow when it's sky light level is below "Min Sunlight", (e.g. at 2.0 when the crop has a skylight below "Min Sunlight" will take twice to grow).
 						Setting this to 0 will prevent crops from growing when sky light level is below "Min Sunlight".
 						1.0 will make crops growth not affected by skylight.""")
-				.defineInRange("No Sunlight Growth Multiplier", noSunLightGrowthMultiplier, 0.0d, 128d);
-		nightTimeGrowthMultiplierConfig = ITCommonConfig.builder
-				.comment("""
+	public static Double noSunLightGrowthMultiplier = 2.0d;
+	@Config(min = 0d, max = 128d)
+	@Label(name = "Night Time Growth Multiplier", description = """
 						Increases the time required for a crop to grow when it's night time.
 						Setting this to 0 will prevent crops from growing when it's night time.
 						1.0 will make crops growth not affected by night.""")
-				.defineInRange("Night Time Growth Multiplier", nightTimeGrowthMultiplier, 0.0d, 128d);
-		minSunlightConfig = ITCommonConfig.builder
-				.comment("Minimum Sky Light level required for crops to not be affected by \"No Sunlight Growth Multiplier\".")
-				.defineInRange("Min Sunlight", minSunlight, 0, 15);
-		ITCommonConfig.builder.pop();
+	public static Double nightTimeGrowthMultiplier = 1d;
+	@Config(min = 0, max = 15)
+	@Label(name = "Min Sunlight", description = "Minimum Sky Light level required for crops to not be affected by \"No Sunlight Growth Multiplier\".")
+	public static Integer minSunlight = 10;
+
+	public ArrayList<PlantGrowthModifier> plantGrowthModifiers = new ArrayList<>();
+
+	public CropsGrowth(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+		super(module, enabledByDefault, canBeDisabled);
 	}
 
 	@Override
-	public void loadConfig() {
-		super.loadConfig();
-		this.cropsRequireWater = this.cropsRequireWaterConfig.get();
-		//this.cropsRequireWaterBlacklist = this.cropsRequireWaterBlacklistConfig.get();
-		this.cropsGrowthMultiplier = this.cropsGrowthMultiplierConfig.get();
-		this.noSunLightGrowthMultiplier = this.noSunlightGrowthMultiplierConfig.get();
-		this.nightTimeGrowthMultiplier = this.nightTimeGrowthMultiplierConfig.get();
-		this.minSunlight = this.minSunlightConfig.get();
+	public void readConfig(final ModConfigEvent event) {
+		super.readConfig(event);
 		if (plantGrowthModifiers.isEmpty()) {
 			for (Block block : ForgeRegistries.BLOCKS.getValues()) {
 				if (!(block instanceof CropBlock))
 					continue;
-				PlantGrowthModifier plantGrowthModifier = new PlantGrowthModifier(IdTagMatcher.Type.ID, block.getRegistryName())
-						.growthMultiplier(this.cropsGrowthMultiplier)
-						.noSunlightGrowthMultiplier(this.noSunLightGrowthMultiplier)
-						.minSunlightRequired(this.minSunlight)
-						.nightTimeGrowthMultiplier(this.nightTimeGrowthMultiplier);
+				PlantGrowthModifier plantGrowthModifier = new PlantGrowthModifier(IdTagMatcher.Type.ID, ForgeRegistries.BLOCKS.getKey(block))
+						.growthMultiplier(cropsGrowthMultiplier)
+						.noSunlightGrowthMultiplier(noSunLightGrowthMultiplier)
+						.minSunlightRequired(minSunlight)
+						.nightTimeGrowthMultiplier(nightTimeGrowthMultiplier);
 				plantGrowthModifiers.add(plantGrowthModifier);
 			}
 		}
@@ -109,25 +81,25 @@ public class CropsGrowth extends Feature {
 	@SubscribeEvent
 	public void cropsRequireWater(BlockEvent.CropGrowEvent.Pre event) {
 		if (!this.isEnabled()
-				|| this.cropsRequireWater.equals(CropsRequireWater.NO)
+				|| cropsRequireWater.equals(CropsRequireWater.NO)
 				|| event.getResult().equals(Event.Result.DENY)
 				//|| this.cropsRequireWaterBlacklist.isBlockBlackOrNotWhiteListed(event.getState().getBlock())
-				|| !Farming.isAffectedByFarmland(event.getLevel(), event.getPos()))
+				|| !FarmingUtils.isAffectedByFarmland(event.getLevel(), event.getPos()))
 			return;
 		// Denies the growth if the crop is on farmland and the farmland is wet. If it's not on farmland the growth is not denied (e.g. Farmer's Delight rice)
-		if (Farming.isCropOnFarmland(event.getLevel(), event.getPos()) && !Farming.isCropOnWetFarmland(event.getLevel(), event.getPos())) {
+		if (FarmingUtils.isCropOnFarmland(event.getLevel(), event.getPos()) && !FarmingUtils.isCropOnWetFarmland(event.getLevel(), event.getPos())) {
 			event.setResult(Event.Result.DENY);
 		}
 	}
 
-	public boolean requiresWetFarmland(Level level, BlockPos blockPos) {
-		return this.isEnabled()
-				&& !this.cropsRequireWater.equals(CropsRequireWater.NO)
-				&& Farming.isAffectedByFarmland(level, blockPos);
+	public static boolean requiresWetFarmland(Level level, BlockPos blockPos) {
+		return isEnabled(CropsGrowth.class)
+				&& !cropsRequireWater.equals(CropsRequireWater.NO)
+				&& FarmingUtils.isAffectedByFarmland(level, blockPos);
 	}
 
-	public boolean hasWetFarmland(Level level, BlockPos blockPos) {
-		return Farming.isCropOnFarmland(level, blockPos) && Farming.isCropOnWetFarmland(level, blockPos);
+	public static boolean hasWetFarmland(Level level, BlockPos blockPos) {
+		return FarmingUtils.isCropOnFarmland(level, blockPos) && FarmingUtils.isCropOnWetFarmland(level, blockPos);
 	}
 
 	/**

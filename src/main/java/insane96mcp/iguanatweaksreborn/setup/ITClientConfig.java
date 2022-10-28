@@ -1,7 +1,6 @@
 package insane96mcp.iguanatweaksreborn.setup;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.module.ClientModules;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Pair;
@@ -22,7 +21,7 @@ public class ITClientConfig {
 
 	public static class ClientConfig {
 		public ClientConfig(final ForgeConfigSpec.Builder builder) {
-			ClientModules.init();
+			//ClientModules.init();
 		}
 	}
 }

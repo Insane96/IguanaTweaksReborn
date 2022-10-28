@@ -28,10 +28,10 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.ViewportEvent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.OverlayRegistry;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -279,16 +279,17 @@ public class Tiredness extends Feature {
 	public static final ResourceLocation GUI_ICONS = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "textures/gui/icons.png");
 
 	@OnlyIn(Dist.CLIENT)
-	public static void registerGui() {
-		OverlayRegistry.registerOverlayAbove(ForgeIngameGui.FOOD_LEVEL_ELEMENT, "Tiredness", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+	@SubscribeEvent
+	public static void registerGui(RegisterGuiOverlaysEvent event) {
+		event.registerAbove(VanillaGuiOverlay.FOOD_LEVEL.id(), "Tiredness", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
 			boolean isMounted = Minecraft.getInstance().player.getVehicle() instanceof LivingEntity;
 			if (isEnabled(Tiredness.class) && !isMounted && !Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements())
 			{
 				gui.setupOverlayRenderState(true, false, GUI_ICONS);
 				int left = screenWidth / 2 + 91;
-				int top = screenHeight - gui.right_height;
+				int top = screenHeight - gui.rightHeight;
 				renderTiredness(gui, mStack, left, top);
-				gui.right_height += 10;
+				gui.rightHeight += 10;
 			}
 		});
 	}
@@ -298,20 +299,20 @@ public class Tiredness extends Feature {
 	private static final Vec2 UV_TIRED = new Vec2(18, 0);
 
 	@OnlyIn(Dist.CLIENT)
-	private void renderTiredness(Gui gui, PoseStack matrixStack, int left, int top) {
+	private static void renderTiredness(Gui gui, PoseStack matrixStack, int left, int top) {
 		Player player = (Player)Minecraft.getInstance().getCameraEntity();
 		float tiredness = player.getPersistentData().getFloat(Strings.Tags.TIREDNESS);
 		int numberOfZ = 0;
-		if (tiredness < this.tirednessToSleep) {
-			numberOfZ += tiredness / (this.tirednessToSleep / 6);
+		if (tiredness < tirednessToSleep) {
+			numberOfZ += tiredness / (tirednessToSleep / 6);
 		}
-		else if (tiredness < this.tirednessToEffect) {
-			float tirednessBetweenSleepEffect = (float) (this.tirednessToEffect - this.tirednessToSleep);
-			numberOfZ += 6 + ((tiredness - this.tirednessToSleep) / (tirednessBetweenSleepEffect / 2));
+		else if (tiredness < tirednessToEffect) {
+			float tirednessBetweenSleepEffect = (float) (tirednessToEffect - tirednessToSleep);
+			numberOfZ += 6 + ((tiredness - tirednessToSleep) / (tirednessBetweenSleepEffect / 2));
 		}
 		else {
-			float tirednessToBlind = (float) (this.tirednessPerLevel * 5);
-			numberOfZ += 8 + ((tiredness - this.tirednessToEffect) / (tirednessToBlind / 2));
+			float tirednessToBlind = (float) (tirednessPerLevel * 5);
+			numberOfZ += 8 + ((tiredness - tirednessToEffect) / (tirednessToBlind / 2));
 		}
 		numberOfZ = Mth.clamp(numberOfZ, 0, 10);
 		Minecraft.getInstance().getProfiler().push("tiredness");
@@ -330,14 +331,14 @@ public class Tiredness extends Feature {
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public void debugScreen(RenderGameOverlayEvent.Text event) {
+	public void debugScreen(CustomizeGuiOverlayEvent.DebugText event) {
 		if (!this.isEnabled())
 			return;
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer playerEntity = mc.player;
 		if (playerEntity == null)
 			return;
-		if (mc.options.renderDebug) {
+		if (mc.options.renderDebug & !mc.showOnlyReducedInfo()) {
 			event.getLeft().add(String.format("Tiredness: %s", new DecimalFormat("#.#").format(playerEntity.getPersistentData().getFloat(Strings.Tags.TIREDNESS))));
 		}
 	}

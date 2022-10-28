@@ -1,91 +1,69 @@
 package insane96mcp.iguanatweaksreborn.module.experience.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
+import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.projectile.ThrownExperienceBottle;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Other Experience", description = "Change other experience sources")
+@LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class OtherExperience extends Feature {
+	@Config(min = 0, max = 512)
+	@Label(name = "Bottle o' Enchanting Bonus XP", description = "Bottle o' enchanting will drop this more XP. Experience is still affected by 'Global Experience Multiplier'\nCan be set to 0 to make Bottle o' enchanting drop no experience")
+	public static Integer xpBottleBonus = 18;
+	@Config(min = 0)
+	@Label(name = "Anvil Repair Cap", description = "Set the cap for repairing items in the anvil (vanilla is 40)")
+	public static Integer anvilRepairCap = 1024;
+	@Config
+	@Label(name = "Remove rename cost", description = "Removes cost of renaming items in Anvil")
+	public static Boolean freeRenaming = true;
+	@Config
+	@Label(name = "Unmending", description = "Replaces the default Mending enchantment. Mending sets the repair cost of an item to 'Unmending Cap' and will stop it from increasing. No longer repairs items with xp.")
+	public static Boolean unmending = true;
+	@Config(min = 1)
+	@Label(name = "Unmending Cap", description = "Set the cap repair cost set by Unmending")
+	public static Integer unmendingCap = 20;
 
-	private final ForgeConfigSpec.IntValue xpBottleBonusConfig;
-	private final ForgeConfigSpec.IntValue anvilRepairCapConfig;
-	private final ForgeConfigSpec.BooleanValue freeRenamingConfig;
-	private final ForgeConfigSpec.BooleanValue unmendingConfig;
-	private final ForgeConfigSpec.IntValue unmendingCapConfig;
-
-	public int xpBottleBonus = 18;
-	public int anvilRepairCap = 2048;
-	public boolean freeRenaming = true;
-	public boolean unmending = true;
-	public int unmendingCap = 20;
-
-	public OtherExperience(Module module) {
-		super(ITCommonConfig.builder, module, true);
-		this.pushConfig(ITCommonConfig.builder);
-		xpBottleBonusConfig = ITCommonConfig.builder
-				.comment("Bottle o' enchanting will drop this more XP. Experience is still affected by 'Global Experience Multiplier'\nCan be set to 0 to make Bottle o' enchanting drop no experience")
-				.defineInRange("Bottle o' Enchanting Bonus XP", this.xpBottleBonus, 0, 1024);
-		anvilRepairCapConfig = ITCommonConfig.builder
-				.comment("Set the cap for repairing items in the anvil (vanilla is 40)")
-				.defineInRange("Anvil Repair Cap", this.anvilRepairCap, 1, Integer.MAX_VALUE);
-		freeRenamingConfig = ITCommonConfig.builder
-				.comment("Removes cost of renaming items in Anvil")
-				.define("Remove rename cost", this.freeRenaming);
-		unmendingConfig = ITCommonConfig.builder
-				.comment("Replaces the default Mending enchantment. Mending sets the repair cost of an item to 'Unmending Cap' and will stop it from increasing. No longer repairs items with xp.")
-				.define("Unmending", this.unmending);
-		unmendingCapConfig = ITCommonConfig.builder
-				.comment("Set the cap repair cost set by Unmending")
-				.defineInRange("Unmending Cap", this.unmendingCap, 1, Integer.MAX_VALUE);
-		ITCommonConfig.builder.pop();
-	}
-
-	@Override
-	public void loadConfig() {
-		super.loadConfig();
-		this.xpBottleBonus = this.xpBottleBonusConfig.get();
-		this.anvilRepairCap = this.anvilRepairCapConfig.get();
-		this.freeRenaming = this.freeRenamingConfig.get();
-		this.unmending = this.unmendingConfig.get();
-		this.unmendingCap = this.unmendingCapConfig.get();
+	public OtherExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+		super(module, enabledByDefault, canBeDisabled);
 	}
 
 	public void onXpBottleHit(ThrownExperienceBottle xpBottle) {
 		if (!this.isEnabled()
-				|| this.xpBottleBonus == 0)
+				|| xpBottleBonus == 0)
 			return;
 
 		if (xpBottle.level instanceof ServerLevel) {
-			ExperienceOrb.award((ServerLevel)xpBottle.level, xpBottle.position(), this.xpBottleBonus);
+			ExperienceOrb.award((ServerLevel)xpBottle.level, xpBottle.position(), xpBottleBonus);
 		}
 	}
 
-	public boolean isFreeRenaming() {
-		return this.isEnabled() && this.freeRenaming;
+	public static boolean isFreeRenaming() {
+		return isEnabled(OtherExperience.class) && freeRenaming;
 	}
 
 	@SubscribeEvent
 	public void onAnvilUse(AnvilRepairEvent event) {
 		if (!this.isEnabled()
-				|| !this.unmending)
+				|| !unmending)
 			return;
-		ItemStack output = event.getItemResult();
+		ItemStack output = event.getOutput();
 		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, output) > 0 && output.getBaseRepairCost() > 15) {
-			output.setRepairCost(this.unmendingCap);
+			output.setRepairCost(unmendingCap);
 		}
 	}
 
-	public boolean isUnmendingEnabled() {
-		return this.isEnabled() && this.unmending;
+	public static boolean isUnmendingEnabled() {
+		return isEnabled(OtherExperience.class) && unmending;
 	}
 }

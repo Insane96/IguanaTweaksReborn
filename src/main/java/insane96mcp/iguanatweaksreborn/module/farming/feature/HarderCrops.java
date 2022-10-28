@@ -1,68 +1,57 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
+import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
-import java.util.List;
 
-@Label(name = "Harder Crops", description = "Crops are no longer insta-minable. This applies only to blocks that are instances of net.minecraft.world.level.block.CropBlock.\n" +
-		"Crops hardness is still affected by the Hardness module.\n" +
-		"Changing anything requires a minecraft restart.")
+@Label(name = "Harder Crops", description = """
+		Crops are no longer insta-minable. This applies only to blocks that are instances of net.minecraft.world.level.block.CropBlock.
+		Crops hardness is still affected by the Hardness module.
+		Changing anything requires a minecraft restart.""")
+@LoadFeature(module = Modules.Ids.FARMING)
 public class HarderCrops extends Feature {
 
-	private final ForgeConfigSpec.ConfigValue<Double> hardnessConfig;
-	private final ForgeConfigSpec.ConfigValue<List<? extends String>> moreBlocksListConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> onlyFullyGrownConfig;
-
-	public double hardness = 1.0f;
+	@Config(min = 0d, max = 128d)
+	@Label(name = "Hardness", description = "How hard to break are plants? For comparison, dirt has an hardness of 0.5")
+	public static Double hardness = 1.0d;
+	@Config
+	@Label(name = "Other affected blocks", description = "Block ids or tags that will have the hardness and hoe efficiency applied. Each entry has a block or tag. This still only applies to blocks that have 0 hardness.")
 	public ArrayList<IdTagMatcher> moreBlocksList;
-	public boolean onlyFullyGrown = true;
+	@Config
+	@Label(name = "Only fully grown", description = "If the hardness should be applied to mature crops only.")
+	public static Boolean onlyFullyGrown = true;
 
-	public HarderCrops(Module module) {
-		super(ITCommonConfig.builder, module);
-		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
-		hardnessConfig = ITCommonConfig.builder
-				.comment("How hard to break are plants? For comparison, dirt has an hardness of 0.5")
-				.defineInRange("Hardness", hardness, 0.0d, 128d);
-		moreBlocksListConfig = ITCommonConfig.builder
-				.comment("Block ids or tags that will have the hardness and hoe efficiency applied. Each entry has a block or tag. This still only applies to blocks that have 0 hardness.")
-				.defineList("Other affected blocks", new ArrayList<>(), o -> o instanceof String);
-		onlyFullyGrownConfig = ITCommonConfig.builder
-				.comment("If the hardness should be applied to mature crops only.")
-				.define("Only fully grown", onlyFullyGrown);
-		ITCommonConfig.builder.pop();
+	public HarderCrops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+		super(module, enabledByDefault, canBeDisabled);
 	}
 
 	@Override
-	public void loadConfig() {
-		super.loadConfig();
-		this.hardness = this.hardnessConfig.get();
-		this.moreBlocksList = (ArrayList<IdTagMatcher>) IdTagMatcher.parseStringList(this.moreBlocksListConfig.get());
-		this.onlyFullyGrown = this.onlyFullyGrownConfig.get();
+	public void readConfig(final ModConfigEvent event) {
+		super.readConfig(event);
 		applyHardness();
 	}
 
 	private boolean hardnessApplied = false;
 
 	private void applyHardness() {
-		if (!this.isEnabled())
-			return;
-		if (hardnessApplied)
-			return;
+		if (!this.isEnabled()
+				|| hardnessApplied) return;
 		hardnessApplied = true;
 
 		for (Block block : ForgeRegistries.BLOCKS.getValues()) {
@@ -77,12 +66,12 @@ public class HarderCrops extends Feature {
 				continue;
 			if (onlyFullyGrown) {
 				//I have doubts that this always takes the fully grown crop
-				block.getStateDefinition().getPossibleStates().get(block.getStateDefinition().getPossibleStates().size() - 1).destroySpeed = (float) this.hardness;
+				block.getStateDefinition().getPossibleStates().get(block.getStateDefinition().getPossibleStates().size() - 1).destroySpeed = hardness.floatValue();
 			}
 			else {
 				block.getStateDefinition().getPossibleStates().forEach(blockState -> {
 					if (blockState.destroySpeed == 0f)
-						blockState.destroySpeed = (float) this.hardness;
+						blockState.destroySpeed = hardness.floatValue();
 				});
 			}
 		}
@@ -90,14 +79,11 @@ public class HarderCrops extends Feature {
 
 	@SubscribeEvent
 	public void onCropBreaking(PlayerEvent.BreakSpeed event) {
-		if (!this.isEnabled())
+		if (!this.isEnabled()
+				|| hardness == 0d) return;
+		ItemStack heldStack = event.getEntity().getMainHandItem();
+		if (!(heldStack.getItem() instanceof TieredItem heldItem))
 			return;
-		if (this.hardness == 0d)
-			return;
-		ItemStack heldStack = event.getPlayer().getMainHandItem();
-		if (!(heldStack.getItem() instanceof TieredItem))
-			return;
-		TieredItem heldItem = (TieredItem) heldStack.getItem();
 		if (!heldItem.canPerformAction(heldStack, ToolActions.HOE_DIG) && !heldItem.canPerformAction(heldStack, ToolActions.AXE_DIG))
 			return;
 		Block block = event.getState().getBlock();
@@ -112,8 +98,8 @@ public class HarderCrops extends Feature {
 			return;
 		float efficiency = heldItem.getTier().getSpeed();
 		if (efficiency > 1.0F) {
-			int efficiencyLevel = EnchantmentHelper.getBlockEfficiency(event.getPlayer());
-			ItemStack itemstack = event.getPlayer().getMainHandItem();
+			int efficiencyLevel = EnchantmentHelper.getBlockEfficiency(event.getEntity());
+			ItemStack itemstack = event.getEntity().getMainHandItem();
 			if (efficiencyLevel > 0 && !itemstack.isEmpty()) {
 				efficiency += (float) (efficiencyLevel * efficiencyLevel + 1);
 			}
