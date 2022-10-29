@@ -1,41 +1,28 @@
 package insane96mcp.iguanatweaksreborn.module.mining.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
+import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.world.level.block.AbstractSkullBlock;
 import net.minecraft.world.level.block.InfestedBlock;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Misc", description = "Various mining changes")
+@LoadFeature(module = Modules.Ids.MINING)
 public class MiningMisc extends Feature {
-	private final ForgeConfigSpec.ConfigValue<Boolean> instaMineSilverfishConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> instaMineHeadsConfig;
+	@Config
+	@Label(name = "Insta-Mine Silverfish", description = "Silverfish blocks will insta-mine like pre-1.17")
+	public static Boolean instaMineSilverfish = true;
+	@Config
+	@Label(name = "Insta-Mine Heads", description = "Heads will insta-break")
+	public static Boolean instaMineHeads = true;
 
-	public boolean instaMineSilverfish = true;
-	public boolean instaMineHeads = true;
-
-	public MiningMisc(Module module) {
-		super(ITCommonConfig.builder, module);
-		this.pushConfig(ITCommonConfig.builder);
-		this.instaMineSilverfishConfig = ITCommonConfig.builder
-				.comment("Silverfish blocks will insta-mine like pre-1.17")
-				.define("Insta-Mine Silverfish", this.instaMineSilverfish);
-		this.instaMineHeadsConfig = ITCommonConfig.builder
-				.comment("Heads will insta-break")
-				.define("Insta-Mine Heads", this.instaMineHeads);
-		ITCommonConfig.builder.pop();
-	}
-
-	@Override
-	public void loadConfig() {
-		super.loadConfig();
-
-		this.instaMineSilverfish = this.instaMineSilverfishConfig.get();
-		this.instaMineHeads = this.instaMineHeadsConfig.get();
+	public MiningMisc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+		super(module, enabledByDefault, canBeDisabled);
 	}
 
 	@SubscribeEvent
@@ -48,7 +35,7 @@ public class MiningMisc extends Feature {
 	}
 
 	public void silverfishBreakSpeed(PlayerEvent.BreakSpeed event) {
-		if (!this.instaMineSilverfish)
+		if (!instaMineSilverfish)
 			return;
 
 		if (event.getState().getBlock() instanceof InfestedBlock)
@@ -56,7 +43,7 @@ public class MiningMisc extends Feature {
 	}
 
 	public void skullBreakSpeed(PlayerEvent.BreakSpeed event) {
-		if (!this.instaMineHeads)
+		if (!instaMineHeads)
 			return;
 
 		if (event.getState().getBlock() instanceof AbstractSkullBlock)

@@ -1,9 +1,10 @@
 package insane96mcp.iguanatweaksreborn.module.movement.feature;
 
-import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
+import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -15,29 +16,29 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "No Pillaring", description = "Prevents the player from placing blocks below him when in mid air.")
+@LoadFeature(module = Modules.Ids.MOVEMENT)
 public class NoPillaring extends Feature {
 
-	public NoPillaring(Module module) {
-		super(ITCommonConfig.builder, module);
-	}
-
-	@Override
-	public void loadConfig() {
-		super.loadConfig();
+	public NoPillaring(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+		super(module, enabledByDefault, canBeDisabled);
 	}
 
 	@SubscribeEvent
 	public void playerRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		if (!this.isEnabled())
 			return;
-		Player playerEntity = event.getPlayer();
-		if (playerEntity.isCreative() || playerEntity.isInWater() || playerEntity.onClimbable())
+		Player playerEntity = event.getEntity();
+		if (playerEntity.isCreative()
+				|| playerEntity.isInWater()
+				|| playerEntity.onClimbable())
 			return;
+		//noinspection ConstantConditions
 		BlockPos placedPos = event.getPos().relative(event.getFace());
 		Vec3 placedBlock = new Vec3(placedPos.getX() + 0.5d, placedPos.getY() + 0.5d, placedPos.getZ() + 0.5d);
 		double distance = placedBlock.distanceTo(playerEntity.position());
 		double allowedDistance = 1.36d;
 		if (playerEntity.hasEffect(MobEffects.JUMP))
+			//noinspection ConstantConditions
 			allowedDistance *= 1 + ((playerEntity.getEffect(MobEffects.JUMP).getAmplifier() + 1) * 0.5);
 		boolean isSolidBlock = true;
 		if (event.getItemStack().getItem() instanceof BlockItem) {

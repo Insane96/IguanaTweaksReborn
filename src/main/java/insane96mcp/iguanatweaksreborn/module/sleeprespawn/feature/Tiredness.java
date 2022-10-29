@@ -2,15 +2,17 @@ package insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.utils.EnergyBoostItem;
 import insane96mcp.iguanatweaksreborn.network.MessageTirednessSync;
 import insane96mcp.iguanatweaksreborn.network.SyncHandler;
-import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -42,70 +44,58 @@ import net.minecraftforge.event.level.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.network.NetworkDirection;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
 @Label(name = "Tiredness", description = "Prevents sleeping if the player is not tired. Tiredness is gained by gaining exhaustion. Allows you to sleep during daytime if too tired")
+@LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class Tiredness extends Feature {
-
-	private final ForgeConfigSpec.DoubleValue tirednessGainMultiplierConfig;
-	private final ForgeConfigSpec.BooleanValue shouldPreventSpawnPointConfig;
-	private final ForgeConfigSpec.DoubleValue tirednessToSleepConfig;
-	private final ForgeConfigSpec.DoubleValue tirednessToEffectConfig;
-	private final ForgeConfigSpec.DoubleValue tirednessPerLevelConfig;
-	private final ForgeConfigSpec.ConfigValue<List<? extends String>> energyBoostItemsConfig;
-
+	private static ForgeConfigSpec.ConfigValue<List<? extends String>> energyBoostItemsConfig;
 	private static final List<String> energyBoostItemsDefault = List.of(
 			"#iguanatweaksreborn:energy_boost",
 			"farmersdelight:hot_cocoa,80,0"
 	);
+	public static List<EnergyBoostItem> energyBoostItems;
 
-	public double tirednessGainMultiplier = 1d;
-	public boolean shouldPreventSpawnPoint = false;
-	public double tirednessToSleep = 320d;
-	public double tirednessToEffect = 400d;
-	public double tirednessPerLevel = 20d;
-	public List<EnergyBoostItem> energyBoostItems;
+	@Config(min = 0d, max = 128d)
+	@Label(name = "Tiredness gained multiplier", description = "Multiply the tiredness gained by this value. Normally you gain tiredness equal to the exhaustion gained. 'Effective Hunger' doesn't affect the exhaustion gained.")
+	public static Double tirednessGainMultiplier = 1d;
+	@Config
+	@Label(name = "Prevent Spawn Point", description = "If true the player will not set the spawn point if he/she can't sleep.")
+	public static Boolean shouldPreventSpawnPoint = false;
+	@Config(min = 0d)
+	@Label(name = "Tiredness to sleep", description = "Tiredness required to be able to sleep.")
+	public static Double tirednessToSleep = 320d;
+	@Config(min = 0d)
+	@Label(name = "Tiredness for effect", description = "Tiredness required to get the Tired effect.")
+	public static Double tirednessToEffect = 400d;
+	@Config(min = 0d)
+	@Label(name = "Tiredness per level", description = "Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
+	public static Double tirednessPerLevel = 20d;
 
-	public Tiredness(Module module) {
-		super(ITCommonConfig.builder, module);
-		this.pushConfig(ITCommonConfig.builder);
-		tirednessGainMultiplierConfig = ITCommonConfig.builder
-				.comment("Multiply the tiredness gained by this value. Normally you gain tiredness equal to the exhaustion gained. 'Effective Hunger' doesn't affect the exhaustion gained.")
-				.defineInRange("Tiredness gained multiplier", this.tirednessGainMultiplier, 0d, 128d);
-		shouldPreventSpawnPointConfig = ITCommonConfig.builder
-				.comment("If true the player will not set the spawn point if he/she can't sleep.")
-				.define("Prevent Spawn Point", this.shouldPreventSpawnPoint);
-		tirednessToSleepConfig = ITCommonConfig.builder
-				.comment("Tiredness required to be able to sleep.")
-				.defineInRange("Tiredness to sleep", this.tirednessToSleep, 0d, Double.MAX_VALUE);
-		tirednessToEffectConfig = ITCommonConfig.builder
-				.comment("Tiredness required to get the Tired effect.")
-				.defineInRange("Tiredness for effect", this.tirednessToEffect, 0d, Double.MAX_VALUE);
-		tirednessPerLevelConfig = ITCommonConfig.builder
-				.comment("Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
-				.defineInRange("Tiredness per level", this.tirednessPerLevel, 0d, Double.MAX_VALUE);
-		energyBoostItemsConfig = ITCommonConfig.builder
+	public Tiredness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	@Override
+	public void loadConfigOptions() {
+		super.loadConfigOptions();
+		energyBoostItemsConfig = this.getBuilder()
 				.comment("""
 						A list of items that when consumed will give the Energy Boost effect.
 						You can specify the item/tag only and the duration will be calculated from the hunger restored or you can include duration,amplifier for customs.
 						The iguanatweaksreborn:energy_boost item tag can be used to add items without a custom duration
 						Format is 'modid:item_id' / '#modid:item_tag' or 'modid:item_id,duration,amplifier' / '#modid:item_tag,duration,amplifier'.""")
 				.defineList("Plants Growth Multiplier", energyBoostItemsDefault, o -> o instanceof String);
-		ITCommonConfig.builder.pop();
 	}
 
 	@Override
-	public void loadConfig() {
-		super.loadConfig();
-		this.tirednessGainMultiplier = this.tirednessGainMultiplierConfig.get();
-		this.shouldPreventSpawnPoint = this.shouldPreventSpawnPointConfig.get();
-		this.tirednessToSleep = this.tirednessToSleepConfig.get();
-		this.tirednessToEffect = this.tirednessToEffectConfig.get();
-		this.tirednessPerLevel = this.tirednessPerLevelConfig.get();
-		this.energyBoostItems = EnergyBoostItem.parseStringList(this.energyBoostItemsConfig.get());
+	public void readConfig(final ModConfigEvent event) {
+		super.readConfig(event);
+		energyBoostItems = EnergyBoostItem.parseStringList(energyBoostItemsConfig.get());
 	}
 
 	@SubscribeEvent
@@ -159,8 +149,8 @@ public class Tiredness extends Feature {
 		playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.ENERGY_BOOST.get(), duration, amplifier, true, false, true, false));
 	}
 
-	public void onFoodExhaustion(Player player, float amount) {
-		if (!this.isEnabled())
+	public static void onFoodExhaustion(Player player, float amount) {
+		if (!isEnabled(Tiredness.class))
 			return;
 
 		if (player.level.isClientSide)
@@ -172,11 +162,11 @@ public class Tiredness extends Feature {
 		float tiredness = persistentData.getFloat(Strings.Tags.TIREDNESS);
 		float newTiredness = tiredness + amount;
 		persistentData.putFloat(Strings.Tags.TIREDNESS, newTiredness);
-		if (tiredness < this.tirednessToSleep && newTiredness >= this.tirednessToSleep) {
+		if (tiredness < tirednessToSleep && newTiredness >= tirednessToSleep) {
 			serverPlayer.displayClientMessage(Component.translatable(Strings.Translatable.TIRED_ENOUGH), false);
 		}
-		else if (tiredness >= this.tirednessToEffect && player.tickCount % 20 == 0) {
-			serverPlayer.addEffect(new MobEffectInstance(ITMobEffects.TIRED.get(), 25, Math.min((int) ((tiredness - this.tirednessToEffect) / this.tirednessPerLevel), 4), true, false, true));
+		else if (tiredness >= tirednessToEffect && player.tickCount % 20 == 0) {
+			serverPlayer.addEffect(new MobEffectInstance(ITMobEffects.TIRED.get(), 25, Math.min((int) ((tiredness - tirednessToEffect) / tirednessPerLevel), 4), true, false, true));
 		}
 
 		Object msg = new MessageTirednessSync(newTiredness);
@@ -203,13 +193,13 @@ public class Tiredness extends Feature {
 
 		ServerPlayer player = (ServerPlayer) event.getEntity();
 
-		if (player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) < this.tirednessToSleep) {
+		if (player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) < tirednessToSleep) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.displayClientMessage(Component.translatable(Strings.Translatable.NOT_TIRED), true);
-			if (!this.shouldPreventSpawnPoint)
+			if (!shouldPreventSpawnPoint)
 				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, true);
 		}
-		else if (player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) > this.tirednessToEffect) {
+		else if (player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) > tirednessToEffect) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.startSleeping(event.getPos());
 			((ServerLevel)player.level).updateSleepingPlayerList();
@@ -221,7 +211,7 @@ public class Tiredness extends Feature {
 		if (!this.isEnabled())
 			return;
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> {
-			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) - (float) this.tirednessToEffect, 0, Float.MAX_VALUE);
+			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) - tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
 			player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, tirednessOnWakeUp);
 		});
 	}
@@ -233,9 +223,9 @@ public class Tiredness extends Feature {
 		event.setResult(Event.Result.ALLOW);
 	}
 
-	public boolean canSleepDuringDay(Player player) {
-		return this.isEnabled()
-				&& player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) > this.tirednessToEffect;
+	public static boolean canSleepDuringDay(Player player) {
+		return isEnabled(Tiredness.class)
+				&& player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) > tirednessToEffect;
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -281,7 +271,7 @@ public class Tiredness extends Feature {
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void registerGui(RegisterGuiOverlaysEvent event) {
-		event.registerAbove(VanillaGuiOverlay.FOOD_LEVEL.id(), "Tiredness", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+		event.registerAbove(VanillaGuiOverlay.FOOD_LEVEL.id(), "tiredness", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
 			boolean isMounted = Minecraft.getInstance().player.getVehicle() instanceof LivingEntity;
 			if (isEnabled(Tiredness.class) && !isMounted && !Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements())
 			{

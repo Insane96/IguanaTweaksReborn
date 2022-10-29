@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.misc.feature.BeaconConduit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;
@@ -15,7 +15,7 @@ public class BeaconBlockEntityMixin {
 
 	@Inject(at = @At("HEAD"), method = "applyEffects", cancellable = true)
 	private static void applyEffects(Level level, BlockPos blockPos, int layers, MobEffect effectPrimary, MobEffect effectSecondary, CallbackInfo ci) {
-		if (Modules.misc.beaconConduit.beaconApplyEffects(level, blockPos, layers, effectPrimary, effectSecondary))
+		if (BeaconConduit.beaconApplyEffects(level, blockPos, layers, effectPrimary, effectSecondary))
 			ci.cancel();
 	}
 }

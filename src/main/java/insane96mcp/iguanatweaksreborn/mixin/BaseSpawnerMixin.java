@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.misc.feature.TempSpawner;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BaseSpawner;
@@ -15,12 +15,12 @@ public class BaseSpawnerMixin {
 
 	@Inject(at = @At("HEAD"), method = "serverTick")
 	private void serverTick(ServerLevel p_151312_, BlockPos p_151313_, CallbackInfo callback) {
-		Modules.misc.tempSpawner.onServerTick((BaseSpawner) (Object) this);
+		TempSpawner.onServerTick((BaseSpawner) (Object) this);
 	}
 
 	@Inject(at = @At("HEAD"), method = "clientTick")
 	private void serverTick(Level p_151320_, BlockPos p_151321_, CallbackInfo callback) {
-		Modules.misc.tempSpawner.onClientTick((BaseSpawner) (Object) this);
+		TempSpawner.onClientTick((BaseSpawner) (Object) this);
 	}
 
 }

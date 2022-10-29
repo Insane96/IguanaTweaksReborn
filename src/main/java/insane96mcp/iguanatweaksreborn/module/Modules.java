@@ -15,6 +15,7 @@ public class Modules {
 	public static Module movement;
 	public static Module sleepRespawn;
 	public static Module stackSize;
+	//public static Module client;
 
 	public static void init() {
 		combat = Module.Builder.create(ITCommonConfig.builder, Ids.COMBAT, "Combat").build();
@@ -26,6 +27,7 @@ public class Modules {
 		movement = Module.Builder.create(ITCommonConfig.builder, Ids.MOVEMENT, "Movement").build();
 		sleepRespawn = Module.Builder.create(ITCommonConfig.builder, Ids.SLEEP_RESPAWN, "Sleep & Respawn").build();
 		stackSize = Module.Builder.create(ITCommonConfig.builder, Ids.STACK_SIZE, "Stack Sizes").build();
+		//client = Module.Builder.create(ITClientConfig.builder, Ids.CLIENT, "Client").build();
 	}
 
 	public static class Ids {
@@ -38,5 +40,6 @@ public class Modules {
 		public static final String MOVEMENT = IguanaTweaksReborn.RESOURCE_PREFIX + "movement";
 		public static final String SLEEP_RESPAWN = IguanaTweaksReborn.RESOURCE_PREFIX + "sleep_respawn";
 		public static final String STACK_SIZE = IguanaTweaksReborn.RESOURCE_PREFIX + "stack_size";
+		public static final String CLIENT = IguanaTweaksReborn.RESOURCE_PREFIX + "client";
 	}
 }

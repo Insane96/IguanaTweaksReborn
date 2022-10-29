@@ -21,7 +21,7 @@ public class PlayerExperience extends Feature {
 						Obviously incompatible with Allurement's 'Remove level Scaling'""")
 	public static Boolean betterScalingLevels = true;
 	@Config(min = -1d, max = 1d)
-	@Label(name = "Better Scaling XP to next level", description = """
+	@Label(name = "Dropped Experience on Death", description = """
 						On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this.
 						Due to Minecraft limitations this is incompatible with other mods that change the level scaling (e.g. Allurement's 'Remove level Scaling').""")
 	public static Double droppedExperienceOnDeath = 0.85d;
@@ -46,8 +46,8 @@ public class PlayerExperience extends Feature {
 	/**
 	 * Returns -1 when the module/feature is not enabled, otherwise the calculated experience required to level up
 	 */
-	public int getBetterScalingLevel(int experienceLevel) {
-		if (!this.isEnabled()
+	public static int getBetterScalingLevel(int experienceLevel) {
+		if (!isEnabled(PlayerExperience.class)
 				|| !betterScalingLevels)
 			return -1;
 
@@ -55,7 +55,7 @@ public class PlayerExperience extends Feature {
 	}
 
 	//Instead of using experienceTotal, calculate the xp from the xp bar and level since experienceTotal doesn't get updated on level consume
-	private int getTotalExperience(Player player) {
+	private static int getTotalExperience(Player player) {
 		int totalExp = 0;
 		for (int i = 0; i < player.experienceLevel; i++) {
 			totalExp += getXpNeededForNextLevel(i);
@@ -64,12 +64,12 @@ public class PlayerExperience extends Feature {
 		//Take into account global experience to prevent XP duping
 		if (Feature.isEnabled(GlobalExperience.class) && GlobalExperience.globalMultiplier != 1d)
 			totalExp *= (1d / GlobalExperience.globalMultiplier);
-		if (totalExp > 247700)
-			totalExp = 247700;
+		if (totalExp > 250000)
+			totalExp = 250000;
 		return totalExp;
 	}
 
-	private int getXpNeededForNextLevel(int currentLevel) {
+	private static int getXpNeededForNextLevel(int currentLevel) {
 		int betterScalingXp = getBetterScalingLevel(currentLevel);
 		if (betterScalingXp != -1)
 			return betterScalingXp;
@@ -84,8 +84,8 @@ public class PlayerExperience extends Feature {
 	/**
 	 * Returns -1 when the module/feature is not enabled, otherwise the experience dropped on death
 	 */
-	public int getExperienceOnDeath(Player player) {
-		if (!this.isEnabled()
+	public static int getExperienceOnDeath(Player player) {
+		if (!isEnabled(PlayerExperience.class)
 				|| (droppedExperienceOnDeath < 0 && !GlobalExperience.isEnabled(GlobalExperience.class))
 				|| (player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY) && !player.isSpectator()))
 			return -1;

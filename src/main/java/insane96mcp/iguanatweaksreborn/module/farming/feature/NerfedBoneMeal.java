@@ -1,10 +1,12 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
+import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Blacklist;
 import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -21,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Label(name = "Nerfed Bone meal", description = "Bone meal is no longer so OP")
+@LoadFeature(module = Modules.Ids.FARMING)
 public class NerfedBoneMeal extends Feature {
 	@Config
 	@Label(name = "Nerfed Bone Meal", description = "Makes more Bone Meal required for Crops. Valid Values are\nNO: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")

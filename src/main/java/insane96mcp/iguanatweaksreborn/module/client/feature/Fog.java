@@ -1,11 +1,9 @@
 package insane96mcp.iguanatweaksreborn.module.client.feature;
 
-import insane96mcp.iguanatweaksreborn.module.ClientModules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
-import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -18,7 +16,7 @@ import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Fog", description = "Makes fog less invasive in some contexts")
-@LoadFeature(module = ClientModules.Ids.CLIENT)
+//@LoadFeature(module = Modules.Ids.CLIENT)
 public class Fog extends Feature {
 
     @Config

@@ -1,14 +1,12 @@
 package insane96mcp.iguanatweaksreborn.module.client.feature;
 
-import insane96mcp.iguanatweaksreborn.module.ClientModules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
-import insane96mcp.insanelib.base.config.LoadFeature;
 
 @Label(name = "Light", description = "Changes to light")
-@LoadFeature(module = ClientModules.Ids.CLIENT)
+//@LoadFeature(module = Modules.Ids.CLIENT)
 public class Light extends Feature {
 
     @Config
@@ -19,7 +17,8 @@ public class Light extends Feature {
         super(module, enabledByDefault, canBeDisabled);
     }
 
+    //TODO
     public static boolean shouldDisableNightVisionFlashing() {
-        return isEnabled(Light.class) && noNightVisionFlashing;
+        return false;/*isEnabled(Light.class) && noNightVisionFlashing;*/
     }
 }

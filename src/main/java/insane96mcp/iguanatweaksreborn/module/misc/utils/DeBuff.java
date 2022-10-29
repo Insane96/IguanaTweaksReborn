@@ -27,7 +27,7 @@ public class DeBuff {
 
 	@Override
 	public String toString() {
-		return String.format("DeBuff{stat: %s, min: %f, max: %f, effect: %s, amplifier: %d}", stat, min, max, effect.getRegistryName(), amplifier);
+		return String.format("DeBuff{stat: %s, min: %f, max: %f, effect: %s, amplifier: %d}", stat, min, max, effect.getDisplayName(), amplifier);
 	}
 
 	public enum Stat {

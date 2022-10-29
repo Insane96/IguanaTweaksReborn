@@ -1,7 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.module.farming.FarmingUtils;
 import insane96mcp.iguanatweaksreborn.module.farming.utils.PlantGrowthModifier;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -11,8 +10,12 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.StemBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -84,10 +87,10 @@ public class CropsGrowth extends Feature {
 				|| cropsRequireWater.equals(CropsRequireWater.NO)
 				|| event.getResult().equals(Event.Result.DENY)
 				//|| this.cropsRequireWaterBlacklist.isBlockBlackOrNotWhiteListed(event.getState().getBlock())
-				|| !FarmingUtils.isAffectedByFarmland(event.getLevel(), event.getPos()))
+				|| !isAffectedByFarmland(event.getLevel(), event.getPos()))
 			return;
 		// Denies the growth if the crop is on farmland and the farmland is wet. If it's not on farmland the growth is not denied (e.g. Farmer's Delight rice)
-		if (FarmingUtils.isCropOnFarmland(event.getLevel(), event.getPos()) && !FarmingUtils.isCropOnWetFarmland(event.getLevel(), event.getPos())) {
+		if (isCropOnFarmland(event.getLevel(), event.getPos()) && !isCropOnWetFarmland(event.getLevel(), event.getPos())) {
 			event.setResult(Event.Result.DENY);
 		}
 	}
@@ -95,11 +98,11 @@ public class CropsGrowth extends Feature {
 	public static boolean requiresWetFarmland(Level level, BlockPos blockPos) {
 		return isEnabled(CropsGrowth.class)
 				&& !cropsRequireWater.equals(CropsRequireWater.NO)
-				&& FarmingUtils.isAffectedByFarmland(level, blockPos);
+				&& isAffectedByFarmland(level, blockPos);
 	}
 
 	public static boolean hasWetFarmland(Level level, BlockPos blockPos) {
-		return FarmingUtils.isCropOnFarmland(level, blockPos) && FarmingUtils.isCropOnWetFarmland(level, blockPos);
+		return isCropOnFarmland(level, blockPos) && isCropOnWetFarmland(level, blockPos);
 	}
 
 	/**
@@ -132,5 +135,34 @@ public class CropsGrowth extends Feature {
 		NO,
 		BONEMEAL_ONLY,
 		ANY_CASE
+	}
+
+	/**
+	 * @return true if the block is affected by the block below
+	 */
+	public static boolean isAffectedByFarmland(LevelAccessor levelAccessor, BlockPos cropPos) {
+		BlockState state = levelAccessor.getBlockState(cropPos);
+		Block block = state.getBlock();
+		return block instanceof CropBlock || block instanceof StemBlock;
+	}
+
+	/**
+	 * @return true if the block is on wet farmland
+	 */
+	public static boolean isCropOnWetFarmland(LevelAccessor levelAccessor, BlockPos cropPos) {
+		BlockState sustainState = levelAccessor.getBlockState(cropPos.below());
+		if (!(sustainState.getBlock() instanceof FarmBlock))
+			return false;
+		int moisture = sustainState.getValue(FarmBlock.MOISTURE);
+		return moisture >= 7;
+	}
+
+
+	/**
+	 * @return true if the block is on farmland
+	 */
+	public static boolean isCropOnFarmland(LevelAccessor levelAccessor, BlockPos cropPos) {
+		BlockState sustainState = levelAccessor.getBlockState(cropPos.below());
+		return sustainState.getBlock() instanceof FarmBlock;
 	}
 }

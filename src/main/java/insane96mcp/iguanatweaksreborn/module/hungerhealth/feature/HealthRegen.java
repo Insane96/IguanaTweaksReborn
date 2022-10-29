@@ -158,8 +158,8 @@ public class HealthRegen extends Feature {
 	/**
 	 * Returns true if overrides the vanilla tick, otherwise false
 	 */
-	public boolean tickFoodStats(FoodData foodStats, Player player) {
-		if (!this.isEnabled())
+	public static boolean tickFoodStats(FoodData foodStats, Player player) {
+		if (!isEnabled(HealthRegen.class))
 			return false;
 		Difficulty difficulty = player.level.getDifficulty();
 		foodStats.lastFoodLevel = foodStats.getFoodLevel();
@@ -177,7 +177,7 @@ public class HealthRegen extends Feature {
 		return true;
 	}
 
-	private void tick(FoodData foodStats, Player player, Difficulty difficulty) {
+	private static void tick(FoodData foodStats, Player player, Difficulty difficulty) {
 		boolean naturalRegen = player.level.getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION);
 		if (naturalRegen && foodStats.saturationLevel > 0.0F && player.isHurt() && foodStats.foodLevel >= 20 && !disableSaturationRegenBoost) {
 			++foodStats.tickTimer;
@@ -215,11 +215,11 @@ public class HealthRegen extends Feature {
 		}
 	}
 
-	public void addHunger(FoodData foodStats, int hunger) {
+	public static void addHunger(FoodData foodStats, int hunger) {
 		foodStats.foodLevel = Mth.clamp(foodStats.foodLevel + hunger, 0, 20);
 	}
 
-	private int getRegenSpeed(Player player) {
+	private static int getRegenSpeed(Player player) {
 		int ticksToRegen = healthRegenSpeed;
 		MobEffectInstance injured = player.getEffect(ITMobEffects.INJURED.get());
 		if (injured != null)

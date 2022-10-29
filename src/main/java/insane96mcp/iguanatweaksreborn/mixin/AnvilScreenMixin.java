@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.experience.feature.OtherExperience;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
 import net.minecraft.network.chat.Component;
@@ -36,7 +36,7 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 			constant = @Constant(intValue = 40)
 	)
 	private int tooExpensiveCap(int cap) {
-		return Modules.experience.otherExperience.anvilRepairCap;
+		return OtherExperience.anvilRepairCap;
 	}
 
 	//Show no cost text

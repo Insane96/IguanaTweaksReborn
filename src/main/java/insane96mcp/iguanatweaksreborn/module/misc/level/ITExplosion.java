@@ -2,9 +2,10 @@ package insane96mcp.iguanatweaksreborn.module.misc.level;
 
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
-import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.entity.ExplosionFallingBlockEntity;
+import insane96mcp.iguanatweaksreborn.module.misc.feature.ExplosionOverhaul;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -39,7 +40,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.PartEntity;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -136,7 +136,7 @@ public class ITExplosion extends Explosion {
 		List<Entity> list = gatherAffectedEntities(affectedEntitiesRadius);
 		net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.level, this, list, affectedEntitiesRadius);
 		for(Entity entity : list) {
-			if (entity.tickCount == 0 && !(entity instanceof PartEntity<?>)  && !(entity instanceof ExplosionFallingBlockEntity)  && !Modules.misc.explosionOverhaul.affectJustSpawnedEntities)
+			if (entity.tickCount == 0 && !(entity instanceof PartEntity<?>)  && !(entity instanceof ExplosionFallingBlockEntity)  && !ExplosionOverhaul.affectJustSpawnedEntities)
 				continue;
 			if (entity.ignoreExplosion())
 				continue;
@@ -176,7 +176,7 @@ public class ITExplosion extends Explosion {
 					if (knockbackScaleWithSize)
 						d11 *= this.radius;
 					d11 = Math.max(d11, this.radius * 0.05d);
-					if (entity instanceof ExplosionFallingBlockEntity || Modules.misc.explosionOverhaul.shouldTakeReducedKnockback(entity))
+					if (entity instanceof ExplosionFallingBlockEntity || ExplosionOverhaul.shouldTakeReducedKnockback(entity))
 						d11 *= 0.2d;
 					entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, yDistance * d11, zDistance * d11));
 					if (entity instanceof Player player) {
@@ -192,7 +192,7 @@ public class ITExplosion extends Explosion {
 	public void destroyBlocks() {
 		if (this.blockInteraction == BlockInteraction.NONE)
 			return;
-		Collections.shuffle(this.getToBlow(), this.level.getRandom());
+		Util.shuffle(this.toBlow, this.level.getRandom());
 		for(BlockPos blockpos : this.getToBlow()) {
 			BlockState blockstate = this.level.getBlockState(blockpos);
 			if (!blockstate.isAir()) {

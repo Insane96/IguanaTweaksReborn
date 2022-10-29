@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.misc.feature.BeaconConduit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.ConduitBlockEntity;
@@ -17,7 +17,7 @@ public class ConduitBlockEntityMixin {
 
 	@Inject(at = @At("HEAD"), method = "updateDestroyTarget", cancellable = true)
 	private static void updateDestroyTarget(Level level, BlockPos blockPos, BlockState state, List<BlockPos> blocks, ConduitBlockEntity conduit, CallbackInfo ci) {
-		if (Modules.misc.beaconConduit.conduitUpdateDestroyEnemies(level, blockPos, state, blocks, conduit))
+		if (BeaconConduit.conduitUpdateDestroyEnemies(level, blockPos, blocks))
 			ci.cancel();
 	}
 }

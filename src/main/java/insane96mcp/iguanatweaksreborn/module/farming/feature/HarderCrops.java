@@ -18,7 +18,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Label(name = "Harder Crops", description = """
 		Crops are no longer insta-minable. This applies only to blocks that are instances of net.minecraft.world.level.block.CropBlock.
@@ -32,7 +32,7 @@ public class HarderCrops extends Feature {
 	public static Double hardness = 1.0d;
 	@Config
 	@Label(name = "Other affected blocks", description = "Block ids or tags that will have the hardness and hoe efficiency applied. Each entry has a block or tag. This still only applies to blocks that have 0 hardness.")
-	public ArrayList<IdTagMatcher> moreBlocksList;
+	public static List<IdTagMatcher> moreBlocksList = List.of();
 	@Config
 	@Label(name = "Only fully grown", description = "If the hardness should be applied to mature crops only.")
 	public static Boolean onlyFullyGrown = true;
@@ -56,7 +56,7 @@ public class HarderCrops extends Feature {
 
 		for (Block block : ForgeRegistries.BLOCKS.getValues()) {
 			boolean isInWhitelist = false;
-			for (IdTagMatcher blacklistEntry : this.moreBlocksList) {
+			for (IdTagMatcher blacklistEntry : moreBlocksList) {
 				if (blacklistEntry.matchesBlock(block, null)) {
 					isInWhitelist = true;
 					break;
@@ -88,7 +88,7 @@ public class HarderCrops extends Feature {
 			return;
 		Block block = event.getState().getBlock();
 		boolean isInWhitelist = false;
-		for (IdTagMatcher blacklistEntry : this.moreBlocksList) {
+		for (IdTagMatcher blacklistEntry : moreBlocksList) {
 			if (blacklistEntry.matchesBlock(block, null)) {
 				isInWhitelist = true;
 				break;

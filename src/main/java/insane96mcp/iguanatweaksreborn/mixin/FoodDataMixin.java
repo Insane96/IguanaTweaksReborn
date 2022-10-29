@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.hungerhealth.feature.HealthRegen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class FoodDataMixin {
 	@Inject(at = @At("HEAD"), method = "tick", cancellable = true)
 	public void tick(Player player, CallbackInfo callbackInfo) {
-		if (Modules.hungerHealth.healthRegen.tickFoodStats((FoodData) (Object) this, player))
+		if (HealthRegen.tickFoodStats((FoodData) (Object) this, player))
 			callbackInfo.cancel();
 	}
 }

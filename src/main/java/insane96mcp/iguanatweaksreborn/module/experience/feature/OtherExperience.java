@@ -32,14 +32,14 @@ public class OtherExperience extends Feature {
 	public static Boolean unmending = true;
 	@Config(min = 1)
 	@Label(name = "Unmending Cap", description = "Set the cap repair cost set by Unmending")
-	public static Integer unmendingCap = 20;
+	public static Integer unmendingCap = 25;
 
 	public OtherExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
-	public void onXpBottleHit(ThrownExperienceBottle xpBottle) {
-		if (!this.isEnabled()
+	public static void onXpBottleHit(ThrownExperienceBottle xpBottle) {
+		if (!isEnabled(OtherExperience.class)
 				|| xpBottleBonus == 0)
 			return;
 

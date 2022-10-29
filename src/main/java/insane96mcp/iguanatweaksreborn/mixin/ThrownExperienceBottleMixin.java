@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.experience.feature.OtherExperience;
 import net.minecraft.world.entity.projectile.ThrownExperienceBottle;
 import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,6 +13,6 @@ public class ThrownExperienceBottleMixin {
 
 	@Inject(at = @At("HEAD"), method = "onHit")
 	public void onHit(HitResult hitResult, CallbackInfo callbackInfo) {
-		Modules.experience.otherExperience.onXpBottleHit((ThrownExperienceBottle) (Object) this);
+		OtherExperience.onXpBottleHit((ThrownExperienceBottle) (Object) this);
 	}
 }

@@ -17,6 +17,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//TODO extend IdTagMatcher
 public class ItemAttributeModifier {
 	public ResourceLocation itemId;
 	public ResourceLocation itemTag;
@@ -113,7 +115,6 @@ public class ItemAttributeModifier {
 		}
 		return itemAttributeModifiers;
 	}
-
 	public boolean matchesItem(Item item) {
 		if (this.itemTag != null) {
 			TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, this.itemTag);
@@ -121,7 +122,7 @@ public class ItemAttributeModifier {
 			return itemTag.contains(item);
 		}
 		else if (this.itemId != null)
-			return item.getRegistryName().equals(this.itemId);
+			return ForgeRegistries.ITEMS.getKey(item).equals(this.itemId);
 		return item.getClass().equals(this.itemClass);
 	}
 }

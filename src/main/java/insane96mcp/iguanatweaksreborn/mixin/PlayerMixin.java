@@ -1,9 +1,9 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.feature.Shields;
 import insane96mcp.iguanatweaksreborn.module.experience.feature.PlayerExperience;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.feature.ExhaustionIncrease;
+import insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature.Tiredness;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +28,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@Inject(at = @At("RETURN"), method = "getXpNeededForNextLevel", cancellable = true)
 	private void xpBarCap(CallbackInfoReturnable<Integer> callback) {
-		int exp = Modules.experience.playerExperience.getBetterScalingLevel(this.experienceLevel);
+		int exp = PlayerExperience.getBetterScalingLevel(this.experienceLevel);
 		if (exp != -1)
 			callback.setReturnValue(exp);
 	}
@@ -42,7 +42,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@Inject(at = @At("HEAD"), method = "causeFoodExhaustion")
 	private void causeFoodExhaustion(float amount, CallbackInfo ci) {
-		Modules.sleepRespawn.tiredness.onFoodExhaustion((Player) (Object) this, amount);
+		Tiredness.onFoodExhaustion((Player) (Object) this, amount);
 	}
 
 	@ModifyVariable(method = "causeFoodExhaustion", argsOnly = true, at = @At("HEAD"))
