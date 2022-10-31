@@ -21,5 +21,6 @@
 	"effect.iguanatweaksreborn.tired.description": "Obtained when haven't slept in a while. Reduces movement speed and sight.",
 	"effect.iguanatweaksreborn.tired.energy_boost": "Decreases tiredness overtime.",
 
-	"container.repair.free": "No Cost"
+	"container.repair.free": "No Cost",
+	"iguanatweaksreborn.item_repaired": "Item got repaired"
 }
