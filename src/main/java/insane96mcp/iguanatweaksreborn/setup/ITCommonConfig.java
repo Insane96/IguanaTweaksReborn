@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Module;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class ITCommonConfig {
@@ -22,7 +23,7 @@ public class ITCommonConfig {
 	public static class CommonConfig {
 		public CommonConfig(final ForgeConfigSpec.Builder builder) {
 			Modules.init();
-			Module.loadFeatures(IguanaTweaksReborn.MOD_ID, this.getClass().getClassLoader());
+			Module.loadFeatures(ModConfig.Type.COMMON, IguanaTweaksReborn.MOD_ID, this.getClass().getClassLoader());
 		}
 	}
 }
