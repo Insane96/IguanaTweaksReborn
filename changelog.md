@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 2.13.1
 * Requires InsaneLib 1.7.1
 * Added back Client module
 * Unmending now resets the repair cost of an item instead of capping the repair cost.
