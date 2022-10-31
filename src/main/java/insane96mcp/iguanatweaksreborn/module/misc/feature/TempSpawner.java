@@ -25,8 +25,6 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.Collections;
-
 @Label(name = "Temporary Spawners", description = "Spawners will no longer spawn mobs infinitely")
 @LoadFeature(module = Modules.Ids.MISC)
 public class TempSpawner extends Feature {
@@ -44,7 +42,7 @@ public class TempSpawner extends Feature {
 	public static IdTagMatcher reagentItem = new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:diamond");
 	@Config
 	@Label(name = "Entity Blacklist", description = "A list of mobs (and optionally dimensions) that shouldn't have their spawner disabled. Each entry has an entity or entity tag and optionally a dimension. E.g. [\"minecraft:zombie\", \"minecraft:blaze,minecraft:the_nether\"]")
-	public static Blacklist entityBlacklist = new Blacklist(Collections.emptyList(), false);
+	public static Blacklist entityBlacklist = new Blacklist();
 
 	public TempSpawner(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

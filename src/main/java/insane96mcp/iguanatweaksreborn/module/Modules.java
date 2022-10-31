@@ -1,8 +1,9 @@
 package insane96mcp.iguanatweaksreborn.module;
 
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.setup.ITClientConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.insanelib.base.Module;
+import net.minecraftforge.fml.config.ModConfig;
 
 public class Modules {
 
@@ -15,19 +16,19 @@ public class Modules {
 	public static Module movement;
 	public static Module sleepRespawn;
 	public static Module stackSize;
-	//public static Module client;
+	public static Module client;
 
 	public static void init() {
-		combat = Module.Builder.create(ITCommonConfig.builder, Ids.COMBAT, "Combat").build();
-		experience = Module.Builder.create(ITCommonConfig.builder, Ids.EXPERIENCE, "Experience").build();
-		farming = Module.Builder.create(ITCommonConfig.builder, Ids.FARMING, "Farming").build();
-		hungerHealth = Module.Builder.create(ITCommonConfig.builder, Ids.HUNGER_HEALTH, "Hunger & Health").build();
-		mining = Module.Builder.create(ITCommonConfig.builder, Ids.MINING, "Mining").build();
-		misc = Module.Builder.create(ITCommonConfig.builder, Ids.MISC, "Miscellaneous").build();
-		movement = Module.Builder.create(ITCommonConfig.builder, Ids.MOVEMENT, "Movement").build();
-		sleepRespawn = Module.Builder.create(ITCommonConfig.builder, Ids.SLEEP_RESPAWN, "Sleep & Respawn").build();
-		stackSize = Module.Builder.create(ITCommonConfig.builder, Ids.STACK_SIZE, "Stack Sizes").build();
-		//client = Module.Builder.create(ITClientConfig.builder, Ids.CLIENT, "Client").build();
+		combat = Module.Builder.create(Ids.COMBAT, "Combat", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
+		experience = Module.Builder.create(Ids.EXPERIENCE, "Experience", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
+		farming = Module.Builder.create(Ids.FARMING, "Farming", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
+		hungerHealth = Module.Builder.create(Ids.HUNGER_HEALTH, "Hunger & Health", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
+		mining = Module.Builder.create(Ids.MINING, "Mining", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
+		misc = Module.Builder.create(Ids.MISC, "Miscellaneous", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
+		movement = Module.Builder.create(Ids.MOVEMENT, "Movement", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
+		sleepRespawn = Module.Builder.create(Ids.SLEEP_RESPAWN, "Sleep & Respawn", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
+		stackSize = Module.Builder.create(Ids.STACK_SIZE, "Stack Sizes", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
+		client = Module.Builder.create(Ids.CLIENT, "Client", ModConfig.Type.CLIENT, ITClientConfig.builder).build();
 	}
 
 	public static class Ids {

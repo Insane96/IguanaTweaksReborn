@@ -16,7 +16,6 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
@@ -34,7 +33,7 @@ public class FoodHunger extends Feature {
 	public static Double foodSaturationMultiplier = 1.0d;
 	@Config
 	@Label(name = "Food Blacklist", description = "Items or tags that will ignore the food multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].")
-	public static Blacklist foodBlacklist = new Blacklist(Collections.emptyList(), false);
+	public static Blacklist foodBlacklist = new Blacklist();
 
 	public FoodHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

@@ -1,12 +1,14 @@
 package insane96mcp.iguanatweaksreborn.module.client.feature;
 
+import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
 
 @Label(name = "Light", description = "Changes to light")
-//@LoadFeature(module = Modules.Ids.CLIENT)
+@LoadFeature(module = Modules.Ids.CLIENT)
 public class Light extends Feature {
 
     @Config

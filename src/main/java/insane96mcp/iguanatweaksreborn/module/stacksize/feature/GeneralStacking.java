@@ -51,7 +51,7 @@ public class GeneralStacking extends Feature {
     @Label(name = "Blacklist", description = "Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"#minecraft:fishes\", \"minecraft:stone\"].")
     public static Blacklist blacklist = new Blacklist(List.of(
             new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:rotten_flesh")
-    ), false);
+    ));
 
 	public GeneralStacking(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);

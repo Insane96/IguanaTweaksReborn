@@ -35,6 +35,6 @@ configBackground = "minecraft:textures/block/cobblestone.png"
 [[dependencies.iguanatweaksreborn]]
     modId="insanelib"
     mandatory=true
-    versionRange="[1.7.0,)"
+    versionRange="[1.7.1,)"
     ordering="NONE"
     side="BOTH"

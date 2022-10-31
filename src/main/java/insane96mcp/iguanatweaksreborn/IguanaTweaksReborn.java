@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn;
 import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerProvider;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature.Tiredness;
 import insane96mcp.iguanatweaksreborn.network.SyncHandler;
+import insane96mcp.iguanatweaksreborn.setup.ITClientConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.utils.Weights;
@@ -41,7 +42,7 @@ public class IguanaTweaksReborn
 
     public IguanaTweaksReborn() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ITCommonConfig.CONFIG_SPEC);
-        //ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ITClientConfig.CONFIG_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ITClientConfig.CONFIG_SPEC);
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);

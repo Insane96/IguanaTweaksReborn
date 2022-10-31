@@ -34,13 +34,13 @@ public class NerfedBoneMeal extends Feature {
 	@Config
 	@Label(name = "Item Blacklist", description = "Items or item tags that will ignore the feature. Can be used with any item that inherits the properties of vanilla bone meal (and it's properly implemented).\n" +
 			"Each entry has an item or tag. The format is modid:item_id or #modid:item_tag.")
-	public static Blacklist itemBlacklist = new Blacklist(Collections.emptyList(), false);
+	public static Blacklist itemBlacklist = new Blacklist();
 	@Config
 	@Label(name = "Block Blacklist", description = "Blocks or block tags that will ignore the feature.\n" +
 			"Each entry has a block or a block tag. The format is modid:block_id or #modid:block_tag.")
 	public static Blacklist blockBlacklist = new Blacklist(List.of(
 			new IdTagMatcher(IdTagMatcher.Type.TAG, "supplementaries:flax")
-	), false);
+	));
 
 	public NerfedBoneMeal(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

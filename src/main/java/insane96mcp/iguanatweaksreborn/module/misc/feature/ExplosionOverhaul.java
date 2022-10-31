@@ -20,7 +20,6 @@ import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.Collections;
 import java.util.List;
 
 @Label(name = "Explosion Overhaul", description = "Various changes to explosions from knockback to shielding.")
@@ -58,10 +57,10 @@ public class ExplosionOverhaul extends Feature {
 	public static Blacklist knockbackBlacklist = new Blacklist(List.of(
 			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:ender_dragon"),
 			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:wither")
-	), false);
+	));
 	@Config
 	@Label(name = "Entity Blacklist", description = "A list of entities that should not use the mod's explosion.")
-	public static Blacklist entityBlacklist = new Blacklist(Collections.emptyList(), false);
+	public static Blacklist entityBlacklist = new Blacklist();
 
 	public ExplosionOverhaul(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

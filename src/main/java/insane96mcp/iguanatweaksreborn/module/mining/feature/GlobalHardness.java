@@ -44,12 +44,12 @@ public class GlobalHardness extends Feature {
 	@Label(name = "Block Hardness Blacklist", description = "Block ids or tags that will ignore the global and dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
 	public static Blacklist hardnessBlacklist = new Blacklist(List.of(
 			new IdTagMatcher(IdTagMatcher.Type.TAG, "iguanatweaksreborn:obsidians")
-	), false);
+	));
 	@Config
 	@Label(name = "Depth Multiplier Blacklist", description = "Block ids or tags that will ignore the depth multiplier. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
 	public static Blacklist depthMultiplierBlacklist = new Blacklist(List.of(
 			new IdTagMatcher(IdTagMatcher.Type.TAG, "iguanatweaksreborn:obsidians")
-	), false);
+	));
 
 	public GlobalHardness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
