@@ -30,6 +30,7 @@ public class Strings {
 		public static final String MOOSHROOM_COOLDOWN = "iguanatweaksreborn.mooshroom_cooldown";
 		public static final String COW_COOLDOWN = "iguanatweaksreborn.cow_cooldown";
 		public static final String YET_READY = "iguanatweaksreborn.yet_ready";
+		public static final String TOO_WEAK = "iguanatweaksreborn.weak_hoe";
 
 		public static final String NO_FOOD_FOR_SLEEP = "iguanatweaksreborn.no_food_for_sleep";
 		public static final String NOT_TIRED = "iguanatweaksreborn.not_tired";

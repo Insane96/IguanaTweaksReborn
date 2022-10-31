@@ -37,6 +37,8 @@ public class Stats extends Feature {
 
 	private static final ArrayList<String> itemModifiersDefault = Lists.newArrayList("minecraft:iron_helmet,HEAD,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_chestplate,CHEST,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_leggings,LEGS,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_boots,FEET,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:netherite_helmet,HEAD,minecraft:generic.armor,1,ADDITION", "minecraft:netherite_boots,FEET,minecraft:generic.armor,1,ADDITION");
 
+	public static List<ItemAttributeModifier> itemModifiers;
+
 	@Config
 	@Label(name = "Reduce Weapon Damage", description = "If true, Swords and Tridents get -1 damage and Axes get -1.5 damage.")
 	public static Boolean reduceWeaponDamage = true;
@@ -55,7 +57,6 @@ public class Stats extends Feature {
 						NERF: Sets max protection level to 3 instead of 4
 						NONE: no changes to protection are done""")
 	public static ProtectionNerf protectionNerf = ProtectionNerf.DISABLE;
-	public static List<ItemAttributeModifier> itemModifiers;
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

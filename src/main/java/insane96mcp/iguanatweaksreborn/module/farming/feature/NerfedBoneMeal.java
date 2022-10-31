@@ -1,14 +1,15 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.base.config.Blacklist;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -20,27 +21,17 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.Collections;
-import java.util.List;
 
 @Label(name = "Nerfed Bone meal", description = "Bone meal is no longer so OP")
 @LoadFeature(module = Modules.Ids.FARMING)
 public class NerfedBoneMeal extends Feature {
+	private static final ResourceLocation BLACKLIST = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "nerfed_bone_meal_blacklist");
 	@Config
 	@Label(name = "Nerfed Bone Meal", description = "Makes more Bone Meal required for Crops. Valid Values are\nNO: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
 	public static BoneMealNerf nerfedBoneMeal = BoneMealNerf.NERFED;
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Bone Meal Fail Chance", description = "Makes Bone Meal have a chance to fail to grow crops. 0 to disable, 1 to disable Bone Meal.")
 	public static Double boneMealFailChance = 0d;
-	@Config
-	@Label(name = "Item Blacklist", description = "Items or item tags that will ignore the feature. Can be used with any item that inherits the properties of vanilla bone meal (and it's properly implemented).\n" +
-			"Each entry has an item or tag. The format is modid:item_id or #modid:item_tag.")
-	public static Blacklist itemBlacklist = new Blacklist();
-	@Config
-	@Label(name = "Block Blacklist", description = "Blocks or block tags that will ignore the feature.\n" +
-			"Each entry has a block or a block tag. The format is modid:block_id or #modid:block_tag.")
-	public static Blacklist blockBlacklist = new Blacklist(List.of(
-			new IdTagMatcher(IdTagMatcher.Type.TAG, "supplementaries:flax")
-	));
 
 	public NerfedBoneMeal(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -70,7 +61,7 @@ public class NerfedBoneMeal extends Feature {
 	}
 
 	public BoneMealResult applyBoneMeal(Level level, ItemStack stack, BlockState state, BlockPos pos) {
-		if (itemBlacklist.isItemBlackOrNotWhiteListed(stack.getItem()) || blockBlacklist.isBlockBlackOrNotWhiteListed(state.getBlock()))
+		if (Utils.isItemInTag(stack.getItem(), BLACKLIST) || Utils.isBlockInTag(state.getBlock(), BLACKLIST))
 			return BoneMealResult.NONE;
 
 		//If farmland is dry and cropsRequireWater is enabled then cancel the event

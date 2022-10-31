@@ -1,16 +1,16 @@
 package insane96mcp.iguanatweaksreborn.module.mining.feature;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.BlockHardness;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.DepthHardnessDimension;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.DimensionHardnessMultiplier;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.base.config.Blacklist;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
@@ -28,6 +28,8 @@ import java.util.List;
 @Label(name = "Global Hardness", description = "Change all the blocks hardness")
 @LoadFeature(module = Modules.Ids.MINING)
 public class GlobalHardness extends Feature {
+	public static final ResourceLocation HARDNESS_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "hardness_blacklist");
+	public static final ResourceLocation DEPTH_MULTIPLIER_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "depth_multiplier_blacklist");
 
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> dimensionHardnessMultiplierConfig;
 	private static final List<String> dimensionHardnessMultiplierDefault = List.of("minecraft:the_nether,4", "minecraft:the_end,4");
@@ -40,16 +42,6 @@ public class GlobalHardness extends Feature {
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Hardness Multiplier", description = "Multiplier applied to the hardness of blocks. E.g. with this set to 3.0 blocks will take 3x more time to break.")
 	public static Double hardnessMultiplier = 2.5d;
-	@Config
-	@Label(name = "Block Hardness Blacklist", description = "Block ids or tags that will ignore the global and dimensional multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
-	public static Blacklist hardnessBlacklist = new Blacklist(List.of(
-			new IdTagMatcher(IdTagMatcher.Type.TAG, "iguanatweaksreborn:obsidians")
-	));
-	@Config
-	@Label(name = "Depth Multiplier Blacklist", description = "Block ids or tags that will ignore the depth multiplier. This can be inverted via 'Blacklist as Whitelist'. Each entry has a block or tag and optionally a dimension. E.g. [\"minecraft:stone\", \"minecraft:diamond_block,minecraft:the_nether\"]")
-	public static Blacklist depthMultiplierBlacklist = new Blacklist(List.of(
-			new IdTagMatcher(IdTagMatcher.Type.TAG, "iguanatweaksreborn:obsidians")
-	));
 
 	public GlobalHardness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -97,7 +89,7 @@ public class GlobalHardness extends Feature {
 	 * Returns 1d when no changes must be made, else will return a multiplier for block hardness
 	 */
 	public double getBlockGlobalHardnessMultiplier(Block block, ResourceLocation dimensionId) {
-		if (hardnessBlacklist.isBlockBlackOrNotWhiteListed(block))
+		if (Utils.isBlockInTag(block, HARDNESS_BLACKLIST))
 			return 1d;
 
 		//If there's a dimension multiplier present return that
@@ -121,7 +113,7 @@ public class GlobalHardness extends Feature {
 				if (blockHardness.matchesBlock(block, dimensionId))
 					return 0d;
 
-		if (depthMultiplierBlacklist.isBlockBlackOrNotWhiteListed(block))
+		if (Utils.isBlockInTag(block, DEPTH_MULTIPLIER_BLACKLIST))
 			return 0d;
 
 		double hardness = 0d;

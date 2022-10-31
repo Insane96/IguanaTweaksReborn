@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
@@ -7,13 +8,18 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cow;
@@ -28,10 +34,14 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @Label(name = "Livestock Slowdown", description = "Slower breeding, Growing, Egging and Milking")
 @LoadFeature(module = Modules.Ids.FARMING)
 public class LivestockSlowdown extends Feature {
+
+	private static final ResourceLocation NO_LIVESTOCK_SLOWDOWN = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "no_livestock_slowdown");
+
 	@Config(min = 1d, max = 128d)
 	@Label(name = "Childs Growth Multiplier", description = "Increases the time required for Baby Animals to grow (e.g. at 2.0 Animals will take twice to grow).\n1.0 will make Animals grow like normal.")
 	public static Double childGrowthMultiplier = 3.0d;
@@ -55,7 +65,8 @@ public class LivestockSlowdown extends Feature {
 	@SubscribeEvent
 	public void slowdownAnimalGrowth(LivingEvent.LivingTickEvent event) {
 		if (!this.isEnabled()
-				|| childGrowthMultiplier == 1d)
+				|| childGrowthMultiplier == 1d
+				|| isEntityBlacklisted(event.getEntity()))
 			return;
 		if (!(event.getEntity() instanceof Animal) && !(event.getEntity() instanceof AbstractVillager))
 			return;
@@ -74,7 +85,8 @@ public class LivestockSlowdown extends Feature {
 	public void slowdownBreeding(LivingEvent.LivingTickEvent event) {
 		if (!this.isEnabled()
 				|| breedingMultiplier == 1d
-				|| !(event.getEntity() instanceof Animal))
+				|| !(event.getEntity() instanceof Animal)
+				|| isEntityBlacklisted(event.getEntity()))
 			return;
 		AgeableMob entity = (AgeableMob) event.getEntity();
 		int growingAge = entity.getAge();
@@ -89,7 +101,8 @@ public class LivestockSlowdown extends Feature {
 	public void slowdownEggLay(LivingEvent.LivingTickEvent event) {
 		if (!this.isEnabled()
 				|| eggLayMultiplier == 1d
-				|| !(event.getEntity() instanceof Chicken chicken))
+				|| !(event.getEntity() instanceof Chicken chicken)
+				|| isEntityBlacklisted(chicken))
 			return;
 		int timeUntilNextEgg = chicken.eggTime;
 		if (timeUntilNextEgg < 0)
@@ -104,7 +117,8 @@ public class LivestockSlowdown extends Feature {
 		if (!this.isEnabled()
 				|| cowMilkDelay == 0
 				|| event.getEntity().tickCount % 20 != 0
-				|| !(event.getEntity() instanceof Cow cow))
+				|| !(event.getEntity() instanceof Cow cow)
+				|| isEntityBlacklisted(cow))
 			return;
 		CompoundTag cowNBT = cow.getPersistentData();
 		int milkCooldown = cowNBT.getInt(Strings.Tags.MILK_COOLDOWN);
@@ -118,6 +132,7 @@ public class LivestockSlowdown extends Feature {
 		if (!this.isEnabled()
 				|| cowMilkDelay == 0
 				|| !(event.getTarget() instanceof Cow cow)
+				|| isEntityBlacklisted(cow)
 				|| cow.getAge() < 0)
 			return;
 		Player player = event.getEntity();
@@ -147,5 +162,11 @@ public class LivestockSlowdown extends Feature {
 			cowNBT.putInt(Strings.Tags.MILK_COOLDOWN, milkCooldown);
 			player.swing(event.getHand());
 		}
+	}
+
+	public static boolean isEntityBlacklisted(Entity entity) {
+		TagKey<EntityType<?>> tagKey = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, NO_LIVESTOCK_SLOWDOWN);
+		//noinspection ConstantConditions
+		return ForgeRegistries.ENTITY_TYPES.tags().getTag(tagKey).contains(entity.getType());
 	}
 }

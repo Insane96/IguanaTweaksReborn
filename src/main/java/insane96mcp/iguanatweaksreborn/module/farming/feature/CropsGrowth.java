@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.farming.utils.PlantGrowthModifier;
 import insane96mcp.insanelib.base.Feature;
@@ -9,6 +10,9 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -27,6 +31,7 @@ import java.util.ArrayList;
 @Label(name = "Crops Growth", description = "Slower Crops growing based off various factors")
 @LoadFeature(module = Modules.Ids.FARMING)
 public class CropsGrowth extends Feature {
+	public static final ResourceLocation NO_GROWTH_MULTIPLIERS = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "no_growth_multipliers");
 
 	@Config
 	@Label(name = "Crops Require Water", description = """
@@ -111,7 +116,8 @@ public class CropsGrowth extends Feature {
 	@SubscribeEvent
 	public void cropsGrowthSpeedMultiplier(BlockEvent.CropGrowEvent.Pre event) {
 		if (!this.isEnabled()
-				|| event.getResult().equals(Event.Result.DENY))
+				|| event.getResult().equals(Event.Result.DENY)
+				|| isCropBlacklisted(event.getState().getBlock()))
 			return;
 		Level level = (Level) event.getLevel();
 		double multiplier = 1d;
@@ -164,5 +170,10 @@ public class CropsGrowth extends Feature {
 	public static boolean isCropOnFarmland(LevelAccessor levelAccessor, BlockPos cropPos) {
 		BlockState sustainState = levelAccessor.getBlockState(cropPos.below());
 		return sustainState.getBlock() instanceof FarmBlock;
+	}
+
+	public static boolean isCropBlacklisted(Block block) {
+		TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, NO_GROWTH_MULTIPLIERS);
+		return ForgeRegistries.BLOCKS.tags().getTag(tagKey).contains(block);
 	}
 }

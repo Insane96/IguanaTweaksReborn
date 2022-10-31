@@ -47,6 +47,7 @@ public class GeneralStacking extends Feature {
     @Config
     @Label(name = "Block Stack Affected by Material", description = "When true, block stacks are affected by both their material type and the block stack multiplier. If false, block stacks will be affected by the multiplier only.")
     public static Boolean blockStackAffectedByMaterial = true;
+    //TODO move the processing of stack sizes to /reload
     @Config
     @Label(name = "Blacklist", description = "Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"#minecraft:fishes\", \"minecraft:stone\"].")
     public static Blacklist blacklist = new Blacklist(List.of(

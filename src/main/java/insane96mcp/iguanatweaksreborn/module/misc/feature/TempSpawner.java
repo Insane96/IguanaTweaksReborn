@@ -1,18 +1,20 @@
 package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerCap;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.base.config.Blacklist;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.BaseSpawner;
@@ -28,6 +30,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Label(name = "Temporary Spawners", description = "Spawners will no longer spawn mobs infinitely")
 @LoadFeature(module = Modules.Ids.MISC)
 public class TempSpawner extends Feature {
+	public static final ResourceLocation BLACKLISTED_SPAWNERS = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "blacklisted_spawners");
 	@Config(min = 0)
 	@Label(name = "Minimum Spawnable Mobs", description = "The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn. The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
 	public static Integer minSpawnableMobs = 25;
@@ -40,9 +43,6 @@ public class TempSpawner extends Feature {
 	@Config
 	@Label(name = "Reagent Item", description = "Set here an item or item tag that can be used on spawners and let you re-enable them.")
 	public static IdTagMatcher reagentItem = new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:diamond");
-	@Config
-	@Label(name = "Entity Blacklist", description = "A list of mobs (and optionally dimensions) that shouldn't have their spawner disabled. Each entry has an entity or entity tag and optionally a dimension. E.g. [\"minecraft:zombie\", \"minecraft:blaze,minecraft:the_nether\"]")
-	public static Blacklist entityBlacklist = new Blacklist();
 
 	public TempSpawner(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -66,7 +66,7 @@ public class TempSpawner extends Feature {
 		}
 		mobSpawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> {
 			spawnerCap.addSpawnedMobs(1);
-			if (entityBlacklist.isEntityBlackOrNotWhitelist(event.getEntity()))
+			if (Utils.isEntityInTag(event.getEntity(), BLACKLISTED_SPAWNERS))
 				return;
 			double distance = Math.sqrt(spawnerPos.distSqr(level.getSharedSpawnPos()));
 			int maxSpawned = (int) ((minSpawnableMobs + (distance / 8d)) * spawnableMobsMultiplier);
@@ -163,9 +163,7 @@ public class TempSpawner extends Feature {
 
 	private static void resetSpawner(SpawnerBlockEntity spawner) {
 		enableSpawner(spawner);
-		spawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> {
-			spawnerCap.setSpawnedMobs(0);
-		});
+		spawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setSpawnedMobs(0));
 	}
 
 	private static boolean isDisabled(SpawnerBlockEntity spawner) {

@@ -23,6 +23,7 @@ import java.util.List;
 @Label(name = "Tool Stats", description = "Less durable and efficient tools")
 @LoadFeature(module = Modules.Ids.MISC)
 public class ToolStats extends Feature {
+	//TODO Add two item tags to make tools deal no damage and have 0 efficiency
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> toolsDurabilityConfig;
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> toolsEfficiencyConfig;
 

@@ -67,7 +67,7 @@ public class HealthRegen extends Feature {
 	@Label(name = "Food Heal Multiplier", description = "When eating you'll get healed by this percentage of (hunger + saturation) restored.")
 	public static Double foodHealMultiplier = 0d;
 	//Effects
-	//TODO Change well fed? Make it activate when eating from low hunger
+	//TODO Change well fed? Make it activate when eating a lot from low hunger
 	@Config
 	@Label(name = "Effects.Enable Well Fed", description = "Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats.")
 	public static Boolean enableWellFed = true;

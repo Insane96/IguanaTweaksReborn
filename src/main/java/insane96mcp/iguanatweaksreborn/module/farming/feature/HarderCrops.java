@@ -26,7 +26,6 @@ import java.util.List;
 		Changing anything requires a minecraft restart.""")
 @LoadFeature(module = Modules.Ids.FARMING)
 public class HarderCrops extends Feature {
-
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Hardness", description = "How hard to break are plants? For comparison, dirt has an hardness of 0.5")
 	public static Double hardness = 1.0d;

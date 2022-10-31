@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.farming.feature;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.farming.utils.HoeCooldown;
+import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -20,7 +21,6 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITag;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,14 +30,13 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.FARMING)
 public class HoesNerfs extends Feature {
 
+	private static final ResourceLocation DISABLED_HOES = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "disabled_hoes");
+
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> hoesCooldownsConfig;
 	private static final List<String> hoesCooldownsDefault = Arrays.asList("minecraft:stone_hoe,20", "minecraft:iron_hoe,15", "minecraft:golden_hoe,4", "minecraft:diamond_hoe,10", "minecraft:netherite_hoe,6", "vulcanite:vulcanite_hoe,15");
 
 	public static ArrayList<HoeCooldown> hoesCooldowns;
 
-	@Config
-	@Label(name = "Disable Low Tier Hoes", description = "When true, Wooden and Stone Hoes will not be usable to till dirt and will be heavily damaged when trying to. The disabled hoes can be changed via the iguanatweaksreborn:disabled_hoes item tag")
-	public static Boolean disableLowTierHoes = true;
 	@Config
 	@Label(name = "Hoes Damage On Use Multiplier", description = "When an hoe is used to till dirt it will lose this durability instead of 1. Set to 1 to disable.")
 	public static Integer hoesDamageOnUseMultiplier = 3;
@@ -88,13 +87,12 @@ public class HoesNerfs extends Feature {
 	public boolean disabledHoes(BlockEvent.BlockToolModificationEvent event) {
 		ItemStack hoe = event.getHeldItemStack();
 
-		if (!disableLowTierHoes
-				|| !isHoeDisabled(event.getHeldItemStack().getItem()))
+		if (!isHoeDisabled(event.getHeldItemStack().getItem()))
 			return false;
 
 		//noinspection ConstantConditions getPlayer can't be null as it's called from onHoeUse that checks if player's null
 		hoe.hurtAndBreak(1, event.getPlayer(), (player) -> player.broadcastBreakEvent(event.getPlayer().getUsedItemHand()));
-		event.getPlayer().displayClientMessage(Component.translatable("This hoe is too weak to be used"), true);
+		event.getPlayer().displayClientMessage(Component.translatable(Strings.Translatable.TOO_WEAK), true);
 		event.setCanceled(true);
 		return true;
 	}
@@ -117,12 +115,9 @@ public class HoesNerfs extends Feature {
 			event.getPlayer().getCooldowns().addCooldown(hoe.getItem(), cooldown);
 	}
 
-	private static final ResourceLocation DISABLED_HOES = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "disabled_hoes");
-
 	private static boolean isHoeDisabled(Item item) {
 		TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, DISABLED_HOES);
 		//noinspection ConstantConditions
-		ITag<Item> tag = ForgeRegistries.ITEMS.tags().getTag(tagKey);
-		return tag.contains(item);
+		return ForgeRegistries.ITEMS.tags().getTag(tagKey).contains(item);
 	}
 }

@@ -160,7 +160,7 @@ public class Tiredness extends Feature {
 
 		CompoundTag persistentData = serverPlayer.getPersistentData();
 		float tiredness = persistentData.getFloat(Strings.Tags.TIREDNESS);
-		float newTiredness = tiredness + amount;
+		float newTiredness = tiredness + (amount * tirednessGainMultiplier.floatValue());
 		persistentData.putFloat(Strings.Tags.TIREDNESS, newTiredness);
 		if (tiredness < tirednessToSleep && newTiredness >= tirednessToSleep) {
 			serverPlayer.displayClientMessage(Component.translatable(Strings.Translatable.TIRED_ENOUGH), false);

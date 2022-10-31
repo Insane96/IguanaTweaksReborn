@@ -1,16 +1,17 @@
 package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.level.ITExplosion;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.base.config.Blacklist;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundExplodePacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -20,12 +21,11 @@ import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.List;
-
 @Label(name = "Explosion Overhaul", description = "Various changes to explosions from knockback to shielding.")
 @LoadFeature(module = Modules.Ids.MISC)
 public class ExplosionOverhaul extends Feature {
-	private static final List<String> knockbackBlacklistDefault = List.of("minecraft:ender_dragon", "minecraft:wither");
+	public static final ResourceLocation KNOCKBACK_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "explosion_knockback_blacklist");
+	public static final ResourceLocation ENTITY_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "explosion_entity_blacklist");
 
 	@Config
 	@Label(name = "Disable Explosion Randomness", description = "Vanilla Explosions use a random number that changes the explosion power. With this enabled the ray strength will be as the explosion size.")
@@ -52,15 +52,6 @@ public class ExplosionOverhaul extends Feature {
 	@Config
 	@Label(name = "Creeper collateral", description = "If true, creepers explosions will drop no blocks.")
 	public static Boolean creeperCollateral = false;
-	@Config
-	@Label(name = "Knockback Blacklist", description = "A list of mobs (and optionally dimensions) that should take reduced knockback. Non-living entities are blacklisted by default.")
-	public static Blacklist knockbackBlacklist = new Blacklist(List.of(
-			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:ender_dragon"),
-			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:wither")
-	));
-	@Config
-	@Label(name = "Entity Blacklist", description = "A list of entities that should not use the mod's explosion.")
-	public static Blacklist entityBlacklist = new Blacklist();
 
 	public ExplosionOverhaul(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -127,10 +118,10 @@ public class ExplosionOverhaul extends Feature {
 		if (!(entity instanceof LivingEntity))
 			return true;
 
-		return knockbackBlacklist.isEntityBlackOrNotWhitelist(entity.getType());
+		return Utils.isEntityInTag(entity, KNOCKBACK_BLACKLIST);
 	}
 
 	public static boolean isBlacklisted(Entity entity) {
-		return entityBlacklist.isEntityBlackOrNotWhitelist(entity.getType());
+		return Utils.isEntityInTag(entity, ENTITY_BLACKLIST);
 	}
 }
