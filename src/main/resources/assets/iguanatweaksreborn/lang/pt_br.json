@@ -1,0 +1,25 @@
+{
+	"iguanatweaksreborn.mooshroom_cooldown": "Leite de Cogumelo ou Ensopado não são",
+	"iguanatweaksreborn.cow_cooldown": "Leite de vaca não é",
+	"iguanatweaksreborn.yet_ready": "ainda pronto",
+
+	"iguanatweaksreborn.no_food_for_sleep": "Você está com muita fome e não consegue dormir",
+	"iguanatweaksreborn.decorative_beds": "As camas são apenas uma decoração agradável. Não é permitido dormir",
+	"iguanatweaksreborn.enjoy_the_night": "Seu ponto de respawn foi definido. Aproveite a noite!",
+	"iguanatweaksreborn.not_tired": "Você não está cansado o suficiente para dormir",
+	"iguanatweaksreborn.tired_enough": "Você começa a se sentir cansado",
+
+	"iguanatweaksreborn.armor_slowdown": "-%s%% Velocidade",
+
+	"effect.iguanatweaksreborn.injured": "Ferida",
+	"effect.iguanatweaksreborn.well_fed": "Bem alimentado",
+	"effect.iguanatweaksreborn.tired": "Cansado",
+	"effect.iguanatweaksreborn.energy_boost": "Aumento de energia",
+
+	"effect.iguanatweaksreborn.injured.description": "Obtido quando danificado. Reduz a regeneração de saúde em 20% por nível.",
+	"effect.iguanatweaksreborn.well_fed.description": "Obtido ao comer. Aumenta a regeneração de saúde em 25% por nível.",
+	"effect.iguanatweaksreborn.tired.description": "Obtido quando não dorme há algum tempo. Reduz a velocidade de movimento e visão.",
+	"effect.iguanatweaksreborn.tired.energy_boost": "Diminui o cansaço nas horas extras.",
+
+	"container.repair.free": "Sem custo"
+}
