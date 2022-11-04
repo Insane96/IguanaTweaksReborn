@@ -10,7 +10,6 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -31,6 +30,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @LoadFeature(module = Modules.Ids.MISC)
 public class TempSpawner extends Feature {
 	public static final ResourceLocation BLACKLISTED_SPAWNERS = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "blacklisted_spawners");
+	public static final ResourceLocation SPAWNER_REACTIVATOR = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "spawner_reactivator");
 	@Config(min = 0)
 	@Label(name = "Minimum Spawnable Mobs", description = "The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn. The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
 	public static Integer minSpawnableMobs = 25;
@@ -40,9 +40,6 @@ public class TempSpawner extends Feature {
 	@Config
 	@Label(name = "Bonus experience the farther from spawn", description = "If true, the spawner will drop more experience when broken based of distance from spawn. +100% every 1024 blocks from spawn. The multiplier from 'Experience From Blocks' Feature still applies.")
 	public static Boolean bonusExperienceWhenFarFromSpawn = true;
-	@Config
-	@Label(name = "Reagent Item", description = "Set here an item or item tag that can be used on spawners and let you re-enable them.")
-	public static IdTagMatcher reagentItem = new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:diamond");
 
 	public TempSpawner(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -80,8 +77,7 @@ public class TempSpawner extends Feature {
 	@SubscribeEvent
 	public void onItemUse(PlayerInteractEvent.RightClickBlock event) {
 		if (!this.isEnabled()
-				|| reagentItem == null
-				|| !reagentItem.matchesItem(event.getItemStack().getItem())
+				|| !Utils.isItemInTag(event.getItemStack().getItem(), SPAWNER_REACTIVATOR)
 				|| event.getLevel().getBlockState(event.getHitVec().getBlockPos()).getBlock() != Blocks.SPAWNER)
 			return;
 
