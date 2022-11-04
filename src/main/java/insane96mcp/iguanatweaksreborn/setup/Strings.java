@@ -38,6 +38,10 @@ public class Strings {
 		public static final String TOO_TIRED = "iguanatweaksreborn.too_tired";
 		public static final String DECORATIVE_BEDS = "iguanatweaksreborn.decorative_beds";
 		public static final String ENJOY_THE_NIGHT = "iguanatweaksreborn.enjoy_the_night";
+		public static final String ITEM_REPAIRED = "iguanatweaksreborn.item_repaired";
+
+		public static final String NO_EFFICIENCY_ITEM = "iguanatweaksreborn.no_efficiency_item";
+		public static final String NO_DAMAGE_ITEM = "iguanatweaksreborn.no_damage_item";
 
 		public static final String ARMOR_SLOWDOWN = "iguanatweaksreborn.armor_slowdown";
     }
