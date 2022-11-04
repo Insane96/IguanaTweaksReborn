@@ -2,6 +2,7 @@
 
 ## Upcoming
 * [Moved many blacklists to data tags](https://github.com/Insane96/IguanaTweaksReborn/wiki/%5B1.19-and-up%5D-Tags) and added some new ones
+  * Added tags to disable items' damage and/or efficiency
 * Fixed some strings not begin translatable
 * Fixed tiredness multiplier not working
 
