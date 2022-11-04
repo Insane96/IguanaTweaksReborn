@@ -31,13 +31,10 @@ import java.text.DecimalFormat;
 @Label(name = "Health Regen", description = "Makes Health regen work differently, like in Combat Test snapshots. Can be customized. Also adds Well Fed and Injured effects.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class HealthRegen extends Feature {
-	//TODO remove the Enum and set a true false value. When true config values will be replaced with the preset ones and this set back to false
+
 	@Config
-	@Label(name = "Health Regen Preset", description = """
-						Sets the other config options to some default values (actual config is not changed, but custom values are ignored):
-						NONE: Use custom values
-						COMBAT_TEST: health regeneration works like the Combat Tests Snapshots""")
-	public static HealthRegenPreset healthRegenPreset = HealthRegenPreset.COMBAT_TEST;
+	@Label(name = "Load Combat Test Config Options", description = "If true, restart the game and the following config options will be changed to the ones of the combat test snapshot and then set this back to false.")
+	public static Boolean loadCombatTestConfigOptions = true;
 	@Config(min = 0)
 	@Label(name = "Health Regen Speed", description = "Sets how many ticks between the health regeneration happens (vanilla is 80; Combat Test is 40).")
 	public static Integer healthRegenSpeed = 80;
@@ -45,7 +42,7 @@ public class HealthRegen extends Feature {
 	@Label(name = "Regen when Hunger Above", description = "Sets how much hunger the player must have to regen health (vanilla is >17; Combat Test is >3).")
 	public static Integer regenWhenFoodAbove = 17;
 	@Config(min = 0)
-	@Label(name = "Starve Speed", description = "Sets how many ticks between starve damage happens (vanilla and Combat Test is 80).")
+	@Label(name = "Starve Speed", description = "Sets how many ticks between starve damage happens (vanilla and Combat Test are 80).")
 	public static Integer starveSpeed = 80;
 	@Config(min = 0)
 	@Label(name = "Starve Damage", description = "Set how much damage is dealt when starving (vanilla and Combat Test are 1).")
@@ -94,15 +91,16 @@ public class HealthRegen extends Feature {
 	@Override
 	public void readConfig(final ModConfigEvent event) {
 		super.readConfig(event);
-		if (healthRegenPreset == HealthRegenPreset.COMBAT_TEST) {
-			healthRegenSpeed = 40;
-			regenWhenFoodAbove = 6;
-			starveSpeed = 80;
-			starveDamage = 1;
-			disableSaturationRegenBoost = true;
-			consumeHungerOnly = true;
-			maxExhaustion = 4d;
-			hungerConsumptionChance = 0.5d;
+		if (loadCombatTestConfigOptions) {
+			this.setConfig("Health Regen Speed", 40);
+			this.setConfig("Regen when Hunger Above", 6);
+			this.setConfig("Starve Speed", 80);
+			this.setConfig("Starve Damage", 1);
+			this.setConfig("Disable Saturation Regen Boost", true);
+			this.setConfig("Consume Hunger Only", true);
+			this.setConfig("Max Exhaustion", 4d);
+			this.setConfig("Hunger Consumption Chance", 0.5d);
+			this.setConfig("Load Combat Test Config Options", false);
 		}
 	}
 
@@ -193,7 +191,7 @@ public class HealthRegen extends Feature {
 			if (foodStats.tickTimer >= getRegenSpeed(player)) {
 				player.heal(1.0F);
 				if (consumeHungerOnly) {
-					if (player.level.getRandom().nextDouble() < 0.5d)
+					if (player.level.getRandom().nextDouble() < hungerConsumptionChance)
 						addHunger(foodStats, -1);
 				}
 				else
@@ -228,11 +226,6 @@ public class HealthRegen extends Feature {
 		if (wellFed != null)
 			ticksToRegen *= 1 / (((wellFed.getAmplifier() + 1) * wellFedEffectiveness) + 1);
 		return ticksToRegen;
-	}
-
-	private enum HealthRegenPreset {
-		NONE,
-		COMBAT_TEST
 	}
 
 	@OnlyIn(Dist.CLIENT)
