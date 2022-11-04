@@ -31,7 +31,7 @@ import java.util.ArrayList;
 @Label(name = "Crops Growth", description = "Slower Crops growing based off various factors")
 @LoadFeature(module = Modules.Ids.FARMING)
 public class CropsGrowth extends Feature {
-	public static final ResourceLocation NO_GROWTH_MULTIPLIERS = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "no_growth_multipliers");
+	public static final ResourceLocation NO_GROWTH_MULTIPLIERS = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_growth_multipliers");
 
 	@Config
 	@Label(name = "Crops Require Water", description = """

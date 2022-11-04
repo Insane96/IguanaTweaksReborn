@@ -30,7 +30,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Label(name = "Temporary Spawners", description = "Spawners will no longer spawn mobs infinitely")
 @LoadFeature(module = Modules.Ids.MISC)
 public class TempSpawner extends Feature {
-	public static final ResourceLocation BLACKLISTED_SPAWNERS = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "blacklisted_spawners");
+	public static final ResourceLocation BLACKLISTED_SPAWNERS = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "blacklisted_spawners");
 	@Config(min = 0)
 	@Label(name = "Minimum Spawnable Mobs", description = "The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn. The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
 	public static Integer minSpawnableMobs = 25;

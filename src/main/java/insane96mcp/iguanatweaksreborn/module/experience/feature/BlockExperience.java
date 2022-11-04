@@ -18,7 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Label(name = "Experience From Blocks", description = "Decrease / Increase experience dropped by blocks broken")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class BlockExperience extends Feature {
-	public static final ResourceLocation NO_BLOCK_XP_MULTIPLIER = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "no_block_xp_multiplier");
+	public static final ResourceLocation NO_BLOCK_XP_MULTIPLIER = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_block_xp_multiplier");
 
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Experience from Blocks Multiplier", description = "Experience dropped by blocks (Ores and Spawners) will be multiplied by this multiplier. Experience dropped by blocks are still affected by 'Global Experience Multiplier'\nCan be set to 0 to make blocks drop no experience")
