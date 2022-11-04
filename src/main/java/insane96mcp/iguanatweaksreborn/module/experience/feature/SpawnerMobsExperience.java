@@ -20,7 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Label(name = "Experience From Spawners' Mobs", description = "Decrease / Increase experience dropped mobs spawned by Spawners")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class SpawnerMobsExperience extends Feature {
-	public static final ResourceLocation NO_SPAWNER_XP_MULTIPLIER = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "no_spawner_xp_multiplier");
+	public static final ResourceLocation NO_SPAWNER_XP_MULTIPLIER = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_spawner_xp_multiplier");
 	@Config(min = 0, max = 128d)
 	@Label(name = "Mobs from Spawners Multiplier", description = """
 						Experience dropped from mobs that come from spawners will be multiplied by this multiplier.

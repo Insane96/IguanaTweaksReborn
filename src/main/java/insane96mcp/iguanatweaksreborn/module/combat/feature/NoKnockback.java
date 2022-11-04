@@ -31,7 +31,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class NoKnockback extends Feature {
 
-	public static final ResourceLocation NO_KNOCKBACK_TAG = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "no_knockback");
+	public static final ResourceLocation NO_KNOCKBACK_TAG = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_knockback");
 
 	@Config
 	@Label(name = "No Item No Knockback", description = "If true the player will deal no knockback when not using an item that doesn't have the attack damage attribute.")

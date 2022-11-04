@@ -24,8 +24,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Label(name = "Explosion Overhaul", description = "Various changes to explosions from knockback to shielding.")
 @LoadFeature(module = Modules.Ids.MISC)
 public class ExplosionOverhaul extends Feature {
-	public static final ResourceLocation KNOCKBACK_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "explosion_knockback_blacklist");
-	public static final ResourceLocation ENTITY_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.MOD_ID + "explosion_entity_blacklist");
+	public static final ResourceLocation KNOCKBACK_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "explosion_knockback_blacklist");
+	public static final ResourceLocation ENTITY_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "explosion_entity_blacklist");
 
 	@Config
 	@Label(name = "Disable Explosion Randomness", description = "Vanilla Explosions use a random number that changes the explosion power. With this enabled the ray strength will be as the explosion size.")

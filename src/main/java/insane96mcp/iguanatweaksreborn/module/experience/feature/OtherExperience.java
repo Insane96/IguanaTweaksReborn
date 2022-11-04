@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.experience.feature;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -124,7 +125,7 @@ public class OtherExperience extends Feature {
 
 		int repairCost = event.getItemStack().getBaseRepairCost();
 		if(repairCost > 0)
-			event.getToolTip().add(Component.translatable("iguanatweaksreborn.item_repaired").withStyle(ChatFormatting.YELLOW));
+			event.getToolTip().add(Component.translatable(Strings.Translatable.ITEM_REPAIRED).withStyle(ChatFormatting.YELLOW));
 	}
 
 	public static boolean isUnmendingEnabled() {
