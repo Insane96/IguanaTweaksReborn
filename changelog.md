@@ -3,6 +3,8 @@
 ## Upcoming
 * [Moved many blacklists to data tags](https://github.com/Insane96/IguanaTweaksReborn/wiki/%5B1.19-and-up%5D-Tags) and added some new ones
   * Added tags to disable items' damage and/or efficiency
+* Added a new `Misc` feature under `Miscellaneous` module
+  * Adds a feature that prevents entities from catching fire when have fire resistance potion on
 * Replaced Health Regen presets with "Load Combat Test Config Options"
   * If true, restart the game and the config options will be changed to the ones of the combat test snapshot and then set the config option back to false.
 * Fixed Hunger Consumption Chance always beign 0.5

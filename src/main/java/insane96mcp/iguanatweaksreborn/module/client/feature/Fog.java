@@ -53,7 +53,7 @@ public class Fog extends Feature {
 
         Entity entity = event.getCamera().getEntity();
         if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(MobEffects.FIRE_RESISTANCE)) {
-            event.setNearPlaneDistance(-8);
+            event.setNearPlaneDistance(-16);
             event.setFarPlaneDistance(24f);
         }
 
