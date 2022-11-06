@@ -138,7 +138,8 @@ public class ToolStats extends Feature {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onTooltip(ItemTooltipEvent event) {
-		if (!this.isEnabled())
+		if (!this.isEnabled()
+				|| !disabledItemsTooltip)
 			return;
 
 		if (Utils.isItemInTag(event.getItemStack().getItem(), NO_DAMAGE_ITEMS)) {
