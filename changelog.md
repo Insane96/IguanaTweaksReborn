@@ -15,6 +15,7 @@
 * Fixed Hunger Consumption Chance always beign 0.5
 * Fixed some strings not begin translatable
 * Fixed tiredness multiplier not working
+* Fixed harder crops applying hardness to non-insta-break blocks too
 
 ## Alpha 2.13.1
 * Requires InsaneLib 1.7.1
