@@ -33,6 +33,7 @@ public class HoesNerfs extends Feature {
 	private static final ResourceLocation DISABLED_HOES = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "disabled_hoes");
 
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> hoesCooldownsConfig;
+	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static final List<String> hoesCooldownsDefault = Arrays.asList("minecraft:stone_hoe,20", "minecraft:iron_hoe,15", "minecraft:golden_hoe,4", "minecraft:diamond_hoe,10", "minecraft:netherite_hoe,6", "vulcanite:vulcanite_hoe,15");
 
 	public static ArrayList<HoeCooldown> hoesCooldowns;

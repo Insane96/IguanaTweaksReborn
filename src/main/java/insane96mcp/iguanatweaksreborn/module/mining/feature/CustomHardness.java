@@ -20,6 +20,7 @@ public class CustomHardness extends Feature {
 
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> customHardnessConfig;
 
+	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static final ArrayList<String> customHardnessDefault = Lists.newArrayList(
 			"minecraft:coal_ore,2.5", "minecraft:iron_ore,3", "minecraft:gold_ore,3.5", "minecraft:diamond_ore,4", "minecraft:redstone_ore,3", "minecraft:lapis_ore,3", "minecraft:emerald_ore,4",
 			"minecraft:deepslate_coal_ore,4.5", "minecraft:deepslate_iron_ore,5", "minecraft:deepslate_gold_ore,5.5", "minecraft:deepslate_diamond_ore,6", "minecraft:deepslate_redstone_ore,5", "minecraft:deepslate_lapis_ore,5", "minecraft:deepslate_emerald_ore,6",

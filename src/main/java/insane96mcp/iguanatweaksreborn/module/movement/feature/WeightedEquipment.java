@@ -47,10 +47,12 @@ import java.util.List;
 public class WeightedEquipment extends Feature {
 
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> materialWeightConfig;
+	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static final List<String> materialWeightDefault = Arrays.asList("leather,0.04", "chainmail,0.10", "golden,0.07", "iron,0.13", "diamond,0.18", "netherite,0.25");
 	public static ArrayList<ArmorMaterialWeight> materialWeight;
 
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> enchantmentsListConfig;
+	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static final List<String> enchantmentsListDefault = Arrays.asList("minecraft:feather_falling,0.10", "elenaidodge2:lightweight,0.15,5");
 	public static ArrayList<ArmorEnchantmentWeight> enchantmentsList;
 

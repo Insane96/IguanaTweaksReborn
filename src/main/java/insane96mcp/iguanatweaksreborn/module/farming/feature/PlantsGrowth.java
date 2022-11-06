@@ -23,6 +23,7 @@ public class PlantsGrowth extends Feature {
 
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> plantsListConfig;
 
+	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static final List<String> plantsListDefault = Arrays.asList(
 			"minecraft:sugar_cane,2.5",
 			"minecraft:cactus,2.5",

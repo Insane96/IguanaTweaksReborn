@@ -31,10 +31,12 @@ public class GlobalHardness extends Feature {
 	public static final ResourceLocation HARDNESS_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "hardness_blacklist");
 	public static final ResourceLocation DEPTH_MULTIPLIER_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "depth_multiplier_blacklist");
 
+	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> dimensionHardnessMultiplierConfig;
 	private static final List<String> dimensionHardnessMultiplierDefault = List.of("minecraft:the_nether,4", "minecraft:the_end,4");
 	public static ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier;
 
+	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> depthMultiplierDimensionConfig;
 	private static final List<String> depthMultiplierDimensionDefault = List.of("minecraft:overworld,0.01,63,-64", "minecraft:overworld,-0.64,4,3");
 	public static ArrayList<DepthHardnessDimension> depthMultiplierDimension;

@@ -22,6 +22,7 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.MISC)
 public class DeBuffs extends Feature {
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> deBuffsConfig;
+	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static final List<String> deBuffsDefault = Arrays.asList("HUNGER,..2,minecraft:mining_fatigue,0", "HUNGER,..4,minecraft:slowness,0", "HEALTH,..3,minecraft:slowness,0");
 	public static ArrayList<DeBuff> deBuffs;
 

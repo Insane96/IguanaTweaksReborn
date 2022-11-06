@@ -54,6 +54,7 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class Tiredness extends Feature {
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> energyBoostItemsConfig;
+	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static final List<String> energyBoostItemsDefault = List.of(
 			"#iguanatweaksreborn:energy_boost",
 			"farmersdelight:hot_cocoa,80,0"

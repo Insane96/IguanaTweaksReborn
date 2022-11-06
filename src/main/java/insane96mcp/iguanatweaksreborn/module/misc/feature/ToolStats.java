@@ -40,6 +40,7 @@ public class ToolStats extends Feature {
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> toolsDurabilityConfig;
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> toolsEfficiencyConfig;
 
+	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static final List<String> toolsDurabilityDefault = Arrays.asList(
 			"minecraft:wooden_sword,1", "minecraft:wooden_pickaxe,1", "minecraft:wooden_shovel,1", "minecraft:wooden_hoe,1", "minecraft:wooden_axe,8",
 			"minecraft:stone_sword,1", "minecraft:stone_pickaxe,8", "minecraft:stone_shovel,48", "minecraft:stone_hoe,8", "minecraft:stone_axe,48",
@@ -47,6 +48,7 @@ public class ToolStats extends Feature {
 			"minecraft:elytra,144"
 	);
 
+	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static final List<String> toolEfficiencyDefault = Arrays.asList(
 			"minecraft:wooden_pickaxe,0.8", "minecraft:wooden_shovel,0.8", "minecraft:wooden_hoe,0.8", "minecraft:wooden_axe,0.8",
 			"minecraft:stone_pickaxe,0.85", "minecraft:stone_shovel,0.85", "minecraft:stone_hoe,0.85", "minecraft:stone_axe,0.85",

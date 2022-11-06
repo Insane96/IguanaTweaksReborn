@@ -1,14 +1,15 @@
 package insane96mcp.iguanatweaksreborn.module.stacksize.feature;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.iguanatweaksreborn.utils.Weights;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.base.config.Blacklist;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -18,11 +19,11 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.List;
-
 @Label(name = "General Stacking", description = "Make food, items and blocks less stackable. Items and Blocks are disabled by default. Changes in this section require a Minecraft restart")
 @LoadFeature(module = Modules.Ids.STACK_SIZE)
 public class GeneralStacking extends Feature {
+    public static final ResourceLocation NO_STACK_SIZE_CHANGES = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_stack_size_changes");
+
     @Config
     @Label(name = "Food Stack Reduction", description = "Food stack sizes will be reduced based off their hunger restored and saturation multiplier. The formula is '(1 - (effective_quality - 1) / Food Quality Divider) * 64' where effective_quality is hunger+saturation restored. E.g. Cooked Porkchops give 8 hunger points and have a 0.8 saturation multiplier so their stack size will be '(1 - (20.8 - 1) / 18.5) * 64' = 24 (Even foods that usually stack up to 16 or that don't stack at all will use the same formula, like Honey or Stews).\nThis is affected by Food Module's feature 'Hunger Restore Multiplier' & 'Saturation Restore multiplier'")
     public static Boolean foodStackReduction = true;
@@ -47,12 +48,6 @@ public class GeneralStacking extends Feature {
     @Config
     @Label(name = "Block Stack Affected by Material", description = "When true, block stacks are affected by both their material type and the block stack multiplier. If false, block stacks will be affected by the multiplier only.")
     public static Boolean blockStackAffectedByMaterial = true;
-    //TODO move the processing of stack sizes to /reload
-    @Config
-    @Label(name = "Blacklist", description = "Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"#minecraft:fishes\", \"minecraft:stone\"].")
-    public static Blacklist blacklist = new Blacklist(List.of(
-            new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:rotten_flesh")
-    ));
 
 	public GeneralStacking(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -81,7 +76,7 @@ public class GeneralStacking extends Feature {
                     continue;
                 if (item.maxStackSize == 1)
                     continue;
-                if (blacklist.isItemBlackOrNotWhiteListed(item))
+                if (Utils.isItemInTag(item, NO_STACK_SIZE_CHANGES))
                     continue;
 
                 double stackSize = item.maxStackSize * itemStackMultiplier;
@@ -101,7 +96,7 @@ public class GeneralStacking extends Feature {
             for (Item item : ForgeRegistries.ITEMS.getValues()) {
                 if (!(item instanceof BlockItem))
                     continue;
-                if (blacklist.isItemBlackOrNotWhiteListed(item))
+                if (Utils.isItemInTag(item, NO_STACK_SIZE_CHANGES))
                     continue;
 
                 Block block = ((BlockItem) item).getBlock();
@@ -125,7 +120,7 @@ public class GeneralStacking extends Feature {
             for (Item item : ForgeRegistries.ITEMS.getValues()) {
                 if (!(item instanceof BowlFoodItem) && !(item instanceof SuspiciousStewItem))
                     continue;
-                if (blacklist.isItemBlackOrNotWhiteListed(item))
+                if (Utils.isItemInTag(item, NO_STACK_SIZE_CHANGES))
                     continue;
 
                 int stackSize = stackableSoups;
@@ -144,7 +139,7 @@ public class GeneralStacking extends Feature {
             for (Item item : ForgeRegistries.ITEMS.getValues()) {
                 if (!item.isEdible())
                     continue;
-                if (blacklist.isItemBlackOrNotWhiteListed(item))
+                if (Utils.isItemInTag(item, NO_STACK_SIZE_CHANGES))
                     continue;
 
                 int hunger = item.getFoodProperties().getNutrition();
