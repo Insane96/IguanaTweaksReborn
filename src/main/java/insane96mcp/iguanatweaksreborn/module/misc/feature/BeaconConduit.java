@@ -31,7 +31,7 @@ import java.util.*;
 @LoadFeature(module = Modules.Ids.MISC)
 public class BeaconConduit extends Feature {
     private static ForgeConfigSpec.ConfigValue<List<? extends String>> blocksListConfig;
-
+    //TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
     private static final List<String> blocksListDefault = Arrays.asList("minecraft:iron_block,1","minecraft:emerald_block,1.2","minecraft:gold_block,1.8","minecraft:diamond_block,2.5","minecraft:netherite_block,4.0", "tconstruct:cobalt_block,2.4", "tconstruct:queens_slime_block,3.0", "tconstruct:hepatizon_block,2.7", "tconstruct:manyullyn_block,3.3");
     public static ArrayList<IdTagValue> blocksList;
 

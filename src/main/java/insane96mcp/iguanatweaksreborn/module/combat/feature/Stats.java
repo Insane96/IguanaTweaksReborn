@@ -36,6 +36,7 @@ public class Stats extends Feature {
 
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> itemModifiersConfig;
 
+	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static final ArrayList<String> itemModifiersDefault = Lists.newArrayList("minecraft:iron_helmet,HEAD,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_chestplate,CHEST,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_leggings,LEGS,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_boots,FEET,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:netherite_helmet,HEAD,minecraft:generic.armor,1,ADDITION", "minecraft:netherite_boots,FEET,minecraft:generic.armor,1,ADDITION");
 
 	public static List<ItemAttributeModifier> itemModifiers;
