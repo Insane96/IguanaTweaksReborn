@@ -1,36 +1,29 @@
 package insane96mcp.iguanatweaksreborn.module.combat.utils;
 
 import com.google.common.base.Enums;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.insanelib.util.LogHelper;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITag;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//TODO extend IdTagMatcher
-public class ItemAttributeModifier {
-	public ResourceLocation itemId;
-	public ResourceLocation itemTag;
+public class ItemAttributeModifier extends IdTagMatcher {
 	public Class<? extends Item> itemClass;
 	public EquipmentSlot slot;
 	public Attribute attribute;
 	public double amount;
 	public AttributeModifier.Operation operation;
 
-	public ItemAttributeModifier(@Nullable ResourceLocation itemId, @Nullable ResourceLocation itemTag, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
-		this.itemId = itemId;
-		this.itemTag = itemTag;
+	public ItemAttributeModifier(IdTagMatcher.Type type, ResourceLocation id, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
+		super(type, id);
 		this.slot = slot;
 		this.attribute = attribute;
 		this.amount = amount;
@@ -38,6 +31,7 @@ public class ItemAttributeModifier {
 	}
 
 	public ItemAttributeModifier(Class<? extends Item> itemClass, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
+		super(Type.ID, "minecraft:air");
 		this.itemClass = itemClass;
 		this.slot = slot;
 		this.attribute = attribute;
@@ -52,15 +46,16 @@ public class ItemAttributeModifier {
 			LogHelper.warn("Invalid line \"%s\" for Item Modifier", line);
 			return null;
 		}
-		ResourceLocation tag = null;
+		IdTagMatcher.Type type;
 		ResourceLocation id = null;
 		if (split[0].startsWith("#")) {
 			String replaced = split[0].replace("#", "");
-			tag = ResourceLocation.tryParse(replaced);
-			if (tag == null) {
+			id = ResourceLocation.tryParse(replaced);
+			if (id == null) {
 				LogHelper.warn("%s tag is not a valid resource location", split[0]);
 				return null;
 			}
+			type = Type.TAG;
 		}
 		else {
 			id = ResourceLocation.tryParse(split[0]);
@@ -72,6 +67,7 @@ public class ItemAttributeModifier {
 				LogHelper.warn("%s id seems to not exist", line);
 				return null;
 			}
+			type = Type.ID;
 		}
 
 		EquipmentSlot slot = Enums.getIfPresent(EquipmentSlot.class, split[1]).orNull();
@@ -103,7 +99,7 @@ public class ItemAttributeModifier {
 			return null;
 		}
 
-		return new ItemAttributeModifier(id, tag, slot, attribute, amount, operation);
+		return new ItemAttributeModifier(type, id, slot, attribute, amount, operation);
 	}
 
 	public static ArrayList<ItemAttributeModifier> parseStringList(List<? extends String> list) {
@@ -115,14 +111,13 @@ public class ItemAttributeModifier {
 		}
 		return itemAttributeModifiers;
 	}
-	public boolean matchesItem(Item item) {
-		if (this.itemTag != null) {
-			TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, this.itemTag);
-			ITag<Item> itemTag = ForgeRegistries.ITEMS.tags().getTag(tagKey);
-			return itemTag.contains(item);
+
+	public boolean matches(Item item) {
+		if (this.itemClass != null) {
+			return item.getClass().equals(this.itemClass);
 		}
-		else if (this.itemId != null)
-			return ForgeRegistries.ITEMS.getKey(item).equals(this.itemId);
-		return item.getClass().equals(this.itemClass);
+		else {
+			return this.matchesItem(item);
+		}
 	}
 }

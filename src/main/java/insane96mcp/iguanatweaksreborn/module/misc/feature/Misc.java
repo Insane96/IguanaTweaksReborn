@@ -15,7 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 public class Misc extends Feature {
 
     @Config
-    @Label(name = "Prevent fire with resistance", description = "If true, entities will no longer be set on fire if has Fire Resistance (like bedrock edition)")
+    @Label(name = "Prevent fire with resistance", description = "If true, entities will no longer be set on fire if have Fire Resistance (like bedrock edition)")
     public static Boolean preventFireWithResistance = true;
 
     public Misc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
