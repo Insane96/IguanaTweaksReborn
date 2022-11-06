@@ -1,12 +1,16 @@
 # Changelog
 
 ## Upcoming
+* Requires InsaneLib 1.7.2
 * [Moved many blacklists to data tags](https://github.com/Insane96/IguanaTweaksReborn/wiki/%5B1.19-and-up%5D-Tags) and added some new ones
   * Added tags to disable items' damage and/or efficiency
 * Added a new `Misc` feature under `Miscellaneous` module
   * Adds a feature that prevents entities from catching fire when have fire resistance potion on
 * Replaced Health Regen presets with "Load Combat Test Config Options"
   * If true, restart the game and the config options will be changed to the ones of the combat test snapshot and then set the config option back to false.
+* Replaced `Reduce Weapon Damage` with `Nerf weapons`
+  * Reduced axes damage reduction (-1.5 -> -1) (like Swords and Tridents)
+  * Axes now get -1 attack range
 * For under lava with Fire Resistance is now slightly more foggy
 * Fixed Hunger Consumption Chance always beign 0.5
 * Fixed some strings not begin translatable

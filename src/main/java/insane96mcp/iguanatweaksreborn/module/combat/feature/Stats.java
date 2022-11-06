@@ -21,6 +21,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -40,8 +41,8 @@ public class Stats extends Feature {
 	public static List<ItemAttributeModifier> itemModifiers;
 
 	@Config
-	@Label(name = "Reduce Weapon Damage", description = "If true, Swords and Tridents get -1 damage and Axes get -1.5 damage.")
-	public static Boolean reduceWeaponDamage = true;
+	@Label(name = "Nerf weapons", description = "If true, Swords, Tridents and Axes get -1 damage and Axes get -1 attack reach.")
+	public static Boolean nerfWeapons = true;
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Power Enchantment Damage Increase", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
 	public static Double powerEnchantmentDamageIncrease = 0.35d;
@@ -78,9 +79,10 @@ public class Stats extends Feature {
 	public void readConfig(final ModConfigEvent event) {
 		super.readConfig(event);
 		CLASS_ATTRIBUTE_MODIFIER.clear();
-		if (reduceWeaponDamage) {
+		if (nerfWeapons) {
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(SwordItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1.5d, AttributeModifier.Operation.ADDITION));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, EquipmentSlot.MAINHAND, ForgeMod.ATTACK_RANGE.get(), -1d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
 		}
 
