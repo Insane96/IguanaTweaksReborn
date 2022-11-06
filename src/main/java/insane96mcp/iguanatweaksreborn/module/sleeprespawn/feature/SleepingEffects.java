@@ -27,7 +27,6 @@ import java.util.List;
 public class SleepingEffects extends Feature {
 
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> effectsOnWakeUpConfig;
-	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
 	private static final List<String> effectsOnWakeUpDefault = List.of("minecraft:slowness,400,0", "minecraft:regeneration,200,1", "minecraft:weakness,300,1", "minecraft:mining_fatigue,300,1");
 	public ArrayList<MobEffectInstance> effectsOnWakeUp;
 
