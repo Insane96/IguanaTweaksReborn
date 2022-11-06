@@ -43,8 +43,8 @@ public class Stats extends Feature {
 	@Label(name = "Reduce Weapon Damage", description = "If true, Swords and Tridents get -1 damage and Axes get -1.5 damage.")
 	public static Boolean reduceWeaponDamage = true;
 	@Config(min = 0d, max = 10d)
-	@Label(name = "Power Power", description = "Set the power of the Power enchantment (vanilla is 0.5).")
-	public static Double powerPower = 0.35d;
+	@Label(name = "Power Enchantment Damage Increase", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
+	public static Double powerEnchantmentDamageIncrease = 0.35d;
 	@Config
 	@Label(name = "Disable Arrow Crits", description = "If true, Arrows from Bows will no longer randomly crit (basically disables the random bonus damage given when firing a fully charged arrow).")
 	public static Boolean disableCritArrows = true;
@@ -103,9 +103,9 @@ public class Stats extends Feature {
 		if (disableCritArrows)
 			arrow.setCritArrow(false);
 
-		if (powerPower != 0.5d && arrow.getOwner() instanceof LivingEntity) {
+		if (powerEnchantmentDamageIncrease != 0.5d && arrow.getOwner() instanceof LivingEntity) {
 			int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
-			double powerReduction = 0.5d - powerPower;
+			double powerReduction = 0.5d - powerEnchantmentDamageIncrease;
 			arrow.setBaseDamage(arrow.getBaseDamage() - (powerLevel * powerReduction + powerReduction));
 		}
 	}
@@ -139,7 +139,7 @@ public class Stats extends Feature {
 
 	private void itemAttributeModifiers(ItemAttributeModifierEvent event) {
 		for (ItemAttributeModifier itemAttributeModifier : itemModifiers) {
-			if (!itemAttributeModifier.matchesItem(event.getItemStack().getItem()))
+			if (!itemAttributeModifier.matches(event.getItemStack().getItem()))
 				continue;
 			if (event.getSlotType() != itemAttributeModifier.slot)
 				continue;

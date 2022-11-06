@@ -34,7 +34,7 @@ public class NoKnockback extends Feature {
 	public static final ResourceLocation NO_KNOCKBACK_TAG = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_knockback");
 
 	@Config
-	@Label(name = "No Item No Knockback", description = "If true the player will deal no knockback when not using an item that doesn't have the attack damage attribute.")
+	@Label(name = "No Weapon No Knockback", description = "If true the player will deal no knockback when not using an item that doesn't have the attack damage attribute.")
 	public static Boolean noItemNoKnockback = true;
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Attack Cooldown No Knockback", description = "When the attack cooldown is below this percentage the player will deal no knockback. (Between 0 and 1, where 1 is the attack fully charged)")
