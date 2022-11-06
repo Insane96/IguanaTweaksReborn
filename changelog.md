@@ -7,6 +7,7 @@
   * Adds a feature that prevents entities from catching fire when have fire resistance potion on
 * Replaced Health Regen presets with "Load Combat Test Config Options"
   * If true, restart the game and the config options will be changed to the ones of the combat test snapshot and then set the config option back to false.
+* For under lava with Fire Resistance is now slightly more foggy
 * Fixed Hunger Consumption Chance always beign 0.5
 * Fixed some strings not begin translatable
 * Fixed tiredness multiplier not working
