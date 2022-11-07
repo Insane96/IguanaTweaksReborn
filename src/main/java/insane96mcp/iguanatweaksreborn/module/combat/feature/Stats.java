@@ -1,6 +1,5 @@
 package insane96mcp.iguanatweaksreborn.module.combat.feature;
 
-import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.utils.ItemAttributeModifier;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
@@ -9,6 +8,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -20,7 +20,6 @@ import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -33,13 +32,17 @@ import java.util.List;
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction")
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class Stats extends Feature {
+	public static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = new ArrayList<>();
 
-	private static ForgeConfigSpec.ConfigValue<List<? extends String>> itemModifiersConfig;
+	public static final List<ItemAttributeModifier> itemModifiers = List.of(
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_helmet", EquipmentSlot.HEAD, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_chestplate", EquipmentSlot.CHEST, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_leggings", EquipmentSlot.LEGS, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_boots", EquipmentSlot.FEET, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
 
-	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
-	private static final ArrayList<String> itemModifiersDefault = Lists.newArrayList("minecraft:iron_helmet,HEAD,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_chestplate,CHEST,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_leggings,LEGS,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:iron_boots,FEET,minecraft:generic.armor_toughness,1.0,ADDITION", "minecraft:netherite_helmet,HEAD,minecraft:generic.armor,1,ADDITION", "minecraft:netherite_boots,FEET,minecraft:generic.armor,1,ADDITION");
-
-	public static List<ItemAttributeModifier> itemModifiers;
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", EquipmentSlot.HEAD, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", EquipmentSlot.FEET, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION)
+	);
 
 	@Config
 	@Label(name = "Nerf weapons", description = "If true, Swords, Tridents and Axes get -1 damage and Axes get -1 attack reach.")
@@ -65,18 +68,6 @@ public class Stats extends Feature {
 	}
 
 	@Override
-	public void loadConfigOptions() {
-		super.loadConfigOptions();
-		itemModifiersConfig = this.getBuilder()
-				.comment("""
-						Define Attribute Modifiers to apply to single items, one string = one item/tag.
-						The format is modid:itemid,slot,attribute,amount,operation (or tag instead of itemid #modid:tagid,...)
-						- slot can be: MAIN_HAND,OFF_HAND,HEAD,CHEST,LEGS,FEET
-						- operation can be: ADDITION, MULTIPLY_BASE, MULTIPLY_TOTAL""")
-				.defineList("Item Modifiers", itemModifiersDefault, o -> o instanceof String);
-	}
-
-	@Override
 	public void readConfig(final ModConfigEvent event) {
 		super.readConfig(event);
 		CLASS_ATTRIBUTE_MODIFIER.clear();
@@ -86,8 +77,10 @@ public class Stats extends Feature {
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, EquipmentSlot.MAINHAND, ForgeMod.ATTACK_RANGE.get(), -1d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
 		}
+	}
 
-		itemModifiers = ItemAttributeModifier.parseStringList(itemModifiersConfig.get());
+	public void loadJsonConfigs() {
+
 	}
 
 	@SubscribeEvent
@@ -128,8 +121,6 @@ public class Stats extends Feature {
 		classAttributeModifiers(event);
 		itemAttributeModifiers(event);
 	}
-
-	public static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = new ArrayList<>();
 
 	private void classAttributeModifiers(ItemAttributeModifierEvent event) {
 		for (ItemAttributeModifier itemAttributeModifier : CLASS_ATTRIBUTE_MODIFIER) {
