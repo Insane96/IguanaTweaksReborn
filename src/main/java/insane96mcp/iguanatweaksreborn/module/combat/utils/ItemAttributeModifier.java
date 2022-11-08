@@ -76,10 +76,14 @@ public class ItemAttributeModifier extends IdTagMatcher {
 			}
 
 			String dimension = GsonHelper.getAsString(json.getAsJsonObject(), "dimension", "");
-			if (!dimension.equals("") && !ResourceLocation.isValidResourceLocation(dimension)) {
-				throw new JsonParseException("Invalid dimension for ItemAttributeModifier: %s".formatted(dimension));
+			if (!dimension.equals("")) {
+				if (!ResourceLocation.isValidResourceLocation(dimension)) {
+					throw new JsonParseException("Invalid dimension for ItemAttributeModifier: %s".formatted(dimension));
+				}
+				else {
+					itemAttributeModifier.dimension = ResourceLocation.tryParse(dimension);
+				}
 			}
-			itemAttributeModifier.dimension = ResourceLocation.tryParse(dimension);
 
 			String sEquipSlot = GsonHelper.getAsString(json.getAsJsonObject(), "slot");
 			itemAttributeModifier.slot = EquipmentSlot.byName(sEquipSlot);

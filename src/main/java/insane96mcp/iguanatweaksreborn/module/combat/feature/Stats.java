@@ -1,9 +1,14 @@
 package insane96mcp.iguanatweaksreborn.module.combat.feature;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.utils.ItemAttributeModifier;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
-import insane96mcp.insanelib.base.Feature;
+import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -11,10 +16,12 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -25,16 +32,22 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+import org.apache.commons.io.FilenameUtils;
 
+import java.io.File;
+import java.io.FileReader;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction")
 @LoadFeature(module = Modules.Ids.COMBAT)
-public class Stats extends Feature {
-	public static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = new ArrayList<>();
+public class Stats extends ITFeature {
+	static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = new ArrayList<>();
 
-	public static final List<ItemAttributeModifier> itemModifiers = List.of(
+	public static final ArrayList<ItemAttributeModifier> itemModifiers = new ArrayList<>(Arrays.asList(
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_helmet", EquipmentSlot.HEAD, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_chestplate", EquipmentSlot.CHEST, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_leggings", EquipmentSlot.LEGS, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
@@ -42,7 +55,7 @@ public class Stats extends Feature {
 
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", EquipmentSlot.HEAD, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", EquipmentSlot.FEET, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION)
-	);
+	));
 
 	@Config
 	@Label(name = "Nerf weapons", description = "If true, Swords, Tridents and Axes get -1 damage and Axes get -1 attack reach.")
@@ -78,9 +91,46 @@ public class Stats extends Feature {
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
 		}
 	}
+	static final Type itemAttributeModifierListType = new TypeToken<ArrayList<ItemAttributeModifier>>(){}.getType();
 
+	@Override
 	public void loadJsonConfigs() {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
+		if (!jsonConfigFolder.exists())
+			jsonConfigFolder.mkdirs();
+
+		File itemModifiersFile = new File(jsonConfigFolder, "item_modifiers.json");
+		if (!itemModifiersFile.exists()) {
+			try {
+				if (!itemModifiersFile.createNewFile()) {
+					throw new Exception("File#createNewFile failed");
+				}
+				String json = gson.toJson(itemModifiers, itemAttributeModifierListType);
+				Files.write(itemModifiersFile.toPath(), json.getBytes());
+			}
+			catch (Exception e) {
+				LogHelper.error("Failed to create default Json %s: %s", FilenameUtils.removeExtension(itemModifiersFile.getName()), e.getMessage());
+			}
+		}
+
+		itemModifiers.clear();
+		try {
+			FileReader fileReader = new FileReader(itemModifiersFile);
+			List<ItemAttributeModifier> itemAttributeModifiers = gson.fromJson(fileReader, itemAttributeModifierListType);
+			//itemAttributeModifiers.validate();
+			itemModifiers.addAll(itemAttributeModifiers);
+		}
+		catch (JsonSyntaxException e) {
+			LogHelper.error("Parsing error loading Json %s: %s", FilenameUtils.removeExtension(itemModifiersFile.getName()), e.getMessage());
+		}
+		catch (Exception e) {
+			LogHelper.error("Failed loading Json %s: %s", FilenameUtils.removeExtension(itemModifiersFile.getName()), e.getMessage());
+		}
+	}
+
+	public static void addClassItemAttributeModifier(Class<? extends Item> itemClass, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
+		CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(itemClass, slot, attribute, amount, operation));
 	}
 
 	@SubscribeEvent

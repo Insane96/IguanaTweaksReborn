@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn;
 
+import insane96mcp.iguanatweaksreborn.data.ITDataReloadListener;
 import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerProvider;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature.Tiredness;
 import insane96mcp.iguanatweaksreborn.network.SyncHandler;
@@ -16,7 +17,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddPackFindersEvent;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -40,6 +43,8 @@ public class IguanaTweaksReborn
 	public static final String RESOURCE_PREFIX = MOD_ID + ":";
     public static final Logger LOGGER = LogManager.getLogger();
 
+    public static final String CONFIG_FOLDER = "config/" + MOD_ID;
+
     public IguanaTweaksReborn() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ITClientConfig.CONFIG_SPEC, MOD_ID + "/client.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ITCommonConfig.CONFIG_SPEC, MOD_ID + "/common.toml");
@@ -50,6 +55,11 @@ public class IguanaTweaksReborn
         FMLJavaModLoadingContext.get().getModEventBus().register(Tiredness.class);
         ITMobEffects.MOB_EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
         Weights.initMaterialWeight();
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public void onAddReloadListener(AddReloadListenerEvent event) {
+        event.addListener(ITDataReloadListener.INSTANCE);
     }
 
     @SubscribeEvent

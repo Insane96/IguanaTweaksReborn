@@ -3,7 +3,6 @@ package insane96mcp.iguanatweaksreborn.module.movement.feature;
 import com.google.common.collect.Multimap;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.feature.Stats;
-import insane96mcp.iguanatweaksreborn.module.combat.utils.ItemAttributeModifier;
 import insane96mcp.iguanatweaksreborn.module.movement.utils.ArmorEnchantmentWeight;
 import insane96mcp.iguanatweaksreborn.module.movement.utils.ArmorMaterialWeight;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
@@ -103,8 +102,8 @@ public class WeightedEquipment extends Feature {
 		materialWeight = ArmorMaterialWeight.parseStringList(materialWeightConfig.get());
 		enchantmentsList = ArmorEnchantmentWeight.parseStringList(enchantmentsListConfig.get());
 		if (shieldSlowdown > 0d) {
-			Stats.CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShieldItem.class, EquipmentSlot.MAINHAND, Attributes.MOVEMENT_SPEED, -shieldSlowdown, AttributeModifier.Operation.MULTIPLY_BASE));
-			Stats.CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShieldItem.class, EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, -shieldSlowdown, AttributeModifier.Operation.MULTIPLY_BASE));
+			Stats.addClassItemAttributeModifier(ShieldItem.class, EquipmentSlot.MAINHAND, Attributes.MOVEMENT_SPEED, -shieldSlowdown, AttributeModifier.Operation.MULTIPLY_BASE);
+			Stats.addClassItemAttributeModifier(ShieldItem.class, EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, -shieldSlowdown, AttributeModifier.Operation.MULTIPLY_BASE);
 		}
 	}
 
