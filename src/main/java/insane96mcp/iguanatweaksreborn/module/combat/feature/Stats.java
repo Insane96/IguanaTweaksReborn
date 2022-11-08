@@ -91,14 +91,12 @@ public class Stats extends ITFeature {
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
 		}
 	}
-	static final Type itemAttributeModifierListType = new TypeToken<ArrayList<ItemAttributeModifier>>(){}.getType();
 
+	static final Type itemAttributeModifierListType = new TypeToken<ArrayList<ItemAttributeModifier>>(){}.getType();
 	@Override
 	public void loadJsonConfigs() {
+		super.loadJsonConfigs();
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-		if (!jsonConfigFolder.exists())
-			jsonConfigFolder.mkdirs();
 
 		File itemModifiersFile = new File(jsonConfigFolder, "item_modifiers.json");
 		if (!itemModifiersFile.exists()) {

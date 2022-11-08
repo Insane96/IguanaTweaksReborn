@@ -23,6 +23,7 @@ public class ITFeature extends Feature {
     protected final File jsonConfigFolder;
 
     public void loadJsonConfigs() {
-
+        if (!jsonConfigFolder.exists())
+            jsonConfigFolder.mkdirs();
     }
 }

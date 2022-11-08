@@ -11,8 +11,8 @@
 * Replaced `Reduce Weapon Damage` with `Nerf weapons`
   * Reduced axes damage reduction (-1.5 -> -1) (like Swords and Tridents)
   * Axes now get -1 attack range
-* For under lava with Fire Resistance is now slightly more foggy
-* Fixed Hunger Consumption Chance always beign 0.5
+* Fog Under Lava with Fire Resistance is now slightly more foggy
+* Fixed Hunger Consumption Chance always being 0.5
 * Fixed some strings not begin translatable
 * Fixed tiredness multiplier not working
 * Fixed harder crops applying hardness to non-insta-break blocks too
