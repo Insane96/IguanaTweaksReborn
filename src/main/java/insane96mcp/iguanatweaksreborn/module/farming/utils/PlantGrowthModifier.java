@@ -1,65 +1,44 @@
 package insane96mcp.iguanatweaksreborn.module.farming.utils;
 
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import com.google.gson.*;
+import com.google.gson.annotations.JsonAdapter;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.math.NumberUtils;
 
-import javax.annotation.Nullable;
+import java.util.List;
 
-public class PlantGrowthModifier {
-	public IdTagMatcher plantId;
-	private double growthMultiplier = 1d;
-	private double noSunlightGrowthMultiplier = 1d;
-	private int minSunlightRequired = 0;
-	private double nightTimeGrowthMultiplier = 1d;
-	/*private List<Tags.Biomes.Type> biomes = new ArrayList<>();
-	private double wrongBiomeMultiplier = 1d;*/
+@JsonAdapter(PlantGrowthModifier.Serializer.class)
+public class PlantGrowthModifier extends IdTagMatcher {
+	private double growthMultiplier;
+	private double noSunlightGrowthMultiplier;
+	private int minSunlightRequired;
+	private double nightTimeGrowthMultiplier;
+	//TODO biomesGrowth
+	private List<IdTagMatcher> biomesGrowth;
+	private double wrongBiomeMultiplier = 1d;
 
-	public PlantGrowthModifier(IdTagMatcher.Type type, ResourceLocation location) {
-		this.plantId = new IdTagMatcher(type, location);
+	public PlantGrowthModifier(IdTagMatcher.Type type, String id) {
+		super(type, id);
 	}
 
-	public PlantGrowthModifier growthMultiplier(double growthMultiplier) {
+	public PlantGrowthModifier(IdTagMatcher.Type type, String id, double growthMultiplier, double noSunlightGrowthMultiplier, int minSunlightRequired, double nightTimeGrowthMultiplier) {
+		super(type, id);
 		this.growthMultiplier = growthMultiplier;
-		return this;
-	}
-
-	public PlantGrowthModifier noSunlightGrowthMultiplier(double noSunlightGrowthMultiplier) {
 		this.noSunlightGrowthMultiplier = noSunlightGrowthMultiplier;
-		return this;
-	}
-
-	public PlantGrowthModifier minSunlightRequired(int minSunlightRequired) {
 		this.minSunlightRequired = minSunlightRequired;
-		return this;
-	}
-
-	public PlantGrowthModifier nightTimeGrowthMultiplier(double nightTimeGrowthMultiplier) {
 		this.nightTimeGrowthMultiplier = nightTimeGrowthMultiplier;
-		return this;
 	}
-
-	/*public PlantGrowthModifier addBiomes(BiomeDictionary.Type... biomeType) {
-		this.biomes.addAll(List.of(biomeType));
-		return this;
-	}
-
-	public PlantGrowthModifier wrongBiomeMultiplier(double wrongBiomeMultiplier) {
-		this.wrongBiomeMultiplier = wrongBiomeMultiplier;
-		return this;
-	}*/
 
 	/**
 	 * Returns -1 when the block doesn't match the PlantGrowthModifier
 	 */
 	public double getMultiplier(Block block, Level level, BlockPos pos) {
-		if (!this.plantId.matchesBlock(block))
+		if (!this.matchesBlock(block))
 			return -1d;
 		double multiplier = this.growthMultiplier;
 		int skyLight = level.getBrightness(LightLayer.SKY, pos);
@@ -72,43 +51,79 @@ public class PlantGrowthModifier {
 		return multiplier;
 	}
 
-	/**
-	 * Parses a simple id,multiplier or tag,multiplier line to a PlantGrowthModifier
-	 */
-	@Nullable
-	public static PlantGrowthModifier parseLine(String line) {
-		String[] split = line.split(",");
-		if (split.length != 2) {
-			LogHelper.warn("Invalid line \"%s\" for Plant Growth Modification", line);
-			return null;
-		}
-		if (!NumberUtils.isParsable(split[1])) {
-			LogHelper.warn(String.format("Invalid multiplier \"%s\" for Plant Growth Modification", line));
-			return null;
-		}
-		double multiplier = Double.parseDouble(split[1]);
-		if (split[0].startsWith("#")) {
-			String replaced = split[0].replace("#", "");
-			ResourceLocation tag = ResourceLocation.tryParse(replaced);
-			if (tag == null) {
-				LogHelper.warn("%s tag for Plant Growth Modification is not valid", replaced);
-				return null;
+	public static class Serializer implements JsonDeserializer<PlantGrowthModifier>, JsonSerializer<PlantGrowthModifier> {
+		@Override
+		public PlantGrowthModifier deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+			String id = GsonHelper.getAsString(json.getAsJsonObject(), "id", "");
+			String tag = GsonHelper.getAsString(json.getAsJsonObject(), "tag", "");
+
+			if (!id.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
+				throw new JsonParseException("Invalid id for PlantGrowthModifier: %s".formatted(id));
 			}
-			return new PlantGrowthModifier(IdTagMatcher.Type.TAG, tag).growthMultiplier(multiplier);
-		}
-		else {
-			ResourceLocation block = ResourceLocation.tryParse(split[0]);
-			if (block == null) {
-				LogHelper.warn("%s block for Plant Growth Modification is not valid", split[0]);
-				return null;
+			if (!tag.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
+				throw new JsonParseException("Invalid tag for PlantGrowthModifier: %s".formatted(tag));
 			}
-			if (ForgeRegistries.BLOCKS.containsKey(block)) {
-				return new PlantGrowthModifier(IdTagMatcher.Type.ID, block).growthMultiplier(multiplier);
+
+			PlantGrowthModifier plantGrowthModifier;
+			if (!id.equals("") && !tag.equals("")){
+				throw new JsonParseException("Invalid HoeCooldown containing both tag (%s) and id (%s)".formatted(tag, id));
+			}
+			else if (!id.equals("")) {
+				plantGrowthModifier = new PlantGrowthModifier(Type.ID, id);
+			}
+			else if (!tag.equals("")){
+				plantGrowthModifier = new PlantGrowthModifier(Type.TAG, id);
 			}
 			else {
-				LogHelper.warn(String.format("%s block for Plant Growth Modification seems to not exist", split[0]));
-				return null;
+				throw new JsonParseException("Invalid HoeCooldown missing either tag and id");
 			}
+
+			String dimension = GsonHelper.getAsString(json.getAsJsonObject(), "dimension", "");
+			if (!dimension.equals("")) {
+				if (!ResourceLocation.isValidResourceLocation(dimension)) {
+					throw new JsonParseException("Invalid dimension for PlantGrowthModifier: %s".formatted(dimension));
+				}
+				else {
+					plantGrowthModifier.dimension = ResourceLocation.tryParse(dimension);
+				}
+			}
+
+			plantGrowthModifier.growthMultiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "growth_multiplier", 1d);
+			plantGrowthModifier.noSunlightGrowthMultiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "no_sunlight_growth_multiplier", 1d);
+			plantGrowthModifier.minSunlightRequired = GsonHelper.getAsInt(json.getAsJsonObject(), "min_sunlight_required", 15);
+			if (plantGrowthModifier.minSunlightRequired < 0 || plantGrowthModifier.minSunlightRequired > 15)
+				throw new JsonParseException("Invalid min_sunlight_required, must be between 0 and 15");
+			plantGrowthModifier.nightTimeGrowthMultiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "night_time_growth_multiplier", 1d);
+			//TODO Correct biome
+			plantGrowthModifier.wrongBiomeMultiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "wrong_biome_multiplier", 1d);
+
+			return plantGrowthModifier;
+		}
+
+		@Override
+		public JsonElement serialize(PlantGrowthModifier src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
+			JsonObject jsonObject = new JsonObject();
+			if (src.type == Type.ID) {
+				jsonObject.addProperty("id", src.location.toString());
+			}
+			else if (src.type == Type.TAG) {
+				jsonObject.addProperty("tag", src.location.toString());
+			}
+			if (src.dimension != null) {
+				jsonObject.addProperty("dimension", src.dimension.toString());
+			}
+			if (src.growthMultiplier != 1d)
+				jsonObject.addProperty("growth_multiplier", src.growthMultiplier);
+			if (src.noSunlightGrowthMultiplier != 1d)
+				jsonObject.addProperty("no_sunlight_growth_multiplier", src.noSunlightGrowthMultiplier);
+			if (src.minSunlightRequired != 15)
+				jsonObject.addProperty("min_sunlight_required", src.minSunlightRequired);
+			if (src.nightTimeGrowthMultiplier != 1d)
+				jsonObject.addProperty("night_time_growth_multiplier", src.nightTimeGrowthMultiplier);
+			//TODO Correct biome
+			if (src.wrongBiomeMultiplier != 1d)
+				jsonObject.addProperty("wrong_biome_multiplier", src.wrongBiomeMultiplier);
+			return jsonObject;
 		}
 	}
 }

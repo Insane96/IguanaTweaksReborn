@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.farming.feature;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.farming.utils.PlantGrowthModifier;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -10,9 +11,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -76,11 +75,8 @@ public class CropsGrowth extends Feature {
 			for (Block block : ForgeRegistries.BLOCKS.getValues()) {
 				if (!(block instanceof CropBlock))
 					continue;
-				PlantGrowthModifier plantGrowthModifier = new PlantGrowthModifier(IdTagMatcher.Type.ID, ForgeRegistries.BLOCKS.getKey(block))
-						.growthMultiplier(cropsGrowthMultiplier)
-						.noSunlightGrowthMultiplier(noSunLightGrowthMultiplier)
-						.minSunlightRequired(minSunlight)
-						.nightTimeGrowthMultiplier(nightTimeGrowthMultiplier);
+				//noinspection ConstantConditions
+				PlantGrowthModifier plantGrowthModifier = new PlantGrowthModifier(IdTagMatcher.Type.ID, ForgeRegistries.BLOCKS.getKey(block).toString(), cropsGrowthMultiplier, noSunLightGrowthMultiplier, minSunlight, nightTimeGrowthMultiplier);
 				plantGrowthModifiers.add(plantGrowthModifier);
 			}
 		}
@@ -91,7 +87,6 @@ public class CropsGrowth extends Feature {
 		if (!this.isEnabled()
 				|| cropsRequireWater.equals(CropsRequireWater.NO)
 				|| event.getResult().equals(Event.Result.DENY)
-				//|| this.cropsRequireWaterBlacklist.isBlockBlackOrNotWhiteListed(event.getState().getBlock())
 				|| !isAffectedByFarmland(event.getLevel(), event.getPos()))
 			return;
 		// Denies the growth if the crop is on farmland and the farmland is wet. If it's not on farmland the growth is not denied (e.g. Farmer's Delight rice)
@@ -117,7 +112,7 @@ public class CropsGrowth extends Feature {
 	public void cropsGrowthSpeedMultiplier(BlockEvent.CropGrowEvent.Pre event) {
 		if (!this.isEnabled()
 				|| event.getResult().equals(Event.Result.DENY)
-				|| isCropBlacklisted(event.getState().getBlock()))
+				|| Utils.isBlockInTag(event.getState().getBlock(), NO_GROWTH_MULTIPLIERS))
 			return;
 		Level level = (Level) event.getLevel();
 		double multiplier = 1d;
@@ -139,7 +134,7 @@ public class CropsGrowth extends Feature {
 
 	public enum CropsRequireWater {
 		NO,
-		BONEMEAL_ONLY,
+		BONE_MEAL_ONLY,
 		ANY_CASE
 	}
 
@@ -170,10 +165,5 @@ public class CropsGrowth extends Feature {
 	public static boolean isCropOnFarmland(LevelAccessor levelAccessor, BlockPos cropPos) {
 		BlockState sustainState = levelAccessor.getBlockState(cropPos.below());
 		return sustainState.getBlock() instanceof FarmBlock;
-	}
-
-	public static boolean isCropBlacklisted(Block block) {
-		TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, NO_GROWTH_MULTIPLIERS);
-		return ForgeRegistries.BLOCKS.tags().getTag(tagKey).contains(block);
 	}
 }

@@ -1,30 +1,35 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.farming.utils.PlantGrowthModifier;
-import insane96mcp.insanelib.base.Feature;
+import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import org.apache.commons.io.FilenameUtils;
 
+import java.io.File;
+import java.io.FileReader;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Plants Growth", description = "Slower Plants (non-crops) growing")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class PlantsGrowth extends Feature {
-
-	private static ForgeConfigSpec.ConfigValue<List<? extends String>> plantsListConfig;
-
-	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
-	private static final List<String> plantsListDefault = Arrays.asList(
+public class PlantsGrowth extends ITFeature {
+	/*private static final List<String> plantsListDefault = Arrays.asList(
 			"minecraft:sugar_cane,2.5",
 			"minecraft:cactus,2.5",
 			"minecraft:cocoa,3.0",
@@ -36,40 +41,62 @@ public class PlantsGrowth extends Feature {
 			"minecraft:sweet_berry_bush,2.0",
 			"minecraft:kelp,2.5",
 			"minecraft:bamboo,2.5"
-	);
+	);*/
 
-	public static ArrayList<PlantGrowthModifier> plantsList;
+	public static ArrayList<PlantGrowthModifier> plantsList = new ArrayList<>(Arrays.asList(
+			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:sugar_cane", 2.5d, 2.5d, 10, 1.5d),
+			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:cactus", 2.5d, 1.5d, 10, 1d),
+			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:cocoa", 3d, 2.5d, 10, 1.5d),
+			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:nether_wart", 3d, 1d, 15, 1d),
+			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:chorus_flower", 3d, 1d, 15, 1d),
+			new PlantGrowthModifier(IdTagMatcher.Type.TAG, "minecraft:saplings", 2.5d, 2.5d, 10, 1.5d),
+			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:melon_stem", 2.5d, 2.5d, 10, 1.5d),
+			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:pumpkin_stem", 2.5d, 2.5d, 10, 1.5d),
+			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:sweet_berry_bush", 2d, 2.5d, 10, 1.5d),
+			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:kelp", 2.5d, 1d, 15, 1.5d),
+			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:bamboo", 2.5d, 2.5d, 10, 1.5d)
+	));
 
 	public PlantsGrowth(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
+	static final Type plantGrowthModifierListType = new TypeToken<ArrayList<PlantGrowthModifier>>(){}.getType();
 	@Override
-	public void loadConfigOptions() {
-		super.loadConfigOptions();
-		plantsListConfig = this.getBuilder()
-				.comment("A list of blocks that will take more time to grow and the multiplier that increases the time to grow. Format is 'modid:blockid,multiplier' or '#modid:blocktag,multiplier'.")
-				.defineList("Plants Growth Multiplier", plantsListDefault, o -> o instanceof String);
-	}
+	public void loadJsonConfigs() {
+		super.loadJsonConfigs();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-	@Override
-	public void readConfig(final ModConfigEvent event) {
-		super.readConfig(event);
-		plantsList = parsePlantsGrowthMultiplier(plantsListConfig.get());
-	}
-
-	public static ArrayList<PlantGrowthModifier> parsePlantsGrowthMultiplier(List<? extends String> list) {
-		ArrayList<PlantGrowthModifier> plantsGrowthModifier = new ArrayList<>();
-		for (String line : list) {
-			PlantGrowthModifier plantGrowthMultiplier = PlantGrowthModifier.parseLine(line);
-			if (plantGrowthMultiplier != null)
-				plantsGrowthModifier.add(plantGrowthMultiplier);
+		File plantGrowthModifiersFile = new File(jsonConfigFolder, "plants_growth_modifiers.json");
+		if (!plantGrowthModifiersFile.exists()) {
+			try {
+				if (!plantGrowthModifiersFile.createNewFile()) {
+					throw new Exception("File#createNewFile failed");
+				}
+				String json = gson.toJson(plantsList, plantGrowthModifierListType);
+				Files.write(plantGrowthModifiersFile.toPath(), json.getBytes());
+			}
+			catch (Exception e) {
+				LogHelper.error("Failed to create default Json %s: %s", FilenameUtils.removeExtension(plantGrowthModifiersFile.getName()), e.getMessage());
+			}
 		}
-		return plantsGrowthModifier;
+
+		plantsList.clear();
+		try {
+			FileReader fileReader = new FileReader(plantGrowthModifiersFile);
+			List<PlantGrowthModifier> plantGrowthModifiers = gson.fromJson(fileReader, plantGrowthModifierListType);
+			plantsList.addAll(plantGrowthModifiers);
+		}
+		catch (JsonSyntaxException e) {
+			LogHelper.error("Parsing error loading Json %s: %s", FilenameUtils.removeExtension(plantGrowthModifiersFile.getName()), e.getMessage());
+		}
+		catch (Exception e) {
+			LogHelper.error("Failed loading Json %s: %s", FilenameUtils.removeExtension(plantGrowthModifiersFile.getName()), e.getMessage());
+		}
 	}
 
 	@SubscribeEvent
-	public void cropGrowPost(BlockEvent.CropGrowEvent.Pre event) {
+	public void cropGrowPre(BlockEvent.CropGrowEvent.Pre event) {
 		if (!this.isEnabled()
 				|| plantsList.isEmpty())
 			return;
