@@ -4,12 +4,15 @@ import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonAdapter(PlantGrowthModifier.Serializer.class)
@@ -18,8 +21,7 @@ public class PlantGrowthModifier extends IdTagMatcher {
 	private double noSunlightGrowthMultiplier;
 	private int minSunlightRequired;
 	private double nightTimeGrowthMultiplier;
-	//TODO biomesGrowth
-	private List<IdTagMatcher> biomesGrowth;
+	private List<IdTagMatcher> correctBiomes = new ArrayList<>();
 	private double wrongBiomeMultiplier = 1d;
 
 	public PlantGrowthModifier(IdTagMatcher.Type type, String id) {
@@ -32,6 +34,16 @@ public class PlantGrowthModifier extends IdTagMatcher {
 		this.noSunlightGrowthMultiplier = noSunlightGrowthMultiplier;
 		this.minSunlightRequired = minSunlightRequired;
 		this.nightTimeGrowthMultiplier = nightTimeGrowthMultiplier;
+	}
+
+	public PlantGrowthModifier(IdTagMatcher.Type type, String id, double growthMultiplier, double noSunlightGrowthMultiplier, int minSunlightRequired, double nightTimeGrowthMultiplier, List<IdTagMatcher> correctBiomes, double wrongBiomeMultiplier) {
+		super(type, id);
+		this.growthMultiplier = growthMultiplier;
+		this.noSunlightGrowthMultiplier = noSunlightGrowthMultiplier;
+		this.minSunlightRequired = minSunlightRequired;
+		this.nightTimeGrowthMultiplier = nightTimeGrowthMultiplier;
+		this.correctBiomes = new ArrayList<>(correctBiomes);
+		this.wrongBiomeMultiplier = wrongBiomeMultiplier;
 	}
 
 	/**
@@ -47,6 +59,18 @@ public class PlantGrowthModifier extends IdTagMatcher {
 		int dayTime = (int) (level.dayTime() % 24000);
 		if (dayTime >= 12786 && dayTime < 23216)
 			multiplier *= this.nightTimeGrowthMultiplier;
+		Holder<Biome> biome = level.getBiome(pos);
+		if (!this.correctBiomes.isEmpty()) {
+			boolean isInCorrectBiome = false;
+			for (IdTagMatcher correctBiome : this.correctBiomes) {
+				if (correctBiome.matchesBiome(biome)) {
+					isInCorrectBiome = true;
+					break;
+				}
+			}
+			if (!isInCorrectBiome)
+				multiplier *= this.wrongBiomeMultiplier;
+		}
 
 		return multiplier;
 	}
@@ -94,8 +118,14 @@ public class PlantGrowthModifier extends IdTagMatcher {
 			if (plantGrowthModifier.minSunlightRequired < 0 || plantGrowthModifier.minSunlightRequired > 15)
 				throw new JsonParseException("Invalid min_sunlight_required, must be between 0 and 15");
 			plantGrowthModifier.nightTimeGrowthMultiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "night_time_growth_multiplier", 1d);
-			//TODO Correct biome
-			plantGrowthModifier.wrongBiomeMultiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "wrong_biome_multiplier", 1d);
+			JsonArray aCorrectBiomes = GsonHelper.getAsJsonArray(json.getAsJsonObject(), "correct_biomes", null);
+			if (aCorrectBiomes != null) {
+				for (JsonElement jsonElement : aCorrectBiomes) {
+					IdTagMatcher biome = context.deserialize(jsonElement, IdTagMatcher.class);
+					plantGrowthModifier.correctBiomes.add(biome);
+				}
+				plantGrowthModifier.wrongBiomeMultiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "wrong_biome_multiplier", 1d);
+			}
 
 			return plantGrowthModifier;
 		}
@@ -120,9 +150,15 @@ public class PlantGrowthModifier extends IdTagMatcher {
 				jsonObject.addProperty("min_sunlight_required", src.minSunlightRequired);
 			if (src.nightTimeGrowthMultiplier != 1d)
 				jsonObject.addProperty("night_time_growth_multiplier", src.nightTimeGrowthMultiplier);
-			//TODO Correct biome
-			if (src.wrongBiomeMultiplier != 1d)
-				jsonObject.addProperty("wrong_biome_multiplier", src.wrongBiomeMultiplier);
+			if (!src.correctBiomes.isEmpty()) {
+				JsonArray aCorrectBiomes = new JsonArray();
+				for (IdTagMatcher biome : src.correctBiomes) {
+					aCorrectBiomes.add(context.serialize(biome, IdTagMatcher.class));
+				}
+				jsonObject.add("correct_biomes", aCorrectBiomes);
+				if (src.wrongBiomeMultiplier != 1d)
+					jsonObject.addProperty("wrong_biome_multiplier", src.wrongBiomeMultiplier);
+			}
 			return jsonObject;
 		}
 	}

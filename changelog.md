@@ -11,6 +11,7 @@
 * Replaced `Reduce Weapon Damage` with `Nerf weapons`
   * Reduced axes damage reduction (-1.5 -> -1) (like Swords and Tridents)
   * Axes now get -1 attack range
+* Plants growth multipliers are now also affected by sunlight and nighttime
 * Fog Under Lava with Fire Resistance is now slightly more foggy
 * Fixed Hunger Consumption Chance always being 0.5
 * Fixed some strings not begin translatable

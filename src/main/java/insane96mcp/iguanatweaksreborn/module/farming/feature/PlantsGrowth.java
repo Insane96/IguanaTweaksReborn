@@ -45,7 +45,9 @@ public class PlantsGrowth extends ITFeature {
 
 	public static ArrayList<PlantGrowthModifier> plantsList = new ArrayList<>(Arrays.asList(
 			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:sugar_cane", 2.5d, 2.5d, 10, 1.5d),
-			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:cactus", 2.5d, 1.5d, 10, 1d),
+			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:cactus", 2.5d, 1.5d, 10, 1d, new ArrayList<>(Arrays.asList(
+					new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_desert")
+			)), 4d),
 			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:cocoa", 3d, 2.5d, 10, 1.5d),
 			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:nether_wart", 3d, 1d, 15, 1d),
 			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:chorus_flower", 3d, 1d, 15, 1d),
