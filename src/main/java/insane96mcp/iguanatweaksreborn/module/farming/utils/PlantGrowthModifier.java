@@ -114,9 +114,11 @@ public class PlantGrowthModifier extends IdTagMatcher {
 
 			plantGrowthModifier.growthMultiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "growth_multiplier", 1d);
 			plantGrowthModifier.noSunlightGrowthMultiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "no_sunlight_growth_multiplier", 1d);
-			plantGrowthModifier.minSunlightRequired = GsonHelper.getAsInt(json.getAsJsonObject(), "min_sunlight_required", 15);
-			if (plantGrowthModifier.minSunlightRequired < 0 || plantGrowthModifier.minSunlightRequired > 15)
-				throw new JsonParseException("Invalid min_sunlight_required, must be between 0 and 15");
+			if (plantGrowthModifier.noSunlightGrowthMultiplier != 1d) {
+				plantGrowthModifier.minSunlightRequired = GsonHelper.getAsInt(json.getAsJsonObject(), "min_sunlight_required");
+				if (plantGrowthModifier.minSunlightRequired < 0 || plantGrowthModifier.minSunlightRequired > 15)
+					throw new JsonParseException("Invalid min_sunlight_required, must be between 0 and 15");
+			}
 			plantGrowthModifier.nightTimeGrowthMultiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "night_time_growth_multiplier", 1d);
 			JsonArray aCorrectBiomes = GsonHelper.getAsJsonArray(json.getAsJsonObject(), "correct_biomes", null);
 			if (aCorrectBiomes != null) {
@@ -124,7 +126,7 @@ public class PlantGrowthModifier extends IdTagMatcher {
 					IdTagMatcher biome = context.deserialize(jsonElement, IdTagMatcher.class);
 					plantGrowthModifier.correctBiomes.add(biome);
 				}
-				plantGrowthModifier.wrongBiomeMultiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "wrong_biome_multiplier", 1d);
+				plantGrowthModifier.wrongBiomeMultiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "wrong_biome_multiplier");
 			}
 
 			return plantGrowthModifier;
@@ -146,7 +148,7 @@ public class PlantGrowthModifier extends IdTagMatcher {
 				jsonObject.addProperty("growth_multiplier", src.growthMultiplier);
 			if (src.noSunlightGrowthMultiplier != 1d)
 				jsonObject.addProperty("no_sunlight_growth_multiplier", src.noSunlightGrowthMultiplier);
-			if (src.minSunlightRequired != 15)
+			if (src.minSunlightRequired != 0)
 				jsonObject.addProperty("min_sunlight_required", src.minSunlightRequired);
 			if (src.nightTimeGrowthMultiplier != 1d)
 				jsonObject.addProperty("night_time_growth_multiplier", src.nightTimeGrowthMultiplier);
