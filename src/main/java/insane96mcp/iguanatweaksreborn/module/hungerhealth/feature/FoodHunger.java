@@ -4,7 +4,6 @@ import com.google.gson.reflect.TypeToken;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.module.farming.utils.PlantGrowthModifier;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.utils.CustomFoodProperties;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
@@ -49,7 +48,7 @@ public class FoodHunger extends ITFeature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
-	static final Type customFoodPropertiesListType = new TypeToken<ArrayList<PlantGrowthModifier>>(){}.getType();
+	static final Type customFoodPropertiesListType = new TypeToken<ArrayList<CustomFoodProperties>>(){}.getType();
 	@Override
 	public void loadJsonConfigs() {
 		super.loadJsonConfigs();

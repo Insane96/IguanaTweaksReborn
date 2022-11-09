@@ -83,7 +83,7 @@ public class CustomFoodProperties extends IdTagMatcher {
 				jsonObject.addProperty("saturation_modifier", src.saturationModifier);
 			}
 			if (src.eatingTime >= 0) {
-				jsonObject.addProperty("eating_time", src.nutrition);
+				jsonObject.addProperty("eating_time", src.eatingTime);
 			}
 			if (src.fastEating != null) {
 				jsonObject.addProperty("fast_eating", src.fastEating);
