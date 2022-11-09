@@ -1,14 +1,16 @@
 package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.utils.CustomFoodProperties;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.base.config.Blacklist;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -22,6 +24,7 @@ import java.util.List;
 @Label(name = "Food Hunger", description = "Change food's hunger and saturation given, also makes food heal you by a bit. Changing anything requires a Minecraft restart.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class FoodHunger extends Feature {
+	public static final ResourceLocation FOOD_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_hunger_changes_food");
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> customFoodValueConfig;
 	public static ArrayList<CustomFoodProperties> customFoodValues;
 
@@ -31,9 +34,6 @@ public class FoodHunger extends Feature {
 	@Config(min = 0d, max = 64d)
 	@Label(name = "Food Saturation Multiplier", description = "Food's saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
 	public static Double foodSaturationMultiplier = 1.0d;
-	@Config
-	@Label(name = "Food Blacklist", description = "Items or tags that will ignore the food multipliers. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"minecraft:stone\", \"minecraft:cooked_porkchop\"].")
-	public static Blacklist foodBlacklist = new Blacklist();
 
 	public FoodHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -70,7 +70,7 @@ public class FoodHunger extends Feature {
 			if (!item.isEdible())
 				continue;
 
-			if (foodBlacklist.isItemBlackOrNotWhiteListed(item))
+			if (Utils.isItemInTag(item, FOOD_BLACKLIST))
 				continue;
 
 			FoodProperties food = item.getFoodProperties();
