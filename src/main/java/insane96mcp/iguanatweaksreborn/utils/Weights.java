@@ -53,7 +53,7 @@ public class Weights {
 		materialWeight.put(Material.WOOL, 1.6d);
 	}
 
-	public static double getStateWeight(BlockState state) {
+	public static double getWeightForState(BlockState state) {
 		Material blockMaterial = state.getMaterial();
 		if (!materialWeight.containsKey(blockMaterial))
 			return 1d;

@@ -19,7 +19,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@Label(name = "General Stacking", description = "Make food, items and blocks less stackable. Items and Blocks are disabled by default. Changes in this section require a Minecraft restart")
+import java.util.HashMap;
+import java.util.Map;
+
+@Label(name = "General Stacking", description = "Make food, items and blocks less stackable. Items and Blocks are disabled by default.")
 @LoadFeature(module = Modules.Ids.STACK_SIZE)
 public class GeneralStacking extends Feature {
     public static final ResourceLocation NO_STACK_SIZE_CHANGES = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_stack_size_changes");
@@ -64,28 +67,38 @@ public class GeneralStacking extends Feature {
 
     private final Object mutex = new Object();
 
+    HashMap<Item, Integer> originalItemStackSizes = new HashMap<>();
     //Items
     public void processItemStackSizes() {
         if (!this.isEnabled())
             return;
         if (itemStackMultiplier == 1d)
             return;
+
         synchronized (mutex) {
-            for (Item item : ForgeRegistries.ITEMS.getValues()) {
-                if (item instanceof BlockItem)
-                    continue;
+            if (originalItemStackSizes.isEmpty()) {
+                for (Item item : ForgeRegistries.ITEMS.getValues()) {
+                    if (item instanceof BlockItem)
+                        continue;
+                    originalItemStackSizes.put(item, item.maxStackSize);
+                }
+            }
+
+            for (Map.Entry<Item, Integer> entry : originalItemStackSizes.entrySet()) {
+                Item item = entry.getKey();
                 if (item.maxStackSize == 1)
                     continue;
                 if (Utils.isItemInTag(item, NO_STACK_SIZE_CHANGES))
                     continue;
 
-                double stackSize = item.maxStackSize * itemStackMultiplier;
+                double stackSize = entry.getValue() * itemStackMultiplier;
                 stackSize = Mth.clamp(stackSize, 1, 64);
                 item.maxStackSize = (int) Math.round(stackSize);
             }
         }
     }
 
+    HashMap<Item, Integer> originalBlockStackSizes = new HashMap<>();
     //Blocks
     public void processBlockStackSizes() {
         if (!this.isEnabled())
@@ -93,17 +106,24 @@ public class GeneralStacking extends Feature {
         if (!blockStackReduction)
             return;
         synchronized (mutex) {
-            for (Item item : ForgeRegistries.ITEMS.getValues()) {
-                if (!(item instanceof BlockItem))
+            if (originalBlockStackSizes.isEmpty()) {
+                for (Item item : ForgeRegistries.ITEMS.getValues()) {
+                    if (!(item instanceof BlockItem))
+                        continue;
+                    originalBlockStackSizes.put(item, item.maxStackSize);
+                }
+            }
+
+            for (Map.Entry<Item, Integer> entry : originalBlockStackSizes.entrySet()) {
+                Item item = entry.getKey();
+                if (item.maxStackSize == 1)
                     continue;
                 if (Utils.isItemInTag(item, NO_STACK_SIZE_CHANGES))
                     continue;
 
                 Block block = ((BlockItem) item).getBlock();
-                double weight = Weights.getStateWeight(block.defaultBlockState());
-                if (!blockStackAffectedByMaterial)
-                    weight = 1d;
-                double stackSize = (item.maxStackSize / weight) * blockStackMultiplier;
+                double weight = blockStackAffectedByMaterial ? Weights.getWeightForState(block.defaultBlockState()) : 1d;
+                double stackSize = (entry.getValue() / weight) * blockStackMultiplier;
                 stackSize = Mth.clamp(stackSize, 1, 64);
                 item.maxStackSize = (int) Math.round(stackSize);
             }
@@ -123,8 +143,7 @@ public class GeneralStacking extends Feature {
                 if (Utils.isItemInTag(item, NO_STACK_SIZE_CHANGES))
                     continue;
 
-                int stackSize = stackableSoups;
-                item.maxStackSize = Math.round(stackSize);
+                item.maxStackSize = Math.round(stackableSoups);
             }
         }
     }

@@ -13,6 +13,7 @@
   * Axes now get -1 attack range
 * Plants growth multipliers are now also affected by sunlight and nighttime
 * Fog Under Lava with Fire Resistance is now slightly more foggy
+* Fixed General Stacking not working properly (resulting in different stacks each time the game was restarted)
 * Fixed Hunger Consumption Chance always being 0.5
 * Fixed some strings not begin translatable
 * Fixed tiredness multiplier not working
