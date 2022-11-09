@@ -13,9 +13,14 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -24,16 +29,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@SuppressWarnings("deprecation")
-@Label(name = "Food Hunger", description = "Change food's hunger and saturation given, also makes food heal you by a bit. Changing anything requires a Minecraft restart.")
+@Label(name = "Food", description = "Changes to food nourishment and the speed on how food is eaten or how items are consumed.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
-//TODO Merge into one feature "Food Properties" and split config like these features
-public class FoodHunger extends ITFeature {
+public class Food extends ITFeature {
 	public static final ResourceLocation FOOD_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_hunger_changes_food");
-	private static ForgeConfigSpec.ConfigValue<List<? extends String>> customFoodValueConfig;
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(Arrays.asList(
-			new CustomFoodProperties(IdTagMatcher.Type.ID, "minecraft:rotten_flesh", 2, -1, 40, false)
+			new CustomFoodProperties(IdTagMatcher.Type.ID, "minecraft:rotten_flesh", 2, -1, 50, false)
 	));
 	public static final ArrayList<CustomFoodProperties> customFoodProperties = new ArrayList<>();
 
@@ -44,7 +46,26 @@ public class FoodHunger extends ITFeature {
 	@Label(name = "Food Saturation Multiplier", description = "Food's saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
 	public static Double foodSaturationMultiplier = 1.0d;
 
-	public FoodHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	@Config
+	@Label(name = "Faster Potion Consuming", description = "Makes potion faster to drink, 1 second instead of 1.6.")
+	public static Boolean fasterPotionConsuming = true;
+	@Config
+	@Label(name = "Faster Milk Consuming", description = "Makes milk faster to drink, 1 second instead of 1.6.")
+	public static Boolean fasterMilkConsuming = true;
+	@Config
+	@Label(name = "Eating Speed Based Off Food Restored", description = "Makes the speed for eating food based off the hunger and saturation they provide. At 2 (hunger + saturation) the speed is vanilla, higher / lower (hunger + saturation) will lower / raise the speed.")
+	public static Boolean eatingSpeedBasedOffFood = true;
+	@Config(min = 0d)
+	@Label(name = "Eating Time Multiplier", description = "Multiplier for the time taken to eat. Only applied if 'Eating Speed Based Off Food Config' is active.")
+	public static Double eatingTimeMultiplier = 0.115d;
+	@Config(min = 0)
+	@Label(name = "Eating Time Minimum", description = "The minimum speed a food will take to eat. \"Fast Food\" items have this value halved. Vanilla time is 32/16")
+	public static Integer eatingTimeMin = 24;
+	@Config
+	@Label(name = "Stop consuming on hit", description = "If true, eating/drinking stops when the player's hit.")
+	public static Boolean stopConsumingOnHit = true;
+
+	public Food(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
@@ -52,15 +73,52 @@ public class FoodHunger extends ITFeature {
 	@Override
 	public void loadJsonConfigs() {
 		super.loadJsonConfigs();
-		this.loadAndReadFile("custom_food_properties.json", customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, customFoodPropertiesListType);
+		this.loadAndReadFile("food_properties.json", customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, customFoodPropertiesListType);
 		processCustomFoodValues();
 	}
 
 	@Override
-	public void readConfig(final ModConfigEvent event) {
+	public void readConfig(ModConfigEvent event) {
 		super.readConfig(event);
 
 		processFoodMultipliers();
+	}
+
+	private static CustomFoodProperties customFoodPropertiesCache;
+	public static int getFoodConsumingTime(ItemStack stack) {
+		if (customFoodPropertiesCache != null && customFoodPropertiesCache.matchesItem(stack.getItem())) {
+			return customFoodPropertiesCache.eatingTime;
+		}
+		else {
+			for (CustomFoodProperties cfp : customFoodProperties) {
+				if (cfp.matchesItem(stack.getItem())) {
+					customFoodPropertiesCache = cfp;
+					return cfp.eatingTime;
+				}
+			}
+		}
+
+		FoodProperties food = stack.getItem().getFoodProperties(stack, null);
+		//noinspection ConstantConditions
+		float time = 32 * ((food.getNutrition() + (food.getNutrition() * food.getSaturationModifier() * 2)));
+		if (food.isFastFood())
+			time /= 2;
+		time *= eatingTimeMultiplier;
+
+		int minTime = food.isFastFood() ? eatingTimeMin / 2 : eatingTimeMin;
+		return (int) Math.max(time, minTime);
+	}
+
+	@SubscribeEvent
+	public void onPlayerHit(LivingDamageEvent event) {
+		if (!this.isEnabled()
+				|| !stopConsumingOnHit
+				|| !(event.getSource().getEntity() instanceof LivingEntity)
+				|| !(event.getEntity() instanceof Player player)
+				|| (!player.getUseItem().getUseAnimation().equals(UseAnim.EAT) && !player.getUseItem().getUseAnimation().equals(UseAnim.DRINK)))
+			return;
+
+		player.stopUsingItem();
 	}
 
 	private boolean processedFoodMultipliers = false;

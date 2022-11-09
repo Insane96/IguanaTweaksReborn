@@ -11,6 +11,7 @@
 * Replaced `Reduce Weapon Damage` with `Nerf weapons`
   * Reduced axes damage reduction (-1.5 -> -1) (like Swords and Tridents)
   * Axes now get -1 attack range
+* 'Food Consuming' and 'Food Hunger' have been merged to a single feature 'Food'
 * Plants growth multipliers are now also affected by sunlight and nighttime
 * Fog Under Lava with Fire Resistance is now slightly more foggy
 * Fixed General Stacking not working properly (resulting in different stacks each time the game was restarted)
