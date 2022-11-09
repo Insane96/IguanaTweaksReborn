@@ -99,7 +99,7 @@ public class PlantGrowthModifier extends IdTagMatcher {
 				plantGrowthModifier = new PlantGrowthModifier(Type.TAG, id);
 			}
 			else {
-				throw new JsonParseException("Invalid HoeCooldown missing either tag and id");
+				throw new JsonParseException("Invalid CustomFoodProperties missing either tag and id");
 			}
 
 			String dimension = GsonHelper.getAsString(json.getAsJsonObject(), "dimension", "");
