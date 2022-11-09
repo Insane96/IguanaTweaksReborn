@@ -106,10 +106,12 @@ public class FoodHunger extends ITFeature {
 					continue;
 				}
 				FoodProperties food = item.getFoodProperties();
-				if (food.nutrition)
-				food.nutrition = foodValue.nutrition;
-				if (foodValue.saturationModifier != -1f)
+				if (foodValue.nutrition >= 0)
+					food.nutrition = foodValue.nutrition;
+				if (foodValue.saturationModifier >= 0f)
 					food.saturationModifier = foodValue.saturationModifier;
+				if (foodValue.fastEating != null)
+					food.fastFood = foodValue.fastEating;
 			}
 		}
 
