@@ -26,15 +26,15 @@ public class BlockHardness extends IdTagMatcher {
 			String tag = GsonHelper.getAsString(json.getAsJsonObject(), "tag", "");
 
 			if (!id.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
-				throw new JsonParseException("Invalid id for BlockHardness: %s".formatted(id));
+				throw new JsonParseException("Invalid id: %s".formatted(id));
 			}
 			if (!tag.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
-				throw new JsonParseException("Invalid tag for BlockHardness: %s".formatted(tag));
+				throw new JsonParseException("Invalid tag: %s".formatted(tag));
 			}
 
 			BlockHardness blockHardness;
 			if (!id.equals("") && !tag.equals("")){
-				throw new JsonParseException("Invalid BlockHardness containing both tag (%s) and id (%s)".formatted(tag, id));
+				throw new JsonParseException("Invalid object containing both tag (%s) and id (%s)".formatted(tag, id));
 			}
 			else if (!id.equals("")) {
 				blockHardness = new BlockHardness(Type.ID, id);
@@ -43,7 +43,7 @@ public class BlockHardness extends IdTagMatcher {
 				blockHardness = new BlockHardness(Type.TAG, id);
 			}
 			else {
-				throw new JsonParseException("Invalid BlockHardness missing either tag and id");
+				throw new JsonParseException("Invalid object missing either tag and id");
 			}
 
 			blockHardness.hardness = GsonHelper.getAsDouble(json.getAsJsonObject(), "hardness");

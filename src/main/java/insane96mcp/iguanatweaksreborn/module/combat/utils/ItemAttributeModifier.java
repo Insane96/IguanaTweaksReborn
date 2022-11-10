@@ -55,15 +55,15 @@ public class ItemAttributeModifier extends IdTagMatcher {
 			String tag = GsonHelper.getAsString(json.getAsJsonObject(), "tag", "");
 
 			if (!id.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
-				throw new JsonParseException("Invalid id for ItemAttributeModifier: %s".formatted(id));
+				throw new JsonParseException("Invalid id: %s".formatted(id));
 			}
 			if (!tag.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
-				throw new JsonParseException("Invalid tag for ItemAttributeModifier: %s".formatted(tag));
+				throw new JsonParseException("Invalid tag: %s".formatted(tag));
 			}
 
 			ItemAttributeModifier itemAttributeModifier;
 			if (!id.equals("") && !tag.equals("")){
-				throw new JsonParseException("Invalid ItemAttributeModifier containing both tag (%s) and id (%s)".formatted(tag, id));
+				throw new JsonParseException("Invalid object containing both tag (%s) and id (%s)".formatted(tag, id));
 			}
 			else if (!id.equals("")) {
 				itemAttributeModifier = new ItemAttributeModifier(Type.ID, id);
@@ -72,13 +72,13 @@ public class ItemAttributeModifier extends IdTagMatcher {
 				itemAttributeModifier = new ItemAttributeModifier(Type.TAG, id);
 			}
 			else {
-				throw new JsonParseException("Invalid ItemAttributeModifier missing either tag and id");
+				throw new JsonParseException("Invalid object missing either tag and id");
 			}
 
 			String dimension = GsonHelper.getAsString(json.getAsJsonObject(), "dimension", "");
 			if (!dimension.equals("")) {
 				if (!ResourceLocation.isValidResourceLocation(dimension)) {
-					throw new JsonParseException("Invalid dimension for ItemAttributeModifier: %s".formatted(dimension));
+					throw new JsonParseException("Invalid dimension: %s".formatted(dimension));
 				}
 				else {
 					itemAttributeModifier.dimension = ResourceLocation.tryParse(dimension);
@@ -91,7 +91,7 @@ public class ItemAttributeModifier extends IdTagMatcher {
 			String sAttribute = GsonHelper.getAsString(json.getAsJsonObject(), "attribute");
 			Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.tryParse(sAttribute));
 			if (attribute == null) {
-				throw new JsonParseException("Invalid attribute for ItemAttributeModifier: %s".formatted(sAttribute));
+				throw new JsonParseException("Invalid attribute: %s".formatted(sAttribute));
 			}
 			itemAttributeModifier.attribute = attribute;
 

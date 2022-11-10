@@ -26,7 +26,7 @@ public class DimensionHardnessMultiplier extends IdTagMatcher {
 			String dimension = GsonHelper.getAsString(json.getAsJsonObject(), "dimension", "");
 			if (!dimension.equals("")) {
 				if (!ResourceLocation.isValidResourceLocation(dimension)) {
-					throw new JsonParseException("Invalid dimension for DimensionHardnessMultiplier: %s".formatted(dimension));
+					throw new JsonParseException("Invalid dimension: %s".formatted(dimension));
 				}
 				else {
 					dimensionHardnessMultiplier.dimension = ResourceLocation.tryParse(dimension);

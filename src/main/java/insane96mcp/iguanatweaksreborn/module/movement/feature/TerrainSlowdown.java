@@ -73,7 +73,7 @@ public class TerrainSlowdown extends Feature {
 		super.readConfig(event);
 		materialOnSlowdown = MaterialSlowdown.parseStringList(materialOnSlowdownConfig.get());
 		materialInSlowdown = MaterialSlowdown.parseStringList(materialInSlowdownConfig.get());
-		customTerrainSlowdown = IdTagValue.parseStringList(customTerrainSlowdownConfig.get());
+		//customTerrainSlowdown = IdTagValue.parseStringList(customTerrainSlowdownConfig.get());
 	}
 
 	@SubscribeEvent
@@ -99,7 +99,7 @@ public class TerrainSlowdown extends Feature {
 					continue;
 				double blockSlowdown = 0d;
 				for (IdTagValue idTagValue : customTerrainSlowdown) {
-					if (idTagValue.idTagMatcher.matchesBlock(state.getBlock())) {
+					if (idTagValue.matchesBlock(state.getBlock())) {
 						blockSlowdown = idTagValue.value;
 						blocks++;
 						break;

@@ -1,12 +1,13 @@
 package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
+import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.utils.IdTagValue;
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -22,18 +23,24 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.util.*;
 
 @Label(name = "Beacon & Conduit", description = "Beacon Range varying based of blocks of the pyramid and better conduit killing mobs")
 @LoadFeature(module = Modules.Ids.MISC)
-public class BeaconConduit extends Feature {
-    private static ForgeConfigSpec.ConfigValue<List<? extends String>> blocksListConfig;
-    //TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
-    private static final List<String> blocksListDefault = Arrays.asList("minecraft:iron_block,1","minecraft:emerald_block,1.2","minecraft:gold_block,1.8","minecraft:diamond_block,2.5","minecraft:netherite_block,4.0", "tconstruct:cobalt_block,2.4", "tconstruct:queens_slime_block,3.0", "tconstruct:hepatizon_block,2.7", "tconstruct:manyullyn_block,3.3");
-    public static ArrayList<IdTagValue> blocksList;
+public class BeaconConduit extends ITFeature {
+    public static final ArrayList<IdTagValue> BLOCKS_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_block", 1d),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:emerald_block", 1.2d),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:gold_block", 1.8d),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_block", 2.5d),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_block", 4d),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:cobalt_block", 2.4d),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:queens_slime_block", 3.0d),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:hepatizon_block", 2.7d),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:manyullyn_block", 3.3d)
+    ));
+    public static final ArrayList<IdTagValue> blocksList = new ArrayList<>();
 
     @Config
     @Label(name = "Affect Pets", description = "If true, pets will also get the beacon effects")
@@ -50,21 +57,9 @@ public class BeaconConduit extends Feature {
     }
 
     @Override
-    public void loadConfigOptions() {
-        super.loadConfigOptions();
-        blocksListConfig = this.getBuilder()
-                .comment("""
-                        A list of blocks and the range increase on the beacon. Each entry represent a block or block tag plus the range increase in blocks of the beacon base.
-                        Each block in the pyramid will increase the range of the beacon. After the blocks have been summed the final value is divided by the number of layers of the beacon.
-                        E.g. a beacon with 1 layer full Iron blocks will give 9 range (+ base range), while with 2 layers (34 range / 2) = 17.
-                        """)
-                .defineList("Blocks Range", blocksListDefault, o -> o instanceof String);
-    }
-
-    @Override
-    public void readConfig(final ModConfigEvent event) {
-        super.readConfig(event);
-        blocksList = IdTagValue.parseStringList(blocksListConfig.get());
+    public void loadJsonConfigs() {
+        super.loadJsonConfigs();
+        this.loadAndReadFile("beacon_blocks_ranges.json", blocksList, BLOCKS_LIST_DEFAULT, IdTagValue.LIST_TYPE);
     }
 
     public static boolean beaconApplyEffects(Level level, BlockPos blockPos, int layers, MobEffect effectPrimary, MobEffect effectSecondary) {
@@ -133,7 +128,7 @@ public class BeaconConduit extends Feature {
         for (Map.Entry<Block, Integer> entry : blocksCount.entrySet()) {
             Optional<IdTagValue> optional = blocksList
                     .stream()
-                    .filter(idTagValue -> idTagValue.idTagMatcher.matchesBlock(entry.getKey()))
+                    .filter(idTagValue -> idTagValue.matchesBlock(entry.getKey()))
                     .findFirst();
             if (optional.isPresent())
                 range += optional.get().value * entry.getValue() / layers;

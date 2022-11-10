@@ -82,15 +82,15 @@ public class PlantGrowthModifier extends IdTagMatcher {
 			String tag = GsonHelper.getAsString(json.getAsJsonObject(), "tag", "");
 
 			if (!id.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
-				throw new JsonParseException("Invalid id for PlantGrowthModifier: %s".formatted(id));
+				throw new JsonParseException("Invalid id: %s".formatted(id));
 			}
 			if (!tag.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
-				throw new JsonParseException("Invalid tag for PlantGrowthModifier: %s".formatted(tag));
+				throw new JsonParseException("Invalid tag: %s".formatted(tag));
 			}
 
 			PlantGrowthModifier plantGrowthModifier;
 			if (!id.equals("") && !tag.equals("")){
-				throw new JsonParseException("Invalid HoeCooldown containing both tag (%s) and id (%s)".formatted(tag, id));
+				throw new JsonParseException("Invalid object containing both tag (%s) and id (%s)".formatted(tag, id));
 			}
 			else if (!id.equals("")) {
 				plantGrowthModifier = new PlantGrowthModifier(Type.ID, id);
@@ -99,13 +99,13 @@ public class PlantGrowthModifier extends IdTagMatcher {
 				plantGrowthModifier = new PlantGrowthModifier(Type.TAG, id);
 			}
 			else {
-				throw new JsonParseException("Invalid CustomFoodProperties missing either tag and id");
+				throw new JsonParseException("Invalid object missing either tag and id");
 			}
 
 			String dimension = GsonHelper.getAsString(json.getAsJsonObject(), "dimension", "");
 			if (!dimension.equals("")) {
 				if (!ResourceLocation.isValidResourceLocation(dimension)) {
-					throw new JsonParseException("Invalid dimension for PlantGrowthModifier: %s".formatted(dimension));
+					throw new JsonParseException("Invalid dimension: %s".formatted(dimension));
 				}
 				else {
 					plantGrowthModifier.dimension = ResourceLocation.tryParse(dimension);

@@ -1,58 +1,73 @@
 package insane96mcp.iguanatweaksreborn.module.misc.utils;
 
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import com.google.gson.*;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.util.IdTagMatcher;
-import org.apache.commons.lang3.math.NumberUtils;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.List;
 
-public class IdTagValue {
-	public IdTagMatcher idTagMatcher;
+@JsonAdapter(IdTagValue.Serializer.class)
+public class IdTagValue extends IdTagMatcher{
 	public double value;
 
-	public IdTagValue(IdTagMatcher idTagMatcher, double value) {
-		this.idTagMatcher = idTagMatcher;
+	public IdTagValue(Type type, String id) {
+		super(type, id);
+	}
+
+	public IdTagValue(Type type, String id, double value) {
+		super(type, id);
 		this.value = value;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("IdTagValue{idTagMatcher: %s, value: %f}", this.idTagMatcher, this.value);
-	}
+	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<IdTagValue>>(){}.getType();
 
-	@Nullable
-	public static IdTagValue parseLine(String line) {
-		//Split
-		String[] split = line.split(",");
-		if (split.length != 2) {
-			LogHelper.warn("Invalid line \"%s\" for IdTagValue", line);
-			return null;
+	public static class Serializer implements JsonDeserializer<IdTagValue>, JsonSerializer<IdTagValue> {
+		@Override
+		public IdTagValue deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+			String id = GsonHelper.getAsString(json.getAsJsonObject(), "id", "");
+			String tag = GsonHelper.getAsString(json.getAsJsonObject(), "tag", "");
+
+			if (!id.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
+				throw new JsonParseException("Invalid id: %s".formatted(id));
+			}
+			if (!tag.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
+				throw new JsonParseException("Invalid tag: %s".formatted(tag));
+			}
+
+			IdTagValue idTagValue;
+			if (!id.equals("") && !tag.equals("")){
+				throw new JsonParseException("Invalid object containing both tag (%s) and id (%s)".formatted(tag, id));
+			}
+			else if (!id.equals("")) {
+				idTagValue = new IdTagValue(Type.ID, id);
+			}
+			else if (!tag.equals("")){
+				idTagValue = new IdTagValue(Type.TAG, id);
+			}
+			else {
+				throw new JsonParseException("Invalid object missing either tag and id");
+			}
+
+			idTagValue.value = GsonHelper.getAsDouble(json.getAsJsonObject(), "value");
+
+			return idTagValue;
 		}
 
-		IdTagMatcher idTagMatcher = IdTagMatcher.parseLine(split[0]);
-		if (idTagMatcher == null) {
-			LogHelper.warn(String.format("Invalid block/tag \"%s\" for IdTagValue", line));
-			return null;
-		}
-		if (!NumberUtils.isParsable(split[1])) {
-			LogHelper.warn(String.format("Invalid value \"%s\" for IdTagValue", line));
-			return null;
-		}
-		double value = Double.parseDouble(split[1]);
+		@Override
+		public JsonElement serialize(IdTagValue src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
+			JsonObject jsonObject = new JsonObject();
+			if (src.type == Type.ID) {
+				jsonObject.addProperty("id", src.location.toString());
+			}
+			else if (src.type == Type.TAG) {
+				jsonObject.addProperty("tag", src.location.toString());
+			}
+			jsonObject.addProperty("value", src.value);
 
-		return new IdTagValue(idTagMatcher, value);
-	}
-
-	public static ArrayList<IdTagValue> parseStringList(List<? extends String> list) {
-		ArrayList<IdTagValue> deBuffs = new ArrayList<>();
-		for (String line : list) {
-			IdTagValue deBuff = IdTagValue.parseLine(line);
-			if (deBuff != null)
-				deBuffs.add(deBuff);
+			return jsonObject;
 		}
-
-		return deBuffs;
 	}
 }

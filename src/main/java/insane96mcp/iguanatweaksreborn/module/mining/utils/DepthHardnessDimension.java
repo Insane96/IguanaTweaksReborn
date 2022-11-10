@@ -31,7 +31,7 @@ public class DepthHardnessDimension extends DimensionHardnessMultiplier {
 			String dimension = GsonHelper.getAsString(json.getAsJsonObject(), "dimension", "");
 			if (!dimension.equals("")) {
 				if (!ResourceLocation.isValidResourceLocation(dimension)) {
-					throw new JsonParseException("Invalid dimension for DepthHardnessDimension: %s".formatted(dimension));
+					throw new JsonParseException("Invalid dimension: %s".formatted(dimension));
 				}
 				else {
 					dimensionHardnessMultiplier.dimension = ResourceLocation.tryParse(dimension);

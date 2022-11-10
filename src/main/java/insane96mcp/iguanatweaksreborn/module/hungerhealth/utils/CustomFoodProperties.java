@@ -37,15 +37,15 @@ public class CustomFoodProperties extends IdTagMatcher {
 			String tag = GsonHelper.getAsString(json.getAsJsonObject(), "tag", "");
 
 			if (!id.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
-				throw new JsonParseException("Invalid id for CustomFoodProperties: %s".formatted(id));
+				throw new JsonParseException("Invalid id: %s".formatted(id));
 			}
 			if (!tag.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
-				throw new JsonParseException("Invalid tag for CustomFoodProperties: %s".formatted(tag));
+				throw new JsonParseException("Invalid tag: %s".formatted(tag));
 			}
 
 			CustomFoodProperties customFoodProperties;
 			if (!id.equals("") && !tag.equals("")){
-				throw new JsonParseException("Invalid CustomFoodProperties containing both tag (%s) and id (%s)".formatted(tag, id));
+				throw new JsonParseException("Invalid object containing both tag (%s) and id (%s)".formatted(tag, id));
 			}
 			else if (!id.equals("")) {
 				customFoodProperties = new CustomFoodProperties(Type.ID, id);
@@ -54,7 +54,7 @@ public class CustomFoodProperties extends IdTagMatcher {
 				customFoodProperties = new CustomFoodProperties(Type.TAG, id);
 			}
 			else {
-				throw new JsonParseException("Invalid CustomFoodProperties missing either tag and id");
+				throw new JsonParseException("Invalid object missing either tag and id");
 			}
 
 			customFoodProperties.nutrition = GsonHelper.getAsInt(json.getAsJsonObject(), "nutrition", -1);

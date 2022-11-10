@@ -51,10 +51,6 @@ public class GlobalHardness extends ITFeature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
-	/*depthMultiplierDimensionConfig = this.getBuilder()
-			.comment("A list of dimensions and their relative block hardness multiplier per blocks below the set Y level. Each entry has a dimension, a multiplier, a Y Level (where the increased hardness starts applying) and a Y Level cap (where the increase should stop).\nE.g. with the default configurations increases the overworld hardness multiplier by 0.025 for each block below the sea level (63); so at Y = 32 you'll get a multiplier of 2.5 (global multiplier) + 0.025 * (63 - 32) = 3.3 hardness multiplier.\nNOTE: This multiplier increase applies to blocks in Custom Hardness too.")
-			.defineList("Depth Multiplier Dimension", depthMultiplierDimensionDefault, o -> o instanceof String);*/
-
 	static final Type dimensionHardnessMultiplierListType = new TypeToken<ArrayList<DimensionHardnessMultiplier>>(){}.getType();
 	static final Type depthHardnessDimensionListType = new TypeToken<ArrayList<DepthHardnessDimension>>(){}.getType();
 
