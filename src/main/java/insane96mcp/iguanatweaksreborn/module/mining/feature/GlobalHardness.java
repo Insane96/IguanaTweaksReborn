@@ -111,7 +111,7 @@ public class GlobalHardness extends Feature {
 			return 0d;
 
 		if (!processCustomHardness)
-			for (BlockHardness blockHardness : CustomHardness.customHardness)
+			for (BlockHardness blockHardness : CustomHardness.customHardnesses)
 				if (blockHardness.matchesBlock(block, dimensionId))
 					return 0d;
 

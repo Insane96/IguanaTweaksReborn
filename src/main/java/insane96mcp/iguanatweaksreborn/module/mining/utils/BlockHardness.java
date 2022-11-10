@@ -1,76 +1,86 @@
 package insane96mcp.iguanatweaksreborn.module.mining.utils;
 
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import com.google.gson.*;
+import com.google.gson.annotations.JsonAdapter;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.math.NumberUtils;
+import net.minecraft.util.GsonHelper;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-
+@JsonAdapter(BlockHardness.Serializer.class)
 public class BlockHardness extends IdTagMatcher {
 	public double hardness;
 
-	public BlockHardness(Type type, ResourceLocation location, Double hardness, ResourceLocation dimension) {
+	BlockHardness(Type type, String location) {
+		super(type, location);
+	}
+
+	public BlockHardness(Type type, String location, Double hardness) {
+		super(type, location);
+		this.hardness = hardness;
+	}
+
+	public BlockHardness(Type type, String location, String dimension, Double hardness) {
 		super(type, location, dimension);
 		this.hardness = hardness;
 	}
 
-	@Nullable
-	public static BlockHardness parseLine(String line) {
-		String[] split = line.split(",");
-		if (split.length < 2 || split.length > 3) {
-			LogHelper.warn("Invalid line \"%s\" for Custom Hardness", line);
-			return null;
-		}
-		if (!NumberUtils.isParsable(split[1])) {
-			LogHelper.warn(String.format("Invalid hardness \"%s\" for Custom Hardness", line));
-			return null;
-		}
-		double hardness = Double.parseDouble(split[1]);
-		ResourceLocation dimension = null;
-		if (split.length == 3) {
-			dimension = ResourceLocation.tryParse(split[2]);
-			if (dimension == null) {
-				LogHelper.info(String.format("Invalid dimension \"%s\" for Custom Hardness. Ignoring it", split[2]));
+	public static class Serializer implements JsonDeserializer<BlockHardness>, JsonSerializer<BlockHardness> {
+		@Override
+		public BlockHardness deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+			String id = GsonHelper.getAsString(json.getAsJsonObject(), "id", "");
+			String tag = GsonHelper.getAsString(json.getAsJsonObject(), "tag", "");
+
+			if (!id.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
+				throw new JsonParseException("Invalid id for BlockHardness: %s".formatted(id));
 			}
-		}
-		if (split[0].startsWith("#")) {
-			String replaced = split[0].replace("#", "");
-			ResourceLocation tag = ResourceLocation.tryParse(replaced);
-			if (tag == null) {
-				LogHelper.warn("%s tag for Custom Hardness is not valid", replaced);
-				return null;
+			if (!tag.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
+				throw new JsonParseException("Invalid tag for BlockHardness: %s".formatted(tag));
 			}
-			return new BlockHardness(Type.TAG, tag, hardness, dimension);
-		}
-		else {
-			ResourceLocation block = ResourceLocation.tryParse(split[0]);
-			if (block == null) {
-				LogHelper.warn("%s block for Custom Hardness is not valid", split[0]);
-				return null;
+
+			BlockHardness blockHardness;
+			if (!id.equals("") && !tag.equals("")){
+				throw new JsonParseException("Invalid CustomFoodProperties containing both tag (%s) and id (%s)".formatted(tag, id));
 			}
-			if (ForgeRegistries.BLOCKS.containsKey(block)) {
-				return new BlockHardness(Type.ID, block, hardness, dimension);
+			else if (!id.equals("")) {
+				blockHardness = new BlockHardness(Type.ID, id);
+			}
+			else if (!tag.equals("")){
+				blockHardness = new BlockHardness(Type.TAG, id);
 			}
 			else {
-				LogHelper.warn(String.format("%s block for Custom Hardness seems to not exist", split[0]));
-				return null;
+				throw new JsonParseException("Invalid CustomFoodProperties missing either tag and id");
 			}
-		}
-	}
 
-	public static ArrayList<BlockHardness> parseStringList(List<? extends String> list) {
-		ArrayList<BlockHardness> blockHardnesses = new ArrayList<>();
-		for (String line : list) {
-			BlockHardness blockHardness = BlockHardness.parseLine(line);
-			if (blockHardness == null)
-				continue;
-			blockHardnesses.add(blockHardness);
+			String dimension = GsonHelper.getAsString(json.getAsJsonObject(), "dimension", "");
+			if (!dimension.equals("")) {
+				if (!ResourceLocation.isValidResourceLocation(dimension)) {
+					throw new JsonParseException("Invalid dimension for HoeCooldown: %s".formatted(dimension));
+				}
+				else {
+					blockHardness.dimension = ResourceLocation.tryParse(dimension);
+				}
+			}
+
+			blockHardness.hardness = GsonHelper.getAsDouble(json.getAsJsonObject(), "hardness");
+
+			return blockHardness;
 		}
 
-		return blockHardnesses;
+		@Override
+		public JsonElement serialize(BlockHardness src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
+			JsonObject jsonObject = new JsonObject();
+			if (src.type == Type.ID) {
+				jsonObject.addProperty("id", src.location.toString());
+			}
+			else if (src.type == Type.TAG) {
+				jsonObject.addProperty("tag", src.location.toString());
+			}
+			if (src.dimension != null) {
+				jsonObject.addProperty("dimension", src.dimension.toString());
+			}
+			jsonObject.addProperty("hardness", src.hardness);
+
+			return jsonObject;
+		}
 	}
 }
