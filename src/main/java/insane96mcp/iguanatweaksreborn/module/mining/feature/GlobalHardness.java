@@ -1,12 +1,13 @@
 package insane96mcp.iguanatweaksreborn.module.mining.feature;
 
+import com.google.gson.reflect.TypeToken;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.BlockHardness;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.DepthHardnessDimension;
 import insane96mcp.iguanatweaksreborn.module.mining.utils.DimensionHardnessMultiplier;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -16,30 +17,31 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 @Label(name = "Global Hardness", description = "Change all the blocks hardness")
 @LoadFeature(module = Modules.Ids.MINING)
-public class GlobalHardness extends Feature {
+public class GlobalHardness extends ITFeature {
 	public static final ResourceLocation HARDNESS_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "hardness_blacklist");
 	public static final ResourceLocation DEPTH_MULTIPLIER_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "depth_multiplier_blacklist");
 
-	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
-	private static ForgeConfigSpec.ConfigValue<List<? extends String>> dimensionHardnessMultiplierConfig;
-	private static final List<String> dimensionHardnessMultiplierDefault = List.of("minecraft:the_nether,4", "minecraft:the_end,4");
-	public static ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier;
+	public static final ArrayList<DimensionHardnessMultiplier> DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT = new ArrayList<>(Arrays.asList(
+			new DimensionHardnessMultiplier("minecraft:the_nether", 4d),
+			new DimensionHardnessMultiplier("minecraft:the_end", 4d)
+	));
+	public static final ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier = new ArrayList<>();
 
-	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
-	private static ForgeConfigSpec.ConfigValue<List<? extends String>> depthMultiplierDimensionConfig;
-	private static final List<String> depthMultiplierDimensionDefault = List.of("minecraft:overworld,0.01,63,-64", "minecraft:overworld,-0.64,4,3");
-	public static ArrayList<DepthHardnessDimension> depthMultiplierDimension;
+	public static final ArrayList<DepthHardnessDimension> DEPTH_HARDNESS_DIMENSIONS_DEFAULT = new ArrayList<>(Arrays.asList(
+			new DepthHardnessDimension("minecraft:overworld", 0.01d, 63, -64),
+			new DepthHardnessDimension("minecraft:overworld", -0.64d, 4, 3)
+	));
+	public static final ArrayList<DepthHardnessDimension> depthMultiplierDimension = new ArrayList<>();
 
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Hardness Multiplier", description = "Multiplier applied to the hardness of blocks. E.g. with this set to 3.0 blocks will take 3x more time to break.")
@@ -49,23 +51,18 @@ public class GlobalHardness extends Feature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
-	@Override
-	public void loadConfigOptions() {
-		super.loadConfigOptions();
-		dimensionHardnessMultiplierConfig = this.getBuilder()
-				.comment("A list of dimensions and their relative block hardness multiplier. Each entry has a a dimension and hardness. This overrides the global multiplier.")
-				.defineList("Dimension Hardness Multiplier", dimensionHardnessMultiplierDefault, o -> o instanceof String);
-		depthMultiplierDimensionConfig = this.getBuilder()
-				.comment("A list of dimensions and their relative block hardness multiplier per blocks below the set Y level. Each entry has a a dimension, a multiplier, a Y Level (where the increased hardness starts applying) and a Y Level cap (where the increase should stop).\nE.g. with the default configurations increases the overworld hardness multiplier by 0.025 for each block below the sea level (63); so at Y = 32 you'll get a multiplier of 2.5 (global multiplier) + 0.025 * (63 - 32) = 3.3 hardness multiplier.\nNOTE: This multiplier increase applies to blocks in Custom Hardness too.")
-				.defineList("Depth Multiplier Dimension", depthMultiplierDimensionDefault, o -> o instanceof String);
-	}
+	/*depthMultiplierDimensionConfig = this.getBuilder()
+			.comment("A list of dimensions and their relative block hardness multiplier per blocks below the set Y level. Each entry has a dimension, a multiplier, a Y Level (where the increased hardness starts applying) and a Y Level cap (where the increase should stop).\nE.g. with the default configurations increases the overworld hardness multiplier by 0.025 for each block below the sea level (63); so at Y = 32 you'll get a multiplier of 2.5 (global multiplier) + 0.025 * (63 - 32) = 3.3 hardness multiplier.\nNOTE: This multiplier increase applies to blocks in Custom Hardness too.")
+			.defineList("Depth Multiplier Dimension", depthMultiplierDimensionDefault, o -> o instanceof String);*/
+
+	static final Type dimensionHardnessMultiplierListType = new TypeToken<ArrayList<DimensionHardnessMultiplier>>(){}.getType();
+	static final Type depthHardnessDimensionListType = new TypeToken<ArrayList<DepthHardnessDimension>>(){}.getType();
 
 	@Override
-	public void readConfig(final ModConfigEvent event) {
-		super.readConfig(event);
-
-		dimensionHardnessMultiplier = (ArrayList<DimensionHardnessMultiplier>) DimensionHardnessMultiplier.parseStringList(dimensionHardnessMultiplierConfig.get());
-		depthMultiplierDimension = DepthHardnessDimension.parseStringList(depthMultiplierDimensionConfig.get());
+	public void loadJsonConfigs() {
+		super.loadJsonConfigs();
+		this.loadAndReadFile("dimension_hardness.json", dimensionHardnessMultiplier, DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT, dimensionHardnessMultiplierListType);
+		this.loadAndReadFile("depth_multipliers.json", depthMultiplierDimension, DEPTH_HARDNESS_DIMENSIONS_DEFAULT, depthHardnessDimensionListType);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -120,8 +117,8 @@ public class GlobalHardness extends Feature {
 
 		double hardness = 0d;
 		for (DepthHardnessDimension depthHardnessDimension : depthMultiplierDimension) {
-			if (dimensionId.equals(depthHardnessDimension.dimension)) {
-				hardness += depthHardnessDimension.multiplier * Math.max(depthHardnessDimension.applyBelowY - Math.max(pos.getY(), depthHardnessDimension.capY), 0);
+			if (depthHardnessDimension.matchesDimension(dimensionId)) {
+				hardness += depthHardnessDimension.multiplier * Math.max(depthHardnessDimension.applyBelowY - Math.max(pos.getY(), depthHardnessDimension.stopAt), 0);
 			}
 		}
 		return hardness;

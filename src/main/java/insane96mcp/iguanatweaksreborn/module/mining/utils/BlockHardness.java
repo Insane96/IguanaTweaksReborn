@@ -19,11 +19,6 @@ public class BlockHardness extends IdTagMatcher {
 		this.hardness = hardness;
 	}
 
-	public BlockHardness(Type type, String location, String dimension, Double hardness) {
-		super(type, location, dimension);
-		this.hardness = hardness;
-	}
-
 	public static class Serializer implements JsonDeserializer<BlockHardness>, JsonSerializer<BlockHardness> {
 		@Override
 		public BlockHardness deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -39,7 +34,7 @@ public class BlockHardness extends IdTagMatcher {
 
 			BlockHardness blockHardness;
 			if (!id.equals("") && !tag.equals("")){
-				throw new JsonParseException("Invalid CustomFoodProperties containing both tag (%s) and id (%s)".formatted(tag, id));
+				throw new JsonParseException("Invalid BlockHardness containing both tag (%s) and id (%s)".formatted(tag, id));
 			}
 			else if (!id.equals("")) {
 				blockHardness = new BlockHardness(Type.ID, id);
@@ -48,17 +43,7 @@ public class BlockHardness extends IdTagMatcher {
 				blockHardness = new BlockHardness(Type.TAG, id);
 			}
 			else {
-				throw new JsonParseException("Invalid CustomFoodProperties missing either tag and id");
-			}
-
-			String dimension = GsonHelper.getAsString(json.getAsJsonObject(), "dimension", "");
-			if (!dimension.equals("")) {
-				if (!ResourceLocation.isValidResourceLocation(dimension)) {
-					throw new JsonParseException("Invalid dimension for HoeCooldown: %s".formatted(dimension));
-				}
-				else {
-					blockHardness.dimension = ResourceLocation.tryParse(dimension);
-				}
+				throw new JsonParseException("Invalid BlockHardness missing either tag and id");
 			}
 
 			blockHardness.hardness = GsonHelper.getAsDouble(json.getAsJsonObject(), "hardness");
@@ -74,9 +59,6 @@ public class BlockHardness extends IdTagMatcher {
 			}
 			else if (src.type == Type.TAG) {
 				jsonObject.addProperty("tag", src.location.toString());
-			}
-			if (src.dimension != null) {
-				jsonObject.addProperty("dimension", src.dimension.toString());
 			}
 			jsonObject.addProperty("hardness", src.hardness);
 

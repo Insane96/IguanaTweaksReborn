@@ -1,51 +1,52 @@
 package insane96mcp.iguanatweaksreborn.module.mining.utils;
 
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import com.google.gson.*;
+import com.google.gson.annotations.JsonAdapter;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.resources.ResourceLocation;
-import org.apache.commons.lang3.math.NumberUtils;
+import net.minecraft.util.GsonHelper;
 
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-
-public class DimensionHardnessMultiplier {
-	public ResourceLocation dimension;
+@JsonAdapter(DimensionHardnessMultiplier.Serializer.class)
+public class DimensionHardnessMultiplier extends IdTagMatcher {
 	public double multiplier;
 
-	public DimensionHardnessMultiplier(ResourceLocation dimension, double multiplier) {
-		this.dimension = dimension;
+	public DimensionHardnessMultiplier() {
+		super(Type.ID, "minecraft:air");
+	}
+
+	public DimensionHardnessMultiplier(String dimension, double multiplier) {
+		super(Type.ID, "minecraft:air", dimension);
 		this.multiplier = multiplier;
 	}
 
-	@Nullable
-	public static DimensionHardnessMultiplier parseLine(String line) {
-		String[] split = line.split(",");
-		if (split.length < 1 || split.length > 2) {
-			LogHelper.warn("Invalid line \"%s\" for Dimension multiplier. Format must be modid:dimensionId,hardness", line);
-			return null;
-		}
-		ResourceLocation dimension = ResourceLocation.tryParse(split[0]);
-		if (dimension == null) {
-			LogHelper.warn(String.format("Invalid dimension \"%s\" for Dimension multiplier", split[0]));
-			return null;
-		}
-		if (!NumberUtils.isParsable(split[1])) {
-			LogHelper.warn(String.format("Invalid hardness \"%s\" for Dimension Multiplier", split[1]));
-			return null;
-		}
-		double hardness = Double.parseDouble(split[1]);
+	public static class Serializer implements JsonDeserializer<DimensionHardnessMultiplier>, JsonSerializer<DimensionHardnessMultiplier> {
+		@Override
+		public DimensionHardnessMultiplier deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+			DimensionHardnessMultiplier dimensionHardnessMultiplier = new DimensionHardnessMultiplier();
+			String dimension = GsonHelper.getAsString(json.getAsJsonObject(), "dimension", "");
+			if (!dimension.equals("")) {
+				if (!ResourceLocation.isValidResourceLocation(dimension)) {
+					throw new JsonParseException("Invalid dimension for DimensionHardnessMultiplier: %s".formatted(dimension));
+				}
+				else {
+					dimensionHardnessMultiplier.dimension = ResourceLocation.tryParse(dimension);
+				}
+			}
 
-		return new DimensionHardnessMultiplier(dimension, hardness);
-	}
+			dimensionHardnessMultiplier.multiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "multiplier");
 
-	public static ArrayList<? extends DimensionHardnessMultiplier> parseStringList(List<? extends String> list) {
-		ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultipliers = new ArrayList<>();
-		for (String line : list) {
-			DimensionHardnessMultiplier dimensionHardnessMultiplier = DimensionHardnessMultiplier.parseLine(line);
-			if (dimensionHardnessMultiplier != null)
-				dimensionHardnessMultipliers.add(dimensionHardnessMultiplier);
+			return dimensionHardnessMultiplier;
 		}
 
-		return dimensionHardnessMultipliers;
+		@Override
+		public JsonElement serialize(DimensionHardnessMultiplier src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
+			JsonObject jsonObject = new JsonObject();
+			if (src.dimension != null) {
+				jsonObject.addProperty("dimension", src.dimension.toString());
+			}
+			jsonObject.addProperty("multiplier", src.multiplier);
+
+			return jsonObject;
+		}
 	}
 }

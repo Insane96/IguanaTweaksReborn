@@ -1,69 +1,61 @@
 package insane96mcp.iguanatweaksreborn.module.mining.utils;
 
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import com.google.gson.*;
+import com.google.gson.annotations.JsonAdapter;
 import net.minecraft.resources.ResourceLocation;
-import org.apache.commons.lang3.math.NumberUtils;
-
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraft.util.GsonHelper;
 
 /**
  * In this case the {@link DepthHardnessDimension#multiplier} field is used per block below the {@link DepthHardnessDimension#applyBelowY} level
  */
+@JsonAdapter(DepthHardnessDimension.Serializer.class)
 public class DepthHardnessDimension extends DimensionHardnessMultiplier {
 
 	public int applyBelowY;
-	public int capY;
+	public int stopAt;
 
-	public DepthHardnessDimension(ResourceLocation dimension, double multiplier, int applyBelowY, int capY) {
+	public DepthHardnessDimension() {
+		super();
+	}
+
+	public DepthHardnessDimension(String dimension, double multiplier, int applyBelowY, int stopAt) {
 		super(dimension, multiplier);
 		this.applyBelowY = applyBelowY;
-		this.capY = capY;
+		this.stopAt = stopAt;
 	}
 
-	@Nullable
-	public static DepthHardnessDimension parseLine(String line) {
-		String[] split = line.split(",");
-		if (split.length != 4) {
-			LogHelper.warn("Invalid line \"%s\" for Depth Hardness Dimension. Format must be modid:dimensionId,hardness,applyBelowY,capY", line);
-			return null;
-		}
-		ResourceLocation dimension = ResourceLocation.tryParse(split[0]);
-		if (dimension == null) {
-			LogHelper.warn(String.format("Invalid dimension \"%s\" for Depth Hardness Dimension", split[0]));
-			return null;
+	public static class Serializer implements JsonDeserializer<DepthHardnessDimension>, JsonSerializer<DepthHardnessDimension> {
+		@Override
+		public DepthHardnessDimension deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+			DepthHardnessDimension dimensionHardnessMultiplier = new DepthHardnessDimension();
+			String dimension = GsonHelper.getAsString(json.getAsJsonObject(), "dimension", "");
+			if (!dimension.equals("")) {
+				if (!ResourceLocation.isValidResourceLocation(dimension)) {
+					throw new JsonParseException("Invalid dimension for DepthHardnessDimension: %s".formatted(dimension));
+				}
+				else {
+					dimensionHardnessMultiplier.dimension = ResourceLocation.tryParse(dimension);
+				}
+			}
+
+			dimensionHardnessMultiplier.multiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "multiplier");
+			dimensionHardnessMultiplier.applyBelowY = GsonHelper.getAsInt(json.getAsJsonObject(), "apply_below_y");
+			dimensionHardnessMultiplier.stopAt = GsonHelper.getAsInt(json.getAsJsonObject(), "stop_at");
+
+			return dimensionHardnessMultiplier;
 		}
 
-		if (!NumberUtils.isParsable(split[1])) {
-			LogHelper.warn(String.format("Invalid hardness \"%s\" for Depth Hardness Dimension", split[1]));
-			return null;
-		}
-		double hardness = Double.parseDouble(split[1]);
+		@Override
+		public JsonElement serialize(DepthHardnessDimension src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
+			JsonObject jsonObject = new JsonObject();
+			if (src.dimension != null) {
+				jsonObject.addProperty("dimension", src.dimension.toString());
+			}
+			jsonObject.addProperty("multiplier", src.multiplier);
+			jsonObject.addProperty("apply_below_y", src.applyBelowY);
+			jsonObject.addProperty("stop_at", src.stopAt);
 
-		if (!NumberUtils.isParsable(split[2])) {
-			LogHelper.warn(String.format("Invalid Y Level \"%s\" for Depth Hardness Dimension", split[2]));
-			return null;
+			return jsonObject;
 		}
-		int applyBelowY = Integer.parseInt(split[2]);
-
-		if (!NumberUtils.isParsable(split[3])) {
-			LogHelper.warn(String.format("Invalid Y cap \"%s\" for Depth Hardness Dimension", split[3]));
-			return null;
-		}
-		int capY = Integer.parseInt(split[3]);
-
-		return new DepthHardnessDimension(dimension, hardness, applyBelowY, capY);
 	}
-
-	public static ArrayList<DepthHardnessDimension> parseStringList(List<? extends String> list) {
-		ArrayList<DepthHardnessDimension> depthHardnessDimensions = new ArrayList<>();
-		for (String line : list) {
-			DepthHardnessDimension depthHardnessDimension = DepthHardnessDimension.parseLine(line);
-			if (depthHardnessDimension != null)
-				depthHardnessDimensions.add(depthHardnessDimension);
-		}
-		return depthHardnessDimensions;
-	}
-
 }
