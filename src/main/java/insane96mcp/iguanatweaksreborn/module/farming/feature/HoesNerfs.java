@@ -74,8 +74,8 @@ public class HoesNerfs extends ITFeature {
 		if (!isHoeDisabled(event.getHeldItemStack().getItem()))
 			return false;
 
+		//hoe.hurtAndBreak(1, event.getPlayer(), (player) -> player.broadcastBreakEvent(event.getPlayer().getUsedItemHand()));
 		//noinspection ConstantConditions getPlayer can't be null as it's called from onHoeUse that checks if player's null
-		hoe.hurtAndBreak(1, event.getPlayer(), (player) -> player.broadcastBreakEvent(event.getPlayer().getUsedItemHand()));
 		event.getPlayer().displayClientMessage(Component.translatable(Strings.Translatable.TOO_WEAK), true);
 		event.setCanceled(true);
 		return true;
