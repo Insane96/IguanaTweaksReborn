@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Food", description = "Changes to food nourishment and the speed on how food is eaten or how items are consumed.")
+@Label(name = "Food & Drinks", description = "Changes to food nourishment and the speed on how food is eaten or how items are consumed. Removing entries from the json requires a minecraft restart.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
-public class Food extends ITFeature {
+public class FoodDrinks extends ITFeature {
 	public static final ResourceLocation FOOD_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_hunger_changes_food");
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(Arrays.asList(
@@ -65,7 +65,7 @@ public class Food extends ITFeature {
 	@Label(name = "Stop consuming on hit", description = "If true, eating/drinking stops when the player's hit.")
 	public static Boolean stopConsumingOnHit = true;
 
-	public Food(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public FoodDrinks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
@@ -150,10 +150,9 @@ public class Food extends ITFeature {
 
 	@SuppressWarnings("ConstantConditions")
 	public void processCustomFoodValues() {
-		if (!this.isEnabled()
-				|| processedCustomFoodValues)
+		if (!this.isEnabled())
 			return;
-		processedCustomFoodValues = true;
+
 		if (customFoodProperties.isEmpty())
 			return;
 
@@ -173,6 +172,9 @@ public class Food extends ITFeature {
 					food.fastFood = foodValue.fastEating;
 			}
 		}
+
+		//reset cache when reloading
+		customFoodPropertiesCache = null;
 
 	}
 }
