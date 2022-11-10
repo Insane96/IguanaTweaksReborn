@@ -69,7 +69,7 @@ public class ItemAttributeModifier extends IdTagMatcher {
 				itemAttributeModifier = new ItemAttributeModifier(Type.ID, id);
 			}
 			else if (!tag.equals("")){
-				itemAttributeModifier = new ItemAttributeModifier(Type.TAG, id);
+				itemAttributeModifier = new ItemAttributeModifier(Type.TAG, tag);
 			}
 			else {
 				throw new JsonParseException("Invalid object missing either tag and id");

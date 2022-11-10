@@ -49,6 +49,8 @@ public class HoesNerfs extends ITFeature {
 	static final Type hoesStatsListType = new TypeToken<ArrayList<HoeStat>>(){}.getType();
 	@Override
 	public void loadJsonConfigs() {
+		if (!this.isEnabled())
+			return;
 		super.loadJsonConfigs();
 		this.loadAndReadFile("hoes_stats.json", hoesStats, HOES_STATS_DEFAULT, hoesStatsListType);
 	}

@@ -45,6 +45,8 @@ public class PlantsGrowth extends ITFeature {
 	static final Type plantGrowthModifierListType = new TypeToken<ArrayList<PlantGrowthModifier>>(){}.getType();
 	@Override
 	public void loadJsonConfigs() {
+		if (!this.isEnabled())
+			return;
 		super.loadJsonConfigs();
 		this.loadAndReadFile("plants_growth_modifiers.json", plantsList, PLANTS_LIST_DEFAULT, plantGrowthModifierListType);
 	}

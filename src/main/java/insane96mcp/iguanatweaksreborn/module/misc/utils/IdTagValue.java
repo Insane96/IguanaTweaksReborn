@@ -10,7 +10,7 @@ import net.minecraft.util.GsonHelper;
 import java.util.ArrayList;
 
 @JsonAdapter(IdTagValue.Serializer.class)
-public class IdTagValue extends IdTagMatcher{
+public class IdTagValue extends IdTagMatcher {
 	public double value;
 
 	public IdTagValue(Type type, String id) {
@@ -45,7 +45,7 @@ public class IdTagValue extends IdTagMatcher{
 				idTagValue = new IdTagValue(Type.ID, id);
 			}
 			else if (!tag.equals("")){
-				idTagValue = new IdTagValue(Type.TAG, id);
+				idTagValue = new IdTagValue(Type.TAG, tag);
 			}
 			else {
 				throw new JsonParseException("Invalid object missing either tag and id");

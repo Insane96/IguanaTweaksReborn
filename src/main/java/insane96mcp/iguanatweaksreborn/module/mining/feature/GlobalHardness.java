@@ -56,6 +56,8 @@ public class GlobalHardness extends ITFeature {
 
 	@Override
 	public void loadJsonConfigs() {
+		if (!this.isEnabled())
+			return;
 		super.loadJsonConfigs();
 		this.loadAndReadFile("dimension_hardness.json", dimensionHardnessMultiplier, DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT, dimensionHardnessMultiplierListType);
 		this.loadAndReadFile("depth_multipliers.json", depthMultiplierDimension, DEPTH_HARDNESS_DIMENSIONS_DEFAULT, depthHardnessDimensionListType);

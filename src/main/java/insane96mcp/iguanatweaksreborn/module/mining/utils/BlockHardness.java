@@ -40,7 +40,7 @@ public class BlockHardness extends IdTagMatcher {
 				blockHardness = new BlockHardness(Type.ID, id);
 			}
 			else if (!tag.equals("")){
-				blockHardness = new BlockHardness(Type.TAG, id);
+				blockHardness = new BlockHardness(Type.TAG, tag);
 			}
 			else {
 				throw new JsonParseException("Invalid object missing either tag and id");

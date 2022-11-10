@@ -89,6 +89,8 @@ public class Stats extends ITFeature {
 	static final Type itemAttributeModifierListType = new TypeToken<ArrayList<ItemAttributeModifier>>(){}.getType();
 	@Override
 	public void loadJsonConfigs() {
+		if (!this.isEnabled())
+			return;
 		super.loadJsonConfigs();
 		this.loadAndReadFile("item_modifiers.json", itemModifiers, ITEM_MODIFIERS_DEFAULT, itemAttributeModifierListType);
 	}

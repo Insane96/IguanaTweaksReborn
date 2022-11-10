@@ -47,6 +47,8 @@ public class CustomHardness extends ITFeature {
 	static final Type blockHardnessListType = new TypeToken<ArrayList<BlockHardness>>(){}.getType();
 	@Override
 	public void loadJsonConfigs() {
+		if (!this.isEnabled())
+			return;
 		super.loadJsonConfigs();
 		this.loadAndReadFile("custom_hardnesses.json", customHardnesses, CUSTOM_HARDNESSES_DEFAULT, blockHardnessListType);
 

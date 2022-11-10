@@ -96,7 +96,7 @@ public class PlantGrowthModifier extends IdTagMatcher {
 				plantGrowthModifier = new PlantGrowthModifier(Type.ID, id);
 			}
 			else if (!tag.equals("")){
-				plantGrowthModifier = new PlantGrowthModifier(Type.TAG, id);
+				plantGrowthModifier = new PlantGrowthModifier(Type.TAG, tag);
 			}
 			else {
 				throw new JsonParseException("Invalid object missing either tag and id");

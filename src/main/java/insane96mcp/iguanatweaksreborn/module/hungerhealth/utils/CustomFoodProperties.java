@@ -51,7 +51,7 @@ public class CustomFoodProperties extends IdTagMatcher {
 				customFoodProperties = new CustomFoodProperties(Type.ID, id);
 			}
 			else if (!tag.equals("")){
-				customFoodProperties = new CustomFoodProperties(Type.TAG, id);
+				customFoodProperties = new CustomFoodProperties(Type.TAG, tag);
 			}
 			else {
 				throw new JsonParseException("Invalid object missing either tag and id");

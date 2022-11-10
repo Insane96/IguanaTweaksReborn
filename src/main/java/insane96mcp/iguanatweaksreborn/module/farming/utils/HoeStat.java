@@ -46,7 +46,7 @@ public class HoeStat extends IdTagMatcher {
 				hoeStat = new HoeStat(Type.ID, id);
 			}
 			else if (!tag.equals("")){
-				hoeStat = new HoeStat(Type.TAG, id);
+				hoeStat = new HoeStat(Type.TAG, tag);
 			}
 			else {
 				throw new JsonParseException("Invalid object missing either tag and id");

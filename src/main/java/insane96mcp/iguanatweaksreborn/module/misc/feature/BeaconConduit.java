@@ -58,6 +58,8 @@ public class BeaconConduit extends ITFeature {
 
     @Override
     public void loadJsonConfigs() {
+        if (!this.isEnabled())
+            return;
         super.loadJsonConfigs();
         this.loadAndReadFile("beacon_blocks_ranges.json", blocksList, BLOCKS_LIST_DEFAULT, IdTagValue.LIST_TYPE);
     }
