@@ -1,21 +1,24 @@
 package insane96mcp.iguanatweaksreborn.module.misc.utils;
 
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
-import insane96mcp.insanelib.util.Utils;
+import com.google.gson.*;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.math.NumberUtils;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.List;
 
+@JsonAdapter(DeBuff.Serializer.class)
 public class DeBuff {
 	public Stat stat;
 	public double min, max;
 	public MobEffect effect;
 	public int amplifier;
+
+	public DeBuff() { }
 
 	public DeBuff(Stat stat, double min, double max, MobEffect effect, int amplifier) {
 		this.stat = stat;
@@ -25,95 +28,49 @@ public class DeBuff {
 		this.amplifier = amplifier;
 	}
 
-	@Override
-	public String toString() {
-		return String.format("DeBuff{stat: %s, min: %f, max: %f, effect: %s, amplifier: %d}", stat, min, max, effect.getDisplayName(), amplifier);
-	}
-
 	public enum Stat {
+		@SerializedName("hunger")
 		HUNGER,
+		@SerializedName("health")
 		HEALTH,
+		@SerializedName("experience_level")
 		EXPERIENCE_LEVEL
 	}
 
-	@Nullable
-	public static DeBuff parseLine(String line) {
-		//Split
-		String[] split = line.split(",");
-		if (split.length != 4) {
-			LogHelper.warn("Invalid line \"%s\" for Debuff", line);
-			return null;
-		}
-		//Stat
-		DeBuff.Stat stat = Utils.searchEnum(DeBuff.Stat.class, split[0]);
-		if (stat == null) {
-			LogHelper.warn(String.format("Invalid stat name \"%s\" for Debuff", line));
-			return null;
-		}
+	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<DeBuff>>(){}.getType();
 
-		//Range
-		double min = -Double.MAX_VALUE, max = Double.MAX_VALUE;
-		if (split[1].contains("..")) {
-			String[] rangeSplit = split[1].split("\\.\\.");
-			if (rangeSplit.length < 1 || rangeSplit.length > 2) {
-				LogHelper.warn(String.format("Invalid range \"%s\" for Debuff", line));
-				return null;
+	public static class Serializer implements JsonDeserializer<DeBuff>, JsonSerializer<DeBuff> {
+		@Override
+		public DeBuff deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+			DeBuff deBuff = new DeBuff();
+			deBuff.stat = context.deserialize(json.getAsJsonObject().get("stat"), Stat.class);
+			deBuff.min = GsonHelper.getAsDouble(json.getAsJsonObject(), "min", Double.MIN_VALUE);
+			deBuff.max = GsonHelper.getAsDouble(json.getAsJsonObject(), "max", Double.MAX_VALUE);
+			String sMobEffect = GsonHelper.getAsString(json.getAsJsonObject(), "effect");
+			MobEffect mobEffect = ForgeRegistries.MOB_EFFECTS.getValue(ResourceLocation.tryParse(sMobEffect));
+			if (mobEffect == null) {
+				throw new JsonParseException("%s effect doesn't exist".formatted(sMobEffect));
 			}
-			if (rangeSplit[0].length() > 0) {
-				if (!NumberUtils.isParsable(rangeSplit[0])) {
-					LogHelper.warn(String.format("Invalid range \"%s\" for Debuff", line));
-					return null;
-				}
-				min = Double.parseDouble(rangeSplit[0]);
-			}
-			if (rangeSplit.length == 2 && rangeSplit[1].length() > 0) {
-				if (!NumberUtils.isParsable(rangeSplit[1])) {
-					LogHelper.warn(String.format("Invalid range \"%s\" for Debuff", line));
-					return null;
-				}
-				max = Double.parseDouble(rangeSplit[1]);
-			}
-		}
-		else {
-			if (!NumberUtils.isParsable(split[1])) {
-				LogHelper.warn(String.format("Invalid range \"%s\" for Debuff", line));
-				return null;
-			}
-			double value = Double.parseDouble(split[1]);
-			min = value;
-			max = value;
+			deBuff.effect = mobEffect;
+			deBuff.amplifier = GsonHelper.getAsInt(json.getAsJsonObject(), "amplifier", 0);
+
+			return deBuff;
 		}
 
-		//Potion effect
-		ResourceLocation effectRL = ResourceLocation.tryParse(split[2]);
-		if (effectRL == null) {
-			LogHelper.warn("%s potion effect for Debuff is not valid", split[2]);
-			return null;
-		}
-		if (!ForgeRegistries.MOB_EFFECTS.containsKey(effectRL)) {
-			LogHelper.warn("%s potion effect for Debuff seems to not exist", split[2]);
-			return null;
-		}
-		MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(effectRL);
+		@Override
+		public JsonElement serialize(DeBuff src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.add("stat", context.serialize(src.stat));
+			if (src.min != Double.MIN_VALUE)
+				jsonObject.addProperty("min", src.min);
+			if (src.max != Double.MAX_VALUE)
+				jsonObject.addProperty("max", src.max);
+			String sMobEffect = ForgeRegistries.MOB_EFFECTS.getKey(src.effect).toString();
+			jsonObject.addProperty("effect", sMobEffect);
+			if (src.amplifier > 0)
+				jsonObject.addProperty("amplifier", src.amplifier);
 
-		//Amplifier
-		if (!NumberUtils.isParsable(split[3])) {
-			LogHelper.warn(String.format("Invalid amplifier \"%s\" for Debuff", line));
-			return null;
+			return jsonObject;
 		}
-		int amplifier = Integer.parseInt(split[3]);
-
-		return new DeBuff(stat, min, max, effect, amplifier);
-	}
-
-	public static ArrayList<? extends DeBuff> parseStringList(List<? extends String> list) {
-		ArrayList<DeBuff> deBuffs = new ArrayList<>();
-		for (String line : list) {
-			DeBuff deBuff = DeBuff.parseLine(line);
-			if (deBuff != null)
-				deBuffs.add(deBuff);
-		}
-
-		return deBuffs;
 	}
 }

@@ -48,7 +48,7 @@ public class TerrainSlowdown extends Feature {
 
 	public static ArrayList<MaterialSlowdown> materialOnSlowdown;
 	public static ArrayList<MaterialSlowdown> materialInSlowdown;
-	public static ArrayList<IdTagValue> customTerrainSlowdown;
+	public static final ArrayList<IdTagValue> customTerrainSlowdown = new ArrayList<>();
 
 	public TerrainSlowdown(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

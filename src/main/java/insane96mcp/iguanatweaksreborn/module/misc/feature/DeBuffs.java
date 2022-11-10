@@ -1,40 +1,35 @@
 package insane96mcp.iguanatweaksreborn.module.misc.feature;
 
+import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.utils.DeBuff;
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Label(name = "DeBuffs", description = "Apply potion effects on certain hunger / health / experience level")
 @LoadFeature(module = Modules.Ids.MISC)
-public class DeBuffs extends Feature {
-	private static ForgeConfigSpec.ConfigValue<List<? extends String>> deBuffsConfig;
-	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
-	private static final List<String> deBuffsDefault = Arrays.asList("HUNGER,..2,minecraft:mining_fatigue,0", "HUNGER,..4,minecraft:slowness,0", "HEALTH,..3,minecraft:slowness,0");
-	public static ArrayList<DeBuff> deBuffs;
+public class DeBuffs extends ITFeature {
+	public static final ArrayList<DeBuff> DEBUFFS_DEFAULT = new ArrayList<>(Arrays.asList(
+			new DeBuff(DeBuff.Stat.HUNGER, Double.MIN_VALUE, 2d, MobEffects.DIG_SLOWDOWN, 0),
+			new DeBuff(DeBuff.Stat.HUNGER, Double.MIN_VALUE, 4d, MobEffects.MOVEMENT_SLOWDOWN, 0),
+			new DeBuff(DeBuff.Stat.HEALTH, Double.MIN_VALUE, 3d, MobEffects.MOVEMENT_SLOWDOWN, 0)
+	));
+	public static final ArrayList<DeBuff> deBuffs = new ArrayList<>();
 
 	public DeBuffs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
-
-	@Override
-	public void loadConfigOptions() {
-		super.loadConfigOptions();
-		deBuffsConfig = this.getBuilder()
-				.comment("""
+				/*.comment("""
 						A list of DeBuffs to apply to the player when has on low hunger / health / experience level. Each string must be 'stat,range,status_effect,amplifier', where stat MUST BE one of the following: HUNGER, HEALTH, EXPERIENCE_LEVEL; range must be a range for the statistic like it's done in commands.
 						'10' When the player has exactly ten of the specified stat.
 						'10..12' When the player has between 10 and 12 (inclusive) of the specified stat.
@@ -42,14 +37,12 @@ public class DeBuffs extends Feature {
 						'..15' When the player has 15 or less of the specified stat.
 						effect must be a potion id, e.g. minecraft:weakness
 						amplifier must be the potion level starting from 0 (0 = level I)
-						""")
-				.defineList("DeBuffs", deBuffsDefault, o -> o instanceof String);
-	}
+						""")*/
 
 	@Override
-	public void readConfig(final ModConfigEvent event) {
-		super.readConfig(event);
-		deBuffs = (ArrayList<DeBuff>) DeBuff.parseStringList(deBuffsConfig.get());
+	public void loadJsonConfigs() {
+		super.loadJsonConfigs();
+		this.loadAndReadFile("debuffs.json", deBuffs, DEBUFFS_DEFAULT, DeBuff.LIST_TYPE);
 	}
 
 	@SubscribeEvent
