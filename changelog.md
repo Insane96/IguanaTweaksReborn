@@ -9,7 +9,7 @@
 * Replaced Health Regen presets with "Load Combat Test Config Options"
   * If true, restart the game and the config options will be changed to the ones of the combat test snapshot and then set the config option back to false.
 * Replaced `Reduce Weapon Damage` with `Nerf weapons`
-  * Reduced axes damage reduction (-1.5 -> -1) (like Swords and Tridents)
+  * Reduced axes damage reduction (-1.5 -> -1) (now like Swords and Tridents)
   * Axes now get -1 attack range
 * Disabled hoes are no longer damaged when trying to till. They can still be used to break blocks.
 * 'Food Consuming' and 'Food Hunger' have been merged to a single feature 'Food'
