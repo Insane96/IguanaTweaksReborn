@@ -13,6 +13,7 @@
   * Axes now get -1 attack range
 * Disabled hoes are no longer damaged when trying to till. They can still be used to break blocks.
 * 'Food Consuming' and 'Food Hunger' have been merged to a single feature 'Food'
+* Tool Efficiencies no longer reduce overall tool efficiency but sets the base tool one.
 * Plants growth multipliers are now also affected by sunlight and nighttime
 * Reduced shield slowdown (~~15%~~ -> 10%)
 * Fog Under Lava with Fire Resistance is now slightly more foggy

@@ -1,12 +1,13 @@
 package insane96mcp.iguanatweaksreborn.module.movement.feature;
 
+import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.utils.IdTagValue;
 import insane96mcp.iguanatweaksreborn.module.movement.utils.MaterialSlowdown;
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -20,21 +21,25 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 @Label(name = "Terrain Slowdown", description = "Slowdown based off the terrain you're walking on.")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
-public class TerrainSlowdown extends Feature {
-
+public class TerrainSlowdown extends ITFeature {
 	private static final UUID MATERIAL_SLOWDOWN_UUID = UUID.fromString("a849043f-b280-4789-bafd-5da8e8e1078e");
+
+	public static final ArrayList<IdTagValue> CUSTOM_TERRAIN_SLOWDOWN_DEFAULT = new ArrayList<>(Arrays.asList(
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:dirt_path", -0.15),
+			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:stone_bricks", -0.15)
+	));
+	public static final ArrayList<IdTagValue> customTerrainSlowdown = new ArrayList<>();
 
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> materialOnSlowdownConfig;
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> materialInSlowdownConfig;
 
-	private static ForgeConfigSpec.ConfigValue<List<? extends String>> customTerrainSlowdownConfig;
-
-	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
+	//TODO Move to json
 	private static final List<String> materialOnSlowdownDefault = List.of(
 			"amethyst,0.1","bamboo_sapling,0","bamboo,0.1","barrier,0","buildable_glass,0","cactus,0","cake,0","clay,0.15","cloth_decoration,0","decoration,0","dirt,0.1","egg,0","explosive,0","glass,0","grass,0.1","heavy_metal,0","ice_solid,0.5","ice,0.35","leaves,0.15","metal,0","moss,0.15","nether_wood,0","piston,0","plant,0","powder_snow,0","replaceable_fireproof_plant,0","replaceable_plant,0","replaceable_water_plant,0","sand,0.15","sculk,0","shulker_shell,0","snow,0.2","sponge,0","stone,0","top_snow,0","vegetable,0","water_plant,0","web,0","wood,0","wool,0.2"
 	);
@@ -42,13 +47,8 @@ public class TerrainSlowdown extends Feature {
 			"amethyst,0.1","bamboo_sapling,0.15","bamboo,0","barrier,0","buildable_glass,0","cactus,0","cake,0","clay,0","cloth_decoration,0","decoration,0","dirt,0","egg,0","explosive,0","glass,0","grass,0","heavy_metal,0","ice_solid,0","ice,0","leaves,0","metal,0","moss,0","nether_wood,0","piston,0","plant,0.15","powder_snow,0","replaceable_fireproof_plant,0.1","replaceable_plant,0.1","replaceable_water_plant,0.1","sand,0","sculk,0","shulker_shell,0","snow,0","sponge,0","stone,0","top_snow,0.1","vegetable,0","water_plant,0.1","web,0","wood,0","wool,0"
 	);
 
-	private static final List<String> customTerrainSlowdownDefault = List.of(
-			"minecraft:dirt_path,-0.15", "#minecraft:stone_bricks,-0.15"
-	);
-
 	public static ArrayList<MaterialSlowdown> materialOnSlowdown;
 	public static ArrayList<MaterialSlowdown> materialInSlowdown;
-	public static final ArrayList<IdTagValue> customTerrainSlowdown = new ArrayList<>();
 
 	public TerrainSlowdown(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -63,9 +63,6 @@ public class TerrainSlowdown extends Feature {
 		materialInSlowdownConfig = this.getBuilder()
 				.comment("Slowdown percentage when walking in certain materials. Material names are fixed and cannot be changed. Materials per block list here: https://docs.google.com/spreadsheets/d/1XZ2iTC4nqit_GxvKurRp8NpW3tNaeaZsvfv4EGPoQxw/edit?usp=sharing")
 				.defineList("Material In Slowdown", materialInSlowdownDefault, o -> o instanceof String);
-		customTerrainSlowdownConfig = this.getBuilder()
-				.comment("List of blocks and percentage slowdown when on that block/block tag. This overrides slowdown given by Material On Slowdown")
-				.defineList("Custom Terrain slowdown", customTerrainSlowdownDefault, o -> o instanceof String);
 	}
 
 	@Override
@@ -73,7 +70,12 @@ public class TerrainSlowdown extends Feature {
 		super.readConfig(event);
 		materialOnSlowdown = MaterialSlowdown.parseStringList(materialOnSlowdownConfig.get());
 		materialInSlowdown = MaterialSlowdown.parseStringList(materialInSlowdownConfig.get());
-		//customTerrainSlowdown = IdTagValue.parseStringList(customTerrainSlowdownConfig.get());
+	}
+
+	@Override
+	public void loadJsonConfigs() {
+		super.loadJsonConfigs();
+		this.loadAndReadFile("custom_terrain_slowdown.json", customTerrainSlowdown, CUSTOM_TERRAIN_SLOWDOWN_DEFAULT, IdTagValue.LIST_TYPE);
 	}
 
 	@SubscribeEvent
