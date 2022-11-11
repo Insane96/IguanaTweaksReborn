@@ -64,16 +64,18 @@ public class HealthRegen extends Feature {
 	@Label(name = "Food Heal Multiplier", description = "When eating you'll get healed by this percentage of (hunger + saturation) restored.")
 	public static Double foodHealMultiplier = 0d;
 	//Effects
-	//TODO Change well fed? Make it activate when eating a lot from low hunger
 	@Config
 	@Label(name = "Effects.Enable Well Fed", description = "Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats.")
 	public static Boolean enableWellFed = true;
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Effects.Well Fed Duration Multiplier", description = "Multiplies the base duration of Well Fed by this value. Base duration is 1 second per food effectiveness (hunger + saturation).")
-	public static Double wellFedDurationMultiplier = 1.0d;
+	public static Double wellFedDurationMultiplier = 2.0d;
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Effects.Well Fed Effectiveness", description = "How much does health regen Well Fed increases per level. (This is inversely proportional, a value of 0.25 makes makes time to regen lower by 20%. A value of 1.0 makes time to regen lower by 50%.")
 	public static Double wellFedEffectiveness = 0.25d;
+	@Config(min = 0d, max = 255d)
+	@Label(name = "Effects.Well Fed Min Nourishment", description = "How much food effectiveness (hunger + saturation) the food must give for the effect to apply")
+	public static Double wellFedMinNourishment = 11d;
 	@Config
 	@Label(name = "Effects.Enable Injured", description = "Set to true to enable Injured, a new effect that slows down health regen and is applied whenever the player is damaged. The effect slows down health regen by 20% per level.")
 	public static Boolean enableInjured = true;
@@ -83,6 +85,9 @@ public class HealthRegen extends Feature {
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Effects.Injured Effectiveness", description = "How much does health regen Injured decreases per level.")
 	public static Double injuredEffectiveness = 0.2d;
+	@Config(min = 0d, max = 255d)
+	@Label(name = "Effects.Injured Min Damage", description = "How much damage the player must take for the effect to apply")
+	public static Double injuredMinDamage = 2d;
 
 	public HealthRegen(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -100,6 +105,7 @@ public class HealthRegen extends Feature {
 			this.setConfig("Consume Hunger Only", true);
 			this.setConfig("Max Exhaustion", 4d);
 			this.setConfig("Hunger Consumption Chance", 0.5d);
+
 			this.setConfig("Load Combat Test Config Options", false);
 		}
 	}
@@ -109,7 +115,8 @@ public class HealthRegen extends Feature {
 		if (!this.isEnabled()
 				|| !enableInjured
 				|| !(event.getEntity() instanceof Player playerEntity)
-				|| event.getSource().equals(DamageSource.STARVE) || event.getSource().equals(DamageSource.DROWN) || event.getSource().equals(DamageSource.FREEZE))
+				|| event.getSource().equals(DamageSource.STARVE) || event.getSource().equals(DamageSource.DROWN) || event.getSource().equals(DamageSource.FREEZE)
+				|| event.getAmount() < injuredMinDamage)
 			return;
 		int duration = (int) ((event.getAmount() * 20) * injuredDurationMultiplier);
 		if (duration == 0)
@@ -138,7 +145,10 @@ public class HealthRegen extends Feature {
 			return;
 		Player playerEntity = (Player) event.getEntity();
 		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
-		int duration = (int) (((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20) * wellFedDurationMultiplier);
+		double effectiveness = food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2;
+		if (effectiveness < wellFedMinNourishment)
+			return;
+		int duration = (int) ((effectiveness * 20) * wellFedDurationMultiplier);
 		if (duration == 0)
 			return;
 		int amplifier = 0;

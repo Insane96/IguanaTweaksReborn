@@ -13,6 +13,8 @@
   * Axes now get -1 attack range
 * Disabled hoes are no longer damaged when trying to till. They can still be used to break blocks.
 * 'Food Consuming' and 'Food Hunger' have been merged to a single feature 'Food'
+* Well Fed is no longer applied for low effectiveness (hunger + saturation) food.
+* Injured is no longer applied for low damages (less than 1.5 hearts).
 * Greatly reduced Energy boost effectiveness (~~-1~~ -> -0.2 tiredness per second)
 * Increased Energy Boost default duration by 5x (and made it configurable)
 * Changed regeneration effect on wake up (~~10~~ -> 60 seconds Regeneration ~~II~~ -> I)
