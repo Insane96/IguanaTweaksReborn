@@ -1,35 +1,36 @@
 package insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature;
 
+import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.module.sleeprespawn.utils.EffectOnWakeUp;
+import insane96mcp.iguanatweaksreborn.module.sleeprespawn.utils.ITMobEffectInstance;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.level.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 @Label(name = "Sleeping Effects", description = "Prevents the player from sleeping if has not enough Hunger and gives him effects on wake up")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
-public class SleepingEffects extends Feature {
-
-	private static ForgeConfigSpec.ConfigValue<List<? extends String>> effectsOnWakeUpConfig;
-	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
-	private static final List<String> effectsOnWakeUpDefault = List.of("minecraft:slowness,400,0", "minecraft:regeneration,200,1", "minecraft:weakness,300,1", "minecraft:mining_fatigue,300,1");
-	public ArrayList<MobEffectInstance> effectsOnWakeUp;
+public class SleepingEffects extends ITFeature {
+	public static final ArrayList<ITMobEffectInstance> EFFECTS_ON_WAKE_UP_DEFAULT = new ArrayList<>(Arrays.asList(
+			new ITMobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 400, 0),
+			new ITMobEffectInstance(MobEffects.REGENERATION, 1200, 0),
+			new ITMobEffectInstance(MobEffects.WEAKNESS, 300, 1),
+			new ITMobEffectInstance(MobEffects.DIG_SLOWDOWN, 300, 1)
+	));
+	public static final ArrayList<ITMobEffectInstance> effectsOnWakeUp = new ArrayList<>();
 
 	@Config(min = 0, max = 20)
 	@Label(name = "Hunger Depleted on Wake Up", description = "How much the hunger bar is depleted when you wake up in the morning. Saturation depleted is based off this value times 2. Setting to 0 will disable this feature.")
@@ -43,17 +44,9 @@ public class SleepingEffects extends Feature {
 	}
 
 	@Override
-	public void loadConfigOptions() {
-		super.loadConfigOptions();
-		effectsOnWakeUpConfig = this.getBuilder()
-				.comment("A list of effects to apply to the player when he wakes up.\nThe format is modid:potion_id,duration_in_ticks,amplifier\nE.g. 'minecraft:slowness,240,1' will apply Slowness II for 12 seconds to the player.")
-				.defineList("Effects on Wake Up", effectsOnWakeUpDefault, o -> o instanceof String);
-	}
-
-	@Override
-	public void readConfig(final ModConfigEvent event) {
-		super.readConfig(event);
-		effectsOnWakeUp = EffectOnWakeUp.parseStringList(effectsOnWakeUpConfig.get());
+	public void loadJsonConfigs() {
+		super.loadJsonConfigs();
+		this.loadAndReadFile("effects_on_wake_up.json", effectsOnWakeUp, EFFECTS_ON_WAKE_UP_DEFAULT, ITMobEffectInstance.LIST_TYPE);
 	}
 
 	@SubscribeEvent
@@ -66,7 +59,7 @@ public class SleepingEffects extends Feature {
 			//For some reasons saturation can go below 0, so I get it back up to 0
 			if (player.getFoodData().getSaturationLevel() < 0.0f)
 				player.getFoodData().eat(1, -player.getFoodData().getSaturationLevel() / 2f);
-			for (MobEffectInstance mobEffectInstance : this.effectsOnWakeUp) {
+			for (MobEffectInstance mobEffectInstance : effectsOnWakeUp) {
 				player.addEffect(new MobEffectInstance(mobEffectInstance));
 			}
 		});

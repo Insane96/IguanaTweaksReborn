@@ -15,6 +15,7 @@
 * 'Food Consuming' and 'Food Hunger' have been merged to a single feature 'Food'
 * Greatly reduced Energy boost effectiveness (~~-1~~ -> -0.2 tiredness per second)
 * Increased Energy Boost default duration by 5x (and made it configurable)
+* Changed regeneration effect on wake up (~~10~~ -> 60 seconds Regeneration ~~II~~ -> I)
 * Tool Efficiencies no longer reduce overall tool efficiency but sets the base tool one.
 * Plants growth multipliers are now also affected by sunlight and nighttime
 * Reduced shield slowdown (~~15%~~ -> 10%)

@@ -69,7 +69,8 @@ public class EnergyBoostItem extends IdTagMatcher {
             else if (src.type == Type.TAG) {
                 jsonObject.addProperty("tag", src.location.toString());
             }
-            jsonObject.addProperty("duration", src.duration);
+            if (src.duration > 0)
+                jsonObject.addProperty("duration", src.duration);
             if (src.amplifier > 0)
                 jsonObject.addProperty("amplifier", src.amplifier);
 
