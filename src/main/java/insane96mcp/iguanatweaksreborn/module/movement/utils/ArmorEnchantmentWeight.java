@@ -1,75 +1,71 @@
 package insane96mcp.iguanatweaksreborn.module.movement.utils;
 
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import com.google.gson.*;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.math.NumberUtils;
+import net.minecraft.util.GsonHelper;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.List;
 
+@JsonAdapter(ArmorEnchantmentWeight.Serializer.class)
 public class ArmorEnchantmentWeight extends IdTagMatcher {
-	public double slownessReductionPerLevel;
-	public double flatSlownessReduction;
+	public double percentageSlownessPerLevel = 0d;
+	public double flatSlownessPerLevel = 0d;
+	public double percentageSlowness = 0d;
+	public double flatSlowness = 0d;
 
-	public ArmorEnchantmentWeight(ResourceLocation location, double slownessReductionPerLevel, double flatSlownessReduction) {
-		super(Type.ID, location);
-		this.slownessReductionPerLevel = slownessReductionPerLevel;
-		this.flatSlownessReduction = flatSlownessReduction;
+	public ArmorEnchantmentWeight(String id) {
+		super(Type.ID, id);
 	}
 
-	public ArmorEnchantmentWeight(@Nullable ResourceLocation item, double slownessReductionPerLevel) {
-		this(item, slownessReductionPerLevel, 0d);
+	public ArmorEnchantmentWeight(String id, double percentageSlownessPerLevel) {
+		super(Type.ID, id);
+		this.percentageSlownessPerLevel = percentageSlownessPerLevel;
 	}
 
-	@Nullable
-	public static ArmorEnchantmentWeight parseLine(String line) {
-		String[] split = line.split(",");
-		if (split.length < 2 || split.length > 3) {
-			LogHelper.warn("Invalid line \"%s\" for Armor Enchantment Weight", line);
-			return null;
-		}
-		ResourceLocation enchantment = ResourceLocation.tryParse(split[0]);
-		if (enchantment == null) {
-			LogHelper.warn("%s enchantment for Armor Enchantment Weight is not valid", split[0]);
-			return null;
-		}
-		if (!ForgeRegistries.ENCHANTMENTS.containsKey(enchantment)) {
-			LogHelper.warn(String.format("%s enchantment for Armor Enchantment Weight seems to not exist", split[0]));
-			return null;
-		}
-		if (!NumberUtils.isParsable(split[1])) {
-			LogHelper.warn(String.format("Invalid slowness reduction per level \"%s\" for Armor Enchantment Weight", line));
-			return null;
-		}
-		double slownessReductionPerLevel = Double.parseDouble(split[1]);
-		if (slownessReductionPerLevel < 0d || slownessReductionPerLevel > 1d)
-			LogHelper.warn(String.format("Slowness reduction per level \"%s\" for Armor Enchantment Weight has been clamped between 0.0 and 1.0", line));
-		slownessReductionPerLevel = Mth.clamp(slownessReductionPerLevel, 0d, 1d);
-		double flatSlownessReduction = 0d;
-		if (split.length >= 3) {
-			if (!NumberUtils.isParsable(split[2])) {
-				LogHelper.warn(String.format("Invalid flat slowness reduction \"%s\" for Armor Enchantment Weight", line));
-				return null;
+	public ArmorEnchantmentWeight(String id, double percentageSlownessPerLevel, double flatSlowness) {
+		super(Type.ID, id);
+		this.percentageSlownessPerLevel = percentageSlownessPerLevel;
+		this.flatSlowness = flatSlowness;
+	}
+
+	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<ArmorEnchantmentWeight>>(){}.getType();
+
+	public static class Serializer implements JsonDeserializer<ArmorEnchantmentWeight>, JsonSerializer<ArmorEnchantmentWeight> {
+		@Override
+		public ArmorEnchantmentWeight deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+			String id = GsonHelper.getAsString(json.getAsJsonObject(), "id");
+
+			if (!id.equals("") && !ResourceLocation.isValidResourceLocation(id)) {
+				throw new JsonParseException("Invalid id: %s".formatted(id));
 			}
-			flatSlownessReduction = Double.parseDouble(split[2]);
-			if (flatSlownessReduction < 0d || flatSlownessReduction > 1d)
-				LogHelper.warn(String.format("Flat slowness reduction \"%s\" for Armor Enchantment Weight has been clamped between 0.0 and 1.0", line));
-			flatSlownessReduction = Mth.clamp(flatSlownessReduction, 0d, 1d);
-		}
-		return new ArmorEnchantmentWeight(enchantment, slownessReductionPerLevel, flatSlownessReduction);
-	}
 
-	public static ArrayList<ArmorEnchantmentWeight> parseStringList(List<? extends String> list) {
-		ArrayList<ArmorEnchantmentWeight> armorEnchantmentWeight = new ArrayList<>();
-		for (String line : list) {
-			ArmorEnchantmentWeight idTagMatcher = ArmorEnchantmentWeight.parseLine(line);
-			if (idTagMatcher != null)
-				armorEnchantmentWeight.add(idTagMatcher);
+			ArmorEnchantmentWeight armorEnchantmentWeight = new ArmorEnchantmentWeight(id);
+
+			armorEnchantmentWeight.percentageSlownessPerLevel = GsonHelper.getAsDouble(json.getAsJsonObject(), "percentage_slowness_per_level", 0d);
+			armorEnchantmentWeight.flatSlownessPerLevel = GsonHelper.getAsDouble(json.getAsJsonObject(), "flat_slowness_per_level", 0d);
+			armorEnchantmentWeight.percentageSlowness = GsonHelper.getAsDouble(json.getAsJsonObject(), "percentage_slowness", 0d);
+			armorEnchantmentWeight.flatSlowness = GsonHelper.getAsDouble(json.getAsJsonObject(), "flat_slowness", 0d);
+
+			return armorEnchantmentWeight;
 		}
-		return armorEnchantmentWeight;
+
+		@Override
+		public JsonElement serialize(ArmorEnchantmentWeight src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("id", src.location.toString());
+			if (src.percentageSlownessPerLevel != 0d)
+				jsonObject.addProperty("percentage_slowness_per_level", src.percentageSlownessPerLevel);
+			if (src.flatSlownessPerLevel != 0d)
+				jsonObject.addProperty("flat_slowness_per_level", src.flatSlownessPerLevel);
+			if (src.percentageSlowness != 0d)
+				jsonObject.addProperty("percentage_slowness", src.percentageSlowness);
+			if (src.flatSlowness != 0d)
+				jsonObject.addProperty("flat_slowness", src.flatSlowness);
+
+			return jsonObject;
+		}
 	}
 }

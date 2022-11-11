@@ -14,6 +14,7 @@
 * Disabled hoes are no longer damaged when trying to till. They can still be used to break blocks.
 * 'Food Consuming' and 'Food Hunger' have been merged to a single feature 'Food'
 * Plants growth multipliers are now also affected by sunlight and nighttime
+* Reduced shield slowdown (~~15%~~ -> 10%)
 * Fog Under Lava with Fire Resistance is now slightly more foggy
 * Fixed General Stacking not working properly (resulting in different stacks each time the game was restarted)
 * Fixed Hunger Consumption Chance always being 0.5

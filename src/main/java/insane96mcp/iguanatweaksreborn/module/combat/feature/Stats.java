@@ -99,6 +99,10 @@ public class Stats extends ITFeature {
 		CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(itemClass, slot, attribute, amount, operation));
 	}
 
+	public static void removeClassItemAttributeModifier(Class<? extends Item> itemClass) {
+		CLASS_ATTRIBUTE_MODIFIER.removeIf(iam -> iam.itemClass.equals(itemClass));
+	}
+
 	@SubscribeEvent
 	public void onArrowSpawn(EntityJoinLevelEvent event) {
 		if (!this.isEnabled())

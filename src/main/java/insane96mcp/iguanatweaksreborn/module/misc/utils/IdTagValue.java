@@ -23,7 +23,6 @@ public class IdTagValue extends IdTagMatcher {
 	}
 
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<IdTagValue>>(){}.getType();
-
 	public static class Serializer implements JsonDeserializer<IdTagValue>, JsonSerializer<IdTagValue> {
 		@Override
 		public IdTagValue deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
