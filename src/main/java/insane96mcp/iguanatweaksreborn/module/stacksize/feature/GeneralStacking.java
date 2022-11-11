@@ -25,6 +25,7 @@ import java.util.Map;
 @Label(name = "General Stacking", description = "Make food, items and blocks less stackable. Items and Blocks are disabled by default.")
 @LoadFeature(module = Modules.Ids.STACK_SIZE)
 public class GeneralStacking extends Feature {
+    //TODO doesn't work as tags are loaded later in a world and not when the game starts
     public static final ResourceLocation NO_STACK_SIZE_CHANGES = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_stack_size_changes");
 
     @Config
@@ -35,7 +36,7 @@ public class GeneralStacking extends Feature {
     public static Double foodQualityDivider = 18.5d;
     @Config(min = 0.01d, max = 64d)
     @Label(name = "Food Stack Multiplier", description = "All the foods max stack sizes will be multiplied by this value to increase / decrease them (after Food Stack Reduction).")
-    public static Double foodStackMultiplier = 0.6d;
+    public static Double foodStackMultiplier = 0.9d;
     @Config(min = 1, max = 64)
     @Label(name = "Stackable Stews", description = "Stews will stack up to this number. It's overridden by 'foodStackReduction' if enabled. Still affected by black/whitelist")
     public static Integer stackableSoups = 16;

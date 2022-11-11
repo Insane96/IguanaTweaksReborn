@@ -157,7 +157,8 @@ public class BeaconConduit extends ITFeature {
             if (distance < 8d)
                 damage = MAX_DAMAGE;
             else
-                damage = (float) (((40d - (distance - 8d)) / 40d) * (MAX_DAMAGE - MIN_DAMAGE) + MIN_DAMAGE);
+                //TODO remake this formula as at maximum range still deals more than MIN_DAMAGE
+                damage = (float) (((68d - (distance - 8d)) / 40d) * (MAX_DAMAGE - MIN_DAMAGE) + MIN_DAMAGE);
             entity.hurt(DamageSource.MAGIC, damage);
         }
         return true;

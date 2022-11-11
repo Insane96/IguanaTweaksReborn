@@ -48,7 +48,6 @@ public class Stats extends ITFeature {
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", EquipmentSlot.HEAD, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", EquipmentSlot.FEET, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION)
 	));
-
 	public static final ArrayList<ItemAttributeModifier> itemModifiers = new ArrayList<>();
 
 	@Config

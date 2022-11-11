@@ -75,19 +75,19 @@ public class HealthRegen extends Feature {
 	public static Double wellFedEffectiveness = 0.25d;
 	@Config(min = 0d, max = 255d)
 	@Label(name = "Effects.Well Fed Min Nourishment", description = "How much food effectiveness (hunger + saturation) the food must give for the effect to apply")
-	public static Double wellFedMinNourishment = 11d;
+	public static Double wellFedMinNourishment = 10d;
 	@Config
 	@Label(name = "Effects.Enable Injured", description = "Set to true to enable Injured, a new effect that slows down health regen and is applied whenever the player is damaged. The effect slows down health regen by 20% per level.")
 	public static Boolean enableInjured = true;
 	@Config(min = 0d, max = 128d)
-	@Label(name = "Effects.Well Fed Duration Multiplier", description = "Multiplies the base duration of Well Fed by this value. Base duration is 1 second per food effectiveness (hunger + saturation).")
+	@Label(name = "Effects.Injured Duration Multiplier", description = "Multiplies the base duration of Injured by this value. Base duration is 1 second per point of damage.")
 	public static Double injuredDurationMultiplier = 1.0d;
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Effects.Injured Effectiveness", description = "How much does health regen Injured decreases per level.")
 	public static Double injuredEffectiveness = 0.2d;
 	@Config(min = 0d, max = 255d)
 	@Label(name = "Effects.Injured Min Damage", description = "How much damage the player must take for the effect to apply")
-	public static Double injuredMinDamage = 2d;
+	public static Double injuredMinDamage = 3d;
 
 	public HealthRegen(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

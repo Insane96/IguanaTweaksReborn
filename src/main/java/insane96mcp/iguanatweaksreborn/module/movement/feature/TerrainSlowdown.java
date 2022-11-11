@@ -82,7 +82,7 @@ public class TerrainSlowdown extends ITFeature {
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
 				|| event.phase != TickEvent.Phase.START
-				|| event.player.tickCount + event.player.getId() % 2 != 0)
+				|| (event.player.tickCount + event.player.getId()) % 2 != 0)
 			return;
 
 		double onTerrainSlowdown = 0d;

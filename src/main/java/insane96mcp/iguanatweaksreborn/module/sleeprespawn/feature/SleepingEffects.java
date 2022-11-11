@@ -65,6 +65,7 @@ public class SleepingEffects extends ITFeature {
 		});
 	}
 
+	//TODO Sleep even if low hunger when tired effect? (If it does the player goes to negative hunger)
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void tooHungryToSleep(PlayerSleepInBedEvent event) {
 		if (!this.isEnabled()

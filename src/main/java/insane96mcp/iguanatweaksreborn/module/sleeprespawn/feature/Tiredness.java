@@ -75,6 +75,9 @@ public class Tiredness extends ITFeature {
 	@Config(min = 0d)
 	@Label(name = "Tiredness per level", description = "Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
 	public static Double tirednessPerLevel = 20d;
+	@Config
+	@Label(name = "Show Tiredness Bar", description = "If true the tiredeness bar will be shown.")
+	public static Boolean showTirednessBar = false;
 	@Config(min = 0d)
 	@Label(name = "Default Energy Boost Duration Multiplier", description = "By default if omitted in the json, food items will give 1 second of Energy Boost per effective nourishment (hunger + saturation) of the food. This multiplies the duration of the effect")
 	public static Double defaultEnergyBoostDurationMultiplier = 5d;
@@ -263,6 +266,8 @@ public class Tiredness extends ITFeature {
 	@SubscribeEvent
 	public static void registerGui(RegisterGuiOverlaysEvent event) {
 		event.registerAbove(VanillaGuiOverlay.FOOD_LEVEL.id(), "tiredness", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+			if (!showTirednessBar)
+				return;
 			boolean isMounted = Minecraft.getInstance().player.getVehicle() instanceof LivingEntity;
 			if (isEnabled(Tiredness.class) && !isMounted && !Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements())
 			{

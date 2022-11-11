@@ -70,6 +70,7 @@ public class Sleeping extends Feature {
 		((ServerLevel)player.level).updateSleepingPlayerList();
 	}
 
+	//TODO Sleep even if day when tired enough?
 	@SubscribeEvent
 	public void sleepDuringDay(SleepingTimeCheckEvent event) {
 		if (!this.isEnabled()

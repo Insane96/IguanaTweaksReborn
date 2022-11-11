@@ -29,15 +29,6 @@ public class DeBuffs extends ITFeature {
 	public DeBuffs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
-				/*.comment("""
-						A list of DeBuffs to apply to the player when has on low hunger / health / experience level. Each string must be 'stat,range,status_effect,amplifier', where stat MUST BE one of the following: HUNGER, HEALTH, EXPERIENCE_LEVEL; range must be a range for the statistic like it's done in commands.
-						'10' When the player has exactly ten of the specified stat.
-						'10..12' When the player has between 10 and 12 (inclusive) of the specified stat.
-						'5..' When the player has five or greater of the specified stat.
-						'..15' When the player has 15 or less of the specified stat.
-						effect must be a potion id, e.g. minecraft:weakness
-						amplifier must be the potion level starting from 0 (0 = level I)
-						""")*/
 
 	@Override
 	public void loadJsonConfigs() {

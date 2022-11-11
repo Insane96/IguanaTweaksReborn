@@ -33,7 +33,7 @@ public class ExplosionOverhaul extends Feature {
 	@Config
 	@Label(name = "Enable Poof Particles", description = "Somewhere around 1.15 Mojang (for performance issues) removed the poof particles from Explosions. Keep them disabled if you have a low end PC.\n" +
 			"These particles aren't shown when explosion power is <= 1")
-	public static Boolean enablePoofParticles = false;
+	public static Boolean enablePoofParticles = true;
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Blocking Damage Scaling", description = "How much damage will the player take when blocking an explosion with a shield. Putting 0 shields will block all the damage like Vanilla, while putting 1 shields will block no damage.")
 	public static Double blockingDamageScaling = 1d;

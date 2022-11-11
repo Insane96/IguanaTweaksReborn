@@ -104,7 +104,6 @@ public class ToolStats extends ITFeature {
 		if (Utils.isItemInTag(player.getMainHandItem().getItem(), NO_EFFICIENCY_ITEMS)) {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(Strings.Translatable.NO_EFFICIENCY_ITEM), true);
-			return;
 		}
 	}
 

@@ -4,14 +4,13 @@ import com.google.common.collect.Multimap;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.CombatEntry;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -20,12 +19,10 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Label(name = "No Knockback", description = "Player will deal no knockback if attacking with a non-weapon or spamming.")
 @LoadFeature(module = Modules.Ids.COMBAT)
@@ -68,8 +65,7 @@ public class NoKnockback extends Feature {
 			return;
 		ItemStack itemStack = player.getMainHandItem();
 
-		TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, NO_KNOCKBACK_TAG);
-		boolean isInTag = ForgeRegistries.ITEMS.tags().getTag(tagKey).contains(itemStack.getItem());
+		boolean isInTag = Utils.isItemInTag(itemStack.getItem(), NO_KNOCKBACK_TAG);
 
 		boolean preventKnockback = false;
 		Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(EquipmentSlot.MAINHAND);
