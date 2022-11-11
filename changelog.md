@@ -13,6 +13,8 @@
   * Axes now get -1 attack range
 * Disabled hoes are no longer damaged when trying to till. They can still be used to break blocks.
 * 'Food Consuming' and 'Food Hunger' have been merged to a single feature 'Food'
+* Greatly reduced Energy boost effectiveness (~~-1~~ -> -0.2 tiredness per second)
+* Increased Energy Boost default duration by 5x (and made it configurable)
 * Tool Efficiencies no longer reduce overall tool efficiency but sets the base tool one.
 * Plants growth multipliers are now also affected by sunlight and nighttime
 * Reduced shield slowdown (~~15%~~ -> 10%)

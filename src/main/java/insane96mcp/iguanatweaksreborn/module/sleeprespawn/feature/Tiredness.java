@@ -2,17 +2,18 @@ package insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.utils.EnergyBoostItem;
 import insane96mcp.iguanatweaksreborn.network.MessageTirednessSync;
 import insane96mcp.iguanatweaksreborn.network.SyncHandler;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -34,7 +35,6 @@ import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
-import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -44,22 +44,21 @@ import net.minecraftforge.event.level.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.network.NetworkDirection;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Tiredness", description = "Prevents sleeping if the player is not tired. Tiredness is gained by gaining exhaustion. Allows you to sleep during daytime if too tired")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
-public class Tiredness extends Feature {
-	private static ForgeConfigSpec.ConfigValue<List<? extends String>> energyBoostItemsConfig;
-	//TODO Move to datapacks (or reloadable stuff like MobsPropertiesRandomness)?
-	private static final List<String> energyBoostItemsDefault = List.of(
-			"#iguanatweaksreborn:energy_boost",
-			"farmersdelight:hot_cocoa,80,0"
-	);
-	public static List<EnergyBoostItem> energyBoostItems;
+public class Tiredness extends ITFeature {
+	public static final List<EnergyBoostItem> ENERGY_BOOST_ITEMS_DEFAULT = new ArrayList<>(Arrays.asList(
+			new EnergyBoostItem(IdTagMatcher.Type.TAG, "iguanatweaksreborn:energy_boost"),
+			new EnergyBoostItem(IdTagMatcher.Type.ID, "farmersdelight:hot_cocoa", 80, 0)
+	));
+	public static final List<EnergyBoostItem> energyBoostItems = new ArrayList<>();
 
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Tiredness gained multiplier", description = "Multiply the tiredness gained by this value. Normally you gain tiredness equal to the exhaustion gained. 'Effective Hunger' doesn't affect the exhaustion gained.")
@@ -76,27 +75,18 @@ public class Tiredness extends Feature {
 	@Config(min = 0d)
 	@Label(name = "Tiredness per level", description = "Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
 	public static Double tirednessPerLevel = 20d;
+	@Config(min = 0d)
+	@Label(name = "Default Energy Boost Duration Multiplier", description = "By default if omitted in the json, food items will give 1 second of Energy Boost per effective nourishment (hunger + saturation) of the food. This multiplies the duration of the effect")
+	public static Double defaultEnergyBoostDurationMultiplier = 5d;
 
 	public Tiredness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
 	@Override
-	public void loadConfigOptions() {
-		super.loadConfigOptions();
-		energyBoostItemsConfig = this.getBuilder()
-				.comment("""
-						A list of items that when consumed will give the Energy Boost effect.
-						You can specify the item/tag only and the duration will be calculated from the hunger restored or you can include duration,amplifier for customs.
-						The iguanatweaksreborn:energy_boost item tag can be used to add items without a custom duration
-						Format is 'modid:item_id' / '#modid:item_tag' or 'modid:item_id,duration,amplifier' / '#modid:item_tag,duration,amplifier'.""")
-				.defineList("Plants Growth Multiplier", energyBoostItemsDefault, o -> o instanceof String);
-	}
-
-	@Override
-	public void readConfig(final ModConfigEvent event) {
-		super.readConfig(event);
-		energyBoostItems = EnergyBoostItem.parseStringList(energyBoostItemsConfig.get());
+	public void loadJsonConfigs() {
+		super.loadJsonConfigs();
+		this.loadAndReadFile("energy_boost_items.json", energyBoostItems, ENERGY_BOOST_ITEMS_DEFAULT, EnergyBoostItem.LIST_TYPE);
 	}
 
 	@SubscribeEvent
@@ -112,8 +102,9 @@ public class Tiredness extends Feature {
 
 		CompoundTag persistentData = serverPlayer.getPersistentData();
 		float tiredness = persistentData.getFloat(Strings.Tags.TIREDNESS);
+		//noinspection ConstantConditions
 		int effectLevel = serverPlayer.getEffect(ITMobEffects.ENERGY_BOOST.get()).getAmplifier() + 1;
-		float newTiredness = Math.max(tiredness - (0.05f * effectLevel), 0);
+		float newTiredness = Math.max(tiredness - (0.01f * effectLevel), 0);
 		persistentData.putFloat(Strings.Tags.TIREDNESS, newTiredness);
 
 		if (serverPlayer.tickCount % 20 == 0) {
@@ -139,13 +130,12 @@ public class Tiredness extends Feature {
 		int duration, amplifier;
 		if (energyBoostItem.duration == 0) {
 			FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
-			duration = (int) ((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20);
-			amplifier = 0;
+			duration = (int) ((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20 * defaultEnergyBoostDurationMultiplier);
 		}
 		else {
 			duration = energyBoostItem.duration;
-			amplifier = energyBoostItem.amplifier;
 		}
+		amplifier = energyBoostItem.amplifier;
 
 		playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.ENERGY_BOOST.get(), duration, amplifier, true, false, true, false));
 	}
@@ -219,7 +209,7 @@ public class Tiredness extends Feature {
 
 	@SubscribeEvent
 	public void allowSleepAtDay(SleepingTimeCheckEvent event) {
-		if (!this.canSleepDuringDay(event.getEntity()))
+		if (!canSleepDuringDay(event.getEntity()))
 			return;
 		event.setResult(Event.Result.ALLOW);
 	}
