@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
+import insane96mcp.iguanatweaksreborn.module.client.feature.Misc;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.insanelib.base.Feature;
 import net.minecraft.world.item.ItemStack;
@@ -17,5 +18,13 @@ public class PotionItemMixin {
 			return;
 
 		callbackInfo.setReturnValue(20);
+	}
+
+	@Inject(at = @At("RETURN"), method = "isFoil", cancellable = true)
+	public void isFoil(ItemStack stack, CallbackInfoReturnable<Boolean> callbackInfo) {
+		if (!Misc.shouldRemovePotionEnchantGlint())
+			return;
+
+		callbackInfo.setReturnValue(false);
 	}
 }

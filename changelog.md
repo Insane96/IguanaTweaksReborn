@@ -4,13 +4,17 @@
 * Requires InsaneLib 1.7.2
 * [Moved many blacklists to data tags](https://github.com/Insane96/IguanaTweaksReborn/wiki/%5B1.19-and-up%5D-Tags) and added some new ones
   * Added tags to disable items' damage and/or efficiency
+* [Moved many lists to json files](https://github.com/Insane96/IguanaTweaksReborn/wiki/%5B1.19-and-up%5D-Json-Configs). Also added a few new setting for some of them
 * Added a new `Misc` feature under `Miscellaneous` module
   * Adds a feature that prevents entities from catching fire when have fire resistance potion on
+* Added a new `Misc` feature under `Client` module
+  * Adds a feature that removes the enchanting glint from potions
 * Replaced Health Regen presets with "Load Combat Test Config Options"
   * If true, restart the game and the config options will be changed to the ones of the combat test snapshot and then set the config option back to false.
 * Replaced `Reduce Weapon Damage` with `Nerf weapons`
   * Reduced axes damage reduction (-1.5 -> -1) (now like Swords and Tridents)
   * Axes now get -1 attack range
+* Terrain slowdown is now updated twice as slower
 * Disabled hoes are no longer damaged when trying to till. They can still be used to break blocks.
 * 'Food Consuming' and 'Food Hunger' have been merged to a single feature 'Food'
 * Well Fed is no longer applied for low effectiveness (hunger + saturation) food.

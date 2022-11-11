@@ -81,12 +81,9 @@ public class TerrainSlowdown extends ITFeature {
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
-				|| event.phase != TickEvent.Phase.START)
+				|| event.phase != TickEvent.Phase.START
+				|| event.player.tickCount + event.player.getId() % 2 != 0)
 			return;
-
-		//TODO Maybe re-enable this
-		//if (event.player.tickCount % 2 != 0)
-			//return;
 
 		double onTerrainSlowdown = 0d;
 		int blocks = 0;
