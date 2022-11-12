@@ -11,7 +11,7 @@
   * Adds a feature that removes the enchanting glint from potions
 * Client
   * Fog Under Lava with Fire Resistance is now more foggy
-  * Fixed a bug where better Nether Fog would cancel all the other mods fog events (even Tiredness one)
+  * Fixed a bug where better Nether Fog would cancel all the other mods fog events (even Tiredness one) even when not in the nether
 * Combat
   * Replaced `Reduce Weapon Damage` with `Nerf weapons`
     * Reduced axes damage reduction (-1.5 -> -1) (now like Swords and Tridents)
