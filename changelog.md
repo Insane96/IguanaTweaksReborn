@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Beta 2.13.2
 * Requires InsaneLib 1.7.2
 * [Moved many blacklists to data tags](https://github.com/Insane96/IguanaTweaksReborn/wiki/%5B1.19-and-up%5D-Tags) and added some new ones
   * Added tags to disable items' damage and/or efficiency
