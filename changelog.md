@@ -19,6 +19,7 @@
 * Farming
   * Disabled hoes are no longer damaged when trying to till. They can still be used to break blocks.
   * Plants growth multipliers are now also affected by sunlight and nighttime
+    * Cactuses now grow much slower outside their biome
   * Fixed harder crops applying hardness to non-insta-break blocks too
 * Hunger & Health
   * 'Food Consuming' and 'Food Hunger' have been merged to a single feature 'Food'
