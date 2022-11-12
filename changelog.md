@@ -14,6 +14,7 @@
 * Replaced `Reduce Weapon Damage` with `Nerf weapons`
   * Reduced axes damage reduction (-1.5 -> -1) (now like Swords and Tridents)
   * Axes now get -1 attack range
+* Fixed conduit dealing near to 0 damage (instead of 2 minumum). Also added a few more config options.
 * Terrain slowdown is now updated twice as slower
 * Disabled hoes are no longer damaged when trying to till. They can still be used to break blocks.
 * 'Food Consuming' and 'Food Hunger' have been merged to a single feature 'Food'

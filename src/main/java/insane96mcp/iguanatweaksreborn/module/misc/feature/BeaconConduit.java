@@ -49,8 +49,14 @@ public class BeaconConduit extends ITFeature {
     @Label(name = "Base Range", description = "Base range of the beacon")
     public static Double baseRange = 10d;
     @Config
-    @Label(name = "Better Conduit Protection", description = "Greatly increases the range and damage of the conduit")
+    @Label(name = "Conduit.Better Protection", description = "Greatly increases the range and damage of the conduit")
     public static Boolean betterConduitProtection = true;
+    @Config(min = 0d, max = 64d)
+    @Label(name = "Conduit.Protection Distance Multiplier", description = "Distance multiplier (formula is blocks_around / 7 * this_multiplier) from the conduit at which it will deal damage to enemies.")
+    public static Double conduitProtectionDistanceMultiplier = 8d;
+    @Config(min = 0d, max = 96d)
+    @Label(name = "Conduit.Protection Max Damage Distance", description = "If a mob is within this radius from the conduit, it will be dealt the maximum amount of damage.")
+    public static Double conduitProtectionMaxDamageDistance = 8d;
 
     public BeaconConduit(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -147,28 +153,35 @@ public class BeaconConduit extends ITFeature {
                 || !betterConduitProtection)
             return false;
 
-        List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, getRange(blockPos, blocks),
+        List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, getDamageAABB(blockPos, blocks),
                 (living) -> living instanceof Enemy && living.isInWaterOrRain());
 
         for (LivingEntity entity : list) {
             level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.CONDUIT_ATTACK_TARGET, SoundSource.BLOCKS, 1.0F, 1.0F);
             double distance = entity.position().distanceTo(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()));
             float damage;
-            if (distance < 8d)
+            if (distance < conduitProtectionMaxDamageDistance)
                 damage = MAX_DAMAGE;
             else
-                //TODO remake this formula as at maximum range still deals more than MIN_DAMAGE
-                damage = (float) (((68d - (distance - 8d)) / 40d) * (MAX_DAMAGE - MIN_DAMAGE) + MIN_DAMAGE);
+                damage = (float)(1 - (distance - conduitProtectionMaxDamageDistance) / (maxRangeRadius() - conduitProtectionMaxDamageDistance)) * (MAX_DAMAGE - MIN_DAMAGE) + MIN_DAMAGE;
             entity.hurt(DamageSource.MAGIC, damage);
         }
         return true;
     }
 
-    private static AABB getRange(BlockPos blockPos, List<BlockPos> blocks) {
-        double range = blocks.size() / 7d * 8d;
+    private static AABB getDamageAABB(BlockPos blockPos, List<BlockPos> blocks) {
+        double range = blocks.size() / 7d * conduitProtectionDistanceMultiplier;
         int x = blockPos.getX();
         int y = blockPos.getY();
         int z = blockPos.getZ();
         return (new AABB(x, y, z, x + 1, y + 1, z + 1)).inflate(range);
+    }
+
+    private static double maxRange() {
+        return 42 / 7d * conduitProtectionDistanceMultiplier;
+    }
+
+    private static double maxRangeRadius() {
+        return Math.sqrt(maxRange() * maxRange() + maxRange() * maxRange());
     }
 }
