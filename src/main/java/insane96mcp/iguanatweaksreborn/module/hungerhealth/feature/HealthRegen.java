@@ -211,7 +211,10 @@ public class HealthRegen extends Feature {
 		}
 		else if (foodStats.foodLevel <= 0) {
 			++foodStats.tickTimer;
-			if (foodStats.tickTimer >= starveSpeed) {
+			int actualStarveSpeed = starveSpeed;
+			if (foodStats.foodLevel < 0)
+				actualStarveSpeed += foodStats.foodLevel * 5;
+			if (foodStats.tickTimer >= actualStarveSpeed) {
 				if (player.getHealth() > 10.0F || difficulty == Difficulty.HARD || player.getHealth() > 1.0F && difficulty == Difficulty.NORMAL) {
 					player.hurt(DamageSource.STARVE, starveDamage);
 				}

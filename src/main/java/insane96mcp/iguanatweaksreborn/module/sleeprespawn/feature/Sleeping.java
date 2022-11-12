@@ -28,8 +28,8 @@ public class Sleeping extends Feature {
 	@Label(name = "Disable Bed Spawn", description = "If set to true the player spawn point will not change when the player cannot sleep. Has no effect if the player can sleep.")
 	public static Boolean disableBedSpawn = false;
 	@Config
-	@Label(name = "Allow Sleeping During Day", description = "If set to true the player will be able to sleep during day time. On wake up it will be night time")
-	public static Boolean allowDaySleep = true;
+	@Label(name = "Allow Sleeping During Day", description = "If set to true the player will be able to sleep during day time. On wake up it will be night time. Note that with 'Tiredness' feature enabled you are still not able to sleep during day unless you're ")
+	public static Boolean allowDaySleep = false;
 
 	public Sleeping(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -60,6 +60,7 @@ public class Sleeping extends Feature {
 	public void notTiredToSleep(PlayerSleepInBedEvent event) {
 		if (!this.isEnabled()
 				|| !allowDaySleep
+				|| event.getResultStatus() != null
 				|| !Tiredness.canSleepDuringDay(event.getEntity()))
 			return;
 
@@ -70,7 +71,6 @@ public class Sleeping extends Feature {
 		((ServerLevel)player.level).updateSleepingPlayerList();
 	}
 
-	//TODO Sleep even if day when tired enough?
 	@SubscribeEvent
 	public void sleepDuringDay(SleepingTimeCheckEvent event) {
 		if (!this.isEnabled()

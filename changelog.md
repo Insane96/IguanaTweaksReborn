@@ -9,29 +9,44 @@
   * Adds a feature that prevents entities from catching fire when have fire resistance potion on
 * Added a new `Misc` feature under `Client` module
   * Adds a feature that removes the enchanting glint from potions
-* Replaced Health Regen presets with "Load Combat Test Config Options"
-  * If true, restart the game and the config options will be changed to the ones of the combat test snapshot and then set the config option back to false.
-* Replaced `Reduce Weapon Damage` with `Nerf weapons`
-  * Reduced axes damage reduction (-1.5 -> -1) (now like Swords and Tridents)
-  * Axes now get -1 attack range
-* Fixed conduit dealing near to 0 damage (instead of 2 minumum). Also added a few more config options.
-* Terrain slowdown is now updated twice as slower
-* Disabled hoes are no longer damaged when trying to till. They can still be used to break blocks.
-* 'Food Consuming' and 'Food Hunger' have been merged to a single feature 'Food'
-* Well Fed is no longer applied for low effectiveness (hunger + saturation) food.
-* Injured is no longer applied for low damages (less than 1.5 hearts).
-* Greatly reduced Energy boost effectiveness (~~-1~~ -> -0.2 tiredness per second)
-* Increased Energy Boost default duration by 5x (and made it configurable)
-* Changed regeneration effect on wake up (~~10~~ -> 60 seconds Regeneration ~~II~~ -> I)
-* Tool Efficiencies no longer reduce overall tool efficiency but sets the base tool one.
-* Plants growth multipliers are now also affected by sunlight and nighttime
-* Reduced shield slowdown (~~15%~~ -> 10%)
-* Fog Under Lava with Fire Resistance is now slightly more foggy
-* Fixed General Stacking not working properly (resulting in different stacks each time the game was restarted)
-* Fixed Hunger Consumption Chance always being 0.5
+* Client
+  * Fog Under Lava with Fire Resistance is now more foggy
+  * Fixed a bug where better Nether Fog would cancel all the other mods fog events (even Tiredness one)
+* Combat
+  * Replaced `Reduce Weapon Damage` with `Nerf weapons`
+    * Reduced axes damage reduction (-1.5 -> -1) (now like Swords and Tridents)
+    * Axes now get -1 attack range
+* Farming
+  * Disabled hoes are no longer damaged when trying to till. They can still be used to break blocks.
+  * Plants growth multipliers are now also affected by sunlight and nighttime
+  * Fixed harder crops applying hardness to non-insta-break blocks too
+* Hunger & Health
+  * 'Food Consuming' and 'Food Hunger' have been merged to a single feature 'Food'
+  * Replaced Health Regen presets with "Load Combat Test Config Options"
+    * If true, restart the game and the config options will be changed to the ones of the combat test snapshot and then set the config option back to false.
+  * You now starve faster if you have negative hunger (obtained by sleeping when too tired and low hunger)
+  * Well Fed is no longer applied for low effectiveness (hunger + saturation) food.
+  * Injured is no longer applied for low damages (less than 1.5 hearts).
+  * Fixed Hunger Consumption Chance always being 0.5
+* Mining
+  * Tool Efficiencies no longer reduce overall tool efficiency but sets the base tool one.
+* Miscellaneous
+  * Fixed conduit dealing near to 0 damage (instead of 2 minumum). Also added a few more config options.
+* Movement
+  * Reduced shield slowdown (~~15%~~ -> 10%)
+  * Terrain slowdown is now updated twice as slower
+* Sleep & Respawn
+  * `Allow Sleeping During Day` is now disabled by default due to Tiredness controlling if you can sleep
+  * Beneficial effects are no longer given to players after sleeping if they wake up with empty hunger bar
+  * Greatly reduced Energy boost effectiveness (~~-1~~ -> -0.2 tiredness per second)
+  * Increased Energy Boost default duration by 5x (and made it configurable)
+  * Changed regeneration effect on wake up (~~10~~ -> 60 seconds Regeneration ~~II~~ -> I)
+  * Fixed tiredness multiplier not working
+* Stack Sizes
+  * Fixed General Stacking not working properly (resulting in different stacks each time the game was restarted)
 * Fixed some strings not begin translatable
-* Fixed tiredness multiplier not working
-* Fixed harder crops applying hardness to non-insta-break blocks too
+### Known bugs
+* Stuff that loads as soon as the configs load doesn't support tags (e.g. Stack sizes blacklist tag or Tool Stats Jsons)
 
 ## Alpha 2.13.1
 * Requires InsaneLib 1.7.1

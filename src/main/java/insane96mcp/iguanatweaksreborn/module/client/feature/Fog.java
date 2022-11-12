@@ -15,6 +15,7 @@ import net.minecraft.world.level.material.FogType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ViewportEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Fog", description = "Makes fog less invasive in some contexts")
@@ -36,7 +37,7 @@ public class Fog extends Feature {
     }
 
     @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public void onFog(ViewportEvent.RenderFog event) {
         if (!this.isEnabled())
             return;
@@ -54,7 +55,7 @@ public class Fog extends Feature {
         Entity entity = event.getCamera().getEntity();
         if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(MobEffects.FIRE_RESISTANCE)) {
             event.setNearPlaneDistance(-16);
-            event.setFarPlaneDistance(24f);
+            event.setFarPlaneDistance(16f);
         }
 
         event.setCanceled(true);
@@ -70,7 +71,7 @@ public class Fog extends Feature {
             float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
             event.setNearPlaneDistance((float) (renderDistance * netherFogRatio / 10f));
             event.setFarPlaneDistance((float) (renderDistance * netherFogRatio));
+            event.setCanceled(true);
         }
-        event.setCanceled(true);
     }
 }

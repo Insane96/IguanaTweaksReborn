@@ -60,12 +60,13 @@ public class SleepingEffects extends ITFeature {
 			if (player.getFoodData().getSaturationLevel() < 0.0f)
 				player.getFoodData().eat(1, -player.getFoodData().getSaturationLevel() / 2f);
 			for (MobEffectInstance mobEffectInstance : effectsOnWakeUp) {
+				if (mobEffectInstance.getEffect().isBeneficial() && player.getFoodData().getFoodLevel() <= 0)
+					continue;
 				player.addEffect(new MobEffectInstance(mobEffectInstance));
 			}
 		});
 	}
 
-	//TODO Sleep even if low hunger when tired effect? (If it does the player goes to negative hunger)
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void tooHungryToSleep(PlayerSleepInBedEvent event) {
 		if (!this.isEnabled()

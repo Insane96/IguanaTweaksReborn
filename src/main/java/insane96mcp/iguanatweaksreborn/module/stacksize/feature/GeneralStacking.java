@@ -150,6 +150,7 @@ public class GeneralStacking extends Feature {
     }
 
     //Food
+    @SuppressWarnings("deprecation")
     public void processFoodStackSizes() {
         if (!this.isEnabled())
             return;
