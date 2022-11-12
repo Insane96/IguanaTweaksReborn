@@ -55,10 +55,22 @@ public class ToolStats extends ITFeature {
 	public static final ArrayList<IdTagValue> toolDurabilities = new ArrayList<>();
 
 	public static final ArrayList<IdTagValue> TOOL_EFFICIENCIES_DEFAULT = new ArrayList<>(Arrays.asList(
-			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/wooden", 1.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/stone", 3d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/iron", 5.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/diamond", 7.5d)
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_pickaxe", 1.5d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_axe", 1.5d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_shovel", 1.5d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 1.5d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_pickaxe", 3d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_axe", 3d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_shovel", 3d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 3d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_pickaxe", 5.5d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_axe", 5.5d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_shovel", 5.5d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_hoe", 5.5d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_pickaxe", 7.5d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_axe", 7.5d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_shovel", 7.5d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_hoe", 7.5d)
 	));
 	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();
 
