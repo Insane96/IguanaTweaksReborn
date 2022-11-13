@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Tamed pets now get the beacon effects
+* 
 
 ## 2.12.7
 * Well Fed and Injured can now be configured (Duration and effectiveness)
