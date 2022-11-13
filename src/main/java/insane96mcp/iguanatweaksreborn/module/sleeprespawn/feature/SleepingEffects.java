@@ -26,7 +26,6 @@ import java.util.Arrays;
 public class SleepingEffects extends ITFeature {
 	public static final ArrayList<ITMobEffectInstance> EFFECTS_ON_WAKE_UP_DEFAULT = new ArrayList<>(Arrays.asList(
 			new ITMobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 400, 0),
-			new ITMobEffectInstance(MobEffects.REGENERATION, 1200, 0),
 			new ITMobEffectInstance(MobEffects.WEAKNESS, 300, 1),
 			new ITMobEffectInstance(MobEffects.DIG_SLOWDOWN, 300, 1)
 	));
