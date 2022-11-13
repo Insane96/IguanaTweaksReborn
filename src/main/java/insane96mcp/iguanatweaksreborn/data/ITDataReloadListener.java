@@ -5,12 +5,14 @@ import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraftforge.common.crafting.conditions.ICondition;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 public class ITDataReloadListener extends SimplePreparableReloadListener<Void> {
     public static final ITDataReloadListener INSTANCE;
+    public static ICondition.IContext reloadContext;
 
     final ArrayList<ITFeature> JSON_CONFIG_FEATURES = new ArrayList<>();
 

@@ -8,12 +8,21 @@ import insane96mcp.iguanatweaksreborn.data.ITDataReloadListener;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Module;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
+import java.util.Collection;
 import java.util.List;
 
 public class ITFeature extends Feature {
@@ -64,5 +73,35 @@ public class ITFeature extends Feature {
         catch (Exception e) {
             LogHelper.error("Failed loading Json %s: %s", FilenameUtils.removeExtension(file.getName()), e.getMessage());
         }
+    }
+
+    public static boolean isItemInTag(Item item, ResourceLocation tag) {
+        TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, tag);
+        Collection<Holder<Item>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);
+        for (Holder<Item> holder : tags) {
+            if (holder.value().equals(item))
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean isBlockInTag(Block block, ResourceLocation tag) {
+        TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, tag);
+        Collection<Holder<Block>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);
+        for (Holder<Block> holder : tags) {
+            if (holder.value().equals(block))
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean isEntityInTag(Entity entity, ResourceLocation tag) {
+        TagKey<EntityType<?>> tagKey = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, tag);
+        Collection<Holder<EntityType<?>>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);
+        for (Holder<EntityType<?>> holder : tags) {
+            if (holder.value().equals(entity.getType()))
+                return true;
+        }
+        return false;
     }
 }

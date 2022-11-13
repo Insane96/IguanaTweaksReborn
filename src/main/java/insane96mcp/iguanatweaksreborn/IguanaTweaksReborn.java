@@ -59,6 +59,7 @@ public class IguanaTweaksReborn
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onAddReloadListener(AddReloadListenerEvent event) {
+        ITDataReloadListener.reloadContext = event.getConditionContext();
         event.addListener(ITDataReloadListener.INSTANCE);
     }
 
