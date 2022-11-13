@@ -250,7 +250,7 @@ public class HealthRegen extends Feature {
 			if (foodStats.tickTimer >= getRegenSpeed(player)) {
 				player.heal(1.0F);
 				if (this.consumeHungerOnly) {
-					if (player.level.getRandom().nextDouble() < 0.5d)
+					if (player.level.getRandom().nextDouble() < this.hungerConsumptionChance)
 						addHunger(foodStats, -1);
 				}
 				else

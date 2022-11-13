@@ -122,7 +122,7 @@ public class Tiredness extends Feature {
 		CompoundTag persistentData = serverPlayer.getPersistentData();
 		float tiredness = persistentData.getFloat(Strings.Tags.TIREDNESS);
 		int effectLevel = serverPlayer.getEffect(ITMobEffects.ENERGY_BOOST.get()).getAmplifier() + 1;
-		float newTiredness = Math.max(tiredness - (0.05f * effectLevel), 0);
+		float newTiredness = Math.max(tiredness - (0.01f * effectLevel), 0);
 		persistentData.putFloat(Strings.Tags.TIREDNESS, newTiredness);
 
 		if (serverPlayer.tickCount % 20 == 0) {
@@ -148,13 +148,12 @@ public class Tiredness extends Feature {
 		int duration, amplifier;
 		if (energyBoostItem.duration == 0) {
 			FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
-			duration = (int) ((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20);
-			amplifier = 0;
+			duration = (int) ((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20 * 5);
 		}
 		else {
 			duration = energyBoostItem.duration;
-			amplifier = energyBoostItem.amplifier;
 		}
+		amplifier = energyBoostItem.amplifier;
 
 		playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.ENERGY_BOOST.get(), duration, amplifier, true, false, true, false));
 	}
@@ -170,7 +169,7 @@ public class Tiredness extends Feature {
 
 		CompoundTag persistentData = serverPlayer.getPersistentData();
 		float tiredness = persistentData.getFloat(Strings.Tags.TIREDNESS);
-		float newTiredness = tiredness + amount;
+		float newTiredness = (float) ((tiredness + amount) * this.tirednessGainMultiplier);
 		persistentData.putFloat(Strings.Tags.TIREDNESS, newTiredness);
 		if (tiredness < this.tirednessToSleep && newTiredness >= this.tirednessToSleep) {
 			serverPlayer.displayClientMessage(new TranslatableComponent(Strings.Translatable.TIRED_ENOUGH), false);

@@ -26,7 +26,7 @@ public class Sleeping extends Feature {
 
 	public boolean disableSleeping = false;
 	public boolean disableBedSpawn = false;
-	public boolean allowDaySleep = true;
+	public boolean allowDaySleep = false;
 
 	public Sleeping(Module module) {
 		super(ITCommonConfig.builder, module);

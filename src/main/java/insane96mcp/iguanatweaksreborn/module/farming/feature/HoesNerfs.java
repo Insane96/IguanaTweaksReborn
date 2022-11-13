@@ -95,7 +95,7 @@ public class HoesNerfs extends Feature {
 		if (!isHoeDisabled(event.getHeldItemStack().getItem()))
 			return false;
 
-		hoe.hurtAndBreak(1, event.getPlayer(), (player) -> player.broadcastBreakEvent(event.getPlayer().getUsedItemHand()));
+		//noinspection ConstantConditions getPlayer can't be null as it's called from onHoeUse that checks if player's null
 		event.getPlayer().displayClientMessage(new TextComponent("This hoe is too weak to be used"), true);
 		event.setCanceled(true);
 		return true;
@@ -103,6 +103,7 @@ public class HoesNerfs extends Feature {
 
 	public void harderTilling(BlockEvent.BlockToolModificationEvent event) {
 		ItemStack hoe = event.getHeldItemStack();
+		//noinspection ConstantConditions getPlayer can't be null as it's called from onHoeUse that checks if player's null
 		if (event.getPlayer().getCooldowns().isOnCooldown(hoe.getItem()))
 			return;
 		int cooldown = 0;

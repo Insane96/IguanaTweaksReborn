@@ -26,7 +26,7 @@ public class SleepingEffects extends Feature {
 	private final ForgeConfigSpec.ConfigValue<List<? extends String>> effectsOnWakeUpConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> noSleepIfHungryConfig;
 
-	private final List<String> effectsOnWakeUpDefault = List.of("minecraft:slowness,400,0", "minecraft:regeneration,200,1", "minecraft:weakness,300,1", "minecraft:mining_fatigue,300,1");
+	private final List<String> effectsOnWakeUpDefault = List.of("minecraft:slowness,400,0", "minecraft:weakness,300,1", "minecraft:mining_fatigue,300,1");
 
 	public int hungerDepletedOnWakeUp = 11;
 	public ArrayList<MobEffectInstance> effectsOnWakeUp;

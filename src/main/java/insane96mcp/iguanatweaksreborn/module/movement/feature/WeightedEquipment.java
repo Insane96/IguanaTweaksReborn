@@ -56,7 +56,7 @@ public class WeightedEquipment extends Feature {
 	public double percentagePerToughness = 0.025d;
 	public ArrayList<ArmorMaterialWeight> materialWeight;
 	public ArrayList<ArmorEnchantmentWeight> enchantmentsList;
-	public double shieldSlowdown = 0.15d;
+	public double shieldSlowdown = 0.1d;
 
 	// 11 - 16 - 15 - 13
 	private final HashMap<EquipmentSlot, Double> armorDurabilityRatio = new HashMap<>();

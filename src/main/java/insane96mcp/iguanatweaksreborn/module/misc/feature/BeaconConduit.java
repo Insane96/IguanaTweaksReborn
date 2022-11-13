@@ -158,7 +158,7 @@ public class BeaconConduit extends Feature {
                 || !this.betterConduitProtection)
             return false;
 
-        List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, getRange(blockPos, blocks),
+        List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, getDamageAABB(blockPos, blocks),
                 (living) -> living instanceof Enemy && living.isInWaterOrRain());
 
         for (LivingEntity entity : list) {
@@ -168,17 +168,25 @@ public class BeaconConduit extends Feature {
             if (distance < 8d)
                 damage = MAX_DAMAGE;
             else
-                damage = (float) (((40d - (distance - 8d)) / 40d) * (MAX_DAMAGE - MIN_DAMAGE) + MIN_DAMAGE);
+                damage = (float)(1 - (distance - 8d) / (maxRangeRadius() - 8d)) * (MAX_DAMAGE - MIN_DAMAGE) + MIN_DAMAGE;
             entity.hurt(DamageSource.MAGIC, damage);
         }
         return true;
     }
 
-    private AABB getRange(BlockPos blockPos, List<BlockPos> blocks) {
+    private static AABB getDamageAABB(BlockPos blockPos, List<BlockPos> blocks) {
         double range = blocks.size() / 7d * 8d;
         int x = blockPos.getX();
         int y = blockPos.getY();
         int z = blockPos.getZ();
         return (new AABB(x, y, z, x + 1, y + 1, z + 1)).inflate(range);
+    }
+
+    private static double maxRange() {
+        return 42 / 7d * 8d;
+    }
+
+    private static double maxRangeRadius() {
+        return Math.sqrt(maxRange() * maxRange() + maxRange() * maxRange());
     }
 }

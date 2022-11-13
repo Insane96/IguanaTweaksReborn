@@ -1,8 +1,18 @@
 # Changelog
 
-## Upcoming
+## 2.12.8
 * Tamed pets now get the beacon effects
+* Greatly reduced Energy boost effectiveness (-1 -> -0.2 tiredness per second)
+* Increased Energy Boost default duration by 5x (and made it configurable)
+* Disabled hoes are no longer damaged when trying to till. They can still be used to break blocks.
+* Fog Under Lava with Fire Resistance is now more foggy
+* `Allow Sleeping During Day` is now disabled by default due to Tiredness controlling if you can sleep
+* Removed Regneration effect when waking up
+* Fixed conduit dealing near to 0 damage (instead of 2 minumum).
 * Fixed General Stacking not working
+* Fixed Fog Feature overwriting Tiredness fog
+* Fixed hunger consumption chance not taking into account the config option
+* Fixed tiredness multiplier not working
 
 ## 2.12.7
 * Well Fed and Injured can now be configured (Duration and effectiveness)
