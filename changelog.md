@@ -2,7 +2,7 @@
 
 ## Upcoming
 * Tamed pets now get the beacon effects
-* 
+* Fixed General Stacking not working
 
 ## 2.12.7
 * Well Fed and Injured can now be configured (Duration and effectiveness)

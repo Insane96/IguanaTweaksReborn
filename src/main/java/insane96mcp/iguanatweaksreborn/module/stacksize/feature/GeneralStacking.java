@@ -75,7 +75,7 @@ public class GeneralStacking extends Feature {
         blockStackAffectedByMaterialConfig = ITCommonConfig.builder
                 .comment("When true, block stacks are affected by both their material type and the block stack multiplier. If false, block stacks will be affected by the multiplier only.")
                 .define("Block Stack Affected by Material", blockStackAffectedByMaterial);
-        blacklistConfig = new Blacklist.Config(ITCommonConfig.builder, "Blacklist", "Items or tags that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item or tag. E.g. [\"#minecraft:fishes\", \"minecraft:stone\"].")
+        blacklistConfig = new Blacklist.Config(ITCommonConfig.builder, "Blacklist", "Items that will ignore the stack changes. This can be inverted via 'Blacklist as Whitelist'. Each entry has an item. E.g. [\"minecraft:stone\"].")
                 .setDefaultList(blacklistDefault)
                 .setIsDefaultWhitelist(false)
                 .build();
@@ -128,6 +128,8 @@ public class GeneralStacking extends Feature {
 
         for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
             Item item = entry.getKey();
+            if (item instanceof BlockItem)
+                continue;
             if (item.maxStackSize == 1)
                 continue;
             if (blacklist.isItemBlackOrNotWhiteListed(item))
@@ -148,6 +150,8 @@ public class GeneralStacking extends Feature {
 
         for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
             Item item = entry.getKey();
+            if (!(item instanceof BlockItem))
+                continue;
             if (item.maxStackSize == 1)
                 continue;
             if (blacklist.isItemBlackOrNotWhiteListed(item))
