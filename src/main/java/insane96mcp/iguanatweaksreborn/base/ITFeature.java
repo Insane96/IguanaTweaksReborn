@@ -40,7 +40,7 @@ public class ITFeature extends Feature {
     public void loadJsonConfigs() {
         jsonConfigFolder = new File(IguanaTweaksReborn.CONFIG_FOLDER + "/" + this.getModule().getName() + "/" + this.getName());
         if (!jsonConfigFolder.exists()) {
-            if (!jsonConfigFolder.mkdir()) {
+            if (!jsonConfigFolder.mkdirs()) {
                 LogHelper.warn("Failed to create %s json config folder", this.getName());
             }
         }
