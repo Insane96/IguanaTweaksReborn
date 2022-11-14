@@ -28,20 +28,22 @@ import java.util.List;
 public class ITFeature extends Feature {
     public ITFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        jsonConfigFolder = new File(IguanaTweaksReborn.CONFIG_FOLDER + "/" + module.getName() + "/" + this.getName());
+        ITDataReloadListener.INSTANCE.registerJsonConfigFeature(this);
+    }
+
+    private File jsonConfigFolder;
+
+    public File getJsonConfigFolder() {
+        return jsonConfigFolder;
+    }
+
+    public void loadJsonConfigs() {
+        jsonConfigFolder = new File(IguanaTweaksReborn.CONFIG_FOLDER + "/" + this.getModule().getName() + "/" + this.getName());
         if (!jsonConfigFolder.exists()) {
             if (!jsonConfigFolder.mkdir()) {
                 LogHelper.warn("Failed to create %s json config folder", this.getName());
             }
         }
-        ITDataReloadListener.INSTANCE.registerJsonConfigFeature(this);
-    }
-
-    protected final File jsonConfigFolder;
-
-    public void loadJsonConfigs() {
-        if (!jsonConfigFolder.exists())
-            jsonConfigFolder.mkdirs();
     }
 
     protected <T> void loadAndReadFile(String fileName, List<T> list, final List<T> defaultList, Type listType) {
@@ -75,6 +77,9 @@ public class ITFeature extends Feature {
         }
     }
 
+    /**
+     * Use this instead of Utils.isItemInTag when reloading data due to tags not existing yet at reload
+     */
     public static boolean isItemInTag(Item item, ResourceLocation tag) {
         TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, tag);
         Collection<Holder<Item>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);
@@ -85,6 +90,9 @@ public class ITFeature extends Feature {
         return false;
     }
 
+    /**
+     * Use this instead of Utils.isBlockInTag when reloading data due to tags not existing yet at reload
+     */
     public static boolean isBlockInTag(Block block, ResourceLocation tag) {
         TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, tag);
         Collection<Holder<Block>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);
@@ -95,6 +103,9 @@ public class ITFeature extends Feature {
         return false;
     }
 
+    /**
+     * Use this instead of Utils.isEntityInTag when reloading data due to tags not existing yet at reload
+     */
     public static boolean isEntityInTag(Entity entity, ResourceLocation tag) {
         TagKey<EntityType<?>> tagKey = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, tag);
         Collection<Holder<EntityType<?>>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);

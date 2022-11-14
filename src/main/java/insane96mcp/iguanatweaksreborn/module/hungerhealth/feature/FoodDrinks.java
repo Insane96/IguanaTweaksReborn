@@ -6,7 +6,6 @@ import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.utils.CustomFoodProperties;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
-import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -21,7 +20,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Type;
@@ -32,7 +30,7 @@ import java.util.List;
 @Label(name = "Food & Drinks", description = "Changes to food nourishment and the speed on how food is eaten or how items are consumed. Removing entries from the json requires a minecraft restart.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class FoodDrinks extends ITFeature {
-	public static final ResourceLocation FOOD_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_hunger_changes_food");
+	public static final ResourceLocation FOOD_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "food_drinks_no_hunger_changes");
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(Arrays.asList(
 			new CustomFoodProperties(IdTagMatcher.Type.ID, "minecraft:rotten_flesh", 2, -1, 50, false)
@@ -76,14 +74,8 @@ public class FoodDrinks extends ITFeature {
 			return;
 		super.loadJsonConfigs();
 		this.loadAndReadFile("food_properties.json", customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, customFoodPropertiesListType);
-		processCustomFoodValues();
-	}
-
-	@Override
-	public void readConfig(ModConfigEvent event) {
-		super.readConfig(event);
-
 		processFoodMultipliers();
+		processCustomFoodValues();
 	}
 
 	private static CustomFoodProperties customFoodPropertiesCache;
@@ -124,7 +116,6 @@ public class FoodDrinks extends ITFeature {
 	}
 
 	private boolean processedFoodMultipliers = false;
-	private boolean processedCustomFoodValues = false;
 
 	@SuppressWarnings("ConstantConditions")
 	public void processFoodMultipliers() {
@@ -134,10 +125,8 @@ public class FoodDrinks extends ITFeature {
 		processedFoodMultipliers = true;
 
 		for (Item item : ForgeRegistries.ITEMS.getValues()) {
-			if (!item.isEdible())
-				continue;
-
-			if (Utils.isItemInTag(item, FOOD_BLACKLIST))
+			if (!item.isEdible()
+					|| isItemInTag(item, FOOD_BLACKLIST))
 				continue;
 
 			FoodProperties food = item.getFoodProperties();
@@ -150,10 +139,8 @@ public class FoodDrinks extends ITFeature {
 
 	@SuppressWarnings("ConstantConditions")
 	public void processCustomFoodValues() {
-		if (!this.isEnabled())
-			return;
-
-		if (customFoodProperties.isEmpty())
+		if (!this.isEnabled()
+				|| customFoodProperties.isEmpty())
 			return;
 
 		for (CustomFoodProperties foodValue : customFoodProperties) {

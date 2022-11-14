@@ -1,10 +1,9 @@
 package insane96mcp.iguanatweaksreborn.module.stacksize.feature;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.iguanatweaksreborn.utils.Weights;
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -24,8 +23,7 @@ import java.util.Map;
 
 @Label(name = "General Stacking", description = "Make food, items and blocks less stackable. Items and Blocks are disabled by default.")
 @LoadFeature(module = Modules.Ids.STACK_SIZE)
-public class GeneralStacking extends Feature {
-    //TODO doesn't work as tags are loaded later in a world and not when the game starts
+public class GeneralStacking extends ITFeature {
     public static final ResourceLocation NO_STACK_SIZE_CHANGES = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_stack_size_changes");
 
     @Config
@@ -58,119 +56,116 @@ public class GeneralStacking extends Feature {
     }
 
     @Override
+    public void loadJsonConfigs() {
+        synchronized (mutex) {
+            resetStackSizes();
+            processItemStackSizes();
+            processBlockStackSizes();
+            processStewStackSizes();
+            processFoodStackSizes();
+        }
+    }
+
+    @Override
     public void readConfig(final ModConfigEvent event) {
         super.readConfig(event);
-        processItemStackSizes();
-        processBlockStackSizes();
-        processStewStackSizes();
-        processFoodStackSizes();
     }
 
     private final Object mutex = new Object();
 
-    HashMap<Item, Integer> originalItemStackSizes = new HashMap<>();
-    //Items
-    public void processItemStackSizes() {
-        if (!this.isEnabled())
-            return;
-        if (itemStackMultiplier == 1d)
-            return;
-
-        synchronized (mutex) {
-            if (originalItemStackSizes.isEmpty()) {
-                for (Item item : ForgeRegistries.ITEMS.getValues()) {
-                    if (item instanceof BlockItem)
-                        continue;
-                    originalItemStackSizes.put(item, item.maxStackSize);
-                }
+    HashMap<Item, Integer> originalStackSizes = new HashMap<>();
+    public void resetStackSizes() {
+        if (originalStackSizes.isEmpty()) {
+            for (Item item : ForgeRegistries.ITEMS.getValues()) {
+                originalStackSizes.put(item, item.maxStackSize);
             }
-
-            for (Map.Entry<Item, Integer> entry : originalItemStackSizes.entrySet()) {
-                Item item = entry.getKey();
-                if (item.maxStackSize == 1)
-                    continue;
-                if (Utils.isItemInTag(item, NO_STACK_SIZE_CHANGES))
-                    continue;
-
-                double stackSize = entry.getValue() * itemStackMultiplier;
-                stackSize = Mth.clamp(stackSize, 1, 64);
-                item.maxStackSize = (int) Math.round(stackSize);
+        }
+        else {
+            for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
+                entry.getKey().maxStackSize = entry.getValue();
             }
         }
     }
 
-    HashMap<Item, Integer> originalBlockStackSizes = new HashMap<>();
+    //Items
+    public void processItemStackSizes() {
+        if (!this.isEnabled()
+                || itemStackMultiplier == 1d)
+            return;
+
+        for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
+            Item item = entry.getKey();
+            if (item instanceof BlockItem
+                    || item.maxStackSize == 1
+                    || isItemInTag(item, NO_STACK_SIZE_CHANGES))
+                continue;
+
+            double stackSize = entry.getValue() * itemStackMultiplier;
+            stackSize = Mth.clamp(stackSize, 1, 64);
+            item.maxStackSize = (int) Math.round(stackSize);
+        }
+    }
+
     //Blocks
     public void processBlockStackSizes() {
-        if (!this.isEnabled())
+        if (!this.isEnabled()
+                || !blockStackReduction)
             return;
-        if (!blockStackReduction)
-            return;
-        synchronized (mutex) {
-            if (originalBlockStackSizes.isEmpty()) {
-                for (Item item : ForgeRegistries.ITEMS.getValues()) {
-                    if (!(item instanceof BlockItem))
-                        continue;
-                    originalBlockStackSizes.put(item, item.maxStackSize);
-                }
-            }
 
-            for (Map.Entry<Item, Integer> entry : originalBlockStackSizes.entrySet()) {
-                Item item = entry.getKey();
-                if (item.maxStackSize == 1)
-                    continue;
-                if (Utils.isItemInTag(item, NO_STACK_SIZE_CHANGES))
-                    continue;
+        for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
+            Item item = entry.getKey();
+            if (!(item instanceof BlockItem)
+                    || item.maxStackSize == 1
+                    || isItemInTag(item, NO_STACK_SIZE_CHANGES))
+                continue;
 
-                Block block = ((BlockItem) item).getBlock();
-                double weight = blockStackAffectedByMaterial ? Weights.getWeightForState(block.defaultBlockState()) : 1d;
-                double stackSize = (entry.getValue() / weight) * blockStackMultiplier;
-                stackSize = Mth.clamp(stackSize, 1, 64);
-                item.maxStackSize = (int) Math.round(stackSize);
-            }
+            Block block = ((BlockItem) item).getBlock();
+            double weight = blockStackAffectedByMaterial ? Weights.getWeightForState(block.defaultBlockState()) : 1d;
+            double stackSize = (entry.getValue() / weight) * blockStackMultiplier;
+            stackSize = Mth.clamp(stackSize, 1, 64);
+            item.maxStackSize = (int) Math.round(stackSize);
         }
+
     }
 
     //Stews
     public void processStewStackSizes() {
-        if (!this.isEnabled())
+        if (!this.isEnabled()
+                || stackableSoups == 1)
             return;
-        if (stackableSoups == 1)
-            return;
-        synchronized (mutex) {
-            for (Item item : ForgeRegistries.ITEMS.getValues()) {
-                if (!(item instanceof BowlFoodItem) && !(item instanceof SuspiciousStewItem))
-                    continue;
-                if (Utils.isItemInTag(item, NO_STACK_SIZE_CHANGES))
-                    continue;
 
-                item.maxStackSize = Math.round(stackableSoups);
-            }
+        for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
+            Item item = entry.getKey();
+            if (!(item instanceof BowlFoodItem) && !(item instanceof SuspiciousStewItem)
+                    || isItemInTag(item, NO_STACK_SIZE_CHANGES))
+                continue;
+
+            item.maxStackSize = Math.round(stackableSoups);
         }
+
     }
 
     //Food
     @SuppressWarnings("deprecation")
     public void processFoodStackSizes() {
-        if (!this.isEnabled())
+        if (!this.isEnabled()
+                || !foodStackReduction)
             return;
-        if (!foodStackReduction)
-            return;
-        synchronized (mutex) {
-            for (Item item : ForgeRegistries.ITEMS.getValues()) {
-                if (!item.isEdible())
-                    continue;
-                if (Utils.isItemInTag(item, NO_STACK_SIZE_CHANGES))
-                    continue;
 
-                int hunger = item.getFoodProperties().getNutrition();
-                double saturation = item.getFoodProperties().getSaturationModifier();
-                double effectiveQuality = hunger + (hunger * saturation * 2d);
-                double stackSize = (1 - (effectiveQuality - 1) / foodQualityDivider) * 64;
-                stackSize *= foodStackMultiplier;
-                stackSize = Mth.clamp(stackSize, 1, 64);
-                item.maxStackSize = (int) Math.round(stackSize);
-            }
+        for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
+            Item item = entry.getKey();
+            if (!item.isEdible()
+                    || isItemInTag(item, NO_STACK_SIZE_CHANGES))
+                continue;
+
+            //noinspection ConstantConditions Can't be null as I check for Item#isEdible
+            int hunger = item.getFoodProperties().getNutrition();
+            double saturation = item.getFoodProperties().getSaturationModifier();
+            double effectiveQuality = hunger + (hunger * saturation * 2d);
+            double stackSize = (1 - (effectiveQuality - 1) / foodQualityDivider) * 64;
+            stackSize *= foodStackMultiplier;
+            stackSize = Mth.clamp(stackSize, 1, 64);
+            item.maxStackSize = (int) Math.round(stackSize);
         }
     }
 

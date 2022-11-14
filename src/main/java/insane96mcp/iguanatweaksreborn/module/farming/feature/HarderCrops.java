@@ -1,9 +1,9 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -18,16 +18,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
 
 @Label(name = "Harder Crops", description = """
 		Crops are no longer insta-minable. This applies only to blocks that are instances of net.minecraft.world.level.block.CropBlock.
-		Crops hardness is still affected by the Hardness module.
-		Changing anything requires a minecraft restart.""")
+		Break speed is still affected by the Hardness module.""")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class HarderCrops extends Feature {
+public class HarderCrops extends ITFeature {
 	public static final ResourceLocation HARDER_CROPS_TAG = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "harder_crops");
+	public static final ResourceLocation HARDER_CROPS_BLACKLIST_TAG = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "harder_crops_blacklist");
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Hardness", description = "How hard to break are plants? For comparison, dirt has an hardness of 0.5")
 	public static Double hardness = 1.0d;
@@ -40,21 +41,43 @@ public class HarderCrops extends Feature {
 	}
 
 	@Override
-	public void readConfig(final ModConfigEvent event) {
-		super.readConfig(event);
+	public void loadJsonConfigs() {
+		if (!this.isEnabled())
+			return;
+
+		resetOriginalHardness();
 		applyHardness();
 	}
 
-	private boolean hardnessApplied = false;
+	ArrayList<BlockState> changedStates = new ArrayList<>();
+
+	private void resetOriginalHardness() {
+		if (changedStates.isEmpty()) {
+			for (Block block : ForgeRegistries.BLOCKS.getValues()) {
+				boolean isInTag = isBlockInTag(block, HARDER_CROPS_TAG);
+				if (!(block instanceof CropBlock) && !isInTag)
+					continue;
+
+				block.getStateDefinition().getPossibleStates().forEach(blockState -> {
+					if (blockState.destroySpeed == 0f)
+						changedStates.add(blockState);
+				});
+			}
+		}
+		else {
+			for (BlockState state : changedStates) {
+				state.destroySpeed = 0f;
+			}
+		}
+	}
 
 	private void applyHardness() {
-		if (!this.isEnabled()
-				|| hardnessApplied) return;
-		hardnessApplied = true;
-
 		for (Block block : ForgeRegistries.BLOCKS.getValues()) {
-			boolean isInTag = Utils.isBlockInTag(block, HARDER_CROPS_TAG);
+			boolean isInTag = isBlockInTag(block, HARDER_CROPS_TAG);
+			boolean isBlacklisted = isBlockInTag(block, HARDER_CROPS_BLACKLIST_TAG);
 			if (!(block instanceof CropBlock) && !isInTag)
+				continue;
+			if (isBlacklisted)
 				continue;
 			if (onlyFullyGrown) {
 				//I have doubts that this always takes the fully grown modded crops
@@ -74,7 +97,8 @@ public class HarderCrops extends Feature {
 	@SubscribeEvent
 	public void onCropBreaking(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled()
-				|| hardness == 0d) return;
+				|| hardness == 0d)
+			return;
 		ItemStack heldStack = event.getEntity().getMainHandItem();
 		if (!(heldStack.getItem() instanceof TieredItem heldItem))
 			return;
