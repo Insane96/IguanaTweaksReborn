@@ -4,7 +4,7 @@
 * Removed Regeneration from Sleeping Effect
 * Fixed tags that loaded on config change not working
   * `iguanatweaksreborn:harder_crops`, `iguanatweaksreborn:food_drinks_no_hunger_changes`, `iguanatweaksreborn:no_stack_size_changes`
-* 
+* Also fixed tags in jsons not working
 
 ## Beta 2.13.2
 * Requires InsaneLib 1.7.2

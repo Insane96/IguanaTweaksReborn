@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Custom Stack Size", description = "Change stack sizes as you please")
+@Label(name = "Custom Stack Size", description = "Change stack sizes as you please. Changing stuff might require a Minecraft restart.")
 @LoadFeature(module = Modules.Ids.STACK_SIZE)
 public class CustomStackSize extends ITFeature {
     public static final List<IdTagValue> CUSTOM_STACK_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
@@ -58,7 +58,7 @@ public class CustomStackSize extends ITFeature {
 
         synchronized (mutex) {
             for (IdTagValue customStackSize : customStackList) {
-                customStackSize.getAllItems().forEach(item -> item.maxStackSize = (int) Mth.clamp(customStackSize.value, 1, 64));
+                getAllItems(customStackSize).forEach(item -> item.maxStackSize = (int) Mth.clamp(customStackSize.value, 1, 64));
             }
         }
     }

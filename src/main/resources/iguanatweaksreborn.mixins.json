@@ -4,6 +4,7 @@
     "compatibilityLevel": "JAVA_8",
     "refmap": "iguanatweaksreborn.refmap.json",
     "mixins": [
+        "AbstractArrowMixin",
         "AnvilMenuMixin",
         "AssignProfessionFromJobSiteMixin",
         "BaseSpawnerMixin",

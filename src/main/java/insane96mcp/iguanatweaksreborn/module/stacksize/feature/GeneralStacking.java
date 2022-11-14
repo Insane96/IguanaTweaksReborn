@@ -21,7 +21,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.HashMap;
 import java.util.Map;
 
-@Label(name = "General Stacking", description = "Make food, items and blocks less stackable. Items and Blocks are disabled by default.")
+@Label(name = "General Stacking", description = "Make food, items and blocks less stackable. Items and Blocks are disabled by default. Changing stuff might require a Minecraft restart.")
 @LoadFeature(module = Modules.Ids.STACK_SIZE)
 public class GeneralStacking extends ITFeature {
     public static final ResourceLocation NO_STACK_SIZE_CHANGES = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_stack_size_changes");
@@ -58,7 +58,12 @@ public class GeneralStacking extends ITFeature {
     @Override
     public void loadJsonConfigs() {
         synchronized (mutex) {
-            resetStackSizes();
+            //resetStackSizes();
+            if (originalStackSizes.isEmpty()) {
+                for (Item item : ForgeRegistries.ITEMS.getValues()) {
+                    originalStackSizes.put(item, item.maxStackSize);
+                }
+            }
             processItemStackSizes();
             processBlockStackSizes();
             processStewStackSizes();

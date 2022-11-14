@@ -144,7 +144,7 @@ public class FoodDrinks extends ITFeature {
 			return;
 
 		for (CustomFoodProperties foodValue : customFoodProperties) {
-			List<Item> items = foodValue.getAllItems();
+			List<Item> items = getAllItems(foodValue);
 			for (Item item : items) {
 				if (!item.isEdible()) {
 					LogHelper.warn("In Custom Food Value %s is not a food", item);
@@ -162,6 +162,5 @@ public class FoodDrinks extends ITFeature {
 
 		//reset cache when reloading
 		customFoodPropertiesCache = null;
-
 	}
 }

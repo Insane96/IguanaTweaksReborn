@@ -8,6 +8,7 @@ import insane96mcp.iguanatweaksreborn.data.ITDataReloadListener;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -22,6 +23,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -91,6 +93,22 @@ public class ITFeature extends Feature {
     }
 
     /**
+     * Use this instead of IdTagMatcher#getAllItems when reloading data due to tags not existing yet at reload
+     */
+    public static List<Item> getAllItems(IdTagMatcher idTagMatcher) {
+        if (idTagMatcher.type == IdTagMatcher.Type.ID)
+            return idTagMatcher.getAllItems();
+
+        TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, idTagMatcher.location);
+        Collection<Holder<Item>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);
+        ArrayList<Item> list = new ArrayList<>();
+        for (Holder<Item> holder : tags) {
+            list.add(holder.value());
+        }
+        return list;
+    }
+
+    /**
      * Use this instead of Utils.isBlockInTag when reloading data due to tags not existing yet at reload
      */
     public static boolean isBlockInTag(Block block, ResourceLocation tag) {
@@ -101,6 +119,22 @@ public class ITFeature extends Feature {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * Use this instead of IdTagMatcher#getAllBlocks when reloading data due to tags not existing yet at reload
+     */
+    public static List<Block> getAllBlocks(IdTagMatcher idTagMatcher) {
+        if (idTagMatcher.type == IdTagMatcher.Type.ID)
+            return idTagMatcher.getAllBlocks();
+
+        TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, idTagMatcher.location);
+        Collection<Holder<Block>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);
+        ArrayList<Block> list = new ArrayList<>();
+        for (Holder<Block> holder : tags) {
+            list.add(holder.value());
+        }
+        return list;
     }
 
     /**
