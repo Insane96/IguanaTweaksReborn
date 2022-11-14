@@ -7,6 +7,7 @@
   * Like combat test snapshots, hitting a mob with multiple arrows will no longer bounce them off but actually hit it.
 * Removed Regeneration from Sleeping Effect
 * Night vision fade out now take 3 seconds instead of 4
+* Sped up a few materials slowdowns
 * Fixed tags that loaded on config change not working
   * `iguanatweaksreborn:harder_crops`, `iguanatweaksreborn:food_drinks_no_hunger_changes`, `iguanatweaksreborn:no_stack_size_changes`
 * Also fixed tags in json not working
