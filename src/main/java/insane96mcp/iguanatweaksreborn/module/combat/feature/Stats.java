@@ -63,6 +63,9 @@ public class Stats extends ITFeature {
 	@Label(name = "Adjust Crossbow Damage", description = "If true, Arrows from Crossbows will no longer deal random damage, but a set amount of damage (about 9 at a medium distance, like Bedrock Edition).")
 	public static Boolean adjustCrossbowDamage = true;
 	@Config
+	@Label(name = "Arrows don't trigger invincibility frames", description = "If true, Arrows will no longer trigger the invincibility frames (like Combat Test Snapshots).")
+	public static Boolean arrowsNoInvincFrames = true;
+	@Config
 	@Label(name = "Nerf Protection Enchantment", description = """
 						DISABLE: Disables protection enchantment.
 						NERF: Sets max protection level to 3 instead of 4
@@ -164,6 +167,10 @@ public class Stats extends ITFeature {
 
 	public static boolean disableEnchantment(Enchantment enchantment) {
 		return enchantment == Enchantments.ALL_DAMAGE_PROTECTION && protectionNerf == ProtectionNerf.DISABLE;
+	}
+
+	public static boolean disableArrowInvFrames() {
+		return isEnabled(Stats.class) && arrowsNoInvincFrames;
 	}
 
 	public enum ProtectionNerf {
