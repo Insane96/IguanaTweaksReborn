@@ -79,6 +79,8 @@ public class Villagers extends Feature {
 		return specialPriceDiff;
 	}
 
+
+	//TODO Check if can be done better, maybe changing -maxUses to 0
 	public static int clampDemand(int demand, int maxUses) {
 		if (!isEnabled(Villagers.class)
 				|| !clampNegativeDemand)
