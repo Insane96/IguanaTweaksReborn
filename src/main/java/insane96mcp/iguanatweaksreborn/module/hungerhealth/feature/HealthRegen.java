@@ -73,6 +73,7 @@ public class HealthRegen extends Feature {
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Effects.Well Fed Effectiveness", description = "How much does health regen Well Fed increases per level. (This is inversely proportional, a value of 0.25 makes makes time to regen lower by 20%. A value of 1.0 makes time to regen lower by 50%.")
 	public static Double wellFedEffectiveness = 0.25d;
+	//TODO still not happy, actually explore the idea of eating from low hunger
 	@Config(min = 0d, max = 255d)
 	@Label(name = "Effects.Well Fed Min Nourishment", description = "How much food effectiveness (hunger + saturation) the food must give for the effect to apply")
 	public static Double wellFedMinNourishment = 10d;

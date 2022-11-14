@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* TODO Add an exhaustion reduction method
 * Added `Arrows don't trigger invincibility frames`.
   * Like combat test snapshots, hitting a mob with multiple arrows will no longer bounce them off but actually hit it.
 * Removed Regeneration from Sleeping Effect
