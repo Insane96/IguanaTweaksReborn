@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Zombie.class)
 public class ZombieMixin {
-	//TODO Try and move to LivingConversionEvent.Pre
 	@Inject(at = @At("TAIL"), method = "wasKilled")
 	private void wasKilled(ServerLevel level, LivingEntity killedEntity, CallbackInfoReturnable<Boolean> callbackInfo) {
 		Villagers.onZombieKillEntity((Zombie) (Object) this, level, killedEntity);

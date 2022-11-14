@@ -13,7 +13,6 @@
         "ConduitBlockEntityMixin",
         "EnchantmentMixin",
         "EntityMixin",
-        "ExperienceOrbMixin",
         "FoodDataMixin",
         "ItemMixin",
         "LivingEntityMixin",

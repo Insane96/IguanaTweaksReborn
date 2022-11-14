@@ -12,6 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownExperienceBottle;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -22,6 +23,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.Map;
@@ -115,6 +118,27 @@ public class OtherExperience extends Feature {
 		}
 	}
 
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void unmending(PlayerXpEvent.PickupXp event) {
+		if (!this.isEnabled()
+				|| !unmending
+				|| event.isCanceled())
+			return;
+
+		Player player = event.getEntity();
+		ExperienceOrb orb = event.getOrb();
+
+		player.takeXpDelay = 2;
+		player.take(orb, 1);
+		if(orb.value > 0)
+			player.giveExperiencePoints(orb.value);
+
+		--orb.count;
+		if (orb.count == 0)
+			orb.discard();
+		event.setCanceled(true);
+	}
+
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onTooltip(ItemTooltipEvent event) {
@@ -126,9 +150,5 @@ public class OtherExperience extends Feature {
 		int repairCost = event.getItemStack().getBaseRepairCost();
 		if(repairCost > 0)
 			event.getToolTip().add(Component.translatable(Strings.Translatable.ITEM_REPAIRED).withStyle(ChatFormatting.YELLOW));
-	}
-
-	public static boolean isUnmendingEnabled() {
-		return isEnabled(OtherExperience.class) && unmending;
 	}
 }
