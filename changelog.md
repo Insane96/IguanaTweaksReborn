@@ -9,8 +9,11 @@
 * Night vision fade out now take 3 seconds instead of 4
 * Changed a few materials slowdowns
   * In Plants (15% -> 10%)
+  * In Bamboo Saplings (15% -> 10%)
   * On Snow (20% -> 10%)
   * On Snow layers (top_snow) (0% -> 10%)
+  * On Wool (20% -> 15%)
+  * On Bamboo (10% -> 15%)
 * Fixed tags that loaded on config change not working
   * `iguanatweaksreborn:harder_crops`, `iguanatweaksreborn:food_drinks_no_hunger_changes`, `iguanatweaksreborn:no_stack_size_changes`
 * Also fixed tags in json not working
