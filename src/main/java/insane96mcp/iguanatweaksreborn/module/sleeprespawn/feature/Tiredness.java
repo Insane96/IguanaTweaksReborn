@@ -144,10 +144,8 @@ public class Tiredness extends ITFeature {
 	}
 
 	public static void onFoodExhaustion(Player player, float amount) {
-		if (!isEnabled(Tiredness.class))
-			return;
-
-		if (player.level.isClientSide)
+		if (!isEnabled(Tiredness.class)
+				|| player.level.isClientSide)
 			return;
 
 		ServerPlayer serverPlayer = (ServerPlayer) player;
@@ -206,6 +204,8 @@ public class Tiredness extends ITFeature {
 			return;
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> {
 			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) - tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
+			if (tirednessOnWakeUp <= 0)
+				player.addEffect(new MobEffectInstance(ITMobEffects.PUMPED.get(), 12000, 0));
 			player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, tirednessOnWakeUp);
 		});
 	}
