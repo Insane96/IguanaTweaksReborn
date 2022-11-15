@@ -15,6 +15,7 @@ public class Strings {
 
 		public static final String SPAWNER_CAP = IguanaTweaksReborn.RESOURCE_PREFIX + "spawner_cap";
 		public static final String TIREDNESS = IguanaTweaksReborn.RESOURCE_PREFIX + "tiredness";
+        public static final String DAMAGE_HISTORY = IguanaTweaksReborn.RESOURCE_PREFIX + "damage_history";
     }
 
 	public static class AttributeModifiers {
