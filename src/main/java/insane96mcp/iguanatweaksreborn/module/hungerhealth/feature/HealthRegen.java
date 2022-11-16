@@ -3,7 +3,6 @@ package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -18,6 +17,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.food.FoodProperties;
@@ -31,7 +31,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.text.DecimalFormat;
-import java.util.List;
 
 @Label(name = "Health Regen", description = "Makes Health regen work differently, like in Combat Test snapshots. Can be customized. Also adds Well Fed and Injured effects.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
@@ -83,7 +82,7 @@ public class HealthRegen extends Feature {
 	@Label(name = "Effects.Well Fed Min Nourishment", description = "How much food effectiveness (hunger + saturation) the food must give for the effect to apply")
 	public static Double wellFedMinNourishment = 10d;
 	@Config
-	@Label(name = "Effects.Enable Injured", description = "Set to true to enable Injured, a new effect that slows down health regen. It's applied when the player takes 3 hits (at least half a heart) in the last 6 seconds. The effect slows down health regen by 20% per level.")
+	@Label(name = "Effects.Enable Injured", description = "Set to true to enable Injured, a new effect that slows down health regen. It's applied when the player takes 3 hits (at least half a heart) in the last 9 seconds (by default). The effect slows down health regen by 20% per level.")
 	public static Boolean enableInjured = true;
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Effects.Injured Duration Multiplier", description = "Multiplies the base duration of Injured by this value. Base duration is 1 second per point of damage.")
@@ -92,10 +91,13 @@ public class HealthRegen extends Feature {
 	@Label(name = "Effects.Injured Effectiveness", description = "How much does health regen Injured decreases per level.")
 	public static Double injuredEffectiveness = 0.2d;
 	@Config(min = 0)
-	@Label(name = "Effects.Injured Times hit", description = "How many times the player must be hit in a span of 6 second to apply the effect")
+	@Label(name = "Effects.Injured Times hit", description = "How many times the player must be hit in a span of \"Injured time to get damaged\" second to apply the effect")
 	public static Integer injuredTimesHit = 3;
+	@Config(min = 0)
+	@Label(name = "Effects.Injured time to get damaged", description = "Time to get hit \"Injured Times hit\" times and get the effect")
+	public static Integer injuredTimeToGetDamaged = 9;
 	@Config(min = 0d, max = 1024d)
-	@Label(name = "Effects.Injured Min Damage", description = "How much damage will make the damage account for \"times hit\"")
+	@Label(name = "Effects.Injured Min Damage", description = "How much damage will make the damage account for \"Injured Times hit\"")
 	public static Double injuredMinDamage = 1d;
 
 	public HealthRegen(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -119,21 +121,14 @@ public class HealthRegen extends Feature {
 		}
 	}
 
-	private static final List<DamageSource> noInjuredDamageSources = List.of(DamageSource.STARVE, DamageSource.DROWN, DamageSource.FREEZE, DamageSource.HOT_FLOOR);
-
 	@SubscribeEvent
 	public void onPlayerDamaged(LivingDamageEvent event) {
 		if (!this.isEnabled()
 				|| !enableInjured
 				|| !(event.getEntity() instanceof Player playerEntity)
+				|| !(event.getSource().getEntity() instanceof LivingEntity)
 				|| event.getAmount() < injuredMinDamage)
 			return;
-
-		for (DamageSource damageSource : noInjuredDamageSources) {
-			if (event.getSource().equals(damageSource)) {
-				return;
-			}
-		}
 
 		ListTag listTag;
 		if (!playerEntity.getPersistentData().contains(Strings.Tags.DAMAGE_HISTORY)) {
@@ -159,22 +154,26 @@ public class HealthRegen extends Feature {
 		}
 
 		int firstHit = listTag.getCompound(0).getInt("tick");
-		if (listTag.size() == injuredTimesHit && playerEntity.tickCount - firstHit < 120) {
-			float totalDamage = 0f;
-			for (int i = 0; i < listTag.size(); i++) {
-				totalDamage += listTag.getCompound(i).getFloat("damage");
-			}
-			int duration = (int) ((totalDamage * 20) * injuredDurationMultiplier);
-			if (duration == 0)
-				return;
-			LogHelper.info("duration: %s", duration);
-			if (playerEntity.hasEffect(ITMobEffects.INJURED.get()))
+
+		if (listTag.size() == injuredTimesHit && playerEntity.tickCount - firstHit < injuredTimeToGetDamaged * 20) {
+			int duration;
+			if (playerEntity.hasEffect(ITMobEffects.INJURED.get())) {
+				duration = (int) ((event.getAmount() * 20) * injuredDurationMultiplier);
 				//noinspection ConstantConditions
 				duration += playerEntity.getEffect(ITMobEffects.INJURED.get()).getDuration();
+			}
+			else {
+				float totalDamage = 0f;
+				for (int i = 0; i < listTag.size(); i++) {
+					totalDamage += listTag.getCompound(i).getFloat("damage");
+				}
+				duration = (int) ((totalDamage * 20) * injuredDurationMultiplier);
+			}
+			if (duration == 0)
+				return;
 			playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.INJURED.get(), duration, 0, true, false, true, false));
-			listTag.clear();
+			listTag.remove(0);
 		}
-		LogHelper.info("saved listTag: %s", listTag);
 		playerEntity.getPersistentData().put(Strings.Tags.DAMAGE_HISTORY, listTag);
 	}
 
