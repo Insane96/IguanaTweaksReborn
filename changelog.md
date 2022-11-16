@@ -3,8 +3,9 @@
 ## Upcoming
 * Reworked Injured Effect
   * Now applied after getting hit 3 times by a mob (directly or indirectly) in the last 9 seconds. If hit when the effect is still active, duration will stack up.
-* Added "~~Pumped~~" effect, given when the player sleeps and doesn't have the Tired effect
+* Added "~~Pumped~~" effect
   * Decreases hunger consumption
+  * Given when the player sleeps and doesn't have the Tired effect. For 8 minutes level II
 * Added `Arrows don't trigger invincibility frames`.
   * Like combat test snapshots, hitting a mob with multiple arrows will no longer bounce them off but actually hit it.
 * Removed Regeneration from Sleeping Effect

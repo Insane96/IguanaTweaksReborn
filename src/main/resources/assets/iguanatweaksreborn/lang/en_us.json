@@ -19,13 +19,13 @@
 	"effect.iguanatweaksreborn.well_fed": "Well Fed",
 	"effect.iguanatweaksreborn.tired": "Tired",
 	"effect.iguanatweaksreborn.energy_boost": "Energy Boost",
-	"effect.iguanatweaksreborn.pumped": "Pumped",
+	"effect.iguanatweaksreborn.well_rested": "Well Rested",
 
 	"effect.iguanatweaksreborn.injured.description": "Obtained when damaged. Reduces health regen by 20% per level.",
 	"effect.iguanatweaksreborn.well_fed.description": "Obtained when eating. Increases health regen by 25% per level.",
 	"effect.iguanatweaksreborn.tired.description": "Obtained when haven't slept in a while. Reduces movement speed and sight.",
 	"effect.iguanatweaksreborn.energy_boost.description": "Decreases tiredness by 0.2 each second.",
-	"effect.iguanatweaksreborn.pumped.description": "Decreases hunger consumption by 20% per level.",
+	"effect.iguanatweaksreborn.well_rested.description": "Decreases hunger consumption by 20% per level.",
 
 	"container.repair.free": "No Cost",
 	"iguanatweaksreborn.item_repaired": "Item got repaired"

@@ -13,11 +13,11 @@ public class Pumped extends ITMobEffect {
     }
 
     public static float decreaseExhaustionConsumption(Player player, float exhaustion) {
-        if (!player.hasEffect(ITMobEffects.PUMPED.get()))
+        if (!player.hasEffect(ITMobEffects.WELL_RESTED.get()))
             return exhaustion;
 
         //noinspection ConstantConditions
-        int amp = player.getEffect(ITMobEffects.PUMPED.get()).getAmplifier() + 1;
+        int amp = player.getEffect(ITMobEffects.WELL_RESTED.get()).getAmplifier() + 1;
         return exhaustion * Math.max(0, 1 - amp * 0.2f);
     }
 }

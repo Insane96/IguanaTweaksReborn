@@ -81,6 +81,16 @@ public class Tiredness extends ITFeature {
 	@Config(min = 0d)
 	@Label(name = "Default Energy Boost Duration Multiplier", description = "By default if omitted in the json, food items will give 1 second of Energy Boost per effective nourishment (hunger + saturation) of the food. This multiplies the duration of the effect")
 	public static Double defaultEnergyBoostDurationMultiplier = 5d;
+	//Well Rested
+	@Config(min = 0d)
+	@Label(name = "Well Rested.Tiredness on wake up", description = "How much max tiredness the player can have on wake up to get the Well Rested effect?")
+	public static Double wellRestedTirednessOnWakeUp = 10d;
+	@Config(min = 0)
+	@Label(name = "Well Rested.Duration", description = "Duration (in seconds) of the well rested effect on wake up")
+	public static Integer wellRestedDuration = 480;
+	@Config(min = 0)
+	@Label(name = "Well Rested.Amplifier", description = "Amplifier (effect level) of well rested effect on wake up. (Note 0 = Level I, 1 = II, ...)")
+	public static Integer wellRestedAmplifier = 1;
 
 	public Tiredness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -121,26 +131,22 @@ public class Tiredness extends ITFeature {
 		if (!this.isEnabled()
 				|| !event.getItem().isEdible())
 			return;
-		EnergyBoostItem energyBoostItem = null;
-		for (EnergyBoostItem energyBoostItem1 : energyBoostItems) {
-			if (energyBoostItem1.matchesItem(event.getItem().getItem()))
-				energyBoostItem = energyBoostItem1;
-		}
-		if (energyBoostItem == null)
-			return;
+		for (EnergyBoostItem energyBoostItem : energyBoostItems) {
+			if (energyBoostItem.matchesItem(event.getItem().getItem())) {
+				Player playerEntity = (Player) event.getEntity();
+				int duration, amplifier;
+				if (energyBoostItem.duration == 0) {
+					FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
+					duration = (int) ((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20 * defaultEnergyBoostDurationMultiplier);
+				}
+				else {
+					duration = energyBoostItem.duration;
+				}
+				amplifier = energyBoostItem.amplifier;
 
-		Player playerEntity = (Player) event.getEntity();
-		int duration, amplifier;
-		if (energyBoostItem.duration == 0) {
-			FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
-			duration = (int) ((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20 * defaultEnergyBoostDurationMultiplier);
+				playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.ENERGY_BOOST.get(), duration, amplifier, true, false, true, false));
+			}
 		}
-		else {
-			duration = energyBoostItem.duration;
-		}
-		amplifier = energyBoostItem.amplifier;
-
-		playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.ENERGY_BOOST.get(), duration, amplifier, true, false, true, false));
 	}
 
 	public static void onFoodExhaustion(Player player, float amount) {
@@ -204,8 +210,8 @@ public class Tiredness extends ITFeature {
 			return;
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> {
 			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) - tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
-			if (tirednessOnWakeUp <= 0)
-				player.addEffect(new MobEffectInstance(ITMobEffects.PUMPED.get(), 12000, 0));
+			if (tirednessOnWakeUp <= wellRestedTirednessOnWakeUp)
+				player.addEffect(new MobEffectInstance(ITMobEffects.WELL_RESTED.get(), wellRestedDuration * 20, wellRestedAmplifier));
 			player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, tirednessOnWakeUp);
 		});
 	}
@@ -217,6 +223,7 @@ public class Tiredness extends ITFeature {
 		event.setResult(Event.Result.ALLOW);
 	}
 
+	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public static boolean canSleepDuringDay(Player player) {
 		return isEnabled(Tiredness.class)
 				&& player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) > tirednessToEffect;
