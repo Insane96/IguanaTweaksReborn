@@ -155,6 +155,7 @@ public class HealthRegen extends Feature {
 
 		int firstHit = listTag.getCompound(0).getInt("tick");
 
+		//TODO Change so if hit 3 times again if the effect is still active the amplifier increases and duration refreshes (no longer stacks up)
 		if (listTag.size() == injuredTimesHit && playerEntity.tickCount - firstHit < injuredTimeToGetDamaged * 20) {
 			int duration;
 			if (playerEntity.hasEffect(ITMobEffects.INJURED.get())) {
