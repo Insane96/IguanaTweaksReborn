@@ -76,7 +76,7 @@ public class HealthRegen extends Feature {
 	@Label(name = "Effects.Well Fed Duration Multiplier", description = "Multiplies the base duration of Well Fed by this value. Base duration is 1 second per food effectiveness (hunger + saturation).")
 	public static Double wellFedDurationMultiplier = 2.0d;
 	@Config(min = 0d, max = 10d)
-	@Label(name = "Effects.Well Fed Effectiveness", description = "How much does health regen Well Fed increases per level. (This is inversely proportional, a value of 0.25 makes makes time to regen lower by 20%. A value of 1.0 makes time to regen lower by 50%.")
+	@Label(name = "Effects.Well Fed Effectiveness", description = "How much does health regen Well Fed increases per level.")
 	public static Double wellFedEffectiveness = 0.25d;
 	//TODO still not happy, actually explore the idea of eating from low hunger
 	@Config(min = 0d, max = 255d)
@@ -291,7 +291,7 @@ public class HealthRegen extends Feature {
 			ticksToRegen *= 1 + ((injured.getAmplifier() + 1) * injuredEffectiveness);
 		MobEffectInstance wellFed = player.getEffect(ITMobEffects.WELL_FED.get());
 		if (wellFed != null)
-			ticksToRegen *= 1 / (((wellFed.getAmplifier() + 1) * wellFedEffectiveness) + 1);
+			ticksToRegen *= 1 - (((wellFed.getAmplifier() + 1) * wellFedEffectiveness));
 		return ticksToRegen;
 	}
 
