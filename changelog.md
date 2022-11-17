@@ -20,6 +20,12 @@
   * On Snow layers (top_snow) (0% -> 10%)
   * On Wool (20% -> 15%)
   * On Bamboo (10% -> 15%)
+* Some plants now grow slower if not in the correct biome (3x if not specified otherwise). The correct biomes:
+  * Cacti, Cocoa Beans and Bamboo in hot biomes
+  * Nether Wart in the Nether
+  * Chorus flowers int the End
+  * Sweet Berry in Taigas
+  * Kelp in Oceans or rivers (2x)
 * Fixed tags that loaded on config change not working
   * `iguanatweaksreborn:harder_crops`, `iguanatweaksreborn:food_drinks_no_hunger_changes`, `iguanatweaksreborn:no_stack_size_changes`
 * Also fixed tags in json not working
