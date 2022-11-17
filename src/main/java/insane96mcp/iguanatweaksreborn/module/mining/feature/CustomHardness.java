@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Custom Hardness", description = "Change specific blocks hardness as well as black and whitelist. Check Mining/Custom Hardness/custom_hardnesses.json to set the hardness of blocks. Requires a Minecraft restart if you remove a block from the list.")
+@Label(name = "Custom Hardness", description = "Change specific blocks hardness as well as black and whitelist. Custom Hardness are controlled via json in this feature's folder. Requires a Minecraft restart if you remove a block from the list.")
 @LoadFeature(module = Modules.Ids.MINING)
 public class CustomHardness extends ITFeature {
 	public static final ArrayList<BlockHardness> CUSTOM_HARDNESSES_DEFAULT = new ArrayList<>(Arrays.asList(

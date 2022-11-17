@@ -25,7 +25,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@Label(name = "Global Hardness", description = "Change all the blocks hardness")
+@Label(name = "Global Hardness", description = "Change all the blocks hardness. Dimension Hardness and Depth Hardness are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MINING)
 public class GlobalHardness extends ITFeature {
 	public static final ResourceLocation HARDNESS_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "hardness_blacklist");

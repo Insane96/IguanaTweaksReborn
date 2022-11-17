@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Custom Stack Size", description = "Change stack sizes as you please. Changing stuff might require a Minecraft restart.")
+@Label(name = "Custom Stack Size", description = "Change stack sizes as you please. Custom Stack Sizes are controlled via json in this feature's folder. Changing stuff might require a Minecraft restart.")
 @LoadFeature(module = Modules.Ids.STACK_SIZE)
 public class CustomStackSize extends ITFeature {
     public static final List<IdTagValue> CUSTOM_STACK_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
@@ -26,6 +26,7 @@ public class CustomStackSize extends ITFeature {
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:furnace_minecart", 16),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:tnt_minecart", 16),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:snowball", 64),
+            //new IdTagValue(IdTagMatcher.Type.ID, "minecraft:egg", 64),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:saddle", 16)
     ));
     public static final List<IdTagValue> customStackList = new ArrayList<>();

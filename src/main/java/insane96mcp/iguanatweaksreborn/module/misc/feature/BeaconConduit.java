@@ -26,7 +26,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
 
-@Label(name = "Beacon & Conduit", description = "Beacon Range varying based of blocks of the pyramid and better conduit killing mobs")
+@Label(name = "Beacon & Conduit", description = "Beacon Range varying based of blocks of the pyramid and better conduit killing mobs. Blocks list and ranges are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MISC)
 public class BeaconConduit extends ITFeature {
     public static final ArrayList<IdTagValue> BLOCKS_LIST_DEFAULT = new ArrayList<>(Arrays.asList(

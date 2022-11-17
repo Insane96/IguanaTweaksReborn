@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Tool Stats", description = "Less durable and efficient tools. Note that removing entries from the json requires a Minecraft Restart")
+@Label(name = "Tool Stats", description = "Less durable and efficient tools. Tools Durabilities and Efficiencies are controlled via json in this feature's folder. Note that removing entries from the json requires a Minecraft Restart")
 @LoadFeature(module = Modules.Ids.MISC)
 public class ToolStats extends ITFeature {
 	public static final ResourceLocation NO_DAMAGE_ITEMS = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_damage_items");

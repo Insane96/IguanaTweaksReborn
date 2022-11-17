@@ -25,7 +25,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@Label(name = "Hoes Nerfs", description = "Slower Hoes and more fragile")
+@Label(name = "Hoes Nerfs", description = "Slower Hoes and more fragile. Hoes Properties are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.FARMING)
 public class HoesNerfs extends ITFeature {
 
