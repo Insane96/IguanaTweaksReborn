@@ -2,8 +2,8 @@
 
 ## Upcoming
 * Reworked Injured Effect
-  * Now applied after getting hit 3 times by a mob (directly or indirectly) in the last 9 seconds. If hit when the effect is still active, duration will stack up.
-  * Players play an injured sound when Injured is applied
+  * Now applied after getting hit 3 times by a mob (directly or indirectly) in the last 9 seconds. If hit when the effect is still active, duration will increase.
+  * Players play an injured sound when Injured is (re-)applied
 * Added Well Rested effect
   * Decreases hunger consumption
   * Given when the player sleeps and doesn't have the Tired effect. For 8 minutes level II
