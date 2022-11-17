@@ -174,7 +174,7 @@ public class HealthRegen extends Feature {
 			if (duration == 0)
 				return;
 			playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.INJURED.get(), duration, 0, true, false, true, false));
-			playerEntity.playSound(ITSoundEvents.INJURED.get(), 1f, 0.8f);
+			playerEntity.playSound(ITSoundEvents.INJURED.get(), 1f, 0.9f);
 			listTag.remove(0);
 		}
 		playerEntity.getPersistentData().put(Strings.Tags.DAMAGE_HISTORY, listTag);
