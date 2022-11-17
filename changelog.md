@@ -12,7 +12,7 @@
 * Added `Arrows don't trigger invincibility frames`.
   * Like combat test snapshots, hitting a mob with multiple arrows will no longer bounce them off but actually hit it.
 * Removed Regeneration from Sleeping Effect
-* Night vision fade out now take 3 seconds instead of 4
+* Night vision fade out now take 2 seconds instead of 4
 * Changed a few materials slowdowns
   * In Plants (15% -> 10%)
   * In Bamboo Saplings (15% -> 10%)

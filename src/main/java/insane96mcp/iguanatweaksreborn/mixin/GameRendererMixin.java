@@ -18,8 +18,8 @@ public abstract class GameRendererMixin {
 		if (!Light.shouldDisableNightVisionFlashing())
 			return;
 		int duration = livingEntity.getEffect(MobEffects.NIGHT_VISION).getDuration();
-		callback.setReturnValue(duration > 60 ?
+		callback.setReturnValue(duration > 40 ?
 				1.0F :
-				((float)duration - partialTicks) * 0.0166667f);
+				((float)duration - partialTicks) * 0.05f);
 	}
 }
