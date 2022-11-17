@@ -82,12 +82,12 @@ public class Tiredness extends ITFeature {
 	@Label(name = "Default Energy Boost Duration Multiplier", description = "By default if omitted in the json, food items will give 1 second of Energy Boost per effective nourishment (hunger + saturation) of the food. This multiplies the duration of the effect")
 	public static Double defaultEnergyBoostDurationMultiplier = 5d;
 	//Well Rested
-	@Config(min = 0d)
-	@Label(name = "Well Rested.Tiredness on wake up", description = "How much max tiredness the player can have on wake up to get the Well Rested effect?")
-	public static Double wellRestedTirednessOnWakeUp = 10d;
 	@Config(min = 0)
 	@Label(name = "Well Rested.Duration", description = "Duration (in seconds) of the well rested effect on wake up")
 	public static Integer wellRestedDuration = 480;
+	@Config(min = 0)
+	@Label(name = "Well Rested.Penalty", description = "How many seconds per tiredness above 'Tiredness for effect' will be removed from effect duration on apply?")
+	public static Integer wellRestedPenalty = 10;
 	@Config(min = 0)
 	@Label(name = "Well Rested.Amplifier", description = "Amplifier (effect level) of well rested effect on wake up. (Note 0 = Level I, 1 = II, ...)")
 	public static Integer wellRestedAmplifier = 1;
@@ -137,6 +137,7 @@ public class Tiredness extends ITFeature {
 				int duration, amplifier;
 				if (energyBoostItem.duration == 0) {
 					FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
+					//noinspection ConstantConditions .isEdible() is checked
 					duration = (int) ((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20 * defaultEnergyBoostDurationMultiplier);
 				}
 				else {
@@ -210,8 +211,9 @@ public class Tiredness extends ITFeature {
 			return;
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> {
 			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) - tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
-			if (tirednessOnWakeUp <= wellRestedTirednessOnWakeUp)
-				player.addEffect(new MobEffectInstance(ITMobEffects.WELL_RESTED.get(), wellRestedDuration * 20, wellRestedAmplifier));
+			int duration = (int) (wellRestedDuration - (tirednessOnWakeUp * wellRestedPenalty));
+			if (duration > 0)
+				player.addEffect(new MobEffectInstance(ITMobEffects.WELL_RESTED.get(), duration, wellRestedAmplifier));
 			player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, tirednessOnWakeUp);
 		});
 	}
@@ -238,6 +240,7 @@ public class Tiredness extends ITFeature {
 				|| !livingEntity.hasEffect(ITMobEffects.TIRED.get()))
 			return;
 
+		//noinspection ConstantConditions
 		int amplifier = livingEntity.getEffect(ITMobEffects.TIRED.get()).getAmplifier();
 		if (amplifier < 1)
 			return;
@@ -258,6 +261,7 @@ public class Tiredness extends ITFeature {
 				|| !livingEntity.hasEffect(ITMobEffects.TIRED.get()))
 			return;
 
+		//noinspection ConstantConditions
 		int amplifier = livingEntity.getEffect(ITMobEffects.TIRED.get()).getAmplifier();
 		if (amplifier < 1)
 			return;
@@ -275,6 +279,7 @@ public class Tiredness extends ITFeature {
 		event.registerAbove(VanillaGuiOverlay.FOOD_LEVEL.id(), "tiredness", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
 			if (!showTirednessBar)
 				return;
+			assert Minecraft.getInstance().player != null : "Minecraft.getInstance().player is null";
 			boolean isMounted = Minecraft.getInstance().player.getVehicle() instanceof LivingEntity;
 			if (isEnabled(Tiredness.class) && !isMounted && !Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements())
 			{
@@ -294,6 +299,7 @@ public class Tiredness extends ITFeature {
 	@OnlyIn(Dist.CLIENT)
 	private static void renderTiredness(Gui gui, PoseStack matrixStack, int left, int top) {
 		Player player = (Player)Minecraft.getInstance().getCameraEntity();
+		assert player != null : "Minecraft.getInstance().getCameraEntity() is null";
 		float tiredness = player.getPersistentData().getFloat(Strings.Tags.TIREDNESS);
 		int numberOfZ = 0;
 		if (tiredness < tirednessToSleep) {

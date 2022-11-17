@@ -8,7 +8,7 @@
   * Effectiveness is no longer inversely proportional
 * Added Well Rested effect
   * Decreases hunger consumption
-  * Given when the player sleeps and doesn't have the Tired effect. For 8 minutes level II
+  * Given when the player is tired and sleeps. For 8 minutes (less if too tired) level II
 * Added `Arrows don't trigger invincibility frames`.
   * Like combat test snapshots, hitting a mob with multiple arrows will no longer bounce them off but actually hit it.
 * Removed Regeneration from Sleeping Effect
