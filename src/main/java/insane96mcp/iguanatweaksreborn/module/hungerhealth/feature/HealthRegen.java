@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
+import insane96mcp.iguanatweaksreborn.setup.ITSoundEvents;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -173,6 +174,7 @@ public class HealthRegen extends Feature {
 			if (duration == 0)
 				return;
 			playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.INJURED.get(), duration, 0, true, false, true, false));
+			playerEntity.playSound(ITSoundEvents.INJURED.get(), 1f, 0.8f);
 			listTag.remove(0);
 		}
 		playerEntity.getPersistentData().put(Strings.Tags.DAMAGE_HISTORY, listTag);

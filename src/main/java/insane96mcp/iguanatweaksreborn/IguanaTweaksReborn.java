@@ -7,6 +7,7 @@ import insane96mcp.iguanatweaksreborn.network.SyncHandler;
 import insane96mcp.iguanatweaksreborn.setup.ITClientConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
+import insane96mcp.iguanatweaksreborn.setup.ITSoundEvents;
 import insane96mcp.iguanatweaksreborn.utils.Weights;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
@@ -53,6 +54,7 @@ public class IguanaTweaksReborn
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::addPackFinders);
         FMLJavaModLoadingContext.get().getModEventBus().register(Tiredness.class);
+        ITSoundEvents.SOUND_EVENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITMobEffects.MOB_EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
         Weights.initMaterialWeight();
     }
