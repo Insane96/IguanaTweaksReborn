@@ -15,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
@@ -174,7 +175,7 @@ public class HealthRegen extends Feature {
 			if (duration == 0)
 				return;
 			playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.INJURED.get(), duration, 0, true, false, true, false));
-			playerEntity.playSound(ITSoundEvents.INJURED.get(), 1f, 0.9f);
+			playerEntity.level.playSound(null, playerEntity, ITSoundEvents.INJURED.get(), SoundSource.PLAYERS, 1f, 0.9f);
 			listTag.remove(0);
 		}
 		playerEntity.getPersistentData().put(Strings.Tags.DAMAGE_HISTORY, listTag);

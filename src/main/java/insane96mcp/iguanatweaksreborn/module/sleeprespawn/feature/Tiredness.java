@@ -166,6 +166,8 @@ public class Tiredness extends ITFeature {
 			serverPlayer.displayClientMessage(Component.translatable(Strings.Translatable.TIRED_ENOUGH), false);
 		}
 		else if (tiredness >= tirednessToEffect && player.tickCount % 20 == 0) {
+			if (!serverPlayer.hasEffect(ITMobEffects.TIRED.get()))
+				serverPlayer.displayClientMessage(Component.translatable(Strings.Translatable.TOO_TIRED), false);
 			serverPlayer.addEffect(new MobEffectInstance(ITMobEffects.TIRED.get(), 25, Math.min((int) ((tiredness - tirednessToEffect) / tirednessPerLevel), 4), true, false, true));
 		}
 
@@ -214,7 +216,7 @@ public class Tiredness extends ITFeature {
 			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) - tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
 			int duration = (int) (wellRestedDuration - (tirednessOnWakeUp * wellRestedPenalty));
 			if (duration > 0)
-				player.addEffect(new MobEffectInstance(ITMobEffects.WELL_RESTED.get(), duration, wellRestedAmplifier));
+				player.addEffect(new MobEffectInstance(ITMobEffects.WELL_RESTED.get(), duration * 20, wellRestedAmplifier));
 			player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, tirednessOnWakeUp);
 		});
 	}

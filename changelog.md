@@ -26,6 +26,7 @@
   * Chorus flowers int the End
   * Sweet Berry in Taigas
   * Kelp in Oceans or rivers (2x)
+* Getting the Tired effect now displays a "too tired" message
 * Fixed tags that loaded on config change not working
   * `iguanatweaksreborn:harder_crops`, `iguanatweaksreborn:food_drinks_no_hunger_changes`, `iguanatweaksreborn:no_stack_size_changes`
 * Also fixed tags in json not working
