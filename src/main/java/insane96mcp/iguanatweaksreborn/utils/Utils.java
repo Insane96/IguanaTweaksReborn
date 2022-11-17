@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -26,5 +27,9 @@ public class Utils {
         TagKey<EntityType<?>> tagKey = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, tag);
         //noinspection ConstantConditions
         return ForgeRegistries.ENTITY_TYPES.tags().getTag(tagKey).contains(entity.getType());
+    }
+
+    public static float getFoodEffectiveness(FoodProperties foodProperties) {
+        return foodProperties.getNutrition() + foodProperties.getNutrition() * foodProperties.getSaturationModifier() * 2;
     }
 }

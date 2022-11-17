@@ -6,6 +6,7 @@ import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.utils.CustomFoodProperties;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -94,7 +95,7 @@ public class FoodDrinks extends ITFeature {
 
 		FoodProperties food = stack.getItem().getFoodProperties(stack, null);
 		//noinspection ConstantConditions
-		float time = 32 * ((food.getNutrition() + (food.getNutrition() * food.getSaturationModifier() * 2)));
+		float time = 32 * Utils.getFoodEffectiveness(food);
 		if (food.isFastFood())
 			time /= 2;
 		time *= eatingTimeMultiplier;

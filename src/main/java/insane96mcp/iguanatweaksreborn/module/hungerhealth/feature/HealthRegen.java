@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.ITSoundEvents;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -181,11 +182,9 @@ public class HealthRegen extends Feature {
 
 	@SubscribeEvent
 	public void onPlayerEat(LivingEntityUseItemEvent.Finish event) {
-		if (!this.isEnabled())
-			return;
-		if (!event.getItem().isEdible())
-			return;
-		if (!(event.getEntity() instanceof Player))
+		if (!this.isEnabled()
+				|| !event.getItem().isEdible()
+				|| !(event.getEntity() instanceof Player))
 			return;
 
 		processWellFed(event);
@@ -198,7 +197,7 @@ public class HealthRegen extends Feature {
 		Player playerEntity = (Player) event.getEntity();
 		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
 		//noinspection ConstantConditions
-		double effectiveness = food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2;
+		double effectiveness = Utils.getFoodEffectiveness(food);
 		if (effectiveness < wellFedMinNourishment)
 			return;
 		int duration = (int) ((effectiveness * 20) * wellFedDurationMultiplier);
@@ -213,7 +212,7 @@ public class HealthRegen extends Feature {
 			return;
 		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), event.getEntity());
 		//noinspection ConstantConditions
-		double heal = (food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * foodHealMultiplier;
+		double heal = Utils.getFoodEffectiveness(food) * foodHealMultiplier;
 		event.getEntity().heal((float) heal);
 	}
 

@@ -9,6 +9,7 @@ import insane96mcp.iguanatweaksreborn.network.MessageTirednessSync;
 import insane96mcp.iguanatweaksreborn.network.SyncHandler;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -138,7 +139,7 @@ public class Tiredness extends ITFeature {
 				if (energyBoostItem.duration == 0) {
 					FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
 					//noinspection ConstantConditions .isEdible() is checked
-					duration = (int) ((food.getNutrition() + food.getNutrition() * food.getSaturationModifier() * 2) * 20 * defaultEnergyBoostDurationMultiplier);
+					duration = (int) (Utils.getFoodEffectiveness(food) * 20 * defaultEnergyBoostDurationMultiplier);
 				}
 				else {
 					duration = energyBoostItem.duration;
