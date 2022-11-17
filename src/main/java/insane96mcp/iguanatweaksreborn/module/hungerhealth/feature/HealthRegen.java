@@ -127,7 +127,7 @@ public class HealthRegen extends Feature {
 		if (!this.isEnabled()
 				|| !enableInjured
 				|| !(event.getEntity() instanceof Player playerEntity)
-				|| !(event.getSource().getEntity() instanceof LivingEntity)
+				|| (!(event.getSource().getEntity() instanceof LivingEntity) && !event.getSource().isFall() && !event.getSource().isExplosion() && !event.getSource().isFire())
 				|| event.getAmount() < injuredMinDamage)
 			return;
 
