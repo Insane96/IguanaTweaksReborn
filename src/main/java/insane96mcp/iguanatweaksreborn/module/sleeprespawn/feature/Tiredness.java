@@ -205,6 +205,8 @@ public class Tiredness extends ITFeature {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.startSleeping(event.getPos());
 			((ServerLevel)player.level).updateSleepingPlayerList();
+			if (!shouldPreventSpawnPoint)
+				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, true);
 		}
 	}
 

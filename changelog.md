@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Fixed well fed not applying
+* Fixed sleeping when Tired effect was present not setting respawn point
 
 ## 2.13.3
 ### Delete and let the config folder regenerate due to quite a few changes
