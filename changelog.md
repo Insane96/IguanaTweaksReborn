@@ -5,7 +5,7 @@
   * Now applied after getting hit 3 times by a mob (directly or indirectly), fall, explosion or fire in the last 9 seconds. If hit when the effect is still active, duration will increase.
   * Players play an injured sound when Injured is (re-)applied
 * Reworked Well Fed Effect
-  * No longer applied when simply eating, instead is now applied if you eat from less than 4 drumsticks to more than 9 drumstick in less than 15 seconds. The duration is based of food effectiveness, while level is based off the amount of food eaten (so "bad" foods give an higher amplifier but less time), max level X.
+  * No longer applied when simply eating, instead is now applied if you eat from less than 4 drumsticks to more than 9 drumstick in less than 15 seconds. The duration is based of food effectiveness, while level is based off the amount of food eaten (so "bad" foods give a higher amplifier but less time), max level X.
   * Effectiveness is no longer inversely proportional (also reduced to 5% per level)
 * Added Well Rested effect
   * Decreases hunger consumption

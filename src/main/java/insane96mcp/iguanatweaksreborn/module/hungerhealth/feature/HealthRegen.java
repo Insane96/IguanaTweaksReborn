@@ -199,9 +199,6 @@ public class HealthRegen extends Feature {
 		//Do not try to apply well-fed if already has it
 		if (playerEntity.hasEffect(ITMobEffects.WELL_FED.get()))
 			return;
-		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
-		//noinspection ConstantConditions
-		float effectiveness = Utils.getFoodEffectiveness(food);
 		ListTag listTag;
 		if (!playerEntity.getPersistentData().contains(Strings.Tags.EAT_HISTORY)) {
 			listTag = new ListTag();
@@ -220,6 +217,9 @@ public class HealthRegen extends Feature {
 		if (playerEntity.getFoodData().getLastFoodLevel() > 8 && listTag.isEmpty())
 			return;
 		//Save the current eat
+		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
+		//noinspection ConstantConditions
+		float effectiveness = Utils.getFoodEffectiveness(food);
 		CompoundTag tag = new CompoundTag();
 		tag.putInt("tick", playerEntity.tickCount);
 		tag.putFloat("effectiveness", effectiveness);
