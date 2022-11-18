@@ -7,8 +7,8 @@ import net.minecraft.world.entity.player.Player;
 /**
  * Reduces exhaustion by 20% per level
  */
-public class Pumped extends ITMobEffect {
-    public Pumped(MobEffectCategory typeIn, int liquidColorIn) {
+public class WellRested extends ITMobEffect {
+    public WellRested(MobEffectCategory typeIn, int liquidColorIn) {
         super(typeIn, liquidColorIn);
     }
 

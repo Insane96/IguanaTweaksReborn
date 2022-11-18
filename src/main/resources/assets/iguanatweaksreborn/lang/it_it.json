@@ -22,12 +22,12 @@
 	"effect.iguanatweaksreborn.energy_boost": "Energico",
 	"effect.iguanatweaksreborn.well_rested": "Ben Riposato",
 
-	"effect.iguanatweaksreborn.injured.description": "Ottenuto quando si viene danneggiati. Riduce la rigenerazione della vita del 20% per livello.",
-	"effect.iguanatweaksreborn.well_fed.description": "Ottenuto quando si mangia. Aumenta la rigenerazione della vita del 25% per livello.",
+	"effect.iguanatweaksreborn.injured.description": "Ottenuto quando si viene danneggiati per troppe volte di fila. Riduce la rigenerazione della vita del 20% per livello.",
+	"effect.iguanatweaksreborn.well_fed.description": "Ottenuto quando si mangia e si ha molta fame. Aumenta la rigenerazione della vita del 25% per livello.",
 	"effect.iguanatweaksreborn.tired.description": "Ottenuto quando non si dorme da un po'. Riduce velocita' di movimento e vista.",
-	"effect.iguanatweaksreborn.energy_boost.description": "Riduce la stanchezza.",
-	"effect.iguanatweaksreborn.well_rested.description": "Riduce il consumo della barra della fame del 20% per livello.",
+	"effect.iguanatweaksreborn.energy_boost.description": "Riduce la stanchezza di 0.2 al secondo per livello.",
+	"effect.iguanatweaksreborn.well_rested.description": "Ottenuto quando si dorme e non si è troppo stanchi. Riduce il consumo della barra della fame del 20% per livello.",
 
 	"container.repair.free": "Nessun costo",
-	"iguanatweaksreborn.item_repaired": "L'oggetto e' stato riparato",
+	"iguanatweaksreborn.item_repaired": "L'oggetto e' stato riparato"
 }
