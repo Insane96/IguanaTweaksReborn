@@ -1,6 +1,7 @@
 # Changelog
 
-## Upcoming
+## 2.13.3
+### Delete and let the config folder regenerate due to quite a few changes
 * Reworked Injured Effect
   * Now applied after getting hit 3 times by a mob (directly or indirectly), fall, explosion or fire in the last 9 seconds. If hit when the effect is still active, duration will increase.
   * Players play an injured sound when Injured is (re-)applied
