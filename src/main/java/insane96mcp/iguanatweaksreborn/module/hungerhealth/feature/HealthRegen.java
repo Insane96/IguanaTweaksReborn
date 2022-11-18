@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.ITSoundEvents;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
+import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -185,7 +186,8 @@ public class HealthRegen extends Feature {
 	public void onPlayerEat(LivingEntityUseItemEvent.Finish event) {
 		if (!this.isEnabled()
 				|| !event.getItem().isEdible()
-				|| !(event.getEntity() instanceof Player))
+				|| !(event.getEntity() instanceof Player)
+				|| event.getEntity().level.isClientSide)
 			return;
 
 		processWellFed(event);
@@ -196,16 +198,51 @@ public class HealthRegen extends Feature {
 		if (!enableWellFed)
 			return;
 		Player playerEntity = (Player) event.getEntity();
+		//Do not try to apply well fed if already has it
+		if (playerEntity.hasEffect(ITMobEffects.WELL_FED.get()))
+			return;
 		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
 		//noinspection ConstantConditions
-		double effectiveness = Utils.getFoodEffectiveness(food);
-		if (effectiveness < wellFedMinNourishment)
+		float effectiveness = Utils.getFoodEffectiveness(food);
+		ListTag listTag;
+		if (!playerEntity.getPersistentData().contains(Strings.Tags.EAT_HISTORY)) {
+			listTag = new ListTag();
+		}
+		else {
+			listTag = playerEntity.getPersistentData().getList(Strings.Tags.EAT_HISTORY, 10);
+			if (listTag.size() > 0 && listTag.getCompound(0).getInt("tick") > playerEntity.tickCount)
+				listTag.clear();
+		}
+		//Remove older than 8 seconds history
+		listTag.removeIf(t -> {
+			if (t instanceof CompoundTag compoundTag) {
+				return playerEntity.tickCount - compoundTag.getInt("tick") > 15 * 20;
+			}
+			return false;
+		});
+
+		//Don't proceed if hunger higher than 8 and no eat history
+		if (playerEntity.getFoodData().getLastFoodLevel() > 8 && listTag.isEmpty())
 			return;
-		int duration = (int) ((effectiveness * 20) * wellFedDurationMultiplier);
-		if (duration == 0)
-			return;
-		int amplifier = 0;
-		playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.WELL_FED.get(), duration, amplifier, true, false, true, false));
+		//Save the current eat
+		CompoundTag tag = new CompoundTag();
+		tag.putInt("tick", playerEntity.tickCount);
+		tag.putFloat("effectiveness", effectiveness);
+		listTag.add(tag);
+		int firstEat = listTag.getCompound(0).getInt("tick");
+		LogHelper.info("listTag: %s", listTag);
+		LogHelper.info("playerTick: %s, firstEat: %s, playerTick - firstEat: %s, 160", playerEntity.tickCount, firstEat, playerEntity.tickCount - firstEat);
+		//Apply well fed if more than 9 drumsticks and if less than 8 seconds passed from the first eating
+		if (playerEntity.getFoodData().getFoodLevel() >= 19 && playerEntity.tickCount - firstEat < 15 * 20) {
+			float totalEffectiveness = 0f;
+			for (int i = 0; i < listTag.size(); i++) {
+				totalEffectiveness += listTag.getCompound(i).getFloat("effectiveness");
+			}
+			int duration = (int) ((totalEffectiveness * 20) * injuredDurationMultiplier);
+			playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.WELL_FED.get(), duration, 0, true, false, true, false));
+			listTag.clear();
+		}
+		playerEntity.getPersistentData().put(Strings.Tags.EAT_HISTORY, listTag);
 	}
 
 	public void healOnEat(LivingEntityUseItemEvent.Finish event) {

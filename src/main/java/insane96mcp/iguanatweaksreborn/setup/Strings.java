@@ -8,14 +8,14 @@ public class Strings {
 	public static class Tags {
 		public static final String MILK_COOLDOWN = IguanaTweaksReborn.RESOURCE_PREFIX + "milk_cooldown";
 		public static final String SPAWNED_MOBS = IguanaTweaksReborn.RESOURCE_PREFIX + "spawned_mobs";
-		public static final String TEMPORARY_SPAWNER = IguanaTweaksReborn.RESOURCE_PREFIX + "temporary_spawner";
 		public static final String TIME_SINCE_LAST_SWING = IguanaTweaksReborn.RESOURCE_PREFIX + "ticks_since_last_swing";
 
 		public static final String XP_PROCESSED = IguanaTweaksReborn.RESOURCE_PREFIX + "xp_processed";
 
 		public static final String SPAWNER_CAP = IguanaTweaksReborn.RESOURCE_PREFIX + "spawner_cap";
 		public static final String TIREDNESS = IguanaTweaksReborn.RESOURCE_PREFIX + "tiredness";
-        public static final String DAMAGE_HISTORY = IguanaTweaksReborn.RESOURCE_PREFIX + "damage_history";
+		public static final String DAMAGE_HISTORY = IguanaTweaksReborn.RESOURCE_PREFIX + "damage_history";
+		public static final String EAT_HISTORY = IguanaTweaksReborn.RESOURCE_PREFIX + "eat_history";
     }
 
 	public static class AttributeModifiers {
