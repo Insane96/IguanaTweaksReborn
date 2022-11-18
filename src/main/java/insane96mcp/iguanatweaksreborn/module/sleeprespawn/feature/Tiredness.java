@@ -216,7 +216,7 @@ public class Tiredness extends ITFeature {
 			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) - tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
 			int duration = (int) (wellRestedDuration - (tirednessOnWakeUp * wellRestedPenalty));
 			if (duration > 0)
-				player.addEffect(new MobEffectInstance(ITMobEffects.WELL_RESTED.get(), duration * 20, wellRestedAmplifier));
+				player.addEffect(new MobEffectInstance(ITMobEffects.WELL_RESTED.get(), duration * 20, wellRestedAmplifier, false, false));
 			player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, tirednessOnWakeUp);
 		});
 	}
