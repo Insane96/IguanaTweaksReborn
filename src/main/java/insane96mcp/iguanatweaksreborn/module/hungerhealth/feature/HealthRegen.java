@@ -209,7 +209,7 @@ public class HealthRegen extends Feature {
 				listTag.clear();
 		}
 		//Clear the "combo" if the first food eaten is 15 seconds later
-		if (listTag.size() > 0 && listTag.getCompound(0).getInt("tick") > 15 * 20) {
+		if (listTag.size() > 0 && playerEntity.tickCount - listTag.getCompound(0).getInt("tick") > 15 * 20) {
 			listTag.clear();
 		}
 

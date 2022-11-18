@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed well fed not applying
+
 ## 2.13.3
 ### Delete and let the config folder regenerate due to quite a few changes
 * Reworked Injured Effect
