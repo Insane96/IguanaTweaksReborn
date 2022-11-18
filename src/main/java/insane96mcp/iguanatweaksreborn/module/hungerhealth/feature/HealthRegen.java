@@ -4,7 +4,6 @@ import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.ITSoundEvents;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -73,18 +72,17 @@ public class HealthRegen extends Feature {
 	public static Double foodHealMultiplier = 0d;
 	//Effects
 	@Config
-	@Label(name = "Effects.Enable Well Fed", description = "Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats.")
+	@Label(name = "Effects.Well Fed.Enable", description = "Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats from less than 4 drumsticks to more than 9 drumstick in less than 15 seconds.")
 	public static Boolean enableWellFed = true;
 	@Config(min = 0d, max = 128d)
-	@Label(name = "Effects.Well Fed Duration Multiplier", description = "Multiplies the base duration of Well Fed by this value. Base duration is 1 second per food effectiveness (hunger + saturation).")
-	public static Double wellFedDurationMultiplier = 2.0d;
-	@Config(min = 0d, max = 10d)
-	@Label(name = "Effects.Well Fed Effectiveness", description = "How much does health regen Well Fed increases per level.")
-	public static Double wellFedEffectiveness = 0.25d;
-	//TODO still not happy, actually explore the idea of eating from low hunger
-	@Config(min = 0d, max = 255d)
-	@Label(name = "Effects.Well Fed Min Nourishment", description = "How much food effectiveness (hunger + saturation) the food must give for the effect to apply")
-	public static Double wellFedMinNourishment = 10d;
+	@Label(name = "Effects.Well Fed.Duration Multiplier", description = "Multiplies the base duration of Well Fed by this value. Base duration is 1 second per food effectiveness (hunger + saturation).")
+	public static Double wellFedDurationMultiplier = 1.0d;
+	@Config(min = 0d, max = 1d)
+	@Label(name = "Effects.Well Fed.Effectiveness", description = "How much does health regen Well Fed increases per level.")
+	public static Double wellFedEffectiveness = 0.05d;
+	@Config(min = 0, max = 255)
+	@Label(name = "Effects.Well Fed.Max Amplifier", description = "Max amplifier of the Well Fed effect (amplifier 0 = I, amplifier 1 = II, ...).")
+	public static Integer wellFedMaxAmplifier = 9;
 	@Config
 	@Label(name = "Effects.Injured.Enable Injured", description = "Set to true to enable Injured, a new effect that slows down health regen. It's applied when the player takes 3 hits (at least half a heart) in the last 9 seconds (by default). The effect slows down health regen by 20% per level.")
 	public static Boolean enableInjured = true;
@@ -198,7 +196,7 @@ public class HealthRegen extends Feature {
 		if (!enableWellFed)
 			return;
 		Player playerEntity = (Player) event.getEntity();
-		//Do not try to apply well fed if already has it
+		//Do not try to apply well-fed if already has it
 		if (playerEntity.hasEffect(ITMobEffects.WELL_FED.get()))
 			return;
 		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
@@ -213,13 +211,10 @@ public class HealthRegen extends Feature {
 			if (listTag.size() > 0 && listTag.getCompound(0).getInt("tick") > playerEntity.tickCount)
 				listTag.clear();
 		}
-		//Remove older than 8 seconds history
-		listTag.removeIf(t -> {
-			if (t instanceof CompoundTag compoundTag) {
-				return playerEntity.tickCount - compoundTag.getInt("tick") > 15 * 20;
-			}
-			return false;
-		});
+		//Clear the "combo" if the first food eaten is 15 seconds later
+		if (listTag.size() > 0 && listTag.getCompound(0).getInt("tick") > 15 * 20) {
+			listTag.clear();
+		}
 
 		//Don't proceed if hunger higher than 8 and no eat history
 		if (playerEntity.getFoodData().getLastFoodLevel() > 8 && listTag.isEmpty())
@@ -230,16 +225,16 @@ public class HealthRegen extends Feature {
 		tag.putFloat("effectiveness", effectiveness);
 		listTag.add(tag);
 		int firstEat = listTag.getCompound(0).getInt("tick");
-		LogHelper.info("listTag: %s", listTag);
-		LogHelper.info("playerTick: %s, firstEat: %s, playerTick - firstEat: %s, 160", playerEntity.tickCount, firstEat, playerEntity.tickCount - firstEat);
-		//Apply well fed if more than 9 drumsticks and if less than 8 seconds passed from the first eating
+
+		//Apply well-fed if more than 9 drumsticks and if less than 15 seconds passed from the first eating
 		if (playerEntity.getFoodData().getFoodLevel() >= 19 && playerEntity.tickCount - firstEat < 15 * 20) {
 			float totalEffectiveness = 0f;
 			for (int i = 0; i < listTag.size(); i++) {
 				totalEffectiveness += listTag.getCompound(i).getFloat("effectiveness");
 			}
-			int duration = (int) ((totalEffectiveness * 20) * injuredDurationMultiplier);
-			playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.WELL_FED.get(), duration, 0, true, false, true, false));
+			int duration = (int) ((totalEffectiveness * 20) * wellFedDurationMultiplier);
+			int amplifier = Math.min(listTag.size() - 1, wellFedMaxAmplifier);
+			playerEntity.addEffect(MCUtils.createEffectInstance(ITMobEffects.WELL_FED.get(), duration, amplifier, true, false, true, false));
 			listTag.clear();
 		}
 		playerEntity.getPersistentData().put(Strings.Tags.EAT_HISTORY, listTag);
