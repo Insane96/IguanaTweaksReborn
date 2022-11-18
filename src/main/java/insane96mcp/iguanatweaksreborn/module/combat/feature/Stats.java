@@ -98,11 +98,15 @@ public class Stats extends ITFeature {
 	}
 
 	public static void addClassItemAttributeModifier(Class<? extends Item> itemClass, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
-		CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(itemClass, slot, attribute, amount, operation));
+		synchronized (CLASS_ATTRIBUTE_MODIFIER) {
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(itemClass, slot, attribute, amount, operation));
+		}
 	}
 
 	public static void removeClassItemAttributeModifier(Class<? extends Item> itemClass) {
-		CLASS_ATTRIBUTE_MODIFIER.removeIf(iam -> iam.itemClass.equals(itemClass));
+		synchronized (CLASS_ATTRIBUTE_MODIFIER) {
+			CLASS_ATTRIBUTE_MODIFIER.removeIf(iam -> iam.itemClass.equals(itemClass));
+		}
 	}
 
 	@SubscribeEvent
