@@ -94,7 +94,8 @@ public class TempSpawner extends Feature {
 		event.getSpawner().save(nbt);
 		BlockPos spawnerPos = event.getSpawner().getSpawnerBlockEntity().getBlockPos();
 		ServerLevel level = (ServerLevel) event.getWorld();
-		SpawnerBlockEntity mobSpawner = (SpawnerBlockEntity) level.getBlockEntity(spawnerPos);
+		if (!(level.getBlockEntity(spawnerPos) instanceof SpawnerBlockEntity mobSpawner))
+			return;
 		ISpawner spawnerCap = mobSpawner.getCapability(SpawnerCap.INSTANCE).orElse(null);
 		if (spawnerCap == null)
 			LogHelper.error("Something's wrong. The spawner has no capability");
