@@ -15,15 +15,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Food Consuming", description = "Changes to the speed on how food is eaten or how items are consumed.")
 public class FoodConsuming extends Feature {
-	private final ForgeConfigSpec.ConfigValue<Boolean> fasterPotionConsumingConfig;
-	private final ForgeConfigSpec.ConfigValue<Boolean> fasterMilkConsumingConfig;
+	private final ForgeConfigSpec.BooleanValue fasterDrinkConsumingConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> eatingSpeedBasedOffFoodConfig;
 	private final ForgeConfigSpec.ConfigValue<Double> eatingTimeMultiplierConfig;
 	private final ForgeConfigSpec.IntValue eatingTimeMinConfig;
 	private final ForgeConfigSpec.ConfigValue<Boolean> stopConsumingOnHitConfig;
 
-	public boolean fasterPotionConsuming = true;
-	public boolean fasterMilkConsuming = true;
+	public boolean fasterDrinkConsuming = true;
 	public boolean eatingSpeedBasedOffFood = true;
 	public double eatingTimeMultiplier = 0.115d;
 	public int eatingTimeMin = 24;
@@ -32,12 +30,9 @@ public class FoodConsuming extends Feature {
 	public FoodConsuming(Module module) {
 		super(ITCommonConfig.builder, module);
 		ITCommonConfig.builder.comment(this.getDescription()).push(this.getName());
-		fasterPotionConsumingConfig = ITCommonConfig.builder
-				.comment("Makes potion faster to drink, 1 second instead of 1.6.")
-				.define("Faster Potion Consuming", this.fasterPotionConsuming);
-		fasterMilkConsumingConfig = ITCommonConfig.builder
-				.comment("Makes milk faster to drink, 1 second instead of 1.6.")
-				.define("Faster Milk Consuming", this.fasterMilkConsuming);
+		fasterDrinkConsumingConfig = ITCommonConfig.builder
+				.comment("Makes potions, milk and honey faster to drink, 1 second instead of 1.6.")
+				.define("Faster Drink Consuming", this.fasterDrinkConsuming);
 		eatingSpeedBasedOffFoodConfig = ITCommonConfig.builder
 				.comment("Makes the speed for eating food based off the hunger and saturation they provide. At 2 (hunger + saturation) the speed is vanilla, higher / lower (hunger + saturation) will lower / raise the speed. Minimum 16 ticks.")
 				.define("Eating Speed Based Off Food Restored", this.eatingSpeedBasedOffFood);
@@ -56,8 +51,7 @@ public class FoodConsuming extends Feature {
 	@Override
 	public void loadConfig() {
 		super.loadConfig();
-		this.fasterPotionConsuming = this.fasterPotionConsumingConfig.get();
-		this.fasterMilkConsuming = this.fasterMilkConsumingConfig.get();
+		this.fasterDrinkConsuming = this.fasterDrinkConsumingConfig.get();
 		this.eatingSpeedBasedOffFood = this.eatingSpeedBasedOffFoodConfig.get();
 		this.eatingTimeMultiplier = this.eatingTimeMultiplierConfig.get();
 		this.eatingTimeMin = this.eatingTimeMinConfig.get();

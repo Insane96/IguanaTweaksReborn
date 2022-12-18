@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MilkBucketItemMixin {
 	@Inject(at = @At("RETURN"), method = "getUseDuration", cancellable = true)
 	public void getUseDuration(ItemStack stack, CallbackInfoReturnable<Integer> callbackInfo) {
-		if (!Modules.hungerHealth.foodConsuming.fasterMilkConsuming || !Modules.hungerHealth.foodConsuming.isEnabled())
+		if (!Modules.hungerHealth.foodConsuming.fasterDrinkConsuming || !Modules.hungerHealth.foodConsuming.isEnabled())
 			return;
 
 		callbackInfo.setReturnValue(20);

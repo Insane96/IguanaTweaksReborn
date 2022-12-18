@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.12.9
+* `Faster Potion Consuming` and `Fast Milk consuming` have been merged to `Fast Drink Consuming`  
+  Honey is also now drinked faster
+* Night vision now fades out in 2 seconds instead of 4
+* Fixed crash with BattleTowers
+
 ## 2.12.8
 * Tamed pets now get the beacon effects
 * Greatly reduced Energy boost effectiveness (-1 -> -0.2 tiredness per second)

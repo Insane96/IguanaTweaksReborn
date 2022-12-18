@@ -13,6 +13,7 @@
         "EnchantmentMixin",
         "ExperienceOrbMixin",
         "FoodDataMixin",
+        "HoneyBottleItemMixin",
         "ItemMixin",
         "LivingEntityMixin",
         "MerchantOfferMixin",
