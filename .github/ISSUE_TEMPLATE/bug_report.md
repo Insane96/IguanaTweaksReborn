@@ -28,5 +28,7 @@ E.g. https://pastebin.com/1AbCDEFG
 **Config**:  
 E.g. https://pastebin.com/1AbCDEFG
 
-**Can be reproduced with a minimal set of mods? (IguanaTweaks Reborn + InsaneLib + e.g. Quark)?**:  
-Yes/No
+**Can be reproduced with IguanaTweaks Reborn + InsaneLib only?**:  
+//Yes/No
+
+If your answer to the previous question is No, then go do it. If doesn't happen with the mod alone, then try to narrow down the mod conflict.
