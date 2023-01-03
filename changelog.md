@@ -2,7 +2,7 @@
 
 ## Upcoming
 * Renamed Well Rested to Vigour
-  * Vigour now reduces more hunger consumption (20% -> 25% per level)
+  * Vigour now reduces more hunger consumption (~~20%~~ -> 25% per level)
   * Can now be obtained with a Beacon when the Regeneration effect is active
   * Can still be obtained by sleeping when not tired
 
@@ -35,7 +35,7 @@
 * Some plants now grow slower if not in the correct biome (3x if not specified otherwise). The correct biomes:
   * Cacti, Cocoa Beans and Bamboo in hot biomes
   * Nether Wart in the Nether
-  * Chorus flowers int the End
+  * Chorus flowers in the End
   * Sweet Berry in Taigas
   * Kelp in Oceans or rivers (2x)
 * Getting the Tired effect now displays a "too tired" message
