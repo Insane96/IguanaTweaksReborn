@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.misc.feature;
 import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.utils.IdTagValue;
+import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -15,6 +16,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.monster.Enemy;
@@ -43,10 +45,13 @@ public class BeaconConduit extends ITFeature {
     public static final ArrayList<IdTagValue> blocksList = new ArrayList<>();
 
     @Config
-    @Label(name = "Affect Pets", description = "If true, pets will also get the beacon effects")
+    @Label(name = "Beacon.Affect Pets", description = "If true, pets will also get the beacon effects")
     public static Boolean affectPets = true;
+    @Config
+    @Label(name = "Beacon.Vigour with Regeneration", description = "If true, with the regeneration effect, the Vigour effect is also applied (reduces hunger consumption by 20%).")
+    public static Boolean vigourWithRegen = true;
     @Config(min = 0d, max = 256d)
-    @Label(name = "Base Range", description = "Base range of the beacon")
+    @Label(name = "Beacon.Base Range", description = "Base range of the beacon")
     public static Double baseRange = 10d;
     @Config
     @Label(name = "Conduit.Better Protection", description = "Greatly increases the range and damage of the conduit")
@@ -80,9 +85,9 @@ public class BeaconConduit extends ITFeature {
         double blocksRange = getBeaconRange(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), layers);
 
         double range = blocksRange + baseRange;
-        int i = 0;
+        int amplifier = 0;
         if (layers >= 4 && effectPrimary == effectSecondary) {
-            i = 1;
+            amplifier = 1;
         }
 
         int j = (9 + layers * 2) * 20;
@@ -90,12 +95,14 @@ public class BeaconConduit extends ITFeature {
         List<Player> list = level.getEntitiesOfClass(Player.class, aabb);
 
         for (Player player : list) {
-            player.addEffect(new MobEffectInstance(effectPrimary, j, i, true, true));
+            player.addEffect(new MobEffectInstance(effectPrimary, j, amplifier, true, true));
         }
 
         if (layers >= 4 && effectPrimary != effectSecondary && effectSecondary != null) {
             for(Player player : list) {
                 player.addEffect(new MobEffectInstance(effectSecondary, j, 0, true, true));
+                if (vigourWithRegen && effectSecondary.equals(MobEffects.REGENERATION))
+                    player.addEffect(new MobEffectInstance(ITMobEffects.VIGOUR.get(), j, 0, true, true));
             }
         }
 
@@ -103,7 +110,7 @@ public class BeaconConduit extends ITFeature {
             List<TamableAnimal> list2 = level.getEntitiesOfClass(TamableAnimal.class, aabb, TamableAnimal::isTame);
 
             for (TamableAnimal animal : list2) {
-                animal.addEffect(new MobEffectInstance(effectPrimary, j, i, true, true));
+                animal.addEffect(new MobEffectInstance(effectPrimary, j, amplifier, true, true));
             }
 
             if (layers >= 4 && effectPrimary != effectSecondary && effectSecondary != null) {
