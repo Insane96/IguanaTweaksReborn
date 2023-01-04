@@ -33,6 +33,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction. Item modifiers are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.COMBAT)
@@ -40,13 +41,13 @@ public class Stats extends ITFeature {
 	static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = new ArrayList<>();
 
 	public static final ArrayList<ItemAttributeModifier> ITEM_MODIFIERS_DEFAULT = new ArrayList<>(Arrays.asList(
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_helmet", EquipmentSlot.HEAD, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_chestplate", EquipmentSlot.CHEST, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_leggings", EquipmentSlot.LEGS, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_boots", EquipmentSlot.FEET, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_helmet", UUID.fromString("a2268a87-c454-424e-b91d-c3f8a5df56cb"), EquipmentSlot.HEAD, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_chestplate", UUID.fromString("1e128657-08a0-44f9-b6f6-df16ddc1b5ae"), EquipmentSlot.CHEST, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_leggings", UUID.fromString("c0a2973f-cffc-4bdf-8132-42ca2141e034"), EquipmentSlot.LEGS, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_boots", UUID.fromString("45c38abc-0737-48f4-adca-43415243b858"), EquipmentSlot.FEET, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
 
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", EquipmentSlot.HEAD, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", EquipmentSlot.FEET, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION)
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", UUID.fromString("da2b677f-467c-49b1-bdf0-070ee782bc0f"), EquipmentSlot.HEAD, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", UUID.fromString("796d3f0c-89e4-47e8-9f95-3a3d5506f70f"), EquipmentSlot.FEET, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION)
 	));
 	public static final ArrayList<ItemAttributeModifier> itemModifiers = new ArrayList<>();
 
@@ -81,10 +82,10 @@ public class Stats extends ITFeature {
 		super.readConfig(event);
 		CLASS_ATTRIBUTE_MODIFIER.clear();
 		if (nerfWeapons) {
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(SwordItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, EquipmentSlot.MAINHAND, ForgeMod.ATTACK_RANGE.get(), -1d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(SwordItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, UUID.fromString("324a87bd-89ea-4d1b-866a-ce49d360d632"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, UUID.fromString("a60ab219-6c3a-453b-a55c-41e9c83f9c0f"), EquipmentSlot.MAINHAND, ForgeMod.ATTACK_RANGE.get(), -1d, AttributeModifier.Operation.ADDITION));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, UUID.fromString("f98cb9bc-3fa7-4fb5-b07a-babe8e35f967"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
 		}
 	}
 
@@ -97,9 +98,9 @@ public class Stats extends ITFeature {
 		this.loadAndReadFile("item_modifiers.json", itemModifiers, ITEM_MODIFIERS_DEFAULT, itemAttributeModifierListType);
 	}
 
-	public static void addClassItemAttributeModifier(Class<? extends Item> itemClass, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
+	public static void addClassItemAttributeModifier(Class<? extends Item> itemClass, UUID uuid, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
 		synchronized (CLASS_ATTRIBUTE_MODIFIER) {
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(itemClass, slot, attribute, amount, operation));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(itemClass, uuid, slot, attribute, amount, operation));
 		}
 	}
 
@@ -151,7 +152,7 @@ public class Stats extends ITFeature {
 	private void classAttributeModifiers(ItemAttributeModifierEvent event) {
 		for (ItemAttributeModifier itemAttributeModifier : CLASS_ATTRIBUTE_MODIFIER) {
 			if (itemAttributeModifier.itemClass.equals(event.getItemStack().getItem().getClass()) && itemAttributeModifier.slot.equals(event.getSlotType())) {
-				AttributeModifier modifier = new AttributeModifier(Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER_UUID, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
+				AttributeModifier modifier = new AttributeModifier(itemAttributeModifier.uuid, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
 				event.addModifier(itemAttributeModifier.attribute, modifier);
 			}
 		}
@@ -164,7 +165,7 @@ public class Stats extends ITFeature {
 			if (event.getSlotType() != itemAttributeModifier.slot)
 				continue;
 
-			AttributeModifier modifier = new AttributeModifier(Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER_UUID, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
+			AttributeModifier modifier = new AttributeModifier(itemAttributeModifier.uuid, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
 			event.addModifier(itemAttributeModifier.attribute, modifier);
 		}
 	}

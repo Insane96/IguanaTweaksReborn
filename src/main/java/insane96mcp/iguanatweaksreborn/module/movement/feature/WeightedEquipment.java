@@ -38,6 +38,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.UUID;
 
 @Label(name = "Weighted Equipment", description = "Armor and Shield slows down the player. Material Weights and Enchantment Weights are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
@@ -97,8 +98,8 @@ public class WeightedEquipment extends ITFeature {
 		super.readConfig(event);
 		Stats.removeClassItemAttributeModifier(ShieldItem.class);
 		if (shieldSlowdown > 0d) {
-			Stats.addClassItemAttributeModifier(ShieldItem.class, EquipmentSlot.MAINHAND, Attributes.MOVEMENT_SPEED, -shieldSlowdown, AttributeModifier.Operation.MULTIPLY_BASE);
-			Stats.addClassItemAttributeModifier(ShieldItem.class, EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, -shieldSlowdown, AttributeModifier.Operation.MULTIPLY_BASE);
+			Stats.addClassItemAttributeModifier(ShieldItem.class, UUID.fromString("ef620642-7e4d-43cb-88e3-feee47a531a0"), EquipmentSlot.MAINHAND, Attributes.MOVEMENT_SPEED, -shieldSlowdown, AttributeModifier.Operation.MULTIPLY_BASE);
+			Stats.addClassItemAttributeModifier(ShieldItem.class, UUID.fromString("49c54369-7541-4cb4-8ee2-63863457427d"), EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, -shieldSlowdown, AttributeModifier.Operation.MULTIPLY_BASE);
 		}
 	}
 

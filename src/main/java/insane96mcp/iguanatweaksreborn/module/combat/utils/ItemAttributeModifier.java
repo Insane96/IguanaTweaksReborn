@@ -12,9 +12,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.UUID;
+
 @JsonAdapter(ItemAttributeModifier.Serializer.class)
 public class ItemAttributeModifier extends IdTagMatcher {
 	public Class<? extends Item> itemClass;
+	public UUID uuid;
 	public EquipmentSlot slot;
 	public Attribute attribute;
 	public double amount;
@@ -24,17 +27,19 @@ public class ItemAttributeModifier extends IdTagMatcher {
 		super(type, id);
 	}
 
-	public ItemAttributeModifier(IdTagMatcher.Type type, String id, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
+	public ItemAttributeModifier(IdTagMatcher.Type type, String id, UUID uuid, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
 		super(type, id);
 		this.slot = slot;
+		this.uuid = uuid;
 		this.attribute = attribute;
 		this.amount = amount;
 		this.operation = operation;
 	}
 
-	public ItemAttributeModifier(Class<? extends Item> itemClass, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
+	public ItemAttributeModifier(Class<? extends Item> itemClass, UUID uuid, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
 		super(Type.ID, "minecraft:air");
 		this.itemClass = itemClass;
+		this.uuid = uuid;
 		this.slot = slot;
 		this.attribute = attribute;
 		this.amount = amount;
@@ -74,6 +79,16 @@ public class ItemAttributeModifier extends IdTagMatcher {
 			else {
 				throw new JsonParseException("Invalid object missing either tag and id");
 			}
+
+			String sUUID = GsonHelper.getAsString(json.getAsJsonObject(), "uuid");
+			UUID uuid;
+			try {
+				uuid = UUID.fromString(sUUID);
+			}
+			catch (Exception ex) {
+				throw new JsonParseException("uuid %s is not valid".formatted(sUUID));
+			}
+			itemAttributeModifier.uuid = uuid;
 
 			String dimension = GsonHelper.getAsString(json.getAsJsonObject(), "dimension", "");
 			if (!dimension.equals("")) {
@@ -115,6 +130,7 @@ public class ItemAttributeModifier extends IdTagMatcher {
 			if (src.dimension != null) {
 				jsonObject.addProperty("dimension", src.dimension.toString());
 			}
+			jsonObject.addProperty("uuid", src.uuid.toString());
 			jsonObject.addProperty("slot", src.slot.getName());
 			jsonObject.addProperty("attribute", ForgeRegistries.ATTRIBUTES.getKey(src.attribute).toString());
 			jsonObject.addProperty("amount", src.amount);
