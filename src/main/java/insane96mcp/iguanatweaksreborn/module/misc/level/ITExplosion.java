@@ -103,7 +103,7 @@ public class ITExplosion extends Explosion {
 	}
 
 	public void fallingBlocks() {
-		if (this.blockInteraction == BlockInteraction.NONE)
+		if (this.blockInteraction == BlockInteraction.KEEP)
 			return;
 		for(BlockPos blockpos : this.getToBlow()) {
 			BlockState blockstate = this.level.getBlockState(blockpos);
@@ -190,7 +190,7 @@ public class ITExplosion extends Explosion {
 	}
 
 	public void destroyBlocks() {
-		if (this.blockInteraction == BlockInteraction.NONE)
+		if (this.blockInteraction == BlockInteraction.KEEP)
 			return;
 		Util.shuffle(this.toBlow, this.level.getRandom());
 		for(BlockPos blockpos : this.getToBlow()) {
@@ -224,7 +224,7 @@ public class ITExplosion extends Explosion {
 	}
 
 	public void spawnParticles() {
-		if (!(this.radius < 2.0F) && this.blockInteraction != Explosion.BlockInteraction.NONE) {
+		if (!(this.radius < 2.0F) && this.blockInteraction != Explosion.BlockInteraction.KEEP) {
 			this.level.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getPosition().x, this.getPosition().y, this.getPosition().z, 1.0D, 0.0D, 0.0D);
 		}
 		else {

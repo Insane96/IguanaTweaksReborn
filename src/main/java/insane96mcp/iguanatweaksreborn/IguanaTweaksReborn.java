@@ -9,33 +9,21 @@ import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.ITSoundEvents;
 import insane96mcp.iguanatweaksreborn.utils.Weights;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.resource.PathPackResources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
 
 @Mod("iguanatweaksreborn")
 public class IguanaTweaksReborn
@@ -52,7 +40,7 @@ public class IguanaTweaksReborn
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::addPackFinders);
+        //FMLJavaModLoadingContext.get().getModEventBus().addListener(this::addPackFinders);
         FMLJavaModLoadingContext.get().getModEventBus().register(Tiredness.class);
         ITSoundEvents.SOUND_EVENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITMobEffects.MOB_EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -80,7 +68,7 @@ public class IguanaTweaksReborn
 
     }
 
-    public void addPackFinders(AddPackFindersEvent event)
+    /*public void addPackFinders(AddPackFindersEvent event)
     {
         for (IntegratedDataPack dp : IntegratedDataPack.INTEGRATED_DATA_PACKS) {
             if (event.getPackType() != dp.packType)
@@ -121,5 +109,5 @@ public class IguanaTweaksReborn
             this.path = path;
             this.description = description;
         }
-    }
+    }*/
 }

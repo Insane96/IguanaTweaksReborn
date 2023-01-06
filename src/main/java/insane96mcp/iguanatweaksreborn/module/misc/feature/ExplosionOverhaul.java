@@ -93,7 +93,7 @@ public class ExplosionOverhaul extends Feature {
 			explosion.processEntities(blockingDamageScaling, knockbackScalesWithSize);
 			explosion.dropItems();
 			explosion.processFire();
-			if (explosion.blockInteraction == Explosion.BlockInteraction.NONE) {
+			if (explosion.blockInteraction == Explosion.BlockInteraction.KEEP) {
 				explosion.clearToBlow();
 			}
 			for (ServerPlayer serverPlayer : world.players()) {

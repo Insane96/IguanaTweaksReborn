@@ -10,7 +10,7 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
@@ -83,7 +83,7 @@ public class ITFeature extends Feature {
      * Use this instead of Utils.isItemInTag when reloading data due to tags not existing yet at reload
      */
     public static boolean isItemInTag(Item item, ResourceLocation tag) {
-        TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, tag);
+        TagKey<Item> tagKey = TagKey.create(Registries.ITEM, tag);
         Collection<Holder<Item>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);
         for (Holder<Item> holder : tags) {
             if (holder.value().equals(item))
@@ -99,7 +99,7 @@ public class ITFeature extends Feature {
         if (idTagMatcher.type == IdTagMatcher.Type.ID)
             return idTagMatcher.getAllItems();
 
-        TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, idTagMatcher.location);
+        TagKey<Item> tagKey = TagKey.create(Registries.ITEM, idTagMatcher.location);
         Collection<Holder<Item>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);
         ArrayList<Item> list = new ArrayList<>();
         for (Holder<Item> holder : tags) {
@@ -112,7 +112,7 @@ public class ITFeature extends Feature {
      * Use this instead of Utils.isBlockInTag when reloading data due to tags not existing yet at reload
      */
     public static boolean isBlockInTag(Block block, ResourceLocation tag) {
-        TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, tag);
+        TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, tag);
         Collection<Holder<Block>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);
         for (Holder<Block> holder : tags) {
             if (holder.value().equals(block))
@@ -128,7 +128,7 @@ public class ITFeature extends Feature {
         if (idTagMatcher.type == IdTagMatcher.Type.ID)
             return idTagMatcher.getAllBlocks();
 
-        TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, idTagMatcher.location);
+        TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, idTagMatcher.location);
         Collection<Holder<Block>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);
         ArrayList<Block> list = new ArrayList<>();
         for (Holder<Block> holder : tags) {
@@ -141,7 +141,7 @@ public class ITFeature extends Feature {
      * Use this instead of Utils.isEntityInTag when reloading data due to tags not existing yet at reload
      */
     public static boolean isEntityInTag(Entity entity, ResourceLocation tag) {
-        TagKey<EntityType<?>> tagKey = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, tag);
+        TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, tag);
         Collection<Holder<EntityType<?>>> tags = ITDataReloadListener.reloadContext.getTag(tagKey);
         for (Holder<EntityType<?>> holder : tags) {
             if (holder.value().equals(entity.getType()))

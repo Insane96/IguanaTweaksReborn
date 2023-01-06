@@ -109,7 +109,7 @@ public class Villagers extends Feature {
 				return;
 			zombievillager.finalizeSpawn(level, level.getCurrentDifficultyAt(zombievillager.blockPosition()), MobSpawnType.CONVERSION, new Zombie.ZombieGroupData(false, true), null);
 			zombievillager.setVillagerData(villager.getVillagerData());
-			zombievillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE).getValue());
+			zombievillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
 			zombievillager.setTradeOffers(villager.getOffers().createTag());
 			zombievillager.setVillagerXp(villager.getVillagerXp());
 			net.minecraftforge.event.ForgeEventFactory.onLivingConvert(killedEntity, zombievillager);

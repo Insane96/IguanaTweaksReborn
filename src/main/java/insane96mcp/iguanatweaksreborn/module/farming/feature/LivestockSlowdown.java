@@ -8,7 +8,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -165,7 +165,7 @@ public class LivestockSlowdown extends Feature {
 	}
 
 	public static boolean isEntityBlacklisted(Entity entity) {
-		TagKey<EntityType<?>> tagKey = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, NO_LIVESTOCK_SLOWDOWN);
+		TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, NO_LIVESTOCK_SLOWDOWN);
 		//noinspection ConstantConditions
 		return ForgeRegistries.ENTITY_TYPES.tags().getTag(tagKey).contains(entity.getType());
 	}

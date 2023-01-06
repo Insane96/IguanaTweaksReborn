@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
@@ -34,7 +34,7 @@ public class BlockExperience extends Feature {
 				|| blockMultiplier == 1.0d)
 			return;
 
-		TagKey<Block> tagKey = TagKey.create(Registry.BLOCK_REGISTRY, NO_BLOCK_XP_MULTIPLIER);
+		TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, NO_BLOCK_XP_MULTIPLIER);
 		if (ForgeRegistries.BLOCKS.tags().getTag(tagKey).contains(event.getState().getBlock()))
 			return;
 

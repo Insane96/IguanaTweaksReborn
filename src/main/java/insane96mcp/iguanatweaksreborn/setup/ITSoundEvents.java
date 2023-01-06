@@ -10,5 +10,5 @@ import net.minecraftforge.registries.RegistryObject;
 public class ITSoundEvents {
 	public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, IguanaTweaksReborn.MOD_ID);
 
-	public static final RegistryObject<SoundEvent> INJURED = SOUND_EVENTS.register("injured", () -> new SoundEvent(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "injured")));
+	public static final RegistryObject<SoundEvent> INJURED = SOUND_EVENTS.register("injured", () -> SoundEvent.createFixedRangeEvent(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "injured"), 16f));
 }

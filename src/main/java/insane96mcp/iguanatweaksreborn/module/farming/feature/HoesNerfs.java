@@ -10,7 +10,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -99,7 +99,7 @@ public class HoesNerfs extends ITFeature {
 	}
 
 	private static boolean isHoeDisabled(Item item) {
-		TagKey<Item> tagKey = TagKey.create(Registry.ITEM_REGISTRY, DISABLED_HOES);
+		TagKey<Item> tagKey = TagKey.create(Registries.ITEM, DISABLED_HOES);
 		//noinspection ConstantConditions
 		return ForgeRegistries.ITEMS.tags().getTag(tagKey).contains(item);
 	}

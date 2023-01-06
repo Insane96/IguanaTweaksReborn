@@ -6,7 +6,6 @@
     "mixins": [
         "AbstractArrowMixin",
         "AnvilMenuMixin",
-        "AssignProfessionFromJobSiteMixin",
         "BaseSpawnerMixin",
         "BeaconBlockEntityMixin",
         "BoatMixin",
@@ -22,6 +21,7 @@
         "PotionItemMixin",
         "ProtectionEnchantmentMixin",
         "ThrownExperienceBottleMixin",
+        "VillagerMixin",
         "ZombieMixin"
     ],
     "minVersion": "0.8",

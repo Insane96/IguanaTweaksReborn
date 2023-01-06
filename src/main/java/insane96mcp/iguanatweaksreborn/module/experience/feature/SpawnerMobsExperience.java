@@ -8,7 +8,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.setup.ILStrings;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
@@ -40,7 +40,7 @@ public class SpawnerMobsExperience extends Feature {
 				|| !mob.getPersistentData().getBoolean(ILStrings.Tags.SPAWNED_FROM_SPAWNER))
 			return;
 
-		TagKey<EntityType<?>> tagKey = TagKey.create(Registry.ENTITY_TYPE_REGISTRY, NO_SPAWNER_XP_MULTIPLIER);
+		TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, NO_SPAWNER_XP_MULTIPLIER);
 		if (ForgeRegistries.ENTITY_TYPES.tags().getTag(tagKey).contains(mob.getType()))
 			return;
 
