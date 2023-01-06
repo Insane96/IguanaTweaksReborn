@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.13.5
 * Updated to 1.19.3
 * Renamed Well Rested to Vigour
   * Vigour now reduces more hunger consumption (~~20%~~ -> 25% per level)
