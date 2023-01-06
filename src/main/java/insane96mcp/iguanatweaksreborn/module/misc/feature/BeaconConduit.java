@@ -9,7 +9,11 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.screens.inventory.BeaconScreen;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -25,6 +29,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RenderTooltipEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.*;
 
@@ -151,6 +159,38 @@ public class BeaconConduit extends ITFeature {
 
         return range;
     }
+
+    boolean replacedTooltip = false;
+
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public void onRenderTooltip(RenderTooltipEvent.Pre event) {
+        if (!this.isEnabled()
+                || !vigourWithRegen
+                || replacedTooltip)
+            return;
+
+        if (Minecraft.getInstance().screen instanceof BeaconScreen beaconScreen) {
+            for (BeaconScreen.BeaconButton beaconButton : beaconScreen.beaconButtons) {
+                if (!(beaconButton instanceof BeaconScreen.BeaconPowerButton beaconPowerButton))
+                    continue;
+                if (beaconPowerButton.effect.equals(MobEffects.REGENERATION)) {
+                    if (vigourWithRegen)
+                        beaconPowerButton.setTooltip(Tooltip.create(
+                                Component.translatable(beaconPowerButton.effect.getDescriptionId())
+                                        .append(Component.literal(" & ")
+                                        .append(Component.translatable(ITMobEffects.VIGOUR.get().getDescriptionId()))),
+                        null));
+                    replacedTooltip = true;
+                }
+            }
+        }
+
+    }
+
+    /*
+     * CONDUIT
+     */
 
     static float MIN_DAMAGE = 2f;
     static float MAX_DAMAGE = 6f;
