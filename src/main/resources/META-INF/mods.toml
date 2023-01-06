@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[42,)"
+loaderVersion="[44,)"
 license="All rights reserved"
 [[mods]]
 modId="iguanatweaksreborn"
@@ -21,20 +21,20 @@ configBackground = "minecraft:textures/block/cobblestone.png"
 [[dependencies.iguanatweaksreborn]]
     modId="forge"
     mandatory=true
-    versionRange="[42,)"
+    versionRange="[44,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.iguanatweaksreborn]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2,1.20)"
+    versionRange="[1.19.3,1.20)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.iguanatweaksreborn]]
     modId="insanelib"
     mandatory=true
-    versionRange="[1.7.2,)"
+    versionRange="[1.7.3,)"
     ordering="NONE"
     side="BOTH"

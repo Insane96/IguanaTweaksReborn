@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Updated to 1.19.3
 * Renamed Well Rested to Vigour
   * Vigour now reduces more hunger consumption (~~20%~~ -> 25% per level)
   * Can now be obtained with a Beacon when the Regeneration effect is active
