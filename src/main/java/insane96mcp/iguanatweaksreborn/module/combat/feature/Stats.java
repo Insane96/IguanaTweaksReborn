@@ -54,7 +54,7 @@ public class Stats extends Feature {
 				.comment("Set the power of the Power enchantment (vanilla is 0.5).")
 				.defineInRange("Power Power", this.powerPower, 0, 10);
 		disableCritArrowsConfig = ITCommonConfig.builder
-				.comment("If true, Arrows from Bows will no longer randomly crit (basically disables the random bonus damage given when firing a fully charged arrow).")
+				.comment("If true, Arrows from Bows and Crossbows will no longer randomly crit (basically disables the random bonus damage given when firing a fully charged arrow).")
 				.define("Disable Arrow Crits", this.disableCritArrows);
 		adjustCrossbowDamageConfig = ITCommonConfig.builder
 				.comment("If true, Arrows from Crossbows will no longer deal random damage, but a set amount of damage (about 9 at a medium distance).")
@@ -118,10 +118,11 @@ public class Stats extends Feature {
 	}
 
 	private void processCrossbow(AbstractArrow arrow) {
-		if (this.adjustCrossbowDamage) {
+		if (this.disableCritArrows)
 			arrow.setCritArrow(false);
+
+		if (this.adjustCrossbowDamage)
 			arrow.setBaseDamage(2.8d);
-		}
 	}
 
 	@SubscribeEvent

@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.12.10
+* Fixed not begin able to disable crit arrows on crossbows without changing the damage
+
 ## 2.12.9
 * `Faster Potion Consuming` and `Fast Milk consuming` have been merged to `Fast Drink Consuming`  
   Honey is also now drinked faster
