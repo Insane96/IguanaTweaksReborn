@@ -1,8 +1,8 @@
 # Changelog
 
-## Upcoming
+## 2.13.5
 * Renamed Well Rested to Vigour
-  * Vigour now reduces more hunger consumption (~~20%~~ -> 25% per level)
+  * Vigour now reduces more hunger consumption (33/50/66.7/75/80/...% at levels I/II/III/IV/V/...)
   * Can now be obtained with a Beacon when the Regeneration effect is active
   * Can still be obtained by sleeping when not tired
 * Item modifiers now require UUIDs (Fixing multiple modifiers not stacking)

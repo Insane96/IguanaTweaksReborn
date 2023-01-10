@@ -18,6 +18,9 @@ public class Vigour extends ITMobEffect {
 
         //noinspection ConstantConditions
         int amp = player.getEffect(ITMobEffects.VIGOUR.get()).getAmplifier() + 1;
-        return exhaustion * Math.max(0, 1 - amp * 0.25f);
+        if (amp == 1)
+            return exhaustion * 1 / 1.5f;
+        else
+            return exhaustion * 1 / amp;
     }
 }
