@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.14.0
+* The update in the number is just to keep 1.19.2 and 1.19.3 separated
+* Vigour now reduces more hunger consumption (33/50/66.7/75/80/...% at levels I/II/III/IV/V/...)
+
 ## 2.13.5
 * Updated to 1.19.3
 * Renamed Well Rested to Vigour

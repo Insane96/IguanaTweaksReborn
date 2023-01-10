@@ -82,16 +82,16 @@ public class Tiredness extends ITFeature {
 	@Config(min = 0d)
 	@Label(name = "Default Energy Boost Duration Multiplier", description = "By default if omitted in the json, food items will give 1 second of Energy Boost per effective nourishment (hunger + saturation) of the food. This multiplies the duration of the effect")
 	public static Double defaultEnergyBoostDurationMultiplier = 5d;
-	//Well Rested
+	//Vigour
 	@Config(min = 0)
-	@Label(name = "Well Rested.Duration", description = "Duration (in seconds) of the well rested effect on wake up")
-	public static Integer wellRestedDuration = 480;
+	@Label(name = "Vigour.Duration", description = "Duration (in seconds) of the Vigour effect on wake up")
+	public static Integer vigourDuration = 480;
 	@Config(min = 0)
-	@Label(name = "Well Rested.Penalty", description = "How many seconds per tiredness above 'Tiredness for effect' will be removed from effect duration on apply?")
-	public static Integer wellRestedPenalty = 10;
+	@Label(name = "Vigour.Penalty", description = "How many seconds per tiredness above 'Tiredness for effect' will be removed from the effect duration on apply?")
+	public static Integer vigourPenalty = 10;
 	@Config(min = 0)
-	@Label(name = "Well Rested.Amplifier", description = "Amplifier (effect level) of well rested effect on wake up. (Note 0 = Level I, 1 = II, ...)")
-	public static Integer wellRestedAmplifier = 1;
+	@Label(name = "Vigour.Amplifier", description = "Amplifier (effect level) of Vigour effect on wake up. (Note 0 = Level I, 1 = II, ...)")
+	public static Integer vigourAmplifier = 1;
 
 	public Tiredness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -216,9 +216,9 @@ public class Tiredness extends ITFeature {
 			return;
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> {
 			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) - tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
-			int duration = (int) (wellRestedDuration - (tirednessOnWakeUp * wellRestedPenalty));
+			int duration = (int) (vigourDuration - (tirednessOnWakeUp * vigourPenalty));
 			if (duration > 0)
-				player.addEffect(new MobEffectInstance(ITMobEffects.VIGOUR.get(), duration * 20, wellRestedAmplifier, false, false));
+				player.addEffect(new MobEffectInstance(ITMobEffects.VIGOUR.get(), duration * 20, vigourAmplifier, false, false));
 			player.getPersistentData().putFloat(Strings.Tags.TIREDNESS, tirednessOnWakeUp);
 		});
 	}
