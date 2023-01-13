@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
+import insane96mcp.iguanatweaksreborn.effect.Vigour;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -44,7 +45,9 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@ModifyVariable(method = "causeFoodExhaustion", argsOnly = true, at = @At("HEAD"))
 	private float applyHungerToFoodExhaustion(float amount) {
-		return Modules.hungerHealth.exhaustionIncrease.increaseHungerEffectiviness((Player) (Object) this, amount);
+		float newAmount = Modules.hungerHealth.exhaustionIncrease.increaseHungerEffectiviness((Player) (Object) this, amount);
+		newAmount = Vigour.decreaseExhaustionConsumption((Player) (Object) this, newAmount);
+		return newAmount;
 	}
 
 	@Inject(method = "disableShield", at = @At("HEAD"), cancellable = true)

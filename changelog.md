@@ -1,11 +1,16 @@
 # Changelog
 
+## 2.12.11
+* Partially backported the Vigour effect
+  * Is applied together with the Regeneration effect of the Beacon
+  * Reduces hunger consumption by 33% (hunger bar will last 50% more)
+
 ## 2.12.10
 * Fixed not begin able to disable crit arrows on crossbows without changing the damage
 
 ## 2.12.9
 * `Faster Potion Consuming` and `Fast Milk consuming` have been merged to `Fast Drink Consuming`  
-  Honey is also now drinked faster
+  Honey is also now drunk faster
 * Night vision now fades out in 2 seconds instead of 4
 * Fixed crash with BattleTowers
 
@@ -16,8 +21,8 @@
 * Disabled hoes are no longer damaged when trying to till. They can still be used to break blocks.
 * Fog Under Lava with Fire Resistance is now more foggy
 * `Allow Sleeping During Day` is now disabled by default due to Tiredness controlling if you can sleep
-* Removed Regneration effect when waking up
-* Fixed conduit dealing near to 0 damage (instead of 2 minumum).
+* Removed Regeneration effect when waking up
+* Fixed conduit dealing near to 0 damage (instead of 2 minimum).
 * Fixed General Stacking not working
 * Fixed Fog Feature overwriting Tiredness fog
 * Fixed hunger consumption chance not taking into account the config option
@@ -35,16 +40,16 @@
   * Changed Beacon ranges for some blocks
     * Diamond Block (3 -> 2.5)
     * Cobalt Block (TiCon) (2.2 -> 2.4)
-* Nerfed bonemeal now should work on any crop block
-  * Fixes error when using bonemeal on Farmers' Delight tomato crop
-  * Fixes Bonemeal fail chance not working on stem blocks (pumpkin/melons)
+* Nerfed bone meal now should work on any crop block
+  * Fixes error when using bone meal on Farmers' Delight tomato crop
+  * Fixes Bone meal fail chance not working on stem blocks (pumpkin/melons)
 
 ## 2.12.5
 * Flying blocks' explosion changes 
   * Removed smoke particles
   * Reduced knockback taken by flying blocks
   * Fixed Flying blocks not flying
-  * Now obeys mob_griefing gamerule
+  * Now obeys mob_griefing game rule
 
 ## 2.12.4
 * Tiredness
@@ -70,7 +75,7 @@
 ## 2.12.1
 * Added `Eating Time Minimum` config option, defaulting to 24 (from 32)
 * Power enchantment power can now be configured
-* Fixed bonemeal begin usable on non-wet farmland
+* Fixed bone meal begin usable on non-wet farmland
 * Fixed temp spawners' entity blacklist config begin outside
 
 ## 2.12.0
