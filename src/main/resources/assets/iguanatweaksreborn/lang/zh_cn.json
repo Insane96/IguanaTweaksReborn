@@ -1,0 +1,33 @@
+{
+	"iguanatweaksreborn.mooshroom_cooldown": "蘑菇煲",
+	"iguanatweaksreborn.cow_cooldown": "牛奶",
+	"iguanatweaksreborn.yet_ready": "尚未准备好",
+	"iguanatweaksreborn.weak_hoe": "这锄头太弱了，不能耕地",
+
+	"iguanatweaksreborn.no_food_for_sleep": "你太饿了，睡不着",
+	"iguanatweaksreborn.decorative_beds": "床只是一个很好的装饰，不允许睡觉",
+	"iguanatweaksreborn.enjoy_the_night": "你的重生点已经设定。好好享受这个夜晚！",
+	"iguanatweaksreborn.not_tired": "你还不够累睡不着",
+	"iguanatweaksreborn.tired_enough": "你开始感到疲倦",
+	"iguanatweaksreborn.too_tired": "你真的应该好好睡一觉",
+
+	"iguanatweaksreborn.no_damage_item": "这件物品并不锋利，攻击起来像拳头",
+	"iguanatweaksreborn.no_efficiency_item": "这个东西又旧又生锈，不能开采任何东西",
+
+	"iguanatweaksreborn.armor_slowdown": "-%s%% 速度",
+
+	"effect.iguanatweaksreborn.injured": "受伤",
+	"effect.iguanatweaksreborn.well_fed": "吃得很饱",
+	"effect.iguanatweaksreborn.tired": "疲惫",
+	"effect.iguanatweaksreborn.energy_boost": "能量提升",
+	"effect.iguanatweaksreborn.well_rested": "休息好了",
+
+	"effect.iguanatweaksreborn.injured.description": "连续受击次数过多时获得。每级减少20%的生命恢复。",
+	"effect.iguanatweaksreborn.well_fed.description": "从低饥饿状态进食时获得。每级增加 25% 的健康恢复。",
+	"effect.iguanatweaksreborn.tired.description": "在长时间不睡觉后获得。降低移动速度和视野。",
+	"effect.iguanatweaksreborn.energy_boost.description": "每级每秒减少0.2疲劳度。",
+	"effect.iguanatweaksreborn.well_rested.description": "睡觉后获得，不会太疲惫。每级减少20%的饥饿消耗。",
+
+	"container.repair.free": "免费",
+	"iguanatweaksreborn.item_repaired": "物品已修好"
+}
