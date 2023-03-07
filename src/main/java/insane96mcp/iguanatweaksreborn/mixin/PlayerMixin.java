@@ -54,13 +54,21 @@ public abstract class PlayerMixin extends LivingEntity {
 	}
 
 	@Inject(method = "disableShield", at = @At("HEAD"), cancellable = true)
-	private void disableShield(boolean efficiencyAffected, CallbackInfo callbackInfo) {
+	private void onDisableShield(boolean efficiencyAffected, CallbackInfo callbackInfo) {
 		if (Shields.combatTestShieldDisabling()) {
 			callbackInfo.cancel();
 			this.getCooldowns().addCooldown(this.getUseItem().getItem(), 32);
 			this.stopUsingItem();
 		}
 	}
+
+	/*@ModifyVariable(method = "getDigSpeed", ordinal = 0, at = @At(value = "STORE", ordinal = 1), remap = false)
+	private float changeEfficiencyFormula(float efficiency, BlockState p_36282_, @Nullable BlockPos pos) {
+		int i = EnchantmentHelper.getBlockEfficiency((Player) (Object) this);
+		efficiency -= (float)(i * i + 1);
+		efficiency += i * 5;
+		return efficiency;
+	}*/
 
 	@Shadow
 	public abstract ItemCooldowns getCooldowns();

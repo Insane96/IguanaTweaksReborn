@@ -35,10 +35,9 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.text.DecimalFormat;
 
-@Label(name = "Health Regen", description = "Makes Health regen work differently, like in Combat Test snapshots. Can be customized. Also adds Well Fed and Injured effects.")
-@LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
+@Label(name = "Health Regen", description = "Makes Health regen work differently, like in Combat Test snapshots. Can be customized. Also adds Well Fed and Injured effects. Hunger related stuff doesn't work (for obvious reasons) if No Hunger feature is enabled")
+@LoadFeature(module = Modules.Ids.HUNGER_HEALTH, enabledByDefault = false)
 public class HealthRegen extends Feature {
-
 	@Config
 	@Label(name = "Load Combat Test Config Options", description = "If true, restart the game and the following config options will be changed to the ones of the combat test snapshot and then set this back to false.")
 	public static Boolean loadCombatTestConfigOptions = true;
@@ -253,7 +252,7 @@ public class HealthRegen extends Feature {
 	 * Returns true if overrides the vanilla tick, otherwise false
 	 */
 	public static boolean tickFoodStats(FoodData foodStats, Player player) {
-		if (!isEnabled(HealthRegen.class))
+		if (!Feature.isEnabled(HealthRegen.class))
 			return false;
 		Difficulty difficulty = player.level.getDifficulty();
 		foodStats.lastFoodLevel = foodStats.getFoodLevel();
@@ -272,7 +271,7 @@ public class HealthRegen extends Feature {
 	}
 
 	private static void tick(FoodData foodStats, Player player, Difficulty difficulty) {
-		boolean naturalRegen = player.level.getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION);
+		boolean naturalRegen = player.level.getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION) && !NoHunger.disableHunger;
 		if (naturalRegen && foodStats.saturationLevel > 0.0F && player.isHurt() && foodStats.foodLevel >= 20 && !disableSaturationRegenBoost) {
 			++foodStats.tickTimer;
 			if (foodStats.tickTimer >= 10) {
@@ -330,7 +329,8 @@ public class HealthRegen extends Feature {
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void debugScreen(CustomizeGuiOverlayEvent.DebugText event) {
-		if (!this.isEnabled())
+		if (!this.isEnabled()
+			|| NoHunger.disableHunger)
 			return;
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer playerEntity = mc.player;
