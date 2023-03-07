@@ -15,7 +15,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Exhaustion Increase", description = "Make the player consume more hunger with different actions")
+@Label(name = "Exhaustion Increase", description = "Make the player consume more hunger with different actions. Does nothing if Hunger bar is disabled.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class ExhaustionIncrease extends Feature {
 	@Config(min = 0d, max = 128d)
@@ -77,5 +77,10 @@ public class ExhaustionIncrease extends Feature {
 		//noinspection ConstantConditions
 		int amp = player.getEffect(MobEffects.HUNGER).getAmplifier() + 1;
 		return amount * (amp * 1f + 1);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled() && !Feature.isEnabled(NoHunger.class);
 	}
 }
