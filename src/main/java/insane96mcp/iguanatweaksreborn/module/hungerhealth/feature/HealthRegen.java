@@ -306,7 +306,7 @@ public class HealthRegen extends Feature {
 				foodStats.tickTimer = 0;
 			}
 		}
-		else {
+		else if (!NoHunger.disableHunger){
 			foodStats.tickTimer = 0;
 		}
 	}
