@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.14.1
+* `Faster Potion Consuming` and `Fast Milk consuming` have been merged to `Fast Drink Consuming`  
+  Honey is also now drunk faster
+* Fixed not begin able to disable crit arrows on crossbows without changing the damage
+* Fixed crash with BattleTowers
+
 ## 2.14.0
 * The update in the number is just to keep 1.19.2 and 1.19.3 separated
 * Vigour now reduces more hunger consumption (33/50/66.7/75/80/...% at levels I/II/III/IV/V/...)

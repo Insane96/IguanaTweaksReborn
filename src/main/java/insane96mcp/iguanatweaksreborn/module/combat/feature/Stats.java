@@ -57,8 +57,9 @@ public class Stats extends ITFeature {
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Power Enchantment Damage Increase", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
 	public static Double powerEnchantmentDamageIncrease = 0.35d;
+	//TODO mixin inside the damage to keep "crit" arrows but without the bonus damage
 	@Config
-	@Label(name = "Disable Arrow Crits", description = "If true, Arrows from Bows will no longer randomly crit (basically disables the random bonus damage given when firing a fully charged arrow).")
+	@Label(name = "Disable Arrow Crits", description = "If true, Arrows from Bows and Crossbows will no longer randomly crit (basically disables the random bonus damage given when firing a fully charged arrow).")
 	public static Boolean disableCritArrows = true;
 	@Config
 	@Label(name = "Adjust Crossbow Damage", description = "If true, Arrows from Crossbows will no longer deal random damage, but a set amount of damage (about 9 at a medium distance, like Bedrock Edition).")
@@ -134,10 +135,11 @@ public class Stats extends ITFeature {
 	}
 
 	private void processCrossbow(AbstractArrow arrow) {
-		if (adjustCrossbowDamage) {
+		if (disableCritArrows)
 			arrow.setCritArrow(false);
+
+		if (adjustCrossbowDamage)
 			arrow.setBaseDamage(2.8d);
-		}
 	}
 
 	@SubscribeEvent

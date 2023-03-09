@@ -56,9 +56,8 @@ public class TempSpawner extends Feature {
 		event.getSpawner().save(nbt);
 		BlockPos spawnerPos = event.getSpawner().getSpawnerBlockEntity().getBlockPos();
 		ServerLevel level = (ServerLevel) event.getLevel();
-		SpawnerBlockEntity mobSpawner = (SpawnerBlockEntity) level.getBlockEntity(spawnerPos);
-		if (mobSpawner == null) {
-			LogHelper.warn("SpawnerBlockEntity is null at %s".formatted(spawnerPos));
+		if (!(event.getSpawner().getSpawnerBlockEntity() instanceof SpawnerBlockEntity mobSpawner)) {
+			LogHelper.warn("SpawnerBlockEntity is null at %s. Some mod is giving a spawner a non SpawnerBlockEntity.".formatted(spawnerPos));
 			return;
 		}
 		mobSpawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> {

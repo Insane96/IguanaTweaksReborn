@@ -46,11 +46,8 @@ public class FoodDrinks extends ITFeature {
 	public static Double foodSaturationMultiplier = 1.0d;
 
 	@Config
-	@Label(name = "Faster Potion Consuming", description = "Makes potion faster to drink, 1 second instead of 1.6.")
-	public static Boolean fasterPotionConsuming = true;
-	@Config
-	@Label(name = "Faster Milk Consuming", description = "Makes milk faster to drink, 1 second instead of 1.6.")
-	public static Boolean fasterMilkConsuming = true;
+	@Label(name = "Faster Drink Consuming", description = "Makes potion faster to drink, 1 second instead of 1.6.")
+	public static Boolean fasterDrinkConsuming = true;
 	@Config
 	@Label(name = "Eating Speed Based Off Food Restored", description = "Makes the speed for eating food based off the hunger and saturation they provide. At 2 (hunger + saturation) the speed is vanilla, higher / lower (hunger + saturation) will lower / raise the speed.")
 	public static Boolean eatingSpeedBasedOffFood = true;

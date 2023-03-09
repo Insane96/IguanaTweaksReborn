@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class PotionItemMixin {
 	@Inject(at = @At("RETURN"), method = "getUseDuration", cancellable = true)
 	public void getUseDuration(ItemStack stack, CallbackInfoReturnable<Integer> callbackInfo) {
-		if (!FoodDrinks.fasterPotionConsuming || !Feature.isEnabled(FoodDrinks.class))
+		if (!FoodDrinks.fasterDrinkConsuming || !Feature.isEnabled(FoodDrinks.class))
 			return;
 
 		callbackInfo.setReturnValue(20);
