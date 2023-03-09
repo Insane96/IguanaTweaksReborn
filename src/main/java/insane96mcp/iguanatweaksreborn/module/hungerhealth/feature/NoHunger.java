@@ -3,7 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
-import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -37,12 +37,12 @@ public class NoHunger extends Feature {
     @Config
     @Label(name = "Passive Health Regen.Passive Regeneration Speed Hard", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for hard difficulty")
     public static MinMax passiveRegenerationTimeHard = new MinMax(10, 45);
-    @Config
-    @Label(name = "Food Gives Fed", description = "If true, food gives the 'Fed' effect that increases passive health regen.")
-    public static Boolean foodGivesFed = true;
+    @Config(min = -1)
+    @Label(name = "Food Gives Fed when Effectiveness", description = "When effectiveness of the food eaten is higher than this value, the Fed effect is given. Set to -1 to disable the fed effect.\nFed increases passive health regen by 50% per level")
+    public static Double foodGivesFedWhenEffectiveness = 8d;
     @Config(min = 0d, max = 1f)
     @Label(name = "Food Heal Multiplier", description = "When eating you'll get healed by this percentage hunger restored. (Set to 1 to have the same effect as pre-beta 1.8 food")
-    public static Double foodHealMultiplier = 0d;
+    public static Double foodHealMultiplier = 1d;
 
     public NoHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -62,7 +62,13 @@ public class NoHunger extends Feature {
             int passiveRegen = getPassiveRegenSpeed(event.player);
 
             if (getPassiveRegenTick(event.player) > passiveRegen) {
-                event.player.heal(1.0F);
+                float heal = 1.0f;
+                if (event.player.hasEffect(ITMobEffects.FED.get())) {
+                    MobEffectInstance fed = event.player.getEffect(ITMobEffects.FED.get());
+                    //noinspection ConstantConditions
+                    heal *= ((fed.getAmplifier() + 1) * 0.5d) + 1;
+                }
+                event.player.heal(heal);
                 resetPassiveRegenTick(event.player);
             }
         }
@@ -81,12 +87,15 @@ public class NoHunger extends Feature {
     }
 
     public void applyFedEffect(LivingEntityUseItemEvent.Finish event) {
-        if (!foodGivesFed) return;
+        if (foodGivesFedWhenEffectiveness < 0d) return;
         FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), event.getEntity());
         //noinspection ConstantConditions
-        int duration = food.nutrition * 50;
-        int amplifier = (int) ((food.saturationModifier * 2 * food.nutrition) / 4 - 1);
-        event.getEntity().addEffect(new MobEffectInstance(ITMobEffects.FED.get(), duration, amplifier, true, false, true));
+        double effectiveness = Utils.getFoodEffectiveness(food);
+        if (effectiveness < foodGivesFedWhenEffectiveness)
+            return;
+        int duration = (int) (food.saturationModifier * 300);
+        //int amplifier = (int) ((food.saturationModifier * 2 * food.nutrition) / 4 - 1);
+        event.getEntity().addEffect(new MobEffectInstance(ITMobEffects.FED.get(), duration, 0, true, false, true));
     }
 
     public void healOnEat(LivingEntityUseItemEvent.Finish event) {
@@ -110,13 +119,6 @@ public class NoHunger extends Feature {
         else {
             secs = (int) ((passiveRegenerationTimeEasy.max - passiveRegenerationTimeEasy.min) * healthPerc + passiveRegenerationTimeEasy.min);
         }
-        LogHelper.info("secs pre Fed: %d", secs);
-        if (player.hasEffect(ITMobEffects.FED.get())) {
-            MobEffectInstance fed = player.getEffect(ITMobEffects.FED.get());
-            //noinspection ConstantConditions
-            secs *= 1 - (((fed.getAmplifier() + 1) * 0.2d));
-        }
-        LogHelper.info("secs: %d", secs);
         return secs * 20;
     }
 

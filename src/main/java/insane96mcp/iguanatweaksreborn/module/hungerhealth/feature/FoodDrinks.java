@@ -40,7 +40,7 @@ public class FoodDrinks extends ITFeature {
 
 	@Config(min = 0d, max = 20d)
 	@Label(name = "Food Hunger Multiplier", description = "Food's hunger restored will be multiplied by this value (rounded up). E.g. With this set to 0.5 a Cooked Porkchop would restore 4 hunger instead of 8. Setting to 1 will disable this feature.")
-	public static Double foodHungerMultiplier = 0.63d;
+	public static Double foodHungerMultiplier = 1d;
 	@Config(min = 0d, max = 64d)
 	@Label(name = "Food Saturation Multiplier", description = "Food's saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
 	public static Double foodSaturationMultiplier = 1.0d;
@@ -53,7 +53,7 @@ public class FoodDrinks extends ITFeature {
 	public static Boolean fasterMilkConsuming = true;
 	@Config
 	@Label(name = "Eating Speed Based Off Food Restored", description = "Makes the speed for eating food based off the hunger and saturation they provide. At 2 (hunger + saturation) the speed is vanilla, higher / lower (hunger + saturation) will lower / raise the speed.")
-	public static Boolean eatingSpeedBasedOffFood = true;
+	public static Boolean eatingSpeedBasedOffFood = false;
 	@Config(min = 0d)
 	@Label(name = "Eating Time Multiplier", description = "Multiplier for the time taken to eat. Only applied if 'Eating Speed Based Off Food Config' is active.")
 	public static Double eatingTimeMultiplier = 0.115d;
