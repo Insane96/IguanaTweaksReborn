@@ -40,7 +40,7 @@ public class FoodDrinks extends ITFeature {
 
 	@Config(min = 0d, max = 20d)
 	@Label(name = "Food Hunger Multiplier", description = "Food's hunger restored will be multiplied by this value (rounded up). E.g. With this set to 0.5 a Cooked Porkchop would restore 4 hunger instead of 8. Setting to 1 will disable this feature.")
-	public static Double foodHungerMultiplier = 1d;
+	public static Double foodHungerMultiplier = 0.83d;
 	@Config(min = 0d, max = 64d)
 	@Label(name = "Food Saturation Multiplier", description = "Food's saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
 	public static Double foodSaturationMultiplier = 1.0d;

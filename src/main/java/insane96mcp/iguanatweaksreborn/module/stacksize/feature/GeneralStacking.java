@@ -31,10 +31,10 @@ public class GeneralStacking extends ITFeature {
     public static Boolean foodStackReduction = true;
     @Config(min = 0d, max = 40d)
     @Label(name = "Food Quality Divider", description = "Used in the 'Food Stack Reduction' formula. Increase this if there are foods that are better than vanilla ones, otherwise they will all stack to 1. Set this to 21.8 if you disable 'Hunger Restore Multiplier'")
-    public static Double foodQualityDivider = 18.5d;
+    public static Double foodQualityDivider = 15d;
     @Config(min = 0.01d, max = 64d)
     @Label(name = "Food Stack Multiplier", description = "All the foods max stack sizes will be multiplied by this value to increase / decrease them (after Food Stack Reduction).")
-    public static Double foodStackMultiplier = 0.9d;
+    public static Double foodStackMultiplier = 0.12d;
     @Config(min = 1, max = 64)
     @Label(name = "Stackable Stews", description = "Stews will stack up to this number. It's overridden by 'foodStackReduction' if enabled. Still affected by black/whitelist")
     public static Integer stackableSoups = 16;
