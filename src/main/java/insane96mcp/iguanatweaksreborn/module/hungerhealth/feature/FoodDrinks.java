@@ -1,9 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
-import com.ezylang.evalex.EvaluationException;
 import com.ezylang.evalex.Expression;
 import com.ezylang.evalex.data.EvaluationValue;
-import com.ezylang.evalex.parser.ParseException;
 import com.google.gson.reflect.TypeToken;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.base.ITFeature;
@@ -29,7 +27,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Food & Drinks", description = "Changes to food nourishment and the speed on how food is eaten or how items are consumed. Custom Food Properties are controlled via json in this feature's folder. Removing entries from the json requires a minecraft restart.")
@@ -37,7 +34,7 @@ import java.util.List;
 public class FoodDrinks extends ITFeature {
 	public static final ResourceLocation FOOD_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "food_drinks_no_hunger_changes");
 
-	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(Arrays.asList(
+	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(
 			new CustomFoodProperties(IdTagMatcher.Type.ID, "minecraft:rotten_flesh", 2, -1, 50, false)
 	));
 	public static final ArrayList<CustomFoodProperties> customFoodProperties = new ArrayList<>();
@@ -80,11 +77,11 @@ public class FoodDrinks extends ITFeature {
 	@Override
 	public void loadConfigOptions() {
 		super.loadConfigOptions();
-		//Check if formula is ok
-		Expression expression = new Expression(eatingSpeedFormula);
 	}
 
 	private static CustomFoodProperties customFoodPropertiesCache;
+	private static FoodProperties lastFoodEatenCache;
+	private static int lastFoodEatenTime;
 	public static int getFoodConsumingTime(ItemStack stack) {
 		if (customFoodPropertiesCache != null && customFoodPropertiesCache.matchesItem(stack.getItem())) {
 			return customFoodPropertiesCache.eatingTime;
@@ -99,6 +96,8 @@ public class FoodDrinks extends ITFeature {
 		}
 
 		FoodProperties food = stack.getItem().getFoodProperties(stack, null);
+		if (food == lastFoodEatenCache)
+			return lastFoodEatenTime;
 
 		Expression expression = new Expression(eatingSpeedFormula);
 		try {
@@ -109,23 +108,14 @@ public class FoodDrinks extends ITFeature {
 					.and("effectiveness", Utils.getFoodEffectiveness(food))
 					.and("fast_food", food.isFastFood())
 					.evaluate();
-			return result.getNumberValue().intValue();
+			lastFoodEatenCache = food;
+			lastFoodEatenTime = result.getNumberValue().intValue();
+			return lastFoodEatenTime;
 		}
-		catch (EvaluationException ex) {
-			LogHelper.error("Failed to evaluate eating speed formula: %s", eatingSpeedFormula);
+		catch (Exception ex) {
+			LogHelper.error("Failed to evaluate or parse eating speed formula: %s", expression);
 			return food.isFastFood() ? 16 : 32;
 		}
-		catch (ParseException ex) {
-			LogHelper.error("Failed to parse eating speed formula: %s", eatingSpeedFormula);
-			return food.isFastFood() ? 16 : 32;
-		}
-		/*double time = 32 * Math.pow(, 1.7);
-		if (food.isFastFood())
-			time /= 2;
-		time *= eatingTimeMultiplier;
-
-		int minTime = food.isFastFood() ? eatingTimeMin / 2 : eatingTimeMin;
-		return (int) Math.max(time, minTime);*/
 	}
 
 	@SubscribeEvent
