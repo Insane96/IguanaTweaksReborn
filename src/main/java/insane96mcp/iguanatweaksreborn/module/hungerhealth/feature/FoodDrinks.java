@@ -1,5 +1,9 @@
 package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
+import com.ezylang.evalex.EvaluationException;
+import com.ezylang.evalex.Expression;
+import com.ezylang.evalex.data.EvaluationValue;
+import com.ezylang.evalex.parser.ParseException;
 import com.google.gson.reflect.TypeToken;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.base.ITFeature;
@@ -46,17 +50,14 @@ public class FoodDrinks extends ITFeature {
 	public static Double foodSaturationMultiplier = 1.0d;
 
 	@Config
-	@Label(name = "Faster Drink Consuming", description = "Makes potion faster to drink, 1 second instead of 1.6.")
+	@Label(name = "Faster Drink Consuming", description = "Makes potion, milk and honey faster to drink, 1 second instead of 1.6.")
 	public static Boolean fasterDrinkConsuming = true;
 	@Config
-	@Label(name = "Eating Speed Based Off Food Restored", description = "Makes the speed for eating food based off the hunger and saturation they provide. At 2 (hunger + saturation) the speed is vanilla, higher / lower (hunger + saturation) will lower / raise the speed.")
-	public static Boolean eatingSpeedBasedOffFood = false;
-	@Config(min = 0d)
-	@Label(name = "Eating Time Multiplier", description = "Multiplier for the time taken to eat. Only applied if 'Eating Speed Based Off Food Config' is active.")
-	public static Double eatingTimeMultiplier = 0.115d;
-	@Config(min = 0)
-	@Label(name = "Eating Time Minimum", description = "The minimum speed a food will take to eat. \"Fast Food\" items have this value halved. Vanilla time is 32/16")
-	public static Integer eatingTimeMin = 24;
+	@Label(name = "Eating Speed Based Off Food Restored", description = "Makes the speed for eating food based off the hunger and saturation they provide.")
+	public static Boolean eatingSpeedBasedOffFood = true;
+	@Config
+	@Label(name = "Eating Speed Formula", description = "The formula to calculate the ticks required to eat a food. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. The default formula increases the time to eat exponentially when higher effectiveness.")
+	public static String eatingSpeedFormula = "MAX((32 * effectiveness^1.7) / IF(fast_food, 2, 1) * 0.04, 24 / IF(fast_food, 2, 1))";
 	@Config
 	@Label(name = "Stop consuming on hit", description = "If true, eating/drinking stops when the player's hit.")
 	public static Boolean stopConsumingOnHit = true;
@@ -76,6 +77,13 @@ public class FoodDrinks extends ITFeature {
 		processCustomFoodValues();
 	}
 
+	@Override
+	public void loadConfigOptions() {
+		super.loadConfigOptions();
+		//Check if formula is ok
+		Expression expression = new Expression(eatingSpeedFormula);
+	}
+
 	private static CustomFoodProperties customFoodPropertiesCache;
 	public static int getFoodConsumingTime(ItemStack stack) {
 		if (customFoodPropertiesCache != null && customFoodPropertiesCache.matchesItem(stack.getItem())) {
@@ -91,14 +99,33 @@ public class FoodDrinks extends ITFeature {
 		}
 
 		FoodProperties food = stack.getItem().getFoodProperties(stack, null);
-		//noinspection ConstantConditions
-		float time = 32 * Utils.getFoodEffectiveness(food);
+
+		Expression expression = new Expression(eatingSpeedFormula);
+		try {
+			//noinspection ConstantConditions
+			EvaluationValue result = expression
+					.with("hunger", food.getNutrition())
+					.and("saturation_modifier", food.getSaturationModifier())
+					.and("effectiveness", Utils.getFoodEffectiveness(food))
+					.and("fast_food", food.isFastFood())
+					.evaluate();
+			return result.getNumberValue().intValue();
+		}
+		catch (EvaluationException ex) {
+			LogHelper.error("Failed to evaluate eating speed formula: %s", eatingSpeedFormula);
+			return food.isFastFood() ? 16 : 32;
+		}
+		catch (ParseException ex) {
+			LogHelper.error("Failed to parse eating speed formula: %s", eatingSpeedFormula);
+			return food.isFastFood() ? 16 : 32;
+		}
+		/*double time = 32 * Math.pow(, 1.7);
 		if (food.isFastFood())
 			time /= 2;
 		time *= eatingTimeMultiplier;
 
 		int minTime = food.isFastFood() ? eatingTimeMin / 2 : eatingTimeMin;
-		return (int) Math.max(time, minTime);
+		return (int) Math.max(time, minTime);*/
 	}
 
 	@SubscribeEvent

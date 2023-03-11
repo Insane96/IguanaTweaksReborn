@@ -1,8 +1,12 @@
 package insane96mcp.iguanatweaksreborn.module.stacksize.feature;
 
+import com.ezylang.evalex.Expression;
+import com.ezylang.evalex.data.EvaluationValue;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.utils.LogHelper;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.iguanatweaksreborn.utils.Weights;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -11,6 +15,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -27,14 +32,11 @@ public class GeneralStacking extends ITFeature {
     public static final ResourceLocation NO_STACK_SIZE_CHANGES = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_stack_size_changes");
 
     @Config
-    @Label(name = "Food Stack Reduction", description = "Food stack sizes will be reduced based off their hunger restored and saturation multiplier. The formula is '(1 - (effective_quality - 1) / Food Quality Divider) * 64' where effective_quality is hunger+saturation restored. E.g. Cooked Porkchops give 8 hunger points and have a 0.8 saturation multiplier so their stack size will be '(1 - (20.8 - 1) / 18.5) * 64' = 24 (Even foods that usually stack up to 16 or that don't stack at all will use the same formula, like Honey or Stews).\nThis is affected by Food Module's feature 'Hunger Restore Multiplier' & 'Saturation Restore multiplier'")
+    @Label(name = "Food Stack Reduction", description = "Food stack sizes will be reduced based off their hunger restored and saturation multiplier. See 'Food Stack Reduction Formula' for the formula")
     public static Boolean foodStackReduction = true;
-    @Config(min = 0d, max = 40d)
-    @Label(name = "Food Quality Divider", description = "Used in the 'Food Stack Reduction' formula. Increase this if there are foods that are better than vanilla ones, otherwise they will all stack to 1. Set this to 21.8 if you disable 'Hunger Restore Multiplier'")
-    public static Double foodQualityDivider = 15d;
-    @Config(min = 0.01d, max = 64d)
-    @Label(name = "Food Stack Multiplier", description = "All the foods max stack sizes will be multiplied by this value to increase / decrease them (after Food Stack Reduction).")
-    public static Double foodStackMultiplier = 0.12d;
+    @Config
+    @Label(name = "Food Stack Reduction Formula", description = "The formula to calculate the stack size of a food item. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
+    public static String foodStackReductionFormula = "(1 - (effectiveness - 1) / 15) * 64 * 0.12";
     @Config(min = 1, max = 64)
     @Label(name = "Stackable Stews", description = "Stews will stack up to this number. It's overridden by 'foodStackReduction' if enabled. Still affected by black/whitelist")
     public static Integer stackableSoups = 16;
@@ -163,14 +165,21 @@ public class GeneralStacking extends ITFeature {
                     || isItemInTag(item, NO_STACK_SIZE_CHANGES))
                 continue;
 
-            //noinspection ConstantConditions Can't be null as I check for Item#isEdible
-            int hunger = item.getFoodProperties().getNutrition();
-            double saturation = item.getFoodProperties().getSaturationModifier();
-            double effectiveQuality = hunger + (hunger * saturation * 2d);
-            double stackSize = (1 - (effectiveQuality - 1) / foodQualityDivider) * 64;
-            stackSize *= foodStackMultiplier;
-            stackSize = Mth.clamp(stackSize, 1, 64);
-            item.maxStackSize = (int) Math.round(stackSize);
+            FoodProperties food = item.getFoodProperties();
+            Expression expression = new Expression(foodStackReductionFormula);
+            try {
+                //noinspection ConstantConditions Can't be null as I check for Item#isEdible
+                EvaluationValue result = expression
+                        .with("hunger", food.getNutrition())
+                        .and("saturation_modifier", food.getSaturationModifier())
+                        .and("effectiveness", Utils.getFoodEffectiveness(food))
+                        .evaluate();
+                int stackSize = Mth.clamp(result.getNumberValue().intValue(), 1, 64);
+                item.maxStackSize = Math.round(stackSize);
+            }
+            catch (Exception ex) {
+                LogHelper.error("Failed to parse or evaluate food stack size formula: %s", expression);
+            }
         }
     }
 
