@@ -29,17 +29,18 @@ public class NoHunger extends Feature {
     @Label(name = "Passive Health Regen.Enable Passive Health Regen", description = "If true, Passive Regeneration is enabled")
     public static Boolean enablePassiveRegen = true;
     @Config
-    @Label(name = "Passive Health Regen.Passive Regeneration Speed Easy", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for easy and peaceful difficulty")
+    @Label(name = "Passive Health Regen.Passive Regen Speed Easy", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for easy and peaceful difficulty")
     public static MinMax passiveRegenerationTimeEasy = new MinMax(5, 30);
     @Config
-    @Label(name = "Passive Health Regen.Passive Regeneration Speed Normal", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for normal difficulty")
+    @Label(name = "Passive Health Regen.Passive Regen Speed Normal", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for normal difficulty")
     public static MinMax passiveRegenerationTimeNormal = new MinMax(7.5, 45);
     @Config
-    @Label(name = "Passive Health Regen.Passive Regeneration Speed Hard", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for hard difficulty")
+    @Label(name = "Passive Health Regen.Passive Regen Speed Hard", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for hard difficulty")
     public static MinMax passiveRegenerationTimeHard = new MinMax(10, 45);
     @Config(min = -1)
-    @Label(name = "Food Gives Fed when Effectiveness", description = "When effectiveness of the food eaten is higher than this value, the Fed effect is given. Set to -1 to disable the fed effect.\nFed increases passive health regen by 50% per level")
-    public static Double foodGivesFedWhenEffectiveness = 8d;
+    @Label(name = "Food Gives Well Fed when Effectiveness >", description = "When effectiveness of the food eaten is higher than this value, the Well Fed effect is given. Set to -1 to disable the fed effect.\n" +
+            "Well Fed increases passive health regen speed by 25% per level")
+    public static Double foodGivesWellFedWhenEffectiveness = 5d;
     @Config(min = 0d, max = 1f)
     @Label(name = "Food Heal Multiplier", description = "When eating you'll get healed by this percentage hunger restored. (Set to 1 to have the same effect as pre-beta 1.8 food")
     public static Double foodHealMultiplier = 1d;
@@ -63,11 +64,6 @@ public class NoHunger extends Feature {
 
             if (getPassiveRegenTick(event.player) > passiveRegen) {
                 float heal = 1.0f;
-                if (event.player.hasEffect(ITMobEffects.FED.get())) {
-                    MobEffectInstance fed = event.player.getEffect(ITMobEffects.FED.get());
-                    //noinspection ConstantConditions
-                    heal *= ((fed.getAmplifier() + 1) * 0.5d) + 1;
-                }
                 event.player.heal(heal);
                 resetPassiveRegenTick(event.player);
             }
@@ -87,15 +83,15 @@ public class NoHunger extends Feature {
     }
 
     public void applyFedEffect(LivingEntityUseItemEvent.Finish event) {
-        if (foodGivesFedWhenEffectiveness < 0d) return;
+        if (foodGivesWellFedWhenEffectiveness < 0d) return;
         FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), event.getEntity());
         //noinspection ConstantConditions
         double effectiveness = Utils.getFoodEffectiveness(food);
-        if (effectiveness < foodGivesFedWhenEffectiveness)
+        if (effectiveness < foodGivesWellFedWhenEffectiveness)
             return;
-        int duration = (int) (food.saturationModifier * 300);
+        int duration = (int) (food.getNutrition() * food.getSaturationModifier() * 2 * 20 * 10);
         //int amplifier = (int) ((food.saturationModifier * 2 * food.nutrition) / 4 - 1);
-        event.getEntity().addEffect(new MobEffectInstance(ITMobEffects.FED.get(), duration, 0, true, false, true));
+        event.getEntity().addEffect(new MobEffectInstance(ITMobEffects.WELL_FED.get(), duration, 0, true, false, true));
     }
 
     public void healOnEat(LivingEntityUseItemEvent.Finish event) {
@@ -118,6 +114,11 @@ public class NoHunger extends Feature {
         }
         else {
             secs = (int) ((passiveRegenerationTimeEasy.max - passiveRegenerationTimeEasy.min) * healthPerc + passiveRegenerationTimeEasy.min);
+        }
+        if (player.hasEffect(ITMobEffects.WELL_FED.get())) {
+            MobEffectInstance wellFed = player.getEffect(ITMobEffects.WELL_FED.get());
+            //noinspection ConstantConditions
+            secs *= 1 - (((wellFed.getAmplifier() + 1) * 0.25d));
         }
         return secs * 20;
     }
