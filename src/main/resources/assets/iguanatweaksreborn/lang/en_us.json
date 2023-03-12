@@ -30,5 +30,7 @@
 	"effect.iguanatweaksreborn.vigour.description": "Decreases hunger consumption by 20% per level.",
 
 	"container.repair.free": "No Cost",
-	"iguanatweaksreborn.item_repaired": "Item got repaired"
+	"iguanatweaksreborn.item_repaired": "Item got repaired",
+
+	"iguanatweaksreborn.spawner_reactivator": "This item can reactivate a Mob Spawner"
 }

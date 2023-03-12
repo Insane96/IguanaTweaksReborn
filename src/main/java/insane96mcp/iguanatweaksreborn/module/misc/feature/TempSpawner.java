@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.misc.feature;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerCap;
+import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.iguanatweaksreborn.utils.LogHelper;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
@@ -12,21 +13,30 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITag;
 
-@Label(name = "Temporary Spawners", description = "Spawners will no longer spawn mobs infinitely")
+@Label(name = "Temporary Spawners", description = "Spawners will no longer spawn mobs infinitely. Echo shards can reactivate a spawner.")
 @LoadFeature(module = Modules.Ids.MISC)
 public class TempSpawner extends Feature {
 	public static final ResourceLocation BLACKLISTED_SPAWNERS = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "blacklisted_spawners");
@@ -166,5 +176,18 @@ public class TempSpawner extends Feature {
 		CompoundTag nbt = new CompoundTag();
 		abstractSpawner.save(nbt);
 		return nbt.getShort("MaxNearbyEntities") == (short) 0 && nbt.getShort("RequiredPlayerRange") == (short) 0;
+	}
+
+	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
+	public void onTooltip(ItemTooltipEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		TagKey<Item> tagKey = TagKey.create(Registries.ITEM, SPAWNER_REACTIVATOR);
+		ITag<Item> itemTag = ForgeRegistries.ITEMS.tags().getTag(tagKey);
+		if (itemTag.contains(event.getItemStack().getItem())) {
+			event.getToolTip().add(Component.translatable(Strings.Translatable.SPAWNER_REACTIVATOR));
+		}
 	}
 }
