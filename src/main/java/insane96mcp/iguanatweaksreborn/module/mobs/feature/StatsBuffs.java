@@ -15,6 +15,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -27,6 +28,7 @@ public class StatsBuffs extends Feature {
     public static final String STAT_BUFFS_APPLIED = IguanaTweaksReborn.RESOURCE_PREFIX + "stat_buffs_applied";
     public static final UUID MOVEMENT_SPEED_UUID = UUID.fromString("f62c1940-39a9-4a4a-8421-2278e259e5f6");
     public static final UUID HEALTH_UUID = UUID.fromString("ad58b57d-1956-416d-804a-5180a01d0bad");
+    public static final UUID SWIM_SPEED_UUID = UUID.fromString("ed9f51b5-e297-498e-a909-31644f2a326d");
 
     //TODO Swim speed +200%
     @Config(min = 0)
@@ -58,6 +60,9 @@ public class StatsBuffs extends Feature {
     @Config(min = 0)
     @Label(name = "Follow Range.Hard", description = "Override for mobs' follow range on hard difficulty. The override is not applied if the mob's follow range is already higher than this. Set to 0 to not override Follow Range.")
     public static Integer followRangeHard = 32;
+    @Config(min = 0)
+    @Label(name = "Swim speed", description = "Bonus percentage health given to mobs on hard difficulty.")
+    public static Double swimSpeed = 2d;
 
     public StatsBuffs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -107,6 +112,9 @@ public class StatsBuffs extends Feature {
             AttributeInstance attribute = entity.getAttribute(Attributes.FOLLOW_RANGE);
             if (attribute != null && attribute.getBaseValue() < followRangeOverride)
                 MCUtils.setAttributeValue(entity, Attributes.FOLLOW_RANGE, followRangeOverride);
+        }
+        if (swimSpeed != 0f) {
+            MCUtils.applyModifier(entity, ForgeMod.SWIM_SPEED.get(), HEALTH_UUID, "Survival Reimagined Bonus Swim speed", swimSpeed, AttributeModifier.Operation.MULTIPLY_BASE, true);
         }
 
         persistentData.putBoolean(STAT_BUFFS_APPLIED, true);
