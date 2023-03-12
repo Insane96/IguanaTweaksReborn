@@ -58,7 +58,7 @@ public class Stamina extends Feature {
     }
 
     public static boolean canSprint(Player player) {
-        return !isStaminaLocked(player) && getStamina(player) > 0;
+        return !isStaminaLocked(player) && getStamina(player) > 0 && getMaxStamina(player) >= 25;
     }
 
     public static void setStamina(Player player, int stamina) {
