@@ -34,7 +34,7 @@ public class ToolStats extends ITFeature {
 	public static final ResourceLocation NO_DAMAGE_ITEMS = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_damage_items");
 	public static final ResourceLocation NO_EFFICIENCY_ITEMS = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_efficiency_items");
 
-	public static final ArrayList<IdTagValue> TOOL_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
+	public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_sword", 1),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_pickaxe", 33),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_axe", 33),
@@ -47,9 +47,44 @@ public class ToolStats extends ITFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 89),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 144),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:carrot_on_a_stick", 63),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shield", 268)
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shield", 268),
+
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_helmet", 39),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_chestplate", 48),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_leggings", 45),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_boots", 33),
+
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_helmet", 91),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_chestplate", 112),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_leggings", 105),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_boots", 77),
+
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_helmet", 91),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_chestplate", 112),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_leggings", 105),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_boots", 77),
+
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 45),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", 56),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_leggings", 52),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_boots", 38),
+
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 214),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", 264),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", 247),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_boots", 181),
+
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 214),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", 264),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", 247),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_boots", 181),
+
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 260),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", 320),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 300),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 220)
 	));
-	public static final ArrayList<IdTagValue> toolDurabilities = new ArrayList<>();
+	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 
 	public static final ArrayList<IdTagValue> TOOL_EFFICIENCIES_DEFAULT = new ArrayList<>(Arrays.asList(
 			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/wooden", 3.5d),
@@ -72,10 +107,10 @@ public class ToolStats extends ITFeature {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-		this.loadAndReadFile("tool_durabilities.json", toolDurabilities, TOOL_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE);
+		this.loadAndReadFile("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE);
 		this.loadAndReadFile("tool_efficiencies.json", toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE);
 
-		for (IdTagValue durability : toolDurabilities) {
+		for (IdTagValue durability : itemDurabilities) {
 			List<Item> items = getAllItems(durability);
 			for (Item item : items) {
 				item.maxDamage = (int) durability.value;
