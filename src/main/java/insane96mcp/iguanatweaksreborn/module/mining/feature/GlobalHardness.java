@@ -23,7 +23,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 @Label(name = "Global Hardness", description = "Change all the blocks hardness. Dimension Hardness and Depth Hardness are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MINING)
@@ -31,15 +31,14 @@ public class GlobalHardness extends ITFeature {
 	public static final ResourceLocation HARDNESS_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "hardness_blacklist");
 	public static final ResourceLocation DEPTH_MULTIPLIER_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "depth_multiplier_blacklist");
 
-	public static final ArrayList<DimensionHardnessMultiplier> DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT = new ArrayList<>(Arrays.asList(
-			new DimensionHardnessMultiplier("minecraft:the_nether", 4d),
-			new DimensionHardnessMultiplier("minecraft:the_end", 4d)
+	public static final ArrayList<DimensionHardnessMultiplier> DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT = new ArrayList<>(List.of(
+			new DimensionHardnessMultiplier("minecraft:the_nether", 3.5d)
 	));
 	public static final ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier = new ArrayList<>();
 
-	public static final ArrayList<DepthHardnessDimension> DEPTH_HARDNESS_DIMENSIONS_DEFAULT = new ArrayList<>(Arrays.asList(
-			new DepthHardnessDimension("minecraft:overworld", 0.01d, 63, -64),
-			new DepthHardnessDimension("minecraft:overworld", -0.64d, 4, 3)
+	public static final ArrayList<DepthHardnessDimension> DEPTH_HARDNESS_DIMENSIONS_DEFAULT = new ArrayList<>(List.of(
+			//new DepthHardnessDimension("minecraft:overworld", 0.01d, 63, -64),
+			//new DepthHardnessDimension("minecraft:overworld", -0.64d, 4, 3)
 	));
 	public static final ArrayList<DepthHardnessDimension> depthMultiplierDimension = new ArrayList<>();
 
