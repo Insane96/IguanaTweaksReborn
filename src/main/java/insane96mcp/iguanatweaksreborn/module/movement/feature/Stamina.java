@@ -98,7 +98,7 @@ public class Stamina extends Feature {
             if (getStamina(player) <= 0)
                 lockSprinting(player);
             shouldSync = true;
-        } else if ((player.tickCount % 2 == 0 && getStamina(player) != getMaxStamina(player) && getMaxStamina(player) >= 25)
+        } else if ((player.tickCount % 2 == 0 && getStamina(player) != getMaxStamina(player) && getMaxStamina(player) >= 40)
                 //Trigger the sync for clients
                 || player.tickCount == 1) {
             regenStamina(player);
@@ -106,7 +106,7 @@ public class Stamina extends Feature {
                 unlockSprinting(player);
             shouldSync = true;
         }
-        else if (!isStaminaLocked(player) && getMaxStamina(player) < 25) {
+        else if (!isStaminaLocked(player) && getMaxStamina(player) < 40) {
             setStamina(player, 0);
             lockSprinting(player);
             shouldSync = true;
