@@ -36,7 +36,7 @@ public class SleepingEffects extends ITFeature {
 	public static Integer hungerDepletedOnWakeUp = 11;
 	@Config
 	@Label(name = "No Sleep If Hungry", description = "If the player's hunger bar is below 'Hunger Depleted on Wake Up' he can't sleep.")
-	public static Boolean noSleepIfHungry = true;
+	public static Boolean noSleepIfHungry = false;
 
 	public SleepingEffects(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

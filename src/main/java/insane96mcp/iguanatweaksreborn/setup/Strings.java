@@ -44,5 +44,6 @@ public class Strings {
 
 		public static final String ARMOR_SLOWDOWN = "iguanatweaksreborn.armor_slowdown";
 		public static final String SPAWNER_REACTIVATOR = IguanaTweaksReborn.MOD_ID + ".spawner_reactivator";
-    }
+		public static final String NO_SPAWN_POINT = IguanaTweaksReborn.MOD_ID + ".no_spawn_point";
+	}
 }
