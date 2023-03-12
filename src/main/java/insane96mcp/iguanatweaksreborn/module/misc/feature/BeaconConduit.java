@@ -147,7 +147,7 @@ public class BeaconConduit extends ITFeature {
             }
         }
 
-        double range = 0d;
+        double range = 1d;
         for (Map.Entry<Block, Integer> entry : blocksCount.entrySet()) {
             Optional<IdTagValue> optional = blocksList
                     .stream()
