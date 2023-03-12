@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.misc.feature.Nerf;
+import insane96mcp.iguanatweaksreborn.module.misc.feature.Nerfs;
 import net.minecraft.world.entity.vehicle.Boat;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class BoatMixin {
 	@Inject(at = @At("RETURN"), method = "getGroundFriction", cancellable = true)
 	public void getGroundFriction(CallbackInfoReturnable<Float> callbackInfo) {
-		callbackInfo.setReturnValue(Nerf.getBoatFriction(callbackInfo.getReturnValueF()));
+		callbackInfo.setReturnValue(Nerfs.getBoatFriction(callbackInfo.getReturnValueF()));
 	}
 }
