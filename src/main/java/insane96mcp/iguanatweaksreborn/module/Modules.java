@@ -13,6 +13,7 @@ public class Modules {
 	public static Module hungerHealth;
 	public static Module mining;
 	public static Module misc;
+	public static Module mobs;
 	public static Module movement;
 	public static Module sleepRespawn;
 	public static Module stackSize;
@@ -24,6 +25,7 @@ public class Modules {
 		hungerHealth = Module.Builder.create(Ids.HUNGER_HEALTH, "Hunger & Health", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
 		mining = Module.Builder.create(Ids.MINING, "Mining", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
 		misc = Module.Builder.create(Ids.MISC, "Miscellaneous", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
+		mobs = Module.Builder.create(Ids.MOBS, "Mobs", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
 		movement = Module.Builder.create(Ids.MOVEMENT, "Movement", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
 		sleepRespawn = Module.Builder.create(Ids.SLEEP_RESPAWN, "Sleep & Respawn", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
 		stackSize = Module.Builder.create(Ids.STACK_SIZE, "Stack Sizes", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
@@ -36,6 +38,7 @@ public class Modules {
 		public static final String HUNGER_HEALTH = IguanaTweaksReborn.RESOURCE_PREFIX + "hunger_health";
 		public static final String MINING = IguanaTweaksReborn.RESOURCE_PREFIX + "mining";
 		public static final String MISC = IguanaTweaksReborn.RESOURCE_PREFIX + "misc";
+		public static final String MOBS = IguanaTweaksReborn.RESOURCE_PREFIX + "mobs";
 		public static final String MOVEMENT = IguanaTweaksReborn.RESOURCE_PREFIX + "movement";
 		public static final String SLEEP_RESPAWN = IguanaTweaksReborn.RESOURCE_PREFIX + "sleep_respawn";
 		public static final String STACK_SIZE = IguanaTweaksReborn.RESOURCE_PREFIX + "stack_size";

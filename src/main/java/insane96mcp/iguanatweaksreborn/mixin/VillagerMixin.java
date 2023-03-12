@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.misc.feature.Villagers;
+import insane96mcp.iguanatweaksreborn.module.mobs.feature.Villagers;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerData;
 import org.spongepowered.asm.mixin.Mixin;

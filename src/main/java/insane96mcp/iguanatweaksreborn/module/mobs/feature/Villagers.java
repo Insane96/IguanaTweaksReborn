@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.module.misc.feature;
+package insane96mcp.iguanatweaksreborn.module.mobs.feature;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Label(name = "Villagers", description = "Small changes to villagers to make them less OP")
-@LoadFeature(module = Modules.Ids.MISC)
+@LoadFeature(module = Modules.Ids.MOBS)
 public class Villagers extends Feature {
 
 	private static final String CURE_DISCOUNT_REMOVED = IguanaTweaksReborn.RESOURCE_PREFIX + "cure_discount_removed";
