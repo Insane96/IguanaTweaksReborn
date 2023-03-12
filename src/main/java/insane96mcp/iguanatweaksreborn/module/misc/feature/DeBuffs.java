@@ -20,9 +20,8 @@ import java.util.Arrays;
 @LoadFeature(module = Modules.Ids.MISC)
 public class DeBuffs extends ITFeature {
 	public static final ArrayList<DeBuff> DEBUFFS_DEFAULT = new ArrayList<>(Arrays.asList(
-			new DeBuff(DeBuff.Stat.HUNGER, Double.MIN_VALUE, 2d, MobEffects.DIG_SLOWDOWN, 0),
-			new DeBuff(DeBuff.Stat.HUNGER, Double.MIN_VALUE, 4d, MobEffects.MOVEMENT_SLOWDOWN, 0),
-			new DeBuff(DeBuff.Stat.HEALTH, Double.MIN_VALUE, 3d, MobEffects.MOVEMENT_SLOWDOWN, 0)
+			new DeBuff(DeBuff.Stat.HEALTH, Double.MIN_VALUE, 3d, MobEffects.MOVEMENT_SLOWDOWN, 0),
+			new DeBuff(DeBuff.Stat.HEALTH, Double.MIN_VALUE, 1.5d, MobEffects.DIG_SLOWDOWN, 0)
 	));
 	public static final ArrayList<DeBuff> deBuffs = new ArrayList<>();
 
