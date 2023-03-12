@@ -90,6 +90,10 @@ public class Stamina extends Feature {
         boolean shouldSync = false;
 
         if (player.isSprinting()) {
+            //Consume less stamina when swimming
+            if (player.isSwimming() && player.tickCount % 2 == 1)
+                return;
+
             consumeStamina(player);
             if (getStamina(player) <= 0)
                 lockSprinting(player);
