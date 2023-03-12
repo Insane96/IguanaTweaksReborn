@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.experience.feature;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -16,8 +16,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class GlobalExperience extends Feature {
 
+	public static final String XP_PROCESSED = IguanaTweaksReborn.RESOURCE_PREFIX + "xp_processed";
+
 	@Config(min = 0d, max = 128d)
-	@Label(name = "Global Experience Multiplier", description = "Experience dropped will be multiplied by this multiplier.\nCan be set to 0 to disable experience drop from any source.")
+	@Label(name = "Global Experience Multiplier", description = "Experience dropped will be multiplied by this value.\nCan be set to 0 to disable experience drop from any source.")
 	public static Double globalMultiplier = 1.25d;
 
 	public GlobalExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -29,7 +31,7 @@ public class GlobalExperience extends Feature {
 		if (!this.isEnabled()
 				|| globalMultiplier == 1.0d
 				|| !(event.getEntity() instanceof ExperienceOrb xpOrb)
-				|| xpOrb.getPersistentData().getBoolean(Strings.Tags.XP_PROCESSED))
+				|| xpOrb.getPersistentData().getBoolean(XP_PROCESSED))
 			return;
 
 		if (globalMultiplier == 0d)
@@ -37,7 +39,7 @@ public class GlobalExperience extends Feature {
 		else
 			xpOrb.value *= globalMultiplier;
 
-		xpOrb.getPersistentData().putBoolean(Strings.Tags.XP_PROCESSED, true);
+		xpOrb.getPersistentData().putBoolean(XP_PROCESSED, true);
 		if (xpOrb.value <= 0d)
 			xpOrb.remove(Entity.RemovalReason.KILLED);
 	}

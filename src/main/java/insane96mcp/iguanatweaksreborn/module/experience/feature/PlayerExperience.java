@@ -14,6 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Label(name = "Player Experience", description = "Changes the experience lost on death and xp per level required.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class PlayerExperience extends Feature {
+	//TODO Change this into a formula
 	@Config
 	@Label(name = "Better Scaling XP to next level", description = """
 						The experience required to level up will be linear instead of exponential like vanilla.
@@ -24,7 +25,7 @@ public class PlayerExperience extends Feature {
 	@Label(name = "Dropped Experience on Death", description = """
 						On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this.
 						Due to Minecraft limitations this is incompatible with other mods that change the level scaling (e.g. Allurement's 'Remove level Scaling').""")
-	public static Double droppedExperienceOnDeath = 0.85d;
+	public static Double droppedExperienceOnDeath = 0.8d;
 	@Config(min = -1d, max = 1d)
 	@Label(name = "Pickup XP Faster", description = "Players will pick up experience faster")
 	public static Boolean pickUpFaster = true;
