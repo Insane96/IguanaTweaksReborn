@@ -15,12 +15,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class PlayerExperience extends Feature {
 	//TODO Change this into a formula
-	@Config
-	@Label(name = "Better Scaling XP to next level", description = """
-						The experience required to level up will be linear instead of exponential like vanilla.
-						The formula used to calculate the xp required for next level is (3 * (current_level + 1))
-						Obviously incompatible with Allurement's 'Remove level Scaling'""")
-	public static Boolean betterScalingLevels = true;
+	@Config(min = -1)
+	@Label(name = "Flat XP to next level", description = """
+						The experience required to level up will be fixed to this value.
+						Set to -1 to Disable.
+						Incompatible with Allurement's 'Remove level Scaling' or any other mod that does something similar""")
+	public static Integer flatLevelScaling = 50;
 	@Config(min = -1d, max = 1d)
 	@Label(name = "Dropped Experience on Death", description = """
 						On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this.
@@ -49,10 +49,10 @@ public class PlayerExperience extends Feature {
 	 */
 	public static int getBetterScalingLevel(int experienceLevel) {
 		if (!isEnabled(PlayerExperience.class)
-				|| !betterScalingLevels)
+				|| flatLevelScaling == -1)
 			return -1;
 
-		return 3 * (experienceLevel + 1);
+		return 50;
 	}
 
 	//Instead of using experienceTotal, calculate the xp from the xp bar and level since experienceTotal doesn't get updated on level consume
