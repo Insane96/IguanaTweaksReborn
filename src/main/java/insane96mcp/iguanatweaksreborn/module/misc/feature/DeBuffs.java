@@ -14,14 +14,13 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 @Label(name = "DeBuffs", description = "Apply potion effects on certain hunger / health / experience level. Debuffs are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MISC)
 public class DeBuffs extends ITFeature {
-	public static final ArrayList<DeBuff> DEBUFFS_DEFAULT = new ArrayList<>(Arrays.asList(
-			new DeBuff(DeBuff.Stat.HEALTH, Double.MIN_VALUE, 3d, MobEffects.MOVEMENT_SLOWDOWN, 0),
-			new DeBuff(DeBuff.Stat.HEALTH, Double.MIN_VALUE, 1.5d, MobEffects.DIG_SLOWDOWN, 0)
+	public static final ArrayList<DeBuff> DEBUFFS_DEFAULT = new ArrayList<>(List.of(
+			new DeBuff(DeBuff.Stat.HEALTH, Double.MIN_VALUE, 2d, MobEffects.DIG_SLOWDOWN, 0)
 	));
 	public static final ArrayList<DeBuff> deBuffs = new ArrayList<>();
 
