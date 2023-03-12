@@ -33,9 +33,6 @@ public class NoKnockback extends Feature {
 	@Config
 	@Label(name = "No Weapon No Knockback", description = "If true the player will deal no knockback when not using an item that doesn't have the attack damage attribute.")
 	public static Boolean noItemNoKnockback = true;
-	@Config(min = 0d, max = 1d)
-	@Label(name = "Attack Cooldown No Knockback", description = "When the attack cooldown is below this percentage the player will deal no knockback. (Between 0 and 1, where 1 is the attack fully charged)")
-	public static Double attackCooldownNoKnockback = 0.925d;
 
 	public NoKnockback(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -74,7 +71,7 @@ public class NoKnockback extends Feature {
 		}
 		int ticksSinceLastSwing = player.getPersistentData().getInt(Strings.Tags.TIME_SINCE_LAST_SWING);
 		float cooldown = Mth.clamp((ticksSinceLastSwing + 0.5f) / player.getCurrentItemAttackStrengthDelay(), 0.0F, 1.0F);
-		if (cooldown <= attackCooldownNoKnockback)
+		if (cooldown <= 0.9f)
 			preventKnockback = true;
 		if (preventKnockback)
 			event.setCanceled(true);
