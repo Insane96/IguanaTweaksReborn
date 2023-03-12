@@ -57,6 +57,7 @@ public class NoHunger extends Feature {
     @Config(min = 0d, max = 1f)
     @Label(name = "Food Heal Multiplier", description = "When eating you'll get healed by this percentage hunger restored. (Set to 1 to have the same effect as pre-beta 1.8 food")
     public static Double foodHealMultiplier = 1d;
+    //TODO Make this a multiplier for the heal
     @Config
     @Label(name = "Raw food.No Heal", description = "If true, raw food doesn't heal. Raw food is defined in the iguanatweaksreborn:raw_food tag")
     public static Boolean rawFoodDoesntHeal = true;

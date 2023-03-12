@@ -19,6 +19,9 @@ buildscript {
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
@@ -98,6 +101,10 @@ mixin {
     add sourceSets.main, "iguanatweaksreborn.refmap.json"
 }
 
+configurations {
+    shade
+    implementation.extendsFrom shade
+}
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
@@ -113,9 +120,12 @@ dependencies {
     // implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3820503")
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+
+    shade 'com.ezylang:EvalEx:3.0.2'
 }
 
 jar {
+    archiveClassifier = 'slim'
     manifest {
         attributes([
                 "Specification-Title"     : "iguanatweaksreborn",
@@ -128,6 +138,19 @@ jar {
                 "MixinConfigs": "iguanatweaksreborn.mixins.json"
         ])
     }
+}
+
+shadowJar {
+    archiveClassifier = ''
+    configurations = [project.configurations.shade]
+    relocate 'com.ezylang.EvalEx', "${project.group}.relocated.EvalEx"
+    finalizedBy 'reobfShadowJar'
+}
+
+assemble.dependsOn shadowJar
+
+reobf {
+    shadowJar {}
 }
 
 jar.finalizedBy('reobfJar')

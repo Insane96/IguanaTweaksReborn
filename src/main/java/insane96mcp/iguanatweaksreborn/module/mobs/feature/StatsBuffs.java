@@ -28,6 +28,7 @@ public class StatsBuffs extends Feature {
     public static final UUID MOVEMENT_SPEED_UUID = UUID.fromString("f62c1940-39a9-4a4a-8421-2278e259e5f6");
     public static final UUID HEALTH_UUID = UUID.fromString("ad58b57d-1956-416d-804a-5180a01d0bad");
 
+    //TODO Swim speed +200%
     @Config(min = 0)
     @Label(name = "Movement Speed.Easy", description = "Bonus percentage movement speed given to mobs on easy difficulty.")
     public static Double movementSpeedEasy = 0.1d;

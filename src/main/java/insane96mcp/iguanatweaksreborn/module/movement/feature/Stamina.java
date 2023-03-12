@@ -92,6 +92,9 @@ public class Stamina extends Feature {
 
         boolean shouldSync = false;
 
+        if (!player.getPersistentData().contains(STAMINA))
+            setStamina(player, getMaxStamina(player));
+
         if (player.isSprinting()) {
             //If the vigour effect is active give the player 20% chance per level to not consume stamina when running.
             if (player.hasEffect(ITMobEffects.VIGOUR.get())) {
