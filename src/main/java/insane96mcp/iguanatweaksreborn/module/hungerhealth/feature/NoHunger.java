@@ -42,13 +42,13 @@ public class NoHunger extends Feature {
     @Label(name = "Passive Health Regen.Enable Passive Health Regen", description = "If true, Passive Regeneration is enabled")
     public static Boolean enablePassiveRegen = true;
     @Config
-    @Label(name = "Passive Health Regen.Passive Regen Speed Easy", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for easy and peaceful difficulty")
+    @Label(name = "Passive Health Regen.Regen Speed Easy", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for easy and peaceful difficulty")
     public static MinMax passiveRegenerationTimeEasy = new MinMax(15, 30);
     @Config
-    @Label(name = "Passive Health Regen.Passive Regen Speed Normal", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for normal difficulty")
+    @Label(name = "Passive Health Regen.Regen Speed Normal", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for normal difficulty")
     public static MinMax passiveRegenerationTimeNormal = new MinMax(20, 45);
     @Config
-    @Label(name = "Passive Health Regen.Passive Regen Speed Hard", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for hard difficulty")
+    @Label(name = "Passive Health Regen.Regen Speed Hard", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for hard difficulty")
     public static MinMax passiveRegenerationTimeHard = new MinMax(25, 45);
     @Config(min = -1)
     @Label(name = "Food Gives Well Fed when Saturation Modifier >", description = "When saturation modifier of the food eaten is higher than this value, the Well Fed effect is given. Set to -1 to disable the effect.\n" +
