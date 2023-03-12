@@ -7,6 +7,7 @@ import insane96mcp.iguanatweaksreborn.event.PlayerSprintEvent;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.network.MessageStaminaSync;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
+import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -17,6 +18,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec2;
@@ -94,6 +96,13 @@ public class Stamina extends Feature {
             if (player.isSwimming() && player.tickCount % 2 == 1)
                 return;
 
+            //If the vigour effect is active give the player 1/x chance to not consume stamina when running. x begin the effect level + 1
+            if (player.hasEffect(ITMobEffects.VIGOUR.get())) {
+                MobEffectInstance mobEffectInstance = player.getEffect(ITMobEffects.VIGOUR.get());
+                //noinspection ConstantConditions
+                if (player.getRandom().nextInt(mobEffectInstance.getAmplifier() + 2) != 0)
+                    return;
+            }
             consumeStamina(player);
             if (getStamina(player) <= 0)
                 lockSprinting(player);
