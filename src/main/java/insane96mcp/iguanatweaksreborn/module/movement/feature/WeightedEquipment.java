@@ -44,18 +44,18 @@ import java.util.UUID;
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class WeightedEquipment extends ITFeature {
 	public static final ArrayList<ArmorMaterialWeight> MATERIAL_WEIGHTS_DEFAULTS = new ArrayList<>(Arrays.asList(
-			new ArmorMaterialWeight("leather", 0.04d),
-			new ArmorMaterialWeight("chainmail", 0.10d),
-			new ArmorMaterialWeight("golden", 0.07d),
-			new ArmorMaterialWeight("iron", 0.13d),
-			new ArmorMaterialWeight("diamond", 0.18d),
-			new ArmorMaterialWeight("netherite", 0.25d)
+			new ArmorMaterialWeight("leather", 0.025d),
+			new ArmorMaterialWeight("chainmail", 0.05d),
+			new ArmorMaterialWeight("golden", 0.025d),
+			new ArmorMaterialWeight("iron", 0.07d),
+			new ArmorMaterialWeight("diamond", 0.09d),
+			new ArmorMaterialWeight("netherite", 0.125d)
 	));
 	public static final ArrayList<ArmorMaterialWeight> materialWeight = new ArrayList<>();
 
 	public static final ArrayList<ArmorEnchantmentWeight> ENCHANTMENTS_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
-			new ArmorEnchantmentWeight("minecraft:feather_falling", -0.10d),
-			new ArmorEnchantmentWeight("elenaidodge2:lightweight", -0.05d, -0.01)
+			new ArmorEnchantmentWeight("minecraft:feather_falling", -0.05d),
+			new ArmorEnchantmentWeight("elenaidodge2:lightweight", -0.025d)
 	));
 	public static final ArrayList<ArmorEnchantmentWeight> enchantmentsList = new ArrayList<>();
 

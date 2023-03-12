@@ -93,7 +93,6 @@ public class Stamina extends Feature {
         boolean shouldSync = false;
 
         if (player.isSprinting()) {
-            //Consume less stamina when swimming
             //If the vigour effect is active give the player 20% chance per level to not consume stamina when running.
             if (player.hasEffect(ITMobEffects.VIGOUR.get())) {
                 MobEffectInstance mobEffectInstance = player.getEffect(ITMobEffects.VIGOUR.get());
