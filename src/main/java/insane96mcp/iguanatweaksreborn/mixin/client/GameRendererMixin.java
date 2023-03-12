@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.mixin;
+package insane96mcp.iguanatweaksreborn.mixin.client;
 
 import insane96mcp.iguanatweaksreborn.module.client.feature.Light;
 import net.minecraft.client.renderer.GameRenderer;

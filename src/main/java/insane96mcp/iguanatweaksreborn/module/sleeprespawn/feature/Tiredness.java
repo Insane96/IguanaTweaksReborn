@@ -6,7 +6,7 @@ import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.utils.EnergyBoostItem;
 import insane96mcp.iguanatweaksreborn.network.MessageTirednessSync;
-import insane96mcp.iguanatweaksreborn.network.SyncHandler;
+import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
@@ -21,7 +21,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -77,7 +76,7 @@ public class Tiredness extends ITFeature {
 	@Label(name = "Tiredness per level", description = "Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
 	public static Double tirednessPerLevel = 20d;
 	@Config
-	@Label(name = "Show Tiredness Bar", description = "If true the tiredeness bar will be shown.")
+	@Label(name = "Show Tiredness Bar", description = "If true the tiredness bar will be shown.")
 	public static Boolean showTirednessBar = false;
 	@Config(min = 0d)
 	@Label(name = "Default Energy Boost Duration Multiplier", description = "By default if omitted in the json, food items will give 1 second of Energy Boost per effective nourishment (hunger + saturation) of the food. This multiplies the duration of the effect")
@@ -124,7 +123,7 @@ public class Tiredness extends ITFeature {
 
 		if (serverPlayer.tickCount % 20 == 0) {
 			Object msg = new MessageTirednessSync(newTiredness);
-			SyncHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+			NetworkHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}
 
@@ -173,7 +172,7 @@ public class Tiredness extends ITFeature {
 		}
 
 		Object msg = new MessageTirednessSync(newTiredness);
-		SyncHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+		NetworkHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -277,8 +276,6 @@ public class Tiredness extends ITFeature {
 		event.setBlue(color);
 	}
 
-	public static final ResourceLocation GUI_ICONS = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "textures/gui/icons.png");
-
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void registerGui(RegisterGuiOverlaysEvent event) {
@@ -289,7 +286,7 @@ public class Tiredness extends ITFeature {
 			boolean isMounted = Minecraft.getInstance().player.getVehicle() instanceof LivingEntity;
 			if (isEnabled(Tiredness.class) && !isMounted && !Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements())
 			{
-				gui.setupOverlayRenderState(true, false, GUI_ICONS);
+				gui.setupOverlayRenderState(true, false, IguanaTweaksReborn.GUI_ICONS);
 				int left = screenWidth / 2 + 91;
 				int top = screenHeight - gui.rightHeight;
 				renderTiredness(gui, mStack, left, top);

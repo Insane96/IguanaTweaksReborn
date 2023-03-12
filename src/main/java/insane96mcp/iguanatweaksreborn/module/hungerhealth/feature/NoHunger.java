@@ -1,25 +1,39 @@
 package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
-import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class NoHunger extends Feature {
+
+    public static final String PASSIVE_REGEN_TICK = IguanaTweaksReborn.RESOURCE_PREFIX + "passive_regen_ticks";
+
+    private static final ResourceLocation RAW_FOOD = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "raw_food");
 
     @Config
     @Label(name = "Disable Hunger", description = "Completely disables the entire hunger system, from the hunger bar, to the health regen that comes with it.")
@@ -43,6 +57,12 @@ public class NoHunger extends Feature {
     @Config(min = 0d, max = 1f)
     @Label(name = "Food Heal Multiplier", description = "When eating you'll get healed by this percentage hunger restored. (Set to 1 to have the same effect as pre-beta 1.8 food")
     public static Double foodHealMultiplier = 1d;
+    @Config
+    @Label(name = "Raw food.No Heal", description = "If true, raw food doesn't heal. Raw food is defined in the iguanatweaksreborn:raw_food tag")
+    public static Boolean rawFoodDoesntHeal = true;
+    @Config(min = 0d, max = 1f)
+    @Label(name = "Raw food.Poison Chance", description = "Raw food has this chance to poison the player. Raw food is defined in the iguanatweaksreborn:raw_food tag")
+    public static Double rawFoodPoisonChance = 0.8d;
 
     public NoHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -92,13 +112,19 @@ public class NoHunger extends Feature {
         event.getEntity().addEffect(new MobEffectInstance(ITMobEffects.WELL_FED.get(), duration, 0, true, false, true));
     }
 
+    @SuppressWarnings("ConstantConditions")
     public void healOnEat(LivingEntityUseItemEvent.Finish event) {
         if (foodHealMultiplier == 0d)
             return;
         FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), event.getEntity());
-        //noinspection ConstantConditions
-        double heal = food.getNutrition() * foodHealMultiplier;
-        event.getEntity().heal((float) heal);
+        boolean isRawFood = isRawFood(event.getItem().getItem());
+        if (event.getEntity().getRandom().nextDouble() < rawFoodPoisonChance && isRawFood) {
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.POISON, food.getNutrition() * 20 * 4));
+        }
+        else if (!isRawFood || !rawFoodDoesntHeal) {
+            double heal = food.getNutrition() * foodHealMultiplier;
+            event.getEntity().heal((float) heal);
+        }
     }
 
     private static int getPassiveRegenSpeed(Player player) {
@@ -122,14 +148,28 @@ public class NoHunger extends Feature {
     }
 
     private static int getPassiveRegenTick(Player player) {
-        return player.getPersistentData().getInt(Strings.Tags.PASSIVE_REGEN_TICK);
+        return player.getPersistentData().getInt(PASSIVE_REGEN_TICK);
     }
 
     private static void incrementPassiveRegenTick(Player player) {
-        player.getPersistentData().putInt(Strings.Tags.PASSIVE_REGEN_TICK, player.getPersistentData().getInt(Strings.Tags.PASSIVE_REGEN_TICK) + 1);
+        player.getPersistentData().putInt(PASSIVE_REGEN_TICK, getPassiveRegenTick(player) + 1);
     }
 
     private static void resetPassiveRegenTick(Player player) {
-        player.getPersistentData().putInt(Strings.Tags.PASSIVE_REGEN_TICK, 0);
+        player.getPersistentData().putInt(PASSIVE_REGEN_TICK, 0);
+    }
+
+    public static boolean isRawFood(Item item) {
+        TagKey<Item> tagKey = TagKey.create(Registries.ITEM, RAW_FOOD);
+        //noinspection ConstantConditions
+        return ForgeRegistries.ITEMS.tags().getTag(tagKey).contains(item);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public void removeFoodBar(final RenderGuiOverlayEvent.Pre event)
+    {
+        if (event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type()))
+            event.setCanceled(true);
     }
 }
