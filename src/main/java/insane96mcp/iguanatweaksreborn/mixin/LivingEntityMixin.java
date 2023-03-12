@@ -9,7 +9,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
-@Mixin(LivingEntity.class)
+//Higher priority over ShieldsPlus. This makes this run first so ShieldPlus overrides this.
+@Mixin(value = LivingEntity.class, priority = 1001)
 public abstract class LivingEntityMixin extends Entity {
 
 	public LivingEntityMixin(EntityType<?> p_19870_, Level p_19871_) {
