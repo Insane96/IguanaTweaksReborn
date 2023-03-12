@@ -96,6 +96,7 @@ public class NoHunger extends Feature {
             MobEffectInstance effect = event.player.getEffect(MobEffects.HUNGER);
             //noinspection ConstantConditions; Checking with hasEffect
             event.player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.isVisible(), effect.showIcon()));
+            event.player.removeEffect(MobEffects.HUNGER);
         }
     }
 
