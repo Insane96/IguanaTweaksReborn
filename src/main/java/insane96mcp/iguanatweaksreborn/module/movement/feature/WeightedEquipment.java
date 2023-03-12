@@ -70,7 +70,7 @@ public class WeightedEquipment extends ITFeature {
 	public static Double percentagePerToughness = 0.025d;
 	@Config(min = 0, max = 1d)
 	@Label(name = "Shield Slowdown", description = "Shields will slowdown the player by this percentage.")
-	public static Double shieldSlowdown = 0.1d;
+	public static Double shieldSlowdown = 0d;
 
 	// 11 - 16 - 15 - 13
 	private static final HashMap<EquipmentSlot, Double> armorDurabilityRatio = new HashMap<>();
