@@ -86,21 +86,19 @@ public class Stamina extends Feature {
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (!this.isEnabled()
-                || !(event.player instanceof ServerPlayer player))
+                || !(event.player instanceof ServerPlayer player)
+                || event.phase.equals(TickEvent.Phase.START))
             return;
 
         boolean shouldSync = false;
 
         if (player.isSprinting()) {
             //Consume less stamina when swimming
-            if (player.isSwimming() && player.tickCount % 2 == 1)
-                return;
-
-            //If the vigour effect is active give the player 1/x chance to not consume stamina when running. x begin the effect level + 1
+            //If the vigour effect is active give the player 20% chance per level to not consume stamina when running.
             if (player.hasEffect(ITMobEffects.VIGOUR.get())) {
                 MobEffectInstance mobEffectInstance = player.getEffect(ITMobEffects.VIGOUR.get());
                 //noinspection ConstantConditions
-                if (player.getRandom().nextInt(mobEffectInstance.getAmplifier() + 2) != 0)
+                if (player.getRandom().nextDouble() < 0.2d * (mobEffectInstance.getAmplifier() + 1))
                     return;
             }
             consumeStamina(player);

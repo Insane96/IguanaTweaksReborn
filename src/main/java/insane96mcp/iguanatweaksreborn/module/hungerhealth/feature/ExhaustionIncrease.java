@@ -15,8 +15,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Exhaustion Increase", description = "Make the player consume more hunger with different actions. Does nothing if Hunger is disabled.")
-@LoadFeature(module = Modules.Ids.HUNGER_HEALTH, enabledByDefault = false)
+@Label(name = "Exhaustion Increase", description = "Make the player consume more hunger with different actions. If hunger is disabled, still works for Tiredness.")
+@LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class ExhaustionIncrease extends Feature {
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Block Break Exhaustion Multiplier", description = "When you break a block you'll get exhaustion equal to the block hardness multiplied by this value. Setting this to 0 will default to the vanilla exhaustion (0.005). (It's not affected by the Global Hardness Features)")

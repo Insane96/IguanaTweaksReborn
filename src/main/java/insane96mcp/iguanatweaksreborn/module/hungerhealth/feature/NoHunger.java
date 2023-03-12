@@ -76,7 +76,8 @@ public class NoHunger extends Feature {
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (!this.isEnabled()
                 || !disableHunger
-                || event.player.level.isClientSide)
+                || event.player.level.isClientSide
+                || event.phase.equals(TickEvent.Phase.START))
             return;
 
         event.player.getFoodData().foodLevel = 15;
