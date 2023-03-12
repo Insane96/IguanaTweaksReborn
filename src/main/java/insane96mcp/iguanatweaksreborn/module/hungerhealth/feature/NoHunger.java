@@ -64,6 +64,10 @@ public class NoHunger extends Feature {
     @Label(name = "Raw food.Poison Chance", description = "Raw food has this chance to poison the player. Raw food is defined in the iguanatweaksreborn:raw_food tag")
     public static Double rawFoodPoisonChance = 0.8d;
 
+    @Config
+    @Label(name = "Convert Hunger to Nausea", description = "If true, Hunger effect is replaced by Nausea")
+    public static Boolean convertHungerToNausea = true;
+
     public NoHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -86,6 +90,12 @@ public class NoHunger extends Feature {
                 event.player.heal(heal);
                 resetPassiveRegenTick(event.player);
             }
+        }
+
+        if (event.player.hasEffect(MobEffects.HUNGER) && convertHungerToNausea) {
+            MobEffectInstance effect = event.player.getEffect(MobEffects.HUNGER);
+            //noinspection ConstantConditions; Checking with hasEffect
+            event.player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.isVisible(), effect.showIcon()));
         }
     }
 
