@@ -45,7 +45,7 @@ public class ToolStats extends ITFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_axe", 89),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_shovel", 89),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 89),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 144),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 86),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:carrot_on_a_stick", 63),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shield", 268)
 	));
