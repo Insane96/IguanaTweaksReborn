@@ -4,10 +4,7 @@ import insane96mcp.iguanatweaksreborn.data.ITDataReloadListener;
 import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerProvider;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature.Tiredness;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
-import insane96mcp.iguanatweaksreborn.setup.ITClientConfig;
-import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
-import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
-import insane96mcp.iguanatweaksreborn.setup.ITSoundEvents;
+import insane96mcp.iguanatweaksreborn.setup.*;
 import insane96mcp.iguanatweaksreborn.utils.Weights;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -51,6 +48,7 @@ public class IguanaTweaksReborn
         FMLJavaModLoadingContext.get().getModEventBus().register(Tiredness.class);
         ITSoundEvents.SOUND_EVENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITMobEffects.MOB_EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ITItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
         Weights.initMaterialWeight();
     }
 
