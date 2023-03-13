@@ -3,15 +3,14 @@ package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -25,7 +24,6 @@ import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
@@ -173,9 +171,7 @@ public class NoHunger extends Feature {
     }
 
     public static boolean isRawFood(Item item) {
-        TagKey<Item> tagKey = TagKey.create(Registries.ITEM, RAW_FOOD);
-        //noinspection ConstantConditions
-        return ForgeRegistries.ITEMS.tags().getTag(tagKey).contains(item);
+        return Utils.isItemInTag(item, RAW_FOOD);
     }
 
     @OnlyIn(Dist.CLIENT)

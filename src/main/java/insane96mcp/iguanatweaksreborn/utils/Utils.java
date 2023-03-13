@@ -29,6 +29,12 @@ public class Utils {
         return ForgeRegistries.ENTITY_TYPES.tags().getTag(tagKey).contains(entity.getType());
     }
 
+    public static boolean isEntityTypeInTag(EntityType<?> entityType, ResourceLocation tag) {
+        TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, tag);
+        //noinspection ConstantConditions
+        return ForgeRegistries.ENTITY_TYPES.tags().getTag(tagKey).contains(entityType);
+    }
+
     public static float getFoodEffectiveness(FoodProperties foodProperties) {
         return foodProperties.getNutrition() + foodProperties.getNutrition() * foodProperties.getSaturationModifier() * 2;
     }

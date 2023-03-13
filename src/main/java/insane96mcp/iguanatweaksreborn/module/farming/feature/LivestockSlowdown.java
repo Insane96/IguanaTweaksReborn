@@ -3,23 +3,21 @@ package insane96mcp.iguanatweaksreborn.module.farming.feature;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cow;
@@ -34,7 +32,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Label(name = "Livestock Slowdown", description = "Slower breeding, Growing, Egging and Milking")
 @LoadFeature(module = Modules.Ids.FARMING)
@@ -165,8 +162,6 @@ public class LivestockSlowdown extends Feature {
 	}
 
 	public static boolean isEntityBlacklisted(Entity entity) {
-		TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, NO_LIVESTOCK_SLOWDOWN);
-		//noinspection ConstantConditions
-		return ForgeRegistries.ENTITY_TYPES.tags().getTag(tagKey).contains(entity.getType());
+		return Utils.isEntityInTag(entity, NO_LIVESTOCK_SLOWDOWN);
 	}
 }

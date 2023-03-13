@@ -6,20 +6,18 @@ import insane96mcp.iguanatweaksreborn.base.ITFeature;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.farming.utils.HoeStat;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -99,8 +97,6 @@ public class HoesNerfs extends ITFeature {
 	}
 
 	private static boolean isHoeDisabled(Item item) {
-		TagKey<Item> tagKey = TagKey.create(Registries.ITEM, DISABLED_HOES);
-		//noinspection ConstantConditions
-		return ForgeRegistries.ITEMS.tags().getTag(tagKey).contains(item);
+		return Utils.isItemInTag(item, DISABLED_HOES);
 	}
 }

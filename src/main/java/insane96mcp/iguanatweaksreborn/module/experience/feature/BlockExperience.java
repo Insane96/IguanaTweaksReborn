@@ -2,18 +2,15 @@ package insane96mcp.iguanatweaksreborn.module.experience.feature;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Label(name = "Experience From Blocks", description = "Decrease / Increase experience dropped by blocks broken")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
@@ -31,12 +28,8 @@ public class BlockExperience extends Feature {
 	@SubscribeEvent
 	public void onBlockXPDrop(BlockEvent.BreakEvent event) {
 		if (!this.isEnabled()
-				|| blockMultiplier == 1.0d)
-			return;
-
-		TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, NO_BLOCK_XP_MULTIPLIER);
-		//noinspection ConstantConditions
-		if (ForgeRegistries.BLOCKS.tags().getTag(tagKey).contains(event.getState().getBlock()))
+				|| blockMultiplier == 1.0d
+				|| !Utils.isBlockInTag(event.getState().getBlock(), NO_BLOCK_XP_MULTIPLIER))
 			return;
 
 		int xpToDrop = event.getExpToDrop();

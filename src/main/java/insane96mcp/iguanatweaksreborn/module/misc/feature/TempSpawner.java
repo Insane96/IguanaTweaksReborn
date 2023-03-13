@@ -13,14 +13,11 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -33,8 +30,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITag;
 
 @Label(name = "Temporary Spawners", description = "Spawners will no longer spawn mobs infinitely. Echo shards can reactivate a spawner.")
 @LoadFeature(module = Modules.Ids.MISC)
@@ -181,13 +176,10 @@ public class TempSpawner extends Feature {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onTooltip(ItemTooltipEvent event) {
-		if (!this.isEnabled())
+		if (!this.isEnabled()
+				|| !Utils.isItemInTag(event.getItemStack().getItem(), SPAWNER_REACTIVATOR))
 			return;
 
-		TagKey<Item> tagKey = TagKey.create(Registries.ITEM, SPAWNER_REACTIVATOR);
-		ITag<Item> itemTag = ForgeRegistries.ITEMS.tags().getTag(tagKey);
-		if (itemTag.contains(event.getItemStack().getItem())) {
-			event.getToolTip().add(Component.translatable(Strings.Translatable.SPAWNER_REACTIVATOR));
-		}
+		event.getToolTip().add(Component.translatable(Strings.Translatable.SPAWNER_REACTIVATOR));
 	}
 }

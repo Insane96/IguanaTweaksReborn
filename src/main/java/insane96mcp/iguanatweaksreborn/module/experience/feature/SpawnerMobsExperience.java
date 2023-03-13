@@ -2,20 +2,17 @@ package insane96mcp.iguanatweaksreborn.module.experience.feature;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.setup.ILStrings;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Label(name = "Experience From Spawners' Mobs", description = "Decrease / Increase experience dropped mobs spawned by Spawners")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
@@ -37,11 +34,8 @@ public class SpawnerMobsExperience extends Feature {
 		if (!this.isEnabled()
 				|| mobsFromSpawnersMultiplier == 1d
 				|| !(event.getEntity() instanceof Mob mob)
-				|| !mob.getPersistentData().getBoolean(ILStrings.Tags.SPAWNED_FROM_SPAWNER))
-			return;
-
-		TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, NO_SPAWNER_XP_MULTIPLIER);
-		if (ForgeRegistries.ENTITY_TYPES.tags().getTag(tagKey).contains(mob.getType()))
+				|| !mob.getPersistentData().getBoolean(ILStrings.Tags.SPAWNED_FROM_SPAWNER)
+				|| !Utils.isEntityInTag(mob, NO_SPAWNER_XP_MULTIPLIER))
 			return;
 
 		mob.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, mobsFromSpawnersMultiplier);
