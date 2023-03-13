@@ -33,5 +33,11 @@
 	"container.repair.free": "No Cost",
 	"iguanatweaksreborn.item_repaired": "Item got repaired",
 
-	"iguanatweaksreborn.spawner_reactivator": "This item can reactivate a Mob Spawner"
+	"iguanatweaksreborn.spawner_reactivator": "This item can reactivate a Mob Spawner",
+
+	"item.iguanatweaksreborn.flint_axe": "Flint Axe",
+	"item.iguanatweaksreborn.flint_pickaxe": "Flint Pickaxe",
+	"item.iguanatweaksreborn.flint_sword": "Flint Sword",
+	"item.iguanatweaksreborn.flint_shovel": "Flint Shovel",
+	"item.iguanatweaksreborn.flint_hoe": "Flint Hoe"
 }

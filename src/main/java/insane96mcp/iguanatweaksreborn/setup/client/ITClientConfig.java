@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.setup;
+package insane96mcp.iguanatweaksreborn.setup.client;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.ClientModules;

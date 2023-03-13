@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.setup.ITClientConfig;
+import insane96mcp.iguanatweaksreborn.setup.client.ITClientConfig;
 import insane96mcp.insanelib.base.Module;
 import net.minecraftforge.fml.config.ModConfig;
 
