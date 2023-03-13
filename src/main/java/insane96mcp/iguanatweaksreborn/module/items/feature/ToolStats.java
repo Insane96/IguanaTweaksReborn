@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.module.misc.feature;
+package insane96mcp.iguanatweaksreborn.module.items.feature;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.base.ITFeature;
@@ -29,17 +29,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Tool Stats", description = "Less durable and efficient tools. Tools Durability and Efficiency are controlled via json in this feature's folder. Note that removing entries from the json requires a Minecraft Restart")
-@LoadFeature(module = Modules.Ids.MISC)
+@LoadFeature(module = Modules.Ids.ITEMS)
 public class ToolStats extends ITFeature {
 	public static final ResourceLocation NO_DAMAGE_ITEMS = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_damage_items");
 	public static final ResourceLocation NO_EFFICIENCY_ITEMS = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_efficiency_items");
 
 	public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_sword", 1),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_pickaxe", 33),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_axe", 33),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_shovel", 33),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 33),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_sword", 1),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_pickaxe", 89),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_axe", 89),
@@ -87,7 +82,6 @@ public class ToolStats extends ITFeature {
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 
 	public static final ArrayList<IdTagValue> TOOL_EFFICIENCIES_DEFAULT = new ArrayList<>(Arrays.asList(
-			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/wooden", 3.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/stone", 2d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/iron", 4.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/diamond", 7d)
