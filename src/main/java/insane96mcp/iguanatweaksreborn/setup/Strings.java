@@ -14,6 +14,7 @@ public class Strings {
 		public static final String TIREDNESS = IguanaTweaksReborn.RESOURCE_PREFIX + "tiredness";
 		public static final String DAMAGE_HISTORY = IguanaTweaksReborn.RESOURCE_PREFIX + "damage_history";
 		public static final String EAT_HISTORY = IguanaTweaksReborn.RESOURCE_PREFIX + "eat_history";
+        public static final String PASSIVE_REGEN_TICK = IguanaTweaksReborn.RESOURCE_PREFIX + "passive_regen_ticks";
     }
 
 	public static class AttributeModifiers {

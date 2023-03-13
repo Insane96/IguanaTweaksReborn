@@ -11,6 +11,7 @@ public class Modules {
 	public static Module experience;
 	public static Module farming;
 	public static Module hungerHealth;
+	public static Module items;
 	public static Module mining;
 	public static Module misc;
 	public static Module mobs;
@@ -23,6 +24,7 @@ public class Modules {
 		experience = Module.Builder.create(Ids.EXPERIENCE, "Experience", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
 		farming = Module.Builder.create(Ids.FARMING, "Farming", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
 		hungerHealth = Module.Builder.create(Ids.HUNGER_HEALTH, "Hunger & Health", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
+		hungerHealth = Module.Builder.create(Ids.ITEMS, "Items", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
 		mining = Module.Builder.create(Ids.MINING, "Mining", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
 		misc = Module.Builder.create(Ids.MISC, "Miscellaneous", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
 		mobs = Module.Builder.create(Ids.MOBS, "Mobs", ModConfig.Type.COMMON, ITCommonConfig.builder).build();
@@ -36,6 +38,7 @@ public class Modules {
 		public static final String EXPERIENCE = IguanaTweaksReborn.RESOURCE_PREFIX + "experience";
 		public static final String FARMING = IguanaTweaksReborn.RESOURCE_PREFIX + "farming";
 		public static final String HUNGER_HEALTH = IguanaTweaksReborn.RESOURCE_PREFIX + "hunger_health";
+		public static final String ITEMS = IguanaTweaksReborn.RESOURCE_PREFIX + "hunger_health";
 		public static final String MINING = IguanaTweaksReborn.RESOURCE_PREFIX + "mining";
 		public static final String MISC = IguanaTweaksReborn.RESOURCE_PREFIX + "misc";
 		public static final String MOBS = IguanaTweaksReborn.RESOURCE_PREFIX + "mobs";
