@@ -78,6 +78,10 @@ repositories {
         name 'DVS1 Maven FS'
         url 'https://dvs1.progwml6.com/files/maven'
     }
+    maven { // SlimeKnights and JEI
+        name 'DVS1 Maven FS'
+        url 'https://dvs1.progwml6.com/files/maven'
+    }
     flatDir {
         dir 'libs'
     }
@@ -107,7 +111,7 @@ dependencies {
     // implementation fg.deobf("curse.maven:immersive_weathering-592449:3815045")
 
     // implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3820503")
-
+    minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 }
 

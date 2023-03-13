@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class SyncHandler {
+public class NetworkHandler {
 	private static final String PROTOCOL_VERSION = Integer.toString(2);
 	public static final SimpleChannel CHANNEL = NetworkRegistry.ChannelBuilder
 			.named(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "network_channel"))
@@ -28,7 +28,8 @@ public class SyncHandler {
 		CHANNEL.registerMessage(1, MessageExhaustionSync.class, MessageExhaustionSync::encode, MessageExhaustionSync::decode, MessageExhaustionSync::handle);
 		CHANNEL.registerMessage(2, MessageSaturationSync.class, MessageSaturationSync::encode, MessageSaturationSync::decode, MessageSaturationSync::handle);
 		CHANNEL.registerMessage(3, MessageTirednessSync.class, MessageTirednessSync::encode, MessageTirednessSync::decode, MessageTirednessSync::handle);
-		MinecraftForge.EVENT_BUS.register(new SyncHandler());
+		CHANNEL.registerMessage(4, MessageStaminaSync.class, MessageStaminaSync::encode, MessageStaminaSync::decode, MessageStaminaSync::handle);
+		MinecraftForge.EVENT_BUS.register(new NetworkHandler());
 	}
 
 	/*

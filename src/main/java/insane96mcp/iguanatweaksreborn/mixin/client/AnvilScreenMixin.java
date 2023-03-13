@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.mixin;
+package insane96mcp.iguanatweaksreborn.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.iguanatweaksreborn.module.experience.feature.OtherExperience;

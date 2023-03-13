@@ -23,11 +23,12 @@
         "ProtectionEnchantmentMixin",
         "ThrownExperienceBottleMixin",
         "VillagerMixin",
-        "ZombieMixin"
+        "ZombieMixin",
+        "client.LocalPlayerMixin"
     ],
     "minVersion": "0.8",
     "client": [
-        "AnvilScreenMixin",
-        "GameRendererMixin"
+        "client.AnvilScreenMixin",
+        "client.GameRendererMixin"
 	]
 }

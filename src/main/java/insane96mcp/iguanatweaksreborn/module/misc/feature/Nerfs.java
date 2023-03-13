@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Nerfs", description = "Various Nerfs")
 @LoadFeature(module = Modules.Ids.MISC)
-public class Nerf extends Feature {
+public class Nerfs extends Feature {
 	@Config
 	@Label(name = "No Sheep Death Wool", description = "If true, sheep will no longer drop Wool on death.")
 	public static Boolean noSheepWool = true;
@@ -27,7 +27,7 @@ public class Nerf extends Feature {
 	@Label(name = "No Ice Boats", description = "If true, boats will no longer go stupidly fast on ice.")
 	public static Boolean noIceBoat = true;
 
-	public Nerf(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 

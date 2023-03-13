@@ -56,7 +56,7 @@ public class BeaconConduit extends ITFeature {
     @Label(name = "Beacon.Affect Pets", description = "If true, pets will also get the beacon effects")
     public static Boolean affectPets = true;
     @Config
-    @Label(name = "Beacon.Vigour with Regeneration", description = "If true, with the regeneration effect, the Vigour effect is also applied (reduces hunger consumption by 20%).")
+    @Label(name = "Beacon.Vigour with Regeneration", description = "If true, with the regeneration effect, the Vigour effect is also applied (reduces hunger and stamina consumption by 20%).")
     public static Boolean vigourWithRegen = true;
     @Config(min = 0d, max = 256d)
     @Label(name = "Beacon.Base Range", description = "Base range of the beacon")
@@ -147,7 +147,7 @@ public class BeaconConduit extends ITFeature {
             }
         }
 
-        double range = 0d;
+        double range = 1d;
         for (Map.Entry<Block, Integer> entry : blocksCount.entrySet()) {
             Optional<IdTagValue> optional = blocksList
                     .stream()

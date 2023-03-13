@@ -22,7 +22,7 @@ public class BlockExperience extends Feature {
 
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Experience from Blocks Multiplier", description = "Experience dropped by blocks (Ores and Spawners) will be multiplied by this multiplier. Experience dropped by blocks are still affected by 'Global Experience Multiplier'\nCan be set to 0 to make blocks drop no experience")
-	public static Double blockMultiplier = 2.2d;
+	public static Double blockMultiplier = 2.25d;
 
 	public BlockExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -35,6 +35,7 @@ public class BlockExperience extends Feature {
 			return;
 
 		TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, NO_BLOCK_XP_MULTIPLIER);
+		//noinspection ConstantConditions
 		if (ForgeRegistries.BLOCKS.tags().getTag(tagKey).contains(event.getState().getBlock()))
 			return;
 

@@ -28,37 +28,34 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Tool Stats", description = "Less durable and efficient tools. Tools Durabilities and Efficiencies are controlled via json in this feature's folder. Note that removing entries from the json requires a Minecraft Restart")
+@Label(name = "Tool Stats", description = "Less durable and efficient tools. Tools Durability and Efficiency are controlled via json in this feature's folder. Note that removing entries from the json requires a Minecraft Restart")
 @LoadFeature(module = Modules.Ids.MISC)
 public class ToolStats extends ITFeature {
 	public static final ResourceLocation NO_DAMAGE_ITEMS = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_damage_items");
 	public static final ResourceLocation NO_EFFICIENCY_ITEMS = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_efficiency_items");
 
-	public static final ArrayList<IdTagValue> TOOL_DURABILITIES_DEFAULT = new ArrayList<>(Arrays.asList(
+	public static final ArrayList<IdTagValue> TOOL_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_sword", 1),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_pickaxe", 1),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_axe", 8),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_shovel", 1),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 1),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_pickaxe", 33),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_axe", 33),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_shovel", 33),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 33),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_sword", 1),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_pickaxe", 8),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_axe", 48),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_shovel", 48),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 8),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_sword", 375),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_pickaxe", 375),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_axe", 375),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_shovel", 375),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_hoe", 375),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 144)
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_pickaxe", 89),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_axe", 89),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_shovel", 89),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 89),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 144),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:carrot_on_a_stick", 63),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shield", 268)
 	));
 	public static final ArrayList<IdTagValue> toolDurabilities = new ArrayList<>();
 
 	public static final ArrayList<IdTagValue> TOOL_EFFICIENCIES_DEFAULT = new ArrayList<>(Arrays.asList(
-			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/wooden", 1.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/stone", 3d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/iron", 5.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/diamond", 7.5d)
+			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/wooden", 3.5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/stone", 2d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/iron", 4.5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "iguanatweaksreborn:equipment/hand/tools/diamond", 7d)
 	));
 	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();
 

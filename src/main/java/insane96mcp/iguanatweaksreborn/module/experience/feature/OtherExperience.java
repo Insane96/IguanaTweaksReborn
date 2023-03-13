@@ -44,7 +44,7 @@ public class OtherExperience extends Feature {
 	@Config
 	@Label(name = "Unmending", description = """
 			Makes mending reset the repair cost of an item to 0 when applied to it. No longer repairs items with XP.
-			If an item has already mending, the enchantment will be removed and repair cost reset.
+			If an item has already mending, the enchantment will be removed and repair cost reset when used in an anvil.
 			Applying mending still requires the base repair cost of the item (you can't add Mending if the operation is 'Too Expensive'""")
 	public static Boolean unmending = true;
 	@Config

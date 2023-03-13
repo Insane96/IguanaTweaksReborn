@@ -1,5 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.hungerhealth.feature;
 
+import com.ezylang.evalex.Expression;
+import com.ezylang.evalex.data.EvaluationValue;
 import com.google.gson.reflect.TypeToken;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.base.ITFeature;
@@ -25,7 +27,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Food & Drinks", description = "Changes to food nourishment and the speed on how food is eaten or how items are consumed. Custom Food Properties are controlled via json in this feature's folder. Removing entries from the json requires a minecraft restart.")
@@ -33,30 +34,29 @@ import java.util.List;
 public class FoodDrinks extends ITFeature {
 	public static final ResourceLocation FOOD_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "food_drinks_no_hunger_changes");
 
-	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(Arrays.asList(
+	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(
 			new CustomFoodProperties(IdTagMatcher.Type.ID, "minecraft:rotten_flesh", 2, -1, 50, false)
 	));
 	public static final ArrayList<CustomFoodProperties> customFoodProperties = new ArrayList<>();
 
+	//TODO Change this to formula
 	@Config(min = 0d, max = 20d)
 	@Label(name = "Food Hunger Multiplier", description = "Food's hunger restored will be multiplied by this value (rounded up). E.g. With this set to 0.5 a Cooked Porkchop would restore 4 hunger instead of 8. Setting to 1 will disable this feature.")
-	public static Double foodHungerMultiplier = 1d;
+	public static Double foodHungerMultiplier = 0.83d;
+	//TODO Change this to formula
 	@Config(min = 0d, max = 64d)
 	@Label(name = "Food Saturation Multiplier", description = "Food's saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
 	public static Double foodSaturationMultiplier = 1.0d;
 
 	@Config
-	@Label(name = "Faster Drink Consuming", description = "Makes potion faster to drink, 1 second instead of 1.6.")
+	@Label(name = "Faster Drink Consuming", description = "Makes potion, milk and honey faster to drink, 1 second instead of 1.6.")
 	public static Boolean fasterDrinkConsuming = true;
 	@Config
-	@Label(name = "Eating Speed Based Off Food Restored", description = "Makes the speed for eating food based off the hunger and saturation they provide. At 2 (hunger + saturation) the speed is vanilla, higher / lower (hunger + saturation) will lower / raise the speed.")
-	public static Boolean eatingSpeedBasedOffFood = false;
-	@Config(min = 0d)
-	@Label(name = "Eating Time Multiplier", description = "Multiplier for the time taken to eat. Only applied if 'Eating Speed Based Off Food Config' is active.")
-	public static Double eatingTimeMultiplier = 0.115d;
-	@Config(min = 0)
-	@Label(name = "Eating Time Minimum", description = "The minimum speed a food will take to eat. \"Fast Food\" items have this value halved. Vanilla time is 32/16")
-	public static Integer eatingTimeMin = 24;
+	@Label(name = "Eating Speed Based Off Food Restored", description = "Makes the speed for eating food based off the hunger and saturation they provide.")
+	public static Boolean eatingSpeedBasedOffFood = true;
+	@Config
+	@Label(name = "Eating Speed Formula", description = "The formula to calculate the ticks required to eat a food. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. The default formula increases the time to eat exponentially when higher effectiveness.")
+	public static String eatingSpeedFormula = "MAX((32 * effectiveness^1.7) / IF(fast_food, 2, 1) * 0.04, 24 / IF(fast_food, 2, 1))";
 	@Config
 	@Label(name = "Stop consuming on hit", description = "If true, eating/drinking stops when the player's hit.")
 	public static Boolean stopConsumingOnHit = true;
@@ -76,7 +76,14 @@ public class FoodDrinks extends ITFeature {
 		processCustomFoodValues();
 	}
 
+	@Override
+	public void loadConfigOptions() {
+		super.loadConfigOptions();
+	}
+
 	private static CustomFoodProperties customFoodPropertiesCache;
+	private static FoodProperties lastFoodEatenCache;
+	private static int lastFoodEatenTime;
 	public static int getFoodConsumingTime(ItemStack stack) {
 		if (customFoodPropertiesCache != null && customFoodPropertiesCache.matchesItem(stack.getItem())) {
 			return customFoodPropertiesCache.eatingTime;
@@ -91,14 +98,26 @@ public class FoodDrinks extends ITFeature {
 		}
 
 		FoodProperties food = stack.getItem().getFoodProperties(stack, null);
-		//noinspection ConstantConditions
-		float time = 32 * Utils.getFoodEffectiveness(food);
-		if (food.isFastFood())
-			time /= 2;
-		time *= eatingTimeMultiplier;
+		if (food == lastFoodEatenCache)
+			return lastFoodEatenTime;
 
-		int minTime = food.isFastFood() ? eatingTimeMin / 2 : eatingTimeMin;
-		return (int) Math.max(time, minTime);
+		Expression expression = new Expression(eatingSpeedFormula);
+		try {
+			//noinspection ConstantConditions
+			EvaluationValue result = expression
+					.with("hunger", food.getNutrition())
+					.and("saturation_modifier", food.getSaturationModifier())
+					.and("effectiveness", Utils.getFoodEffectiveness(food))
+					.and("fast_food", food.isFastFood())
+					.evaluate();
+			lastFoodEatenCache = food;
+			lastFoodEatenTime = result.getNumberValue().intValue();
+			return lastFoodEatenTime;
+		}
+		catch (Exception ex) {
+			LogHelper.error("Failed to evaluate or parse eating speed formula: %s", expression);
+			return food.isFastFood() ? 16 : 32;
+		}
 	}
 
 	@SubscribeEvent

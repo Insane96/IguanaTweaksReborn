@@ -14,17 +14,18 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Label(name = "Player Experience", description = "Changes the experience lost on death and xp per level required.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class PlayerExperience extends Feature {
-	@Config
-	@Label(name = "Better Scaling XP to next level", description = """
-						The experience required to level up will be linear instead of exponential like vanilla.
-						The formula used to calculate the xp required for next level is (3 * (current_level + 1))
-						Obviously incompatible with Allurement's 'Remove level Scaling'""")
-	public static Boolean betterScalingLevels = true;
+	//TODO Change this into a formula
+	@Config(min = -1)
+	@Label(name = "Flat XP to next level", description = """
+						The experience required to level up will be fixed to this value.
+						Set to -1 to Disable.
+						Incompatible with Allurement's 'Remove level Scaling' or any other mod that does something similar""")
+	public static Integer flatLevelScaling = 50;
 	@Config(min = -1d, max = 1d)
 	@Label(name = "Dropped Experience on Death", description = """
 						On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this.
 						Due to Minecraft limitations this is incompatible with other mods that change the level scaling (e.g. Allurement's 'Remove level Scaling').""")
-	public static Double droppedExperienceOnDeath = 0.85d;
+	public static Double droppedExperienceOnDeath = 0.8d;
 	@Config(min = -1d, max = 1d)
 	@Label(name = "Pickup XP Faster", description = "Players will pick up experience faster")
 	public static Boolean pickUpFaster = true;
@@ -48,10 +49,10 @@ public class PlayerExperience extends Feature {
 	 */
 	public static int getBetterScalingLevel(int experienceLevel) {
 		if (!isEnabled(PlayerExperience.class)
-				|| !betterScalingLevels)
+				|| flatLevelScaling == -1)
 			return -1;
 
-		return 3 * (experienceLevel + 1);
+		return 50;
 	}
 
 	//Instead of using experienceTotal, calculate the xp from the xp bar and level since experienceTotal doesn't get updated on level consume
@@ -64,6 +65,7 @@ public class PlayerExperience extends Feature {
 		//Take into account global experience to prevent XP duping
 		if (Feature.isEnabled(GlobalExperience.class) && GlobalExperience.globalMultiplier != 1d)
 			totalExp *= (1d / GlobalExperience.globalMultiplier);
+		//Cap to 250k XP
 		if (totalExp > 250000)
 			totalExp = 250000;
 		return totalExp;

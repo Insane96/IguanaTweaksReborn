@@ -19,7 +19,7 @@ public class Shields extends Feature {
 	public static Boolean removeShieldWindup = true;
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Shield Damage Blocked", description = "Shields will only block this amount of damage. Setting to 0 will make shield block like vanilla.")
-	public static Double shieldBlockDamage = 5d;
+	public static Double shieldBlockDamage = 4d;
 	@Config
 	@Label(name = "Combat Test shield disabling", description = "Makes shields always disable for 1.6 seconds like Combat Test snapshots.")
 	public static Boolean combatTestShieldDisabling = true;

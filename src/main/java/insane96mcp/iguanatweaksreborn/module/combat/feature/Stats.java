@@ -56,8 +56,8 @@ public class Stats extends ITFeature {
 	public static Boolean nerfWeapons = true;
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Power Enchantment Damage Increase", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
-	public static Double powerEnchantmentDamageIncrease = 0.35d;
-	//TODO mixin inside the damage to keep "crit" arrows but without the bonus damage
+	public static Double powerEnchantmentDamageIncrease = 0.4d;
+	//TODO mixin inside the damage to keep "crit" arrows but without the bonus damage. AbstractArrow line 307
 	@Config
 	@Label(name = "Disable Arrow Crits", description = "If true, Arrows from Bows and Crossbows will no longer randomly crit (basically disables the random bonus damage given when firing a fully charged arrow).")
 	public static Boolean disableCritArrows = true;
