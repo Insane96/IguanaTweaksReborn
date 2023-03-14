@@ -11,6 +11,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -34,6 +35,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Label(name = "Temporary Spawners", description = "Spawners will no longer spawn mobs infinitely. Echo shards can reactivate a spawner.")
 @LoadFeature(module = Modules.Ids.MISC)
 public class TempSpawner extends Feature {
+	//TODO Config option to increase mob spawner range (maybe also speed and ignore light)
 	public static final ResourceLocation BLACKLISTED_SPAWNERS = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "blacklisted_spawners");
 	public static final ResourceLocation SPAWNER_REACTIVATOR = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "spawner_reactivator");
 	@Config(min = 0)
@@ -92,7 +94,8 @@ public class TempSpawner extends Feature {
 			return;
 
 		event.setUseItem(Event.Result.ALLOW);
-		event.getItemStack().shrink(1);
+		if (!event.getEntity().getAbilities().instabuild)
+			event.getItemStack().shrink(1);
 		event.getEntity().swing(event.getHand(), true);
 		resetSpawner(spawner);
 	}
@@ -180,6 +183,6 @@ public class TempSpawner extends Feature {
 				|| !Utils.isItemInTag(event.getItemStack().getItem(), SPAWNER_REACTIVATOR))
 			return;
 
-		event.getToolTip().add(Component.translatable(Strings.Translatable.SPAWNER_REACTIVATOR));
+		event.getToolTip().add(Component.translatable(Strings.Translatable.SPAWNER_REACTIVATOR).withStyle(ChatFormatting.LIGHT_PURPLE));
 	}
 }
