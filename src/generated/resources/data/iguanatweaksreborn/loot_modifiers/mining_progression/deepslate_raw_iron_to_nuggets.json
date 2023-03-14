@@ -1,0 +1,11 @@
+{
+  "type": "iguanatweaksreborn:replace_drop",
+  "conditions": [
+    {
+      "block": "minecraft:deepslate_iron_ore",
+      "condition": "minecraft:block_state_property"
+    }
+  ],
+  "item_to_replace": "minecraft:raw_iron",
+  "new_item": "minecraft:iron_nugget"
+}

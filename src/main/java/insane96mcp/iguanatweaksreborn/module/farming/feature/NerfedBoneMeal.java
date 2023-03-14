@@ -65,7 +65,7 @@ public class NerfedBoneMeal extends Feature {
 			return BoneMealResult.NONE;
 
 		//If farmland is dry and cropsRequireWater is enabled then cancel the event
-		if (CropsGrowth.requiresWetFarmland(level, pos) && !CropsGrowth.hasWetFarmland(level, pos)) {
+		if (Crops.requiresWetFarmland(level, pos) && !Crops.hasWetFarmland(level, pos)) {
 			return BoneMealResult.CANCEL;
 		}
 

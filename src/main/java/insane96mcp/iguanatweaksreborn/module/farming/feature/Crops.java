@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.farming.utils.PlantGrowthModifier;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
@@ -12,13 +13,14 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.FarmBlock;
-import net.minecraft.world.level.block.StemBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,9 +29,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 
-@Label(name = "Crops Growth", description = "Slower Crops growing based off various factors")
+@Label(name = "Crops", description = "Slower Crops growing based off various factors and less yield from crops")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class CropsGrowth extends Feature {
+public class Crops extends Feature {
 	public static final ResourceLocation NO_GROWTH_MULTIPLIERS = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_growth_multipliers");
 
 	@Config
@@ -64,7 +66,7 @@ public class CropsGrowth extends Feature {
 
 	public ArrayList<PlantGrowthModifier> plantGrowthModifiers = new ArrayList<>();
 
-	public CropsGrowth(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public Crops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
@@ -96,7 +98,7 @@ public class CropsGrowth extends Feature {
 	}
 
 	public static boolean requiresWetFarmland(Level level, BlockPos blockPos) {
-		return isEnabled(CropsGrowth.class)
+		return isEnabled(Crops.class)
 				&& !cropsRequireWater.equals(CropsRequireWater.NO)
 				&& isAffectedByFarmland(level, blockPos);
 	}
@@ -165,5 +167,34 @@ public class CropsGrowth extends Feature {
 	public static boolean isCropOnFarmland(LevelAccessor levelAccessor, BlockPos cropPos) {
 		BlockState sustainState = levelAccessor.getBlockState(cropPos.below());
 		return sustainState.getBlock() instanceof FarmBlock;
+	}
+
+	private static final String path = "crops/";
+
+	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
+		provider.add(path + "harder_beetroot_farming", new DropMultiplierModifier(
+				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.BEETROOTS).build()},
+				Items.BEETROOT_SEEDS,
+				0.137f,
+				1
+		));
+		provider.add(path + "harder_wheat_farming", new DropMultiplierModifier(
+				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.WHEAT).build()},
+				Items.WHEAT_SEEDS,
+				0.137f,
+				1
+		));
+		provider.add(path + "harder_potato_farming", new DropMultiplierModifier(
+				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.POTATOES).build()},
+				Items.POTATO,
+				0.1f,
+				1
+		));
+		provider.add(path + "harder_carrot_farming", new DropMultiplierModifier(
+				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.CARROTS).build()},
+				Items.CARROT,
+				0.1f,
+				1
+		));
 	}
 }

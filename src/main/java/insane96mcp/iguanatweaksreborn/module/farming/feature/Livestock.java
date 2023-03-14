@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.farming.feature;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.Strings;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
@@ -9,6 +10,8 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.EntityTypePredicate;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -18,6 +21,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cow;
@@ -27,16 +31,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
+import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
-@Label(name = "Livestock Slowdown", description = "Slower breeding, Growing, Egging and Milking")
+@Label(name = "Livestock", description = "Slower breeding, Growing, Egging and Milking. Lower yield.")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class LivestockSlowdown extends Feature {
-
+public class Livestock extends Feature {
 	private static final ResourceLocation NO_LIVESTOCK_SLOWDOWN = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "no_livestock_slowdown");
 
 	@Config(min = 1d, max = 128d)
@@ -55,7 +62,7 @@ public class LivestockSlowdown extends Feature {
 	@Label(name = "Cow Milk Delay", description = "Seconds before a cow can be milked again. This applies to Mooshroom stew too.\n0 will disable this feature.")
 	public static Integer cowMilkDelay = 1200;
 
-	public LivestockSlowdown(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
@@ -163,5 +170,57 @@ public class LivestockSlowdown extends Feature {
 
 	public static boolean isEntityBlacklisted(Entity entity) {
 		return Utils.isEntityInTag(entity, NO_LIVESTOCK_SLOWDOWN);
+	}
+
+	private static final String path = "livestock/";
+
+	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
+		provider.add(path + "lower_chicken", new DropMultiplierModifier(
+				new LootItemCondition[0],
+				Items.CHICKEN,
+				0.25f
+		));
+		provider.add(path + "lower_cooked_chicken", new DropMultiplierModifier(
+				new LootItemCondition[0],
+				Items.COOKED_CHICKEN,
+				0.25f
+		));
+		provider.add(path + "lower_mutton", new DropMultiplierModifier(
+				new LootItemCondition[0],
+				Items.MUTTON,
+				0.25f
+		));
+		provider.add(path + "lower_cooked_mutton", new DropMultiplierModifier(
+				new LootItemCondition[0],
+				Items.COOKED_MUTTON,
+				0.25f
+		));
+		provider.add(path + "lower_beef", new DropMultiplierModifier(
+				new LootItemCondition[0],
+				Items.BEEF,
+				0.25f
+		));
+		provider.add(path + "lower_cooked_beef", new DropMultiplierModifier(
+				new LootItemCondition[0],
+				Items.COOKED_BEEF,
+				0.25f
+		));
+		provider.add(path + "lower_cow_leather", new DropMultiplierModifier(
+				new LootItemCondition[] {
+						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.COW)).build()).build()
+				},
+				Items.LEATHER,
+				0.4f
+		));
+		provider.add(path + "lower_porkchop", new DropMultiplierModifier(
+				new LootItemCondition[0],
+				Items.BEEF,
+				0.5f
+		));
+		provider.add(path + "lower_cooked_porkchop", new DropMultiplierModifier(
+				new LootItemCondition[0],
+				Items.COOKED_BEEF,
+				0.5f
+		));
 	}
 }

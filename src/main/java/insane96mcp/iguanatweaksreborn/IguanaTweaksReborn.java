@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn;
 
 import insane96mcp.iguanatweaksreborn.data.ITDataReloadListener;
+import insane96mcp.iguanatweaksreborn.data.ITGlobalLootModifierProvider;
 import insane96mcp.iguanatweaksreborn.data.ITRecipeProvider;
 import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerProvider;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature.Tiredness;
@@ -91,7 +92,7 @@ public class IguanaTweaksReborn
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         generator.addProvider(event.includeServer(), new ITRecipeProvider(generator.getPackOutput()));
-        //generator.addProvider(event.includeServer(), new ITGlobalLootModifierProvider(generator.getPackOutput(), IguanaTweaksReborn.MOD_ID));
+        generator.addProvider(event.includeServer(), new ITGlobalLootModifierProvider(generator.getPackOutput(), IguanaTweaksReborn.MOD_ID));
     }
 
     /*public void addPackFinders(AddPackFindersEvent event)
