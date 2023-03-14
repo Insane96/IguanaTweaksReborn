@@ -1,6 +1,11 @@
 {
     "replace": false,
     "entries": [
-        "iguanatweaksreborn:raw_iron_to_nuggets"
+        "iguanatweaksreborn:raw_iron_to_nuggets",
+        "iguanatweaksreborn:deepslate_raw_iron_to_nuggets",
+        "iguanatweaksreborn:harder_potatoes_farming",
+        "iguanatweaksreborn:harder_carrots_farming",
+        "iguanatweaksreborn:harder_wheat_farming",
+        "iguanatweaksreborn:harder_beetroot_farming"
     ]
 }

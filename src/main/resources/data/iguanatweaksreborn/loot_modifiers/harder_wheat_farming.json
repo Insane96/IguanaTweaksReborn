@@ -1,0 +1,12 @@
+{
+    "type": "iguanatweaksreborn:drop_multiplier",
+    "conditions": [
+        {
+            "condition": "minecraft:block_state_property",
+            "block": "minecraft:wheat"
+        }
+    ],
+    "item": "minecraft:wheat_seeds",
+    "multiplier": 0.137,
+    "amount_to_keep": 1
+}

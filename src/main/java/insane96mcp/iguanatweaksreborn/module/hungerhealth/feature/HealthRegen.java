@@ -109,16 +109,16 @@ public class HealthRegen extends Feature {
 	public void readConfig(final ModConfigEvent event) {
 		super.readConfig(event);
 		if (loadCombatTestConfigOptions) {
-			this.setConfig("Health Regen Speed", 40);
-			this.setConfig("Regen when Hunger Above", 6);
-			this.setConfig("Starve Speed", 80);
-			this.setConfig("Starve Damage", 1);
-			this.setConfig("Disable Saturation Regen Boost", true);
-			this.setConfig("Consume Hunger Only", true);
-			this.setConfig("Max Exhaustion", 4d);
-			this.setConfig("Hunger Consumption Chance", 0.5d);
+			this.setConfigOption("Health Regen Speed", 40);
+			this.setConfigOption("Regen when Hunger Above", 6);
+			this.setConfigOption("Starve Speed", 80);
+			this.setConfigOption("Starve Damage", 1);
+			this.setConfigOption("Disable Saturation Regen Boost", true);
+			this.setConfigOption("Consume Hunger Only", true);
+			this.setConfigOption("Max Exhaustion", 4d);
+			this.setConfigOption("Hunger Consumption Chance", 0.5d);
 
-			this.setConfig("Load Combat Test Config Options", false);
+			this.setConfigOption("Load Combat Test Config Options", false);
 		}
 	}
 

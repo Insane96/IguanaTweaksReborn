@@ -3,7 +3,7 @@
     "conditions": [
         {
             "condition": "minecraft:block_state_property",
-            "block": "minecraft:iron_ore"
+            "block": "minecraft:deepslate_iron_ore"
         }
     ],
     "item_to_replace": "minecraft:raw_iron",
