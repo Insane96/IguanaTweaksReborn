@@ -82,6 +82,9 @@ public class FlintTools extends ITFeature {
 			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_DAMAGE_ITEM).withStyle(ChatFormatting.RED));
 			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_EFFICIENCY_ITEM).withStyle(ChatFormatting.RED));
 		}
+		else if (event.getItemStack().getItem().equals(Items.WOODEN_SWORD)) {
+			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_DAMAGE_ITEM).withStyle(ChatFormatting.RED));
+		}
 	}
 
 	private static boolean isWoodenTool(Item item) {
