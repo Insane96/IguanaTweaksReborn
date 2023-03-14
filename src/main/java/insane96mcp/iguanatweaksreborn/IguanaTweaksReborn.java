@@ -5,10 +5,7 @@ import insane96mcp.iguanatweaksreborn.data.ITRecipeProvider;
 import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerProvider;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature.Tiredness;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
-import insane96mcp.iguanatweaksreborn.setup.ITCommonConfig;
-import insane96mcp.iguanatweaksreborn.setup.ITItems;
-import insane96mcp.iguanatweaksreborn.setup.ITMobEffects;
-import insane96mcp.iguanatweaksreborn.setup.ITSoundEvents;
+import insane96mcp.iguanatweaksreborn.setup.*;
 import insane96mcp.iguanatweaksreborn.setup.client.ClientSetup;
 import insane96mcp.iguanatweaksreborn.setup.client.ITClientConfig;
 import insane96mcp.iguanatweaksreborn.utils.Weights;
@@ -26,6 +23,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -50,14 +48,16 @@ public class IguanaTweaksReborn
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ITClientConfig.CONFIG_SPEC, MOD_ID + "/client.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ITCommonConfig.CONFIG_SPEC, MOD_ID + "/common.toml");
         MinecraftForge.EVENT_BUS.register(this);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::gatherData);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::creativeTabsBuildContents);
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::gatherData);
+        modEventBus.addListener(ClientSetup::creativeTabsBuildContents);
         //FMLJavaModLoadingContext.get().getModEventBus().addListener(this::addPackFinders);
-        FMLJavaModLoadingContext.get().getModEventBus().register(Tiredness.class);
-        ITSoundEvents.SOUND_EVENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        ITMobEffects.MOB_EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        ITItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        modEventBus.register(Tiredness.class);
+        ITSoundEvents.SOUND_EVENTS.register(modEventBus);
+        ITMobEffects.MOB_EFFECTS.register(modEventBus);
+        ITItems.ITEMS.register(modEventBus);
+        ITGlobalLootModifiers.LOOT_MODIFIERS.register(modEventBus);
         Weights.initMaterialWeight();
     }
 
@@ -91,6 +91,7 @@ public class IguanaTweaksReborn
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         generator.addProvider(event.includeServer(), new ITRecipeProvider(generator.getPackOutput()));
+        //generator.addProvider(event.includeServer(), new ITGlobalLootModifierProvider(generator.getPackOutput(), IguanaTweaksReborn.MOD_ID));
     }
 
     /*public void addPackFinders(AddPackFindersEvent event)
