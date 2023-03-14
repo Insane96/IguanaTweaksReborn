@@ -29,6 +29,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class NoHunger extends Feature {
 
+    //TODO Make food regenerate health overtime. Higher saturation = faster regen. Maybe with this remove Well Fed
     public static final String PASSIVE_REGEN_TICK = IguanaTweaksReborn.RESOURCE_PREFIX + "passive_regen_ticks";
 
     private static final ResourceLocation RAW_FOOD = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "raw_food");
