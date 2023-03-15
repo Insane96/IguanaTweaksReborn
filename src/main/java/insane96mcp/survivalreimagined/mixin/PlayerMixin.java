@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.survivalreimagined.effect.Vigour;
 import insane96mcp.survivalreimagined.module.combat.feature.Shields;
 import insane96mcp.survivalreimagined.module.experience.feature.PlayerExperience;
@@ -12,13 +13,12 @@ import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(Player.class)
+//Higher priority over ShieldsPlus. This makes this run first so ShieldPlus overrides this.
+@Mixin(value = Player.class, priority = 1001)
 public abstract class PlayerMixin extends LivingEntity {
 	@Shadow
 	public int experienceLevel;
@@ -62,6 +62,14 @@ public abstract class PlayerMixin extends LivingEntity {
 		}
 	}
 
+	@ModifyConstant(constant = @Constant(floatValue = 3.0F), method = "hurtCurrentlyUsedShield")
+	private float blockingWindupTime(float minDamage) {
+		if (Feature.isEnabled(Shields.class))
+			minDamage = Shields.minShieldHurtDamage.floatValue();
+		return minDamage;
+	}
+
+	//Changes efficiency formula
 	/*@ModifyVariable(method = "getDigSpeed", ordinal = 0, at = @At(value = "STORE", ordinal = 1), remap = false)
 	private float changeEfficiencyFormula(float efficiency, BlockState p_36282_, @Nullable BlockPos pos) {
 		int i = EnchantmentHelper.getBlockEfficiency((Player) (Object) this);

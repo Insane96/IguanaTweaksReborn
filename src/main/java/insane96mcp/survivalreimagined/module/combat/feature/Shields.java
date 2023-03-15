@@ -24,6 +24,9 @@ public class Shields extends Feature {
 	@Label(name = "Combat Test shield disabling", description = "Makes shields always disable for 1.6 seconds like Combat Test snapshots.")
 	public static Boolean combatTestShieldDisabling = true;
 
+	@Label(name = "Min Shield Hurt Damage", description = "The minimum damage dealt to the player for the shield to take damage (durability). Vanilla is 3.")
+	public static Double minShieldHurtDamage = 1d;
+
 	public Shields(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
