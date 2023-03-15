@@ -193,17 +193,17 @@ public class Livestock extends Feature {
 		provider.add(path + "lower_chicken", new DropMultiplierModifier(
 				new LootItemCondition[0],
 				Items.CHICKEN,
-				0.25f
+				0.2f
 		));
 		provider.add(path + "lower_cooked_chicken", new DropMultiplierModifier(
 				new LootItemCondition[0],
 				Items.COOKED_CHICKEN,
-				0.25f
+				0.2f
 		));
 		provider.add(path + "lower_mutton", new DropMultiplierModifier(
 				new LootItemCondition[0],
 				Items.MUTTON,
-				0.25f
+				0.2f
 		));
 		provider.add(path + "lower_cooked_mutton", new DropMultiplierModifier(
 				new LootItemCondition[0],
@@ -229,13 +229,13 @@ public class Livestock extends Feature {
 		));
 		provider.add(path + "lower_porkchop", new DropMultiplierModifier(
 				new LootItemCondition[0],
-				Items.BEEF,
-				0.5f
+				Items.PORKCHOP,
+				0.4f
 		));
 		provider.add(path + "lower_cooked_porkchop", new DropMultiplierModifier(
 				new LootItemCondition[0],
-				Items.COOKED_BEEF,
-				0.5f
+				Items.COOKED_PORKCHOP,
+				0.4f
 		));
 	}
 }

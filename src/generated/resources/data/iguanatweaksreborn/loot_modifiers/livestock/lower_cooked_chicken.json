@@ -3,5 +3,5 @@
   "amount_to_keep": 0,
   "conditions": [],
   "item": "minecraft:cooked_chicken",
-  "multiplier": 0.5
+  "multiplier": 0.2
 }

@@ -2,6 +2,6 @@
   "type": "iguanatweaksreborn:drop_multiplier",
   "amount_to_keep": 0,
   "conditions": [],
-  "item": "minecraft:cooked_beef",
-  "multiplier": 0.5
+  "item": "minecraft:cooked_porkchop",
+  "multiplier": 0.4
 }

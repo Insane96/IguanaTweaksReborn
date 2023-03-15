@@ -12,6 +12,8 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePrope
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 
+import java.util.List;
+
 @Label(name = "Mining Progression", description = "Various progression changes for mining")
 @LoadFeature(module = Modules.Ids.MINING)
 public class MiningProgression extends Feature {
@@ -26,12 +28,14 @@ public class MiningProgression extends Feature {
 		provider.add(path + "raw_iron_to_nuggets", new ReplaceDropModifier(
 				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.IRON_ORE).build()},
 				Items.RAW_IRON,
-				Items.IRON_NUGGET
+				Items.IRON_NUGGET,
+				List.of(1f, 2f, 5f, 9f, 12f)
 		));
 		provider.add(path + "deepslate_raw_iron_to_nuggets", new ReplaceDropModifier(
 				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.DEEPSLATE_IRON_ORE).build()},
 				Items.RAW_IRON,
-				Items.IRON_NUGGET
+				Items.IRON_NUGGET,
+				List.of(1f, 2f, 5f, 9f, 12f)
 		));
 	}
 }

@@ -1,0 +1,15 @@
+{
+  "type": "iguanatweaksreborn:drop_multiplier",
+  "amount_to_keep": 0,
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "type": "minecraft:cow"
+      }
+    }
+  ],
+  "item": "minecraft:leather",
+  "multiplier": 0.4
+}
