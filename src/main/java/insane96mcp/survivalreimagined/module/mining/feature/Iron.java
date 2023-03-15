@@ -21,6 +21,8 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.MINING)
 public class Iron extends Feature {
 
+	//Maybe some kind of Soul Forge to double yields from ores
+
 	@Config
 	@Label(name = "Farmable Iron data pack", description = """
 			Enables the following changes to vanilla data pack:
@@ -28,9 +30,17 @@ public class Iron extends Feature {
 			* Silverfish can drop Iron Nuggets""")
 	public static Boolean farmableIronDataPack = true;
 
+	@Config
+	@Label(name = "Armor Crafting Data Pack", description = """
+			Enables the following changes to vanilla data pack:
+			* Iron Armor requires leather armor to be crafted
+			""")
+	public static Boolean armorCraftingDataPack = true;
+
 	public Iron(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "farmable_iron", net.minecraft.network.chat.Component.literal("Survival Reimagined Farmable Iron"), () -> farmableIronDataPack));
+		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "iron_armor_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Armor Crafting"), () -> armorCraftingDataPack));
 	}
 
 	private static final String path = "mining_progression/";

@@ -45,6 +45,8 @@ import net.minecraftforge.fluids.FluidUtil;
 @Label(name = "Livestock", description = "Slower breeding, Growing, Egging and Milking. Lower yield.")
 @LoadFeature(module = Modules.Ids.FARMING)
 public class Livestock extends Feature {
+
+	//TODO Change the eating grass goal to make sheep only eat tall grass and no longer grass blocks
 	private static final ResourceLocation NO_LIVESTOCK_SLOWDOWN = new ResourceLocation(SurvivalReimagined.MOD_ID, "no_livestock_slowdown");
 
 	@Config(min = 1d, max = 128d)

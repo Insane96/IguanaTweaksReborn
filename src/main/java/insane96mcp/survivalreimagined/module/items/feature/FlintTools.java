@@ -8,12 +8,14 @@ import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.setup.IntegratedDataPacks;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -41,8 +43,13 @@ public class FlintTools extends SRFeature {
 	@Label(name = "Disable Wooden Tools", description = "Makes wooden items deal no damage and not able to break blocks.")
 	public static Boolean disableWoodenTools = true;
 
+	@Config
+	@Label(name = "Disable Wooden Tools Recipe", description = "Disable wooden tools recipe.")
+	public static Boolean disableWoodenToolsRecipe = true;
+
 	public FlintTools(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "disable_wooden_tools", net.minecraft.network.chat.Component.literal("Survival Reimagined Disable Wooden Tools"), () -> disableWoodenToolsRecipe));
 	}
 
 	@SubscribeEvent

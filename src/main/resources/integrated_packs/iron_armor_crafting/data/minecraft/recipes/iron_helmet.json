@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XLX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": {
+      "item": "minecraft:leather_helmet",
+      "tag": "{Damage: 0}"
+    }
+  },
+  "result": {
+    "item": "minecraft:iron_helmet"
+  }
+}

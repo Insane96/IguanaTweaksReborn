@@ -7,8 +7,8 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.setup.ITSoundEvents;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
+import insane96mcp.survivalreimagined.setup.SRSoundEvents;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -173,7 +173,7 @@ public class HealthRegen extends Feature {
 			if (duration == 0)
 				return;
 			playerEntity.addEffect(MCUtils.createEffectInstance(SRMobEffects.INJURED.get(), duration, 0, true, false, true, false));
-			playerEntity.level.playSound(null, playerEntity, ITSoundEvents.INJURED.get(), SoundSource.PLAYERS, 1f, 0.9f);
+			playerEntity.level.playSound(null, playerEntity, SRSoundEvents.INJURED.get(), SoundSource.PLAYERS, 1f, 0.9f);
 			listTag.remove(0);
 		}
 		playerEntity.getPersistentData().put(Strings.Tags.DAMAGE_HISTORY, listTag);

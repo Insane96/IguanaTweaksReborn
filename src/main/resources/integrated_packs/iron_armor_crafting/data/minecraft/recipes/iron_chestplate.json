@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XLX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+    "L": {
+      "item": "minecraft:leather_chestplate",
+      "tag": "{Damage: 0}"
+    }
+  },
+  "result": {
+    "item": "minecraft:iron_chestplate"
+  }
+}

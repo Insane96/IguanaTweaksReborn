@@ -63,7 +63,7 @@ public class SurvivalReimagined
         modEventBus.addListener(ClientSetup::creativeTabsBuildContents);
         modEventBus.addListener(this::addPackFinders);
         modEventBus.register(Tiredness.class);
-        ITSoundEvents.SOUND_EVENTS.register(modEventBus);
+        SRSoundEvents.SOUND_EVENTS.register(modEventBus);
         SRMobEffects.MOB_EFFECTS.register(modEventBus);
         SRItems.ITEMS.register(modEventBus);
         SRGlobalLootModifiers.LOOT_MODIFIERS.register(modEventBus);
