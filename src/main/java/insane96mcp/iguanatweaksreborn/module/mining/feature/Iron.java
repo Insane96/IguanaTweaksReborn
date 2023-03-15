@@ -2,10 +2,13 @@ package insane96mcp.iguanatweaksreborn.module.mining.feature;
 
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.ReplaceDropModifier;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.setup.IntegratedDataPacks;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
@@ -14,12 +17,20 @@ import net.minecraftforge.common.data.GlobalLootModifierProvider;
 
 import java.util.List;
 
-@Label(name = "Mining Progression", description = "Various progression changes for mining")
+@Label(name = "Iron", description = "Various changes for iron")
 @LoadFeature(module = Modules.Ids.MINING)
-public class MiningProgression extends Feature {
+public class Iron extends Feature {
 
-	public MiningProgression(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	@Config
+	@Label(name = "Farmable Iron data pack", description = """
+			Enables the following changes to vanilla data pack:
+			* Stone (Broken with a non Silk-Touch tool) can drop Iron Nuggets
+			* Silverfish can drop Iron Nuggets""")
+	public static Boolean farmableIronDataPack = true;
+
+	public Iron(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "farmable_iron", net.minecraft.network.chat.Component.literal("IT Reborn Farmable Iron"), () -> farmableIronDataPack));
 	}
 
 	private static final String path = "mining_progression/";

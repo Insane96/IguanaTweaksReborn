@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "IWI",
-    "ILI",
-    "IWI"
+    " I ",
+    "LWL",
+    " I "
   ],
   "key": {
     "W": {
