@@ -1,0 +1,7 @@
+{
+    "replace": false,
+    "values": [
+        "#survivalreimagined:equipment/hand/tools/wooden",
+        "minecraft:wooden_sword"
+    ]
+}

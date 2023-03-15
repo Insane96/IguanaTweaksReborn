@@ -2,9 +2,9 @@ modLoader="javafml"
 loaderVersion="[44,)"
 license="All rights reserved"
 [[mods]]
-modId="iguanatweaksreborn"
+modId="survivalreimagined"
 version="${file.jarVersion}"
-displayName="Iguana Tweaks Reborn"
+displayName="Survival Reimagined"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/iguanatweaks-reborn"
 #logoFile="examplemod.png"
 credits = "Thanks to Iguana for the original Mod. Effect Icons made by hamzaa#1200. Injured sound by thecheeseman from freesound.org. Stamina overlay code from AppleSkin exhaustion code."
@@ -12,27 +12,29 @@ authors = "Insane96MCP"
 description = '''
 Multiple changes to make Minecraft Harder.
 Movement Restrictions, Farming, Mining, Explosions and much more.
+
+Formerly known as Iguana Tweaks Reborn
 '''
 # Catalogue icon
-itemIcon = "minecraft:golden_hoe"
+itemIcon = "survivalreimagined:flint_pickaxe"
 # Configured background
 configBackground = "minecraft:textures/block/cobblestone.png"
 
-[[dependencies.iguanatweaksreborn]]
+[[dependencies.survivalreimagined]]
     modId="forge"
     mandatory=true
     versionRange="[44,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.iguanatweaksreborn]]
+[[dependencies.survivalreimagined]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.19.3,1.20)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.iguanatweaksreborn]]
+[[dependencies.survivalreimagined]]
     modId="insanelib"
     mandatory=true
     versionRange="[1.8.1,)"

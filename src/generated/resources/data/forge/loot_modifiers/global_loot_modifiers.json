@@ -1,20 +1,20 @@
 {
   "entries": [
-    "iguanatweaksreborn:crops/harder_potato_farming",
-    "iguanatweaksreborn:mining_progression/deepslate_raw_iron_to_nuggets",
-    "iguanatweaksreborn:mining_progression/raw_iron_to_nuggets",
-    "iguanatweaksreborn:crops/harder_wheat_farming",
-    "iguanatweaksreborn:livestock/lower_chicken",
-    "iguanatweaksreborn:livestock/lower_beef",
-    "iguanatweaksreborn:livestock/lower_cow_leather",
-    "iguanatweaksreborn:livestock/lower_cooked_mutton",
-    "iguanatweaksreborn:livestock/lower_cooked_porkchop",
-    "iguanatweaksreborn:livestock/lower_porkchop",
-    "iguanatweaksreborn:livestock/lower_cooked_chicken",
-    "iguanatweaksreborn:livestock/lower_mutton",
-    "iguanatweaksreborn:crops/harder_carrot_farming",
-    "iguanatweaksreborn:livestock/lower_cooked_beef",
-    "iguanatweaksreborn:crops/harder_beetroot_farming"
+    "survivalreimagined:crops/harder_potato_farming",
+    "survivalreimagined:mining_progression/deepslate_raw_iron_to_nuggets",
+    "survivalreimagined:mining_progression/raw_iron_to_nuggets",
+    "survivalreimagined:crops/harder_wheat_farming",
+    "survivalreimagined:livestock/lower_chicken",
+    "survivalreimagined:livestock/lower_beef",
+    "survivalreimagined:livestock/lower_cow_leather",
+    "survivalreimagined:livestock/lower_cooked_mutton",
+    "survivalreimagined:livestock/lower_cooked_porkchop",
+    "survivalreimagined:livestock/lower_porkchop",
+    "survivalreimagined:livestock/lower_cooked_chicken",
+    "survivalreimagined:livestock/lower_mutton",
+    "survivalreimagined:crops/harder_carrot_farming",
+    "survivalreimagined:livestock/lower_cooked_beef",
+    "survivalreimagined:crops/harder_beetroot_farming"
   ],
   "replace": false
 }

@@ -1,0 +1,34 @@
+{
+	"survivalreimagined.mooshroom_cooldown": "Il latte o la zuppa della mooshroom non",
+	"survivalreimagined.cow_cooldown": "Il latte della mucca non",
+	"survivalreimagined.yet_ready": "è ancora pronto",
+	"survivalreimagined.weak_hoe": "Questa zappa è troppo fragile per zappare la terra",
+
+	"survivalreimagined.no_food_for_sleep": "Sei troppo affamato e non riesci a prendere sonno",
+	"survivalreimagined.decorative_beds": "I letti sono solo una decorazione. Dormire non è permesso",
+	"survivalreimagined.enjoy_the_night": "Il tuo punto di rinascita è stato impostato. Goditi la notte!",
+	"survivalreimagined.not_tired": "Non sei abbastanza stanco/a per dormire",
+	"survivalreimagined.tired_enough": "Inizi a sentirti stanco/a",
+	"survivalreimagined.too_tired": "Dovresti davvero farti una dormita",
+
+	"survivalreimagined.no_damage_item": "La lama di questo oggetto non è affilata, colpisce come un pugno",
+	"survivalreimagined.no_efficiency_item": "Questo oggetto è vecchio e arrugginito, non può scavare nulla",
+
+	"survivalreimagined.armor_slowdown": "-%s%% Velocità",
+
+	"effect.survivalreimagined.injured": "Ferito",
+	"effect.survivalreimagined.well_fed": "Ben Nutrito",
+	"effect.survivalreimagined.fed": "Nutrito",
+	"effect.survivalreimagined.tired": "Stanco",
+	"effect.survivalreimagined.energy_boost": "Energico",
+	"effect.survivalreimagined.vigour": "Ben Riposato",
+
+	"effect.survivalreimagined.injured.description": "Ottenuto quando si viene danneggiati per troppe volte di fila. Riduce la rigenerazione della vita del 20% per livello.",
+	"effect.survivalreimagined.well_fed.description": "Ottenuto quando si mangia e si ha molta fame. Aumenta la rigenerazione della vita del 25% per livello.",
+	"effect.survivalreimagined.tired.description": "Ottenuto quando non si dorme da un po'. Riduce velocita' di movimento e vista.",
+	"effect.survivalreimagined.energy_boost.description": "Riduce la stanchezza di 0.2 al secondo per livello.",
+	"effect.survivalreimagined.vigour.description": "Riduce il consumo della barra della fame del 20% per livello.",
+
+	"container.repair.free": "Nessun costo",
+	"survivalreimagined.item_repaired": "L'oggetto e' stato riparato"
+}

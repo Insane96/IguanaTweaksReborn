@@ -28,8 +28,8 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = "${mod_version}-mc${mc_version}"
-group = 'insane96mcp.iguanatweaksreborn' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'IguanaTweaksReborn'
+group = 'insane96mcp.survivalreimagined' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'SurvivalReimagined'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -47,10 +47,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            args '-mixin.config=iguanatweaksreborn.mixins.json'
+            args '-mixin.config=survivalreimagined.mixins.json'
 
             mods {
-                iguanatweaksreborn {
+                survivalreimagined {
                     source sourceSets.main
                 }
             }
@@ -63,10 +63,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            args '-mixin.config=iguanatweaksreborn.mixins.json'
+            args '-mixin.config=survivalreimagined.mixins.json'
 
             mods {
-                iguanatweaksreborn {
+                survivalreimagined {
                     source sourceSets.main
                 }
             }
@@ -79,10 +79,10 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'iguanatweaksreborn', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'survivalreimagined', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
             mods {
-                iguanatweaksreborn {
+                survivalreimagined {
                     source sourceSets.main
                 }
             }
@@ -114,7 +114,7 @@ repositories {
 }
 
 mixin {
-    add sourceSets.main, "iguanatweaksreborn.refmap.json"
+    add sourceSets.main, "survivalreimagined.refmap.json"
 }
 
 configurations {
@@ -144,14 +144,14 @@ jar {
     archiveClassifier = 'slim'
     manifest {
         attributes([
-                "Specification-Title"     : "iguanatweaksreborn",
+                "Specification-Title"     : "survivalreimagined",
                 "Specification-Vendor"    : "Insane96MCP",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "Insane96MCP",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "iguanatweaksreborn.mixins.json"
+                "MixinConfigs": "survivalreimagined.mixins.json"
         ])
     }
 }
