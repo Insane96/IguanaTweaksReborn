@@ -114,7 +114,7 @@ public class Stamina extends Feature {
             if (isStaminaLocked(player) && player.tickCount % 2 == 0)
                 return;
             regenStamina(player);
-            if (getStamina(player) >= getMaxStamina(player))
+            if (getStamina(player) >= getMaxStamina(player) - 10)
                 unlockSprinting(player);
             shouldSync = true;
         }
@@ -130,7 +130,7 @@ public class Stamina extends Feature {
             NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
-
+//TODO Make mobs always drop equipment
     @SubscribeEvent
     public void onSprint(PlayerSprintEvent event) {
         if (!this.isEnabled())
