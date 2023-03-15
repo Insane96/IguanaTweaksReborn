@@ -1,12 +1,25 @@
 {
-    "type": "tconstruct:melting",
-    "ingredient": {
-      "item": "minecraft:chain"
-    },
-    "result": {
-      "fluid": "tconstruct:molten_iron",
-      "amount": 30
-    },
-    "temperature": 800,
-    "time": 66
-  }
+    "type": "forge:conditional",
+    "recipes": [
+        {
+            "conditions": [
+                {
+                    "type": "forge:mod_loaded",
+                    "modid": "tconstruct"
+                }
+            ],
+            "recipe": {
+                "type": "tconstruct:melting",
+                "ingredient": {
+                  "item": "minecraft:chain"
+                },
+                "result": {
+                  "fluid": "tconstruct:molten_iron",
+                  "amount": 30
+                },
+                "temperature": 800,
+                "time": 66
+              }
+        }
+    ]
+}
