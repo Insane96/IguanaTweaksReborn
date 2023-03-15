@@ -60,7 +60,7 @@ public class Stamina extends Feature {
     }
 
     public static boolean canSprint(Player player) {
-        return !isStaminaLocked(player) && getStamina(player) > 0;
+        return !isStaminaLocked(player) && getStamina(player) > 0 && !player.getAbilities().instabuild;
     }
 
     public static void setStamina(Player player, int stamina) {
