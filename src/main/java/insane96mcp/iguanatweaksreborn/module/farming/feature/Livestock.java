@@ -35,6 +35,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
+import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -54,7 +55,10 @@ public class Livestock extends Feature {
 	public static Boolean childGrowthVillagers = true;
 	@Config(min = 1d, max = 128d)
 	@Label(name = "Breeding Time Multiplier", description = "Increases the time required for Animals to breed again (e.g. at 2.0 Animals will take twice to be able to breed again).\n1.0 will make Animals breed like normal.")
-	public static Double breedingMultiplier = 3.5d;
+	public static Double breedingMultiplier = 2d;
+	@Config(min = 0d, max = 1d)
+	@Label(name = "Breeding Fail Chance", description = "Chance for a baby to not to be born.")
+	public static Double breedingFailChance = 0.75d;
 	@Config(min = 1d, max = 128d)
 	@Label(name = "Egg Lay Multiplier", description = "Increases the time required for Chickens to lay an egg (e.g. at 2.0 Chickens will take twice the time to lay an egg).\n1.0 will make chickens lay eggs like normal.")
 	public static Double eggLayMultiplier = 3.0d;
@@ -83,6 +87,17 @@ public class Livestock extends Feature {
 		double chance = 1d / childGrowthMultiplier;
 		if (entity.getRandom().nextFloat() > chance)
 			entity.setAge(growingAge - 1);
+	}
+
+	@SubscribeEvent
+	public void failBreeding(BabyEntitySpawnEvent event) {
+		if (!this.isEnabled()
+				|| breedingFailChance == 0d
+				|| !(event.getParentA() instanceof Animal animal)
+				|| isEntityBlacklisted(event.getParentA()))
+			return;
+		if (animal.getRandom().nextFloat() < breedingFailChance)
+			event.setCanceled(true);
 	}
 
 	@SubscribeEvent
