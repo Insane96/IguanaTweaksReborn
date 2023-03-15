@@ -227,7 +227,7 @@ public class Livestock extends Feature {
 						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.COW)).build()).build()
 				},
 				Items.LEATHER,
-				0.4f
+				0.5f
 		));
 		provider.add(path + "lower_porkchop", new DropMultiplierModifier(
 				new LootItemCondition[0],

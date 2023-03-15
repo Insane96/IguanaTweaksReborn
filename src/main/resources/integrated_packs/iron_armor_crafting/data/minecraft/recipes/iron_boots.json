@@ -9,8 +9,7 @@
       "item": "minecraft:iron_ingot"
     },
     "L": {
-      "item": "minecraft:leather_boots",
-      "tag": "{Damage: 0}"
+      "item": "minecraft:leather_boots"
     }
   },
   "result": {

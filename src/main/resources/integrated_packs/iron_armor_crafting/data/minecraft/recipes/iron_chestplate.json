@@ -10,8 +10,7 @@
       "item": "minecraft:iron_ingot"
     },
     "L": {
-      "item": "minecraft:leather_chestplate",
-      "tag": "{Damage: 0}"
+      "item": "minecraft:leather_chestplate"
     }
   },
   "result": {

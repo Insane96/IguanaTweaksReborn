@@ -21,7 +21,8 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.MINING)
 public class Iron extends Feature {
 
-	//Maybe some kind of Soul Forge to double yields from ores
+	//TODO Maybe some kind of Soul Forge to double yields from ores
+	//TODO Make a new recipe type to upgrade stuff (normal recipes don't accept nbt)
 
 	@Config
 	@Label(name = "Farmable Iron data pack", description = """
