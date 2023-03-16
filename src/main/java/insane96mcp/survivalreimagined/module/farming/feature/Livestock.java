@@ -232,13 +232,13 @@ public class Livestock extends Feature {
 				Items.COOKED_BEEF,
 				0.25f
 		));
-		provider.add(path + "lower_cow_leather", new DropMultiplierModifier(
+		/*provider.add(path + "lower_cow_leather", new DropMultiplierModifier(
 				new LootItemCondition[] {
 						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.COW)).build()).build()
 				},
 				Items.LEATHER,
 				0.5f
-		));
+		));*/
 		provider.add(path + "lower_porkchop", new DropMultiplierModifier(
 				new LootItemCondition[0],
 				Items.PORKCHOP,
