@@ -38,7 +38,7 @@ public class StatsBuffs extends Feature {
     public static Double movementSpeedNormal = 0.2d;
     @Config(min = 0)
     @Label(name = "Movement Speed.Hard", description = "Bonus percentage movement speed given to mobs on hard difficulty.")
-    public static Double movementSpeedHard = 0.25d;
+    public static Double movementSpeedHard = 0.3d;
 
     @Config(min = 0)
     @Label(name = "Health.Easy", description = "Bonus percentage health given to mobs on easy difficulty.")
