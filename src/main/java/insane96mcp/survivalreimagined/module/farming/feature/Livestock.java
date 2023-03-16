@@ -239,6 +239,47 @@ public class Livestock extends Feature {
 				Items.COOKED_PORKCHOP,
 				0.4f
 		));
-		//TODO Fish
+		provider.add(path + "lower_cod", new DropMultiplierModifier(
+				new LootItemCondition[] {
+						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.COD)).build()).build()
+				},
+				Items.COD,
+				0.3f
+		));
+		provider.add(path + "lower_cooked_cod", new DropMultiplierModifier(
+				new LootItemCondition[] {
+						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.COD)).build()).build()
+				},
+				Items.COOKED_COD,
+				0.3f
+		));
+		provider.add(path + "lower_salmon", new DropMultiplierModifier(
+				new LootItemCondition[] {
+						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.SALMON)).build()).build()
+				},
+				Items.SALMON,
+				0.3f
+		));
+		provider.add(path + "lower_cooked_salmon", new DropMultiplierModifier(
+				new LootItemCondition[] {
+						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.SALMON)).build()).build()
+				},
+				Items.COOKED_SALMON,
+				0.3f
+		));
+		provider.add(path + "lower_pufferfish", new DropMultiplierModifier(
+				new LootItemCondition[] {
+						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.PUFFERFISH)).build()).build()
+				},
+				Items.PUFFERFISH,
+				0.3f
+		));
+		provider.add(path + "lower_tropical_fish", new DropMultiplierModifier(
+				new LootItemCondition[] {
+						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.TROPICAL_FISH)).build()).build()
+				},
+				Items.TROPICAL_FISH,
+				0.3f
+		));
 	}
 }

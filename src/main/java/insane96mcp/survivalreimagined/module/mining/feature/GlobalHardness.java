@@ -43,7 +43,7 @@ public class GlobalHardness extends SRFeature {
 	public static final ArrayList<DepthHardnessDimension> depthMultiplierDimension = new ArrayList<>();
 
 	@Config(min = 0d, max = 128d)
-	@Label(name = "Hardness Multiplier", description = "Multiplier applied to the hardness of blocks. E.g. with this set to 3.0 blocks will take 3x more time to break.")
+	@Label(name = "Hardness Multiplier", description = "Multiplier applied to the hardness of blocks. E.g. with this set to 3.0 blocks will take 3 times longer to break.")
 	public static Double hardnessMultiplier = 2d;
 
 	public GlobalHardness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
