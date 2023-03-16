@@ -52,7 +52,9 @@ public class NoKnockback extends Feature {
 	public void onKnockback(LivingKnockBackEvent event) {
 		if (!this.isEnabled())
 			return;
-		LivingEntity attacker = event.getEntity().getKillCredit();
+		LivingEntity attacker = event.getEntity().lastHurtByPlayer;
+		if (attacker == null)
+			attacker = event.getEntity().getKillCredit();
 		if (!(attacker instanceof Player player))
 			return;
 		if (player.getAbilities().instabuild)
