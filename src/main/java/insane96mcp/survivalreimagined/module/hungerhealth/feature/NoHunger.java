@@ -56,10 +56,9 @@ public class NoHunger extends Feature {
     @Config(min = 0d, max = 1f)
     @Label(name = "Food Heal Multiplier", description = "When eating you'll get healed by this percentage hunger restored. (Set to 1 to have the same effect as pre-beta 1.8 food")
     public static Double foodHealMultiplier = 1d;
-    //TODO Make this a multiplier for the heal
     @Config
-    @Label(name = "Raw food.No Heal", description = "If true, raw food doesn't heal. Raw food is defined in the survivalreimagined:raw_food tag")
-    public static Boolean rawFoodDoesntHeal = true;
+    @Label(name = "Raw food.Heal Multiplier", description = "If true, raw food will heal by this percentage. Raw food is defined in the survivalreimagined:raw_food tag")
+    public static Double rawFoodHealPercentage = 1d;
     @Config(min = 0d, max = 1f)
     @Label(name = "Raw food.Poison Chance", description = "Raw food has this chance to poison the player. Raw food is defined in the survivalreimagined:raw_food tag")
     public static Double rawFoodPoisonChance = 0.8d;
@@ -133,8 +132,10 @@ public class NoHunger extends Feature {
         if (event.getEntity().getRandom().nextDouble() < rawFoodPoisonChance && isRawFood) {
             event.getEntity().addEffect(new MobEffectInstance(MobEffects.POISON, food.getNutrition() * 20 * 4));
         }
-        else if (!isRawFood || !rawFoodDoesntHeal) {
+        else {
             double heal = food.getNutrition() * foodHealMultiplier;
+            if (isRawFood && rawFoodHealPercentage != 1d)
+                heal *= rawFoodHealPercentage;
             event.getEntity().heal((float) heal);
         }
     }
