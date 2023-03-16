@@ -30,7 +30,6 @@ public class StatsBuffs extends Feature {
     public static final UUID HEALTH_UUID = UUID.fromString("ad58b57d-1956-416d-804a-5180a01d0bad");
     public static final UUID SWIM_SPEED_UUID = UUID.fromString("ed9f51b5-e297-498e-a909-31644f2a326d");
 
-    //TODO Swim speed +200%
     @Config(min = 0)
     @Label(name = "Movement Speed.Easy", description = "Bonus percentage movement speed given to mobs on easy difficulty.")
     public static Double movementSpeedEasy = 0.1d;
@@ -114,7 +113,7 @@ public class StatsBuffs extends Feature {
                 MCUtils.setAttributeValue(entity, Attributes.FOLLOW_RANGE, followRangeOverride);
         }
         if (swimSpeed != 0f) {
-            MCUtils.applyModifier(entity, ForgeMod.SWIM_SPEED.get(), HEALTH_UUID, "Survival Reimagined Bonus Swim speed", swimSpeed, AttributeModifier.Operation.MULTIPLY_BASE, true);
+            MCUtils.applyModifier(entity, ForgeMod.SWIM_SPEED.get(), SWIM_SPEED_UUID, "Survival Reimagined Bonus Swim speed", swimSpeed, AttributeModifier.Operation.MULTIPLY_BASE, true);
         }
 
         persistentData.putBoolean(STAT_BUFFS_APPLIED, true);
