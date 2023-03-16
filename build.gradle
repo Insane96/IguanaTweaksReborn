@@ -133,7 +133,8 @@ dependencies {
 
     // implementation fg.deobf("curse.maven:immersive_weathering-592449:3815045")
 
-    // implementation fg.deobf("curse.maven:mmmmmmmmmmmm-225738:3820503")
+    //runtimeOnly fg.deobf("curse.maven:selene-499980:4431044")
+    //runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4410143")
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 

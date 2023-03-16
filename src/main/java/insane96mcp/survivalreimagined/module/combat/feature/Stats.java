@@ -57,13 +57,9 @@ public class Stats extends SRFeature {
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Power Enchantment Damage Increase", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
 	public static Double powerEnchantmentDamageIncrease = 0.4d;
-	//TODO mixin inside the damage to keep "crit" arrows but without the bonus damage. AbstractArrow line 307
 	@Config
-	@Label(name = "Disable Arrow Crits", description = "If true, Arrows from Bows and Crossbows will no longer randomly crit (basically disables the random bonus damage given when firing a fully charged arrow).")
-	public static Boolean disableCritArrows = true;
-	@Config
-	@Label(name = "Adjust Crossbow Damage", description = "If true, Arrows from Crossbows will no longer deal random damage, but a set amount of damage (about 9 at a medium distance, like Bedrock Edition).")
-	public static Boolean adjustCrossbowDamage = true;
+	@Label(name = "Disable Crit Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
+	public static Boolean disableCritArrowsBonusDamage = false;
 	@Config
 	@Label(name = "Arrows don't trigger invincibility frames", description = "If true, Arrows will no longer trigger the invincibility frames (like Combat Test Snapshots).")
 	public static Boolean arrowsNoInvincFrames = true;
@@ -113,33 +109,19 @@ public class Stats extends SRFeature {
 
 	@SubscribeEvent
 	public void onArrowSpawn(EntityJoinLevelEvent event) {
-		if (!this.isEnabled())
-			return;
-		if (!(event.getEntity() instanceof AbstractArrow arrow))
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof AbstractArrow arrow))
 			return;
 		if (!arrow.shotFromCrossbow())
 			processBow(arrow);
-		else
-			processCrossbow(arrow);
 	}
 
 	private void processBow(AbstractArrow arrow) {
-		if (disableCritArrows)
-			arrow.setCritArrow(false);
-
 		if (powerEnchantmentDamageIncrease != 0.5d && arrow.getOwner() instanceof LivingEntity) {
 			int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
 			double powerReduction = 0.5d - powerEnchantmentDamageIncrease;
 			arrow.setBaseDamage(arrow.getBaseDamage() - (powerLevel * powerReduction + powerReduction));
 		}
-	}
-
-	private void processCrossbow(AbstractArrow arrow) {
-		if (disableCritArrows)
-			arrow.setCritArrow(false);
-
-		if (adjustCrossbowDamage)
-			arrow.setBaseDamage(2.8d);
 	}
 
 	@SubscribeEvent
