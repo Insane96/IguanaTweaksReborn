@@ -46,7 +46,6 @@ import net.minecraftforge.fluids.FluidUtil;
 @LoadFeature(module = Modules.Ids.FARMING)
 public class Livestock extends Feature {
 
-	//TODO Change the eating grass goal to make sheep only eat tall grass and no longer grass blocks
 	private static final ResourceLocation NO_LIVESTOCK_SLOWDOWN = new ResourceLocation(SurvivalReimagined.MOD_ID, "no_livestock_slowdown");
 
 	@Config(min = 1d, max = 128d)
@@ -71,6 +70,17 @@ public class Livestock extends Feature {
 	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
+
+	/*@SubscribeEvent
+	public void onSheepSpawn(EntityJoinLevelEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof Sheep sheep))
+			return;
+
+		sheep.goalSelector.removeGoal(sheep.eatBlockGoal);
+		sheep.eatBlockGoal = new SREatBlockGoal(sheep);
+		sheep.goalSelector.addGoal(5, sheep.eatBlockGoal);
+	}*/
 
 	@SubscribeEvent
 	public void slowdownAnimalGrowth(LivingEvent.LivingTickEvent event) {

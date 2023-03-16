@@ -14,9 +14,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Label(name = "Misc", description = "Various mining changes")
 @LoadFeature(module = Modules.Ids.MINING)
 public class MiningMisc extends Feature {
+
+	//TODO Prevent swords from mining 0 hardness blocks
 	@Config
 	@Label(name = "Insta-Mine Silverfish", description = "Silverfish blocks will insta-mine like pre-1.17")
 	public static Boolean instaMineSilverfish = true;
+	//TODO Change blocks hardness maybe
 	@Config
 	@Label(name = "Insta-Mine Heads", description = "Heads will insta-break")
 	public static Boolean instaMineHeads = true;
