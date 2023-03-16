@@ -19,7 +19,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
@@ -48,7 +47,7 @@ public class Stamina extends Feature {
      * Each half heart accounts for 1/2 a second sprinting
      */
     public static int getMaxStamina(Player player) {
-        return (int) (player.getHealth() * 10);
+        return Mth.ceil(player.getHealth() * 10);
     }
 
     public static int getStamina(Player player) {
@@ -150,8 +149,7 @@ public class Stamina extends Feature {
         if (event.getOverlay() == GuiOverlayManager.findOverlay(PLAYER_HEALTH_ELEMENT)) {
             Minecraft mc = Minecraft.getInstance();
             ForgeGui gui = (ForgeGui) mc.gui;
-            boolean isMounted = mc.player.getVehicle() instanceof LivingEntity;
-            if (!isMounted && !mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
+            if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
                 renderStamina(gui, event.getPoseStack(), event.getPartialTick(), event.getWindow().getScreenWidth(), event.getWindow().getScreenHeight());
             }
         }
