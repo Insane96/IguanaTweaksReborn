@@ -11,7 +11,9 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameRules;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Nerfs", description = "Various Nerfs")
@@ -26,6 +28,9 @@ public class Nerfs extends Feature {
 	@Config
 	@Label(name = "No Ice Boats", description = "If true, boats will no longer go stupidly fast on ice.")
 	public static Boolean noIceBoat = true;
+	@Config
+	@Label(name = "No Coordinates", description = "If true, renderDebugInfo is enabled by default. Requires a world restart")
+	public static Boolean noCoordinates = true;
 
 	public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -45,5 +50,14 @@ public class Nerfs extends Feature {
 
 	public static float getBoatFriction(float glide) {
 		return noIceBoat ? 0.45f : glide;
+	}
+
+	@SubscribeEvent
+	public void onServerStarted(ServerStartedEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		if (noCoordinates)
+			event.getServer().getGameRules().getRule(GameRules.RULE_REDUCEDDEBUGINFO).set(true, event.getServer());
 	}
 }
