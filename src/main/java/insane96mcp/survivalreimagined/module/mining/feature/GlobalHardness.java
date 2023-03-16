@@ -44,7 +44,7 @@ public class GlobalHardness extends SRFeature {
 
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Hardness Multiplier", description = "Multiplier applied to the hardness of blocks. E.g. with this set to 3.0 blocks will take 3x more time to break.")
-	public static Double hardnessMultiplier = 2.5d;
+	public static Double hardnessMultiplier = 2d;
 
 	public GlobalHardness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
