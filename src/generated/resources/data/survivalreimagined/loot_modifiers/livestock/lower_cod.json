@@ -6,10 +6,10 @@
       "condition": "minecraft:entity_properties",
       "entity": "this",
       "predicate": {
-        "type": "minecraft:cow"
+        "type": "minecraft:cod"
       }
     }
   ],
-  "item": "minecraft:leather",
-  "multiplier": 0.4
+  "item": "minecraft:cod",
+  "multiplier": 0.3
 }

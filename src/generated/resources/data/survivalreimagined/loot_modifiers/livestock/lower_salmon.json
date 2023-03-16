@@ -1,0 +1,15 @@
+{
+  "type": "survivalreimagined:drop_multiplier",
+  "amount_to_keep": 0,
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "type": "minecraft:salmon"
+      }
+    }
+  ],
+  "item": "minecraft:salmon",
+  "multiplier": 0.3
+}
