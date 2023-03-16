@@ -130,7 +130,7 @@ public class Stamina extends Feature {
             NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
-//TODO Make mobs always drop equipment
+
     @SubscribeEvent
     public void onSprint(PlayerSprintEvent event) {
         if (!this.isEnabled())
