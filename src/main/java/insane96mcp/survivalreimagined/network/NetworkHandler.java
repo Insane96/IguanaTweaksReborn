@@ -29,6 +29,7 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(2, MessageSaturationSync.class, MessageSaturationSync::encode, MessageSaturationSync::decode, MessageSaturationSync::handle);
 		CHANNEL.registerMessage(3, MessageTirednessSync.class, MessageTirednessSync::encode, MessageTirednessSync::decode, MessageTirednessSync::handle);
 		CHANNEL.registerMessage(4, MessageStaminaSync.class, MessageStaminaSync::encode, MessageStaminaSync::decode, MessageStaminaSync::handle);
+		CHANNEL.registerMessage(5, MessageFoodRegenSync.class, MessageFoodRegenSync::encode, MessageFoodRegenSync::decode, MessageFoodRegenSync::handle);
 		MinecraftForge.EVENT_BUS.register(new NetworkHandler());
 	}
 
