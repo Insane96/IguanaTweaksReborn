@@ -15,7 +15,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @LoadFeature(module = Modules.Ids.MINING)
 public class MiningMisc extends Feature {
 
-	//TODO Prevent swords from mining 0 hardness blocks
 	@Config
 	@Label(name = "Insta-Mine Silverfish", description = "Silverfish blocks will insta-mine like pre-1.17")
 	public static Boolean instaMineSilverfish = true;
@@ -23,6 +22,11 @@ public class MiningMisc extends Feature {
 	@Config
 	@Label(name = "Insta-Mine Heads", description = "Heads will insta-break")
 	public static Boolean instaMineHeads = true;
+
+	//TODO Prevent swords from mining 0 hardness blocks
+	/*@Config
+	@Label(name = "No Sword breaking insta-mine blocks", description = "Prevents swords from breaking blocks like grass, etc.")
+	public static Boolean noSwordBreaking = true;*/
 
 	public MiningMisc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -32,6 +36,9 @@ public class MiningMisc extends Feature {
 	public void onBreak(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled())
 			return;
+
+		/*if (event.getEntity().getMainHandItem().getItem() instanceof SwordItem && event.getState().destroySpeed == 0f)
+			event.setNewSpeed(0f);*/
 
 		silverfishBreakSpeed(event);
 		skullBreakSpeed(event);

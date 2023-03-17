@@ -64,6 +64,7 @@ public class HoesNerfs extends SRFeature {
 	public void onHoeUse(BlockEvent.BlockToolModificationEvent event) {
 		if (!this.isEnabled()
 				|| event.getPlayer() == null
+				//TODO Cancel on client too
 				|| (event.getPlayer() != null && event.getPlayer().level.isClientSide)
 				|| event.isSimulated()
 				|| event.getToolAction() != ToolActions.HOE_TILL

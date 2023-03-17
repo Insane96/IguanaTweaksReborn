@@ -32,6 +32,11 @@ public class Nerfs extends Feature {
 	@Label(name = "No Coordinates", description = "If true, renderDebugInfo is enabled by default. Requires a world restart")
 	public static Boolean noCoordinates = true;
 
+	//TODO Unlimited tracking maps
+	/*@Config
+	@Label(name = "Infinite maps range", description = "Makes maps useful by not letting the player ")
+	public static Boolean infiniteRangeMap = true;*/
+
 	public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}

@@ -143,8 +143,6 @@ public class NoHunger extends Feature {
         event.getEntity().addEffect(new MobEffectInstance(SRMobEffects.WELL_FED.get(), duration, 0, true, false, true));
     }
 
-    //TODO Unlimited tracking maps
-
     @SuppressWarnings("ConstantConditions")
     public void healOnEat(LivingEntityUseItemEvent.Finish event) {
         if (foodHealHealthMultiplier == 0d

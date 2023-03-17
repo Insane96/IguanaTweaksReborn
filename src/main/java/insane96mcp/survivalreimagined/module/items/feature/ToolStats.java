@@ -31,7 +31,8 @@ import java.util.List;
 @Label(name = "Tool Stats", description = "Less durable and efficient tools. Tools Durability and Efficiency are controlled via json in this feature's folder. Note that removing entries from the json requires a Minecraft Restart")
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class ToolStats extends SRFeature {
-	//TODO Add tooltip for efficiency
+
+	public static final String TOOL_EFFICIENCY = "survivalreimagined.tool_efficiency";
 	public static final ResourceLocation NO_DAMAGE_ITEMS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_damage_items");
 	public static final ResourceLocation NO_EFFICIENCY_ITEMS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_efficiency_items");
 
@@ -165,6 +166,9 @@ public class ToolStats extends SRFeature {
 		}
 		if (Utils.isItemInTag(event.getItemStack().getItem(), NO_EFFICIENCY_ITEMS)) {
 			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_EFFICIENCY_ITEM).withStyle(ChatFormatting.RED));
+		}
+		else if (event.getItemStack().getItem() instanceof DiggerItem diggerItem){
+			event.getToolTip().add(Component.translatable(TOOL_EFFICIENCY, diggerItem.speed).withStyle(ChatFormatting.BLUE));
 		}
 
 	}
