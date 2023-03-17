@@ -102,7 +102,6 @@ public class Tiredness extends SRFeature {
 		this.loadAndReadFile("energy_boost_items.json", energyBoostItems, ENERGY_BOOST_ITEMS_DEFAULT, EnergyBoostItem.LIST_TYPE);
 	}
 
-	//TODO Energy boost should reduce the tiredness gained, instead of reducing tiredness
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()

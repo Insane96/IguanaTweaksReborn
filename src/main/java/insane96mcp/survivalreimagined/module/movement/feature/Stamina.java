@@ -132,7 +132,8 @@ public class Stamina extends Feature {
 
     @SubscribeEvent
     public void onSprint(PlayerSprintEvent event) {
-        if (!this.isEnabled())
+        if (!this.isEnabled()
+                || event.getPlayer().getAbilities().instabuild)
             return;
 
         if (!canSprint(event.getPlayer()))
