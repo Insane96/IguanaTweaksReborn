@@ -202,7 +202,7 @@ public class SRExplosion extends Explosion {
 				if (!doesCreeperCollateralApply() && blockstate.canDropFromExplosion(this.level, blockpos, this) && this.level instanceof ServerLevel) {
 					BlockEntity blockEntity = blockstate.hasBlockEntity() ? this.level.getBlockEntity(blockpos) : null;
 					LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withRandom(this.level.getRandom()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockpos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, this.source);
-					if (this.blockInteraction == Explosion.BlockInteraction.DESTROY) {
+					if (this.blockInteraction == Explosion.BlockInteraction.DESTROY_WITH_DECAY) {
 						lootcontext$builder.withParameter(LootContextParams.EXPLOSION_RADIUS, this.radius);
 					}
 					blockstate.getDrops(lootcontext$builder).forEach((stack) -> addBlockDrops(droppedItems, stack, immutableBlockPos));
