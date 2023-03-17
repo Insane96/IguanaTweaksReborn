@@ -67,6 +67,7 @@ public class SurvivalReimagined
         SRMobEffects.MOB_EFFECTS.register(modEventBus);
         SRItems.ITEMS.register(modEventBus);
         SRGlobalLootModifiers.LOOT_MODIFIERS.register(modEventBus);
+        SRRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         Weights.initMaterialWeight();
     }
 
