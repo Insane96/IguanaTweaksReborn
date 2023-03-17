@@ -17,6 +17,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -198,7 +199,7 @@ public class SRExplosion extends Explosion {
 			if (!blockstate.isAir()) {
 				BlockPos immutableBlockPos = blockpos.immutable();
 				this.level.getProfiler().push("explosion_blocks");
-				if (!this.creeperCollateral && blockstate.canDropFromExplosion(this.level, blockpos, this) && this.level instanceof ServerLevel) {
+				if (!doesCreeperCollateralApply() && blockstate.canDropFromExplosion(this.level, blockpos, this) && this.level instanceof ServerLevel) {
 					BlockEntity blockEntity = blockstate.hasBlockEntity() ? this.level.getBlockEntity(blockpos) : null;
 					LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withRandom(this.level.getRandom()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockpos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, this.source);
 					if (this.blockInteraction == Explosion.BlockInteraction.DESTROY) {
@@ -210,6 +211,10 @@ public class SRExplosion extends Explosion {
 				this.level.getProfiler().pop();
 			}
 		}
+	}
+
+	public boolean doesCreeperCollateralApply() {
+		return this.creeperCollateral && this.getExploder() instanceof Creeper;
 	}
 
 	public void dropItems() {

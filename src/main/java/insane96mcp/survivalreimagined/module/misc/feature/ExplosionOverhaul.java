@@ -30,7 +30,6 @@ public class ExplosionOverhaul extends Feature {
 	@Config
 	@Label(name = "Disable Explosion Randomness", description = "Vanilla Explosions use a random number that changes the explosion power. With this enabled the ray strength will be as the explosion size.")
 	public static Boolean disableExplosionRandomness = true;
-	//TODO Change option to only show poof particles and remove explosion emitter
 	@Config
 	@Label(name = "Enable Poof Particles", description = "Somewhere around 1.15 Mojang (for performance issues) removed the poof particles from Explosions. Keep them disabled if you have a low end PC.\n" +
 			"These particles aren't shown when explosion power is <= 1")
@@ -102,16 +101,6 @@ public class ExplosionOverhaul extends Feature {
 					serverPlayer.connection.send(new ClientboundExplodePacket(explosion.getPosition().x, explosion.getPosition().y, event.getExplosion().getPosition().z, explosion.radius, explosion.getToBlow(), explosion.getHitPlayers().get(serverPlayer)));
 				}
 			}
-		}
-		else {
-			explosion.gatherAffectedBlocks(!disableExplosionRandomness);
-			if (enableFlyingBlocks)
-				explosion.fallingBlocks();
-			explosion.destroyBlocks();
-			explosion.playSound();
-			explosion.spawnParticles();
-			explosion.processFire();
-			explosion.finalizeExplosion(true);
 		}
 	}
 
