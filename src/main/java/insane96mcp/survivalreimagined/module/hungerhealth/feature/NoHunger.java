@@ -77,8 +77,8 @@ public class NoHunger extends Feature {
     public static Double rawFoodPoisonChance = 0.8d;
 
     @Config
-    @Label(name = "Convert Hunger to Nausea", description = "If true, Hunger effect is replaced by Nausea")
-    public static Boolean convertHungerToNausea = true;
+    @Label(name = "Convert Hunger to Weakness", description = "If true, Hunger effect is replaced by Weakness")
+    public static Boolean convertHungerToWeakness = true;
 
     public NoHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -108,10 +108,10 @@ public class NoHunger extends Feature {
             }
         }
 
-        if (event.player.hasEffect(MobEffects.HUNGER) && convertHungerToNausea) {
+        if (event.player.hasEffect(MobEffects.HUNGER) && convertHungerToWeakness) {
             MobEffectInstance effect = event.player.getEffect(MobEffects.HUNGER);
             //noinspection ConstantConditions; Checking with hasEffect
-            event.player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.isVisible(), effect.showIcon()));
+            event.player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.isVisible(), effect.showIcon()));
             event.player.removeEffect(MobEffects.HUNGER);
         }
 
