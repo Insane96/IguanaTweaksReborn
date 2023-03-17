@@ -1,18 +1,16 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XLX"
-  ],
-  "key": {
-    "X": {
-      "item": "minecraft:iron_ingot"
-    },
-    "L": {
-      "item": "minecraft:leather_helmet"
-    }
+  "type": "survivalreimagined:upgrade_item",
+  "group": "iron_armor",
+  "category": "equipment",
+  "ingredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "amount": 5,
+  "to_upgrade": {
+    "item": "minecraft:leather_helmet"
   },
   "result": {
     "item": "minecraft:iron_helmet"
-  }
+  },
+  "keep_durability": true
 }
