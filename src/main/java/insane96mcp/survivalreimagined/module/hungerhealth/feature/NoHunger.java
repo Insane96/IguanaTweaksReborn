@@ -41,7 +41,6 @@ import net.minecraftforge.network.NetworkDirection;
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class NoHunger extends Feature {
 
-    //TODO Make food regenerate health overtime. Higher saturation = faster regen. Maybe with this remove Well Fed
     private static final String PASSIVE_REGEN_TICK = SurvivalReimagined.RESOURCE_PREFIX + "passive_regen_ticks";
     private static final String FOOD_REGEN_LEFT = SurvivalReimagined.RESOURCE_PREFIX + "food_regen_left";
     private static final String FOOD_REGEN_STRENGTH = SurvivalReimagined.RESOURCE_PREFIX + "food_regen_strength";

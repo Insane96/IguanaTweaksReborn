@@ -2,7 +2,6 @@
 	"survivalreimagined.mooshroom_cooldown": "Il latte o la zuppa della mooshroom non",
 	"survivalreimagined.cow_cooldown": "Il latte della mucca non",
 	"survivalreimagined.yet_ready": "è ancora pronto",
-	"survivalreimagined.weak_hoe": "Questa zappa è troppo fragile per zappare la terra",
 
 	"survivalreimagined.no_food_for_sleep": "Sei troppo affamato e non riesci a prendere sonno",
 	"survivalreimagined.decorative_beds": "I letti sono solo una decorazione. Dormire non è permesso",
@@ -13,6 +12,9 @@
 
 	"survivalreimagined.no_damage_item": "La lama di questo oggetto non è affilata, colpisce come un pugno",
 	"survivalreimagined.no_efficiency_item": "Questo oggetto è vecchio e arrugginito, non può scavare nulla",
+
+	"survivalreimagined.weak_hoe": "Questa zappa è troppo debole per zappare la terra",
+	"survivalreimagined.till_cooldown": "%.2f tempo di ricarica zappa",
 
 	"survivalreimagined.armor_slowdown": "-%s%% Velocità",
 
@@ -30,5 +32,12 @@
 	"effect.survivalreimagined.vigour.description": "Riduce il consumo della barra della fame del 20% per livello.",
 
 	"container.repair.free": "Nessun costo",
-	"survivalreimagined.item_repaired": "L'oggetto e' stato riparato"
+	"survivalreimagined.item_repaired": "L'oggetto é stato riparato",
+	"survivalreimagined.no_spawn_point": "Non puoi impostare un punto di respawn. Meglio lasciare delle tracce dallo spawn del mondo.",
+	"survivalreimagined.spawner_reactivator": "Questo oggetto può riattivare un Generatore di Mostri",
+	"item.survivalreimagined.flint_axe": "Ascia di Selce",
+	"item.survivalreimagined.flint_pickaxe": "Piccone di Selce",
+	"item.survivalreimagined.flint_sword": "Spada di Selce",
+	"item.survivalreimagined.flint_shovel": "Pala di Selce",
+	"item.survivalreimagined.flint_hoe": "Zappa di Selce"
 }

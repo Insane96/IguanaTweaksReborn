@@ -30,7 +30,6 @@ public class Strings {
 		public static final String MOOSHROOM_COOLDOWN = "survivalreimagined.mooshroom_cooldown";
 		public static final String COW_COOLDOWN = "survivalreimagined.cow_cooldown";
 		public static final String YET_READY = "survivalreimagined.yet_ready";
-		public static final String TOO_WEAK = "survivalreimagined.weak_hoe";
 
 		public static final String NO_FOOD_FOR_SLEEP = "survivalreimagined.no_food_for_sleep";
 		public static final String NOT_TIRED = "survivalreimagined.not_tired";

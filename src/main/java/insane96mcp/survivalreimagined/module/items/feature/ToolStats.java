@@ -31,15 +31,23 @@ import java.util.List;
 @Label(name = "Tool Stats", description = "Less durable and efficient tools. Tools Durability and Efficiency are controlled via json in this feature's folder. Note that removing entries from the json requires a Minecraft Restart")
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class ToolStats extends SRFeature {
+	//TODO Add tooltip for efficiency
 	public static final ResourceLocation NO_DAMAGE_ITEMS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_damage_items");
 	public static final ResourceLocation NO_EFFICIENCY_ITEMS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_efficiency_items");
 
 	public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_sword", 1),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_pickaxe", 33),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_axe", 33),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_shovel", 33),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 33),
+
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_sword", 1),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_pickaxe", 89),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_axe", 89),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_shovel", 89),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 89),
+
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 86),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:carrot_on_a_stick", 63),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shield", 268),

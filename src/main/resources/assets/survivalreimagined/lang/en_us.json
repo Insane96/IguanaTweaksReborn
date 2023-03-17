@@ -2,7 +2,6 @@
 	"survivalreimagined.mooshroom_cooldown": "Mooshroom's Milk or Stew aren't",
 	"survivalreimagined.cow_cooldown": "Cow's Milk is not",
 	"survivalreimagined.yet_ready": "yet ready",
-	"survivalreimagined.weak_hoe": "This hoe is too weak to till soil",
 
 	"survivalreimagined.no_food_for_sleep": "You're too hungry and can't fall asleep",
 	"survivalreimagined.decorative_beds": "Beds are just a nice decoration. No sleep allowed",
@@ -14,6 +13,9 @@
 
 	"survivalreimagined.no_damage_item": "This item blade is not sharp, hits like a fist",
 	"survivalreimagined.no_efficiency_item": "This item is old and rusty, can't mine anything",
+
+	"survivalreimagined.weak_hoe": "This hoe is too weak to till soil",
+	"survivalreimagined.till_cooldown": "%.2f till cooldown",
 
 	"survivalreimagined.armor_slowdown": "-%s%% Speed",
 
