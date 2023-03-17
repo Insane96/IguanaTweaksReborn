@@ -1,0 +1,17 @@
+{
+    "target": "minecraft:vex",
+    "attributes": [
+        {
+            "id": "minecraft:generic.max_health",
+            "modifier_name": "Less health for Vexes",
+            "amount": -8,
+            "operation": "addition"
+        },
+        {
+            "id": "minecraft:generic.attack_damage",
+            "modifier_name": "Less Damage for Vexes",
+            "amount": -0.40,
+            "operation": "multiply_base"
+        }
+    ]
+}

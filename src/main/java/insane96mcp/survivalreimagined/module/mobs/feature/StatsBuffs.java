@@ -5,27 +5,15 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.MCUtils;
-import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import insane96mcp.survivalreimagined.setup.IntegratedDataPacks;
+import net.minecraft.server.packs.PackType;
 
-import java.util.UUID;
-
-@Label(name = "Stats Buffs", description = "Increase monsters health, movement speed, etc. I always recommend Mobs Properties Randomness to have more control over stat, equip, etc.")
+@Label(name = "Stats Buffs", description = "Increase monsters health, movement speed, etc. This feature uses Mobs Properties Randomness.")
 @LoadFeature(module = Modules.Ids.MOBS)
 public class StatsBuffs extends Feature {
 
-    public static final String STAT_BUFFS_APPLIED = SurvivalReimagined.RESOURCE_PREFIX + "stat_buffs_applied";
+    /*public static final String STAT_BUFFS_APPLIED = SurvivalReimagined.RESOURCE_PREFIX + "stat_buffs_applied";
     public static final UUID MOVEMENT_SPEED_UUID = UUID.fromString("f62c1940-39a9-4a4a-8421-2278e259e5f6");
     public static final UUID HEALTH_UUID = UUID.fromString("ad58b57d-1956-416d-804a-5180a01d0bad");
     public static final UUID SWIM_SPEED_UUID = UUID.fromString("ed9f51b5-e297-498e-a909-31644f2a326d");
@@ -61,13 +49,17 @@ public class StatsBuffs extends Feature {
     public static Integer followRangeHard = 32;
     @Config(min = 0)
     @Label(name = "Swim speed", description = "Bonus percentage health given to mobs on hard difficulty.")
-    public static Double swimSpeed = 2d;
+    public static Double swimSpeed = 2d;*/
+    @Config
+    @Label(name = "Enable DataPack", description = "Enables the DataPack that buffs mobs.")
+    public static Boolean enableDataPack = true;
 
     public StatsBuffs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
+        IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "mobs_buffs", net.minecraft.network.chat.Component.literal("Survival Reimagined Mobs Stats Buffs"), () -> this.isEnabled() && enableDataPack));
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public void onMobSpawn(EntityJoinLevelEvent event) {
         if (!this.isEnabled()
                 || !(event.getEntity() instanceof Enemy)
@@ -117,5 +109,5 @@ public class StatsBuffs extends Feature {
         }
 
         persistentData.putBoolean(STAT_BUFFS_APPLIED, true);
-    }
+    }*/
 }

@@ -1,0 +1,52 @@
+{
+    "target": "#survivalreimagined:mobs_no_bosses",
+    "attributes": [
+        {
+            "id": "minecraft:generic.max_health",
+            "modifier_name": "More Health for Mobs",
+            "amount": {
+                "min": 0.25,
+                "max": 0.75,
+                "difficulty_modifier": {
+                    "operation": "multiply",
+                    "easy": 0.5,
+                    "hard": 1.5
+                }
+            },
+            "operation": "multiply_base"
+        },
+        {
+            "id": "minecraft:generic.movement_speed",
+            "modifier_name": "More Speed for Mobs",
+            "amount": {
+                "min": 0.10,
+                "max": 0.20,
+                "difficulty_modifier": {
+                    "operation": "multiply",
+                    "easy": 0.5,
+                    "hard": 1.5
+                }
+            },
+            "operation": "multiply_base"
+        },
+        {
+            "id": "minecraft:generic.follow_range",
+            "modifier_name": "More Follow Range for Mobs",
+            "amount": {
+                "value": 16,
+                "difficulty_modifier": {
+                    "operation": "multiply",
+                    "easy": 0.5,
+                    "hard": 1.5
+                }
+            },
+            "operation": "addition"
+        },
+        {
+            "id": "forge:swim_speed",
+            "modifier_name": "More Swim Speed for Mobs",
+            "amount": 2,
+            "operation": "multiply_base"
+        }
+    ]
+}

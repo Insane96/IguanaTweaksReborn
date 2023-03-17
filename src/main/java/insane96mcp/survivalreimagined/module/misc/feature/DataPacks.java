@@ -51,10 +51,10 @@ public class DataPacks extends Feature {
 
     public DataPacks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "hardcore_torches", net.minecraft.network.chat.Component.literal("Survival Reimagined Hardcore Torches"), () -> hardcoreTorches));
-        IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "cheaper_chains", net.minecraft.network.chat.Component.literal("Survival Reimagined Cheaper Chains"), () -> cheaperChains));
-        IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "misc_tweaks", net.minecraft.network.chat.Component.literal("Survival Reimagined Misc Tweaks"), () -> miscTweaks));
-        IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "cheaper_rails", net.minecraft.network.chat.Component.literal("Survival Reimagined Cheaper Rails"), () -> cheaperRails));
-        IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "no_nether_roof", net.minecraft.network.chat.Component.literal("Survival Reimagined No Nether Roof"), () -> disableNetherRoof));
+        IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "hardcore_torches", net.minecraft.network.chat.Component.literal("Survival Reimagined Hardcore Torches"), () -> this.isEnabled() && hardcoreTorches));
+        IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "cheaper_chains", net.minecraft.network.chat.Component.literal("Survival Reimagined Cheaper Chains"), () -> this.isEnabled() && cheaperChains));
+        IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "misc_tweaks", net.minecraft.network.chat.Component.literal("Survival Reimagined Misc Tweaks"), () -> this.isEnabled() && miscTweaks));
+        IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "cheaper_rails", net.minecraft.network.chat.Component.literal("Survival Reimagined Cheaper Rails"), () -> this.isEnabled() && cheaperRails));
+        IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "no_nether_roof", net.minecraft.network.chat.Component.literal("Survival Reimagined No Nether Roof"), () -> this.isEnabled() && disableNetherRoof));
     }
 }

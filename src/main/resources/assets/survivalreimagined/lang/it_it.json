@@ -39,5 +39,6 @@
 	"item.survivalreimagined.flint_pickaxe": "Piccone di Selce",
 	"item.survivalreimagined.flint_sword": "Spada di Selce",
 	"item.survivalreimagined.flint_shovel": "Pala di Selce",
-	"item.survivalreimagined.flint_hoe": "Zappa di Selce"
+	"item.survivalreimagined.flint_hoe": "Zappa di Selce",
+	"survivalreimagined.tool_efficiency": "%.1f Efficienza Attrezzo"
 }

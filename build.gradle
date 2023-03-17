@@ -126,6 +126,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
     implementation fg.deobf("blank:InsaneLib:${lib_version}-mc${mc_version}")
+    runtimeOnly fg.deobf("blank:MobsPropertiesRandomness:${mpr_version}-mc${mc_version}")
 
     // Copypasted from materialis. Still no shame.
     // implementation fg.deobf("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}")

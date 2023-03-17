@@ -49,7 +49,7 @@ public class FlintTools extends SRFeature {
 
 	public FlintTools(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "disable_wooden_tools", net.minecraft.network.chat.Component.literal("Survival Reimagined Disable Wooden Tools"), () -> disableWoodenToolsRecipe));
+		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "disable_wooden_tools", net.minecraft.network.chat.Component.literal("Survival Reimagined Disable Wooden Tools"), () -> this.isEnabled() && disableWoodenToolsRecipe));
 	}
 
 	@SubscribeEvent

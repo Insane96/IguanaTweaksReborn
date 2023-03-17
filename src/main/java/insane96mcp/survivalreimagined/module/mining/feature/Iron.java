@@ -40,8 +40,8 @@ public class Iron extends Feature {
 
 	public Iron(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "farmable_iron", net.minecraft.network.chat.Component.literal("Survival Reimagined Farmable Iron"), () -> farmableIronDataPack));
-		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "iron_armor_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Armor Crafting"), () -> armorCraftingDataPack));
+		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "farmable_iron", net.minecraft.network.chat.Component.literal("Survival Reimagined Farmable Iron"), () -> this.isEnabled() && farmableIronDataPack));
+		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "iron_armor_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Armor Crafting"), () -> this.isEnabled() && armorCraftingDataPack));
 	}
 
 	private static final String path = "mining_progression/";

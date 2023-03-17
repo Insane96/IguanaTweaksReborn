@@ -1,0 +1,11 @@
+{
+    "target": "minecraft:vindicator",
+    "attributes": [
+        {
+            "id": "minecraft:generic.attack_damage",
+            "modifier_name": "Less Damage for Vindicators",
+            "amount": -0.333,
+            "operation": "multiply_base"
+        }
+    ]
+}
