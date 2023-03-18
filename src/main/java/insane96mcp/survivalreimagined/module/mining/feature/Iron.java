@@ -5,24 +5,16 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPacks;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
-
-import java.util.List;
 
 @Label(name = "Iron", description = "Various changes for iron")
 @LoadFeature(module = Modules.Ids.MINING)
 public class Iron extends Feature {
 
 	//TODO Maybe some kind of Soul Forge to double yields from ores
-	//TODO Make a new recipe type to upgrade stuff (normal recipes don't accept nbt)
 
 	@Config
 	@Label(name = "Farmable Iron data pack", description = """
@@ -38,26 +30,31 @@ public class Iron extends Feature {
 			""")
 	public static Boolean armorCraftingDataPack = true;
 
+	@Config
+	@Label(name = "Iron Smelting Data Pack", description = """
+			Enables the following changes to vanilla data pack:
+			* Smelting iron in a furnace takes 2x time
+			""")
+	public static Boolean ironSmeltingDataPack = true;
+
+	@Config
+	@Label(name = "Iron Generation Data Pack", description = """
+			Enables the following changes to vanilla data pack:
+			* Iron ore has a chance to be discarded when exposed to air (60% for large veins, 40% for small)
+			""")
+	public static Boolean ironGenerationDataPack = true;
+
 	public Iron(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "farmable_iron", net.minecraft.network.chat.Component.literal("Survival Reimagined Farmable Iron"), () -> this.isEnabled() && farmableIronDataPack));
 		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "iron_armor_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Armor Crafting"), () -> this.isEnabled() && armorCraftingDataPack));
+		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "iron_smelting", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Smelting"), () -> this.isEnabled() && ironSmeltingDataPack));
+		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "iron_generation", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Generation"), () -> this.isEnabled() && ironGenerationDataPack));
 	}
 
-	private static final String path = "mining_progression/";
+	private static final String path = "iron/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "raw_iron_to_nuggets", new ReplaceDropModifier(
-				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.IRON_ORE).build()},
-				Items.RAW_IRON,
-				Items.IRON_NUGGET,
-				List.of(1f, 2f, 5f, 9f, 12f)
-		));
-		provider.add(path + "deepslate_raw_iron_to_nuggets", new ReplaceDropModifier(
-				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.DEEPSLATE_IRON_ORE).build()},
-				Items.RAW_IRON,
-				Items.IRON_NUGGET,
-				List.of(1f, 2f, 5f, 9f, 12f)
-		));
+
 	}
 }
