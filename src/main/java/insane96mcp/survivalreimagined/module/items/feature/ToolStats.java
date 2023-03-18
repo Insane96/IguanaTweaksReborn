@@ -17,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -33,6 +34,7 @@ import java.util.List;
 public class ToolStats extends SRFeature {
 
 	public static final String TOOL_EFFICIENCY = "survivalreimagined.tool_efficiency";
+	public static final String BONUS_TOOL_EFFICIENCY = "survivalreimagined.bonus_tool_efficiency";
 	public static final ResourceLocation NO_DAMAGE_ITEMS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_damage_items");
 	public static final ResourceLocation NO_EFFICIENCY_ITEMS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_efficiency_items");
 
@@ -168,8 +170,14 @@ public class ToolStats extends SRFeature {
 			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_EFFICIENCY_ITEM).withStyle(ChatFormatting.RED));
 		}
 		else if (event.getItemStack().getItem() instanceof DiggerItem diggerItem){
-			event.getToolTip().add(Component.translatable(TOOL_EFFICIENCY, diggerItem.speed).withStyle(ChatFormatting.BLUE));
+			int efficiency = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
+			float toolEfficiency = diggerItem.speed;
+			float bonusToolEfficiency = diggerItem.speed * (efficiency * 0.75f);
+			if (efficiency > 0)
+				toolEfficiency += bonusToolEfficiency;
+			event.getToolTip().add(Component.translatable(TOOL_EFFICIENCY, toolEfficiency).withStyle(ChatFormatting.BLUE));
+			if (efficiency > 0)
+				event.getToolTip().add(Component.literal("  ").append(Component.translatable(BONUS_TOOL_EFFICIENCY, bonusToolEfficiency).withStyle(ChatFormatting.GRAY)));
 		}
-
 	}
 }
