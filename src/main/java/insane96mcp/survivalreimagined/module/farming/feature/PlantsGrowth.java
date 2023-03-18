@@ -22,8 +22,6 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.FARMING)
 public class PlantsGrowth extends SRFeature {
 
-	//TODO Add Wrong season multiplier
-	//TODO Change SS tags and remove saplings from winter (maybe even something else)
 	public static final ArrayList<PlantGrowthModifier> PLANTS_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
 			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:sugar_cane", 2.5d, 2.5d, 10, 1.5d),
 			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:cactus", 2.5d, 1.5d, 10, 1d, new ArrayList<>(List.of(

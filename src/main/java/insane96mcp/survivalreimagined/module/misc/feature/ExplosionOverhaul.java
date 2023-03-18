@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.event.SREventFactory;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.level.SRExplosion;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -83,6 +84,7 @@ public class ExplosionOverhaul extends Feature {
 		if (e.source != null && explosionAtHalfEntity)
 			y += e.source.getBbHeight() / 2d;
 		SRExplosion explosion = new SRExplosion(e.level, e.source, e.getDamageSource(), e.damageCalculator, e.getPosition().x, y, e.getPosition().z, e.radius, e.fire, e.blockInteraction, creeperCollateral);
+		SREventFactory.onSRExplosionCreated(explosion);
 
 		if (!event.getLevel().isClientSide) {
 			ServerLevel world = (ServerLevel) event.getLevel();

@@ -28,6 +28,8 @@ public class MiningMisc extends Feature {
 	@Label(name = "No Sword breaking insta-mine blocks", description = "Prevents swords from breaking blocks like grass, etc.")
 	public static Boolean noSwordBreaking = true;*/
 
+	//TODO Add a powerful TNT. Maybe a tnt that deals more "damage" to stone blocks
+
 	public MiningMisc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
