@@ -48,7 +48,7 @@ public class Livestock extends Feature {
 
 	private static final ResourceLocation NO_LIVESTOCK_SLOWDOWN = new ResourceLocation(SurvivalReimagined.MOD_ID, "no_livestock_slowdown");
 
-	//Livestock slowdown based on seasons
+	//TODO Livestock slowdown based on seasons
 	@Config(min = 1d, max = 128d)
 	@Label(name = "Childs Growth Multiplier", description = "Increases the time required for Baby Animals to grow (e.g. at 2.0 Animals will take twice to grow).\n1.0 will make Animals grow like normal.")
 	public static Double childGrowthMultiplier = 3.0d;
