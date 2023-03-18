@@ -68,6 +68,7 @@ public class SurvivalReimagined
         SRItems.ITEMS.register(modEventBus);
         SRGlobalLootModifiers.LOOT_MODIFIERS.register(modEventBus);
         SRRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
+        SRLootItemConditions.LOOT_ITEM_CONDITION_TYPES.register(modEventBus);
         Weights.initMaterialWeight();
     }
 

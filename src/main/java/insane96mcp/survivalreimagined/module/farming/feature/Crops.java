@@ -26,7 +26,6 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import sereneseasons.config.FertilityConfig;
 
 import java.util.ArrayList;
 
@@ -65,14 +64,6 @@ public class Crops extends Feature {
 	@Label(name = "Min Sunlight", description = "Minimum Sky Light level required for crops to not be affected by \"No Sunlight Growth Multiplier\".")
 	public static Integer minSunlight = 10;
 
-	@Config
-	@Label(name = "Serene Seasons changes", description = """
-			Makes the following changes to Serene Seasons config:
-			* out_of_season_crop_behavior is set to 2 so out of season crops break when trying to grow
-			* underground_fertility_level is set to -1
-			""")
-	public static Boolean changeSereneSeasonsConfig = true;
-
 	public ArrayList<PlantGrowthModifier> plantGrowthModifiers = new ArrayList<>();
 
 	public Crops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -91,11 +82,6 @@ public class Crops extends Feature {
 				PlantGrowthModifier plantGrowthModifier = new PlantGrowthModifier(IdTagMatcher.Type.ID, ForgeRegistries.BLOCKS.getKey(block).toString(), cropsGrowthMultiplier, noSunLightGrowthMultiplier, minSunlight, nightTimeGrowthMultiplier);
 				plantGrowthModifiers.add(plantGrowthModifier);
 			}
-		}
-
-		if (changeSereneSeasonsConfig) {
-			FertilityConfig.outOfSeasonCropBehavior.set(2);
-			FertilityConfig.undergroundFertilityLevel.set(-1);
 		}
 	}
 

@@ -1,0 +1,12 @@
+{
+    "type": "survivalreimagined:drop_multiplier",
+    "amount_to_keep": 0,
+    "conditions": [
+        {
+            "condition": "survivalreimagined:current_season",
+            "season": "WINTER"
+        }
+    ],
+    "tag": "minecraft:saplings",
+    "multiplier": 0
+}
