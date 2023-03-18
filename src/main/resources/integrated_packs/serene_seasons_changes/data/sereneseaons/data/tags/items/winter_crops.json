@@ -1,0 +1,18 @@
+{
+  "replace": true,
+  "values": [
+	"minecraft:red_mushroom",
+	"minecraft:brown_mushroom",
+	"minecraft:nether_wart",
+	"minecraft:crimson_fungus",
+	"minecraft:warped_fungus",
+	"minecraft:crimson_nylium",
+	"minecraft:warped_nylium",
+	"minecraft:twisting_vines",
+	"minecraft:weeping_vines",
+	"minecraft:seagrass",
+	"minecraft:sea_pickle",
+	"minecraft:kelp",
+	"minecraft:glow_berries"
+  ]
+}
