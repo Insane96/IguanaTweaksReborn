@@ -48,6 +48,10 @@ public class Stats extends SRFeature {
 
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", UUID.fromString("da2b677f-467c-49b1-bdf0-070ee782bc0f"), EquipmentSlot.HEAD, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", UUID.fromString("796d3f0c-89e4-47e8-9f95-3a3d5506f70f"), EquipmentSlot.FEET, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", UUID.fromString("5ede369f-1031-41ed-bf5d-83c8a84c3c84"), EquipmentSlot.HEAD, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", UUID.fromString("28aed31c-7b92-4f84-aab5-1f4be1e50609"), EquipmentSlot.CHEST, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", UUID.fromString("9f1d717e-5b4a-4885-b8b1-12f940df28ec"), EquipmentSlot.LEGS, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", UUID.fromString("37961f1b-d6f9-4b63-86ad-1226ce021e98"), EquipmentSlot.FEET, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
 
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_sword", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .8d, AttributeModifier.Operation.ADDITION)
 	));
