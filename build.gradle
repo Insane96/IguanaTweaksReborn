@@ -128,15 +128,10 @@ dependencies {
     implementation fg.deobf("blank:InsaneLib:${lib_version}-mc${mc_version}")
     runtimeOnly fg.deobf("blank:MobsPropertiesRandomness:${mpr_version}-mc${mc_version}")
 
-    // Copypasted from materialis. Still no shame.
-    // implementation fg.deobf("slimeknights.mantle:Mantle:${mc_version}-${mantle_version}")
-    // implementation fg.deobf("slimeknights.tconstruct:TConstruct:${mc_version}-${tic_version}")
-
-    // implementation fg.deobf("curse.maven:immersive_weathering-592449:3815045")
-
     //runtimeOnly fg.deobf("curse.maven:selene-499980:4431044")
     //runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4410143")
-    implementation fg.deobf("curse.maven:serene-seasons-291874:4408359")
+    implementation fg.deobf("com.github.glitchfiend:SereneSeasons:${mc_version}-${sereneseasons_version}")
+    //compileOnly fg.deobf("com.github.glitchfiend:SereneSeasons:${mc_version}-${sereneseasons_version}")
 
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
