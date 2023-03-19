@@ -15,7 +15,7 @@ import net.minecraftforge.common.data.GlobalLootModifierProvider;
 public class Iron extends Feature {
 
 	//TODO Maybe some kind of Soul Forge to double yields from ores
-
+	//TODO Anvil recipes to make tools
 	@Config
 	@Label(name = "Farmable Iron data pack", description = """
 			Enables the following changes to vanilla data pack:
