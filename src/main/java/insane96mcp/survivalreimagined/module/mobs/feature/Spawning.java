@@ -7,8 +7,12 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import sereneseasons.api.season.Season;
 import sereneseasons.api.season.SeasonChangedEvent;
+import sereneseasons.api.season.SeasonHelper;
 
 @Label(name = "Spawning", description = "Changes to mob spawn")
 @LoadFeature(module = Modules.Ids.MOBS)
@@ -49,8 +53,22 @@ public class Spawning extends SRFeature {
         if (!this.isEnabled())
             return;
 
-        switch (event.getNewSeason().getSeason()){
+        update(event.getNewSeason().getSeason());
+    }
 
+    @SubscribeEvent
+    public void onWorldLoad(LevelEvent.Load event) {
+        if (!this.isEnabled()
+                || event.getLevel().isClientSide()
+                || !(event.getLevel() instanceof Level level)
+                || !level.dimension().equals(Level.OVERWORLD))
+            return;
+
+        update(SeasonHelper.getSeasonState(level).getSeason());
+    }
+
+    private void update(Season season) {
+        switch (season) {
             case SPRING -> {
                 MobCategory.MONSTER.despawnDistance = despawnDistanceSpring;
                 MobCategory.MONSTER.max = hostileCapSpring;
