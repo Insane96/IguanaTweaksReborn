@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "minecraft:golden_leggings"
+  },
+  "right": {
+    "item": "minecraft:diamond"
+  },
+  "amount": 7,
+  "result": {
+    "item": "minecraft:diamond_leggings"
+  },
+  "keep_durability": true
+}

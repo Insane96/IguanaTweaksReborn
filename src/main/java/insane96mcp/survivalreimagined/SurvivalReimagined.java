@@ -1,8 +1,9 @@
 package insane96mcp.survivalreimagined;
 
+import insane96mcp.survivalreimagined.data.SRAnvilRecipeReloadListener;
 import insane96mcp.survivalreimagined.data.SRDataReloadListener;
-import insane96mcp.survivalreimagined.data.SRGlobalLootModifierProvider;
 import insane96mcp.survivalreimagined.data.SRRecipeProvider;
+import insane96mcp.survivalreimagined.data.lootmodifier.SRGlobalLootModifierProvider;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerProvider;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
@@ -67,7 +68,6 @@ public class SurvivalReimagined
         SRMobEffects.MOB_EFFECTS.register(modEventBus);
         SRItems.ITEMS.register(modEventBus);
         SRGlobalLootModifiers.LOOT_MODIFIERS.register(modEventBus);
-        SRRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         SRLootItemConditions.LOOT_ITEM_CONDITION_TYPES.register(modEventBus);
         Weights.initMaterialWeight();
     }
@@ -76,6 +76,7 @@ public class SurvivalReimagined
     public void onAddReloadListener(AddReloadListenerEvent event) {
         SRDataReloadListener.reloadContext = event.getConditionContext();
         event.addListener(SRDataReloadListener.INSTANCE);
+        event.addListener(SRAnvilRecipeReloadListener.INSTANCE);
     }
 
     @SubscribeEvent

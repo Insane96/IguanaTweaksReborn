@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "minecraft:leather_leggings"
+  },
+  "right": {
+    "item": "minecraft:iron_ingot"
+  },
+  "amount": 7,
+  "result": {
+    "item": "minecraft:iron_leggings"
+  },
+  "keep_durability": true
+}

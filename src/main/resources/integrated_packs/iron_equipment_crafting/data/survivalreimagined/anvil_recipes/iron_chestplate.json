@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "minecraft:leather_chestplate"
+  },
+  "right": {
+    "item": "minecraft:iron_ingot"
+  },
+  "amount": 8,
+  "result": {
+    "item": "minecraft:iron_chestplate"
+  },
+  "keep_durability": true
+}

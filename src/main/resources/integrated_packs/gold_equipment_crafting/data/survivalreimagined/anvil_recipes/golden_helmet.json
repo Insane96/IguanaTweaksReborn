@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "minecraft:leather_helmet"
+  },
+  "right": {
+    "item": "minecraft:gold_ingot"
+  },
+  "amount": 5,
+  "result": {
+    "item": "minecraft:golden_helmet"
+  },
+  "keep_durability": true
+}

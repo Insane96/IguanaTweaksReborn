@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "minecraft:leather_boots"
+  },
+  "right": {
+    "item": "minecraft:gold_ingot"
+  },
+  "amount": 4,
+  "result": {
+    "item": "minecraft:golden_boots"
+  },
+  "keep_durability": true
+}

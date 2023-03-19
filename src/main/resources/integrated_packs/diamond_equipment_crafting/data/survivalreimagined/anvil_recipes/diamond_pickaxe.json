@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "minecraft:golden_pickaxe"
+  },
+  "right": {
+    "item": "minecraft:diamond"
+  },
+  "amount": 3,
+  "result": {
+    "item": "minecraft:diamond_pickaxe"
+  },
+  "keep_durability": true
+}

@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.setup;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.data.LootItemCurrentSeasonCondition;
+import insane96mcp.survivalreimagined.data.condition.LootItemCurrentSeasonCondition;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.registries.DeferredRegister;

@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "survivalreimagined:flint_sword"
+  },
+  "right": {
+    "item": "minecraft:gold_ingot"
+  },
+  "amount": 2,
+  "result": {
+    "item": "minecraft:golden_sword"
+  },
+  "keep_durability": true
+}

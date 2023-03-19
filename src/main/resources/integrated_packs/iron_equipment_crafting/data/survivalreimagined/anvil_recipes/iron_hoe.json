@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "survivalreimagined:flint_hoe"
+  },
+  "right": {
+    "item": "minecraft:iron_ingot"
+  },
+  "amount": 2,
+  "result": {
+    "item": "minecraft:iron_hoe"
+  },
+  "keep_durability": true
+}

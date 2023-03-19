@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "minecraft:golden_chestplate"
+  },
+  "right": {
+    "item": "minecraft:diamond"
+  },
+  "amount": 8,
+  "result": {
+    "item": "minecraft:diamond_chestplate"
+  },
+  "keep_durability": true
+}

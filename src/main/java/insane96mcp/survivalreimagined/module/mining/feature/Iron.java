@@ -24,30 +24,28 @@ public class Iron extends Feature {
 	public static Boolean farmableIronDataPack = true;
 
 	@Config
-	@Label(name = "Armor Crafting Data Pack", description = """
+	@Label(name = "Equipment Crafting Data Pack", description = """
 			Enables the following changes to vanilla data pack:
-			* Iron Armor requires leather armor to be crafted
-			""")
-	public static Boolean armorCraftingDataPack = true;
+			* Iron Armor requires leather armor to be crafted in an anvil
+			* Iron Tools require flint tools to be crafted in an anvil""")
+	public static Boolean equipmentCraftingDataPack = true;
 
 	@Config
 	@Label(name = "Iron Smelting Data Pack", description = """
 			Enables the following changes to vanilla data pack:
-			* Smelting iron in a furnace takes 2x time
-			""")
+			* Smelting iron in a furnace takes 4x time""")
 	public static Boolean ironSmeltingDataPack = true;
 
 	@Config
 	@Label(name = "Iron Generation Data Pack", description = """
 			Enables the following changes to vanilla data pack:
-			* Iron ore has a chance to be discarded when exposed to air (60% for large veins, 40% for small)
-			""")
+			* Iron ore has a chance to be discarded when exposed to air (60% for large veins, 40% for small)""")
 	public static Boolean ironGenerationDataPack = true;
 
 	public Iron(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "farmable_iron", net.minecraft.network.chat.Component.literal("Survival Reimagined Farmable Iron"), () -> this.isEnabled() && farmableIronDataPack));
-		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "iron_armor_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Armor Crafting"), () -> this.isEnabled() && armorCraftingDataPack));
+		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "iron_equipment_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Equipment Crafting"), () -> this.isEnabled() && equipmentCraftingDataPack));
 		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "iron_smelting", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Smelting"), () -> this.isEnabled() && ironSmeltingDataPack));
 		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "iron_generation", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Generation"), () -> this.isEnabled() && ironGenerationDataPack));
 	}

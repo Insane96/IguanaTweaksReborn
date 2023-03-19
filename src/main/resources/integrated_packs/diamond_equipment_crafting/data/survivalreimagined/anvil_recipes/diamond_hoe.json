@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "minecraft:golden_hoe"
+  },
+  "right": {
+    "item": "minecraft:diamond"
+  },
+  "amount": 2,
+  "result": {
+    "item": "minecraft:diamond_hoe"
+  },
+  "keep_durability": true
+}

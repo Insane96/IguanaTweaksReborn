@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "minecraft:golden_sword"
+  },
+  "right": {
+    "item": "minecraft:diamond"
+  },
+  "amount": 2,
+  "result": {
+    "item": "minecraft:diamond_sword"
+  },
+  "keep_durability": true
+}
