@@ -45,11 +45,11 @@ import java.util.UUID;
 public class WeightedEquipment extends SRFeature {
 	public static final ArrayList<ArmorMaterialWeight> MATERIAL_WEIGHTS_DEFAULTS = new ArrayList<>(Arrays.asList(
 			new ArmorMaterialWeight("leather", 0.025d),
-			new ArmorMaterialWeight("chainmail", 0.05d),
+			new ArmorMaterialWeight("chainmail", 0.050d),
 			new ArmorMaterialWeight("golden", 0.025d),
-			new ArmorMaterialWeight("iron", 0.07d),
-			new ArmorMaterialWeight("diamond", 0.09d),
-			new ArmorMaterialWeight("netherite", 0.125d)
+			new ArmorMaterialWeight("iron", 0.075d),
+			new ArmorMaterialWeight("diamond", 0.010d),
+			new ArmorMaterialWeight("netherite", 0.15d)
 	));
 	public static final ArrayList<ArmorMaterialWeight> materialWeight = new ArrayList<>();
 
@@ -61,7 +61,7 @@ public class WeightedEquipment extends SRFeature {
 
 	@Config(min = 0, max = 1d)
 	@Label(name = "Slowdown per Armor", description = "Percentage slowdown per point of armor the player is wearing.")
-	public static Double slownessPerArmor = 0.01d;
+	public static Double slownessPerArmor = 0.005d;
 	@Config(min = 0, max = 1d)
 	@Label(name = "Percentage Increase per Toughness", description = """
 						This value times the Armor Toughness worn by the player is a percentage increase of the Slowdown per Armor.
