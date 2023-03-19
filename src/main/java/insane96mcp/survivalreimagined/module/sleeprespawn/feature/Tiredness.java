@@ -339,7 +339,7 @@ public class Tiredness extends SRFeature {
 		LocalPlayer playerEntity = mc.player;
 		if (playerEntity == null)
 			return;
-		if (mc.options.renderDebug & !mc.showOnlyReducedInfo()) {
+		if (mc.options.renderDebug && !mc.showOnlyReducedInfo()) {
 			event.getLeft().add(String.format("Tiredness: %s", new DecimalFormat("#.#").format(playerEntity.getPersistentData().getFloat(Strings.Tags.TIREDNESS))));
 		}
 	}

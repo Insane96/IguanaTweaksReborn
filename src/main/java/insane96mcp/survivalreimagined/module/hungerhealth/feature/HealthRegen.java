@@ -336,7 +336,7 @@ public class HealthRegen extends Feature {
 		LocalPlayer playerEntity = mc.player;
 		if (playerEntity == null)
 			return;
-		if (mc.options.renderDebug) {
+		if (mc.options.renderDebug && !mc.showOnlyReducedInfo()) {
 			FoodData foodStats = playerEntity.getFoodData();
 			event.getLeft().add(String.format("Hunger: %d, Saturation: %s, Exhaustion: %s", foodStats.foodLevel, new DecimalFormat("#.#").format(foodStats.saturationLevel), new DecimalFormat("0.00").format(foodStats.exhaustionLevel)));
 		}

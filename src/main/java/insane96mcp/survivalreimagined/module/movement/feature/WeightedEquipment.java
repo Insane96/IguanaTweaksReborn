@@ -211,7 +211,7 @@ public class WeightedEquipment extends SRFeature {
 		if (movementSpeed == null)
 			return;
 		AttributeModifier modifier = movementSpeed.getModifier(Strings.AttributeModifiers.ARMOR_SLOWDOWN_UUID);
-		if (mc.options.renderDebug && modifier != null) {
+		if (mc.options.renderDebug && !mc.showOnlyReducedInfo() && modifier != null) {
 			event.getLeft().add(String.format("Armor Slowdown: %s%%", Utils.formatDecimal(Math.abs(modifier.getAmount()) * 100f, "#.#")));
 		}
 	}

@@ -221,7 +221,7 @@ public class Stamina extends Feature {
         LocalPlayer playerEntity = mc.player;
         if (playerEntity == null)
             return;
-        if (mc.options.renderDebug & !mc.showOnlyReducedInfo()) {
+        if (mc.options.renderDebug && !mc.showOnlyReducedInfo()) {
             event.getLeft().add(String.format("Stamina: %d/%d; Stamina Locked: %s", getStamina(playerEntity), getMaxStamina(playerEntity), isStaminaLocked(playerEntity)));
         }
     }
