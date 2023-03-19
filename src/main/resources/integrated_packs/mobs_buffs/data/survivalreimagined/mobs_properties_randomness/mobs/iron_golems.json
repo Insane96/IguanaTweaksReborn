@@ -13,6 +13,14 @@
             "modifier_name": "More Sight for Iron Golems",
             "amount": 3,
             "operation": "multiply_base"
+        },
+        {
+            "id": "minecraft:generic.movement_speed",
+            "modifier_name": "More Speed for Iron Golems",
+            "amount": {
+                "value": 0.20
+            },
+            "operation": "multiply_base"
         }
     ]
 }
