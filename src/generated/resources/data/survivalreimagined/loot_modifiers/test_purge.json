@@ -1,0 +1,5 @@
+{
+  "type": "survivalreimagined:loot_purger",
+  "loot_table": "minecraft:chests/abandoned_mineshaft",
+  "end_range": 1000
+}

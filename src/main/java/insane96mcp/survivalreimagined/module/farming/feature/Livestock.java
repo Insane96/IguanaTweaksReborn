@@ -7,6 +7,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
+import insane96mcp.survivalreimagined.data.lootmodifier.LootPurgerModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -291,6 +292,12 @@ public class Livestock extends Feature {
 				},
 				Items.TROPICAL_FISH,
 				0.3f
+		));
+
+		provider.add(path + "test_purger", new LootPurgerModifier(
+				new LootItemCondition[0],
+				new ResourceLocation("minecraft:chests/abandoned_mineshaft"),
+				1000
 		));
 	}
 }

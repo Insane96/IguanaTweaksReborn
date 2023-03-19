@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.setup;
 import com.mojang.serialization.Codec;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
+import insane96mcp.survivalreimagined.data.lootmodifier.LootPurgerModifier;
 import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.registries.DeferredRegister;
@@ -14,4 +15,5 @@ public class SRGlobalLootModifiers {
 
     public static final RegistryObject<Codec<? extends IGlobalLootModifier>> REPLACE_DROP_MODIFIER = LOOT_MODIFIERS.register("replace_drop", ReplaceDropModifier.CODEC);
     public static final RegistryObject<Codec<? extends IGlobalLootModifier>> DROP_MULTIPLIER_MODIFIER = LOOT_MODIFIERS.register("drop_multiplier", DropMultiplierModifier.CODEC);
+    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> LOOT_PURGER_MODIFIER = LOOT_MODIFIERS.register("loot_purger", LootPurgerModifier.CODEC);
 }

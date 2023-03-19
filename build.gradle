@@ -130,8 +130,8 @@ dependencies {
 
     //runtimeOnly fg.deobf("curse.maven:selene-499980:4431044")
     //runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4410143")
+
     implementation fg.deobf("com.github.glitchfiend:SereneSeasons:${mc_version}-${sereneseasons_version}")
-    //compileOnly fg.deobf("com.github.glitchfiend:SereneSeasons:${mc_version}-${sereneseasons_version}")
 
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"

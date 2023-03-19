@@ -19,7 +19,8 @@
     "survivalreimagined:crops/harder_carrot_farming",
     "survivalreimagined:livestock/lower_cooked_beef",
     "survivalreimagined:livestock/lower_cod",
-    "survivalreimagined:crops/harder_beetroot_farming"
+    "survivalreimagined:crops/harder_beetroot_farming",
+    "survivalreimagined:test_purge"
   ],
   "replace": false
 }
