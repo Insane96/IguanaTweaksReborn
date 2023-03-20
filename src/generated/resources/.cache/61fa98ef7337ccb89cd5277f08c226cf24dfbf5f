@@ -1,4 +1,4 @@
-// 1.19.3	2023-03-20T11:08:42.0725086	Global Loot Modifiers : survivalreimagined
+// 1.19.3	2023-03-20T20:56:26.0731659	Global Loot Modifiers : survivalreimagined
 efae2d912cad78ddd335873a122a05f4f16dc5ea data/forge/loot_modifiers/global_loot_modifiers.json
 4f3af5dc3090b2d301bf47ae6323c629ba0916da data/survivalreimagined/loot_modifiers/crops/harder_beetroot_farming.json
 9b64ab14e88ea02f99d8be48790af8a3a804c0b8 data/survivalreimagined/loot_modifiers/crops/harder_carrot_farming.json
@@ -18,4 +18,4 @@ a99238d8552f3b060cb5f09a8fbba1280d80159e data/survivalreimagined/loot_modifiers/
 e3c13803a7845b83d8eff62696f3a373d8f870df data/survivalreimagined/loot_modifiers/livestock/lower_pufferfish.json
 95e7d4bcaa5aad10e2af218e750caa1193c40261 data/survivalreimagined/loot_modifiers/livestock/lower_salmon.json
 ab024b39751275d21a3d854d651783d9403d42e8 data/survivalreimagined/loot_modifiers/livestock/lower_tropical_fish.json
-dcb4067d6a2b5c781cdfeb0e9fc3457421c58f06 data/survivalreimagined/loot_modifiers/livestock/test_purger.json
+f9e71dc09393ddf78d4545b33ce542593fb4f7f4 data/survivalreimagined/loot_modifiers/livestock/test_purger.json
