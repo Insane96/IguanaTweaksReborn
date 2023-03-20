@@ -1,5 +1,5 @@
-// 1.19.3	2023-03-16T19:14:17.1191645	Global Loot Modifiers : survivalreimagined
-db680f8ec94e064ea7dc9e341d8a6f5f986be84d data/forge/loot_modifiers/global_loot_modifiers.json
+// 1.19.3	2023-03-20T11:08:42.0725086	Global Loot Modifiers : survivalreimagined
+efae2d912cad78ddd335873a122a05f4f16dc5ea data/forge/loot_modifiers/global_loot_modifiers.json
 4f3af5dc3090b2d301bf47ae6323c629ba0916da data/survivalreimagined/loot_modifiers/crops/harder_beetroot_farming.json
 9b64ab14e88ea02f99d8be48790af8a3a804c0b8 data/survivalreimagined/loot_modifiers/crops/harder_carrot_farming.json
 2463d5b51cb271d59a6fe30517d09a5173a553b5 data/survivalreimagined/loot_modifiers/crops/harder_potato_farming.json
@@ -18,5 +18,4 @@ a99238d8552f3b060cb5f09a8fbba1280d80159e data/survivalreimagined/loot_modifiers/
 e3c13803a7845b83d8eff62696f3a373d8f870df data/survivalreimagined/loot_modifiers/livestock/lower_pufferfish.json
 95e7d4bcaa5aad10e2af218e750caa1193c40261 data/survivalreimagined/loot_modifiers/livestock/lower_salmon.json
 ab024b39751275d21a3d854d651783d9403d42e8 data/survivalreimagined/loot_modifiers/livestock/lower_tropical_fish.json
-b130312304c6403787d231865f6857653fb18807 data/survivalreimagined/loot_modifiers/mining_progression/deepslate_raw_iron_to_nuggets.json
-cbceb3250c88e07d270f2e5c3925214f731fa965 data/survivalreimagined/loot_modifiers/mining_progression/raw_iron_to_nuggets.json
+dcb4067d6a2b5c781cdfeb0e9fc3457421c58f06 data/survivalreimagined/loot_modifiers/livestock/test_purger.json

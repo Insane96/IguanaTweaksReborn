@@ -2,11 +2,10 @@
   "entries": [
     "survivalreimagined:livestock/lower_salmon",
     "survivalreimagined:crops/harder_potato_farming",
-    "survivalreimagined:mining_progression/deepslate_raw_iron_to_nuggets",
     "survivalreimagined:livestock/lower_tropical_fish",
     "survivalreimagined:livestock/lower_cooked_cod",
-    "survivalreimagined:mining_progression/raw_iron_to_nuggets",
     "survivalreimagined:crops/harder_wheat_farming",
+    "survivalreimagined:livestock/test_purger",
     "survivalreimagined:livestock/lower_chicken",
     "survivalreimagined:livestock/lower_beef",
     "survivalreimagined:livestock/lower_cooked_mutton",
@@ -19,8 +18,7 @@
     "survivalreimagined:crops/harder_carrot_farming",
     "survivalreimagined:livestock/lower_cooked_beef",
     "survivalreimagined:livestock/lower_cod",
-    "survivalreimagined:crops/harder_beetroot_farming",
-    "survivalreimagined:test_purge"
+    "survivalreimagined:crops/harder_beetroot_farming"
   ],
   "replace": false
 }
