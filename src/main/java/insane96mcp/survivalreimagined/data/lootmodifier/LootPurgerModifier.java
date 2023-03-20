@@ -60,8 +60,8 @@ public class LootPurgerModifier extends LootModifier {
         int z = (int) context.getParam(LootContextParams.ORIGIN).z;
         int distanceFromSpawn = (int) Math.sqrt((x - spawnX) * (x - spawnX) + (z - spawnZ) * (z - spawnZ));
         int distanceFromStart = (distanceFromSpawn - this.startRange);
-        float multiplier = (distanceFromStart - this.endRange) * (multiplierAtEnd - multiplierAtStart);
-        generatedLoot.removeIf(itemStack -> context.getRandom().nextDouble() > multiplier);
+        float multiplier = (this.endRange - distanceFromStart) / ((float) this.endRange - this.startRange) * (multiplierAtEnd - multiplierAtStart);
+        generatedLoot.removeIf(itemStack -> context.getRandom().nextDouble() < multiplier);
         return generatedLoot;
     }
 
