@@ -2,7 +2,6 @@ package insane96mcp.survivalreimagined.module.items.feature;
 
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.LootPurgerModifier;
@@ -14,9 +13,7 @@ import net.minecraftforge.common.data.GlobalLootModifierProvider;
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class World extends SRFeature {
 
-	@Config
-	@Label(name = "Reduce", description = "If set to true items in the 'no_damage_items' and 'no_efficiency_items' will get a tooltip.")
-	public static Boolean disabledItemsTooltip = true;
+	//TODO New World module + Desire Paths
 
 	public World(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
