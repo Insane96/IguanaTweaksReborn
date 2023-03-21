@@ -52,6 +52,6 @@ license="All rights reserved"
     [[dependencies.survivalreimagined]]
         modId="sereneseasons"
         mandatory=true
-        versionRange="[8.2.0.29,)"
+        versionRange="[8.2.0.37,)"
         ordering="NONE"
         side="BOTH"
