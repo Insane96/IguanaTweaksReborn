@@ -123,7 +123,7 @@ public class HoesNerfs extends SRFeature {
 						|| hoeStat.cooldown <= 0)
 					continue;
 
-				event.getToolTip().add(Component.translatable(TILL_COOLDOWN, hoeStat.cooldown / 20f).withStyle(ChatFormatting.GREEN));
+				event.getToolTip().add(Component.translatable(TILL_COOLDOWN, hoeStat.cooldown / 20f).withStyle(ChatFormatting.DARK_GREEN));
 				break;
 			}
 		}
