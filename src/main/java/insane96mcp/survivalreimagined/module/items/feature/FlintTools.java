@@ -31,7 +31,7 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class FlintTools extends SRFeature {
 
-	private static final ILItemTier FLINT_TIER = new ILItemTier(1, 33, 3.5f, 1.5f, 5, () -> Ingredient.of(Items.FLINT));
+	private static final ILItemTier FLINT_TIER = new ILItemTier(1, 38, 3.5f, 1.5f, 5, () -> Ingredient.of(Items.FLINT));
 
 	public static final RegistryObject<Item> FLINT_SWORD = SRItems.ITEMS.register("flint_sword", () -> new SwordItem(FLINT_TIER, 3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> FLINT_SHOVEL = SRItems.ITEMS.register("flint_shovel", () -> new ShovelItem(FLINT_TIER, 1.5F, -3.0F, new Item.Properties()));
