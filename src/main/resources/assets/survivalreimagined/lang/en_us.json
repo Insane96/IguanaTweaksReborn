@@ -11,11 +11,11 @@
 
 	"survivalreimagined.no_damage_item": "This item blade is not sharp, hits like a fist",
 	"survivalreimagined.no_efficiency_item": "This item is old and rusty, can't mine anything",
-	"survivalreimagined.tool_efficiency": "%.1f Tool efficiency",
+	"survivalreimagined.tool_efficiency": "%.1f Tool Efficiency",
 	"survivalreimagined.bonus_tool_efficiency": "(+%.1f from Efficiency)",
 
 	"survivalreimagined.weak_hoe": "This hoe is too weak to till soil",
-	"survivalreimagined.till_cooldown": "%.1f till cooldown",
+	"survivalreimagined.till_cooldown": "%.1f Till Cooldown",
 
 	"survivalreimagined.armor_slowdown": "-%s%% Speed",
 

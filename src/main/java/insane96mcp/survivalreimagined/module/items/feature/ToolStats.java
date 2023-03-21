@@ -23,9 +23,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -158,10 +158,8 @@ public class ToolStats extends SRFeature {
 		}
 	}
 
-	static final DecimalFormat ONE_DECIMAL_FORMATTER = new DecimalFormat("#.#");
-
-	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled()
 				|| !disabledItemsTooltip)
@@ -179,9 +177,9 @@ public class ToolStats extends SRFeature {
 			float bonusToolEfficiency = diggerItem.speed * (efficiency * 0.75f);
 			if (efficiency > 0)
 				toolEfficiency += bonusToolEfficiency;
-			event.getToolTip().add(Component.translatable(TOOL_EFFICIENCY, ONE_DECIMAL_FORMATTER.format(toolEfficiency)).withStyle(ChatFormatting.DARK_GREEN));
-			if (efficiency > 0)
-				event.getToolTip().add(Component.literal("  ").append(Component.translatable(BONUS_TOOL_EFFICIENCY, ONE_DECIMAL_FORMATTER.format(bonusToolEfficiency)).withStyle(ChatFormatting.GRAY)));
+			event.getToolTip().add(Component.literal(" ").append(Component.translatable(TOOL_EFFICIENCY, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(toolEfficiency))).withStyle(ChatFormatting.DARK_GREEN));
+			/*if (efficiency > 0)
+				event.getToolTip().add(Component.literal("  ").append(Component.translatable(BONUS_TOOL_EFFICIENCY, ONE_DECIMAL_FORMATTER.format(bonusToolEfficiency)).withStyle(ChatFormatting.GRAY)));*/
 		}
 	}
 }

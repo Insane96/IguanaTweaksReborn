@@ -36,8 +36,6 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
 
-import java.text.DecimalFormat;
-
 @Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class NoHunger extends Feature {
@@ -265,8 +263,6 @@ public class NoHunger extends Feature {
         RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
     }
 
-    static final DecimalFormat ONE_DECIMAL_FORMATTER = new DecimalFormat("#.#");
-
     /*@OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onTooltip(ItemTooltipEvent event) {
@@ -278,6 +274,6 @@ public class NoHunger extends Feature {
         float heal = food.getNutrition() * foodHealHealthMultiplier.floatValue();
         //Half heart per second by default
         float strength = (0.5f * (1.4f - food.getSaturationModifier()));
-        event.getToolTip().add(Component.translatable(FOOD_STATS_TRANSLATABLE, ONE_DECIMAL_FORMATTER.format(heal), ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.DARK_GREEN));
+        event.getToolTip().add(Component.translatable(FOOD_STATS_TRANSLATABLE, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal), SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.DARK_GREEN));
     }*/
 }

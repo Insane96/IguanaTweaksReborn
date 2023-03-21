@@ -12,9 +12,9 @@
 	"survivalreimagined.no_efficiency_item": "Questo oggetto è vecchio e arrugginito, non può scavare nulla",
 
 	"survivalreimagined.weak_hoe": "Questa zappa è troppo debole per zappare la terra",
-	"survivalreimagined.till_cooldown": "%.2f tempo di ricarica zappa",
+	"survivalreimagined.till_cooldown": "%.1f Tempo di ricarica zappa",
 
-	"survivalreimagined.armor_slowdown": "-%s%% Velocità",
+	"survivalreimagined.armor_slowdown": "Velocità: -%s%%",
 
 	"effect.survivalreimagined.injured": "Ferito",
 	"effect.survivalreimagined.well_fed": "Ben Nutrito",
@@ -40,5 +40,6 @@
 	"item.survivalreimagined.flint_sword": "Spada di Selce",
 	"item.survivalreimagined.flint_shovel": "Pala di Selce",
 	"item.survivalreimagined.flint_hoe": "Zappa di Selce",
-	"survivalreimagined.tool_efficiency": "%.1f Efficienza Attrezzo"
+	"survivalreimagined.tool_efficiency": "%.1f Efficienza attrezzo",
+	"survivalreimagined.bonus_tool_efficiency": "(+%.1f da Efficienza)"
 }

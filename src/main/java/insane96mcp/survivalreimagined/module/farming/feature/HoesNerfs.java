@@ -20,10 +20,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.lang.reflect.Type;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -109,10 +109,8 @@ public class HoesNerfs extends SRFeature {
 		return Utils.isItemInTag(item, DISABLED_HOES);
 	}
 
-	static final DecimalFormat ONE_DECIMAL_FORMATTER = new DecimalFormat("#.#");
-
-	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled())
 			return;
@@ -126,7 +124,7 @@ public class HoesNerfs extends SRFeature {
 						|| hoeStat.cooldown <= 0)
 					continue;
 
-				event.getToolTip().add(Component.translatable(TILL_COOLDOWN, ONE_DECIMAL_FORMATTER.format(hoeStat.cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN));
+				event.getToolTip().add(Component.literal(" ").append(Component.translatable(TILL_COOLDOWN, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(hoeStat.cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
 				break;
 			}
 		}

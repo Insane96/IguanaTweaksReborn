@@ -11,6 +11,7 @@ import insane96mcp.survivalreimagined.setup.*;
 import insane96mcp.survivalreimagined.setup.client.ClientSetup;
 import insane96mcp.survivalreimagined.setup.client.SRClientConfig;
 import insane96mcp.survivalreimagined.utils.Weights;
+import net.minecraft.client.Minecraft;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -42,6 +43,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Path;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 @Mod("survivalreimagined")
 public class SurvivalReimagined
@@ -53,6 +56,9 @@ public class SurvivalReimagined
     public static final String CONFIG_FOLDER = "config/" + MOD_ID;
 
     public static final ResourceLocation GUI_ICONS = new ResourceLocation(SurvivalReimagined.MOD_ID, "textures/gui/icons.png");
+
+    static DecimalFormatSymbols DECIMAL_FORMAT_SYMBOLS;
+    public static DecimalFormat ONE_DECIMAL_FORMATTER;
 
     public SurvivalReimagined() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SRClientConfig.CONFIG_SPEC, MOD_ID + "/client.toml");
@@ -96,6 +102,9 @@ public class SurvivalReimagined
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         NetworkHandler.init();
+
+        DECIMAL_FORMAT_SYMBOLS = new DecimalFormatSymbols(Minecraft.getInstance().getLocale());
+        ONE_DECIMAL_FORMATTER = new DecimalFormat("#.#", DECIMAL_FORMAT_SYMBOLS);
     }
 
     @SubscribeEvent
