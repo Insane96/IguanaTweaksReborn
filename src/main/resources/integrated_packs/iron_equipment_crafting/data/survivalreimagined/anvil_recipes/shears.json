@@ -1,0 +1,12 @@
+{
+  "left": {
+    "item": "minecraft:iron_ingot"
+  },
+  "right": {
+    "item": "minecraft:iron_ingot"
+  },
+  "amount": 1,
+  "result": {
+    "item": "minecraft:shears"
+  }
+}

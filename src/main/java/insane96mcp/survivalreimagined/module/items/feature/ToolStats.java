@@ -54,7 +54,7 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 86),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:carrot_on_a_stick", 63),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shield", 268),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shears", 79),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shears", 119),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_helmet", 39),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_chestplate", 48),
@@ -176,7 +176,7 @@ public class ToolStats extends SRFeature {
 			float bonusToolEfficiency = diggerItem.speed * (efficiency * 0.75f);
 			if (efficiency > 0)
 				toolEfficiency += bonusToolEfficiency;
-			event.getToolTip().add(Component.translatable(TOOL_EFFICIENCY, toolEfficiency).withStyle(ChatFormatting.BLUE));
+			event.getToolTip().add(Component.translatable(TOOL_EFFICIENCY, toolEfficiency).withStyle(ChatFormatting.DARK_GREEN));
 			if (efficiency > 0)
 				event.getToolTip().add(Component.literal("  ").append(Component.translatable(BONUS_TOOL_EFFICIENCY, bonusToolEfficiency).withStyle(ChatFormatting.GRAY)));
 		}
