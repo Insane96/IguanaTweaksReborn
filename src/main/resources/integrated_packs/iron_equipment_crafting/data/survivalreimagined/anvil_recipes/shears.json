@@ -1,11 +1,11 @@
 {
   "left": {
-    "item": "minecraft:iron_ingot"
+    "item": "minecraft:flint"
   },
   "right": {
     "item": "minecraft:iron_ingot"
   },
-  "amount": 1,
+  "amount": 2,
   "result": {
     "item": "minecraft:shears"
   }
