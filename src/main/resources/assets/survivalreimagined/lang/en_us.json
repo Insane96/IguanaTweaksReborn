@@ -1,7 +1,5 @@
 {
-	"survivalreimagined.mooshroom_cooldown": "Mooshroom's Milk or Stew aren't",
-	"survivalreimagined.cow_cooldown": "Cow's Milk is not",
-	"survivalreimagined.yet_ready": "yet ready",
+	"survivalreimagined.milk_cooldown": "This %s's fluid is not yet ready",
 
 	"survivalreimagined.no_food_for_sleep": "You're too hungry and can't fall asleep",
 	"survivalreimagined.decorative_beds": "Beds are just a nice decoration. No sleep allowed",

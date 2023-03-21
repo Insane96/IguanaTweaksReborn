@@ -1,7 +1,5 @@
 {
-	"survivalreimagined.mooshroom_cooldown": "Il latte o la zuppa della mooshroom non",
-	"survivalreimagined.cow_cooldown": "Il latte della mucca non",
-	"survivalreimagined.yet_ready": "è ancora pronto",
+	"survivalreimagined.milk_cooldown": "Il liquido di questo/a %s non è ancora pronto",
 
 	"survivalreimagined.no_food_for_sleep": "Sei troppo affamato e non riesci a prendere sonno",
 	"survivalreimagined.decorative_beds": "I letti sono solo una decorazione. Dormire non è permesso",

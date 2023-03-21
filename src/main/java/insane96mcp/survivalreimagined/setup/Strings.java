@@ -6,7 +6,6 @@ import java.util.UUID;
 
 public class Strings {
 	public static class Tags {
-		public static final String MILK_COOLDOWN = SurvivalReimagined.RESOURCE_PREFIX + "milk_cooldown";
 		public static final String SPAWNED_MOBS = SurvivalReimagined.RESOURCE_PREFIX + "spawned_mobs";
 		public static final String TIME_SINCE_LAST_SWING = SurvivalReimagined.RESOURCE_PREFIX + "ticks_since_last_swing";
 
@@ -27,10 +26,6 @@ public class Strings {
 	}
 
 	public static class Translatable {
-		public static final String MOOSHROOM_COOLDOWN = "survivalreimagined.mooshroom_cooldown";
-		public static final String COW_COOLDOWN = "survivalreimagined.cow_cooldown";
-		public static final String YET_READY = "survivalreimagined.yet_ready";
-
 		public static final String NO_FOOD_FOR_SLEEP = "survivalreimagined.no_food_for_sleep";
 		public static final String NOT_TIRED = "survivalreimagined.not_tired";
 		public static final String TIRED_ENOUGH = "survivalreimagined.tired_enough";

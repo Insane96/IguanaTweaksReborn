@@ -1,32 +1,27 @@
 package insane96mcp.survivalreimagined.module.farming.feature;
 
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.setup.Strings;
-import insane96mcp.survivalreimagined.utils.Utils;
+import insane96mcp.survivalreimagined.module.farming.utils.LivestockData;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.EntityTypePredicate;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
-import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.MushroomCow;
-import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -41,35 +36,92 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import sereneseasons.api.season.Season;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Label(name = "Livestock", description = "Slower breeding, Growing, Egging and Milking. Lower yield.")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class Livestock extends Feature {
+public class Livestock extends SRFeature {
 
-	private static final ResourceLocation NO_LIVESTOCK_SLOWDOWN = new ResourceLocation(SurvivalReimagined.MOD_ID, "no_livestock_slowdown");
+	public static final String MILK_COOLDOWN_TRANSLATION = SurvivalReimagined.MOD_ID + ".milk_cooldown";
+	public static final String MILK_COOLDOWN = SurvivalReimagined.RESOURCE_PREFIX + "milk_cooldown";
 
-	//TODO Livestock slowdown based on seasons
-	@Config(min = 1d, max = 128d)
-	@Label(name = "Childs Growth Multiplier", description = "Increases the time required for Baby Animals to grow (e.g. at 2.0 Animals will take twice to grow).\n1.0 will make Animals grow like normal.")
-	public static Double childGrowthMultiplier = 3.0d;
-	@Config
-	@Label(name = "Childs Growth Villagers", description = "If true, 'Childs Growth Multiplier' will be applied to villagers too.")
-	public static Boolean childGrowthVillagers = true;
-	@Config(min = 1d, max = 128d)
-	@Label(name = "Breeding Time Multiplier", description = "Increases the time required for Animals to breed again (e.g. at 2.0 Animals will take twice to be able to breed again).\n1.0 will make Animals breed like normal.")
-	public static Double breedingMultiplier = 2d;
-	@Config(min = 0d, max = 1d)
-	@Label(name = "Breeding Fail Chance", description = "Chance for a baby to not to be born.")
-	public static Double breedingFailChance = 0.75d;
-	@Config(min = 1d, max = 128d)
-	@Label(name = "Egg Lay Multiplier", description = "Increases the time required for Chickens to lay an egg (e.g. at 2.0 Chickens will take twice the time to lay an egg).\n1.0 will make chickens lay eggs like normal.")
-	public static Double eggLayMultiplier = 3.0d;
-	@Config(min = 0)
-	@Label(name = "Cow Milk Delay", description = "Seconds before a cow can be milked again. This applies to Mooshroom stew too.\n0 will disable this feature.")
-	public static Integer cowMilkDelay = 1200;
+	public static final ArrayList<LivestockData> GROWTH_SLOWNDOWN_DEFAULT = new ArrayList<>(List.of(
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 2.5d, Season.SPRING),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 2.0d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 3.0d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 4.0d, Season.WINTER),
+
+			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 2.5d, Season.SPRING),
+			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 2.0d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 3.0d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 4.0d, Season.WINTER)
+	));
+
+	public static final ArrayList<LivestockData> growthSlowdown = new ArrayList<>();
+
+	public static final ArrayList<LivestockData> BREEDING_COOLDOWN_DEFAULT = new ArrayList<>(List.of(
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 2.5d, Season.SPRING),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 2.0d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 3.0d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 4.0d, Season.WINTER),
+
+			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 5d, Season.SPRING),
+			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 4.0d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 6.0d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 8.0d, Season.WINTER)
+	));
+
+	public static final ArrayList<LivestockData> breedingCooldown = new ArrayList<>();
+
+	public static final ArrayList<LivestockData> EGG_LAY_SLOWDOWN_DEFAULT = new ArrayList<>(List.of(
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 3.0d, Season.SPRING),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 2.5d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 3.5d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 5.0d, Season.WINTER)
+	));
+
+	public static final ArrayList<LivestockData> eggLaySlowdown = new ArrayList<>();
+
+	public static final ArrayList<LivestockData> COW_MILK_COOLDOWN_DEFAULT = new ArrayList<>(List.of(
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "cows", 1500, Season.SPRING),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "cows", 1200, Season.SUMMER),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "cows", 1800, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "cows", 3000, Season.WINTER)
+	));
+
+	public static final ArrayList<LivestockData> cowMilkCooldown = new ArrayList<>();
+
+	public static final ArrayList<LivestockData> BREEDING_FAIL_CHANCE_DEFAULT = new ArrayList<>(List.of(
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 0.6d, Season.SPRING),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 0.5d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 0.7d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 0.9d, Season.WINTER),
+
+			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 0.6d, Season.SPRING),
+			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 0.5d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 0.7d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 0.9d, Season.WINTER)
+	));
+
+	public static final ArrayList<LivestockData> breedingFailChance = new ArrayList<>();
 
 	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	@Override
+	public void loadJsonConfigs() {
+		if (!this.isEnabled())
+			return;
+		super.loadJsonConfigs();
+		this.loadAndReadFile("growth_slowdown_multiplier.json", growthSlowdown, GROWTH_SLOWNDOWN_DEFAULT, LivestockData.livestockDataListType);
+		this.loadAndReadFile("breeding_cooldown_multiplier.json", breedingCooldown, BREEDING_COOLDOWN_DEFAULT, LivestockData.livestockDataListType);
+		this.loadAndReadFile("egg_lay_cooldown_multiplier.json", eggLaySlowdown, EGG_LAY_SLOWDOWN_DEFAULT, LivestockData.livestockDataListType);
+		this.loadAndReadFile("cow_milk_cooldown.json", cowMilkCooldown, COW_MILK_COOLDOWN_DEFAULT, LivestockData.livestockDataListType);
+		this.loadAndReadFile("breeding_fail_chance.json", breedingFailChance, BREEDING_FAIL_CHANCE_DEFAULT, LivestockData.livestockDataListType);
 	}
 
 	/*@SubscribeEvent
@@ -84,120 +136,153 @@ public class Livestock extends Feature {
 	}*/
 
 	@SubscribeEvent
+	public void onLivingTick(LivingEvent.LivingTickEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		slowdownAnimalGrowth(event);
+		slowdownBreeding(event);
+		slowdownEggLay(event);
+		cowMilkTick(event);
+	}
+
 	public void slowdownAnimalGrowth(LivingEvent.LivingTickEvent event) {
-		if (!this.isEnabled()
-				|| childGrowthMultiplier == 1d
-				|| isEntityBlacklisted(event.getEntity()))
+		if (!(event.getEntity() instanceof AgeableMob mob))
 			return;
-		if (!(event.getEntity() instanceof Animal) && !(event.getEntity() instanceof AbstractVillager))
-			return;
-		if (event.getEntity() instanceof AbstractVillager && !childGrowthVillagers)
-			return;
-		AgeableMob entity = (AgeableMob) event.getEntity();
-		int growingAge = entity.getAge();
+
+		int growingAge = mob.getAge();
 		if (growingAge >= 0)
 			return;
-		double chance = 1d / childGrowthMultiplier;
-		if (entity.getRandom().nextFloat() > chance)
-			entity.setAge(growingAge - 1);
-	}
 
-	@SubscribeEvent
-	public void failBreeding(BabyEntitySpawnEvent event) {
-		if (!this.isEnabled()
-				|| breedingFailChance == 0d
-				|| !(event.getParentA() instanceof Animal animal)
-				|| isEntityBlacklisted(event.getParentA()))
+		double multiplier = 0d;
+		for (LivestockData data : growthSlowdown){
+			if (data.matches(mob))
+				multiplier += data.getValue();
+		}
+		if (multiplier == 0d)
 			return;
-		if (animal.getRandom().nextFloat() < breedingFailChance)
-			event.setCanceled(true);
+
+		double chance = 1d / multiplier;
+		if (mob.getRandom().nextFloat() > chance)
+			mob.setAge(growingAge - 1);
 	}
 
-	@SubscribeEvent
 	public void slowdownBreeding(LivingEvent.LivingTickEvent event) {
-		if (!this.isEnabled()
-				|| breedingMultiplier == 1d
-				|| !(event.getEntity() instanceof Animal)
-				|| isEntityBlacklisted(event.getEntity()))
+		if (!(event.getEntity() instanceof AgeableMob mob))
 			return;
-		AgeableMob entity = (AgeableMob) event.getEntity();
-		int growingAge = entity.getAge();
+
+		int growingAge = mob.getAge();
 		if (growingAge <= 0)
 			return;
-		double chance = 1d / breedingMultiplier;
-		if (entity.getRandom().nextFloat() > chance)
-			entity.setAge(growingAge + 1);
+
+		double multiplier = 0d;
+		for (LivestockData data : breedingCooldown){
+			if (data.matches(mob))
+				multiplier += data.getValue();
+		}
+		if (multiplier == 0d)
+			return;
+
+		double chance = 1d / multiplier;
+		if (mob.getRandom().nextFloat() > chance)
+			mob.setAge(growingAge + 1);
 	}
 
-	@SubscribeEvent
 	public void slowdownEggLay(LivingEvent.LivingTickEvent event) {
-		if (!this.isEnabled()
-				|| eggLayMultiplier == 1d
-				|| !(event.getEntity() instanceof Chicken chicken)
-				|| isEntityBlacklisted(chicken))
+		if (!(event.getEntity() instanceof Chicken chicken))
 			return;
+
 		int timeUntilNextEgg = chicken.eggTime;
 		if (timeUntilNextEgg < 0)
 			return;
-		double chance = 1d / eggLayMultiplier;
+
+		double multiplier = 0d;
+		for (LivestockData data : eggLaySlowdown){
+			if (data.matches(chicken))
+				multiplier += data.getValue();
+		}
+		if (multiplier == 0d)
+			return;
+
+		double chance = 1d / multiplier;
 		if (chicken.getRandom().nextFloat() > chance)
 			chicken.eggTime += 1;
 	}
 
-	@SubscribeEvent
 	public void cowMilkTick(LivingEvent.LivingTickEvent event) {
-		if (!this.isEnabled()
-				|| cowMilkDelay == 0
-				|| event.getEntity().tickCount % 20 != 0
-				|| !(event.getEntity() instanceof Cow cow)
-				|| isEntityBlacklisted(cow))
+		if (event.getEntity().tickCount % 20 != 0 ||
+				!(event.getEntity() instanceof Animal animal))
 			return;
-		CompoundTag cowNBT = cow.getPersistentData();
-		int milkCooldown = cowNBT.getInt(Strings.Tags.MILK_COOLDOWN);
+
+		CompoundTag cowNBT = animal.getPersistentData();
+		int milkCooldown = cowNBT.getInt(MILK_COOLDOWN);
 		if (milkCooldown > 0)
 			milkCooldown -= 20;
-		cowNBT.putInt(Strings.Tags.MILK_COOLDOWN, milkCooldown);
+		cowNBT.putInt(MILK_COOLDOWN, milkCooldown);
 	}
 
 	@SubscribeEvent
-	public void onCowMilk(PlayerInteractEvent.EntityInteract event) {
+	public void onAnimalMilk(PlayerInteractEvent.EntityInteract event) {
 		if (!this.isEnabled()
-				|| cowMilkDelay == 0
-				|| !(event.getTarget() instanceof Cow cow)
-				|| isEntityBlacklisted(cow)
-				|| cow.getAge() < 0)
+				|| !(event.getTarget() instanceof Animal animal)
+				|| animal.getAge() < 0)
 			return;
+
+		int cooldown = 0;
+		for (LivestockData data : cowMilkCooldown){
+			if (data.matches(animal)) {
+				cooldown = (int) data.getValue();
+				break;
+			}
+		}
+		if (cooldown == 0)
+			return;
+
 		Player player = event.getEntity();
 		InteractionHand hand = event.getHand();
 		ItemStack equipped = player.getItemInHand(hand);
 		if (equipped.isEmpty() || equipped.getItem() == Items.AIR)
 			return;
 		Item item = equipped.getItem();
-		if ((!FluidUtil.getFluidHandler(equipped).isPresent() || !FluidStack.loadFluidStackFromNBT(equipped.getTag()).isEmpty()) && (!(cow instanceof MushroomCow) || item != Items.BOWL))
+		if ((!FluidUtil.getFluidHandler(equipped).isPresent() || !FluidStack.loadFluidStackFromNBT(equipped.getTag()).isEmpty()) && (!(animal instanceof MushroomCow) || item != Items.BOWL))
 			return;
-		CompoundTag cowNBT = cow.getPersistentData();
-		int milkCooldown = cowNBT.getInt(Strings.Tags.MILK_COOLDOWN);
+		CompoundTag cowNBT = animal.getPersistentData();
+		int milkCooldown = cowNBT.getInt(MILK_COOLDOWN);
 		if (milkCooldown > 0) {
 			event.setCanceled(true);
 			if (!player.level.isClientSide) {
-				cow.playSound(SoundEvents.COW_HURT, 0.4F, (event.getEntity().level.random.nextFloat() - event.getEntity().level.random.nextFloat()) * 0.2F + 1.2F);
-				String animal = cow instanceof MushroomCow ? Strings.Translatable.MOOSHROOM_COOLDOWN : Strings.Translatable.COW_COOLDOWN;
-				String yetReady = Strings.Translatable.YET_READY;
-				MutableComponent message = Component.translatable(animal).append(" ").append(Component.translatable(yetReady));
+				animal.playSound(SoundEvents.COW_HURT, 0.4F, (event.getEntity().level.random.nextFloat() - event.getEntity().level.random.nextFloat()) * 0.2F + 1.2F);
+				MutableComponent message = Component.translatable(MILK_COOLDOWN_TRANSLATION, animal.getDisplayName());
 				player.displayClientMessage(message, true);
 			}
 			else
 				event.setCancellationResult(InteractionResult.SUCCESS);
 		}
 		else {
-			milkCooldown = cowMilkDelay * 20;
-			cowNBT.putInt(Strings.Tags.MILK_COOLDOWN, milkCooldown);
+			milkCooldown = cooldown * 20;
+			cowNBT.putInt(MILK_COOLDOWN, milkCooldown);
 			player.swing(event.getHand());
 		}
 	}
 
-	public static boolean isEntityBlacklisted(Entity entity) {
-		return Utils.isEntityInTag(entity, NO_LIVESTOCK_SLOWDOWN);
+	@SubscribeEvent
+	public void failBreeding(BabyEntitySpawnEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		double failChance = 0d;
+		int c = 0;
+		for (LivestockData data : breedingFailChance){
+			if (data.matches(event.getParentA())) {
+				failChance += data.getValue();
+				c++;
+			}
+		}
+		if (c == 0d)
+			return;
+
+		if (event.getParentA().getRandom().nextFloat() < failChance / c)
+			event.setCanceled(true);
 	}
 
 	private static final String path = "livestock/";
