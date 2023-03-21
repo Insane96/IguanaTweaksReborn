@@ -15,7 +15,7 @@
 	"survivalreimagined.bonus_tool_efficiency": "(+%.1f from Efficiency)",
 
 	"survivalreimagined.weak_hoe": "This hoe is too weak to till soil",
-	"survivalreimagined.till_cooldown": "%.2f till cooldown",
+	"survivalreimagined.till_cooldown": "%.1f till cooldown",
 
 	"survivalreimagined.armor_slowdown": "-%s%% Speed",
 
@@ -31,6 +31,8 @@
 	"effect.survivalreimagined.tired.description": "Obtained when haven't slept in a while. Reduces movement speed and sight.",
 	"effect.survivalreimagined.energy_boost.description": "Decreases tiredness by 0.2 each second per level.",
 	"effect.survivalreimagined.vigour.description": "Decreases hunger consumption by 20% per level.",
+
+	"survivalreimagined.food_stats": "%.1f Health / %.1f sec",
 
 	"container.repair.free": "No Cost",
 	"survivalreimagined.item_repaired": "Item got repaired",

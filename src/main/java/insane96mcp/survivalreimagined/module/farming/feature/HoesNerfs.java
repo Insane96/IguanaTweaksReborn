@@ -23,6 +23,7 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -108,6 +109,8 @@ public class HoesNerfs extends SRFeature {
 		return Utils.isItemInTag(item, DISABLED_HOES);
 	}
 
+	static final DecimalFormat ONE_DECIMAL_FORMATTER = new DecimalFormat("#.#");
+
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onTooltip(ItemTooltipEvent event) {
@@ -123,7 +126,7 @@ public class HoesNerfs extends SRFeature {
 						|| hoeStat.cooldown <= 0)
 					continue;
 
-				event.getToolTip().add(Component.translatable(TILL_COOLDOWN, hoeStat.cooldown / 20f).withStyle(ChatFormatting.DARK_GREEN));
+				event.getToolTip().add(Component.translatable(TILL_COOLDOWN, ONE_DECIMAL_FORMATTER.format(hoeStat.cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN));
 				break;
 			}
 		}

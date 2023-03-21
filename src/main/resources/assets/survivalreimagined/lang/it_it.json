@@ -29,6 +29,8 @@
 	"effect.survivalreimagined.energy_boost.description": "Riduce la stanchezza di 0.2 al secondo per livello.",
 	"effect.survivalreimagined.vigour.description": "Riduce il consumo della barra della fame del 20% per livello.",
 
+	"survivalreimagined.food_stats": "%.1f Vita / %.1f sec",
+
 	"container.repair.free": "Nessun costo",
 	"survivalreimagined.item_repaired": "L'oggetto é stato riparato",
 	"survivalreimagined.no_spawn_point": "Non puoi impostare un punto di respawn. Meglio lasciare delle tracce dallo spawn del mondo.",
