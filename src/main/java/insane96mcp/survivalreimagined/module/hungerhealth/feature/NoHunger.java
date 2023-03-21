@@ -19,7 +19,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -55,14 +54,8 @@ public class NoHunger extends Feature {
     @Label(name = "Passive Health Regen.Enable Passive Health Regen", description = "If true, Passive Regeneration is enabled")
     public static Boolean enablePassiveRegen = true;
     @Config
-    @Label(name = "Passive Health Regen.Regen Speed Easy", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for easy and peaceful difficulty")
-    public static MinMax passiveRegenerationTimeEasy = new MinMax(15, 30);
-    @Config
-    @Label(name = "Passive Health Regen.Regen Speed Normal", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for normal difficulty")
-    public static MinMax passiveRegenerationTimeNormal = new MinMax(20, 45);
-    @Config
-    @Label(name = "Passive Health Regen.Regen Speed Hard", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%. This applies for hard difficulty")
-    public static MinMax passiveRegenerationTimeHard = new MinMax(25, 45);
+    @Label(name = "Passive Health Regen.Regen Speed", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%")
+    public static MinMax passiveRegenerationTime = new MinMax(40, 60);
     @Config(min = -1)
     @Label(name = "Food Gives Well Fed when Saturation Modifier >", description = "When saturation modifier of the food eaten is higher than this value, the Well Fed effect is given. Set to -1 to disable the effect.\n" +
             "Well Fed increases passive health regen speed by 40%")
@@ -169,15 +162,7 @@ public class NoHunger extends Feature {
     private static int getPassiveRegenSpeed(Player player) {
         float healthPerc = 1 - (player.getHealth() / player.getMaxHealth());
         int secs;
-        if (player.level.getDifficulty().equals(Difficulty.HARD)) {
-            secs = (int) ((passiveRegenerationTimeHard.max - passiveRegenerationTimeHard.min) * healthPerc + passiveRegenerationTimeHard.min);
-        }
-        else if (player.level.getDifficulty().equals(Difficulty.NORMAL)) {
-            secs = (int) ((passiveRegenerationTimeNormal.max - passiveRegenerationTimeNormal.min) * healthPerc + passiveRegenerationTimeNormal.min);
-        }
-        else {
-            secs = (int) ((passiveRegenerationTimeEasy.max - passiveRegenerationTimeEasy.min) * healthPerc + passiveRegenerationTimeEasy.min);
-        }
+        secs = (int) ((passiveRegenerationTime.max - passiveRegenerationTime.min) * healthPerc + passiveRegenerationTime.min);
         if (player.hasEffect(SRMobEffects.WELL_FED.get())) {
             MobEffectInstance wellFed = player.getEffect(SRMobEffects.WELL_FED.get());
             //noinspection ConstantConditions
