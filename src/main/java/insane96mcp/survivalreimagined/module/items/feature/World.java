@@ -13,7 +13,7 @@ import net.minecraftforge.common.data.GlobalLootModifierProvider;
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class World extends SRFeature {
 
-	//TODO New World module + Desire Paths
+	//TODO New World module + Desire Paths + Check if changing day length is viable
 
 	public World(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
