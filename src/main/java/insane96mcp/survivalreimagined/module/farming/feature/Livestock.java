@@ -7,7 +7,6 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
-import insane96mcp.survivalreimagined.data.lootmodifier.LootPurgerModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -204,100 +203,57 @@ public class Livestock extends Feature {
 	private static final String path = "livestock/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "lower_chicken", new DropMultiplierModifier(
-				new LootItemCondition[0],
-				Items.CHICKEN,
-				0.2f
-		));
-		provider.add(path + "lower_cooked_chicken", new DropMultiplierModifier(
-				new LootItemCondition[0],
-				Items.COOKED_CHICKEN,
-				0.2f
-		));
-		provider.add(path + "lower_mutton", new DropMultiplierModifier(
-				new LootItemCondition[0],
-				Items.MUTTON,
-				0.2f
-		));
-		provider.add(path + "lower_cooked_mutton", new DropMultiplierModifier(
-				new LootItemCondition[0],
-				Items.COOKED_MUTTON,
-				0.25f
-		));
-		provider.add(path + "lower_beef", new DropMultiplierModifier(
-				new LootItemCondition[0],
-				Items.BEEF,
-				0.25f
-		));
-		provider.add(path + "lower_cooked_beef", new DropMultiplierModifier(
-				new LootItemCondition[0],
-				Items.COOKED_BEEF,
-				0.25f
-		));
-		/*provider.add(path + "lower_cow_leather", new DropMultiplierModifier(
-				new LootItemCondition[] {
-						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.COW)).build()).build()
-				},
-				Items.LEATHER,
-				0.5f
-		));*/
-		provider.add(path + "lower_porkchop", new DropMultiplierModifier(
-				new LootItemCondition[0],
-				Items.PORKCHOP,
-				0.4f
-		));
-		provider.add(path + "lower_cooked_porkchop", new DropMultiplierModifier(
-				new LootItemCondition[0],
-				Items.COOKED_PORKCHOP,
-				0.4f
-		));
-		provider.add(path + "lower_cod", new DropMultiplierModifier(
-				new LootItemCondition[] {
-						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.COD)).build()).build()
-				},
+		provider.add(path + "lower_chicken", new DropMultiplierModifier.Builder(Items.CHICKEN, 0.2f)
+				.build());
+		provider.add(path + "lower_cooked_chicken", new DropMultiplierModifier.Builder(Items.COOKED_CHICKEN, 0.2f)
+				.build());
+		provider.add(path + "lower_mutton", new DropMultiplierModifier.Builder(Items.MUTTON, 0.2f)
+				.build());
+		provider.add(path + "lower_cooked_mutton", new DropMultiplierModifier.Builder(Items.COOKED_MUTTON, 0.2f)
+				.build());
+		provider.add(path + "lower_beef", new DropMultiplierModifier.Builder(Items.BEEF, 0.2f)
+				.build());
+		provider.add(path + "lower_cooked_beef", new DropMultiplierModifier.Builder(Items.COOKED_BEEF, 0.2f)
+				.build());
+		provider.add(path + "lower_porkchop", new DropMultiplierModifier.Builder(Items.PORKCHOP, 0.4f)
+				.build());
+		provider.add(path + "lower_cooked_porkchop", new DropMultiplierModifier.Builder(Items.COOKED_PORKCHOP, 0.4f)
+				.build());
+		provider.add(path + "lower_cod", new DropMultiplierModifier.Builder(new LootItemCondition[] {
+				LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.COD)).build()).build()
+		},
 				Items.COD,
-				0.3f
-		));
-		provider.add(path + "lower_cooked_cod", new DropMultiplierModifier(
-				new LootItemCondition[] {
-						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.COD)).build()).build()
-				},
+				0.25f)
+				.build());
+		provider.add(path + "lower_cooked_cod", new DropMultiplierModifier.Builder(new LootItemCondition[] {
+				LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.COD)).build()).build()
+		},
 				Items.COOKED_COD,
-				0.3f
-		));
-		provider.add(path + "lower_salmon", new DropMultiplierModifier(
-				new LootItemCondition[] {
-						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.SALMON)).build()).build()
-				},
+				0.25f)
+				.build());
+		provider.add(path + "lower_salmon", new DropMultiplierModifier.Builder(new LootItemCondition[] {
+				LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.SALMON)).build()).build()
+		},
 				Items.SALMON,
-				0.3f
-		));
-		provider.add(path + "lower_cooked_salmon", new DropMultiplierModifier(
-				new LootItemCondition[] {
-						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.SALMON)).build()).build()
-				},
+				0.25f)
+				.build());
+		provider.add(path + "lower_cooked_salmon", new DropMultiplierModifier.Builder(new LootItemCondition[] {
+				LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.SALMON)).build()).build()
+		},
 				Items.COOKED_SALMON,
-				0.3f
-		));
-		provider.add(path + "lower_pufferfish", new DropMultiplierModifier(
-				new LootItemCondition[] {
-						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.PUFFERFISH)).build()).build()
-				},
+				0.25f)
+				.build());
+		provider.add(path + "lower_pufferfish", new DropMultiplierModifier.Builder(new LootItemCondition[] {
+				LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.PUFFERFISH)).build()).build()
+		},
 				Items.PUFFERFISH,
-				0.3f
-		));
-		provider.add(path + "lower_tropical_fish", new DropMultiplierModifier(
-				new LootItemCondition[] {
-						LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.TROPICAL_FISH)).build()).build()
-				},
+				0.3f)
+				.build());
+		provider.add(path + "lower_tropical_fish", new DropMultiplierModifier.Builder(new LootItemCondition[] {
+				LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(EntityType.TROPICAL_FISH)).build()).build()
+		},
 				Items.TROPICAL_FISH,
-				0.3f
-		));
-
-		provider.add(path + "test_purger", new LootPurgerModifier(
-				new LootItemCondition[0],
-				new ResourceLocation("minecraft:chests/abandoned_mineshaft"),
-				1000
-		));
+				0.3f)
+				.build());
 	}
 }

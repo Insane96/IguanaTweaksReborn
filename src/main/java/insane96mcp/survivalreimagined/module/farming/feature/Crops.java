@@ -173,29 +173,29 @@ public class Crops extends Feature {
 	private static final String path = "crops/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "harder_beetroot_farming", new DropMultiplierModifier(
+		provider.add(path + "harder_beetroot_farming", new DropMultiplierModifier.Builder(
 				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.BEETROOTS).build()},
 				Items.BEETROOT_SEEDS,
-				0.137f,
-				1
-		));
-		provider.add(path + "harder_wheat_farming", new DropMultiplierModifier(
+				0.137f)
+				.keepAmount(1)
+				.build());
+		provider.add(path + "harder_wheat_farming", new DropMultiplierModifier.Builder(
 				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.WHEAT).build()},
 				Items.WHEAT_SEEDS,
-				0.137f,
-				1
-		));
-		provider.add(path + "harder_potato_farming", new DropMultiplierModifier(
+				0.137f)
+				.keepAmount(1)
+				.build());
+		provider.add(path + "harder_potato_farming", new DropMultiplierModifier.Builder(
 				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.POTATOES).build()},
 				Items.POTATO,
-				0.1f,
-				1
-		));
-		provider.add(path + "harder_carrot_farming", new DropMultiplierModifier(
+				0.1f)
+				.keepAmount(1)
+				.build());
+		provider.add(path + "harder_carrot_farming", new DropMultiplierModifier.Builder(
 				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.CARROTS).build()},
 				Items.CARROT,
-				0.1f,
-				1
-		));
+				0.1f)
+				.keepAmount(1)
+				.build());
 	}
 }

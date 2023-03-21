@@ -1,6 +1,5 @@
 {
   "type": "survivalreimagined:drop_multiplier",
-  "amount_to_keep": 0,
   "conditions": [
     {
       "condition": "minecraft:entity_properties",
@@ -11,5 +10,5 @@
     }
   ],
   "item": "minecraft:cooked_cod",
-  "multiplier": 0.3
+  "multiplier": 0.25
 }

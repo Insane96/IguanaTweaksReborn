@@ -21,10 +21,10 @@ public class CustomStackSize extends SRFeature {
     public static final List<IdTagValue> CUSTOM_STACK_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:potion", 16),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:minecart", 16),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chest_minecart", 16),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:hopper_minecart", 16),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:furnace_minecart", 16),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:tnt_minecart", 16),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chest_minecart", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:hopper_minecart", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:furnace_minecart", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:tnt_minecart", 8),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:snowball", 64),
             //new IdTagValue(IdTagMatcher.Type.ID, "minecraft:egg", 64),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:saddle", 16)

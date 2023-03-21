@@ -27,15 +27,15 @@ public class LootPurgerModifier extends LootModifier {
                     )).apply(inst, LootPurgerModifier::new)
             ));
 
-    private final ResourceLocation lootTable;
-    private final int startRange;
-    private final int endRange;
+    private ResourceLocation lootTable;
+    private int startRange = 0;
+    private int endRange;
     //Chance to purge when at start range
-    private final float multiplierAtStart;
-    private final boolean applyToDamageable;
+    private float multiplierAtStart = 0f;
+    private boolean applyToDamageable = false;
 
-    public LootPurgerModifier(LootItemCondition[] conditionsIn, ResourceLocation lootTable, int endRange) {
-        this(conditionsIn, lootTable, 0, endRange, 0f, true);
+    public LootPurgerModifier(LootItemCondition[] conditionsIn) {
+        super(conditionsIn);
     }
 
     public LootPurgerModifier(LootItemCondition[] conditionsIn, ResourceLocation lootTable, int startRange, int endRange, float multiplierAtStart, boolean applyToDamageable) {
@@ -59,17 +59,53 @@ public class LootPurgerModifier extends LootModifier {
         int z = (int) context.getParam(LootContextParams.ORIGIN).z;
         int distanceFromSpawn = (int) Math.sqrt((x - spawnX) * (x - spawnX) + (z - spawnZ) * (z - spawnZ));
         int distanceFromStart = (distanceFromSpawn - this.startRange);
+        //Chance to purge
         float multiplier = (this.endRange - distanceFromStart) / ((float) this.endRange - this.startRange) * (1f - multiplierAtStart);
         generatedLoot.removeIf(itemStack -> context.getRandom().nextDouble() < multiplier);
-        generatedLoot.forEach(itemStack -> {
-            if (itemStack.getItem().canBeDepleted())
-                itemStack.setDamageValue((int) ((itemStack.getMaxDamage() - itemStack.getDamageValue()) * (1f - multiplier)));
-        });
+        if (this.applyToDamageable) {
+            generatedLoot.forEach(itemStack -> {
+                if (itemStack.getItem().canBeDepleted())
+                    itemStack.setDamageValue((int) (itemStack.getMaxDamage() - ((itemStack.getMaxDamage() - itemStack.getDamageValue()) * (1f - multiplier))));
+            });
+        }
         return generatedLoot;
     }
 
     @Override
     public Codec<? extends IGlobalLootModifier> codec() {
         return CODEC.get();
+    }
+
+    public static class Builder {
+        final LootPurgerModifier lootPurgerModifier;
+
+        public Builder(LootItemCondition[] conditionsIn, ResourceLocation lootTable, int endRange) {
+            this.lootPurgerModifier = new LootPurgerModifier(conditionsIn);
+            this.lootPurgerModifier.endRange = endRange;
+            this.lootPurgerModifier.lootTable = lootTable;
+        }
+
+        public Builder(ResourceLocation lootTable, int endRange) {
+            this(new LootItemCondition[0], lootTable, endRange);
+        }
+
+        public Builder setStartRange(int startRange) {
+            this.lootPurgerModifier.startRange = startRange;
+            return this;
+        }
+
+        public Builder setMultiplierAtStart(float multiplierAtStart) {
+            this.lootPurgerModifier.multiplierAtStart = multiplierAtStart;
+            return this;
+        }
+
+        public Builder applyToDamageable() {
+            this.lootPurgerModifier.applyToDamageable = true;
+            return this;
+        }
+
+        public LootPurgerModifier build() {
+            return this.lootPurgerModifier;
+        }
     }
 }

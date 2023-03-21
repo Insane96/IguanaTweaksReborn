@@ -1,7 +1,6 @@
 {
   "type": "survivalreimagined:drop_multiplier",
-  "amount_to_keep": 0,
   "conditions": [],
   "item": "minecraft:cooked_mutton",
-  "multiplier": 0.25
+  "multiplier": 0.2
 }

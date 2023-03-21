@@ -22,41 +22,26 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class DropMultiplierModifier extends LootModifier {
+
+    //TODO Builder
     public static final Supplier<Codec<DropMultiplierModifier>> CODEC = Suppliers.memoize(() ->
             RecordCodecBuilder.create(inst -> codecStart(inst).and(
                     inst.group(
                             ForgeRegistries.ITEMS.getCodec().optionalFieldOf("item").forGetter(m -> m.item),
                             TagKey.codec(Registries.ITEM).optionalFieldOf("tag").forGetter(m -> m.tag),
                             Codec.floatRange(0f, 1024f).fieldOf("multiplier").forGetter(m -> m.multiplier),
-                            Codec.intRange(0, 256).fieldOf("amount_to_keep").forGetter(m -> m.amountToKeep)
+                            Codec.intRange(0, 256).optionalFieldOf("amount_to_keep", 0).forGetter(m -> m.amountToKeep)
                     )).apply(inst, DropMultiplierModifier::new)
             ));
 
     //The item to modify
-    private final Optional<Item> item;
+    private Optional<Item> item;
     //The item tag to modify
-    private final Optional<TagKey<Item>> tag;
+    private Optional<TagKey<Item>> tag;
     //The multiplier applied to the amount of items
-    private final float multiplier;
+    private float multiplier;
     //This amount is subtracted from the total amount before applying the multiplier
-    private final int amountToKeep;
-
-    public DropMultiplierModifier(LootItemCondition[] conditionsIn, Item item, float multiplier, int amountToKeep) {
-        this(conditionsIn, Optional.of(item), Optional.empty(), multiplier, amountToKeep);
-    }
-
-    public DropMultiplierModifier(LootItemCondition[] conditionsIn, TagKey<Item> tag, float multiplier, int amountToKeep) {
-        this(conditionsIn, Optional.empty(), Optional.of(tag), multiplier, amountToKeep);
-    }
-
-
-    public DropMultiplierModifier(LootItemCondition[] conditionsIn, Item item, float multiplier) {
-        this(conditionsIn, Optional.of(item), Optional.empty(), multiplier, 0);
-    }
-
-    public DropMultiplierModifier(LootItemCondition[] conditionsIn, TagKey<Item> tag, float multiplier) {
-        this(conditionsIn, Optional.empty(), Optional.of(tag), multiplier, 0);
-    }
+    private int amountToKeep = 0;
 
     public DropMultiplierModifier(LootItemCondition[] conditionsIn, Optional<Item> item, Optional<TagKey<Item>> tag, float multiplier, int amountToKeep) {
         super(conditionsIn);
@@ -100,8 +85,45 @@ public class DropMultiplierModifier extends LootModifier {
         return generatedLoot;
     }
 
+    public static DropMultiplierModifier newItem(LootItemCondition[] conditionsIn, Optional<Item> item, float multiplier) {
+        return new DropMultiplierModifier(conditionsIn, item, Optional.empty(), multiplier, 0);
+    }
+
+    public static DropMultiplierModifier newTag(LootItemCondition[] conditionsIn, Optional<TagKey<Item>> tag, float multiplier) {
+        return new DropMultiplierModifier(conditionsIn, Optional.empty(), tag, multiplier, 0);
+    }
+
     @Override
     public Codec<? extends IGlobalLootModifier> codec() {
         return CODEC.get();
+    }
+
+    public static class Builder {
+        final DropMultiplierModifier dropMultiplierModifier;
+
+        public Builder(LootItemCondition[] conditionsIn, Item item, float multiplier) {
+            this.dropMultiplierModifier = DropMultiplierModifier.newItem(conditionsIn, Optional.of(item), multiplier);
+        }
+
+        public Builder(LootItemCondition[] conditionsIn, TagKey<Item> tag, float multiplier) {
+            this.dropMultiplierModifier = DropMultiplierModifier.newTag(conditionsIn, Optional.of(tag), multiplier);
+        }
+
+        public Builder(Item item, float multiplier) {
+            this.dropMultiplierModifier = DropMultiplierModifier.newItem(new LootItemCondition[0], Optional.of(item), multiplier);
+        }
+
+        public Builder(TagKey<Item> tag, float multiplier) {
+            this.dropMultiplierModifier = DropMultiplierModifier.newTag(new LootItemCondition[0], Optional.of(tag), multiplier);
+        }
+
+        public Builder keepAmount(int amount) {
+            this.dropMultiplierModifier.amountToKeep = amount;
+            return this;
+        }
+
+        public DropMultiplierModifier build() {
+            return this.dropMultiplierModifier;
+        }
     }
 }
