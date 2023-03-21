@@ -36,6 +36,8 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
 
+import java.text.DecimalFormat;
+
 @Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class NoHunger extends Feature {
@@ -45,6 +47,8 @@ public class NoHunger extends Feature {
     private static final String FOOD_REGEN_LEFT = SurvivalReimagined.RESOURCE_PREFIX + "food_regen_left";
     private static final String FOOD_REGEN_STRENGTH = SurvivalReimagined.RESOURCE_PREFIX + "food_regen_strength";
 
+    private static final String FOOD_STATS_TRANSLATABLE = SurvivalReimagined.MOD_ID + ".food_stats";
+
     private static final ResourceLocation RAW_FOOD = new ResourceLocation(SurvivalReimagined.MOD_ID, "raw_food");
 
     @Config
@@ -52,19 +56,18 @@ public class NoHunger extends Feature {
     public static Boolean disableHunger = true;
     @Config
     @Label(name = "Passive Health Regen.Enable Passive Health Regen", description = "If true, Passive Regeneration is enabled")
-    public static Boolean enablePassiveRegen = true;
+    public static Boolean enablePassiveRegen = false;
     @Config
     @Label(name = "Passive Health Regen.Regen Speed", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%")
     public static MinMax passiveRegenerationTime = new MinMax(40, 60);
-    @Config(min = -1)
-    @Label(name = "Food Gives Well Fed when Saturation Modifier >", description = "When saturation modifier of the food eaten is higher than this value, the Well Fed effect is given. Set to -1 to disable the effect.\n" +
-            "Well Fed increases passive health regen speed by 40%")
-    public static Double foodGivesWellFedWhenSaturationModifier = 0.5d;
     @Config(min = 0d)
     @Label(name = "Food Heal.Health Multiplier", description = "When eating you'll get healed by hunger restored multiplied by this percentage. (Set to 1 to have the same effect as pre-beta 1.8 food")
-    public static Double foodHealHealthMultiplier = 1d;
+    public static Double foodHealHealthMultiplier = 0.83d;
     @Config
-    @Label(name = "Raw food.Heal Multiplier", description = "If true, raw food will heal by this percentage. Raw food is defined in the survivalreimagined:raw_food tag")
+    @Label(name = "Food Heal.Instant Heal", description = "If true, health is regenerated instantly instead of over time")
+    public static Boolean foodHealInstantly = false;
+    @Config
+    @Label(name = "Raw food.Heal Multiplier", description = "If true, raw food will heal by this percentage (this is applied after 'Food Heal.Health Multiplier'). Raw food is defined in the survivalreimagined:raw_food tag")
     public static Double rawFoodHealPercentage = 1d;
     @Config(min = 0d, max = 1f)
     @Label(name = "Raw food.Poison Chance", description = "Raw food has this chance to poison the player. Raw food is defined in the survivalreimagined:raw_food tag")
@@ -122,19 +125,7 @@ public class NoHunger extends Feature {
                 || event.getEntity().level.isClientSide)
             return;
 
-        //applyFedEffect(event);
         healOnEat(event);
-    }
-
-    public void applyFedEffect(LivingEntityUseItemEvent.Finish event) {
-        if (foodGivesWellFedWhenSaturationModifier < 0d) return;
-        FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), event.getEntity());
-        //noinspection ConstantConditions
-        if (food.saturationModifier < foodGivesWellFedWhenSaturationModifier)
-            return;
-        int duration = (int) (food.getNutrition() * food.getSaturationModifier() * 2 * 20 * 10);
-        //int amplifier = (int) ((food.saturationModifier * 2 * food.nutrition) / 4 - 1);
-        event.getEntity().addEffect(new MobEffectInstance(SRMobEffects.WELL_FED.get(), duration, 0, true, false, true));
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -147,13 +138,17 @@ public class NoHunger extends Feature {
         if (player.getRandom().nextDouble() < rawFoodPoisonChance && isRawFood) {
             player.addEffect(new MobEffectInstance(MobEffects.POISON, food.getNutrition() * 20 * 4));
         }
+
+        float heal = food.getNutrition() * foodHealHealthMultiplier.floatValue();
+        //Half heart per second by default
+        float strength = (0.5f * (1.4f - food.getSaturationModifier())) / 20f;
+        if (isRawFood && rawFoodHealPercentage != 1d)
+            heal *= rawFoodHealPercentage;
+
+        if (foodHealInstantly) {
+            player.heal(heal);
+        }
         else {
-            float heal = food.getNutrition() * foodHealHealthMultiplier.floatValue();
-            //Half heart per second by default
-            float strength = 0.5f * food.getSaturationModifier() / 20f;
-            if (isRawFood && rawFoodHealPercentage != 1d)
-                heal *= rawFoodHealPercentage;
-            //event.getEntity().heal((float) heal);
             setFoodRegenLeft(player, heal);
             setFoodRegenStrength(player, strength);
         }
@@ -269,4 +264,20 @@ public class NoHunger extends Feature {
         // rebind default icons
         RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
     }
+
+    static final DecimalFormat ONE_DECIMAL_FORMATTER = new DecimalFormat("#.#");
+
+    /*@OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public void onTooltip(ItemTooltipEvent event) {
+        if (!this.isEnabled()
+                || !event.getItemStack().getItem().isEdible())
+            return;
+
+        FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
+        float heal = food.getNutrition() * foodHealHealthMultiplier.floatValue();
+        //Half heart per second by default
+        float strength = (0.5f * (1.4f - food.getSaturationModifier()));
+        event.getToolTip().add(Component.translatable(FOOD_STATS_TRANSLATABLE, ONE_DECIMAL_FORMATTER.format(heal), ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.DARK_GREEN));
+    }*/
 }

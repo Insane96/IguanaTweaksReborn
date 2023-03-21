@@ -42,7 +42,7 @@ public class FoodDrinks extends SRFeature {
 	//TODO Change this to formula
 	@Config(min = 0d, max = 20d)
 	@Label(name = "Food Hunger Multiplier", description = "Food's hunger restored will be multiplied by this value (rounded up). E.g. With this set to 0.5 a Cooked Porkchop would restore 4 hunger instead of 8. Setting to 1 will disable this feature.")
-	public static Double foodHungerMultiplier = 0.83d;
+	public static Double foodHungerMultiplier = 1d;
 	//TODO Change this to formula
 	@Config(min = 0d, max = 64d)
 	@Label(name = "Food Saturation Multiplier", description = "Food's saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
@@ -56,7 +56,7 @@ public class FoodDrinks extends SRFeature {
 	public static Boolean eatingSpeedBasedOffFood = true;
 	@Config
 	@Label(name = "Eating Speed Formula", description = "The formula to calculate the ticks required to eat a food. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. The default formula increases the time to eat exponentially when higher effectiveness.")
-	public static String eatingSpeedFormula = "MAX((32 * effectiveness^1.7) / IF(fast_food, 2, 1) * 0.04, 24 / IF(fast_food, 2, 1))";
+	public static String eatingSpeedFormula = "MAX((32 * effectiveness^1.3) / IF(fast_food, 2, 1) * 0.04, 24 / IF(fast_food, 2, 1))";
 	@Config
 	@Label(name = "Stop consuming on hit", description = "If true, eating/drinking stops when the player's hit.")
 	public static Boolean stopConsumingOnHit = true;
