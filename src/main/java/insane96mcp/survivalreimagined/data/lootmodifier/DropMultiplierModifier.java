@@ -23,7 +23,6 @@ import java.util.function.Supplier;
 
 public class DropMultiplierModifier extends LootModifier {
 
-    //TODO Builder
     public static final Supplier<Codec<DropMultiplierModifier>> CODEC = Suppliers.memoize(() ->
             RecordCodecBuilder.create(inst -> codecStart(inst).and(
                     inst.group(

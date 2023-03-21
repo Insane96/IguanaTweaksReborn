@@ -34,7 +34,7 @@ public class Nerfs extends Feature {
 
 	//TODO Unlimited tracking maps
 	/*@Config
-	@Label(name = "Infinite maps range", description = "Makes maps useful by not letting the player ")
+	@Label(name = "Infinite maps range", description = "Since you have no coordinates, makes maps useful by not letting the player indicator disappear after some blocks")
 	public static Boolean infiniteRangeMap = true;*/
 
 	public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
