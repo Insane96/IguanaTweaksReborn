@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Spiders no longer apply Slowness 2 on hit
+
 ## Alpha 3.0.1
 * Shears now Require an anvil to make (flint + 2 iron ingots)
   * Durability has been increased (33% -> 50% of vanilla durability)

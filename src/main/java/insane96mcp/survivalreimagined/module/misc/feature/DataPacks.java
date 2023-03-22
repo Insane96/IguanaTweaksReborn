@@ -13,6 +13,7 @@ import net.minecraft.server.packs.PackType;
 @LoadFeature(module = Modules.Ids.MISC)
 public class DataPacks extends Feature {
 
+    //Furnace requires copper, you get nuggets by smelting raw copper on campfire
     @Config
     @Label(name = "Hardcore Torches", description = """
             Changes vanilla torch recipes.
