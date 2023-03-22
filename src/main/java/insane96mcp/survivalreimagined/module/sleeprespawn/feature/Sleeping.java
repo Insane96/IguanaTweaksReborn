@@ -26,7 +26,7 @@ public class Sleeping extends Feature {
 	@Label(name = "Disable Sleeping", description = "If set to true the player will not be able to sleep.")
 	public static Boolean disableSleeping = false;
 	@Config
-	@Label(name = "Disable Spawn Points", description = "If set to true the player spawn point cannot be changed and will always be .")
+	@Label(name = "Disable Spawn Points", description = "If set to true the player spawn point cannot be changed.")
 	public static Boolean disableSpawnPoints = true;
 	@Config
 	@Label(name = "Allow Sleeping During Day", description = "If set to true the player will be able to sleep during day time. On wake up it will be night time. Note that with 'Tiredness' feature enabled you are still not able to sleep during day unless you're ")
@@ -47,12 +47,11 @@ public class Sleeping extends Feature {
 
 		if (disableSleeping) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
-			if (!disableSpawnPoints) {
+			if (disableSpawnPoints) {
+				player.displayClientMessage(Component.translatable(Strings.Translatable.DECORATIVE_BEDS), false);
+			} else {
 				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, true);
 				player.displayClientMessage(Component.translatable(Strings.Translatable.ENJOY_THE_NIGHT), false);
-			}
-			else {
-				player.displayClientMessage(Component.translatable(Strings.Translatable.DECORATIVE_BEDS), false);
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.items.feature;
+package insane96mcp.survivalreimagined.module.world.feature;
 
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -9,13 +9,13 @@ import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 
-@Label(name = "World", description = "Changes items in world")
-@LoadFeature(module = Modules.Ids.ITEMS)
-public class World extends SRFeature {
+@Label(name = "Loot reducer", description = "Reduces loot from some structures when too near spawn.")
+@LoadFeature(module = Modules.Ids.WORLD)
+public class Loot extends SRFeature {
 
-	//TODO New World module + Desire Paths + Check if changing day length is viable
+	//TODO Desire Paths + Check if changing day length is viable
 
-	public World(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public Loot(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
