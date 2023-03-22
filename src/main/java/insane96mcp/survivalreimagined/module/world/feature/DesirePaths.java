@@ -23,6 +23,8 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.WORLD)
 public class DesirePaths extends SRFeature {
 
+	//Add Dirt to Path mod dependency
+
 	private static final List<String> DEFAULT_TRANSFORMATION_LIST = List.of("minecraft:grass_block,minecraft:dirt", "minecraft:dirt,minecraft:coarse_dirt");
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> transformationListConfig;
 
