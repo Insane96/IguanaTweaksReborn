@@ -2,11 +2,15 @@ package insane96mcp.survivalreimagined.module.world.feature;
 
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.world.data.BlockTransformation;
+import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,6 +27,7 @@ import java.util.List;
 @Label(name = "Desire Paths", description = "Wear down grass when passing on it.")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class DesirePaths extends SRFeature {
+	public static final ResourceLocation GRASS_TO_WALK_ON = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "grass_to_walk_on");
 
 	//Add Dirt to Path mod dependency
 
@@ -30,6 +35,10 @@ public class DesirePaths extends SRFeature {
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> transformationListConfig;
 
 	public static ArrayList<BlockTransformation> transformationList;
+
+	@Config
+	@Label(name = "Break Tall Grass", description = "Tall grass is broken when grass is transformed")
+	public static Boolean breakTallGrass = true;
 
 	public DesirePaths(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -72,6 +81,12 @@ public class DesirePaths extends SRFeature {
 						Block block = ForgeRegistries.BLOCKS.getValue(blockTransformation.transformTo);
 						if (block == null) continue;
 						event.player.level.setBlockAndUpdate(pos, block.defaultBlockState());
+						if (!breakTallGrass)
+							continue;
+						pos = new BlockPos(x2, event.player.position().y + 0.002d, z2);
+						if (Utils.isBlockInTag(state.getBlock(), GRASS_TO_WALK_ON)) {
+							event.player.level.destroyBlock(pos, false, event.player);
+						}
 					}
 				}
 			}
