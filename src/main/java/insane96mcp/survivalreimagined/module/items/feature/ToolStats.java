@@ -57,40 +57,35 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shield", 268),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shears", 119),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_helmet", 39),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_helmet", 33),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_chestplate", 48),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_leggings", 45),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_boots", 33),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_boots", 39),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_helmet", 91),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_helmet", 77),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_chestplate", 112),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_leggings", 105),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_boots", 77),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_boots", 91),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_helmet", 91),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_helmet", 77),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_chestplate", 112),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_leggings", 105),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_boots", 77),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_boots", 91),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 45),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 38),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", 56),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_leggings", 52),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_boots", 38),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_boots", 45),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 214),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 181),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", 264),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", 247),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_boots", 181),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_boots", 214),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 214),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", 264),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", 247),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_boots", 181),
-
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 260),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 220),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", 320),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 300),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 220)
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 260)
 	));
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 
