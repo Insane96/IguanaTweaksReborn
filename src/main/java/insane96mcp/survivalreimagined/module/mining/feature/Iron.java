@@ -15,7 +15,7 @@ import net.minecraftforge.common.data.GlobalLootModifierProvider;
 public class Iron extends Feature {
 
 	//TODO Maybe some kind of Soul Forge to double yields from ores
-	//TODO Make iron armor require chain armor instead of leather. As much as I like the idea of using leather as a base, cows and leather is not easy to come by. Make chain armor craftable from leather+chains in anvil.
+	//TODO Make iron armor require chain armor instead of leather. As much as I like the idea of using leather as a base, cows and leather are not easy to come by. Make chain armor craftable from leather+chains in anvil.
 	//1 leather for boots, 2 for helmet, 3 for leggings and 4 for chestplate. Chains amount is the same as the vanilla crafting
 	@Config
 	@Label(name = "Farmable Iron data pack", description = """

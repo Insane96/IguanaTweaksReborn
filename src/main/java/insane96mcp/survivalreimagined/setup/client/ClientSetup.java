@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.setup.client;
 
+import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.feature.FlintTools;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.event.CreativeModeTabEvent;
@@ -16,6 +17,10 @@ public class ClientSetup {
         }
         else if (event.getTab() == CreativeModeTabs.COMBAT) {
             event.accept(FlintTools.FLINT_SWORD.get());
+            event.accept(ChainedCopperArmor.HELMET.get());
+            event.accept(ChainedCopperArmor.CHESTPLATE.get());
+            event.accept(ChainedCopperArmor.LEGGINGS.get());
+            event.accept(ChainedCopperArmor.BOOTS.get());
         }
     }
 }

@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.data;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.feature.FlintTools;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -73,6 +74,42 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                             ::save
                 )
                 .build(writer, SurvivalReimagined.MOD_ID, "flint_from_gravel");
+
+        //Chained Copper Armor
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ChainedCopperArmor.HELMET.get())
+                .pattern("cmc")
+                .pattern("m m")
+                .define('c', Items.CHAIN)
+                .define('m', Items.COPPER_INGOT)
+                .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                .unlockedBy("has_chain", has(Items.CHAIN))
+                .save(writer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ChainedCopperArmor.CHESTPLATE.get())
+                .pattern("c c")
+                .pattern("cmc")
+                .pattern("mmm")
+                .define('c', Items.CHAIN)
+                .define('m', Items.COPPER_INGOT)
+                .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                .unlockedBy("has_chain", has(Items.CHAIN))
+                .save(writer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ChainedCopperArmor.LEGGINGS.get())
+                .pattern("ccc")
+                .pattern("m m")
+                .pattern("m m")
+                .define('c', Items.CHAIN)
+                .define('m', Items.COPPER_INGOT)
+                .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                .unlockedBy("has_chain", has(Items.CHAIN))
+                .save(writer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ChainedCopperArmor.BOOTS.get())
+                .pattern("c c")
+                .pattern("m m")
+                .define('c', Items.CHAIN)
+                .define('m', Items.COPPER_INGOT)
+                .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                .unlockedBy("has_chain", has(Items.CHAIN))
+                .save(writer);
     }
 
 
