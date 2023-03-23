@@ -1,7 +1,19 @@
 # Changelog
 
 ## Upcoming
+* Desire paths now make the player break tall grass
+* Added Path to Dirt as dependency
+* Added Chained Copper Armor
+  * Iron Armor is now made with Chained Copper Armor
 * Spiders no longer apply Slowness 2 on hit
+* Iron Golems now have Resistance III instead of II
+* Villagers loot is now also reduced based on distance from spawn
+* Animals no longer spawn in Winter
+* Tilling soil animation is no longer played if the hoe is disabled
+* Wooden tools are now replaced with stone ones in loot chests
+* Furnaces now require copper to make
+  * Copper can be made in campfires over 8 minutes with Raw Copper
+* Copper now takes 4x time to make in furnace
 
 ## Alpha 3.0.1
 * Shears now Require an anvil to make (flint + 2 iron ingots)

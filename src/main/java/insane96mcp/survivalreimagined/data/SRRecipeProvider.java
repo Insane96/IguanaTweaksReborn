@@ -86,7 +86,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ChainedCopperArmor.CHESTPLATE.get())
                 .pattern("c c")
-                .pattern("cmc")
+                .pattern("mcm")
                 .pattern("mmm")
                 .define('c', Items.CHAIN)
                 .define('m', Items.COPPER_INGOT)

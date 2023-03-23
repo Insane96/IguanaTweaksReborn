@@ -83,6 +83,7 @@ public class DesirePaths extends SRFeature {
 						event.player.level.setBlockAndUpdate(pos, block.defaultBlockState());
 						if (!breakTallGrass)
 							continue;
+						//TODO Not Working
 						pos = new BlockPos(x2, event.player.position().y + 0.002d, z2);
 						if (Utils.isBlockInTag(state.getBlock(), GRASS_TO_WALK_ON)) {
 							event.player.level.destroyBlock(pos, false, event.player);
