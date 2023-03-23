@@ -3,7 +3,7 @@
     "potion_effects": [
         {
             "id": "minecraft:resistance",
-            "amplifier": 1,
+            "amplifier": 2,
             "ambient": true
         }
     ],
