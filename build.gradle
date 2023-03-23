@@ -127,6 +127,7 @@ dependencies {
 
     implementation fg.deobf("blank:InsaneLib:${lib_version}-mc${mc_version}")
     runtimeOnly fg.deobf("blank:MobsPropertiesRandomness:${mpr_version}-mc${mc_version}")
+    runtimeOnly fg.deobf("blank:PathToDirt:${path_to_dirt_version}-mc${mc_version}")
 
     //runtimeOnly fg.deobf("curse.maven:selene-499980:4431044")
     //runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4410143")
