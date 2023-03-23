@@ -27,7 +27,7 @@ import java.util.List;
 @Label(name = "Desire Paths", description = "Wear down grass when passing on it.")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class DesirePaths extends SRFeature {
-	public static final ResourceLocation GRASS_TO_WALK_ON = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "grass_to_walk_on");
+	public static final ResourceLocation TALL_GRASS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "tall_grass");
 
 	//Add Dirt to Path mod dependency
 
@@ -81,11 +81,11 @@ public class DesirePaths extends SRFeature {
 						Block block = ForgeRegistries.BLOCKS.getValue(blockTransformation.transformTo);
 						if (block == null) continue;
 						event.player.level.setBlockAndUpdate(pos, block.defaultBlockState());
-						if (!breakTallGrass)
-							continue;
-						//TODO Not Working
+
+						if (!breakTallGrass) continue;
 						pos = new BlockPos(x2, event.player.position().y + 0.002d, z2);
-						if (Utils.isBlockInTag(state.getBlock(), GRASS_TO_WALK_ON)) {
+						state = event.player.level.getBlockState(pos);
+						if (Utils.isBlockInTag(state.getBlock(), TALL_GRASS)) {
 							event.player.level.destroyBlock(pos, false, event.player);
 						}
 					}

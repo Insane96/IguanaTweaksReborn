@@ -1,4 +1,4 @@
-// 1.19.3	2023-03-23T08:20:38.1252501	Recipes
+// 1.19.3	2023-03-23T22:27:08.3969503	Recipes
 9ba6c4648e72a63698c040e5ce158e6f239f1411 data/survivalreimagined/advancements/recipes/combat/chained_copper_boots.json
 c405bac8749cdaabda0be00306773b702679e97a data/survivalreimagined/advancements/recipes/combat/chained_copper_chestplate.json
 df67a9a9b2a74006f0602e7ee828dce2ce020170 data/survivalreimagined/advancements/recipes/combat/chained_copper_helmet.json
@@ -9,7 +9,7 @@ c1c36e2da6c66bd0e65d281c52966d59924a7e10 data/survivalreimagined/advancements/re
 b4ac75fe79329cfc27fb83015abfacfc58910a31 data/survivalreimagined/advancements/recipes/tools/flint_pickaxe.json
 fe107b59c6d5ebf26a28fdd5acd005b4c86d270d data/survivalreimagined/advancements/recipes/tools/flint_shovel.json
 e698abfc880db00dd9ff68ac1edfceb681312b19 data/survivalreimagined/recipes/chained_copper_boots.json
-a631274fe3cff590c5cac7a81c0f82e5204245e7 data/survivalreimagined/recipes/chained_copper_chestplate.json
+305bf3b4164c492f9a15d23818abe90f1f1b5950 data/survivalreimagined/recipes/chained_copper_chestplate.json
 841145d1a46eecbda1933bcd65fe033fece8e06e data/survivalreimagined/recipes/chained_copper_helmet.json
 4f3ac68500f6a485aad56c16051cbffaf66c4de5 data/survivalreimagined/recipes/chained_copper_leggings.json
 2c51acf45e24f4a83223cdaec13439fb0ff5f91c data/survivalreimagined/recipes/flint_axe.json
