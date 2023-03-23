@@ -48,13 +48,6 @@ license="All rights reserved"
         ordering="NONE"
         side="BOTH"
 
-    [[dependencies.survivalreimagined]]
-        modId="pathtodirt"
-        mandatory=true
-        versionRange="[1.6.0,)"
-        ordering="NONE"
-        side="BOTH"
-
 
     [[dependencies.survivalreimagined]]
         modId="sereneseasons"
