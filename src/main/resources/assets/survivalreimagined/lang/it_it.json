@@ -41,5 +41,10 @@
 	"item.survivalreimagined.flint_shovel": "Pala di Selce",
 	"item.survivalreimagined.flint_hoe": "Zappa di Selce",
 	"survivalreimagined.tool_efficiency": "%.1f Efficienza attrezzo",
-	"survivalreimagined.bonus_tool_efficiency": "(+%.1f da Efficienza)"
+	"survivalreimagined.bonus_tool_efficiency": "(+%.1f da Efficienza)",
+
+	"item.survivalreimagined.chained_copper_helmet": "Elmetto di Rame a catene",
+	"item.survivalreimagined.chained_copper_chestplate": "Petto di Rame a catene",
+	"item.survivalreimagined.chained_copper_leggings": "Gambali di Rame a catene",
+	"item.survivalreimagined.chained_copper_boots": "Stivali di Rame a catene"
 }

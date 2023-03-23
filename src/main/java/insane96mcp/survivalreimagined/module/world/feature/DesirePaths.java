@@ -8,6 +8,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.world.data.BlockTransformation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -58,7 +59,6 @@ public class DesirePaths extends SRFeature {
 
 		AABB bb = event.player.getBoundingBox();
 		int mX = Mth.floor(bb.minX);
-		int mY = Mth.floor(bb.minY);
 		int mZ = Mth.floor(bb.minZ);
 		for (int x2 = mX; x2 < bb.maxX; x2++) {
 			for (int z2 = mZ; z2 < bb.maxZ; z2++) {
@@ -68,8 +68,11 @@ public class DesirePaths extends SRFeature {
 					if (!blockTransformation.matchesBlock(state.getBlock()))
 						continue;
 
-					if (event.player.getRandom().nextFloat() < 0.02f)
-						event.player.level.setBlockAndUpdate(pos, ForgeRegistries.BLOCKS.getValue(blockTransformation.transformTo).defaultBlockState());
+					if (event.player.getRandom().nextFloat() < 0.02f) {
+						Block block = ForgeRegistries.BLOCKS.getValue(blockTransformation.transformTo);
+						if (block == null) continue;
+						event.player.level.setBlockAndUpdate(pos, block.defaultBlockState());
+					}
 				}
 			}
 		}

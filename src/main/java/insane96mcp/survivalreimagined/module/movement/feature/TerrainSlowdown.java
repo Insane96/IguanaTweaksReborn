@@ -30,7 +30,7 @@ public class TerrainSlowdown extends SRFeature {
 	private static final UUID MATERIAL_SLOWDOWN_UUID = UUID.fromString("a849043f-b280-4789-bafd-5da8e8e1078e");
 
 	public static final ArrayList<IdTagValue> CUSTOM_TERRAIN_SLOWDOWN_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:dirt_path", -0.15)
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:dirt_path", -0.10)
 	));
 	public static final ArrayList<IdTagValue> customTerrainSlowdown = new ArrayList<>();
 

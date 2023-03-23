@@ -43,5 +43,10 @@
 	"item.survivalreimagined.flint_pickaxe": "Flint Pickaxe",
 	"item.survivalreimagined.flint_sword": "Flint Sword",
 	"item.survivalreimagined.flint_shovel": "Flint Shovel",
-	"item.survivalreimagined.flint_hoe": "Flint Hoe"
+	"item.survivalreimagined.flint_hoe": "Flint Hoe",
+
+	"item.survivalreimagined.chained_copper_helmet": "Chained Copper Helmet",
+	"item.survivalreimagined.chained_copper_chestplate": "Chained Copper Chestplate",
+	"item.survivalreimagined.chained_copper_leggings": "Chained Copper Leggings",
+	"item.survivalreimagined.chained_copper_boots": "Chained Copper Boots"
 }

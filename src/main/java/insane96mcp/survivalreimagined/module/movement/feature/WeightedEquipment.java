@@ -45,10 +45,11 @@ import java.util.UUID;
 public class WeightedEquipment extends SRFeature {
 	public static final ArrayList<ArmorMaterialWeight> MATERIAL_WEIGHTS_DEFAULTS = new ArrayList<>(Arrays.asList(
 			new ArmorMaterialWeight("leather", 0.025d),
-			new ArmorMaterialWeight("chainmail", 0.050d),
+			new ArmorMaterialWeight("chained_copper", 0.05d),
+			new ArmorMaterialWeight("chainmail", 0.05d),
 			new ArmorMaterialWeight("golden", 0.025d),
 			new ArmorMaterialWeight("iron", 0.075d),
-			new ArmorMaterialWeight("diamond", 0.010d),
+			new ArmorMaterialWeight("diamond", 0.10d),
 			new ArmorMaterialWeight("netherite", 0.15d)
 	));
 	public static final ArrayList<ArmorMaterialWeight> materialWeight = new ArrayList<>();
