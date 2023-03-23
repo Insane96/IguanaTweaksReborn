@@ -20,6 +20,7 @@ import java.util.List;
 public class CustomHardness extends SRFeature {
 	public static final ArrayList<BlockHardness> CUSTOM_HARDNESSES_DEFAULT = new ArrayList<>(Arrays.asList(
 			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:coal_ore", 2.5d),
+			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:copper_ore", 2.5d),
 			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:iron_ore", 3d),
 			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:gold_ore", 3.5d),
 			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:diamond_ore", 4d),
@@ -27,12 +28,13 @@ public class CustomHardness extends SRFeature {
 			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:lapis_ore", 3d),
 			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:emerald_ore", 4d),
 
-			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_coal_ore", 4.5d),
-			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_iron_ore", 5d),
-			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_gold_ore", 5.5d),
+			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_coal_ore", 4d),
+			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_copper_ore", 4d),
+			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_iron_ore", 4.5d),
+			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_gold_ore", 5d),
 			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_diamond_ore", 6d),
-			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_redstone_ore", 5d),
-			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_lapis_ore", 5d),
+			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_redstone_ore", 4.5d),
+			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_lapis_ore", 4.5d),
 			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:deepslate_emerald_ore", 6d),
 
 			new BlockHardness(IdTagMatcher.Type.ID, "minecraft:ancient_debris", 10d),
