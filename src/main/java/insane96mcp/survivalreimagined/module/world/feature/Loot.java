@@ -89,6 +89,7 @@ public class Loot extends SRFeature {
 				.build()
 		);
 		provider.add(path + "chests/spawn_bonus_chest", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/spawn_bonus_chest"), 2000)
+				.setMultiplierAtStart(0.75f)
 				.applyToDamageable()
 				.build()
 		);

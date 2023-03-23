@@ -7,6 +7,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPacks;
 import insane96mcp.survivalreimagined.setup.SRItems;
@@ -21,6 +22,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -76,6 +78,31 @@ public class FlintTools extends SRFeature {
 			if (event.getEntity() instanceof Player player)
 				player.displayClientMessage(Component.translatable(Strings.Translatable.NO_DAMAGE_ITEM), true);
 		}
+	}
+
+	private static final String path = "flint_tools/";
+
+	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
+		provider.add(path + "replace_wooden_sword", new ReplaceDropModifier.Builder(Items.WOODEN_SWORD, FLINT_SWORD.get())
+				.applyToChestsOnly()
+				.build()
+		);
+		provider.add(path + "replace_wooden_axe", new ReplaceDropModifier.Builder(Items.WOODEN_AXE, FLINT_AXE.get())
+				.applyToChestsOnly()
+				.build()
+		);
+		provider.add(path + "replace_wooden_shovel", new ReplaceDropModifier.Builder(Items.WOODEN_SHOVEL, FLINT_SHOVEL.get())
+				.applyToChestsOnly()
+				.build()
+		);
+		provider.add(path + "replace_wooden_pickaxe", new ReplaceDropModifier.Builder(Items.WOODEN_PICKAXE, FLINT_PICKAXE.get())
+				.applyToChestsOnly()
+				.build()
+		);
+		provider.add(path + "replace_wooden_hoe", new ReplaceDropModifier.Builder(Items.WOODEN_HOE, FLINT_HOE.get())
+				.applyToChestsOnly()
+				.build()
+		);
 	}
 
 	@OnlyIn(Dist.CLIENT)

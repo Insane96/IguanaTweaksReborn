@@ -3,5 +3,6 @@
   "apply_to_damageable": true,
   "conditions": [],
   "end_range": 2000,
-  "loot_table": "minecraft:chests/spawn_bonus_chest"
+  "loot_table": "minecraft:chests/spawn_bonus_chest",
+  "multiplier_at_start": 0.75
 }
