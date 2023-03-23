@@ -44,6 +44,10 @@ public class Spawning extends SRFeature {
     @Label(name = "Hostile Cap.Autumn", description = "Hostile Mobs cap on autumn, note that lower values increase the mobs around the player.")
     public static Integer hostileCapAutumn = 70;
 
+    @Config
+    @Label(name = "Animals.No Spawn Winter", description = "Animals can no longer naturally spawn in Winter.")
+    public static Boolean noAnimalSpawnInWinter = true;
+
     public Spawning(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -72,18 +76,23 @@ public class Spawning extends SRFeature {
             case SPRING -> {
                 MobCategory.MONSTER.despawnDistance = despawnDistanceSpring;
                 MobCategory.MONSTER.max = hostileCapSpring;
+                MobCategory.CREATURE.max = 10;
             }
             case SUMMER -> {
                 MobCategory.MONSTER.despawnDistance = despawnDistanceSummer;
                 MobCategory.MONSTER.max = hostileCapSummer;
+                MobCategory.CREATURE.max = 10;
             }
             case AUTUMN -> {
                 MobCategory.MONSTER.despawnDistance = despawnDistanceAutumn;
                 MobCategory.MONSTER.max = hostileCapAutumn;
+                MobCategory.CREATURE.max = 10;
             }
             case WINTER -> {
                 MobCategory.MONSTER.despawnDistance = despawnDistanceWinter;
                 MobCategory.MONSTER.max = hostileCapWinter;
+                if (noAnimalSpawnInWinter)
+                    MobCategory.CREATURE.max = 0;
             }
         }
     }
