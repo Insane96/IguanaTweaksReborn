@@ -32,6 +32,8 @@ import java.util.List;
 @Label(name = "Food & Drinks", description = "Changes to food nourishment and the speed on how food is eaten or how items are consumed. Custom Food Properties are controlled via json in this feature's folder. Removing entries from the json requires a minecraft restart.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class FoodDrinks extends SRFeature {
+	//TODO Double the time to smelt food in a normal furnace
+
 	public static final ResourceLocation FOOD_BLACKLIST = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "food_drinks_no_hunger_changes");
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(
@@ -56,7 +58,7 @@ public class FoodDrinks extends SRFeature {
 	public static Boolean eatingSpeedBasedOffFood = true;
 	@Config
 	@Label(name = "Eating Speed Formula", description = "The formula to calculate the ticks required to eat a food. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. The default formula increases the time to eat exponentially when higher effectiveness.")
-	public static String eatingSpeedFormula = "MAX((32 * effectiveness^1.3) / IF(fast_food, 2, 1) * 0.04, 24 / IF(fast_food, 2, 1))";
+	public static String eatingSpeedFormula = "MAX((32 * effectiveness^1.35) / IF(fast_food, 2, 1) * 0.04, 24 / IF(fast_food, 2, 1))";
 	@Config
 	@Label(name = "Stop consuming on hit", description = "If true, eating/drinking stops when the player's hit.")
 	public static Boolean stopConsumingOnHit = true;

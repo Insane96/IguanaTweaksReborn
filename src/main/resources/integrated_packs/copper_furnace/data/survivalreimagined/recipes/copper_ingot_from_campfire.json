@@ -3,6 +3,6 @@
   "ingredient": {
     "item": "minecraft:raw_copper"
   },
-  "result": "minecraft:copper_nugget",
-  "cookingtime": 1200
+  "result": "minecraft:copper_ingot",
+  "cookingtime": 9600
 }

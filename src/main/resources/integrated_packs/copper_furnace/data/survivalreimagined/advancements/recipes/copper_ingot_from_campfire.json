@@ -16,7 +16,7 @@
         "has_the_recipe": {
             "trigger": "minecraft:recipe_unlocked",
             "conditions": {
-                "recipe": "survivalreimagined:copper_nugget_from_campfire"
+                "recipe": "survivalreimagined:copper_ingot_from_campfire"
             }
         }
     },
@@ -28,7 +28,7 @@
     ],
     "rewards": {
         "recipes": [
-            "survivalreimagined:torch"
+            "survivalreimagined:copper_ingot_from_campfire"
         ]
     }
 }
