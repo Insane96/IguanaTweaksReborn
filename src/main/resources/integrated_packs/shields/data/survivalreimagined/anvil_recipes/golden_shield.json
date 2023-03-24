@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "survivalreimagined:flint_shield"
+  },
+  "right": {
+    "item": "minecraft:gold_ingot"
+  },
+  "amount": 4,
+  "result": {
+    "item": "shieldsplus:golden_shield"
+  },
+  "keep_durability": true
+}

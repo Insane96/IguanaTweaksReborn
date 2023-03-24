@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": {
+      "tag": "minecraft:logs"
+    },
+    "f": {
+      "item": "minecraft:flint"
+    },
+    "l": {
+      "item": "minecraft:leather"
+    }
+  },
+  "pattern": [
+    " f ",
+    "lLl",
+    " f "
+  ],
+  "result": {
+    "item": "survivalreimagined:flint_shield"
+  }
+}

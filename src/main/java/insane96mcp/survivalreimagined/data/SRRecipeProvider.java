@@ -5,6 +5,7 @@ import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.feature.FlintTools;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
@@ -62,6 +63,15 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('f', Items.FLINT)
                 .define('s', Items.STICK)
                 .unlockedBy("has_stick", has(Items.STICK))
+                .unlockedBy("has_flint", has(Items.FLINT))
+                .save(writer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FlintTools.FLINT_SHIELD.get())
+                .pattern(" f ")
+                .pattern("lLl")
+                .pattern(" f ")
+                .define('f', Items.FLINT)
+                .define('l', Items.LEATHER)
+                .define('L', ItemTags.LOGS)
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
 

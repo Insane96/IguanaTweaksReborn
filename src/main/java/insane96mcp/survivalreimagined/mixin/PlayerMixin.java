@@ -1,8 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.survivalreimagined.effect.Vigour;
-import insane96mcp.survivalreimagined.module.combat.feature.Shields;
 import insane96mcp.survivalreimagined.module.experience.feature.Enchantments;
 import insane96mcp.survivalreimagined.module.experience.feature.PlayerExperience;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.ExhaustionIncrease;
@@ -17,7 +15,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -57,22 +57,6 @@ public abstract class PlayerMixin extends LivingEntity {
 		float newAmount = ExhaustionIncrease.increaseHungerEffectiveness((Player) (Object) this, amount);
 		newAmount = Vigour.decreaseExhaustionConsumption((Player) (Object) this, newAmount);
 		return newAmount;
-	}
-
-	@Inject(method = "disableShield", at = @At("HEAD"), cancellable = true)
-	private void onDisableShield(boolean efficiencyAffected, CallbackInfo callbackInfo) {
-		if (Shields.combatTestShieldDisabling()) {
-			callbackInfo.cancel();
-			this.getCooldowns().addCooldown(this.getUseItem().getItem(), 32);
-			this.stopUsingItem();
-		}
-	}
-
-	@ModifyConstant(constant = @Constant(floatValue = 3.0F), method = "hurtCurrentlyUsedShield")
-	private float blockingWindupTime(float minDamage) {
-		if (Feature.isEnabled(Shields.class))
-			minDamage = Shields.minShieldHurtDamage.floatValue();
-		return minDamage;
 	}
 
 	//Changes efficiency formula

@@ -60,7 +60,7 @@ public class ToolStats extends SRFeature {
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 86),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:carrot_on_a_stick", 63),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shield", 268),
+			//new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shield", 268),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shears", 119),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_helmet", 33),

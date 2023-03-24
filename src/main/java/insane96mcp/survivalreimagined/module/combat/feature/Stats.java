@@ -65,7 +65,7 @@ public class Stats extends SRFeature {
 	public static Double powerEnchantmentDamageIncrease = 0.4d;
 	@Config
 	@Label(name = "Disable Crit Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
-	public static Boolean disableCritArrowsBonusDamage = false;
+	public static Boolean disableCritArrowsBonusDamage = true;
 	@Config
 	@Label(name = "Arrows don't trigger invincibility frames", description = "If true, Arrows will no longer trigger the invincibility frames (like Combat Test Snapshots).")
 	public static Boolean arrowsNoInvincFrames = true;
@@ -125,6 +125,8 @@ public class Stats extends SRFeature {
 	private void processBow(AbstractArrow arrow) {
 		if (powerEnchantmentDamageIncrease != 0.5d && arrow.getOwner() instanceof LivingEntity) {
 			int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
+			if (powerLevel == 0)
+				return;
 			double powerReduction = 0.5d - powerEnchantmentDamageIncrease;
 			arrow.setBaseDamage(arrow.getBaseDamage() - (powerLevel * powerReduction + powerReduction));
 		}

@@ -1,6 +1,10 @@
 # Changelog
 
 ## Upcoming
+* Added Shields+
+  * Removed the shield changes in the mod, using Shields+ ones
+  * Added Flint Shields and disabled wooden shields
+  * Metal shields require Anvil to be made
 * Desire paths now make the player break tall grass
 * Added Path to Dirt as dependency
 * Added Chained Copper Armor
@@ -14,6 +18,7 @@
 * Furnaces now require copper to make
   * Copper can be made in campfires over 8 minutes with Raw Copper
 * Copper now takes 4x time to make in furnace
+* Deepslate ore is now less hard to break
 
 ## Alpha 3.0.1
 * Shears now Require an anvil to make (flint + 2 iron ingots)

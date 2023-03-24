@@ -49,9 +49,9 @@ license="All rights reserved"
         side="BOTH"
 
     [[dependencies.survivalreimagined]]
-        modId="pathtodirt"
+        modId="shieldsplus"
         mandatory=true
-        versionRange="[1.6.0,)"
+        versionRange="[1.4.1,)"
         ordering="NONE"
         side="BOTH"
 

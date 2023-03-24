@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " M ",
+        "MBM",
+        " M "
+    ],
+    "key": {
+        "M": {
+            "item": "minecraft:copper_ingot"
+        },
+        "B": {
+            "item": "survivalreimagined:flint_shield"
+        }
+    },
+    "result": {
+        "item": "shieldsplus:copper_shield"
+    }
+}

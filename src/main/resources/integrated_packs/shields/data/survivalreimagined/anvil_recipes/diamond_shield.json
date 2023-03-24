@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "minecraft:shield"
+  },
+  "right": {
+    "item": "minecraft:diamond"
+  },
+  "amount": 4,
+  "result": {
+    "item": "shieldsplus:diamond_shield"
+  },
+  "keep_durability": true
+}

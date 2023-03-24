@@ -5,6 +5,8 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.item.ILItemTier;
+import insane96mcp.shieldsplus.world.item.SPShieldItem;
+import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
@@ -33,13 +35,17 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class FlintTools extends SRFeature {
 
-	private static final ILItemTier FLINT_TIER = new ILItemTier(1, 66, 2f, 1.5f, 5, () -> Ingredient.of(Items.FLINT));
+	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("flint", 3d, 66, Items.FLINT, 9, Rarity.COMMON);
+
+	private static final ILItemTier FLINT_TIER = new ILItemTier(1, 66, 2f, 1.5f, 9, () -> Ingredient.of(Items.FLINT));
 
 	public static final RegistryObject<Item> FLINT_SWORD = SRItems.ITEMS.register("flint_sword", () -> new SwordItem(FLINT_TIER, 3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> FLINT_SHOVEL = SRItems.ITEMS.register("flint_shovel", () -> new ShovelItem(FLINT_TIER, 1.5F, -3.0F, new Item.Properties()));
 	public static final RegistryObject<Item> FLINT_PICKAXE = SRItems.ITEMS.register("flint_pickaxe", () -> new PickaxeItem(FLINT_TIER, 1, -2.8F, new Item.Properties()));
 	public static final RegistryObject<Item> FLINT_AXE = SRItems.ITEMS.register("flint_axe", () -> new AxeItem(FLINT_TIER, 7.0F, -3.2F, new Item.Properties()));
 	public static final RegistryObject<Item> FLINT_HOE = SRItems.ITEMS.register("flint_hoe", () -> new HoeItem(FLINT_TIER, -1, -2.0F, new Item.Properties()));
+
+	public static final RegistryObject<SPShieldItem> FLINT_SHIELD = SRItems.registerShield("flint_shield", SHIELD_MATERIAL);
 
 	@Config
 	@Label(name = "Disable Wooden Tools", description = "Makes wooden items deal no damage and not able to break blocks.")
