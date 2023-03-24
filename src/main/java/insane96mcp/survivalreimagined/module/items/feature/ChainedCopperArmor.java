@@ -19,7 +19,7 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class ChainedCopperArmor extends SRFeature {
 
-	private static final SRArmorMaterial CHAINED_COPPER = new SRArmorMaterial("survivalreimagined:chained_copper", 6, new int[] {1, 3, 4, 1}, 13, SoundEvents.ARMOR_EQUIP_CHAIN, 0f, 0f, () -> Ingredient.of(Items.COPPER_INGOT));
+	private static final SRArmorMaterial CHAINED_COPPER = new SRArmorMaterial("survivalreimagined:chained_copper", 10, new int[] {1, 3, 4, 1}, 13, SoundEvents.ARMOR_EQUIP_CHAIN, 0f, 0f, () -> Ingredient.of(Items.COPPER_INGOT));
 
 	public static final RegistryObject<Item> HELMET = SRItems.ITEMS.register("chained_copper_helmet", () -> new ArmorItem(CHAINED_COPPER, EquipmentSlot.HEAD, new Item.Properties()));
 	public static final RegistryObject<Item> CHESTPLATE = SRItems.ITEMS.register("chained_copper_chestplate", () -> new ArmorItem(CHAINED_COPPER, EquipmentSlot.CHEST, new Item.Properties()));

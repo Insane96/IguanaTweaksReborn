@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "values": [
+        "survivalreimagined:flint_pickaxe",
+        "survivalreimagined:flint_axe",
+        "survivalreimagined:flint_shovel",
+        "survivalreimagined:flint_hoe"
+    ]
+}

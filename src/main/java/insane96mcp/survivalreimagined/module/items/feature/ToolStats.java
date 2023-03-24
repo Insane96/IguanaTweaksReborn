@@ -46,6 +46,12 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_shovel", 33),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 33),
 
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_sword", 1),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_pickaxe", 34),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_axe", 34),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_shovel", 34),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_hoe", 34),
+
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_sword", 1),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_pickaxe", 89),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_axe", 89),
@@ -66,6 +72,11 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_chestplate", 112),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_leggings", 105),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_boots", 91),
+
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chainer_copper_helmet", 66),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chainer_copper_chestplate", 96),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chainer_copper_leggings", 90),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chainer_copper_boots", 78),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_helmet", 77),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_chestplate", 112),
@@ -90,6 +101,7 @@ public class ToolStats extends SRFeature {
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 
 	public static final ArrayList<IdTagValue> TOOL_EFFICIENCIES_DEFAULT = new ArrayList<>(Arrays.asList(
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/flint", 3.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/stone", 2.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iron", 4.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/diamond", 7d)
