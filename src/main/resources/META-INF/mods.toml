@@ -55,6 +55,13 @@ license="All rights reserved"
         ordering="NONE"
         side="BOTH"
 
+    [[dependencies.survivalreimagined]]
+        modId="enhancedai"
+        mandatory=true
+        versionRange="[1.9.1,)"
+        ordering="NONE"
+        side="BOTH"
+
 
     [[dependencies.survivalreimagined]]
         modId="sereneseasons"
