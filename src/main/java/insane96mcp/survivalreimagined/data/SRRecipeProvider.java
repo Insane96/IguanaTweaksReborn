@@ -67,10 +67,9 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FlintTools.FLINT_SHIELD.get())
                 .pattern(" f ")
-                .pattern("lLl")
+                .pattern("fLf")
                 .pattern(" f ")
                 .define('f', Items.FLINT)
-                .define('l', Items.LEATHER)
                 .define('L', ItemTags.LOGS)
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);

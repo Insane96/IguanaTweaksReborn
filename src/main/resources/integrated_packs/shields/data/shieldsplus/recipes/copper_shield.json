@@ -1,16 +1,19 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        " M ",
-        "MBM",
-        " M "
+        " L ",
+        "CBC",
+        " L "
     ],
     "key": {
-        "M": {
+        "C": {
             "item": "minecraft:copper_ingot"
         },
         "B": {
             "item": "survivalreimagined:flint_shield"
+        },
+        "L": {
+            "item": "minecraft:leather"
         }
     },
     "result": {
