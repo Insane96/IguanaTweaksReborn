@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.0.2
 * Added Shields+
   * Removed the shield changes in the mod, using Shields+ ones
   * Added Flint Shields and disabled wooden shields
@@ -19,6 +19,7 @@
   * Copper can be made in campfires over 8 minutes with Raw Copper
 * Copper now takes 4x time to make in furnace
 * Deepslate ore is now less hard to break
+* Fixed arrows dealing the wrong amount of damage (and skeletons dealing tons of damage)
 
 ## Alpha 3.0.1
 * Shears now Require an anvil to make (flint + 2 iron ingots)
