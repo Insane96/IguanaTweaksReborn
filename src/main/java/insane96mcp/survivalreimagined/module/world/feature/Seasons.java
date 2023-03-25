@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.misc.feature;
+package insane96mcp.survivalreimagined.module.world.feature;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -12,7 +12,7 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import sereneseasons.config.FertilityConfig;
 
 @Label(name = "Seasons", description = "Change a few things relative to Serene Seasons")
-@LoadFeature(module = Modules.Ids.MISC)
+@LoadFeature(module = Modules.Ids.WORLD)
 public class Seasons extends Feature {
 
 	@Config
