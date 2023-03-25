@@ -1,5 +1,11 @@
 # Changelog
 
+## Upcoming
+* Iron armor requires leather armor to be made (again)
+* Flint shield no longer requires leather to be made
+  * Copper shield now does
+* Grass blocks now slowdown less
+
 ## Alpha 3.0.2
 * Added Shields+
   * Removed the shield changes in the mod, using Shields+ ones
