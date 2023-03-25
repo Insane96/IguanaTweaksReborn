@@ -8,8 +8,10 @@ import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeConfig;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import sereneseasons.api.season.Season;
 import sereneseasons.api.season.SeasonChangedEvent;
 import sereneseasons.api.season.SeasonHelper;
@@ -48,8 +50,17 @@ public class Spawning extends SRFeature {
     @Label(name = "Animals.No Spawn Winter", description = "Animals can no longer naturally spawn in Winter.")
     public static Boolean noAnimalSpawnInWinter = true;
 
+    @Config
+    @Label(name = "Stupid baby zombies", description = "Disable baby zombies spawning")
+    public static Boolean disableBabyZombies = true;
+
     public Spawning(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
+    }
+
+    @Override
+    public void readConfig(ModConfigEvent event) {
+        super.readConfig(event);
     }
 
     @SubscribeEvent
@@ -69,6 +80,10 @@ public class Spawning extends SRFeature {
             return;
 
         update(SeasonHelper.getSeasonState(level).getSeason());
+
+        if (disableBabyZombies) {
+            ForgeConfig.SERVER.zombieBabyChance.set(0d);
+        }
     }
 
     private void update(Season season) {
