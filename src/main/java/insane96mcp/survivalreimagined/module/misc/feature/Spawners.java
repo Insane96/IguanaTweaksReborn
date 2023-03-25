@@ -32,10 +32,10 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Temporary Spawners", description = "Spawners will no longer spawn mobs infinitely. Echo shards can reactivate a spawner.")
+@Label(name = "Spawners", description = "Spawners will no longer spawn mobs infinitely. Echo shards can reactivate a spawner. Monsters spawning from spawners ignore light and spawning is much faster")
 @LoadFeature(module = Modules.Ids.MISC)
-public class TempSpawner extends Feature {
-	//TODO Increase spawn speed and ignore light
+public class Spawners extends Feature {
+
 	public static final ResourceLocation BLACKLISTED_SPAWNERS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "blacklisted_spawners");
 	public static final ResourceLocation SPAWNER_REACTIVATOR = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "spawner_reactivator");
 	public static final ResourceLocation NO_LIMIT_SPAWNER = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "spawner_reactivator");
@@ -49,7 +49,15 @@ public class TempSpawner extends Feature {
 	@Label(name = "Bonus experience the farther from spawn", description = "If true, the spawner will drop more experience when broken based of distance from spawn. +100% every 1024 blocks from spawn. The multiplier from 'Experience From Blocks' Feature still applies.")
 	public static Boolean bonusExperienceWhenFarFromSpawn = true;
 
-	public TempSpawner(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	@Config
+	@Label(name = "Ignore Light", description = "If true, monsters from spawners will spawn no matter the light level.")
+	public static Boolean ignoreLight = true;
+
+	@Config(min = 0)
+	@Label(name = "Spawning speed boost", description = "How much faster spawners tick down the spawning delay.")
+	public static Integer spawningSpeedBoost = 4;
+
+	public Spawners(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
@@ -112,15 +120,16 @@ public class TempSpawner extends Feature {
 		event.setExpToDrop((int) (event.getExpToDrop() * (1 + distance / 1024d)));
 	}
 
-	public static void onServerTick(BaseSpawner spawner) {
+	public static void onSpawnerServerTick(BaseSpawner spawner) {
 		if (!(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity))
 			return;
 		//If the feature is disabled then reactivate disabled spawners and prevent further processing
-		if (!isEnabled(TempSpawner.class)) {
+		if (!isEnabled(Spawners.class)) {
 			if (isDisabled(spawnerBlockEntity))
 				enableSpawner(spawnerBlockEntity);
 			return;
 		}
+		spawner.spawnDelay -= spawningSpeedBoost;
 		//If spawnable mobs amount has changed then re-enable the spawner
 		if (spawnerBlockEntity.getLevel() instanceof ServerLevel world) {
 			spawnerBlockEntity.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> {

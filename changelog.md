@@ -1,6 +1,9 @@
 # Changelog
 
 ## Upcoming
+* Temp Spawners is now "Spawners"
+  * Increased spawning speed of spawners by 400%
+  * Spawners now ignore light levels
 * Iron armor requires leather armor to be made (again)
 * Flint shield no longer requires leather to be made
   * Copper shield now does
