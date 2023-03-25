@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.data;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.module.items.feature.BoneClub;
 import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.feature.FlintTools;
 import net.minecraft.data.PackOutput;
@@ -72,6 +73,13 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('f', Items.FLINT)
                 .define('L', ItemTags.LOGS)
                 .unlockedBy("has_flint", has(Items.FLINT))
+                .save(writer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BoneClub.BONE_CLUB.get())
+                .pattern("  b")
+                .pattern(" b ")
+                .pattern("b  ")
+                .define('b', Items.BONE)
+                .unlockedBy("has_bone", has(Items.BONE))
                 .save(writer);
 
         ConditionalRecipe.builder()

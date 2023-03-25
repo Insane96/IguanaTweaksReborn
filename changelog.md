@@ -1,6 +1,10 @@
 # Changelog
 
 ## Upcoming
+* Added EnhancedAI
+  * Mobs are tougher to fight as they have a few more tricks up their sleeve
+* Added Bone Club
+  * If you dare to fight a skeleton you can use his bones to get a new weapon, low durability but quite good damage.
 * Temp Spawners is now "Spawners"
   * Increased spawning speed of spawners by 400%
   * Spawners now ignore light levels

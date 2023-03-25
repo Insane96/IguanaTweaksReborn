@@ -52,6 +52,8 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_shovel", 34),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_hoe", 34),
 
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:bone_club", 34),
+
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_sword", 1),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_pickaxe", 89),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_axe", 89),
