@@ -32,13 +32,14 @@ public class EquipmentDropChance extends IdTagMatcher {
         this.dropChance = dropChance;
     }
 
-    //Applies the drop chance to the slot
-    public boolean apply(Mob mob) {
+    /**
+     * Applies the drop chance to the slot, if drop chance is null the drop chance will not change from vanilla
+     */
+    public void apply(Mob mob) {
         if (dropChance == null)
-            return false;
+            return;
 
         mob.setDropChance(this.slot, this.dropChance);
-        return true;
     }
 
     public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<EquipmentDropChance>>(){}.getType();
