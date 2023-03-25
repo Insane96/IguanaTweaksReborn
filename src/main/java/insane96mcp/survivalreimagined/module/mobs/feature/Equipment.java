@@ -52,9 +52,8 @@ public class Equipment extends SRFeature {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             boolean customDropChance = false;
             for (EquipmentDropChance edc : equipmentDropChances) {
-                if (edc.matchesEntity(entity)) {
+                if (edc.matchesEntity(entity) && edc.apply(entity)) {
                     customDropChance = true;
-                    edc.apply(entity);
                 }
             }
             if (!customDropChance)
