@@ -27,6 +27,8 @@ import java.util.UUID;
 @Label(name = "Terrain Slowdown", description = "Slowdown based off the terrain you're walking on. Custom Terrain Slowdown are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class TerrainSlowdown extends SRFeature {
+
+	//TODO Prevent recalculating slowdown until player's on ground
 	private static final UUID MATERIAL_SLOWDOWN_UUID = UUID.fromString("a849043f-b280-4789-bafd-5da8e8e1078e");
 
 	public static final ArrayList<IdTagValue> CUSTOM_TERRAIN_SLOWDOWN_DEFAULT = new ArrayList<>(List.of(
@@ -80,7 +82,8 @@ public class TerrainSlowdown extends SRFeature {
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
 				|| event.phase != TickEvent.Phase.START
-				|| (event.player.tickCount + event.player.getId()) % 2 != 0)
+				|| (event.player.tickCount + event.player.getId()) % 2 != 0
+				|| !event.player.isOnGround())
 			return;
 
 		double onTerrainSlowdown = 0d;

@@ -12,11 +12,13 @@
 * Iron tools now have 50% more durability
 * Flint shield no longer requires leather to be made
   * Copper shield now does
+* Terrain slowdown no longer removes the slowdown when the player is midair
 * Grass blocks now slowdown less
 * Honey now heals less
 * Overhauled textures
 * Removed baby zombies
 * Reduced health for mobs by 20%
+* Dungeon loot is now less purged and fixed too many spawner heads
 
 ## Alpha 3.0.2
 * Added Shields+
