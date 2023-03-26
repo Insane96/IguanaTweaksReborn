@@ -1,0 +1,19 @@
+{
+    "target": "#minecraft:skeletons",
+    "set_nbt": [
+        {
+            "nbt_tag": "enhancedai:inaccuracy",
+            "type": "double",
+            "value": {
+                "min": 6,
+                "max": 10,
+                "difficulty_modifier": {
+                    "operation": "multiply",
+                    "easy": 1.3333333,
+                    "hard": 0.6666667
+                }
+            },
+            "persistent_data": true
+        }
+    ]
+}
