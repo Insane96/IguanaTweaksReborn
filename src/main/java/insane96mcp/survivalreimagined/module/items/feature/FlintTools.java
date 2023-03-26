@@ -35,19 +35,17 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class FlintTools extends SRFeature {
 
-	//TODO Nether Steel Tools
-
 	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("flint", 3d, 33, Items.FLINT, 9, Rarity.COMMON);
 
-	private static final ILItemTier FLINT_TIER = new ILItemTier(1, 66, 2f, 1.5f, 9, () -> Ingredient.of(Items.FLINT));
+	private static final ILItemTier ITEM_TIER = new ILItemTier(1, 66, 2f, 1.5f, 9, () -> Ingredient.of(Items.FLINT));
 
-	public static final RegistryObject<Item> FLINT_SWORD = SRItems.ITEMS.register("flint_sword", () -> new SwordItem(FLINT_TIER, 3, -2.4F, new Item.Properties()));
-	public static final RegistryObject<Item> FLINT_SHOVEL = SRItems.ITEMS.register("flint_shovel", () -> new ShovelItem(FLINT_TIER, 1.5F, -3.0F, new Item.Properties()));
-	public static final RegistryObject<Item> FLINT_PICKAXE = SRItems.ITEMS.register("flint_pickaxe", () -> new PickaxeItem(FLINT_TIER, 1, -2.8F, new Item.Properties()));
-	public static final RegistryObject<Item> FLINT_AXE = SRItems.ITEMS.register("flint_axe", () -> new AxeItem(FLINT_TIER, 7.0F, -3.2F, new Item.Properties()));
-	public static final RegistryObject<Item> FLINT_HOE = SRItems.ITEMS.register("flint_hoe", () -> new HoeItem(FLINT_TIER, -1, -2.0F, new Item.Properties()));
+	public static final RegistryObject<Item> SWORD = SRItems.ITEMS.register("flint_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties()));
+	public static final RegistryObject<Item> SHOVEL = SRItems.ITEMS.register("flint_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
+	public static final RegistryObject<Item> PICKAXE = SRItems.ITEMS.register("flint_pickaxe", () -> new PickaxeItem(ITEM_TIER, 1, -2.8F, new Item.Properties()));
+	public static final RegistryObject<Item> AXE = SRItems.ITEMS.register("flint_axe", () -> new AxeItem(ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
+	public static final RegistryObject<Item> HOE = SRItems.ITEMS.register("flint_hoe", () -> new HoeItem(ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
-	public static final RegistryObject<SPShieldItem> FLINT_SHIELD = SRItems.registerShield("flint_shield", SHIELD_MATERIAL);
+	public static final RegistryObject<SPShieldItem> SHIELD = SRItems.registerShield("flint_shield", SHIELD_MATERIAL);
 
 	@Config
 	@Label(name = "Disable Wooden Tools", description = "Makes wooden items deal no damage and not able to break blocks.")
@@ -91,23 +89,23 @@ public class FlintTools extends SRFeature {
 	private static final String path = "flint_tools/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "replace_wooden_sword", new ReplaceDropModifier.Builder(Items.WOODEN_SWORD, FLINT_SWORD.get())
+		provider.add(path + "replace_wooden_sword", new ReplaceDropModifier.Builder(Items.WOODEN_SWORD, SWORD.get())
 				.applyToChestsOnly()
 				.build()
 		);
-		provider.add(path + "replace_wooden_axe", new ReplaceDropModifier.Builder(Items.WOODEN_AXE, FLINT_AXE.get())
+		provider.add(path + "replace_wooden_axe", new ReplaceDropModifier.Builder(Items.WOODEN_AXE, AXE.get())
 				.applyToChestsOnly()
 				.build()
 		);
-		provider.add(path + "replace_wooden_shovel", new ReplaceDropModifier.Builder(Items.WOODEN_SHOVEL, FLINT_SHOVEL.get())
+		provider.add(path + "replace_wooden_shovel", new ReplaceDropModifier.Builder(Items.WOODEN_SHOVEL, SHOVEL.get())
 				.applyToChestsOnly()
 				.build()
 		);
-		provider.add(path + "replace_wooden_pickaxe", new ReplaceDropModifier.Builder(Items.WOODEN_PICKAXE, FLINT_PICKAXE.get())
+		provider.add(path + "replace_wooden_pickaxe", new ReplaceDropModifier.Builder(Items.WOODEN_PICKAXE, PICKAXE.get())
 				.applyToChestsOnly()
 				.build()
 		);
-		provider.add(path + "replace_wooden_hoe", new ReplaceDropModifier.Builder(Items.WOODEN_HOE, FLINT_HOE.get())
+		provider.add(path + "replace_wooden_hoe", new ReplaceDropModifier.Builder(Items.WOODEN_HOE, HOE.get())
 				.applyToChestsOnly()
 				.build()
 		);

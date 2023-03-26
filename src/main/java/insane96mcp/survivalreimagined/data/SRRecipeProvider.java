@@ -21,7 +21,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
 
     @Override
     protected void buildRecipes(@NotNull Consumer<FinishedRecipe> writer) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintTools.FLINT_AXE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintTools.AXE.get())
                 .pattern("ff")
                 .pattern("fs")
                 .pattern(" s")
@@ -30,7 +30,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_stick", has(Items.STICK))
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintTools.FLINT_SHOVEL.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintTools.SHOVEL.get())
                 .pattern("f")
                 .pattern("s")
                 .pattern("s")
@@ -39,7 +39,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_stick", has(Items.STICK))
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintTools.FLINT_PICKAXE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintTools.PICKAXE.get())
                 .pattern("fff")
                 .pattern(" s ")
                 .pattern(" s ")
@@ -48,7 +48,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_stick", has(Items.STICK))
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintTools.FLINT_HOE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintTools.HOE.get())
                 .pattern("ff")
                 .pattern(" s")
                 .pattern(" s")
@@ -57,7 +57,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_stick", has(Items.STICK))
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FlintTools.FLINT_SWORD.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FlintTools.SWORD.get())
                 .pattern("f")
                 .pattern("f")
                 .pattern("s")
@@ -66,7 +66,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_stick", has(Items.STICK))
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FlintTools.FLINT_SHIELD.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FlintTools.SHIELD.get())
                 .pattern(" f ")
                 .pattern("fLf")
                 .pattern(" f ")
