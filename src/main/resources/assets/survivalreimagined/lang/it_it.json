@@ -35,18 +35,18 @@
 	"survivalreimagined.item_repaired": "L'oggetto é stato riparato",
 	"survivalreimagined.no_spawn_point": "Non puoi impostare un punto di respawn. Meglio lasciare delle tracce dallo spawn del mondo.",
 	"survivalreimagined.spawner_reactivator": "Questo oggetto può riattivare un Generatore di Mostri",
-	"item.survivalreimagined.flint_axe": "Ascia di Selce",
-	"item.survivalreimagined.flint_pickaxe": "Piccone di Selce",
-	"item.survivalreimagined.flint_sword": "Spada di Selce",
-	"item.survivalreimagined.flint_shovel": "Pala di Selce",
-	"item.survivalreimagined.flint_hoe": "Zappa di Selce",
-	"item.survivalreimagined.flint_shield": "Scudo di Selce",
+	"item.survivalreimagined.flint_axe": "Ascia di selce",
+	"item.survivalreimagined.flint_pickaxe": "Piccone di selce",
+	"item.survivalreimagined.flint_sword": "Spada di selce",
+	"item.survivalreimagined.flint_shovel": "Pala di selce",
+	"item.survivalreimagined.flint_hoe": "Zappa di selce",
+	"item.survivalreimagined.flint_shield": "Scudo di selce",
 	"survivalreimagined.tool_efficiency": "%.1f Efficienza attrezzo",
 	"survivalreimagined.bonus_tool_efficiency": "(+%.1f da Efficienza)",
 	"item.survivalreimagined.bone_club": "Clava d'osso",
 
-	"item.survivalreimagined.chained_copper_helmet": "Elmo di Rame a catene",
-	"item.survivalreimagined.chained_copper_chestplate": "Corazza di Rame a catene",
-	"item.survivalreimagined.chained_copper_leggings": "Gambiere di Rame a catene",
-	"item.survivalreimagined.chained_copper_boots": "Stivali di Rame a catene"
+	"item.survivalreimagined.chained_copper_helmet": "Elmo di rame a catene",
+	"item.survivalreimagined.chained_copper_chestplate": "Corazza di rame a catene",
+	"item.survivalreimagined.chained_copper_leggings": "Gambiere di rame a catene",
+	"item.survivalreimagined.chained_copper_boots": "Stivali di rame a catene"
 }
