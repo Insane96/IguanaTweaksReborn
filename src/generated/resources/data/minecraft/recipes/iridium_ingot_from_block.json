@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "survivalreimagined:iridium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "survivalreimagined:iridium_ingot"
+  }
+}

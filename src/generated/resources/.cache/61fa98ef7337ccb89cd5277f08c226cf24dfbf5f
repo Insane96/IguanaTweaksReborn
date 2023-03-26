@@ -1,4 +1,4 @@
-// 1.19.3	2023-03-23T16:52:24.4930923	Global Loot Modifiers : survivalreimagined
+// 1.19.3	2023-03-26T23:12:55.0492835	Global Loot Modifiers : survivalreimagined
 b291c1a34c4f14187876ca997e0f535c967def6b data/forge/loot_modifiers/global_loot_modifiers.json
 6244a72f1f99847ab64b7eb6122b3031edb76abb data/survivalreimagined/loot_modifiers/chest_loot/chests/abandoned_mineshaft.json
 5fc821ebca9deecb9c0725ade9e4da5e0fb3bb3b data/survivalreimagined/loot_modifiers/chest_loot/chests/buried_treasure.json
@@ -8,7 +8,7 @@ af71b325681d6140c07a7484e38c9173f1032e89 data/survivalreimagined/loot_modifiers/
 7769a87d6a1743c5e3fd9b140bb17d991249b500 data/survivalreimagined/loot_modifiers/chest_loot/chests/pillager_outpost.json
 eddcd2d120c3124e93b39add277a85d13035c5c3 data/survivalreimagined/loot_modifiers/chest_loot/chests/ruined_portal.json
 12b78dee7152ceacc8e850e914b0bfb9b43be91c data/survivalreimagined/loot_modifiers/chest_loot/chests/shipwreck_treasure.json
-1f4def60a286f59ab2a5a317967a7c26348633f8 data/survivalreimagined/loot_modifiers/chest_loot/chests/simple_dungeon.json
+9d49780993b69a9ad139ca0bd32433a622224746 data/survivalreimagined/loot_modifiers/chest_loot/chests/simple_dungeon.json
 b59ff6443486ed2ed779d82134052aae8106c6a0 data/survivalreimagined/loot_modifiers/chest_loot/chests/spawn_bonus_chest.json
 90405d4e6bd1adf832dfaea5afc8f0806ec8bf91 data/survivalreimagined/loot_modifiers/chest_loot/chests/village/village_armorer.json
 c41de5f73b20f025439e480c02263fc9552b9ea0 data/survivalreimagined/loot_modifiers/chest_loot/chests/village/village_butcher.json

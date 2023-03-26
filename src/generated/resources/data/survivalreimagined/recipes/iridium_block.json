@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "survivalreimagined:iridium_ingot"
+    },
+    {
+      "item": "survivalreimagined:iridium_ingot"
+    },
+    {
+      "item": "survivalreimagined:iridium_ingot"
+    },
+    {
+      "item": "survivalreimagined:iridium_ingot"
+    },
+    {
+      "item": "survivalreimagined:iridium_ingot"
+    },
+    {
+      "item": "survivalreimagined:iridium_ingot"
+    },
+    {
+      "item": "survivalreimagined:iridium_ingot"
+    },
+    {
+      "item": "survivalreimagined:iridium_ingot"
+    },
+    {
+      "item": "survivalreimagined:iridium_ingot"
+    }
+  ],
+  "result": {
+    "item": "survivalreimagined:iridium_block"
+  }
+}

@@ -72,6 +72,7 @@ public class SurvivalReimagined
         modEventBus.register(Tiredness.class);
         SRSoundEvents.SOUND_EVENTS.register(modEventBus);
         SRMobEffects.MOB_EFFECTS.register(modEventBus);
+        SRBlocks.BLOCKS.register(modEventBus);
         SRItems.ITEMS.register(modEventBus);
         SRGlobalLootModifiers.LOOT_MODIFIERS.register(modEventBus);
         SRLootItemConditions.LOOT_ITEM_CONDITION_TYPES.register(modEventBus);

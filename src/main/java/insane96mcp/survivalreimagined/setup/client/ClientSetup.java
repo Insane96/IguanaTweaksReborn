@@ -23,12 +23,30 @@ public class ClientSetup {
         }
         else if (event.getTab() == CreativeModeTabs.COMBAT) {
             event.accept(FlintTools.SWORD.get());
+            event.accept(FlintTools.SHIELD.get());
             event.accept(BoneClub.BONE_CLUB.get());
             event.accept(Iridium.SWORD.get());
             event.accept(ChainedCopperArmor.HELMET.get());
             event.accept(ChainedCopperArmor.CHESTPLATE.get());
             event.accept(ChainedCopperArmor.LEGGINGS.get());
             event.accept(ChainedCopperArmor.BOOTS.get());
+
+            event.accept(Iridium.HELMET.get());
+            event.accept(Iridium.CHESTPLATE.get());
+            event.accept(Iridium.LEGGINGS.get());
+            event.accept(Iridium.BOOTS.get());
+            //event.accept(Iridium.SHIELD.get());
+        }
+        else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(Iridium.BLOCK_ITEM.get());
+        }
+        else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
+            event.accept(Iridium.ORE_ITEM.get());
+            event.accept(Iridium.DEEPSLATE_ORE_ITEM.get());
+        }
+        else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(Iridium.INGOT.get());
+            event.accept(Iridium.NUGGET.get());
         }
     }
 }

@@ -27,7 +27,6 @@ import java.util.UUID;
 @Label(name = "Terrain Slowdown", description = "Slowdown based off the terrain you're walking on. Custom Terrain Slowdown are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class TerrainSlowdown extends SRFeature {
-	//TODO Lower Cena chance
 	//TODO Give mobs buffs after some time
 	private static final UUID MATERIAL_SLOWDOWN_UUID = UUID.fromString("a849043f-b280-4789-bafd-5da8e8e1078e");
 

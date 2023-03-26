@@ -45,10 +45,11 @@ public class BeaconConduit extends SRFeature {
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:gold_block", 1.8d),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_block", 2.5d),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_block", 4d),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:cobalt_block", 2.4d),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:queens_slime_block", 3.0d),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:hepatizon_block", 2.7d),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:manyullyn_block", 3.3d)
+            new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_block", 3d),
+            new IdTagValue(IdTagMatcher.Type.ID, "tconstruct:cobalt_block", 2.4d),
+            new IdTagValue(IdTagMatcher.Type.ID, "tconstruct:queens_slime_block", 3.0d),
+            new IdTagValue(IdTagMatcher.Type.ID, "tconstruct:hepatizon_block", 2.7d),
+            new IdTagValue(IdTagMatcher.Type.ID, "tconstruct:manyullyn_block", 3.3d)
     ));
     public static final ArrayList<IdTagValue> blocksList = new ArrayList<>();
 

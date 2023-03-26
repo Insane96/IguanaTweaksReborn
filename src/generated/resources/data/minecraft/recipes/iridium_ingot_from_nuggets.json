@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "survivalreimagined:iridium_nugget"
+    },
+    {
+      "item": "survivalreimagined:iridium_nugget"
+    },
+    {
+      "item": "survivalreimagined:iridium_nugget"
+    },
+    {
+      "item": "survivalreimagined:iridium_nugget"
+    },
+    {
+      "item": "survivalreimagined:iridium_nugget"
+    },
+    {
+      "item": "survivalreimagined:iridium_nugget"
+    },
+    {
+      "item": "survivalreimagined:iridium_nugget"
+    },
+    {
+      "item": "survivalreimagined:iridium_nugget"
+    },
+    {
+      "item": "survivalreimagined:iridium_nugget"
+    }
+  ],
+  "result": {
+    "item": "survivalreimagined:iridium_ingot"
+  }
+}
