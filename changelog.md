@@ -9,9 +9,14 @@
   * Increased spawning speed of spawners by 400%
   * Spawners now ignore light levels
 * Iron armor requires leather armor to be made (again)
+* Iron tools now have 50% more durability
 * Flint shield no longer requires leather to be made
   * Copper shield now does
 * Grass blocks now slowdown less
+* Honey now heals less
+* Overhauled textures
+* Removed baby zombies
+* Reduced health for mobs by 20%
 
 ## Alpha 3.0.2
 * Added Shields+

@@ -84,7 +84,7 @@ public class Loot extends SRFeature {
 				.build()
 		);
 		provider.add(path + "chests/simple_dungeon", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/simple_dungeon"), 2000)
-				.setMultiplierAtStart(0.25f)
+				.setMultiplierAtStart(0.4f)
 				.applyToDamageable()
 				.build()
 		);
