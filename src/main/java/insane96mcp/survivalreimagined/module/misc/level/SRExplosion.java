@@ -88,9 +88,10 @@ public class SRExplosion extends Explosion {
 							Optional<Float> optional = this.damageCalculator.getBlockExplosionResistance(this, this.level, blockpos, blockstate, fluidstate);
 							if (optional.isPresent()) {
 								float resistance = optional.get();
-								/*if (blockstate.getMaterial().equals(Material.STONE) && this.stoneResistanceDivider >= 0)
-									resistance /= this.stoneResistanceDivider;*/
-								rayStrength -= (resistance + 0.3F) * 0.3F;
+								float multiplier = 0.3f;
+								/*if (blockstate.getMaterial().equals(Material.STONE) /*&& this.stoneResistanceDivider >= 0)
+									multiplier /= 5f;*/
+								rayStrength -= (resistance + 0.3F) * multiplier;
 							}
 							if (rayStrength > 0.0F && this.damageCalculator.shouldBlockExplode(this, this.level, blockpos, blockstate, rayStrength)) {
 								set.add(blockpos);

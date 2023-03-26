@@ -13,6 +13,7 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 @Label(name = "EnhancedAI", description = "Changes to EnhancedAI config")
 @LoadFeature(module = Modules.Ids.MOBS)
 public class EnhancedAI extends SRFeature {
+    //TODO Nerf skellys
     @Config
     @Label(name = "Cena Nerf", description = "Makes creeper Cena explosion power the same as normal creeper. Cena will be just a jumpscare lul.")
     public static Boolean cenaNerf = true;
