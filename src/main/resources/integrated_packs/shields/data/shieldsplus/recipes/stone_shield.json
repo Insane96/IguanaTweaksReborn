@@ -1,7 +1,19 @@
 {
-    "conditions": [
-        {
-            "type": "forge:false"
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " S ",
+        "SLS",
+        " S "
+    ],
+    "key": {
+        "S": {
+            "item": "minecraft:cobblestone"
+        },
+        "L": {
+            "tag": "minecraft:logs"
         }
-    ]
+    },
+    "result": {
+        "item": "shieldsplus:stone_shield"
+    }
 }
