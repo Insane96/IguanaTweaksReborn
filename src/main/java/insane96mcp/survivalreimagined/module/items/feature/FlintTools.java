@@ -35,7 +35,7 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class FlintTools extends SRFeature {
 
-	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("flint", 3d, 33, Items.FLINT, 9, Rarity.COMMON);
+	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("flint", 3d, 33, () -> Items.FLINT, 9, Rarity.COMMON);
 
 	private static final ILItemTier ITEM_TIER = new ILItemTier(1, 66, 2f, 1.5f, 9, () -> Ingredient.of(Items.FLINT));
 

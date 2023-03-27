@@ -51,7 +51,7 @@ license="All rights reserved"
     [[dependencies.survivalreimagined]]
         modId="shieldsplus"
         mandatory=true
-        versionRange="[1.4.1,)"
+        versionRange="[1.4.3,)"
         ordering="NONE"
         side="BOTH"
 

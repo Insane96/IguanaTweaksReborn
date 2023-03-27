@@ -4,6 +4,8 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.item.ILItemTier;
+import insane96mcp.shieldsplus.world.item.SPShieldItem;
+import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.utils.SRArmorMaterial;
@@ -26,7 +28,6 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class Iridium extends SRFeature {
 
-	//TODO Crafting
 	public static final RegistryObject<Block> BLOCK = SRBlocks.BLOCKS.register("iridium_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
 	public static final RegistryObject<Block> ORE = SRBlocks.BLOCKS.register("iridium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5)));
 	public static final RegistryObject<Block> DEEPSLATE_ORE = SRBlocks.BLOCKS.register("deepslate_iridium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(ORE.get()).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), UniformInt.of(2, 5)));
@@ -54,10 +55,9 @@ public class Iridium extends SRFeature {
 	public static final RegistryObject<Item> LEGGINGS = SRItems.ITEMS.register("iridium_leggings", () -> new ArmorItem(ARMOR_MATERIAL, EquipmentSlot.LEGS, new Item.Properties()));
 	public static final RegistryObject<Item> BOOTS = SRItems.ITEMS.register("iridium_boots", () -> new ArmorItem(ARMOR_MATERIAL, EquipmentSlot.FEET, new Item.Properties()));
 
-	//TODO Use a lazy loader for the repair material
-	//public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("iridium", 5.5d, 452, INGOT.get(), 9, Rarity.RARE);
+	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("iridium", 5.5d, 452, INGOT, 9, Rarity.COMMON);
 
-	//public static final RegistryObject<SPShieldItem> SHIELD = SRItems.registerShield("iridium_shield", SHIELD_MATERIAL);
+	public static final RegistryObject<SPShieldItem> SHIELD = SRItems.registerShield("iridium_shield", SHIELD_MATERIAL);
 
 	public Iridium(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
