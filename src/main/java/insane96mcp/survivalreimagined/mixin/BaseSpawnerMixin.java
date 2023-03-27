@@ -13,14 +13,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BaseSpawner.class)
 public class BaseSpawnerMixin {
 
-	@Inject(at = @At("HEAD"), method = "serverTick")
+	@Inject(at = @At("HEAD"), method = "serverTick", cancellable = true)
 	private void serverTick(ServerLevel p_151312_, BlockPos p_151313_, CallbackInfo callback) {
-		Spawners.onSpawnerServerTick((BaseSpawner) (Object) this);
+		if (Spawners.onSpawnerServerTick((BaseSpawner) (Object) this))
+			callback.cancel();
 	}
 
-	@Inject(at = @At("HEAD"), method = "clientTick")
-	private void serverTick(Level p_151320_, BlockPos p_151321_, CallbackInfo callback) {
-		Spawners.onClientTick((BaseSpawner) (Object) this);
+	@Inject(at = @At("HEAD"), method = "clientTick", cancellable = true)
+	private void clientTick(Level p_151320_, BlockPos p_151321_, CallbackInfo callback) {
+		if (Spawners.onSpawnerClientTick((BaseSpawner) (Object) this))
+			callback.cancel();
 	}
 
 }

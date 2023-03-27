@@ -7,7 +7,10 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.misc.capability.ISpawner;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerCap;
+import insane96mcp.survivalreimagined.network.NetworkHandler;
+import insane96mcp.survivalreimagined.network.message.MessageSpawnerStatusSync;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -18,19 +21,23 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 @Label(name = "Spawners", description = "Spawners will no longer spawn mobs infinitely. Echo shards can reactivate a spawner. Monsters spawning from spawners ignore light and spawning is much faster")
 @LoadFeature(module = Modules.Ids.MISC)
@@ -84,7 +91,7 @@ public class Spawners extends Feature {
 			int maxSpawned = (int) ((minSpawnableMobs + (distance / 8d)) * spawnableMobsMultiplier);
 
 			if (spawnerCap.getSpawnedMobs() >= maxSpawned) {
-				disableSpawner(mobSpawner);
+				setSpawnerStatus(mobSpawner, true);
 			}
 		});
 	}
@@ -118,75 +125,68 @@ public class Spawners extends Feature {
 		event.setExpToDrop((int) (event.getExpToDrop() * (1 + distance / 1024d)));
 	}
 
-	public static void onSpawnerServerTick(BaseSpawner spawner) {
+	/**
+	 * Returns true if the spawner should not tick
+	 */
+	public static boolean onSpawnerServerTick(BaseSpawner spawner) {
 		if (!(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity))
-			return;
+			return false;
 		//If the feature is disabled then reactivate disabled spawners and prevent further processing
-		if (!Feature.isEnabled(Spawners.class)) {
-			if (isDisabled(spawnerBlockEntity))
-				enableSpawner(spawnerBlockEntity);
-			return;
-		}
-		spawner.spawnDelay -= spawningSpeedBoost;
+		if (!Feature.isEnabled(Spawners.class))
+			return false;
+		else if (isDisabled(spawnerBlockEntity))
+			return true;
+		spawner.spawnDelay = Math.max(spawner.spawnDelay - spawningSpeedBoost, 0);
 		//If spawnable mobs amount has changed then re-enable the spawner
 		if (spawnerBlockEntity.getLevel() instanceof ServerLevel world) {
 			spawnerBlockEntity.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> {
 				double distance = Math.sqrt(spawnerBlockEntity.getBlockPos().distSqr(world.getSharedSpawnPos()));
 				int maxSpawned = (int) ((minSpawnableMobs + (distance / 8d)) * spawnableMobsMultiplier);
 				if (spawnerCap.getSpawnedMobs() < maxSpawned && isDisabled(spawnerBlockEntity)) {
-					enableSpawner(spawnerBlockEntity);
+					setSpawnerStatus(spawnerBlockEntity, false);
 				}
 			});
 		}
+		return false;
 	}
 
-	public static void onClientTick(BaseSpawner spawner) {
-		if (!Feature.isEnabled(Spawners.class))
-			return;
-		if (!(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity))
-			return;
+	/**
+	 * Returns true if the spawner should not tick
+	 */
+	public static boolean onSpawnerClientTick(BaseSpawner spawner) {
+		if (!Feature.isEnabled(Spawners.class)
+			|| !(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity)
+			|| !isDisabled(spawnerBlockEntity))
+			return false;
 		Level level = spawnerBlockEntity.getLevel();
 		if (level == null)
-			return;
-		if (!isDisabled(spawnerBlockEntity))
-			return;
+			return false;
 		BlockPos blockpos = spawnerBlockEntity.getBlockPos();
 		for (int i = 0; i < 10; i++) {
 			level.addParticle(ParticleTypes.SMOKE, blockpos.getX() + level.random.nextDouble(), blockpos.getY() + level.random.nextDouble(), blockpos.getZ() + level.random.nextDouble(), 0.0D, 0.0D, 0.0D);
 		}
+		return true;
 	}
 
-	//TODO Refactor
-	private static void disableSpawner(SpawnerBlockEntity spawner) {
-		BaseSpawner abstractSpawner = spawner.getSpawner();
-		CompoundTag nbt = new CompoundTag();
-		abstractSpawner.save(nbt);
-		nbt.putShort("MaxNearbyEntities", (short) 0);
-		nbt.putShort("RequiredPlayerRange", (short) 0);
-		spawner.load(nbt);
-		spawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setDisabled(true));
-	}
-
-	private static void enableSpawner(SpawnerBlockEntity spawner) {
-		BaseSpawner abstractSpawner = spawner.getSpawner();
-		CompoundTag nbt = new CompoundTag();
-		abstractSpawner.save(nbt);
-		nbt.putShort("MaxNearbyEntities", (short) 6);
-		nbt.putShort("RequiredPlayerRange", (short) 16);
-		spawner.load(nbt);
-		spawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setDisabled(false));
+	private static void setSpawnerStatus(SpawnerBlockEntity spawner, boolean disabled) {
+		spawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setDisabled(disabled));
+		//noinspection ConstantConditions
+		if (spawner.hasLevel() && !spawner.getLevel().isClientSide) {
+			Object msg = new MessageSpawnerStatusSync(spawner.getBlockPos(), disabled);
+			for (Player player : spawner.getLevel().players()) {
+				NetworkHandler.CHANNEL.sendTo(msg, ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+			}
+		}
 	}
 
 	private static void resetSpawner(SpawnerBlockEntity spawner) {
-		enableSpawner(spawner);
+		setSpawnerStatus(spawner, false);
 		spawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setSpawnedMobs(0));
 	}
 
 	private static boolean isDisabled(SpawnerBlockEntity spawner) {
-		BaseSpawner abstractSpawner = spawner.getSpawner();
-		CompoundTag nbt = new CompoundTag();
-		abstractSpawner.save(nbt);
-		return nbt.getShort("MaxNearbyEntities") == (short) 0 && nbt.getShort("RequiredPlayerRange") == (short) 0;
+		LazyOptional<ISpawner> cap = spawner.getCapability(SpawnerCap.INSTANCE);
+		return cap.map(ISpawner::isDisabled).orElse(false);
 	}
 
 	@SubscribeEvent
