@@ -7,7 +7,6 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "weight": 1,
                     "name": "survivalreimagined:iridium_nugget",
                     "functions": [
                         {
@@ -28,7 +27,6 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "weight": 2,
                     "name": "minecraft:cobblestone"
                 }
             ]
