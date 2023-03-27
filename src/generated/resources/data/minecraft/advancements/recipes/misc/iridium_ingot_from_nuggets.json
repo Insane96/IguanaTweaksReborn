@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ingot": {
+    "has_nuggets": {
       "conditions": {
         "items": [
           {
             "items": [
-              "survivalreimagined:iridium_ingot"
+              "survivalreimagined:iridium_nugget"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_ingot",
+      "has_nuggets",
       "has_the_recipe"
     ]
   ],

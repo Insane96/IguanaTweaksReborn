@@ -1,11 +1,11 @@
-// 1.19.3	2023-03-26T23:35:49.8763486	Recipes
+// 1.19.3	2023-03-27T15:35:43.8809007	Recipes
 7243fded625f7e43e6c6759c3b57f2c80bee6b13 data/minecraft/advancements/recipes/combat/iridium_boots.json
 73342fcb6024908f42b56ff447d4847d7c5da2c4 data/minecraft/advancements/recipes/combat/iridium_chestplate.json
 9a2ad0e6b52cc2cfdc4cb11f8d5fe8fba07ed59b data/minecraft/advancements/recipes/combat/iridium_helmet.json
 cad6193d77e89bedb45eceb989ec01e498bdc242 data/minecraft/advancements/recipes/combat/iridium_leggings.json
 64203112b470d76c89c51b1ed764bc184d9d74db data/minecraft/advancements/recipes/combat/iridium_sword.json
 0414d4d07b69c0d34c4c5803f58f9bf9211d11a4 data/minecraft/advancements/recipes/misc/iridium_ingot_from_block.json
-76aacc0cc88db4dafdc737dac0b7b594a3c369b9 data/minecraft/advancements/recipes/misc/iridium_ingot_from_nuggets.json
+3479686918ec99bf9845e164d90818cf153b6f35 data/minecraft/advancements/recipes/misc/iridium_ingot_from_nuggets.json
 081930848bedbef2bddef7f3030604f09affa168 data/minecraft/advancements/recipes/tools/iridium_axe.json
 afe803da5dd40e281232faae4f365330363fcd32 data/minecraft/advancements/recipes/tools/iridium_how.json
 65f7c2d4f5d2a0661b00f7145c0e7163f8bee759 data/minecraft/advancements/recipes/tools/iridium_pickaxe.json
