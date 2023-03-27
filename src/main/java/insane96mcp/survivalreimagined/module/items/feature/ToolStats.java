@@ -66,6 +66,12 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_shovel", 375),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_hoe", 375),
 
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_sword", 877),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_pickaxe", 877),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_axe", 877),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_shovel", 877),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_hoe", 877),
+
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 86),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:carrot_on_a_stick", 63),
 			//new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shield", 268),
