@@ -271,7 +271,7 @@ public class HealthRegen extends Feature {
 	}
 
 	private static void tick(FoodData foodStats, Player player, Difficulty difficulty) {
-		boolean naturalRegen = player.level.getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION) && !NoHunger.disableHunger;
+		boolean naturalRegen = player.level.getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION) && !Feature.isEnabled(NoHunger.class);
 		if (naturalRegen && foodStats.saturationLevel > 0.0F && player.isHurt() && foodStats.foodLevel >= 20 && !disableSaturationRegenBoost) {
 			++foodStats.tickTimer;
 			if (foodStats.tickTimer >= 10) {
@@ -306,7 +306,7 @@ public class HealthRegen extends Feature {
 				foodStats.tickTimer = 0;
 			}
 		}
-		else if (!NoHunger.disableHunger){
+		else if (!Feature.isEnabled(NoHunger.class)){
 			foodStats.tickTimer = 0;
 		}
 	}
@@ -330,7 +330,7 @@ public class HealthRegen extends Feature {
 	@SubscribeEvent
 	public void debugScreen(CustomizeGuiOverlayEvent.DebugText event) {
 		if (!this.isEnabled()
-			|| NoHunger.disableHunger)
+			|| !Feature.isEnabled(NoHunger.class))
 			return;
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer playerEntity = mc.player;

@@ -49,9 +49,6 @@ public class NoHunger extends Feature {
     private static final ResourceLocation RAW_FOOD = new ResourceLocation(SurvivalReimagined.MOD_ID, "raw_food");
 
     @Config
-    @Label(name = "Disable Hunger", description = "Completely disables the entire hunger system, from the hunger bar, to the health regen that comes with it.")
-    public static Boolean disableHunger = true;
-    @Config
     @Label(name = "Passive Health Regen.Enable Passive Health Regen", description = "If true, Passive Regeneration is enabled")
     public static Boolean enablePassiveRegen = false;
     @Config
@@ -84,7 +81,6 @@ public class NoHunger extends Feature {
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (!this.isEnabled()
-                || !disableHunger
                 || event.player.level.isClientSide
                 || event.phase.equals(TickEvent.Phase.START))
             return;
@@ -218,7 +214,7 @@ public class NoHunger extends Feature {
     @SubscribeEvent
     public void removeFoodBar(final RenderGuiOverlayEvent.Pre event)
     {
-        if (event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type()))
+        if (this.isEnabled() && event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type()))
             event.setCanceled(true);
     }
 
