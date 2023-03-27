@@ -1,6 +1,7 @@
-package insane96mcp.survivalreimagined.network;
+package insane96mcp.survivalreimagined.network.message;
 
 import insane96mcp.survivalreimagined.module.movement.feature.Stamina;
+import insane96mcp.survivalreimagined.network.NetworkHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
