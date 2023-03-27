@@ -11,9 +11,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BaseSpawner.class)
-public class BaseSpawnerMixin {
+public abstract class BaseSpawnerMixin {
 
-	@Inject(at = @At("HEAD"), method = "serverTick", cancellable = true)
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BaseSpawner;isNearPlayer(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z", shift = At.Shift.AFTER), method = "serverTick", cancellable = true)
 	private void serverTick(ServerLevel p_151312_, BlockPos p_151313_, CallbackInfo callback) {
 		if (Spawners.onSpawnerServerTick((BaseSpawner) (Object) this))
 			callback.cancel();

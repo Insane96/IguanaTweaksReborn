@@ -4,7 +4,8 @@ import insane96mcp.survivalreimagined.data.SRAnvilRecipeReloadListener;
 import insane96mcp.survivalreimagined.data.SRDataReloadListener;
 import insane96mcp.survivalreimagined.data.SRRecipeProvider;
 import insane96mcp.survivalreimagined.data.lootmodifier.SRGlobalLootModifierProvider;
-import insane96mcp.survivalreimagined.module.misc.capability.SpawnerProvider;
+import insane96mcp.survivalreimagined.module.misc.capability.SpawnerData;
+import insane96mcp.survivalreimagined.module.misc.capability.SpawnerDataAttacher;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.setup.*;
@@ -18,18 +19,11 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -64,12 +58,14 @@ public class SurvivalReimagined
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SRClientConfig.CONFIG_SPEC, MOD_ID + "/client.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SRCommonConfig.CONFIG_SPEC, MOD_ID + "/common.toml");
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(SpawnerDataAttacher.class);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(ClientSetup::creativeTabsBuildContents);
         modEventBus.addListener(this::addPackFinders);
         modEventBus.register(Tiredness.class);
+        modEventBus.register(SpawnerData.class);
         SRSoundEvents.SOUND_EVENTS.register(modEventBus);
         SRMobEffects.MOB_EFFECTS.register(modEventBus);
         SRBlocks.BLOCKS.register(modEventBus);
@@ -84,21 +80,6 @@ public class SurvivalReimagined
         SRDataReloadListener.reloadContext = event.getConditionContext();
         event.addListener(SRDataReloadListener.INSTANCE);
         event.addListener(SRAnvilRecipeReloadListener.INSTANCE);
-    }
-
-    @SubscribeEvent
-    public void attachCapBlockEntity(final AttachCapabilitiesEvent<BlockEntity> event)
-    {
-        if (event.getObject() instanceof SpawnerBlockEntity)
-            event.addCapability(SpawnerProvider.IDENTIFIER, new SpawnerProvider());
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public void attachCapBlockEntity(final RenderGuiOverlayEvent.Pre event)
-    {
-        if (event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type()))
-            event.setCanceled(true);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

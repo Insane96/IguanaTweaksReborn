@@ -8,6 +8,7 @@
 * Temp Spawners is now "Spawners"
   * Increased spawning speed of spawners by 400%
   * Spawners now ignore light levels
+  * Hugely increased performance when checking if the spawner is disabled
 * Iron armor requires leather armor to be made (again)
 * Iron tools now have 50% more durability
 * Flint shield no longer requires leather to be made

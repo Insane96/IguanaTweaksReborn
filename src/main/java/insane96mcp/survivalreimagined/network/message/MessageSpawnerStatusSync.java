@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.network.message;
 
-import insane96mcp.survivalreimagined.module.misc.capability.SpawnerCap;
+import insane96mcp.survivalreimagined.module.misc.capability.SpawnerData;
 import insane96mcp.survivalreimagined.network.NetworkHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -30,7 +30,7 @@ public class MessageSpawnerStatusSync {
 	public static void handle(final MessageSpawnerStatusSync message, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			if (NetworkHelper.getSidedPlayer(ctx.get()).level.getBlockEntity(message.pos) instanceof SpawnerBlockEntity spawnerBlockEntity) {
-				spawnerBlockEntity.getCapability(SpawnerCap.INSTANCE).ifPresent(iSpawner -> iSpawner.setDisabled(message.status));
+				spawnerBlockEntity.getCapability(SpawnerData.INSTANCE).ifPresent(iSpawner -> iSpawner.setDisabled(message.status));
 			}
 		});
 		ctx.get().setPacketHandled(true);

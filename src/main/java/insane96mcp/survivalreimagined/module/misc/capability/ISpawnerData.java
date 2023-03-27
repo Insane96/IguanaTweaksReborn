@@ -1,6 +1,9 @@
 package insane96mcp.survivalreimagined.module.misc.capability;
 
-public interface ISpawner {
+import net.minecraft.nbt.CompoundTag;
+import net.minecraftforge.common.util.INBTSerializable;
+
+public interface ISpawnerData extends INBTSerializable<CompoundTag> {
 	int getSpawnedMobs();
 	void addSpawnedMobs(int spawnedMobs);
 	void setSpawnedMobs(int spawnedMobs);

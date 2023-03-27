@@ -7,8 +7,8 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.misc.capability.ISpawner;
-import insane96mcp.survivalreimagined.module.misc.capability.SpawnerCap;
+import insane96mcp.survivalreimagined.module.misc.capability.ISpawnerData;
+import insane96mcp.survivalreimagined.module.misc.capability.SpawnerData;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.MessageSpawnerStatusSync;
 import insane96mcp.survivalreimagined.setup.Strings;
@@ -83,7 +83,7 @@ public class Spawners extends Feature {
 			LogHelper.warn("SpawnerBlockEntity is null at %s. Some mod is giving a spawner a non SpawnerBlockEntity.".formatted(spawnerPos));
 			return;
 		}
-		mobSpawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> {
+		mobSpawner.getCapability(SpawnerData.INSTANCE).ifPresent(spawnerCap -> {
 			spawnerCap.addSpawnedMobs(1);
 			if (Utils.isEntityInTag(event.getEntity(), BLACKLISTED_SPAWNERS))
 				return;
@@ -93,6 +93,7 @@ public class Spawners extends Feature {
 			if (spawnerCap.getSpawnedMobs() >= maxSpawned) {
 				setSpawnerStatus(mobSpawner, true);
 			}
+			mobSpawner.setChanged();
 		});
 	}
 
@@ -131,22 +132,11 @@ public class Spawners extends Feature {
 	public static boolean onSpawnerServerTick(BaseSpawner spawner) {
 		if (!(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity))
 			return false;
-		//If the feature is disabled then reactivate disabled spawners and prevent further processing
 		if (!Feature.isEnabled(Spawners.class))
 			return false;
 		else if (isDisabled(spawnerBlockEntity))
 			return true;
 		spawner.spawnDelay = Math.max(spawner.spawnDelay - spawningSpeedBoost, 0);
-		//If spawnable mobs amount has changed then re-enable the spawner
-		if (spawnerBlockEntity.getLevel() instanceof ServerLevel world) {
-			spawnerBlockEntity.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> {
-				double distance = Math.sqrt(spawnerBlockEntity.getBlockPos().distSqr(world.getSharedSpawnPos()));
-				int maxSpawned = (int) ((minSpawnableMobs + (distance / 8d)) * spawnableMobsMultiplier);
-				if (spawnerCap.getSpawnedMobs() < maxSpawned && isDisabled(spawnerBlockEntity)) {
-					setSpawnerStatus(spawnerBlockEntity, false);
-				}
-			});
-		}
 		return false;
 	}
 
@@ -155,8 +145,10 @@ public class Spawners extends Feature {
 	 */
 	public static boolean onSpawnerClientTick(BaseSpawner spawner) {
 		if (!Feature.isEnabled(Spawners.class)
-			|| !(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity)
-			|| !isDisabled(spawnerBlockEntity))
+			|| !(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity))
+			return false;
+		spawner.spawnDelay = Math.max(spawner.spawnDelay - spawningSpeedBoost, 0);
+		if (!isDisabled(spawnerBlockEntity))
 			return false;
 		Level level = spawnerBlockEntity.getLevel();
 		if (level == null)
@@ -169,7 +161,8 @@ public class Spawners extends Feature {
 	}
 
 	private static void setSpawnerStatus(SpawnerBlockEntity spawner, boolean disabled) {
-		spawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setDisabled(disabled));
+		spawner.getCapability(SpawnerData.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setDisabled(disabled));
+		spawner.setChanged();
 		//noinspection ConstantConditions
 		if (spawner.hasLevel() && !spawner.getLevel().isClientSide) {
 			Object msg = new MessageSpawnerStatusSync(spawner.getBlockPos(), disabled);
@@ -181,12 +174,13 @@ public class Spawners extends Feature {
 
 	private static void resetSpawner(SpawnerBlockEntity spawner) {
 		setSpawnerStatus(spawner, false);
-		spawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setSpawnedMobs(0));
+		spawner.getCapability(SpawnerData.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setSpawnedMobs(0));
+		spawner.setChanged();
 	}
 
 	private static boolean isDisabled(SpawnerBlockEntity spawner) {
-		LazyOptional<ISpawner> cap = spawner.getCapability(SpawnerCap.INSTANCE);
-		return cap.map(ISpawner::isDisabled).orElse(false);
+		LazyOptional<ISpawnerData> cap = spawner.getCapability(SpawnerData.INSTANCE);
+		return cap.map(ISpawnerData::isDisabled).orElse(false);
 	}
 
 	@SubscribeEvent
