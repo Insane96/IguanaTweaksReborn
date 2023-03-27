@@ -91,15 +91,13 @@ public class Spawners extends Feature {
 
 	@SubscribeEvent
 	public void onItemUse(PlayerInteractEvent.RightClickBlock event) {
-		if (!this.isEnabled()
-				|| !Utils.isItemInTag(event.getItemStack().getItem(), SPAWNER_REACTIVATOR)
+		if (!Utils.isItemInTag(event.getItemStack().getItem(), SPAWNER_REACTIVATOR)
 				|| event.getLevel().getBlockState(event.getHitVec().getBlockPos()).getBlock() != Blocks.SPAWNER)
 			return;
 
 		SpawnerBlockEntity spawner = (SpawnerBlockEntity) event.getLevel().getBlockEntity(event.getHitVec().getBlockPos());
-		if (spawner == null)
-			return;
-		if (!isDisabled(spawner))
+		if (spawner == null
+				|| !isDisabled(spawner))
 			return;
 
 		event.setUseItem(Event.Result.ALLOW);
