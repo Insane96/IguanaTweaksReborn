@@ -28,11 +28,13 @@ public class SpawnerProvider implements ICapabilityProvider, ICapabilitySerializ
 	public CompoundTag serializeNBT() {
 		CompoundTag nbt = new CompoundTag();
 		nbt.putInt(Strings.Tags.SPAWNED_MOBS, backend.getSpawnedMobs());
+		nbt.putBoolean(Strings.Tags.SPAWNER_DISABLED, backend.isDisabled());
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(CompoundTag nbt) {
 		backend.setSpawnedMobs(nbt.getInt(Strings.Tags.SPAWNED_MOBS));
+		backend.setDisabled(nbt.getBoolean(Strings.Tags.SPAWNER_DISABLED));
 	}
 }

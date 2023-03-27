@@ -124,7 +124,7 @@ public class Spawners extends Feature {
 		if (!(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity))
 			return;
 		//If the feature is disabled then reactivate disabled spawners and prevent further processing
-		if (!isEnabled(Spawners.class)) {
+		if (!Feature.isEnabled(Spawners.class)) {
 			if (isDisabled(spawnerBlockEntity))
 				enableSpawner(spawnerBlockEntity);
 			return;
@@ -143,6 +143,8 @@ public class Spawners extends Feature {
 	}
 
 	public static void onClientTick(BaseSpawner spawner) {
+		if (!Feature.isEnabled(Spawners.class))
+			return;
 		if (!(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity))
 			return;
 		Level level = spawnerBlockEntity.getLevel();
@@ -156,6 +158,7 @@ public class Spawners extends Feature {
 		}
 	}
 
+	//TODO Refactor
 	private static void disableSpawner(SpawnerBlockEntity spawner) {
 		BaseSpawner abstractSpawner = spawner.getSpawner();
 		CompoundTag nbt = new CompoundTag();
@@ -163,6 +166,7 @@ public class Spawners extends Feature {
 		nbt.putShort("MaxNearbyEntities", (short) 0);
 		nbt.putShort("RequiredPlayerRange", (short) 0);
 		spawner.load(nbt);
+		spawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setDisabled(true));
 	}
 
 	private static void enableSpawner(SpawnerBlockEntity spawner) {
@@ -172,6 +176,7 @@ public class Spawners extends Feature {
 		nbt.putShort("MaxNearbyEntities", (short) 6);
 		nbt.putShort("RequiredPlayerRange", (short) 16);
 		spawner.load(nbt);
+		spawner.getCapability(SpawnerCap.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setDisabled(false));
 	}
 
 	private static void resetSpawner(SpawnerBlockEntity spawner) {

@@ -14,6 +14,7 @@ public class Strings {
 		public static final String DAMAGE_HISTORY = SurvivalReimagined.RESOURCE_PREFIX + "damage_history";
 		public static final String EAT_HISTORY = SurvivalReimagined.RESOURCE_PREFIX + "eat_history";
         public static final String PASSIVE_REGEN_TICK = SurvivalReimagined.RESOURCE_PREFIX + "passive_regen_ticks";
+		public static final String SPAWNER_DISABLED = SurvivalReimagined.RESOURCE_PREFIX + "spawner_disabled";
     }
 
 	public static class AttributeModifiers {
