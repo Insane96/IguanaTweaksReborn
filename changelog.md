@@ -20,6 +20,7 @@
 * Removed baby zombies
 * Reduced health for mobs by 20%
 * Dungeon loot is now less purged and fixed too many spawner heads
+* Hay Bales can no longer be crafted back to wheat
 
 ## Alpha 3.0.2
 * Added Shields+
