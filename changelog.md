@@ -1,11 +1,13 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.1.0
 * Added EnhancedAI mod
   * Mobs are tougher to fight as they have a few more tricks up their sleeve
+* Added Iridium, a new ore found at any height plus a lot generates hidden about 16 blocks below the sea level
+  * Can be applied to Iron equipment in a Smithing Table to get Iridium equipment, slightly better than iron but more durable
 * Added Bone Club
   * If you dare to fight a skeleton you can use his bones to get a new weapon, low durability but quite good damage.
-* Added "Actually sweet Berry Bushes"
+* Added "Actually Sweet Berry Bushes"
   * Entities are no longer damaged by berry bushes if they're wearing leggings and boots
 * Temp Spawners is now "Spawners"
   * Increased spawning speed of spawners by 400%
@@ -23,7 +25,7 @@
 * Reduced health for mobs by 20%
 * Dungeon loot is now less purged and fixed too many spawner heads
 * Desire paths no longer trigger if going slow enough (e.g. when sneaking)
-* Villages no longer generate
+* Villages no longer generate until I find a way to make them not so much useful
 
 ## Alpha 3.0.2
 * Added Shields+
