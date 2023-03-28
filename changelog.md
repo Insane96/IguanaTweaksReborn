@@ -1,10 +1,12 @@
 # Changelog
 
 ## Upcoming
-* Added EnhancedAI
+* Added EnhancedAI mod
   * Mobs are tougher to fight as they have a few more tricks up their sleeve
 * Added Bone Club
   * If you dare to fight a skeleton you can use his bones to get a new weapon, low durability but quite good damage.
+* Added "Actually sweet Berry Bushes"
+  * Entities are no longer damaged by berry bushes if they're wearing leggings and boots
 * Temp Spawners is now "Spawners"
   * Increased spawning speed of spawners by 400%
   * Spawners now ignore light levels
