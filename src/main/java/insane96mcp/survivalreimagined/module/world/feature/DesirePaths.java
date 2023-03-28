@@ -29,8 +29,6 @@ import java.util.List;
 public class DesirePaths extends SRFeature {
 	public static final ResourceLocation TALL_GRASS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "tall_grass");
 
-	//Add Dirt to Path mod dependency
-
 	private static final List<String> DEFAULT_TRANSFORMATION_LIST = List.of("minecraft:grass_block,minecraft:dirt", "minecraft:dirt,minecraft:coarse_dirt");
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> transformationListConfig;
 
@@ -62,7 +60,7 @@ public class DesirePaths extends SRFeature {
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
 				|| event.player.level.isClientSide
-				|| event.player.walkDist == event.player.walkDistO
+				|| event.player.walkDistO - event.player.walkDist < 0.04f
 				|| event.player.tickCount % 2 == 1)
 			return;
 
