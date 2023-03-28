@@ -28,6 +28,7 @@ public class SyncHandler {
 		CHANNEL.registerMessage(1, MessageExhaustionSync.class, MessageExhaustionSync::encode, MessageExhaustionSync::decode, MessageExhaustionSync::handle);
 		CHANNEL.registerMessage(2, MessageSaturationSync.class, MessageSaturationSync::encode, MessageSaturationSync::decode, MessageSaturationSync::handle);
 		CHANNEL.registerMessage(3, MessageTirednessSync.class, MessageTirednessSync::encode, MessageTirednessSync::decode, MessageTirednessSync::handle);
+		CHANNEL.registerMessage(6, MessageSpawnerStatusSync.class, MessageSpawnerStatusSync::encode, MessageSpawnerStatusSync::decode, MessageSpawnerStatusSync::handle);
 		MinecraftForge.EVENT_BUS.register(new SyncHandler());
 	}
 

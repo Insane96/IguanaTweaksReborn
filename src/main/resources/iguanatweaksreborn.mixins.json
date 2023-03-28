@@ -18,6 +18,7 @@
         "LivingEntityMixin",
         "MerchantOfferMixin",
         "MilkBucketItemMixin",
+        "MonsterMixin",
         "PlayerMixin",
         "PotionItemMixin",
         "ProtectionEnchantmentMixin",

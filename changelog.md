@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.13.6
+* Backported survival reimagined Spawners changes
+  * Temp Spawner feature has been renamed to Spawners
+  * Spawners now spawn mobs 5 times as fast and ignore the light level
+  * Hugely increased performance of the feature
+
 ## 2.13.5
 * Renamed Well Rested to Vigour
   * Vigour now reduces more hunger consumption (33/50/66.7/75/80/...% at levels I/II/III/IV/V/...)

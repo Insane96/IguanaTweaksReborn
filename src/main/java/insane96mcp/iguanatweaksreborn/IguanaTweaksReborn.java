@@ -1,7 +1,8 @@
 package insane96mcp.iguanatweaksreborn;
 
 import insane96mcp.iguanatweaksreborn.data.ITDataReloadListener;
-import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerProvider;
+import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerData;
+import insane96mcp.iguanatweaksreborn.module.misc.capability.SpawnerDataAttacher;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.feature.Tiredness;
 import insane96mcp.iguanatweaksreborn.network.SyncHandler;
 import insane96mcp.iguanatweaksreborn.setup.ITClientConfig;
@@ -14,12 +15,9 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -50,10 +48,12 @@ public class IguanaTweaksReborn
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ITClientConfig.CONFIG_SPEC, MOD_ID + "/client.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ITCommonConfig.CONFIG_SPEC, MOD_ID + "/common.toml");
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(SpawnerDataAttacher.class);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::addPackFinders);
         FMLJavaModLoadingContext.get().getModEventBus().register(Tiredness.class);
+        FMLJavaModLoadingContext.get().getModEventBus().register(SpawnerData.class);
         ITSoundEvents.SOUND_EVENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITMobEffects.MOB_EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
         Weights.initMaterialWeight();
@@ -63,13 +63,6 @@ public class IguanaTweaksReborn
     public void onAddReloadListener(AddReloadListenerEvent event) {
         ITDataReloadListener.reloadContext = event.getConditionContext();
         event.addListener(ITDataReloadListener.INSTANCE);
-    }
-
-    @SubscribeEvent
-    public void attachCapBlockEntity(final AttachCapabilitiesEvent<BlockEntity> event)
-    {
-        if (event.getObject() instanceof SpawnerBlockEntity)
-            event.addCapability(SpawnerProvider.IDENTIFIER, new SpawnerProvider());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

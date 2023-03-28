@@ -12,10 +12,11 @@ public class Strings {
 
 		public static final String XP_PROCESSED = IguanaTweaksReborn.RESOURCE_PREFIX + "xp_processed";
 
-		public static final String SPAWNER_CAP = IguanaTweaksReborn.RESOURCE_PREFIX + "spawner_cap";
+		public static final String SPAWNER_DATA = IguanaTweaksReborn.RESOURCE_PREFIX + "spawner_data";
 		public static final String TIREDNESS = IguanaTweaksReborn.RESOURCE_PREFIX + "tiredness";
 		public static final String DAMAGE_HISTORY = IguanaTweaksReborn.RESOURCE_PREFIX + "damage_history";
 		public static final String EAT_HISTORY = IguanaTweaksReborn.RESOURCE_PREFIX + "eat_history";
+		public static final String SPAWNER_DISABLED = IguanaTweaksReborn.RESOURCE_PREFIX + "spawner_disabled";
     }
 
 	public static class AttributeModifiers {
@@ -45,5 +46,6 @@ public class Strings {
 		public static final String NO_DAMAGE_ITEM = "iguanatweaksreborn.no_damage_item";
 
 		public static final String ARMOR_SLOWDOWN = "iguanatweaksreborn.armor_slowdown";
+		public static final String SPAWNER_REACTIVATOR = "iguanatweaksreborn.spawner_reactivator";
     }
 }
