@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Almost doubled food stack size
+
 ## Alpha 3.1.0
 * Added EnhancedAI mod
   * Mobs are tougher to fight as they have a few more tricks up their sleeve
