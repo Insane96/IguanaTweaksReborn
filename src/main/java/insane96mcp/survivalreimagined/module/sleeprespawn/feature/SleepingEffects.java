@@ -24,6 +24,7 @@ import java.util.Arrays;
 @Label(name = "Sleeping Effects", description = "Prevents the player from sleeping if has not enough Hunger and gives him effects on wake up. Effects on wake up are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class SleepingEffects extends SRFeature {
+	//TODO Move to Tiredness, when sleeping and too tired you feel dizzy on wakeup
 	public static final ArrayList<SRMobEffectInstance> EFFECTS_ON_WAKE_UP_DEFAULT = new ArrayList<>(Arrays.asList(
 			new SRMobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 400, 0),
 			new SRMobEffectInstance(MobEffects.WEAKNESS, 300, 1),
