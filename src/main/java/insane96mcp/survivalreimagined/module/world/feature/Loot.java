@@ -2,11 +2,14 @@ package insane96mcp.survivalreimagined.module.world.feature;
 
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.LootPurgerModifier;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.setup.IntegratedDataPacks;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 
 import java.util.List;
@@ -16,9 +19,13 @@ import java.util.List;
 public class Loot extends SRFeature {
 
 	//TODO Check if changing day length is viable
+	@Config
+	@Label(name = "Better Structure Loot", description = "If true a datapack will be enabled that overhauls structure loot")
+	public static Boolean betterStructureLoot = true;
 
 	public Loot(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		IntegratedDataPacks.INTEGRATED_DATA_PACKS.add(new IntegratedDataPacks.IntegratedDataPack(PackType.SERVER_DATA, "better_loot", net.minecraft.network.chat.Component.literal("Survival Reimagined Better Loot"), () -> this.isEnabled() && betterStructureLoot));
 	}
 
 	private static final String path = "chest_loot/";
@@ -44,17 +51,17 @@ public class Loot extends SRFeature {
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
 		provider.add(path + "chests/abandoned_mineshaft", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/abandoned_mineshaft"), 2000)
-				.setMultiplierAtStart(0.25f)
+				.setMultiplierAtStart(0.2f)
 				.applyToDamageable()
 				.build()
 		);
 		provider.add(path + "chests/buried_treasure", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/buried_treasure"), 2000)
-				.setMultiplierAtStart(0.25f)
+				.setMultiplierAtStart(0.2f)
 				.applyToDamageable()
 				.build()
 		);
 		provider.add(path + "chests/desert_pyramid", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/desert_pyramid"), 2000)
-				.setMultiplierAtStart(0.25f)
+				.setMultiplierAtStart(0.2f)
 				.applyToDamageable()
 				.build()
 		);
@@ -64,22 +71,22 @@ public class Loot extends SRFeature {
 				.build()
 		);
 		provider.add(path + "chests/jungle_temple", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/jungle_temple"), 2000)
-				.setMultiplierAtStart(0.25f)
+				.setMultiplierAtStart(0.2f)
 				.applyToDamageable()
 				.build()
 		);
 		provider.add(path + "chests/pillager_outpost", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/pillager_outpost"), 2000)
-				.setMultiplierAtStart(0.5f)
+				.setMultiplierAtStart(0.4f)
 				.applyToDamageable()
 				.build()
 		);
 		provider.add(path + "chests/ruined_portal", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/ruined_portal"), 2000)
-				.setMultiplierAtStart(0.5f)
+				.setMultiplierAtStart(0.4f)
 				.applyToDamageable()
 				.build()
 		);
 		provider.add(path + "chests/shipwreck_treasure", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/shipwreck_treasure"), 2000)
-				.setMultiplierAtStart(0.25f)
+				.setMultiplierAtStart(0.2f)
 				.applyToDamageable()
 				.build()
 		);
@@ -89,7 +96,7 @@ public class Loot extends SRFeature {
 				.build()
 		);
 		provider.add(path + "chests/spawn_bonus_chest", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/spawn_bonus_chest"), 2000)
-				.setMultiplierAtStart(0.75f)
+				.setMultiplierAtStart(0.7f)
 				.applyToDamageable()
 				.build()
 		);
