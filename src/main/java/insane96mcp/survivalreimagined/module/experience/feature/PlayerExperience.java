@@ -18,7 +18,7 @@ public class PlayerExperience extends Feature {
 	@Config(min = -1)
 	@Label(name = "Flat XP to next level", description = """
 						The experience required to level up will be fixed to this value.
-						Set to -1 to Disable.
+						Set to 0 to disable.
 						Incompatible with Allurement's 'Remove level Scaling' or any other mod that does something similar""")
 	public static Integer flatLevelScaling = 50;
 	@Config(min = -1d, max = 1d)
@@ -38,7 +38,8 @@ public class PlayerExperience extends Feature {
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
 				|| event.phase != TickEvent.Phase.START
-				|| !pickUpFaster) return;
+				|| !pickUpFaster)
+			return;
 
 		if (event.player.takeXpDelay > 0)
 			event.player.takeXpDelay--;
@@ -49,10 +50,10 @@ public class PlayerExperience extends Feature {
 	 */
 	public static int getBetterScalingLevel(int experienceLevel) {
 		if (!isEnabled(PlayerExperience.class)
-				|| flatLevelScaling == -1)
+				|| flatLevelScaling == 0)
 			return -1;
 
-		return 50;
+		return flatLevelScaling;
 	}
 
 	//Instead of using experienceTotal, calculate the xp from the xp bar and level since experienceTotal doesn't get updated on level consume

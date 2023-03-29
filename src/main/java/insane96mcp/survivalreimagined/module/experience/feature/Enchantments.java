@@ -57,7 +57,7 @@ public class Enchantments extends Feature {
 		ItemStack right = event.getRight();
 		ItemStack out = event.getOutput();
 
-		if(out.isEmpty() && (left.isEmpty() || right.isEmpty()))
+		if (out.isEmpty() && (left.isEmpty() || right.isEmpty()))
 			return;
 
 		boolean isMended = false;
@@ -65,19 +65,19 @@ public class Enchantments extends Feature {
 		Map<Enchantment, Integer> enchLeft = EnchantmentHelper.getEnchantments(left);
 		Map<Enchantment, Integer> enchRight = EnchantmentHelper.getEnchantments(right);
 
-		if(enchLeft.containsKey(net.minecraft.world.item.enchantment.Enchantments.MENDING) || enchRight.containsKey(net.minecraft.world.item.enchantment.Enchantments.MENDING)) {
-			if(left.getItem() == right.getItem())
+		if (enchLeft.containsKey(net.minecraft.world.item.enchantment.Enchantments.MENDING) || enchRight.containsKey(net.minecraft.world.item.enchantment.Enchantments.MENDING)) {
+			if (left.getItem() == right.getItem())
 				isMended = true;
 
-			if(right.getItem() == Items.ENCHANTED_BOOK)
+			if (right.getItem() == Items.ENCHANTED_BOOK)
 				isMended = true;
 		}
 
-		if(isMended) {
-			if(out.isEmpty())
+		if (isMended) {
+			if (out.isEmpty())
 				out = left.copy();
 
-			if(!out.hasTag())
+			if (!out.hasTag())
 				out.setTag(new CompoundTag());
 
 			Map<Enchantment, Integer> enchOutput = EnchantmentHelper.getEnchantments(out);
@@ -87,11 +87,11 @@ public class Enchantments extends Feature {
 			EnchantmentHelper.setEnchantments(enchOutput, out);
 
 			out.setRepairCost(0);
-			if(out.isDamageableItem())
+			if (out.isDamageableItem())
 				out.setDamageValue(0);
 
 			event.setOutput(out);
-			if(event.getCost() == 0)
+			if (event.getCost() == 0)
 				event.setCost(1);
 		}
 	}
