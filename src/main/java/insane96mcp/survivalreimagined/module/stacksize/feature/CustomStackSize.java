@@ -27,7 +27,11 @@ public class CustomStackSize extends SRFeature {
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:tnt_minecart", 8),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:snowball", 64),
             //new IdTagValue(IdTagMatcher.Type.ID, "minecraft:egg", 64),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:saddle", 16)
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:saddle", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_horse_armor", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_horse_armor", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_horse_armor", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_horse_armor", 8)
     ));
     public static final List<IdTagValue> customStackList = new ArrayList<>();
 

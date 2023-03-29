@@ -4,6 +4,7 @@
 * Almost doubled food stack size
 * Better Structure Loot has been moved to Loot
 * Reduced tiredness required before begin able to sleep
+* Saddle and horse armors now stack to 8
 
 ## Alpha 3.1.0
 * Added EnhancedAI mod
