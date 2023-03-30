@@ -1,5 +1,23 @@
 # Changelog
 
+## Upcoming
+* Added Magnetic enchantment for Pants
+* Added Magic Protection enchantment for armor
+* Almost doubled food stack size
+* Better Structure Loot has been moved to Loot
+* Reduced tiredness required before begin able to sleep
+* Saddle and horse armors now stack to 8
+* Bone club durability increased but reduced damage
+* Eggs now stack to 64
+* Removed toughness and bonus toughness from iron and netherite armor
+* Increased hoes cooldowns, but now efficiency reduces the cooldown by 1 tick per level
+* Blast furnaces now take 2x time to smelt ores
+* Added a global switch to disable all datapacks
+* Food now takes 2x to cook in a furnace
+* Iridium ore drops and ores per chunk increased but decreased ores per vein
+* Increased iron nuggets drop with fortune
+* Stamina now regenerates faster when locked
+
 ## Alpha 3.1.0
 * Added EnhancedAI mod
   * Mobs are tougher to fight as they have a few more tricks up their sleeve

@@ -17,7 +17,6 @@ public class Modules {
 	public static Module mobs;
 	public static Module movement;
 	public static Module sleepRespawn;
-	public static Module stackSize;
 	public static Module world;
 
 	public static void init() {
@@ -31,7 +30,6 @@ public class Modules {
 		mobs = Module.Builder.create(Ids.MOBS, "Mobs", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
 		movement = Module.Builder.create(Ids.MOVEMENT, "Movement", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
 		sleepRespawn = Module.Builder.create(Ids.SLEEP_RESPAWN, "Sleep & Respawn", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
-		stackSize = Module.Builder.create(Ids.STACK_SIZE, "Stack Sizes", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
 		world = Module.Builder.create(Ids.WORLD, "World", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
 	}
 
@@ -46,7 +44,6 @@ public class Modules {
 		public static final String MOBS = SurvivalReimagined.RESOURCE_PREFIX + "mobs";
 		public static final String MOVEMENT = SurvivalReimagined.RESOURCE_PREFIX + "movement";
 		public static final String SLEEP_RESPAWN = SurvivalReimagined.RESOURCE_PREFIX + "sleep_respawn";
-		public static final String STACK_SIZE = SurvivalReimagined.RESOURCE_PREFIX + "stack_size";
 		public static final String WORLD = SurvivalReimagined.RESOURCE_PREFIX + "world";
 	}
 }

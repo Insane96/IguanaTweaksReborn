@@ -68,10 +68,10 @@ public class Tiredness extends SRFeature {
 	public static Boolean shouldPreventSpawnPoint = false;
 	@Config(min = 0d)
 	@Label(name = "Tiredness to sleep", description = "Tiredness required to be able to sleep.")
-	public static Double tirednessToSleep = 320d;
+	public static Double tirednessToSleep = 240d;
 	@Config(min = 0d)
 	@Label(name = "Tiredness for effect", description = "Tiredness required to get the Tired effect.")
-	public static Double tirednessToEffect = 400d;
+	public static Double tirednessToEffect = 360d;
 	@Config(min = 0d)
 	@Label(name = "Tiredness per level", description = "Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
 	public static Double tirednessPerLevel = 20d;
@@ -209,7 +209,8 @@ public class Tiredness extends SRFeature {
 		}
 	}
 
-	@SubscribeEvent
+	//Run after Sleeping Effects
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void resetTirednessOnWakeUp(SleepFinishedTimeEvent event) {
 		if (!this.isEnabled())
 			return;

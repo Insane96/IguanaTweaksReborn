@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.stacksize.feature;
+package insane96mcp.survivalreimagined.module.items.feature;
 
 import com.ezylang.evalex.Expression;
 import com.ezylang.evalex.data.EvaluationValue;
@@ -6,9 +6,11 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import insane96mcp.survivalreimagined.utils.Weights;
@@ -19,24 +21,41 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-@Label(name = "General Stacking", description = "Make food, items and blocks less stackable. Items and Blocks are disabled by default. Changing stuff might require a Minecraft restart.")
-@LoadFeature(module = Modules.Ids.STACK_SIZE)
-public class GeneralStacking extends SRFeature {
+@Label(name = "Stack Sizes", description = "Make food, items and blocks less stackable, or change stack sizes as you wish. Items and Blocks are disabled by default. Changing stuff might require a Minecraft restart.")
+@LoadFeature(module = Modules.Ids.ITEMS)
+public class StackSizes extends SRFeature {
     public static final ResourceLocation NO_STACK_SIZE_CHANGES = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_stack_size_changes");
+
+    public static final List<IdTagValue> CUSTOM_STACK_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:potion", 16),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:minecart", 16),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chest_minecart", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:hopper_minecart", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:furnace_minecart", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:tnt_minecart", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:snowball", 64),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:egg", 64),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:saddle", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_horse_armor", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_horse_armor", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_horse_armor", 8),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_horse_armor", 8)
+    ));
+    public static final List<IdTagValue> customStackList = new ArrayList<>();
 
     @Config
     @Label(name = "Food Stack Reduction", description = "Food stack sizes will be reduced based off their hunger restored and saturation multiplier. See 'Food Stack Reduction Formula' for the formula")
     public static Boolean foodStackReduction = true;
     @Config
     @Label(name = "Food Stack Reduction Formula", description = "The formula to calculate the stack size of a food item. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
-    public static String foodStackReductionFormula = "ROUND((1 - (effectiveness - 1) / 15) * 64 * 0.13, 0)";
+    public static String foodStackReductionFormula = "ROUND((1 - (effectiveness - 1) / 24) * 64 * 0.2, 0)";
     @Config(min = 1, max = 64)
     @Label(name = "Stackable Stews", description = "Stews will stack up to this number. It's overridden by 'foodStackReduction' if enabled. Still affected by black/whitelist")
     public static Integer stackableSoups = 16;
@@ -53,12 +72,15 @@ public class GeneralStacking extends SRFeature {
     @Label(name = "Block Stack Affected by Material", description = "When true, block stacks are affected by both their material type and the block stack multiplier. If false, block stacks will be affected by the multiplier only.")
     public static Boolean blockStackAffectedByMaterial = true;
 
-	public GeneralStacking(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public StackSizes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
 
     @Override
     public void loadJsonConfigs() {
+        if (!this.isEnabled())
+            return;
+        super.loadJsonConfigs();
         synchronized (mutex) {
             //resetStackSizes();
             if (originalStackSizes.isEmpty()) {
@@ -70,6 +92,10 @@ public class GeneralStacking extends SRFeature {
             processBlockStackSizes();
             processStewStackSizes();
             processFoodStackSizes();
+
+            this.loadAndReadFile("custom_stack_sizes.json", customStackList, CUSTOM_STACK_LIST_DEFAULT, IdTagValue.LIST_TYPE);
+
+            processCustomStackSizes();
         }
     }
 
@@ -115,8 +141,7 @@ public class GeneralStacking extends SRFeature {
 
     //Blocks
     public void processBlockStackSizes() {
-        if (!this.isEnabled()
-                || !blockStackReduction)
+        if (!blockStackReduction)
             return;
 
         for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
@@ -137,8 +162,7 @@ public class GeneralStacking extends SRFeature {
 
     //Stews
     public void processStewStackSizes() {
-        if (!this.isEnabled()
-                || stackableSoups == 1)
+        if (stackableSoups == 1)
             return;
 
         for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
@@ -155,8 +179,7 @@ public class GeneralStacking extends SRFeature {
     //Food
     @SuppressWarnings("deprecation")
     public void processFoodStackSizes() {
-        if (!this.isEnabled()
-                || !foodStackReduction)
+        if (!foodStackReduction)
             return;
 
         for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
@@ -181,6 +204,20 @@ public class GeneralStacking extends SRFeature {
                 LogHelper.error("Failed to parse or evaluate food stack size formula: %s", expression);
             }
         }
+    }
+
+    public void processCustomStackSizes() {
+        if (customStackList.isEmpty())
+            return;
+
+        for (IdTagValue customStackSize : customStackList) {
+            getAllItems(customStackSize).forEach(item -> item.maxStackSize = (int) Mth.clamp(customStackSize.value, 1, 64));
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerLoggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
+        processCustomStackSizes();
     }
 
     /**

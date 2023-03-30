@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.feature;
 
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -9,6 +10,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.sleeprespawn.utils.SRMobEffectInstance;
 import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,6 +26,7 @@ import java.util.Arrays;
 @Label(name = "Sleeping Effects", description = "Prevents the player from sleeping if has not enough Hunger and gives him effects on wake up. Effects on wake up are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class SleepingEffects extends SRFeature {
+
 	public static final ArrayList<SRMobEffectInstance> EFFECTS_ON_WAKE_UP_DEFAULT = new ArrayList<>(Arrays.asList(
 			new SRMobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 400, 0),
 			new SRMobEffectInstance(MobEffects.WEAKNESS, 300, 1),
@@ -37,6 +40,10 @@ public class SleepingEffects extends SRFeature {
 	@Config
 	@Label(name = "No Sleep If Hungry", description = "If the player's hunger bar is below 'Hunger Depleted on Wake Up' he can't sleep.")
 	public static Boolean noSleepIfHungry = false;
+
+	@Config
+	@Label(name = "Dizzy when tired", description = "Apply the effects only when too tired")
+	public static Boolean dizzyWhenToTired = true;
 
 	public SleepingEffects(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -53,7 +60,12 @@ public class SleepingEffects extends SRFeature {
 		if (!this.isEnabled()
 				|| (hungerDepletedOnWakeUp == 0 && effectsOnWakeUp.isEmpty()))
 			return;
+
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> {
+			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) - Tiredness.tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
+			if (dizzyWhenToTired && Feature.isEnabled(Tiredness.class) && tirednessOnWakeUp == 0f)
+				return;
+
 			player.getFoodData().eat(-hungerDepletedOnWakeUp, 1.0f);
 			//For some reasons saturation can go below 0, so I get it back up to 0
 			if (player.getFoodData().getSaturationLevel() < 0.0f)

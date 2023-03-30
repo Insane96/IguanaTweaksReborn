@@ -17,10 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Label(name = "DeBuffs", description = "Apply potion effects on certain hunger / health / experience level. Debuffs are controlled via json in this feature's folder")
-@LoadFeature(module = Modules.Ids.MISC)
+@LoadFeature(module = Modules.Ids.MISC, enabledByDefault = false)
 public class DeBuffs extends SRFeature {
 	public static final ArrayList<DeBuff> DEBUFFS_DEFAULT = new ArrayList<>(List.of(
-			new DeBuff(DeBuff.Stat.HEALTH, Double.MIN_VALUE, 2d, MobEffects.DIG_SLOWDOWN, 0)
+			new DeBuff(DeBuff.Stat.HEALTH, Double.MIN_VALUE, 2d, MobEffects.DIG_SLOWDOWN, 0),
+			new DeBuff(DeBuff.Stat.HUNGER, Double.MIN_VALUE, 6d, MobEffects.DIG_SLOWDOWN, 0)
 	));
 	public static final ArrayList<DeBuff> deBuffs = new ArrayList<>();
 

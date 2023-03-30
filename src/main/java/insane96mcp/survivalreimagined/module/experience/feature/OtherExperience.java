@@ -14,7 +14,7 @@ import net.minecraft.world.entity.projectile.ThrownExperienceBottle;
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class OtherExperience extends Feature {
 	@Config(min = 0, max = 512)
-	@Label(name = "Bottle o' Enchanting Bonus XP", description = "Bottle o' enchanting will drop this more XP. Experience is still affected by 'Global Experience Multiplier'\nCan be set to 0 to make Bottle o' enchanting drop no experience")
+	@Label(name = "Bottle o' Enchanting Bonus XP", description = "Bottle o' enchanting will drop this more XP. Experience is still affected by 'Global Experience Multiplier'\nCan be set to 0 to make Bottle o' enchanting drop no bonus experience")
 	public static Integer xpBottleBonus = 18;
 	@Config(min = 0)
 	@Label(name = "Anvil Repair Cap", description = "Set the cap for repairing items in the anvil (vanilla is 40)")

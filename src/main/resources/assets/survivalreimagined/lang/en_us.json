@@ -66,5 +66,10 @@
 	"item.survivalreimagined.chained_copper_helmet": "Chained Copper Helmet",
 	"item.survivalreimagined.chained_copper_chestplate": "Chained Copper Chestplate",
 	"item.survivalreimagined.chained_copper_leggings": "Chained Copper Leggings",
-	"item.survivalreimagined.chained_copper_boots": "Chained Copper Boots"
+	"item.survivalreimagined.chained_copper_boots": "Chained Copper Boots",
+
+	"enchantment.survivalreimagined.magnetic": "Magnetic",
+	"enchantment.survivalreimagined.magic_protection": "Magic Protection",
+	"enchantment.survivalreimagined.expanded": "Expanded",
+	"enchantment.survivalreimagined.blasting": "Blasting"
 }

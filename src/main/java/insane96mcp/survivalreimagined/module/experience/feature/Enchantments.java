@@ -6,12 +6,17 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.experience.enchantment.Blasting;
+import insane96mcp.survivalreimagined.module.experience.enchantment.MagicProtection;
+import insane96mcp.survivalreimagined.module.experience.enchantment.Magnetic;
 import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -19,7 +24,11 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -42,9 +51,24 @@ public class Enchantments extends Feature {
 	@Config
 	@Label(name = "Efficiency changed formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to (tool_efficiency + 75% * level)")
 	public static Boolean changeEfficiencyFormula = true;
+	@Config(min = 0d, max = 10d)
+	@Label(name = "Power Enchantment Damage", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
+	public static Double powerEnchantmentDamage = 0.4d;
+	@Config
+	@Label(name = "Nerf Protection Enchantment", description = """
+						DISABLE: Disables protection enchantment.
+						NERF: Sets max protection level to 3 instead of 4
+						NONE: no changes to protection are done""")
+	public static ProtectionNerf protectionNerf = ProtectionNerf.DISABLE;
+
+	//TODO Make enchantments deactivable
 
 	public Enchantments(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	public static boolean disableEnchantment(Enchantment enchantment) {
+		return enchantment == net.minecraft.world.item.enchantment.Enchantments.ALL_DAMAGE_PROTECTION && protectionNerf == ProtectionNerf.DISABLE;
 	}
 
 	@SubscribeEvent
@@ -57,7 +81,7 @@ public class Enchantments extends Feature {
 		ItemStack right = event.getRight();
 		ItemStack out = event.getOutput();
 
-		if(out.isEmpty() && (left.isEmpty() || right.isEmpty()))
+		if (out.isEmpty() && (left.isEmpty() || right.isEmpty()))
 			return;
 
 		boolean isMended = false;
@@ -65,19 +89,19 @@ public class Enchantments extends Feature {
 		Map<Enchantment, Integer> enchLeft = EnchantmentHelper.getEnchantments(left);
 		Map<Enchantment, Integer> enchRight = EnchantmentHelper.getEnchantments(right);
 
-		if(enchLeft.containsKey(net.minecraft.world.item.enchantment.Enchantments.MENDING) || enchRight.containsKey(net.minecraft.world.item.enchantment.Enchantments.MENDING)) {
-			if(left.getItem() == right.getItem())
+		if (enchLeft.containsKey(net.minecraft.world.item.enchantment.Enchantments.MENDING) || enchRight.containsKey(net.minecraft.world.item.enchantment.Enchantments.MENDING)) {
+			if (left.getItem() == right.getItem())
 				isMended = true;
 
-			if(right.getItem() == Items.ENCHANTED_BOOK)
+			if (right.getItem() == Items.ENCHANTED_BOOK)
 				isMended = true;
 		}
 
-		if(isMended) {
-			if(out.isEmpty())
+		if (isMended) {
+			if (out.isEmpty())
 				out = left.copy();
 
-			if(!out.hasTag())
+			if (!out.hasTag())
 				out.setTag(new CompoundTag());
 
 			Map<Enchantment, Integer> enchOutput = EnchantmentHelper.getEnchantments(out);
@@ -87,11 +111,11 @@ public class Enchantments extends Feature {
 			EnchantmentHelper.setEnchantments(enchOutput, out);
 
 			out.setRepairCost(0);
-			if(out.isDamageableItem())
+			if (out.isDamageableItem())
 				out.setDamageValue(0);
 
 			event.setOutput(out);
-			if(event.getCost() == 0)
+			if (event.getCost() == 0)
 				event.setCost(1);
 		}
 	}
@@ -118,6 +142,49 @@ public class Enchantments extends Feature {
 	}
 
 	@SubscribeEvent
+	public void onEntityTick(LivingEvent.LivingTickEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		Magnetic.tryPullItems(event.getEntity());
+	}
+
+	@SubscribeEvent
+	public void onEffectAdded(MobEffectEvent.Added event) {
+		if (!this.isEnabled())
+			return;
+
+		MagicProtection.reduceBadEffectsDuration(event.getEntity(), event.getEffectInstance());
+	}
+
+	@SubscribeEvent
+	public void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+		if (!this.isEnabled())
+			return;
+
+		event.setNewSpeed(event.getNewSpeed() + Blasting.getMiningSpeedBoost(event.getEntity(), event.getState()));
+	}
+
+	@SubscribeEvent
+	public void onArrowSpawn(EntityJoinLevelEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof AbstractArrow arrow))
+			return;
+		if (!arrow.shotFromCrossbow())
+			processBow(arrow);
+	}
+
+	private void processBow(AbstractArrow arrow) {
+		if (powerEnchantmentDamage != 0.5d && arrow.getOwner() instanceof LivingEntity) {
+			int powerLevel = EnchantmentHelper.getEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
+			if (powerLevel == 0)
+				return;
+			double powerReduction = 0.5d - powerEnchantmentDamage;
+			arrow.setBaseDamage(arrow.getBaseDamage() - (powerLevel * powerReduction + powerReduction));
+		}
+	}
+
+	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled()
@@ -128,5 +195,9 @@ public class Enchantments extends Feature {
 		int repairCost = event.getItemStack().getBaseRepairCost();
 		if(repairCost > 0)
 			event.getToolTip().add(Component.translatable(Strings.Translatable.ITEM_REPAIRED).withStyle(ChatFormatting.YELLOW));
+	}
+
+	public enum ProtectionNerf {
+		NONE, NERF, DISABLE
 	}
 }

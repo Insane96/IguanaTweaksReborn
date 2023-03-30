@@ -110,7 +110,7 @@ public class Stamina extends Feature {
                 //Trigger the sync for clients
                 || player.tickCount == 1) {
             //Slower regeneration if stamina il locked
-            if (isStaminaLocked(player) && player.tickCount % 2 == 0)
+            if (isStaminaLocked(player) && player.tickCount % 3 == 0)
                 return;
             regenStamina(player);
             if (getStamina(player) >= getMaxStamina(player) - 10)

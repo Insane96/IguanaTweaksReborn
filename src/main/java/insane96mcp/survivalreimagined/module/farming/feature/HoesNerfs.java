@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.module.farming.feature;
 import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
@@ -15,6 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolActions;
@@ -37,16 +39,20 @@ public class HoesNerfs extends SRFeature {
 
 	public static final ArrayList<HoeStat> HOES_STATS_DEFAULT = new ArrayList<>(Arrays.asList(
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 40, 4),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:flint_hoe", 16, 3),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 20, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:iron_hoe", 15, 4),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:golden_hoe", 4),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:diamond_hoe", 10, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:netherite_hoe", 6, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "vulcanite:vulcanite_hoe", 15, 3)
+			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:flint_hoe", 18, 2),
+			new HoeStat(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 30, 2),
+			new HoeStat(IdTagMatcher.Type.ID, "minecraft:iron_hoe", 20, 4),
+			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:iridium_hoe", 18, 4),
+			new HoeStat(IdTagMatcher.Type.ID, "minecraft:golden_hoe", 5),
+			new HoeStat(IdTagMatcher.Type.ID, "minecraft:diamond_hoe", 15, 2),
+			new HoeStat(IdTagMatcher.Type.ID, "minecraft:netherite_hoe", 10, 2)
 	));
 
 	public static final ArrayList<HoeStat> hoesStats = new ArrayList<>();
+
+	@Config(min = 0)
+	@Label(name = "Efficiency cooldown reduction", description = "Each Efficiency level reduces the cooldown of hoes by this many ticks.")
+	public static Integer efficiencyCooldownReduction = 1;
 
 	public HoesNerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -95,7 +101,10 @@ public class HoesNerfs extends SRFeature {
 		for (HoeStat hoeStat : hoesStats) {
 			if (hoeStat.matchesItem(hoe.getItem(), null)) {
 				if (hoeStat.cooldown > 0) {
-					event.getPlayer().getCooldowns().addCooldown(hoe.getItem(), hoeStat.cooldown);
+					int efficiency = hoe.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
+					int cooldown = hoeStat.cooldown - (efficiency * efficiencyCooldownReduction);
+					if (cooldown > 0)
+						event.getPlayer().getCooldowns().addCooldown(hoe.getItem(), cooldown);
 				}
 				if (hoeStat.damageOnTill > 1) {
 					hoe.hurtAndBreak(hoeStat.damageOnTill - 1, event.getPlayer(), (player) -> player.broadcastBreakEvent(event.getPlayer().getUsedItemHand()));
@@ -115,6 +124,27 @@ public class HoesNerfs extends SRFeature {
 		if (!this.isEnabled())
 			return;
 
+		//TODO Remake the modifiers list, it doesn't sum up multiple modifiers
+		/*List<Component> toRemove = new ArrayList<>();
+		boolean hasModifiersTooltip = false;
+
+		for (Component mutableComponent : event.getToolTip()) {
+			if (mutableComponent.getContents() instanceof TranslatableContents t && t.getKey().startsWith("item.modifiers.")) {
+				hasModifiersTooltip = true;
+			}
+
+			if (!hasModifiersTooltip)
+				continue;
+			List<Component> siblings = mutableComponent.getSiblings();
+			for (Component component : siblings) {
+				if (component.getContents() instanceof TranslatableContents translatableContents && translatableContents.getKey().startsWith("attribute.modifier.")) {
+					toRemove.add(mutableComponent);
+				}
+			}
+		}
+
+		toRemove.forEach(component -> event.getToolTip().remove(component));*/
+
 		if (Utils.isItemInTag(event.getItemStack().getItem(), DISABLED_HOES)) {
 			event.getToolTip().add(Component.translatable(TOO_WEAK).withStyle(ChatFormatting.RED));
 		}
@@ -124,7 +154,9 @@ public class HoesNerfs extends SRFeature {
 						|| hoeStat.cooldown <= 0)
 					continue;
 
-				event.getToolTip().add(Component.literal(" ").append(Component.translatable(TILL_COOLDOWN, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(hoeStat.cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
+				int efficiency = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
+				int cooldown = hoeStat.cooldown - (efficiency * efficiencyCooldownReduction);
+				event.getToolTip().add(Component.literal(" ").append(Component.translatable(TILL_COOLDOWN, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
 				break;
 			}
 		}

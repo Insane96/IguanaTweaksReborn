@@ -11,21 +11,15 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.combat.utils.ItemAttributeModifier;
 import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TridentItem;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
@@ -41,17 +35,8 @@ public class Stats extends SRFeature {
 	static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = new ArrayList<>();
 
 	public static final ArrayList<ItemAttributeModifier> ITEM_MODIFIERS_DEFAULT = new ArrayList<>(Arrays.asList(
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_helmet", UUID.fromString("a2268a87-c454-424e-b91d-c3f8a5df56cb"), EquipmentSlot.HEAD, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_chestplate", UUID.fromString("1e128657-08a0-44f9-b6f6-df16ddc1b5ae"), EquipmentSlot.CHEST, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_leggings", UUID.fromString("c0a2973f-cffc-4bdf-8132-42ca2141e034"), EquipmentSlot.LEGS, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:iron_boots", UUID.fromString("45c38abc-0737-48f4-adca-43415243b858"), EquipmentSlot.FEET, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
-
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", UUID.fromString("da2b677f-467c-49b1-bdf0-070ee782bc0f"), EquipmentSlot.HEAD, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", UUID.fromString("796d3f0c-89e4-47e8-9f95-3a3d5506f70f"), EquipmentSlot.FEET, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", UUID.fromString("5ede369f-1031-41ed-bf5d-83c8a84c3c84"), EquipmentSlot.HEAD, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", UUID.fromString("28aed31c-7b92-4f84-aab5-1f4be1e50609"), EquipmentSlot.CHEST, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", UUID.fromString("9f1d717e-5b4a-4885-b8b1-12f940df28ec"), EquipmentSlot.LEGS, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", UUID.fromString("37961f1b-d6f9-4b63-86ad-1226ce021e98"), EquipmentSlot.FEET, Attributes.ARMOR_TOUGHNESS, 1.0d, AttributeModifier.Operation.ADDITION),
 
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_sword", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .8d, AttributeModifier.Operation.ADDITION)
 	));
@@ -60,21 +45,12 @@ public class Stats extends SRFeature {
 	@Config
 	@Label(name = "Nerf weapons", description = "If true, Swords, Tridents and Axes get -1 damage and Axes get -1 attack reach.")
 	public static Boolean nerfWeapons = true;
-	@Config(min = 0d, max = 10d)
-	@Label(name = "Power Enchantment Damage Increase", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
-	public static Double powerEnchantmentDamageIncrease = 0.4d;
 	@Config
 	@Label(name = "Disable Crit Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
 	public static Boolean disableCritArrowsBonusDamage = true;
 	@Config
 	@Label(name = "Arrows don't trigger invincibility frames", description = "If true, Arrows will no longer trigger the invincibility frames (like Combat Test Snapshots).")
 	public static Boolean arrowsNoInvincFrames = true;
-	@Config
-	@Label(name = "Nerf Protection Enchantment", description = """
-						DISABLE: Disables protection enchantment.
-						NERF: Sets max protection level to 3 instead of 4
-						NONE: no changes to protection are done""")
-	public static ProtectionNerf protectionNerf = ProtectionNerf.DISABLE;
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -114,25 +90,6 @@ public class Stats extends SRFeature {
 	}
 
 	@SubscribeEvent
-	public void onArrowSpawn(EntityJoinLevelEvent event) {
-		if (!this.isEnabled()
-				|| !(event.getEntity() instanceof AbstractArrow arrow))
-			return;
-		if (!arrow.shotFromCrossbow())
-			processBow(arrow);
-	}
-
-	private void processBow(AbstractArrow arrow) {
-		if (powerEnchantmentDamageIncrease != 0.5d && arrow.getOwner() instanceof LivingEntity) {
-			int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
-			if (powerLevel == 0)
-				return;
-			double powerReduction = 0.5d - powerEnchantmentDamageIncrease;
-			arrow.setBaseDamage(arrow.getBaseDamage() - (powerLevel * powerReduction + powerReduction));
-		}
-	}
-
-	@SubscribeEvent
 	public void onAttributeEvent(ItemAttributeModifierEvent event) {
 		if (!this.isEnabled())
 			return;
@@ -162,15 +119,8 @@ public class Stats extends SRFeature {
 		}
 	}
 
-	public static boolean disableEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.ALL_DAMAGE_PROTECTION && protectionNerf == ProtectionNerf.DISABLE;
-	}
-
 	public static boolean disableArrowInvFrames() {
 		return isEnabled(Stats.class) && arrowsNoInvincFrames;
 	}
 
-	public enum ProtectionNerf {
-		NONE, NERF, DISABLE
-	}
 }

@@ -49,14 +49,15 @@ public class WeightedEquipment extends SRFeature {
 			new ArmorMaterialWeight("chainmail", 0.05d),
 			new ArmorMaterialWeight("golden", 0.025d),
 			new ArmorMaterialWeight("iron", 0.075d),
+			new ArmorMaterialWeight("iridium", 0.08d),
 			new ArmorMaterialWeight("diamond", 0.10d),
 			new ArmorMaterialWeight("netherite", 0.15d)
 	));
 	public static final ArrayList<ArmorMaterialWeight> materialWeight = new ArrayList<>();
 
 	public static final ArrayList<ArmorEnchantmentWeight> ENCHANTMENTS_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
-			new ArmorEnchantmentWeight("minecraft:feather_falling", -0.05d),
-			new ArmorEnchantmentWeight("elenaidodge2:lightweight", -0.025d)
+			new ArmorEnchantmentWeight("minecraft:feather_falling", -0.005d),
+			new ArmorEnchantmentWeight("elenaidodge2:lightweight", -0.0025d)
 	));
 	public static final ArrayList<ArmorEnchantmentWeight> enchantmentsList = new ArrayList<>();
 
