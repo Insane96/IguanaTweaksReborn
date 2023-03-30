@@ -18,6 +18,7 @@ import java.util.List;
 @Label(name = "Custom Stack Size", description = "Change stack sizes as you please. Custom Stack Sizes are controlled via json in this feature's folder. Changing stuff might require a Minecraft restart.")
 @LoadFeature(module = Modules.Ids.STACK_SIZE)
 public class CustomStackSize extends SRFeature {
+    //TODO Move in Items module and merge with General Stacking
     public static final List<IdTagValue> CUSTOM_STACK_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:potion", 16),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:minecart", 16),
