@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.server.packs.PackType;
 
@@ -21,6 +22,6 @@ public class Diamond extends Feature {
 
 	public Diamond(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "diamond_equipment_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Diamond Equipment Crafting"), () -> this.isEnabled() && equipmentCraftingDataPack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "diamond_equipment_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Diamond Equipment Crafting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && equipmentCraftingDataPack));
 	}
 }
