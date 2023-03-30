@@ -15,6 +15,7 @@
 * Food now takes 2x to cook in a furnace
 * Iridium ore drops and ores per chunk increased but decreased ores per vein
 * Increased iron nuggets drop with fortune
+* Stamina now regenerates faster when locked
 
 ## Alpha 3.1.0
 * Added EnhancedAI mod
