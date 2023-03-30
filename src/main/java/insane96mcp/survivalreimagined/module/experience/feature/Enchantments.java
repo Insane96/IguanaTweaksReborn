@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.experience.enchantment.Magnetic;
 import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -19,6 +20,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -42,6 +44,8 @@ public class Enchantments extends Feature {
 	@Config
 	@Label(name = "Efficiency changed formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to (tool_efficiency + 75% * level)")
 	public static Boolean changeEfficiencyFormula = true;
+
+	//TODO Make enchantments deactivable
 
 	public Enchantments(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -115,6 +119,14 @@ public class Enchantments extends Feature {
 		if (orb.count == 0)
 			orb.discard();
 		event.setCanceled(true);
+	}
+
+	@SubscribeEvent
+	public void onEntityTick(LivingEvent.LivingTickEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		Magnetic.tryPullItems(event.getEntity());
 	}
 
 	@SubscribeEvent

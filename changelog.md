@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Added Magnetic enchantment for Pants
 * Almost doubled food stack size
 * Better Structure Loot has been moved to Loot
 * Reduced tiredness required before begin able to sleep
