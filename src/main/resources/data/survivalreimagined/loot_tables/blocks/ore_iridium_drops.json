@@ -13,15 +13,18 @@
                             "function": "minecraft:set_count",
                             "count": {
                                 "type": "minecraft:uniform",
-                                "min": 1,
-                                "max": 2
+                                "min": 2,
+                                "max": 4
                             },
                             "add": false
                         },
                         {
                             "function": "minecraft:apply_bonus",
                             "enchantment": "minecraft:fortune",
-                            "formula": "minecraft:ore_drops"
+                            "formula": "minecraft:uniform_bonus_count",
+                            "parameters": {
+                                "bonusMultiplier": 4
+                            }
                         }
                     ]
                 },
