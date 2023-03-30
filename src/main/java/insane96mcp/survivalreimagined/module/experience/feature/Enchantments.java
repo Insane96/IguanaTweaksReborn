@@ -13,7 +13,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -21,6 +23,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -46,11 +49,24 @@ public class Enchantments extends Feature {
 	@Config
 	@Label(name = "Efficiency changed formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to (tool_efficiency + 75% * level)")
 	public static Boolean changeEfficiencyFormula = true;
+	@Config(min = 0d, max = 10d)
+	@Label(name = "Power Enchantment Damage", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
+	public static Double powerEnchantmentDamage = 0.4d;
+	@Config
+	@Label(name = "Nerf Protection Enchantment", description = """
+						DISABLE: Disables protection enchantment.
+						NERF: Sets max protection level to 3 instead of 4
+						NONE: no changes to protection are done""")
+	public static ProtectionNerf protectionNerf = ProtectionNerf.DISABLE;
 
 	//TODO Make enchantments deactivable
 
 	public Enchantments(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	public static boolean disableEnchantment(Enchantment enchantment) {
+		return enchantment == net.minecraft.world.item.enchantment.Enchantments.ALL_DAMAGE_PROTECTION && protectionNerf == ProtectionNerf.DISABLE;
 	}
 
 	@SubscribeEvent
@@ -140,6 +156,25 @@ public class Enchantments extends Feature {
 	}
 
 	@SubscribeEvent
+	public void onArrowSpawn(EntityJoinLevelEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof AbstractArrow arrow))
+			return;
+		if (!arrow.shotFromCrossbow())
+			processBow(arrow);
+	}
+
+	private void processBow(AbstractArrow arrow) {
+		if (powerEnchantmentDamage != 0.5d && arrow.getOwner() instanceof LivingEntity) {
+			int powerLevel = EnchantmentHelper.getEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
+			if (powerLevel == 0)
+				return;
+			double powerReduction = 0.5d - powerEnchantmentDamage;
+			arrow.setBaseDamage(arrow.getBaseDamage() - (powerLevel * powerReduction + powerReduction));
+		}
+	}
+
+	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled()
@@ -150,5 +185,9 @@ public class Enchantments extends Feature {
 		int repairCost = event.getItemStack().getBaseRepairCost();
 		if(repairCost > 0)
 			event.getToolTip().add(Component.translatable(Strings.Translatable.ITEM_REPAIRED).withStyle(ChatFormatting.YELLOW));
+	}
+
+	public enum ProtectionNerf {
+		NONE, NERF, DISABLE
 	}
 }

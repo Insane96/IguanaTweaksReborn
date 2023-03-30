@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.combat.feature.Stats;
+import insane96mcp.survivalreimagined.module.experience.feature.Enchantments;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -22,28 +22,28 @@ public class ProtectionEnchantmentMixin extends Enchantment {
 
 	@Override
 	public boolean isTreasureOnly() {
-		if (this.type == ProtectionEnchantment.Type.ALL && Stats.protectionNerf == Stats.ProtectionNerf.DISABLE)
+		if (this.type == ProtectionEnchantment.Type.ALL && Enchantments.protectionNerf == Enchantments.ProtectionNerf.DISABLE)
 			return true;
 		return super.isTreasureOnly();
 	}
 
 	@Override
 	public boolean isTradeable() {
-		if (this.type == ProtectionEnchantment.Type.ALL && Stats.protectionNerf == Stats.ProtectionNerf.DISABLE)
+		if (this.type == ProtectionEnchantment.Type.ALL && Enchantments.protectionNerf == Enchantments.ProtectionNerf.DISABLE)
 			return false;
 		return super.isTradeable();
 	}
 
 	@Override
 	public boolean isDiscoverable() {
-		if (this.type == ProtectionEnchantment.Type.ALL && Stats.protectionNerf == Stats.ProtectionNerf.DISABLE)
+		if (this.type == ProtectionEnchantment.Type.ALL && Enchantments.protectionNerf == Enchantments.ProtectionNerf.DISABLE)
 			return false;
 		return super.isDiscoverable();
 	}
 
 	@Override
 	public int getMaxLevel() {
-		if (this.type == ProtectionEnchantment.Type.ALL && Stats.protectionNerf == Stats.ProtectionNerf.NERF)
+		if (this.type == ProtectionEnchantment.Type.ALL && Enchantments.protectionNerf == Enchantments.ProtectionNerf.NERF)
 			return 3;
 
 		return 4;

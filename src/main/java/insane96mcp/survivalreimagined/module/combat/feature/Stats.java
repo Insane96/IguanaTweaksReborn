@@ -11,21 +11,15 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.combat.utils.ItemAttributeModifier;
 import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TridentItem;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
@@ -51,21 +45,12 @@ public class Stats extends SRFeature {
 	@Config
 	@Label(name = "Nerf weapons", description = "If true, Swords, Tridents and Axes get -1 damage and Axes get -1 attack reach.")
 	public static Boolean nerfWeapons = true;
-	@Config(min = 0d, max = 10d)
-	@Label(name = "Power Enchantment Damage Increase", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
-	public static Double powerEnchantmentDamageIncrease = 0.4d;
 	@Config
 	@Label(name = "Disable Crit Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
 	public static Boolean disableCritArrowsBonusDamage = true;
 	@Config
 	@Label(name = "Arrows don't trigger invincibility frames", description = "If true, Arrows will no longer trigger the invincibility frames (like Combat Test Snapshots).")
 	public static Boolean arrowsNoInvincFrames = true;
-	@Config
-	@Label(name = "Nerf Protection Enchantment", description = """
-						DISABLE: Disables protection enchantment.
-						NERF: Sets max protection level to 3 instead of 4
-						NONE: no changes to protection are done""")
-	public static ProtectionNerf protectionNerf = ProtectionNerf.DISABLE;
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -105,25 +90,6 @@ public class Stats extends SRFeature {
 	}
 
 	@SubscribeEvent
-	public void onArrowSpawn(EntityJoinLevelEvent event) {
-		if (!this.isEnabled()
-				|| !(event.getEntity() instanceof AbstractArrow arrow))
-			return;
-		if (!arrow.shotFromCrossbow())
-			processBow(arrow);
-	}
-
-	private void processBow(AbstractArrow arrow) {
-		if (powerEnchantmentDamageIncrease != 0.5d && arrow.getOwner() instanceof LivingEntity) {
-			int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
-			if (powerLevel == 0)
-				return;
-			double powerReduction = 0.5d - powerEnchantmentDamageIncrease;
-			arrow.setBaseDamage(arrow.getBaseDamage() - (powerLevel * powerReduction + powerReduction));
-		}
-	}
-
-	@SubscribeEvent
 	public void onAttributeEvent(ItemAttributeModifierEvent event) {
 		if (!this.isEnabled())
 			return;
@@ -153,15 +119,8 @@ public class Stats extends SRFeature {
 		}
 	}
 
-	public static boolean disableEnchantment(Enchantment enchantment) {
-		return enchantment == Enchantments.ALL_DAMAGE_PROTECTION && protectionNerf == ProtectionNerf.DISABLE;
-	}
-
 	public static boolean disableArrowInvFrames() {
 		return isEnabled(Stats.class) && arrowsNoInvincFrames;
 	}
 
-	public enum ProtectionNerf {
-		NONE, NERF, DISABLE
-	}
 }
