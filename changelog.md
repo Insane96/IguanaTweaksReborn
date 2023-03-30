@@ -5,6 +5,9 @@
 * Better Structure Loot has been moved to Loot
 * Reduced tiredness required before begin able to sleep
 * Saddle and horse armors now stack to 8
+* Eggs now stack to 64
+* Removed toughness and bonus toughness from iron and netherite armor
+* Increased hoes cooldowns, but now efficiency reduces the cooldown by 1 tick per level
 
 ## Alpha 3.1.0
 * Added EnhancedAI mod
