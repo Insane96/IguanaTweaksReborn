@@ -155,7 +155,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         800
                 )
                 .unlockedBy("has_iridium_ore", has(Iridium.ORE.get()))
-                .save(writer);
+                .save(writer, "iridium_ingot_from_smelting_ore");
 
         SimpleCookingRecipeBuilder.smelting(
                         Ingredient.of(Iridium.DEEPSLATE_ORE.get()),
@@ -165,27 +165,27 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         800
                 )
                 .unlockedBy("has_iridium_ore", has(Iridium.DEEPSLATE_ORE.get()))
-                .save(writer);
+                .save(writer, "iridium_ingot_from_smelting_deepslate_ore");
 
         SimpleCookingRecipeBuilder.blasting(
                         Ingredient.of(Iridium.ORE.get()),
                         RecipeCategory.MISC,
                         Iridium.INGOT.get(),
                         0.8f,
-                        100
+                        200
                 )
                 .unlockedBy("has_iridium_ore", has(Iridium.ORE.get()))
-                .save(writer);
+                .save(writer, "iridium_ingot_from_blasting_ore");
 
         SimpleCookingRecipeBuilder.blasting(
                         Ingredient.of(Iridium.DEEPSLATE_ORE.get()),
                         RecipeCategory.MISC,
                         Iridium.INGOT.get(),
                         0.8f,
-                        100
+                        200
                 )
                 .unlockedBy("has_iridium_ore", has(Iridium.DEEPSLATE_ORE.get()))
-                .save(writer);
+                .save(writer, "iridium_ingot_from_blasting_deepslate_ore");
 
         UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.AXE.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))

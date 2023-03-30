@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 800,
+  "experience": 0.8,
+  "ingredient": {
+    "item": "survivalreimagined:iridium_ore"
+  },
+  "result": "survivalreimagined:iridium_ingot"
+}
