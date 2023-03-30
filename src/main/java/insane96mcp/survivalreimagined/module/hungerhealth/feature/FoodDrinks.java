@@ -32,8 +32,6 @@ import java.util.List;
 @Label(name = "Food & Drinks", description = "Changes to food nourishment and the speed on how food is eaten or how items are consumed. Custom Food Properties are controlled via json in this feature's folder. Removing entries from the json requires a minecraft restart.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class FoodDrinks extends SRFeature {
-	//TODO Double the time to smelt food in a normal furnace
-
 	public static final ResourceLocation FOOD_BLACKLIST = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "food_drinks_no_hunger_changes");
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(

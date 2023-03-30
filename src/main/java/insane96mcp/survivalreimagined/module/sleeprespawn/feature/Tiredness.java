@@ -209,7 +209,8 @@ public class Tiredness extends SRFeature {
 		}
 	}
 
-	@SubscribeEvent
+	//Run after Sleeping Effects
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void resetTirednessOnWakeUp(SleepFinishedTimeEvent event) {
 		if (!this.isEnabled())
 			return;
