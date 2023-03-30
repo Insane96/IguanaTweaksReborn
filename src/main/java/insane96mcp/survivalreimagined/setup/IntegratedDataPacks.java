@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
+//TODO Remove the double class and leave IntegratedDataPack only
 public class IntegratedDataPacks {
 
     public static final List<IntegratedDataPack> INTEGRATED_DATA_PACKS = new ArrayList<>();

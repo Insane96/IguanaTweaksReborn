@@ -50,7 +50,7 @@ public class DataPacks extends Feature {
     public static Boolean disableNetherRoof = true;
 
     @Config
-    @Label(name = "Copper Furnace", description = "If true a datapack will be enabled that makes furnaces require copper. Copper nuggets can be obtained from raw copper on campfires.")
+    @Label(name = "Copper Furnace", description = "If true a datapack will be enabled that makes furnaces require copper. Copper ingots can be obtained from raw copper on campfires.")
     public static Boolean copperFurnace = true;
 
     @Config
