@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.experience.enchantment.MagicProtection;
 import insane96mcp.survivalreimagined.module.experience.enchantment.Magnetic;
 import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.ChatFormatting;
@@ -21,6 +22,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -127,6 +129,14 @@ public class Enchantments extends Feature {
 			return;
 
 		Magnetic.tryPullItems(event.getEntity());
+	}
+
+	@SubscribeEvent
+	public void onEffectAdded(MobEffectEvent.Added event) {
+		if (!this.isEnabled())
+			return;
+
+		MagicProtection.reduceBadEffectsDuration(event.getEntity(), event.getEffectInstance());
 	}
 
 	@SubscribeEvent

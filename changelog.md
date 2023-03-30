@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Added Magnetic enchantment for Pants
+* Added Magic Protection enchantment for armor
 * Almost doubled food stack size
 * Better Structure Loot has been moved to Loot
 * Reduced tiredness required before begin able to sleep

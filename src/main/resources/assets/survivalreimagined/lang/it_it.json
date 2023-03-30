@@ -64,5 +64,10 @@
 	"item.survivalreimagined.chained_copper_helmet": "Elmo di rame a catene",
 	"item.survivalreimagined.chained_copper_chestplate": "Corazza di rame a catene",
 	"item.survivalreimagined.chained_copper_leggings": "Gambiere di rame a catene",
-	"item.survivalreimagined.chained_copper_boots": "Stivali di rame a catene"
+	"item.survivalreimagined.chained_copper_boots": "Stivali di rame a catene",
+
+	"enchantment.survivalreimagined.magnetic": "Magnetico",
+	"enchantment.survivalreimagined.magic_protection": "Protezione dalla magia",
+	"enchantment.survivalreimagined.expanded": "Espansione",
+	"enchantment.survivalreimagined.blasting": "Detonante"
 }
