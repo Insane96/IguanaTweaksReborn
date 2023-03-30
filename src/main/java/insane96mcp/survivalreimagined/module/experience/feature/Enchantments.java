@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.experience.enchantment.Blasting;
 import insane96mcp.survivalreimagined.module.experience.enchantment.MagicProtection;
 import insane96mcp.survivalreimagined.module.experience.enchantment.Magnetic;
 import insane96mcp.survivalreimagined.setup.Strings;
@@ -27,6 +28,7 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -153,6 +155,14 @@ public class Enchantments extends Feature {
 			return;
 
 		MagicProtection.reduceBadEffectsDuration(event.getEntity(), event.getEffectInstance());
+	}
+
+	@SubscribeEvent
+	public void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+		if (!this.isEnabled())
+			return;
+
+		event.setNewSpeed(event.getNewSpeed() + Blasting.getMiningSpeedBoost(event.getEntity(), event.getState()));
 	}
 
 	@SubscribeEvent
