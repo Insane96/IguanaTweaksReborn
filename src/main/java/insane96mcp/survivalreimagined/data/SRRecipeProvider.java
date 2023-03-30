@@ -147,6 +147,46 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_ingot", has(Iridium.INGOT.get()))
                 .save(writer);
 
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(Iridium.ORE.get()),
+                        RecipeCategory.MISC,
+                        Iridium.INGOT.get(),
+                        0.8f,
+                        800
+                )
+                .unlockedBy("has_iridium_ore", has(Iridium.ORE.get()))
+                .save(writer);
+
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(Iridium.DEEPSLATE_ORE.get()),
+                        RecipeCategory.MISC,
+                        Iridium.INGOT.get(),
+                        0.8f,
+                        800
+                )
+                .unlockedBy("has_iridium_ore", has(Iridium.DEEPSLATE_ORE.get()))
+                .save(writer);
+
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(Iridium.ORE.get()),
+                        RecipeCategory.MISC,
+                        Iridium.INGOT.get(),
+                        0.8f,
+                        100
+                )
+                .unlockedBy("has_iridium_ore", has(Iridium.ORE.get()))
+                .save(writer);
+
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(Iridium.DEEPSLATE_ORE.get()),
+                        RecipeCategory.MISC,
+                        Iridium.INGOT.get(),
+                        0.8f,
+                        100
+                )
+                .unlockedBy("has_iridium_ore", has(Iridium.DEEPSLATE_ORE.get()))
+                .save(writer);
+
         UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.AXE.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_axe");
@@ -162,9 +202,9 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SWORD), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.SWORD.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_sword");
-        /*UpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.SHIELD.get())
+        UpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.SHIELD.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
-                .save(writer, "iridium_shield");*/
+                .save(writer, "iridium_shield");
         UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HELMET), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.HELMET.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_helmet");
