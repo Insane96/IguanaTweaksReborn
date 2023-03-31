@@ -1,14 +1,21 @@
 # Changelog
 
 ## Upcoming
-* Added Magnetic enchantment for Pants
-* Added Magic Protection enchantment for armor
-* Almost doubled food stack size
-* Better Structure Loot has been moved to Loot
+* Enchantments
+  * Added Magnetic enchantment for Pants
+  * Added Magic Protection enchantment for armor
+* Stack Sizes (module no longer exists, has been moved to Items as a feature)
+  * Almost doubled food stack size
+  * Saddle and horse armors now stack to 8
+  * Eggs now stack to 64
+* Mobs
+  * Disabled Creeper Cena and walking fuse creepers now slow down when swelling
+  * Skeletons running away from players are now less painful to deal with
+  * Removed follow range buff from zombies, also slightly lowered buffs for non-zombies
+  * Fixed mobs swim speed begin too high
+  * Reduced Witches speed
 * Reduced tiredness required before begin able to sleep
-* Saddle and horse armors now stack to 8
 * Bone club durability increased but reduced damage
-* Eggs now stack to 64
 * Removed toughness and bonus toughness from iron and netherite armor
 * Increased hoes cooldowns, but now efficiency reduces the cooldown by 1 tick per level
 * Blast furnaces now take 2x time to smelt ores
@@ -17,6 +24,7 @@
 * Iridium ore drops and ores per chunk increased but decreased ores per vein
 * Increased iron nuggets drop with fortune
 * Stamina now regenerates faster when locked
+* Tridents now have +0.5 attack range
 
 ## Alpha 3.1.0
 * Added EnhancedAI mod

@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.mobs.feature;
 
+import insane96mcp.enhancedai.modules.base.feature.Movement;
 import insane96mcp.enhancedai.modules.creeper.feature.CreeperSwell;
 import insane96mcp.enhancedai.modules.skeleton.feature.SkeletonFleeTarget;
 import insane96mcp.enhancedai.modules.spider.feature.ThrowingWeb;
@@ -36,9 +37,11 @@ public class EnhancedAI extends SRFeature {
         Module.getFeature(ThrowingWeb.class).setConfigOption("Slowness.Stacking Amplifier", false);
         Module.getFeature(CreeperSwell.class).readConfig(event);
 
-
-        Module.getFeature(WitchFleeTarget.class).readConfig(event);
         Module.getFeature(WitchFleeTarget.class).setConfigOption("Flee speed Multiplier Near", 1.1d);
         Module.getFeature(WitchFleeTarget.class).setConfigOption("Flee speed Multiplier Far", 1d);
+        Module.getFeature(WitchFleeTarget.class).readConfig(event);
+
+        Module.getFeature(Movement.class).setConfigOption("Swim Speed Multiplier", 1d);
+        Module.getFeature(Movement.class).readConfig(event);
     }
 }
