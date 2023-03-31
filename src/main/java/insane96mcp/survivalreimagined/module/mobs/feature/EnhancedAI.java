@@ -5,7 +5,6 @@ import insane96mcp.enhancedai.modules.skeleton.feature.SkeletonFleeTarget;
 import insane96mcp.enhancedai.modules.spider.feature.ThrowingWeb;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
@@ -15,10 +14,6 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 @LoadFeature(module = Modules.Ids.MOBS)
 public class EnhancedAI extends SRFeature {
 
-    @Config
-    @Label(name = "Cena Nerf", description = "Makes creeper Cena explosion power the same as normal creeper. Cena will be just a jumpscare lul.")
-    public static Boolean cenaNerf = true;
-
     public EnhancedAI(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -27,17 +22,17 @@ public class EnhancedAI extends SRFeature {
     public void readConfig(ModConfigEvent event) {
         super.readConfig(event);
 
-        if (cenaNerf) {
-            Module.getFeature(CreeperSwell.class).setConfigOption("Cena.Explosion power", 4d);
-        }
+        Module.getFeature(CreeperSwell.class).setConfigOption("Cena.Chance", 0d);
 
         Module.getFeature(SkeletonFleeTarget.class).setConfigOption("Flee speed Multiplier Near", 1.1d);
         Module.getFeature(SkeletonFleeTarget.class).setConfigOption("Flee speed Multiplier Far", 1d);
+        Module.getFeature(SkeletonFleeTarget.class).setConfigOption("Flee Distance Near", 6d);
+        Module.getFeature(SkeletonFleeTarget.class).setConfigOption("Flee Distance Far", 13d);
+        Module.getFeature(SkeletonFleeTarget.class).setConfigOption("Avoid Player chance", 0.25d);
+        Module.getFeature(SkeletonFleeTarget.class).readConfig(event);
 
         Module.getFeature(ThrowingWeb.class).setConfigOption("Slowness.Amplifier", 1);
         Module.getFeature(ThrowingWeb.class).setConfigOption("Slowness.Stacking Amplifier", false);
-        //Read the config values
         Module.getFeature(CreeperSwell.class).readConfig(event);
-        Module.getFeature(SkeletonFleeTarget.class).readConfig(event);
     }
 }
