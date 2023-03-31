@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.module.experience.enchantment;
 
 import insane96mcp.survivalreimagined.setup.SREnchantments;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -27,17 +28,17 @@ public class Expanded extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 4;
+        return 2;
     }
 
     @Override
     public int getMinCost(int level) {
-        return 15 + 20 * (level - 1);
+        return 25 * level;
     }
 
     @Override
     public int getMaxCost(int level) {
-        return this.getMinCost(level) + 20;
+        return this.getMinCost(level) + 25;
     }
 
     public boolean checkCompatibility(Enchantment other) {
@@ -51,9 +52,8 @@ public class Expanded extends Enchantment {
         List<BlockPos> minedBlocks = getMinedBlocks(enchLevel, entity, pos, face);
         for (BlockPos minedBlock : minedBlocks) {
             BlockState minedBlockState = level.getBlockState(minedBlock);
-            if (minedBlockState.getMaterial() != state.getMaterial())
-                continue;
-            if (minedBlockState.getDestroySpeed(level, minedBlock) > state.getDestroySpeed(level, pos) + 0.5d)
+            if (minedBlockState.getMaterial() != state.getMaterial()
+                    || minedBlockState.getDestroySpeed(level, minedBlock) > state.getDestroySpeed(level, pos) + 0.5d)
                 continue;
             if (level instanceof ServerLevel) {
                 BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(minedBlock) : null;
@@ -68,26 +68,41 @@ public class Expanded extends Enchantment {
         }
     }
 
+    public static void applyDestroyAnimation(LivingEntity entity, ClientLevel clientLevel, BlockPos pos, Direction face, BlockState state) {
+        //TODO RenderLevelLastEvent https://github.com/SlimeKnights/TinkersConstruct/blob/9d79ac1792c0342eb340b0d4d683f5c5711db28a/src/main/java/slimeknights/tconstruct/tools/client/ToolRenderEvents.java#LL111C41-L111C61
+        /*int enchLevel = entity.getMainHandItem().getEnchantmentLevel(SREnchantments.EXPANDED.get());
+        if (enchLevel == 0)
+            return;
+        List<BlockPos> minedBlocks = getMinedBlocks(enchLevel, entity, pos, face);
+        BlockDestructionProgress bdp = Minecraft.getInstance().levelRenderer.destroyingBlocks.get(entity.getId());
+        if (bdp == null)
+            return;
+        int destroyProgress = bdp.getProgress();
+        for (BlockPos minedBlock : minedBlocks) {
+            BlockState minedBlockState = clientLevel.getBlockState(minedBlock);
+            if (minedBlockState.getMaterial() != state.getMaterial()
+                    || minedBlockState.getDestroySpeed(clientLevel, minedBlock) > state.getDestroySpeed(clientLevel, pos) + 0.5d)
+                continue;
+            clientLevel.destroyBlockProgress(entity.getId(), minedBlock, destroyProgress);
+        }*/
+    }
+
     public static List<BlockPos> getMinedBlocks(int level, LivingEntity entity, BlockPos pos, Direction face) {
         List<BlockPos> minedBlocks = new ArrayList<>();
+        if (face == Direction.UP || face == Direction.DOWN)
+            face = entity.getDirection();
 
-        switch (level) {
-            case 1 -> {
-                minedBlocks.add(pos.below());
-            }
-            case 2 -> {
-                minedBlocks.add(pos.below());
-                minedBlocks.add(pos.above());
-            }
-            case 3 -> {
-                minedBlocks.add(pos.below());
-                minedBlocks.add(pos.above());
-                minedBlocks.add(pos.relative(face.getClockWise()));
-                minedBlocks.add(pos.relative(face.getCounterClockWise()));
-            }
-            case 4 -> {
-                //TODO
-            }
+        if (level >= 1) {
+            minedBlocks.add(pos.below());
+            minedBlocks.add(pos.above());
+        }
+        if (level >= 2) {
+            minedBlocks.add(pos.relative(face.getClockWise()));
+            minedBlocks.add(pos.relative(face.getCounterClockWise()));
+            minedBlocks.add(pos.relative(face.getClockWise()).above());
+            minedBlocks.add(pos.relative(face.getCounterClockWise()).above());
+            minedBlocks.add(pos.relative(face.getClockWise()).below());
+            minedBlocks.add(pos.relative(face.getCounterClockWise()).below());
         }
 
         return minedBlocks;
