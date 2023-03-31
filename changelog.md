@@ -4,6 +4,7 @@
 * Enchantments
   * Added Magnetic enchantment for Pants
   * Added Magic Protection enchantment for armor
+  * Added Blasting, a new Pickaxe enchantment that increases efficiency against low explosion resistant blocks (e.g. ores). Mutually exclusive with Efficiancy and Expanded
 * Stack Sizes (module no longer exists, has been moved to Items as a feature)
   * Almost doubled food stack size
   * Saddle and horse armors now stack to 8

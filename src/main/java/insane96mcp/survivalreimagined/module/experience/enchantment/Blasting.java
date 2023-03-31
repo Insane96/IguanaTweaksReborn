@@ -3,14 +3,17 @@ package insane96mcp.survivalreimagined.module.experience.enchantment;
 import insane96mcp.survivalreimagined.setup.SREnchantments;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.enchantment.DiggingEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class Blasting extends Enchantment {
+    static final EnchantmentCategory PICKAXES = EnchantmentCategory.create("pickaxes", item -> item instanceof PickaxeItem);
+
     public Blasting() {
-        super(Rarity.UNCOMMON, EnchantmentCategory.DIGGER, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(Rarity.UNCOMMON, PICKAXES, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     @Override
@@ -37,6 +40,6 @@ public class Blasting extends Enchantment {
         if (level == 0)
             return 0f;
 
-        return (float) (level * Math.min(10f, Math.pow(3f, (6f - state.getBlock().getExplosionResistance()) / 1.5f)));
+        return (float) (level * Math.pow(2.5d, 6.5f - state.getBlock().getExplosionResistance()));
     }
 }
