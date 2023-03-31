@@ -43,8 +43,8 @@ public class Stats extends SRFeature {
 	public static final ArrayList<ItemAttributeModifier> itemModifiers = new ArrayList<>();
 
 	@Config
-	@Label(name = "Nerf weapons", description = "If true, Swords, Tridents and Axes get -1 damage and Axes get -1 attack reach.")
-	public static Boolean nerfWeapons = true;
+	@Label(name = "Adjust weapons", description = "If true, Swords, Tridents and Axes get -1 damage, Axes get -0.5 attack reach and Tridents get +0.5 attack reach.")
+	public static Boolean adjustWeapons = true;
 	@Config
 	@Label(name = "Disable Crit Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
 	public static Boolean disableCritArrowsBonusDamage = true;
@@ -60,11 +60,12 @@ public class Stats extends SRFeature {
 	public void readConfig(final ModConfigEvent event) {
 		super.readConfig(event);
 		CLASS_ATTRIBUTE_MODIFIER.clear();
-		if (nerfWeapons) {
+		if (adjustWeapons) {
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(SwordItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, UUID.fromString("324a87bd-89ea-4d1b-866a-ce49d360d632"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, UUID.fromString("a60ab219-6c3a-453b-a55c-41e9c83f9c0f"), EquipmentSlot.MAINHAND, ForgeMod.ATTACK_RANGE.get(), -0.5d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, UUID.fromString("f98cb9bc-3fa7-4fb5-b07a-babe8e35f967"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, ForgeMod.ATTACK_RANGE.get(), 0.5d, AttributeModifier.Operation.ADDITION));
 		}
 	}
 
