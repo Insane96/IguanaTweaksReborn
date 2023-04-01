@@ -10,6 +10,8 @@
   * Almost doubled food stack size
   * Saddle and horse armors now stack to 8
   * Eggs now stack to 64
+* Added Unfair One-Shots
+  * When players' above 7.5 hearts would take so much damage to kill them, they are instead left with half a heart
 * Mobs
   * Disabled Creeper Cena and walking fuse creepers now slow down when swelling
   * Skeletons running away from players are now less painful to deal with
@@ -27,6 +29,9 @@
 * Increased iron nuggets drop with fortune
 * Stamina now regenerates faster when locked
 * Tridents now have +0.5 attack range
+* Removed Iron and Iridium Tools bonus durability
+* Torch recipe now crafts 3
+* Reduced Tools efficiency and reduced global block hardness, but re-enabled depth hardness
 
 ## Alpha 3.1.0
 * Added EnhancedAI mod
