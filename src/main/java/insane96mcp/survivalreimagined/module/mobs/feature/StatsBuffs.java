@@ -29,7 +29,6 @@ public class StatsBuffs extends Feature {
     public void readConfig(ModConfigEvent event) {
         super.readConfig(event);
         Module.getFeature(Targeting.class).setConfigOption("Follow Range Override", new MinMax(0d));
-
         Module.getFeature(Targeting.class).setConfigOption("XRay Range Override", new MinMax(0d));
         //Read the config values
         Module.getFeature(Targeting.class).readConfig(event);

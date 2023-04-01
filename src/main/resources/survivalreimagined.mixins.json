@@ -12,6 +12,7 @@
         "ConduitBlockEntityMixin",
         "EnchantmentMixin",
         "EntityMixin",
+        "FireBlockMixin",
         "FoodDataMixin",
         "HoneyBottleItemMixin",
         "ItemMixin",

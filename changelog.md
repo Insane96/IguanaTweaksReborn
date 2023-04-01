@@ -12,6 +12,10 @@
   * Eggs now stack to 64
 * Added Unfair One-Shots
   * When players' above 7.5 hearts would take enough damage to kill them, they are instead left with half a heart
+* Added Fire feature
+  * Logs burnt by fire nownhave 25% chance to drop charcoal
+  * Two flints in both hands can be used to set on fire blocks. High chance of breaking. 
+  * Fire now spreads 4x faster
 * Mobs
   * Disabled Creeper Cena and walking fuse creepers now slow down when swelling
   * Skeletons running away from players are now less painful to deal with
