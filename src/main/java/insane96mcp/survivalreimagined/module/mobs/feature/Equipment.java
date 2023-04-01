@@ -24,6 +24,9 @@ public class Equipment extends SRFeature {
     public static final ArrayList<EquipmentDropChance> EQUIPMENT_DROP_CHANCES_DEFAULT = new ArrayList<>(List.of(
             new EquipmentDropChance(IdTagMatcher.Type.TAG, "minecraft:skeletons", EquipmentSlot.MAINHAND),
             new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:zombie", EquipmentSlot.OFFHAND),
+            new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:zombified_piglin", EquipmentSlot.MAINHAND),
+            new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:piglin", EquipmentSlot.MAINHAND),
+            new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:piglin_brute", EquipmentSlot.MAINHAND),
             new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:drowned", EquipmentSlot.OFFHAND),
             new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:zombie_villager", EquipmentSlot.OFFHAND),
             new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:vex", EquipmentSlot.MAINHAND),
