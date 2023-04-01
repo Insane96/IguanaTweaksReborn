@@ -11,7 +11,7 @@
   * Saddle and horse armors now stack to 8
   * Eggs now stack to 64
 * Added Unfair One-Shots
-  * When players' above 7.5 hearts would take so much damage to kill them, they are instead left with half a heart
+  * When players' above 7.5 hearts would take enough damage to kill them, they are instead left with half a heart
 * Mobs
   * Disabled Creeper Cena and walking fuse creepers now slow down when swelling
   * Skeletons running away from players are now less painful to deal with

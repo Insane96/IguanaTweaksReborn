@@ -65,7 +65,7 @@ public class NoHunger extends Feature {
     public static Double rawFoodHealPercentage = 1d;
     @Config(min = 0d, max = 1f)
     @Label(name = "Raw food.Poison Chance", description = "Raw food has this chance to poison the player. Raw food is defined in the survivalreimagined:raw_food tag")
-    public static Double rawFoodPoisonChance = 0.8d;
+    public static Double rawFoodPoisonChance = 0.6d;
 
     @Config
     @Label(name = "Convert Hunger to Weakness", description = "If true, Hunger effect is replaced by Weakness")

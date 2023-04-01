@@ -51,42 +51,42 @@ public class Loot extends SRFeature {
 	);
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "chests/abandoned_mineshaft", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/abandoned_mineshaft"), 2000)
+		provider.add(path + "chests/abandoned_mineshaft", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/abandoned_mineshaft"), 3000)
 				.setMultiplierAtStart(0.2f)
 				.applyToDamageable()
 				.build()
 		);
-		provider.add(path + "chests/buried_treasure", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/buried_treasure"), 2000)
+		provider.add(path + "chests/buried_treasure", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/buried_treasure"), 3000)
 				.setMultiplierAtStart(0.2f)
 				.applyToDamageable()
 				.build()
 		);
-		provider.add(path + "chests/desert_pyramid", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/desert_pyramid"), 2000)
+		provider.add(path + "chests/desert_pyramid", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/desert_pyramid"), 3000)
 				.setMultiplierAtStart(0.2f)
 				.applyToDamageable()
 				.build()
 		);
-		provider.add(path + "chests/igloo_chest", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/igloo_chest"), 2000)
-				.setMultiplierAtStart(0.5f)
-				.applyToDamageable()
-				.build()
-		);
-		provider.add(path + "chests/jungle_temple", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/jungle_temple"), 2000)
+		provider.add(path + "chests/igloo_chest", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/igloo_chest"), 3000)
 				.setMultiplierAtStart(0.2f)
 				.applyToDamageable()
 				.build()
 		);
-		provider.add(path + "chests/pillager_outpost", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/pillager_outpost"), 2000)
-				.setMultiplierAtStart(0.4f)
+		provider.add(path + "chests/jungle_temple", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/jungle_temple"), 3000)
+				.setMultiplierAtStart(0.2f)
+				.applyToDamageable()
+				.build()
+		);
+		provider.add(path + "chests/pillager_outpost", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/pillager_outpost"), 3000)
+				.setMultiplierAtStart(0.2f)
 				.applyToDamageable()
 				.build()
 		);
 		provider.add(path + "chests/ruined_portal", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/ruined_portal"), 2000)
-				.setMultiplierAtStart(0.4f)
+				.setMultiplierAtStart(0.3f)
 				.applyToDamageable()
 				.build()
 		);
-		provider.add(path + "chests/shipwreck_treasure", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/shipwreck_treasure"), 2000)
+		provider.add(path + "chests/shipwreck_treasure", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/shipwreck_treasure"), 3000)
 				.setMultiplierAtStart(0.2f)
 				.applyToDamageable()
 				.build()

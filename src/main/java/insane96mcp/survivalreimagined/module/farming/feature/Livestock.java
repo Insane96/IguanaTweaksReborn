@@ -288,9 +288,15 @@ public class Livestock extends SRFeature {
 	private static final String path = "livestock/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
+		provider.add(path + "increase_feathers", new DropMultiplierModifier.Builder(Items.FEATHER, 2f)
+				.build());
 		provider.add(path + "lower_chicken", new DropMultiplierModifier.Builder(Items.CHICKEN, 0.2f)
 				.build());
 		provider.add(path + "lower_cooked_chicken", new DropMultiplierModifier.Builder(Items.COOKED_CHICKEN, 0.2f)
+				.build());
+		provider.add(path + "lower_rabbit", new DropMultiplierModifier.Builder(Items.RABBIT, 0.75f)
+				.build());
+		provider.add(path + "lower_cooked_rabbit", new DropMultiplierModifier.Builder(Items.COOKED_RABBIT, 0.75f)
 				.build());
 		provider.add(path + "lower_mutton", new DropMultiplierModifier.Builder(Items.MUTTON, 0.2f)
 				.build());

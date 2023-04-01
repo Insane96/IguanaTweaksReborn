@@ -25,7 +25,7 @@ public class EnhancedAI extends SRFeature {
         super.readConfig(event);
 
         Module.getFeature(CreeperSwell.class).setConfigOption("Cena.Chance", 0d);
-        Module.getFeature(CreeperSwell.class).setConfigOption("Walking Fuse Speed Modifier", 0.3333d);
+        Module.getFeature(CreeperSwell.class).setConfigOption("Walking Fuse Speed Modifier", -0.6667d);
         Module.getFeature(CreeperSwell.class).readConfig(event);
 
         Module.getFeature(SkeletonFleeTarget.class).setConfigOption("Flee speed Multiplier Near", 1.1d);
