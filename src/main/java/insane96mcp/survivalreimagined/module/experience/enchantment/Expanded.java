@@ -46,6 +46,7 @@ public class Expanded extends Enchantment {
     }
 
     public static void apply(LivingEntity entity, Level level, BlockPos pos, Direction face, BlockState state) {
+        //TODO Prevent applying if the tool is not effective against the block
         int enchLevel = entity.getMainHandItem().getEnchantmentLevel(SREnchantments.EXPANDED.get());
         if (enchLevel == 0)
             return;
