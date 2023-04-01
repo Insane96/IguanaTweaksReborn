@@ -73,10 +73,10 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_leggings", 105),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_boots", 91),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chainer_copper_helmet", 66),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chainer_copper_chestplate", 96),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chainer_copper_leggings", 90),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chainer_copper_boots", 78),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_helmet", 66),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_chestplate", 96),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_leggings", 90),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_boots", 78),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_helmet", 77),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_chestplate", 112),
