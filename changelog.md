@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.2.0
 * Enchantments
   * Added Magnetic enchantment for Pants
   * Added Magic Protection enchantment for armor
