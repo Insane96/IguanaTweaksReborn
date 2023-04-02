@@ -1,0 +1,6 @@
+{
+    "pack": {
+        "description": "Disables crops drops when broken by a non-entity (e.g. water)",
+        "pack_format": 10
+    }
+}
