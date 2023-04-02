@@ -1,0 +1,6 @@
+{
+  "type": "survivalreimagined:drop_multiplier",
+  "conditions": [],
+  "item": "minecraft:feather",
+  "multiplier": 2.0
+}

@@ -2,7 +2,7 @@
   "type": "survivalreimagined:loot_purger",
   "apply_to_damageable": true,
   "conditions": [],
-  "end_range": 2000,
+  "end_range": 3000,
   "loot_table": "minecraft:chests/desert_pyramid",
   "multiplier_at_start": 0.2
 }
