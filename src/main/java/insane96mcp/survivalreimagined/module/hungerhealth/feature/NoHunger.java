@@ -15,8 +15,11 @@ import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.MessageFoodRegenSync;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
 import insane96mcp.survivalreimagined.utils.Utils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -33,6 +36,7 @@ import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
 
@@ -258,17 +262,25 @@ public class NoHunger extends Feature {
         RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
     }
 
-    /*@OnlyIn(Dist.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onTooltip(ItemTooltipEvent event) {
         if (!this.isEnabled()
                 || !event.getItemStack().getItem().isEdible())
             return;
 
-        FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
-        float heal = food.getNutrition() * foodHealHealthMultiplier.floatValue();
-        //Half heart per second by default
-        float strength = (0.5f * (1.4f - food.getSaturationModifier()));
-        event.getToolTip().add(Component.translatable(FOOD_STATS_TRANSLATABLE, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal), SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.DARK_GREEN));
-    }*/
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer playerEntity = mc.player;
+        if (playerEntity == null)
+            return;
+
+        if (mc.options.advancedItemTooltips) {
+            FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
+            //noinspection ConstantConditions
+            float heal = food.getNutrition() * foodHealHealthMultiplier.floatValue();
+            //Half heart per second by default
+            float strength = (0.5f * (1.4f - food.getSaturationModifier()));
+            event.getToolTip().add(Component.translatable(FOOD_STATS_TRANSLATABLE, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal), SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
+        }
+    }
 }
