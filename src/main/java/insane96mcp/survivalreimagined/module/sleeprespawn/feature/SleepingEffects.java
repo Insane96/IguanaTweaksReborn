@@ -62,7 +62,7 @@ public class SleepingEffects extends SRFeature {
 			return;
 
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> {
-			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Strings.Tags.TIREDNESS) - Tiredness.tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
+			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Tiredness.TIREDNESS_TAG) - Tiredness.tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
 			if (dizzyWhenToTired && Feature.isEnabled(Tiredness.class) && tirednessOnWakeUp == 0f)
 				return;
 

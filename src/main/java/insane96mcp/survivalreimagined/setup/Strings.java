@@ -10,7 +10,6 @@ public class Strings {
 		public static final String TIME_SINCE_LAST_SWING = SurvivalReimagined.RESOURCE_PREFIX + "ticks_since_last_swing";
 
 		public static final String SPAWNER_DATA = SurvivalReimagined.RESOURCE_PREFIX + "spawner_data";
-		public static final String TIREDNESS = SurvivalReimagined.RESOURCE_PREFIX + "tiredness";
 		public static final String DAMAGE_HISTORY = SurvivalReimagined.RESOURCE_PREFIX + "damage_history";
 		public static final String EAT_HISTORY = SurvivalReimagined.RESOURCE_PREFIX + "eat_history";
         public static final String PASSIVE_REGEN_TICK = SurvivalReimagined.RESOURCE_PREFIX + "passive_regen_ticks";
@@ -28,9 +27,6 @@ public class Strings {
 
 	public static class Translatable {
 		public static final String NO_FOOD_FOR_SLEEP = "survivalreimagined.no_food_for_sleep";
-		public static final String NOT_TIRED = "survivalreimagined.not_tired";
-		public static final String TIRED_ENOUGH = "survivalreimagined.tired_enough";
-		public static final String TOO_TIRED = "survivalreimagined.too_tired";
 		public static final String DECORATIVE_BEDS = "survivalreimagined.decorative_beds";
 		public static final String ENJOY_THE_NIGHT = "survivalreimagined.enjoy_the_night";
 		public static final String ITEM_REPAIRED = "survivalreimagined.item_repaired";
