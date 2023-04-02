@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Copper from campfire now requires 4 minutes instead of 5
+
 ## Alpha 3.2.0
 * Enchantments
   * Added Magnetic enchantment for Pants
