@@ -67,6 +67,10 @@ public class Enchantments extends Feature {
 						NONE: no changes to protection are done""")
 	public static ProtectionNerf protectionNerf = ProtectionNerf.DISABLE;
 
+	@Config
+	@Label(name = "Prevent farmland trampling with Feather Falling")
+	public static Boolean preventFarmlandTramplingWithFeatherFalling = true;
+
 	//TODO Make enchantments deactivable
 
 	public Enchantments(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -197,6 +201,17 @@ public class Enchantments extends Feature {
 			return;
 		if (!arrow.shotFromCrossbow())
 			processBow(arrow);
+	}
+
+	@SubscribeEvent
+	public void onFarmlandTrample(BlockEvent.FarmlandTrampleEvent event) {
+		if (!this.isEnabled()
+				|| !preventFarmlandTramplingWithFeatherFalling
+				|| !(event.getEntity() instanceof LivingEntity entity)
+				|| EnchantmentHelper.getEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.FALL_PROTECTION, entity) <= 0)
+			return;
+
+		event.setCanceled(true);
 	}
 
 	private void processBow(AbstractArrow arrow) {

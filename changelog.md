@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Farmland is no longer trampled if the trampler is wearing Feather Falling
 * Tiredness
   * Increased tiredness required to sleep and effect
   * Vigour on wake up changed (Vigour II for 8 minutes -> Vigour I for 20 minutes)
