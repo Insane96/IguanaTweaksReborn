@@ -38,7 +38,7 @@ public class Modules {
 		public static final String EXPERIENCE = SurvivalReimagined.RESOURCE_PREFIX + "experience";
 		public static final String FARMING = SurvivalReimagined.RESOURCE_PREFIX + "farming";
 		public static final String HUNGER_HEALTH = SurvivalReimagined.RESOURCE_PREFIX + "hunger_health";
-		public static final String ITEMS = SurvivalReimagined.RESOURCE_PREFIX + "hunger_health";
+		public static final String ITEMS = SurvivalReimagined.RESOURCE_PREFIX + "items";
 		public static final String MINING = SurvivalReimagined.RESOURCE_PREFIX + "mining";
 		public static final String MISC = SurvivalReimagined.RESOURCE_PREFIX + "misc";
 		public static final String MOBS = SurvivalReimagined.RESOURCE_PREFIX + "mobs";

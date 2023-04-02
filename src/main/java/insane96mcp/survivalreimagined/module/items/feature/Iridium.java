@@ -1,12 +1,12 @@
 package insane96mcp.survivalreimagined.module.items.feature;
 
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.utils.SRArmorMaterial;
 import insane96mcp.survivalreimagined.setup.SRBlocks;
@@ -26,7 +26,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Iridium", description = "Add Irirum, a new ore scattered everywhere in the Overworld in small quantities and can be used to upgrade Iron Equipment")
 @LoadFeature(module = Modules.Ids.ITEMS)
-public class Iridium extends SRFeature {
+public class Iridium extends Feature {
 
 	public static final RegistryObject<Block> BLOCK = SRBlocks.BLOCKS.register("iridium_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
 	public static final RegistryObject<Block> ORE = SRBlocks.BLOCKS.register("iridium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5)));

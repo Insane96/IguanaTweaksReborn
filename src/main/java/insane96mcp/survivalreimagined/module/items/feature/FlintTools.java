@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.items.feature;
 
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -8,7 +9,6 @@ import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
@@ -34,7 +34,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Flint Tools", description = "Add flint tools and make wooden tools useless")
 @LoadFeature(module = Modules.Ids.ITEMS)
-public class FlintTools extends SRFeature {
+public class FlintTools extends Feature {
 
 	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("flint", 3d, 33, () -> Items.FLINT, 9, Rarity.COMMON);
 

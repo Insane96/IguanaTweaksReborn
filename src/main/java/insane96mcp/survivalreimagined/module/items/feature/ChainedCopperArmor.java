@@ -1,9 +1,9 @@
 package insane96mcp.survivalreimagined.module.items.feature;
 
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.utils.SRArmorMaterial;
 import insane96mcp.survivalreimagined.setup.SRItems;
@@ -17,7 +17,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Chained Copper Armor", description = "Add Chained Copper Armor")
 @LoadFeature(module = Modules.Ids.ITEMS)
-public class ChainedCopperArmor extends SRFeature {
+public class ChainedCopperArmor extends Feature {
 
 	private static final SRArmorMaterial CHAINED_COPPER = new SRArmorMaterial("survivalreimagined:chained_copper", 10, new int[] {1, 3, 4, 1}, 13, SoundEvents.ARMOR_EQUIP_CHAIN, 0f, 0f, () -> Ingredient.of(Items.COPPER_INGOT));
 
