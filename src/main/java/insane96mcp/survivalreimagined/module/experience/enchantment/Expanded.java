@@ -15,10 +15,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.BlockDestructionProgress;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.DiggingEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -60,8 +62,10 @@ public class Expanded extends Enchantment {
     }
 
     public static void apply(LivingEntity entity, Level level, BlockPos pos, Direction face, BlockState state) {
-        //TODO Prevent applying if the tool is not effective against the block
-        int enchLevel = entity.getMainHandItem().getEnchantmentLevel(SREnchantments.EXPANDED.get());
+        ItemStack heldStack = entity.getMainHandItem();
+        if (!heldStack.isCorrectToolForDrops(state))
+            return;
+        int enchLevel = heldStack.getEnchantmentLevel(SREnchantments.EXPANDED.get());
         if (enchLevel == 0)
             return;
         List<BlockPos> minedBlocks = getMinedBlocks(enchLevel, level, entity, pos, face);
@@ -75,8 +79,13 @@ public class Expanded extends Enchantment {
                     drop.setDefaultPickUpDelay();
                     level.addFreshEntity(drop);
                 });
+                heldStack.hurtAndBreak(1, entity, l -> {
+                    l.broadcastBreakEvent(InteractionHand.MAIN_HAND);
+                });
             }
             level.destroyBlock(minedBlock, false, entity);
+            if (heldStack.isEmpty())
+                break;
         }
     }
 
@@ -106,6 +115,9 @@ public class Expanded extends Enchantment {
         BlockHitResult blockTrace = (BlockHitResult)result;
         BlockPos targetPos = blockTrace.getBlockPos();
         BlockState targetState = level.getBlockState(targetPos);
+        ItemStack heldStack = player.getMainHandItem();
+        if (!heldStack.isCorrectToolForDrops(targetState))
+            return;
         BlockDestructionProgress progress = null;
         for (Int2ObjectMap.Entry<BlockDestructionProgress> entry : Minecraft.getInstance().levelRenderer.destroyingBlocks.int2ObjectEntrySet()) {
             if (entry.getValue().getPos().equals(targetPos)) {
