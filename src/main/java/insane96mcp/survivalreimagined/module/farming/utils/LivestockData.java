@@ -23,7 +23,11 @@ public class LivestockData extends IdTagMatcher {
 		super(type, location);
 	}
 
-	public LivestockData(Type type, String location, double value, Season season) {
+	public LivestockData(Type type, String location, double value) {
+		this(type, location, value, null);
+	}
+
+	public LivestockData(Type type, String location, double value, @Nullable Season season) {
 		super(type, location);
 		this.value = value;
 		this.season = season;

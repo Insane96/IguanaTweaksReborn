@@ -3,6 +3,7 @@
 ## Upcoming
 * Farmland is no longer trampled if the trampler is wearing Feather Falling
 * Crops broken by non-entities (e.g. Water) now drop nothing
+* Sheep no longer regrow wool 100% of the time after eating
 * Tiredness
   * Increased tiredness required to sleep and effect
   * Vigour on wake up changed (Vigour II for 8 minutes -> Vigour I for 20 minutes)

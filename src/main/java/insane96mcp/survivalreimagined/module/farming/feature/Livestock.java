@@ -8,6 +8,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.farming.ai.SREatBlock;
 import insane96mcp.survivalreimagined.module.farming.utils.LivestockData;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.EntityTypePredicate;
@@ -19,9 +20,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.MushroomCow;
+import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,6 +33,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -94,6 +98,12 @@ public class Livestock extends SRFeature {
 
 	public static final ArrayList<LivestockData> cowMilkCooldown = new ArrayList<>();
 
+	public static final ArrayList<LivestockData> SHEEP_WOOL_REGROWTH_CHANCE = new ArrayList<>(List.of(
+			new LivestockData(IdTagMatcher.Type.ID, "minecraft:sheep", 0.6d)
+	));
+
+	public static final ArrayList<LivestockData> sheepWoolRegrowthChance = new ArrayList<>();
+
 	public static final ArrayList<LivestockData> BREEDING_FAIL_CHANCE_DEFAULT = new ArrayList<>(List.of(
 			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 0.6d, Season.SPRING),
 			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 0.5d, Season.SUMMER),
@@ -121,19 +131,31 @@ public class Livestock extends SRFeature {
 		this.loadAndReadFile("breeding_cooldown_multiplier.json", breedingCooldown, BREEDING_COOLDOWN_DEFAULT, LivestockData.livestockDataListType);
 		this.loadAndReadFile("egg_lay_cooldown_multiplier.json", eggLaySlowdown, EGG_LAY_SLOWDOWN_DEFAULT, LivestockData.livestockDataListType);
 		this.loadAndReadFile("cow_milk_cooldown.json", cowMilkCooldown, COW_MILK_COOLDOWN_DEFAULT, LivestockData.livestockDataListType);
+		this.loadAndReadFile("sheep_wool_regrowth_chance.json", sheepWoolRegrowthChance, SHEEP_WOOL_REGROWTH_CHANCE, LivestockData.livestockDataListType);
 		this.loadAndReadFile("breeding_fail_chance.json", breedingFailChance, BREEDING_FAIL_CHANCE_DEFAULT, LivestockData.livestockDataListType);
 	}
 
-	/*@SubscribeEvent
-	public void onSheepSpawn(EntityJoinLevelEvent event) {
+	@SubscribeEvent
+	public void onSheepJoinLevel(EntityJoinLevelEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getEntity() instanceof Sheep sheep))
 			return;
 
 		sheep.goalSelector.removeGoal(sheep.eatBlockGoal);
-		sheep.eatBlockGoal = new SREatBlockGoal(sheep);
+		sheep.eatBlockGoal = new SREatBlock(sheep);
 		sheep.goalSelector.addGoal(5, sheep.eatBlockGoal);
-	}*/
+	}
+
+	public static boolean canSheepRegrowWool(Mob mob) {
+		double chance = 1d;
+		for (LivestockData data : sheepWoolRegrowthChance){
+			if (data.matches(mob))
+				chance = data.getValue();
+		}
+		if (chance == 1d)
+			return true;
+		return mob.getRandom().nextDouble() < chance;
+	}
 
 	@SubscribeEvent
 	public void onLivingTick(LivingEvent.LivingTickEvent event) {
