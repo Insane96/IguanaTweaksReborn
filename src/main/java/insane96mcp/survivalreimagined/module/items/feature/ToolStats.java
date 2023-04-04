@@ -40,23 +40,9 @@ public class ToolStats extends SRFeature {
 	public static final ResourceLocation NO_EFFICIENCY_ITEMS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_efficiency_items");
 
 	public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_sword", 1),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_pickaxe", 33),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_axe", 33),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_shovel", 33),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 33),
-
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_sword", 1),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_pickaxe", 34),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_axe", 34),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_shovel", 34),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_hoe", 34),
-
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_sword", 1),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_pickaxe", 89),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_axe", 89),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_shovel", 89),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 89),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/wooden", 33),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/stone", 34),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/flint", 67),
 
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/iridium", 643),
 
@@ -85,6 +71,11 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_leggings", 105),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_boots", 91),
 
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_helmet", 102),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_chestplate", 149),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_leggings", 140),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_boots", 121),
+
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 38),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", 56),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_leggings", 52),
@@ -103,10 +94,10 @@ public class ToolStats extends SRFeature {
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 
 	public static final ArrayList<IdTagValue> TOOL_EFFICIENCIES_DEFAULT = new ArrayList<>(Arrays.asList(
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/flint", 3d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/stone", 2d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iron", 4d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iridium", 4.5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/flint", 2.5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/stone", 3.333d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iron", 4.5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iridium", 5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/diamond", 7d)
 	));
 	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();
