@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Swapped Flint and Stone tools' Durability and Efficiency
+* Re-enabled Flint and Stone Hoes
+
 ## Alpha 3.2.2
 * Successfully(?) updated to MC 1.19.4
 
