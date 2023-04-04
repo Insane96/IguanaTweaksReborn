@@ -39,12 +39,12 @@ public class HoesNerfs extends SRFeature {
 
 	public static final ArrayList<HoeStat> HOES_STATS_DEFAULT = new ArrayList<>(Arrays.asList(
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 40, 4),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:flint_hoe", 18, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 30, 2),
+			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:flint_hoe", 30, 4),
+			new HoeStat(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 18, 4),
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:iron_hoe", 20, 4),
 			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:iridium_hoe", 18, 4),
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:golden_hoe", 5),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:diamond_hoe", 15, 2),
+			new HoeStat(IdTagMatcher.Type.ID, "minecraft:diamond_hoe", 15, 3),
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:netherite_hoe", 10, 2)
 	));
 
