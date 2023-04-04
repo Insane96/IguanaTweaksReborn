@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.2.1
 * Farmland is no longer trampled if the trampler is wearing Feather Falling
 * Crops broken by non-entities (e.g. Water) now drop nothing
 * Sheep no longer regrow wool 100% of the time after eating
