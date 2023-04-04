@@ -1,13 +1,24 @@
 package insane96mcp.survivalreimagined.module.experience.enchantment;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.SheetedDecalTextureGenerator;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import insane96mcp.survivalreimagined.setup.SREnchantments;
-import net.minecraft.client.multiplayer.ClientLevel;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.MultiPlayerGameMode;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.BlockDestructionProgress;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.DiggingEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -16,7 +27,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,13 +64,10 @@ public class Expanded extends Enchantment {
         int enchLevel = entity.getMainHandItem().getEnchantmentLevel(SREnchantments.EXPANDED.get());
         if (enchLevel == 0)
             return;
-        List<BlockPos> minedBlocks = getMinedBlocks(enchLevel, entity, pos, face);
+        List<BlockPos> minedBlocks = getMinedBlocks(enchLevel, level, entity, pos, face);
         for (BlockPos minedBlock : minedBlocks) {
-            BlockState minedBlockState = level.getBlockState(minedBlock);
-            if (minedBlockState.getMaterial() != state.getMaterial()
-                    || minedBlockState.getDestroySpeed(level, minedBlock) > state.getDestroySpeed(level, pos) + 0.5d)
-                continue;
             if (level instanceof ServerLevel) {
+                BlockState minedBlockState = level.getBlockState(minedBlock);
                 BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(minedBlock) : null;
                 LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) level)).withRandom(level.getRandom()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(minedBlock)).withParameter(LootContextParams.TOOL, entity.getMainHandItem()).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, entity);
                 minedBlockState.getDrops(lootcontext$builder).forEach((stack) -> {
@@ -69,43 +80,99 @@ public class Expanded extends Enchantment {
         }
     }
 
-    public static void applyDestroyAnimation(LivingEntity entity, ClientLevel clientLevel, BlockPos pos, Direction face, BlockState state) {
-        //TODO RenderLevelLastEvent https://github.com/SlimeKnights/TinkersConstruct/blob/9d79ac1792c0342eb340b0d4d683f5c5711db28a/src/main/java/slimeknights/tconstruct/tools/client/ToolRenderEvents.java#LL111C41-L111C61
-        /*int enchLevel = entity.getMainHandItem().getEnchantmentLevel(SREnchantments.EXPANDED.get());
+    public static void applyDestroyAnimation(RenderLevelStageEvent event) {
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_SOLID_BLOCKS)
+            return;
+        // validate required variables are set
+        MultiPlayerGameMode controller = Minecraft.getInstance().gameMode;
+        if (controller == null || !controller.isDestroying()) {
+            return;
+        }
+        Level level = Minecraft.getInstance().level;
+        Player player = Minecraft.getInstance().player;
+        if (level == null || player == null || Minecraft.getInstance().getCameraEntity() == null) {
+            return;
+        }
+        // must have the enchantment
+        int enchLevel = player.getMainHandItem().getEnchantmentLevel(SREnchantments.EXPANDED.get());
         if (enchLevel == 0)
             return;
-        List<BlockPos> minedBlocks = getMinedBlocks(enchLevel, entity, pos, face);
-        BlockDestructionProgress bdp = Minecraft.getInstance().levelRenderer.destroyingBlocks.get(entity.getId());
-        if (bdp == null)
+        // must be targeting a block
+        HitResult result = Minecraft.getInstance().hitResult;
+        if (result == null || result.getType() != HitResult.Type.BLOCK) {
             return;
-        int destroyProgress = bdp.getProgress();
-        for (BlockPos minedBlock : minedBlocks) {
-            BlockState minedBlockState = clientLevel.getBlockState(minedBlock);
-            if (minedBlockState.getMaterial() != state.getMaterial()
-                    || minedBlockState.getDestroySpeed(clientLevel, minedBlock) > state.getDestroySpeed(clientLevel, pos) + 0.5d)
-                continue;
-            clientLevel.destroyBlockProgress(entity.getId(), minedBlock, destroyProgress);
-        }*/
+        }
+        // find breaking progress
+        BlockHitResult blockTrace = (BlockHitResult)result;
+        BlockPos targetPos = blockTrace.getBlockPos();
+        BlockState targetState = level.getBlockState(targetPos);
+        BlockDestructionProgress progress = null;
+        for (Int2ObjectMap.Entry<BlockDestructionProgress> entry : Minecraft.getInstance().levelRenderer.destroyingBlocks.int2ObjectEntrySet()) {
+            if (entry.getValue().getPos().equals(targetPos)) {
+                progress = entry.getValue();
+                break;
+            }
+        }
+        if (progress == null) {
+            return;
+        }
+        // determine extra blocks to highlight
+        List<BlockPos> minedBlocks = getMinedBlocks(enchLevel, level, player, targetPos, blockTrace.getDirection());
+        if (minedBlocks.isEmpty()) {
+            return;
+        }
+
+        // set up buffers
+        PoseStack matrices = event.getPoseStack();
+        matrices.pushPose();
+        MultiBufferSource.BufferSource vertices = event.getLevelRenderer().renderBuffers.crumblingBufferSource();
+        VertexConsumer vertexBuilder = vertices.getBuffer(ModelBakery.DESTROY_TYPES.get(progress.getProgress()));
+
+        // finally, render the blocks
+        Camera renderInfo = Minecraft.getInstance().gameRenderer.getMainCamera();
+        double x = renderInfo.getPosition().x;
+        double y = renderInfo.getPosition().y;
+        double z = renderInfo.getPosition().z;
+        BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
+        for (BlockPos minedPos : minedBlocks) {
+            matrices.pushPose();
+            matrices.translate(minedPos.getX() - x, minedPos.getY() - y, minedPos.getZ() - z);
+            PoseStack.Pose entry = matrices.last();
+            VertexConsumer blockBuilder = new SheetedDecalTextureGenerator(vertexBuilder, entry.pose(), entry.normal(), 1f);
+            dispatcher.renderBreakingTexture(level.getBlockState(minedPos), minedPos, level, matrices, blockBuilder);
+            matrices.popPose();
+        }
+        // finish rendering
+        matrices.popPose();
+        vertices.endBatch();
     }
 
-    public static List<BlockPos> getMinedBlocks(int level, LivingEntity entity, BlockPos pos, Direction face) {
+    public static List<BlockPos> getMinedBlocks(int expansion, Level level, LivingEntity entity, BlockPos targetPos, Direction face) {
         List<BlockPos> minedBlocks = new ArrayList<>();
         if (face == Direction.UP || face == Direction.DOWN)
             face = entity.getDirection();
 
-        if (level >= 1) {
-            minedBlocks.add(pos.below());
-            minedBlocks.add(pos.above());
+        if (expansion >= 1) {
+            addIfCanBeMined(minedBlocks, level, targetPos, targetPos.below());
+            addIfCanBeMined(minedBlocks, level, targetPos, targetPos.above());
         }
-        if (level >= 2) {
-            minedBlocks.add(pos.relative(face.getClockWise()));
-            minedBlocks.add(pos.relative(face.getCounterClockWise()));
-            minedBlocks.add(pos.relative(face.getClockWise()).above());
-            minedBlocks.add(pos.relative(face.getCounterClockWise()).above());
-            minedBlocks.add(pos.relative(face.getClockWise()).below());
-            minedBlocks.add(pos.relative(face.getCounterClockWise()).below());
+        if (expansion >= 2) {
+            addIfCanBeMined(minedBlocks,level, targetPos, targetPos.relative(face.getClockWise()));
+            addIfCanBeMined(minedBlocks,level, targetPos, targetPos.relative(face.getCounterClockWise()));
+            addIfCanBeMined(minedBlocks,level, targetPos, targetPos.relative(face.getClockWise()).above());
+            addIfCanBeMined(minedBlocks,level, targetPos, targetPos.relative(face.getCounterClockWise()).above());
+            addIfCanBeMined(minedBlocks,level, targetPos, targetPos.relative(face.getClockWise()).below());
+            addIfCanBeMined(minedBlocks,level, targetPos, targetPos.relative(face.getCounterClockWise()).below());
         }
 
         return minedBlocks;
+    }
+
+    private static void addIfCanBeMined(List<BlockPos> blockPos, Level level, BlockPos targetPos, BlockPos minedPos) {
+        BlockState targetState = level.getBlockState(targetPos);
+        BlockState minedState = level.getBlockState(minedPos);
+        if (targetState.getMaterial() == minedState.getMaterial()
+                && targetState.getDestroySpeed(level, targetPos) >= minedState.getDestroySpeed(level, minedPos) - 0.5d)
+            blockPos.add(minedPos);
     }
 }

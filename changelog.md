@@ -9,6 +9,7 @@
   * Fixed tired applying continuously
 * Copper from campfire now requires 4 minutes instead of 5
 * Iridium tool durability increased by 10%
+* Expanded now shows the blocks being broken
 
 ## Alpha 3.2.0
 * Enchantments

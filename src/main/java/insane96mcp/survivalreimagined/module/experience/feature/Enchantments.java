@@ -12,7 +12,6 @@ import insane96mcp.survivalreimagined.module.experience.enchantment.MagicProtect
 import insane96mcp.survivalreimagined.module.experience.enchantment.Magnetic;
 import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -28,6 +27,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -174,13 +174,21 @@ public class Enchantments extends Feature {
 
 		event.setNewSpeed(event.getNewSpeed() + Blasting.getMiningSpeedBoost(event.getEntity(), event.getState()));
 
-		if (event.getEntity().level.isClientSide && event.getPosition().isPresent()) {
+		/*if (event.getEntity().level.isClientSide && event.getPosition().isPresent()) {
 			ClientLevel clientLevel = (ClientLevel) event.getEntity().level;
 			Vec3 viewVector = event.getEntity().getViewVector(1f);
 			Vec3 endClip = event.getEntity().getEyePosition().add(viewVector.x * event.getEntity().getReachDistance(), viewVector.y * event.getEntity().getReachDistance(), viewVector.z * event.getEntity().getReachDistance());
 			BlockHitResult blockHitResult = clientLevel.clip(new ClipContext(event.getEntity().getEyePosition(), endClip, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, event.getEntity()));
 			Expanded.applyDestroyAnimation(event.getEntity(), clientLevel, event.getPosition().get(), blockHitResult.getDirection(), event.getState());
-		}
+		}*/
+	}
+
+	@SubscribeEvent
+	public void onRenderLevel(RenderLevelStageEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		Expanded.applyDestroyAnimation(event);
 	}
 
 	@SubscribeEvent
