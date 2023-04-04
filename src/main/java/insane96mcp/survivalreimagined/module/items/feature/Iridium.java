@@ -11,9 +11,9 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.utils.SRArmorMaterial;
 import insane96mcp.survivalreimagined.setup.SRBlocks;
 import insane96mcp.survivalreimagined.setup.SRItems;
+import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
@@ -23,6 +23,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.EnumMap;
 
 @Label(name = "Iridium", description = "Add Irirum, a new ore scattered everywhere in the Overworld in small quantities and can be used to upgrade Iron Equipment")
 @LoadFeature(module = Modules.Ids.ITEMS)
@@ -48,12 +50,17 @@ public class Iridium extends Feature {
 	public static final RegistryObject<Item> AXE = SRItems.ITEMS.register("iridium_axe", () -> new AxeItem(ITEM_TIER, 6.0F, -3.2F, new Item.Properties()));
 	public static final RegistryObject<Item> HOE = SRItems.ITEMS.register("iridium_hoe", () -> new HoeItem(ITEM_TIER, -2, -1.0F, new Item.Properties()));
 
-	private static final SRArmorMaterial ARMOR_MATERIAL = new SRArmorMaterial("survivalreimagined:iridium", 20, new int[] {3, 5, 6, 2}, 6, SoundEvents.ARMOR_EQUIP_IRON, 1f, 0.04f, () -> Ingredient.of(INGOT.get()));
+	private static final SRArmorMaterial ARMOR_MATERIAL = new SRArmorMaterial("survivalreimagined:iridium", 20, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
+		p_266652_.put(ArmorItem.Type.BOOTS, 3);
+		p_266652_.put(ArmorItem.Type.LEGGINGS, 5);
+		p_266652_.put(ArmorItem.Type.CHESTPLATE, 6);
+		p_266652_.put(ArmorItem.Type.HELMET, 2);
+	}), 6, SoundEvents.ARMOR_EQUIP_IRON, 1f, 0.04f, () -> Ingredient.of(INGOT.get()));
 
-	public static final RegistryObject<Item> HELMET = SRItems.ITEMS.register("iridium_helmet", () -> new ArmorItem(ARMOR_MATERIAL, EquipmentSlot.HEAD, new Item.Properties()));
-	public static final RegistryObject<Item> CHESTPLATE = SRItems.ITEMS.register("iridium_chestplate", () -> new ArmorItem(ARMOR_MATERIAL, EquipmentSlot.CHEST, new Item.Properties()));
-	public static final RegistryObject<Item> LEGGINGS = SRItems.ITEMS.register("iridium_leggings", () -> new ArmorItem(ARMOR_MATERIAL, EquipmentSlot.LEGS, new Item.Properties()));
-	public static final RegistryObject<Item> BOOTS = SRItems.ITEMS.register("iridium_boots", () -> new ArmorItem(ARMOR_MATERIAL, EquipmentSlot.FEET, new Item.Properties()));
+	public static final RegistryObject<Item> HELMET = SRItems.ITEMS.register("iridium_helmet", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties()));
+	public static final RegistryObject<Item> CHESTPLATE = SRItems.ITEMS.register("iridium_chestplate", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+	public static final RegistryObject<Item> LEGGINGS = SRItems.ITEMS.register("iridium_leggings", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+	public static final RegistryObject<Item> BOOTS = SRItems.ITEMS.register("iridium_boots", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.BOOTS, new Item.Properties()));
 
 	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("iridium", 5.5d, 452, INGOT, 9, Rarity.COMMON);
 

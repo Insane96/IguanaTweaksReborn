@@ -82,7 +82,7 @@ public class SRRandomSpreadWithChance extends StructurePlacement {
                                             Codec.intRange(0, 4096).fieldOf("separation").forGetter(RandomSpreadParams::separation),
                                             RandomSpreadType.CODEC.optionalFieldOf("spread_type", RandomSpreadType.LINEAR).forGetter(RandomSpreadParams::spreadType)
                                     ).apply(instance, RandomSpreadParams::new))
-                            .flatXmap((p_205002_) -> p_205002_.spacing <= p_205002_.separation ? DataResult.error("Spacing has to be larger than separation") : DataResult.success(p_205002_), DataResult::success).codec());
+                            .flatXmap((p_275182_) -> p_275182_.spacing <= p_275182_.separation ? DataResult.error(() -> "Spacing has to be larger than separation") : DataResult.success(p_275182_), DataResult::success).codec());
     }
 
     /**

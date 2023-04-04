@@ -187,34 +187,34 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_iridium_ore", has(Iridium.DEEPSLATE_ORE.get()))
                 .save(writer, "iridium_ingot_from_blasting_deepslate_ore");
 
-        UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.AXE.get())
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.AXE.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_axe");
-        UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_PICKAXE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.PICKAXE.get())
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_PICKAXE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.PICKAXE.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_pickaxe");
-        UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SHOVEL), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.SHOVEL.get())
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SHOVEL), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.SHOVEL.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_shovel");
-        UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HOE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.HOE.get())
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HOE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.HOE.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_how");
-        UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SWORD), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.SWORD.get())
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SWORD), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.SWORD.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_sword");
-        UpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.SHIELD.get())
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.SHIELD.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_shield");
-        UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HELMET), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.HELMET.get())
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HELMET), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.HELMET.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_helmet");
-        UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_CHESTPLATE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.CHESTPLATE.get())
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_CHESTPLATE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.CHESTPLATE.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_chestplate");
-        UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_LEGGINGS), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.LEGGINGS.get())
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_LEGGINGS), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.LEGGINGS.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_leggings");
-        UpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.BOOTS.get())
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.BOOTS.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
                 .save(writer, "iridium_boots");
     }

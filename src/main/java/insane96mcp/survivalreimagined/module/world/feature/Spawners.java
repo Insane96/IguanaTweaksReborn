@@ -31,7 +31,7 @@ import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -69,9 +69,9 @@ public class Spawners extends Feature {
 	}
 
 	@SubscribeEvent
-	public void onSpawnerSpawn(LivingSpawnEvent.SpecialSpawn event) {
+	public void onSpawnerSpawn(MobSpawnEvent.FinalizeSpawn event) {
 		if (!this.isEnabled()
-				|| !event.getSpawnReason().equals(MobSpawnType.SPAWNER)
+				|| !event.getSpawnType().equals(MobSpawnType.SPAWNER)
 				|| event.getSpawner() == null
 				|| event.getSpawner().getSpawnerBlockEntity() == null)
 			return;

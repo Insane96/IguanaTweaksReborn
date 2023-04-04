@@ -30,6 +30,11 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 		super(p_98901_, p_98902_, p_98903_, p_98904_);
 	}
 
+	@Shadow
+	protected void renderErrorIcon(PoseStack p_266902_, int p_266822_, int p_267045_) {
+
+	}
+
 	//Set too expensive client side
 	@ModifyConstant(
 			method = "renderLabels",

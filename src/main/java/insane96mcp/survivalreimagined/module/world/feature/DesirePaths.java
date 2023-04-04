@@ -69,7 +69,7 @@ public class DesirePaths extends SRFeature {
 		int mZ = Mth.floor(bb.minZ);
 		for (int x2 = mX; x2 < bb.maxX; x2++) {
 			for (int z2 = mZ; z2 < bb.maxZ; z2++) {
-				BlockPos pos = new BlockPos(x2, event.player.position().y - 0.002d, z2);
+				BlockPos pos = BlockPos.containing(x2, event.player.position().y - 0.002d, z2);
 				BlockState state = event.player.level.getBlockState(pos);
 				for (BlockTransformation blockTransformation : transformationList) {
 					if (!blockTransformation.matchesBlock(state.getBlock()))
@@ -81,7 +81,7 @@ public class DesirePaths extends SRFeature {
 						event.player.level.setBlockAndUpdate(pos, block.defaultBlockState());
 
 						if (!breakTallGrass) continue;
-						pos = new BlockPos(x2, event.player.position().y + 0.002d, z2);
+						pos = BlockPos.containing(x2, event.player.position().y + 0.002d, z2);
 						state = event.player.level.getBlockState(pos);
 						if (Utils.isBlockInTag(state.getBlock(), TALL_GRASS)) {
 							event.player.level.destroyBlock(pos, false, event.player);

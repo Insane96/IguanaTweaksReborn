@@ -16,9 +16,9 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -127,7 +127,7 @@ public class HealthRegen extends Feature {
 		if (!this.isEnabled()
 				|| !enableInjured
 				|| !(event.getEntity() instanceof Player playerEntity)
-				|| (!(event.getSource().getEntity() instanceof LivingEntity) && !event.getSource().isFall() && !event.getSource().isExplosion() && !event.getSource().isFire())
+				|| (!(event.getSource().getEntity() instanceof LivingEntity) && !event.getSource().is(DamageTypeTags.IS_FALL) && !event.getSource().is(DamageTypeTags.IS_EXPLOSION) && !event.getSource().is(DamageTypeTags.IS_FIRE))
 				|| event.getAmount() < injuredMinDamage)
 			return;
 
@@ -301,7 +301,7 @@ public class HealthRegen extends Feature {
 				actualStarveSpeed += foodStats.foodLevel * 5;
 			if (foodStats.tickTimer >= actualStarveSpeed) {
 				if (player.getHealth() > 10.0F || difficulty == Difficulty.HARD || player.getHealth() > 1.0F && difficulty == Difficulty.NORMAL) {
-					player.hurt(DamageSource.STARVE, starveDamage);
+					player.hurt(player.damageSources().starve(), starveDamage);
 				}
 				foodStats.tickTimer = 0;
 			}

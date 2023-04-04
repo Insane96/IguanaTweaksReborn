@@ -245,4 +245,9 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 	@Shadow
 	public void createResult() {
 	}
+
+	@Shadow
+	protected ItemCombinerMenuSlotDefinition createInputSlotDefinitions() {
+		return null;
+	}
 }

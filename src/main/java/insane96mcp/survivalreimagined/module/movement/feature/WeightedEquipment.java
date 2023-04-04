@@ -148,7 +148,7 @@ public class WeightedEquipment extends SRFeature {
 			if (!ForgeRegistries.ITEMS.getKey(itemStack.getItem()).getPath().contains(armorMaterialWeight.id))
 				continue;
 			ArmorItem armor = (ArmorItem) itemStack.getItem();
-			EquipmentSlot slot = armor.getSlot();
+			EquipmentSlot slot = armor.getEquipmentSlot();
 			double armorPieceSlowdown = armorMaterialWeight.totalWeight * armorDurabilityRatio.get(slot);
 			if (armorMaterialWeight.totalWeight == 0d)
 				noMaterialSlowdown = true;
@@ -158,7 +158,7 @@ public class WeightedEquipment extends SRFeature {
 		//If no slowdown was found in the material weight
 		if (slowdown == 0d && !noMaterialSlowdown) {
 			ArmorItem armorItem = (ArmorItem) itemStack.getItem();
-			Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(armorItem.getSlot());
+			Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(armorItem.getEquipmentSlot());
 			double armor = 0d;
 			for (AttributeModifier attributeModifier : attributeModifiers.get(Attributes.ARMOR)) {
 				if (!attributeModifier.getOperation().equals(AttributeModifier.Operation.ADDITION))

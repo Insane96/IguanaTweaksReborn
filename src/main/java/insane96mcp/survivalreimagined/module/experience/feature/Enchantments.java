@@ -197,7 +197,7 @@ public class Enchantments extends Feature {
 			return;
 
 		Vec3 viewVector = event.getPlayer().getViewVector(1f);
-		Vec3 endClip = event.getPlayer().getEyePosition().add(viewVector.x * event.getPlayer().getReachDistance(), viewVector.y * event.getPlayer().getReachDistance(), viewVector.z * event.getPlayer().getReachDistance());
+		Vec3 endClip = event.getPlayer().getEyePosition().add(viewVector.x * event.getPlayer().getEntityReach(), viewVector.y * event.getPlayer().getEntityReach(), viewVector.z * event.getPlayer().getEntityReach());
 		BlockHitResult blockHitResult = event.getLevel().clip(new ClipContext(event.getPlayer().getEyePosition(), endClip, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, event.getPlayer()));
 		Expanded.apply(event.getPlayer(), event.getPlayer().getLevel(), event.getPos(), blockHitResult.getDirection(), event.getState());
 	}

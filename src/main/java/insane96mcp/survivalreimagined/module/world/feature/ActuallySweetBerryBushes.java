@@ -5,7 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,7 +21,7 @@ public class ActuallySweetBerryBushes extends Feature {
     @SubscribeEvent
     public void onBushesDamage(LivingDamageEvent event) {
         if (!this.isEnabled()
-            || !event.getSource().equals(DamageSource.SWEET_BERRY_BUSH))
+            || !event.getSource().is(DamageTypes.SWEET_BERRY_BUSH))
             return;
 
         if (!event.getEntity().getItemBySlot(EquipmentSlot.LEGS).isEmpty() && !event.getEntity().getItemBySlot(EquipmentSlot.FEET).isEmpty())

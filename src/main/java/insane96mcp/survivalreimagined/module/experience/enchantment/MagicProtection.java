@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.module.experience.enchantment;
 
 import insane96mcp.survivalreimagined.setup.SREnchantments;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,7 +34,7 @@ public class MagicProtection extends Enchantment {
 
     @Override
     public int getDamageProtection(int level, DamageSource source) {
-        return source.isMagic() ? level * 2 : 0;
+        return source.is(DamageTypes.MAGIC) ? level * 2 : 0;
     }
 
     public boolean checkCompatibility(Enchantment other) {
