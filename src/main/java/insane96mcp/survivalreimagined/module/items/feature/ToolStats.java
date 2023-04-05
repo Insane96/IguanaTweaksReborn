@@ -42,7 +42,7 @@ public class ToolStats extends SRFeature {
 	public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/wooden", 33),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/stone", 34),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/flint", 67),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/flint", 85),
 
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/iridium", 643),
 
