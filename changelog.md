@@ -1,8 +1,11 @@
 # Changelog
 
 ## Upcoming
+* No Knockback has become Knockback
+  * Instead of removing knockback, now attacking without a weapon or spamming has reduced knockback
 * Swapped Flint and Stone tools' Durability and Efficiency
 * Re-enabled Flint and Stone Hoes
+* Changed smoker recipe to require iridium
 
 ## Alpha 3.2.2
 * Successfully(?) updated to MC 1.19.4
@@ -35,7 +38,7 @@
 * Added Unfair One-Shots
   * When players' above 7.5 hearts would take enough damage to kill them, they are instead left with half a heart
 * Added Fire feature
-  * Logs burnt by fire nownhave 25% chance to drop charcoal
+  * Logs burnt by fire now have 25% chance to drop charcoal
   * Two flints in both hands can be used to set on fire blocks. High chance of breaking. 
   * Fire now spreads 4x faster
 * Mobs

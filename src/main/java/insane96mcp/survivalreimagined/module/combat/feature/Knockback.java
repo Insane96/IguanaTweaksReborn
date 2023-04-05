@@ -24,9 +24,9 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "No Knockback", description = "Player will deal no knockback if attacking with a non-weapon or spamming.")
+@Label(name = "Knockback", description = "Player will deal reduced knockback if attacking with a non-weapon or spamming.")
 @LoadFeature(module = Modules.Ids.COMBAT)
-public class NoKnockback extends Feature {
+public class Knockback extends Feature {
 
 	public static final ResourceLocation NO_KNOCKBACK_TAG = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_knockback");
 
@@ -34,7 +34,11 @@ public class NoKnockback extends Feature {
 	@Label(name = "No Weapon No Knockback", description = "If true the player will deal no knockback when not using an item that doesn't have the attack damage attribute.")
 	public static Boolean noItemNoKnockback = true;
 
-	public NoKnockback(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	@Config(min = 0d, max = 1d)
+	@Label(name = "Knockback reduction", description = "Percentage knockback dealt when conditions are met.")
+	public static Double knockbackReduction = 0.6d;
+
+	public Knockback(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
@@ -75,7 +79,11 @@ public class NoKnockback extends Feature {
 		float cooldown = Mth.clamp((ticksSinceLastSwing + 0.5f) / player.getCurrentItemAttackStrengthDelay(), 0.0F, 1.0F);
 		if (cooldown <= 0.9f)
 			preventKnockback = true;
-		if (preventKnockback)
-			event.setCanceled(true);
+		if (preventKnockback) {
+			if (knockbackReduction == 0d)
+				event.setCanceled(true);
+			else
+				event.setStrength(event.getStrength() * knockbackReduction.floatValue());
+		}
 	}
 }
