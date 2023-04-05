@@ -25,6 +25,8 @@ public class ReplaceDropModifier extends LootModifier {
                     inst.group(
                             ForgeRegistries.ITEMS.getCodec().fieldOf("item_to_replace").forGetter(m -> m.itemToReplace),
                             ForgeRegistries.ITEMS.getCodec().fieldOf("new_item").forGetter(m -> m.newItem),
+                            Codec.INT.optionalFieldOf("amount_to_replace", -1).forGetter(m -> m.amountToReplace),
+                            Codec.list(Codec.FLOAT).optionalFieldOf("chances", List.of(1f)).forGetter(m -> m.chances),
                             Codec.list(Codec.FLOAT).optionalFieldOf("multipliers", List.of(1f)).forGetter(m -> m.multipliers),
                             Codec.BOOL.fieldOf("chests_only").forGetter(m -> m.chestsOnly)
                     )).apply(inst, ReplaceDropModifier::new)
@@ -35,17 +37,23 @@ public class ReplaceDropModifier extends LootModifier {
     //Item to replace with
     private final Item newItem;
     //List of multipliers, where the first is for no-fortune applied and the subsequent ones are for increasing level of fortune
+    private int amountToReplace;
+    //List of chances, where the first is for no-fortune applied and the subsequent ones are for increasing level of fortune
+    private List<Float> chances;
+    //List of multipliers, where the first is for no-fortune applied and the subsequent ones are for increasing level of fortune
     private List<Float> multipliers;
     private boolean chestsOnly;
 
     public ReplaceDropModifier(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem) {
-        this(conditionsIn, itemToReplace, newItem, List.of(1f), false);
+        this(conditionsIn, itemToReplace, newItem, -1, List.of(1f), List.of(1f), false);
     }
 
-    public ReplaceDropModifier(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem, List<Float> multipliers, boolean chestsOnly) {
+    public ReplaceDropModifier(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem, int amountToReplace, List<Float> chances, List<Float> multipliers, boolean chestsOnly) {
         super(conditionsIn);
         this.itemToReplace = itemToReplace;
         this.newItem = newItem;
+        this.amountToReplace = amountToReplace;
+        this.chances = chances;
         this.multipliers = multipliers;
         this.chestsOnly = chestsOnly;
     }
@@ -61,11 +69,26 @@ public class ReplaceDropModifier extends LootModifier {
         if (amount.get() == 0)
             return generatedLoot;
 
-        generatedLoot.removeIf(stack -> stack.getItem().equals(itemToReplace));
         ItemStack itemstack = context.getParamOrNull(LootContextParams.TOOL);
         int i = itemstack != null ? itemstack.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE) : 0;
+        float chance = this.chances.get(Math.min(i, this.chances.size() - 1));
+        if (context.getRandom().nextDouble() >= chance)
+            return generatedLoot;
+
         float multiplier = this.multipliers.get(Math.min(i, this.multipliers.size() - 1));
-        generatedLoot.add(new ItemStack(newItem, (int) (amount.get() * multiplier)));
+
+        generatedLoot.removeIf(stack -> stack.getItem().equals(itemToReplace));
+        if (amountToReplace == -1) {
+            generatedLoot.add(new ItemStack(newItem, (int) (amount.get() * multiplier)));
+        }
+        else {
+            ItemStack replacedStack = new ItemStack(this.newItem, (int) (Math.min(amount.get(), amountToReplace) * multiplier));
+            generatedLoot.add(replacedStack);
+            if (amountToReplace < amount.get()) {
+                ItemStack oldStack = new ItemStack(this.itemToReplace, amount.get() - amountToReplace);
+                generatedLoot.add(oldStack);
+            }
+        }
         return generatedLoot;
     }
 
@@ -77,6 +100,16 @@ public class ReplaceDropModifier extends LootModifier {
 
         public Builder(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem) {
             replaceDropModifier = new ReplaceDropModifier(conditionsIn, itemToReplace, newItem);
+        }
+
+        public Builder setAmountToReplace(int amount) {
+            replaceDropModifier.amountToReplace = amount;
+            return this;
+        }
+
+        public Builder setChances(List<Float> chances) {
+            replaceDropModifier.chances = chances;
+            return this;
         }
 
         public Builder setMultipliers(List<Float> multipliers) {

@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "survivalreimagined:flint_shield"
-  }
+  },
+  "show_notification": true
 }

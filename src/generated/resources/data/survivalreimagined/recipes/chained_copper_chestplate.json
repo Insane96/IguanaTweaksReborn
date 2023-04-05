@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "survivalreimagined:chained_copper_chestplate"
-  }
+  },
+  "show_notification": true
 }

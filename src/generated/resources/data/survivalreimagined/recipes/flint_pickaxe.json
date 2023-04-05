@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "survivalreimagined:flint_pickaxe"
-  }
+  },
+  "show_notification": true
 }

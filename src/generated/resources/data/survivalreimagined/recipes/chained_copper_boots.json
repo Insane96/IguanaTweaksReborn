@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "survivalreimagined:chained_copper_boots"
-  }
+  },
+  "show_notification": true
 }

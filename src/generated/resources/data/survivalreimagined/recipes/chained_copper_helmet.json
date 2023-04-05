@@ -15,5 +15,6 @@
   ],
   "result": {
     "item": "survivalreimagined:chained_copper_helmet"
-  }
+  },
+  "show_notification": true
 }

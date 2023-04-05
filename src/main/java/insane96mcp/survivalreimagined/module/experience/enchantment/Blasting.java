@@ -35,6 +35,7 @@ public class Blasting extends Enchantment {
         return !(other instanceof DiggingEnchantment) && super.checkCompatibility(other);
     }
 
+    //TODO No speed boost if wrong block
     public static float getMiningSpeedBoost(LivingEntity entity, BlockState state) {
         int level = entity.getItemBySlot(EquipmentSlot.MAINHAND).getEnchantmentLevel(SREnchantments.BLASTING.get());
         if (level == 0)

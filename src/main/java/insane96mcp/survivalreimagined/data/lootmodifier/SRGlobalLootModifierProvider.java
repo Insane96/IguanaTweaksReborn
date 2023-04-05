@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.data.lootmodifier;
 
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.farming.feature.Livestock;
+import insane96mcp.survivalreimagined.module.items.feature.AncientLapis;
 import insane96mcp.survivalreimagined.module.items.feature.FlintTools;
 import insane96mcp.survivalreimagined.module.mining.feature.Iron;
 import insane96mcp.survivalreimagined.module.world.feature.Loot;
@@ -17,6 +18,7 @@ public class SRGlobalLootModifierProvider extends GlobalLootModifierProvider {
     protected void start() {
         Iron.addGlobalLoot(this);
         Crops.addGlobalLoot(this);
+        AncientLapis.addGlobalLoot(this);
         Livestock.addGlobalLoot(this);
         Loot.addGlobalLoot(this);
         FlintTools.addGlobalLoot(this);

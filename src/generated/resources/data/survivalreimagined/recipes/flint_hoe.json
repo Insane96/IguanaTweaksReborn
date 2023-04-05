@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "survivalreimagined:flint_hoe"
-  }
+  },
+  "show_notification": true
 }

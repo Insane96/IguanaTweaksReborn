@@ -16,5 +16,6 @@
   ],
   "result": {
     "item": "survivalreimagined:flint_sword"
-  }
+  },
+  "show_notification": true
 }
