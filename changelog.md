@@ -5,7 +5,7 @@
   * Instead of removing knockback, now attacking without a weapon or spamming has reduced knockback
 * Swapped Flint and Stone tools' Durability and Efficiency
 * Re-enabled Flint and Stone Hoes
-* Changed smoker recipe to require iridium
+* Smoker recipe now requires iridium
 
 ## Alpha 3.2.2
 * Successfully(?) updated to MC 1.19.4
