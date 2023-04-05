@@ -66,7 +66,7 @@ public class FoodDrinks extends SRFeature {
 	public static Boolean stopConsumingOnHit = true;
 
 	@Config
-	@Label(name = "Slower food in furnaces", description = "Furnaces take 2x more time to smelt Food.")
+	@Label(name = "Furnace food and smoker recipe", description = "Furnaces take 2x more time to smelt Food and change smokers recipe.")
 	public static Boolean slowerFoodInFurnaces = true;
 
 	public FoodDrinks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
