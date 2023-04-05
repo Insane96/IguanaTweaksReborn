@@ -3,6 +3,7 @@
 ## Upcoming
 * No Knockback has become Knockback
   * Instead of removing knockback, now attacking without a weapon or spamming has reduced knockback
+* The nether no longer has the 8 blocks ratio
 * Swapped Flint and Stone tools' Durability and Efficiency
 * Re-enabled Flint and Stone Hoes
 * Smoker recipe now requires iridium
