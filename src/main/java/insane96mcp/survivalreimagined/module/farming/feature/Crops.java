@@ -194,7 +194,7 @@ public class Crops extends Feature {
 		provider.add(path + "harder_carrot_farming", new DropMultiplierModifier.Builder(
 				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.CARROTS).build()},
 				Items.CARROT,
-				0.1f)
+				0.137f)
 				.keepAmount(1)
 				.build());
 	}
