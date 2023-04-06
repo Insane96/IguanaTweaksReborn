@@ -133,7 +133,7 @@ public class NoHunger extends Feature {
         FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), player);
         boolean isRawFood = isRawFood(event.getItem().getItem());
         if (player.getRandom().nextDouble() < rawFoodPoisonChance && isRawFood) {
-            player.addEffect(new MobEffectInstance(MobEffects.POISON, food.getNutrition() * 20 * 4));
+            player.addEffect(new MobEffectInstance(MobEffects.POISON, food.getNutrition() * 20 * 3));
         }
 
         float heal = food.getNutrition() * foodHealHealthMultiplier.floatValue();
