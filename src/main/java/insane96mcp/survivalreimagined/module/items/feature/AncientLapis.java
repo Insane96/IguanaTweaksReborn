@@ -82,19 +82,12 @@ public class AncientLapis extends Feature {
 	private static final String path = "ancient_lapis/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "ancient_lapis_from_ore", new ReplaceDropModifier.Builder(
-				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.LAPIS_ORE).build()},
-				Items.LAPIS_LAZULI,
-				ANCIENT_LAPIS.get())
-				.setAmountToReplace(1)
-				.setChances(List.of(0.008f, 0.009f, 0.010f, 0.011f, 0.012f))
-				.build());
 		provider.add(path + "ancient_lapis_from_deepslate_ore", new ReplaceDropModifier.Builder(
 				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.DEEPSLATE_LAPIS_ORE).build()},
 				Items.LAPIS_LAZULI,
 				ANCIENT_LAPIS.get())
 				.setAmountToReplace(1)
-				.setChances(List.of(0.008f, 0.009f, 0.010f, 0.011f, 0.012f))
+				.setChances(List.of(0.12f, 0.135f, 0.155f, 0.17f, 0.20f))
 				.build());
 	}
 }

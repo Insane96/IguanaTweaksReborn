@@ -1,7 +1,6 @@
-// 1.19.4	2023-04-05T21:18:59.380042	Global Loot Modifiers : survivalreimagined
-7dff038dc831ca58a6c739c8010c6e76c5d3dfe3 data/forge/loot_modifiers/global_loot_modifiers.json
-63fcb238703cbd855e348753edcc79fb4ea644f9 data/survivalreimagined/loot_modifiers/ancient_lapis/ancient_lapis_from_deepslate_ore.json
-e62e91f1d8479968000526309a1890fdc926cecc data/survivalreimagined/loot_modifiers/ancient_lapis/ancient_lapis_from_ore.json
+// 1.19.4	2023-04-06T07:57:46.3768473	Global Loot Modifiers : survivalreimagined
+eedcb1ac96eeb1a308a68b42fe0a74929845461a data/forge/loot_modifiers/global_loot_modifiers.json
+367d5215f063ffd64be9cbb77d2e2eab0fe3f23c data/survivalreimagined/loot_modifiers/ancient_lapis/ancient_lapis_from_deepslate_ore.json
 49eacaf5a0e8fd4eda9b8bf49bb8e397b13a86cd data/survivalreimagined/loot_modifiers/chest_loot/chests/abandoned_mineshaft.json
 31efe9992a0af525eb804662d3fdcd9641597d09 data/survivalreimagined/loot_modifiers/chest_loot/chests/buried_treasure.json
 2d7edbb9c51f335ef455f1b5e8257d0171bf4ca4 data/survivalreimagined/loot_modifiers/chest_loot/chests/desert_pyramid.json
