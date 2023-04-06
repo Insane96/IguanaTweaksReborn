@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.module.experience.enchantment;
 import insane96mcp.survivalreimagined.setup.SREnchantments;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.enchantment.DiggingEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -35,9 +36,11 @@ public class Blasting extends Enchantment {
         return !(other instanceof DiggingEnchantment) && super.checkCompatibility(other);
     }
 
-    //TODO No speed boost if wrong block
     public static float getMiningSpeedBoost(LivingEntity entity, BlockState state) {
-        int level = entity.getItemBySlot(EquipmentSlot.MAINHAND).getEnchantmentLevel(SREnchantments.BLASTING.get());
+        ItemStack heldStack = entity.getMainHandItem();
+        if (!heldStack.isCorrectToolForDrops(state))
+            return 0f;
+        int level = heldStack.getEnchantmentLevel(SREnchantments.BLASTING.get());
         if (level == 0)
             return 0f;
 
