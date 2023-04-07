@@ -46,10 +46,10 @@ public class Fire extends Feature {
     public static Boolean twoFlintFireStarter = true;
     @Config(min = 0d, max = 1d)
     @Label(name = "Two flint fire starter.Ignite Chance", description = "Chance to ignite a block when using two flints")
-    public static Double twoFlintFireStarterIgniteChance = 0.25d;
+    public static Double twoFlintFireStarterIgniteChance = 0.4d;
     @Config(min = 0d, max = 1d)
     @Label(name = "Two flint fire starter.Break Chance", description = "Chance for the flint to break when using two flints")
-    public static Double twoFlintFireStarterBreakChance = 0.25d;
+    public static Double twoFlintFireStarterBreakChance = 0.2d;
 
     public Fire(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
