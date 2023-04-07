@@ -49,12 +49,12 @@ public class Expanded extends Enchantment {
 
     @Override
     public int getMinCost(int level) {
-        return 25 * level;
+        return 22 * level;
     }
 
     @Override
     public int getMaxCost(int level) {
-        return this.getMinCost(level) + 25;
+        return this.getMinCost(level) + 22;
     }
 
     public boolean checkCompatibility(Enchantment other) {
