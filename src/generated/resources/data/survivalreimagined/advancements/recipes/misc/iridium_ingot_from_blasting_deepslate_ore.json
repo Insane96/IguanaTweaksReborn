@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "survivalreimagined:iridium_ore"
+              "survivalreimagined:deepslate_iridium_ore"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:iridium_ingot_from_blasting_ore"
+        "recipe": "survivalreimagined:iridium_ingot_from_blasting_deepslate_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:iridium_ingot_from_blasting_ore"
+      "survivalreimagined:iridium_ingot_from_blasting_deepslate_ore"
     ]
   }
 }

@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:iridium_axe"
+        "recipe": "survivalreimagined:iridium_pickaxe"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:iridium_axe"
+      "survivalreimagined:iridium_pickaxe"
     ]
   }
 }

@@ -137,11 +137,11 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Iridium.INGOT.get(), 9)
                 .requires(Iridium.BLOCK_ITEM.get(), 1)
                 .unlockedBy("has_ingot", has(Iridium.INGOT.get()))
-                .save(writer, "iridium_ingot_from_block");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_ingot_from_block");
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Iridium.INGOT.get(), 1)
                 .requires(Iridium.NUGGET.get(), 9)
                 .unlockedBy("has_nuggets", has(Iridium.NUGGET.get()))
-                .save(writer, "iridium_ingot_from_nuggets");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_ingot_from_nuggets");
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Iridium.NUGGET.get(), 9)
                 .requires(Iridium.INGOT.get(), 1)
                 .unlockedBy("has_ingot", has(Iridium.INGOT.get()))
@@ -155,7 +155,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         800
                 )
                 .unlockedBy("has_iridium_ore", has(Iridium.ORE.get()))
-                .save(writer, "iridium_ingot_from_smelting_ore");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_ingot_from_smelting_ore");
 
         SimpleCookingRecipeBuilder.smelting(
                         Ingredient.of(Iridium.DEEPSLATE_ORE.get()),
@@ -165,7 +165,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         800
                 )
                 .unlockedBy("has_iridium_ore", has(Iridium.DEEPSLATE_ORE.get()))
-                .save(writer, "iridium_ingot_from_smelting_deepslate_ore");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_ingot_from_smelting_deepslate_ore");
 
         SimpleCookingRecipeBuilder.blasting(
                         Ingredient.of(Iridium.ORE.get()),
@@ -175,7 +175,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         200
                 )
                 .unlockedBy("has_iridium_ore", has(Iridium.ORE.get()))
-                .save(writer, "iridium_ingot_from_blasting_ore");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_ingot_from_blasting_ore");
 
         SimpleCookingRecipeBuilder.blasting(
                         Ingredient.of(Iridium.DEEPSLATE_ORE.get()),
@@ -185,38 +185,38 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         200
                 )
                 .unlockedBy("has_iridium_ore", has(Iridium.DEEPSLATE_ORE.get()))
-                .save(writer, "iridium_ingot_from_blasting_deepslate_ore");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_ingot_from_blasting_deepslate_ore");
 
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.AXE.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
-                .save(writer, "iridium_axe");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_axe");
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_PICKAXE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.PICKAXE.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
-                .save(writer, "iridium_pickaxe");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_pickaxe");
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SHOVEL), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.SHOVEL.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
-                .save(writer, "iridium_shovel");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_shovel");
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HOE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.TOOLS, Iridium.HOE.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
-                .save(writer, "iridium_how");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_how");
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SWORD), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.SWORD.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
-                .save(writer, "iridium_sword");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_sword");
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.SHIELD.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
-                .save(writer, "iridium_shield");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_shield");
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HELMET), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.HELMET.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
-                .save(writer, "iridium_helmet");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_helmet");
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_CHESTPLATE), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.CHESTPLATE.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
-                .save(writer, "iridium_chestplate");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_chestplate");
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_LEGGINGS), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.LEGGINGS.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
-                .save(writer, "iridium_leggings");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_leggings");
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Iridium.INGOT.get()), RecipeCategory.COMBAT, Iridium.BOOTS.get())
                 .unlocks("has_iridium", has(Iridium.INGOT.get()))
-                .save(writer, "iridium_boots");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iridium_boots");
     }
 
 

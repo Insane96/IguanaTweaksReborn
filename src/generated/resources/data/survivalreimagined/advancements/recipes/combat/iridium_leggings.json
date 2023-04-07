@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:iridium_sword"
+        "recipe": "survivalreimagined:iridium_leggings"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:iridium_sword"
+      "survivalreimagined:iridium_leggings"
     ]
   }
 }

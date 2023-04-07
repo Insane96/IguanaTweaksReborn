@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iridium": {
+    "has_iridium_ore": {
       "conditions": {
         "items": [
           {
             "items": [
-              "survivalreimagined:iridium_ingot"
+              "survivalreimagined:iridium_ore"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:iridium_chestplate"
+        "recipe": "survivalreimagined:iridium_ingot_from_smelting_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_iridium",
+      "has_iridium_ore",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:iridium_chestplate"
+      "survivalreimagined:iridium_ingot_from_smelting_ore"
     ]
   }
 }

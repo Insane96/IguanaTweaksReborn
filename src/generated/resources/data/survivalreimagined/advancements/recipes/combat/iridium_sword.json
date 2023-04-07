@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_nuggets": {
+    "has_iridium": {
       "conditions": {
         "items": [
           {
             "items": [
-              "survivalreimagined:iridium_nugget"
+              "survivalreimagined:iridium_ingot"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:iridium_ingot_from_nuggets"
+        "recipe": "survivalreimagined:iridium_sword"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_nuggets",
+      "has_iridium",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:iridium_ingot_from_nuggets"
+      "survivalreimagined:iridium_sword"
     ]
   }
 }
