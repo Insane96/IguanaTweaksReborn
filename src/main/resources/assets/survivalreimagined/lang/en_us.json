@@ -101,5 +101,7 @@
 	"advancements.sr_story.iron_nugget.title": "Some small traces in stone",
 	"advancements.sr_story.iron_nugget.description": "Obtain an Iron Nugget by mining Stone",
 	"advancements.sr_story.chained_copper_armor.title": "Early protection",
-	"advancements.sr_story.chained_copper_armor.description": "Obtain a full set of Chained Copper Armor"
+	"advancements.sr_story.chained_copper_armor.description": "Obtain a full set of Chained Copper Armor",
+	"advancements.sr_story.iridium_pickaxe.title": "Getting a real upgrade",
+	"advancements.sr_story.iridium_pickaxe.description": "Obtain an Iridium Pickaxe by upgrading an Iron one in the Smithing Table"
 }

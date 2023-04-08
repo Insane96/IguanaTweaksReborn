@@ -1,0 +1,40 @@
+{
+	"display": {
+		"icon": {
+			"item": "minecraft:iron_chestplate"
+		},
+		"title": {
+			"translate": "advancements.story.obtain_armor.title"
+		},
+		"description": {
+			"translate": "advancements.story.obtain_armor.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/anvil",
+	"criteria": {
+		"iron_chestplate": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"minecraft:iron_helmet",
+							"minecraft:iron_chestplate",
+							"minecraft:iron_leggings",
+							"minecraft:iron_boots"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"iron_chestplate"
+		]
+	]
+}

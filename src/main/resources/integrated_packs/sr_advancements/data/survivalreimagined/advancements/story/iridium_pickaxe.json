@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:iridium_pickaxe"
+		},
+		"title": {
+			"translate": "advancements.sr_story.iridium_pickaxe.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.iridium_pickaxe.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/iron_pickaxe",
+	"criteria": {
+		"iridium_pickaxe": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"survivalreimagined:iridium_pickaxe"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"iridium_pickaxe"
+		]
+	]
+}
