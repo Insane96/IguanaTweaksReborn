@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "minecraft:iron_pickaxe"
+		},
+		"title": {
+			"translate": "advancements.sr_story.iron_pickaxe.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.iron_pickaxe.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/anvil",
+	"criteria": {
+		"iron_pickaxe": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"minecraft:iron_pickaxe"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"iron_pickaxe"
+		]
+	]
+}

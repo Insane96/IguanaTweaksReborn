@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "minecraft:torch"
+		},
+		"title": {
+			"translate": "advancements.sr_story.torch.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.torch.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/campfire",
+	"criteria": {
+		"torch": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"minecraft:torch"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"torch"
+		]
+	]
+}

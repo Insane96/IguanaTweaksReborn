@@ -1,0 +1,40 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:chained_copper_chestplate"
+		},
+		"title": {
+			"translate": "advancements.sr_story.chained_copper_armor.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.chained_copper_armor.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/furnace",
+	"criteria": {
+		"chained_copper_helmet": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"survivalreimagined:chained_copper_helmet",
+							"survivalreimagined:chained_copper_chestplate",
+							"survivalreimagined:chained_copper_leggings",
+							"survivalreimagined:chained_copper_boots"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"chained_copper_helmet"
+		]
+	]
+}

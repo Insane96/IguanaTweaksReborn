@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "shieldsplus:copper_shield"
+		},
+		"title": {
+			"translate": "advancements.sr_story.copper_shield.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.copper_shield.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/campfire",
+	"criteria": {
+		"copper_shield": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"shieldsplus:copper_shield"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"copper_shield"
+		]
+	]
+}
