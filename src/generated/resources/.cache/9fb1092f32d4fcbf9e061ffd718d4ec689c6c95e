@@ -1,4 +1,4 @@
-// 1.19.4	2023-04-07T18:22:01.7407617	Recipes
+// 1.19.4	2023-04-08T14:55:13.8131015	Recipes
 8f369dca6fb0fa013af1840c43d09d6ebcfedc06 data/survivalreimagined/advancements/recipes/building_blocks/iridium_block.json
 6feb7ba675d6700ec93735ab594d447d8746b303 data/survivalreimagined/advancements/recipes/combat/bone_club.json
 9ba6c4648e72a63698c040e5ce158e6f239f1411 data/survivalreimagined/advancements/recipes/combat/chained_copper_boots.json
@@ -28,6 +28,7 @@ ac4f31129becf44ad8b981a6615b1fc678042db8 data/survivalreimagined/advancements/re
 dfebb2ff3eb57e5bead413039185cb9844dc8592 data/survivalreimagined/advancements/recipes/tools/iridium_how.json
 70589f442eb3aca39cdf8213dd63ad5d1bc77b2e data/survivalreimagined/advancements/recipes/tools/iridium_pickaxe.json
 4fb3bdd55b7fb9cd551b434a61610cf70609f6a5 data/survivalreimagined/advancements/recipes/tools/iridium_shovel.json
+808e76b9d681d97a081306386cc8fb839dc9d5d2 data/survivalreimagined/advancements/recipes/transportation/nether_infused_powered_rail.json
 8a1060ff63c386d5c8332054853022283a2f7dd5 data/survivalreimagined/recipes/bone_club.json
 3d7b02f7f9a0c8b68884c28b9dded44c546214a4 data/survivalreimagined/recipes/chained_copper_boots.json
 5986b94d944bee4eb2739fc9538d019cc886fcf2 data/survivalreimagined/recipes/chained_copper_chestplate.json
@@ -58,3 +59,4 @@ e4b4966e9ccf3dfbe5e57073a2eeab0decaae407 data/survivalreimagined/recipes/iridium
 1f7fcb7ec0566025b3f57519e42cca18cf97c7d2 data/survivalreimagined/recipes/iridium_shield.json
 cffea0062bb25ef9ad3fb9db571536b6a01ba38b data/survivalreimagined/recipes/iridium_shovel.json
 8f27e70e2a6dcf2f3d1e8a79c94a958cb5e15efa data/survivalreimagined/recipes/iridium_sword.json
+4f99ae3bb7a07b10723b8cb0cc7e110f75e26d8e data/survivalreimagined/recipes/nether_infused_powered_rail.json

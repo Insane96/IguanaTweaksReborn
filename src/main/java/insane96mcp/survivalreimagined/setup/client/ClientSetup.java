@@ -39,7 +39,7 @@ public class ClientSetup {
             event.accept(Iridium.BLOCK_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
-            event.accept(Minecarts.NETHER_INFUSED_RAIL_BLOCK_ITEM.get());
+            event.accept(Minecarts.NETHER_INFUSED_POWERED_RAIL_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(Iridium.ORE_ITEM.get());

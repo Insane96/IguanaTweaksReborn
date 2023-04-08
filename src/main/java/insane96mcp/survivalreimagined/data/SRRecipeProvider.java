@@ -5,6 +5,7 @@ import insane96mcp.survivalreimagined.module.items.feature.BoneClub;
 import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.feature.FlintTools;
 import insane96mcp.survivalreimagined.module.items.feature.Iridium;
+import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
@@ -128,6 +129,14 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('m', Items.COPPER_INGOT)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
                 .unlockedBy("has_chain", has(Items.CHAIN))
+                .save(writer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, Minecarts.NETHER_INFUSED_POWERED_RAIL_ITEM.get(), 4)
+                .requires(Items.POWERED_RAIL, 4)
+                .requires(Items.NETHER_BRICK, 4)
+                .requires(Items.FIRE_CHARGE, 1)
+                .unlockedBy("has_powered_rail", has(Items.POWERED_RAIL))
+                .unlockedBy("has_nether_brick", has(Items.NETHER_BRICK))
                 .save(writer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Iridium.BLOCK_ITEM.get(), 1)

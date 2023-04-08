@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_rail_raised_ne",
+  "render_type": "cutout",
+  "textures": {
+    "rail": "survivalreimagined:block/nether_infused_powered_rail"
+  }
+}
