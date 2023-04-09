@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.event.PlayerSprintEvent;
@@ -28,6 +29,7 @@ import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
 import org.lwjgl.opengl.GL11;
@@ -39,6 +41,14 @@ public class Stamina extends Feature {
     public static final String STAMINA = SurvivalReimagined.RESOURCE_PREFIX + "stamina";
     public static final String STAMINA_LOCKED = SurvivalReimagined.RESOURCE_PREFIX + "stamina_locked";
 
+    @Config(min = 0)
+    @Label(name = "Stamina per half heart", description = "How much stamina the player has per half heart. Each 1 stamina is 1 tick of running")
+    public static Integer staminaPerHalfHeart = 10;
+
+    @Config(min = 0)
+    @Label(name = "Stamina consumed on jump", description = "How much stamina the player consumes on each jump")
+    public static Integer staminaConsumedOnJump = 0;
+
     public Stamina(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -47,7 +57,7 @@ public class Stamina extends Feature {
      * Each half heart accounts for 1/2 a second sprinting
      */
     public static int getMaxStamina(Player player) {
-        return Mth.ceil(player.getHealth() * 10);
+        return Mth.ceil(player.getHealth() * staminaPerHalfHeart);
     }
 
     public static int getStamina(Player player) {
@@ -63,11 +73,15 @@ public class Stamina extends Feature {
     }
 
     public static void setStamina(Player player, int stamina) {
-        player.getPersistentData().putInt(STAMINA, Math.min(stamina, getMaxStamina(player)));
+        player.getPersistentData().putInt(STAMINA, Mth.clamp(stamina, 0, getMaxStamina(player)));
     }
 
     public static void consumeStamina(Player player) {
         setStamina(player, getStamina(player) - 1);
+    }
+
+    public static void consumeStamina(Player player, int amount) {
+        setStamina(player, getStamina(player) - amount);
     }
 
     public static void regenStamina(Player player) {
@@ -140,6 +154,16 @@ public class Stamina extends Feature {
             event.setCanceled(true);
     }
 
+    @SubscribeEvent
+    public void onPlayerJump(final LivingEvent.LivingJumpEvent event) {
+        if (!this.isEnabled()
+                || staminaConsumedOnJump == 0
+                || !(event.getEntity() instanceof ServerPlayer player))
+            return;
+
+        consumeStamina(player, staminaConsumedOnJump);
+    }
+
     static ResourceLocation PLAYER_HEALTH_ELEMENT = new ResourceLocation("minecraft", "player_health");
 
     @OnlyIn(Dist.CLIENT)
@@ -168,8 +192,8 @@ public class Stamina extends Feature {
 
         int right = mc.getWindow().getGuiScaledWidth() / 2 - 91;
         int top = mc.getWindow().getGuiScaledHeight() - healthIconsOffset + 9;
-        int halfHeartsMaxStamina = Mth.ceil(getMaxStamina(player) / 10f);
-        int halfHeartsStamina = Mth.ceil(getStamina(player) / 10f);
+        int halfHeartsMaxStamina = Mth.ceil((float) getMaxStamina(player) / staminaPerHalfHeart);
+        int halfHeartsStamina = Mth.ceil((float) getStamina(player) / staminaPerHalfHeart);
         RenderSystem.setShaderTexture(0, SurvivalReimagined.GUI_ICONS);
         int height = 9;
         if (isStaminaLocked(player))
@@ -222,7 +246,7 @@ public class Stamina extends Feature {
         if (playerEntity == null)
             return;
         if (mc.options.renderDebug && !mc.showOnlyReducedInfo()) {
-            event.getLeft().add(String.format("Stamina: %d/%d; Stamina Locked: %s", getStamina(playerEntity), getMaxStamina(playerEntity), isStaminaLocked(playerEntity)));
+            event.getLeft().add(String.format("Stamina: %d/%d; Locked: %s", getStamina(playerEntity), getMaxStamina(playerEntity), isStaminaLocked(playerEntity)));
         }
     }
 }

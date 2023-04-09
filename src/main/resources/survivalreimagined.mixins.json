@@ -18,6 +18,7 @@
 		"FoodDataMixin",
 		"HoneyBottleItemMixin",
 		"ItemMixin",
+		"LivingEntityMixin",
 		"MerchantOfferMixin",
 		"MilkBucketItemMixin",
 		"MonsterMixin",

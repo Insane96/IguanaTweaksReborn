@@ -8,6 +8,7 @@
   * Now has 1 in level chance to not consume an arrow  
 * No Knockback has become Knockback
   * Instead of removing knockback, now attacking without a weapon or spamming has reduced knockback
+* Sprint jumping is now affected by movement speed
 * The nether no longer has the 8 blocks ratio
 * Swapped Flint and Stone tools' Durability and Efficiency
 * Re-enabled Flint and Stone Hoes
