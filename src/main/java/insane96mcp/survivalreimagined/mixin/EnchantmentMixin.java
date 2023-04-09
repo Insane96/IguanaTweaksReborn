@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.survivalreimagined.module.experience.feature.Enchantments;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.ArrowInfiniteEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,5 +21,12 @@ public class EnchantmentMixin {
 	private void canApplyAtEnchantingTable(ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
 		if (Enchantments.disableEnchantment((Enchantment) (Object) this))
 			callback.setReturnValue(false);
+	}
+
+	@Inject(at = @At("RETURN"), method = "getMaxLevel", cancellable = true)
+	private void onGetMaxLevel(CallbackInfoReturnable<Integer> cir) {
+		//noinspection ConstantValue
+		if (((Enchantment)(Object) this) instanceof ArrowInfiniteEnchantment)
+			cir.setReturnValue(4);
 	}
 }

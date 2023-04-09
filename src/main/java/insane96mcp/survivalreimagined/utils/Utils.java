@@ -3,8 +3,10 @@ package insane96mcp.survivalreimagined.utils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -37,5 +39,19 @@ public class Utils {
 
     public static float getFoodEffectiveness(FoodProperties foodProperties) {
         return foodProperties.getNutrition() + foodProperties.getNutrition() * foodProperties.getSaturationModifier() * 2;
+    }
+
+    /**
+     * Returns a "synced" random. It's not really synced, it uses level game time, which is usually synced
+     */
+    public static RandomSource syncedRandom(Player player) {
+        RandomSource random = player.getRandom();
+        if (player.level.isClientSide)
+            random.setSeed(player.level.getGameTime() + 1);
+        else
+            random.setSeed(player.level.getGameTime());
+        random.setSeed(random.nextLong());
+        random.setSeed(random.nextLong());
+        return random;
     }
 }
