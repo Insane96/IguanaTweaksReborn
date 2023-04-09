@@ -1,28 +1,28 @@
 {
 	"display": {
 		"icon": {
-			"item": "minecraft:campfire"
+			"item": "minecraft:shield"
 		},
 		"title": {
-			"translate": "advancements.sr_story.campfire.title"
+			"translate": "advancements.sr_story.iron_shield.title"
 		},
 		"description": {
-			"translate": "advancements.sr_story.campfire.description"
+			"translate": "advancements.sr_story.iron_shield.description"
 		},
 		"frame": "task",
 		"show_toast": true,
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/flint_pickaxe",
+	"parent": "survivalreimagined:story/anvil",
 	"criteria": {
-		"campfire": {
+		"iron_shield": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
 						"items": [
-							"minecraft:campfire"
+							"minecraft:shield"
 						]
 					}
 				]
@@ -31,7 +31,7 @@
 	},
 	"requirements": [
 		[
-			"campfire"
+			"iron_shield"
 		]
 	]
 }

@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Advancements!
+  * First step towards new advancements
 * No Knockback has become Knockback
   * Instead of removing knockback, now attacking without a weapon or spamming has reduced knockback
 * The nether no longer has the 8 blocks ratio
