@@ -19,6 +19,7 @@
 		"HoneyBottleItemMixin",
 		"ItemMixin",
 		"LivingEntityMixin",
+		"MendingEnchantmentMixin",
 		"MerchantOfferMixin",
 		"MilkBucketItemMixin",
 		"MonsterMixin",

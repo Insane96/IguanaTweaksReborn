@@ -1,10 +1,8 @@
 package insane96mcp.survivalreimagined.data;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.module.items.feature.BoneClub;
-import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
-import insane96mcp.survivalreimagined.module.items.feature.FlintTools;
-import insane96mcp.survivalreimagined.module.items.feature.Iridium;
+import insane96mcp.survivalreimagined.module.experience.feature.Enchantments;
+import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -137,6 +135,14 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(Items.FIRE_CHARGE, 1)
                 .unlockedBy("has_powered_rail", has(Items.POWERED_RAIL))
                 .unlockedBy("has_nether_brick", has(Items.NETHER_BRICK))
+                .save(writer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Enchantments.MENDING_MOSS.get(), 1)
+                .requires(AncientLapis.ANCIENT_LAPIS.get(), 1)
+                .requires(Items.MOSS_BLOCK, 1)
+                .requires(Items.EXPERIENCE_BOTTLE, 1)
+                .unlockedBy("has_moss_block", has(Items.MOSS_BLOCK))
+                .unlockedBy("has_ancient_lapis", has(AncientLapis.ANCIENT_LAPIS.get()))
                 .save(writer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Iridium.BLOCK_ITEM.get(), 1)

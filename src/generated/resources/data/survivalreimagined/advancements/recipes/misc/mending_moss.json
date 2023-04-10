@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ancient_lapis": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "survivalreimagined:ancient_lapis"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_moss_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:moss_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "survivalreimagined:mending_moss"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_moss_block",
+      "has_ancient_lapis",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "survivalreimagined:mending_moss"
+    ]
+  }
+}

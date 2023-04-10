@@ -1,0 +1,6 @@
+{
+  "type": "survivalreimagined:drop_multiplier",
+  "conditions": [],
+  "item": "minecraft:leather",
+  "multiplier": 1.5
+}

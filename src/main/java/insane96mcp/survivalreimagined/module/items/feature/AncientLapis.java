@@ -102,7 +102,7 @@ public class AncientLapis extends Feature {
 				Items.LAPIS_LAZULI,
 				ANCIENT_LAPIS.get())
 				.setAmountToReplace(1)
-				.setChances(List.of(0.12f, 0.135f, 0.155f, 0.17f, 0.20f))
+				.setChances(List.of(0.12f, 0.15f, 0.19f, 0.24f, 0.30f))
 				.build());
 	}
 }
