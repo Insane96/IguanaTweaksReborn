@@ -67,6 +67,21 @@
             "entries": [
                 {
                     "type": "minecraft:item",
+                    "weight": 6,
+                    "name": "minecraft:experience_bottle",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
                     "weight": 5,
                     "name": "minecraft:emerald",
                     "functions": [

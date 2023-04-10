@@ -13,7 +13,7 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "weight": 5,
+                    "weight": 10,
                     "name": "minecraft:experience_bottle",
                     "functions": [
                         {
