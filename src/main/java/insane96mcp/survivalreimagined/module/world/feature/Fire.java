@@ -39,7 +39,7 @@ public class Fire extends Feature {
 
     @Config(min = 0d, max = 1d)
     @Label(name = "Charcoal from burnt logs chance", description = "Chance for logs to release charcoal when burnt")
-    public static Double charcoalFromBurntLogsChance = 0.25d;
+    public static Double charcoalFromBurntLogsChance = 0.4d;
 
     @Config
     @Label(name = "Two flint fire starter.Enabled", description = "If true, two flints (on per hand) can start a fire")
@@ -57,20 +57,20 @@ public class Fire extends Feature {
 
     @SubscribeEvent
     public void onBlockBurnt(BlockBurntEvent event) {
-        if (!this.isEnabled())
+        if (!this.isEnabled()
+                || charcoalFromBurntLogsChance == 0d)
             return;
 
-        if (charcoalFromBurntLogsChance > 0d) {
-            if (event.getState().is(BlockTags.LOGS_THAT_BURN)) {
-                ItemEntity item = new ItemEntity((Level) event.getLevel(), event.getPos().getX() + 0.5d, event.getPos().getY() + 0.5d, event.getPos().getZ() + 0.5d, new ItemStack(Items.CHARCOAL));
-                item.setDefaultPickUpDelay();
-                event.getLevel().addFreshEntity(item);
-            }
+        if (event.getLevel().getRandom().nextDouble() < charcoalFromBurntLogsChance
+                && event.getState().is(BlockTags.LOGS_THAT_BURN)) {
+            ItemEntity item = new ItemEntity((Level) event.getLevel(), event.getPos().getX() + 0.5d, event.getPos().getY() + 0.5d, event.getPos().getZ() + 0.5d, new ItemStack(Items.CHARCOAL));
+            item.setDefaultPickUpDelay();
+            event.getLevel().addFreshEntity(item);
         }
     }
 
     @SubscribeEvent
-    public void onBlockRightclicked(PlayerInteractEvent.RightClickBlock event) {
+    public void onBlockRightClicked(PlayerInteractEvent.RightClickBlock event) {
         if (!this.isEnabled()
                 || !twoFlintFireStarter
                 || event.getHand() != InteractionHand.MAIN_HAND
@@ -108,6 +108,7 @@ public class Fire extends Feature {
             }
             event.getLevel().playSound(null, event.getPos(), SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, event.getLevel().getRandom().nextFloat() * 0.4F + 0.8F);
         }
+        //On fail, play a high-pitched sound
         else {
             event.getLevel().playSound(null, event.getPos(), SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, event.getLevel().getRandom().nextFloat() * 0.4F + 1.5F);
         }
