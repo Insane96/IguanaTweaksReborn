@@ -6,10 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.experience.enchantment.Blasting;
-import insane96mcp.survivalreimagined.module.experience.enchantment.Expanded;
-import insane96mcp.survivalreimagined.module.experience.enchantment.MagicProtection;
-import insane96mcp.survivalreimagined.module.experience.enchantment.Magnetic;
+import insane96mcp.survivalreimagined.module.experience.enchantment.*;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -22,6 +19,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
@@ -86,6 +84,14 @@ public class Enchantments extends Feature {
 		event.setCost(0);
 		event.setMaterialCost(1);
 		event.setOutput(result);
+	}
+
+	@SubscribeEvent
+	public void onAttributeModifiers(ItemAttributeModifierEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		StepUp.applyAttributeModifier(event);
 	}
 
 	@SubscribeEvent

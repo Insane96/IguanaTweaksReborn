@@ -6,6 +6,8 @@
 * Infinity rework
   * Infinity max level is now 4
   * Now has 1 in level chance to not consume an arrow
+* Added Step Up enchantment
+  * +0.5 step height
 * No Knockback has become Knockback
   * Instead of removing knockback, now attacking without a weapon or spamming has reduced knockback
 * Removed Mending and added Mending Moss
