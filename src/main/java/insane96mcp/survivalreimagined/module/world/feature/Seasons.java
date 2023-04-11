@@ -9,8 +9,11 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.server.packs.PackType;
+import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import sereneseasons.config.FertilityConfig;
+import sereneseasons.config.ServerConfig;
 
 @Label(name = "Seasons", description = "Change a few things relative to Serene Seasons")
 @LoadFeature(module = Modules.Ids.WORLD)
@@ -45,6 +48,14 @@ public class Seasons extends Feature {
 		if (changeSereneSeasonsConfig) {
 			FertilityConfig.outOfSeasonCropBehavior.set(2);
 			FertilityConfig.undergroundFertilityLevel.set(-1);
+		}
+	}
+
+	@SubscribeEvent
+	public void onServerStart(ServerStartedEvent event) {
+		if (changeSereneSeasonsConfig) {
+			ServerConfig.startingSubSeason.set(2);
+			ServerConfig.progressSeasonWhileOffline.set(false);
 		}
 	}
 }
