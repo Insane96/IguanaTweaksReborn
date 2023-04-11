@@ -67,7 +67,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 
 		ItemStack left = this.inputSlots.getItem(0);
 		this.cost.set(1);
-		int cost = 0;
+		int mergeCost = 0;
 		int baseCost = 0;
 		boolean isRenaming = false;
 		if (left.isEmpty()) {
@@ -96,12 +96,13 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 					for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount(); ++repairItemCountCost) {
 						int j3 = leftCopy.getDamageValue() - repairSteps;
 						leftCopy.setDamageValue(j3);
-						++cost;
+						++mergeCost;
 						repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
 					}
 
 					this.repairItemCountCost = repairItemCountCost;
-				} else {
+				}
+				else {
 					if (!isEnchantedBook && (!leftCopy.is(right.getItem()) || !leftCopy.isDamageableItem())) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
 						this.cost.set(0);
@@ -120,7 +121,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 
 						if (l1 < leftCopy.getDamageValue()) {
 							leftCopy.setDamageValue(l1);
-							cost += 2;
+							mergeCost += 2;
 						}
 					}
 
@@ -141,7 +142,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 							for(Enchantment enchantment : leftEnchantments.keySet()) {
 								if (enchantment != enchantment1 && !enchantment1.isCompatibleWith(enchantment)) {
 									canEnchant = false;
-									++cost;
+									++mergeCost;
 								}
 							}
 
@@ -154,7 +155,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 								}
 
 								leftEnchantments.put(enchantment1, rightLvl);
-								int k3 = switch (enchantment1.getRarity()) {
+								int enchantmentRarityCost = switch (enchantment1.getRarity()) {
 									case COMMON -> 1;
 									case UNCOMMON -> 2;
 									case RARE -> 4;
@@ -162,12 +163,12 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 								};
 
 								if (isEnchantedBook) {
-									k3 = Math.max(1, k3 / 2);
+									enchantmentRarityCost = Math.max(1, enchantmentRarityCost / 2);
 								}
 
-								cost += k3 * rightLvl;
+								mergeCost += enchantmentRarityCost * rightLvl;
 								if (left.getCount() > 1) {
-									cost = 40;
+									mergeCost = 40;
 								}
 							}
 						}
@@ -186,20 +187,22 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 					isRenaming = true;
 					leftCopy.resetHoverName();
 				}
-			} else if (!this.itemName.equals(left.getHoverName().getString())) {
+			}
+			else if (!this.itemName.equals(left.getHoverName().getString())) {
 				isRenaming = true;
 				leftCopy.setHoverName(Component.literal(this.itemName));
 			}
-			if (isEnchantedBook && !leftCopy.isBookEnchantable(right)) leftCopy = ItemStack.EMPTY;
+			if (isEnchantedBook && !leftCopy.isBookEnchantable(right))
+				leftCopy = ItemStack.EMPTY;
 
-			this.cost.set(baseCost + cost);
+			this.cost.set(baseCost + mergeCost);
 			if (isRenaming && !OtherExperience.isFreeRenaming())
 				this.cost.set(this.cost.get() + COST_RENAME);
-			if (cost <= 0 && !isRenaming) {
+			if (mergeCost <= 0 && !isRenaming) {
 				leftCopy = ItemStack.EMPTY;
 			}
 
-			if (isRenaming && OtherExperience.isFreeRenaming() && cost <= 0) {
+			if (isRenaming && OtherExperience.isFreeRenaming() && mergeCost <= 0) {
 				this.cost.set(0);
 			}
 
@@ -209,16 +212,16 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			}
 
 			if (!leftCopy.isEmpty()) {
-				int k2 = leftCopy.getBaseRepairCost();
-				if (!right.isEmpty() && k2 < right.getBaseRepairCost()) {
-					k2 = right.getBaseRepairCost();
+				int toolRepairCost = leftCopy.getBaseRepairCost();
+				if (!right.isEmpty() && toolRepairCost < right.getBaseRepairCost()) {
+					toolRepairCost = right.getBaseRepairCost();
 				}
 
-				if (cost > 1) {
-					k2 = AnvilMenu.calculateIncreasedRepairCost(k2);
+				if (mergeCost >= 1) {
+					toolRepairCost = AnvilMenu.calculateIncreasedRepairCost(toolRepairCost);
 				}
 
-				leftCopy.setRepairCost(k2);
+				leftCopy.setRepairCost(toolRepairCost);
 				EnchantmentHelper.setEnchantments(leftEnchantments, leftCopy);
 			}
 
