@@ -7,6 +7,7 @@ import insane96mcp.enhancedai.modules.creeper.feature.CreeperSwell;
 import insane96mcp.enhancedai.modules.skeleton.feature.SkeletonFleeTarget;
 import insane96mcp.enhancedai.modules.spider.feature.ThrowingWeb;
 import insane96mcp.enhancedai.modules.witch.feature.WitchFleeTarget;
+import insane96mcp.enhancedai.modules.zombie.feature.DiggerZombie;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
@@ -55,5 +56,8 @@ public class EnhancedAI extends SRFeature {
         Module.getFeature(Animals.class).setConfigOption("Movement Speed Multiplier", 1.2d);
         Module.getFeature(Animals.class).setConfigOption("Knockback", 2.25d);
         Module.getFeature(Animals.class).readConfig(event);
+
+        Module.getFeature(DiggerZombie.class).setConfigOption("Digger Speed Multiplier", 2d);
+        Module.getFeature(DiggerZombie.class).readConfig(event);
     }
 }
