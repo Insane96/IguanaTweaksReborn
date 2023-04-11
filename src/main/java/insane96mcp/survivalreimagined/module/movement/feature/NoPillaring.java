@@ -48,7 +48,7 @@ public class NoPillaring extends Feature {
 			BlockState state = block.getStateForPlacement(new BlockPlaceContext(event.getEntity(), event.getHand(), event.getItemStack(), event.getHitVec()));
 			if (state == null)
 				state = block.defaultBlockState();
-			isSolidBlock = state.entityCanStandOn(event.getLevel(), event.getPos(), event.getEntity());
+			isSolidBlock = state.canOcclude();/*state.entityCanStandOn(event.getLevel(), event.getPos(), event.getEntity());*/
 		}
 		if (isSolidBlock && playerEntity.getViewXRot(1.0f) > 40f && !playerEntity.isOnGround() && event.getItemStack().getItem() instanceof BlockItem && distance <= allowedDistance && playerEntity.getY() > placedPos.getY()) {
 			event.setCanceled(true);
