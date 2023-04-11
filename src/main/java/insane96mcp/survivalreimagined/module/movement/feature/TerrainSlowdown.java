@@ -94,7 +94,7 @@ public class TerrainSlowdown extends SRFeature {
 		for (int x2 = mX; x2 < bb.maxX; x2++) {
 			for (int z2 = mZ; z2 < bb.maxZ; z2++) {
 				BlockState state = event.player.level.getBlockState(BlockPos.containing(x2, event.player.position().y - 0.02d, z2));
-				if (state.isAir())
+				if (state.isAir() || !state.canOcclude())
 					continue;
 				double blockSlowdown = 0d;
 				for (IdTagValue idTagValue : customTerrainSlowdown) {
