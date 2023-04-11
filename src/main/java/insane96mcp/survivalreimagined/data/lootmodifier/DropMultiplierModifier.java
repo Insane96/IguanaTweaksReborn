@@ -12,7 +12,9 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
@@ -126,6 +128,14 @@ public class DropMultiplierModifier extends LootModifier {
 
         public Builder(EntityType<?> entityType, TagKey<Item> tag, float multiplier) {
             this.dropMultiplierModifier = DropMultiplierModifier.newTag(new LootItemCondition[] {LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(entityType)).build()).build()}, Optional.of(tag), multiplier);
+        }
+
+        public Builder(Block block, Item item, float multiplier) {
+            this.dropMultiplierModifier = DropMultiplierModifier.newItem(new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(block).build()}, Optional.of(item), multiplier);
+        }
+
+        public Builder(Block block, TagKey<Item> tag, float multiplier) {
+            this.dropMultiplierModifier = DropMultiplierModifier.newTag(new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(block).build()}, Optional.of(tag), multiplier);
         }
 
         public Builder keepAmount(int amount) {

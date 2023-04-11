@@ -18,8 +18,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -173,28 +171,16 @@ public class Crops extends Feature {
 	private static final String path = "crops/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "harder_beetroot_farming", new DropMultiplierModifier.Builder(
-				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.BEETROOTS).build()},
-				Items.BEETROOT_SEEDS,
-				0.137f)
+		provider.add(path + "harder_beetroot_farming", new DropMultiplierModifier.Builder(Blocks.BEETROOTS, Items.BEETROOT_SEEDS, 0.15f)
 				.keepAmount(1)
 				.build());
-		provider.add(path + "harder_wheat_farming", new DropMultiplierModifier.Builder(
-				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.WHEAT).build()},
-				Items.WHEAT_SEEDS,
-				0.137f)
+		provider.add(path + "harder_wheat_farming", new DropMultiplierModifier.Builder(Blocks.WHEAT, Items.WHEAT_SEEDS, 0.15f)
 				.keepAmount(1)
 				.build());
-		provider.add(path + "harder_potato_farming", new DropMultiplierModifier.Builder(
-				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.POTATOES).build()},
-				Items.POTATO,
-				0.1f)
+		provider.add(path + "harder_potato_farming", new DropMultiplierModifier.Builder(Blocks.POTATOES, Items.POTATO, 0.1f)
 				.keepAmount(1)
 				.build());
-		provider.add(path + "harder_carrot_farming", new DropMultiplierModifier.Builder(
-				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.CARROTS).build()},
-				Items.CARROT,
-				0.137f)
+		provider.add(path + "harder_carrot_farming", new DropMultiplierModifier.Builder(Blocks.CARROTS, Items.CARROT, 0.15f)
 				.keepAmount(1)
 				.build());
 	}

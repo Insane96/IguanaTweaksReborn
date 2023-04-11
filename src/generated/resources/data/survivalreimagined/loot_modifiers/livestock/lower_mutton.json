@@ -2,5 +2,5 @@
   "type": "survivalreimagined:drop_multiplier",
   "conditions": [],
   "item": "minecraft:mutton",
-  "multiplier": 0.2
+  "multiplier": 0.3
 }
