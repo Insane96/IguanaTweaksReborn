@@ -9,7 +9,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -43,9 +45,12 @@ public class NoPillaring extends Feature {
 		boolean isSolidBlock = true;
 		if (event.getItemStack().getItem() instanceof BlockItem) {
 			Block block = ((BlockItem) event.getItemStack().getItem()).getBlock();
-			isSolidBlock = block.defaultBlockState().canOcclude();
+			BlockState state = block.getStateForPlacement(new BlockPlaceContext(event.getEntity(), event.getHand(), event.getItemStack(), event.getHitVec()));
+			if (state == null)
+				state = block.defaultBlockState();
+			isSolidBlock = state.entityCanStandOn(event.getLevel(), event.getPos(), event.getEntity());
 		}
-		if (playerEntity.getViewXRot(1.0f) > 40f && !playerEntity.isOnGround() && event.getItemStack().getItem() instanceof BlockItem && distance <= allowedDistance && playerEntity.getY() > placedPos.getY() && isSolidBlock) {
+		if (isSolidBlock && playerEntity.getViewXRot(1.0f) > 40f && !playerEntity.isOnGround() && event.getItemStack().getItem() instanceof BlockItem && distance <= allowedDistance && playerEntity.getY() > placedPos.getY()) {
 			event.setCanceled(true);
 			event.setResult(Event.Result.DENY);
 		}
