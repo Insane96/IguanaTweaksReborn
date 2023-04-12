@@ -23,7 +23,7 @@
   * Instead of removing knockback, now attacking without a weapon or spamming has reduced knockback
 * Added Nether Infused Powered Rails
   * 2.5x faster than normal rails
-* Removed Mending and added Mending Moss
+* Removed Mending and added Cleansing Moss
 * Slight rework of structure loot (more XP Bottles)
 * Increased Golden Tools base efficiency
 * Sprint jumping is now affected by movement speed

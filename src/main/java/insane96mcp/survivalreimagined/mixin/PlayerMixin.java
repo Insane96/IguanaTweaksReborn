@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.survivalreimagined.effect.Vigour;
-import insane96mcp.survivalreimagined.module.experience.feature.Enchantments;
+import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.experience.feature.PlayerExperience;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.ExhaustionIncrease;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
@@ -62,7 +62,7 @@ public abstract class PlayerMixin extends LivingEntity {
 	//Changes efficiency formula
 	@ModifyVariable(method = "getDigSpeed", ordinal = 0, at = @At(value = "STORE", ordinal = 1), remap = false)
 	private float changeEfficiencyFormula(float efficiency, BlockState p_36282_, @Nullable BlockPos pos) {
-		if (!Enchantments.changeEfficiencyFormula)
+		if (!EnchantmentsFeature.changeEfficiencyFormula)
 			return efficiency;
 		int lvl = EnchantmentHelper.getBlockEfficiency((Player) (Object) this);
 		//Remove vanilla efficiency

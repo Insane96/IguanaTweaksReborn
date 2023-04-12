@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.data;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.module.experience.feature.Enchantments;
+import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import net.minecraft.data.PackOutput;
@@ -137,7 +137,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_nether_brick", has(Items.NETHER_BRICK))
                 .save(writer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Enchantments.MENDING_MOSS.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EnchantmentsFeature.CLEANSING_MOSS.get(), 1)
                 .requires(AncientLapis.ANCIENT_LAPIS.get(), 1)
                 .requires(Items.MOSS_BLOCK, 1)
                 .requires(Items.EXPERIENCE_BOTTLE, 1)

@@ -27,7 +27,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "survivalreimagined:mending_moss"
+        "recipe": "survivalreimagined:cleansing_moss"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -41,7 +41,7 @@
   ],
   "rewards": {
     "recipes": [
-      "survivalreimagined:mending_moss"
+      "survivalreimagined:cleansing_moss"
     ]
   }
 }

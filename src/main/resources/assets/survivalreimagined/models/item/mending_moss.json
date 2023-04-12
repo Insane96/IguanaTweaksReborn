@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "survivalreimagined:item/mending_moss"
+    "layer0": "survivalreimagined:item/cleansing_moss"
   }
 }

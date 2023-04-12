@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.experience.feature.Enchantments;
+import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -15,14 +15,14 @@ public class MendingEnchantmentMixin extends Enchantment {
 
 	@Override
 	public boolean isTradeable() {
-		if (Enchantments.isMendingOverhaulEnabled())
+		if (EnchantmentsFeature.isMendingOverhaulEnabled())
 			return false;
 		return super.isTradeable();
 	}
 
 	@Override
 	public boolean isDiscoverable() {
-		if (Enchantments.isMendingOverhaulEnabled())
+		if (EnchantmentsFeature.isMendingOverhaulEnabled())
 			return false;
 		return super.isDiscoverable();
 	}

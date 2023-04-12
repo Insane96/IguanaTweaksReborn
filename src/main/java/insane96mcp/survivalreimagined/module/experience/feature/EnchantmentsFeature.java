@@ -30,12 +30,12 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Enchantments", description = "Change some enchantments and anvil related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
-public class Enchantments extends Feature {
+public class EnchantmentsFeature extends Feature {
 	@Config
 	@Label(name = "Mending overhaul", description = "Removes the mending enchantment and adds a new item that resets the repair cost of items.")
 	public static Boolean mendingOverhaul = true;
 
-	public static final RegistryObject<Item> MENDING_MOSS = SRItems.ITEMS.register("mending_moss", () -> new Item(new Item.Properties().stacksTo(1)));
+	public static final RegistryObject<Item> CLEANSING_MOSS = SRItems.ITEMS.register("cleansing_moss", () -> new Item(new Item.Properties().stacksTo(1)));
 
 	@Config
 	@Label(name = "Efficiency changed formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to (tool_efficiency + 75% * level)")
@@ -57,7 +57,7 @@ public class Enchantments extends Feature {
 
 	//TODO Make enchantments deactivable
 
-	public Enchantments(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
@@ -76,7 +76,7 @@ public class Enchantments extends Feature {
 			return;
 
 		ItemStack right = event.getRight();
-		if (!right.is(MENDING_MOSS.get()))
+		if (!right.is(CLEANSING_MOSS.get()))
 			return;
 
 		ItemStack result = left.copy();
@@ -172,6 +172,6 @@ public class Enchantments extends Feature {
 	}
 
 	public static boolean isMendingOverhaulEnabled() {
-		return Feature.isEnabled(Enchantments.class) && mendingOverhaul;
+		return Feature.isEnabled(EnchantmentsFeature.class) && mendingOverhaul;
 	}
 }
