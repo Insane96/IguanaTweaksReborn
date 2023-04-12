@@ -12,11 +12,13 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.utils.HoeStat;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolActions;
@@ -115,6 +117,26 @@ public class Hoes extends SRFeature {
 		}
 	}
 
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void onBlockBreak(BlockEvent.BreakEvent event) {
+		if (!this.isEnabled()
+				|| !event.getState().getMaterial().isReplaceable())
+			return;
+		for (HoeStat hoeStat : hoesStats) {
+			if (hoeStat.matchesItem(event.getPlayer().getMainHandItem().getItem(), null) && hoeStat.scytheRadius > 0) {
+				BlockPos.betweenClosedStream(event.getPos().offset(-hoeStat.scytheRadius, -(hoeStat.scytheRadius - 1), -hoeStat.scytheRadius), event.getPos().offset(hoeStat.scytheRadius, hoeStat.scytheRadius - 1, hoeStat.scytheRadius))
+						.forEach(pos -> {
+							BlockState state = event.getPlayer().level.getBlockState(pos);
+							if (!state.getMaterial().isReplaceable()
+									|| !state.getFluidState().isEmpty())
+								return;
+							event.getPlayer().getLevel().destroyBlock(pos, false);
+						});
+				break;
+			}
+		}
+	}
+
 	private static boolean isHoeDisabled(Item item) {
 		return Utils.isItemInTag(item, DISABLED_HOES);
 	}
@@ -158,8 +180,8 @@ public class Hoes extends SRFeature {
 				int efficiency = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
 				int cooldown = hoeStat.cooldown - (efficiency * efficiencyCooldownReduction);
 				event.getToolTip().add(Component.literal(" ").append(Component.translatable(TILL_COOLDOWN, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
-				/*if (hoeStat.scytheRadius > 0)
-					event.getToolTip().add(Component.literal(" ").append(Component.translatable(SCYTHE_RADIUS, hoeStat.scytheRadius).withStyle(ChatFormatting.DARK_GREEN)));*/
+				if (hoeStat.scytheRadius > 0)
+					event.getToolTip().add(Component.literal(" ").append(Component.translatable(SCYTHE_RADIUS, hoeStat.scytheRadius).withStyle(ChatFormatting.DARK_GREEN)));
 				break;
 			}
 		}

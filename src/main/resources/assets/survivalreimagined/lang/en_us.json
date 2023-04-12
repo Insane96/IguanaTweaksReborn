@@ -17,6 +17,7 @@
 
 	"survivalreimagined.weak_hoe": "This hoe is too weak to till soil",
 	"survivalreimagined.till_cooldown": "%.1f Till Cooldown",
+	"survivalreimagined.scythe_radius": "%d Scythe radius",
 
 	"survivalreimagined.armor_slowdown": "-%s%% Speed",
 
@@ -108,5 +109,7 @@
 	"advancements.sr_story.chained_copper_armor.title": "Early protection",
 	"advancements.sr_story.chained_copper_armor.description": "Obtain a full set of Chained Copper Armor",
 	"advancements.sr_story.iridium_pickaxe.title": "Getting a real upgrade",
-	"advancements.sr_story.iridium_pickaxe.description": "Obtain an Iridium Pickaxe by upgrading an Iron one in the Smithing Table"
+	"advancements.sr_story.iridium_pickaxe.description": "Obtain an Iridium Pickaxe by upgrading an Iron one in the Smithing Table",
+	"advancements.sr_story.wheat_seeds.title": "Seedy Business",
+	"advancements.sr_story.wheat_seeds.description": "Obtain wheat seeds by tilling grass blocks not near water"
 }
