@@ -60,8 +60,8 @@ public class DesirePaths extends SRFeature {
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
 				|| event.player.level.isClientSide
-				|| event.player.walkDistO - event.player.walkDist < 0.04f
-				|| event.player.tickCount % 2 == 1)
+				|| event.player.walkDist - event.player.walkDistO < 0.04f
+				|| event.phase == TickEvent.Phase.START)
 			return;
 
 		AABB bb = event.player.getBoundingBox();
@@ -75,7 +75,7 @@ public class DesirePaths extends SRFeature {
 					if (!blockTransformation.matchesBlock(state.getBlock()))
 						continue;
 
-					if (event.player.getRandom().nextFloat() < 0.02f) {
+					if (event.player.getRandom().nextFloat() < 0.03f) {
 						Block block = ForgeRegistries.BLOCKS.getValue(blockTransformation.transformTo);
 						if (block == null) continue;
 						event.player.level.setBlockAndUpdate(pos, block.defaultBlockState());
