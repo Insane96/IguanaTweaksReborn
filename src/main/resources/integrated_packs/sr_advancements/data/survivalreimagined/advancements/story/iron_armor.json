@@ -17,18 +17,16 @@
 	"parent": "survivalreimagined:story/anvil",
 	"criteria": {
 		"iron_chestplate": {
-			"trigger": "minecraft:inventory_changed",
+			"trigger": "survivalreimagined:anvil_repair",
 			"conditions": {
-				"items": [
-					{
-						"items": [
-							"minecraft:iron_helmet",
-							"minecraft:iron_chestplate",
-							"minecraft:iron_leggings",
-							"minecraft:iron_boots"
-						]
-					}
-				]
+				"output": {
+					"items": [
+						"minecraft:iron_helmet",
+						"minecraft:iron_chestplate",
+						"minecraft:iron_leggings",
+						"minecraft:iron_boots"
+					]
+				}
 			}
 		}
 	},
