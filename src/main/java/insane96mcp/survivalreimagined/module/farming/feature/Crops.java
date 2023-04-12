@@ -71,6 +71,10 @@ public class Crops extends Feature {
 	@Label(name = "Wheat From Grass Chance", description = "Chance for grass to drop wheat seeds when tilled.")
 	public static Double wheatFromGrassChance = 0.1d;
 
+	@Config(min = 1)
+	@Label(name = "Water Hydration Radius", description = "Radius where water hydrates farmland, vanilla is 4.")
+	public static Integer waterHydrationRadius = 2;
+
 	public ArrayList<PlantGrowthModifier> plantGrowthModifiers = new ArrayList<>();
 
 	public Crops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -190,7 +194,7 @@ public class Crops extends Feature {
 			return;
 
 		boolean canBeHydrated = false;
-		for(BlockPos blockpos : BlockPos.betweenClosed(event.getPos().offset(-4, 0, -4), event.getPos().offset(4, 1, 4))) {
+		for(BlockPos blockpos : BlockPos.betweenClosed(event.getPos().offset(-waterHydrationRadius, 0, -waterHydrationRadius), event.getPos().offset(waterHydrationRadius, 1, waterHydrationRadius))) {
 			if (Blocks.FARMLAND.defaultBlockState().canBeHydrated(event.getLevel(), event.getPos(), event.getLevel().getFluidState(blockpos), blockpos)) {
 				canBeHydrated = true;
 				break;
