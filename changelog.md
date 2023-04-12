@@ -3,6 +3,8 @@
 ## Upcoming
 * Advancements!
   * First step towards new advancements
+* Re-enabled spawn points
+  * World and bed respawns are now loose. Players will respawn up to 256 blocks from the world spawn/bed
 * Infinity rework
   * Infinity max level is now 4
   * Now has 1 in level chance to not consume an arrow

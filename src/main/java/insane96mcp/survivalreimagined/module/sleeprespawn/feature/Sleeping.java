@@ -11,14 +11,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.event.level.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Sleeping and Spawn Points", description = "Changes to sleeping and spawn points")
+@Label(name = "Sleeping and Spawn Point", description = "Changes to sleeping and spawn points")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class Sleeping extends Feature {
 
@@ -26,8 +25,8 @@ public class Sleeping extends Feature {
 	@Label(name = "Disable Sleeping", description = "If set to true the player will not be able to sleep.")
 	public static Boolean disableSleeping = false;
 	@Config
-	@Label(name = "Disable Spawn Points", description = "If set to true the player spawn point cannot be changed.")
-	public static Boolean disableSpawnPoints = true;
+	@Label(name = "Disable Spawn Point", description = "If set to true the player spawn point cannot be changed with beds.")
+	public static Boolean disableSpawnPoint = false;
 	@Config
 	@Label(name = "Allow Sleeping During Day", description = "If set to true the player will be able to sleep during day time. On wake up it will be night time. Note that with 'Tiredness' feature enabled you are still not able to sleep during day unless you're ")
 	public static Boolean allowDaySleep = false;
@@ -47,26 +46,13 @@ public class Sleeping extends Feature {
 
 		if (disableSleeping) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
-			if (disableSpawnPoints) {
+			if (disableSpawnPoint) {
 				player.displayClientMessage(Component.translatable(Strings.Translatable.DECORATIVE_BEDS), false);
 			} else {
 				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, true);
 				player.displayClientMessage(Component.translatable(Strings.Translatable.ENJOY_THE_NIGHT), false);
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void disableSpawnPoint(PlayerSetSpawnEvent event) {
-		if (!this.isEnabled()
-				|| event.isForced()
-				|| !disableSpawnPoints)
-			return;
-
-		ServerPlayer player = (ServerPlayer) event.getEntity();
-
-		player.displayClientMessage(Component.translatable(Strings.Translatable.NO_SPAWN_POINT), false);
-		event.setCanceled(true);
 	}
 
 	@SubscribeEvent

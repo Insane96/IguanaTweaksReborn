@@ -4,6 +4,7 @@
 	"survivalreimagined.no_food_for_sleep": "You're too hungry and can't fall asleep",
 	"survivalreimagined.decorative_beds": "Beds are just a nice decoration. No sleep allowed",
 	"survivalreimagined.no_spawn_point": "You cannot set a respawn point. Better leave a trace from the world's spawn.",
+	"survivalreimagined.loose_bed_respawn_point_set": "Your respawn point is loose, you'll respawn in a radius from your bed.",
 	"survivalreimagined.enjoy_the_night": "Your respawn point has been set. Enjoy the night!",
 	"survivalreimagined.not_tired": "You're not tired enough to sleep",
 	"survivalreimagined.tired_enough": "You start feeling tired",
