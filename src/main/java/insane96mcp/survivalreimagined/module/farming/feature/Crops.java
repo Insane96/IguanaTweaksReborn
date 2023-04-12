@@ -13,14 +13,19 @@ import insane96mcp.survivalreimagined.module.farming.utils.PlantGrowthModifier;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -61,6 +66,10 @@ public class Crops extends Feature {
 	@Config(min = 0, max = 15)
 	@Label(name = "Min Sunlight", description = "Minimum Sky Light level required for crops to not be affected by \"No Sunlight Growth Multiplier\".")
 	public static Integer minSunlight = 10;
+
+	@Config(min = 0d, max = 1d)
+	@Label(name = "Wheat From Grass Chance", description = "Chance for grass to drop wheat seeds when tilled.")
+	public static Double wheatFromGrassChance = 0.1d;
 
 	public ArrayList<PlantGrowthModifier> plantGrowthModifiers = new ArrayList<>();
 
@@ -168,6 +177,32 @@ public class Crops extends Feature {
 		return sustainState.getBlock() instanceof FarmBlock;
 	}
 
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void onTill(BlockEvent.BlockToolModificationEvent event) {
+		if (!this.isEnabled()
+				|| event.getPlayer() == null
+				|| event.isSimulated()
+				|| event.getToolAction() != ToolActions.HOE_TILL
+				|| event.getState().getBlock().getToolModifiedState(event.getState(), event.getContext(), event.getToolAction(), true) == null
+				|| event.isCanceled()
+				|| !event.getState().is(Blocks.GRASS_BLOCK)
+				|| wheatFromGrassChance == 0d)
+			return;
+
+		boolean canBeHydrated = false;
+		for(BlockPos blockpos : BlockPos.betweenClosed(event.getPos().offset(-4, 0, -4), event.getPos().offset(4, 1, 4))) {
+			if (Blocks.FARMLAND.defaultBlockState().canBeHydrated(event.getLevel(), event.getPos(), event.getLevel().getFluidState(blockpos), blockpos)) {
+				canBeHydrated = true;
+				break;
+			}
+		}
+		if (canBeHydrated)
+			return;
+		event.setFinalState(Blocks.DIRT.defaultBlockState());
+		if (event.getLevel().getRandom().nextDouble() < wheatFromGrassChance)
+			event.getPlayer().getLevel().addFreshEntity(new ItemEntity(event.getPlayer().getLevel(), event.getContext().getClickedPos().getX() + 0.5, event.getContext().getClickedPos().getY() + 1, event.getContext().getClickedPos().getZ() + 0.5, new ItemStack(Items.WHEAT_SEEDS)));
+	}
+
 	private static final String path = "crops/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
@@ -183,5 +218,20 @@ public class Crops extends Feature {
 		provider.add(path + "harder_carrot_farming", new DropMultiplierModifier.Builder(Blocks.CARROTS, Items.CARROT, 0.15f)
 				.keepAmount(1)
 				.build());
+
+		provider.add(path + "no_carrot_from_zombie", new DropMultiplierModifier.Builder(EntityType.ZOMBIE, Items.CARROT, 0f).build());
+		provider.add(path + "no_potato_from_zombie", new DropMultiplierModifier.Builder(EntityType.ZOMBIE, Items.POTATO, 0f).build());
+		provider.add(path + "no_baked_potato_from_zombie", new DropMultiplierModifier.Builder(EntityType.ZOMBIE, Items.BAKED_POTATO, 0f).build());
+		provider.add(path + "no_carrot_from_husk", new DropMultiplierModifier.Builder(EntityType.HUSK, Items.CARROT, 0f).build());
+		provider.add(path + "no_potato_from_husk", new DropMultiplierModifier.Builder(EntityType.HUSK, Items.POTATO, 0f).build());
+		provider.add(path + "no_baked_potato_from_husk", new DropMultiplierModifier.Builder(EntityType.HUSK, Items.BAKED_POTATO, 0f).build());
+		provider.add(path + "no_carrot_from_zombie_villager", new DropMultiplierModifier.Builder(EntityType.ZOMBIE_VILLAGER, Items.CARROT, 0f).build());
+		provider.add(path + "no_potato_from_zombie_villager", new DropMultiplierModifier.Builder(EntityType.ZOMBIE_VILLAGER, Items.POTATO, 0f).build());
+		provider.add(path + "no_baked_potato_from_zombie_villager", new DropMultiplierModifier.Builder(EntityType.ZOMBIE_VILLAGER, Items.BAKED_POTATO, 0f).build());
+
+		provider.add(path + "no_seeds_from_grass", new DropMultiplierModifier.Builder(Blocks.GRASS, Items.WHEAT_SEEDS, 0f).build());
+		provider.add(path + "no_seeds_from_tall_grass", new DropMultiplierModifier.Builder(Blocks.TALL_GRASS, Items.WHEAT_SEEDS, 0f).build());
+		provider.add(path + "no_seeds_from_fern", new DropMultiplierModifier.Builder(Blocks.FERN, Items.WHEAT_SEEDS, 0f).build());
+		provider.add(path + "no_seeds_from_large_fern", new DropMultiplierModifier.Builder(Blocks.LARGE_FERN, Items.WHEAT_SEEDS, 0f).build());
 	}
 }

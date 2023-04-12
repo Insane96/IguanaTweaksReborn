@@ -9,6 +9,9 @@
   * Killing the ghost will give back your items
 * Reworked Wandering Trader trades
   * Less junk and added items for emeralds trades
+* Crops changes
+  * Tall grass no longer drops seeds, you must till grass blocks
+  * Zombies no longer drop potatoes and carrots
 * Infinity rework
   * Infinity max level is now 4
   * Now has 1 in level chance to not consume an arrow
