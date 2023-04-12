@@ -7,6 +7,8 @@
   * World and bed respawns are now loose. Players will respawn up to 256 blocks from the world spawn/bed
 * Players that die now summon a Ghost with their items
   * Killing the ghost will give back your items
+* Reworked Wandering Trader trades
+  * Less junk and added items for emeralds trades
 * Infinity rework
   * Infinity max level is now 4
   * Now has 1 in level chance to not consume an arrow
