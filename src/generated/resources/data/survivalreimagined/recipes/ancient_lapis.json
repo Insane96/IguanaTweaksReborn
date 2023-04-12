@@ -3,16 +3,16 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "survivalreimagined:ancient_lapis"
+      "item": "survivalreimagined:cleansed_lapis"
     },
     {
-      "item": "minecraft:moss_block"
+      "item": "minecraft:netherite_scrap"
     },
     {
       "item": "minecraft:experience_bottle"
     }
   ],
   "result": {
-    "item": "survivalreimagined:cleansing_moss"
+    "item": "survivalreimagined:ancient_lapis"
   }
 }

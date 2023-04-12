@@ -67,7 +67,7 @@
 	"block.survivalreimagined.nether_infused_powered_rail": "Nether Infused Powered Rail",
 
 	"item.survivalreimagined.ancient_lapis": "Ancient Lapis",
-	"item.survivalreimagined.cleansing_moss": "Cleansing Moss",
+	"item.survivalreimagined.cleansed_lapis": "Cleansed Lapis",
 
 	"item.survivalreimagined.chained_copper_helmet": "Chained Copper Helmet",
 	"item.survivalreimagined.chained_copper_chestplate": "Chained Copper Chestplate",
@@ -111,5 +111,9 @@
 	"advancements.sr_story.iridium_pickaxe.title": "Getting a real upgrade",
 	"advancements.sr_story.iridium_pickaxe.description": "Obtain an Iridium Pickaxe by upgrading an Iron one in the Smithing Table",
 	"advancements.sr_story.wheat_seeds.title": "Seedy Business",
-	"advancements.sr_story.wheat_seeds.description": "Obtain wheat seeds by tilling grass blocks not near water"
+	"advancements.sr_story.wheat_seeds.description": "Obtain wheat seeds by tilling grass blocks not near water",
+	"advancements.sr_story.cleansed_lapis.title": "Cleanse that repair cost",
+	"advancements.sr_story.cleansed_lapis.description": "Use a Cleansed Lapis to reset the repair cost of an item",
+	"advancements.sr_story.ancient_lapis.title": "Over 9000",
+	"advancements.sr_story.ancient_lapis.description": "Use an Ancient Lapis to increase the level of an enchantment over its maximum"
 }

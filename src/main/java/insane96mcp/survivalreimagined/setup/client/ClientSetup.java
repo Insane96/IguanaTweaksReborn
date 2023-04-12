@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.setup.client;
 
+import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -49,6 +50,7 @@ public class ClientSetup {
             event.accept(Iridium.INGOT.get());
             event.accept(Iridium.NUGGET.get());
             event.accept(AncientLapis.ANCIENT_LAPIS.get());
+            event.accept(EnchantmentsFeature.CLEANSED_LAPIS.get());
         }
     }
 }

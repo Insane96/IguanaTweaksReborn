@@ -5,6 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantment.*;
 import insane96mcp.survivalreimagined.setup.SRItems;
@@ -12,12 +13,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -28,6 +34,8 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.List;
+
 @Label(name = "Enchantments", description = "Change some enchantments and anvil related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class EnchantmentsFeature extends Feature {
@@ -35,7 +43,7 @@ public class EnchantmentsFeature extends Feature {
 	@Label(name = "Mending overhaul", description = "Removes the mending enchantment and adds a new item that resets the repair cost of items.")
 	public static Boolean mendingOverhaul = true;
 
-	public static final RegistryObject<Item> CLEANSING_MOSS = SRItems.ITEMS.register("cleansing_moss", () -> new Item(new Item.Properties().stacksTo(1)));
+	public static final RegistryObject<Item> CLEANSED_LAPIS = SRItems.ITEMS.register("cleansed_lapis", () -> new Item(new Item.Properties().stacksTo(1)));
 
 	@Config
 	@Label(name = "Efficiency changed formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to (tool_efficiency + 75% * level)")
@@ -76,7 +84,7 @@ public class EnchantmentsFeature extends Feature {
 			return;
 
 		ItemStack right = event.getRight();
-		if (!right.is(CLEANSING_MOSS.get()))
+		if (!right.is(CLEANSED_LAPIS.get()))
 			return;
 
 		ItemStack result = left.copy();
@@ -173,5 +181,24 @@ public class EnchantmentsFeature extends Feature {
 
 	public static boolean isMendingOverhaulEnabled() {
 		return Feature.isEnabled(EnchantmentsFeature.class) && mendingOverhaul;
+	}
+
+	private static final String path = "enchantments/";
+
+	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
+		provider.add(path + "cleansed_lapis_from_deepslate_lapis_ore", new ReplaceDropModifier.Builder(
+				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.DEEPSLATE_LAPIS_ORE).build()},
+				Items.LAPIS_LAZULI,
+				CLEANSED_LAPIS.get())
+				.setAmountToReplace(1)
+				.setChances(List.of(0.10f, 0.12f, 0.15f, 0.19f, 0.24f))
+				.build());
+		provider.add(path + "cleansed_lapis_from_lapis_ore", new ReplaceDropModifier.Builder(
+				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.LAPIS_ORE).build()},
+				Items.LAPIS_LAZULI,
+				CLEANSED_LAPIS.get())
+				.setAmountToReplace(1)
+				.setChances(List.of(0.05f, 0.06f, 0.075f, 0.095f, 0.12f))
+				.build());
 	}
 }

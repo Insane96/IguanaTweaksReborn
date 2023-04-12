@@ -137,11 +137,11 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_nether_brick", has(Items.NETHER_BRICK))
                 .save(writer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EnchantmentsFeature.CLEANSING_MOSS.get(), 1)
-                .requires(AncientLapis.ANCIENT_LAPIS.get(), 1)
-                .requires(Items.MOSS_BLOCK, 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AncientLapis.ANCIENT_LAPIS.get(), 1)
+                .requires(EnchantmentsFeature.CLEANSED_LAPIS.get(), 1)
+                .requires(Items.NETHERITE_SCRAP, 1)
                 .requires(Items.EXPERIENCE_BOTTLE, 1)
-                .unlockedBy("has_moss_block", has(Items.MOSS_BLOCK))
+                .unlockedBy("has_netherite_scrap", has(Items.NETHERITE_SCRAP))
                 .unlockedBy("has_ancient_lapis", has(AncientLapis.ANCIENT_LAPIS.get()))
                 .save(writer);
 
