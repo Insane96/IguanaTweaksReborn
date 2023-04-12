@@ -12,7 +12,8 @@
 * Crops changes
   * Tall grass no longer drops seeds, you must till grass blocks
   * Zombies no longer drop potatoes and carrots
-* Water now hydrates farmland in a 2 block radius instead of 4
+  * Water now hydrates farmland in a 2 block radius instead of 4
+* Hoes can now break grass in a radius
 * Infinity rework
   * Infinity max level is now 4
   * Now has 1 in level chance to not consume an arrow
