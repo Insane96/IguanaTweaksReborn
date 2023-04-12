@@ -11,6 +11,8 @@ public class HoeStat extends IdTagMatcher {
 	public int cooldown;
 	public int damageOnTill;
 
+	public int scytheRadius;
+
 	public HoeStat(Type type, String location) {
 		super(type, location);
 	}
@@ -20,9 +22,14 @@ public class HoeStat extends IdTagMatcher {
 	}
 
 	public HoeStat(Type type, String location, int cooldown, int damageOnTill) {
+		this(type, location, cooldown, damageOnTill, 1);
+	}
+
+	public HoeStat(Type type, String location, int cooldown, int damageOnTill, int scytheRadius) {
 		super(type, location);
 		this.cooldown = cooldown;
 		this.damageOnTill = damageOnTill;
+		this.scytheRadius = scytheRadius;
 	}
 
 	public static class Serializer implements JsonDeserializer<HoeStat>, JsonSerializer<HoeStat> {
@@ -64,6 +71,7 @@ public class HoeStat extends IdTagMatcher {
 
 			hoeStat.cooldown = GsonHelper.getAsInt(json.getAsJsonObject(), "cooldown");
 			hoeStat.damageOnTill = GsonHelper.getAsInt(json.getAsJsonObject(), "damage_on_till", 1);
+			hoeStat.scytheRadius = GsonHelper.getAsInt(json.getAsJsonObject(), "scythe_radius", 1);
 
 			return hoeStat;
 		}
@@ -83,6 +91,7 @@ public class HoeStat extends IdTagMatcher {
 			jsonObject.addProperty("cooldown", src.cooldown);
 			if (src.damageOnTill > 1)
 				jsonObject.addProperty("damage_on_till", src.damageOnTill);
+			jsonObject.addProperty("scythe_radius", src.scytheRadius);
 			return jsonObject;
 		}
 	}
