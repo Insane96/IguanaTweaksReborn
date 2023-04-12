@@ -5,6 +5,8 @@
   * First step towards new advancements
 * Re-enabled spawn points
   * World and bed respawns are now loose. Players will respawn up to 256 blocks from the world spawn/bed
+* Players that die now summon a Ghost with their items
+  * Killing the ghost will give back your items
 * Infinity rework
   * Infinity max level is now 4
   * Now has 1 in level chance to not consume an arrow
@@ -12,6 +14,8 @@
   * +0.5 step height
 * No Knockback has become Knockback
   * Instead of removing knockback, now attacking without a weapon or spamming has reduced knockback
+* Added Nether Infused Powered Rails
+  * 2.5x faster than normal rails
 * Removed Mending and added Mending Moss
 * Slight rework of structure loot (more XP Bottles)
 * Increased Golden Tools base efficiency

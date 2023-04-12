@@ -8,6 +8,7 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.mobs.data.EquipmentDropChance;
+import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -52,7 +53,8 @@ public class Equipment extends SRFeature {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onMobSpawn(EntityJoinLevelEvent event) {
         if (!this.isEnabled()
-                || !(event.getEntity() instanceof Mob entity))
+                || !(event.getEntity() instanceof Mob entity)
+                || entity.getPersistentData().contains(Death.PLAYER_GHOST))
             return;
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
