@@ -25,7 +25,7 @@ import java.util.Map;
 @Label(name = "Ancient Lapis", description = "Add an item that increases the level of an enchantment, up to 1 level above the limit.")
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class AncientLapis extends Feature {
-	public static final RegistryObject<Item> ANCIENT_LAPIS = SRItems.ITEMS.register("ancient_lapis", () -> new Item(new Item.Properties().stacksTo(1).fireResistant()));
+	public static final RegistryObject<Item> ANCIENT_LAPIS = SRItems.ITEMS.register("ancient_lapis", () -> new Item(new Item.Properties().fireResistant()));
 
 	public AncientLapis(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

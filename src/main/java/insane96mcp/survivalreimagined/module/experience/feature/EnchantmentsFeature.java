@@ -43,7 +43,7 @@ public class EnchantmentsFeature extends Feature {
 	@Label(name = "Mending overhaul", description = "Removes the mending enchantment and adds a new item that resets the repair cost of items.")
 	public static Boolean mendingOverhaul = true;
 
-	public static final RegistryObject<Item> CLEANSED_LAPIS = SRItems.ITEMS.register("cleansed_lapis", () -> new Item(new Item.Properties().stacksTo(1)));
+	public static final RegistryObject<Item> CLEANSED_LAPIS = SRItems.ITEMS.register("cleansed_lapis", () -> new Item(new Item.Properties()));
 
 	@Config
 	@Label(name = "Efficiency changed formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to (tool_efficiency + 75% * level)")
