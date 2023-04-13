@@ -1,0 +1,79 @@
+{
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "projection": "rigid",
+                "location": "survivalreimagined:respawn_obelisk",
+                "processors": {
+                    "processors": [
+                        {
+                            "processor_type": "minecraft:rule",
+                            "rules": [
+                                {
+                                    "location_predicate": {
+                                        "predicate_type": "minecraft:always_true"
+                                    },
+                                    "input_predicate": {
+                                        "predicate_type": "minecraft:random_block_match",
+                                        "block": "minecraft:stone_bricks",
+                                        "probability": 0.3
+                                    },
+                                    "output_state": {
+                                        "Name": "minecraft:mossy_stone_bricks"
+                                    }
+                                },
+                                {
+                                    "location_predicate": {
+                                        "predicate_type": "minecraft:always_true"
+                                    },
+                                    "input_predicate": {
+                                        "predicate_type": "minecraft:random_block_match",
+                                        "block": "minecraft:stone_brick_slab",
+                                        "probability": 0.3
+                                    },
+                                    "output_state": {
+                                        "Name": "minecraft:mossy_stone_brick_slab"
+                                    }
+                                },
+                                {
+                                    "location_predicate": {
+                                        "predicate_type": "minecraft:always_true"
+                                    },
+                                    "input_predicate": {
+                                        "predicate_type": "minecraft:random_block_match",
+                                        "block": "minecraft:polished_andesite",
+                                        "probability": 0.3
+                                    },
+                                    "output_state": {
+                                        "Name": "minecraft:air"
+                                    }
+                                },
+                                {
+                                    "location_predicate": {
+                                        "predicate_type": "minecraft:always_true"
+                                    },
+                                    "input_predicate": {
+                                        "predicate_type": "minecraft:random_block_match",
+                                        "block": "minecraft:iron_block",
+                                        "probability": 0.6
+                                    },
+                                    "output_state": {
+                                        "Name": "minecraft:air"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "processor_type": "minecraft:gravity",
+                            "heightmap": "OCEAN_FLOOR_WG",
+                            "offset": 0
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
