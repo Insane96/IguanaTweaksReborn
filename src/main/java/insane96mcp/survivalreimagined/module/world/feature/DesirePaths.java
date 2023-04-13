@@ -75,7 +75,7 @@ public class DesirePaths extends SRFeature {
 					if (!blockTransformation.matchesBlock(state.getBlock()))
 						continue;
 
-					if (event.player.getRandom().nextFloat() < 0.03f) {
+					if (event.player.getRandom().nextFloat() < 0.04f) {
 						Block block = ForgeRegistries.BLOCKS.getValue(blockTransformation.transformTo);
 						if (block == null) continue;
 						event.player.level.setBlockAndUpdate(pos, block.defaultBlockState());
