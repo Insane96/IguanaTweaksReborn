@@ -6,6 +6,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
 
@@ -17,13 +18,19 @@ public class SRAnvilRecipe {
     int amount;
     ItemStack result;
     boolean keepDamage;
+    Double chanceToBreak;
 
     public SRAnvilRecipe(Ingredient left, Ingredient right, int amount, ItemStack result, boolean keepDamage) {
+        this(left, right, amount, result, keepDamage, null);
+    }
+
+    public SRAnvilRecipe(Ingredient left, Ingredient right, int amount, ItemStack result, boolean keepDamage, @Nullable Double chanceToBreak) {
         this.right = right;
         this.amount = amount;
         this.left = left;
         this.result = result;
         this.keepDamage = keepDamage;
+        this.chanceToBreak = chanceToBreak;
     }
 
     public boolean matches(ItemStack left, ItemStack right) {
@@ -37,6 +44,10 @@ public class SRAnvilRecipe {
         return result;
     }
 
+    public double getChanceToBreak() {
+        return this.chanceToBreak;
+    }
+
     public static class Serializer implements JsonSerializer<SRAnvilRecipe>, JsonDeserializer<SRAnvilRecipe> {
 
         @Override
@@ -47,6 +58,8 @@ public class SRAnvilRecipe {
             jsonObject.addProperty("amount", src.amount);
             jsonObject.add("result", context.serialize(src.result));
             jsonObject.addProperty("keep_damage", src.keepDamage);
+            if (src.chanceToBreak != null)
+                jsonObject.addProperty("chance_to_break", src.chanceToBreak);
             return jsonObject;
         }
 
@@ -57,7 +70,10 @@ public class SRAnvilRecipe {
             int amount = GsonHelper.getAsInt(json.getAsJsonObject(), "amount");
             ItemStack result = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json.getAsJsonObject(), "result"));
             boolean keepDurability = GsonHelper.getAsBoolean(json.getAsJsonObject(), "keep_durability", false);
-            return new SRAnvilRecipe(left, right, amount, result, keepDurability);
+            Double chanceToBreak = null;
+            if (json.getAsJsonObject().has("chance_to_break"))
+                chanceToBreak = GsonHelper.getAsDouble(json.getAsJsonObject(), "chance_to_break");
+            return new SRAnvilRecipe(left, right, amount, result, keepDurability, chanceToBreak);
         }
     }
 }

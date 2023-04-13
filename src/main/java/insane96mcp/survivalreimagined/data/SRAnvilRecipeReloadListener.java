@@ -11,6 +11,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -59,6 +60,16 @@ public class SRAnvilRecipeReloadListener extends SimpleJsonResourceReloadListene
                 event.setCost(0);
                 event.setOutput(anvilRecipe.assemble(event.getLeft(), event.getRight()));
                 event.setMaterialCost(anvilRecipe.amount);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void anvilUpdateEvent(final AnvilRepairEvent event)
+    {
+        for (SRAnvilRecipe anvilRecipe : SRAnvilRecipeReloadListener.RECIPES) {
+            if (anvilRecipe.matches(event.getLeft(), event.getRight()) && anvilRecipe.getChanceToBreak() > -1d) {
+                event.setBreakChance((float) anvilRecipe.getChanceToBreak());
             }
         }
     }
