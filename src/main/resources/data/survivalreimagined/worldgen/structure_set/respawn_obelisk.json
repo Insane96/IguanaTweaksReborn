@@ -1,7 +1,11 @@
 {
     "structures": [
         {
-            "structure": "survivalreimagined:respawn_obelisk",
+            "structure": "survivalreimagined:respawn_obelisk_stonebrick",
+            "weight": 1
+        },
+        {
+            "structure": "survivalreimagined:respawn_obelisk_deepslate",
             "weight": 1
         }
     ],
