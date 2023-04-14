@@ -144,7 +144,8 @@ public class Respawn extends Feature {
 		if (!this.isEnabled()
 				|| event.isForced()
 				|| !(event.getEntity() instanceof ServerPlayer player)
-				|| (player.getRespawnPosition() != null && player.level.getBlockState(player.getRespawnPosition()).is(RESPAWN_OBELISK.get())))
+				|| (event.getNewSpawn() != null && player.level.getBlockState(event.getNewSpawn()).is(RESPAWN_OBELISK.get()))
+				|| (player.getRespawnPosition() != null && !player.level.getBlockState(player.getRespawnPosition()).is(RESPAWN_OBELISK.get())))
 			return;
 
 		event.setCanceled(true);

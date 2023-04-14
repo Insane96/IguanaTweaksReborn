@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.module.sleeprespawn.block;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -45,6 +46,9 @@ public class RespawnObeliskBlock extends Block {
                 && level.getBlockState(pos.west(4)).is(Blocks.IRON_BLOCK)) {
             enable(player, level, pos, state);
             return InteractionResult.SUCCESS;
+        }
+        else if (!state.getValue(ENABLED)) {
+            player.sendSystemMessage(Component.literal("Can't activate. Missing catalyst blocks."));
         }
         else if (state.getValue(ENABLED) && !level.isClientSide) {
             ServerPlayer serverplayer = (ServerPlayer)player;

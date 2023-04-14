@@ -4,12 +4,14 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.setup.ILStrings;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -19,6 +21,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
+import net.minecraftforge.event.entity.living.LivingConversionEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -50,6 +53,8 @@ public class Death extends Feature {
 			return;
 		zombie.setPos(player.position());
 		zombie.setPersistenceRequired();
+		zombie.lootTable = new ResourceLocation("minecraft:empty");
+		zombie.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, 0d);
 		zombie.getPersistentData().putBoolean(PLAYER_GHOST, true);
 		zombie.setCustomName(Component.translatable(PLAYER_GHOST_LANG, player.getName().getString()));
 		zombie.setSilent(true);
@@ -101,5 +106,11 @@ public class Death extends Feature {
 
 		if (event.getEntity().level.hasNearbyAlivePlayer(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 64))
 			event.getEntity().setGlowingTag(true);
+	}
+
+	@SubscribeEvent
+	public void canConvert(LivingConversionEvent.Pre event) {
+		if (event.getEntity().getPersistentData().contains(PLAYER_GHOST))
+			event.setCanceled(true);
 	}
 }
