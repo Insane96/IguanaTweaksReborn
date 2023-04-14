@@ -9,5 +9,6 @@
   "result": {
     "item": "shieldsplus:diamond_shield"
   },
-  "keep_durability": true
+  "keep_durability": true,
+  "chance_to_break": 0.075
 }

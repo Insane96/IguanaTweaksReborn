@@ -9,5 +9,6 @@
   "result": {
     "item": "minecraft:diamond_axe"
   },
-  "keep_durability": true
+  "keep_durability": true,
+  "chance_to_break": 0.075
 }

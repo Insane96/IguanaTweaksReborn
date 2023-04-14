@@ -8,5 +8,6 @@
   "amount": 2,
   "result": {
     "item": "minecraft:shears"
-  }
+  },
+  "chance_to_break": 0.075
 }
