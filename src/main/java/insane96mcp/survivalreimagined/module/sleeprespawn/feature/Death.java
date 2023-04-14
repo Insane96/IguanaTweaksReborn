@@ -60,8 +60,10 @@ public class Death extends Feature {
 		}
 		zombie.setItemSlot(EquipmentSlot.MAINHAND, player.getMainHandItem());
 		zombie.setGuaranteedDrop(EquipmentSlot.MAINHAND);
+		player.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
 		zombie.setItemSlot(EquipmentSlot.OFFHAND, player.getOffhandItem());
 		zombie.setGuaranteedDrop(EquipmentSlot.OFFHAND);
+		player.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
 		ListTag listTag = new ListTag();
 		for (ItemStack item : player.getInventory().items) {
 			listTag.add(item.save(new CompoundTag()));
