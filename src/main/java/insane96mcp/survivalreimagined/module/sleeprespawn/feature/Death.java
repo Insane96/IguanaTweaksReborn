@@ -9,6 +9,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -27,6 +29,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class Death extends Feature {
 
 	public static final String PLAYER_GHOST = SurvivalReimagined.RESOURCE_PREFIX + "player_ghost";
+	public static final String PLAYER_GHOST_LANG = SurvivalReimagined.MOD_ID + ".player_ghost";
 	public static final String ITEMS_TO_DROP = SurvivalReimagined.RESOURCE_PREFIX + "items_to_drop";
 	//public static final String XP_TO_DROP = SurvivalReimagined.RESOURCE_PREFIX + "xp_to_drop";
 
@@ -48,9 +51,9 @@ public class Death extends Feature {
 		zombie.setPos(player.position());
 		zombie.setPersistenceRequired();
 		zombie.getPersistentData().putBoolean(PLAYER_GHOST, true);
+		zombie.setCustomName(Component.translatable(PLAYER_GHOST_LANG, player.getName().getString()));
 		zombie.setSilent(true);
 		zombie.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, -1, 0, false, false, false));
-		zombie.addEffect(new MobEffectInstance(MobEffects.GLOWING, -1, 0, false, false, false));
 		zombie.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, -1, 0, false, false, false));
 		for (int i = 0; i < 4; i++) {
 			EquipmentSlot slot = EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, i);
@@ -87,5 +90,16 @@ public class Death extends Feature {
 				event.getEntity().level.addFreshEntity(itemEntity);
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void onEntityTick(LivingEvent.LivingTickEvent event) {
+		if (!this.isEnabled()
+				|| event.getEntity().tickCount % 20 != 2
+				|| !event.getEntity().getPersistentData().contains(PLAYER_GHOST))
+			return;
+
+		if (event.getEntity().level.hasNearbyAlivePlayer(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 64))
+			event.getEntity().setGlowingTag(true);
 	}
 }

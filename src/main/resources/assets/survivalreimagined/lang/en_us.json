@@ -9,6 +9,7 @@
 	"survivalreimagined.not_tired": "You're not tired enough to sleep",
 	"survivalreimagined.tired_enough": "You start feeling tired",
 	"survivalreimagined.too_tired": "You should really get some sleep",
+	"survivalreimagined.player_ghost": "%s's Ghost",
 
 	"survivalreimagined.no_damage_item": "This item blade is not sharp, hits like a fist",
 	"survivalreimagined.no_efficiency_item": "This item is old and rusty, can't mine anything",

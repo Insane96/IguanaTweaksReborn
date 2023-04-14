@@ -16,7 +16,7 @@ import net.minecraftforge.registries.RegistryObject;
 @Label(name = "Bone Club", description = "Add a new early game weapon")
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class BoneClub extends Feature {
-	private static final ILItemTier BONE_TIER = new ILItemTier(1, 66, 2f, 1f, 9, () -> Ingredient.of(Items.BONE));
+	private static final ILItemTier BONE_TIER = new ILItemTier(1, 67, 2f, 1f, 9, () -> Ingredient.of(Items.BONE));
 
 	public static final RegistryObject<Item> BONE_CLUB = SRItems.ITEMS.register("bone_club", () -> new GenericAttackItem(BONE_TIER, 4, -2.7F, new Item.Properties()));
 
