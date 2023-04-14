@@ -9,18 +9,24 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RespawnAnchorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class RespawnObeliskBlock extends Block {
     public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
@@ -40,7 +46,7 @@ public class RespawnObeliskBlock extends Block {
             enable(player, level, pos, state);
             return InteractionResult.SUCCESS;
         }
-        else if (!level.isClientSide) {
+        else if (state.getValue(ENABLED) && !level.isClientSide) {
             ServerPlayer serverplayer = (ServerPlayer)player;
             if (serverplayer.getRespawnDimension() != level.dimension() || !pos.equals(serverplayer.getRespawnPosition())) {
                 serverplayer.setRespawnPosition(level.dimension(), pos, 0.0F, false, true);
@@ -60,6 +66,17 @@ public class RespawnObeliskBlock extends Block {
         p_270172_.setBlock(p_270534_, blockstate, 3);
         p_270172_.gameEvent(GameEvent.BLOCK_CHANGE, p_270534_, GameEvent.Context.of(p_270997_, blockstate));
         p_270172_.playSound(null, (double)p_270534_.getX() + 0.5D, (double)p_270534_.getY() + 0.5D, (double)p_270534_.getZ() + 0.5D, SoundEvents.RESPAWN_ANCHOR_CHARGE, SoundSource.BLOCKS, 1.0F, 1.0F);
+    }
+
+    @Override
+    public Optional<Vec3> getRespawnPosition(BlockState state, EntityType<?> type, LevelReader levelReader, BlockPos pos, float orientation, @org.jetbrains.annotations.Nullable LivingEntity entity) {
+        if (!levelReader.getBlockState(pos).getValue(RespawnObeliskBlock.ENABLED) || !levelReader.getBlockState(pos.north(4)).is(Blocks.IRON_BLOCK) || !levelReader.getBlockState(pos.south(4)).is(Blocks.IRON_BLOCK) || !levelReader.getBlockState(pos.east(4)).is(Blocks.IRON_BLOCK) || !levelReader.getBlockState(pos.west(4)).is(Blocks.IRON_BLOCK))
+            return Optional.empty();
+        if (state.getBlock() instanceof RespawnObeliskBlock && levelReader instanceof Level level)
+        {
+            return RespawnAnchorBlock.findStandUpPosition(type, levelReader, pos);
+        }
+        return Optional.empty();
     }
 
     public static int lightLevel(BlockState state) {

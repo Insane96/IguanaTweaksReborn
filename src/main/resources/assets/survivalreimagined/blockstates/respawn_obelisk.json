@@ -1,10 +1,10 @@
 {
   "variants": {
     "enabled=false": {
-      "model": "minecraft:block/respawn_obelisk_disabled"
+      "model": "survivalreimagined:block/respawn_obelisk_disabled"
     },
     "enabled=true": {
-      "model": "minecraft:block/respawn_obelisk_enabled"
+      "model": "survivalreimagined:block/respawn_obelisk_enabled"
     }
   }
 }

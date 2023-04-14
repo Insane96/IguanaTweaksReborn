@@ -14,13 +14,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -71,13 +71,12 @@ public class Respawn extends Feature {
 			return;
 
 		Level level = event.getEntity().getLevel();
-		if (!level.getBlockState(pos).getValue(RespawnObeliskBlock.ENABLED) || !level.getBlockState(pos.north(4)).is(Blocks.IRON_BLOCK) || !level.getBlockState(pos.south(4)).is(Blocks.IRON_BLOCK) || !level.getBlockState(pos.east(4)).is(Blocks.IRON_BLOCK) || !level.getBlockState(pos.west(4)).is(Blocks.IRON_BLOCK))
-			return;
 
 		level.destroyBlock(pos.north(4), false);
 		level.destroyBlock(pos.south(4), false);
 		level.destroyBlock(pos.east(4), false);
 		level.destroyBlock(pos.west(4), false);
+		level.setBlock(pos, level.getBlockState(pos).setValue(RespawnObeliskBlock.ENABLED, false), 3);
 	}
 
 	@Nullable
@@ -127,7 +126,7 @@ public class Respawn extends Feature {
 		return respawn;
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onSetSpawn(PlayerSetSpawnEvent event) {
 		if (!this.isEnabled()
 				|| event.isForced()
@@ -138,5 +137,16 @@ public class Respawn extends Feature {
 
 		ServerPlayer player = (ServerPlayer) event.getEntity();
 		player.displayClientMessage(Component.translatable(LOOSE_RESPAWN_POINT_SET), false);
+	}
+
+	@SubscribeEvent
+	public void onSetSpawn2(PlayerSetSpawnEvent event) {
+		if (!this.isEnabled()
+				|| event.isForced()
+				|| !(event.getEntity() instanceof ServerPlayer player)
+				|| (player.getRespawnPosition() != null && player.level.getBlockState(player.getRespawnPosition()).is(RESPAWN_OBELISK.get())))
+			return;
+
+		event.setCanceled(true);
 	}
 }
