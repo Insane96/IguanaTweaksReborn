@@ -22,6 +22,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -57,7 +58,7 @@ public class NoHunger extends Feature {
     public static Boolean enablePassiveRegen = false;
     @Config
     @Label(name = "Passive Health Regen.Regen Speed", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%")
-    public static MinMax passiveRegenerationTime = new MinMax(40, 60);
+    public static MinMax passiveRegenerationTime = new MinMax(120, 180);
     @Config(min = 0d)
     @Label(name = "Food Heal.Health Multiplier", description = "When eating you'll get healed by hunger restored multiplied by this percentage. (Set to 1 to have the same effect as pre-beta 1.8 food")
     public static Double foodHealHealthMultiplier = 0.83d;
@@ -155,6 +156,8 @@ public class NoHunger extends Feature {
         float healthPerc = 1 - (player.getHealth() / player.getMaxHealth());
         int secs;
         secs = (int) ((passiveRegenerationTime.max - passiveRegenerationTime.min) * healthPerc + passiveRegenerationTime.min);
+        if (player.level.getDifficulty().equals(Difficulty.HARD))
+            secs *= 1.5d;
         if (player.hasEffect(SRMobEffects.WELL_FED.get())) {
             MobEffectInstance wellFed = player.getEffect(SRMobEffects.WELL_FED.get());
             //noinspection ConstantConditions

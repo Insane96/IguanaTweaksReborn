@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Actually Sweet Berry Bushes", description = "Berry bushes no longer deal damage when walking in them with leggings and boots.")
@@ -19,7 +19,7 @@ public class ActuallySweetBerryBushes extends Feature {
     }
 
     @SubscribeEvent
-    public void onBushesDamage(LivingDamageEvent event) {
+    public void onBushesDamage(LivingAttackEvent event) {
         if (!this.isEnabled()
             || !event.getSource().is(DamageTypes.SWEET_BERRY_BUSH))
             return;
