@@ -68,8 +68,8 @@ public class SRAnvilRecipeReloadListener extends SimpleJsonResourceReloadListene
     public static void anvilUpdateEvent(final AnvilRepairEvent event)
     {
         for (SRAnvilRecipe anvilRecipe : SRAnvilRecipeReloadListener.RECIPES) {
-            if (anvilRecipe.matches(event.getLeft(), event.getRight()) && anvilRecipe.getChanceToBreak() > -1d) {
-                event.setBreakChance((float) anvilRecipe.getChanceToBreak());
+            if (anvilRecipe.matches(event.getLeft(), event.getRight()) && anvilRecipe.getChanceToBreak() != null) {
+                event.setBreakChance(anvilRecipe.getChanceToBreak().floatValue());
             }
         }
     }

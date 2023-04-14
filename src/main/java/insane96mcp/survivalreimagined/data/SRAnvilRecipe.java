@@ -44,7 +44,7 @@ public class SRAnvilRecipe {
         return result;
     }
 
-    public double getChanceToBreak() {
+    public Double getChanceToBreak() {
         return this.chanceToBreak;
     }
 
