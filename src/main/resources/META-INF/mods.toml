@@ -49,6 +49,13 @@ license="All rights reserved"
         side="BOTH"
 
     [[dependencies.survivalreimagined]]
+        modId="pehkui"
+        mandatory=true
+        versionRange="[3.7.2,)"
+        ordering="NONE"
+        side="BOTH"
+
+    [[dependencies.survivalreimagined]]
         modId="shieldsplus"
         mandatory=true
         versionRange="[1.4.3,)"

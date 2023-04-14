@@ -97,10 +97,6 @@ repositories {
         name 'DVS1 Maven FS'
         url 'https://dvs1.progwml6.com/files/maven'
     }
-    maven { // SlimeKnights and JEI
-        name 'DVS1 Maven FS'
-        url 'https://dvs1.progwml6.com/files/maven'
-    }
     flatDir {
         dir 'libs'
     }
@@ -110,6 +106,9 @@ repositories {
         content {
             includeGroup "curse.maven"
         }
+    }
+    maven {
+        url = "https://jitpack.io"
     }
 }
 
@@ -135,6 +134,8 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:better-advancements-272515:4481186")
 
     implementation fg.deobf("com.github.glitchfiend:SereneSeasons:${mc_version}-${sereneseasons_version}")
+
+    implementation fg.deobf("com.github.Virtuoel:Pehkui:${pehkui_version}-${mc_version}-forge")
 
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
