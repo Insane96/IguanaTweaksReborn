@@ -27,6 +27,7 @@
   * New item that can reset the repair cost of items
 * Added Ancient Lapis
   * New item crafted from Cleansed Lapis that can increase the level of enchantments over the maximum
+* Spiders are now smaller and Zombies can vary in size
 * Slight rework of structure loot (more XP Bottles)
 * Increased Golden Tools base efficiency
 * Sprint jumping is now affected by movement speed

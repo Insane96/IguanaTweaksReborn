@@ -1,10 +1,10 @@
 {
     "type": "minecraft:jigsaw",
-    "biomes": "#minecraft:has_structure/ruined_portal_standard",
+    "biomes": "#survivalreimagined:is_birch_forest",
     "step": "surface_structures",
     "spawn_overrides": {},
     "terrain_adaptation": "beard_thin",
-    "start_pool": "survivalreimagined:respawn_obelisk_deepslate",
+    "start_pool": "survivalreimagined:respawn_obelisk_birch",
     "size": 1,
     "start_height": {
         "absolute": 0

@@ -11,7 +11,7 @@
                     "processors": [
                         {
                             "processor_type": "minecraft:block_rot",
-                            "integrity": 0.7,
+                            "integrity": 0.75,
                             "rottable_blocks": "#survivalreimagined:structures/respawn_obelisk/blocks_to_rot"
                         },
                         {

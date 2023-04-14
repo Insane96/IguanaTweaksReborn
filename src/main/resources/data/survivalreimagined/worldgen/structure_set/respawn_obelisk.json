@@ -7,6 +7,26 @@
         {
             "structure": "survivalreimagined:respawn_obelisk_deepslate",
             "weight": 1
+        },
+        {
+            "structure": "survivalreimagined:respawn_obelisk_birch",
+            "weight": 1
+        },
+        {
+            "structure": "survivalreimagined:respawn_obelisk_desert",
+            "weight": 1
+        },
+        {
+            "structure": "survivalreimagined:respawn_obelisk_jungle",
+            "weight": 1
+        },
+        {
+            "structure": "survivalreimagined:respawn_obelisk_ocean",
+            "weight": 1
+        },
+        {
+            "structure": "survivalreimagined:respawn_obelisk_snow",
+            "weight": 1
         }
     ],
     "placement": {

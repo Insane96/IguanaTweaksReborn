@@ -17,6 +17,9 @@
         "minecraft:cobbled_deepslate",
         "minecraft:birch_planks",
         "minecraft:birch_slab",
-        "minecraft:birch_log"
+        "minecraft:birch_log",
+        "minecraft:prismarine_bricks",
+        "minecraft:prismarine_brick_slab",
+        "minecraft:prismarine"
     ]
 }

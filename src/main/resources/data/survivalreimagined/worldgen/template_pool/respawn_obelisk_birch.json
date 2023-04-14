@@ -6,7 +6,7 @@
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "rigid",
-                "location": "survivalreimagined:respawn_obelisk_deepslate",
+                "location": "survivalreimagined:respawn_obelisk_birch",
                 "processors": {
                     "processors": [
                         {
