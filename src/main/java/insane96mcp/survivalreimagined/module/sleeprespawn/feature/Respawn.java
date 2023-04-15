@@ -11,10 +11,13 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
 import insane96mcp.survivalreimagined.module.sleeprespawn.block.RespawnObeliskBlock;
 import insane96mcp.survivalreimagined.setup.SRBlocks;
+import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -44,6 +47,8 @@ public class Respawn extends SRFeature {
 	public static Double looseBedSpawnRange = 256d;
 
 	public static final RegistryObject<RespawnObeliskBlock> RESPAWN_OBELISK = SRBlocks.BLOCKS.register("respawn_obelisk", () -> new RespawnObeliskBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops().strength(50.0F, 1200.0F).lightLevel(RespawnObeliskBlock::lightLevel)));
+
+	public static final RegistryObject<BlockItem> RESPAWN_OBELISK_ITEM = SRItems.ITEMS.register("respawn_obelisk", () -> new BlockItem(RESPAWN_OBELISK.get(), new Item.Properties()));
 
 	public static final ArrayList<IdTagValue> RESPAWN_OBELISK_CATALYSTS_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_block", 0.8d),
