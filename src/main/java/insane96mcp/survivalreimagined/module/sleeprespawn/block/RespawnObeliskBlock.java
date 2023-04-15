@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.block;
 
 import com.google.common.collect.ImmutableList;
+import insane96mcp.survivalreimagined.data.trigger.ActivateRespawnObeliskTrigger;
 import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
 import net.minecraft.core.BlockPos;
@@ -74,6 +75,7 @@ public class RespawnObeliskBlock extends Block {
             if (serverplayer.getRespawnDimension() != level.dimension() || !pos.equals(serverplayer.getRespawnPosition())) {
                 serverplayer.setRespawnPosition(level.dimension(), pos, 0.0F, false, true);
                 level.playSound(null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.RESPAWN_ANCHOR_SET_SPAWN, SoundSource.BLOCKS, 1.0F, 1.0F);
+                ActivateRespawnObeliskTrigger.TRIGGER.trigger(serverplayer);
                 return InteractionResult.SUCCESS;
             }
         }

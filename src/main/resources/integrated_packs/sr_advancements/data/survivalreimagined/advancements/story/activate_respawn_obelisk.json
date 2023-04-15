@@ -1,0 +1,28 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:respawn_obelisk"
+		},
+		"title": {
+			"translate": "advancements.sr_story.activate_respawn_obelisk.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.activate_respawn_obelisk.description"
+		},
+		"frame": "goal",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/respawn_obelisk",
+	"criteria": {
+		"activate_respawn_obelisk": {
+			"trigger": "survivalreimagined:activate_respawn_obelisk"
+		}
+	},
+	"requirements": [
+		[
+			"activate_respawn_obelisk"
+		]
+	]
+}
