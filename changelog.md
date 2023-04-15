@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.3.0
 * Advancements!
   * First step towards new advancements
 * Re-enabled spawn points

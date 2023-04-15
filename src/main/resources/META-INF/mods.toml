@@ -20,59 +20,59 @@ license="All rights reserved"
     # Configured background
     configBackground = "minecraft:textures/block/cobblestone.png"
 
-    [[dependencies.survivalreimagined]]
-        modId="forge"
-        mandatory=true
-        versionRange="[44,)"
-        ordering="NONE"
-        side="BOTH"
+[[dependencies.survivalreimagined]]
+    modId="forge"
+    mandatory=true
+    versionRange="[44,)"
+    ordering="NONE"
+    side="BOTH"
 
-    [[dependencies.survivalreimagined]]
-        modId="minecraft"
-        mandatory=true
-        versionRange="[1.19.3,1.20)"
-        ordering="NONE"
-        side="BOTH"
+[[dependencies.survivalreimagined]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19.4,1.20)"
+    ordering="NONE"
+    side="BOTH"
 
-    [[dependencies.survivalreimagined]]
-        modId="insanelib"
-        mandatory=true
-        versionRange="[1.8.1,)"
-        ordering="NONE"
-        side="BOTH"
+[[dependencies.survivalreimagined]]
+    modId="insanelib"
+    mandatory=true
+    versionRange="[1.8.1,)"
+    ordering="NONE"
+    side="BOTH"
 
-    [[dependencies.survivalreimagined]]
-        modId="mobspropertiesrandomness"
-        mandatory=true
-        versionRange="[4.3.0,)"
-        ordering="NONE"
-        side="BOTH"
+[[dependencies.survivalreimagined]]
+    modId="mobspropertiesrandomness"
+    mandatory=true
+    versionRange="[4.3.0,)"
+    ordering="NONE"
+    side="BOTH"
 
-    [[dependencies.survivalreimagined]]
-        modId="pehkui"
-        mandatory=true
-        versionRange="[3.7.2,)"
-        ordering="NONE"
-        side="BOTH"
+[[dependencies.survivalreimagined]]
+    modId="pehkui"
+    mandatory=true
+    versionRange="[3.7.2,)"
+    ordering="NONE"
+    side="BOTH"
 
-    [[dependencies.survivalreimagined]]
-        modId="shieldsplus"
-        mandatory=true
-        versionRange="[1.4.3,)"
-        ordering="NONE"
-        side="BOTH"
+[[dependencies.survivalreimagined]]
+    modId="shieldsplus"
+    mandatory=true
+    versionRange="[1.4.3,)"
+    ordering="NONE"
+    side="BOTH"
 
-    [[dependencies.survivalreimagined]]
-        modId="enhancedai"
-        mandatory=true
-        versionRange="[1.10.1,)"
-        ordering="NONE"
-        side="BOTH"
+[[dependencies.survivalreimagined]]
+    modId="enhancedai"
+    mandatory=true
+    versionRange="[1.10.1,)"
+    ordering="NONE"
+    side="BOTH"
 
 
-    [[dependencies.survivalreimagined]]
-        modId="sereneseasons"
-        mandatory=true
-        versionRange="[8.2.0.37,)"
-        ordering="NONE"
-        side="BOTH"
+[[dependencies.survivalreimagined]]
+    modId="sereneseasons"
+    mandatory=true
+    versionRange="[8.2.0.37,)"
+    ordering="NONE"
+    side="BOTH"
