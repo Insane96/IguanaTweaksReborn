@@ -17,6 +17,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
@@ -57,6 +58,8 @@ public class Death extends Feature {
 		zombie.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, 0d);
 		zombie.getPersistentData().putBoolean(PLAYER_GHOST, true);
 		zombie.setCustomName(Component.translatable(PLAYER_GHOST_LANG, player.getName().getString()));
+		if (zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null)
+			zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1d);
 		zombie.setSilent(true);
 		zombie.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, -1, 0, false, false, false));
 		zombie.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, -1, 0, false, false, false));
