@@ -1,6 +1,8 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.block;
 
 import com.google.common.collect.ImmutableList;
+import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
+import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
@@ -16,7 +18,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RespawnAnchorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -32,23 +33,41 @@ import java.util.Optional;
 public class RespawnObeliskBlock extends Block {
     public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
 
+    private static final ImmutableList<Vec3i> CATALYST_RELATIVE_POSITIONS = ImmutableList.of(
+            new Vec3i(-4, 0, 0),
+            new Vec3i(4, 0, 0),
+            new Vec3i(0, 0, -4),
+            new Vec3i(0, 0, 4)
+    );
+
     private static final ImmutableList<Vec3i> RESPAWN_HORIZONTAL_OFFSETS = ImmutableList.of(new Vec3i(0, 0, -1), new Vec3i(-1, 0, 0), new Vec3i(0, 0, 1), new Vec3i(1, 0, 0), new Vec3i(-1, 0, -1), new Vec3i(1, 0, -1), new Vec3i(-1, 0, 1), new Vec3i(1, 0, 1));
     private static final ImmutableList<Vec3i> RESPAWN_OFFSETS = (new ImmutableList.Builder<Vec3i>()).addAll(RESPAWN_HORIZONTAL_OFFSETS).addAll(RESPAWN_HORIZONTAL_OFFSETS.stream().map(Vec3i::below).iterator()).addAll(RESPAWN_HORIZONTAL_OFFSETS.stream().map(Vec3i::above).iterator()).add(new Vec3i(0, 1, 0)).build();
 
     public RespawnObeliskBlock(Properties properties) {
         super(properties);
+        registerDefaultState(this.getStateDefinition().any().setValue(ENABLED, false));
     }
 
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
-        if (!state.getValue(ENABLED) && level.getBlockState(pos.north(4)).is(Blocks.IRON_BLOCK)
-                && level.getBlockState(pos.south(4)).is(Blocks.IRON_BLOCK)
-                && level.getBlockState(pos.east(4)).is(Blocks.IRON_BLOCK)
-                && level.getBlockState(pos.west(4)).is(Blocks.IRON_BLOCK)) {
-            enable(player, level, pos, state);
-            return InteractionResult.SUCCESS;
-        }
-        else if (!state.getValue(ENABLED)) {
-            player.sendSystemMessage(Component.literal("Can't activate. Missing catalyst blocks."));
+        if (!state.getValue(ENABLED)) {
+            boolean hasCatalyst = true;
+            BlockPos.MutableBlockPos relativePos = new BlockPos.MutableBlockPos();
+            for (Vec3i rel : CATALYST_RELATIVE_POSITIONS) {
+                relativePos.set(pos).move(rel);
+                if (!isBlockCatalyst(level.getBlockState(relativePos).getBlock())) {
+                    hasCatalyst = false;
+                    break;
+                }
+            }
+            if (hasCatalyst) {
+                enable(player, level, pos, state);
+                return InteractionResult.SUCCESS;
+            }
+            else {
+                if (!level.isClientSide && hand == InteractionHand.MAIN_HAND)
+                    player.sendSystemMessage(Component.literal("Can't activate. Missing catalyst blocks."));
+                return InteractionResult.PASS;
+            }
         }
         else if (state.getValue(ENABLED) && !level.isClientSide) {
             ServerPlayer serverplayer = (ServerPlayer)player;
@@ -74,16 +93,52 @@ public class RespawnObeliskBlock extends Block {
 
     @Override
     public Optional<Vec3> getRespawnPosition(BlockState state, EntityType<?> type, LevelReader levelReader, BlockPos pos, float orientation, @org.jetbrains.annotations.Nullable LivingEntity entity) {
-        if (!levelReader.getBlockState(pos).getValue(RespawnObeliskBlock.ENABLED) || !levelReader.getBlockState(pos.north(4)).is(Blocks.IRON_BLOCK) || !levelReader.getBlockState(pos.south(4)).is(Blocks.IRON_BLOCK) || !levelReader.getBlockState(pos.east(4)).is(Blocks.IRON_BLOCK) || !levelReader.getBlockState(pos.west(4)).is(Blocks.IRON_BLOCK))
+        if (!levelReader.getBlockState(pos).getValue(RespawnObeliskBlock.ENABLED))
             return Optional.empty();
-        if (state.getBlock() instanceof RespawnObeliskBlock && levelReader instanceof Level level)
+        boolean hasCatalyst = true;
+        BlockPos.MutableBlockPos relativePos = new BlockPos.MutableBlockPos();
+        for (Vec3i rel : CATALYST_RELATIVE_POSITIONS) {
+            relativePos.set(pos).move(rel);
+            if (!isBlockCatalyst(levelReader.getBlockState(relativePos).getBlock())) {
+                hasCatalyst = false;
+                break;
+            }
+        }
+        if (hasCatalyst && state.getBlock() instanceof RespawnObeliskBlock)
         {
             return RespawnAnchorBlock.findStandUpPosition(type, levelReader, pos);
         }
         return Optional.empty();
     }
 
+    public static void onObeliskRespawn(Player player, Level level, BlockPos respawnPos) {
+        BlockPos.MutableBlockPos relativePos = new BlockPos.MutableBlockPos();
+        boolean hasDestroyedBlock = false;
+        for (Vec3i rel : CATALYST_RELATIVE_POSITIONS) {
+            relativePos.set(respawnPos).move(rel);
+            double chance = getCatalystBlockChanceToBreak(level.getBlockState(relativePos).getBlock());
+            if (chance > 0d && level.getRandom().nextDouble() < chance) {
+                level.destroyBlock(relativePos, false);
+                hasDestroyedBlock = true;
+            }
+        }
+        if (hasDestroyedBlock) {
+            level.setBlock(respawnPos, level.getBlockState(respawnPos).setValue(RespawnObeliskBlock.ENABLED, false), 3);
+            level.playSound(null, respawnPos.getX(), respawnPos.getY(), respawnPos.getZ(), SoundEvents.RESPAWN_ANCHOR_DEPLETE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            player.sendSystemMessage(Component.literal("Respawn Obelisk disabled because one or more catalysts have been destroyed."));
+        }
+    }
+
     public static int lightLevel(BlockState state) {
         return state.getValue(ENABLED) ? 15 : 7;
+    }
+
+    public static boolean isBlockCatalyst(Block block) {
+        return Respawn.respawnObeliskCatalysts.stream().anyMatch(idTagValue -> idTagValue.matchesBlock(block));
+    }
+
+    public static double getCatalystBlockChanceToBreak(Block block) {
+        Optional<IdTagValue> catalyst = Respawn.respawnObeliskCatalysts.stream().filter(idTagValue -> idTagValue.matchesBlock(block)).findFirst();
+        return catalyst.map(idTagValue -> idTagValue.value).orElse(0d);
     }
 }

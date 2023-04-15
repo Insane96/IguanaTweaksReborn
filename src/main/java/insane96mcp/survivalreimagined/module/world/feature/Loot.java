@@ -1,10 +1,10 @@
 package insane96mcp.survivalreimagined.module.world.feature;
 
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.LootPurgerModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @Label(name = "Loot reducer", description = "Reduces loot from some structures when too near spawn.")
 @LoadFeature(module = Modules.Ids.WORLD)
-public class Loot extends SRFeature {
+public class Loot extends Feature {
 
 	//TODO Check if changing day length is viable
 	@Config

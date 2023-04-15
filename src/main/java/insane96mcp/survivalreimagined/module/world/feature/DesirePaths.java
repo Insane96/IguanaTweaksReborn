@@ -1,11 +1,11 @@
 package insane96mcp.survivalreimagined.module.world.feature;
 
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.world.data.BlockTransformation;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -26,7 +26,7 @@ import java.util.List;
 
 @Label(name = "Desire Paths", description = "Wear down grass when passing on it.")
 @LoadFeature(module = Modules.Ids.WORLD)
-public class DesirePaths extends SRFeature {
+public class DesirePaths extends Feature {
 	public static final ResourceLocation TALL_GRASS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "tall_grass");
 
 	private static final List<String> DEFAULT_TRANSFORMATION_LIST = List.of("minecraft:grass_block,minecraft:dirt", "minecraft:dirt,minecraft:coarse_dirt");

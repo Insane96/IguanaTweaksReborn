@@ -1,19 +1,20 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.feature;
 
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
 import insane96mcp.survivalreimagined.module.sleeprespawn.block.RespawnObeliskBlock;
 import insane96mcp.survivalreimagined.setup.SRBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -25,10 +26,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Label(name = "Respawn", description = "Changes to respawning")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
-public class Respawn extends Feature {
+public class Respawn extends SRFeature {
 
 	public static final String LOOSE_RESPAWN_POINT_SET = SurvivalReimagined.MOD_ID + ".loose_bed_respawn_point_set";
 
@@ -40,10 +43,29 @@ public class Respawn extends Feature {
 	@Label(name = "Loose Bed Spawn Range", description = "The range from beds where players will respawn.")
 	public static Double looseBedSpawnRange = 256d;
 
-	public static final RegistryObject<RespawnObeliskBlock> RESPAWN_OBELISK = SRBlocks.BLOCKS.register("respawn_obelisk", () -> new RespawnObeliskBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops().strength(50.0F, 1200.0F).lightLevel(state -> RespawnObeliskBlock.lightLevel(state))));
+	public static final RegistryObject<RespawnObeliskBlock> RESPAWN_OBELISK = SRBlocks.BLOCKS.register("respawn_obelisk", () -> new RespawnObeliskBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops().strength(50.0F, 1200.0F).lightLevel(RespawnObeliskBlock::lightLevel)));
+
+	public static final ArrayList<IdTagValue> RESPAWN_OBELISK_CATALYSTS_DEFAULT = new ArrayList<>(List.of(
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_block", 0.8d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:gold_block", 0.3d),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_block", 0.2d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_block", 0.1d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:emerald_block", 0.1d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_block", 0.01d)
+	));
+
+	public static final ArrayList<IdTagValue> respawnObeliskCatalysts = new ArrayList<>();
 
 	public Respawn(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	@Override
+	public void loadJsonConfigs() {
+		if (!this.isEnabled())
+			return;
+		super.loadJsonConfigs();
+		this.loadAndReadFile("respawn_obelisk_catalysts.json", respawnObeliskCatalysts, RESPAWN_OBELISK_CATALYSTS_DEFAULT, IdTagValue.LIST_TYPE);
 	}
 
 	@SubscribeEvent
@@ -61,22 +83,6 @@ public class Respawn extends Feature {
 			event.getEntity().teleportToWithTicket(respawn.getX() + 0.5d, respawn.getY() + 0.5d, respawn.getZ() + 0.5d);
 
 		tryRespawnObelisk(event);
-	}
-
-	private void tryRespawnObelisk(PlayerEvent.PlayerRespawnEvent event) {
-		ServerPlayer player = (ServerPlayer) event.getEntity();
-		BlockPos pos = player.getRespawnPosition();
-		if (pos == null
-				|| !event.getEntity().getLevel().getBlockState(pos).is(RESPAWN_OBELISK.get()))
-			return;
-
-		Level level = event.getEntity().getLevel();
-
-		level.destroyBlock(pos.north(4), false);
-		level.destroyBlock(pos.south(4), false);
-		level.destroyBlock(pos.east(4), false);
-		level.destroyBlock(pos.west(4), false);
-		level.setBlock(pos, level.getBlockState(pos).setValue(RespawnObeliskBlock.ENABLED, false), 3);
 	}
 
 	@Nullable
@@ -126,8 +132,18 @@ public class Respawn extends Feature {
 		return respawn;
 	}
 
+	private void tryRespawnObelisk(PlayerEvent.PlayerRespawnEvent event) {
+		ServerPlayer player = (ServerPlayer) event.getEntity();
+		BlockPos pos = player.getRespawnPosition();
+		if (pos == null
+				|| !event.getEntity().getLevel().getBlockState(pos).is(RESPAWN_OBELISK.get()))
+			return;
+
+		RespawnObeliskBlock.onObeliskRespawn(event.getEntity(), event.getEntity().level, pos);
+	}
+
 	@SubscribeEvent(priority = EventPriority.LOW)
-	public void onSetSpawn(PlayerSetSpawnEvent event) {
+	public void onSetSpawnLooseMessage(PlayerSetSpawnEvent event) {
 		if (!this.isEnabled()
 				|| event.isForced()
 				|| looseBedSpawnRange == 0d
@@ -140,7 +156,7 @@ public class Respawn extends Feature {
 	}
 
 	@SubscribeEvent
-	public void onSetSpawn2(PlayerSetSpawnEvent event) {
+	public void onSetSpawnPreventObeliskOverwrite(PlayerSetSpawnEvent event) {
 		if (!this.isEnabled()
 				|| event.isForced()
 				|| !(event.getEntity() instanceof ServerPlayer player)
