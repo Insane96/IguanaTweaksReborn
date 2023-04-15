@@ -5,6 +5,8 @@
   * First step towards new advancements
 * Re-enabled spawn points
   * World and bed respawns are now loose. Players will respawn up to 256 blocks from the world spawn/bed
+* Added Respawn Obelisks
+  * Structures found in the world which hold a Respawn Obelisk, a new block that allows you to set the spawn point by placing catalysts (precious blocks) nearby.
 * Players that die now summon a Ghost with their items
   * Killing the ghost will give back your items
 * Reworked Wandering Trader trades

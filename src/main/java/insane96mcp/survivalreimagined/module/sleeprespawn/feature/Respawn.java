@@ -50,7 +50,7 @@ public class Respawn extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:gold_block", 0.3d),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_block", 0.2d),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_block", 0.1d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:emerald_block", 0.1d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:emerald_block", 0.5d),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_block", 0.01d)
 	));
 
