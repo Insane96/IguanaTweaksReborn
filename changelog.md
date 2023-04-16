@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.4.0
 * Added Crate
   * An early-mid game shulker to transport items around. Having more than one in the inventory will slow the player down
 * Added Wild Crops
@@ -9,6 +9,7 @@
   * Potatoes and carrots can no longer be planted, instead you must use the seeds counterpart
   * Removed wheat seeds from tilling grass
   * Wheat seeds can now be obtained from Wandering Traders
+* Mod now runs on servers
 
 ## Alpha 3.3.0
 * Advancements!
