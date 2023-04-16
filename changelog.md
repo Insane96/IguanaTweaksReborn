@@ -10,6 +10,7 @@
   * Unbreaking max level is now 1
   * Netherite tools durability has been increased (+50%)
 * Chickens can no longer be bred, use eggs
+* Starting season is now mid-Summer
 
 ## Alpha 3.4.1
 * Renamed Iridium to Florpium

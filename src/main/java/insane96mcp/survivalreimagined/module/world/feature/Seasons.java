@@ -54,7 +54,7 @@ public class Seasons extends Feature {
 	@SubscribeEvent
 	public void onServerStart(ServerStartedEvent event) {
 		if (changeSereneSeasonsConfig) {
-			ServerConfig.startingSubSeason.set(2);
+			ServerConfig.startingSubSeason.set(5);
 			ServerConfig.progressSeasonWhileOffline.set(false);
 		}
 	}

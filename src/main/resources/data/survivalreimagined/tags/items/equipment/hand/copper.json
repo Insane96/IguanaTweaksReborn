@@ -1,7 +1,7 @@
 {
     "replace": false,
     "values": [
-        "#survivalreimagined:equipment/hand/tools/flint",
+        "#survivalreimagined:equipment/hand/tools/copper",
         "survivalreimagined:copper_sword"
     ]
 }
