@@ -20,9 +20,10 @@ import java.util.function.Supplier;
 @LoadFeature(module = Modules.Ids.WORLD)
 public class WanderingTrader extends SRFeature {
     public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_GENERIC_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
-            new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Items.POTATO), 3),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Items.CARROT), 3),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Items.BEETROOT_SEEDS), 3),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Items.WHEAT_SEEDS), 4),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Items.CARROT), 4),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Items.CARROT), 4),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Items.BEETROOT_SEEDS), 4),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.BROWN_MUSHROOM), 4),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.RED_MUSHROOM), 4),
             new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.MELON), 2),

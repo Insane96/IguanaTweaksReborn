@@ -3,6 +3,8 @@
 ## Upcoming
 * Added Crate
   * An early-mid game shulker to transport items around. Having more than one in the inventory will slow the player down
+* Removed Seeds from tilling grass
+  * Wheat seeds can now be obtained from Wandering Traders
 
 ## Alpha 3.3.0
 * Advancements!

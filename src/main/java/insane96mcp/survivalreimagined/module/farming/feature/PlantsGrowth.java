@@ -45,7 +45,7 @@ public class PlantsGrowth extends SRFeature {
 			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:kelp", 2.5d, 1d, 0, 1.5d, new ArrayList<>(List.of(
 					new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:is_ocean"),
 					new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:is_river")
-			)), 2d),
+			)), 2.5d),
 			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:bamboo", 2.5d, 2.5d, 10, 1.5d, new ArrayList<>(List.of(
 					new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_hot")
 			)), 3d)

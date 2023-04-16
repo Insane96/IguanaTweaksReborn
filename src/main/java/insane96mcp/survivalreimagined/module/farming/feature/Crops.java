@@ -14,18 +14,14 @@ import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -66,10 +62,6 @@ public class Crops extends Feature {
 	@Config(min = 0, max = 15)
 	@Label(name = "Min Sunlight", description = "Minimum Sky Light level required for crops to not be affected by \"No Sunlight Growth Multiplier\".")
 	public static Integer minSunlight = 10;
-
-	@Config(min = 0d, max = 1d)
-	@Label(name = "Wheat From Grass Chance", description = "Chance for grass to drop wheat seeds when tilled.")
-	public static Double wheatFromGrassChance = 0.1d;
 
 	@Config(min = 1)
 	@Label(name = "Water Hydration Radius", description = "Radius where water hydrates farmland, vanilla is 4.")
@@ -181,7 +173,7 @@ public class Crops extends Feature {
 		return sustainState.getBlock() instanceof FarmBlock;
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOW)
+	/*@SubscribeEvent(priority = EventPriority.LOW)
 	public void onTill(BlockEvent.BlockToolModificationEvent event) {
 		if (!this.isEnabled()
 				|| event.getPlayer() == null
@@ -205,7 +197,7 @@ public class Crops extends Feature {
 		event.setFinalState(Blocks.DIRT.defaultBlockState());
 		if (event.getLevel().getRandom().nextDouble() < wheatFromGrassChance)
 			event.getPlayer().getLevel().addFreshEntity(new ItemEntity(event.getPlayer().getLevel(), event.getContext().getClickedPos().getX() + 0.5, event.getContext().getClickedPos().getY() + 1, event.getContext().getClickedPos().getZ() + 0.5, new ItemStack(Items.WHEAT_SEEDS)));
-	}
+	}*/
 
 	private static final String path = "crops/";
 
