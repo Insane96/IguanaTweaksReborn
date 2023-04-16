@@ -1,5 +1,6 @@
 {
   "entries": [
+    "survivalreimagined:crops/no_wheat_expansion",
     "survivalreimagined:chest_loot/chests/desert_pyramid",
     "survivalreimagined:chest_loot/chests/village/village_mason",
     "survivalreimagined:livestock/lower_chicken",
@@ -15,7 +16,6 @@
     "survivalreimagined:crops/no_seeds_from_grass",
     "survivalreimagined:chest_loot/chests/spawn_bonus_chest",
     "survivalreimagined:chest_loot/chests/village/village_toolsmith",
-    "survivalreimagined:crops/harder_carrot_farming",
     "survivalreimagined:chest_loot/chests/pillager_outpost",
     "survivalreimagined:chest_loot/chests/simple_dungeon",
     "survivalreimagined:chest_loot/chests/village/village_temple",
@@ -27,7 +27,6 @@
     "survivalreimagined:crops/no_seeds_from_tall_grass",
     "survivalreimagined:livestock/lower_tropical_fish",
     "survivalreimagined:livestock/lower_cooked_cod",
-    "survivalreimagined:crops/harder_wheat_farming",
     "survivalreimagined:livestock/lower_beef",
     "survivalreimagined:enchantments/cleansed_lapis_from_lapis_ore",
     "survivalreimagined:livestock/lower_cooked_mutton",
@@ -51,14 +50,14 @@
     "survivalreimagined:crops/no_baked_potato_from_husk",
     "survivalreimagined:flint_tools/replace_wooden_sword",
     "survivalreimagined:crops/no_carrot_from_husk",
+    "survivalreimagined:crops/no_potato_expansion",
     "survivalreimagined:crops/no_carrot_from_zombie",
     "survivalreimagined:chest_loot/chests/village/village_fletcher",
-    "survivalreimagined:crops/harder_beetroot_farming",
     "survivalreimagined:chest_loot/chests/village/village_butcher",
     "survivalreimagined:chest_loot/chests/village/village_cartographer",
     "survivalreimagined:chest_loot/chests/village/village_taiga_house",
     "survivalreimagined:flint_tools/replace_wooden_hoe",
-    "survivalreimagined:crops/harder_potato_farming",
+    "survivalreimagined:crops/no_carrot_expansion",
     "survivalreimagined:chest_loot/chests/village/village_snowy_house",
     "survivalreimagined:chest_loot/chests/abandoned_mineshaft",
     "survivalreimagined:chest_loot/chests/village/village_armorer",
@@ -67,7 +66,8 @@
     "survivalreimagined:livestock/lower_cooked_porkchop",
     "survivalreimagined:livestock/lower_pufferfish",
     "survivalreimagined:crops/no_seeds_from_fern",
-    "survivalreimagined:chest_loot/chests/buried_treasure"
+    "survivalreimagined:chest_loot/chests/buried_treasure",
+    "survivalreimagined:crops/no_beetroot_expansion"
   ],
   "replace": false
 }

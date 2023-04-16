@@ -3,10 +3,10 @@
   "amount_to_keep": 1,
   "conditions": [
     {
-      "block": "minecraft:carrots",
+      "block": "minecraft:potatoes",
       "condition": "minecraft:block_state_property"
     }
   ],
-  "item": "minecraft:carrot",
-  "multiplier": 0.15
+  "item": "minecraft:potato",
+  "multiplier": 0.0
 }
