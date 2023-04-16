@@ -10,7 +10,7 @@
                     "tag": "minecraft:stone_ore_replaceables"
                 },
                 "state": {
-                    "Name": "survivalreimagined:iridium_ore"
+                    "Name": "survivalreimagined:florpium_ore"
                 }
             },
             {
@@ -19,7 +19,7 @@
                     "tag": "minecraft:deepslate_ore_replaceables"
                 },
                 "state": {
-                    "Name": "survivalreimagined:deepslate_iridium_ore"
+                    "Name": "survivalreimagined:deepslate_florpium_ore"
                 }
             }
         ]

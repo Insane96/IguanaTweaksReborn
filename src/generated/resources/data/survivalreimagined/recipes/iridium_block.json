@@ -3,34 +3,34 @@
   "category": "building",
   "ingredients": [
     {
-      "item": "survivalreimagined:iridium_ingot"
+      "item": "survivalreimagined:florpium_ingot"
     },
     {
-      "item": "survivalreimagined:iridium_ingot"
+      "item": "survivalreimagined:florpium_ingot"
     },
     {
-      "item": "survivalreimagined:iridium_ingot"
+      "item": "survivalreimagined:florpium_ingot"
     },
     {
-      "item": "survivalreimagined:iridium_ingot"
+      "item": "survivalreimagined:florpium_ingot"
     },
     {
-      "item": "survivalreimagined:iridium_ingot"
+      "item": "survivalreimagined:florpium_ingot"
     },
     {
-      "item": "survivalreimagined:iridium_ingot"
+      "item": "survivalreimagined:florpium_ingot"
     },
     {
-      "item": "survivalreimagined:iridium_ingot"
+      "item": "survivalreimagined:florpium_ingot"
     },
     {
-      "item": "survivalreimagined:iridium_ingot"
+      "item": "survivalreimagined:florpium_ingot"
     },
     {
-      "item": "survivalreimagined:iridium_ingot"
+      "item": "survivalreimagined:florpium_ingot"
     }
   ],
   "result": {
-    "item": "survivalreimagined:iridium_block"
+    "item": "survivalreimagined:florpium_block"
   }
 }

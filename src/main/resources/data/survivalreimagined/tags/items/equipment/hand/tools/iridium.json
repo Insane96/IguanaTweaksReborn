@@ -1,9 +1,9 @@
 {
     "replace": false,
     "values": [
-        "survivalreimagined:iridium_pickaxe",
-        "survivalreimagined:iridium_axe",
-        "survivalreimagined:iridium_shovel",
-        "survivalreimagined:iridium_hoe"
+        "survivalreimagined:florpium_pickaxe",
+        "survivalreimagined:florpium_axe",
+        "survivalreimagined:florpium_shovel",
+        "survivalreimagined:florpium_hoe"
     ]
 }

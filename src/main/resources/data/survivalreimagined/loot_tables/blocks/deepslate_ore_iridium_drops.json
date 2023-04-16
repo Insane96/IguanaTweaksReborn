@@ -7,7 +7,7 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "survivalreimagined:iridium_nugget",
+                    "name": "survivalreimagined:florpium_nugget",
                     "functions": [
                         {
                             "function": "minecraft:set_count",

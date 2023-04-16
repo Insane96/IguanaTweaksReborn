@@ -49,7 +49,7 @@
 * The nether no longer has the 8 blocks ratio
 * Swapped Flint and Stone tools' Durability and Efficiency
 * Re-enabled Flint and Stone Hoes
-* Smoker recipe now requires iridium
+* Smoker recipe now requires florpium
 
 ## Alpha 3.2.2
 * Successfully(?) updated to MC 1.19.4
@@ -63,7 +63,7 @@
   * Vigour on wake up changed (Vigour II for 8 minutes -> Vigour I for 20 minutes)
   * Fixed tired applying continuously
 * Copper from campfire now requires 4 minutes instead of 5
-* Iridium tool durability increased by 10%
+* Florpium tool durability increased by 10%
 * Expanded 
   * Now shows the blocks being broken
   * Tool now takes 1 damage per block broken
@@ -98,19 +98,19 @@
 * Blast furnaces now take 2x time to smelt ores
 * Added a global switch to disable all datapacks
 * Food now takes 2x to cook in a furnace
-* Iridium ore drops and ores per chunk increased but decreased ores per vein
+* Florpium ore drops and ores per chunk increased but decreased ores per vein
 * Increased iron nuggets drop with fortune
 * Stamina now regenerates faster when locked
 * Tridents now have +0.5 attack range
-* Removed Iron and Iridium Tools bonus durability
+* Removed Iron and Florpium Tools bonus durability
 * Torch recipe now crafts 3
 * Reduced Tools efficiency and reduced global block hardness, but re-enabled depth hardness
 
 ## Alpha 3.1.0
 * Added EnhancedAI mod
   * Mobs are tougher to fight as they have a few more tricks up their sleeve
-* Added Iridium, a new ore found at any height plus a lot generates hidden about 16 blocks below the sea level
-  * Can be applied to Iron equipment in a Smithing Table to get Iridium equipment, slightly better than iron but more durable
+* Added Florpium, a new ore found at any height plus a lot generates hidden about 16 blocks below the sea level
+  * Can be applied to Iron equipment in a Smithing Table to get Florpium equipment, slightly better than iron but more durable
 * Added Bone Club
   * If you dare to fight a skeleton you can use his bones to get a new weapon, low durability but quite good damage.
 * Added "Actually Sweet Berry Bushes"

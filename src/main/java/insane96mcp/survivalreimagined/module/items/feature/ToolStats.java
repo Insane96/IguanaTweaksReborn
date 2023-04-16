@@ -44,7 +44,7 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/flint", 48),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/stone", 63),
 
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/iridium", 643),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/florpium", 643),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 86),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:carrot_on_a_stick", 63),
@@ -71,10 +71,10 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_leggings", 105),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_boots", 91),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_helmet", 102),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_chestplate", 149),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_leggings", 140),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:iridium_boots", 121),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_helmet", 102),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_chestplate", 149),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_leggings", 140),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_boots", 121),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 38),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", 56),
@@ -98,7 +98,7 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/flint", 3.333d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/stone", 2.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iron", 4.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iridium", 5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/florpium", 5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/golden", 16d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/diamond", 7d)
 	));

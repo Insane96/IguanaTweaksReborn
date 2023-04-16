@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iridium": {
+    "has_florpium": {
       "conditions": {
         "items": [
           {
             "items": [
-              "survivalreimagined:iridium_ingot"
+              "survivalreimagined:florpium_ingot"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "survivalreimagined:iridium_shovel"
+        "recipe": "survivalreimagined:florpium_shovel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_iridium",
+      "has_florpium",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "survivalreimagined:iridium_shovel"
+      "survivalreimagined:florpium_shovel"
     ]
   }
 }

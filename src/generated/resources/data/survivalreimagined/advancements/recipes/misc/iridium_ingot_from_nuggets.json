@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "survivalreimagined:iridium_nugget"
+              "survivalreimagined:florpium_nugget"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "survivalreimagined:iridium_ingot_from_nuggets"
+        "recipe": "survivalreimagined:florpium_ingot_from_nuggets"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "survivalreimagined:iridium_ingot_from_nuggets"
+      "survivalreimagined:florpium_ingot_from_nuggets"
     ]
   }
 }

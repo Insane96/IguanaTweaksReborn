@@ -1,13 +1,13 @@
 {
 	"display": {
 		"icon": {
-			"item": "survivalreimagined:iridium_pickaxe"
+			"item": "survivalreimagined:florpium_pickaxe"
 		},
 		"title": {
-			"translate": "advancements.sr_story.iridium_pickaxe.title"
+			"translate": "advancements.sr_story.florpium_pickaxe.title"
 		},
 		"description": {
-			"translate": "advancements.sr_story.iridium_pickaxe.description"
+			"translate": "advancements.sr_story.florpium_pickaxe.description"
 		},
 		"frame": "task",
 		"show_toast": true,
@@ -16,13 +16,13 @@
 	},
 	"parent": "survivalreimagined:story/iron_pickaxe",
 	"criteria": {
-		"iridium_pickaxe": {
+		"florpium_pickaxe": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
 						"items": [
-							"survivalreimagined:iridium_pickaxe"
+							"survivalreimagined:florpium_pickaxe"
 						]
 					}
 				]
@@ -31,7 +31,7 @@
 	},
 	"requirements": [
 		[
-			"iridium_pickaxe"
+			"florpium_pickaxe"
 		]
 	]
 }

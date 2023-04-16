@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "survivalreimagined:item/iridium_boots"
+    "layer0": "survivalreimagined:item/florpium_boots"
   }
 }

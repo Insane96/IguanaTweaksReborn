@@ -1,12 +1,12 @@
 {
   "type": "minecraft:smithing",
   "addition": {
-    "item": "survivalreimagined:iridium_ingot"
+    "item": "survivalreimagined:florpium_ingot"
   },
   "base": {
     "item": "minecraft:iron_chestplate"
   },
   "result": {
-    "item": "survivalreimagined:iridium_chestplate"
+    "item": "survivalreimagined:florpium_chestplate"
   }
 }

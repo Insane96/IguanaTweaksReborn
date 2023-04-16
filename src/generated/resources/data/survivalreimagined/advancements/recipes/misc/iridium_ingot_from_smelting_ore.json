@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_iridium_ore": {
+    "has_florpium_ore": {
       "conditions": {
         "items": [
           {
             "items": [
-              "survivalreimagined:iridium_ore"
+              "survivalreimagined:florpium_ore"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "survivalreimagined:iridium_ingot_from_smelting_ore"
+        "recipe": "survivalreimagined:florpium_ingot_from_smelting_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_iridium_ore",
+      "has_florpium_ore",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "survivalreimagined:iridium_ingot_from_smelting_ore"
+      "survivalreimagined:florpium_ingot_from_smelting_ore"
     ]
   }
 }

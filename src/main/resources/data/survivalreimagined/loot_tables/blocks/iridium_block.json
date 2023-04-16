@@ -7,7 +7,7 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "survivalreimagined:iridium_block"
+                    "name": "survivalreimagined:florpium_block"
                 }
             ],
             "conditions": [

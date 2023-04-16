@@ -21,29 +21,29 @@ public class ClientSetup {
             event.accept(FlintTools.PICKAXE.get());
             event.accept(FlintTools.SHOVEL.get());
             event.accept(FlintTools.HOE.get());
-            event.accept(Iridium.AXE.get());
-            event.accept(Iridium.PICKAXE.get());
-            event.accept(Iridium.SHOVEL.get());
-            event.accept(Iridium.HOE.get());
+            event.accept(Florpium.AXE.get());
+            event.accept(Florpium.PICKAXE.get());
+            event.accept(Florpium.SHOVEL.get());
+            event.accept(Florpium.HOE.get());
         }
         else if (event.getTab() == CreativeModeTabs.COMBAT) {
             event.accept(FlintTools.SWORD.get());
             event.accept(FlintTools.SHIELD.get());
             event.accept(BoneClub.BONE_CLUB.get());
-            event.accept(Iridium.SWORD.get());
+            event.accept(Florpium.SWORD.get());
             event.accept(ChainedCopperArmor.HELMET.get());
             event.accept(ChainedCopperArmor.CHESTPLATE.get());
             event.accept(ChainedCopperArmor.LEGGINGS.get());
             event.accept(ChainedCopperArmor.BOOTS.get());
 
-            event.accept(Iridium.HELMET.get());
-            event.accept(Iridium.CHESTPLATE.get());
-            event.accept(Iridium.LEGGINGS.get());
-            event.accept(Iridium.BOOTS.get());
-            event.accept(Iridium.SHIELD.get());
+            event.accept(Florpium.HELMET.get());
+            event.accept(Florpium.CHESTPLATE.get());
+            event.accept(Florpium.LEGGINGS.get());
+            event.accept(Florpium.BOOTS.get());
+            event.accept(Florpium.SHIELD.get());
         }
         else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(Iridium.BLOCK_ITEM.get());
+            event.accept(Florpium.BLOCK_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(Respawn.RESPAWN_OBELISK_ITEM.get());
@@ -53,12 +53,12 @@ public class ClientSetup {
             event.accept(Minecarts.NETHER_INFUSED_POWERED_RAIL_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
-            event.accept(Iridium.ORE_ITEM.get());
-            event.accept(Iridium.DEEPSLATE_ORE_ITEM.get());
+            event.accept(Florpium.ORE_ITEM.get());
+            event.accept(Florpium.DEEPSLATE_ORE_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(Iridium.INGOT.get());
-            event.accept(Iridium.NUGGET.get());
+            event.accept(Florpium.INGOT.get());
+            event.accept(Florpium.NUGGET.get());
             event.accept(AncientLapis.ANCIENT_LAPIS.get());
             event.accept(EnchantmentsFeature.CLEANSED_LAPIS.get());
         }

@@ -1,7 +1,7 @@
 {
     "replace": false,
     "values": [
-        "#survivalreimagined:equipment/hand/tools/iridium",
-        "survivalreimagined:iridium_sword"
+        "#survivalreimagined:equipment/hand/tools/florpium",
+        "survivalreimagined:florpium_sword"
     ]
 }

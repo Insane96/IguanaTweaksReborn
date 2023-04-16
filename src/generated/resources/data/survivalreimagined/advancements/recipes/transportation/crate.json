@@ -13,12 +13,12 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_iridium_nugget": {
+    "has_florpium_nugget": {
       "conditions": {
         "items": [
           {
             "items": [
-              "survivalreimagined:iridium_nugget"
+              "survivalreimagined:florpium_nugget"
             ]
           }
         ]
@@ -34,7 +34,7 @@
   },
   "requirements": [
     [
-      "has_iridium_nugget",
+      "has_florpium_nugget",
       "has_barrel",
       "has_the_recipe"
     ]

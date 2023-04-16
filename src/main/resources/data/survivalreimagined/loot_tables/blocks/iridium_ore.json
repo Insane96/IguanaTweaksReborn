@@ -10,7 +10,7 @@
                     "children": [
                         {
                             "type": "minecraft:item",
-                            "name": "survivalreimagined:iridium_ore",
+                            "name": "survivalreimagined:florpium_ore",
                             "conditions": [
                                 {
                                     "condition": "minecraft:match_tool",
@@ -29,7 +29,7 @@
                         },
                         {
                             "type": "minecraft:loot_table",
-                            "name": "survivalreimagined:blocks/ore_iridium_drops",
+                            "name": "survivalreimagined:blocks/ore_florpium_drops",
                             "functions": [
                                 {
                                     "function": "minecraft:explosion_decay"

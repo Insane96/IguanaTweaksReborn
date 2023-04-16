@@ -3,11 +3,11 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "survivalreimagined:iridium_ingot"
+      "item": "survivalreimagined:florpium_ingot"
     }
   ],
   "result": {
     "count": 9,
-    "item": "survivalreimagined:iridium_nugget"
+    "item": "survivalreimagined:florpium_nugget"
   }
 }

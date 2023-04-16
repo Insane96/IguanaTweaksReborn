@@ -1,12 +1,12 @@
 {
   "type": "minecraft:smithing",
   "addition": {
-    "item": "survivalreimagined:iridium_ingot"
+    "item": "survivalreimagined:florpium_ingot"
   },
   "base": {
     "item": "minecraft:shield"
   },
   "result": {
-    "item": "survivalreimagined:iridium_shield"
+    "item": "survivalreimagined:florpium_shield"
   }
 }
