@@ -44,6 +44,9 @@ public class EnchantmentsFeature extends Feature {
 	@Config
 	@Label(name = "Mending overhaul", description = "Removes the mending enchantment and adds a new item that resets the repair cost of items.")
 	public static Boolean mendingOverhaul = true;
+	@Config
+	@Label(name = "Infinity overhaul", description = "Infinity can go up to level 4. Each level makes an arrow have 1 in level chance to not consume.")
+	public static Boolean infinityOverhaul = true;
 
 	public static final RegistryObject<Item> CLEANSED_LAPIS = SRItems.REGISTRY.register("cleansed_lapis", () -> new Item(new Item.Properties()));
 
@@ -184,6 +187,10 @@ public class EnchantmentsFeature extends Feature {
 
 	public static boolean isMendingOverhaulEnabled() {
 		return Feature.isEnabled(EnchantmentsFeature.class) && mendingOverhaul;
+	}
+
+	public static boolean isInfinityOverhaulEnabled() {
+		return Feature.isEnabled(EnchantmentsFeature.class) && infinityOverhaul;
 	}
 
 	private static final String path = "enchantments/";

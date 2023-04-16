@@ -26,7 +26,7 @@ public class EnchantmentMixin {
 	@Inject(at = @At("RETURN"), method = "getMaxLevel", cancellable = true)
 	private void onGetMaxLevel(CallbackInfoReturnable<Integer> cir) {
 		//noinspection ConstantValue
-		if (((Enchantment)(Object) this) instanceof ArrowInfiniteEnchantment)
+		if (EnchantmentsFeature.isInfinityOverhaulEnabled() && ((Enchantment)(Object) this) instanceof ArrowInfiniteEnchantment)
 			cir.setReturnValue(4);
 	}
 }
