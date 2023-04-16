@@ -71,6 +71,9 @@
 	"block.survivalreimagined.respawn_obelisk": "Respawn Obelisk",
 	"block.survivalreimagined.crate": "Crate",
 
+	"block.minecraft.carrots.seeds": "Carrot Seeds",
+	"block.minecraft.potatoes.seeds": "Potato Seeds",
+
 	"survivalreimagined.crate_weighted": "Slows down if %d or more are carried",
 
 	"item.survivalreimagined.ancient_lapis": "Ancient Lapis",
@@ -117,8 +120,8 @@
 	"advancements.sr_story.chained_copper_armor.description": "Obtain a full set of Chained Copper Armor",
 	"advancements.sr_story.iridium_pickaxe.title": "Getting a real upgrade",
 	"advancements.sr_story.iridium_pickaxe.description": "Obtain an Iridium Pickaxe by upgrading an Iron one in the Smithing Table",
-	"advancements.sr_story.wheat_seeds.title": "Seedy Business",
-	"advancements.sr_story.wheat_seeds.description": "Obtain wheat seeds by tilling grass blocks not near water",
+	"advancements.sr_story.seeds.title": "Seedy Business",
+	"advancements.sr_story.seeds.description": "Obtain seeds from wild crops",
 	"advancements.sr_story.cleansed_lapis.title": "Cleanse that repair cost",
 	"advancements.sr_story.cleansed_lapis.description": "Use a Cleansed Lapis to reset the repair cost of an item",
 	"advancements.sr_story.ancient_lapis.title": "Over 9000",

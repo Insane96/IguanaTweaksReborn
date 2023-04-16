@@ -9,22 +9,32 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.farming.block.SeedsBlockItem;
+import insane96mcp.survivalreimagined.module.farming.block.WildCropBlock;
 import insane96mcp.survivalreimagined.module.farming.utils.PlantGrowthModifier;
+import insane96mcp.survivalreimagined.setup.SRBlocks;
+import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 
@@ -66,6 +76,13 @@ public class Crops extends Feature {
 	@Config(min = 1)
 	@Label(name = "Water Hydration Radius", description = "Radius where water hydrates farmland, vanilla is 4.")
 	public static Integer waterHydrationRadius = 2;
+
+	public static final RegistryObject<BlockItem> POTATO_SEEDS = SRItems.REGISTRY.register("potato_seeds", () -> new SeedsBlockItem(Blocks.POTATOES, new Item.Properties()));
+	public static final RegistryObject<BlockItem> CARROT_SEEDS = SRItems.REGISTRY.register("carrot_seeds", () -> new SeedsBlockItem(Blocks.CARROTS, new Item.Properties()));
+	public static final RegistryObject<WildCropBlock> WILD_WHEAT = SRBlocks.REGISTRY.register("wild_wheat", () -> new WildCropBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+	public static final RegistryObject<WildCropBlock> WILD_CARROTS = SRBlocks.REGISTRY.register("wild_carrots", () -> new WildCropBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+	public static final RegistryObject<WildCropBlock> WILD_POTATOES = SRBlocks.REGISTRY.register("wild_potatoes", () -> new WildCropBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+	public static final RegistryObject<WildCropBlock> WILD_BEETROOTS = SRBlocks.REGISTRY.register("wild_beetroots", () -> new WildCropBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
 
 	public ArrayList<PlantGrowthModifier> plantGrowthModifiers = new ArrayList<>();
 
@@ -173,6 +190,15 @@ public class Crops extends Feature {
 		return sustainState.getBlock() instanceof FarmBlock;
 	}
 
+	@SubscribeEvent
+	public void onTryToPlant(PlayerInteractEvent.RightClickBlock event) {
+		if (!this.isEnabled())
+			return;
+
+		if (event.getItemStack().is(Items.POTATO) || event.getItemStack().is(Items.CARROT))
+			event.setCanceled(true);
+	}
+
 	/*@SubscribeEvent(priority = EventPriority.LOW)
 	public void onTill(BlockEvent.BlockToolModificationEvent event) {
 		if (!this.isEnabled()
@@ -202,16 +228,16 @@ public class Crops extends Feature {
 	private static final String path = "crops/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "harder_beetroot_farming", new DropMultiplierModifier.Builder(Blocks.BEETROOTS, Items.BEETROOT_SEEDS, 0.15f)
+		provider.add(path + "no_beetroot_expansion", new DropMultiplierModifier.Builder(Blocks.BEETROOTS, Items.BEETROOT_SEEDS, 0.15f)
 				.keepAmount(1)
 				.build());
-		provider.add(path + "harder_wheat_farming", new DropMultiplierModifier.Builder(Blocks.WHEAT, Items.WHEAT_SEEDS, 0.15f)
+		provider.add(path + "no_wheat_expansion", new DropMultiplierModifier.Builder(Blocks.WHEAT, Items.WHEAT_SEEDS, 0.15f)
 				.keepAmount(1)
 				.build());
-		provider.add(path + "harder_potato_farming", new DropMultiplierModifier.Builder(Blocks.POTATOES, Items.POTATO, 0.1f)
+		provider.add(path + "no_potato_expansion", new DropMultiplierModifier.Builder(Blocks.POTATOES, Items.POTATO, 0f)
 				.keepAmount(1)
 				.build());
-		provider.add(path + "harder_carrot_farming", new DropMultiplierModifier.Builder(Blocks.CARROTS, Items.CARROT, 0.15f)
+		provider.add(path + "no_carrot_expansion", new DropMultiplierModifier.Builder(Blocks.CARROTS, Items.CARROT, 0f)
 				.keepAmount(1)
 				.build());
 

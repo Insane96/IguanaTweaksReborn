@@ -4,10 +4,10 @@
 			"item": "minecraft:wheat_seeds"
 		},
 		"title": {
-			"translate": "advancements.sr_story.wheat_seeds.title"
+			"translate": "advancements.sr_story.seeds.title"
 		},
 		"description": {
-			"translate": "advancements.sr_story.wheat_seeds.description"
+			"translate": "advancements.sr_story.seeds.description"
 		},
 		"frame": "task",
 		"show_toast": true,
@@ -16,13 +16,16 @@
 	},
 	"parent": "survivalreimagined:story/campfire",
 	"criteria": {
-		"wheat_seeds": {
+		"seeds": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
 						"items": [
-							"minecraft:wheat_seeds"
+							"minecraft:wheat_seeds",
+							"minecraft:beetroot_seeds",
+							"survivalreimagined:potato_seeds",
+							"survivalreimagined:carrot_seeds"
 						]
 					}
 				]
@@ -31,7 +34,7 @@
 	},
 	"requirements": [
 		[
-			"wheat_seeds"
+			"seeds"
 		]
 	]
 }
