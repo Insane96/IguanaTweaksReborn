@@ -66,13 +66,14 @@ public class SurvivalReimagined
         modEventBus.addListener(this::addPackFinders);
         modEventBus.register(Tiredness.class);
         modEventBus.register(SpawnerData.class);
-        SRSoundEvents.SOUND_EVENTS.register(modEventBus);
-        SRMobEffects.MOB_EFFECTS.register(modEventBus);
-        SRBlocks.BLOCKS.register(modEventBus);
-        SRItems.ITEMS.register(modEventBus);
-        SREnchantments.ENCHANTMENTS.register(modEventBus);
-        SRGlobalLootModifiers.LOOT_MODIFIERS.register(modEventBus);
-        SRLootItemConditions.LOOT_ITEM_CONDITION_TYPES.register(modEventBus);
+        SRSoundEvents.REGISTRY.register(modEventBus);
+        SRMobEffects.REGISTRY.register(modEventBus);
+        SRBlocks.REGISTRY.register(modEventBus);
+        SRBlockEntityTypes.REGISTRY.register(modEventBus);
+        SRItems.REGISTRY.register(modEventBus);
+        SREnchantments.REGISTRY.register(modEventBus);
+        SRGlobalLootModifiers.REGISTRY.register(modEventBus);
+        SRLootItemConditions.REGISTRY.register(modEventBus);
         Weights.initMaterialWeight();
     }
 

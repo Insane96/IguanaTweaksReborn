@@ -11,9 +11,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class SRGlobalLootModifiers {
-    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, SurvivalReimagined.MOD_ID);
+    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> REGISTRY = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, SurvivalReimagined.MOD_ID);
 
-    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> REPLACE_DROP_MODIFIER = LOOT_MODIFIERS.register("replace_drop", ReplaceDropModifier.CODEC);
-    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> DROP_MULTIPLIER_MODIFIER = LOOT_MODIFIERS.register("drop_multiplier", DropMultiplierModifier.CODEC);
-    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> LOOT_PURGER_MODIFIER = LOOT_MODIFIERS.register("loot_purger", LootPurgerModifier.CODEC);
+    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> REPLACE_DROP_MODIFIER = REGISTRY.register("replace_drop", ReplaceDropModifier.CODEC);
+    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> DROP_MULTIPLIER_MODIFIER = REGISTRY.register("drop_multiplier", DropMultiplierModifier.CODEC);
+    public static final RegistryObject<Codec<? extends IGlobalLootModifier>> LOOT_PURGER_MODIFIER = REGISTRY.register("loot_purger", LootPurgerModifier.CODEC);
 }

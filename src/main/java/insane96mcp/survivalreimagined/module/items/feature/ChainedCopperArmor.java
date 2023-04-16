@@ -28,10 +28,10 @@ public class ChainedCopperArmor extends Feature {
 		p_266652_.put(ArmorItem.Type.HELMET, 1);
 	}), 13, SoundEvents.ARMOR_EQUIP_CHAIN, 0f, 0f, () -> Ingredient.of(Items.COPPER_INGOT));
 
-	public static final RegistryObject<Item> HELMET = SRItems.ITEMS.register("chained_copper_helmet", () -> new ArmorItem(CHAINED_COPPER, ArmorItem.Type.HELMET, new Item.Properties()));
-	public static final RegistryObject<Item> CHESTPLATE = SRItems.ITEMS.register("chained_copper_chestplate", () -> new ArmorItem(CHAINED_COPPER, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-	public static final RegistryObject<Item> LEGGINGS = SRItems.ITEMS.register("chained_copper_leggings", () -> new ArmorItem(CHAINED_COPPER, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-	public static final RegistryObject<Item> BOOTS = SRItems.ITEMS.register("chained_copper_boots", () -> new ArmorItem(CHAINED_COPPER, ArmorItem.Type.BOOTS, new Item.Properties()));
+	public static final RegistryObject<Item> HELMET = SRItems.REGISTRY.register("chained_copper_helmet", () -> new ArmorItem(CHAINED_COPPER, ArmorItem.Type.HELMET, new Item.Properties()));
+	public static final RegistryObject<Item> CHESTPLATE = SRItems.REGISTRY.register("chained_copper_chestplate", () -> new ArmorItem(CHAINED_COPPER, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+	public static final RegistryObject<Item> LEGGINGS = SRItems.REGISTRY.register("chained_copper_leggings", () -> new ArmorItem(CHAINED_COPPER, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+	public static final RegistryObject<Item> BOOTS = SRItems.REGISTRY.register("chained_copper_boots", () -> new ArmorItem(CHAINED_COPPER, ArmorItem.Type.BOOTS, new Item.Properties()));
 
 
 	public ChainedCopperArmor(Module module, boolean enabledByDefault, boolean canBeDisabled) {

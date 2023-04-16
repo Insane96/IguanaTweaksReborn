@@ -46,9 +46,9 @@ public class Respawn extends SRFeature {
 	@Label(name = "Loose Bed Spawn Range", description = "The range from beds where players will respawn.")
 	public static Double looseBedSpawnRange = 256d;
 
-	public static final RegistryObject<RespawnObeliskBlock> RESPAWN_OBELISK = SRBlocks.BLOCKS.register("respawn_obelisk", () -> new RespawnObeliskBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops().strength(50.0F, 1200.0F).lightLevel(RespawnObeliskBlock::lightLevel)));
+	public static final RegistryObject<RespawnObeliskBlock> RESPAWN_OBELISK = SRBlocks.REGISTRY.register("respawn_obelisk", () -> new RespawnObeliskBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops().strength(50.0F, 1200.0F).lightLevel(RespawnObeliskBlock::lightLevel)));
 
-	public static final RegistryObject<BlockItem> RESPAWN_OBELISK_ITEM = SRItems.ITEMS.register("respawn_obelisk", () -> new BlockItem(RESPAWN_OBELISK.get(), new Item.Properties()));
+	public static final RegistryObject<BlockItem> RESPAWN_OBELISK_ITEM = SRItems.REGISTRY.register("respawn_obelisk", () -> new BlockItem(RESPAWN_OBELISK.get(), new Item.Properties()));
 
 	public static final ArrayList<IdTagValue> RESPAWN_OBELISK_CATALYSTS_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_block", 0.8d),

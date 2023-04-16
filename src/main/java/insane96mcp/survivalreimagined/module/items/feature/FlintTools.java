@@ -40,11 +40,11 @@ public class FlintTools extends Feature {
 
 	private static final ILItemTier ITEM_TIER = new ILItemTier(1, 252, 2f, 1.5f, 9, () -> Ingredient.of(Items.FLINT));
 
-	public static final RegistryObject<Item> SWORD = SRItems.ITEMS.register("flint_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties()));
-	public static final RegistryObject<Item> SHOVEL = SRItems.ITEMS.register("flint_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
-	public static final RegistryObject<Item> PICKAXE = SRItems.ITEMS.register("flint_pickaxe", () -> new PickaxeItem(ITEM_TIER, 1, -2.8F, new Item.Properties()));
-	public static final RegistryObject<Item> AXE = SRItems.ITEMS.register("flint_axe", () -> new AxeItem(ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
-	public static final RegistryObject<Item> HOE = SRItems.ITEMS.register("flint_hoe", () -> new HoeItem(ITEM_TIER, -1, -2.0F, new Item.Properties()));
+	public static final RegistryObject<Item> SWORD = SRItems.REGISTRY.register("flint_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties()));
+	public static final RegistryObject<Item> SHOVEL = SRItems.REGISTRY.register("flint_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
+	public static final RegistryObject<Item> PICKAXE = SRItems.REGISTRY.register("flint_pickaxe", () -> new PickaxeItem(ITEM_TIER, 1, -2.8F, new Item.Properties()));
+	public static final RegistryObject<Item> AXE = SRItems.REGISTRY.register("flint_axe", () -> new AxeItem(ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
+	public static final RegistryObject<Item> HOE = SRItems.REGISTRY.register("flint_hoe", () -> new HoeItem(ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRItems.registerShield("flint_shield", SHIELD_MATERIAL);
 

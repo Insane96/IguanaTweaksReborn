@@ -8,7 +8,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
 public class SRLootItemConditions {
-    public static final DeferredRegister<LootItemConditionType> LOOT_ITEM_CONDITION_TYPES = DeferredRegister.create(Registries.LOOT_CONDITION_TYPE.location(), SurvivalReimagined.MOD_ID);
+    public static final DeferredRegister<LootItemConditionType> REGISTRY = DeferredRegister.create(Registries.LOOT_CONDITION_TYPE.location(), SurvivalReimagined.MOD_ID);
 
-    public static final RegistryObject<LootItemConditionType> CURRENT_SEASON = LOOT_ITEM_CONDITION_TYPES.register("current_season", () -> new LootItemConditionType(new LootItemCurrentSeasonCondition.Serializer()));
+    public static final RegistryObject<LootItemConditionType> CURRENT_SEASON = REGISTRY.register("current_season", () -> new LootItemConditionType(new LootItemCurrentSeasonCondition.Serializer()));
 }

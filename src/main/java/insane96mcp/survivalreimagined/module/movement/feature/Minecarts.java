@@ -25,8 +25,8 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class Minecarts extends Feature {
 
-	public static final RegistryObject<NetherInfusedRailBlock> NETHER_INFUSED_POWERED_RAIL = SRBlocks.BLOCKS.register("nether_infused_powered_rail", () -> new NetherInfusedRailBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.7F).sound(SoundType.NETHER_BRICKS)));
-	public static final RegistryObject<Item> NETHER_INFUSED_POWERED_RAIL_ITEM = SRItems.ITEMS.register("nether_infused_powered_rail", () -> new BlockItem(NETHER_INFUSED_POWERED_RAIL.get(), new Item.Properties().rarity(Rarity.COMMON)));
+	public static final RegistryObject<NetherInfusedRailBlock> NETHER_INFUSED_POWERED_RAIL = SRBlocks.REGISTRY.register("nether_infused_powered_rail", () -> new NetherInfusedRailBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.7F).sound(SoundType.NETHER_BRICKS)));
+	public static final RegistryObject<Item> NETHER_INFUSED_POWERED_RAIL_ITEM = SRItems.REGISTRY.register("nether_infused_powered_rail", () -> new BlockItem(NETHER_INFUSED_POWERED_RAIL.get(), new Item.Properties().rarity(Rarity.COMMON)));
 
 	public Minecarts(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

@@ -8,11 +8,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class SREnchantments {
-    public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, SurvivalReimagined.MOD_ID);
+    public static final DeferredRegister<Enchantment> REGISTRY = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, SurvivalReimagined.MOD_ID);
 
-    public static final RegistryObject<Enchantment> MAGNETIC = ENCHANTMENTS.register("magnetic", Magnetic::new);
-    public static final RegistryObject<Enchantment> MAGIC_PROTECTION = ENCHANTMENTS.register("magic_protection", MagicProtection::new);
-    public static final RegistryObject<Enchantment> BLASTING = ENCHANTMENTS.register("blasting", Blasting::new);
-    public static final RegistryObject<Enchantment> EXPANDED = ENCHANTMENTS.register("expanded", Expanded::new);
-    public static final RegistryObject<Enchantment> STEP_UP = ENCHANTMENTS.register("step_up", StepUp::new);
+    public static final RegistryObject<Enchantment> MAGNETIC = REGISTRY.register("magnetic", Magnetic::new);
+    public static final RegistryObject<Enchantment> MAGIC_PROTECTION = REGISTRY.register("magic_protection", MagicProtection::new);
+    public static final RegistryObject<Enchantment> BLASTING = REGISTRY.register("blasting", Blasting::new);
+    public static final RegistryObject<Enchantment> EXPANDED = REGISTRY.register("expanded", Expanded::new);
+    public static final RegistryObject<Enchantment> STEP_UP = REGISTRY.register("step_up", StepUp::new);
 }

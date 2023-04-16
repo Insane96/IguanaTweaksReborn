@@ -18,7 +18,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class BoneClub extends Feature {
 	private static final ILItemTier BONE_TIER = new ILItemTier(1, 67, 2f, 1f, 9, () -> Ingredient.of(Items.BONE));
 
-	public static final RegistryObject<Item> BONE_CLUB = SRItems.ITEMS.register("bone_club", () -> new GenericAttackItem(BONE_TIER, 4, -2.7F, new Item.Properties()));
+	public static final RegistryObject<Item> BONE_CLUB = SRItems.REGISTRY.register("bone_club", () -> new GenericAttackItem(BONE_TIER, 4, -2.7F, new Item.Properties()));
 
 	public BoneClub(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
