@@ -1,5 +1,13 @@
 # Changelog
 
+## Upcoming
+* Added Copper Reinforced Flint Tools
+  * Fast but low durability
+  * Iron tools are now made from Stone Tools instead of Flint
+* Adjusted the formula for healing from food
+  * Lower Hunger foods now real much less than higher hunger foods
+* Chickens can no longer be bred, use eggs
+
 ## Alpha 3.4.1
 * Renamed Iridium to Florpium
 * Wild crops now generate more commonly

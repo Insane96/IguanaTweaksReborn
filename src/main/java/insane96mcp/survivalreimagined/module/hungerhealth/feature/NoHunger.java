@@ -61,7 +61,7 @@ public class NoHunger extends Feature {
     public static MinMax passiveRegenerationTime = new MinMax(120, 180);
     @Config(min = 0d)
     @Label(name = "Food Heal.Health Multiplier", description = "When eating you'll get healed by hunger restored multiplied by this percentage. (Set to 1 to have the same effect as pre-beta 1.8 food")
-    public static Double foodHealHealthMultiplier = 0.83d;
+    public static Double foodHealHealthMultiplier = 0.3d;
     @Config
     @Label(name = "Food Heal.Instant Heal", description = "If true, health is regenerated instantly instead of over time")
     public static Boolean foodHealInstantly = false;
@@ -137,7 +137,7 @@ public class NoHunger extends Feature {
             player.addEffect(new MobEffectInstance(MobEffects.POISON, food.getNutrition() * 20 * 3));
         }
 
-        float heal = food.getNutrition() * foodHealHealthMultiplier.floatValue();
+        float heal = getHealingFromFood(food);
         //Half heart per second by default
         float strength = (0.5f * (1.4f - food.getSaturationModifier())) / 20f;
         if (isRawFood && rawFoodHealPercentage != 1d)
@@ -184,6 +184,10 @@ public class NoHunger extends Feature {
 
     private static void setFoodRegenLeft(Player player, float amount) {
         player.getPersistentData().putFloat(FOOD_REGEN_LEFT, amount);
+    }
+
+    public static float getHealingFromFood(FoodProperties food) {
+        return (float) (Math.pow(food.getNutrition(), 1.5f) * foodHealHealthMultiplier.floatValue());
     }
 
     private static void consumeAndHealFromFoodRegen(Player player) {
@@ -280,7 +284,7 @@ public class NoHunger extends Feature {
         if (mc.options.advancedItemTooltips) {
             FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
             //noinspection ConstantConditions
-            float heal = food.getNutrition() * foodHealHealthMultiplier.floatValue();
+            float heal = getHealingFromFood(food);
             //Half heart per second by default
             float strength = (0.5f * (1.4f - food.getSaturationModifier()));
             event.getToolTip().add(Component.translatable(FOOD_STATS_TRANSLATABLE, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal), SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
