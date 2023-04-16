@@ -3,7 +3,11 @@
 ## Upcoming
 * Added Crate
   * An early-mid game shulker to transport items around. Having more than one in the inventory will slow the player down
-* Removed Seeds from tilling grass
+* Added Wild Crops
+  * Crops that generate in the wild and drop seeds
+  * Enlarging farms requires exploring / trading
+  * Potatoes and carrots can no longer be planted, instead you must use the seeds counterpart
+  * Removed wheat seeds from tilling grass
   * Wheat seeds can now be obtained from Wandering Traders
 
 ## Alpha 3.3.0
