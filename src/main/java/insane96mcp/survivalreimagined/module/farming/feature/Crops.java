@@ -18,9 +18,11 @@ import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
@@ -197,6 +199,17 @@ public class Crops extends Feature {
 
 		if (event.getItemStack().is(Items.POTATO) || event.getItemStack().is(Items.CARROT))
 			event.setCanceled(true);
+	}
+
+	private static final Ingredient CHICKEN_FOOD_ITEMS = Ingredient.of(Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS, Items.TORCHFLOWER_SEEDS);
+	@SubscribeEvent
+	public void onTryToSeedChickens(PlayerInteractEvent.EntityInteract event) {
+		if (!this.isEnabled()
+				|| !(event.getTarget() instanceof Chicken)
+				|| !CHICKEN_FOOD_ITEMS.test(event.getItemStack()))
+			return;
+
+		event.setCanceled(true);
 	}
 
 	/*@SubscribeEvent(priority = EventPriority.LOW)
