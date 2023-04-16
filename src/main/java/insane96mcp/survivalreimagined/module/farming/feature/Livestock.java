@@ -76,10 +76,10 @@ public class Livestock extends SRFeature {
 	public static final ArrayList<LivestockData> breedingCooldown = new ArrayList<>();
 
 	public static final ArrayList<LivestockData> EGG_LAY_SLOWDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 3.0d, Season.SPRING),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 2.5d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 3.5d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 5.0d, Season.WINTER)
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 2.5d, Season.SPRING),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 2.0d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 3.0d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 4.0d, Season.WINTER)
 	));
 
 	public static final ArrayList<LivestockData> eggLaySlowdown = new ArrayList<>();
