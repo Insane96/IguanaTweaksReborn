@@ -1,0 +1,35 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:copper_pickaxe"
+		},
+		"title": {
+			"translate": "advancements.sr_story.copper_pickaxe.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.copper_pickaxe.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/anvil",
+	"criteria": {
+		"copper_pickaxe": {
+			"trigger": "survivalreimagined:anvil_repair",
+			"conditions": {
+				"output": {
+					"items": [
+						"survivalreimagined:copper_pickaxe"
+					]
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"copper_pickaxe"
+		]
+	]
+}

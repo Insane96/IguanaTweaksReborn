@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "values": [
+        "survivalreimagined:copper_pickaxe",
+        "survivalreimagined:copper_axe",
+        "survivalreimagined:copper_shovel",
+        "survivalreimagined:copper_hoe"
+    ]
+}

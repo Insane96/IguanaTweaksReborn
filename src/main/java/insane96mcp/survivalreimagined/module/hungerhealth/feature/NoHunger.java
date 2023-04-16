@@ -10,6 +10,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.movement.feature.Stamina;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.MessageFoodRegenSync;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
@@ -256,9 +257,9 @@ public class NoHunger extends Feature {
         if (saturationModifier == 0f)
             return;
         RenderSystem.setShaderTexture(0, SurvivalReimagined.GUI_ICONS);
-        //Stamina.setColor(1.2f - (saturationModifier / 1.2f), 0.78f, 0.17f, 1f);
+        Stamina.setColor(1.2f - (saturationModifier / 1.2f), 0.78f, 0.17f, 1f);
         mc.gui.blit(poseStack, right, top, (int) UV_ARROW.x, (int) UV_ARROW.y, 9, 9);
-        //Stamina.resetColor();
+        Stamina.resetColor();
 
         // rebind default icons
         RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);

@@ -38,7 +38,7 @@ public class FlintTools extends Feature {
 
 	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("flint", 3d, 33, () -> Items.FLINT, 9, Rarity.COMMON);
 
-	private static final ILItemTier ITEM_TIER = new ILItemTier(1, 252, 2f, 1.5f, 9, () -> Ingredient.of(Items.FLINT));
+	private static final ILItemTier ITEM_TIER = new ILItemTier(1, 99, 6f, 1.5f, 9, () -> Ingredient.of(Items.FLINT));
 
 	public static final RegistryObject<Item> SWORD = SRItems.REGISTRY.register("flint_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> SHOVEL = SRItems.REGISTRY.register("flint_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));

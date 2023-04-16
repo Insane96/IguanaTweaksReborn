@@ -1,0 +1,14 @@
+{
+  "left": {
+    "item": "survivalreimagined:flint_sword"
+  },
+  "right": {
+    "item": "minecraft:copper_ingot"
+  },
+  "amount": 2,
+  "result": {
+    "item": "survivalreimagined:copper_sword"
+  },
+  "keep_durability": true,
+  "chance_to_break": 0.075
+}

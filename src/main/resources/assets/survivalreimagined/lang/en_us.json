@@ -52,6 +52,12 @@
 	"item.survivalreimagined.flint_shield": "Flint Shield",
 	"item.survivalreimagined.bone_club": "Bone Club",
 
+	"item.survivalreimagined.copper_axe": "Copper Reinforced Flint Axe",
+	"item.survivalreimagined.copper_pickaxe": "Copper Reinforced Flint Pickaxe",
+	"item.survivalreimagined.copper_sword": "Copper Reinforced Flint Sword",
+	"item.survivalreimagined.copper_shovel": "Copper Reinforced Flint Shovel",
+	"item.survivalreimagined.copper_hoe": "Copper Reinforced Flint Hoe",
+
 	"item.survivalreimagined.florpium_axe": "Florpium Axe",
 	"item.survivalreimagined.florpium_pickaxe": "Florpium Pickaxe",
 	"item.survivalreimagined.florpium_sword": "Florpium Sword",
@@ -109,7 +115,7 @@
 	"advancements.sr_story.anvil.title": "Metal equipment anyone?",
 	"advancements.sr_story.anvil.description": "Obtain an anvil",
 	"advancements.sr_story.iron_pickaxe.title": "Shiny metal pick",
-	"advancements.sr_story.iron_pickaxe.description": "Obtain an Iron Pickaxe in an Anvil by upgrading Flint Pickaxe",
+	"advancements.sr_story.iron_pickaxe.description": "Obtain an Iron Pickaxe in an Anvil by upgrading a Stone Pickaxe",
 	"advancements.sr_story.iron_shield.title": "The vanilla shield",
 	"advancements.sr_story.iron_shield.description": "Obtain an Iron Shield in an Anvil by upgrading a Copper Shield",
 	"advancements.sr_story.copper_shield.title": "Getting an upgrade",
@@ -131,5 +137,7 @@
 	"advancements.sr_story.activate_respawn_obelisk.title": "A precise respawn",
 	"advancements.sr_story.activate_respawn_obelisk.description": "Activate a Respawn Obelisk by putting precious blocks at the same height and set the respawn point.",
 	"advancements.sr_story.crate.title": "This is heavy",
-	"advancements.sr_story.crate.description": "Get a movement speed penalty by transporting more than one Crate."
+	"advancements.sr_story.crate.description": "Get a movement speed penalty by transporting more than one Crate.",
+	"advancements.sr_story.copper_pickaxe.title": "An alternative to Iron",
+	"advancements.sr_story.copper_pickaxe.description": "Obtain a Copper Reinforced Flint Pickaxe in an Anvil by upgrading a Flint Pickaxe."
 }

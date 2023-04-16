@@ -22,6 +22,10 @@ public class ClientSetup {
             event.accept(FlintTools.PICKAXE.get());
             event.accept(FlintTools.SHOVEL.get());
             event.accept(FlintTools.HOE.get());
+            event.accept(CopperTools.AXE.get());
+            event.accept(CopperTools.PICKAXE.get());
+            event.accept(CopperTools.SHOVEL.get());
+            event.accept(CopperTools.HOE.get());
             event.accept(Florpium.AXE.get());
             event.accept(Florpium.PICKAXE.get());
             event.accept(Florpium.SHOVEL.get());
@@ -30,6 +34,7 @@ public class ClientSetup {
         else if (event.getTab() == CreativeModeTabs.COMBAT) {
             event.accept(FlintTools.SWORD.get());
             event.accept(FlintTools.SHIELD.get());
+            event.accept(CopperTools.SWORD.get());
             event.accept(BoneClub.BONE_CLUB.get());
             event.accept(Florpium.SWORD.get());
             event.accept(ChainedCopperArmor.HELMET.get());
