@@ -144,6 +144,7 @@ public class Stamina extends Feature {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onSprint(PlayerSprintEvent event) {
         if (!this.isEnabled()

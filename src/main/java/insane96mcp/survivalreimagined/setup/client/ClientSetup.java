@@ -1,11 +1,16 @@
 package insane96mcp.survivalreimagined.setup.client;
 
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.event.CreativeModeTabEvent;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 public class ClientSetup {
     public static void creativeTabsBuildContents(final CreativeModeTabEvent.BuildContents event)
@@ -57,5 +62,10 @@ public class ClientSetup {
             event.accept(AncientLapis.ANCIENT_LAPIS.get());
             event.accept(EnchantmentsFeature.CLEANSED_LAPIS.get());
         }
+    }
+
+    public static void init() {
+        DecimalFormatSymbols DECIMAL_FORMAT_SYMBOLS = new DecimalFormatSymbols(Minecraft.getInstance().getLocale());
+        SurvivalReimagined.ONE_DECIMAL_FORMATTER = new DecimalFormat("#.#", DECIMAL_FORMAT_SYMBOLS);
     }
 }

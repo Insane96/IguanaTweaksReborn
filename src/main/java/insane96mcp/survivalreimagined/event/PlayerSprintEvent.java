@@ -6,7 +6,8 @@ import net.minecraftforge.eventbus.api.Event;
 
 /**
  * Fired when the game checks if the player can sprint.
- * Cancel to prevent player sprinting
+ * Cancel to prevent player sprinting.
+ * This event is fired Client Side only
  */
 @Cancelable
 public class PlayerSprintEvent extends Event {

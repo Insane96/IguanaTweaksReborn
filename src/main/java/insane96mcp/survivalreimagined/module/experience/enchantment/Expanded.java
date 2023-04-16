@@ -32,6 +32,8 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 
 import java.util.ArrayList;
@@ -89,6 +91,7 @@ public class Expanded extends Enchantment {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static void applyDestroyAnimation(RenderLevelStageEvent event) {
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_SOLID_BLOCKS)
             return;
