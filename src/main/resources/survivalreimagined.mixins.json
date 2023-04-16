@@ -12,6 +12,7 @@
         "BeaconBlockEntityMixin",
         "BoatMixin",
         "ConduitBlockEntityMixin",
+        "DigDurabilityEnchantmentMixin",
         "EnchantmentMixin",
         "EntityMixin",
         "FarmBlockMixin",

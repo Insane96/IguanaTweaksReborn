@@ -47,6 +47,9 @@ public class EnchantmentsFeature extends Feature {
 	@Config
 	@Label(name = "Infinity overhaul", description = "Infinity can go up to level 4. Each level makes an arrow have 1 in level chance to not consume.")
 	public static Boolean infinityOverhaul = true;
+	@Config
+	@Label(name = "Unbreaking overhaul", description = "Unbreaking max level is set to 1.")
+	public static Boolean unbreakingOverhaul = true;
 
 	public static final RegistryObject<Item> CLEANSED_LAPIS = SRItems.REGISTRY.register("cleansed_lapis", () -> new Item(new Item.Properties()));
 
@@ -191,6 +194,10 @@ public class EnchantmentsFeature extends Feature {
 
 	public static boolean isInfinityOverhaulEnabled() {
 		return Feature.isEnabled(EnchantmentsFeature.class) && infinityOverhaul;
+	}
+
+	public static boolean isUnbreakingOverhaulEnabled() {
+		return Feature.isEnabled(EnchantmentsFeature.class) && unbreakingOverhaul;
 	}
 
 	private static final String path = "enchantments/";

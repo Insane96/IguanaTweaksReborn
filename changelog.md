@@ -6,6 +6,9 @@
   * Iron tools are now made from Stone Tools instead of Flint
 * Adjusted the formula for healing from food
   * Lower Hunger foods now heal much less than higher hunger foods
+* Unbreaking Overhaul
+  * Unbreaking max level is now 1
+  * Netherite tools durability has been increased (+50%)
 * Chickens can no longer be bred, use eggs
 
 ## Alpha 3.4.1
