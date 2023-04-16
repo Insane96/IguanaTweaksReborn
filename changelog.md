@@ -1,5 +1,10 @@
 # Changelog
 
+## Alpha 3.4.1
+* Renamed Iridium to Florpium
+* Wild crops now generate more commonly
+* Fixed crash in creative
+
 ## Alpha 3.4.0
 * Added Crate
   * An early-mid game shulker to transport items around. Having more than one in the inventory will slow the player down

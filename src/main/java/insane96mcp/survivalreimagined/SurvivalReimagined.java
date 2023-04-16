@@ -59,6 +59,7 @@ public class SurvivalReimagined
         MinecraftForge.EVENT_BUS.register(SpawnerDataAttacher.class);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(ClientSetup::creativeTabsBuildContents);
         modEventBus.addListener(this::addPackFinders);

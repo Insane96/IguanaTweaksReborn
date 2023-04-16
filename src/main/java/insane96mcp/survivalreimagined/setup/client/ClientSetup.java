@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.setup.client;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
+import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
@@ -55,6 +56,8 @@ public class ClientSetup {
         else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(Florpium.ORE_ITEM.get());
             event.accept(Florpium.DEEPSLATE_ORE_ITEM.get());
+            event.accept(Crops.CARROT_SEEDS.get());
+            event.accept(Crops.POTATO_SEEDS.get());
         }
         else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
             event.accept(Florpium.INGOT.get());
