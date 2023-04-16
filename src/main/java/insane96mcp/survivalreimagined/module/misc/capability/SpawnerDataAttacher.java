@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -45,8 +46,10 @@ public class SpawnerDataAttacher {
 
     @SubscribeEvent
     public static void attach(final AttachCapabilitiesEvent<BlockEntity> event) {
-        final SpawnerDataProvider provider = new SpawnerDataProvider();
-        event.addCapability(SpawnerDataProvider.IDENTIFIER, provider);
+        if (event.getObject() instanceof SpawnerBlockEntity) {
+            final SpawnerDataProvider provider = new SpawnerDataProvider();
+            event.addCapability(SpawnerDataProvider.IDENTIFIER, provider);
+        }
     }
 
     private SpawnerDataAttacher() {
