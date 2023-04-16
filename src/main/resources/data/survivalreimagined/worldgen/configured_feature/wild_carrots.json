@@ -1,8 +1,8 @@
 {
     "type": "minecraft:random_patch",
     "config": {
-        "tries": 32,
-        "xz_spread": 4,
+        "tries": 24,
+        "xz_spread": 5,
         "y_spread": 3,
         "feature": {
             "feature": {
