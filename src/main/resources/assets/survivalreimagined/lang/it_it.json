@@ -48,6 +48,8 @@
 	"survivalreimagined.bonus_tool_efficiency": "(+%.1f da Efficienza)",
 	"item.survivalreimagined.bone_club": "Clava d'osso",
 
+	"survivalreimagined.container.crate": "Cassa",
+
 	"item.survivalreimagined.iridium_axe": "Ascia d'iridio",
 	"item.survivalreimagined.iridium_pickaxe": "Piccone d'iridio",
 	"item.survivalreimagined.iridium_sword": "Spada d'iridio",
@@ -63,6 +65,11 @@
 	"block.survivalreimagined.iridium_block": "Blocco d'iridio",
 	"block.survivalreimagined.iridium_ore": "Minerale d'iridio",
 	"block.survivalreimagined.deepslate_iridium_ore": "Minerale d'iridio in ardesia profonda",
+	"block.survivalreimagined.nether_infused_powered_rail": "Nether Infused Powered Rail",
+	"block.survivalreimagined.respawn_obelisk": "Obelisco della Rinascita",
+	"block.survivalreimagined.crate": "Cassa",
+
+	"survivalreimagined.crate_weighted": "Rallenta chi ne trasporata %d o più",
 
 	"item.survivalreimagined.ancient_lapis": "Lapis Antico",
 

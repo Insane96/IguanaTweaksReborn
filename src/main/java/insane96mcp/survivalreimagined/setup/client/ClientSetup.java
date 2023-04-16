@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.setup.client;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
+import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.event.CreativeModeTabEvent;
 
@@ -38,6 +39,10 @@ public class ClientSetup {
         }
         else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(Iridium.BLOCK_ITEM.get());
+        }
+        else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            event.accept(Respawn.RESPAWN_OBELISK_ITEM.get());
+            event.accept(Crate.BLOCK_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.accept(Minecarts.NETHER_INFUSED_POWERED_RAIL_ITEM.get());

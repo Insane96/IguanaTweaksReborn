@@ -1,0 +1,41 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:crate"
+		},
+		"title": {
+			"translate": "advancements.sr_story.crate.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.crate.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/iron_pickaxe",
+	"criteria": {
+		"crate": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"survivalreimagined:crate"
+						],
+						"count": {
+							"min": 2,
+							"max": 64
+						}
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"crate"
+		]
+	]
+}

@@ -40,6 +40,8 @@
 	"container.repair.free": "No Cost",
 	"survivalreimagined.item_repaired": "Item got repaired",
 
+	"survivalreimagined.container.crate": "Crate",
+
 	"survivalreimagined.spawner_reactivator": "This item can reactivate a Mob Spawner",
 
 	"item.survivalreimagined.flint_axe": "Flint Axe",
@@ -67,6 +69,9 @@
 	"block.survivalreimagined.deepslate_iridium_ore": "Deepslate Iridium Ore",
 	"block.survivalreimagined.nether_infused_powered_rail": "Nether Infused Powered Rail",
 	"block.survivalreimagined.respawn_obelisk": "Respawn Obelisk",
+	"block.survivalreimagined.crate": "Crate",
+
+	"survivalreimagined.crate_weighted": "Slows down if %d or more are carried",
 
 	"item.survivalreimagined.ancient_lapis": "Ancient Lapis",
 	"item.survivalreimagined.cleansed_lapis": "Cleansed Lapis",
@@ -121,5 +126,7 @@
 	"advancements.sr_story.respawn_obelisk.title": "The ancients respawned here",
 	"advancements.sr_story.respawn_obelisk.description": "Find a Respawn Obelisk.",
 	"advancements.sr_story.activate_respawn_obelisk.title": "A precise respawn",
-	"advancements.sr_story.activate_respawn_obelisk.description": "Activate a Respawn Obelisk by putting precious blocks at the same height and set the respawn point."
+	"advancements.sr_story.activate_respawn_obelisk.description": "Activate a Respawn Obelisk by putting precious blocks at the same height and set the respawn point.",
+	"advancements.sr_story.crate.title": "This is heavy",
+	"advancements.sr_story.crate.description": "Get a movement speed penalty by transporting more than one Crate."
 }

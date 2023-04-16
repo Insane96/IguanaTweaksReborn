@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "survivalreimagined:block/crate_bottom",
+    "side": "survivalreimagined:block/crate_side",
+    "top": "survivalreimagined:block/crate_top"
+  }
+}

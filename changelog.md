@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Added Crate
+  * An early-mid game shulker to transport items around. Having more than one in the inventory will slow the player down
+
 ## Alpha 3.3.0
 * Advancements!
   * First step towards new advancements

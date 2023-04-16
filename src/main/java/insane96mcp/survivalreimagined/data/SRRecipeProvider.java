@@ -129,6 +129,17 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_chain", has(Items.CHAIN))
                 .save(writer);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Crate.BLOCK_ITEM.get())
+                .pattern("nnn")
+                .pattern("ibi")
+                .pattern("nnn")
+                .define('n', Iridium.NUGGET.get())
+                .define('i', Items.IRON_INGOT)
+                .define('b', Items.BARREL)
+                .unlockedBy("has_iridium_nugget", has(Iridium.NUGGET.get()))
+                .unlockedBy("has_barrel", has(Items.BARREL))
+                .save(writer);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, Minecarts.NETHER_INFUSED_POWERED_RAIL_ITEM.get(), 4)
                 .requires(Items.POWERED_RAIL, 4)
                 .requires(Items.NETHER_BRICK, 4)
