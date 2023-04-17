@@ -8,6 +8,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantment.*;
+import insane96mcp.survivalreimagined.setup.SREnchantments;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -16,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
@@ -30,6 +32,7 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -41,6 +44,9 @@ import java.util.List;
 @Label(name = "Enchantments", description = "Change some enchantments and anvil related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class EnchantmentsFeature extends Feature {
+
+	public static final RegistryObject<Item> CLEANSED_LAPIS = SRItems.REGISTRY.register("cleansed_lapis", () -> new Item(new Item.Properties()));
+
 	@Config
 	@Label(name = "Mending overhaul", description = "Removes the mending enchantment and adds a new item that resets the repair cost of items.")
 	public static Boolean mendingOverhaul = true;
@@ -50,8 +56,9 @@ public class EnchantmentsFeature extends Feature {
 	@Config
 	@Label(name = "Unbreaking overhaul", description = "Unbreaking max level is set to 1.")
 	public static Boolean unbreakingOverhaul = true;
-
-	public static final RegistryObject<Item> CLEANSED_LAPIS = SRItems.REGISTRY.register("cleansed_lapis", () -> new Item(new Item.Properties()));
+	@Config
+	@Label(name = "Replace Bane of Arthropods", description = "Replace Bane of Arthropods with Bane of SSSSS, similar to Bane of Arthropods deals more damage to Spiders but also creepers.")
+	public static Boolean replaceBaneOfArthropods = true;
 
 	@Config
 	@Label(name = "Efficiency changed formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to (tool_efficiency + 75% * level)")
@@ -78,7 +85,8 @@ public class EnchantmentsFeature extends Feature {
 	}
 
 	public static boolean disableEnchantment(Enchantment enchantment) {
-		return enchantment == net.minecraft.world.item.enchantment.Enchantments.ALL_DAMAGE_PROTECTION && protectionNerf == ProtectionNerf.DISABLE;
+		return (enchantment == net.minecraft.world.item.enchantment.Enchantments.ALL_DAMAGE_PROTECTION && protectionNerf == ProtectionNerf.DISABLE)
+				|| (enchantment == Enchantments.BANE_OF_ARTHROPODS && replaceBaneOfArthropods);
 	}
 
 	@SubscribeEvent
@@ -152,6 +160,19 @@ public class EnchantmentsFeature extends Feature {
 		Vec3 endClip = event.getPlayer().getEyePosition().add(viewVector.x * event.getPlayer().getEntityReach(), viewVector.y * event.getPlayer().getEntityReach(), viewVector.z * event.getPlayer().getEntityReach());
 		BlockHitResult blockHitResult = event.getLevel().clip(new ClipContext(event.getPlayer().getEyePosition(), endClip, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, event.getPlayer()));
 		Expanded.apply(event.getPlayer(), event.getPlayer().getLevel(), event.getPos(), blockHitResult.getDirection(), event.getState());
+	}
+
+	@SubscribeEvent
+	public void onLivingAttack(LivingHurtEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getSource().getEntity() instanceof LivingEntity entity))
+			return;
+
+		int lvl = entity.getMainHandItem().getEnchantmentLevel(SREnchantments.BANE_OF_SSSSS.get());
+		if (lvl == 0)
+			return;
+
+		event.setAmount((float) (event.getAmount() + 2.5d * lvl));
 	}
 
 	@SubscribeEvent

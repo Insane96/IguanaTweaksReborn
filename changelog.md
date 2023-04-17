@@ -9,6 +9,8 @@
 * Unbreaking Overhaul
   * Unbreaking max level is now 1
   * Netherite tools durability has been increased (+50%)
+* Added Bane of SSSSS. Deals bonus damage to Creepers and Spiders
+  * Replaces Bane of Arthropods
 * Chickens can no longer be bred, use eggs
 * Starting season is now mid-Summer
 
