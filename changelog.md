@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.5.0
 * Added Copper Reinforced Flint Tools
   * Fast but low durability
   * Iron tools are now made from Stone Tools instead of Flint
