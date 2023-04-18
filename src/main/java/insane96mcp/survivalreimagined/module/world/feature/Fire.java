@@ -76,6 +76,7 @@ public class Fire extends Feature {
                 || event.getHand() != InteractionHand.MAIN_HAND
                 || !event.getItemStack().is(Items.FLINT)
                 || !event.getEntity().getOffhandItem().is(Items.FLINT)
+                || event.getEntity().getCooldowns().isOnCooldown(Items.FLINT)
                 || event.getLevel().isClientSide)
             return;
 
