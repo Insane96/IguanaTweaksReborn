@@ -17,12 +17,36 @@ public class CustomFoodProperties extends IdTagMatcher {
 		super(type, id);
 	}
 
-	public CustomFoodProperties(Type type, String id, int nutrition, float saturationModifier, int eatingTime, boolean fastEating) {
-		super(type, id);
-		this.nutrition = nutrition;
-		this.saturationModifier = saturationModifier;
-		this.eatingTime = eatingTime;
-		this.fastEating = fastEating;
+	public static class Builder {
+		CustomFoodProperties customFoodProperties;
+
+		public Builder(Type type, String id) {
+			this.customFoodProperties = new CustomFoodProperties(type, id);
+		}
+
+		public CustomFoodProperties build() {
+			return this.customFoodProperties;
+		}
+
+		public Builder setNutrition(int nutrition) {
+			this.customFoodProperties.nutrition = nutrition;
+			return this;
+		}
+
+		public Builder setSaturationModifier(float saturationModifier) {
+			this.customFoodProperties.saturationModifier = saturationModifier;
+			return this;
+		}
+
+		public Builder setEatingTime(int eatingTime) {
+			this.customFoodProperties.eatingTime = eatingTime;
+			return this;
+		}
+
+		public Builder fastEating() {
+			this.customFoodProperties.fastEating = true;
+			return this;
+		}
 	}
 
 	@Override

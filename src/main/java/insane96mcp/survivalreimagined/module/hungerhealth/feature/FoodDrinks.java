@@ -38,8 +38,7 @@ public class FoodDrinks extends SRFeature {
 	public static final ResourceLocation FOOD_BLACKLIST = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "food_drinks_no_hunger_changes");
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(
-			new CustomFoodProperties(IdTagMatcher.Type.ID, "minecraft:rotten_flesh", 2, -1, 50, false),
-			new CustomFoodProperties(IdTagMatcher.Type.ID, "minecraft:honey_bottle", 4, -1, -1, false)
+			new CustomFoodProperties.Builder(IdTagMatcher.Type.ID, "minecraft:rotten_flesh").setNutrition(2).setEatingTime(50).build()
 	));
 	public static final ArrayList<CustomFoodProperties> customFoodProperties = new ArrayList<>();
 
