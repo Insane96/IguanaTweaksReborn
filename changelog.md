@@ -3,6 +3,7 @@
 ## Upcoming
 * Breaking a tree without an axe now drops planks
 * Buckets now require the Nether to be made
+* Squids now come in various sizes
 * Removed Gold Nuggets drop from Zombified Piglins
 
 ## Alpha 3.5.0

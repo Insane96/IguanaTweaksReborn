@@ -1,0 +1,14 @@
+{
+    "target": "#survivalreimagined:squids",
+    "scale_pehkui": [
+        {
+            "scale": {
+                "min": 0.8,
+                "max": 2
+            },
+            "scale_types": [
+                "pehkui:base"
+            ]
+        }
+    ]
+}
