@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.feature;
 
+import insane96mcp.enhancedai.setup.EAStrings;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -57,6 +58,7 @@ public class Death extends Feature {
 		zombie.lootTable = new ResourceLocation("minecraft:empty");
 		zombie.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, 0d);
 		zombie.getPersistentData().putBoolean(PLAYER_GHOST, true);
+		zombie.getPersistentData().putBoolean(EAStrings.Tags.Zombie.MINER, true);
 		zombie.setCustomName(Component.translatable(PLAYER_GHOST_LANG, player.getName().getString()));
 		if (zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null)
 			zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1d);
