@@ -1,0 +1,56 @@
+{
+    "type": "survivalreimagined:ore_with_surface_feature",
+    "config": {
+        "ore_config": {
+            "size": 32,
+            "discard_chance_on_air_exposure": 0,
+            "targets": [
+                {
+                    "target": {
+                        "predicate_type": "minecraft:tag_match",
+                        "tag": "minecraft:stone_ore_replaceables"
+                    },
+                    "state": {
+                        "Name": "minecraft:iron_ore"
+                    }
+                },
+                {
+                    "target": {
+                        "predicate_type": "minecraft:tag_match",
+                        "tag": "minecraft:deepslate_ore_replaceables"
+                    },
+                    "state": {
+                        "Name": "minecraft:deepslate_iron_ore"
+                    }
+                }
+            ]
+        },
+        "random_patch_config": {
+            "tries": 64,
+            "xz_spread": 7,
+            "y_spread": 3,
+            "feature": {
+                "feature": {
+                    "type": "minecraft:simple_block",
+                    "config": {
+                        "to_place": {
+                            "type": "minecraft:simple_state_provider",
+                            "state": {
+                                "Name": "minecraft:iron_trapdoor"
+                            }
+                        }
+                    }
+                },
+                "placement": [
+                    {
+                        "type": "minecraft:block_predicate_filter",
+                        "predicate": {
+                            "type": "minecraft:matching_blocks",
+                            "blocks": "minecraft:air"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

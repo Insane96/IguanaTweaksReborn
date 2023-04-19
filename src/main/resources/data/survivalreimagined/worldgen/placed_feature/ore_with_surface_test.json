@@ -1,0 +1,20 @@
+{
+    "feature": "survivalreimagined:ore_with_surface_test",
+    "placement": [
+        {
+            "type": "minecraft:in_square"
+        },
+        {
+            "type": "minecraft:height_range",
+            "height": {
+                "type": "minecraft:uniform",
+                "min_inclusive": {
+                    "absolute": -32
+                },
+                "max_inclusive": {
+                    "absolute": 32
+                }
+            }
+        }
+    ]
+}
