@@ -6,11 +6,15 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.mobs.data.EquipmentDropChance;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.Items;
+import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -68,5 +72,11 @@ public class Equipment extends SRFeature {
             if (!customDropChance)
                 entity.setDropChance(slot, dropChance.floatValue());
         }
+    }
+
+    private static final String path = "equipment/";
+
+    public static void addGlobalLoot(GlobalLootModifierProvider provider) {
+        provider.add(path + "remove_gold_nuggets_from_piglins", new DropMultiplierModifier.Builder(EntityType.ZOMBIFIED_PIGLIN, Items.GOLD_NUGGET, 0f).build());
     }
 }

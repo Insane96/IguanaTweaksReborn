@@ -1,0 +1,14 @@
+{
+  "type": "survivalreimagined:drop_multiplier",
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "type": "minecraft:zombified_piglin"
+      }
+    }
+  ],
+  "item": "minecraft:gold_nugget",
+  "multiplier": 0.0
+}

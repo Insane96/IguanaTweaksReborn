@@ -67,6 +67,7 @@
     "survivalreimagined:livestock/lower_pufferfish",
     "survivalreimagined:crops/no_seeds_from_fern",
     "survivalreimagined:chest_loot/chests/buried_treasure",
+    "survivalreimagined:equipment/remove_gold_nuggets_from_piglins",
     "survivalreimagined:crops/no_beetroot_expansion"
   ],
   "replace": false

@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Removed Gold Nuggets drop from Zombified Piglins
+
 ## Alpha 3.5.0
 * Added Copper Reinforced Flint Tools
   * Fast but low durability
