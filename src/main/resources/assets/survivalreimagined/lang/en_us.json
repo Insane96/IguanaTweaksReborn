@@ -140,5 +140,7 @@
 	"advancements.sr_story.crate.title": "This is heavy",
 	"advancements.sr_story.crate.description": "Get a movement speed penalty by transporting more than one Crate.",
 	"advancements.sr_story.copper_pickaxe.title": "An alternative to Iron",
-	"advancements.sr_story.copper_pickaxe.description": "Obtain a Copper Reinforced Flint Pickaxe in an Anvil by upgrading a Flint Pickaxe."
+	"advancements.sr_story.copper_pickaxe.description": "Obtain a Copper Reinforced Flint Pickaxe in an Anvil by upgrading a Flint Pickaxe.",
+	"advancements.sr_story.bucket.title": "Moses one block at time",
+	"advancements.sr_story.bucket.description": "Obtain an Iron Bucket in an anvil with A Quartz and Iron Ingots."
 }

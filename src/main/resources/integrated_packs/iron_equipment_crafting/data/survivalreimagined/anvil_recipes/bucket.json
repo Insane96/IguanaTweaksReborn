@@ -1,0 +1,13 @@
+{
+  "left": {
+    "item": "minecraft:quartz"
+  },
+  "right": {
+    "item": "minecraft:iron_ingot"
+  },
+  "amount": 3,
+  "result": {
+    "item": "minecraft:bucket"
+  },
+  "chance_to_break": 0.075
+}
