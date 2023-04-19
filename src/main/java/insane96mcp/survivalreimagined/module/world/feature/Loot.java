@@ -6,11 +6,21 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.LootPurgerModifier;
+import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
+import net.minecraft.advancements.critereon.EntityEquipmentPredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 
 import java.util.List;
@@ -48,6 +58,19 @@ public class Loot extends Feature {
 			new ResourceLocation("minecraft:chests/village/village_temple"),
 			new ResourceLocation("minecraft:chests/village/village_toolsmith"),
 			new ResourceLocation("minecraft:chests/village/village_weaponsmith")
+	);
+
+
+	private record WoodTypes(Item log, Item planks, String name) {}
+	private static final List<WoodTypes> WOOD_TYPES = List.of(
+			new WoodTypes(Items.OAK_LOG, Items.OAK_PLANKS, "oak"),
+			new WoodTypes(Items.BIRCH_LOG, Items.BIRCH_PLANKS, "birch"),
+			new WoodTypes(Items.SPRUCE_LOG, Items.SPRUCE_PLANKS, "spruce"),
+			new WoodTypes(Items.JUNGLE_LOG, Items.JUNGLE_PLANKS, "jungle"),
+			new WoodTypes(Items.ACACIA_LOG, Items.ACACIA_PLANKS, "acacia"),
+			new WoodTypes(Items.DARK_OAK_LOG, Items.DARK_OAK_PLANKS, "dark_oak"),
+			new WoodTypes(Items.WARPED_STEM, Items.WARPED_PLANKS, "warped"),
+			new WoodTypes(Items.CRIMSON_STEM, Items.CRIMSON_PLANKS, "crimson")
 	);
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
@@ -106,6 +129,24 @@ public class Loot extends Feature {
 					.setMultiplierAtStart(0.1f)
 					.applyToDamageable()
 					.build()
+			);
+		}
+
+		for (WoodTypes woodTypes : WOOD_TYPES) {
+			provider.add(path + "trees/" + woodTypes.name, new ReplaceDropModifier.Builder(new LootItemCondition[] {
+							LootItemEntityPropertyCondition.hasProperties(
+											LootContext.EntityTarget.THIS,
+											new EntityPredicate.Builder().equipment(
+															new EntityEquipmentPredicate.Builder().mainhand(
+																			ItemPredicate.Builder.item().of(ItemTags.AXES)
+																					.build())
+																	.build())
+													.build())
+									.invert()
+									.build()
+					}, woodTypes.log, woodTypes.planks)
+							.setMultipliers(List.of(2.0f))
+							.build()
 			);
 		}
 	}
