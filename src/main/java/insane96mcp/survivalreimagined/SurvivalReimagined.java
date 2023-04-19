@@ -71,6 +71,7 @@ public class SurvivalReimagined
         SRBlockEntityTypes.REGISTRY.register(modEventBus);
         SRItems.REGISTRY.register(modEventBus);
         SRFeatureType.REGISTRY.register(modEventBus);
+        SRRuleTestType.REGISTRY.register(modEventBus);
         SREnchantments.REGISTRY.register(modEventBus);
         SRGlobalLootModifiers.REGISTRY.register(modEventBus);
         SRLootItemConditions.REGISTRY.register(modEventBus);

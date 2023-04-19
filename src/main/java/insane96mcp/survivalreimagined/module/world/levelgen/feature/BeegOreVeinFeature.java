@@ -1,6 +1,7 @@
-package insane96mcp.survivalreimagined.module.world.levelgen.feature.configuration;
+package insane96mcp.survivalreimagined.module.world.levelgen.feature;
 
 import com.mojang.serialization.Codec;
+import insane96mcp.survivalreimagined.module.world.levelgen.feature.configuration.OreWithRandomPatchConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.util.Mth;
@@ -9,7 +10,6 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.BulkSectionAccess;
 import net.minecraft.world.level.chunk.LevelChunkSection;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
@@ -17,20 +17,50 @@ import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguratio
 import java.util.BitSet;
 import java.util.function.Function;
 
-public class OreWithSurfaceFeature extends Feature<OreWithRandomPatchConfiguration> {
+public class BeegOreVeinFeature extends Feature<OreWithRandomPatchConfiguration> {
 
-    public OreWithSurfaceFeature(Codec<OreWithRandomPatchConfiguration> codec) {
+    public BeegOreVeinFeature(Codec<OreWithRandomPatchConfiguration> codec) {
         super(codec);
     }
 
     @Override
     public boolean place(FeaturePlaceContext<OreWithRandomPatchConfiguration> context) {
-
         RandomSource randomsource = context.random();
         BlockPos blockpos = context.origin();
         WorldGenLevel worldgenlevel = context.level();
         OreWithRandomPatchConfiguration configuration = context.config();
-        float f = randomsource.nextFloat() * (float)Math.PI;
+        int width = 10;
+        int height = 10;
+
+        boolean hasPlacedOre = false;
+        try (BulkSectionAccess bulksectionaccess = new BulkSectionAccess(worldgenlevel)) {
+            BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+            for (int x = blockpos.getX() - width / 2; x < blockpos.getX() + width / 2; x++) {
+                for (int y = blockpos.getY() - height / 2; y < blockpos.getY() + height / 2; y++) {
+                    for (int z = blockpos.getZ() - width / 2; z < blockpos.getZ() + width / 2; z++) {
+                        mutableBlockPos.set(x, y, z);
+                        if (worldgenlevel.ensureCanWrite(mutableBlockPos)) {
+                            LevelChunkSection levelchunksection = bulksectionaccess.getSection(mutableBlockPos);
+                            if (levelchunksection != null) {
+                                int i3 = SectionPos.sectionRelative(x);
+                                int j3 = SectionPos.sectionRelative(y);
+                                int k3 = SectionPos.sectionRelative(z);
+                                BlockState blockstate = levelchunksection.getBlockState(i3, j3, k3);
+
+                                for (OreConfiguration.TargetBlockState oreconfiguration$targetblockstate : configuration.oreConfiguration.targetStates) {
+                                    if (canPlaceOre(blockstate, bulksectionaccess::getBlockState, randomsource, configuration, oreconfiguration$targetblockstate, mutableBlockPos)) {
+                                        levelchunksection.setBlockState(i3, j3, k3, oreconfiguration$targetblockstate.state, false);
+                                        hasPlacedOre = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        /*float f = randomsource.nextFloat() * (float)Math.PI;
         float f1 = (float)configuration.oreConfiguration.size / 8.0F;
         int i = Mth.ceil(((float)configuration.oreConfiguration.size / 16.0F * 2.0F + 1.0F) / 2.0F);
         double d0 = (double)blockpos.getX() + Math.sin(f) * (double)f1;
@@ -46,15 +76,12 @@ public class OreWithSurfaceFeature extends Feature<OreWithRandomPatchConfigurati
         int j1 = 2 * (Mth.ceil(f1) + i);
         int k1 = 2 * (2 + i);
 
-        boolean hasPlacedOre = false;
         for(int l1 = k; l1 <= k + j1; ++l1) {
             for(int i2 = i1; i2 <= i1 + j1; ++i2) {
                 if (l <= worldgenlevel.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, l1, i2)) {
-                    if (this.doPlace(worldgenlevel, randomsource, configuration, d0, d1, d2, d3, d4, d5, k, l, i1, j1, k1) && !hasPlacedOre)
-                        hasPlacedOre = true;
                 }
             }
-        }
+        }*/
 
         int placedRandomPatch = 0;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
@@ -62,7 +89,7 @@ public class OreWithSurfaceFeature extends Feature<OreWithRandomPatchConfigurati
         int ySpread = configuration.patchConfiguration.ySpread() + 1;
 
         for(int m = 0; m < configuration.patchConfiguration.tries(); ++m) {
-            blockpos$mutableblockpos.setWithOffset(blockpos, randomsource.nextInt(xzSpread) - randomsource.nextInt(xzSpread), randomsource.nextInt(ySpread) - randomsource.nextInt(k), randomsource.nextInt(xzSpread) - randomsource.nextInt(xzSpread));
+            blockpos$mutableblockpos.setWithOffset(blockpos, randomsource.nextInt(xzSpread) - randomsource.nextInt(xzSpread), randomsource.nextInt(ySpread) - randomsource.nextInt(ySpread), randomsource.nextInt(xzSpread) - randomsource.nextInt(xzSpread));
             if (configuration.patchConfiguration.feature().value().place(worldgenlevel, context.chunkGenerator(), randomsource, blockpos$mutableblockpos)) {
                 ++placedRandomPatch;
             }
@@ -138,23 +165,6 @@ public class OreWithSurfaceFeature extends Feature<OreWithRandomPatchConfigurati
                                             if (!bitset.get(l2)) {
                                                 bitset.set(l2);
                                                 blockpos$mutableblockpos.set(i2, j2, k2);
-                                                if (p_225172_.ensureCanWrite(blockpos$mutableblockpos)) {
-                                                    LevelChunkSection levelchunksection = bulksectionaccess.getSection(blockpos$mutableblockpos);
-                                                    if (levelchunksection != null) {
-                                                        int i3 = SectionPos.sectionRelative(i2);
-                                                        int j3 = SectionPos.sectionRelative(j2);
-                                                        int k3 = SectionPos.sectionRelative(k2);
-                                                        BlockState blockstate = levelchunksection.getBlockState(i3, j3, k3);
-
-                                                        for(OreConfiguration.TargetBlockState oreconfiguration$targetblockstate : p_225174_.oreConfiguration.targetStates) {
-                                                            if (canPlaceOre(blockstate, bulksectionaccess::getBlockState, p_225173_, p_225174_, oreconfiguration$targetblockstate, blockpos$mutableblockpos)) {
-                                                                levelchunksection.setBlockState(i3, j3, k3, oreconfiguration$targetblockstate.state, false);
-                                                                ++i;
-                                                                break;
-                                                            }
-                                                        }
-                                                    }
-                                                }
                                             }
                                         }
                                     }
@@ -169,13 +179,15 @@ public class OreWithSurfaceFeature extends Feature<OreWithRandomPatchConfigurati
         return i > 0;
     }
 
-    public static boolean canPlaceOre(BlockState p_225187_, Function<BlockPos, BlockState> p_225188_, RandomSource p_225189_, OreWithRandomPatchConfiguration p_225190_, OreConfiguration.TargetBlockState p_225191_, BlockPos.MutableBlockPos p_225192_) {
-        if (!p_225191_.target.test(p_225187_, p_225189_)) {
+    public static boolean canPlaceOre(BlockState state, Function<BlockPos, BlockState> func, RandomSource random, OreWithRandomPatchConfiguration configuration, OreConfiguration.TargetBlockState targetBlockState, BlockPos.MutableBlockPos mutableBlockPos) {
+        if (!targetBlockState.target.test(state, random)) {
             return false;
-        } else if (shouldSkipAirCheck(p_225189_, p_225190_.oreConfiguration.discardChanceOnAirExposure)) {
+        }
+        else if (shouldSkipAirCheck(random, configuration.oreConfiguration.discardChanceOnAirExposure)) {
             return true;
-        } else {
-            return !isAdjacentToAir(p_225188_, p_225192_);
+        }
+        else {
+            return !isAdjacentToAir(func, mutableBlockPos);
         }
     }
 
