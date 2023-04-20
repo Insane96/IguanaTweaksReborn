@@ -65,7 +65,7 @@ public class Seasons extends Feature {
 
 	@SubscribeEvent
 	public void onPreLevelTick(TickEvent.LevelTickEvent event) {
-		if (changeSereneSeasonsConfig && event.level.getGameTime() == 0) {
+		if (event.level.getGameTime() == 0 && changeSereneSeasonsConfig) {
 			SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(event.level);
 			//seasonData.seasonCycleTicks = SeasonTime.ZERO.getSubSeasonDuration() * Season.SubSeason.MID_SUMMER.ordinal();
 			seasonData.seasonCycleTicks = event.level.random.nextInt(12) * SeasonTime.ZERO.getSubSeasonDuration();

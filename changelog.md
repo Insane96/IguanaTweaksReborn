@@ -1,6 +1,9 @@
 # Changelog
 
 ## Upcoming
+* Added Beeg Ore Veins
+  * Veins that generate underground with lots of ores. On the surface, rocks can be found that mark the veins below
+* Starting season is now randomized
 * Breaking a tree without an axe now drops planks
 * Buckets now require the Nether to be made
 * Squids now come in various sizes
