@@ -1,0 +1,61 @@
+{
+    "type": "survivalreimagined:ore_with_surface_feature",
+    "config": {
+        "width": 10,
+        "height": 20,
+        "discard_chance_on_air_exposure": 0.5,
+        "targets": [
+            {
+                "target": {
+                    "predicate_type": "survivalreimagined:random_block_tag_match",
+                    "tag": "minecraft:stone_ore_replaceables",
+                    "probability": 0.25
+                },
+                "state": {
+                    "Name": "minecraft:iron_ore"
+                }
+            },
+            {
+                "target": {
+                    "predicate_type": "survivalreimagined:random_block_tag_match",
+                    "tag": "minecraft:deepslate_ore_replaceables",
+                    "probability": 0.1
+                },
+                "state": {
+                    "Name": "minecraft:deepslate_iron_ore"
+                }
+            }
+        ],
+        "surface_patch_config": {
+            "tries": 64,
+            "xz_spread": 9,
+            "y_spread": 6,
+            "feature": {
+                "feature": {
+                    "type": "minecraft:simple_block",
+                    "config": {
+                        "to_place": {
+                            "type": "minecraft:simple_state_provider",
+                            "state": {
+                                "Name": "survivalreimagined:iron_ore_rock"
+                            }
+                        }
+                    }
+                },
+                "placement": [
+                    {
+                        "type": "minecraft:block_predicate_filter",
+                        "predicate": {
+                            "type": "minecraft:matching_blocks",
+                            "blocks": "minecraft:air"
+                        }
+                    },
+                    {
+                        "type": "minecraft:heightmap",
+                        "heightmap": "MOTION_BLOCKING_NO_LEAVES"
+                    }
+                ]
+            }
+        }
+    }
+}

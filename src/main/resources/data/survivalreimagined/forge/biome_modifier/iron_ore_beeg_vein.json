@@ -1,0 +1,6 @@
+{
+    "type": "forge:add_features",
+    "biomes": "#forge:is_cold/overworld",
+    "features": "survivalreimagined:iron_ore_beeg_vein",
+    "step": "vegetal_decoration"
+}
