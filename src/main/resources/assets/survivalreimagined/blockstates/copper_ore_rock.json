@@ -1,0 +1,21 @@
+{
+    "variants": {
+        "": [
+            {
+                "model": "survivalreimagined:block/copper_ore_rock"
+            },
+            {
+                "model": "survivalreimagined:block/copper_ore_rock",
+                "y": 90
+            },
+            {
+                "model": "survivalreimagined:block/copper_ore_rock",
+                "y": 180
+            },
+            {
+                "model": "survivalreimagined:block/copper_ore_rock",
+                "y": 270
+            }
+        ]
+    }
+}

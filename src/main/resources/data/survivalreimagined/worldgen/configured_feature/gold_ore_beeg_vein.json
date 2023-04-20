@@ -1,8 +1,8 @@
 {
     "type": "survivalreimagined:ore_with_surface_feature",
     "config": {
-        "width": 10,
-        "height": 20,
+        "width": 16,
+        "height": 8,
         "discard_chance_on_air_exposure": 0.5,
         "targets": [
             {
@@ -12,7 +12,7 @@
                     "probability": 0.15
                 },
                 "state": {
-                    "Name": "minecraft:iron_ore"
+                    "Name": "minecraft:gold_ore"
                 }
             },
             {
@@ -22,7 +22,7 @@
                     "probability": 0.15
                 },
                 "state": {
-                    "Name": "minecraft:deepslate_iron_ore"
+                    "Name": "minecraft:deepslate_gold_ore"
                 }
             }
         ],
@@ -37,7 +37,7 @@
                         "to_place": {
                             "type": "minecraft:simple_state_provider",
                             "state": {
-                                "Name": "survivalreimagined:iron_ore_rock"
+                                "Name": "survivalreimagined:gold_ore_rock"
                             }
                         }
                     }

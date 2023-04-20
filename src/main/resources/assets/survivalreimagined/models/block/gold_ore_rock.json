@@ -1,0 +1,7 @@
+{
+    "parent": "survivalreimagined:block/ore_rock",
+    "textures": {
+        "particle": "block/deepslate_gold_ore",
+        "texture": "block/deepslate_gold_ore"
+    }
+}

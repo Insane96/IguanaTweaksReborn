@@ -4,6 +4,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
+import insane96mcp.survivalreimagined.module.world.feature.BeegVeins;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
@@ -172,6 +173,63 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(Florpium.INGOT.get(), 1)
                 .unlockedBy("has_ingot", has(Florpium.INGOT.get()))
                 .save(writer);
+
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(BeegVeins.COPPER_ORE_ROCK_ITEM.get()),
+                        RecipeCategory.MISC,
+                        Items.COPPER_INGOT,
+                        0.7f,
+                        800
+                )
+                .unlockedBy("has_copper_ore_rock", has(BeegVeins.COPPER_ORE_ROCK_ITEM.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "copper_ingot_from_smelting_rock");
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(BeegVeins.COPPER_ORE_ROCK_ITEM.get()),
+                        RecipeCategory.MISC,
+                        Items.COPPER_INGOT,
+                        0.7f,
+                        200
+                )
+                .unlockedBy("has_copper_ore_rock", has(BeegVeins.COPPER_ORE_ROCK_ITEM.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "copper_ingot_from_blasting_rock");
+
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(BeegVeins.IRON_ORE_ROCK_ITEM.get()),
+                        RecipeCategory.MISC,
+                        Items.IRON_INGOT,
+                        0.8f,
+                        800
+                )
+                .unlockedBy("has_iron_ore_rock", has(BeegVeins.IRON_ORE_ROCK_ITEM.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iron_ingot_from_smelting_rock");
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(BeegVeins.IRON_ORE_ROCK_ITEM.get()),
+                        RecipeCategory.MISC,
+                        Items.IRON_INGOT,
+                        0.8f,
+                        200
+                )
+                .unlockedBy("has_iron_ore_rock", has(BeegVeins.IRON_ORE_ROCK_ITEM.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iron_ingot_from_blasting_rock");
+
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(BeegVeins.GOLD_ORE_ROCK_ITEM.get()),
+                        RecipeCategory.MISC,
+                        Items.GOLD_INGOT,
+                        1f,
+                        800
+                )
+                .unlockedBy("has_gold_ore_rock", has(BeegVeins.GOLD_ORE_ROCK_ITEM.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "gold_ingot_from_smelting_rock");
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(BeegVeins.GOLD_ORE_ROCK_ITEM.get()),
+                        RecipeCategory.MISC,
+                        Items.GOLD_INGOT,
+                        1f,
+                        200
+                )
+                .unlockedBy("has_gold_ore_rock", has(BeegVeins.GOLD_ORE_ROCK_ITEM.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "gold_ingot_from_blasting_rock");
 
         SimpleCookingRecipeBuilder.smelting(
                         Ingredient.of(Florpium.ORE.get()),

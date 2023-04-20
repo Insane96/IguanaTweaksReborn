@@ -74,6 +74,9 @@
 	"block.survivalreimagined.nether_infused_powered_rail": "Nether Infused Powered Rail",
 	"block.survivalreimagined.respawn_obelisk": "Obelisco della Rinascita",
 	"block.survivalreimagined.crate": "Cassa",
+	"block.survivalreimagined.iron_ore_rock": "Roccia di minerale di ferro",
+	"block.survivalreimagined.gold_ore_rock": "Roccia di minerale d'oro",
+	"block.survivalreimagined.copper_ore_rock": "Roccia di minerale di rame",
 
 	"survivalreimagined.crate_weighted": "Rallenta chi ne trasporata %d o più",
 

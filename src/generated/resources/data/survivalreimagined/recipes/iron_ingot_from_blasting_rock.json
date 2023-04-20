@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.8,
+  "ingredient": {
+    "item": "survivalreimagined:iron_ore_rock"
+  },
+  "result": "minecraft:iron_ingot"
+}
