@@ -47,8 +47,8 @@ public class Spawning extends SRFeature {
     public static Integer hostileCapAutumn = 70;
 
     @Config
-    @Label(name = "Animals.No Spawn Winter", description = "Animals can no longer naturally spawn in Winter.")
-    public static Boolean noAnimalSpawnInWinter = true;
+    @Label(name = "No Animals or Sea Creatures Spawn Winter", description = "Animals and Sea Creatures can no longer naturally spawn in Winter.")
+    public static Boolean noAnimalOrSeaCreatureSpawnInWinter = true;
 
     @Config
     @Label(name = "Stupid baby zombies", description = "Disable baby zombies spawning")
@@ -92,22 +92,27 @@ public class Spawning extends SRFeature {
                 MobCategory.MONSTER.despawnDistance = despawnDistanceSpring;
                 MobCategory.MONSTER.max = hostileCapSpring;
                 MobCategory.CREATURE.max = 10;
+                MobCategory.WATER_AMBIENT.max = 20;
             }
             case SUMMER -> {
                 MobCategory.MONSTER.despawnDistance = despawnDistanceSummer;
                 MobCategory.MONSTER.max = hostileCapSummer;
                 MobCategory.CREATURE.max = 10;
+                MobCategory.WATER_AMBIENT.max = 20;
             }
             case AUTUMN -> {
                 MobCategory.MONSTER.despawnDistance = despawnDistanceAutumn;
                 MobCategory.MONSTER.max = hostileCapAutumn;
                 MobCategory.CREATURE.max = 10;
+                MobCategory.WATER_AMBIENT.max = 20;
             }
             case WINTER -> {
                 MobCategory.MONSTER.despawnDistance = despawnDistanceWinter;
                 MobCategory.MONSTER.max = hostileCapWinter;
-                if (noAnimalSpawnInWinter)
+                if (noAnimalOrSeaCreatureSpawnInWinter) {
                     MobCategory.CREATURE.max = 0;
+                    MobCategory.WATER_AMBIENT.max = 0;
+                }
             }
         }
     }
