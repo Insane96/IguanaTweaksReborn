@@ -17,6 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import sereneseasons.api.season.SeasonHelper;
 
 @Label(name = "Fog", description = "Makes fog less invasive in some contexts")
 @LoadFeature(module = ClientModules.Ids.CLIENT)
@@ -33,8 +34,8 @@ public class Fog extends Feature {
     public static Double netherFogRatio = 0.75d;
 
     @Config
-    @Label(name = "Fog change per season", description = "Fog changes based off seasons.")
-    public static Boolean fogChangePerSeason = true;
+    @Label(name = "Fog change when rains", description = "Fog changes when it's raining based off seasons.")
+    public static Boolean fogChangeOnRain = true;
 
     public Fog(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -52,7 +53,7 @@ public class Fog extends Feature {
     }
 
     private void seasonFog(ViewportEvent.RenderFog event) {
-        if (!fogChangePerSeason
+        if (!fogChangeOnRain
                 || event.isCanceled())
             return;
 
@@ -60,8 +61,20 @@ public class Fog extends Feature {
         if (entity.level.dimension() == Level.OVERWORLD && entity.level.isRaining()) {
             float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
             float rainLevel = entity.level.getRainLevel(1f);
-            event.setNearPlaneDistance(renderDistance * (0.75f * (1f - rainLevel)));
-            event.setFarPlaneDistance(renderDistance * (1f - rainLevel + 0.2f));
+            float nearMultiplier = switch (SeasonHelper.getSeasonState(entity.level).getSeason()) {
+                case SPRING -> 0.7F;
+                case SUMMER -> 0.8F;
+                case AUTUMN -> 0.6F;
+                case WINTER -> 0.1F;
+            };
+            float farMultiplier = switch (SeasonHelper.getSeasonState(entity.level).getSeason()) {
+                case SPRING -> 0.8F;
+                case SUMMER -> 0.9F;
+                case AUTUMN -> 0.75F;
+                case WINTER -> 0.3F;
+            };
+            event.setNearPlaneDistance(renderDistance * nearMultiplier);
+            event.setFarPlaneDistance(renderDistance * farMultiplier);
             event.setCanceled(true);
         }
     }

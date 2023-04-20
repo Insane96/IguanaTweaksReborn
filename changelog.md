@@ -3,6 +3,8 @@
 ## Upcoming
 * Added Beeg Ore Veins
   * Veins that generate underground with lots of ores. On the surface, rocks can be found that mark the veins below
+* Fog now changes when it's raining
+  * Colder seasons = more fog
 * Starting season is now randomized
 * Breaking a tree without an axe now drops planks
 * Buckets now require the Nether to be made
