@@ -5,7 +5,9 @@
   * Veins that generate underground with lots of ores. On the surface, rocks can be found that mark the veins below
 * Fog now changes when it's raining
   * Colder seasons = more fog
-* Starting season is now randomized
+* Unbreaking Overhaul
+  * When a tool with unbreaking breaks, an Enchanted Item fragment pops out with the same enchantments of the item that broke. Can be applied to a new item in an anvil to transfer the enchantments and the name
+* Starting season is now Mid-Summer
 * Breaking a tree without an axe now drops planks
 * Buckets now require the Nether to be made
 * Squids and fishes now come in various sizes

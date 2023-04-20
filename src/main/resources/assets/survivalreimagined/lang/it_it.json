@@ -80,7 +80,10 @@
 
 	"survivalreimagined.crate_weighted": "Rallenta chi ne trasporata %d o più",
 
-	"item.survivalreimagined.ancient_lapis": "Lapis Antico",
+	"item.survivalreimagined.ancient_lapis": "Lapis antico",
+	"item.survivalreimagined.cleansed_lapis": "Lapis puro",
+	"item.survivalreimagined.enchanted_item_fragment": "Frammento incantato di oggetto",
+	"survivalreimagined.enchanted_item_fragment.appliable_to": "Applicabile a: ",
 
 	"item.survivalreimagined.chained_copper_helmet": "Elmo di rame a catene",
 	"item.survivalreimagined.chained_copper_chestplate": "Corazza di rame a catene",
