@@ -8,8 +8,9 @@
 * Starting season is now randomized
 * Breaking a tree without an axe now drops planks
 * Buckets now require the Nether to be made
-* Squids now come in various sizes
+* Squids and fishes now come in various sizes
 * Removed Gold Nuggets drop from Zombified Piglins
+* Miner Zombies now have a higher chance to spawn in Hard
 
 ## Alpha 3.5.0
 * Added Copper Reinforced Flint Tools

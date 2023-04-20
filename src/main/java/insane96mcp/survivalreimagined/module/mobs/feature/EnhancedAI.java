@@ -60,8 +60,6 @@ public class EnhancedAI extends SRFeature {
         Module.getFeature(Animals.class).readConfig(event);
 
         Module.getFeature(DiggerZombie.class).setConfigOption("Digger Speed Multiplier", 2d);
-        //Control digger zombies via MPR
-        Module.getFeature(DiggerZombie.class).setConfigOption("Digger Chance", 0d);
         Module.getFeature(DiggerZombie.class).readConfig(event);
     }
 }
