@@ -56,9 +56,8 @@ public class Fog extends Feature {
         if (entity instanceof LivingEntity livingEntity && livingEntity.hasEffect(MobEffects.FIRE_RESISTANCE)) {
             event.setNearPlaneDistance(-16);
             event.setFarPlaneDistance(16f);
+            event.setCanceled(true);
         }
-
-        event.setCanceled(true);
     }
 
     public void netherFog(ViewportEvent.RenderFog event) {
