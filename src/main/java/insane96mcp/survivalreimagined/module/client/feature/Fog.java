@@ -32,6 +32,10 @@ public class Fog extends Feature {
     @Label(name = "Nether Fog Ratio", description = "Render distance is multiplied by this value in the Nether. Vanilla is 0.5.")
     public static Double netherFogRatio = 0.75d;
 
+    @Config
+    @Label(name = "Fog change per season", description = "Fog changes based off seasons.")
+    public static Boolean fogChangePerSeason = true;
+
     public Fog(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -44,6 +48,22 @@ public class Fog extends Feature {
 
         lavaFog(event);
         netherFog(event);
+        seasonFog(event);
+    }
+
+    private void seasonFog(ViewportEvent.RenderFog event) {
+        if (!fogChangePerSeason
+                || event.isCanceled())
+            return;
+
+        Entity entity = event.getCamera().getEntity();
+        if (entity.level.dimension() == Level.OVERWORLD && entity.level.isRaining()) {
+            float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
+            float rainLevel = entity.level.getRainLevel(1f);
+            event.setNearPlaneDistance(renderDistance * (0.75f * (1f - rainLevel)));
+            event.setFarPlaneDistance(renderDistance * (1f - rainLevel + 0.2f));
+            event.setCanceled(true);
+        }
     }
 
     public void lavaFog(ViewportEvent.RenderFog event) {
