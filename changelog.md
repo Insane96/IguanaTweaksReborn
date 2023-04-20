@@ -9,6 +9,7 @@
 * Breaking a tree without an axe now drops planks
 * Buckets now require the Nether to be made
 * Squids and fishes now come in various sizes
+* Fishes no longer spawn in winter
 * Removed Gold Nuggets drop from Zombified Piglins
 * Miner Zombies now have a higher chance to spawn in Hard
 
