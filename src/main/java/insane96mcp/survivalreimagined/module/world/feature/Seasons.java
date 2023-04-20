@@ -13,7 +13,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
-import sereneseasons.api.season.Season;
 import sereneseasons.config.FertilityConfig;
 import sereneseasons.config.ServerConfig;
 import sereneseasons.handler.season.SeasonHandler;
@@ -25,7 +24,7 @@ import sereneseasons.season.SeasonTime;
 public class Seasons extends Feature {
 
 	@Config
-	@Label(name = "Serene Seasons changes", description = "Normal glass no longer counts as greenhouse glass and saplings no longer grow in Winter.")
+	@Label(name = "Serene Seasons changes", description = "Normal glass no longer counts as greenhouse glass, saplings no longer grow in Winter and starting season is random.")
 	public static Boolean sereneSeasonsChanges = true;
 
 	@Config
@@ -59,7 +58,7 @@ public class Seasons extends Feature {
 	@SubscribeEvent
 	public void onServerStart(ServerStartedEvent event) {
 		if (changeSereneSeasonsConfig) {
-			ServerConfig.startingSubSeason.set(5);
+			ServerConfig.startingSubSeason.set(0);
 			ServerConfig.progressSeasonWhileOffline.set(false);
 		}
 	}
@@ -68,7 +67,8 @@ public class Seasons extends Feature {
 	public void onPreLevelTick(TickEvent.LevelTickEvent event) {
 		if (changeSereneSeasonsConfig && event.level.getGameTime() == 0) {
 			SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(event.level);
-			seasonData.seasonCycleTicks = SeasonTime.ZERO.getSubSeasonDuration() * Season.SubSeason.MID_SUMMER.ordinal();
+			//seasonData.seasonCycleTicks = SeasonTime.ZERO.getSubSeasonDuration() * Season.SubSeason.MID_SUMMER.ordinal();
+			seasonData.seasonCycleTicks = event.level.random.nextInt(12) * SeasonTime.ZERO.getSubSeasonDuration();
 			seasonData.setDirty();
 			SeasonHandler.sendSeasonUpdate(event.level);
 		}
