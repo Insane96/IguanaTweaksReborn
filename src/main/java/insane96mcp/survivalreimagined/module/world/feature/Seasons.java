@@ -9,11 +9,16 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.server.packs.PackType;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+import sereneseasons.api.season.Season;
 import sereneseasons.config.FertilityConfig;
 import sereneseasons.config.ServerConfig;
+import sereneseasons.handler.season.SeasonHandler;
+import sereneseasons.season.SeasonSavedData;
+import sereneseasons.season.SeasonTime;
 
 @Label(name = "Seasons", description = "Change a few things relative to Serene Seasons")
 @LoadFeature(module = Modules.Ids.WORLD)
@@ -56,6 +61,16 @@ public class Seasons extends Feature {
 		if (changeSereneSeasonsConfig) {
 			ServerConfig.startingSubSeason.set(5);
 			ServerConfig.progressSeasonWhileOffline.set(false);
+		}
+	}
+
+	@SubscribeEvent
+	public void onPreLevelTick(TickEvent.LevelTickEvent event) {
+		if (changeSereneSeasonsConfig && event.level.getGameTime() == 0) {
+			SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(event.level);
+			seasonData.seasonCycleTicks = SeasonTime.ZERO.getSubSeasonDuration() * Season.SubSeason.MID_SUMMER.ordinal();
+			seasonData.setDirty();
+			SeasonHandler.sendSeasonUpdate(event.level);
 		}
 	}
 }
