@@ -82,10 +82,10 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_leggings", 140),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_boots", 121),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 38),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", 56),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_leggings", 52),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_boots", 45),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 62),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", 90),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_leggings", 84),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_boots", 73),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 181),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", 264),
