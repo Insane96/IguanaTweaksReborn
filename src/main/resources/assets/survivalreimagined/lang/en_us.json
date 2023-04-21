@@ -87,8 +87,8 @@
 
 	"item.survivalreimagined.ancient_lapis": "Ancient Lapis",
 	"item.survivalreimagined.cleansed_lapis": "Cleansed Lapis",
-	"item.survivalreimagined.enchanted_item_fragment": "Enchanted Item Fragment",
-	"survivalreimagined.enchanted_item_fragment.appliable_to": "Appliable to: ",
+	"item.survivalreimagined.item_fragment": "Item Fragment",
+	"survivalreimagined.item_fragment.appliable_to": "Appliable to: ",
 
 	"item.survivalreimagined.chained_copper_helmet": "Chained Copper Helmet",
 	"item.survivalreimagined.chained_copper_chestplate": "Chained Copper Chestplate",

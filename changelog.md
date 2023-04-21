@@ -6,7 +6,7 @@
 * Fog now changes when it's raining
   * Colder seasons = more fog
 * Unbreaking Overhaul
-  * When a tool with unbreaking breaks, an Enchanted Item fragment pops out with the same enchantments of the item that broke. Can be applied to a new item in an anvil to transfer the enchantments and the name
+  * When a tool with unbreaking breaks, an Item fragment pops out with the same enchantments of the item that broke. Can be applied to a new item in an anvil to transfer the enchantments
 * Starting season is now Mid-Summer
 * Breaking a tree without an axe now drops planks
 * Buckets now require the Nether to be made

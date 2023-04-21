@@ -39,7 +39,7 @@ public class UnbreakingOverhaul extends Feature {
 	@Label(name = "Enchanted Item Fragment", description = "Enable Enchanted Item Fragments.")
 	public static Boolean enchantedItemFragment = true;
 
-	public static RegistryObject<Item> ENCHANTED_ITEM_FRAGMENT = SRItems.REGISTRY.register("enchanted_item_fragment", () -> new Item(new Item.Properties().stacksTo(1)));
+	public static RegistryObject<Item> ITEM_FRAGMENT = SRItems.REGISTRY.register("item_fragment", () -> new Item(new Item.Properties().stacksTo(1)));
 
 	public UnbreakingOverhaul(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -50,6 +50,8 @@ public class UnbreakingOverhaul extends Feature {
 		super.loadConfigOptions();
 		if (maxOneLevel)
 			Enchantments.UNBREAKING.rarity = Enchantment.Rarity.VERY_RARE;
+		else
+			Enchantments.UNBREAKING.rarity = Enchantment.Rarity.UNCOMMON;
 	}
 
 	public static boolean isMaxOneLevel() {
@@ -59,13 +61,14 @@ public class UnbreakingOverhaul extends Feature {
 	@SubscribeEvent
 	public void onItemDestroyed(PlayerDestroyItemEvent event) {
 		if (!this.isEnabled()
-				|| !enchantedItemFragment)
+				|| !enchantedItemFragment
+				|| !event.getOriginal().isDamageableItem())
 			return;
 
-		if (event.getOriginal().getEnchantmentLevel(Enchantments.UNBREAKING) < 0)
+		if (event.getOriginal().getEnchantmentLevel(Enchantments.UNBREAKING) <= 0)
 			return;
 
-		ItemStack itemStack = new ItemStack(ENCHANTED_ITEM_FRAGMENT.get());
+		ItemStack itemStack = new ItemStack(ITEM_FRAGMENT.get());
 		event.getOriginal().getAllEnchantments().forEach(itemStack::enchant);
 		if (!itemStack.hasTag())
 			itemStack.setTag(new CompoundTag());
@@ -79,7 +82,7 @@ public class UnbreakingOverhaul extends Feature {
 	public void onAnvilUpdate(AnvilUpdateEvent event) {
 		if (!this.isEnabled()
 				|| !enchantedItemFragment
-				|| !event.getRight().is(ENCHANTED_ITEM_FRAGMENT.get())
+				|| !event.getRight().is(ITEM_FRAGMENT.get())
 				|| !event.getRight().hasTag()
 				|| !event.getRight().getTag().contains("appliable_to")
 				|| !event.getLeft().isEnchantable()
@@ -113,7 +116,7 @@ public class UnbreakingOverhaul extends Feature {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onTooltip(ItemTooltipEvent event) {
-		if (!event.getItemStack().is(ENCHANTED_ITEM_FRAGMENT.get())
+		if (!event.getItemStack().is(ITEM_FRAGMENT.get())
 				|| !event.getItemStack().hasTag()
 				|| !event.getItemStack().getTag().contains("appliable_to"))
 			return;
@@ -121,6 +124,6 @@ public class UnbreakingOverhaul extends Feature {
 		Item appliableTo = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(event.getItemStack().getTag().getString("appliable_to")));
 		if (appliableTo == null)
 			return;
-		event.getToolTip().add(Component.translatable(SurvivalReimagined.MOD_ID + ".enchanted_item_fragment.appliable_to").append(appliableTo.getDescription().copy().withStyle(ChatFormatting.AQUA)));
+		event.getToolTip().add(Component.translatable(SurvivalReimagined.MOD_ID + ".item_fragment.appliable_to").append(appliableTo.getDescription().copy().withStyle(ChatFormatting.AQUA)));
 	}
 }
