@@ -4,10 +4,10 @@
 			"item": "minecraft:golden_chestplate"
 		},
 		"title": {
-			"translate": "advancements.sr_story.golden_chestplate.title"
+			"translate": "advancements.sr_story.golden_armor.title"
 		},
 		"description": {
-			"translate": "advancements.sr_story.golden_chestplate.description"
+			"translate": "advancements.sr_story.golden_armor.description"
 		},
 		"frame": "task",
 		"show_toast": true,
