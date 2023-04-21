@@ -28,7 +28,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.UUID;
 
-@Label(name = "Ancient Lapis", description = "Add an item that increases the level of an enchantment, up to 1 level above the limit.")
+@Label(name = "Crate", description = "A new block that can let you carry more stuff around.")
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class Crate extends Feature {
 
