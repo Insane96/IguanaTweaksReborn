@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.movement.utils;
+package insane96mcp.survivalreimagined.module.movement.data;
 
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Weights;

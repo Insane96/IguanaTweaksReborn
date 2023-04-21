@@ -8,7 +8,7 @@ import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
-import insane96mcp.survivalreimagined.module.movement.utils.MaterialSlowdown;
+import insane96mcp.survivalreimagined.module.movement.data.MaterialSlowdown;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;

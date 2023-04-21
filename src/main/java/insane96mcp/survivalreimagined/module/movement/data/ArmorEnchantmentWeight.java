@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.movement.utils;
+package insane96mcp.survivalreimagined.module.movement.data;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;

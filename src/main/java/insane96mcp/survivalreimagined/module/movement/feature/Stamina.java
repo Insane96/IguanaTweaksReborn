@@ -10,6 +10,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.event.PlayerSprintEvent;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.movement.handler.StaminaHandler;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.MessageStaminaSync;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
@@ -53,49 +54,6 @@ public class Stamina extends Feature {
         super(module, enabledByDefault, canBeDisabled);
     }
 
-    /**
-     * Each half heart accounts for 1/2 a second sprinting
-     */
-    public static int getMaxStamina(Player player) {
-        return Mth.ceil(player.getHealth() * staminaPerHalfHeart);
-    }
-
-    public static int getStamina(Player player) {
-        return player.getPersistentData().getInt(STAMINA);
-    }
-
-    public static boolean isStaminaLocked(Player player) {
-        return player.getPersistentData().getBoolean(STAMINA_LOCKED);
-    }
-
-    public static boolean canSprint(Player player) {
-        return !isStaminaLocked(player) && getStamina(player) > 0 && !player.getAbilities().instabuild;
-    }
-
-    public static void setStamina(Player player, int stamina) {
-        player.getPersistentData().putInt(STAMINA, Mth.clamp(stamina, 0, getMaxStamina(player)));
-    }
-
-    public static void consumeStamina(Player player) {
-        setStamina(player, getStamina(player) - 1);
-    }
-
-    public static void consumeStamina(Player player, int amount) {
-        setStamina(player, getStamina(player) - amount);
-    }
-
-    public static void regenStamina(Player player) {
-        setStamina(player, getStamina(player) + 1);
-    }
-
-    public static void lockSprinting(Player player) {
-        player.getPersistentData().putBoolean(STAMINA_LOCKED, true);
-    }
-
-    public static void unlockSprinting(Player player) {
-        player.getPersistentData().putBoolean(STAMINA_LOCKED, false);
-    }
-
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (!this.isEnabled()
@@ -106,7 +64,7 @@ public class Stamina extends Feature {
         boolean shouldSync = false;
 
         if (!player.getPersistentData().contains(STAMINA))
-            setStamina(player, getMaxStamina(player));
+            StaminaHandler.setStamina(player, StaminaHandler.getMaxStamina(player));
 
         if (player.isSprinting() && player.getVehicle() == null && !player.getAbilities().instabuild) {
             //If the vigour effect is active give the player 20% chance per level to not consume stamina when running.
@@ -116,30 +74,30 @@ public class Stamina extends Feature {
                 if (player.getRandom().nextDouble() < 0.2d * (mobEffectInstance.getAmplifier() + 1))
                     return;
             }
-            consumeStamina(player);
-            if (getStamina(player) <= 0)
-                lockSprinting(player);
+            StaminaHandler.consumeStamina(player);
+            if (StaminaHandler.getStamina(player) <= 0)
+                StaminaHandler.lockSprinting(player);
             shouldSync = true;
-        } else if ((getStamina(player) != getMaxStamina(player) && getMaxStamina(player) >= 40)
+        } else if ((StaminaHandler.getStamina(player) != StaminaHandler.getMaxStamina(player) && StaminaHandler.getMaxStamina(player) >= 40)
                 //Trigger the sync for clients
                 || player.tickCount == 1) {
             //Slower regeneration if stamina il locked
-            if (isStaminaLocked(player) && player.tickCount % 3 == 0)
+            if (StaminaHandler.isStaminaLocked(player) && player.tickCount % 3 == 0)
                 return;
-            regenStamina(player);
-            if (getStamina(player) >= getMaxStamina(player) - 10)
-                unlockSprinting(player);
+            StaminaHandler.regenStamina(player);
+            if (StaminaHandler.getStamina(player) >= StaminaHandler.getMaxStamina(player) - 10)
+                StaminaHandler.unlockSprinting(player);
             shouldSync = true;
         }
-        else if (!isStaminaLocked(player) && getMaxStamina(player) < 40) {
-            setStamina(player, 0);
-            lockSprinting(player);
+        else if (!StaminaHandler.isStaminaLocked(player) && StaminaHandler.getMaxStamina(player) < 40) {
+            StaminaHandler.setStamina(player, 0);
+            StaminaHandler.lockSprinting(player);
             shouldSync = true;
         }
 
         if (shouldSync) {
             //Sync stamina to client
-            Object msg = new MessageStaminaSync(getStamina(player), isStaminaLocked(player));
+            Object msg = new MessageStaminaSync(StaminaHandler.getStamina(player), StaminaHandler.isStaminaLocked(player));
             NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
@@ -151,7 +109,7 @@ public class Stamina extends Feature {
                 || event.getPlayer().getAbilities().instabuild)
             return;
 
-        if (!canSprint(event.getPlayer()))
+        if (!StaminaHandler.canSprint(event.getPlayer()))
             event.setCanceled(true);
     }
 
@@ -162,7 +120,7 @@ public class Stamina extends Feature {
                 || !(event.getEntity() instanceof ServerPlayer player))
             return;
 
-        consumeStamina(player, staminaConsumedOnJump);
+        StaminaHandler.consumeStamina(player, staminaConsumedOnJump);
     }
 
     static ResourceLocation PLAYER_HEALTH_ELEMENT = new ResourceLocation("minecraft", "player_health");
@@ -185,7 +143,7 @@ public class Stamina extends Feature {
 
     @OnlyIn(Dist.CLIENT)
     public static void renderStamina(ForgeGui gui, PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
-        int healthIconsOffset = gui.leftHeight;
+        int healthIconsOffset = 49;
 
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
@@ -193,11 +151,11 @@ public class Stamina extends Feature {
 
         int right = mc.getWindow().getGuiScaledWidth() / 2 - 91;
         int top = mc.getWindow().getGuiScaledHeight() - healthIconsOffset + 9;
-        int halfHeartsMaxStamina = Mth.ceil((float) getMaxStamina(player) / staminaPerHalfHeart);
-        int halfHeartsStamina = Mth.ceil((float) getStamina(player) / staminaPerHalfHeart);
+        int halfHeartsMaxStamina = Mth.ceil((float) StaminaHandler.getMaxStamina(player) / staminaPerHalfHeart);
+        int halfHeartsStamina = Mth.ceil((float) StaminaHandler.getStamina(player) / staminaPerHalfHeart);
         RenderSystem.setShaderTexture(0, SurvivalReimagined.GUI_ICONS);
         int height = 9;
-        if (isStaminaLocked(player))
+        if (StaminaHandler.isStaminaLocked(player))
             setColor(1f, 1f, 1f, .5f);
         else
             setColor(1f, 0f, 0f, .75f);
@@ -247,7 +205,7 @@ public class Stamina extends Feature {
         if (playerEntity == null)
             return;
         if (mc.options.renderDebug && !mc.showOnlyReducedInfo()) {
-            event.getLeft().add(String.format("Stamina: %d/%d; Locked: %s", getStamina(playerEntity), getMaxStamina(playerEntity), isStaminaLocked(playerEntity)));
+            event.getLeft().add(String.format("Stamina: %d/%d; Locked: %s", StaminaHandler.getStamina(playerEntity), StaminaHandler.getMaxStamina(playerEntity), StaminaHandler.isStaminaLocked(playerEntity)));
         }
     }
 }
