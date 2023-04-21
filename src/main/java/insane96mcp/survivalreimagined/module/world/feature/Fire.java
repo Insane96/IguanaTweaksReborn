@@ -7,7 +7,10 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.event.BlockBurntEvent;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
+import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -39,7 +42,11 @@ public class Fire extends Feature {
 
     @Config(min = 0d, max = 1d)
     @Label(name = "Charcoal from burnt logs chance", description = "Chance for logs to release charcoal when burnt")
-    public static Double charcoalFromBurntLogsChance = 0.4d;
+    public static Double charcoalFromBurntLogsChance = 0.6d;
+
+    @Config
+    @Label(name = "Disable Charcoal Smelting", description = "If enabled, a data pack will be enabled that removes the Charcoal recipe from smelting")
+    public static Boolean disableCharcoalSmelting = true;
 
     @Config
     @Label(name = "Two flint fire starter.Enabled", description = "If true, two flints (on per hand) can start a fire")
@@ -53,6 +60,7 @@ public class Fire extends Feature {
 
     public Fire(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_charcoal_smelting", net.minecraft.network.chat.Component.literal("Survival Reimagined No Charcoal Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableCharcoalSmelting));
     }
 
     @SubscribeEvent
