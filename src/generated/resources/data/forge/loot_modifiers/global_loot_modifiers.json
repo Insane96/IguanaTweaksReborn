@@ -1,7 +1,6 @@
 {
   "entries": [
     "survivalreimagined:chest_loot/trees/jungle",
-    "survivalreimagined:crops/no_wheat_expansion",
     "survivalreimagined:chest_loot/chests/desert_pyramid",
     "survivalreimagined:chest_loot/chests/village/village_mason",
     "survivalreimagined:livestock/lower_chicken",
@@ -57,14 +56,12 @@
     "survivalreimagined:chest_loot/trees/birch",
     "survivalreimagined:flint_tools/replace_wooden_sword",
     "survivalreimagined:crops/no_carrot_from_husk",
-    "survivalreimagined:crops/no_potato_expansion",
     "survivalreimagined:crops/no_carrot_from_zombie",
     "survivalreimagined:chest_loot/chests/village/village_fletcher",
     "survivalreimagined:chest_loot/chests/village/village_butcher",
     "survivalreimagined:chest_loot/chests/village/village_cartographer",
     "survivalreimagined:chest_loot/chests/village/village_taiga_house",
     "survivalreimagined:flint_tools/replace_wooden_hoe",
-    "survivalreimagined:crops/no_carrot_expansion",
     "survivalreimagined:chest_loot/chests/village/village_snowy_house",
     "survivalreimagined:chest_loot/chests/abandoned_mineshaft",
     "survivalreimagined:chest_loot/chests/village/village_armorer",
@@ -75,8 +72,7 @@
     "survivalreimagined:chest_loot/trees/warped",
     "survivalreimagined:crops/no_seeds_from_fern",
     "survivalreimagined:chest_loot/chests/buried_treasure",
-    "survivalreimagined:equipment/remove_gold_nuggets_from_piglins",
-    "survivalreimagined:crops/no_beetroot_expansion"
+    "survivalreimagined:equipment/remove_gold_nuggets_from_piglins"
   ],
   "replace": false
 }
