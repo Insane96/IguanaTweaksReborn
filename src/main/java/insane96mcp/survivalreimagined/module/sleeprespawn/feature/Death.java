@@ -61,7 +61,7 @@ public class Death extends Feature {
 		zombie.getPersistentData().putBoolean(EAStrings.Tags.Zombie.MINER, true);
 		zombie.setCustomName(Component.translatable(PLAYER_GHOST_LANG, player.getName().getString()));
 		if (zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null)
-			zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1d);
+			zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.8d);
 		zombie.setSilent(true);
 		zombie.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, -1, 0, false, false, false));
 		zombie.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, -1, 0, false, false, false));
