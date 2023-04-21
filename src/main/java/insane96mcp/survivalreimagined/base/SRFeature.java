@@ -19,6 +19,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.commons.io.FilenameUtils;
 
@@ -60,6 +61,7 @@ public class SRFeature extends Feature {
 
     protected static <T> void loadAndReadJson(String json, List<T> list, final List<T> defaultList, Type listType) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        list.clear();
         List<T> listRead;
         try {
             listRead = gson.fromJson(json, listType);
@@ -191,11 +193,11 @@ public class SRFeature extends Feature {
                 }
             }
 
-            list.clear();
+            this.list.clear();
             try {
                 FileReader fileReader = new FileReader(file);
                 List<T> listRead = gson.fromJson(fileReader, listType);
-                list.addAll(listRead);
+                this.list.addAll(listRead);
             }
             catch (JsonSyntaxException e) {
                 LogHelper.error("Parsing error loading Json %s: %s", FilenameUtils.removeExtension(file.getName()), e.getMessage());
@@ -204,8 +206,12 @@ public class SRFeature extends Feature {
                 LogHelper.error("Failed loading Json %s: %s", FilenameUtils.removeExtension(file.getName()), e.getMessage());
             }
 
+            this.onLoad(false);
+        }
+
+        public void onLoad(boolean isClientSide) {
             if (this.onLoad != null)
-                this.onLoad.accept(list, false);
+                this.onLoad.accept(this.list, isClientSide);
         }
 
         public void syncToClient(OnDatapackSyncEvent event) {
@@ -214,6 +220,7 @@ public class SRFeature extends Feature {
 
             Gson gson = new GsonBuilder().create();
 
+            LogHelper.info("syncToClient %s %s", this.fileName, this.configType);
             if (event.getPlayer() == null) {
                 event.getPlayerList().getPlayers().forEach(player -> {
                     JsonConfigSyncMessage.sync(this.configType, gson.toJson(this.list, this.listType), player);
@@ -229,6 +236,15 @@ public class SRFeature extends Feature {
     public void onDataPackSync(OnDatapackSyncEvent event) {
         for (JsonConfig<?> jsonConfig : JSON_CONFIGS) {
             jsonConfig.syncToClient(event);
+        }
+    }
+
+    @SubscribeEvent
+    public void onDataPackSync(TagsUpdatedEvent event) {
+        if (event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED) {
+            for (JsonConfig<?> jsonConfig : JSON_CONFIGS) {
+                jsonConfig.onLoad(true);
+            }
         }
     }
 }

@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Out of season crops no longer break. They just don't grow
+
 ## Alpha 3.6.1
 * Some stuff is now synced client-side
 * Charcoal can now only be obtained from burning Logs. Also increased chance (40% -> 60%)

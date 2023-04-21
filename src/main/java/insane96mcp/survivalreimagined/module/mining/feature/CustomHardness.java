@@ -55,7 +55,7 @@ public class CustomHardness extends SRFeature {
 
 	public static void handleCustomBlockHardnessPacket(String json) {
 		loadAndReadJson(json, customHardnesses, CUSTOM_HARDNESSES_DEFAULT, IdTagValue.LIST_TYPE);
-		processBlockHardness(customHardnesses, true);
+		//processBlockHardness(customHardnesses, true);
 	}
 
 	private static final Object mutex = new Object();

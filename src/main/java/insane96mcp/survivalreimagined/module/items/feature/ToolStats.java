@@ -13,6 +13,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.Strings;
+import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -131,15 +132,18 @@ public class ToolStats extends SRFeature {
 	public static void loadDurabilities(List<IdTagValue> list, boolean isclientSide) {
 		for (IdTagValue durability : list) {
 			List<Item> items = getAllItems(durability, isclientSide);
+			LogHelper.info("items %s", items);
 			for (Item item : items) {
+				LogHelper.info("item %s", item);
 				item.maxDamage = (int) durability.value;
 			}
 		}
 	}
 
 	public static void handleDurabilityPacket(String json) {
+		LogHelper.info("handleDurabilityPacket %s", json);
 		loadAndReadJson(json, itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE);
-		loadDurabilities(itemDurabilities, true);
+		//loadDurabilities(itemDurabilities, true);
 	}
 
 	public static void loadToolEfficiencies(List<IdTagValue> list, boolean isclientSide) {
@@ -155,7 +159,7 @@ public class ToolStats extends SRFeature {
 
 	public static void handleEfficienciesPacket(String json) {
 		loadAndReadJson(json, toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE);
-		loadToolEfficiencies(toolEfficiencies, true);
+		//loadToolEfficiencies(toolEfficiencies, true);
 	}
 
 	@SubscribeEvent

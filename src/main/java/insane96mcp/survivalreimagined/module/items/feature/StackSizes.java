@@ -73,14 +73,13 @@ public class StackSizes extends SRFeature {
 
 	public StackSizes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        JSON_CONFIGS.add(new JsonConfig<>("custom_stack_sizes.json", customStackList, CUSTOM_STACK_LIST_DEFAULT, IdTagValue.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.CUSTOM_FOOD_STACK_SIZES));
+        JSON_CONFIGS.add(new JsonConfig<>("custom_stack_sizes.json", customStackList, CUSTOM_STACK_LIST_DEFAULT, IdTagValue.LIST_TYPE, StackSizes::processCustomStackSizes, true, JsonConfigSyncMessage.ConfigType.CUSTOM_FOOD_STACK_SIZES));
     }
 
     @Override
     public void loadJsonConfigs() {
         if (!this.isEnabled())
             return;
-        super.loadJsonConfigs();
         synchronized (mutex) {
             //resetStackSizes();
             if (originalStackSizes.isEmpty()) {
@@ -92,14 +91,13 @@ public class StackSizes extends SRFeature {
             processBlockStackSizes();
             processStewStackSizes();
             processFoodStackSizes();
-
-            processCustomStackSizes(customStackList, false);
         }
+        super.loadJsonConfigs();
     }
 
     public static void handleCustomStackSizesPacket(String json) {
         loadAndReadJson(json, customStackList, CUSTOM_STACK_LIST_DEFAULT, IdTagValue.LIST_TYPE);
-        processCustomStackSizes(customStackList, true);
+        //processCustomStackSizes(customStackList, true);
     }
 
     private final Object mutex = new Object();
