@@ -7,6 +7,8 @@
   * Colder seasons = more fog
 * Unbreaking Overhaul
   * When a tool with unbreaking breaks, an Item fragment pops out with the same enchantments of the item that broke. Can be applied to a new item in an anvil to transfer the enchantments
+* Added Golden Absorption
+  * Wearing Gold Armor or shield gives one regnerating heart of absorption per piece (capped to the player health)
 * Starting season is now Mid-Summer
 * Breaking a tree without an axe now drops planks
 * Buckets now require the Nether to be made

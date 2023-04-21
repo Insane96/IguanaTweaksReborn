@@ -1,0 +1,38 @@
+{
+	"display": {
+		"icon": {
+			"item": "minecraft:golden_chestplate"
+		},
+		"title": {
+			"translate": "advancements.sr_story.golden_chestplate.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.golden_chestplate.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/anvil",
+	"criteria": {
+		"golden_armor": {
+			"trigger": "survivalreimagined:anvil_repair",
+			"conditions": {
+				"output": {
+					"items": [
+						"minecraft:golden_helmet",
+						"minecraft:golden_chestplate",
+						"minecraft:golden_leggings",
+						"minecraft:golden_boots"
+					]
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"golden_armor"
+		]
+	]
+}

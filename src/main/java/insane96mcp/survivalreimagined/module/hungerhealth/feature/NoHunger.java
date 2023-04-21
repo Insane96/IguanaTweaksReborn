@@ -249,7 +249,7 @@ public class NoHunger extends Feature {
 
     @OnlyIn(Dist.CLIENT)
     public static void renderFoodRegen(ForgeGui gui, PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
-        int healthIconsOffset = gui.leftHeight;
+        int healthIconsOffset = 49;
 
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
