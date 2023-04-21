@@ -1,5 +1,8 @@
 # Changelog
 
+## Alpha 3.6.1
+* Some stuff is now synced client-side
+
 ## Alpha 3.6.0
 * Added Beeg Ore Veins
   * Veins that generate underground with lots of ores. On the surface, rocks can be found that mark the veins below
@@ -12,11 +15,11 @@
 * Starting season is now Mid-Summer
 * Breaking a tree without an axe now drops planks
 * Buckets now require the Nether to be made
+* Sheeps now have a low chance to drop wool on death
 * Squids and fishes now come in various sizes
 * Fishes no longer spawn in winter
 * Removed Gold Nuggets drop from Zombified Piglins
 * Miner Zombies now have a higher chance to spawn in Hard
-* Sheeps now have a low chance to drop wool on death
 
 ## Alpha 3.5.0
 * Added Copper Reinforced Flint Tools

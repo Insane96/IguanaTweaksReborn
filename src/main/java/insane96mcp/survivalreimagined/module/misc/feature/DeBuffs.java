@@ -27,12 +27,12 @@ public class DeBuffs extends SRFeature {
 
 	public DeBuffs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		JSON_CONFIGS.add(new JsonConfig<>("debuffs.json", deBuffs, DEBUFFS_DEFAULT, DeBuff.LIST_TYPE));
 	}
 
 	@Override
 	public void loadJsonConfigs() {
 		super.loadJsonConfigs();
-		this.loadAndReadFile("debuffs.json", deBuffs, DEBUFFS_DEFAULT, DeBuff.LIST_TYPE);
 	}
 
 	@SubscribeEvent

@@ -62,6 +62,8 @@ public class TerrainSlowdown extends SRFeature {
 		materialInSlowdownConfig = this.getBuilder()
 				.comment("Slowdown percentage when walking in certain materials. Material names are fixed and cannot be changed. Materials per block list here: https://docs.google.com/spreadsheets/d/1XZ2iTC4nqit_GxvKurRp8NpW3tNaeaZsvfv4EGPoQxw/edit?usp=sharing")
 				.defineList("Material In Slowdown", materialInSlowdownDefault, o -> o instanceof String);
+		//TODO Sync
+		JSON_CONFIGS.add(new JsonConfig<>("custom_terrain_slowdown.json", customTerrainSlowdown, CUSTOM_TERRAIN_SLOWDOWN_DEFAULT, IdTagValue.LIST_TYPE));
 	}
 
 	@Override
@@ -74,7 +76,6 @@ public class TerrainSlowdown extends SRFeature {
 	@Override
 	public void loadJsonConfigs() {
 		super.loadJsonConfigs();
-		this.loadAndReadFile("custom_terrain_slowdown.json", customTerrainSlowdown, CUSTOM_TERRAIN_SLOWDOWN_DEFAULT, IdTagValue.LIST_TYPE);
 	}
 
 	@SubscribeEvent

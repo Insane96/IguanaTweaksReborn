@@ -22,7 +22,13 @@ public class IdTagValue extends IdTagMatcher {
 		this.value = value;
 	}
 
+	public IdTagValue(String dimension, double value) {
+		super(Type.ID, "minecraft:air", dimension);
+		this.value = value;
+	}
+
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<IdTagValue>>(){}.getType();
+
 	public static class Serializer implements JsonDeserializer<IdTagValue>, JsonSerializer<IdTagValue> {
 		@Override
 		public IdTagValue deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -39,14 +45,11 @@ public class IdTagValue extends IdTagMatcher {
 			IdTagValue idTagValue;
 			if (!id.equals("") && !tag.equals("")){
 				throw new JsonParseException("Invalid object containing both tag (%s) and id (%s)".formatted(tag, id));
-			}
-			else if (!id.equals("")) {
+			} else if (!id.equals("")) {
 				idTagValue = new IdTagValue(Type.ID, id);
-			}
-			else if (!tag.equals("")){
+			} else if (!tag.equals("")){
 				idTagValue = new IdTagValue(Type.TAG, tag);
-			}
-			else {
+			} else {
 				throw new JsonParseException("Invalid object missing either tag and id");
 			}
 
@@ -60,8 +63,7 @@ public class IdTagValue extends IdTagMatcher {
 			JsonObject jsonObject = new JsonObject();
 			if (src.type == Type.ID) {
 				jsonObject.addProperty("id", src.location.toString());
-			}
-			else if (src.type == Type.TAG) {
+			} else if (src.type == Type.TAG) {
 				jsonObject.addProperty("tag", src.location.toString());
 			}
 			jsonObject.addProperty("value", src.value);

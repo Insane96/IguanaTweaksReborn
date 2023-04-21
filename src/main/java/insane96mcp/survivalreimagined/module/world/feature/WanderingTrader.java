@@ -73,9 +73,11 @@ public class WanderingTrader extends SRFeature {
     public void loadJsonConfigs() {
         if (!this.isEnabled())
             return;
+        if (JSON_CONFIGS.isEmpty()) {
+            JSON_CONFIGS.add(new JsonConfig<>("generic_trades.json", wanderingTraderGenericTrades, WANDERING_TRADER_GENERIC_TRADES_DEFAULT.get(), SerializableTrade.SERIALIZABLE_TRADE_LIST_TYPE));
+            JSON_CONFIGS.add(new JsonConfig<>("rare_trades.json", wanderingTraderRareTrades, WANDERING_TRADER_RARE_TRADES_DEFAULT.get(), SerializableTrade.SERIALIZABLE_TRADE_LIST_TYPE));
+        }
         super.loadJsonConfigs();
-        this.loadAndReadFile("generic_trades.json", wanderingTraderGenericTrades, WANDERING_TRADER_GENERIC_TRADES_DEFAULT.get(), SerializableTrade.SERIALIZABLE_TRADE_LIST_TYPE);
-        this.loadAndReadFile("rare_trades.json", wanderingTraderRareTrades, WANDERING_TRADER_RARE_TRADES_DEFAULT.get(), SerializableTrade.SERIALIZABLE_TRADE_LIST_TYPE);
     }
 
     @SubscribeEvent

@@ -1,6 +1,5 @@
 package insane96mcp.survivalreimagined.module.mining.feature;
 
-import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -8,9 +7,8 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.mining.utils.BlockHardness;
 import insane96mcp.survivalreimagined.module.mining.utils.DepthHardnessDimension;
-import insane96mcp.survivalreimagined.module.mining.utils.DimensionHardnessMultiplier;
+import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +19,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +28,10 @@ public class GlobalHardness extends SRFeature {
 	public static final ResourceLocation HARDNESS_BLACKLIST = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "hardness_blacklist");
 	public static final ResourceLocation DEPTH_MULTIPLIER_BLACKLIST = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "depth_multiplier_blacklist");
 
-	public static final ArrayList<DimensionHardnessMultiplier> DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT = new ArrayList<>(List.of(
-			new DimensionHardnessMultiplier("minecraft:the_nether", 4.0d)
+	public static final ArrayList<IdTagValue> DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT = new ArrayList<>(List.of(
+			new IdTagValue("minecraft:the_nether", 4.0d)
 	));
-	public static final ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier = new ArrayList<>();
+	public static final ArrayList<IdTagValue> dimensionHardnessMultiplier = new ArrayList<>();
 
 	public static final ArrayList<DepthHardnessDimension> DEPTH_HARDNESS_DIMENSIONS_DEFAULT = new ArrayList<>(List.of(
 			new DepthHardnessDimension("minecraft:overworld", 0.01d, 63, -64),
@@ -48,18 +45,15 @@ public class GlobalHardness extends SRFeature {
 
 	public GlobalHardness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		JSON_CONFIGS.add(new JsonConfig<>("dimension_hardness.json", dimensionHardnessMultiplier, DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT, IdTagValue.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("depth_multipliers.json", depthMultiplierDimension, DEPTH_HARDNESS_DIMENSIONS_DEFAULT, DepthHardnessDimension.LIST_TYPE));
 	}
-
-	static final Type dimensionHardnessMultiplierListType = new TypeToken<ArrayList<DimensionHardnessMultiplier>>(){}.getType();
-	static final Type depthHardnessDimensionListType = new TypeToken<ArrayList<DepthHardnessDimension>>(){}.getType();
 
 	@Override
 	public void loadJsonConfigs() {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-		this.loadAndReadFile("dimension_hardness.json", dimensionHardnessMultiplier, DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT, dimensionHardnessMultiplierListType);
-		this.loadAndReadFile("depth_multipliers.json", depthMultiplierDimension, DEPTH_HARDNESS_DIMENSIONS_DEFAULT, depthHardnessDimensionListType);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -89,9 +83,9 @@ public class GlobalHardness extends SRFeature {
 			return 1d;
 
 		//If there's a dimension multiplier present return that
-		for (DimensionHardnessMultiplier dimensionHardnessMultiplier : dimensionHardnessMultiplier)
+		for (IdTagValue dimensionHardnessMultiplier : dimensionHardnessMultiplier)
 			if (dimensionId.equals(dimensionHardnessMultiplier.dimension))
-				return dimensionHardnessMultiplier.multiplier;
+				return dimensionHardnessMultiplier.value;
 
 		//Otherwise, return the global multiplier
 		return hardnessMultiplier;
@@ -105,7 +99,7 @@ public class GlobalHardness extends SRFeature {
 			return 0d;
 
 		if (!processCustomHardness)
-			for (BlockHardness blockHardness : CustomHardness.customHardnesses)
+			for (IdTagValue blockHardness : CustomHardness.customHardnesses)
 				if (blockHardness.matchesBlock(block, dimensionId))
 					return 0d;
 
@@ -115,7 +109,7 @@ public class GlobalHardness extends SRFeature {
 		double hardness = 0d;
 		for (DepthHardnessDimension depthHardnessDimension : depthMultiplierDimension) {
 			if (depthHardnessDimension.matchesDimension(dimensionId)) {
-				hardness += depthHardnessDimension.multiplier * Math.max(depthHardnessDimension.applyBelowY - Math.max(pos.getY(), depthHardnessDimension.stopAt), 0);
+				hardness += depthHardnessDimension.value * Math.max(depthHardnessDimension.applyBelowY - Math.max(pos.getY(), depthHardnessDimension.stopAt), 0);
 			}
 		}
 		return hardness;

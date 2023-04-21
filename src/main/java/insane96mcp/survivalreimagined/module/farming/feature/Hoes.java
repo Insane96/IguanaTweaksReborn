@@ -1,6 +1,5 @@
 package insane96mcp.survivalreimagined.module.farming.feature;
 
-import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -27,7 +26,6 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -60,15 +58,14 @@ public class Hoes extends SRFeature {
 
 	public Hoes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		JSON_CONFIGS.add(new JsonConfig<>("hoes_stats.json", hoesStats, HOES_STATS_DEFAULT, HoeStat.LIST_TYPE));
 	}
 
-	static final Type hoesStatsListType = new TypeToken<ArrayList<HoeStat>>(){}.getType();
 	@Override
 	public void loadJsonConfigs() {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-		this.loadAndReadFile("hoes_stats.json", hoesStats, HOES_STATS_DEFAULT, hoesStatsListType);
 	}
 
 	@SubscribeEvent

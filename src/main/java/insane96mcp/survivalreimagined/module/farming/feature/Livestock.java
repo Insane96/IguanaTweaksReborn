@@ -116,6 +116,12 @@ public class Livestock extends SRFeature {
 
 	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		JSON_CONFIGS.add(new JsonConfig<>("growth_slowdown_multiplier.json", growthSlowdown, GROWTH_SLOWNDOWN_DEFAULT, LivestockData.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("breeding_cooldown_multiplier.json", breedingCooldown, BREEDING_COOLDOWN_DEFAULT, LivestockData.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("egg_lay_cooldown_multiplier.json", eggLaySlowdown, EGG_LAY_SLOWDOWN_DEFAULT, LivestockData.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("cow_milk_cooldown.json", cowMilkCooldown, COW_MILK_COOLDOWN_DEFAULT, LivestockData.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("sheep_wool_regrowth_chance.json", sheepWoolRegrowthChance, SHEEP_WOOL_REGROWTH_CHANCE, LivestockData.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("breeding_fail_chance.json", breedingFailChance, BREEDING_FAIL_CHANCE_DEFAULT, LivestockData.LIST_TYPE));
 	}
 
 	@Override
@@ -123,12 +129,6 @@ public class Livestock extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-		this.loadAndReadFile("growth_slowdown_multiplier.json", growthSlowdown, GROWTH_SLOWNDOWN_DEFAULT, LivestockData.livestockDataListType);
-		this.loadAndReadFile("breeding_cooldown_multiplier.json", breedingCooldown, BREEDING_COOLDOWN_DEFAULT, LivestockData.livestockDataListType);
-		this.loadAndReadFile("egg_lay_cooldown_multiplier.json", eggLaySlowdown, EGG_LAY_SLOWDOWN_DEFAULT, LivestockData.livestockDataListType);
-		this.loadAndReadFile("cow_milk_cooldown.json", cowMilkCooldown, COW_MILK_COOLDOWN_DEFAULT, LivestockData.livestockDataListType);
-		this.loadAndReadFile("sheep_wool_regrowth_chance.json", sheepWoolRegrowthChance, SHEEP_WOOL_REGROWTH_CHANCE, LivestockData.livestockDataListType);
-		this.loadAndReadFile("breeding_fail_chance.json", breedingFailChance, BREEDING_FAIL_CHANCE_DEFAULT, LivestockData.livestockDataListType);
 	}
 
 	@SubscribeEvent
@@ -146,7 +146,7 @@ public class Livestock extends SRFeature {
 		double chance = 1d;
 		for (LivestockData data : sheepWoolRegrowthChance){
 			if (data.matches(mob))
-				chance = data.getValue();
+				chance = data.value;
 		}
 		if (chance == 1d)
 			return true;
@@ -175,7 +175,7 @@ public class Livestock extends SRFeature {
 		double multiplier = 0d;
 		for (LivestockData data : growthSlowdown){
 			if (data.matches(mob))
-				multiplier += data.getValue();
+				multiplier += data.value;
 		}
 		if (multiplier == 0d)
 			return;
@@ -196,7 +196,7 @@ public class Livestock extends SRFeature {
 		double multiplier = 0d;
 		for (LivestockData data : breedingCooldown){
 			if (data.matches(mob))
-				multiplier += data.getValue();
+				multiplier += data.value;
 		}
 		if (multiplier == 0d)
 			return;
@@ -217,7 +217,7 @@ public class Livestock extends SRFeature {
 		double multiplier = 0d;
 		for (LivestockData data : eggLaySlowdown){
 			if (data.matches(chicken))
-				multiplier += data.getValue();
+				multiplier += data.value;
 		}
 		if (multiplier == 0d)
 			return;
@@ -249,7 +249,7 @@ public class Livestock extends SRFeature {
 		int cooldown = 0;
 		for (LivestockData data : cowMilkCooldown){
 			if (data.matches(animal)) {
-				cooldown = (int) data.getValue();
+				cooldown = (int) data.value;
 				break;
 			}
 		}
@@ -292,7 +292,7 @@ public class Livestock extends SRFeature {
 		int c = 0;
 		for (LivestockData data : breedingFailChance){
 			if (data.matches(event.getParentA())) {
-				failChance += data.getValue();
+				failChance += data.value;
 				c++;
 			}
 		}

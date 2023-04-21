@@ -44,6 +44,7 @@ public class Equipment extends SRFeature {
 
     public Equipment(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
+        JSON_CONFIGS.add(new JsonConfig<>("custom_drop_chances.json", equipmentDropChances, EQUIPMENT_DROP_CHANCES_DEFAULT, EquipmentDropChance.LIST_TYPE));
     }
 
     @Override
@@ -51,7 +52,6 @@ public class Equipment extends SRFeature {
         if (!this.isEnabled())
             return;
         super.loadJsonConfigs();
-        this.loadAndReadFile("custom_drop_chances.json", equipmentDropChances, EQUIPMENT_DROP_CHANCES_DEFAULT, EquipmentDropChance.LIST_TYPE);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

@@ -1,5 +1,7 @@
 package insane96mcp.survivalreimagined.module.items.feature;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -9,6 +11,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
+import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
@@ -20,6 +23,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -113,6 +117,8 @@ public class ToolStats extends SRFeature {
 
 	public ToolStats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		JSON_CONFIGS.add(new JsonConfig<>("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE, ToolStats::loadDurabilities, true, JsonConfigSyncMessage.ConfigType.DURABILITIES));
+		JSON_CONFIGS.add(new JsonConfig<>("tool_efficiencies.json", toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE, ToolStats::loadToolEfficiencies, true, JsonConfigSyncMessage.ConfigType.EFFICIENCIES));
 	}
 
 	@Override
@@ -120,23 +126,50 @@ public class ToolStats extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-		this.loadAndReadFile("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE);
-		this.loadAndReadFile("tool_efficiencies.json", toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE);
+	}
 
-		for (IdTagValue durability : itemDurabilities) {
-			List<Item> items = getAllItems(durability);
+	public static void loadDurabilities(List<IdTagValue> list, boolean isclientSide) {
+		for (IdTagValue durability : list) {
+			List<Item> items = getAllItems(durability, isclientSide);
 			for (Item item : items) {
 				item.maxDamage = (int) durability.value;
 			}
 		}
+	}
 
-		for (IdTagValue efficiency : toolEfficiencies) {
-			List<Item> items = getAllItems(efficiency);
+	public static void handleDurabilityPacket(String json) {
+		loadAndReadJson(json, itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE);
+		loadDurabilities(itemDurabilities, true);
+	}
+
+	public static void loadToolEfficiencies(List<IdTagValue> list, boolean isclientSide) {
+		for (IdTagValue efficiency : list) {
+			List<Item> items = getAllItems(efficiency, isclientSide);
 			for (Item item : items) {
 				if (!(item instanceof DiggerItem diggerItem))
 					continue;
 				diggerItem.speed = (float) efficiency.value;
 			}
+		}
+	}
+
+	public static void handleEfficienciesPacket(String json) {
+		loadAndReadJson(json, toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE);
+		loadToolEfficiencies(toolEfficiencies, true);
+	}
+
+	@SubscribeEvent
+	public void onDataPackSync(OnDatapackSyncEvent event) {
+		Gson gson = new GsonBuilder().create();
+		if (event.getPlayer() == null) {
+			event.getPlayerList().getPlayers().forEach(player -> {
+				JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.DURABILITIES, gson.toJson(itemDurabilities, IdTagValue.LIST_TYPE), player);
+				JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.EFFICIENCIES, gson.toJson(toolEfficiencies, IdTagValue.LIST_TYPE), player);
+			});
+		}
+		else {
+			JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.DURABILITIES, gson.toJson(itemDurabilities, IdTagValue.LIST_TYPE), event.getPlayer());
+			JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.EFFICIENCIES, gson.toJson(toolEfficiencies, IdTagValue.LIST_TYPE), event.getPlayer());
 		}
 	}
 

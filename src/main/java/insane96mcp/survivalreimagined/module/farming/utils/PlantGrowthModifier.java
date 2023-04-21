@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.module.farming.utils;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -74,6 +75,8 @@ public class PlantGrowthModifier extends IdTagMatcher {
 
 		return multiplier;
 	}
+
+	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<PlantGrowthModifier>>(){}.getType();
 
 	public static class Serializer implements JsonDeserializer<PlantGrowthModifier>, JsonSerializer<PlantGrowthModifier> {
 		@Override

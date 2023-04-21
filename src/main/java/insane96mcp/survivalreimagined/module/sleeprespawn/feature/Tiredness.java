@@ -99,12 +99,12 @@ public class Tiredness extends SRFeature {
 
 	public Tiredness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		JSON_CONFIGS.add(new JsonConfig<>("energy_boost_items.json", energyBoostItems, ENERGY_BOOST_ITEMS_DEFAULT, EnergyBoostItem.LIST_TYPE));
 	}
 
 	@Override
 	public void loadJsonConfigs() {
 		super.loadJsonConfigs();
-		this.loadAndReadFile("energy_boost_items.json", energyBoostItems, ENERGY_BOOST_ITEMS_DEFAULT, EnergyBoostItem.LIST_TYPE);
 	}
 
 	@SubscribeEvent

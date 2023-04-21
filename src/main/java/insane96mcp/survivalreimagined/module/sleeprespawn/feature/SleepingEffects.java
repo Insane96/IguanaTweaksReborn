@@ -47,12 +47,12 @@ public class SleepingEffects extends SRFeature {
 
 	public SleepingEffects(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		JSON_CONFIGS.add(new JsonConfig<>("effects_on_wake_up.json", effectsOnWakeUp, EFFECTS_ON_WAKE_UP_DEFAULT, SRMobEffectInstance.LIST_TYPE));
 	}
 
 	@Override
 	public void loadJsonConfigs() {
 		super.loadJsonConfigs();
-		this.loadAndReadFile("effects_on_wake_up.json", effectsOnWakeUp, EFFECTS_ON_WAKE_UP_DEFAULT, SRMobEffectInstance.LIST_TYPE);
 	}
 
 	@SubscribeEvent

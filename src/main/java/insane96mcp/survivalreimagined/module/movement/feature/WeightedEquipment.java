@@ -79,6 +79,9 @@ public class WeightedEquipment extends SRFeature {
 
 	public WeightedEquipment(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		//TODO Sync to client
+		JSON_CONFIGS.add(new JsonConfig<>("enchantments_weights.json", enchantmentsList, ENCHANTMENTS_LIST_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("materials_weights.json", materialWeight, MATERIAL_WEIGHTS_DEFAULTS, ArmorMaterialWeight.LIST_TYPE));
 
 		armorDurabilityRatio.put(EquipmentSlot.HEAD, 0.2d);
 		armorDurabilityRatio.put(EquipmentSlot.CHEST, 0.290909091d);
@@ -91,8 +94,6 @@ public class WeightedEquipment extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-		this.loadAndReadFile("enchantments_weights.json", enchantmentsList, ENCHANTMENTS_LIST_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE);
-		this.loadAndReadFile("materials_weights.json", materialWeight, MATERIAL_WEIGHTS_DEFAULTS, ArmorMaterialWeight.LIST_TYPE);
 	}
 
 	@Override

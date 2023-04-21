@@ -71,6 +71,7 @@ public class FoodDrinks extends SRFeature {
 	public FoodDrinks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "slower_food_in_furnace", net.minecraft.network.chat.Component.literal("Survival Reimagined Slower Food in Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && slowerFoodInFurnaces));
+		JSON_CONFIGS.add(new JsonConfig<>("food_properties.json", customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, customFoodPropertiesListType, FoodDrinks::processCustomFoodValues));
 	}
 
 	static final Type customFoodPropertiesListType = new TypeToken<ArrayList<CustomFoodProperties>>(){}.getType();
@@ -79,9 +80,7 @@ public class FoodDrinks extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-		this.loadAndReadFile("food_properties.json", customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, customFoodPropertiesListType);
 		processFoodMultipliers();
-		processCustomFoodValues();
 	}
 
 	@Override
@@ -140,12 +139,11 @@ public class FoodDrinks extends SRFeature {
 		player.stopUsingItem();
 	}
 
-	private boolean processedFoodMultipliers = false;
+	private static boolean processedFoodMultipliers = false;
 
 	@SuppressWarnings("ConstantConditions")
-	public void processFoodMultipliers() {
-		if (!this.isEnabled()
-				|| processedFoodMultipliers)
+	public static void processFoodMultipliers() {
+		if (processedFoodMultipliers)
 			return;
 		processedFoodMultipliers = true;
 
@@ -163,13 +161,12 @@ public class FoodDrinks extends SRFeature {
 	}
 
 	@SuppressWarnings("ConstantConditions")
-	public void processCustomFoodValues() {
-		if (!this.isEnabled()
-				|| customFoodProperties.isEmpty())
+	public static void processCustomFoodValues(List<CustomFoodProperties> list, boolean isClientSide) {
+		if (list.isEmpty())
 			return;
 
-		for (CustomFoodProperties foodValue : customFoodProperties) {
-			List<Item> items = getAllItems(foodValue);
+		for (CustomFoodProperties foodValue : list) {
+			List<Item> items = getAllItems(foodValue, false);
 			for (Item item : items) {
 				if (!item.isEdible()) {
 					LogHelper.warn("In Custom Food Value %s is not a food", item);

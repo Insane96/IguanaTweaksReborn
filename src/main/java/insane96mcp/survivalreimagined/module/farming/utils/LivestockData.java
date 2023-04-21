@@ -3,7 +3,7 @@ package insane96mcp.survivalreimagined.module.farming.utils;
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.Entity;
@@ -14,8 +14,7 @@ import sereneseasons.api.season.SeasonHelper;
 import java.util.ArrayList;
 
 @JsonAdapter(LivestockData.Serializer.class)
-public class LivestockData extends IdTagMatcher {
-	private double value;
+public class LivestockData extends IdTagValue {
 	@Nullable
 	private Season season;
 
@@ -33,17 +32,13 @@ public class LivestockData extends IdTagMatcher {
 		this.season = season;
 	}
 
-	public double getValue() {
-		return value;
-	}
-
 	public boolean matches(Entity entity) {
 		if (season != null && !season.equals(SeasonHelper.getSeasonState(entity.level).getSeason()))
 			return false;
 		return this.matchesEntity(entity);
 	}
 
-	public static final java.lang.reflect.Type livestockDataListType = new TypeToken<ArrayList<LivestockData>>(){}.getType();
+	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<LivestockData>>(){}.getType();
 
 	public static class Serializer implements JsonDeserializer<LivestockData>, JsonSerializer<LivestockData> {
 		@Override

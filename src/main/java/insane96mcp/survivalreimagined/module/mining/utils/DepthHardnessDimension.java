@@ -2,20 +2,24 @@ package insane96mcp.survivalreimagined.module.mining.utils;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.reflect.TypeToken;
+import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 
+import java.util.ArrayList;
+
 /**
- * In this case the {@link DepthHardnessDimension#multiplier} field is used per block below the {@link DepthHardnessDimension#applyBelowY} level
+ * In this case the {@link IdTagValue#value} field is used per block below the {@link DepthHardnessDimension#applyBelowY} level
  */
 @JsonAdapter(DepthHardnessDimension.Serializer.class)
-public class DepthHardnessDimension extends DimensionHardnessMultiplier {
+public class DepthHardnessDimension extends IdTagValue {
 
 	public int applyBelowY;
 	public int stopAt;
 
 	public DepthHardnessDimension() {
-		super();
+		super(Type.ID, "minecraft:air");
 	}
 
 	public DepthHardnessDimension(String dimension, double multiplier, int applyBelowY, int stopAt) {
@@ -23,6 +27,8 @@ public class DepthHardnessDimension extends DimensionHardnessMultiplier {
 		this.applyBelowY = applyBelowY;
 		this.stopAt = stopAt;
 	}
+
+	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<DepthHardnessDimension>>(){}.getType();
 
 	public static class Serializer implements JsonDeserializer<DepthHardnessDimension>, JsonSerializer<DepthHardnessDimension> {
 		@Override
@@ -38,7 +44,7 @@ public class DepthHardnessDimension extends DimensionHardnessMultiplier {
 				}
 			}
 
-			dimensionHardnessMultiplier.multiplier = GsonHelper.getAsDouble(json.getAsJsonObject(), "multiplier");
+			dimensionHardnessMultiplier.value = GsonHelper.getAsDouble(json.getAsJsonObject(), "multiplier");
 			dimensionHardnessMultiplier.applyBelowY = GsonHelper.getAsInt(json.getAsJsonObject(), "apply_below_y");
 			dimensionHardnessMultiplier.stopAt = GsonHelper.getAsInt(json.getAsJsonObject(), "stop_at");
 
@@ -51,7 +57,7 @@ public class DepthHardnessDimension extends DimensionHardnessMultiplier {
 			if (src.dimension != null) {
 				jsonObject.addProperty("dimension", src.dimension.toString());
 			}
-			jsonObject.addProperty("multiplier", src.multiplier);
+			jsonObject.addProperty("multiplier", src.value);
 			jsonObject.addProperty("apply_below_y", src.applyBelowY);
 			jsonObject.addProperty("stop_at", src.stopAt);
 

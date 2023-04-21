@@ -73,6 +73,8 @@ public class BeaconConduit extends SRFeature {
 
     public BeaconConduit(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
+
+        JSON_CONFIGS.add(new JsonConfig<>("beacon_blocks_ranges.json", blocksList, BLOCKS_LIST_DEFAULT, IdTagValue.LIST_TYPE));
     }
 
     @Override
@@ -80,7 +82,6 @@ public class BeaconConduit extends SRFeature {
         if (!this.isEnabled())
             return;
         super.loadJsonConfigs();
-        this.loadAndReadFile("beacon_blocks_ranges.json", blocksList, BLOCKS_LIST_DEFAULT, IdTagValue.LIST_TYPE);
     }
 
     public static boolean beaconApplyEffects(Level level, BlockPos blockPos, int layers, MobEffect effectPrimary, MobEffect effectSecondary) {

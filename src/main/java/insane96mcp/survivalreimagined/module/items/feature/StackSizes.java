@@ -11,6 +11,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
+import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import insane96mcp.survivalreimagined.utils.Weights;
@@ -21,9 +22,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
@@ -74,6 +73,7 @@ public class StackSizes extends SRFeature {
 
 	public StackSizes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
+        JSON_CONFIGS.add(new JsonConfig<>("custom_stack_sizes.json", customStackList, CUSTOM_STACK_LIST_DEFAULT, IdTagValue.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.CUSTOM_FOOD_STACK_SIZES));
     }
 
     @Override
@@ -93,15 +93,13 @@ public class StackSizes extends SRFeature {
             processStewStackSizes();
             processFoodStackSizes();
 
-            this.loadAndReadFile("custom_stack_sizes.json", customStackList, CUSTOM_STACK_LIST_DEFAULT, IdTagValue.LIST_TYPE);
-
-            processCustomStackSizes();
+            processCustomStackSizes(customStackList, false);
         }
     }
 
-    @Override
-    public void readConfig(final ModConfigEvent event) {
-        super.readConfig(event);
+    public static void handleCustomStackSizesPacket(String json) {
+        loadAndReadJson(json, customStackList, CUSTOM_STACK_LIST_DEFAULT, IdTagValue.LIST_TYPE);
+        processCustomStackSizes(customStackList, true);
     }
 
     private final Object mutex = new Object();
@@ -206,18 +204,13 @@ public class StackSizes extends SRFeature {
         }
     }
 
-    public void processCustomStackSizes() {
-        if (customStackList.isEmpty())
+    public static void processCustomStackSizes(List<IdTagValue> list, boolean isClientSide) {
+        if (list.isEmpty())
             return;
 
-        for (IdTagValue customStackSize : customStackList) {
-            getAllItems(customStackSize).forEach(item -> item.maxStackSize = (int) Mth.clamp(customStackSize.value, 1, 64));
+        for (IdTagValue customStackSize : list) {
+            getAllItems(customStackSize, isClientSide).forEach(item -> item.maxStackSize = (int) Mth.clamp(customStackSize.value, 1, 64));
         }
-    }
-
-    @SubscribeEvent
-    public void onPlayerLoggedInEvent(PlayerEvent.PlayerLoggedInEvent event) {
-        processCustomStackSizes();
     }
 
     /**

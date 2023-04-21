@@ -1,6 +1,5 @@
 package insane96mcp.survivalreimagined.module.combat.feature;
 
-import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -9,6 +8,7 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.combat.utils.ItemAttributeModifier;
+import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -23,7 +23,6 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,6 +59,7 @@ public class Stats extends SRFeature {
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		JSON_CONFIGS.add(new JsonConfig<>("item_modifiers.json", itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.ITEM_ATTRIBUTE_MODIFIERS));
 	}
 
 	@Override
@@ -75,13 +75,15 @@ public class Stats extends SRFeature {
 		}
 	}
 
-	static final Type itemAttributeModifierListType = new TypeToken<ArrayList<ItemAttributeModifier>>(){}.getType();
 	@Override
 	public void loadJsonConfigs() {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-		this.loadAndReadFile("item_modifiers.json", itemModifiers, ITEM_MODIFIERS_DEFAULT, itemAttributeModifierListType);
+	}
+
+	public static void handleItemAttributeModifiersPacket(String json) {
+		loadAndReadJson(json, itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE);
 	}
 
 	public static void addClassItemAttributeModifier(Class<? extends Item> itemClass, UUID uuid, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
@@ -129,5 +131,4 @@ public class Stats extends SRFeature {
 	public static boolean disableArrowInvFrames() {
 		return isEnabled(Stats.class) && arrowsNoInvincFrames;
 	}
-
 }

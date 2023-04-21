@@ -2,9 +2,12 @@ package insane96mcp.survivalreimagined.module.farming.utils;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+
+import java.util.ArrayList;
 
 @JsonAdapter(HoeStat.Serializer.class)
 public class HoeStat extends IdTagMatcher {
@@ -31,6 +34,8 @@ public class HoeStat extends IdTagMatcher {
 		this.damageOnTill = damageOnTill;
 		this.scytheRadius = scytheRadius;
 	}
+
+	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<HoeStat>>(){}.getType();
 
 	public static class Serializer implements JsonDeserializer<HoeStat>, JsonSerializer<HoeStat> {
 		@Override

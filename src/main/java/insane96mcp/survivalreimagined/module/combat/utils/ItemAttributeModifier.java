@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.module.combat.utils;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.utils.AttributeModifierOperation;
 import net.minecraft.resources.ResourceLocation;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @JsonAdapter(ItemAttributeModifier.Serializer.class)
@@ -52,6 +54,8 @@ public class ItemAttributeModifier extends IdTagMatcher {
 		else
 			return this.matchesItem(item);
 	}
+
+	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<ItemAttributeModifier>>(){}.getType();
 
 	public static class Serializer implements JsonDeserializer<ItemAttributeModifier>, JsonSerializer<ItemAttributeModifier> {
 		@Override

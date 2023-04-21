@@ -1,6 +1,5 @@
 package insane96mcp.survivalreimagined.module.farming.feature;
 
-import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
@@ -13,7 +12,6 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,15 +52,14 @@ public class PlantsGrowth extends SRFeature {
 
 	public PlantsGrowth(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		JSON_CONFIGS.add(new JsonConfig<>("plants_growth_modifiers.json", plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE));
 	}
 
-	static final Type plantGrowthModifierListType = new TypeToken<ArrayList<PlantGrowthModifier>>(){}.getType();
 	@Override
 	public void loadJsonConfigs() {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-		this.loadAndReadFile("plants_growth_modifiers.json", plantsList, PLANTS_LIST_DEFAULT, plantGrowthModifierListType);
 	}
 
 	@SubscribeEvent
