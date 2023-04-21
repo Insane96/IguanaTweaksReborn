@@ -2,9 +2,10 @@
 
 ## Upcoming
 * Out of season crops no longer break. They just don't grow
-* Fixed stuff using tags not syncing to client
+* Creepers now drop 1-3 gunpowder instead of 0-2 and have a rare TNT drop
 * More advancements work
 * Reduced Pumpkin and Melon generation
+* Fixed stuff using tags not syncing to client
 
 ## Alpha 3.6.1
 * Some stuff is now synced client-side
