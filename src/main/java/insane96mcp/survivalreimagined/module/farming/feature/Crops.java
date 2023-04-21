@@ -12,11 +12,14 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.block.SeedsBlockItem;
 import insane96mcp.survivalreimagined.module.farming.block.WildCropBlock;
 import insane96mcp.survivalreimagined.module.farming.utils.PlantGrowthModifier;
+import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
+import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRBlocks;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.item.BlockItem;
@@ -79,6 +82,10 @@ public class Crops extends Feature {
 	@Label(name = "Water Hydration Radius", description = "Radius where water hydrates farmland, vanilla is 4.")
 	public static Integer waterHydrationRadius = 2;
 
+	@Config
+	@Label(name = "No Seed renew datapack", description = "Enables a datapack that makes crops only drop one seed.")
+	public static Boolean noSeedRenewDatapack = true;
+
 	public static final RegistryObject<BlockItem> POTATO_SEEDS = SRItems.REGISTRY.register("potato_seeds", () -> new SeedsBlockItem(Blocks.POTATOES, new Item.Properties()));
 	public static final RegistryObject<BlockItem> CARROT_SEEDS = SRItems.REGISTRY.register("carrot_seeds", () -> new SeedsBlockItem(Blocks.CARROTS, new Item.Properties()));
 	public static final RegistryObject<WildCropBlock> WILD_WHEAT = SRBlocks.REGISTRY.register("wild_wheat", () -> new WildCropBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
@@ -90,6 +97,7 @@ public class Crops extends Feature {
 
 	public Crops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_seed_renew", net.minecraft.network.chat.Component.literal("Survival Reimagined No Seed Renew"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && noSeedRenewDatapack));
 	}
 
 	@Override
@@ -241,7 +249,7 @@ public class Crops extends Feature {
 	private static final String path = "crops/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "no_beetroot_expansion", new DropMultiplierModifier.Builder(Blocks.BEETROOTS, Items.BEETROOT_SEEDS, 0.15f)
+		/*provider.add(path + "no_beetroot_expansion", new DropMultiplierModifier.Builder(Blocks.BEETROOTS, Items.BEETROOT_SEEDS, 0.15f)
 				.keepAmount(1)
 				.build());
 		provider.add(path + "no_wheat_expansion", new DropMultiplierModifier.Builder(Blocks.WHEAT, Items.WHEAT_SEEDS, 0.15f)
@@ -252,7 +260,7 @@ public class Crops extends Feature {
 				.build());
 		provider.add(path + "no_carrot_expansion", new DropMultiplierModifier.Builder(Blocks.CARROTS, Items.CARROT, 0f)
 				.keepAmount(1)
-				.build());
+				.build());*/
 
 		provider.add(path + "no_carrot_from_zombie", new DropMultiplierModifier.Builder(EntityType.ZOMBIE, Items.CARROT, 0f).build());
 		provider.add(path + "no_potato_from_zombie", new DropMultiplierModifier.Builder(EntityType.ZOMBIE, Items.POTATO, 0f).build());
