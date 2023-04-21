@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:explosive_barrel"
+		},
+		"title": {
+			"translate": "advancements.sr_story.explosive_barrel.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.explosive_barrel.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/furnace",
+	"criteria": {
+		"explosive_barrel": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"survivalreimagined:explosive_barrel"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"explosive_barrel"
+		]
+	]
+}

@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.module.items.block;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.misc.level.SRExplosion;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -79,7 +80,7 @@ public class ExplosiveBarrelBlock extends Block {
     @Override
     public void appendHoverText(ItemStack p_49816_, @Nullable BlockGetter p_49817_, List<Component> components, TooltipFlag p_49819_) {
         super.appendHoverText(p_49816_, p_49817_, components, p_49819_);
-        components.add(Component.translatable(UNSTABLE));
+        components.add(Component.translatable(UNSTABLE).withStyle(ChatFormatting.RED));
     }
 
     @Override
