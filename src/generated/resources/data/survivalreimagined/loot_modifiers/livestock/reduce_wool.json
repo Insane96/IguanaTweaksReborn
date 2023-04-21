@@ -1,0 +1,14 @@
+{
+  "type": "survivalreimagined:drop_multiplier",
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "type": "minecraft:sheep"
+      }
+    }
+  ],
+  "multiplier": 0.4,
+  "tag": "minecraft:wool"
+}

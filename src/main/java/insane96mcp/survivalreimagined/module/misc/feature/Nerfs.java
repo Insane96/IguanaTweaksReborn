@@ -21,7 +21,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class Nerfs extends Feature {
 	@Config
 	@Label(name = "No Sheep Death Wool", description = "If true, sheep will no longer drop Wool on death.")
-	public static Boolean noSheepWool = true;
+	public static Boolean noSheepWool = false;
 	@Config
 	@Label(name = "Iron from Golems only when killed by Player", description = "If true, Iron golems will only drop Iron when killed by the player.")
 	public static Boolean ironRequiresPlayer = true;

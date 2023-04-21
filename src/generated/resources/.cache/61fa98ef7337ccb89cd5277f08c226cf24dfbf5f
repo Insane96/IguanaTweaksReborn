@@ -1,5 +1,5 @@
-// 1.19.4	2023-04-21T10:03:05.8067445	Global Loot Modifiers : survivalreimagined
-74dba399afa731254d2c7d1deb7e9c22d1531225 data/forge/loot_modifiers/global_loot_modifiers.json
+// 1.19.4	2023-04-21T10:55:45.7684231	Global Loot Modifiers : survivalreimagined
+d12a4cfac28b83f95232a5a46efa8e101a537178 data/forge/loot_modifiers/global_loot_modifiers.json
 49eacaf5a0e8fd4eda9b8bf49bb8e397b13a86cd data/survivalreimagined/loot_modifiers/chest_loot/chests/abandoned_mineshaft.json
 31efe9992a0af525eb804662d3fdcd9641597d09 data/survivalreimagined/loot_modifiers/chest_loot/chests/buried_treasure.json
 2d7edbb9c51f335ef455f1b5e8257d0171bf4ca4 data/survivalreimagined/loot_modifiers/chest_loot/chests/desert_pyramid.json
@@ -73,3 +73,4 @@ a43511174dc1c7c997594de8fad0f0ac6c8162dd data/survivalreimagined/loot_modifiers/
 93574824911d66aa060e3ca542f15b3ac0141185 data/survivalreimagined/loot_modifiers/livestock/lower_rabbit.json
 0d2bb38bcbff117600b477e72f855008c986677d data/survivalreimagined/loot_modifiers/livestock/lower_salmon.json
 aaa07321a11f977f498711e16dc7e800439a4334 data/survivalreimagined/loot_modifiers/livestock/lower_tropical_fish.json
+188b7ced3f1445c47965876639a57becb9c9844b data/survivalreimagined/loot_modifiers/livestock/reduce_wool.json

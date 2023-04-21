@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Sheeps now have a low chance to drop wool on death
+
 ## Alpha 3.6.0
 * Added Beeg Ore Veins
   * Veins that generate underground with lots of ores. On the surface, rocks can be found that mark the veins below

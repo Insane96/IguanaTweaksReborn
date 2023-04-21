@@ -14,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
@@ -307,6 +308,7 @@ public class Livestock extends SRFeature {
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
 		provider.add(path + "increase_feathers", new DropMultiplierModifier.Builder(Items.FEATHER, 2f).build());
 		provider.add(path + "increase_leather", new DropMultiplierModifier.Builder(Items.LEATHER, 1.5f).build());
+		provider.add(path + "reduce_wool", new DropMultiplierModifier.Builder(EntityType.SHEEP, ItemTags.WOOL, 0.4f).build());
 
 		provider.add(path + "lower_chicken", new DropMultiplierModifier.Builder(Items.CHICKEN, 0.3f).build());
 		provider.add(path + "lower_cooked_chicken", new DropMultiplierModifier.Builder(Items.COOKED_CHICKEN, 0.3f).build());
