@@ -6,6 +6,7 @@ import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
+import insane96mcp.survivalreimagined.module.world.feature.BeegVeins;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.event.CreativeModeTabEvent;
@@ -63,6 +64,9 @@ public class ClientSetup {
             event.accept(Florpium.DEEPSLATE_ORE_ITEM.get());
             event.accept(Crops.CARROT_SEEDS.get());
             event.accept(Crops.POTATO_SEEDS.get());
+            event.accept(BeegVeins.COPPER_ORE_ROCK_ITEM.get());
+            event.accept(BeegVeins.IRON_ORE_ROCK_ITEM.get());
+            event.accept(BeegVeins.GOLD_ORE_ROCK_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
             event.accept(Florpium.INGOT.get());
