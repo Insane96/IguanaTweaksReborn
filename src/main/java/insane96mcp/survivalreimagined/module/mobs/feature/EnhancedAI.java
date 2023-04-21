@@ -57,6 +57,7 @@ public class EnhancedAI extends SRFeature {
 
         Module.getFeature(Animals.class).setConfigOption("Movement Speed Multiplier", 1.2d);
         Module.getFeature(Animals.class).setConfigOption("Knockback", 2.25d);
+        Module.getFeature(Animals.class).setConfigOption("Fight back chance", 0.3d);
         Module.getFeature(Animals.class).readConfig(event);
 
         Module.getFeature(DiggerZombie.class).setConfigOption("Digger Speed Multiplier", 2d);
