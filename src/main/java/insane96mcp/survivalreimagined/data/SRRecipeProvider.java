@@ -174,6 +174,13 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_ingot", has(Florpium.INGOT.get()))
                 .save(writer);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ExplosiveBarrel.BLOCK_ITEM.get())
+                .requires(Items.TNT, 1)
+                .requires(Items.BARREL, 1)
+                .requires(Items.GUNPOWDER, 2)
+                .unlockedBy("has_tnt", has(Items.TNT))
+                .save(writer);
+
         SimpleCookingRecipeBuilder.smelting(
                         Ingredient.of(BeegVeins.COPPER_ORE_ROCK_ITEM.get()),
                         RecipeCategory.MISC,

@@ -76,6 +76,7 @@
 	"block.survivalreimagined.nether_infused_powered_rail": "Nether Infused Powered Rail",
 	"block.survivalreimagined.respawn_obelisk": "Respawn Obelisk",
 	"block.survivalreimagined.crate": "Crate",
+	"block.survivalreimagined.explosive_barrel": "Explosive Barrel",
 	"block.survivalreimagined.iron_ore_rock": "Iron Ore Rock",
 	"block.survivalreimagined.gold_ore_rock": "Gold Ore Rock",
 	"block.survivalreimagined.copper_ore_rock": "Copper Ore Rock",
@@ -84,6 +85,7 @@
 	"block.minecraft.potatoes.seeds": "Potato Seeds",
 
 	"survivalreimagined.crate_weighted": "Slows down if %d or more are carried",
+	"survivalreimagined.unstable": "WARNING! Highly unstable",
 
 	"item.survivalreimagined.ancient_lapis": "Ancient Lapis",
 	"item.survivalreimagined.cleansed_lapis": "Cleansed Lapis",

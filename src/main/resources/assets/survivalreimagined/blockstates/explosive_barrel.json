@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "survivalreimagined:block/explosive_barrel",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "survivalreimagined:block/explosive_barrel",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "survivalreimagined:block/explosive_barrel",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "survivalreimagined:block/explosive_barrel",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "survivalreimagined:block/explosive_barrel"
+    },
+    "facing=west": {
+      "model": "survivalreimagined:block/explosive_barrel",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

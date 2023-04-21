@@ -58,6 +58,7 @@ public class ClientSetup {
         }
         else if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.accept(Minecarts.NETHER_INFUSED_POWERED_RAIL_ITEM.get());
+            event.accept(ExplosiveBarrel.BLOCK_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(Florpium.ORE_ITEM.get());
