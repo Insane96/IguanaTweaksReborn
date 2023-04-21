@@ -70,11 +70,11 @@
             "nbt_tag": "enhancedai:miner",
             "type": "boolean",
             "value": {
-                "value": 0.6,
+                "value": 0.06,
                 "difficulty_modifier": {
                     "operation": "add",
-                    "easy": -0.4,
-                    "hard": 0.4
+                    "easy": -0.04,
+                    "hard": 0.04
                 }
             },
             "persistent_data": true
