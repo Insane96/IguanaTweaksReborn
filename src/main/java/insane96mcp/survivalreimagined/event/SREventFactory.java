@@ -16,10 +16,14 @@ public class SREventFactory {
         return event.canSprint();
     }
 
-    public static void onSRExplosionCreated(SRExplosion explosion)
+    /**
+     * Returns true if the event is canceled
+     */
+    public static boolean onSRExplosionCreated(SRExplosion explosion)
     {
         SRExplosionCreatedEvent event = new SRExplosionCreatedEvent(explosion);
         MinecraftForge.EVENT_BUS.post(event);
+        return event.isCanceled();
     }
 
     public static void onBlockBurnt(Level level, BlockPos pos, BlockState state)

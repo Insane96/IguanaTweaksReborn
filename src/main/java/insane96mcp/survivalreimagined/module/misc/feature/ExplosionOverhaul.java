@@ -6,15 +6,12 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.event.SREventFactory;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.level.SRExplosion;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.protocol.game.ClientboundExplodePacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Explosion;
@@ -66,6 +63,8 @@ public class ExplosionOverhaul extends Feature {
 
 		Explosion e = event.getExplosion();
 		if (e.level instanceof ServerLevel level && !e.getToBlow().isEmpty() && e.blockInteraction != Explosion.BlockInteraction.KEEP && e.radius >= 2) {
+			if (e instanceof SRExplosion srExplosion && !srExplosion.poofParticles)
+				return;
 			int particleCount = (int)(e.radius * 125);
 			level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.33D);
 		}
@@ -73,9 +72,10 @@ public class ExplosionOverhaul extends Feature {
 
 	//Setting the lowest priority so other mods can change explosions params before creating the ITExplosion
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onExplosionStart(ExplosionEvent.Start event) {
+	public void replaceExplosionWithSRExplosion(ExplosionEvent.Start event) {
 		if (!this.isEnabled()
-				|| (event.getExplosion().getExploder() != null && isBlacklisted(event.getExplosion().getExploder())))
+				|| (event.getExplosion().getExploder() != null && isBlacklisted(event.getExplosion().getExploder()))
+				|| !(event.getLevel() instanceof ServerLevel level))
 			return;
 
 		event.setCanceled(true);
@@ -83,27 +83,7 @@ public class ExplosionOverhaul extends Feature {
 		double y = e.getPosition().y;
 		if (e.source != null && explosionAtHalfEntity)
 			y += e.source.getBbHeight() / 2d;
-		SRExplosion explosion = new SRExplosion(e.level, e.source, e.getDamageSource(), e.damageCalculator, e.getPosition().x, y, e.getPosition().z, e.radius, e.fire, e.blockInteraction, creeperCollateral);
-		SREventFactory.onSRExplosionCreated(explosion);
-
-		if (!event.getLevel().isClientSide) {
-			ServerLevel world = (ServerLevel) event.getLevel();
-			explosion.gatherAffectedBlocks(!disableExplosionRandomness);
-			if (enableFlyingBlocks)
-				explosion.fallingBlocks();
-			explosion.destroyBlocks();
-			explosion.processEntities(blockingDamageScaling, knockbackScalesWithSize);
-			explosion.dropItems();
-			explosion.processFire();
-			if (explosion.blockInteraction == Explosion.BlockInteraction.KEEP) {
-				explosion.clearToBlow();
-			}
-			for (ServerPlayer serverPlayer : world.players()) {
-				if (serverPlayer.distanceToSqr(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z) < 4096.0D) {
-					serverPlayer.connection.send(new ClientboundExplodePacket(explosion.getPosition().x, explosion.getPosition().y, event.getExplosion().getPosition().z, explosion.radius, explosion.getToBlow(), explosion.getHitPlayers().get(serverPlayer)));
-				}
-			}
-		}
+		SRExplosion.explodeServer(level, e.source, e.getDamageSource(), e.damageCalculator, e.getPosition().x, y, e.getPosition().z, e.radius, e.fire, e.blockInteraction, true);
 	}
 
 	public static boolean shouldTakeReducedKnockback(Entity entity) {

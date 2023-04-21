@@ -2,16 +2,16 @@ package insane96mcp.survivalreimagined.module.misc.level;
 
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
+import insane96mcp.survivalreimagined.event.SREventFactory;
 import insane96mcp.survivalreimagined.module.misc.entity.ExplosionFallingBlockEntity;
 import insane96mcp.survivalreimagined.module.misc.feature.ExplosionOverhaul;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.Util;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundExplodePacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -24,6 +24,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Block;
@@ -33,6 +34,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.piston.MovingPistonBlock;
 import net.minecraft.world.level.block.piston.PistonMovingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -49,15 +51,17 @@ public class SRExplosion extends Explosion {
 	ObjectArrayList<Pair<ItemStack, BlockPos>> droppedItems = new ObjectArrayList<>();
 	boolean dealsKnockback;
 	boolean creeperCollateral;
+	public final boolean poofParticles;
 
 	public SRExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean creeperCollateral) {
-		this(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true, creeperCollateral);
+		this(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true, creeperCollateral, true);
 	}
 
-	public SRExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean dealsKnockback, boolean creeperCollateral) {
+	public SRExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean dealsKnockback, boolean creeperCollateral, boolean poofParticles) {
 		super(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction);
 		this.dealsKnockback = dealsKnockback;
 		this.creeperCollateral = creeperCollateral;
+		this.poofParticles = poofParticles;
 	}
 
 	public void gatherAffectedBlocks(boolean randomize) {
@@ -195,6 +199,7 @@ public class SRExplosion extends Explosion {
 	}
 
 	public void destroyBlocks() {
+		this.level.gameEvent(this.source, GameEvent.EXPLODE, new Vec3(this.getPosition().x, this.getPosition().y, this.getPosition().z));
 		if (this.blockInteraction == BlockInteraction.KEEP)
 			return;
 		Util.shuffle(this.toBlow, this.level.getRandom());
@@ -224,20 +229,6 @@ public class SRExplosion extends Explosion {
 	public void dropItems() {
 		for(Pair<ItemStack, BlockPos> pair : droppedItems) {
 			Block.popResource(this.level, pair.getSecond(), pair.getFirst());
-		}
-	}
-
-	//Should be called in remote world only
-	public void playSound() {
-		this.level.playLocalSound(this.getPosition().x, this.getPosition().y, this.getPosition().z, SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (this.level.getRandom().nextFloat() - this.level.getRandom().nextFloat()) * 0.2F) * 0.7F, false);
-	}
-
-	public void spawnParticles() {
-		if (!(this.radius < 2.0F) && this.blockInteraction != Explosion.BlockInteraction.KEEP) {
-			this.level.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getPosition().x, this.getPosition().y, this.getPosition().z, 1.0D, 0.0D, 0.0D);
-		}
-		else {
-			this.level.addParticle(ParticleTypes.EXPLOSION, this.getPosition().x, this.getPosition().y, this.getPosition().z, 1.0D, 0.0D, 0.0D);
 		}
 	}
 
@@ -278,5 +269,48 @@ public class SRExplosion extends Explosion {
 
 		knockback -= knockback * knockbackReduction;
 		return knockback;
+	}
+
+	public static SRExplosion explode(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Level.ExplosionInteraction explosionInteraction, boolean poofParticles) {
+		Explosion.BlockInteraction blockInteraction = switch (explosionInteraction) {
+			case NONE -> BlockInteraction.KEEP;
+			case BLOCK ->
+					level.getGameRules().getBoolean(GameRules.RULE_BLOCK_EXPLOSION_DROP_DECAY) ? BlockInteraction.DESTROY_WITH_DECAY : BlockInteraction.DESTROY;
+			case MOB ->
+					net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(level, source) ? level.getGameRules().getBoolean(GameRules.RULE_MOB_EXPLOSION_DROP_DECAY) ? BlockInteraction.DESTROY_WITH_DECAY : BlockInteraction.DESTROY : BlockInteraction.KEEP;
+			case TNT ->
+					level.getGameRules().getBoolean(GameRules.RULE_TNT_EXPLOSION_DROP_DECAY) ? BlockInteraction.DESTROY_WITH_DECAY : BlockInteraction.DESTROY;
+		};
+		if (level instanceof ServerLevel serverLevel)
+			return explodeServer(serverLevel, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, poofParticles);
+		else
+			return explodeClient((ClientLevel) level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, poofParticles);
+	}
+
+	public static SRExplosion explodeServer(ServerLevel level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean poofParticles) {
+		SRExplosion explosion = new SRExplosion(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true, true, poofParticles);
+		if (SREventFactory.onSRExplosionCreated(explosion)) return explosion;
+		explosion.gatherAffectedBlocks(!ExplosionOverhaul.disableExplosionRandomness);
+		if (ExplosionOverhaul.enableFlyingBlocks)
+			explosion.fallingBlocks();
+		explosion.destroyBlocks();
+		explosion.processEntities(ExplosionOverhaul.blockingDamageScaling, ExplosionOverhaul.knockbackScalesWithSize);
+		explosion.dropItems();
+		explosion.processFire();
+		if (explosion.blockInteraction == Explosion.BlockInteraction.KEEP) {
+			explosion.clearToBlow();
+		}
+		for (ServerPlayer serverPlayer : level.players()) {
+			if (serverPlayer.distanceToSqr(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z) < 4096.0D) {
+				serverPlayer.connection.send(new ClientboundExplodePacket(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z, explosion.radius, explosion.getToBlow(), explosion.getHitPlayers().get(serverPlayer)));
+			}
+		}
+		return explosion;
+	}
+
+	public static SRExplosion explodeClient(ClientLevel level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean poofParticles) {
+		SRExplosion explosion = new SRExplosion(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true, true, poofParticles);
+		if (SREventFactory.onSRExplosionCreated(explosion)) return explosion;
+		return explosion;
 	}
 }
