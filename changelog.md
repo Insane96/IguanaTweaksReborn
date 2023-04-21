@@ -2,7 +2,8 @@
 
 ## Alpha 3.6.1
 * Some stuff is now synced client-side
-* Charcoal can now only be obtained from burning Logs. Also increased chance (40% -> 60%.)
+* Charcoal can now only be obtained from burning Logs. Also increased chance (40% -> 60%)
+  * Also fixed charcoal not dropping from logs
 * Increased Gold Armor Durability
 
 ## Alpha 3.6.0
