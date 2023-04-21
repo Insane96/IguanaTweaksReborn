@@ -2,6 +2,9 @@
 
 ## Upcoming
 * Out of season crops no longer break. They just don't grow
+* Fixed stuff using tags not syncing to client
+* More advancements work
+* Reduced Pumpkin and Melon generation
 
 ## Alpha 3.6.1
 * Some stuff is now synced client-side
