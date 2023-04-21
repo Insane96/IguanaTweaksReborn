@@ -17,8 +17,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Debug(export = true)
 @Mixin(FireBlock.class)
 public class FireBlockMixin {
-	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 1), method = "tryCatchFire", remap = false)
-	void onBlockBurnt(Level level, BlockPos pos, int p_53434_, RandomSource random, int p_53436_, Direction face, CallbackInfo ci) {
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;", ordinal = 1), method = "tryCatchFire")
+	private void onBlockBurnt(Level level, BlockPos pos, int p_53434_, RandomSource random, int p_53436_, Direction face, CallbackInfo ci) {
 		SREventFactory.onBlockBurnt(level, pos, level.getBlockState(pos));
 	}
 
