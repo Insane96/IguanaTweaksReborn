@@ -220,7 +220,6 @@ public class SRFeature extends Feature {
 
             Gson gson = new GsonBuilder().create();
 
-            LogHelper.info("syncToClient %s %s", this.fileName, this.configType);
             if (event.getPlayer() == null) {
                 event.getPlayerList().getPlayers().forEach(player -> {
                     JsonConfigSyncMessage.sync(this.configType, gson.toJson(this.list, this.listType), player);
