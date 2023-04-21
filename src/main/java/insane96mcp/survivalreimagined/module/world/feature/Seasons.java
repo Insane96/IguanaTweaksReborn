@@ -51,7 +51,7 @@ public class Seasons extends Feature {
 		super.readConfig(event);
 
 		if (changeSereneSeasonsConfig) {
-			FertilityConfig.outOfSeasonCropBehavior.set(2);
+			FertilityConfig.outOfSeasonCropBehavior.set(1);
 			FertilityConfig.undergroundFertilityLevel.set(-1);
 		}
 	}
