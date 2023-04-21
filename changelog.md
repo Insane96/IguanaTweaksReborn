@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.6.0
 * Added Beeg Ore Veins
   * Veins that generate underground with lots of ores. On the surface, rocks can be found that mark the veins below
 * Fog now changes when it's raining
