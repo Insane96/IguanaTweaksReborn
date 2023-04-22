@@ -13,6 +13,7 @@ import insane96mcp.survivalreimagined.setup.SREnchantments;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -162,7 +163,8 @@ public class EnchantmentsFeature extends Feature {
 	@SubscribeEvent
 	public void onLivingAttack(LivingHurtEvent event) {
 		if (!this.isEnabled()
-				|| !(event.getSource().getEntity() instanceof LivingEntity entity))
+				|| !(event.getSource().getEntity() instanceof LivingEntity entity)
+				|| !(event.getEntity() instanceof Creeper))
 			return;
 
 		int lvl = entity.getMainHandItem().getEnchantmentLevel(SREnchantments.BANE_OF_SSSSS.get());
