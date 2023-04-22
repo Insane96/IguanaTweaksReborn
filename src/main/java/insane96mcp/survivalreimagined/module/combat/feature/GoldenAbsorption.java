@@ -28,7 +28,7 @@ public class GoldenAbsorption extends Feature {
 
 	@Config(min = 0)
 	@Label(name = "Absorption per golden piece")
-	public static Integer absorptionPerGoldenPiece = 2;
+	public static Double absorptionPerGoldenPiece = 2d;
 	@Config(min = 0)
 	@Label(name = "Regen Speed", description = "Speed (in ticks) at which Absorption hearts regenerate")
 	public static Integer regenSpeed = 200;
@@ -56,7 +56,7 @@ public class GoldenAbsorption extends Feature {
 
 		Player player = event.player;
 
-		int goldenAbsorption = player.getPersistentData().getInt(GOLDEN_ABSORPTION);
+		float goldenAbsorption = player.getPersistentData().getInt(GOLDEN_ABSORPTION);
 		if (player.tickCount % 20 == 5) {
 			goldenAbsorption = updateGoldenAbsorption(player);
 		}
@@ -67,7 +67,7 @@ public class GoldenAbsorption extends Feature {
 			absorptionAmplifier = player.getEffect(MobEffects.ABSORPTION).getAmplifier() + 1;
 		}
 
-		int actualGoldenAbsorption = (int) (player.getAbsorptionAmount() - (absorptionAmplifier * 4));
+		float actualGoldenAbsorption = player.getAbsorptionAmount() - (absorptionAmplifier * 4);
 
 		if (actualGoldenAbsorption != goldenAbsorption) {
 			if (actualGoldenAbsorption > goldenAbsorption && player.tickCount % absorptionDecay == 0) {
