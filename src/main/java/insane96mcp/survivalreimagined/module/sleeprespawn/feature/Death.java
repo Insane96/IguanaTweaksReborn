@@ -109,7 +109,7 @@ public class Death extends Feature {
 				|| !event.getEntity().getPersistentData().contains(PLAYER_GHOST))
 			return;
 
-		if (event.getEntity().level.hasNearbyAlivePlayer(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 64))
+		if (event.getEntity().level.hasNearbyAlivePlayer(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 80))
 			event.getEntity().setGlowingTag(true);
 	}
 
