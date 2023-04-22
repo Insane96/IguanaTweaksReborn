@@ -10,5 +10,5 @@
     "item": "survivalreimagined:copper_pickaxe"
   },
   "keep_durability": true,
-  "chance_to_break": 0.075
+  "chance_to_break": 0.05
 }
