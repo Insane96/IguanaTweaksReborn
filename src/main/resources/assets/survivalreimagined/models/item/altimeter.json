@@ -1,0 +1,19 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "survivalreimagined:item/altimeter/altimeter_00"
+    },
+    "overrides": [
+        { "predicate": { "survivalreimagined:y": -64 }, "model": "survivalreimagined:item/altimeter_00" },
+        { "predicate": { "survivalreimagined:y": -32 }, "model": "survivalreimagined:item/altimeter_01" },
+        { "predicate": { "survivalreimagined:y": 0 }, "model": "survivalreimagined:item/altimeter_02" },
+        { "predicate": { "survivalreimagined:y": 32 }, "model": "survivalreimagined:item/altimeter_03" },
+        { "predicate": { "survivalreimagined:y": 64 }, "model": "survivalreimagined:item/altimeter_04" },
+        { "predicate": { "survivalreimagined:y": 96 }, "model": "survivalreimagined:item/altimeter_05" },
+        { "predicate": { "survivalreimagined:y": 128 }, "model": "survivalreimagined:item/altimeter_06" },
+        { "predicate": { "survivalreimagined:y": 160 }, "model": "survivalreimagined:item/altimeter_07" },
+        { "predicate": { "survivalreimagined:y": 196 }, "model": "survivalreimagined:item/altimeter_08" },
+        { "predicate": { "survivalreimagined:y": 228 }, "model": "survivalreimagined:item/altimeter_09" },
+        { "predicate": { "survivalreimagined:y": 256 }, "model": "survivalreimagined:item/altimeter_10" }
+    ]
+}

@@ -3,6 +3,8 @@
 ## Upcoming
 * Added Explosive Barrels
   * Highly unstable will explode instantly
+* Added Altimeter
+  * Displays roughly your altitude
 * Out of season crops no longer break. They just don't grow
 * Players now have reduced block reach
 * Player's Ghost now also stores dropped XP

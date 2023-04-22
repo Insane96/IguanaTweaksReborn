@@ -141,6 +141,16 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_barrel", has(Items.BARREL))
                 .save(writer);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Altimeter.ITEM.get())
+                .pattern(" i ")
+                .pattern("frf")
+                .pattern(" f ")
+                .define('f', Florpium.INGOT.get())
+                .define('i', Items.IRON_INGOT)
+                .define('r', Items.REDSTONE)
+                .unlockedBy("has_florpium_nugget", has(Florpium.NUGGET.get()))
+                .save(writer);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, Minecarts.NETHER_INFUSED_POWERED_RAIL_ITEM.get(), 4)
                 .requires(Items.POWERED_RAIL, 4)
                 .requires(Items.NETHER_BRICK, 4)

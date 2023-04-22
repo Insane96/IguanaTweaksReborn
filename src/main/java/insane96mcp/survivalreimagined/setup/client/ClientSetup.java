@@ -8,8 +8,11 @@ import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
 import insane96mcp.survivalreimagined.module.world.feature.BeegVeins;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -77,8 +80,15 @@ public class ClientSetup {
         }
     }
 
-    public static void init() {
+    public static void init(FMLClientSetupEvent event) {
         DecimalFormatSymbols DECIMAL_FORMAT_SYMBOLS = new DecimalFormatSymbols(Minecraft.getInstance().getLocale());
         SurvivalReimagined.ONE_DECIMAL_FORMATTER = new DecimalFormat("#.#", DECIMAL_FORMAT_SYMBOLS);
+
+        event.enqueueWork(() ->
+                ItemProperties.register(Altimeter.ITEM.get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "y"), (stack, clientLevel, livingEntity, entityId) -> {
+                    if (livingEntity == null)
+                        return 96f;
+                    return (float) livingEntity.getY();
+                }));
     }
 }

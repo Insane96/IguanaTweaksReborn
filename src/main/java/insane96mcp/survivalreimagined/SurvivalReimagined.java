@@ -90,7 +90,7 @@ public class SurvivalReimagined
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        ClientSetup.init();
+        ClientSetup.init(event);
     }
 
     @SubscribeEvent

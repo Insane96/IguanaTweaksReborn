@@ -90,6 +90,7 @@
 	"item.survivalreimagined.ancient_lapis": "Ancient Lapis",
 	"item.survivalreimagined.cleansed_lapis": "Cleansed Lapis",
 	"item.survivalreimagined.item_fragment": "Item Fragment",
+	"item.survivalreimagined.altimeter": "Altimeter",
 	"survivalreimagined.item_fragment.appliable_to": "Appliable to: ",
 
 	"item.survivalreimagined.chained_copper_helmet": "Chained Copper Helmet",
@@ -163,5 +164,7 @@
 	"advancements.sr_story.iron_armor.title": "Suit Up",
 	"advancements.sr_story.iron_armor.description": "Create Iron Armor by upgrading a Chained Copper one in an Anvil.",
 	"advancements.sr_story.explosive_barrel.title": "WARNING! Unstable",
-	"advancements.sr_story.explosive_barrel.description": "Craft an Explosive Barrel. Warning: explodes easily."
+	"advancements.sr_story.explosive_barrel.description": "Craft an Explosive Barrel. Warning: explodes easily.",
+	"advancements.sr_story.altimeter.title": "Ups and downs",
+	"advancements.sr_story.altimeter.description": "Craft an Altimeter to roughly know your height. Each layer on the Altimeter represents 32 blocks from Bedrock."
 }
