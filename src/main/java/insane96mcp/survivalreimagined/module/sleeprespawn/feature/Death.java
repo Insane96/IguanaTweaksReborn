@@ -8,6 +8,8 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.setup.ILStrings;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.experience.feature.GlobalExperience;
+import insane96mcp.survivalreimagined.module.experience.feature.PlayerExperience;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -18,6 +20,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Zombie;
@@ -36,7 +39,7 @@ public class Death extends Feature {
 	public static final String PLAYER_GHOST = SurvivalReimagined.RESOURCE_PREFIX + "player_ghost";
 	public static final String PLAYER_GHOST_LANG = SurvivalReimagined.MOD_ID + ".player_ghost";
 	public static final String ITEMS_TO_DROP = SurvivalReimagined.RESOURCE_PREFIX + "items_to_drop";
-	//public static final String XP_TO_DROP = SurvivalReimagined.RESOURCE_PREFIX + "xp_to_drop";
+	public static final String XP_TO_DROP = SurvivalReimagined.RESOURCE_PREFIX + "xp_to_drop";
 
 	public Death(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -47,7 +50,7 @@ public class Death extends Feature {
 		if (!this.isEnabled()
 				|| !(event.getEntity() instanceof ServerPlayer player)
 				|| player.getLevel().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
-				|| player.getInventory().isEmpty())
+				|| (player.getInventory().isEmpty() && PlayerExperience.getExperienceOnDeath(player, true) == 0))
 			return;
 
 		Zombie zombie = EntityType.ZOMBIE.create(player.getLevel());
@@ -82,6 +85,9 @@ public class Death extends Feature {
 			listTag.add(item.save(new CompoundTag()));
 		}
 		zombie.getPersistentData().put(ITEMS_TO_DROP, listTag);
+		zombie.getPersistentData().putInt(XP_TO_DROP, PlayerExperience.getExperienceOnDeath(player, true));
+		player.setExperienceLevels(0);
+		player.setExperiencePoints(0);
 		player.level.addFreshEntity(zombie);
 		player.getInventory().clearContent();
 	}
@@ -99,6 +105,12 @@ public class Death extends Feature {
 				ItemEntity itemEntity = new ItemEntity(event.getEntity().getLevel(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), stack);
 				event.getEntity().level.addFreshEntity(itemEntity);
 			}
+		}
+		int experienceToDrop = event.getEntity().getPersistentData().getInt(XP_TO_DROP);
+		if (experienceToDrop > 0) {
+			ExperienceOrb xpOrb = new ExperienceOrb(event.getEntity().level, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), experienceToDrop);
+			xpOrb.getPersistentData().putBoolean(GlobalExperience.XP_PROCESSED, true);
+			event.getEntity().level.addFreshEntity(xpOrb);
 		}
 	}
 

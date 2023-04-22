@@ -42,7 +42,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@Inject(at = @At("HEAD"), method = "getExperienceReward", cancellable = true)
 	private void getExperiencePoints(CallbackInfoReturnable<Integer> callback) {
-		int exp = PlayerExperience.getExperienceOnDeath((Player) (Object) this);
+		int exp = PlayerExperience.getExperienceOnDeath((Player) (Object) this, false);
 		if (exp != -1)
 			callback.setReturnValue(exp);
 	}
