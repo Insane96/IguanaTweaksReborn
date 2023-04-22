@@ -4,6 +4,7 @@
 * Added Explosive Barrels
   * Highly unstable will explode instantly
 * Out of season crops no longer break. They just don't grow
+* Players now have reduced block reach
 * Creepers now drop 1-3 gunpowder instead of 0-2 and have a rare TNT drop
 * More advancements work
 * Reduced Pumpkin and Melon generation
