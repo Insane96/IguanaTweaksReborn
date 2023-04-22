@@ -164,11 +164,12 @@ public class Respawn extends SRFeature {
 	public void onSetSpawnPreventObeliskOverwrite(PlayerSetSpawnEvent event) {
 		if (!this.isEnabled()
 				|| event.isForced()
-				|| !(event.getEntity() instanceof ServerPlayer player)
-				|| (event.getNewSpawn() != null && player.level.getBlockState(event.getNewSpawn()).is(RESPAWN_OBELISK.get()))
-				|| (player.getRespawnPosition() != null && !player.level.getBlockState(player.getRespawnPosition()).is(RESPAWN_OBELISK.get())))
+				|| !(event.getEntity() instanceof ServerPlayer player))
 			return;
 
-		event.setCanceled(true);
+		if (player.getRespawnPosition() != null && player.level.getBlockState(player.getRespawnPosition()).is(RESPAWN_OBELISK.get())
+			&& event.getNewSpawn() != null && !player.level.getBlockState(event.getNewSpawn()).is(RESPAWN_OBELISK.get())) {
+			event.setCanceled(true);
+		}
 	}
 }

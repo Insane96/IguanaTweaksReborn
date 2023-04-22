@@ -42,9 +42,8 @@ public class Sleeping extends Feature {
 				|| event.getEntity().level.isClientSide)
 			return;
 
-		ServerPlayer player = (ServerPlayer) event.getEntity();
-
 		if (disableSleeping) {
+			ServerPlayer player = (ServerPlayer) event.getEntity();
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			if (disableSpawnPoint) {
 				player.displayClientMessage(Component.translatable(Strings.Translatable.DECORATIVE_BEDS), false);
@@ -56,7 +55,7 @@ public class Sleeping extends Feature {
 	}
 
 	@SubscribeEvent
-	public void notTiredToSleep(PlayerSleepInBedEvent event) {
+	public void forceSleepDuringDay(PlayerSleepInBedEvent event) {
 		if (!this.isEnabled()
 				|| !allowDaySleep
 				|| event.getResultStatus() != null
@@ -71,7 +70,7 @@ public class Sleeping extends Feature {
 	}
 
 	@SubscribeEvent
-	public void sleepDuringDay(SleepingTimeCheckEvent event) {
+	public void trySleepDuringDay(SleepingTimeCheckEvent event) {
 		if (!this.isEnabled()
 				|| !allowDaySleep
 				|| (isEnabled(Tiredness.class) && !Tiredness.canSleepDuringDay(event.getEntity())))
