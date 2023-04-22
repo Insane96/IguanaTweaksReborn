@@ -179,6 +179,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(Items.BARREL, 1)
                 .requires(Items.GUNPOWDER, 2)
                 .unlockedBy("has_tnt", has(Items.TNT))
+                .unlockedBy("has_barrel", has(Items.BARREL))
                 .save(writer);
 
         SimpleCookingRecipeBuilder.smelting(

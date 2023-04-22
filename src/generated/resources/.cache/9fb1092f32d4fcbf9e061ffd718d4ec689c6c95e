@@ -1,4 +1,4 @@
-// 1.19.4	2023-04-21T23:10:45.0272006	Recipes
+// 1.19.4	2023-04-22T10:51:36.0628211	Recipes
 abad59b630c6bf440cc249d04ac0a87d250e8cae data/survivalreimagined/advancements/recipes/building_blocks/florpium_block.json
 6feb7ba675d6700ec93735ab594d447d8746b303 data/survivalreimagined/advancements/recipes/combat/bone_club.json
 9ba6c4648e72a63698c040e5ce158e6f239f1411 data/survivalreimagined/advancements/recipes/combat/chained_copper_boots.json
@@ -27,7 +27,7 @@ c627fce5274c9cbf21ec86597fcd493543db0208 data/survivalreimagined/advancements/re
 53c320a9f3fb10be242f9835b0af5511d2c42859 data/survivalreimagined/advancements/recipes/misc/gold_ingot_from_smelting_rock.json
 b24fc6a2b53c000d9f1832210c686beaec8a411a data/survivalreimagined/advancements/recipes/misc/iron_ingot_from_blasting_rock.json
 953c8332aa90affb1f5b91c319ca498393290e95 data/survivalreimagined/advancements/recipes/misc/iron_ingot_from_smelting_rock.json
-00645d715c949e36b971aeb2cbe429ab21802979 data/survivalreimagined/advancements/recipes/redstone/explosive_barrel.json
+2e5903db6d1239b22bc94168686756c24f1f3486 data/survivalreimagined/advancements/recipes/redstone/explosive_barrel.json
 c1c36e2da6c66bd0e65d281c52966d59924a7e10 data/survivalreimagined/advancements/recipes/tools/flint_axe.json
 82561256c9e95acdd5289f80ca2d723f964a5bfc data/survivalreimagined/advancements/recipes/tools/flint_hoe.json
 b4ac75fe79329cfc27fb83015abfacfc58910a31 data/survivalreimagined/advancements/recipes/tools/flint_pickaxe.json
