@@ -9,7 +9,6 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.server.packs.PackType;
-import net.minecraftforge.common.data.GlobalLootModifierProvider;
 
 @Label(name = "Iron", description = "Various changes for iron")
 @LoadFeature(module = Modules.Ids.MINING)
@@ -47,11 +46,5 @@ public class Iron extends Feature {
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "iron_equipment_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Equipment Crafting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && equipmentCraftingDataPack));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "iron_smelting", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && ironSmeltingDataPack));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "iron_generation", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && ironGenerationDataPack));
-	}
-
-	private static final String path = "iron/";
-
-	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-
 	}
 }

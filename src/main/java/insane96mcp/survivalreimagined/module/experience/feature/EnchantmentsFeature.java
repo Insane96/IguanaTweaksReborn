@@ -5,29 +5,26 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantment.*;
+import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
+import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SREnchantments;
 import insane96mcp.survivalreimagined.setup.SRItems;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -38,8 +35,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.List;
 
 @Label(name = "Enchantments", description = "Change some enchantments and anvil related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
@@ -75,10 +70,15 @@ public class EnchantmentsFeature extends Feature {
 	@Label(name = "Prevent farmland trampling with Feather Falling")
 	public static Boolean preventFarmlandTramplingWithFeatherFalling = true;
 
+	@Config
+	@Label(name = "Cleansed Lapis DataPack", description = "Enables a datapack that adds Cleansed Lapis drop from lapis ore")
+	public static Boolean cleansedLapisDataPack = true;
+
 	//TODO Make enchantments deactivable
 
 	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "cleansed_lapis", net.minecraft.network.chat.Component.literal("Survival Reimagined Cleansed Lapis"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cleansedLapisDataPack));
 	}
 
 	public static boolean disableEnchantment(Enchantment enchantment) {
@@ -212,24 +212,5 @@ public class EnchantmentsFeature extends Feature {
 
 	public static boolean isInfinityOverhaulEnabled() {
 		return Feature.isEnabled(EnchantmentsFeature.class) && infinityOverhaul;
-	}
-
-	private static final String path = "enchantments/";
-
-	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "cleansed_lapis_from_deepslate_lapis_ore", new ReplaceDropModifier.Builder(
-				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.DEEPSLATE_LAPIS_ORE).build()},
-				Items.LAPIS_LAZULI,
-				CLEANSED_LAPIS.get())
-				.setAmountToReplace(1)
-				.setChances(List.of(0.10f, 0.12f, 0.15f, 0.19f, 0.24f))
-				.build());
-		provider.add(path + "cleansed_lapis_from_lapis_ore", new ReplaceDropModifier.Builder(
-				new LootItemCondition[]{new LootItemBlockStatePropertyCondition.Builder(Blocks.LAPIS_ORE).build()},
-				Items.LAPIS_LAZULI,
-				CLEANSED_LAPIS.get())
-				.setAmountToReplace(1)
-				.setChances(List.of(0.05f, 0.06f, 0.075f, 0.095f, 0.12f))
-				.build());
 	}
 }

@@ -249,19 +249,6 @@ public class Crops extends Feature {
 	private static final String path = "crops/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		/*provider.add(path + "no_beetroot_expansion", new DropMultiplierModifier.Builder(Blocks.BEETROOTS, Items.BEETROOT_SEEDS, 0.15f)
-				.keepAmount(1)
-				.build());
-		provider.add(path + "no_wheat_expansion", new DropMultiplierModifier.Builder(Blocks.WHEAT, Items.WHEAT_SEEDS, 0.15f)
-				.keepAmount(1)
-				.build());
-		provider.add(path + "no_potato_expansion", new DropMultiplierModifier.Builder(Blocks.POTATOES, Items.POTATO, 0f)
-				.keepAmount(1)
-				.build());
-		provider.add(path + "no_carrot_expansion", new DropMultiplierModifier.Builder(Blocks.CARROTS, Items.CARROT, 0f)
-				.keepAmount(1)
-				.build());*/
-
 		provider.add(path + "no_carrot_from_zombie", new DropMultiplierModifier.Builder(EntityType.ZOMBIE, Items.CARROT, 0f).build());
 		provider.add(path + "no_potato_from_zombie", new DropMultiplierModifier.Builder(EntityType.ZOMBIE, Items.POTATO, 0f).build());
 		provider.add(path + "no_baked_potato_from_zombie", new DropMultiplierModifier.Builder(EntityType.ZOMBIE, Items.BAKED_POTATO, 0f).build());

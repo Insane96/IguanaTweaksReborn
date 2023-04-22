@@ -2,23 +2,24 @@ package insane96mcp.survivalreimagined.module.farming.feature;
 
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
-import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.ai.SREatBlock;
 import insane96mcp.survivalreimagined.module.farming.utils.LivestockData;
+import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
+import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
@@ -28,7 +29,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -114,6 +114,10 @@ public class Livestock extends SRFeature {
 
 	public static final ArrayList<LivestockData> breedingFailChance = new ArrayList<>();
 
+	@Config
+	@Label(name = "Loot DataPack", description = "Enables a datapack that changes food drops")
+	public static Boolean lootDataPack = true;
+
 	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("growth_slowdown_multiplier.json", growthSlowdown, GROWTH_SLOWNDOWN_DEFAULT, LivestockData.LIST_TYPE));
@@ -122,6 +126,8 @@ public class Livestock extends SRFeature {
 		JSON_CONFIGS.add(new JsonConfig<>("cow_milk_cooldown.json", cowMilkCooldown, COW_MILK_COOLDOWN_DEFAULT, LivestockData.LIST_TYPE));
 		JSON_CONFIGS.add(new JsonConfig<>("sheep_wool_regrowth_chance.json", sheepWoolRegrowthChance, SHEEP_WOOL_REGROWTH_CHANCE, LivestockData.LIST_TYPE));
 		JSON_CONFIGS.add(new JsonConfig<>("breeding_fail_chance.json", breedingFailChance, BREEDING_FAIL_CHANCE_DEFAULT, LivestockData.LIST_TYPE));
+
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "livestock_loot_changes", net.minecraft.network.chat.Component.literal("Survival Reimagined Livestock Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lootDataPack));
 	}
 
 	@Override
@@ -301,30 +307,5 @@ public class Livestock extends SRFeature {
 
 		if (event.getParentA().getRandom().nextFloat() < failChance / c)
 			event.setCanceled(true);
-	}
-
-	private static final String path = "livestock/";
-
-	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "increase_feathers", new DropMultiplierModifier.Builder(Items.FEATHER, 2f).build());
-		provider.add(path + "increase_leather", new DropMultiplierModifier.Builder(Items.LEATHER, 1.5f).build());
-		provider.add(path + "reduce_wool", new DropMultiplierModifier.Builder(EntityType.SHEEP, ItemTags.WOOL, 0.4f).build());
-
-		provider.add(path + "lower_chicken", new DropMultiplierModifier.Builder(Items.CHICKEN, 0.3f).build());
-		provider.add(path + "lower_cooked_chicken", new DropMultiplierModifier.Builder(Items.COOKED_CHICKEN, 0.3f).build());
-		provider.add(path + "lower_rabbit", new DropMultiplierModifier.Builder(Items.RABBIT, 0.8f).build());
-		provider.add(path + "lower_cooked_rabbit", new DropMultiplierModifier.Builder(Items.COOKED_RABBIT, 0.8f).build());
-		provider.add(path + "lower_mutton", new DropMultiplierModifier.Builder(Items.MUTTON, 0.3f).build());
-		provider.add(path + "lower_cooked_mutton", new DropMultiplierModifier.Builder(Items.COOKED_MUTTON, 0.3f).build());
-		provider.add(path + "lower_beef", new DropMultiplierModifier.Builder(Items.BEEF, 0.3f).build());
-		provider.add(path + "lower_cooked_beef", new DropMultiplierModifier.Builder(Items.COOKED_BEEF, 0.3f).build());
-		provider.add(path + "lower_porkchop", new DropMultiplierModifier.Builder(Items.PORKCHOP, 0.5f).build());
-		provider.add(path + "lower_cooked_porkchop", new DropMultiplierModifier.Builder(Items.COOKED_PORKCHOP, 0.5f).build());
-		provider.add(path + "lower_cod", new DropMultiplierModifier.Builder(EntityType.COD, Items.COD, 0.25f).build());
-		provider.add(path + "lower_cooked_cod", new DropMultiplierModifier.Builder(EntityType.COD,	Items.COOKED_COD, 0.25f).build());
-		provider.add(path + "lower_salmon", new DropMultiplierModifier.Builder(EntityType.SALMON,  Items.SALMON, 0.25f).build());
-		provider.add(path + "lower_cooked_salmon", new DropMultiplierModifier.Builder(EntityType.SALMON, Items.COOKED_SALMON,	0.25f).build());
-		provider.add(path + "lower_pufferfish", new DropMultiplierModifier.Builder(EntityType.PUFFERFISH, Items.PUFFERFISH,0.35f).build());
-		provider.add(path + "lower_tropical_fish", new DropMultiplierModifier.Builder(EntityType.TROPICAL_FISH, Items.TROPICAL_FISH, 0.35f).build());
 	}
 }

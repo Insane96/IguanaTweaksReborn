@@ -1,6 +1,0 @@
-{
-  "type": "survivalreimagined:drop_multiplier",
-  "conditions": [],
-  "item": "minecraft:beef",
-  "multiplier": 0.3
-}
