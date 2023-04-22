@@ -10,10 +10,7 @@ import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.*;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -59,9 +56,11 @@ public class Gold extends Feature {
 		}
 	}
 
-	public static int getFortuneLevel(int prev) {
+	public static int getFortuneLevel(int prev, ItemStack itemStack) {
 		if(!isEnabled(Gold.class)
 				|| !luckyGold
+				|| !(itemStack.getItem() instanceof TieredItem tieredItem)
+				|| tieredItem.getTier() != Tiers.GOLD
 				|| prev >= 1)
 			return prev;
 

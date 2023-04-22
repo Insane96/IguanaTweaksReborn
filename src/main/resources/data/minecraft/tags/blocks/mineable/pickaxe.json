@@ -3,6 +3,9 @@
     "values": [
         "survivalreimagined:florpium_block",
         "survivalreimagined:florpium_ore",
-        "survivalreimagined:deepslate_florpium_ore"
+        "survivalreimagined:deepslate_florpium_ore",
+        "survivalreimagined:iron_ore_rock",
+        "survivalreimagined:gold_ore_rock",
+        "survivalreimagined:copper_ore_rock"
     ]
 }
