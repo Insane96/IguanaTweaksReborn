@@ -126,6 +126,8 @@
 	"advancements.sr_story.anvil.description": "Obtain an anvil",
 	"advancements.sr_story.iron_pickaxe.title": "Shiny metal pick",
 	"advancements.sr_story.iron_pickaxe.description": "Obtain an Iron Pickaxe in an Anvil by upgrading a Stone Pickaxe",
+	"advancements.sr_story.golden_pickaxe.title": "Lucky Gold",
+	"advancements.sr_story.golden_pickaxe.description": "Obtain a Gold Pickaxe by upgrading Flint Pickaxe. You'll feel luck run through your veins.",
 	"advancements.sr_story.iron_shield.title": "The vanilla shield",
 	"advancements.sr_story.iron_shield.description": "Obtain an Iron Shield in an Anvil by upgrading a Copper Shield",
 	"advancements.sr_story.copper_shield.title": "Getting an upgrade",
@@ -160,6 +162,6 @@
 	"advancements.sr_story.shears.description": "Create Shears in an anvil with a Flint and Iron Ingots.",
 	"advancements.sr_story.iron_armor.title": "Suit Up",
 	"advancements.sr_story.iron_armor.description": "Create Iron Armor by upgrading a Chained Copper one in an Anvil.",
-	"advancements.sr_story.explosive_barre.title": "WARNING! Unstable",
-	"advancements.sr_story.explosive_barre.description": "Craft an Explosive Barrel. Warning: explodes easily."
+	"advancements.sr_story.explosive_barrel.title": "WARNING! Unstable",
+	"advancements.sr_story.explosive_barrel.description": "Craft an Explosive Barrel. Warning: explodes easily."
 }
