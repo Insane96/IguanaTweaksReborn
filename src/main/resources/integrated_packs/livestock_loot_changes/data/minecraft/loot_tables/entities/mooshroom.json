@@ -25,7 +25,7 @@
               "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "minecraft:leather"
+          "name": "minecraft:beef"
         }
       ],
       "rolls": 1.0
@@ -68,7 +68,7 @@
               "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "minecraft:beef"
+          "name": "minecraft:leather"
         }
       ],
       "rolls": 1.0
