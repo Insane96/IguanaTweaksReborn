@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "survivalreimagined:item/enchanted_item_fragment"
+    "layer0": "survivalreimagined:item/item_fragment"
   }
 }
