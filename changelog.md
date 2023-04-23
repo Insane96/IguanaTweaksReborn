@@ -9,6 +9,9 @@
 * Out of season crops no longer break. They just don't grow
 * Florpium now generates much more but no longer drops a sh*t ton of nuggets with fortune
 * Players now have reduced block reach
+* Player required xp to level up now scales differently (reverted to IguanaTweaks formula)
+  * Was 50 xp per level, now is 3 * next_level
+  * Formula is now customizable
 * Player's Ghost 
   * Are stronger but neutral
   * Can now be right-clicked to get back items
