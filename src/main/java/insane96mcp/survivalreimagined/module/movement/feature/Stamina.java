@@ -50,6 +50,10 @@ public class Stamina extends Feature {
     @Label(name = "Stamina consumed on jump", description = "How much stamina the player consumes on each jump")
     public static Integer staminaConsumedOnJump = 0;
 
+    @Config
+    @Label(name = "Disable Sprinting", description = "Disable sprinting altogether")
+    public static Boolean disableSprinting = false;
+
     public Stamina(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -109,7 +113,7 @@ public class Stamina extends Feature {
                 || event.getPlayer().getAbilities().instabuild)
             return;
 
-        if (!StaminaHandler.canSprint(event.getPlayer()))
+        if (!StaminaHandler.canSprint(event.getPlayer()) || disableSprinting)
             event.setCanceled(true);
     }
 
