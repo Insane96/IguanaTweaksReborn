@@ -60,7 +60,7 @@ public class Fog extends Feature {
             return;
 
         Entity entity = event.getCamera().getEntity();
-        if (entity.getEyeInFluidType() == ForgeMod.EMPTY_TYPE.get() && entity.level.dimension() == Level.OVERWORLD && entity.level.isRaining() && entity.getY() > 48d) {
+        if (entity.getEyeInFluidType() == ForgeMod.EMPTY_TYPE.get() && entity.level.dimension() == Level.OVERWORLD && entity.level.isRaining() && entity.getY() > 32d) {
             float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
             float rainLevel = entity.level.getRainLevel(1f);
             //Lower than 1 means a percentage of current render distance, higher means a flat render distance
