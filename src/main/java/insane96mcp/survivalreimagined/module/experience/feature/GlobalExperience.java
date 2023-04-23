@@ -20,7 +20,7 @@ public class GlobalExperience extends Feature {
 
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Global Experience Multiplier", description = "Experience dropped will be multiplied by this value.\nCan be set to 0 to disable experience drop from any source.")
-	public static Double globalMultiplier = 1.4d;
+	public static Double globalMultiplier = 1.25d;
 
 	public GlobalExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
