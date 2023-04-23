@@ -28,6 +28,7 @@
 * Reduced Pumpkin and Melon generation
 * Increased hide dropped from rabbits
 * Fixed stuff using tags not syncing to client
+* Rain Fog no longer affects players below Y 48
 
 ## Alpha 3.6.1
 * Some stuff is now synced client-side

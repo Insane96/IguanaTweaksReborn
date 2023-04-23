@@ -76,14 +76,10 @@ public class Fog extends Feature {
                 case AUTUMN -> 0.75F;
                 case WINTER -> 40F;
             };
-            if (near <= 1f)
-                event.setNearPlaneDistance(renderDistance * near);
-            else
-                event.setNearPlaneDistance(near);
-            if (far <= 1f)
-                event.setFarPlaneDistance(renderDistance * far);
-            else
-                event.setFarPlaneDistance(far);
+            if (near <= 1f) event.setNearPlaneDistance(renderDistance * near);
+            else event.setNearPlaneDistance(near);
+            if (far <= 1f) event.setFarPlaneDistance(renderDistance * far);
+            else event.setFarPlaneDistance(far);
             event.setCanceled(true);
         }
     }
