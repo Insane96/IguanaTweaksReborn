@@ -34,9 +34,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Label(name = "Tool Stats", description = "Less durable and efficient tools. Tools Durability and Efficiency are controlled via json in this feature's folder. Note that removing entries from the json requires a Minecraft Restart")
+@Label(name = "Item Stats", description = "Less durable items and efficient tools. Items Durability and Efficiency are controlled via json in this feature's folder. Note that removing entries from the json requires a Minecraft Restart")
 @LoadFeature(module = Modules.Ids.ITEMS)
-public class ToolStats extends SRFeature {
+public class ItemStats extends SRFeature {
 
 	public static final String TOOL_EFFICIENCY = "survivalreimagined.tool_efficiency";
 	public static final String BONUS_TOOL_EFFICIENCY = "survivalreimagined.bonus_tool_efficiency";
@@ -73,30 +73,30 @@ public class ToolStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_leggings", 90),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_boots", 78),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_helmet", 77),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_chestplate", 112),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_leggings", 105),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_boots", 91),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_helmet", 82),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_chestplate", 120),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_leggings", 112),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_boots", 97),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_helmet", 102),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_chestplate", 149),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_leggings", 140),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_boots", 121),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_helmet", 110),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_chestplate", 160),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_leggings", 150),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_boots", 130),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 62),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", 90),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_leggings", 84),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_boots", 73),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 181),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", 264),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", 247),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_boots", 214),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 242),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", 352),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", 330),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_boots", 286),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 220),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", 320),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 300),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 260)
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 275),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", 400),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 375),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 325)
 	));
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 
@@ -116,10 +116,10 @@ public class ToolStats extends SRFeature {
 	@Label(name = "Disabled items tooltip", description = "If set to true items in the 'no_damage_items' and 'no_efficiency_items' will get a tooltip.")
 	public static Boolean disabledItemsTooltip = true;
 
-	public ToolStats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public ItemStats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		JSON_CONFIGS.add(new JsonConfig<>("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE, ToolStats::loadDurabilities, true, JsonConfigSyncMessage.ConfigType.DURABILITIES));
-		JSON_CONFIGS.add(new JsonConfig<>("tool_efficiencies.json", toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE, ToolStats::loadToolEfficiencies, true, JsonConfigSyncMessage.ConfigType.EFFICIENCIES));
+		JSON_CONFIGS.add(new JsonConfig<>("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadDurabilities, true, JsonConfigSyncMessage.ConfigType.DURABILITIES));
+		JSON_CONFIGS.add(new JsonConfig<>("tool_efficiencies.json", toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadToolEfficiencies, true, JsonConfigSyncMessage.ConfigType.EFFICIENCIES));
 	}
 
 	@Override
