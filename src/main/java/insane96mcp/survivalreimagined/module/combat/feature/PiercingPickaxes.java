@@ -16,6 +16,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,6 +41,7 @@ public class PiercingPickaxes extends Feature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
+	@SuppressWarnings("DataFlowIssue")
 	@SubscribeEvent
 	public void onPostEntityDamaged(PostEntityHurtEvent event) {
 		if (!this.isEnabled()
@@ -54,7 +57,12 @@ public class PiercingPickaxes extends Feature {
 			else
 				piercingDamageSource = attacker.damageSources().source(PIERCING_MOB_ATTACK, attacker);
 
+			AttributeModifier attributeModifier = new AttributeModifier("Piercing Knockback resistance", 1d, AttributeModifier.Operation.ADDITION);
+			if (event.getEntity().getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null)
+				event.getEntity().getAttribute(Attributes.KNOCKBACK_RESISTANCE).addTransientModifier(attributeModifier);
 			event.getEntity().hurt(piercingDamageSource, (float) (pickaxeItem.getAttackDamage() * piercingRatio));
+			if (event.getEntity().getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null)
+				event.getEntity().getAttribute(Attributes.KNOCKBACK_RESISTANCE).removeModifier(attributeModifier);
 		}
 	}
 
