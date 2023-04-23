@@ -18,6 +18,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -28,6 +29,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -38,6 +40,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Label(name = "Death", description = "Changes to death")
@@ -48,6 +51,8 @@ public class Death extends Feature {
 	public static final String PLAYER_GHOST_LANG = SurvivalReimagined.MOD_ID + ".player_ghost";
 	public static final String ITEMS_TO_DROP = SurvivalReimagined.RESOURCE_PREFIX + "items_to_drop";
 	public static final String XP_TO_DROP = SurvivalReimagined.RESOURCE_PREFIX + "xp_to_drop";
+	public static final String LAST_GHOST_UUID = SurvivalReimagined.RESOURCE_PREFIX + "last_ghost_uuid";
+	public static final String GHOST_OWNER_UUID = SurvivalReimagined.RESOURCE_PREFIX + "ghost_owner_uuid";
 
 	public static final UUID MOVEMENT_SPEED_BONUS = UUID.fromString("1905c271-160b-4560-9b76-c97b007657a5");
 	public static final UUID ATTACK_DAMAGE_BONUS = UUID.fromString("bce0ee20-1358-4c8c-89ee-9446548a284b");
@@ -61,8 +66,7 @@ public class Death extends Feature {
 	public void onPlayerDeath(LivingDeathEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getEntity() instanceof ServerPlayer player)
-				|| player.getLevel().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
-				|| (player.getInventory().isEmpty() && PlayerExperience.getExperienceOnDeath(player, true) == 0))
+				|| player.getLevel().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY))
 			return;
 
 		Zombie zombie = EntityType.ZOMBIE.create(player.getLevel());
@@ -84,18 +88,6 @@ public class Death extends Feature {
 		zombie.setSilent(true);
 		zombie.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, -1, 0, false, false, false));
 		zombie.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, -1, 0, false, false, false));
-		/*for (int i = 0; i < 4; i++) {
-			EquipmentSlot slot = EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, i);
-			zombie.setItemSlot(slot, player.getInventory().getArmor(i));
-			zombie.setGuaranteedDrop(slot);
-			player.setItemSlot(slot, ItemStack.EMPTY);
-		}
-		zombie.setItemSlot(EquipmentSlot.MAINHAND, player.getMainHandItem());
-		zombie.setGuaranteedDrop(EquipmentSlot.MAINHAND);
-		player.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-		zombie.setItemSlot(EquipmentSlot.OFFHAND, player.getOffhandItem());
-		zombie.setGuaranteedDrop(EquipmentSlot.OFFHAND);
-		player.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);*/
 		ListTag listTag = new ListTag();
 		for (ItemStack item : player.getInventory().items) {
 			listTag.add(item.save(new CompoundTag()));
@@ -108,13 +100,15 @@ public class Death extends Feature {
 		}
 		zombie.getPersistentData().put(ITEMS_TO_DROP, listTag);
 		zombie.getPersistentData().putInt(XP_TO_DROP, PlayerExperience.getExperienceOnDeath(player, true));
+		zombie.getPersistentData().putUUID(GHOST_OWNER_UUID, player.getUUID());
 		player.setExperienceLevels(0);
 		player.setExperiencePoints(0);
 		player.level.addFreshEntity(zombie);
 		player.getInventory().clearContent();
+		player.getPersistentData().putUUID(LAST_GHOST_UUID, zombie.getUUID());
 	}
 
-	//Remove targetting goal. Only attack players that attack the ghost
+	//Remove targeting goal. Only attack players that attack the ghost
 	@SubscribeEvent
 	public void onGhostJoinWorld(EntityJoinLevelEvent event) {
 		if (!event.getEntity().getPersistentData().contains(PLAYER_GHOST))
@@ -168,12 +162,35 @@ public class Death extends Feature {
 	public void onEntityTick(LivingEvent.LivingTickEvent event) {
 		if (!this.isEnabled()
 				|| event.getEntity().tickCount % 20 != 2
+				|| event.getEntity().level.isClientSide
 				|| !event.getEntity().getPersistentData().contains(PLAYER_GHOST))
 			return;
 
+		Zombie zombie = (Zombie) event.getEntity();
+		if (zombie.getPersistentData().contains(GHOST_OWNER_UUID)) {
+			UUID owner = zombie.getPersistentData().getUUID(GHOST_OWNER_UUID);
+			Optional<Player> oPlayer = getPlayerOwner((ServerLevel) zombie.level, owner);
+			oPlayer.ifPresent(player -> {
+				if (player.getPersistentData().contains(LAST_GHOST_UUID)) {
+					UUID lastGhost = player.getPersistentData().getUUID(LAST_GHOST_UUID);
+					if (!lastGhost.equals(zombie.getUUID()))
+						zombie.kill();
+				}
+			});
+		}
 		if (event.getEntity().level.hasNearbyAlivePlayer(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 80))
 			event.getEntity().setGlowingTag(true);
 		event.getEntity().setTicksFrozen(0);
+	}
+
+	private Optional<Player> getPlayerOwner(ServerLevel level, UUID playerUUID) {
+		for(Player player : level.players()) {
+			UUID uuid = player.getUUID();
+			if(uuid.equals(playerUUID))
+				return Optional.of(player);
+		}
+
+		return Optional.empty();
 	}
 
 	@SubscribeEvent

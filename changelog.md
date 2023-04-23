@@ -20,6 +20,7 @@
 * Player's Ghost 
   * Are stronger but neutral
   * Can now be right-clicked to get back items
+  * Will die and drop all the stuff if the player dies again
   * Now also stores dropped XP. Players now drop more experience on death
 * Creepers now drop 1-3 gunpowder instead of 0-2 and have a rare TNT drop
 * More advancements work
