@@ -1,11 +1,13 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.survivalreimagined.effect.Vigour;
+import insane96mcp.survivalreimagined.event.SREventFactory;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.experience.feature.PlayerExperience;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.ExhaustionIncrease;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -69,6 +71,11 @@ public abstract class PlayerMixin extends LivingEntity {
 		efficiency -= (float)(lvl * lvl + 1);
 		efficiency *= 0.75f * lvl + 1;
 		return efficiency;
+	}
+
+	@Inject(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setHealth(F)V"))
+	private void onPostDamage(DamageSource damageSource, float amount, CallbackInfo ci) {
+		SREventFactory.onPostHurtEntity(this, damageSource, amount);
 	}
 
 	@Shadow

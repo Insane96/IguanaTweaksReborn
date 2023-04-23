@@ -40,7 +40,6 @@ public class ClientSetup {
             event.accept(FlintTools.SWORD.get());
             event.accept(FlintTools.SHIELD.get());
             event.accept(CopperTools.SWORD.get());
-            event.accept(BoneClub.BONE_CLUB.get());
             event.accept(Florpium.SWORD.get());
             event.accept(ChainedCopperArmor.HELMET.get());
             event.accept(ChainedCopperArmor.CHESTPLATE.get());

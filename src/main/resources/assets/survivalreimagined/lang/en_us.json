@@ -15,6 +15,7 @@
 	"survivalreimagined.no_efficiency_item": "This item is old and rusty, can't mine anything",
 	"survivalreimagined.tool_efficiency": "%.1f Tool Efficiency",
 	"survivalreimagined.bonus_tool_efficiency": "(+%.1f from Efficiency)",
+	"survivalreimagined.piercing_damage": "%.1f Piercing Damage",
 
 	"survivalreimagined.weak_hoe": "This hoe is too weak to till soil",
 	"survivalreimagined.till_cooldown": "%.1f Till Cooldown",
@@ -112,8 +113,8 @@
 	"advancements.sr_story.root.description": "How to progress with Survival Reimagined",
 	"advancements.sr_story.flint_pickaxe.title": "Wooden Tools?",
 	"advancements.sr_story.flint_pickaxe.description": "Obtain your first Flint Pickaxe",
-	"advancements.sr_story.stone_pickaxe.title": "Not really an upgrade",
-	"advancements.sr_story.stone_pickaxe.description": "Obtain a Stone Pickaxe, and realize that Flint is actually better",
+	"advancements.sr_story.stone_pickaxe.title": "Battle Pickaxe",
+	"advancements.sr_story.stone_pickaxe.description": "Obtain a Stone Pickaxe, and realize that Flint is actually better to mine, but can be used as weapons dealing damage that ignores armor",
 	"advancements.sr_story.flint_shield.title": "Better than taking a full blow",
 	"advancements.sr_story.flint_shield.description": "Obtain an early game shield",
 	"advancements.sr_story.charcoal.title": "No coal? No problem!",

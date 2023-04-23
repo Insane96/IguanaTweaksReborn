@@ -1,13 +1,17 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
+import insane96mcp.survivalreimagined.event.SREventFactory;
 import insane96mcp.survivalreimagined.module.movement.feature.TerrainSlowdown;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
@@ -33,5 +37,10 @@ public class LivingEntityMixin {
 
         double playerMS = livingEntity.getAttributeValue(Attributes.MOVEMENT_SPEED);
         return playerMS / baseMS;
+    }
+
+    @Inject(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;gameEvent(Lnet/minecraft/world/level/gameevent/GameEvent;)V"))
+    private void onPostDamage(DamageSource damageSource, float amount, CallbackInfo ci) {
+        SREventFactory.onPostHurtEntity((LivingEntity)(Object)this, damageSource, amount);
     }
 }

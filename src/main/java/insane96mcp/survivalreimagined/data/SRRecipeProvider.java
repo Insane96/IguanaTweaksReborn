@@ -77,13 +77,6 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('L', ItemTags.LOGS)
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BoneClub.BONE_CLUB.get())
-                .pattern("  b")
-                .pattern(" b ")
-                .pattern("b  ")
-                .define('b', Items.BONE)
-                .unlockedBy("has_bone", has(Items.BONE))
-                .save(writer);
 
         ConditionalRecipe.builder()
                 .addCondition(not(modLoaded("tconstruct")))
