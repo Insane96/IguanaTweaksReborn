@@ -260,6 +260,79 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_ingot_from_smelting_ore");
 
         SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(ChainedCopperArmor.HELMET.get()),
+                        RecipeCategory.MISC,
+                        Items.IRON_NUGGET,
+                        0,
+                        200
+                )
+                .unlockedBy("has_chained_armor", has(ChainedCopperArmor.HELMET.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "smelting_chained_copper_helmet");
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(ChainedCopperArmor.CHESTPLATE.get()),
+                        RecipeCategory.MISC,
+                        Items.IRON_NUGGET,
+                        0,
+                        200
+                )
+                .unlockedBy("has_chained_armor", has(ChainedCopperArmor.CHESTPLATE.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "smelting_chained_copper_chestplate");
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(ChainedCopperArmor.LEGGINGS.get()),
+                        RecipeCategory.MISC,
+                        Items.IRON_NUGGET,
+                        0,
+                        200
+                )
+                .unlockedBy("has_chained_armor", has(ChainedCopperArmor.LEGGINGS.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "smelting_chained_copper_leggings");
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(ChainedCopperArmor.BOOTS.get()),
+                        RecipeCategory.MISC,
+                        Items.IRON_NUGGET,
+                        0,
+                        200
+                )
+                .unlockedBy("has_chained_armor", has(ChainedCopperArmor.BOOTS.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "smelting_chained_copper_boots");
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(ChainedCopperArmor.HELMET.get()),
+                        RecipeCategory.MISC,
+                        Items.IRON_NUGGET,
+                        0,
+                        200
+                )
+                .unlockedBy("has_chained_armor", has(ChainedCopperArmor.HELMET.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blasting_chained_copper_helmet");
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(ChainedCopperArmor.CHESTPLATE.get()),
+                        RecipeCategory.MISC,
+                        Items.IRON_NUGGET,
+                        0,
+                        200
+                )
+                .unlockedBy("has_chained_armor", has(ChainedCopperArmor.CHESTPLATE.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blasting_chained_copper_chestplate");
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(ChainedCopperArmor.LEGGINGS.get()),
+                        RecipeCategory.MISC,
+                        Items.IRON_NUGGET,
+                        0,
+                        200
+                )
+                .unlockedBy("has_chained_armor", has(ChainedCopperArmor.LEGGINGS.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blasting_chained_copper_leggings");
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(ChainedCopperArmor.BOOTS.get()),
+                        RecipeCategory.MISC,
+                        Items.IRON_NUGGET,
+                        0,
+                        200
+                )
+                .unlockedBy("has_chained_armor", has(ChainedCopperArmor.BOOTS.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blasting_chained_copper_boots");
+
+        SimpleCookingRecipeBuilder.smelting(
                         Ingredient.of(Florpium.DEEPSLATE_ORE.get()),
                         RecipeCategory.MISC,
                         Florpium.INGOT.get(),

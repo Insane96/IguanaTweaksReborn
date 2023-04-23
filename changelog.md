@@ -10,6 +10,7 @@
 * Player's Ghost now also stores dropped XP
 * Creepers now drop 1-3 gunpowder instead of 0-2 and have a rare TNT drop
 * More advancements work
+* Chained copper armor can now be smelted/blasted
 * Reduced Pumpkin and Melon generation
 * Increased hide dropped from rabbits
 * Fixed stuff using tags not syncing to client
