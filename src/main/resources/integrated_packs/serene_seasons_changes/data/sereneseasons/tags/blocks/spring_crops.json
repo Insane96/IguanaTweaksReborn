@@ -1,7 +1,7 @@
 {
   "replace": true,
   "values": [
-	"minecraft:oak_sapling",
+    "minecraft:oak_sapling",
 	"minecraft:birch_sapling",
 	"minecraft:spruce_sapling",
 	"minecraft:jungle_sapling",
@@ -18,18 +18,21 @@
 	"minecraft:crimson_nylium",
 	"minecraft:warped_nylium",
 	"minecraft:twisting_vines",
+	"minecraft:twisting_vines_plant",
 	"minecraft:weeping_vines",
+	"minecraft:weeping_vines_plant",
 	"minecraft:seagrass",
 	"minecraft:sea_pickle",
 	"minecraft:kelp",
-	"minecraft:glow_berries",
-	  "minecraft:glow_lichen",
+	"minecraft:kelp_plant",
+	"minecraft:cave_vines",
+	"minecraft:cave_vines_plant",
 	"minecraft:grass_block",
 	"minecraft:grass",
 	"minecraft:fern",
-	"minecraft:wheat_seeds",
-	"minecraft:pumpkin_seeds",
-	"minecraft:beetroot_seeds",
-	"survivalreimagined:carrot_seeds"
+	"minecraft:bamboo",
+	"minecraft:bamboo_sapling",
+	"minecraft:carrots",
+	"minecraft:potatoes"
   ]
 }
