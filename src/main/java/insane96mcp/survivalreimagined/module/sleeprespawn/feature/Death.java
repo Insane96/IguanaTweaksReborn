@@ -56,7 +56,8 @@ public class Death extends Feature {
 
 	public static final UUID MOVEMENT_SPEED_BONUS = UUID.fromString("1905c271-160b-4560-9b76-c97b007657a5");
 	public static final UUID ATTACK_DAMAGE_BONUS = UUID.fromString("bce0ee20-1358-4c8c-89ee-9446548a284b");
-	public static final UUID XRAY_BONUS = UUID.fromString("db05e364-0189-47bb-a6cb-487791c8dcd2");
+	public static final UUID ATTACK_DAMAGE_XP_BONUS = UUID.fromString("4b0d7d72-30cb-4200-9cc7-0944308b8bae");
+	public static final UUID HEALTH_XP_BONUS = UUID.fromString("db05e364-0189-47bb-a6cb-487791c8dcd2");
 
 	public Death(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -82,9 +83,8 @@ public class Death extends Feature {
 		zombie.setCustomName(Component.translatable(PLAYER_GHOST_LANG, player.getName().getString()));
 		if (zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null)
 			zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1d);
-		zombie.getAttribute(Attributes.MAX_HEALTH).setBaseValue(40d);
 		MCUtils.applyModifier(zombie, Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_BONUS, "Ghost movement speed bonus", 0.5d, AttributeModifier.Operation.MULTIPLY_BASE, true);
-		MCUtils.applyModifier(zombie, Attributes.ATTACK_DAMAGE, ATTACK_DAMAGE_BONUS, "Ghost attack damage bonus", 5d, AttributeModifier.Operation.ADDITION, true);
+		MCUtils.applyModifier(zombie, Attributes.ATTACK_DAMAGE, ATTACK_DAMAGE_BONUS, "Ghost attack damage bonus", 1d, AttributeModifier.Operation.ADDITION, true);
 		zombie.setSilent(true);
 		zombie.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, -1, 0, false, false, false));
 		zombie.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, -1, 0, false, false, false));
@@ -99,7 +99,10 @@ public class Death extends Feature {
 			listTag.add(item.save(new CompoundTag()));
 		}
 		zombie.getPersistentData().put(ITEMS_TO_DROP, listTag);
-		zombie.getPersistentData().putInt(XP_TO_DROP, PlayerExperience.getExperienceOnDeath(player, true));
+		int xpDropped = PlayerExperience.getExperienceOnDeath(player, true);
+		zombie.getPersistentData().putInt(XP_TO_DROP, xpDropped);
+		MCUtils.applyModifier(zombie, Attributes.ATTACK_DAMAGE, ATTACK_DAMAGE_XP_BONUS, "Ghost attack damage bonus by XP", xpDropped * 0.001d, AttributeModifier.Operation.MULTIPLY_BASE, true);
+		MCUtils.applyModifier(zombie, Attributes.MAX_HEALTH, HEALTH_XP_BONUS, "Ghost health bonus by XP", xpDropped * 0.001d, AttributeModifier.Operation.MULTIPLY_BASE, true);
 		zombie.getPersistentData().putUUID(GHOST_OWNER_UUID, player.getUUID());
 		player.setExperienceLevels(0);
 		player.setExperiencePoints(0);
