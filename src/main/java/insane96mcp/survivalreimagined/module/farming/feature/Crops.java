@@ -61,7 +61,7 @@ public class Crops extends Feature {
 						Increases the time required for a crop (stems NOT included) to grow (e.g. at 2.0 the crop will take twice to grow).
 						Setting this to 0 will prevent crops from growing naturally.
 						1.0 will make crops grow like normal.""")
-	public static Double cropsGrowthMultiplier = 2.5d;
+	public static Double cropsGrowthMultiplier = 1d;
 	@Config(min = 0d, max = 128d)
 	@Label(name = "No Sunlight Growth Multiplier", description = """
 						Increases the time required for a crop to grow when it's sky light level is below "Min Sunlight", (e.g. at 2.0 when the crop has a skylight below "Min Sunlight" will take twice to grow).
@@ -73,7 +73,7 @@ public class Crops extends Feature {
 						Increases the time required for a crop to grow when it's night time.
 						Setting this to 0 will prevent crops from growing when it's night time.
 						1.0 will make crops growth not affected by night.""")
-	public static Double nightTimeGrowthMultiplier = 1d;
+	public static Double nightTimeGrowthMultiplier = 1.5d;
 	@Config(min = 0, max = 15)
 	@Label(name = "Min Sunlight", description = "Minimum Sky Light level required for crops to not be affected by \"No Sunlight Growth Multiplier\".")
 	public static Integer minSunlight = 10;
@@ -109,8 +109,7 @@ public class Crops extends Feature {
 				if (!(block instanceof CropBlock))
 					continue;
 				//noinspection ConstantConditions
-				PlantGrowthModifier plantGrowthModifier = new PlantGrowthModifier(IdTagMatcher.Type.ID, ForgeRegistries.BLOCKS.getKey(block).toString(), cropsGrowthMultiplier, noSunLightGrowthMultiplier, minSunlight, nightTimeGrowthMultiplier);
-				plantGrowthModifiers.add(plantGrowthModifier);
+				plantGrowthModifiers.add(new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, ForgeRegistries.BLOCKS.getKey(block).toString()).setGrowthMultiplier(cropsGrowthMultiplier.floatValue()).setNoSunglightMultipler(noSunLightGrowthMultiplier.floatValue(), minSunlight).setNightTimeMultiplier(nightTimeGrowthMultiplier.floatValue()).build());
 			}
 		}
 	}

@@ -21,32 +21,55 @@ import java.util.List;
 public class PlantsGrowth extends SRFeature {
 
 	public static final ArrayList<PlantGrowthModifier> PLANTS_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
-			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:sugar_cane", 2.5d, 2.5d, 10, 1.5d),
-			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:cactus", 2.5d, 1.5d, 10, 1d, new ArrayList<>(List.of(
-					new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_hot")
-			)), 3d),
-			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:cocoa", 3d, 2.5d, 10, 1.5d, new ArrayList<>(List.of(
-					new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_hot")
-			)), 3d),
-			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:nether_wart", 3d, 1d, 0, 1d, new ArrayList<>(List.of(
-					new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:is_nether")
-			)), 3d),
-			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:chorus_flower", 3d, 1d, 0, 1d, new ArrayList<>(List.of(
-					new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:is_end")
-			)), 3d),
-			new PlantGrowthModifier(IdTagMatcher.Type.TAG, "minecraft:saplings", 2.5d, 2.5d, 10, 1.5d),
-			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:melon_stem", 2.5d, 2.5d, 10, 1.5d),
-			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:pumpkin_stem", 2.5d, 2.5d, 10, 1.5d),
-			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:sweet_berry_bush", 2d, 2.5d, 10, 1.5d, new ArrayList<>(List.of(
-					new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:is_taiga")
-			)), 3d),
-			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:kelp", 2.5d, 1d, 0, 1.5d, new ArrayList<>(List.of(
-					new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:is_ocean"),
-					new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:is_river")
-			)), 2.5d),
-			new PlantGrowthModifier(IdTagMatcher.Type.ID, "minecraft:bamboo", 2.5d, 2.5d, 10, 1.5d, new ArrayList<>(List.of(
-					new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_hot")
-			)), 3d)
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:sugar_cane")
+					.setNoSunglightMultipler(1.75f, 10).build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:cactus")
+					.setNoSunglightMultipler(1.5f, 10)
+					.setGrowthBiomes(new ArrayList<>(List.of(
+							new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_hot")
+					)), 3f).build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:cocoa")
+					.setNoSunglightMultipler(2.5f, 10)
+					.setNightTimeMultiplier(1.5f)
+					.setGrowthBiomes(new ArrayList<>(List.of(
+							new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_hot")
+					)), 3f).build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:nether_wart")
+					.setGrowthBiomes(new ArrayList<>(List.of(
+							new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_nether")
+					)), 3f).build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:chorus_flower")
+					.setGrowthBiomes(new ArrayList<>(List.of(
+							new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_end")
+					)), 3f).build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.TAG, "minecraft:saplings")
+					.setNoSunglightMultipler(2.5f, 10)
+					.setNightTimeMultiplier(1.5f).build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:melon_stem")
+					.setNoSunglightMultipler(2.5f, 10)
+					.setNightTimeMultiplier(1.5f).build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:pumpkin_stem")
+					.setNoSunglightMultipler(2.5f, 10)
+					.setNightTimeMultiplier(1.5f).build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:sweet_berry_bush")
+					.setNoSunglightMultipler(2.5f, 10)
+					.setNightTimeMultiplier(1.5f)
+					.setGrowthBiomes(new ArrayList<>(List.of(
+							new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_taiga")
+					)), 3f).build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:kelp")
+					.setGrowthMultiplier(1.25f)
+					.setNightTimeMultiplier(1.25f)
+					.setGrowthBiomes(new ArrayList<>(List.of(
+							new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:is_ocean"),
+							new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:is_river")
+					)), 3f).build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:bamboo")
+					.setNoSunglightMultipler(2.5f, 10)
+					.setNightTimeMultiplier(1.25f)
+					.setGrowthBiomes(new ArrayList<>(List.of(
+							new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:is_hot")
+					)), 3f).build()
 	));
 	public static final ArrayList<PlantGrowthModifier> plantsList = new ArrayList<>();
 
