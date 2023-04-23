@@ -83,20 +83,20 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_leggings", 150),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_boots", 130),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 62),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", 90),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_leggings", 84),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_boots", 73),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 66),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", 96),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_leggings", 90),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_boots", 78),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 242),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", 352),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", 330),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_boots", 286),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 181),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", 264),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", 247),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_boots", 214),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 275),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", 400),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 375),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 325)
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 253),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", 368),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 345),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 299)
 	));
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 
@@ -107,7 +107,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/stone", 2.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iron", 4d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/florpium", 4.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/golden", 16d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/golden", 15d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/diamond", 7d)
 	));
 	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();
