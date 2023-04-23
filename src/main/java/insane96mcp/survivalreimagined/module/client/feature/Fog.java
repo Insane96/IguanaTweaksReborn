@@ -60,23 +60,30 @@ public class Fog extends Feature {
             return;
 
         Entity entity = event.getCamera().getEntity();
-        if (entity.getEyeInFluidType() == ForgeMod.EMPTY_TYPE.get() && entity.level.dimension() == Level.OVERWORLD && entity.level.isRaining()) {
+        if (entity.getEyeInFluidType() == ForgeMod.EMPTY_TYPE.get() && entity.level.dimension() == Level.OVERWORLD && entity.level.isRaining() && entity.getY() > 48d) {
             float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
             float rainLevel = entity.level.getRainLevel(1f);
-            float nearMultiplier = switch (SeasonHelper.getSeasonState(entity.level).getSeason()) {
+            //Lower than 1 means a percentage of current render distance, higher means a flat render distance
+            float near = switch (SeasonHelper.getSeasonState(entity.level).getSeason()) {
                 case SPRING -> 0.7F;
                 case SUMMER -> 0.8F;
                 case AUTUMN -> 0.6F;
-                case WINTER -> 0.1F;
+                case WINTER -> 20F;
             };
-            float farMultiplier = switch (SeasonHelper.getSeasonState(entity.level).getSeason()) {
+            float far = switch (SeasonHelper.getSeasonState(entity.level).getSeason()) {
                 case SPRING -> 0.8F;
                 case SUMMER -> 0.9F;
                 case AUTUMN -> 0.75F;
-                case WINTER -> 0.3F;
+                case WINTER -> 40F;
             };
-            event.setNearPlaneDistance(renderDistance * nearMultiplier);
-            event.setFarPlaneDistance(renderDistance * farMultiplier);
+            if (near <= 1f)
+                event.setNearPlaneDistance(renderDistance * near);
+            else
+                event.setNearPlaneDistance(near);
+            if (far <= 1f)
+                event.setFarPlaneDistance(renderDistance * far);
+            else
+                event.setFarPlaneDistance(far);
             event.setCanceled(true);
         }
     }
