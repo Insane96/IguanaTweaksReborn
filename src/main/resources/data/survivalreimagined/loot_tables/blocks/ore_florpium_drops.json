@@ -21,10 +21,7 @@
                         {
                             "function": "minecraft:apply_bonus",
                             "enchantment": "minecraft:fortune",
-                            "formula": "minecraft:uniform_bonus_count",
-                            "parameters": {
-                                "bonusMultiplier": 4
-                            }
+                            "formula": "minecraft:ore_drops"
                         }
                     ]
                 },

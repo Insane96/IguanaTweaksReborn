@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "survivalreimagined:deepslate_florpium_ore"
+              "survivalreimagined:florpium_ore"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "survivalreimagined:florpium_ingot_from_blasting_deepslate_ore"
+        "recipe": "survivalreimagined:florpium_nugget_from_blasting_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "survivalreimagined:florpium_ingot_from_blasting_deepslate_ore"
+      "survivalreimagined:florpium_nugget_from_blasting_ore"
     ]
   }
 }

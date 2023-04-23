@@ -44,7 +44,7 @@ public class BeaconConduit extends SRFeature {
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:gold_block", 1.8d),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_block", 2.5d),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_block", 4d),
-            new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_block", 2.5d),
+            new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_block", 3.0d),
             new IdTagValue(IdTagMatcher.Type.ID, "tconstruct:cobalt_block", 2.4d),
             new IdTagValue(IdTagMatcher.Type.ID, "tconstruct:queens_slime_block", 3.0d),
             new IdTagValue(IdTagMatcher.Type.ID, "tconstruct:hepatizon_block", 2.7d),

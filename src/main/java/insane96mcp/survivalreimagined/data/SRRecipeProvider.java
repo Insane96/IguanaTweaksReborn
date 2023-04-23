@@ -250,16 +250,6 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "gold_ingot_from_blasting_rock");
 
         SimpleCookingRecipeBuilder.smelting(
-                        Ingredient.of(Florpium.ORE.get()),
-                        RecipeCategory.MISC,
-                        Florpium.INGOT.get(),
-                        0.8f,
-                        800
-                )
-                .unlockedBy("has_florpium_ore", has(Florpium.ORE.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_ingot_from_smelting_ore");
-
-        SimpleCookingRecipeBuilder.smelting(
                         Ingredient.of(ChainedCopperArmor.HELMET.get()),
                         RecipeCategory.MISC,
                         Items.IRON_NUGGET,
@@ -333,34 +323,44 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blasting_chained_copper_boots");
 
         SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(Florpium.ORE.get()),
+                        RecipeCategory.MISC,
+                        Florpium.NUGGET.get(),
+                        0.8f,
+                        800
+                )
+                .unlockedBy("has_florpium_ore", has(Florpium.ORE.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_nugget_from_smelting_ore");
+
+        SimpleCookingRecipeBuilder.smelting(
                         Ingredient.of(Florpium.DEEPSLATE_ORE.get()),
                         RecipeCategory.MISC,
-                        Florpium.INGOT.get(),
+                        Florpium.NUGGET.get(),
                         0.8f,
                         800
                 )
                 .unlockedBy("has_florpium_ore", has(Florpium.DEEPSLATE_ORE.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_ingot_from_smelting_deepslate_ore");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_nugget_from_smelting_deepslate_ore");
 
         SimpleCookingRecipeBuilder.blasting(
                         Ingredient.of(Florpium.ORE.get()),
                         RecipeCategory.MISC,
-                        Florpium.INGOT.get(),
+                        Florpium.NUGGET.get(),
                         0.8f,
                         200
                 )
                 .unlockedBy("has_florpium_ore", has(Florpium.ORE.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_ingot_from_blasting_ore");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_nugget_from_blasting_ore");
 
         SimpleCookingRecipeBuilder.blasting(
                         Ingredient.of(Florpium.DEEPSLATE_ORE.get()),
                         RecipeCategory.MISC,
-                        Florpium.INGOT.get(),
+                        Florpium.NUGGET.get(),
                         0.8f,
                         200
                 )
                 .unlockedBy("has_florpium_ore", has(Florpium.DEEPSLATE_ORE.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_ingot_from_blasting_deepslate_ore");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_nugget_from_blasting_deepslate_ore");
 
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Florpium.INGOT.get()), RecipeCategory.TOOLS, Florpium.AXE.get())
                 .unlocks("has_florpium", has(Florpium.INGOT.get()))

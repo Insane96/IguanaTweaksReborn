@@ -6,6 +6,7 @@
 * Added Altimeter
   * Displays roughly your altitude
 * Out of season crops no longer break. They just don't grow
+* Florpium now generates much more but no longer drops a sh*t ton of nuggets with fortune
 * Players now have reduced block reach
 * Player's Ghost now also stores dropped XP
 * Creepers now drop 1-3 gunpowder instead of 0-2 and have a rare TNT drop
