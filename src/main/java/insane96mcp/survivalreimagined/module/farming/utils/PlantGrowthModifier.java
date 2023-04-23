@@ -12,6 +12,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import sereneseasons.api.season.Season;
+import sereneseasons.api.season.SeasonHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,31 +26,19 @@ public class PlantGrowthModifier extends IdTagMatcher {
 	private float nightTimeMultiplier = 1f;
 	private List<IdTagMatcher> correctBiomes = new ArrayList<>();
 	private float wrongBiomeMultiplier = 1f;
+	public final List<SeasonMultiplier> seasonsMultipliers = new ArrayList<>();
 
 	public PlantGrowthModifier(IdTagMatcher.Type type, String id) {
 		super(type, id);
 	}
 
-	private PlantGrowthModifier(IdTagMatcher.Type type, String id, float growthMultiplier, float noSunlightMultiplier, int minSunlightRequired, float nightTimeMultiplier) {
-		super(type, id);
-		this.growthMultiplier = growthMultiplier;
-		this.noSunlightMultiplier = noSunlightMultiplier;
-		this.minSunlightRequired = minSunlightRequired;
-		this.nightTimeMultiplier = nightTimeMultiplier;
-	}
-
-	private PlantGrowthModifier(IdTagMatcher.Type type, String id, float growthMultiplier, float noSunlightMultiplier, int minSunlightRequired, float nightTimeMultiplier, List<IdTagMatcher> correctBiomes, float wrongBiomeMultiplier) {
-		super(type, id);
-		this.growthMultiplier = growthMultiplier;
-		this.noSunlightMultiplier = noSunlightMultiplier;
-		this.minSunlightRequired = minSunlightRequired;
-		this.nightTimeMultiplier = nightTimeMultiplier;
-		this.correctBiomes = new ArrayList<>(correctBiomes);
-		this.wrongBiomeMultiplier = wrongBiomeMultiplier;
+	public record SeasonMultiplier(Season season, float multiplier) {
+		public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<SeasonMultiplier>>(){}.getType();
 	}
 
 	/**
 	 * Returns -1 when the block doesn't match the PlantGrowthModifier
+	 * Returns 0 when the plant will not grow
 	 */
 	public double getMultiplier(Block block, Level level, BlockPos pos) {
 		if (!this.matchesBlock(block))
@@ -72,6 +62,14 @@ public class PlantGrowthModifier extends IdTagMatcher {
 			if (!isInCorrectBiome)
 				multiplier *= this.wrongBiomeMultiplier;
 		}
+		if (!this.seasonsMultipliers.isEmpty()) {
+			for (SeasonMultiplier seasonMultiplier : this.seasonsMultipliers) {
+				if (SeasonHelper.getSeasonState(level).getSeason().equals(seasonMultiplier.season)) {
+					multiplier *= seasonMultiplier.multiplier;
+					break;
+				}
+			}
+		}
 
 		return multiplier;
 	}
@@ -90,6 +88,7 @@ public class PlantGrowthModifier extends IdTagMatcher {
 
 		public Builder setNoSunglightMultipler(float noSunlightMultiplier, int minSunlight) {
 			this.plantGrowthModifier.noSunlightMultiplier = noSunlightMultiplier;
+			this.plantGrowthModifier.minSunlightRequired = minSunlight;
 			return this;
 		}
 
@@ -101,6 +100,11 @@ public class PlantGrowthModifier extends IdTagMatcher {
 		public Builder setGrowthBiomes(List<IdTagMatcher> biomes, float wrongBiomeMultiplier) {
 			this.plantGrowthModifier.correctBiomes = new ArrayList<>(biomes);
 			this.plantGrowthModifier.wrongBiomeMultiplier = wrongBiomeMultiplier;
+			return this;
+		}
+
+		public Builder addSeasonMultiplier(Season season, float seasonMultiplier) {
+			this.plantGrowthModifier.seasonsMultipliers.add(new SeasonMultiplier(season, seasonMultiplier));
 			return this;
 		}
 
@@ -164,6 +168,13 @@ public class PlantGrowthModifier extends IdTagMatcher {
 				}
 				plantGrowthModifier.wrongBiomeMultiplier = GsonHelper.getAsFloat(json.getAsJsonObject(), "wrong_biome_multiplier");
 			}
+			JsonArray aSeasonsMultipliers = GsonHelper.getAsJsonArray(json.getAsJsonObject(), "season_multipliers", null);
+			if (aSeasonsMultipliers != null) {
+				for (JsonElement jsonElement : aSeasonsMultipliers) {
+					SeasonMultiplier seasonMultiplier = context.deserialize(jsonElement, SeasonMultiplier.class);
+					plantGrowthModifier.seasonsMultipliers.add(seasonMultiplier);
+				}
+			}
 
 			return plantGrowthModifier;
 		}
@@ -196,6 +207,13 @@ public class PlantGrowthModifier extends IdTagMatcher {
 				jsonObject.add("correct_biomes", aCorrectBiomes);
 				if (src.wrongBiomeMultiplier != 1d)
 					jsonObject.addProperty("wrong_biome_multiplier", src.wrongBiomeMultiplier);
+			}
+			if (!src.seasonsMultipliers.isEmpty()) {
+				JsonArray aSeasonMultipliers = new JsonArray();
+				for (SeasonMultiplier seasonMultiplier : src.seasonsMultipliers) {
+					aSeasonMultipliers.add(context.serialize(seasonMultiplier, SeasonMultiplier.class));
+				}
+				jsonObject.add("season_multipliers", aSeasonMultipliers);
 			}
 			return jsonObject;
 		}
