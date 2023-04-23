@@ -78,6 +78,7 @@ public class Death extends Feature {
 		zombie.setCustomName(Component.translatable(PLAYER_GHOST_LANG, player.getName().getString()));
 		if (zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null)
 			zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1d);
+		zombie.getAttribute(Attributes.MAX_HEALTH).setBaseValue(40d);
 		MCUtils.applyModifier(zombie, Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_BONUS, "Ghost movement speed bonus", 0.5d, AttributeModifier.Operation.MULTIPLY_BASE, true);
 		MCUtils.applyModifier(zombie, Attributes.ATTACK_DAMAGE, ATTACK_DAMAGE_BONUS, "Ghost attack damage bonus", 5d, AttributeModifier.Operation.ADDITION, true);
 		zombie.setSilent(true);
@@ -97,6 +98,12 @@ public class Death extends Feature {
 		player.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);*/
 		ListTag listTag = new ListTag();
 		for (ItemStack item : player.getInventory().items) {
+			listTag.add(item.save(new CompoundTag()));
+		}
+		for (ItemStack item : player.getInventory().armor) {
+			listTag.add(item.save(new CompoundTag()));
+		}
+		for (ItemStack item : player.getInventory().offhand) {
 			listTag.add(item.save(new CompoundTag()));
 		}
 		zombie.getPersistentData().put(ITEMS_TO_DROP, listTag);
