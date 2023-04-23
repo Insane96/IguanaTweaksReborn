@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.7.0
 * Added Explosive Barrels
   * Highly unstable will explode instantly
 * Added Altimeter

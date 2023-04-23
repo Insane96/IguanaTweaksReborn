@@ -173,6 +173,7 @@ public class Death extends Feature {
 
 		if (event.getEntity().level.hasNearbyAlivePlayer(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 80))
 			event.getEntity().setGlowingTag(true);
+		event.getEntity().setTicksFrozen(0);
 	}
 
 	@SubscribeEvent

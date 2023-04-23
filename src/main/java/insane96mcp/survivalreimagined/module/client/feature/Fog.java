@@ -55,7 +55,8 @@ public class Fog extends Feature {
 
     private void seasonFog(ViewportEvent.RenderFog event) {
         if (!fogChangeOnRain
-                || event.isCanceled())
+                || event.isCanceled()
+                || event.getCamera().getFluidInCamera() != FogType.NONE)
             return;
 
         Entity entity = event.getCamera().getEntity();
