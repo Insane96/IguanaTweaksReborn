@@ -5,6 +5,8 @@
   * Highly unstable will explode instantly
 * Added Altimeter
   * Displays roughly your altitude
+* Added Water Coolant enchantment
+  * Deals bonus damage and freezes fire immune and water sensitive mobs
 * Added "Piercing Pickaxe"
   * Pickaxes deal bonus damage that bypasses armor
 * Removed Bone Club

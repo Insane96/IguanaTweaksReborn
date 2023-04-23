@@ -5,12 +5,15 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantment.*;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SREnchantments;
 import insane96mcp.survivalreimagined.setup.SRItems;
+import insane96mcp.survivalreimagined.utils.Utils;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
@@ -42,6 +45,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class EnchantmentsFeature extends Feature {
 
 	public static final RegistryObject<Item> CLEANSED_LAPIS = SRItems.REGISTRY.register("cleansed_lapis", () -> new Item(new Item.Properties()));
+	public static final ResourceLocation WATER_COOLANT_AFFECTED = new ResourceLocation(SurvivalReimagined.MOD_ID, "water_coolant_affected");
 
 	@Config
 	@Label(name = "Mending overhaul", description = "Removes the mending enchantment and adds a new item that resets the repair cost of items.")
@@ -163,15 +167,33 @@ public class EnchantmentsFeature extends Feature {
 	@SubscribeEvent
 	public void onLivingAttack(LivingHurtEvent event) {
 		if (!this.isEnabled()
-				|| !(event.getSource().getEntity() instanceof LivingEntity entity)
-				|| !(event.getEntity() instanceof Creeper))
+				|| !(event.getSource().getEntity() instanceof LivingEntity attacker))
 			return;
 
-		int lvl = entity.getMainHandItem().getEnchantmentLevel(SREnchantments.BANE_OF_SSSSS.get());
+		baneOfSssssOnAttack(attacker, event.getEntity(), event);
+		waterCoolantOnAttack(attacker, event.getEntity(), event);
+	}
+
+	public void baneOfSssssOnAttack(LivingEntity attacker, LivingEntity entity, LivingHurtEvent event) {
+		if (!(entity instanceof Creeper))
+			return;
+		int lvl = attacker.getMainHandItem().getEnchantmentLevel(SREnchantments.BANE_OF_SSSSS.get());
 		if (lvl == 0)
 			return;
 
-		event.setAmount((float) (event.getAmount() + 2.5d * lvl));
+		event.setAmount((event.getAmount() + 2.5f * lvl));
+	}
+
+	public void waterCoolantOnAttack(LivingEntity attacker, LivingEntity entity, LivingHurtEvent event) {
+		if (!Utils.isEntityInTag(entity, WATER_COOLANT_AFFECTED))
+			return;
+
+		int lvl = attacker.getMainHandItem().getEnchantmentLevel(SREnchantments.WATER_COOLANT.get());
+		if (lvl == 0)
+			return;
+
+		float bonusDamage = 2.5f * lvl;
+		event.setAmount((event.getAmount() + bonusDamage));
 	}
 
 	@SubscribeEvent

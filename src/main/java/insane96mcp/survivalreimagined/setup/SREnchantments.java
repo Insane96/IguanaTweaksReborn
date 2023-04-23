@@ -16,4 +16,5 @@ public class SREnchantments {
     public static final RegistryObject<Enchantment> EXPANDED = REGISTRY.register("expanded", Expanded::new);
     public static final RegistryObject<Enchantment> STEP_UP = REGISTRY.register("step_up", StepUp::new);
     public static final RegistryObject<Enchantment> BANE_OF_SSSSS = REGISTRY.register("bane_of_sssss", BaneOfSSSS::new);
+    public static final RegistryObject<Enchantment> WATER_COOLANT = REGISTRY.register("water_coolant", WaterCoolant::new);
 }
