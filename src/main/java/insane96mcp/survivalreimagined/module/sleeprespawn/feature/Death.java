@@ -74,10 +74,11 @@ public class Death extends Feature {
 		zombie.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, 0d);
 		zombie.getPersistentData().putBoolean(PLAYER_GHOST, true);
 		zombie.getPersistentData().putBoolean(EAStrings.Tags.Zombie.MINER, true);
+		zombie.getPersistentData().putBoolean("mobspropertiesrandomness:processed", true);
 		zombie.setCustomName(Component.translatable(PLAYER_GHOST_LANG, player.getName().getString()));
 		if (zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null)
 			zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1d);
-		MCUtils.applyModifier(zombie, Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_BONUS, "Ghost movement speed bonus", 0.3d, AttributeModifier.Operation.MULTIPLY_BASE, true);
+		MCUtils.applyModifier(zombie, Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_BONUS, "Ghost movement speed bonus", 0.5d, AttributeModifier.Operation.MULTIPLY_BASE, true);
 		MCUtils.applyModifier(zombie, Attributes.ATTACK_DAMAGE, ATTACK_DAMAGE_BONUS, "Ghost attack damage bonus", 5d, AttributeModifier.Operation.ADDITION, true);
 		zombie.setSilent(true);
 		zombie.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, -1, 0, false, false, false));
