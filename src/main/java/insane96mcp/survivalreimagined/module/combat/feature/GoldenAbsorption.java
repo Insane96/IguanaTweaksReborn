@@ -69,7 +69,7 @@ public class GoldenAbsorption extends Feature {
 
 		float actualGoldenAbsorption = player.getAbsorptionAmount() - (absorptionAmplifier * 4);
 
-		if (actualGoldenAbsorption != goldenAbsorption) {
+		if (actualGoldenAbsorption >= 0f && actualGoldenAbsorption != goldenAbsorption) {
 			if (actualGoldenAbsorption > goldenAbsorption && player.tickCount % absorptionDecay == 0) {
 				player.setAbsorptionAmount(player.getAbsorptionAmount() - 1);
 			} else if (player.tickCount % regenSpeed == 0) {
