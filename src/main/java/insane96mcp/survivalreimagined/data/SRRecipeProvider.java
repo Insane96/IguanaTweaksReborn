@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.data;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
+import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.world.feature.BeegVeins;
@@ -190,6 +191,20 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(Items.GUNPOWDER, 2)
                 .unlockedBy("has_tnt", has(Items.TNT))
                 .unlockedBy("has_barrel", has(Items.BARREL))
+                .save(writer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, FoodDrinks.BROWN_MUSHROOM_STEW.get())
+                .requires(Items.BOWL, 1)
+                .requires(Items.BROWN_MUSHROOM, 2)
+                .unlockedBy("has_bowl", has(Items.BOWL))
+                .unlockedBy("has_mushroom", has(Items.BROWN_MUSHROOM))
+                .save(writer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, FoodDrinks.RED_MUSHROOM_STEW.get())
+                .requires(Items.BOWL, 1)
+                .requires(Items.RED_MUSHROOM, 2)
+                .unlockedBy("has_bowl", has(Items.BOWL))
+                .unlockedBy("has_mushroom", has(Items.BROWN_MUSHROOM))
                 .save(writer);
 
         SimpleCookingRecipeBuilder.smelting(

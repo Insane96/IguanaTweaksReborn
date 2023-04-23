@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.setup.client;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
+import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
@@ -77,6 +78,10 @@ public class ClientSetup {
             event.accept(Florpium.NUGGET.get());
             event.accept(AncientLapis.ANCIENT_LAPIS.get());
             event.accept(EnchantmentsFeature.CLEANSED_LAPIS.get());
+        }
+        else if (event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
+            event.accept(FoodDrinks.BROWN_MUSHROOM_STEW.get());
+            event.accept(FoodDrinks.RED_MUSHROOM_STEW.get());
         }
     }
 

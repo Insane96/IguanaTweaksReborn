@@ -5,6 +5,7 @@
   * Highly unstable will explode instantly
 * Added Altimeter
   * Displays roughly your altitude
+* Added Red and Brown mushroom stews
 * Out of season crops no longer break. They just don't grow
 * Florpium now generates much more but no longer drops a sh*t ton of nuggets with fortune
 * Players now have reduced block reach

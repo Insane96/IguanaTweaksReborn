@@ -14,6 +14,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.hungerhealth.utils.CustomFoodProperties;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
+import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.resources.ResourceLocation;
@@ -21,12 +22,14 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -35,6 +38,14 @@ import java.util.List;
 @Label(name = "Foods & Drinks", description = "Changes to food nourishment and the speed on how food is eaten or how items are consumed. Custom Food Properties are controlled via json in this feature's folder. Removing entries from the json requires a minecraft restart.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class FoodDrinks extends SRFeature {
+
+	public static final RegistryObject<Item> BROWN_MUSHROOM_STEW = SRItems.REGISTRY.register("brown_mushroom_stew", () -> new BowlFoodItem(new Item.Properties()
+			.food(new FoodProperties.Builder().nutrition(3).saturationMod(0.6F).build())
+	));
+	public static final RegistryObject<Item> RED_MUSHROOM_STEW = SRItems.REGISTRY.register("red_mushroom_stew", () -> new BowlFoodItem(new Item.Properties()
+			.food(new FoodProperties.Builder().nutrition(3).saturationMod(0.6F).build())
+	));
+
 	public static final ResourceLocation FOOD_BLACKLIST = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "food_drinks_no_hunger_changes");
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(
