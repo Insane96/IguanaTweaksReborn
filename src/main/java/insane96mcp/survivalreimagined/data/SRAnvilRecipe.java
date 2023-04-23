@@ -39,8 +39,9 @@ public class SRAnvilRecipe {
 
     public ItemStack assemble(ItemStack left, ItemStack right) {
         ItemStack result = this.result.copy();
-        if (this.keepDamage)
-            result.setDamageValue(left.getDamageValue());
+        result.setTag(left.getTag());
+        if (!this.keepDamage)
+            result.setDamageValue(0);
         return result;
     }
 

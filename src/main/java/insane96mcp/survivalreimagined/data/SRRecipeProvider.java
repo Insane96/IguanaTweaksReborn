@@ -204,7 +204,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(Items.BOWL, 1)
                 .requires(Items.RED_MUSHROOM, 2)
                 .unlockedBy("has_bowl", has(Items.BOWL))
-                .unlockedBy("has_mushroom", has(Items.BROWN_MUSHROOM))
+                .unlockedBy("has_mushroom", has(Items.RED_MUSHROOM))
                 .save(writer);
 
         SimpleCookingRecipeBuilder.smelting(
@@ -305,7 +305,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         RecipeCategory.MISC,
                         Items.IRON_NUGGET,
                         0,
-                        200
+                        100
                 )
                 .unlockedBy("has_chained_armor", has(ChainedCopperArmor.HELMET.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blasting_chained_copper_helmet");
@@ -314,7 +314,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         RecipeCategory.MISC,
                         Items.IRON_NUGGET,
                         0,
-                        200
+                        100
                 )
                 .unlockedBy("has_chained_armor", has(ChainedCopperArmor.CHESTPLATE.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blasting_chained_copper_chestplate");
@@ -323,7 +323,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         RecipeCategory.MISC,
                         Items.IRON_NUGGET,
                         0,
-                        200
+                        100
                 )
                 .unlockedBy("has_chained_armor", has(ChainedCopperArmor.LEGGINGS.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blasting_chained_copper_leggings");
@@ -332,7 +332,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         RecipeCategory.MISC,
                         Items.IRON_NUGGET,
                         0,
-                        200
+                        100
                 )
                 .unlockedBy("has_chained_armor", has(ChainedCopperArmor.BOOTS.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blasting_chained_copper_boots");
