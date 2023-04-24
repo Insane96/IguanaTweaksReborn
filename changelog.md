@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Phantoms now vary in size
+* Ghost zombies health and damage now scales with the xp stored
+
 ## Alpha 3.7.0
 * Added Explosive Barrels
   * Highly unstable will explode instantly
