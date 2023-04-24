@@ -1,6 +1,9 @@
 # Changelog
 
 ## Upcoming
+* Fishing changes
+  * You can no longer get fishes in small bodies of water
+  * Junk chance is greatly increased
 * Phantoms now vary in size
 * Ghost zombies health and damage now scales with the xp stored
 
