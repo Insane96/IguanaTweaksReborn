@@ -1,6 +1,6 @@
 {
     "type": "forge:add_features",
-    "biomes": "#forge:is_cold/overworld",
+    "biomes": "#minecraft:is_forest",
     "features": "survivalreimagined:iron_ore_beeg_vein",
     "step": "underground_ores"
 }

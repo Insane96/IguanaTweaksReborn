@@ -1,6 +1,6 @@
 {
     "type": "forge:add_features",
-    "biomes": "#minecraft:is_forest",
+    "biomes": "#forge:is_cold/overworld",
     "features": "survivalreimagined:copper_ore_beeg_vein",
     "step": "underground_ores"
 }
