@@ -55,6 +55,9 @@ public class Fire extends Feature {
     @Config
     @Label(name = "Disable Charcoal Smelting", description = "If enabled, a data pack will be enabled that removes the Charcoal recipe from smelting")
     public static Boolean disableCharcoalSmelting = true;
+    @Config
+    @Label(name = "Reduce exposed coal", description = "If enabled, a data pack will be enabled that reduces the coal exposed to air.")
+    public static Boolean reduceExposedCoal = true;
 
     @Config
     @Label(name = "Two flint fire starter.Enabled", description = "If true, two flints (on per hand) can start a fire")
@@ -69,6 +72,7 @@ public class Fire extends Feature {
     public Fire(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_charcoal_smelting", net.minecraft.network.chat.Component.literal("Survival Reimagined No Charcoal Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableCharcoalSmelting));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "coal_generation", net.minecraft.network.chat.Component.literal("Survival Reimagined Coal Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && reduceExposedCoal));
     }
 
     @SubscribeEvent
