@@ -5,18 +5,26 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Gold", description = "Various changes for gold")
 @LoadFeature(module = Modules.Ids.MINING)
 public class Gold extends Feature {
+
+	public static final String LUCKY_GOLD_TOOLTIP = SurvivalReimagined.MOD_ID + ".innate_luck";
 
 	@Config
 	@Label(name = "Lucky Gold", description = "Changes Gold tools to have an innate Fortune/Looting level and changes the harvest level to be like stone tools.")
@@ -76,4 +84,16 @@ public class Gold extends Feature {
 		return Tiers.STONE;
 	}
 
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public void onTooltip(ItemTooltipEvent event) {
+		if (!this.isEnabled()
+				|| !luckyGold
+				|| !(event.getItemStack().getItem() instanceof TieredItem tieredItem)
+				|| tieredItem.getTier() != Tiers.GOLD)
+			return;
+
+		event.getToolTip().add(Component.empty());
+		event.getToolTip().add(Component.translatable(LUCKY_GOLD_TOOLTIP).withStyle(ChatFormatting.GOLD));
+	}
 }
