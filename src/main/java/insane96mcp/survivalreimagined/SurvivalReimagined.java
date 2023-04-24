@@ -58,6 +58,7 @@ public class SurvivalReimagined
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(SpawnerDataAttacher.class);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        modEventBus.addListener(ClientSetup::entityRenderEvent);
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::gatherData);
@@ -73,6 +74,7 @@ public class SurvivalReimagined
         SRFeatureType.REGISTRY.register(modEventBus);
         SRRuleTestType.REGISTRY.register(modEventBus);
         SREnchantments.REGISTRY.register(modEventBus);
+        SREntityTypes.REGISTRY.register(modEventBus);
         SRGlobalLootModifiers.REGISTRY.register(modEventBus);
         SRLootItemConditions.REGISTRY.register(modEventBus);
         Weights.initMaterialWeight();

@@ -8,10 +8,14 @@ import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
 import insane96mcp.survivalreimagined.module.world.feature.BeegVeins;
+import insane96mcp.survivalreimagined.module.world.feature.Fire;
+import insane96mcp.survivalreimagined.setup.SREntityTypes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.FallingBlockRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -56,6 +60,7 @@ public class ClientSetup {
             event.accept(Florpium.BLOCK_ITEM.get());
             event.accept(FlintExpansion.FLINT_BLOCK_ITEM.get());
             event.accept(FlintExpansion.POLISHED_FLINT_BLOCK_ITEM.get());
+            event.accept(Fire.CHARCOAL_LAYER_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(Respawn.RESPAWN_OBELISK_ITEM.get());
@@ -96,5 +101,9 @@ public class ClientSetup {
                         return 96f;
                     return (float) livingEntity.getY();
                 }));
+    }
+
+    public static void entityRenderEvent(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(SREntityTypes.PILABLE_FALLING_LAYER.get(), FallingBlockRenderer::new);
     }
 }

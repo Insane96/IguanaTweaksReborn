@@ -3,6 +3,8 @@
 ## Upcoming
 * Added Anvil feature
   * An anvil dropping on a block may transform it
+* Added charcoal layer
+  * When logs burn now generate a charcoal layer instead of dropping charcoal
 * Added Flint Block and Polished Flint Block
 * Fishing changes
   * You can no longer get fishes in small bodies of water

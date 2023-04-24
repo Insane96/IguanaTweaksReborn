@@ -8,33 +8,41 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.event.BlockBurntEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
+import insane96mcp.survivalreimagined.module.world.block.PilableLayerBlock;
+import insane96mcp.survivalreimagined.module.world.entity.PilableFallingLayerEntity;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
+import insane96mcp.survivalreimagined.setup.SRBlocks;
+import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseFireBlock;
-import net.minecraft.world.level.block.CampfireBlock;
-import net.minecraft.world.level.block.CandleBlock;
-import net.minecraft.world.level.block.CandleCakeBlock;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Fire")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class Fire extends Feature {
+
+    public static final RegistryObject<Block> CHARCOAL_LAYER = SRBlocks.REGISTRY.register("charcoal_layer", () -> new PilableLayerBlock(BlockBehaviour.Properties.of(Material.MOSS, MaterialColor.COLOR_BLACK).strength(0.8F).sound(SoundType.MOSS_CARPET).isViewBlocking((state, blockGetter, pos) -> state.getValue(PilableLayerBlock.LAYERS) >= 8), Items.CHARCOAL));
+    public static final RegistryObject<BlockItem> CHARCOAL_LAYER_ITEM = SRItems.REGISTRY.register("charcoal_layer", () -> new BlockItem(CHARCOAL_LAYER.get(), new Item.Properties()));
 
     @Config(min = 0d, max = 100)
     @Label(name = "Fire spread speed multiplier", description = "How much faster fire ticks and spreads.")
@@ -71,9 +79,10 @@ public class Fire extends Feature {
 
         if (event.getLevel().getRandom().nextDouble() < charcoalFromBurntLogsChance
                 && event.getState().is(BlockTags.LOGS_THAT_BURN)) {
-            ItemEntity item = new ItemEntity((Level) event.getLevel(), event.getPos().getX() + 0.5d, event.getPos().getY() + 0.5d, event.getPos().getZ() + 0.5d, new ItemStack(Items.CHARCOAL));
+            /*ItemEntity item = new ItemEntity((Level) event.getLevel(), event.getPos().getX() + 0.5d, event.getPos().getY() + 0.5d, event.getPos().getZ() + 0.5d, new ItemStack(Items.CHARCOAL));
             item.setDefaultPickUpDelay();
-            event.getLevel().addFreshEntity(item);
+            event.getLevel().addFreshEntity(item);*/
+            PilableFallingLayerEntity.fall((Level) event.getLevel(), event.getPos(), CHARCOAL_LAYER.get().defaultBlockState());
         }
     }
 
