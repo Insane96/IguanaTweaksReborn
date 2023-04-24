@@ -23,10 +23,10 @@ public class ClientSetup {
     {
         if (event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES)
         {
-            event.accept(FlintTools.AXE.get());
-            event.accept(FlintTools.PICKAXE.get());
-            event.accept(FlintTools.SHOVEL.get());
-            event.accept(FlintTools.HOE.get());
+            event.accept(FlintExpansion.AXE.get());
+            event.accept(FlintExpansion.PICKAXE.get());
+            event.accept(FlintExpansion.SHOVEL.get());
+            event.accept(FlintExpansion.HOE.get());
             event.accept(CopperTools.AXE.get());
             event.accept(CopperTools.PICKAXE.get());
             event.accept(CopperTools.SHOVEL.get());
@@ -37,8 +37,8 @@ public class ClientSetup {
             event.accept(Florpium.HOE.get());
         }
         else if (event.getTab() == CreativeModeTabs.COMBAT) {
-            event.accept(FlintTools.SWORD.get());
-            event.accept(FlintTools.SHIELD.get());
+            event.accept(FlintExpansion.SWORD.get());
+            event.accept(FlintExpansion.SHIELD.get());
             event.accept(CopperTools.SWORD.get());
             event.accept(Florpium.SWORD.get());
             event.accept(ChainedCopperArmor.HELMET.get());
@@ -54,6 +54,8 @@ public class ClientSetup {
         }
         else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(Florpium.BLOCK_ITEM.get());
+            event.accept(FlintExpansion.FLINT_BLOCK_ITEM.get());
+            event.accept(FlintExpansion.POLISHED_FLINT_BLOCK_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(Respawn.RESPAWN_OBELISK_ITEM.get());

@@ -13,6 +13,7 @@ import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
+import insane96mcp.survivalreimagined.setup.SRBlocks;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -23,6 +24,10 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
@@ -32,9 +37,9 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
-@Label(name = "Flint Tools", description = "Add flint tools and make wooden tools useless")
+@Label(name = "Flint Expansion", description = "Add flint tools and make wooden tools useless. Also add flint blocks.")
 @LoadFeature(module = Modules.Ids.ITEMS)
-public class FlintTools extends Feature {
+public class FlintExpansion extends Feature {
 
 	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("flint", 3d, 33, () -> Items.FLINT, 9, Rarity.COMMON);
 
@@ -47,6 +52,10 @@ public class FlintTools extends Feature {
 	public static final RegistryObject<Item> HOE = SRItems.REGISTRY.register("flint_hoe", () -> new HoeItem(ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRItems.registerShield("flint_shield", SHIELD_MATERIAL);
+	public static final RegistryObject<Block> FLINT_BLOCK = SRBlocks.REGISTRY.register("flint_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 5.0F)));
+	public static final RegistryObject<BlockItem> FLINT_BLOCK_ITEM = SRItems.REGISTRY.register("flint_block", () -> new BlockItem(FLINT_BLOCK.get(), new Item.Properties()));
+	public static final RegistryObject<Block> POLISHED_FLINT_BLOCK = SRBlocks.REGISTRY.register("polished_flint_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 5.0F)));
+	public static final RegistryObject<BlockItem> POLISHED_FLINT_BLOCK_ITEM = SRItems.REGISTRY.register("polished_flint_block", () -> new BlockItem(POLISHED_FLINT_BLOCK.get(), new Item.Properties()));
 
 	@Config
 	@Label(name = "Disable Wooden Tools", description = "Makes wooden items deal no damage and not able to break blocks.")
@@ -56,7 +65,7 @@ public class FlintTools extends Feature {
 	@Label(name = "Disable Wooden Tools Recipe", description = "Disable wooden tools recipe.")
 	public static Boolean disableWoodenToolsRecipe = true;
 
-	public FlintTools(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public FlintExpansion(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "disable_wooden_tools", net.minecraft.network.chat.Component.literal("Survival Reimagined Disable Wooden Tools"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableWoodenToolsRecipe));
 	}

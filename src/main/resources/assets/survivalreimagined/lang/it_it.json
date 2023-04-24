@@ -78,6 +78,8 @@
 	"block.survivalreimagined.iron_ore_rock": "Roccia di minerale di ferro",
 	"block.survivalreimagined.gold_ore_rock": "Roccia di minerale d'oro",
 	"block.survivalreimagined.copper_ore_rock": "Roccia di minerale di rame",
+	"block.survivalreimagined.flint_block": "Blocco di selce",
+	"block.survivalreimagined.polished_flint_block": "Blocco di selce levigato",
 
 	"survivalreimagined.crate_weighted": "Rallenta chi ne trasporata %d o più",
 	"survivalreimagined.unstable": "ATTENZIONE! Altamente instabile",

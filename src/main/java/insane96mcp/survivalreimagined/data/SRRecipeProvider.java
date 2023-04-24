@@ -24,7 +24,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
 
     @Override
     protected void buildRecipes(@NotNull Consumer<FinishedRecipe> writer) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintTools.AXE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintExpansion.AXE.get())
                 .pattern("ff")
                 .pattern("fs")
                 .pattern(" s")
@@ -33,7 +33,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_stick", has(Items.STICK))
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintTools.SHOVEL.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintExpansion.SHOVEL.get())
                 .pattern("f")
                 .pattern("s")
                 .pattern("s")
@@ -42,7 +42,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_stick", has(Items.STICK))
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintTools.PICKAXE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintExpansion.PICKAXE.get())
                 .pattern("fff")
                 .pattern(" s ")
                 .pattern(" s ")
@@ -51,7 +51,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_stick", has(Items.STICK))
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintTools.HOE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, FlintExpansion.HOE.get())
                 .pattern("ff")
                 .pattern(" s")
                 .pattern(" s")
@@ -60,7 +60,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_stick", has(Items.STICK))
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FlintTools.SWORD.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FlintExpansion.SWORD.get())
                 .pattern("f")
                 .pattern("f")
                 .pattern("s")
@@ -69,7 +69,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_stick", has(Items.STICK))
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FlintTools.SHIELD.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FlintExpansion.SHIELD.get())
                 .pattern(" f ")
                 .pattern("fLf")
                 .pattern(" f ")
@@ -77,6 +77,19 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('L', ItemTags.LOGS)
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.FLINT_BLOCK_ITEM.get())
+                .requires(Items.FLINT, 9)
+                .unlockedBy("has_flint", has(Items.FLINT))
+                .save(writer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.POLISHED_FLINT_BLOCK_ITEM.get())
+                .pattern("ff")
+                .pattern("ff")
+                .define('f', FlintExpansion.FLINT_BLOCK_ITEM.get())
+                .unlockedBy("has_flint_block", has(FlintExpansion.FLINT_BLOCK_ITEM.get()))
+                .save(writer);
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(FlintExpansion.FLINT_BLOCK_ITEM.get()), RecipeCategory.BUILDING_BLOCKS, FlintExpansion.POLISHED_FLINT_BLOCK_ITEM.get())
+                .unlockedBy("has_flint_block", has(FlintExpansion.FLINT_BLOCK_ITEM.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "stonecutter_polished_flint_block");
 
         ConditionalRecipe.builder()
                 .addCondition(not(modLoaded("tconstruct")))

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "survivalreimagined:flint_block"
+  },
+  "result": "survivalreimagined:polished_flint_block"
+}

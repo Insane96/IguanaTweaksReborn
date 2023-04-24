@@ -81,6 +81,8 @@
 	"block.survivalreimagined.iron_ore_rock": "Iron Ore Rock",
 	"block.survivalreimagined.gold_ore_rock": "Gold Ore Rock",
 	"block.survivalreimagined.copper_ore_rock": "Copper Ore Rock",
+	"block.survivalreimagined.flint_block": "Flint Block",
+	"block.survivalreimagined.polished_flint_block": "Polished Flint Block",
 
 	"block.minecraft.carrots.seeds": "Carrot Seeds",
 	"block.minecraft.potatoes.seeds": "Potato Seeds",

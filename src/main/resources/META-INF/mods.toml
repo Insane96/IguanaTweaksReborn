@@ -7,7 +7,7 @@ license="All rights reserved"
     displayName="Survival Reimagined"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/iguanatweaks-reborn"
     #logoFile="examplemod.png"
-    credits = "Thanks to Iguana for the original Mod. Effect Icons made by hamzaa#1200. Injured sound by thecheeseman from freesound.org. Stamina overlay code from AppleSkin exhaustion code."
+    credits = "Thanks to Iguana for the original Mod. Effect Icons made by hamzaa#1200. Injured sound by thecheeseman from freesound.org. Stamina overlay code from AppleSkin exhaustion code. Tocinin#8975 for the Flint Blocks textures."
     authors = "Insane96MCP"
     description = '''
     Multiple changes to make Minecraft Harder.

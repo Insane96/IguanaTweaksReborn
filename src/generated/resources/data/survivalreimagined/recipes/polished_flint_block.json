@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "f": {
+      "item": "survivalreimagined:flint_block"
+    }
+  },
+  "pattern": [
+    "ff",
+    "ff"
+  ],
+  "result": {
+    "item": "survivalreimagined:polished_flint_block"
+  },
+  "show_notification": true
+}
