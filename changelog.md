@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Added Anvil feature
+  * An anvil dropping on a block may transform it
 * Fishing changes
   * You can no longer get fishes in small bodies of water
   * Junk chance is greatly increased

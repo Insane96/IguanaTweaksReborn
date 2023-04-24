@@ -17,6 +17,7 @@
         "DiggerItemMixin",
         "EnchantmentMixin",
         "EntityMixin",
+        "FallingBlockEntityMixin",
         "FarmBlockMixin",
         "FireBlockMixin",
         "FoodDataMixin",
