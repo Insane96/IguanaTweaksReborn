@@ -30,7 +30,8 @@ public class SleepingEffects extends SRFeature {
 	public static final ArrayList<SRMobEffectInstance> EFFECTS_ON_WAKE_UP_DEFAULT = new ArrayList<>(Arrays.asList(
 			new SRMobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 400, 0),
 			new SRMobEffectInstance(MobEffects.WEAKNESS, 300, 1),
-			new SRMobEffectInstance(MobEffects.DIG_SLOWDOWN, 300, 1)
+			new SRMobEffectInstance(MobEffects.DIG_SLOWDOWN, 300, 1),
+			new SRMobEffectInstance(MobEffects.REGENERATION, 300, 0)
 	));
 	public static final ArrayList<SRMobEffectInstance> effectsOnWakeUp = new ArrayList<>();
 
