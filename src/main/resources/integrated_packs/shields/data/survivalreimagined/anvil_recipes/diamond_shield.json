@@ -1,6 +1,6 @@
 {
   "left": {
-    "item": "minecraft:shield"
+    "item": "shieldsplus:golden_shield"
   },
   "right": {
     "item": "minecraft:diamond"

@@ -14,4 +14,9 @@ public class FallingBlockEntityMixin {
     private void onDiscardOnLand(CallbackInfo ci) {
         SREventFactory.onFallingBlockLand((FallingBlockEntity) (Object) this);
     }
+
+    /*@ModifyConstant(constant = @Constant(floatValue = 1.0f), method = "causeFallDamage")
+    private float onFallDamageReduction(float constant) {
+        return 3f;
+    }*/
 }
