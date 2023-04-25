@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
@@ -90,7 +91,9 @@ public class Gold extends Feature {
 		if (!this.isEnabled()
 				|| !luckyGold
 				|| !(event.getItemStack().getItem() instanceof TieredItem tieredItem)
-				|| tieredItem.getTier() != Tiers.GOLD)
+				|| tieredItem.getTier() != Tiers.GOLD
+				|| event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_FORTUNE) > 0
+				|| event.getItemStack().getEnchantmentLevel(Enchantments.MOB_LOOTING) > 0)
 			return;
 
 		event.getToolTip().add(Component.empty());

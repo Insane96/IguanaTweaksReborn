@@ -7,6 +7,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.ClientModules;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -56,7 +57,8 @@ public class Fog extends Feature {
     private void seasonFog(ViewportEvent.RenderFog event) {
         if (!fogChangeOnRain
                 || event.isCanceled()
-                || event.getCamera().getFluidInCamera() != FogType.NONE)
+                || event.getCamera().getFluidInCamera() != FogType.NONE
+                || event.getMode() != FogRenderer.FogMode.FOG_TERRAIN)
             return;
 
         Entity entity = event.getCamera().getEntity();
@@ -66,9 +68,9 @@ public class Fog extends Feature {
             //Lower than 1 means a percentage of current render distance, higher means a flat render distance
             float near = switch (SeasonHelper.getSeasonState(entity.level).getSeason()) {
                 case SPRING -> 0.7F;
-                case SUMMER -> 0.8F;
+                case SUMMER -> 0.85F;
                 case AUTUMN -> 0.6F;
-                case WINTER -> 20F;
+                case WINTER -> 15F;
             };
             float far = switch (SeasonHelper.getSeasonState(entity.level).getSeason()) {
                 case SPRING -> 0.8F;
