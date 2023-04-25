@@ -52,7 +52,6 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/copper", 75),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/golden", 52),
 
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/florpium", 643),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", 3047),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 86),

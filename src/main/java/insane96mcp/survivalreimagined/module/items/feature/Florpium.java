@@ -42,7 +42,7 @@ public class Florpium extends Feature {
 	public static final RegistryObject<Item> ORE_ITEM = SRItems.REGISTRY.register("florpium_ore", () -> new BlockItem(ORE.get(), new Item.Properties().rarity(Rarity.COMMON)));
 	public static final RegistryObject<Item> DEEPSLATE_ORE_ITEM = SRItems.REGISTRY.register("deepslate_florpium_ore", () -> new BlockItem(DEEPSLATE_ORE.get(), new Item.Properties().rarity(Rarity.COMMON)));
 
-	private static final ILItemTier ITEM_TIER = new ILItemTier(2, 585, 6.5f, 2.5f, 12, () -> Ingredient.of(INGOT.get()));
+	private static final ILItemTier ITEM_TIER = new ILItemTier(2, 780, 6.5f, 2.5f, 12, () -> Ingredient.of(INGOT.get()));
 
 	public static final RegistryObject<Item> SWORD = SRItems.REGISTRY.register("florpium_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> SHOVEL = SRItems.REGISTRY.register("florpium_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
