@@ -22,6 +22,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -138,8 +139,6 @@ public class NoHunger extends Feature {
         }
 
         float heal = getHealingFromFood(food);
-        //Half heart per second by default
-        float strength = (0.5f * (1.4f - food.getSaturationModifier())) / 20f;
         if (isRawFood && rawFoodHealPercentage != 1d)
             heal *= rawFoodHealPercentage;
 
@@ -147,6 +146,8 @@ public class NoHunger extends Feature {
             player.heal(heal);
         }
         else {
+            //Clamped between 0.1 and 0.5 hp/s
+            float strength = getFoodHealingStrength(food) / 20f;
             setFoodRegenLeft(player, heal);
             setFoodRegenStrength(player, strength);
         }
@@ -190,6 +191,10 @@ public class NoHunger extends Feature {
         return (float) (Math.pow(food.getNutrition(), 1.5f) * foodHealHealthMultiplier.floatValue());
     }
 
+    public static float getFoodHealingStrength(FoodProperties food) {
+        return Mth.clamp(0.5f * (1.4f - food.getSaturationModifier()), 0.1f, 0.5f);
+    }
+
     private static void consumeAndHealFromFoodRegen(Player player) {
         float regenLeft = getFoodRegenLeft(player);
         float regenStrength = getFoodRegenStrength(player) * FOOD_REGEN_TICK_RATE;
@@ -197,12 +202,11 @@ public class NoHunger extends Feature {
             regenStrength = regenLeft;
         player.heal(regenStrength);
         regenLeft -= regenStrength;
-        if (regenLeft < 0f){
+        if (regenLeft <= 0f){
             regenLeft = 0f;
+            setFoodRegenStrength(player, 0f);
         }
         setFoodRegenLeft(player, regenLeft);
-        if (regenLeft == 0f)
-            setFoodRegenStrength(player, 0f);
     }
 
     private static float getFoodRegenStrength(Player player) {
@@ -286,7 +290,7 @@ public class NoHunger extends Feature {
             //noinspection ConstantConditions
             float heal = getHealingFromFood(food);
             //Half heart per second by default
-            float strength = (0.5f * (1.4f - food.getSaturationModifier()));
+            float strength = getFoodHealingStrength(food);
             event.getToolTip().add(Component.translatable(FOOD_STATS_TRANSLATABLE, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal), SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
         }
     }

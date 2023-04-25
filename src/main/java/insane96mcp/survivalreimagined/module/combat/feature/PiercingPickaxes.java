@@ -23,6 +23,7 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Piercing Pickaxes", description = "Pickaxes deal bonus piercing damage.")
@@ -67,7 +68,7 @@ public class PiercingPickaxes extends Feature {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getItemStack().getItem() instanceof PickaxeItem pickaxeItem))
