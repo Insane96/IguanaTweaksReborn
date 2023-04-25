@@ -92,7 +92,8 @@ public class Respawn extends SRFeature {
 
 	@Nullable
 	private BlockPos looseWorldSpawn(PlayerEvent.PlayerRespawnEvent event) {
-		if (looseWorldSpawnRange == 0d)
+		if (looseWorldSpawnRange == 0d
+				|| event.getEntity().isSpectator())
 			return null;
 		ServerPlayer player = (ServerPlayer) event.getEntity();
 		BlockPos pos = player.getRespawnPosition();
@@ -115,7 +116,8 @@ public class Respawn extends SRFeature {
 
 	@Nullable
 	private BlockPos looseBedSpawn(PlayerEvent.PlayerRespawnEvent event) {
-		if (looseBedSpawnRange == 0d)
+		if (looseBedSpawnRange == 0d
+				|| event.getEntity().isSpectator())
 			return null;
 		ServerPlayer player = (ServerPlayer) event.getEntity();
 		BlockPos pos = player.getRespawnPosition();

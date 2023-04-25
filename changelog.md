@@ -9,7 +9,11 @@
 * Fishing changes
   * You can no longer get fishes in small bodies of water
   * Junk chance is greatly increased
+* Shields recipes are now coherent with tools recipes
+* Copper shields now block 4 damage instead of 3
+* Reduced Fishing Rods Durability
 * When you wake up you now get a Regeneration I effect for 15 seconds
+* Coal generates much less when exposed now
 * Phantoms now vary in size
 * Ghost zombies health and damage now scales with the xp stored
 
