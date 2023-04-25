@@ -81,6 +81,10 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(Items.FLINT, 9)
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.FLINT, 9)
+                .requires(FlintExpansion.FLINT_BLOCK_ITEM.get(), 1)
+                .unlockedBy("has_flint_block_item", has(FlintExpansion.FLINT_BLOCK_ITEM.get()))
+                .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.POLISHED_FLINT_BLOCK_ITEM.get())
                 .pattern("ff")
                 .pattern("ff")
