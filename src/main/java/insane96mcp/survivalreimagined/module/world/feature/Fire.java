@@ -41,7 +41,7 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.WORLD)
 public class Fire extends Feature {
 
-    public static final RegistryObject<Block> CHARCOAL_LAYER = SRBlocks.REGISTRY.register("charcoal_layer", () -> new PilableLayerBlock(BlockBehaviour.Properties.of(Material.MOSS, MaterialColor.COLOR_BLACK).strength(0.8F).sound(SoundType.MOSS_CARPET).isViewBlocking((state, blockGetter, pos) -> state.getValue(PilableLayerBlock.LAYERS) >= 8), Items.CHARCOAL));
+    public static final RegistryObject<Block> CHARCOAL_LAYER = SRBlocks.REGISTRY.register("charcoal_layer", () -> new PilableLayerBlock(BlockBehaviour.Properties.of(Material.MOSS, MaterialColor.COLOR_BLACK).strength(0.5F).sound(SoundType.MOSS_CARPET).isViewBlocking((state, blockGetter, pos) -> state.getValue(PilableLayerBlock.LAYERS) >= 8), Items.CHARCOAL));
     public static final RegistryObject<BlockItem> CHARCOAL_LAYER_ITEM = SRItems.REGISTRY.register("charcoal_layer", () -> new BlockItem(CHARCOAL_LAYER.get(), new Item.Properties()));
 
     @Config(min = 0d, max = 100)
