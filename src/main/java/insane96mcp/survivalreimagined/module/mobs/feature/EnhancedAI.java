@@ -5,6 +5,7 @@ import insane96mcp.enhancedai.modules.base.feature.Movement;
 import insane96mcp.enhancedai.modules.base.feature.Targeting;
 import insane96mcp.enhancedai.modules.creeper.feature.CreeperSwell;
 import insane96mcp.enhancedai.modules.skeleton.feature.SkeletonFleeTarget;
+import insane96mcp.enhancedai.modules.skeleton.feature.SkeletonShoot;
 import insane96mcp.enhancedai.modules.spider.feature.ThrowingWeb;
 import insane96mcp.enhancedai.modules.witch.feature.WitchFleeTarget;
 import insane96mcp.enhancedai.modules.zombie.feature.DiggerZombie;
@@ -39,6 +40,9 @@ public class EnhancedAI extends SRFeature {
         Module.getFeature(SkeletonFleeTarget.class).setConfigOption("Flee Distance Near", 6d);
         Module.getFeature(SkeletonFleeTarget.class).setConfigOption("Flee Distance Far", 13d);
         Module.getFeature(SkeletonFleeTarget.class).setConfigOption("Avoid Player chance", 0.25d);
+        Module.getFeature(SkeletonFleeTarget.class).readConfig(event);
+
+        Module.getFeature(SkeletonShoot.class).setConfigOption("Spammer chance", 0d);
         Module.getFeature(SkeletonFleeTarget.class).readConfig(event);
 
         Module.getFeature(ThrowingWeb.class).setConfigOption("Slowness.Amplifier", 1);
