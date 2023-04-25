@@ -9,6 +9,13 @@
                     "type": "minecraft:item",
                     "name": "survivalreimagined:carrot_seeds"
                 }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {}
+                }
             ]
         },
         {
@@ -26,6 +33,11 @@
                     "properties": {
                         "age": "7"
                     }
+                },
+                {
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {}
                 }
             ]
         }
