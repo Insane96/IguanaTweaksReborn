@@ -138,7 +138,7 @@ public class NoHunger extends Feature {
             player.addEffect(new MobEffectInstance(MobEffects.POISON, food.getNutrition() * 20 * 3));
         }
 
-        float heal = getHealingFromFood(food);
+        float heal = getFoodHealing(food);
         if (isRawFood && rawFoodHealPercentage != 1d)
             heal *= rawFoodHealPercentage;
 
@@ -146,7 +146,6 @@ public class NoHunger extends Feature {
             player.heal(heal);
         }
         else {
-            //Clamped between 0.1 and 0.5 hp/s
             float strength = getFoodHealingStrength(food) / 20f;
             setFoodRegenLeft(player, heal);
             setFoodRegenStrength(player, strength);
@@ -187,11 +186,12 @@ public class NoHunger extends Feature {
         player.getPersistentData().putFloat(FOOD_REGEN_LEFT, amount);
     }
 
-    public static float getHealingFromFood(FoodProperties food) {
+    public static float getFoodHealing(FoodProperties food) {
         return (float) (Math.pow(food.getNutrition(), 1.5f) * foodHealHealthMultiplier.floatValue());
     }
 
     public static float getFoodHealingStrength(FoodProperties food) {
+        //Clamped between 0.1 and 0.5 hp/s
         return Mth.clamp(0.5f * (1.4f - food.getSaturationModifier()), 0.1f, 0.5f);
     }
 
@@ -288,7 +288,7 @@ public class NoHunger extends Feature {
         if (mc.options.advancedItemTooltips) {
             FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
             //noinspection ConstantConditions
-            float heal = getHealingFromFood(food);
+            float heal = getFoodHealing(food);
             //Half heart per second by default
             float strength = getFoodHealingStrength(food);
             event.getToolTip().add(Component.translatable(FOOD_STATS_TRANSLATABLE, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal), SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
