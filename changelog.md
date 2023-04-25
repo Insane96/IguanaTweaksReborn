@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.7.1
 * Added Anvil feature
   * An anvil dropping on a block may transform it
 * Added charcoal layer
