@@ -27,6 +27,7 @@
         "MendingEnchantmentMixin",
         "MerchantOfferMixin",
         "MilkBucketItemMixin",
+        "MobEffectMixin",
         "MonsterMixin",
         "PlayerMixin",
         "PotionItemMixin",

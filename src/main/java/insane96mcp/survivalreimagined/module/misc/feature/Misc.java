@@ -18,6 +18,10 @@ public class Misc extends Feature {
     @Label(name = "Prevent fire with resistance", description = "If true, entities will no longer be set on fire if have Fire Resistance (like bedrock edition)")
     public static Boolean preventFireWithResistance = true;
 
+    @Config
+    @Label(name = "Slower poison", description = "If true, poison will damage the player twice as slow.")
+    public static Boolean slowerPoison = true;
+
     public Misc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -29,5 +33,9 @@ public class Misc extends Feature {
             return false;
 
        return livingEntity.hasEffect(MobEffects.FIRE_RESISTANCE);
+    }
+
+    public static boolean isSlowerPoison() {
+        return isEnabled(Misc.class) && slowerPoison;
     }
 }
