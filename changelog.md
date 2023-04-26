@@ -7,8 +7,8 @@
   * When logs burn now generate a charcoal layer instead of dropping charcoal
 * Added Flint Block and Polished Flint Block
 * Fishing changes
-  * You can no longer get fishes in small bodies of water
-  * Junk chance is greatly increased
+  * Junk chance is greatly increased, Luck of the Sea greatly decreases the junk chance
+  * In small bodies of water fishes are rarer
 * Shields recipes are now coherent with tools recipes
 * Copper shields now block 4 damage instead of 3
 * Reduced Fishing Rods Durability
