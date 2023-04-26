@@ -21,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
@@ -85,6 +86,8 @@ public class Stamina extends Feature {
                 //noinspection DataFlowIssue
                 amountConsumed += tiredInstance.getAmplifier();
             }
+            if (player.getPose() == Pose.SWIMMING && player.tickCount % 3 == 1)
+                return;
             StaminaHandler.consumeStamina(player, amountConsumed);
             shouldSync = true;
         } else if ((StaminaHandler.getStamina(player) != StaminaHandler.getMaxStamina(player) && StaminaHandler.getMaxStamina(player) >= 40)

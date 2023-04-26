@@ -7,6 +7,7 @@
 * Stamina
   * Jumping now consumes stamina
   * Tired effect now affects stamina consumption
+  * Swimming now consumes less stamina
 
 ## Alpha 3.7.1
 * Added Anvil feature
