@@ -23,6 +23,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -33,6 +34,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
@@ -58,6 +60,9 @@ public class Fire extends Feature {
     @Config
     @Label(name = "Reduce exposed coal", description = "If enabled, a data pack will be enabled that reduces the coal exposed to air.")
     public static Boolean reduceExposedCoal = true;
+    @Config
+    @Label(name = "\"Iron\" Coal", description = "If enabled coal cannot be mined without an Iron Pickaxe or higher.")
+    public static Boolean ironCoal = true;
 
     @Config
     @Label(name = "Two flint fire starter.Enabled", description = "If true, two flints (on per hand) can start a fire")
@@ -149,5 +154,17 @@ public class Fire extends Feature {
 
     public static boolean changeFireSpreadSpeed() {
         return Feature.isEnabled(Fire.class) && fireSpreadSpeedMultiplier != 1d;
+    }
+
+    @SubscribeEvent
+    public void onCoalMine(PlayerEvent.BreakSpeed event) {
+        if (!this.isEnabled()
+                || !ironCoal
+                || !(event.getState().is(Blocks.COAL_ORE) || event.getState().is(Blocks.DEEPSLATE_COAL_ORE))
+                || !(event.getEntity().getMainHandItem().getItem() instanceof TieredItem tieredItem)
+                || tieredItem.getTier().getLevel() > 1)
+            return;
+
+        event.setNewSpeed(event.getNewSpeed() / 5f);
     }
 }
