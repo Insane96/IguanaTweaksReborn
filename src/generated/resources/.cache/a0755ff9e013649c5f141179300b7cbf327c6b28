@@ -1,0 +1,7 @@
+// 1.19.4	2023-04-26T19:48:13.961516	Tags for minecraft:item mod id survivalreimagined
+d7e9ef7bd080383218f0b0b7079c57eaff48b823 data/minecraft/tags/items/axes.json
+955bcd4a6ce982afbad2c36e733026ca6cead690 data/minecraft/tags/items/hoes.json
+0550cabf19f515ffeaaddec8928d6cc1fdf14ce0 data/minecraft/tags/items/pickaxes.json
+f41eb6e98511b0b8c073032cb2a1cd24bf1e7ccb data/minecraft/tags/items/shovels.json
+9fde9c894c86f564af8c33c14b895d942771ed81 data/minecraft/tags/items/swords.json
+66522314243d5119f3610b4a75a66c92faddf431 data/survivalreimagined/tags/items/disabled_hoes.json

@@ -1,8 +1,6 @@
 package insane96mcp.survivalreimagined;
 
-import insane96mcp.survivalreimagined.data.SRAnvilRecipeReloadListener;
-import insane96mcp.survivalreimagined.data.SRDataReloadListener;
-import insane96mcp.survivalreimagined.data.SRRecipeProvider;
+import insane96mcp.survivalreimagined.data.*;
 import insane96mcp.survivalreimagined.data.lootmodifier.SRGlobalLootModifierProvider;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerData;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerDataAttacher;
@@ -12,6 +10,7 @@ import insane96mcp.survivalreimagined.setup.*;
 import insane96mcp.survivalreimagined.setup.client.ClientSetup;
 import insane96mcp.survivalreimagined.setup.client.SRClientConfig;
 import insane96mcp.survivalreimagined.utils.Weights;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -38,6 +37,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Path;
 import java.text.DecimalFormat;
+import java.util.concurrent.CompletableFuture;
 
 @Mod("survivalreimagined")
 public class SurvivalReimagined
@@ -99,8 +99,12 @@ public class SurvivalReimagined
     public void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
         generator.addProvider(event.includeServer(), new SRRecipeProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new SRGlobalLootModifierProvider(generator.getPackOutput(), SurvivalReimagined.MOD_ID));
+        SRBlockTagsProvider blockTags = new SRBlockTagsProvider(generator.getPackOutput(), lookupProvider, SurvivalReimagined.MOD_ID, existingFileHelper);
+        generator.addProvider(event.includeServer(), blockTags);
+        generator.addProvider(event.includeServer(), new SRItemTagsProvider(generator.getPackOutput(), lookupProvider, blockTags.contentsGetter(), SurvivalReimagined.MOD_ID, existingFileHelper));
     }
 
     public void addPackFinders(AddPackFindersEvent event)

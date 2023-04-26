@@ -1,4 +1,4 @@
-// 1.19.4	2023-04-22T08:29:29.7341276	Global Loot Modifiers : survivalreimagined
+// 1.19.4	2023-04-26T19:48:13.9585152	Global Loot Modifiers : survivalreimagined
 27236afd98f150339fc19b52654d64b30414ecbf data/forge/loot_modifiers/global_loot_modifiers.json
 49eacaf5a0e8fd4eda9b8bf49bb8e397b13a86cd data/survivalreimagined/loot_modifiers/chest_loot/chests/abandoned_mineshaft.json
 31efe9992a0af525eb804662d3fdcd9641597d09 data/survivalreimagined/loot_modifiers/chest_loot/chests/buried_treasure.json
