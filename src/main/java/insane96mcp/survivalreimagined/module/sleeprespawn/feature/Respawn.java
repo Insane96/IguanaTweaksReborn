@@ -159,6 +159,8 @@ public class Respawn extends SRFeature {
 			return;
 
 		ServerPlayer player = (ServerPlayer) event.getEntity();
+		if (event.getNewSpawn().equals(player.getRespawnPosition()))
+			return;
 		player.displayClientMessage(Component.translatable(LOOSE_RESPAWN_POINT_SET), false);
 	}
 
