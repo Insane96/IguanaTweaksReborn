@@ -24,6 +24,26 @@
                 "state": {
                     "Name": "minecraft:deepslate_copper_ore"
                 }
+            },
+            {
+                "target": {
+                    "predicate_type": "survivalreimagined:random_block_tag_match",
+                    "tag": "minecraft:stone_ore_replaceables",
+                    "probability": 0.05
+                },
+                "state": {
+                    "Name": "minecraft:raw_copper_block"
+                }
+            },
+            {
+                "target": {
+                    "predicate_type": "survivalreimagined:random_block_tag_match",
+                    "tag": "minecraft:deepslate_ore_replaceables",
+                    "probability": 0.05
+                },
+                "state": {
+                    "Name": "minecraft:raw_copper_block"
+                }
             }
         ],
         "surface_patch_config": {

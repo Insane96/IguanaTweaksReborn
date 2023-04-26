@@ -9,6 +9,7 @@
   * Tired effect now affects stamina consumption
   * Swimming now consumes less stamina
 * Poison now damages entities much slower
+* Beeg veins now have 3% chance to generate a raw ore block 
 
 ## Alpha 3.7.1
 * Added Anvil feature

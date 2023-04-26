@@ -152,6 +152,7 @@ public class Stamina extends Feature {
     }
 
     private static final Vec2 UV_STAMINA = new Vec2(0, 9);
+    //protected static final RandomSource random = RandomSource.create();
 
     @OnlyIn(Dist.CLIENT)
     public static void renderStamina(ForgeGui gui, PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
@@ -161,6 +162,8 @@ public class Stamina extends Feature {
         Player player = mc.player;
         assert player != null;
 
+        //random.setSeed(gui.getGuiTicks() * 312871L);
+
         int right = mc.getWindow().getGuiScaledWidth() / 2 - 91;
         int top = mc.getWindow().getGuiScaledHeight() - healthIconsOffset + 9;
         int halfHeartsMaxStamina = Mth.ceil((float) StaminaHandler.getMaxStamina(player) / staminaPerHalfHeart);
@@ -168,10 +171,10 @@ public class Stamina extends Feature {
         RenderSystem.setShaderTexture(0, SurvivalReimagined.GUI_ICONS);
         int height = 9;
         if (StaminaHandler.isStaminaLocked(player))
-            setColor(1f, 1f, 1f, .5f);
+            setColor(0.7f, 0.7f, 0.7f, .7f);
         else
-            setColor(1f, 0f, 0f, .75f);
-        for (int h = 0; h < halfHeartsMaxStamina; h++) {
+            setColor(1f, 1f, 1f, 0.43f);
+        for (int h = halfHeartsMaxStamina - 1; h >= 0; h--) {
             if (h < halfHeartsStamina)
                 continue;
             int v = (int) UV_STAMINA.y;
@@ -187,8 +190,11 @@ public class Stamina extends Feature {
                 u = (int) UV_STAMINA.x + 5;
                 r = 5;
             }
+            /*if (player.getHealth() <= 4) {
+                top += random.nextInt(2);
+            }*/
 
-            mc.gui.blit(poseStack, right + (h / 2 * 8) + r, top, u, v, width, height);
+            GuiComponent.blit(poseStack, right + (h / 2 * 8) + r, top, u, v, width, height);
         }
         resetColor();
 

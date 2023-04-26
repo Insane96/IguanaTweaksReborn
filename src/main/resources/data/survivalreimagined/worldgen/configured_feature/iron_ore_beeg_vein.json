@@ -24,6 +24,26 @@
                 "state": {
                     "Name": "minecraft:deepslate_iron_ore"
                 }
+            },
+            {
+                "target": {
+                    "predicate_type": "survivalreimagined:random_block_tag_match",
+                    "tag": "minecraft:stone_ore_replaceables",
+                    "probability": 0.03
+                },
+                "state": {
+                    "Name": "minecraft:raw_iron_block"
+                }
+            },
+            {
+                "target": {
+                    "predicate_type": "survivalreimagined:random_block_tag_match",
+                    "tag": "minecraft:deepslate_ore_replaceables",
+                    "probability": 0.03
+                },
+                "state": {
+                    "Name": "minecraft:raw_iron_block"
+                }
             }
         ],
         "surface_patch_config": {
