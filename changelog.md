@@ -9,7 +9,7 @@
   * Tired effect now affects stamina consumption
   * Swimming now consumes less stamina
 * Added Nether feature
-  * Added Portal requires Diamond Block. The nether portal requires Diamond blocks in the corner to be lit (only in the Overworld)
+  * Added Portal requires Gold Block. The nether portal requires Gold blocks in the corner to be lit (only in the Overworld)
   * Added Remove Lava Pockets. Well ... removes lava pockets from the nether
   * Moved No nether roof from Data Packs to this
 * Poison now damages entities much slower

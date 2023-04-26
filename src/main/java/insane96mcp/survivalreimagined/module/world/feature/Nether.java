@@ -29,7 +29,7 @@ public class Nether extends Feature {
     @Label(name = "Disable Nether Roof and 8 block ratio", description = "Makes the nether 128 blocks high instead of 256, effectively disabling the \"Nether Roof\" and removes the 8 block ratio between nether and end.")
     public static Boolean disableNetherRoof = true;
     @Config
-    @Label(name = "Portal requires Diamond Block", description = "The portal requires Diamond blocks in the corners to turn it on (in the overworld).")
+    @Label(name = "Portal requires Gold Block", description = "The portal requires Gold blocks in the corners to turn it on (in the overworld).")
     public static Boolean portalRequiresDiamondBlock = true;
     @Config
     @Label(name = "Remove Lava Pockets", description = "If true, lava pockets in the nether are removed.")
@@ -45,7 +45,7 @@ public class Nether extends Feature {
     }
 
     @SubscribeEvent
-    public void onBlockBurnt(BlockEvent.PortalSpawnEvent event) {
+    public void onPortalTryToActivate(BlockEvent.PortalSpawnEvent event) {
         if (!this.isEnabled()
                 || !portalRequiresDiamondBlock
                 || event.getPortalSize().bottomLeft == null)
@@ -59,7 +59,7 @@ public class Nether extends Feature {
         BlockPos.betweenClosed(event.getPortalSize().bottomLeft.below().relative(event.getPortalSize().rightDir.getOpposite(), 1),
                 event.getPortalSize().bottomLeft.relative(Direction.UP, event.getPortalSize().height).relative(event.getPortalSize().rightDir, event.getPortalSize().width))
                 .forEach((pos) -> {
-            if (level.getBlockState(pos).is(Blocks.DIAMOND_BLOCK))
+            if (level.getBlockState(pos).is(Blocks.GOLD_BLOCK))
                 diamondBlocks.increment();
         });
         if (diamondBlocks.getValue() < 4) {
@@ -67,7 +67,7 @@ public class Nether extends Feature {
 
             for(Player player : level.players()) {
                 if (aabb.contains(player.getX(), player.getY(), player.getZ())) {
-                    player.sendSystemMessage(Component.literal("The portal needs diamond blocks in the corner to be activated"));
+                    player.sendSystemMessage(Component.literal("The portal needs gold blocks in the corner to be activated"));
                 }
             }
             event.setCanceled(true);
