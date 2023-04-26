@@ -52,7 +52,7 @@ public class Fire extends Feature {
 
     @Config(min = 0d, max = 1d)
     @Label(name = "Charcoal from burnt logs chance", description = "Chance for logs to release charcoal when burnt")
-    public static Double charcoalFromBurntLogsChance = 0.6d;
+    public static Double charcoalFromBurntLogsChance = 0.75d;
 
     @Config
     @Label(name = "Disable Charcoal Smelting", description = "If enabled, a data pack will be enabled that removes the Charcoal recipe from smelting")
@@ -162,6 +162,7 @@ public class Fire extends Feature {
                 || !ironCoal
                 || !(event.getState().is(Blocks.COAL_ORE) || event.getState().is(Blocks.DEEPSLATE_COAL_ORE))
                 || !(event.getEntity().getMainHandItem().getItem() instanceof TieredItem tieredItem)
+                //TODO Change to TierSortingRegistry.getTiersLowerThan()
                 || tieredItem.getTier().getLevel() > 1)
             return;
 

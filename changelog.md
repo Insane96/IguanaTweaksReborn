@@ -12,6 +12,7 @@
   * Added Portal requires Gold Block. The nether portal requires Gold blocks in the corner to be lit (only in the Overworld)
   * Added Remove Lava Pockets. Well ... removes lava pockets from the nether
   * Moved No nether roof from Data Packs to this
+* Coal is now minable only with tools that can mine diamonds
 * Poison now damages entities much slower
 * Beeg veins now have 3% chance to generate a raw ore block 
 
