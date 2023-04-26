@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.feature;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -33,6 +34,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -249,6 +251,12 @@ public class Tiredness extends SRFeature {
 				&& player.getPersistentData().getFloat(TIREDNESS_TAG) > tirednessToEffect;
 	}
 
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public void onRenderer(RenderGuiOverlayEvent.Post event) {
+
+	}
+
 	/*@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onFog(ViewportEvent.RenderFog event) {
@@ -304,6 +312,27 @@ public class Tiredness extends SRFeature {
 				int top = screenHeight - gui.rightHeight;
 				renderTiredness(gui, mStack, left, top);
 				gui.rightHeight += 10;
+			}
+		});
+		event.registerAbove(VanillaGuiOverlay.SLEEP_FADE.id(), "tired_overlay", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
+			assert Minecraft.getInstance().player != null : "Minecraft.getInstance().player is null";
+			if (isEnabled(Tiredness.class) && gui.shouldDrawSurvivalElements())
+			{
+				LocalPlayer player = Minecraft.getInstance().player;
+				if (!player.hasEffect(SRMobEffects.TIRED.get()))
+					return;
+				//noinspection DataFlowIssue
+				int amplifier = player.getEffect(SRMobEffects.TIRED.get()).getAmplifier() + 1;
+				Minecraft.getInstance().getProfiler().push("tired_overlay");
+				RenderSystem.disableDepthTest();
+				float opacity = (amplifier * 20f) / 100.0F;
+				if (opacity > 1.0F)
+					opacity = 1.0F - (amplifier * 20f - 100) / 10.0F;
+
+				int color = (int) (220.0F * opacity) << 24 | 1052704;
+				GuiComponent.fill(mStack, 0, 0, screenWidth, screenHeight, color);
+				RenderSystem.enableDepthTest();
+				Minecraft.getInstance().getProfiler().pop();
 			}
 		});
 	}

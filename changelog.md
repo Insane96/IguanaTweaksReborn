@@ -2,7 +2,7 @@
 
 ## Upcoming
 * Tiredness
-  * Tired effect no longer adds Fog
+  * Tired effect no longer adds Fog, instead adds an overlay on the screen reducing sight
   * Tiredness now comes earlier but the effect takes more time to come
 * Stamina
   * Jumping now consumes stamina
