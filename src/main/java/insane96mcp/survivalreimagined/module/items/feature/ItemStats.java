@@ -80,10 +80,10 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_leggings", 112),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_boots", 97),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_helmet", 110),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_chestplate", 160),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_leggings", 150),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:florpium_boots", 130),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:mithril_helmet", 110),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:mithril_chestplate", 160),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:mithril_leggings", 150),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:mithril_boots", 130),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 66),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", 96),
@@ -108,7 +108,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/copper", 6d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/stone", 2.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iron", 4d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/florpium", 4.5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/mithril", 4.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/golden", 15d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/diamond", 7d)
 	));

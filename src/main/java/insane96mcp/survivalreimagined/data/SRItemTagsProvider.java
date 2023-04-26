@@ -3,7 +3,7 @@ package insane96mcp.survivalreimagined.data;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.items.feature.CopperTools;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
-import insane96mcp.survivalreimagined.module.items.feature.Florpium;
+import insane96mcp.survivalreimagined.module.items.feature.Mithril;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -29,11 +29,11 @@ public class SRItemTagsProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         //Vanilla
-        tag(ItemTags.PICKAXES).add(FlintExpansion.PICKAXE.get(), Florpium.PICKAXE.get(), CopperTools.PICKAXE.get());
-        tag(ItemTags.AXES).add(FlintExpansion.AXE.get(), Florpium.AXE.get(), CopperTools.AXE.get());
-        tag(ItemTags.SHOVELS).add(FlintExpansion.SHOVEL.get(), Florpium.SHOVEL.get(), CopperTools.SHOVEL.get());
-        tag(ItemTags.SWORDS).add(FlintExpansion.SWORD.get(), Florpium.SWORD.get(), CopperTools.SWORD.get());
-        tag(ItemTags.HOES).add(FlintExpansion.HOE.get(), Florpium.HOE.get(), CopperTools.HOE.get());
+        tag(ItemTags.PICKAXES).add(FlintExpansion.PICKAXE.get(), Mithril.PICKAXE.get(), CopperTools.PICKAXE.get());
+        tag(ItemTags.AXES).add(FlintExpansion.AXE.get(), Mithril.AXE.get(), CopperTools.AXE.get());
+        tag(ItemTags.SHOVELS).add(FlintExpansion.SHOVEL.get(), Mithril.SHOVEL.get(), CopperTools.SHOVEL.get());
+        tag(ItemTags.SWORDS).add(FlintExpansion.SWORD.get(), Mithril.SWORD.get(), CopperTools.SWORD.get());
+        tag(ItemTags.HOES).add(FlintExpansion.HOE.get(), Mithril.HOE.get(), CopperTools.HOE.get());
 
         //Mod's
         tag(DISABLED_HOES)

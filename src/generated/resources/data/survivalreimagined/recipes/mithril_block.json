@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "survivalreimagined:mithril_ingot"
+    },
+    {
+      "item": "survivalreimagined:mithril_ingot"
+    },
+    {
+      "item": "survivalreimagined:mithril_ingot"
+    },
+    {
+      "item": "survivalreimagined:mithril_ingot"
+    },
+    {
+      "item": "survivalreimagined:mithril_ingot"
+    },
+    {
+      "item": "survivalreimagined:mithril_ingot"
+    },
+    {
+      "item": "survivalreimagined:mithril_ingot"
+    },
+    {
+      "item": "survivalreimagined:mithril_ingot"
+    },
+    {
+      "item": "survivalreimagined:mithril_ingot"
+    }
+  ],
+  "result": {
+    "item": "survivalreimagined:mithril_block"
+  }
+}

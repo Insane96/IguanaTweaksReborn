@@ -3,7 +3,7 @@ package insane96mcp.survivalreimagined.data;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.items.feature.Crate;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
-import insane96mcp.survivalreimagined.module.items.feature.Florpium;
+import insane96mcp.survivalreimagined.module.items.feature.Mithril;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.world.feature.BeegVeins;
 import insane96mcp.survivalreimagined.module.world.feature.Fire;
@@ -46,7 +46,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(Fire.CHARCOAL_LAYER.get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(Florpium.BLOCK.get()).add(Florpium.ORE.get()).add(Florpium.DEEPSLATE_ORE.get())
+                .add(Mithril.BLOCK.get()).add(Mithril.ORE.get()).add(Mithril.DEEPSLATE_ORE.get())
                 .add(BeegVeins.IRON_ORE_ROCK.get()).add(BeegVeins.COPPER_ORE_ROCK.get()).add(BeegVeins.GOLD_ORE_ROCK.get())
                 .add(FlintExpansion.FLINT_BLOCK.get()).add(FlintExpansion.POLISHED_FLINT_BLOCK.get());
 
@@ -54,7 +54,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(Crate.BLOCK.get());
 
         tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(Florpium.BLOCK.get()).add(Florpium.ORE.get()).add(Florpium.DEEPSLATE_ORE.get());
+                .add(Mithril.BLOCK.get()).add(Mithril.ORE.get()).add(Mithril.DEEPSLATE_ORE.get());
 
         tag(BlockTags.RAILS)
                 .add(Minecarts.NETHER_INFUSED_POWERED_RAIL.get());

@@ -35,29 +35,29 @@ public class ClientSetup {
             event.accept(CopperTools.PICKAXE.get());
             event.accept(CopperTools.SHOVEL.get());
             event.accept(CopperTools.HOE.get());
-            event.accept(Florpium.AXE.get());
-            event.accept(Florpium.PICKAXE.get());
-            event.accept(Florpium.SHOVEL.get());
-            event.accept(Florpium.HOE.get());
+            event.accept(Mithril.AXE.get());
+            event.accept(Mithril.PICKAXE.get());
+            event.accept(Mithril.SHOVEL.get());
+            event.accept(Mithril.HOE.get());
         }
         else if (event.getTab() == CreativeModeTabs.COMBAT) {
             event.accept(FlintExpansion.SWORD.get());
             event.accept(FlintExpansion.SHIELD.get());
             event.accept(CopperTools.SWORD.get());
-            event.accept(Florpium.SWORD.get());
+            event.accept(Mithril.SWORD.get());
             event.accept(ChainedCopperArmor.HELMET.get());
             event.accept(ChainedCopperArmor.CHESTPLATE.get());
             event.accept(ChainedCopperArmor.LEGGINGS.get());
             event.accept(ChainedCopperArmor.BOOTS.get());
 
-            event.accept(Florpium.HELMET.get());
-            event.accept(Florpium.CHESTPLATE.get());
-            event.accept(Florpium.LEGGINGS.get());
-            event.accept(Florpium.BOOTS.get());
-            event.accept(Florpium.SHIELD.get());
+            event.accept(Mithril.HELMET.get());
+            event.accept(Mithril.CHESTPLATE.get());
+            event.accept(Mithril.LEGGINGS.get());
+            event.accept(Mithril.BOOTS.get());
+            event.accept(Mithril.SHIELD.get());
         }
         else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(Florpium.BLOCK_ITEM.get());
+            event.accept(Mithril.BLOCK_ITEM.get());
             event.accept(FlintExpansion.FLINT_BLOCK_ITEM.get());
             event.accept(FlintExpansion.POLISHED_FLINT_BLOCK_ITEM.get());
             event.accept(Fire.CHARCOAL_LAYER_ITEM.get());
@@ -71,8 +71,8 @@ public class ClientSetup {
             event.accept(ExplosiveBarrel.BLOCK_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
-            event.accept(Florpium.ORE_ITEM.get());
-            event.accept(Florpium.DEEPSLATE_ORE_ITEM.get());
+            event.accept(Mithril.ORE_ITEM.get());
+            event.accept(Mithril.DEEPSLATE_ORE_ITEM.get());
             event.accept(Crops.CARROT_SEEDS.get());
             event.accept(Crops.POTATO_SEEDS.get());
             event.accept(BeegVeins.COPPER_ORE_ROCK_ITEM.get());
@@ -80,8 +80,8 @@ public class ClientSetup {
             event.accept(BeegVeins.GOLD_ORE_ROCK_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(Florpium.INGOT.get());
-            event.accept(Florpium.NUGGET.get());
+            event.accept(Mithril.INGOT.get());
+            event.accept(Mithril.NUGGET.get());
             event.accept(AncientLapis.ANCIENT_LAPIS.get());
             event.accept(EnchantmentsFeature.CLEANSED_LAPIS.get());
         }

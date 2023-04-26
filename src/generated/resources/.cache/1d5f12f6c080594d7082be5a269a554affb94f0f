@@ -1,8 +1,8 @@
-// 1.19.4	2023-04-26T19:48:13.961516	Tags for minecraft:block mod id survivalreimagined
+// 1.19.4	2023-04-26T19:54:34.1155837	Tags for minecraft:block mod id survivalreimagined
 e5885ef0a617164dd018ba56e7626506ebfde1c9 data/minecraft/tags/blocks/mineable/axe.json
-b8079c85b54c091979e6ccfb2c91a0caaf87737c data/minecraft/tags/blocks/mineable/pickaxe.json
+cc29ae441f27014ea431014c4fe9c902e8617001 data/minecraft/tags/blocks/mineable/pickaxe.json
 a9b9725d70e83f3d2d8e6e0396b663d87db8655b data/minecraft/tags/blocks/mineable/shovel.json
-7217f6891fb65f9a289bdfbc3b0166f077da17e7 data/minecraft/tags/blocks/needs_iron_tool.json
+3f335b440325d5927be2b518bd9226405b93971e data/minecraft/tags/blocks/needs_iron_tool.json
 e5885ef0a617164dd018ba56e7626506ebfde1c9 data/minecraft/tags/blocks/needs_stone_tool.json
 dc70421b7d35675f9461f0a1e20d96310bb6d594 data/minecraft/tags/blocks/rails.json
 27d8f8140167f00ac523f12020236dc5cd2419c2 data/survivalreimagined/tags/blocks/depth_multiplier_blacklist.json

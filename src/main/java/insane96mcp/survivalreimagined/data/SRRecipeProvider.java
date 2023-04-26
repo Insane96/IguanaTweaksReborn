@@ -145,10 +145,10 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .pattern("nnn")
                 .pattern("ibi")
                 .pattern("nnn")
-                .define('n', Florpium.NUGGET.get())
+                .define('n', Mithril.NUGGET.get())
                 .define('i', Items.IRON_INGOT)
                 .define('b', Items.BARREL)
-                .unlockedBy("has_florpium_nugget", has(Florpium.NUGGET.get()))
+                .unlockedBy("has_mithril_nugget", has(Mithril.NUGGET.get()))
                 .unlockedBy("has_barrel", has(Items.BARREL))
                 .save(writer);
 
@@ -156,10 +156,10 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .pattern(" i ")
                 .pattern("frf")
                 .pattern(" f ")
-                .define('f', Florpium.INGOT.get())
+                .define('f', Mithril.INGOT.get())
                 .define('i', Items.IRON_INGOT)
                 .define('r', Items.REDSTONE)
-                .unlockedBy("has_florpium_nugget", has(Florpium.NUGGET.get()))
+                .unlockedBy("has_mithril_nugget", has(Mithril.NUGGET.get()))
                 .save(writer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, Minecarts.NETHER_INFUSED_POWERED_RAIL_ITEM.get(), 4)
@@ -178,21 +178,21 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_ancient_lapis", has(AncientLapis.ANCIENT_LAPIS.get()))
                 .save(writer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Florpium.BLOCK_ITEM.get(), 1)
-                .requires(Florpium.INGOT.get(), 9)
-                .unlockedBy("has_ingot", has(Florpium.INGOT.get()))
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Mithril.BLOCK_ITEM.get(), 1)
+                .requires(Mithril.INGOT.get(), 9)
+                .unlockedBy("has_ingot", has(Mithril.INGOT.get()))
                 .save(writer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Florpium.INGOT.get(), 9)
-                .requires(Florpium.BLOCK_ITEM.get(), 1)
-                .unlockedBy("has_ingot", has(Florpium.INGOT.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_ingot_from_block");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Florpium.INGOT.get(), 1)
-                .requires(Florpium.NUGGET.get(), 9)
-                .unlockedBy("has_nuggets", has(Florpium.NUGGET.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_ingot_from_nuggets");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Florpium.NUGGET.get(), 9)
-                .requires(Florpium.INGOT.get(), 1)
-                .unlockedBy("has_ingot", has(Florpium.INGOT.get()))
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Mithril.INGOT.get(), 9)
+                .requires(Mithril.BLOCK_ITEM.get(), 1)
+                .unlockedBy("has_ingot", has(Mithril.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_ingot_from_block");
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Mithril.INGOT.get(), 1)
+                .requires(Mithril.NUGGET.get(), 9)
+                .unlockedBy("has_nuggets", has(Mithril.NUGGET.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_ingot_from_nuggets");
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Mithril.NUGGET.get(), 9)
+                .requires(Mithril.INGOT.get(), 1)
+                .unlockedBy("has_ingot", has(Mithril.INGOT.get()))
                 .save(writer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ExplosiveBarrel.BLOCK_ITEM.get())
@@ -348,75 +348,75 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blasting_chained_copper_boots");
 
         SimpleCookingRecipeBuilder.smelting(
-                        Ingredient.of(Florpium.ORE.get()),
+                        Ingredient.of(Mithril.ORE.get()),
                         RecipeCategory.MISC,
-                        Florpium.NUGGET.get(),
+                        Mithril.NUGGET.get(),
                         0.8f,
                         800
                 )
-                .unlockedBy("has_florpium_ore", has(Florpium.ORE.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_nugget_from_smelting_ore");
+                .unlockedBy("has_mithril_ore", has(Mithril.ORE.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_nugget_from_smelting_ore");
 
         SimpleCookingRecipeBuilder.smelting(
-                        Ingredient.of(Florpium.DEEPSLATE_ORE.get()),
+                        Ingredient.of(Mithril.DEEPSLATE_ORE.get()),
                         RecipeCategory.MISC,
-                        Florpium.NUGGET.get(),
+                        Mithril.NUGGET.get(),
                         0.8f,
                         800
                 )
-                .unlockedBy("has_florpium_ore", has(Florpium.DEEPSLATE_ORE.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_nugget_from_smelting_deepslate_ore");
+                .unlockedBy("has_mithril_ore", has(Mithril.DEEPSLATE_ORE.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_nugget_from_smelting_deepslate_ore");
 
         SimpleCookingRecipeBuilder.blasting(
-                        Ingredient.of(Florpium.ORE.get()),
+                        Ingredient.of(Mithril.ORE.get()),
                         RecipeCategory.MISC,
-                        Florpium.NUGGET.get(),
+                        Mithril.NUGGET.get(),
                         0.8f,
                         200
                 )
-                .unlockedBy("has_florpium_ore", has(Florpium.ORE.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_nugget_from_blasting_ore");
+                .unlockedBy("has_mithril_ore", has(Mithril.ORE.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_nugget_from_blasting_ore");
 
         SimpleCookingRecipeBuilder.blasting(
-                        Ingredient.of(Florpium.DEEPSLATE_ORE.get()),
+                        Ingredient.of(Mithril.DEEPSLATE_ORE.get()),
                         RecipeCategory.MISC,
-                        Florpium.NUGGET.get(),
+                        Mithril.NUGGET.get(),
                         0.8f,
                         200
                 )
-                .unlockedBy("has_florpium_ore", has(Florpium.DEEPSLATE_ORE.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_nugget_from_blasting_deepslate_ore");
+                .unlockedBy("has_mithril_ore", has(Mithril.DEEPSLATE_ORE.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_nugget_from_blasting_deepslate_ore");
 
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Florpium.INGOT.get()), RecipeCategory.TOOLS, Florpium.AXE.get())
-                .unlocks("has_florpium", has(Florpium.INGOT.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_axe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_PICKAXE), Ingredient.of(Florpium.INGOT.get()), RecipeCategory.TOOLS, Florpium.PICKAXE.get())
-                .unlocks("has_florpium", has(Florpium.INGOT.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_pickaxe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SHOVEL), Ingredient.of(Florpium.INGOT.get()), RecipeCategory.TOOLS, Florpium.SHOVEL.get())
-                .unlocks("has_florpium", has(Florpium.INGOT.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_shovel");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HOE), Ingredient.of(Florpium.INGOT.get()), RecipeCategory.TOOLS, Florpium.HOE.get())
-                .unlocks("has_florpium", has(Florpium.INGOT.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_how");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SWORD), Ingredient.of(Florpium.INGOT.get()), RecipeCategory.COMBAT, Florpium.SWORD.get())
-                .unlocks("has_florpium", has(Florpium.INGOT.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_sword");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(Florpium.INGOT.get()), RecipeCategory.COMBAT, Florpium.SHIELD.get())
-                .unlocks("has_florpium", has(Florpium.INGOT.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_shield");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HELMET), Ingredient.of(Florpium.INGOT.get()), RecipeCategory.COMBAT, Florpium.HELMET.get())
-                .unlocks("has_florpium", has(Florpium.INGOT.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_helmet");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_CHESTPLATE), Ingredient.of(Florpium.INGOT.get()), RecipeCategory.COMBAT, Florpium.CHESTPLATE.get())
-                .unlocks("has_florpium", has(Florpium.INGOT.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_chestplate");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_LEGGINGS), Ingredient.of(Florpium.INGOT.get()), RecipeCategory.COMBAT, Florpium.LEGGINGS.get())
-                .unlocks("has_florpium", has(Florpium.INGOT.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_leggings");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Florpium.INGOT.get()), RecipeCategory.COMBAT, Florpium.BOOTS.get())
-                .unlocks("has_florpium", has(Florpium.INGOT.get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "florpium_boots");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.TOOLS, Mithril.AXE.get())
+                .unlocks("has_mithril", has(Mithril.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_axe");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_PICKAXE), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.TOOLS, Mithril.PICKAXE.get())
+                .unlocks("has_mithril", has(Mithril.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_pickaxe");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SHOVEL), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.TOOLS, Mithril.SHOVEL.get())
+                .unlocks("has_mithril", has(Mithril.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_shovel");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HOE), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.TOOLS, Mithril.HOE.get())
+                .unlocks("has_mithril", has(Mithril.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_how");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SWORD), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.COMBAT, Mithril.SWORD.get())
+                .unlocks("has_mithril", has(Mithril.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_sword");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.COMBAT, Mithril.SHIELD.get())
+                .unlocks("has_mithril", has(Mithril.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_shield");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HELMET), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.COMBAT, Mithril.HELMET.get())
+                .unlocks("has_mithril", has(Mithril.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_helmet");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_CHESTPLATE), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.COMBAT, Mithril.CHESTPLATE.get())
+                .unlocks("has_mithril", has(Mithril.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_chestplate");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_LEGGINGS), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.COMBAT, Mithril.LEGGINGS.get())
+                .unlocks("has_mithril", has(Mithril.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_leggings");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.COMBAT, Mithril.BOOTS.get())
+                .unlocks("has_mithril", has(Mithril.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_boots");
     }
 
 

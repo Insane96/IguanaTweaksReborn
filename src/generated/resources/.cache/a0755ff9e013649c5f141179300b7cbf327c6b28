@@ -1,7 +1,7 @@
-// 1.19.4	2023-04-26T19:48:13.961516	Tags for minecraft:item mod id survivalreimagined
-d7e9ef7bd080383218f0b0b7079c57eaff48b823 data/minecraft/tags/items/axes.json
-955bcd4a6ce982afbad2c36e733026ca6cead690 data/minecraft/tags/items/hoes.json
-0550cabf19f515ffeaaddec8928d6cc1fdf14ce0 data/minecraft/tags/items/pickaxes.json
-f41eb6e98511b0b8c073032cb2a1cd24bf1e7ccb data/minecraft/tags/items/shovels.json
-9fde9c894c86f564af8c33c14b895d942771ed81 data/minecraft/tags/items/swords.json
+// 1.19.4	2023-04-26T19:54:34.1145836	Tags for minecraft:item mod id survivalreimagined
+26b36f7979d1b6b0954380373aabb949ef16b64e data/minecraft/tags/items/axes.json
+1850b01ae23583dc7df9351d2e4cfb94f0bd9592 data/minecraft/tags/items/hoes.json
+42c680d8e5cdf7f04a9fe9c20d8177c6b8acbeab data/minecraft/tags/items/pickaxes.json
+91c3cd5d1aafe3f8bec012eabe5de20ee5ecc363 data/minecraft/tags/items/shovels.json
+a24b91636d435fbf63e6d7f96ef0d7ac0eeb8521 data/minecraft/tags/items/swords.json
 66522314243d5119f3610b4a75a66c92faddf431 data/survivalreimagined/tags/items/disabled_hoes.json

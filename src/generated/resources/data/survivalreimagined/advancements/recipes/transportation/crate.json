@@ -13,12 +13,12 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "has_florpium_nugget": {
+    "has_mithril_nugget": {
       "conditions": {
         "items": [
           {
             "items": [
-              "survivalreimagined:florpium_nugget"
+              "survivalreimagined:mithril_nugget"
             ]
           }
         ]
@@ -34,7 +34,7 @@
   },
   "requirements": [
     [
-      "has_florpium_nugget",
+      "has_mithril_nugget",
       "has_barrel",
       "has_the_recipe"
     ]

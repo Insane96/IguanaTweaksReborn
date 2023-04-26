@@ -12,6 +12,7 @@
   * Added Portal requires Gold Block. The nether portal requires Gold blocks in the corner to be lit (only in the Overworld)
   * Added Remove Lava Pockets. Well ... removes lava pockets from the nether
   * Moved No nether roof from Data Packs to this
+* Florpium is now Mithril
 * Coal is now minable only with tools that can mine diamonds
 * Poison now damages entities much slower
 * Beeg veins now have 3% chance to generate a raw ore block 
@@ -45,7 +46,7 @@
 * Removed Bone Club
 * Added Red and Brown mushroom stews
 * Out of season crops no longer break. They just don't grow
-* Florpium now generates much more but no longer drops a sh*t ton of nuggets with fortune
+* Mithril now generates much more but no longer drops a sh*t ton of nuggets with fortune
 * Players now have reduced block reach
 * Player required xp to level up now scales differently (reverted to IguanaTweaks formula)
   * Was 50 xp per level, now is 3 * next_level
@@ -102,7 +103,7 @@
 * Starting season is now mid-Summer
 
 ## Alpha 3.4.1
-* Renamed Iridium to Florpium
+* Renamed Iridium to Mithril
 * Wild crops now generate more commonly
 * Fixed crash in creative
 
@@ -155,7 +156,7 @@
 * The nether no longer has the 8 blocks ratio
 * Swapped Flint and Stone tools' Durability and Efficiency
 * Re-enabled Flint and Stone Hoes
-* Smoker recipe now requires florpium
+* Smoker recipe now requires mithril
 
 ## Alpha 3.2.2
 * Successfully(?) updated to MC 1.19.4
@@ -169,7 +170,7 @@
   * Vigour on wake up changed (Vigour II for 8 minutes -> Vigour I for 20 minutes)
   * Fixed tired applying continuously
 * Copper from campfire now requires 4 minutes instead of 5
-* Florpium tool durability increased by 10%
+* Mithril tool durability increased by 10%
 * Expanded 
   * Now shows the blocks being broken
   * Tool now takes 1 damage per block broken
@@ -204,19 +205,19 @@
 * Blast furnaces now take 2x time to smelt ores
 * Added a global switch to disable all datapacks
 * Food now takes 2x to cook in a furnace
-* Florpium ore drops and ores per chunk increased but decreased ores per vein
+* Mithril ore drops and ores per chunk increased but decreased ores per vein
 * Increased iron nuggets drop with fortune
 * Stamina now regenerates faster when locked
 * Tridents now have +0.5 attack range
-* Removed Iron and Florpium Tools bonus durability
+* Removed Iron and Mithril Tools bonus durability
 * Torch recipe now crafts 3
 * Reduced Tools efficiency and reduced global block hardness, but re-enabled depth hardness
 
 ## Alpha 3.1.0
 * Added EnhancedAI mod
   * Mobs are tougher to fight as they have a few more tricks up their sleeve
-* Added Florpium, a new ore found at any height plus a lot generates hidden about 16 blocks below the sea level
-  * Can be applied to Iron equipment in a Smithing Table to get Florpium equipment, slightly better than iron but more durable
+* Added Mithril, a new ore found at any height plus a lot generates hidden about 16 blocks below the sea level
+  * Can be applied to Iron equipment in a Smithing Table to get Mithril equipment, slightly better than iron but more durable
 * Added Bone Club
   * If you dare to fight a skeleton you can use his bones to get a new weapon, low durability but quite good damage.
 * Added "Actually Sweet Berry Bushes"

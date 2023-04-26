@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "survivalreimagined:mithril_nugget"
+    },
+    {
+      "item": "survivalreimagined:mithril_nugget"
+    },
+    {
+      "item": "survivalreimagined:mithril_nugget"
+    },
+    {
+      "item": "survivalreimagined:mithril_nugget"
+    },
+    {
+      "item": "survivalreimagined:mithril_nugget"
+    },
+    {
+      "item": "survivalreimagined:mithril_nugget"
+    },
+    {
+      "item": "survivalreimagined:mithril_nugget"
+    },
+    {
+      "item": "survivalreimagined:mithril_nugget"
+    },
+    {
+      "item": "survivalreimagined:mithril_nugget"
+    }
+  ],
+  "result": {
+    "item": "survivalreimagined:mithril_ingot"
+  }
+}

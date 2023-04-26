@@ -49,7 +49,7 @@ public class WeightedEquipment extends SRFeature {
 			new ArmorMaterialWeight("chainmail", 0.05d),
 			new ArmorMaterialWeight("golden", 0.025d),
 			new ArmorMaterialWeight("iron", 0.075d),
-			new ArmorMaterialWeight("florpium", 0.08d),
+			new ArmorMaterialWeight("mithril", 0.08d),
 			new ArmorMaterialWeight("diamond", 0.10d),
 			new ArmorMaterialWeight("netherite", 0.15d)
 	));
