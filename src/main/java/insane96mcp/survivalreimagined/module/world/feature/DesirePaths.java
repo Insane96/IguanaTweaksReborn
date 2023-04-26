@@ -69,7 +69,7 @@ public class DesirePaths extends Feature {
 		int mZ = Mth.floor(bb.minZ);
 		for (int x2 = mX; x2 < bb.maxX; x2++) {
 			for (int z2 = mZ; z2 < bb.maxZ; z2++) {
-				BlockPos pos = BlockPos.containing(x2, event.player.position().y - 0.002d, z2);
+				BlockPos pos = event.player.getOnPos();
 				BlockState state = event.player.level.getBlockState(pos);
 				for (BlockTransformation blockTransformation : transformationList) {
 					if (!blockTransformation.matchesBlock(state.getBlock()))
