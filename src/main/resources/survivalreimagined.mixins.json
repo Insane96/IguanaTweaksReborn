@@ -32,6 +32,7 @@
         "PlayerMixin",
         "PotionItemMixin",
         "ProtectionEnchantmentMixin",
+        "SpringFeatureMixin",
         "ThrownExperienceBottleMixin",
         "VillagerMixin",
         "ZombieMixin"

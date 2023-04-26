@@ -50,10 +50,6 @@ public class DataPacks extends Feature {
     public static Boolean actualRedstoneComponents = true;
 
     @Config
-    @Label(name = "Disable Nether Roof", description = "Makes the nether 128 blocks high instead of 256, effectively disabling the \"Nether Roof\"")
-    public static Boolean disableNetherRoof = true;
-
-    @Config
     @Label(name = "Copper Furnace", description = "If true a datapack will be enabled that makes furnaces require copper. Copper ingots can be obtained from raw copper on campfires.")
     public static Boolean copperFurnace = true;
 
@@ -75,7 +71,6 @@ public class DataPacks extends Feature {
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "cheaper_chains", net.minecraft.network.chat.Component.literal("Survival Reimagined Cheaper Chains"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cheaperChains));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "misc_tweaks", net.minecraft.network.chat.Component.literal("Survival Reimagined Misc Tweaks"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && miscTweaks));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "cheaper_rails", net.minecraft.network.chat.Component.literal("Survival Reimagined Cheaper Rails"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cheaperRails));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_nether_roof", net.minecraft.network.chat.Component.literal("Survival Reimagined No Nether Roof"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableNetherRoof));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "actual_redstone_components", net.minecraft.network.chat.Component.literal("Survival Reimagined Actual Redstone components"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && actualRedstoneComponents));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_furnace", net.minecraft.network.chat.Component.literal("Survival Reimagined Copper Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperFurnace));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "disable_villages", net.minecraft.network.chat.Component.literal("Survival Reimagined Disable Villages"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableVillages));
