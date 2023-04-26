@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.world;
+package insane96mcp.survivalreimagined.module.world.feature;
 
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
