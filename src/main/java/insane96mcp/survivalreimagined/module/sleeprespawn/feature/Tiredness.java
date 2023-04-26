@@ -17,6 +17,7 @@ import insane96mcp.survivalreimagined.setup.SRMobEffects;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -32,7 +33,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -73,13 +73,13 @@ public class Tiredness extends SRFeature {
 	public static Boolean shouldPreventSpawnPoint = false;
 	@Config(min = 0d)
 	@Label(name = "Tiredness to sleep", description = "Tiredness required to be able to sleep.")
-	public static Double tirednessToSleep = 320d;
+	public static Double tirednessToSleep = 300d;
 	@Config(min = 0d)
 	@Label(name = "Tiredness for effect", description = "Tiredness required to get the Tired effect.")
-	public static Double tirednessToEffect = 420d;
+	public static Double tirednessToEffect = 350d;
 	@Config(min = 0d)
 	@Label(name = "Tiredness per level", description = "Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
-	public static Double tirednessPerLevel = 30d;
+	public static Double tirednessPerLevel = 50d;
 	@Config
 	@Label(name = "Show Tiredness Bar", description = "If true the tiredness bar will be shown.")
 	public static Boolean showTirednessBar = false;
@@ -249,7 +249,7 @@ public class Tiredness extends SRFeature {
 				&& player.getPersistentData().getFloat(TIREDNESS_TAG) > tirednessToEffect;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	/*@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onFog(ViewportEvent.RenderFog event) {
 		if (!this.isEnabled()
@@ -287,7 +287,7 @@ public class Tiredness extends SRFeature {
 		event.setRed(color);
 		event.setGreen(color);
 		event.setBlue(color);
-	}
+	}*/
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -339,7 +339,7 @@ public class Tiredness extends SRFeature {
 				uv = UV_SLEEPY;
 
 			int x = left - (i * 8) - 9;
-			gui.blit(matrixStack, x, top, (int) uv.x, (int) uv.y, 9, 9);
+			GuiComponent.blit(matrixStack, x, top, (int) uv.x, (int) uv.y, 9, 9);
 		}
 		Minecraft.getInstance().getProfiler().pop();
 	}
