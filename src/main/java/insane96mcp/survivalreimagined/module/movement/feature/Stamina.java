@@ -48,7 +48,7 @@ public class Stamina extends Feature {
 
     @Config(min = 0)
     @Label(name = "Stamina consumed on jump", description = "How much stamina the player consumes on each jump")
-    public static Integer staminaConsumedOnJump = 0;
+    public static Integer staminaConsumedOnJump = 5;
 
     @Config
     @Label(name = "Disable Sprinting", description = "Disable sprinting altogether")
@@ -71,16 +71,21 @@ public class Stamina extends Feature {
             StaminaHandler.setStamina(player, StaminaHandler.getMaxStamina(player));
 
         if (player.isSprinting() && player.getVehicle() == null && !player.getAbilities().instabuild) {
+            int amountConsumed = 1;
             //If the vigour effect is active give the player 20% chance per level to not consume stamina when running.
             if (player.hasEffect(SRMobEffects.VIGOUR.get())) {
-                MobEffectInstance mobEffectInstance = player.getEffect(SRMobEffects.VIGOUR.get());
-                //noinspection ConstantConditions
-                if (player.getRandom().nextDouble() < 0.2d * (mobEffectInstance.getAmplifier() + 1))
+                MobEffectInstance vigourInstance = player.getEffect(SRMobEffects.VIGOUR.get());
+                //noinspection DataFlowIssue
+                if (player.getRandom().nextDouble() < 0.2d * (vigourInstance.getAmplifier() + 1))
                     return;
             }
-            StaminaHandler.consumeStamina(player);
-            if (StaminaHandler.getStamina(player) <= 0)
-                StaminaHandler.lockSprinting(player);
+            //If the tired effect is active consume one more stamina per level above I
+            if (player.hasEffect(SRMobEffects.TIRED.get())) {
+                MobEffectInstance tiredInstance = player.getEffect(SRMobEffects.TIRED.get());
+                //noinspection DataFlowIssue
+                amountConsumed += tiredInstance.getAmplifier();
+            }
+            StaminaHandler.consumeStamina(player, amountConsumed);
             shouldSync = true;
         } else if ((StaminaHandler.getStamina(player) != StaminaHandler.getMaxStamina(player) && StaminaHandler.getMaxStamina(player) >= 40)
                 //Trigger the sync for clients

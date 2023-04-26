@@ -1,5 +1,13 @@
 # Changelog
 
+## Upcoming
+* Tiredness
+  * Tired effect no longer adds Fog
+  * Tiredness now comes earlier but the effect takes more time to come
+* Stamina
+  * Jumping now consumes stamina
+  * Tired effect now affects stamina consumption
+
 ## Alpha 3.7.1
 * Added Anvil feature
   * An anvil dropping on a block may transform it

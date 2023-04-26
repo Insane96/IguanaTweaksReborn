@@ -5,9 +5,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
 public class StaminaHandler {
-    /**
-     * Each half heart accounts for 1/2 a second sprinting
-     */
     public static int getMaxStamina(Player player) {
         return Mth.ceil(player.getHealth() * Stamina.staminaPerHalfHeart);
     }
@@ -29,11 +26,13 @@ public class StaminaHandler {
     }
 
     public static void consumeStamina(Player player) {
-        setStamina(player, getStamina(player) - 1);
+        consumeStamina(player, 1);
     }
 
     public static void consumeStamina(Player player, int amount) {
         setStamina(player, getStamina(player) - amount);
+        if (getStamina(player) <= 0)
+            lockSprinting(player);
     }
 
     public static void regenStamina(Player player) {
