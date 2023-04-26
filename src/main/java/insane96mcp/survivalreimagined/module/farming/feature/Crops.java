@@ -45,7 +45,7 @@ public class Crops extends Feature {
 						Set if crops require wet farmland to grow.
 						Valid Values:
 						NO: Crops will not require water to grow
-						BONEMEAL_ONLY: Crops will grow on dry farmland by only using bonemeal
+						BONE_MEAL_ONLY: Crops will grow on dry farmland by only using bone meal
 						ANY_CASE: Will make Crops not grow in any case when on dry farmland""")
 	public static CropsRequireWater cropsRequireWater = CropsRequireWater.ANY_CASE;
 
@@ -147,6 +147,10 @@ public class Crops extends Feature {
 			return;
 
 		event.setCanceled(true);
+	}
+
+	public static int getWaterHydrationRadius() {
+		return isEnabled(Crops.class) ? waterHydrationRadius : 4;
 	}
 
 	private static final String path = "crops/";

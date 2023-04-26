@@ -1,6 +1,12 @@
 # Changelog
 
 ## Upcoming
+* Added Nether feature
+  * Added Portal requires Gold Block. The nether portal requires Gold blocks in the corner to be lit (only in the Overworld)
+  * Added Remove Lava Pockets. Well ... removes lava pockets from the nether
+  * Moved No nether roof from Data Packs to this
+* Added Composted Farmland
+  * Use bonemeal on farmland to transform it into composted farmland. Composted farmland ticks 3 times faster than normal farmland
 * Tiredness
   * Tired effect no longer adds Fog, instead adds an overlay on the screen reducing sight
   * Tiredness now comes earlier but the effect takes more time to come
@@ -8,10 +14,6 @@
   * Jumping now consumes stamina
   * Tired effect now affects stamina consumption
   * Swimming now consumes less stamina
-* Added Nether feature
-  * Added Portal requires Gold Block. The nether portal requires Gold blocks in the corner to be lit (only in the Overworld)
-  * Added Remove Lava Pockets. Well ... removes lava pockets from the nether
-  * Moved No nether roof from Data Packs to this
 * Florpium is now Mithril
 * Coal is now minable only with tools that can mine diamonds
 * Poison now damages entities much slower

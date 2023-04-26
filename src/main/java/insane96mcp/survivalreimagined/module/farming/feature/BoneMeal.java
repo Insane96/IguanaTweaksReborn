@@ -7,24 +7,35 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.farming.block.CompostedFarmlandBlock;
+import insane96mcp.survivalreimagined.setup.SRBlocks;
+import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.StemBlock;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Collections;
 
-@Label(name = "Nerfed Bone meal", description = "Bone meal is no longer so OP")
+@Label(name = "Bone meal", description = "Bone meal is no longer so OP and also Composted Farmland")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class NerfedBoneMeal extends Feature {
+public class BoneMeal extends Feature {
+
+	public static final RegistryObject<CompostedFarmlandBlock> COMPOSTED_FARMLAND = SRBlocks.REGISTRY.register("composted_farmland", () -> new CompostedFarmlandBlock(BlockBehaviour.Properties.of(Material.DIRT).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking((state, blockGetter, pos) -> true).isSuffocating((state, blockGetter, pos) -> true)));
+	public static final RegistryObject<BlockItem> COMPOSTED_FARMLAND_ITEM = SRItems.REGISTRY.register("composted_farmland", () -> new BlockItem(COMPOSTED_FARMLAND.get(), new Item.Properties()));
+
 	private static final ResourceLocation BLACKLIST = new ResourceLocation(SurvivalReimagined.MOD_ID, "nerfed_bone_meal_blacklist");
 	@Config
 	@Label(name = "Nerfed Bone Meal", description = "Makes more Bone Meal required for Crops. Valid Values are\nNO: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
@@ -32,8 +43,18 @@ public class NerfedBoneMeal extends Feature {
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Bone Meal Fail Chance", description = "Makes Bone Meal have a chance to fail to grow crops. 0 to disable, 1 to disable Bone Meal.")
 	public static Double boneMealFailChance = 0d;
+	@Config
+	@Label(name = "Transform Farmland in Composted", description = "Bone meal used on Farmland transforms it into Composted Farmland.")
+	public static Boolean farmlandToComposted = true;
 
-	public NerfedBoneMeal(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	@Config(min = 1)
+	@Label(name = "Composted Farmland Extra Ticks", description = "How many extra random ticks does Composted Farmland give to the crop sitting on top?")
+	public static Integer compostedFarmlandExtraTicks = 3;
+	@Config(min = 0d, max = 1d)
+	@Label(name = "Composted Farmland Chance to Decay", description = "Chance for a Composted farmland to decay back to farmland")
+	public static Double compostedFarmlandChanceToDecay = 0.05d;
+
+	public BoneMeal(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
@@ -47,11 +68,18 @@ public class NerfedBoneMeal extends Feature {
 				|| !this.isEnabled()
 				|| event.getLevel().isClientSide)
 			return;
-		BoneMealResult result = applyBoneMeal(event.getLevel(), event.getStack(), event.getBlock(), event.getPos());
-		if (result == BoneMealResult.ALLOW)
+		if (farmlandToComposted && event.getBlock().is(Blocks.FARMLAND)){
+			event.getLevel().setBlockAndUpdate(event.getPos(), COMPOSTED_FARMLAND.get().defaultBlockState().setValue(FarmBlock.MOISTURE, event.getBlock().getValue(FarmBlock.MOISTURE)));
+			event.getEntity().swing(event.getEntity().getUsedItemHand(), true);
 			event.setResult(Event.Result.ALLOW);
-		else if (result == BoneMealResult.CANCEL)
-			event.setCanceled(true);
+		}
+		else {
+			BoneMealResult result = applyBoneMeal(event.getLevel(), event.getStack(), event.getBlock(), event.getPos());
+			if (result == BoneMealResult.ALLOW)
+				event.setResult(Event.Result.ALLOW);
+			else if (result == BoneMealResult.CANCEL)
+				event.setCanceled(true);
+		}
 	}
 
 	public enum BoneMealResult {
@@ -80,17 +108,14 @@ public class NerfedBoneMeal extends Feature {
 
 			if (level.getRandom().nextDouble() < boneMealFailChance) {
 				return BoneMealResult.ALLOW;
-			}
-			else if (nerfedBoneMeal.equals(BoneMealNerf.SLIGHT)) {
+			} else if (nerfedBoneMeal.equals(BoneMealNerf.SLIGHT)) {
 				age += Mth.nextInt(level.getRandom(), 1, 2);
-			}
-			else if (nerfedBoneMeal.equals(BoneMealNerf.NERFED)) {
+			} else if (nerfedBoneMeal.equals(BoneMealNerf.NERFED)) {
 				age++;
 			}
 			age = Mth.clamp(age, 0, maxAge);
 			state = state.setValue(cropBlock.getAgeProperty(), age);
-		}
-		else if (state.getBlock() instanceof StemBlock) {
+		} else if (state.getBlock() instanceof StemBlock) {
 			int age = state.getValue(StemBlock.AGE);
 			int maxAge = Collections.max(StemBlock.AGE.getPossibleValues());
 			if (age == maxAge) {
@@ -99,17 +124,14 @@ public class NerfedBoneMeal extends Feature {
 
 			if (level.getRandom().nextDouble() < boneMealFailChance) {
 				return BoneMealResult.ALLOW;
-			}
-			else if (nerfedBoneMeal.equals(BoneMealNerf.SLIGHT)) {
+			} else if (nerfedBoneMeal.equals(BoneMealNerf.SLIGHT)) {
 				age += Mth.nextInt(level.getRandom(), 1, 2);
-			}
-			else if (nerfedBoneMeal.equals(BoneMealNerf.NERFED)) {
+			} else if (nerfedBoneMeal.equals(BoneMealNerf.NERFED)) {
 				age++;
 			}
 			age = Mth.clamp(age, 0, maxAge);
 			state = state.setValue(StemBlock.AGE, age);
-		}
-		else
+		} else
 			return BoneMealResult.NONE;
 		level.setBlockAndUpdate(pos, state);
 		return BoneMealResult.ALLOW;

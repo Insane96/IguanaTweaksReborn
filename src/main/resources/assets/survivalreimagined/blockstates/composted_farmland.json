@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "moisture=0": {
+      "model": "survivalreimagined:block/composted_farmland"
+    },
+    "moisture=1": {
+      "model": "survivalreimagined:block/composted_farmland"
+    },
+    "moisture=2": {
+      "model": "survivalreimagined:block/composted_farmland"
+    },
+    "moisture=3": {
+      "model": "survivalreimagined:block/composted_farmland"
+    },
+    "moisture=4": {
+      "model": "survivalreimagined:block/composted_farmland"
+    },
+    "moisture=5": {
+      "model": "survivalreimagined:block/composted_farmland"
+    },
+    "moisture=6": {
+      "model": "survivalreimagined:block/composted_farmland"
+    },
+    "moisture=7": {
+      "model": "survivalreimagined:block/composted_farmland_moist"
+    }
+  }
+}
