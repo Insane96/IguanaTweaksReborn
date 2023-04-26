@@ -159,6 +159,8 @@ public class Death extends Feature {
 		}
 		event.getTarget().getPersistentData().remove(ITEMS_TO_DROP);
 		InteractWithGhostTrigger.TRIGGER.trigger((ServerPlayer) event.getEntity());
+		if (event.getTarget().getPersistentData().getInt(XP_TO_DROP) <= 0)
+			event.getTarget().kill();
 	}
 
 	@SubscribeEvent
