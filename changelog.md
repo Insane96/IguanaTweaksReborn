@@ -7,6 +7,8 @@
   * Moved No nether roof from Data Packs to this
 * Added Composted Farmland
   * Use bonemeal on farmland to transform it into composted farmland. Composted farmland ticks 3 times faster than normal farmland
+* Added Fast Leaf Decay
+  * Leaves decay faster
 * Tiredness
   * Tired effect no longer adds Fog, instead adds an overlay on the screen reducing sight
   * Tiredness now comes earlier but the effect takes more time to come
