@@ -23,6 +23,7 @@
         "FoodDataMixin",
         "HoneyBottleItemMixin",
         "ItemMixin",
+        "LeavesBlockMixin",
         "LivingEntityMixin",
         "MendingEnchantmentMixin",
         "MerchantOfferMixin",

@@ -35,8 +35,9 @@ public class Seasons extends Feature {
 	@Config
 	@Label(name = "Serene Seasons changes", description = """
 			Makes the following changes to Serene Seasons config:
-			* out_of_season_crop_behavior is set to 2 so out of season crops break when trying to grow
-			* underground_fertility_level is set to -1 so out of season crops can never grow, even underground
+			Makes the following changes to Serene Seasons config:
+			* seasonal_crops is set to false, as it's controlled by PlantsGrowth
+			* Sets the starting season to mid summer
 			""")
 	public static Boolean changeSereneSeasonsConfig = true;
 
