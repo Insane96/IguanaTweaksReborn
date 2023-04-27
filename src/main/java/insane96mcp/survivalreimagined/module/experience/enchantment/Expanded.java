@@ -20,7 +20,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.DiggingEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -38,6 +38,7 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Expanded extends Enchantment {
     public Expanded() {
@@ -189,5 +190,16 @@ public class Expanded extends Enchantment {
         if (targetState.getMaterial() == minedState.getMaterial()
                 && targetState.getDestroySpeed(level, targetPos) >= minedState.getDestroySpeed(level, minedPos) - 0.5d)
             blockPos.add(minedPos);
+    }
+
+    public static enum ExpansionType {
+        DIGGER(item -> item instanceof PickaxeItem || item instanceof ShovelItem),
+        EXPANDED(item -> item instanceof AxeItem || item instanceof HoeItem);
+
+        Predicate<Item> doesApplyToItem;
+
+        ExpansionType(Predicate<Item> doesApplyToItem) {
+
+        }
     }
 }
