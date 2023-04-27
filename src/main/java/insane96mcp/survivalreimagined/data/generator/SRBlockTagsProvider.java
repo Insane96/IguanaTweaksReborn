@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.data;
+package insane96mcp.survivalreimagined.data.generator;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.items.feature.Crate;

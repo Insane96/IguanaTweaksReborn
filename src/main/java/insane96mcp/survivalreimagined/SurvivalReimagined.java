@@ -1,6 +1,10 @@
 package insane96mcp.survivalreimagined;
 
-import insane96mcp.survivalreimagined.data.*;
+import insane96mcp.survivalreimagined.data.SRAnvilRecipeReloadListener;
+import insane96mcp.survivalreimagined.data.SRDataReloadListener;
+import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
+import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
+import insane96mcp.survivalreimagined.data.generator.SRRecipeProvider;
 import insane96mcp.survivalreimagined.data.lootmodifier.SRGlobalLootModifierProvider;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerData;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerDataAttacher;
