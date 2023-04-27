@@ -12,13 +12,16 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 @JsonAdapter(SerializableTrade.SerializableTradeSerializer.class)
 public class SerializableTrade implements VillagerTrades.ItemListing {
@@ -31,6 +34,8 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 
 	@Nullable
 	private EnchantRandomly enchantRandomly;
+
+	private final List<EnchantmentInstance> enchantments = new ArrayList<>();
 
 	public SerializableTrade() {
 
@@ -48,6 +53,11 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 		this.xp = xp;
 	}
 
+	public SerializableTrade enchant(Enchantment enchantment, int level) {
+		this.enchantments.add(new EnchantmentInstance(enchantment, level));
+		return this;
+	}
+
 	public SerializableTrade enchantResult(int minLevel, int maxLevel, boolean treasure) {
 		this.enchantRandomly = new EnchantRandomly(minLevel, maxLevel, treasure);
 		return this;
@@ -59,6 +69,9 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 		ItemStack result = this.result.copy();
 		if (this.enchantRandomly != null)
 			result = EnchantmentHelper.enchantItem(random, result, random.nextInt(this.enchantRandomly.minLevel, this.enchantRandomly.maxLevel + 1), this.enchantRandomly.treasure);
+		for (EnchantmentInstance enchantmentInstance : this.enchantments) {
+			result.enchant(enchantmentInstance.enchantment, enchantmentInstance.level);
+		}
 		return new MerchantOffer(this.itemA, this.itemB == null ? ItemStack.EMPTY : this.itemB, result, this.maxUses, this.xp, 1f);
 	}
 
@@ -95,6 +108,14 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 			if (enchantRandomly != null) {
 				serializableTrade.enchantRandomly = new EnchantRandomly(GsonHelper.getAsInt(enchantRandomly, "min_levels"), GsonHelper.getAsInt(enchantRandomly, "max_levels"), GsonHelper.getAsBoolean(enchantRandomly, "treasure"));
 			}
+			JsonArray enchantments = GsonHelper.getAsJsonArray(json.getAsJsonObject(), "enchantments", null);
+			if (enchantments != null) {
+				enchantments.asList().forEach(jsonElement -> {
+					String id = GsonHelper.getAsString(jsonElement.getAsJsonObject(), "id");
+					int level = GsonHelper.getAsInt(jsonElement.getAsJsonObject(), "level", 1);
+					serializableTrade.enchantments.add(new EnchantmentInstance(ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryParse(id)), level));
+				});
+			}
 
 			serializableTrade.maxUses = GsonHelper.getAsInt(json.getAsJsonObject(), "max_uses");
 			serializableTrade.xp = GsonHelper.getAsInt(json.getAsJsonObject(), "xp", 0);
@@ -121,6 +142,17 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 				enchantRandomly.addProperty("max_levels", src.enchantRandomly.maxLevel);
 				enchantRandomly.addProperty("treasure", src.enchantRandomly.treasure);
 				jsonObject.add("enchant_randomly", enchantRandomly);
+			}
+			if (!src.enchantments.isEmpty()) {
+				JsonArray jsonArray = new JsonArray();
+				src.enchantments.forEach(enchantmentInstance -> {
+					JsonObject enchantmentsObject = new JsonObject();
+					enchantmentsObject.addProperty("id", ForgeRegistries.ENCHANTMENTS.getKey(enchantmentInstance.enchantment).toString());
+					if (enchantmentInstance.level > 1)
+						enchantmentsObject.addProperty("level", enchantmentInstance.level);
+					jsonArray.add(enchantmentsObject);
+				});
+				jsonObject.add("enchantments", jsonArray);
 			}
 			jsonObject.addProperty("max_uses", src.maxUses);
 			jsonObject.addProperty("xp", src.xp);

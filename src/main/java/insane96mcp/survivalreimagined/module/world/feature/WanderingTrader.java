@@ -10,6 +10,7 @@ import insane96mcp.survivalreimagined.module.items.feature.Mithril;
 import insane96mcp.survivalreimagined.module.world.data.SerializableTrade;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -56,7 +57,8 @@ public class WanderingTrader extends SRFeature {
     public static final ArrayList<SerializableTrade> wanderingTraderGenericTrades = new ArrayList<>();
 
     public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_RARE_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
-            new SerializableTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(Items.BOOK), 1).enchantResult(8, 16, false),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(Items.BOOK), 1).enchantResult(6, 12, false).enchant(Enchantments.UNBREAKING, 1),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(Items.BOOK), 1).enchantResult(10, 18, false),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.GUNPOWDER, 2), 8),
             new SerializableTrade(new ItemStack(Items.EMERALD, 4), new ItemStack(Items.TROPICAL_FISH_BUCKET), 4),
             new SerializableTrade(new ItemStack(Items.EMERALD, 4), new ItemStack(Items.PUFFERFISH_BUCKET), 4),
