@@ -9,7 +9,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.ai.SREatBlock;
-import insane96mcp.survivalreimagined.module.farming.utils.LivestockData;
+import insane96mcp.survivalreimagined.module.farming.data.LivestockData;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.nbt.CompoundTag;

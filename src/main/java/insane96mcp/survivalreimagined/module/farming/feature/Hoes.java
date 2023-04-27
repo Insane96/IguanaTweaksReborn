@@ -8,7 +8,7 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.farming.utils.HoeStat;
+import insane96mcp.survivalreimagined.module.farming.data.HoeStat;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;

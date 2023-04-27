@@ -5,7 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.items.utils.SRArmorMaterial;
+import insane96mcp.survivalreimagined.module.items.item.SRArmorMaterial;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvents;

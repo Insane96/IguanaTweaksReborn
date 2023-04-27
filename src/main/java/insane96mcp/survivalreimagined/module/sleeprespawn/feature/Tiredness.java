@@ -7,15 +7,13 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
-import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.sleeprespawn.utils.EnergyBoostItem;
+import insane96mcp.survivalreimagined.module.sleeprespawn.data.EnergyBoostItem;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.MessageTirednessSync;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
-import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
@@ -28,7 +26,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -104,11 +101,6 @@ public class Tiredness extends SRFeature {
 		JSON_CONFIGS.add(new JsonConfig<>("energy_boost_items.json", energyBoostItems, ENERGY_BOOST_ITEMS_DEFAULT, EnergyBoostItem.LIST_TYPE));
 	}
 
-	@Override
-	public void loadJsonConfigs() {
-		super.loadJsonConfigs();
-	}
-
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
@@ -119,11 +111,11 @@ public class Tiredness extends SRFeature {
 		ServerPlayer serverPlayer = (ServerPlayer) event.player;
 		CompoundTag persistentData = serverPlayer.getPersistentData();
 		float tiredness = persistentData.getFloat(TIREDNESS_TAG);
-		applyEnergyBoostEffect(tiredness, serverPlayer, persistentData);
 		applyTired(tiredness, serverPlayer);
+		tickEnergyBoostEffect(tiredness, serverPlayer, persistentData);
 	}
 
-	private void applyEnergyBoostEffect(float tiredness, ServerPlayer player, CompoundTag persistentData) {
+	private void tickEnergyBoostEffect(float tiredness, ServerPlayer player, CompoundTag persistentData) {
 		if (!player.hasEffect(SRMobEffects.ENERGY_BOOST.get()))
 			return;
 
@@ -152,21 +144,7 @@ public class Tiredness extends SRFeature {
 				|| !event.getItem().isEdible())
 			return;
 		for (EnergyBoostItem energyBoostItem : energyBoostItems) {
-			if (energyBoostItem.matchesItem(event.getItem().getItem())) {
-				Player playerEntity = (Player) event.getEntity();
-				int duration, amplifier;
-				if (energyBoostItem.duration == 0) {
-					FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
-					//noinspection ConstantConditions .isEdible() is checked
-					duration = (int) (Utils.getFoodEffectiveness(food) * 20 * defaultEnergyBoostDurationMultiplier);
-				}
-				else {
-					duration = energyBoostItem.duration;
-				}
-				amplifier = energyBoostItem.amplifier;
-
-				playerEntity.addEffect(MCUtils.createEffectInstance(SRMobEffects.ENERGY_BOOST.get(), duration, amplifier, true, false, true, false));
-			}
+			energyBoostItem.tryApply((Player) event.getEntity(), event.getItem());
 		}
 	}
 

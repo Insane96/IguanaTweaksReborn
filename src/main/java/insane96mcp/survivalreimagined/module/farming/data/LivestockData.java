@@ -1,9 +1,9 @@
-package insane96mcp.survivalreimagined.module.farming.utils;
+package insane96mcp.survivalreimagined.module.farming.data;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
-import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
+import insane96mcp.survivalreimagined.data.IdTagValue;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.Entity;

@@ -9,7 +9,7 @@ import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.block.SeedsBlockItem;
 import insane96mcp.survivalreimagined.module.farming.block.WildCropBlock;
-import insane96mcp.survivalreimagined.module.farming.utils.PlantGrowthModifier;
+import insane96mcp.survivalreimagined.module.farming.data.PlantGrowthModifier;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRBlocks;

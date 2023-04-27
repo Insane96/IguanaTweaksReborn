@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.combat.utils.ItemAttributeModifier;
+import insane96mcp.survivalreimagined.module.combat.data.ItemAttributeModifier;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.world.entity.EquipmentSlot;

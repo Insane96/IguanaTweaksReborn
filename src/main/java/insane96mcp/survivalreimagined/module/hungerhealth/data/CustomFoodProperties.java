@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.hungerhealth.utils;
+package insane96mcp.survivalreimagined.module.hungerhealth.data;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;

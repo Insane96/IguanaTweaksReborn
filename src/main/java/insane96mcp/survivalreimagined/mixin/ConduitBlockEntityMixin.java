@@ -16,7 +16,7 @@ import java.util.List;
 public class ConduitBlockEntityMixin {
 
 	@Inject(at = @At("HEAD"), method = "updateDestroyTarget", cancellable = true)
-	private static void updateDestroyTarget(Level level, BlockPos blockPos, BlockState state, List<BlockPos> blocks, ConduitBlockEntity conduit, CallbackInfo ci) {
+	private static void onUpdateDestroyTarget(Level level, BlockPos blockPos, BlockState state, List<BlockPos> blocks, ConduitBlockEntity conduit, CallbackInfo ci) {
 		if (BeaconConduit.conduitUpdateDestroyEnemies(level, blockPos, blocks))
 			ci.cancel();
 	}

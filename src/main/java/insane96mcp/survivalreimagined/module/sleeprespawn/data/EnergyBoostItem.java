@@ -1,11 +1,18 @@
-package insane96mcp.survivalreimagined.module.sleeprespawn.utils;
+package insane96mcp.survivalreimagined.module.sleeprespawn.data;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.util.MCUtils;
+import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
+import insane96mcp.survivalreimagined.setup.SRMobEffects;
+import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 
@@ -24,6 +31,23 @@ public class EnergyBoostItem extends IdTagMatcher {
         super(type, location);
         this.duration = duration;
         this.amplifier = amplifier;
+    }
+
+    public void tryApply(Player player, ItemStack stack) {
+        if (!this.matchesItem(stack.getItem()))
+            return;
+
+        int duration;
+        if (this.duration == 0) {
+            FoodProperties food = stack.getFoodProperties(player);
+            //noinspection ConstantConditions .isEdible() is checked
+            duration = (int) (Utils.getFoodEffectiveness(food) * 20 * Tiredness.defaultEnergyBoostDurationMultiplier);
+        }
+        else {
+            duration = this.duration;
+        }
+
+        player.addEffect(MCUtils.createEffectInstance(SRMobEffects.ENERGY_BOOST.get(), duration, this.amplifier, true, false, true, false));
     }
 
     public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<EnergyBoostItem>>(){}.getType();

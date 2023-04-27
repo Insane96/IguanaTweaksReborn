@@ -5,8 +5,8 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.misc.utils.IdTagValue;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.world.level.block.Block;
 

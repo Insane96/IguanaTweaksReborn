@@ -88,9 +88,6 @@ public class Fire extends Feature {
 
         if (event.getLevel().getRandom().nextDouble() < charcoalFromBurntLogsChance
                 && event.getState().is(BlockTags.LOGS_THAT_BURN)) {
-            /*ItemEntity item = new ItemEntity((Level) event.getLevel(), event.getPos().getX() + 0.5d, event.getPos().getY() + 0.5d, event.getPos().getZ() + 0.5d, new ItemStack(Items.CHARCOAL));
-            item.setDefaultPickUpDelay();
-            event.getLevel().addFreshEntity(item);*/
             PilableFallingLayerEntity.fall((Level) event.getLevel(), event.getPos(), CHARCOAL_LAYER.get().defaultBlockState());
         }
     }

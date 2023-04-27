@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.sleeprespawn.utils;
+package insane96mcp.survivalreimagined.module.sleeprespawn.data;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;

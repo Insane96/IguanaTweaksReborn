@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.sleeprespawn.utils.SRMobEffectInstance;
+import insane96mcp.survivalreimagined.module.sleeprespawn.data.SRMobEffectInstance;
 import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;

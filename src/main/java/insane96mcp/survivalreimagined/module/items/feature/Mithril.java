@@ -8,7 +8,7 @@ import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.items.utils.SRArmorMaterial;
+import insane96mcp.survivalreimagined.module.items.item.SRArmorMaterial;
 import insane96mcp.survivalreimagined.setup.SRBlocks;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.Util;

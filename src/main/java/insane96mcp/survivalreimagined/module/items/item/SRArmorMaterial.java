@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.items.utils;
+package insane96mcp.survivalreimagined.module.items.item;
 
 import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvent;

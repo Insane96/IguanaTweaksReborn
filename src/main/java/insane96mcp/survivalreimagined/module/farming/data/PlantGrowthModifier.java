@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.farming.utils;
+package insane96mcp.survivalreimagined.module.farming.data;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
