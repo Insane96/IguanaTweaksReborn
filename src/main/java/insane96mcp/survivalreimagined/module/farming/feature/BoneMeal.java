@@ -68,12 +68,21 @@ public class BoneMeal extends Feature {
 				|| !this.isEnabled()
 				|| event.getLevel().isClientSide)
 			return;
-		if (farmlandToRich && event.getBlock().is(Blocks.FARMLAND)){
-			event.getLevel().setBlockAndUpdate(event.getPos(), RICH_FARMLAND.get().defaultBlockState().setValue(FarmBlock.MOISTURE, event.getBlock().getValue(FarmBlock.MOISTURE)));
-			event.getEntity().swing(event.getEntity().getUsedItemHand(), true);
-			event.setResult(Event.Result.ALLOW);
+		boolean hasRichedFarmland = false;
+		if (farmlandToRich){
+			BlockPos farmlandPos = null;
+			if (event.getBlock().is(Blocks.FARMLAND))
+				farmlandPos = event.getPos();
+			else if (event.getLevel().getBlockState(event.getPos().below()).is(Blocks.FARMLAND) && event.getEntity().isCrouching())
+				farmlandPos = event.getPos().below();
+			if (farmlandPos != null) {
+				event.getLevel().setBlockAndUpdate(farmlandPos, RICH_FARMLAND.get().defaultBlockState().setValue(FarmBlock.MOISTURE, event.getLevel().getBlockState(farmlandPos).getValue(FarmBlock.MOISTURE)));
+				event.getEntity().swing(event.getEntity().getUsedItemHand(), true);
+				event.setResult(Event.Result.ALLOW);
+				hasRichedFarmland = true;
+			}
 		}
-		else {
+		if (!hasRichedFarmland) {
 			BoneMealResult result = applyBoneMeal(event.getLevel(), event.getStack(), event.getBlock(), event.getPos());
 			if (result == BoneMealResult.ALLOW)
 				event.setResult(Event.Result.ALLOW);
