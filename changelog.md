@@ -10,7 +10,7 @@
   * Added Remove Lava Pockets. This ... removes lava pockets from the nether
   * Moved No nether roof from Data Packs to this
 * Added Rich Farmland
-  * Use bonemeal on farmland to transform it into rich farmland. This farmland ticks 3 times faster than normal farmland
+  * Use bonemeal on farmland or crouching on crops to transform it into rich farmland. This farmland ticks 3 times faster than normal farmland
 * Added Fast Leaf Decay
   * Leaves decay faster
 * Tiredness
@@ -24,7 +24,6 @@
 * Skeletons now have a chance to spawn with bow ingredients instead of bows
 * Coal is now minable only with tools that can mine diamonds
 * Poison now damages entities much slower
-* Beeg veins now have 3% chance to generate a raw ore block 
 
 ## Alpha 3.7.1
 * Added Anvil feature

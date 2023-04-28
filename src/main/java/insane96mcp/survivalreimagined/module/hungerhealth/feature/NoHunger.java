@@ -107,8 +107,14 @@ public class NoHunger extends Feature {
         if (event.player.hasEffect(MobEffects.HUNGER) && convertHungerToWeakness) {
             MobEffectInstance effect = event.player.getEffect(MobEffects.HUNGER);
             //noinspection ConstantConditions; Checking with hasEffect
-            event.player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, effect.getDuration(), effect.getAmplifier(), effect.isAmbient(), effect.isVisible(), effect.showIcon()));
+            event.player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, effect.getDuration() + 1, effect.getAmplifier(), effect.isAmbient(), effect.isVisible(), effect.showIcon()));
             event.player.removeEffect(MobEffects.HUNGER);
+        }
+        if (event.player.hasEffect(MobEffects.SATURATION)) {
+            MobEffectInstance effect = event.player.getEffect(MobEffects.SATURATION);
+            //noinspection ConstantConditions; Checking with hasEffect
+            event.player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, (effect.getDuration() + 1) * 20, effect.getAmplifier(), effect.isAmbient(), effect.isVisible(), effect.showIcon()));
+            event.player.removeEffect(MobEffects.SATURATION);
         }
 
         if (event.player.tickCount % FOOD_REGEN_TICK_RATE == 0 && getFoodRegenLeft(event.player) > 0f) {
