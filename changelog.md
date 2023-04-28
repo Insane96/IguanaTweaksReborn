@@ -21,6 +21,7 @@
   * Tired effect now affects stamina consumption
   * Swimming now consumes less stamina
 * Florpium is now Mithril
+* Skeletons now have a chance to spawn with bow ingredients instead of bows
 * Coal is now minable only with tools that can mine diamonds
 * Poison now damages entities much slower
 * Beeg veins now have 3% chance to generate a raw ore block 

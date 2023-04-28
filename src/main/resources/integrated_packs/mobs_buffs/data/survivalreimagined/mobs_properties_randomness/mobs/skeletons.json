@@ -15,5 +15,19 @@
             },
             "persistent_data": true
         }
-    ]
+    ],
+    "equipment": {
+        "main_hand": {
+            "override": true,
+            "chance": 0.15,
+            "items": [
+                {
+                    "id": "minecraft:stick"
+                },
+                {
+                    "id": "minecraft:string"
+                }
+            ]
+        }
+    }
 }
