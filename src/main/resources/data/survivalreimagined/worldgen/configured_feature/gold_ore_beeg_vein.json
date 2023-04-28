@@ -67,7 +67,7 @@
             }
         ],
         "surface_patch_config": {
-            "tries": 48,
+            "tries": 12,
             "xz_spread": 8,
             "y_spread": 5,
             "feature": {
@@ -84,15 +84,8 @@
                 },
                 "placement": [
                     {
-                        "type": "minecraft:block_predicate_filter",
-                        "predicate": {
-                            "type": "minecraft:matching_blocks",
-                            "blocks": "minecraft:air"
-                        }
-                    },
-                    {
                         "type": "minecraft:heightmap",
-                        "heightmap": "MOTION_BLOCKING_NO_LEAVES"
+                        "heightmap": "OCEAN_FLOOR_WG"
                     }
                 ]
             }

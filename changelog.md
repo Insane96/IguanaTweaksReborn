@@ -7,7 +7,7 @@
   * Beeg Veins still exist. They generate with Poor and Rich ores
 * Added Nether feature
   * Added Portal requires Gold Block. The nether portal requires Gold blocks in the corner to be lit (only in the Overworld)
-  * Added Remove Lava Pockets. Well ... removes lava pockets from the nether
+  * Added Remove Lava Pockets. This ... removes lava pockets from the nether
   * Moved No nether roof from Data Packs to this
 * Added Rich Farmland
   * Use bonemeal on farmland to transform it into rich farmland. This farmland ticks 3 times faster than normal farmland
