@@ -5,6 +5,8 @@ import insane96mcp.survivalreimagined.data.SRDataReloadListener;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.data.generator.SRRecipeProvider;
+import insane96mcp.survivalreimagined.data.generator.client.SRBlockModelsProvider;
+import insane96mcp.survivalreimagined.data.generator.client.SRItemModelsProvider;
 import insane96mcp.survivalreimagined.data.lootmodifier.SRGlobalLootModifierProvider;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerData;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerDataAttacher;
@@ -109,6 +111,8 @@ public class SurvivalReimagined
         SRBlockTagsProvider blockTags = new SRBlockTagsProvider(generator.getPackOutput(), lookupProvider, SurvivalReimagined.MOD_ID, existingFileHelper);
         generator.addProvider(event.includeServer(), blockTags);
         generator.addProvider(event.includeServer(), new SRItemTagsProvider(generator.getPackOutput(), lookupProvider, blockTags.contentsGetter(), SurvivalReimagined.MOD_ID, existingFileHelper));
+        generator.addProvider(event.includeClient(), new SRBlockModelsProvider(generator.getPackOutput(), SurvivalReimagined.MOD_ID, existingFileHelper));
+        generator.addProvider(event.includeClient(), new SRItemModelsProvider(generator.getPackOutput(), SurvivalReimagined.MOD_ID, existingFileHelper));
     }
 
     public void addPackFinders(AddPackFindersEvent event)

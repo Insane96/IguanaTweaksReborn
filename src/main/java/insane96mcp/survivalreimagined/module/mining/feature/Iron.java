@@ -34,17 +34,10 @@ public class Iron extends Feature {
 			* Smelting iron in a furnace takes 4x time""")
 	public static Boolean ironSmeltingDataPack = true;
 
-	@Config
-	@Label(name = "Iron Generation Data Pack", description = """
-			Enables the following changes to vanilla data pack:
-			* Iron ore has a chance to be discarded when exposed to air (60% for large veins, 40% for small)""")
-	public static Boolean ironGenerationDataPack = true;
-
 	public Iron(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "farmable_iron", net.minecraft.network.chat.Component.literal("Survival Reimagined Farmable Iron"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && farmableIronDataPack));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "iron_equipment_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Equipment Crafting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && equipmentCraftingDataPack));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "iron_smelting", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && ironSmeltingDataPack));
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "iron_generation", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && ironGenerationDataPack));
 	}
 }

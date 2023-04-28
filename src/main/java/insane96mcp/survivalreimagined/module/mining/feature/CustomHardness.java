@@ -27,6 +27,13 @@ public class CustomHardness extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:lapis_ore", 3d),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:emerald_ore", 4d),
 
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:poor_copper_ore", 1.667d),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:poor_iron_ore", 2d),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:poor_gold_ore", 2.333d),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_copper_ore", 3.333d),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_iron_ore", 4d),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_gold_ore", 4.6666d),
+
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_coal_ore", 4d),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_copper_ore", 4d),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_iron_ore", 4.5d),
@@ -35,6 +42,13 @@ public class CustomHardness extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_redstone_ore", 4.5d),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_lapis_ore", 4.5d),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_emerald_ore", 6d),
+
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:poor_deepslate_copper_ore", 2.667d),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:poor_deepslate_iron_ore", 3d),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:poor_deepslate_gold_ore", 3.333d),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_deepslate_copper_ore", 5.333d),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_deepslate_iron_ore", 6d),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_deepslate_gold_ore", 6.666d),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:ancient_debris", 12d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:obsidians", 33d)

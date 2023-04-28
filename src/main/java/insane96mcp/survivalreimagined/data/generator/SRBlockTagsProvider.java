@@ -5,8 +5,8 @@ import insane96mcp.survivalreimagined.module.items.feature.Crate;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.items.feature.Mithril;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
-import insane96mcp.survivalreimagined.module.world.feature.BeegVeins;
 import insane96mcp.survivalreimagined.module.world.feature.Fire;
+import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -47,17 +47,30 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(Mithril.BLOCK.get()).add(Mithril.ORE.get()).add(Mithril.DEEPSLATE_ORE.get())
-                .add(BeegVeins.IRON_ORE_ROCK.get()).add(BeegVeins.COPPER_ORE_ROCK.get()).add(BeegVeins.GOLD_ORE_ROCK.get())
+                .add(OreGeneration.IRON_ORE_ROCK.block().get()).add(OreGeneration.COPPER_ORE_ROCK.block().get()).add(OreGeneration.GOLD_ORE_ROCK.block().get())
+                .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get())
+                .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get())
+                .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get())
                 .add(FlintExpansion.FLINT_BLOCK.get()).add(FlintExpansion.POLISHED_FLINT_BLOCK.get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(Crate.BLOCK.get());
+                .add(Crate.BLOCK.get())
+                .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get())
+                .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get());
 
         tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get())
                 .add(Mithril.BLOCK.get()).add(Mithril.ORE.get()).add(Mithril.DEEPSLATE_ORE.get());
 
         tag(BlockTags.RAILS)
                 .add(Minecarts.NETHER_INFUSED_POWERED_RAIL.get());
+
+        tag(BlockTags.IRON_ORES)
+                .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get());
+        tag(BlockTags.GOLD_ORES)
+                .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get());
+        tag(BlockTags.COPPER_ORES)
+                .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get());
 
         //Mod's tags
         tag(RESPAWN_OBELISK_BLOCKS_TO_ROT)

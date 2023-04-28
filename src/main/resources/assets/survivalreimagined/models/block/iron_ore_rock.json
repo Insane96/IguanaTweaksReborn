@@ -1,7 +1,7 @@
 {
     "parent": "survivalreimagined:block/ore_rock",
     "textures": {
-        "particle": "block/deepslate_iron_ore",
-        "texture": "block/deepslate_iron_ore"
+        "particle": "block/iron_ore",
+        "texture": "block/iron_ore"
     }
 }

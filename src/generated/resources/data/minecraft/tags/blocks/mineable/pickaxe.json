@@ -6,6 +6,18 @@
     "survivalreimagined:iron_ore_rock",
     "survivalreimagined:copper_ore_rock",
     "survivalreimagined:gold_ore_rock",
+    "survivalreimagined:poor_iron_ore",
+    "survivalreimagined:rich_iron_ore",
+    "survivalreimagined:poor_deepslate_iron_ore",
+    "survivalreimagined:rich_deepslate_iron_ore",
+    "survivalreimagined:poor_gold_ore",
+    "survivalreimagined:rich_gold_ore",
+    "survivalreimagined:poor_deepslate_gold_ore",
+    "survivalreimagined:rich_deepslate_gold_ore",
+    "survivalreimagined:poor_copper_ore",
+    "survivalreimagined:rich_copper_ore",
+    "survivalreimagined:poor_deepslate_copper_ore",
+    "survivalreimagined:rich_deepslate_copper_ore",
     "survivalreimagined:flint_block",
     "survivalreimagined:polished_flint_block"
   ]

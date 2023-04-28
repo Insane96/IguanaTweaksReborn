@@ -9,7 +9,17 @@
                 "target": {
                     "predicate_type": "survivalreimagined:random_block_tag_match",
                     "tag": "minecraft:stone_ore_replaceables",
-                    "probability": 0.15
+                    "probability": 0.025
+                },
+                "state": {
+                    "Name": "survivalreimagined:rich_copper_ore"
+                }
+            },
+            {
+                "target": {
+                    "predicate_type": "survivalreimagined:random_block_tag_match",
+                    "tag": "minecraft:stone_ore_replaceables",
+                    "probability": 0.075
                 },
                 "state": {
                     "Name": "minecraft:copper_ore"
@@ -18,8 +28,28 @@
             {
                 "target": {
                     "predicate_type": "survivalreimagined:random_block_tag_match",
-                    "tag": "minecraft:deepslate_ore_replaceables",
-                    "probability": 0.15
+                    "tag": "minecraft:stone_ore_replaceables",
+                    "probability": 0.20
+                },
+                "state": {
+                    "Name": "survivalreimagined:poor_copper_ore"
+                }
+            },
+            {
+                "target": {
+                    "predicate_type": "survivalreimagined:random_block_tag_match",
+                    "tag": "minecraft:deepslate_ore_replaceable",
+                    "probability": 0.025
+                },
+                "state": {
+                    "Name": "survivalreimagined:rich_deepslate_copper_ore"
+                }
+            },
+            {
+                "target": {
+                    "predicate_type": "survivalreimagined:random_block_tag_match",
+                    "tag": "minecraft:deepslate_ore_replaceable",
+                    "probability": 0.075
                 },
                 "state": {
                     "Name": "minecraft:deepslate_copper_ore"
@@ -28,21 +58,11 @@
             {
                 "target": {
                     "predicate_type": "survivalreimagined:random_block_tag_match",
-                    "tag": "minecraft:stone_ore_replaceables",
-                    "probability": 0.05
+                    "tag": "minecraft:deepslate_ore_replaceable",
+                    "probability": 0.20
                 },
                 "state": {
-                    "Name": "minecraft:raw_copper_block"
-                }
-            },
-            {
-                "target": {
-                    "predicate_type": "survivalreimagined:random_block_tag_match",
-                    "tag": "minecraft:deepslate_ore_replaceables",
-                    "probability": 0.05
-                },
-                "state": {
-                    "Name": "minecraft:raw_copper_block"
+                    "Name": "survivalreimagined:poor_deepslate_copper_ore"
                 }
             }
         ],

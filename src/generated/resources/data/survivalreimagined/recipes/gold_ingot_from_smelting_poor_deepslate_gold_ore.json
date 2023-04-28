@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 800,
+  "experience": 1.0,
+  "ingredient": {
+    "item": "survivalreimagined:poor_deepslate_gold_ore"
+  },
+  "result": "minecraft:gold_ingot"
+}

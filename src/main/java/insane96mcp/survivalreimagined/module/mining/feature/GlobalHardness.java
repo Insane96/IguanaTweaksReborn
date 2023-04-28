@@ -68,7 +68,7 @@ public class GlobalHardness extends SRFeature {
 		BlockState blockState = level.getBlockState(pos);
 		Block block = blockState.getBlock();
 		double blockGlobalHardness = getBlockGlobalHardnessMultiplier(block, dimensionId);
-		blockGlobalHardness += getDepthHardnessMultiplier(block, dimensionId, pos, false);
+		blockGlobalHardness += getDepthHardnessMultiplier(block, dimensionId, pos, true);
 		if (blockGlobalHardness == 1d)
 			return;
 		double multiplier = 1d / blockGlobalHardness;

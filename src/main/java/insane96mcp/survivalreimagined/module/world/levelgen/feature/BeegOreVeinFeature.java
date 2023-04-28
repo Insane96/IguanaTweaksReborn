@@ -64,6 +64,8 @@ public class BeegOreVeinFeature extends Feature<OreWithRandomPatchConfiguration>
             }
         }
 
+        if (!hasPlacedOre)
+            return false;
         int placedRandomPatch = 0;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
         int xzSpread = configuration.patchConfiguration.xzSpread() + 1;
@@ -76,7 +78,7 @@ public class BeegOreVeinFeature extends Feature<OreWithRandomPatchConfiguration>
             }
         }
 
-        return placedRandomPatch > 0 || hasPlacedOre;
+        return placedRandomPatch > 0;
     }
 
     public static boolean canPlaceOre(BlockState state, Function<BlockPos, BlockState> func, RandomSource random, OreWithRandomPatchConfiguration configuration, OreConfiguration.TargetBlockState targetBlockState, BlockPos.MutableBlockPos mutableBlockPos) {

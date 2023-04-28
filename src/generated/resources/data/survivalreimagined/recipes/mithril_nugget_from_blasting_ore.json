@@ -2,7 +2,7 @@
   "type": "minecraft:blasting",
   "category": "misc",
   "cookingtime": 200,
-  "experience": 0.8,
+  "experience": 1.0,
   "ingredient": {
     "item": "survivalreimagined:mithril_ore"
   },

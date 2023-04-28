@@ -8,8 +8,8 @@ import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
-import insane96mcp.survivalreimagined.module.world.feature.BeegVeins;
 import insane96mcp.survivalreimagined.module.world.feature.Fire;
+import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import insane96mcp.survivalreimagined.setup.SREntityTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.FallingBlockRenderer;
@@ -66,7 +66,6 @@ public class ClientSetup {
         else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(Respawn.RESPAWN_OBELISK_ITEM.get());
             event.accept(Crate.BLOCK_ITEM.get());
-            event.accept(BoneMeal.RICH_FARMLAND_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.accept(Minecarts.NETHER_INFUSED_POWERED_RAIL_ITEM.get());
@@ -77,9 +76,22 @@ public class ClientSetup {
             event.accept(Mithril.DEEPSLATE_ORE_ITEM.get());
             event.accept(Crops.CARROT_SEEDS.get());
             event.accept(Crops.POTATO_SEEDS.get());
-            event.accept(BeegVeins.COPPER_ORE_ROCK_ITEM.get());
-            event.accept(BeegVeins.IRON_ORE_ROCK_ITEM.get());
-            event.accept(BeegVeins.GOLD_ORE_ROCK_ITEM.get());
+            event.accept(OreGeneration.COPPER_ORE_ROCK.item().get());
+            event.accept(OreGeneration.IRON_ORE_ROCK.item().get());
+            event.accept(OreGeneration.GOLD_ORE_ROCK.item().get());
+            event.accept(OreGeneration.POOR_RICH_IRON_ORE.poorOre().item().get());
+            event.accept(OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().item().get());
+            event.accept(OreGeneration.POOR_RICH_IRON_ORE.richOre().item().get());
+            event.accept(OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().item().get());
+            event.accept(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().item().get());
+            event.accept(OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().item().get());
+            event.accept(OreGeneration.POOR_RICH_COPPER_ORE.richOre().item().get());
+            event.accept(OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().item().get());
+            event.accept(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().item().get());
+            event.accept(OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().item().get());
+            event.accept(OreGeneration.POOR_RICH_GOLD_ORE.richOre().item().get());
+            event.accept(OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().item().get());
+            event.accept(BoneMeal.RICH_FARMLAND_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
             event.accept(Mithril.INGOT.get());

@@ -5,14 +5,16 @@ import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeat
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
-import insane96mcp.survivalreimagined.module.world.feature.BeegVeins;
+import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
@@ -218,60 +220,60 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer);
 
         SimpleCookingRecipeBuilder.smelting(
-                        Ingredient.of(BeegVeins.COPPER_ORE_ROCK_ITEM.get()),
+                        Ingredient.of(OreGeneration.COPPER_ORE_ROCK.item().get()),
                         RecipeCategory.MISC,
                         Items.COPPER_INGOT,
                         0.7f,
                         800
                 )
-                .unlockedBy("has_copper_ore_rock", has(BeegVeins.COPPER_ORE_ROCK_ITEM.get()))
+                .unlockedBy("has_copper_ore_rock", has(OreGeneration.COPPER_ORE_ROCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "copper_ingot_from_smelting_rock");
         SimpleCookingRecipeBuilder.blasting(
-                        Ingredient.of(BeegVeins.COPPER_ORE_ROCK_ITEM.get()),
+                        Ingredient.of(OreGeneration.COPPER_ORE_ROCK.item().get()),
                         RecipeCategory.MISC,
                         Items.COPPER_INGOT,
                         0.7f,
                         200
                 )
-                .unlockedBy("has_copper_ore_rock", has(BeegVeins.COPPER_ORE_ROCK_ITEM.get()))
+                .unlockedBy("has_copper_ore_rock", has(OreGeneration.COPPER_ORE_ROCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "copper_ingot_from_blasting_rock");
 
         SimpleCookingRecipeBuilder.smelting(
-                        Ingredient.of(BeegVeins.IRON_ORE_ROCK_ITEM.get()),
+                        Ingredient.of(OreGeneration.IRON_ORE_ROCK.item().get()),
                         RecipeCategory.MISC,
                         Items.IRON_INGOT,
                         0.8f,
                         800
                 )
-                .unlockedBy("has_iron_ore_rock", has(BeegVeins.IRON_ORE_ROCK_ITEM.get()))
+                .unlockedBy("has_iron_ore_rock", has(OreGeneration.IRON_ORE_ROCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iron_ingot_from_smelting_rock");
         SimpleCookingRecipeBuilder.blasting(
-                        Ingredient.of(BeegVeins.IRON_ORE_ROCK_ITEM.get()),
+                        Ingredient.of(OreGeneration.IRON_ORE_ROCK.item().get()),
                         RecipeCategory.MISC,
                         Items.IRON_INGOT,
                         0.8f,
                         200
                 )
-                .unlockedBy("has_iron_ore_rock", has(BeegVeins.IRON_ORE_ROCK_ITEM.get()))
+                .unlockedBy("has_iron_ore_rock", has(OreGeneration.IRON_ORE_ROCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "iron_ingot_from_blasting_rock");
 
         SimpleCookingRecipeBuilder.smelting(
-                        Ingredient.of(BeegVeins.GOLD_ORE_ROCK_ITEM.get()),
+                        Ingredient.of(OreGeneration.GOLD_ORE_ROCK.item().get()),
                         RecipeCategory.MISC,
                         Items.GOLD_INGOT,
                         1f,
                         800
                 )
-                .unlockedBy("has_gold_ore_rock", has(BeegVeins.GOLD_ORE_ROCK_ITEM.get()))
+                .unlockedBy("has_gold_ore_rock", has(OreGeneration.GOLD_ORE_ROCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "gold_ingot_from_smelting_rock");
         SimpleCookingRecipeBuilder.blasting(
-                        Ingredient.of(BeegVeins.GOLD_ORE_ROCK_ITEM.get()),
+                        Ingredient.of(OreGeneration.GOLD_ORE_ROCK.item().get()),
                         RecipeCategory.MISC,
                         Items.GOLD_INGOT,
                         1f,
                         200
                 )
-                .unlockedBy("has_gold_ore_rock", has(BeegVeins.GOLD_ORE_ROCK_ITEM.get()))
+                .unlockedBy("has_gold_ore_rock", has(OreGeneration.GOLD_ORE_ROCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "gold_ingot_from_blasting_rock");
 
         SimpleCookingRecipeBuilder.smelting(
@@ -351,7 +353,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         Ingredient.of(Mithril.ORE.get()),
                         RecipeCategory.MISC,
                         Mithril.NUGGET.get(),
-                        0.8f,
+                        1f,
                         800
                 )
                 .unlockedBy("has_mithril_ore", has(Mithril.ORE.get()))
@@ -361,7 +363,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         Ingredient.of(Mithril.DEEPSLATE_ORE.get()),
                         RecipeCategory.MISC,
                         Mithril.NUGGET.get(),
-                        0.8f,
+                        1f,
                         800
                 )
                 .unlockedBy("has_mithril_ore", has(Mithril.DEEPSLATE_ORE.get()))
@@ -371,7 +373,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         Ingredient.of(Mithril.ORE.get()),
                         RecipeCategory.MISC,
                         Mithril.NUGGET.get(),
-                        0.8f,
+                        1f,
                         200
                 )
                 .unlockedBy("has_mithril_ore", has(Mithril.ORE.get()))
@@ -381,7 +383,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         Ingredient.of(Mithril.DEEPSLATE_ORE.get()),
                         RecipeCategory.MISC,
                         Mithril.NUGGET.get(),
-                        0.8f,
+                        1f,
                         200
                 )
                 .unlockedBy("has_mithril_ore", has(Mithril.DEEPSLATE_ORE.get()))
@@ -417,7 +419,33 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.COMBAT, Mithril.BOOTS.get())
                 .unlocks("has_mithril", has(Mithril.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_boots");
+
+        addPoorRichOreRecipes(writer, OreGeneration.POOR_RICH_IRON_ORE, Items.IRON_INGOT, 0.8f);
+        addPoorRichOreRecipes(writer, OreGeneration.POOR_RICH_COPPER_ORE, Items.COPPER_INGOT, 0.7f);
+        addPoorRichOreRecipes(writer, OreGeneration.POOR_RICH_GOLD_ORE, Items.GOLD_INGOT, 1f);
     }
 
-
+    private void addPoorRichOreRecipes(Consumer<FinishedRecipe> writer, OreGeneration.PoorRichOre poorRichOre, Item smeltOutput, float experience) {
+        for (Item item : poorRichOre.getAllItems()) {
+            String name = ForgeRegistries.ITEMS.getKey(item).getPath();
+            SimpleCookingRecipeBuilder.smelting(
+                            Ingredient.of(item),
+                            RecipeCategory.MISC,
+                            smeltOutput,
+                            experience,
+                            800
+                    )
+                    .unlockedBy("has_" + name, has(item))
+                    .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "gold_ingot_from_smelting_" + name);
+            SimpleCookingRecipeBuilder.blasting(
+                            Ingredient.of(item),
+                            RecipeCategory.MISC,
+                            smeltOutput,
+                            experience,
+                            200
+                    )
+                    .unlockedBy("has_" + name, has(item))
+                    .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "gold_ingot_from_blasting_" + name);
+        }
+    }
 }

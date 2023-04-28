@@ -1,6 +1,10 @@
 # Changelog
 
 ## Upcoming
+* Changed Beeg Veins feature to Ore Generation feature
+  * Added Poor and Rich iron, gold and copper ores. The veins of these ores now generate randomly with poor, normal and rich ores
+    * Poor ores drop 50% stuff while rich drops 200%
+  * Beeg Veins still exist. They generate with Poor and Rich ores
 * Added Nether feature
   * Added Portal requires Gold Block. The nether portal requires Gold blocks in the corner to be lit (only in the Overworld)
   * Added Remove Lava Pockets. Well ... removes lava pockets from the nether
