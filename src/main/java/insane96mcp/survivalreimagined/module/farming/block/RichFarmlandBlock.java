@@ -19,8 +19,8 @@ import net.minecraftforge.common.PlantType;
 
 import javax.annotation.Nullable;
 
-public class CompostedFarmlandBlock extends FarmBlock {
-    public CompostedFarmlandBlock(Properties properties) {
+public class RichFarmlandBlock extends FarmBlock {
+    public RichFarmlandBlock(Properties properties) {
         super(properties);
     }
 
@@ -46,13 +46,13 @@ public class CompostedFarmlandBlock extends FarmBlock {
         }
 
         if (moisture == MAX_MOISTURE && isUnderCrops) {
-            for (int e = 0; e < BoneMeal.compostedFarmlandExtraTicks; e++) {
+            for (int e = 0; e < BoneMeal.richFarmlandExtraTicks; e++) {
                 level.getBlockState(pos.above()).randomTick(level, pos.above(), random);
             }
             //Bonemeal particles
             level.levelEvent(2005, pos.above(), 0);
         }
-        if (random.nextDouble() < BoneMeal.compostedFarmlandChanceToDecay) {
+        if (random.nextDouble() < BoneMeal.richFarmlandChanceToDecay) {
             turnToFarmland(null, state, level, pos);
         }
     }

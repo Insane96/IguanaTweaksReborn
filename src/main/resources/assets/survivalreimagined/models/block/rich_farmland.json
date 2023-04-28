@@ -2,6 +2,6 @@
   "parent": "minecraft:block/template_farmland",
   "textures": {
     "dirt": "minecraft:block/dirt",
-    "top": "survivalreimagined:block/composted_farmland_moist"
+    "top": "survivalreimagined:block/rich_farmland"
   }
 }

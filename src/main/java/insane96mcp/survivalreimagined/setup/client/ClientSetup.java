@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.setup.client;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
+import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
@@ -65,6 +66,7 @@ public class ClientSetup {
         else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(Respawn.RESPAWN_OBELISK_ITEM.get());
             event.accept(Crate.BLOCK_ITEM.get());
+            event.accept(BoneMeal.RICH_FARMLAND_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.accept(Minecarts.NETHER_INFUSED_POWERED_RAIL_ITEM.get());

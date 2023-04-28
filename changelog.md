@@ -5,8 +5,8 @@
   * Added Portal requires Gold Block. The nether portal requires Gold blocks in the corner to be lit (only in the Overworld)
   * Added Remove Lava Pockets. Well ... removes lava pockets from the nether
   * Moved No nether roof from Data Packs to this
-* Added Composted Farmland
-  * Use bonemeal on farmland to transform it into composted farmland. Composted farmland ticks 3 times faster than normal farmland
+* Added Rich Farmland
+  * Use bonemeal on farmland to transform it into rich farmland. This farmland ticks 3 times faster than normal farmland
 * Added Fast Leaf Decay
   * Leaves decay faster
 * Tiredness
