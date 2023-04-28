@@ -106,7 +106,7 @@ public class Fog extends Feature {
             return;
 
         Entity entity = event.getCamera().getEntity();
-        if (entity.level.dimension() == Level.NETHER) {
+        if (entity.getEyeInFluidType() == ForgeMod.EMPTY_TYPE.get() && entity.level.dimension() == Level.NETHER) {
             float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
             event.setNearPlaneDistance((float) (renderDistance * netherFogRatio / 10f));
             event.setFarPlaneDistance((float) (renderDistance * netherFogRatio));
