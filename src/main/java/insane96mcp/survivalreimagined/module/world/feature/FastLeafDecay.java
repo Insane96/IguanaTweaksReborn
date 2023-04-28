@@ -25,7 +25,7 @@ public class FastLeafDecay extends Feature {
 
 	@Config(min = 1)
 	@Label(name = "Min ticks to decay")
-	public static Integer minTicksToDecay = 150;
+	public static Integer minTicksToDecay = 100;
 
 	@Config(min = 1)
 	@Label(name = "Max ticks to decay")
