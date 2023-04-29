@@ -68,7 +68,8 @@ public class Death extends Feature {
 		if (!this.isEnabled()
 				|| !(event.getEntity() instanceof ServerPlayer player)
 				|| player.getLevel().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
-				|| player.level.isOutsideBuildHeight(player.blockPosition().getY()))
+				|| player.level.isOutsideBuildHeight(player.blockPosition().getY())
+				|| (player.getInventory().isEmpty() && player.experienceLevel == 0))
 			return;
 
 		player.getLevel().setBlock(player.blockPosition(), GRAVE.block().get().defaultBlockState(), 3);
