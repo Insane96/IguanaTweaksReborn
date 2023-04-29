@@ -1,12 +1,12 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.event.SREventFactory;
 import insane96mcp.survivalreimagined.module.movement.feature.TerrainSlowdown;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,22 +21,11 @@ public class LivingEntityMixin {
         if (instance.isSprinting() && Feature.isEnabled(TerrainSlowdown.class)) {
             float yRot = instance.getYRot() * ((float)Math.PI / 180F);
             float boost = 0.2f;
-            boost *= getMovementSpeedRatio(instance);
+            boost *= MCUtils.getMovementSpeedRatio(instance);
             instance.setDeltaMovement(instance.getDeltaMovement().add((-Mth.sin(yRot) * boost), 0.0D, (Mth.cos(yRot) * boost)));
             return false;
         }
         return instance.isSprinting();
-    }
-
-    //TODO Move to Lib
-    private static double getMovementSpeedRatio(LivingEntity livingEntity) {
-        double baseMS = 0.1;
-        if (livingEntity.isSprinting()) {
-            baseMS += 0.029999999329447746;
-        }
-
-        double playerMS = livingEntity.getAttributeValue(Attributes.MOVEMENT_SPEED);
-        return playerMS / baseMS;
     }
 
     @Inject(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;gameEvent(Lnet/minecraft/world/level/gameevent/GameEvent;)V"))
