@@ -27,6 +27,7 @@ public class GraveBlockEntity extends BlockEntity {
 
     public void setItems(NonNullList<ItemStack> items) {
         this.items = items;
+        this.setChanged();
     }
 
     public int getXpStored() {
@@ -35,6 +36,7 @@ public class GraveBlockEntity extends BlockEntity {
 
     public void setXpStored(int xpStored) {
         this.xpStored = xpStored;
+        this.setChanged();
     }
 
     @Override
