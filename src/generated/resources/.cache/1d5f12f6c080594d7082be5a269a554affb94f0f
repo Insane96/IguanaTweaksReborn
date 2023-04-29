@@ -1,9 +1,9 @@
-// 1.19.4	2023-04-28T10:54:27.8539639	Tags for minecraft:block mod id survivalreimagined
+// 1.19.4	2023-04-29T09:33:11.9983581	Tags for minecraft:block mod id survivalreimagined
 d5819582440cadb8c17b7aff856539c50bc69af4 data/minecraft/tags/blocks/copper_ores.json
 72ec216a289a55b54a365aa57fe69c0a71bf4fe8 data/minecraft/tags/blocks/gold_ores.json
 033aecf42ef3d2b4f210e09a0cd49e3da5bffbff data/minecraft/tags/blocks/iron_ores.json
 e5885ef0a617164dd018ba56e7626506ebfde1c9 data/minecraft/tags/blocks/mineable/axe.json
-dbe24d765104abb5a25fbcf2dc508697c4a6143a data/minecraft/tags/blocks/mineable/pickaxe.json
+7eaea5ad61c58ae17e87d87c72aab43574cb4359 data/minecraft/tags/blocks/mineable/pickaxe.json
 a9b9725d70e83f3d2d8e6e0396b663d87db8655b data/minecraft/tags/blocks/mineable/shovel.json
 52d189ecd518fc6baf07cb5a710c133edfc63e64 data/minecraft/tags/blocks/needs_iron_tool.json
 479fdc5a16a9e1acab5c335f39ebd5b8f4855532 data/minecraft/tags/blocks/needs_stone_tool.json

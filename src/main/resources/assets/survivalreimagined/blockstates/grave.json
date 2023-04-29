@@ -1,0 +1,19 @@
+{
+    "variants": {
+        "facing=east": {
+            "model": "survivalreimagined:block/grave",
+            "y": 270
+        },
+        "facing=north": {
+            "model": "survivalreimagined:block/grave",
+            "y": 180
+        },
+        "facing=south": {
+            "model": "survivalreimagined:block/grave"
+        },
+        "facing=west": {
+            "model": "survivalreimagined:block/grave",
+            "y": 90
+        }
+    }
+}

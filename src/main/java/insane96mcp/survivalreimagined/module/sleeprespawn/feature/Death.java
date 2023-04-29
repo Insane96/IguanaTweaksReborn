@@ -1,45 +1,40 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.feature;
 
-import insane96mcp.enhancedai.setup.EAStrings;
 import insane96mcp.insanelib.ai.ILNearestAttackableTargetGoal;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.setup.ILStrings;
-import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.data.trigger.InteractWithGhostTrigger;
+import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.feature.GlobalExperience;
 import insane96mcp.survivalreimagined.module.experience.feature.PlayerExperience;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import insane96mcp.survivalreimagined.module.sleeprespawn.block.GraveBlock;
+import insane96mcp.survivalreimagined.module.sleeprespawn.block.GraveBlockEntity;
+import insane96mcp.survivalreimagined.setup.SRBlockEntityTypes;
+import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingConversionEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -47,6 +42,9 @@ import java.util.UUID;
 @Label(name = "Death", description = "Changes to death")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class Death extends Feature {
+
+	public static final BlockWithItem GRAVE = BlockWithItem.register("grave", () -> new GraveBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(1.5F, 6.0F)));
+	public static final RegistryObject<BlockEntityType<?>> GRAVE_BLOCK_ENTITY_TYPE = SRBlockEntityTypes.REGISTRY.register("grave", () -> BlockEntityType.Builder.of(GraveBlockEntity::new, GRAVE.block().get()).build(null));
 
 	public static final String PLAYER_GHOST = SurvivalReimagined.RESOURCE_PREFIX + "player_ghost";
 	public static final String PLAYER_GHOST_LANG = SurvivalReimagined.MOD_ID + ".player_ghost";
@@ -68,10 +66,26 @@ public class Death extends Feature {
 	public void onPlayerDeath(LivingDeathEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getEntity() instanceof ServerPlayer player)
-				|| player.getLevel().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY))
+				|| player.getLevel().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
+				|| player.level.isOutsideBuildHeight(player.blockPosition().getY()))
 			return;
 
-		Zombie zombie = EntityType.ZOMBIE.create(player.getLevel());
+		player.getLevel().setBlock(player.blockPosition(), GRAVE.block().get().defaultBlockState(), 3);
+		if (player.getLevel().getBlockState(player.blockPosition().below()).canBeReplaced())
+			player.getLevel().setBlock(player.blockPosition().below(), Blocks.COARSE_DIRT.defaultBlockState(), 3);
+		GraveBlockEntity graveBlockEntity = new GraveBlockEntity(event.getEntity().blockPosition(), GRAVE.block().get().defaultBlockState());
+		NonNullList<ItemStack> items = NonNullList.create();
+		items.addAll(player.getInventory().items);
+		items.addAll(player.getInventory().armor);
+		items.addAll(player.getInventory().offhand);
+		graveBlockEntity.setItems(items);
+		int xpDropped = PlayerExperience.getExperienceOnDeath(player, true);
+		graveBlockEntity.setXpStored(xpDropped);
+		player.getLevel().setBlockEntity(graveBlockEntity);
+		player.setExperienceLevels(0);
+		player.setExperiencePoints(0);
+		player.getInventory().clearContent();
+		/*Zombie zombie = EntityType.ZOMBIE.create(player.getLevel());
 		if (zombie == null)
 			return;
 		zombie.setPos(player.position());
@@ -109,7 +123,7 @@ public class Death extends Feature {
 		player.setExperiencePoints(0);
 		player.level.addFreshEntity(zombie);
 		player.getInventory().clearContent();
-		player.getPersistentData().putUUID(LAST_GHOST_UUID, zombie.getUUID());
+		player.getPersistentData().putUUID(LAST_GHOST_UUID, zombie.getUUID());*/
 	}
 
 	//Remove targeting goal. Only attack players that attack the ghost
@@ -129,14 +143,14 @@ public class Death extends Feature {
 				|| !event.getEntity().getPersistentData().contains(PLAYER_GHOST))
 			return;
 
-		ListTag listTag = event.getEntity().getPersistentData().getList(ITEMS_TO_DROP, Tag.TAG_COMPOUND);
+		/*ListTag listTag = event.getEntity().getPersistentData().getList(ITEMS_TO_DROP, Tag.TAG_COMPOUND);
 		for (Tag tag : listTag) {
 			if (tag instanceof CompoundTag compoundTag) {
 				ItemStack stack = ItemStack.of(compoundTag);
 				ItemEntity itemEntity = new ItemEntity(event.getEntity().getLevel(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), stack);
 				event.getEntity().level.addFreshEntity(itemEntity);
 			}
-		}
+		}*/
 		int experienceToDrop = event.getEntity().getPersistentData().getInt(XP_TO_DROP);
 		if (experienceToDrop > 0) {
 			ExperienceOrb xpOrb = new ExperienceOrb(event.getEntity().level, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), experienceToDrop);
@@ -145,7 +159,7 @@ public class Death extends Feature {
 		}
 	}
 
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void onGhostRightClick(PlayerInteractEvent.EntityInteract event) {
 		if (!event.getTarget().getPersistentData().contains(PLAYER_GHOST)
 			|| event.getEntity().level.isClientSide)
@@ -163,7 +177,7 @@ public class Death extends Feature {
 		InteractWithGhostTrigger.TRIGGER.trigger((ServerPlayer) event.getEntity());
 		if (event.getTarget().getPersistentData().getInt(XP_TO_DROP) <= 0)
 			event.getTarget().kill();
-	}
+	}*/
 
 	@SubscribeEvent
 	public void onEntityTick(LivingEvent.LivingTickEvent event) {

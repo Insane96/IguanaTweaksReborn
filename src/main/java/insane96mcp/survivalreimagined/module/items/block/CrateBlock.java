@@ -116,7 +116,6 @@ public class CrateBlock extends BaseEntityBlock {
                 for(int i = 0; i < crateBlockEntity.getContainerSize(); ++i) {
                     p_56219_.accept(crateBlockEntity.getItem(i));
                 }
-
             });
         }
 

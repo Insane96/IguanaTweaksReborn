@@ -5,6 +5,7 @@ import insane96mcp.survivalreimagined.module.items.feature.Crate;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.items.feature.Mithril;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
+import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
 import insane96mcp.survivalreimagined.module.world.feature.Fire;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import net.minecraft.core.HolderLookup;
@@ -51,7 +52,8 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get())
                 .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get())
                 .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get())
-                .add(FlintExpansion.FLINT_BLOCK.get()).add(FlintExpansion.POLISHED_FLINT_BLOCK.get());
+                .add(FlintExpansion.FLINT_BLOCK.get()).add(FlintExpansion.POLISHED_FLINT_BLOCK.get())
+                .add(Death.GRAVE.block().get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(Crate.BLOCK.get())

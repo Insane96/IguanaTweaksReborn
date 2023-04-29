@@ -78,6 +78,7 @@
 	"block.survivalreimagined.copper_ore_rock": "Roccia di minerale di rame",
 	"block.survivalreimagined.flint_block": "Blocco di selce",
 	"block.survivalreimagined.polished_flint_block": "Blocco di selce levigato",
+	"block.survivalreimagined.grave": "Tomba",
 
 	"block.survivalreimagined.crate": "Cassa",
 	"survivalreimagined.crate_weighted": "Rallenta chi ne trasporta %d o più",
