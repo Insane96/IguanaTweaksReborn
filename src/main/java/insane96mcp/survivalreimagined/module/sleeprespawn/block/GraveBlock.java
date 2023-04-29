@@ -51,12 +51,12 @@ public class GraveBlock extends BaseEntityBlock {
         return direction.getAxis() == Direction.Axis.X ? SHAPE_X : SHAPE_Z;
     }
 
-    public BlockState getStateForPlacement(BlockPlaceContext p_48781_) {
-        return this.defaultBlockState().setValue(FACING, p_48781_.getHorizontalDirection().getClockWise());
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getClockWise());
     }
 
-    public BlockState rotate(BlockState p_48811_, Rotation p_48812_) {
-        return p_48811_.setValue(FACING, p_48812_.rotate(p_48811_.getValue(FACING)));
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_48814_) {
@@ -88,7 +88,7 @@ public class GraveBlock extends BaseEntityBlock {
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState p_49232_) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
@@ -97,7 +97,7 @@ public class GraveBlock extends BaseEntityBlock {
         if (!state.is(newState.getBlock())) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof GraveBlockEntity graveBlockEntity) {
-                Containers.dropContents(level, pos, graveBlockEntity.getItems());
+                graveBlockEntity.getItems().forEach(itemStack -> Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), itemStack));
                 int xpStored = graveBlockEntity.getXpStored();
                 if (xpStored > 0) {
                     Zombie zombie = EntityType.ZOMBIE.create(level);
@@ -115,7 +115,6 @@ public class GraveBlock extends BaseEntityBlock {
                         zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(1d);
                     MCUtils.applyModifier(zombie, Attributes.MOVEMENT_SPEED, Death.MOVEMENT_SPEED_BONUS, "Ghost movement speed bonus", 0.5d, AttributeModifier.Operation.MULTIPLY_BASE, true);
                     MCUtils.applyModifier(zombie, Attributes.ATTACK_DAMAGE, Death.ATTACK_DAMAGE_BONUS, "Ghost attack damage bonus", 1d, AttributeModifier.Operation.ADDITION, true);
-                    MCUtils.applyModifier(zombie, Attributes.MAX_HEALTH, Death.ATTACK_DAMAGE_BONUS, "Ghost health bonus", 10d, AttributeModifier.Operation.ADDITION, true);
                     zombie.setSilent(true);
                     zombie.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, -1, 0, false, false, false));
                     zombie.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, -1, 0, false, false, false));

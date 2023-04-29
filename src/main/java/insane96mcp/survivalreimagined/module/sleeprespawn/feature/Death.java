@@ -13,7 +13,6 @@ import insane96mcp.survivalreimagined.module.experience.feature.PlayerExperience
 import insane96mcp.survivalreimagined.module.sleeprespawn.block.GraveBlock;
 import insane96mcp.survivalreimagined.module.sleeprespawn.block.GraveBlockEntity;
 import insane96mcp.survivalreimagined.setup.SRBlockEntityTypes;
-import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -36,6 +35,8 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -73,15 +74,23 @@ public class Death extends Feature {
 		player.getLevel().setBlock(player.blockPosition(), GRAVE.block().get().defaultBlockState(), 3);
 		if (player.getLevel().getBlockState(player.blockPosition().below()).canBeReplaced())
 			player.getLevel().setBlock(player.blockPosition().below(), Blocks.COARSE_DIRT.defaultBlockState(), 3);
-		GraveBlockEntity graveBlockEntity = new GraveBlockEntity(event.getEntity().blockPosition(), GRAVE.block().get().defaultBlockState());
-		NonNullList<ItemStack> items = NonNullList.create();
-		items.addAll(player.getInventory().items);
-		items.addAll(player.getInventory().armor);
-		items.addAll(player.getInventory().offhand);
+		GraveBlockEntity graveBlockEntity = (GraveBlockEntity) player.getLevel().getBlockEntity(player.blockPosition());
+		List<ItemStack> items = new ArrayList<>();
+		player.getInventory().items.forEach(itemStack -> {
+			if (!itemStack.isEmpty())
+				items.add(itemStack);
+		});
+		player.getInventory().armor.forEach(itemStack -> {
+			if (!itemStack.isEmpty())
+				items.add(itemStack);
+		});
+		player.getInventory().offhand.forEach(itemStack -> {
+			if (!itemStack.isEmpty())
+				items.add(itemStack);
+		});
 		graveBlockEntity.setItems(items);
 		int xpDropped = PlayerExperience.getExperienceOnDeath(player, true);
 		graveBlockEntity.setXpStored(xpDropped);
-		player.getLevel().setBlockEntity(graveBlockEntity);
 		player.setExperienceLevels(0);
 		player.setExperiencePoints(0);
 		player.getInventory().clearContent();
