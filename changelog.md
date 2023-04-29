@@ -3,6 +3,7 @@
 ## Alpha 3.8.0
 * Changed death (again)
   * Dieing now summons a grave. Breaking the grave will give back your items and summon the players' ghost with the xp, like before.
+  * As before, if you die again, the grave breaks
 * Respawning now happens in a min and max radius from world spawn/your bed
   * Instead of respawning from 0 to 256 blocks from the spawn point you'll now respawn from 128 to 256 blocks from spawn
   * Fixed respawning in lava

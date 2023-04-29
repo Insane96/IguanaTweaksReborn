@@ -23,6 +23,8 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -34,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GraveBlock extends BaseEntityBlock {
+public class GraveBlock extends BaseEntityBlock implements EntityBlock {
     protected static final VoxelShape SHAPE_X = Block.box(3.0D, 0.0D, 6.0D, 13.0D, 12.0D, 10.0d);
     protected static final VoxelShape SHAPE_Z = Block.box(6.0D, 0.0D, 3.0D, 10.0D, 12.0D, 13.0d);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -92,11 +94,13 @@ public class GraveBlock extends BaseEntityBlock {
         return RenderShape.MODEL;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean p_60519_) {
         if (!state.is(newState.getBlock())) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof GraveBlockEntity graveBlockEntity) {
+                //TODO Make items drop like if the player died (more sparse) and set despawn timer to 90 seconds
                 graveBlockEntity.getItems().forEach(itemStack -> Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), itemStack));
                 int xpStored = graveBlockEntity.getXpStored();
                 if (xpStored > 0) {
@@ -128,5 +132,11 @@ public class GraveBlock extends BaseEntityBlock {
 
             super.onRemove(state, level, pos, newState, p_60519_);
         }
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        return blockEntityType == Death.GRAVE_BLOCK_ENTITY_TYPE.get() && !level.isClientSide ? GraveBlockEntity::serverTick : null;
     }
 }
