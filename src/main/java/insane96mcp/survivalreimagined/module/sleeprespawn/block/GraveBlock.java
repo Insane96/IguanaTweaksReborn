@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
@@ -113,6 +115,7 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
                     zombie.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, 0d);
                     zombie.getPersistentData().putBoolean(Death.PLAYER_GHOST, true);
                     zombie.getPersistentData().putBoolean(EAStrings.Tags.Zombie.MINER, true);
+                    zombie.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_PICKAXE));
                     zombie.getPersistentData().putBoolean("mobspropertiesrandomness:processed", true);
                     //zombie.setCustomName(Component.translatable(Death.PLAYER_GHOST_LANG, player.getName().getString()));
                     if (zombie.getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null)
