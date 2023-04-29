@@ -4,6 +4,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
@@ -16,8 +17,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -40,11 +44,11 @@ public class Respawn extends SRFeature {
 
 	@Config(min = 0)
 	@Label(name = "Loose World Spawn Range", description = "The range from world spawn where players will respawn.")
-	public static Double looseWorldSpawnRange = 256d;
+	public static MinMax looseWorldSpawnRange = new MinMax(128d, 256d);
 
 	@Config(min = 0)
 	@Label(name = "Loose Bed Spawn Range", description = "The range from beds where players will respawn.")
-	public static Double looseBedSpawnRange = 256d;
+	public static MinMax looseBedSpawnRange = new MinMax(128d, 192d);
 
 	public static final RegistryObject<RespawnObeliskBlock> RESPAWN_OBELISK = SRBlocks.REGISTRY.register("respawn_obelisk", () -> new RespawnObeliskBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops().strength(50.0F, 1200.0F).lightLevel(RespawnObeliskBlock::lightLevel)));
 
@@ -92,7 +96,7 @@ public class Respawn extends SRFeature {
 
 	@Nullable
 	private BlockPos looseWorldSpawn(PlayerEvent.PlayerRespawnEvent event) {
-		if (looseWorldSpawnRange == 0d
+		if (looseWorldSpawnRange.min == 0d
 				|| event.getEntity().isSpectator())
 			return null;
 		ServerPlayer player = (ServerPlayer) event.getEntity();
@@ -100,23 +104,12 @@ public class Respawn extends SRFeature {
 		if (pos != null)
 			return null;
 
-		BlockPos respawn = BlockPos.randomInCube(player.getLevel().getRandom(), 1, player.getLevel().getSharedSpawnPos(), looseWorldSpawnRange.intValue()).iterator().next();
-		int y = player.getLevel().getMaxBuildHeight();
-		while (y > player.getLevel().getMinBuildHeight()) {
-			respawn = new BlockPos(respawn.getX(), y - 1, respawn.getZ());
-			BlockState state = player.getLevel().getBlockState(respawn);
-			if (state.getMaterial().blocksMotion() || !state.getFluidState().isEmpty()) {
-				respawn = new BlockPos(respawn.getX(), y, respawn.getZ());
-				break;
-			}
-			y--;
-		}
-		return respawn;
+		return getSpawnPositionInRange(player.level.getSharedSpawnPos(), looseWorldSpawnRange, player.level, player.level.random);
 	}
 
 	@Nullable
 	private BlockPos looseBedSpawn(PlayerEvent.PlayerRespawnEvent event) {
-		if (looseBedSpawnRange == 0d
+		if (looseBedSpawnRange.min == 0d
 				|| event.getEntity().isSpectator())
 			return null;
 		ServerPlayer player = (ServerPlayer) event.getEntity();
@@ -125,18 +118,43 @@ public class Respawn extends SRFeature {
 				|| !event.getEntity().getLevel().getBlockState(pos).is(BlockTags.BEDS))
 			return null;
 
-		BlockPos respawn = BlockPos.randomInCube(player.getLevel().getRandom(), 1, pos, looseWorldSpawnRange.intValue()).iterator().next();
-		int y = player.getLevel().getMaxBuildHeight();
-		while (y > player.getLevel().getMinBuildHeight()) {
-			respawn = new BlockPos(respawn.getX(), y - 1, respawn.getZ());
-			BlockState state = player.getLevel().getBlockState(respawn);
-			if (state.getMaterial().blocksMotion() || !state.getFluidState().isEmpty()) {
-				respawn = new BlockPos(respawn.getX(), y, respawn.getZ());
-				break;
-			}
-			y--;
+		return getSpawnPositionInRange(pos, looseBedSpawnRange, player.level, player.level.random);
+	}
+
+	private BlockPos getSpawnPositionInRange(BlockPos center, MinMax minMax, Level level, RandomSource random) {
+		/*double angle = random.nextDouble() * Math.PI * 2d;
+		double x = (Math.cos(angle) * (Mth.nextDouble(random, minMax.min, minMax.max)));
+		for (int i = 0; i < 100; i++) {
+			LogHelper.info("%s".formatted(Math.cos(angle) * (Mth.nextDouble(random, minMax.min, minMax.max))));
 		}
-		return respawn;
+		double z = (Math.sin(angle) * (Mth.nextDouble(random, minMax.min, minMax.max)));*/
+		double minSqr = minMax.min * minMax.min;
+		double maxSqr = minMax.max * minMax.max;
+		int x, y, z;
+		BlockState stateBelow;
+		BlockPos.MutableBlockPos respawn = new BlockPos.MutableBlockPos();
+		boolean foundValidY = false;
+		do {
+			do {
+				x = random.nextInt((int) -minMax.max, (int) minMax.max);
+				z = random.nextInt((int) -minMax.max, (int) minMax.max);
+			} while (x * x + z * z > maxSqr || x * x + z * z < minSqr);
+			y = level.getMaxBuildHeight();
+			do {
+				respawn.set(x + center.getX(), y, z + center.getZ());
+				stateBelow = level.getBlockState(respawn.below());
+				//Discard if there's lava below
+				if (stateBelow.getFluidState().is(FluidTags.LAVA))
+					break;
+				if (stateBelow.getMaterial().blocksMotion() || !stateBelow.getFluidState().isEmpty()) {
+					foundValidY = true;
+					break;
+				}
+				y--;
+			} while (y > level.getMinBuildHeight());
+		} while (!foundValidY);
+
+		return respawn.immutable();
 	}
 
 	private void tryRespawnObelisk(PlayerEvent.PlayerRespawnEvent event) {
@@ -153,7 +171,7 @@ public class Respawn extends SRFeature {
 	public void onSetSpawnLooseMessage(PlayerSetSpawnEvent event) {
 		if (!this.isEnabled()
 				|| event.isForced()
-				|| looseBedSpawnRange == 0d
+				|| looseBedSpawnRange.min == 0d
 				|| event.getNewSpawn() == null
 				|| !event.getEntity().getLevel().getBlockState(event.getNewSpawn()).is(BlockTags.BEDS))
 			return;

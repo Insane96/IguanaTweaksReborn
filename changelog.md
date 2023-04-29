@@ -3,6 +3,9 @@
 ## Alpha 3.8.0
 * Changed death (again)
   * Dieing now summons a grave. Breaking the grave will give back your items and summon the players' ghost with the xp, like before.
+* Respawning now happens in a min and max radius from world spawn/your bed
+  * Instead of respawning from 0 to 256 blocks from the spawn point you'll now respawn from 128 to 256 blocks from spawn
+  * Fixed respawning in lava
 * Changed Beeg Veins feature to Ore Generation feature
   * Added Poor and Rich iron, gold and copper ores. The veins of these ores now generate randomly with poor, normal and rich ores
     * Poor ores drop 50% stuff while rich drops 200%
