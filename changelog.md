@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.8.0
 * Changed death (again)
   * Dieing now summons a grave. Breaking the grave will give back your items and summon the players' ghost with the xp, like before.
 * Changed Beeg Veins feature to Ore Generation feature
