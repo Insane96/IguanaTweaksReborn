@@ -10,6 +10,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.module.world.block.PilableLayerBlock;
 import insane96mcp.survivalreimagined.module.world.entity.PilableFallingLayerEntity;
+import insane96mcp.survivalreimagined.module.world.item.FirestarterItem;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRBlocks;
 import insane96mcp.survivalreimagined.setup.SRItems;
@@ -18,6 +19,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -25,6 +27,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -34,6 +37,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -46,13 +50,15 @@ public class Fire extends Feature {
     public static final RegistryObject<Block> CHARCOAL_LAYER = SRBlocks.REGISTRY.register("charcoal_layer", () -> new PilableLayerBlock(BlockBehaviour.Properties.of(Material.MOSS, MaterialColor.COLOR_BLACK).strength(0.5F).sound(SoundType.MOSS_CARPET).isViewBlocking((state, blockGetter, pos) -> state.getValue(PilableLayerBlock.LAYERS) >= 8), Items.CHARCOAL));
     public static final RegistryObject<BlockItem> CHARCOAL_LAYER_ITEM = SRItems.REGISTRY.register("charcoal_layer", () -> new BlockItem(CHARCOAL_LAYER.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> FIRESTARTER = SRItems.REGISTRY.register("firestarter", () -> new FirestarterItem(new Item.Properties().stacksTo(1).defaultDurability(11)));
+
     @Config(min = 0d, max = 100)
     @Label(name = "Fire spread speed multiplier", description = "How much faster fire ticks and spreads.")
     public static Double fireSpreadSpeedMultiplier = 4d;
 
     @Config(min = 0d, max = 1d)
     @Label(name = "Charcoal from burnt logs chance", description = "Chance for logs to release charcoal when burnt")
-    public static Double charcoalFromBurntLogsChance = 0.75d;
+    public static Double charcoalFromBurntLogsChance = 0.8d;
 
     @Config
     @Label(name = "Disable Charcoal Smelting", description = "If enabled, a data pack will be enabled that removes the Charcoal recipe from smelting")
@@ -69,11 +75,16 @@ public class Fire extends Feature {
     public static Double twoFlintFireStarterIgniteChance = 0.4d;
     @Config(min = 0d, max = 1d)
     @Label(name = "Two flint fire starter.Break Chance", description = "Chance for the flint to break when using two flints")
-    public static Double twoFlintFireStarterBreakChance = 0.2d;
+    public static Double twoFlintFireStarterBreakChance = 0.25d;
+    @Config
+    @Label(name = "Unlit campfire", description = "If true, campfires must be lit")
+    public static Boolean unlitCampfires = true;
 
     public Fire(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_charcoal_smelting", net.minecraft.network.chat.Component.literal("Survival Reimagined No Charcoal Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableCharcoalSmelting));
+        Blocks.CAMPFIRE.defaultBlockState = Blocks.CAMPFIRE.defaultBlockState().setValue(CampfireBlock.LIT, Boolean.FALSE);
+        Blocks.SOUL_CAMPFIRE.defaultBlockState = Blocks.SOUL_CAMPFIRE.defaultBlockState().setValue(CampfireBlock.LIT, Boolean.FALSE);
     }
 
     @SubscribeEvent
@@ -145,8 +156,27 @@ public class Fire extends Feature {
         }
     }
 
+    protected static BlockHitResult getPlayerPOVHitResult(Level p_41436_, Player p_41437_, ClipContext.Fluid p_41438_) {
+        float f = p_41437_.getXRot();
+        float f1 = p_41437_.getYRot();
+        Vec3 vec3 = p_41437_.getEyePosition();
+        float f2 = Mth.cos(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
+        float f3 = Mth.sin(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
+        float f4 = -Mth.cos(-f * ((float)Math.PI / 180F));
+        float f5 = Mth.sin(-f * ((float)Math.PI / 180F));
+        float f6 = f3 * f4;
+        float f7 = f2 * f4;
+        double d0 = p_41437_.getBlockReach();
+        Vec3 vec31 = vec3.add((double)f6 * d0, (double)f5 * d0, (double)f7 * d0);
+        return p_41436_.clip(new ClipContext(vec3, vec31, ClipContext.Block.OUTLINE, p_41438_, p_41437_));
+    }
+
     public static boolean changeFireSpreadSpeed() {
         return Feature.isEnabled(Fire.class) && fireSpreadSpeedMultiplier != 1d;
+    }
+
+    public static boolean areCampfiresUnlit() {
+        return Feature.isEnabled(Fire.class) && unlitCampfires;
     }
 
     @SubscribeEvent

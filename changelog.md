@@ -26,6 +26,9 @@
   * Jumping now consumes stamina
   * Tired effect now affects stamina consumption
   * Swimming now consumes less stamina
+* Fire
+  * Added Firestarter, made with 2 flints and one iron ingot
+  * Campfires now come unlit and must be lit
 * Florpium is now Mithril
 * Skeletons now have a chance to spawn with bow ingredients instead of bows
 * Coal is now minable only with tools that can mine diamonds

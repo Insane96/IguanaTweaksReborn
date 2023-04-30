@@ -5,6 +5,7 @@ import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeat
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
+import insane96mcp.survivalreimagined.module.world.feature.Fire;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -217,6 +218,12 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(Items.RED_MUSHROOM, 2)
                 .unlockedBy("has_bowl", has(Items.BOWL))
                 .unlockedBy("has_mushroom", has(Items.RED_MUSHROOM))
+                .save(writer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, Fire.FIRESTARTER.get())
+                .requires(Items.FLINT, 2)
+                .requires(Items.IRON_INGOT, 1)
+                .unlockedBy("has_iron_nugget", has(Items.IRON_NUGGET))
                 .save(writer);
 
         SimpleCookingRecipeBuilder.smelting(

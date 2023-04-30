@@ -15,4 +15,9 @@ public class EntityMixin {
         if (Misc.isFireImmune((Entity) (Object) this))
             cir.setReturnValue(true);
     }
+
+    /*@ModifyConstant(method = "updateInWaterStateAndDoFluidPushing", constant = @Constant(floatValue = 1f))
+    private float onFluidFallModifer(float waterFallDamageModifier) {
+        return Fluids.shouldOverrideWaterFallDamageModifier() ? 0.9f : waterFallDamageModifier;
+    }*/
 }
