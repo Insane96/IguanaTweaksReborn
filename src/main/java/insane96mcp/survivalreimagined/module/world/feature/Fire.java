@@ -19,7 +19,6 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -27,7 +26,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -37,7 +35,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -72,10 +69,10 @@ public class Fire extends Feature {
     public static Boolean twoFlintFireStarter = true;
     @Config(min = 0d, max = 1d)
     @Label(name = "Two flint fire starter.Ignite Chance", description = "Chance to ignite a block when using two flints")
-    public static Double twoFlintFireStarterIgniteChance = 0.4d;
+    public static Double twoFlintFireStarterIgniteChance = 0.35d;
     @Config(min = 0d, max = 1d)
     @Label(name = "Two flint fire starter.Break Chance", description = "Chance for the flint to break when using two flints")
-    public static Double twoFlintFireStarterBreakChance = 0.25d;
+    public static Double twoFlintFireStarterBreakChance = 0.3d;
     @Config
     @Label(name = "Unlit campfire", description = "If true, campfires must be lit")
     public static Boolean unlitCampfires = true;
@@ -154,21 +151,6 @@ public class Fire extends Feature {
             event.getEntity().broadcastBreakEvent(InteractionHand.OFF_HAND);
             net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(event.getEntity(), event.getEntity().getOffhandItem(), InteractionHand.OFF_HAND);
         }
-    }
-
-    protected static BlockHitResult getPlayerPOVHitResult(Level p_41436_, Player p_41437_, ClipContext.Fluid p_41438_) {
-        float f = p_41437_.getXRot();
-        float f1 = p_41437_.getYRot();
-        Vec3 vec3 = p_41437_.getEyePosition();
-        float f2 = Mth.cos(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
-        float f3 = Mth.sin(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
-        float f4 = -Mth.cos(-f * ((float)Math.PI / 180F));
-        float f5 = Mth.sin(-f * ((float)Math.PI / 180F));
-        float f6 = f3 * f4;
-        float f7 = f2 * f4;
-        double d0 = p_41437_.getBlockReach();
-        Vec3 vec31 = vec3.add((double)f6 * d0, (double)f5 * d0, (double)f7 * d0);
-        return p_41436_.clip(new ClipContext(vec3, vec31, ClipContext.Block.OUTLINE, p_41438_, p_41437_));
     }
 
     public static boolean changeFireSpreadSpeed() {

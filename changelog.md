@@ -3,7 +3,7 @@
 ## Alpha 3.8.0
 * Changed death (again)
   * Dieing now summons a grave. Breaking the grave will give back your items and summon the players' ghost with the xp, like before.
-  * As before, if you die again, the grave breaks
+  * As before, if you die again, the grave breaks, dropping everthing
 * Respawning now happens in a min and max radius from world spawn/your bed
   * Instead of respawning from 0 to 256 blocks from the spawn point you'll now respawn from 128 to 256 blocks from spawn
   * Fixed respawning in lava
@@ -19,6 +19,9 @@
   * Use bonemeal on farmland or crouching on crops to transform it into rich farmland. This farmland ticks 3 times faster than normal farmland
 * Added Fast Leaf Decay
   * Leaves decay faster
+* Fire
+  * Added Firestarter, made with 2 flints and one iron ingot
+  * Campfires now come unlit and must be lit
 * Tiredness
   * Tired effect no longer adds Fog, instead adds an overlay on the screen reducing sight
   * Tiredness now comes earlier but the effect takes more time to come
@@ -26,9 +29,6 @@
   * Jumping now consumes stamina
   * Tired effect now affects stamina consumption
   * Swimming now consumes less stamina
-* Fire
-  * Added Firestarter, made with 2 flints and one iron ingot
-  * Campfires now come unlit and must be lit
 * Florpium is now Mithril
 * Skeletons now have a chance to spawn with bow ingredients instead of bows
 * Coal is now minable only with tools that can mine diamonds

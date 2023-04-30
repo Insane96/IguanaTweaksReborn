@@ -14,7 +14,7 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/flint_pickaxe",
+	"parent": "survivalreimagined:story/charcoal",
 	"criteria": {
 		"campfire": {
 			"trigger": "minecraft:inventory_changed",

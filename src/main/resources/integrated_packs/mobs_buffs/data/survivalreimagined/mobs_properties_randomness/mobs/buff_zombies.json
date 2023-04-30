@@ -18,7 +18,7 @@
             "id": "minecraft:generic.movement_speed",
             "modifier_name": "More Speed for Mobs",
             "amount": {
-                "value": 0.075,
+                "value": 0.08,
                 "difficulty_modifier": {
                     "operation": "multiply",
                     "easy": 0.5,
@@ -33,8 +33,21 @@
             "operation": "multiply_base"
         },
         {
+            "id": "minecraft:generic.follow_range",
+            "modifier_name": "More Follow Range for Mobs",
+            "amount": {
+                "value": 8,
+                "difficulty_modifier": {
+                    "operation": "multiply",
+                    "easy": 0.5,
+                    "hard": 1.5
+                }
+            },
+            "operation": "addition"
+        },
+        {
             "id": "enhancedai:generic.xray_follow_range",
-            "chance": 0.25,
+            "chance": 0.333,
             "modifier_name": "More XRay Range for Mobs",
             "amount": {
                 "value": 24,
