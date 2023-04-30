@@ -125,6 +125,10 @@ public class TerrainSlowdown extends SRFeature {
 						}
 					}
 				}
+				if ((state.getMaterial() == Material.SNOW || state.getMaterial() == Material.TOP_SNOW)
+						&& event.player.getItemBySlot(EquipmentSlot.FEET).is(Items.LEATHER_BOOTS)
+						&& preventSnowSlowdownWithLeatherBoots)
+					continue;
 				onTerrainSlowdown += blockSlowdown;
 			}
 		}
@@ -151,6 +155,10 @@ public class TerrainSlowdown extends SRFeature {
 							break;
 						}
 					}
+					if ((state.getMaterial() == Material.SNOW || state.getMaterial() == Material.TOP_SNOW)
+							&& event.player.getItemBySlot(EquipmentSlot.FEET).is(Items.LEATHER_BOOTS)
+							&& preventSnowSlowdownWithLeatherBoots)
+						continue;
 					inTerrainSlowdown += blockSlowdown;
 				}
 			}
