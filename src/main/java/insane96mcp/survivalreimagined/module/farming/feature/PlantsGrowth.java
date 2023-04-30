@@ -99,21 +99,37 @@ public class PlantsGrowth extends SRFeature {
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:wheat")
 					.setNoSunglightMultipler(2f, 10)
 					.addSeasonMultiplier(Season.WINTER, 0f)
-					.addSeasonMultiplier(Season.SPRING, 0f).build(),
+					.addSeasonMultiplier(Season.SPRING, 0f)
+					.setGrowthBiomes(List.of(
+							new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_cold")),
+					3f)
+					.inverseCorrectBiomes().build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:potatoes")
 					.setNoSunglightMultipler(2f, 10)
 					.addSeasonMultiplier(Season.WINTER, 0f)
 					.addSeasonMultiplier(Season.AUTUMN, 0f)
-					.addSeasonMultiplier(Season.SUMMER, 0f).build(),
+					.addSeasonMultiplier(Season.SUMMER, 0f)
+					.setGrowthBiomes(List.of(
+							new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_cold")),
+					3f)
+					.inverseCorrectBiomes().build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:beetroots")
 					.setNoSunglightMultipler(2f, 10)
 					.addSeasonMultiplier(Season.WINTER, 0f)
 					.addSeasonMultiplier(Season.SPRING, 0f)
-					.addSeasonMultiplier(Season.SUMMER, 0f).build(),
+					.addSeasonMultiplier(Season.SUMMER, 0f)
+					.setGrowthBiomes(List.of(
+									new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_cold")),
+							2f)
+					.inverseCorrectBiomes().build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:carrots")
 					.setNoSunglightMultipler(2f, 10)
 					.addSeasonMultiplier(Season.WINTER, 0f)
-					.addSeasonMultiplier(Season.SUMMER, 0f).build()
+					.addSeasonMultiplier(Season.SUMMER, 0f)
+					.setGrowthBiomes(List.of(
+									new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_cold")),
+							2f)
+					.inverseCorrectBiomes().build()
 	));
 	public static final ArrayList<PlantGrowthModifier> plantsList = new ArrayList<>();
 
