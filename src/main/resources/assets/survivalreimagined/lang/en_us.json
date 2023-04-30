@@ -193,5 +193,9 @@
 	"advancements.sr_story.altimeter.description": "Craft an Altimeter to roughly know your height. Each layer on the Altimeter represents 32 blocks from Bedrock.",
 	"advancements.sr_story.diamond_armor.description": "Equip a full set of diamond armor by upgrading Gold armor in an anvil.",
 	"advancements.sr_story.firestarter.title": "Starting Fires",
-	"advancements.sr_story.firestarter.description": "Craft a Firestarter to create fire more consistently. Each layer on the Altimeter represents 32 blocks from Bedrock."
+	"advancements.sr_story.firestarter.description": "Craft a Firestarter to create fire more consistently.",
+	"advancements.sr_story.rich_farmland.title": "Better use for Bone Neal",
+	"advancements.sr_story.rich_farmland.description": "Use Bone Meal on Farmland (or on crops while chrouching) to create Rich Farmland. Rich farmland makes crops grow faster, but decays after a while.",
+	"advancements.sr_story.anvil_transform_block.title": "Anvils are heavy",
+	"advancements.sr_story.anvil_transform_block.description": "Make an anvil fall on a block to make another block."
 }

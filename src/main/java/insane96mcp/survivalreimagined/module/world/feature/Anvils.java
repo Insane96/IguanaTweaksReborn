@@ -6,11 +6,15 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.insanelib.util.LogHelper;
 import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.data.trigger.AnvilTransformBlockTrigger;
 import insane96mcp.survivalreimagined.event.FallingBlockLandEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.world.data.AnvilTransformation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -49,6 +53,15 @@ public class Anvils extends SRFeature {
                     LogHelper.warn("[Anvil Transformation] %s is not a valid block".formatted(anvilTransformation.to));
                 }
                 event.getFallingBlock().level.setBlock(event.getFallingBlock().getOnPos(), block.defaultBlockState(), 3);
+
+                if (event.getEntity().level instanceof ServerLevel serverLevel) {
+                    AABB aabb = event.getEntity().getBoundingBox().inflate(4d);
+                    for(ServerPlayer player : serverLevel.players()) {
+                        if (aabb.contains(player.getX(), player.getY(), player.getZ())) {
+                            AnvilTransformBlockTrigger.TRIGGER.trigger(player);
+                        }
+                    }
+                }
                 break;
             }
         }

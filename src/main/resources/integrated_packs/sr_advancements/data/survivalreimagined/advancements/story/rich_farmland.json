@@ -1,0 +1,42 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:rich_farmland"
+		},
+		"title": {
+			"translate": "advancements.sr_story.rich_farmland.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.rich_farmland.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/furnace",
+	"criteria": {
+		"rich_farmland": {
+			"trigger": "minecraft:using_item",
+			"conditions": {
+				"player": [
+					{
+						"condition": "minecraft:block_state_property",
+						"block": "minecraft:farmland",
+						"properties": {}
+					}
+				],
+				"item": {
+					"items": [
+						"minecraft:bone_meal"
+					]
+				}
+			}
+		}
+	},
+	"requirements": [
+		[
+			"rich_farmland"
+		]
+	]
+}
