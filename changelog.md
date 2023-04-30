@@ -29,6 +29,7 @@
   * Jumping now consumes stamina
   * Tired effect now affects stamina consumption
   * Swimming now consumes less stamina
+* Snow no longer slows down the player if he's wearing Leather Boots
 * Florpium is now Mithril
 * Skeletons now have a chance to spawn with bow ingredients instead of bows
 * Coal is now minable only with tools that can mine diamonds
