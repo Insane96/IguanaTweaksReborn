@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.module.movement.feature;
 
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.insanelib.util.MCUtils;
@@ -11,9 +12,12 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.movement.data.MaterialSlowdown;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.event.TickEvent;
@@ -49,6 +53,10 @@ public class TerrainSlowdown extends SRFeature {
 	public static ArrayList<MaterialSlowdown> materialOnSlowdown;
 	public static ArrayList<MaterialSlowdown> materialInSlowdown;
 
+	@Config
+	@Label(name = "Prevent Snow slowdown with Leather Boots")
+	public static Boolean preventSnowSlowdownWithLeatherBoots = true;
+
 	public TerrainSlowdown(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
@@ -82,7 +90,6 @@ public class TerrainSlowdown extends SRFeature {
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
 				|| event.phase != TickEvent.Phase.START
-				|| (event.player.tickCount + event.player.getId()) % 2 != 0
 				|| !event.player.isOnGround())
 			return;
 
@@ -96,6 +103,10 @@ public class TerrainSlowdown extends SRFeature {
 			for (int z2 = mZ; z2 < bb.maxZ; z2++) {
 				BlockState state = event.player.level.getBlockState(BlockPos.containing(x2, event.player.position().y - 0.02d, z2));
 				if (state.isAir() || !state.getMaterial().blocksMotion())
+					continue;
+				if ((state.getMaterial() == Material.SNOW || state.getMaterial() == Material.TOP_SNOW)
+						&& event.player.getItemBySlot(EquipmentSlot.FEET).is(Items.LEATHER_BOOTS)
+						&& preventSnowSlowdownWithLeatherBoots)
 					continue;
 				double blockSlowdown = 0d;
 				for (IdTagValue idTagValue : customTerrainSlowdown) {
@@ -127,6 +138,10 @@ public class TerrainSlowdown extends SRFeature {
 				for (int z2 = mZ; z2 < bb.maxZ; z2++) {
 					BlockState state = event.player.level.getBlockState(new BlockPos(x2, y2, z2));
 					if (state.isAir())
+						continue;
+					if ((state.getMaterial() == Material.SNOW || state.getMaterial() == Material.TOP_SNOW)
+							&& event.player.getItemBySlot(EquipmentSlot.FEET).is(Items.LEATHER_BOOTS)
+							&& preventSnowSlowdownWithLeatherBoots)
 						continue;
 					double blockSlowdown = 0d;
 					for (MaterialSlowdown materialIn : materialInSlowdown) {
