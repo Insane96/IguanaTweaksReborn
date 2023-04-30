@@ -25,6 +25,7 @@ public class PlantGrowthModifier extends IdTagMatcher {
 	private int minSunlightRequired = 0;
 	private float nightTimeMultiplier = 1f;
 	private List<IdTagMatcher> correctBiomes = new ArrayList<>();
+	private boolean invertCorrectBiomes = false;
 	private float wrongBiomeMultiplier = 1f;
 	public final List<SeasonMultiplier> seasonsMultipliers = new ArrayList<>();
 
@@ -59,7 +60,8 @@ public class PlantGrowthModifier extends IdTagMatcher {
 					break;
 				}
 			}
-			if (!isInCorrectBiome)
+			//If is not in correct biome or if is but the correct biomes becomes wrong biomes
+			if (!isInCorrectBiome || this.invertCorrectBiomes)
 				multiplier *= this.wrongBiomeMultiplier;
 		}
 		if (!this.seasonsMultipliers.isEmpty()) {
@@ -100,6 +102,11 @@ public class PlantGrowthModifier extends IdTagMatcher {
 		public Builder setGrowthBiomes(List<IdTagMatcher> biomes, float wrongBiomeMultiplier) {
 			this.plantGrowthModifier.correctBiomes = new ArrayList<>(biomes);
 			this.plantGrowthModifier.wrongBiomeMultiplier = wrongBiomeMultiplier;
+			return this;
+		}
+
+		public Builder inverseCorrectBiomes() {
+			this.plantGrowthModifier.invertCorrectBiomes = !this.plantGrowthModifier.invertCorrectBiomes;
 			return this;
 		}
 
@@ -167,6 +174,7 @@ public class PlantGrowthModifier extends IdTagMatcher {
 					plantGrowthModifier.correctBiomes.add(biome);
 				}
 				plantGrowthModifier.wrongBiomeMultiplier = GsonHelper.getAsFloat(json.getAsJsonObject(), "wrong_biome_multiplier");
+				plantGrowthModifier.invertCorrectBiomes = GsonHelper.getAsBoolean(json.getAsJsonObject(), "inverse_correct_biomes", false);
 			}
 			JsonArray aSeasonsMultipliers = GsonHelper.getAsJsonArray(json.getAsJsonObject(), "season_multipliers", null);
 			if (aSeasonsMultipliers != null) {
@@ -207,6 +215,8 @@ public class PlantGrowthModifier extends IdTagMatcher {
 				jsonObject.add("correct_biomes", aCorrectBiomes);
 				if (src.wrongBiomeMultiplier != 1d)
 					jsonObject.addProperty("wrong_biome_multiplier", src.wrongBiomeMultiplier);
+				if (src.invertCorrectBiomes)
+					jsonObject.addProperty("inverse_correct_biomes", true);
 			}
 			if (!src.seasonsMultipliers.isEmpty()) {
 				JsonArray aSeasonMultipliers = new JsonArray();
