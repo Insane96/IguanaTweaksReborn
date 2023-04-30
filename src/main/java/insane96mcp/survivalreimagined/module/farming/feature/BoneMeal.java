@@ -14,6 +14,7 @@ import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -62,7 +63,7 @@ public class BoneMeal extends Feature {
 	 * Handles part of crops require water too
 	 */
 	@SubscribeEvent
-	public void nerfBoneMeal(BonemealEvent event) {
+	public void onBonemeal(BonemealEvent event) {
 		if (event.isCanceled()
 				|| event.getResult() == Event.Result.DENY
 				|| !this.isEnabled()
@@ -77,7 +78,7 @@ public class BoneMeal extends Feature {
 				farmlandPos = event.getPos().below();
 			if (farmlandPos != null) {
 				event.getLevel().setBlockAndUpdate(farmlandPos, RICH_FARMLAND.get().defaultBlockState().setValue(FarmBlock.MOISTURE, event.getLevel().getBlockState(farmlandPos).getValue(FarmBlock.MOISTURE)));
-				event.getEntity().swing(event.getEntity().getUsedItemHand(), true);
+				event.getEntity().swing(event.getEntity().getMainHandItem().getItem() == event.getStack().getItem() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, true);
 				event.setResult(Event.Result.ALLOW);
 				hasRichedFarmland = true;
 			}
