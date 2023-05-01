@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.8.1
 * Slabs (not double) now take half the time to break
 * Items from graves now despawn faster
 * Respawn Obelisk blocks now have a much lower chance to break
