@@ -7,7 +7,6 @@ import insane96mcp.survivalreimagined.module.misc.entity.ExplosionFallingBlockEn
 import insane96mcp.survivalreimagined.module.misc.feature.ExplosionOverhaul;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.Util;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundExplodePacket;
 import net.minecraft.server.level.ServerLevel;
@@ -271,7 +270,10 @@ public class SRExplosion extends Explosion {
 		return knockback;
 	}
 
+	@Nullable
 	public static SRExplosion explode(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Level.ExplosionInteraction explosionInteraction, boolean poofParticles) {
+		if (!(level instanceof ServerLevel serverLevel))
+			return null;
 		Explosion.BlockInteraction blockInteraction = switch (explosionInteraction) {
 			case NONE -> BlockInteraction.KEEP;
 			case BLOCK ->
@@ -281,13 +283,10 @@ public class SRExplosion extends Explosion {
 			case TNT ->
 					level.getGameRules().getBoolean(GameRules.RULE_TNT_EXPLOSION_DROP_DECAY) ? BlockInteraction.DESTROY_WITH_DECAY : BlockInteraction.DESTROY;
 		};
-		if (level instanceof ServerLevel serverLevel)
-			return explodeServer(serverLevel, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, poofParticles);
-		else
-			return explodeClient((ClientLevel) level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, poofParticles);
+		return explode(serverLevel, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, poofParticles);
 	}
 
-	public static SRExplosion explodeServer(ServerLevel level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean poofParticles) {
+	public static SRExplosion explode(ServerLevel level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean poofParticles) {
 		SRExplosion explosion = new SRExplosion(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true, true, poofParticles);
 		if (SREventFactory.onSRExplosionCreated(explosion)) return explosion;
 		explosion.gatherAffectedBlocks(!ExplosionOverhaul.disableExplosionRandomness);
@@ -308,9 +307,8 @@ public class SRExplosion extends Explosion {
 		return explosion;
 	}
 
-	public static SRExplosion explodeClient(ClientLevel level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean poofParticles) {
-		SRExplosion explosion = new SRExplosion(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true, true, poofParticles);
-		if (SREventFactory.onSRExplosionCreated(explosion)) return explosion;
-		return explosion;
-	}
+
+	//TODO Waterlog Graves
+
+	//TODO Respawn problem when you have a respawn anchor but it's disabled you can't set your bed spawn
 }

@@ -74,8 +74,8 @@ public class ExplosionOverhaul extends Feature {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void replaceExplosionWithSRExplosion(ExplosionEvent.Start event) {
 		if (!this.isEnabled()
-				|| (event.getExplosion().getExploder() != null && isBlacklisted(event.getExplosion().getExploder()))
-				|| !(event.getLevel() instanceof ServerLevel level))
+				|| !(event.getLevel() instanceof ServerLevel level)
+				|| (event.getExplosion().getExploder() != null && isBlacklisted(event.getExplosion().getExploder())))
 			return;
 
 		event.setCanceled(true);
@@ -83,7 +83,7 @@ public class ExplosionOverhaul extends Feature {
 		double y = e.getPosition().y;
 		if (e.source != null && explosionAtHalfEntity)
 			y += e.source.getBbHeight() / 2d;
-		SRExplosion.explodeServer(level, e.source, e.getDamageSource(), e.damageCalculator, e.getPosition().x, y, e.getPosition().z, e.radius, e.fire, e.blockInteraction, true);
+		SRExplosion.explode(level, e.source, e.getDamageSource(), e.damageCalculator, e.getPosition().x, y, e.getPosition().z, e.radius, e.fire, e.blockInteraction, true);
 	}
 
 	public static boolean shouldTakeReducedKnockback(Entity entity) {
