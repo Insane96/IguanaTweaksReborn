@@ -123,7 +123,6 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
         if (!state.is(newState.getBlock())) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof GraveBlockEntity graveBlockEntity) {
-                //TODO Make items drop like if the player died (more sparse) and set despawn timer to 90 seconds
                 graveBlockEntity.getItems().forEach(itemStack -> dropGraveItems(level, itemStack, pos));
                 int xpStored = graveBlockEntity.getXpStored();
                 if (xpStored > 0) {

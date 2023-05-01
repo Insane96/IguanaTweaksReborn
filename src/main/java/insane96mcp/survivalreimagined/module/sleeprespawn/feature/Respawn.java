@@ -189,7 +189,7 @@ public class Respawn extends SRFeature {
 				|| !(event.getEntity() instanceof ServerPlayer player))
 			return;
 
-		if (player.getRespawnPosition() != null && player.level.getBlockState(player.getRespawnPosition()).is(RESPAWN_OBELISK.get())
+		if (player.getRespawnPosition() != null && player.level.getBlockState(player.getRespawnPosition()).is(RESPAWN_OBELISK.get()) && player.level.getBlockState(player.getRespawnPosition()).getValue(RespawnObeliskBlock.ENABLED)
 			&& event.getNewSpawn() != null && !player.level.getBlockState(event.getNewSpawn()).is(RESPAWN_OBELISK.get())) {
 			event.setCanceled(true);
 		}
