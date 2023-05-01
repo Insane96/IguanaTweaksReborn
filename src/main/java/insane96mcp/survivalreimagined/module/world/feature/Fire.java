@@ -21,10 +21,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -35,6 +32,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -167,8 +165,7 @@ public class Fire extends Feature {
                 || !ironCoal
                 || !(event.getState().is(Blocks.COAL_ORE) || event.getState().is(Blocks.DEEPSLATE_COAL_ORE))
                 || !(event.getEntity().getMainHandItem().getItem() instanceof TieredItem tieredItem)
-                //TODO Change to TierSortingRegistry.getTiersLowerThan()
-                || tieredItem.getTier().getLevel() > 1)
+                || !TierSortingRegistry.getTiersLowerThan(Tiers.IRON).contains(tieredItem.getTier()))
             return;
 
         event.setNewSpeed(event.getNewSpeed() / 5f);

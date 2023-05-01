@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.network.message;
 
 import insane96mcp.survivalreimagined.module.combat.feature.Stats;
+import insane96mcp.survivalreimagined.module.farming.feature.PlantsGrowth;
 import insane96mcp.survivalreimagined.module.items.feature.ItemStats;
 import insane96mcp.survivalreimagined.module.items.feature.StackSizes;
 import insane96mcp.survivalreimagined.module.mining.feature.CustomHardness;
@@ -56,7 +57,8 @@ public class JsonConfigSyncMessage {
         EFFICIENCIES(ItemStats::handleEfficienciesPacket),
         ITEM_ATTRIBUTE_MODIFIERS(Stats::handleItemAttributeModifiersPacket),
         CUSTOM_FOOD_STACK_SIZES(StackSizes::handleCustomStackSizesPacket),
-        CUSTOM_BLOCK_HARDNESS(CustomHardness::handleCustomBlockHardnessPacket);
+        CUSTOM_BLOCK_HARDNESS(CustomHardness::handleCustomBlockHardnessPacket),
+        PLANTS_GROWTH(PlantsGrowth::handlePlantsGrowthPacket);
 
         final Consumer<String> consumer;
 

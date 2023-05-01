@@ -7,6 +7,7 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.data.PlantGrowthModifier;
+import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -135,8 +136,7 @@ public class PlantsGrowth extends SRFeature {
 
 	public PlantsGrowth(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		//TODO Sync to clients
-		JSON_CONFIGS.add(new JsonConfig<>("plants_growth_modifiers.json", plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("plants_growth_modifiers.json", plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.PLANTS_GROWTH));
 	}
 
 	@Override
@@ -144,6 +144,10 @@ public class PlantsGrowth extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
+	}
+
+	public static void handlePlantsGrowthPacket(String json) {
+		loadAndReadJson(json, plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE);
 	}
 
 	@SubscribeEvent
