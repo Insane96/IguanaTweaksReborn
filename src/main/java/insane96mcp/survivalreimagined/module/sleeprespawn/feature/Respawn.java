@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.util.LogHelper;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.IdTagValue;
@@ -121,6 +122,7 @@ public class Respawn extends SRFeature {
 		return getSpawnPositionInRange(pos, looseBedSpawnRange, player.level, player.level.random);
 	}
 
+	@Nullable
 	private BlockPos getSpawnPositionInRange(BlockPos center, MinMax minMax, Level level, RandomSource random) {
 		double minSqr = minMax.min * minMax.min;
 		double maxSqr = minMax.max * minMax.max;
@@ -149,6 +151,10 @@ public class Respawn extends SRFeature {
 			} while (y > level.getMinBuildHeight());
 			triesLeft--;
 		} while (!foundValidY && triesLeft > 0);
+		if (triesLeft <= 0) {
+			LogHelper.warn("Failed to find a respawn point within %s", center);
+			return null;
+		}
 
 		return respawn.immutable();
 	}
