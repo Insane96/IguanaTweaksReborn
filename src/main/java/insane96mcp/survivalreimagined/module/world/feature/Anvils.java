@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Label(name = "Anvils", description = "Make anvils usable to create blocks. Use the anvil_transformations.json file in the feature's folder to change or add block transformations.")
-@LoadFeature(module = Modules.Ids.WORLD)
+@LoadFeature(module = Modules.Ids.WORLD, enabledByDefault = false)
 public class Anvils extends SRFeature {
 
     public static final ArrayList<AnvilTransformation> ANVIL_TRANSFORMATIONS_DEFAULT = new ArrayList<>(List.of(
@@ -30,7 +30,6 @@ public class Anvils extends SRFeature {
         new AnvilTransformation(IdTagMatcher.Type.ID, "minecraft:cobblestone", "minecraft:gravel"),
             new AnvilTransformation(IdTagMatcher.Type.ID, "minecraft:gravel", "minecraft:sand"),
             new AnvilTransformation(IdTagMatcher.Type.ID, "minecraft:sandstone", "minecraft:sand")
-        //new AnvilTranformation(IdTagMatcher.Type.ID, "minecraft:sand", "minecraft:dust")
     ));
     public static final ArrayList<AnvilTransformation> anvilTransformations = new ArrayList<>();
 

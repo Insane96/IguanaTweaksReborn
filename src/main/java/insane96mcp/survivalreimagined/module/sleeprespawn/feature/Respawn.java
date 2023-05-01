@@ -56,12 +56,12 @@ public class Respawn extends SRFeature {
 	public static final RegistryObject<BlockItem> RESPAWN_OBELISK_ITEM = SRItems.REGISTRY.register("respawn_obelisk", () -> new BlockItem(RESPAWN_OBELISK.get(), new Item.Properties()));
 
 	public static final ArrayList<IdTagValue> RESPAWN_OBELISK_CATALYSTS_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_block", 0.3d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:gold_block", 0.15d),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:mithril_block", 0.05d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_block", 0.75d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:gold_block", 0.3d),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:mithril_block", 0.075d),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_block", 0.05d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:emerald_block", 0.5d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_block", 0.005d)
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:emerald_block", 0.35d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_block", 0d)
 	));
 
 	public static final ArrayList<IdTagValue> respawnObeliskCatalysts = new ArrayList<>();

@@ -51,12 +51,12 @@ public class RespawnObeliskBlock extends Block {
 
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
         if (!state.getValue(ENABLED)) {
-            boolean hasCatalyst = true;
+            boolean hasCatalyst = false;
             BlockPos.MutableBlockPos relativePos = new BlockPos.MutableBlockPos();
             for (Vec3i rel : CATALYST_RELATIVE_POSITIONS) {
                 relativePos.set(pos).move(rel);
-                if (!isBlockCatalyst(level.getBlockState(relativePos).getBlock())) {
-                    hasCatalyst = false;
+                if (isBlockCatalyst(level.getBlockState(relativePos).getBlock())) {
+                    hasCatalyst = true;
                     break;
                 }
             }
@@ -66,7 +66,7 @@ public class RespawnObeliskBlock extends Block {
             }
             else {
                 if (!level.isClientSide && hand == InteractionHand.MAIN_HAND)
-                    player.sendSystemMessage(Component.literal("Can't activate. Missing catalyst blocks."));
+                    player.sendSystemMessage(Component.literal("Can't activate. The Obelisk requires at least one catalyst block."));
                 return InteractionResult.PASS;
             }
         }
@@ -97,12 +97,12 @@ public class RespawnObeliskBlock extends Block {
     public Optional<Vec3> getRespawnPosition(BlockState state, EntityType<?> type, LevelReader levelReader, BlockPos pos, float orientation, @org.jetbrains.annotations.Nullable LivingEntity entity) {
         if (!levelReader.getBlockState(pos).getValue(RespawnObeliskBlock.ENABLED))
             return Optional.empty();
-        boolean hasCatalyst = true;
+        boolean hasCatalyst = false;
         BlockPos.MutableBlockPos relativePos = new BlockPos.MutableBlockPos();
         for (Vec3i rel : CATALYST_RELATIVE_POSITIONS) {
             relativePos.set(pos).move(rel);
-            if (!isBlockCatalyst(levelReader.getBlockState(relativePos).getBlock())) {
-                hasCatalyst = false;
+            if (isBlockCatalyst(levelReader.getBlockState(relativePos).getBlock())) {
+                hasCatalyst = true;
                 break;
             }
         }
@@ -115,19 +115,32 @@ public class RespawnObeliskBlock extends Block {
 
     public static void onObeliskRespawn(Player player, Level level, BlockPos respawnPos) {
         BlockPos.MutableBlockPos relativePos = new BlockPos.MutableBlockPos();
-        boolean hasDestroyedBlock = false;
         for (Vec3i rel : CATALYST_RELATIVE_POSITIONS) {
             relativePos.set(respawnPos).move(rel);
+            if (!isBlockCatalyst(level.getBlockState(relativePos).getBlock()))
+                continue;
             double chance = getCatalystBlockChanceToBreak(level.getBlockState(relativePos).getBlock());
             if (chance > 0d && level.getRandom().nextDouble() < chance) {
                 level.destroyBlock(relativePos, false);
-                hasDestroyedBlock = true;
+            }
+            //Try to break only one block
+            break;
+        }
+        boolean hasCatalyst = false;
+        for (Vec3i rel : CATALYST_RELATIVE_POSITIONS) {
+            relativePos.set(respawnPos).move(rel);
+            if (isBlockCatalyst(level.getBlockState(relativePos).getBlock())) {
+                hasCatalyst = true;
+                break;
             }
         }
-        if (hasDestroyedBlock) {
+        if (!hasCatalyst) {
             level.setBlock(respawnPos, level.getBlockState(respawnPos).setValue(RespawnObeliskBlock.ENABLED, false), 3);
             level.playSound(null, respawnPos.getX(), respawnPos.getY(), respawnPos.getZ(), SoundEvents.RESPAWN_ANCHOR_DEPLETE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            player.sendSystemMessage(Component.literal("Respawn Obelisk disabled because one or more catalysts have been destroyed."));
+            player.sendSystemMessage(Component.literal("Respawn Obelisk disabled because there are no catalysts left. Your respawn point has been reset"));
+            if (player instanceof ServerPlayer serverPlayer) {
+                serverPlayer.setRespawnPosition(player.level.dimension(), null, 0f, false, false);
+            }
         }
     }
 

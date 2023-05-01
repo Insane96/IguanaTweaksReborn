@@ -1,9 +1,10 @@
 # Changelog
 
 ## Alpha 3.8.1
+* Respawn obelisk now requires only at least one catalyst block to activate, and will only try to break one of the catalysts instead of each one of them. Tweaked some chances.
 * Slabs (not double) now take half the time to break
 * Items from graves now despawn faster
-* Respawn Obelisk blocks now have a much lower chance to break
+* playerSleepingPercentage gamerule is now set to 1
 * Fixes
 
 ## Alpha 3.8.0

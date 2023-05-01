@@ -161,10 +161,10 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
             return;
 
         ItemEntity itementity = new ItemEntity(level, pos.getCenter().x, pos.getCenter().y, pos.getCenter().z, stack);
-        itementity.setPickUpDelay(40);
+        //itementity.setPickUpDelay(40);
         itementity.lifespan = 2400;
 
-        float f = level.random.nextFloat() * 0.5F;
+        float f = level.random.nextFloat() * 0.25F;
         float f1 = level.random.nextFloat() * ((float)Math.PI * 2F);
         itementity.setDeltaMovement((-Mth.sin(f1) * f), 0.2F, (Mth.cos(f1) * f));
         level.addFreshEntity(itementity);
