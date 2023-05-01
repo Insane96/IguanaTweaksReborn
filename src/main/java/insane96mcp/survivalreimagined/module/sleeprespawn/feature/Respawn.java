@@ -122,12 +122,6 @@ public class Respawn extends SRFeature {
 	}
 
 	private BlockPos getSpawnPositionInRange(BlockPos center, MinMax minMax, Level level, RandomSource random) {
-		/*double angle = random.nextDouble() * Math.PI * 2d;
-		double x = (Math.cos(angle) * (Mth.nextDouble(random, minMax.min, minMax.max)));
-		for (int i = 0; i < 100; i++) {
-			LogHelper.info("%s".formatted(Math.cos(angle) * (Mth.nextDouble(random, minMax.min, minMax.max))));
-		}
-		double z = (Math.sin(angle) * (Mth.nextDouble(random, minMax.min, minMax.max)));*/
 		double minSqr = minMax.min * minMax.min;
 		double maxSqr = minMax.max * minMax.max;
 		int x, y, z;
@@ -164,6 +158,10 @@ public class Respawn extends SRFeature {
 				|| !event.getEntity().getLevel().getBlockState(pos).is(RESPAWN_OBELISK.get()))
 			return;
 
+		if (!event.getEntity().getLevel().getBlockState(pos).getValue(RespawnObeliskBlock.ENABLED)) {
+			player.sendSystemMessage(Component.literal("You couldn't respawn at the obelisk because it was disabled."));
+			return;
+		}
 		RespawnObeliskBlock.onObeliskRespawn(event.getEntity(), event.getEntity().level, pos);
 	}
 
