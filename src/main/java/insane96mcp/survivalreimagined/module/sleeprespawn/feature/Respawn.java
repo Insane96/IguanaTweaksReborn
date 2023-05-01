@@ -128,6 +128,7 @@ public class Respawn extends SRFeature {
 		BlockState stateBelow;
 		BlockPos.MutableBlockPos respawn = new BlockPos.MutableBlockPos();
 		boolean foundValidY = false;
+		int triesLeft = 1000;
 		do {
 			do {
 				x = random.nextInt((int) -minMax.max, (int) minMax.max);
@@ -146,7 +147,8 @@ public class Respawn extends SRFeature {
 				}
 				y--;
 			} while (y > level.getMinBuildHeight());
-		} while (!foundValidY);
+			triesLeft--;
+		} while (!foundValidY && triesLeft > 0);
 
 		return respawn.immutable();
 	}
