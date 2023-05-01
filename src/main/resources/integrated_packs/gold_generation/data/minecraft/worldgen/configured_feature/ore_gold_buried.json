@@ -38,7 +38,7 @@
                 "target": {
                     "predicate_type": "survivalreimagined:random_block_tag_match",
                     "tag": "minecraft:deepslate_ore_replaceables",
-                    "probability": 0.15
+                    "probability": 0.20
                 },
                 "state": {
                     "Name": "survivalreimagined:rich_deepslate_gold_ore"
