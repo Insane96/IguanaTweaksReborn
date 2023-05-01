@@ -12,6 +12,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.AbstractSkullBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.InfestedBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -38,6 +40,10 @@ public class MiningMisc extends Feature {
 	@Label(name = "Mining Range reduction", description = "Reduce the range at which players can interact with blocks")
 	public static Double miningRangeReduction = -1d;
 
+	@Config
+	@Label(name = "Fast slabs", description = "Makes slabs (not double slabs) take half the time to break")
+	public static Boolean fastSlabs = true;
+
 	public MiningMisc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
@@ -54,14 +60,13 @@ public class MiningMisc extends Feature {
 
 	@SubscribeEvent
 	public void onBreak(PlayerEvent.BreakSpeed event) {
-		if (!this.isEnabled())
+		if (!this.isEnabled()
+				|| !fastSlabs
+				|| !(event.getState().getBlock() instanceof SlabBlock))
 			return;
 
-        /*if (event.getEntity().getMainHandItem().getItem() instanceof SwordItem && event.getState().destroySpeed == 0f)
-			event.setNewSpeed(0f);*/
-
-		//silverfishBreakSpeed(event);
-		//skullBreakSpeed(event);
+		if (event.getState().getValue(SlabBlock.TYPE) == SlabType.TOP || event.getState().getValue(SlabBlock.TYPE) == SlabType.BOTTOM)
+			event.setNewSpeed(event.getOriginalSpeed() * 2f);
 	}
 
 	/*public void silverfishBreakSpeed(PlayerEvent.BreakSpeed event) {

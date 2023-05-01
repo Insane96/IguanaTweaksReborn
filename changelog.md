@@ -1,5 +1,11 @@
 # Changelog
 
+## Upcoming
+* Slabs (not double) now take half the time to break
+* Items from graves now despawn faster
+* Respawn Obelisk blocks now have a much lower chance to break
+* Fixes
+
 ## Alpha 3.8.0
 * Changed death (again)
   * Dieing now summons a grave. Breaking the grave will give back your items and summon the players' ghost with the xp, like before.
