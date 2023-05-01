@@ -61,8 +61,10 @@ public class PlantGrowthModifier extends IdTagMatcher {
 				}
 			}
 			//If is not in correct biome or if is but the correct biomes becomes wrong biomes
-			if (!isInCorrectBiome || this.invertCorrectBiomes)
+			if (!this.invertCorrectBiomes && !isInCorrectBiome
+					|| this.invertCorrectBiomes && isInCorrectBiome) {
 				multiplier *= this.wrongBiomeMultiplier;
+			}
 		}
 		if (!this.seasonsMultipliers.isEmpty()) {
 			for (SeasonMultiplier seasonMultiplier : this.seasonsMultipliers) {

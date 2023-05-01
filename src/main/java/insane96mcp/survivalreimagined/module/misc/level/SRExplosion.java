@@ -307,8 +307,5 @@ public class SRExplosion extends Explosion {
 		return explosion;
 	}
 
-
-	//TODO Waterlog Graves
-
 	//TODO Respawn problem when you have a respawn anchor but it's disabled you can't set your bed spawn
 }

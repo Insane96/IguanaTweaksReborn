@@ -102,7 +102,7 @@ public class PlantsGrowth extends SRFeature {
 					.addSeasonMultiplier(Season.SPRING, 0f)
 					.setGrowthBiomes(List.of(
 							new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_cold")),
-					3f)
+					2f)
 					.inverseCorrectBiomes().build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:potatoes")
 					.setNoSunglightMultipler(2f, 10)
@@ -111,7 +111,7 @@ public class PlantsGrowth extends SRFeature {
 					.addSeasonMultiplier(Season.SUMMER, 0f)
 					.setGrowthBiomes(List.of(
 							new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_cold")),
-					3f)
+					2f)
 					.inverseCorrectBiomes().build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:beetroots")
 					.setNoSunglightMultipler(2f, 10)
@@ -120,7 +120,7 @@ public class PlantsGrowth extends SRFeature {
 					.addSeasonMultiplier(Season.SUMMER, 0f)
 					.setGrowthBiomes(List.of(
 									new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_cold")),
-							2f)
+							1.5f)
 					.inverseCorrectBiomes().build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:carrots")
 					.setNoSunglightMultipler(2f, 10)
@@ -128,13 +128,14 @@ public class PlantsGrowth extends SRFeature {
 					.addSeasonMultiplier(Season.SUMMER, 0f)
 					.setGrowthBiomes(List.of(
 									new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_cold")),
-							2f)
+							1.5f)
 					.inverseCorrectBiomes().build()
 	));
 	public static final ArrayList<PlantGrowthModifier> plantsList = new ArrayList<>();
 
 	public PlantsGrowth(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		//TODO Sync to clients
 		JSON_CONFIGS.add(new JsonConfig<>("plants_growth_modifiers.json", plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE));
 	}
 
