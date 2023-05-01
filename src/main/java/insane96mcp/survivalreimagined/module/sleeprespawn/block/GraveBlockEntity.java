@@ -120,6 +120,8 @@ public class GraveBlockEntity extends BlockEntity {
             return;
 
         GraveBlockEntity graveBlockEntity = (GraveBlockEntity) t;
+        if (graveBlockEntity.owner == null)
+            return;
         Optional<ServerPlayer> oPlayer = getPlayerOwner((ServerLevel) level, graveBlockEntity.owner);
         oPlayer.ifPresent(player -> {
             if (player.getStats().getValue(Stats.CUSTOM.get(Stats.DEATHS)) != graveBlockEntity.deathNumber) {

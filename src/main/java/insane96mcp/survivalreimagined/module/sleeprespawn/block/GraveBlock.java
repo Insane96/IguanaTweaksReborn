@@ -9,13 +9,14 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Containers;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -123,7 +124,7 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof GraveBlockEntity graveBlockEntity) {
                 //TODO Make items drop like if the player died (more sparse) and set despawn timer to 90 seconds
-                graveBlockEntity.getItems().forEach(itemStack -> Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), itemStack));
+                graveBlockEntity.getItems().forEach(itemStack -> dropGraveItems(level, itemStack, pos));
                 int xpStored = graveBlockEntity.getXpStored();
                 if (xpStored > 0) {
                     Zombie zombie = EntityType.ZOMBIE.create(level);
@@ -155,6 +156,19 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
 
             super.onRemove(state, level, pos, newState, p_60519_);
         }
+    }
+    public void dropGraveItems(Level level, ItemStack stack, BlockPos pos) {
+        if (stack.isEmpty())
+            return;
+
+        ItemEntity itementity = new ItemEntity(level, pos.getCenter().x, pos.getCenter().y, pos.getCenter().z, stack);
+        itementity.setPickUpDelay(40);
+        itementity.lifespan = 2400;
+
+        float f = level.random.nextFloat() * 0.5F;
+        float f1 = level.random.nextFloat() * ((float)Math.PI * 2F);
+        itementity.setDeltaMovement((-Mth.sin(f1) * f), 0.2F, (Mth.cos(f1) * f));
+        level.addFreshEntity(itementity);
     }
 
     @Nullable
