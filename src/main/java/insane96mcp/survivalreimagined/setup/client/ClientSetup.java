@@ -7,6 +7,7 @@ import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
+import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
 import insane96mcp.survivalreimagined.module.world.feature.Fire;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
@@ -62,6 +63,7 @@ public class ClientSetup {
             event.accept(FlintExpansion.FLINT_BLOCK_ITEM.get());
             event.accept(FlintExpansion.POLISHED_FLINT_BLOCK_ITEM.get());
             event.accept(Fire.CHARCOAL_LAYER_ITEM.get());
+            event.accept(Death.GRAVE.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(Respawn.RESPAWN_OBELISK_ITEM.get());

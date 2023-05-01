@@ -80,8 +80,10 @@ public class GraveBlockEntity extends BlockEntity {
             this.items.add(ItemStack.of(itemStackTag));
         }
         this.xpStored = compoundTag.getInt(XP_STORED_TAG);
-        this.owner = compoundTag.getUUID(OWNER_TAG);
-        this.deathNumber = compoundTag.getInt(DEATH_NUMBER_TAG);
+        if (compoundTag.contains(OWNER_TAG)) {
+            this.owner = compoundTag.getUUID(OWNER_TAG);
+            this.deathNumber = compoundTag.getInt(DEATH_NUMBER_TAG);
+        }
     }
 
     @Override
@@ -95,8 +97,10 @@ public class GraveBlockEntity extends BlockEntity {
         }
         compoundTag.put(ITEMS_TAG, itemsList);
         compoundTag.putInt(XP_STORED_TAG, this.xpStored);
-        compoundTag.putUUID(OWNER_TAG, this.owner);
-        compoundTag.putInt(DEATH_NUMBER_TAG, this.deathNumber);
+        if (this.owner != null) {
+            compoundTag.putUUID(OWNER_TAG, this.owner);
+            compoundTag.putInt(DEATH_NUMBER_TAG, this.deathNumber);
+        }
     }
 
     @Nullable
