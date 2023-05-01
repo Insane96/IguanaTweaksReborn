@@ -26,6 +26,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -39,6 +40,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.event.level.SleepFinishedTimeEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -229,51 +231,19 @@ public class Tiredness extends SRFeature {
 				&& player.getPersistentData().getFloat(TIREDNESS_TAG) > tirednessToEffect;
 	}
 
+	@SubscribeEvent
+	public void onServerStarted(ServerStartedEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		event.getServer().getGameRules().getRule(GameRules.RULE_PLAYERS_SLEEPING_PERCENTAGE).set(1, event.getServer());
+	}
+
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onRenderer(RenderGuiOverlayEvent.Post event) {
 
 	}
-
-	/*@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent
-	public void onFog(ViewportEvent.RenderFog event) {
-		if (!this.isEnabled()
-				|| event.getCamera().getEntity().isSpectator()
-				|| !(event.getCamera().getEntity() instanceof LivingEntity livingEntity)
-				|| !livingEntity.hasEffect(SRMobEffects.TIRED.get()))
-			return;
-
-		//noinspection ConstantConditions
-		int amplifier = livingEntity.getEffect(SRMobEffects.TIRED.get()).getAmplifier();
-		if (amplifier < 1)
-			return;
-		float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
-		float near = -8;
-		float far = Math.min(48f, renderDistance) - ((amplifier - 1) * 10);
-		event.setNearPlaneDistance(near);
-		event.setFarPlaneDistance(far);
-		event.setCanceled(true);
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent
-	public void onFog(ViewportEvent.ComputeFogColor event) {
-		if (!this.isEnabled()
-				|| event.getCamera().getEntity().isSpectator()
-				|| !(event.getCamera().getEntity() instanceof LivingEntity livingEntity)
-				|| !livingEntity.hasEffect(SRMobEffects.TIRED.get()))
-			return;
-
-		//noinspection ConstantConditions
-		int amplifier = livingEntity.getEffect(SRMobEffects.TIRED.get()).getAmplifier();
-		if (amplifier < 1)
-			return;
-		float color = 0f;
-		event.setRed(color);
-		event.setGreen(color);
-		event.setBlue(color);
-	}*/
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
