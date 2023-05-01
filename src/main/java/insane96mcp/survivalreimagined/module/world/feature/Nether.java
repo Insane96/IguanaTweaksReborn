@@ -30,7 +30,10 @@ public class Nether extends Feature {
     public static Boolean disableNetherRoof = true;
     @Config
     @Label(name = "Portal requires Gold Block", description = "The portal requires Gold blocks in the corners to turn it on (in the overworld).")
-    public static Boolean portalRequiresDiamondBlock = true;
+    public static Boolean portalRequiresGoldBlock = true;
+    /*@Config
+    @Label(name = "Entering the Nether requires Diamond Pickaxe advancement", description = "If the player hasn't unlocked the Diamond Pickaxe advancement he can't enter the Nether.")
+    public static Boolean requireDiamondPickAdvancement = true;*/
     @Config
     @Label(name = "Remove Lava Pockets", description = "If true, lava pockets in the nether are removed.")
     public static Boolean removeLavaPockets = true;
@@ -47,7 +50,7 @@ public class Nether extends Feature {
     @SubscribeEvent
     public void onPortalTryToActivate(BlockEvent.PortalSpawnEvent event) {
         if (!this.isEnabled()
-                || !portalRequiresDiamondBlock
+                || !portalRequiresGoldBlock
                 || event.getPortalSize().bottomLeft == null)
             return;
 
@@ -73,4 +76,14 @@ public class Nether extends Feature {
             event.setCanceled(true);
         }
     }
+
+    /*@SubscribeEvent
+    public void onTryEnteringNether(EntityTravelToDimensionEvent event) {
+        if (!this.isEnabled()
+                || !requireDiamondPickAdvancement
+                || !(event.getEntity() instanceof ServerPlayer player))
+            return;
+
+        if (player.getAdvancements().getOrStartProgress())
+    }*/
 }
