@@ -85,7 +85,6 @@ public class FoodDrinks extends SRFeature {
 		JSON_CONFIGS.add(new JsonConfig<>("food_properties.json", customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, customFoodPropertiesListType, FoodDrinks::processCustomFoodValues));
 	}
 
-	static final Type customFoodPropertiesListType = new TypeToken<ArrayList<CustomFoodProperties>>(){}.getType();
 	@Override
 	public void loadJsonConfigs() {
 		if (!this.isEnabled())
@@ -94,9 +93,8 @@ public class FoodDrinks extends SRFeature {
 		processFoodMultipliers();
 	}
 
-	@Override
-	public void loadConfigOptions() {
-		super.loadConfigOptions();
+	public static void handleCustomFoodPropertiesPacket(String json) {
+		loadAndReadJson(json, customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, CustomFoodProperties.LIST_TYPE);
 	}
 
 	private static CustomFoodProperties customFoodPropertiesCache;

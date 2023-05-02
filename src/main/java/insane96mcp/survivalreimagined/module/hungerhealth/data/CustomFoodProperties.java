@@ -2,9 +2,12 @@ package insane96mcp.survivalreimagined.module.hungerhealth.data;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+
+import java.util.ArrayList;
 
 @JsonAdapter(CustomFoodProperties.Serializer.class)
 public class CustomFoodProperties extends IdTagMatcher {
@@ -53,6 +56,8 @@ public class CustomFoodProperties extends IdTagMatcher {
 	public String toString() {
 		return "FoodValue{type: %s, id: %s, nutrition: %s, saturation_modifier: %s, eating_time: %s, fast_eating: %s}".formatted(this.type, this.location, this.nutrition, this.saturationModifier, this.eatingTime, this.fastEating);
 	}
+
+	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<CustomFoodProperties>>(){}.getType();
 
 	public static class Serializer implements JsonDeserializer<CustomFoodProperties>, JsonSerializer<CustomFoodProperties> {
 		@Override
