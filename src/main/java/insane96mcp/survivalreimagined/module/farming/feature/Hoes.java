@@ -7,13 +7,14 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.data.HoeStat;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -36,7 +37,7 @@ public class Hoes extends SRFeature {
 	public static final String TOO_WEAK = "survivalreimagined.weak_hoe";
 	public static final String TILL_COOLDOWN = "survivalreimagined.till_cooldown";
 	public static final String SCYTHE_RADIUS = "survivalreimagined.scythe_radius";
-	private static final ResourceLocation DISABLED_HOES = new ResourceLocation(SurvivalReimagined.MOD_ID, "disabled_hoes");
+	public static final TagKey<Item> DISABLED_HOES = SRItemTagsProvider.create("disabled_hoes");
 
 	public static final ArrayList<HoeStat> HOES_STATS_DEFAULT = new ArrayList<>(Arrays.asList(
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 40, 4, 0),

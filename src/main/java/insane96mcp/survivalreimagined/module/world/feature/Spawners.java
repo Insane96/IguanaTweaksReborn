@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.capability.ISpawnerData;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerData;
@@ -22,8 +23,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -44,8 +47,7 @@ import net.minecraftforge.network.NetworkDirection;
 public class Spawners extends Feature {
 
 	public static final ResourceLocation BLACKLISTED_SPAWNERS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "blacklisted_spawners");
-	public static final ResourceLocation SPAWNER_REACTIVATOR = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "spawner_reactivator");
-	public static final ResourceLocation NO_LIMIT_SPAWNER = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "spawner_reactivator");
+	public static final TagKey<Item> SPAWNER_REACTIVATOR = SRItemTagsProvider.create("spawner_reactivator");
 	@Config(min = 0)
 	@Label(name = "Minimum Spawnable Mobs", description = "The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn. The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
 	public static Integer minSpawnableMobs = 25;

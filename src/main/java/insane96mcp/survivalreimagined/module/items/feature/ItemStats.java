@@ -11,13 +11,14 @@ import insane96mcp.shieldsplus.setup.SPItems;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.IdTagValue;
+import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
@@ -40,10 +41,11 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class ItemStats extends SRFeature {
 
+	//Re-enable Swords?
 	public static final String TOOL_EFFICIENCY = "survivalreimagined.tool_efficiency";
 	public static final String BONUS_TOOL_EFFICIENCY = "survivalreimagined.bonus_tool_efficiency";
-	public static final ResourceLocation NO_DAMAGE_ITEMS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_damage_items");
-	public static final ResourceLocation NO_EFFICIENCY_ITEMS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_efficiency_items");
+	public static final TagKey<Item> NO_DAMAGE = SRItemTagsProvider.create("no_damage");
+	public static final TagKey<Item> NO_EFFICIENCY = SRItemTagsProvider.create("no_efficiency");
 
 	public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/wooden", 33),
@@ -188,7 +190,7 @@ public class ItemStats extends SRFeature {
 			return;
 
 		Player player = event.getEntity();
-		if (Utils.isItemInTag(player.getMainHandItem().getItem(), NO_EFFICIENCY_ITEMS)) {
+		if (Utils.isItemInTag(player.getMainHandItem().getItem(), NO_EFFICIENCY)) {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(Strings.Translatable.NO_EFFICIENCY_ITEM), true);
 		}
@@ -200,7 +202,7 @@ public class ItemStats extends SRFeature {
 				|| !(event.getSource().getEntity() instanceof Player player))
 			return;
 
-		if (Utils.isItemInTag(player.getMainHandItem().getItem(), NO_DAMAGE_ITEMS)) {
+		if (Utils.isItemInTag(player.getMainHandItem().getItem(), NO_DAMAGE)) {
 			event.setAmount(1f);
 			player.displayClientMessage(Component.translatable(Strings.Translatable.NO_DAMAGE_ITEM), true);
 		}
@@ -213,10 +215,10 @@ public class ItemStats extends SRFeature {
 				|| !disabledItemsTooltip)
 			return;
 
-		if (Utils.isItemInTag(event.getItemStack().getItem(), NO_DAMAGE_ITEMS)) {
+		if (Utils.isItemInTag(event.getItemStack().getItem(), NO_DAMAGE)) {
 			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_DAMAGE_ITEM).withStyle(ChatFormatting.RED));
 		}
-		if (Utils.isItemInTag(event.getItemStack().getItem(), NO_EFFICIENCY_ITEMS)) {
+		if (Utils.isItemInTag(event.getItemStack().getItem(), NO_EFFICIENCY)) {
 			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_EFFICIENCY_ITEM).withStyle(ChatFormatting.RED));
 		}
 		else if (event.getItemStack().getItem() instanceof DiggerItem diggerItem){

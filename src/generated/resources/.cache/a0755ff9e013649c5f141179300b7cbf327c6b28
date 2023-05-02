@@ -1,7 +1,16 @@
-// 1.19.4	2023-04-26T19:54:34.1145836	Tags for minecraft:item mod id survivalreimagined
+// 1.19.4	2023-05-02T15:29:37.7330231	Tags for minecraft:item mod id survivalreimagined
 26b36f7979d1b6b0954380373aabb949ef16b64e data/minecraft/tags/items/axes.json
 1850b01ae23583dc7df9351d2e4cfb94f0bd9592 data/minecraft/tags/items/hoes.json
 42c680d8e5cdf7f04a9fe9c20d8177c6b8acbeab data/minecraft/tags/items/pickaxes.json
 91c3cd5d1aafe3f8bec012eabe5de20ee5ecc363 data/minecraft/tags/items/shovels.json
 a24b91636d435fbf63e6d7f96ef0d7ac0eeb8521 data/minecraft/tags/items/swords.json
 66522314243d5119f3610b4a75a66c92faddf431 data/survivalreimagined/tags/items/disabled_hoes.json
+b1eaa8c6251363a43fec48d3a61979cccb61a40a data/survivalreimagined/tags/items/energy_boost.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/food_drinks_no_hunger_changes.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/nerfed_bone_meal_blacklist.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/no_damage.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/no_efficiency.json
+ed812d11a070d92ca88d1d889a167aa4dcda4159 data/survivalreimagined/tags/items/no_stack_size_changes.json
+6d67060fc5efb8077b0425f5c97e1eb90d7a9988 data/survivalreimagined/tags/items/raw_food.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/reduced_knockback.json
+3c136ad71b9cc1a962b06ab779e09369ea8e25a9 data/survivalreimagined/tags/items/spawner_reactivator.json

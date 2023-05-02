@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.data.generator;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.items.feature.Crate;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.items.feature.Mithril;
@@ -31,7 +32,6 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
     public static final TagKey<Block> DEPTH_MULTIPLIER_BLACKLIST = create("depth_multiplier_blacklist");
     public static final TagKey<Block> TALL_GRASS = create("tall_grass");
     public static final TagKey<Block> NO_BLOCK_XP_MULTIPLIER = create("no_block_xp_multiplier");
-    public static final TagKey<Block> NERFED_BONEMEAL_BLACKLIST = create("nerfed_bone_meal_blacklist");
 
     public SRBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, modId, existingFileHelper);
@@ -93,11 +93,11 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(Blocks.GRASS).add(Blocks.TALL_GRASS).add(Blocks.FERN).add(Blocks.DEAD_BUSH);
 
         tag(NO_BLOCK_XP_MULTIPLIER);
-        tag(NERFED_BONEMEAL_BLACKLIST);
+        tag(BoneMeal.BLOCK_BLACKLIST);
 
     }
 
-    private static TagKey<Block> create(String tagName) {
+    public static TagKey<Block> create(String tagName) {
         return TagKey.create(Registries.BLOCK, new ResourceLocation(SurvivalReimagined.MOD_ID, tagName));
     }
 }

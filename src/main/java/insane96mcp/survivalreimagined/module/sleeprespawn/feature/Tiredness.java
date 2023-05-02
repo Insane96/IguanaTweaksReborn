@@ -9,6 +9,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.sleeprespawn.data.EnergyBoostItem;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
@@ -22,10 +23,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
@@ -59,6 +62,7 @@ public class Tiredness extends SRFeature {
 	public static final String NOT_TIRED = "survivalreimagined.not_tired";
 	public static final String TIRED_ENOUGH = "survivalreimagined.tired_enough";
 	public static final String TOO_TIRED = "survivalreimagined.too_tired";
+	public static final TagKey<Item> ENERGY_BOOST = SRItemTagsProvider.create("energy_boost");
 
 	public static final List<EnergyBoostItem> ENERGY_BOOST_ITEMS_DEFAULT = new ArrayList<>(Arrays.asList(
 			new EnergyBoostItem(IdTagMatcher.Type.TAG, "survivalreimagined:energy_boost"),

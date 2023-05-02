@@ -4,5 +4,5 @@
   "conditions": [],
   "end_range": 3000,
   "loot_table": "minecraft:chests/jungle_temple",
-  "multiplier_at_start": 0.2
+  "multiplier_at_start": 0.1
 }

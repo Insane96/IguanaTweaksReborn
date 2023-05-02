@@ -86,6 +86,18 @@ public class SRFeature extends Feature {
     }
 
     /**
+     * Use this instead of Utils.isItemInTag when reloading data due to tags not existing yet at reload
+     */
+    public static boolean isItemInTag(Item item, TagKey<Item> tag) {
+        Collection<Holder<Item>> tags = SRDataReloadListener.reloadContext.getTag(tag);
+        for (Holder<Item> holder : tags) {
+            if (holder.value().equals(item))
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * Use this instead of IdTagMatcher#getAllItems when reloading data due to tags not existing yet at reload
      */
     public static List<Item> getAllItems(IdTagMatcher idTagMatcher, boolean isClientSide) {
@@ -115,6 +127,18 @@ public class SRFeature extends Feature {
     }
 
     /**
+     * Use this instead of Utils.isBlockInTag when reloading data due to tags not existing yet at reload
+     */
+    public static boolean isBlockInTag(Block block, TagKey<Block> tag) {
+        Collection<Holder<Block>> tags = SRDataReloadListener.reloadContext.getTag(tag);
+        for (Holder<Block> holder : tags) {
+            if (holder.value().equals(block))
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * Use this instead of IdTagMatcher#getAllBlocks when reloading data due to tags not existing yet at reload
      */
     public static List<Block> getAllBlocks(IdTagMatcher idTagMatcher, boolean isClientSide) {
@@ -136,6 +160,18 @@ public class SRFeature extends Feature {
     public static boolean isEntityInTag(Entity entity, ResourceLocation tag) {
         TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, tag);
         Collection<Holder<EntityType<?>>> tags = SRDataReloadListener.reloadContext.getTag(tagKey);
+        for (Holder<EntityType<?>> holder : tags) {
+            if (holder.value().equals(entity.getType()))
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Use this instead of Utils.isEntityInTag when reloading data due to tags not existing yet at reload
+     */
+    public static boolean isEntityInTag(Entity entity, TagKey<EntityType<?>> tag) {
+        Collection<Holder<EntityType<?>>> tags = SRDataReloadListener.reloadContext.getTag(tag);
         for (Holder<EntityType<?>> holder : tags) {
             if (holder.value().equals(entity.getType()))
                 return true;

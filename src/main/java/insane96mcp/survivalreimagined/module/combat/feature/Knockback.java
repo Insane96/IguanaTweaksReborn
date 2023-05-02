@@ -6,11 +6,11 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.CombatEntry;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -28,7 +29,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class Knockback extends Feature {
 
-	public static final ResourceLocation NO_KNOCKBACK_TAG = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_knockback");
+	public static final TagKey<Item> REDUCED_KNOCKBACK = SRItemTagsProvider.create("reduced_knockback");
 
 	@Config
 	@Label(name = "No Weapon No Knockback", description = "If true the player will deal no knockback when not using an item that doesn't have the attack damage attribute.")
@@ -68,7 +69,7 @@ public class Knockback extends Feature {
 			return;
 		ItemStack itemStack = player.getMainHandItem();
 
-		boolean isInTag = Utils.isItemInTag(itemStack.getItem(), NO_KNOCKBACK_TAG);
+		boolean isInTag = Utils.isItemInTag(itemStack.getItem(), REDUCED_KNOCKBACK);
 
 		boolean preventKnockback = false;
 		Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(EquipmentSlot.MAINHAND);

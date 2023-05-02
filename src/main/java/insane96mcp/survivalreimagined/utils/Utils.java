@@ -26,15 +26,32 @@ public class Utils {
     }
 
     public static boolean isEntityInTag(Entity entity, ResourceLocation tag) {
-        TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, tag);
-        //noinspection ConstantConditions
-        return ForgeRegistries.ENTITY_TYPES.tags().getTag(tagKey).contains(entity.getType());
+        return isEntityTypeInTag(entity.getType(), tag);
     }
 
     public static boolean isEntityTypeInTag(EntityType<?> entityType, ResourceLocation tag) {
         TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, tag);
         //noinspection ConstantConditions
         return ForgeRegistries.ENTITY_TYPES.tags().getTag(tagKey).contains(entityType);
+    }
+
+    public static boolean isItemInTag(Item item, TagKey<Item> tag) {
+        //noinspection ConstantConditions
+        return ForgeRegistries.ITEMS.tags().getTag(tag).contains(item);
+    }
+
+    public static boolean isBlockInTag(Block block, TagKey<Block> tag) {
+        //noinspection ConstantConditions
+        return ForgeRegistries.BLOCKS.tags().getTag(tag).contains(block);
+    }
+
+    public static boolean isEntityInTag(Entity entity, TagKey<EntityType<?>> tag) {
+        return isEntityTypeInTag(entity.getType(), tag);
+    }
+
+    public static boolean isEntityTypeInTag(EntityType<?> entityType, TagKey<EntityType<?>> tag) {
+        //noinspection ConstantConditions
+        return ForgeRegistries.ENTITY_TYPES.tags().getTag(tag).contains(entityType);
     }
 
     public static float getFoodEffectiveness(FoodProperties foodProperties) {

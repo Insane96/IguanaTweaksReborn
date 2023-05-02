@@ -9,6 +9,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.movement.feature.Stamina;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
@@ -22,6 +23,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -52,7 +54,7 @@ public class NoHunger extends Feature {
 
     private static final String FOOD_STATS_TRANSLATABLE = SurvivalReimagined.MOD_ID + ".food_stats";
 
-    private static final ResourceLocation RAW_FOOD = new ResourceLocation(SurvivalReimagined.MOD_ID, "raw_food");
+    public static final TagKey<Item> RAW_FOOD = SRItemTagsProvider.create("raw_food");
 
     @Config
     @Label(name = "Passive Health Regen.Enable Passive Health Regen", description = "If true, Passive Regeneration is enabled")

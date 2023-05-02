@@ -5,14 +5,15 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
+import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.block.RichFarmlandBlock;
 import insane96mcp.survivalreimagined.setup.SRBlocks;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.BlockItem;
@@ -37,7 +38,8 @@ public class BoneMeal extends Feature {
 	public static final RegistryObject<RichFarmlandBlock> RICH_FARMLAND = SRBlocks.REGISTRY.register("rich_farmland", () -> new RichFarmlandBlock(BlockBehaviour.Properties.of(Material.DIRT).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking((state, blockGetter, pos) -> true).isSuffocating((state, blockGetter, pos) -> true)));
 	public static final RegistryObject<BlockItem> RICH_FARMLAND_ITEM = SRItems.REGISTRY.register("rich_farmland", () -> new BlockItem(RICH_FARMLAND.get(), new Item.Properties()));
 
-	private static final ResourceLocation BLACKLIST = new ResourceLocation(SurvivalReimagined.MOD_ID, "nerfed_bone_meal_blacklist");
+	public static final TagKey<Item> ITEM_BLACKLIST = SRItemTagsProvider.create("nerfed_bone_meal_blacklist");
+	public static final TagKey<Block> BLOCK_BLACKLIST = SRBlockTagsProvider.create("nerfed_bone_meal_blacklist");
 	@Config
 	@Label(name = "Nerfed Bone Meal", description = "Makes more Bone Meal required for Crops. Valid Values are\nNO: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
 	public static BoneMealNerf nerfedBoneMeal = BoneMealNerf.NERFED;
@@ -99,7 +101,7 @@ public class BoneMeal extends Feature {
 	}
 
 	public BoneMealResult applyBoneMeal(Level level, ItemStack stack, BlockState state, BlockPos pos) {
-		if (Utils.isItemInTag(stack.getItem(), BLACKLIST) || Utils.isBlockInTag(state.getBlock(), BLACKLIST))
+		if (Utils.isItemInTag(stack.getItem(), ITEM_BLACKLIST) || Utils.isBlockInTag(state.getBlock(), BLOCK_BLACKLIST))
 			return BoneMealResult.NONE;
 
 		//If farmland is dry and cropsRequireWater is enabled then cancel the event

@@ -7,8 +7,8 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
-import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.hungerhealth.data.CustomFoodProperties;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
@@ -17,8 +17,8 @@ import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -45,7 +45,7 @@ public class FoodDrinks extends SRFeature {
 			.food(new FoodProperties.Builder().nutrition(3).saturationMod(0.6F).build())
 	));
 
-	public static final ResourceLocation FOOD_BLACKLIST = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "food_drinks_no_hunger_changes");
+	public static final TagKey<Item> FOOD_BLACKLIST = SRItemTagsProvider.create("food_drinks_no_hunger_changes");
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(
 			new CustomFoodProperties.Builder(IdTagMatcher.Type.ID, "minecraft:rotten_flesh").setNutrition(2).setEatingTime(50).build()

@@ -7,15 +7,15 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
-import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.IdTagValue;
+import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import insane96mcp.survivalreimagined.utils.Weights;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -30,7 +30,7 @@ import java.util.*;
 @Label(name = "Stack Sizes", description = "Make food, items and blocks less stackable, or change stack sizes as you wish. Items and Blocks are disabled by default. Changing stuff might require a Minecraft restart.")
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class StackSizes extends SRFeature {
-    public static final ResourceLocation NO_STACK_SIZE_CHANGES = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_stack_size_changes");
+    public static final TagKey<Item> NO_STACK_SIZE_CHANGES = SRItemTagsProvider.create("no_stack_size_changes");
 
     public static final List<IdTagValue> CUSTOM_STACK_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:potion", 16),
@@ -167,7 +167,7 @@ public class StackSizes extends SRFeature {
                     || isItemInTag(item, NO_STACK_SIZE_CHANGES))
                 continue;
 
-            item.maxStackSize = Math.round(stackableSoups);
+            item.maxStackSize = stackableSoups;
         }
 
     }
