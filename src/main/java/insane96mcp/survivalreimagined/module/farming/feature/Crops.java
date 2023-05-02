@@ -131,7 +131,8 @@ public class Crops extends Feature {
 
 	@SubscribeEvent
 	public void onTryToPlant(PlayerInteractEvent.RightClickBlock event) {
-		if (!this.isEnabled())
+		if (!this.isEnabled()
+				|| !(event.getLevel().getBlockState(event.getHitVec().getBlockPos()).getBlock() instanceof FarmBlock))
 			return;
 
 		if (event.getItemStack().is(Items.POTATO) || event.getItemStack().is(Items.CARROT))
