@@ -2,7 +2,6 @@ package insane96mcp.survivalreimagined.module.hungerhealth.feature;
 
 import com.ezylang.evalex.Expression;
 import com.ezylang.evalex.data.EvaluationValue;
-import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -13,6 +12,7 @@ import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.hungerhealth.data.CustomFoodProperties;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
+import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.LogHelper;
@@ -31,7 +31,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,13 +75,13 @@ public class FoodDrinks extends SRFeature {
 	public static Boolean stopConsumingOnHit = true;
 
 	@Config
-	@Label(name = "Furnace food and smoker recipe", description = "Furnaces take 2x more time to smelt Food and change smokers recipe.")
-	public static Boolean slowerFoodInFurnaces = true;
+	@Label(name = "No Furnace food and smoker recipe", description = "Food can no longer be smelted in furnaces and change smokers recipe to require Mithril ingot.")
+	public static Boolean noFurnaceFoodAndSmokerRecipe = true;
 
 	public FoodDrinks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "slower_food_in_furnace", net.minecraft.network.chat.Component.literal("Survival Reimagined Slower Food in Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && slowerFoodInFurnaces));
-		JSON_CONFIGS.add(new JsonConfig<>("food_properties.json", customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, customFoodPropertiesListType, FoodDrinks::processCustomFoodValues));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_food_in_furnace", net.minecraft.network.chat.Component.literal("Survival Reimagined No Food in Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && noFurnaceFoodAndSmokerRecipe));
+		JSON_CONFIGS.add(new JsonConfig<>("food_properties.json", customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, CustomFoodProperties.LIST_TYPE, FoodDrinks::processCustomFoodValues, true, JsonConfigSyncMessage.ConfigType.CUSTOM_FOOD_PROPERTIES));
 	}
 
 	@Override

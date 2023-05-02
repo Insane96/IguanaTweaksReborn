@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Food can no longer be smelted in a furnace. Requires either a campfire or a smoker
 * Beeg veins are now variable size and the ore rocks on top now generate more the more ores got generated below
 
 ## Alpha 3.8.1
