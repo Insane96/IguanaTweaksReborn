@@ -37,7 +37,9 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", UUID.fromString("da2b677f-467c-49b1-bdf0-070ee782bc0f"), EquipmentSlot.HEAD, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", UUID.fromString("796d3f0c-89e4-47e8-9f95-3a3d5506f70f"), EquipmentSlot.FEET, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
 
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_sword", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .8d, AttributeModifier.Operation.ADDITION)/*,
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_sword", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .4d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_axe", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .25d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_pickaxe", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .3d, AttributeModifier.Operation.ADDITION)/*,
 
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_helmet", UUID.fromString("e53774f5-c002-4bb3-b81d-4b15e01630d7"), EquipmentSlot.HEAD, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", UUID.fromString("bb234f07-2feb-4654-9d8c-6249631c1e26"), EquipmentSlot.CHEST, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
@@ -67,7 +69,7 @@ public class Stats extends SRFeature {
 		super.readConfig(event);
 		CLASS_ATTRIBUTE_MODIFIER.clear();
 		if (adjustWeapons) {
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(SwordItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
+			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(SwordItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1.5d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, UUID.fromString("324a87bd-89ea-4d1b-866a-ce49d360d632"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, UUID.fromString("a60ab219-6c3a-453b-a55c-41e9c83f9c0f"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH.get(), -0.5d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, UUID.fromString("f98cb9bc-3fa7-4fb5-b07a-babe8e35f967"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
