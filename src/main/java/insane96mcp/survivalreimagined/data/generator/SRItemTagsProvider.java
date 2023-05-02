@@ -11,6 +11,7 @@ import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.items.feature.ItemStats;
 import insane96mcp.survivalreimagined.module.items.feature.StackSizes;
 import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
+import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
 import insane96mcp.survivalreimagined.module.world.feature.Spawners;
 import net.minecraft.core.HolderLookup;
@@ -36,11 +37,11 @@ public class SRItemTagsProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         //Vanilla
-        tag(ItemTags.PICKAXES).add(FlintExpansion.PICKAXE.get(), Mithril.PICKAXE.get(), CopperTools.PICKAXE.get());
-        tag(ItemTags.AXES).add(FlintExpansion.AXE.get(), Mithril.AXE.get(), CopperTools.AXE.get());
-        tag(ItemTags.SHOVELS).add(FlintExpansion.SHOVEL.get(), Mithril.SHOVEL.get(), CopperTools.SHOVEL.get());
-        tag(ItemTags.SWORDS).add(FlintExpansion.SWORD.get(), Mithril.SWORD.get(), CopperTools.SWORD.get());
-        tag(ItemTags.HOES).add(FlintExpansion.HOE.get(), Mithril.HOE.get(), CopperTools.HOE.get());
+        tag(ItemTags.PICKAXES).add(FlintExpansion.PICKAXE.get(), Mithril.PICKAXE.get(), CopperTools.PICKAXE.get(), SoulSteel.PICKAXE.get());
+        tag(ItemTags.AXES).add(FlintExpansion.AXE.get(), Mithril.AXE.get(), CopperTools.AXE.get(), SoulSteel.AXE.get());
+        tag(ItemTags.SHOVELS).add(FlintExpansion.SHOVEL.get(), Mithril.SHOVEL.get(), CopperTools.SHOVEL.get(), SoulSteel.SHOVEL.get());
+        tag(ItemTags.SWORDS).add(FlintExpansion.SWORD.get(), Mithril.SWORD.get(), CopperTools.SWORD.get(), SoulSteel.SWORD.get());
+        tag(ItemTags.HOES).add(FlintExpansion.HOE.get(), Mithril.HOE.get(), CopperTools.HOE.get(), SoulSteel.HOE.get());
 
         //Mod's
         tag(Hoes.DISABLED_HOES)

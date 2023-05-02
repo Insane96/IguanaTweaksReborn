@@ -34,12 +34,12 @@ public class Mithril extends Feature {
 	public static final RegistryObject<Block> ORE = SRBlocks.REGISTRY.register("mithril_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5)));
 	public static final RegistryObject<Block> DEEPSLATE_ORE = SRBlocks.REGISTRY.register("deepslate_mithril_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(ORE.get()).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), UniformInt.of(2, 5)));
 
-	public static final RegistryObject<Item> INGOT = SRItems.REGISTRY.register("mithril_ingot", () -> new Item(new Item.Properties().rarity(Rarity.COMMON)));
+	public static final RegistryObject<Item> INGOT = SRItems.REGISTRY.register("mithril_ingot", () -> new Item(new Item.Properties()));
 
-	public static final RegistryObject<Item> NUGGET = SRItems.REGISTRY.register("mithril_nugget", () -> new Item(new Item.Properties().rarity(Rarity.COMMON)));
+	public static final RegistryObject<Item> NUGGET = SRItems.REGISTRY.register("mithril_nugget", () -> new Item(new Item.Properties()));
 
-	public static final RegistryObject<Item> BLOCK_ITEM = SRItems.REGISTRY.register("mithril_block", () -> new BlockItem(BLOCK.get(), new Item.Properties().rarity(Rarity.COMMON)));
-	public static final RegistryObject<Item> ORE_ITEM = SRItems.REGISTRY.register("mithril_ore", () -> new BlockItem(ORE.get(), new Item.Properties().rarity(Rarity.COMMON)));
+	public static final RegistryObject<Item> BLOCK_ITEM = SRItems.REGISTRY.register("mithril_block", () -> new BlockItem(BLOCK.get(), new Item.Properties()));
+	public static final RegistryObject<Item> ORE_ITEM = SRItems.REGISTRY.register("mithril_ore", () -> new BlockItem(ORE.get(), new Item.Properties()));
 	public static final RegistryObject<Item> DEEPSLATE_ORE_ITEM = SRItems.REGISTRY.register("deepslate_mithril_ore", () -> new BlockItem(DEEPSLATE_ORE.get(), new Item.Properties().rarity(Rarity.COMMON)));
 
 	private static final ILItemTier ITEM_TIER = new ILItemTier(2, 780, 6.5f, 2.5f, 12, () -> Ingredient.of(INGOT.get()));

@@ -5,6 +5,7 @@ import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.items.feature.Crate;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
+import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
 import insane96mcp.survivalreimagined.module.world.feature.Fire;
@@ -47,7 +48,8 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(Fire.CHARCOAL_LAYER.get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(Mithril.BLOCK.get()).add(Mithril.ORE.get()).add(Mithril.DEEPSLATE_ORE.get())
+                .add(Mithril.BLOCK.get(), Mithril.ORE.get(), Mithril.DEEPSLATE_ORE.get())
+                .add(SoulSteel.BLOCK.block().get())
                 .add(OreGeneration.IRON_ORE_ROCK.block().get()).add(OreGeneration.COPPER_ORE_ROCK.block().get()).add(OreGeneration.GOLD_ORE_ROCK.block().get())
                 .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get())
                 .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get())
@@ -62,7 +64,8 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
 
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get())
-                .add(Mithril.BLOCK.get()).add(Mithril.ORE.get()).add(Mithril.DEEPSLATE_ORE.get());
+                .add(Mithril.BLOCK.get(), Mithril.ORE.get(), Mithril.DEEPSLATE_ORE.get())
+                .add(SoulSteel.BLOCK.block().get());
 
         tag(BlockTags.RAILS)
                 .add(Minecarts.NETHER_INFUSED_POWERED_RAIL.get());

@@ -7,6 +7,7 @@ import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
+import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
@@ -42,12 +43,18 @@ public class ClientSetup {
             event.accept(Mithril.PICKAXE.get());
             event.accept(Mithril.SHOVEL.get());
             event.accept(Mithril.HOE.get());
+            event.accept(SoulSteel.AXE.get());
+            event.accept(SoulSteel.PICKAXE.get());
+            event.accept(SoulSteel.SHOVEL.get());
+            event.accept(SoulSteel.HOE.get());
         }
         else if (event.getTab() == CreativeModeTabs.COMBAT) {
             event.accept(FlintExpansion.SWORD.get());
             event.accept(FlintExpansion.SHIELD.get());
             event.accept(CopperTools.SWORD.get());
             event.accept(Mithril.SWORD.get());
+            event.accept(SoulSteel.SWORD.get());
+
             event.accept(ChainedCopperArmor.HELMET.get());
             event.accept(ChainedCopperArmor.CHESTPLATE.get());
             event.accept(ChainedCopperArmor.LEGGINGS.get());
@@ -58,9 +65,16 @@ public class ClientSetup {
             event.accept(Mithril.LEGGINGS.get());
             event.accept(Mithril.BOOTS.get());
             event.accept(Mithril.SHIELD.get());
+
+            event.accept(SoulSteel.HELMET.get());
+            event.accept(SoulSteel.CHESTPLATE.get());
+            event.accept(SoulSteel.LEGGINGS.get());
+            event.accept(SoulSteel.BOOTS.get());
+            event.accept(SoulSteel.SHIELD.get());
         }
         else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(Mithril.BLOCK_ITEM.get());
+            event.accept(SoulSteel.BLOCK.item().get());
             event.accept(FlintExpansion.FLINT_BLOCK_ITEM.get());
             event.accept(FlintExpansion.POLISHED_FLINT_BLOCK_ITEM.get());
             event.accept(Fire.CHARCOAL_LAYER_ITEM.get());
@@ -99,6 +113,8 @@ public class ClientSetup {
         else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
             event.accept(Mithril.INGOT.get());
             event.accept(Mithril.NUGGET.get());
+            event.accept(SoulSteel.INGOT.get());
+            event.accept(SoulSteel.NUGGET.get());
             event.accept(AncientLapis.ANCIENT_LAPIS.get());
             event.accept(EnchantmentsFeature.CLEANSED_LAPIS.get());
         }

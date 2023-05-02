@@ -13,7 +13,12 @@ public class SRItems {
     public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, SurvivalReimagined.MOD_ID);
 
     public static RegistryObject<SPShieldItem> registerShield(String id, SPShieldMaterial material) {
-        RegistryObject<SPShieldItem> shield = SRItems.REGISTRY.register(id, () -> new SPShieldItem(material, (new Item.Properties()).durability(material.durability).rarity(material.rarity)));
+        return registerShield(id, material, false);
+    }
+
+    public static RegistryObject<SPShieldItem> registerShield(String id, SPShieldMaterial material, boolean fireResistant) {
+        Item.Properties properties = new Item.Properties().durability(material.durability).rarity(material.rarity);
+        RegistryObject<SPShieldItem> shield = SRItems.REGISTRY.register(id, () -> new SPShieldItem(material, properties));
         SPItems.SHIELDS.add(shield);
         return shield;
     }
