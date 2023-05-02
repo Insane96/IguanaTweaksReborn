@@ -57,7 +57,7 @@ public class WanderingTrader extends SRFeature {
     public static final ArrayList<SerializableTrade> wanderingTraderGenericTrades = new ArrayList<>();
 
     public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_RARE_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
-            new SerializableTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(Items.BOOK), 1).enchantResult(6, 12, false).enchant(Enchantments.UNBREAKING, 1),
+            new SerializableTrade(new ItemStack(Items.BOOK), new ItemStack(Items.EMERALD, 6), new ItemStack(Items.BOOK), 1, 0).enchantResult(6, 12, false).enchant(Enchantments.UNBREAKING, 1),
             new SerializableTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(Items.BOOK), 1).enchantResult(10, 18, false),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.GUNPOWDER, 2), 8),
             new SerializableTrade(new ItemStack(Items.EMERALD, 4), new ItemStack(Items.TROPICAL_FISH_BUCKET), 4),
