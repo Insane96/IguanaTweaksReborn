@@ -2,6 +2,9 @@
 
 ## Upcoming
 * Food can no longer be smelted in a furnace. Requires either a campfire or a smoker
+* Golden Pickaxes and Golden Axes now have higher attack speed
+* Added better attack invincibility
+  * Attacking faster than 2 hits per second will make entities invulnerable for less time. Only works when wielding weapons.
 * Beeg veins are now variable size and the ore rocks on top now generate more the more ores got generated below
 
 ## Alpha 3.8.1
