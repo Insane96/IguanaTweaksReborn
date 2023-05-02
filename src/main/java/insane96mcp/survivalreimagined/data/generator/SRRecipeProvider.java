@@ -4,6 +4,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
+import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.world.feature.Fire;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;

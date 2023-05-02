@@ -4,7 +4,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.items.feature.Crate;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
-import insane96mcp.survivalreimagined.module.items.feature.Mithril;
+import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
 import insane96mcp.survivalreimagined.module.world.feature.Fire;

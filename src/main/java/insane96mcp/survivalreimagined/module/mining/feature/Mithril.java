@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.items.feature;
+package insane96mcp.survivalreimagined.module.mining.feature;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;

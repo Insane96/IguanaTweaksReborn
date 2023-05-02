@@ -6,7 +6,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
-import insane96mcp.survivalreimagined.module.items.feature.Mithril;
+import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
 import insane96mcp.survivalreimagined.module.world.data.SerializableTrade;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

@@ -6,6 +6,7 @@ import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
+import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
