@@ -28,14 +28,17 @@ public class BeegOreVeinFeature extends Feature<OreWithRandomPatchConfiguration>
         WorldGenLevel worldgenlevel = context.level();
         OreWithRandomPatchConfiguration configuration = context.config();
 
-        int minX = blockpos.getX() - configuration.width / 2;
-        int maxX = blockpos.getX() + configuration.width / 2;
-        int minY = blockpos.getY() - configuration.height / 2;
-        int maxY = blockpos.getY() + configuration.height / 2;
-        int minZ = blockpos.getZ() - configuration.width / 2;
-        int maxZ = blockpos.getZ() + configuration.width / 2;
+        int widthX = configuration.width.sample(context.random());
+        int height = configuration.height.sample(context.random());
+        int widthZ = configuration.width.sample(context.random());
+        int minX = blockpos.getX() - widthX / 2;
+        int maxX = blockpos.getX() + widthX / 2;
+        int minY = blockpos.getY() - height / 2;
+        int maxY = blockpos.getY() + height / 2;
+        int minZ = blockpos.getZ() - widthZ / 2;
+        int maxZ = blockpos.getZ() + widthZ / 2;
 
-        boolean hasPlacedOre = false;
+        int placed = 0;
         try (BulkSectionAccess bulksectionaccess = new BulkSectionAccess(worldgenlevel)) {
             BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
             for (int x = minX; x < maxX; x++) {
@@ -53,7 +56,7 @@ public class BeegOreVeinFeature extends Feature<OreWithRandomPatchConfiguration>
                                 for (OreConfiguration.TargetBlockState oreconfiguration$targetblockstate : configuration.targetStates) {
                                     if (canPlaceOre(blockstate, bulksectionaccess::getBlockState, randomsource, configuration, oreconfiguration$targetblockstate, mutableBlockPos)) {
                                         levelchunksection.setBlockState(i3, j3, k3, oreconfiguration$targetblockstate.state, false);
-                                        hasPlacedOre = true;
+                                        placed++;
                                         break;
                                     }
                                 }
@@ -64,14 +67,15 @@ public class BeegOreVeinFeature extends Feature<OreWithRandomPatchConfiguration>
             }
         }
 
-        if (!hasPlacedOre)
+        if (placed == 0)
             return false;
+        int randomPatchToPlace = placed / 30;
         int placedRandomPatch = 0;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
         int xzSpread = configuration.patchConfiguration.xzSpread() + 1;
         int ySpread = configuration.patchConfiguration.ySpread() + 1;
 
-        for(int m = 0; m < configuration.patchConfiguration.tries(); ++m) {
+        for(int m = 0; m < randomPatchToPlace; ++m) {
             blockpos$mutableblockpos.setWithOffset(blockpos, randomsource.nextInt(xzSpread) - randomsource.nextInt(xzSpread), randomsource.nextInt(ySpread) - randomsource.nextInt(ySpread), randomsource.nextInt(xzSpread) - randomsource.nextInt(xzSpread));
             if (configuration.patchConfiguration.feature().value().place(worldgenlevel, context.chunkGenerator(), randomsource, blockpos$mutableblockpos)) {
                 ++placedRandomPatch;

@@ -1,8 +1,20 @@
 {
     "type": "survivalreimagined:ore_with_surface_feature",
     "config": {
-        "width": 13,
-        "height": 13,
+        "width": {
+            "type": "minecraft:uniform",
+            "value": {
+                "max_inclusive": 13,
+                "min_inclusive": 10
+            }
+        },
+        "height": {
+            "type": "minecraft:uniform",
+            "value": {
+                "max_inclusive": 13,
+                "min_inclusive": 10
+            }
+        },
         "discard_chance_on_air_exposure": 0.5,
         "targets": [
             {
@@ -67,7 +79,7 @@
             }
         ],
         "surface_patch_config": {
-            "tries": 12,
+            "tries": 1,
             "xz_spread": 8,
             "y_spread": 5,
             "feature": {
