@@ -27,7 +27,7 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.EnumMap;
 
 @Label(name = "Mithril", description = "Add Mithril, a new ore scattered everywhere in the Overworld in small quantities and can be used to upgrade Iron Equipment")
-@LoadFeature(module = Modules.Ids.ITEMS)
+@LoadFeature(module = Modules.Ids.MINING)
 public class Mithril extends Feature {
 
 	public static final RegistryObject<Block> BLOCK = SRBlocks.REGISTRY.register("mithril_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
