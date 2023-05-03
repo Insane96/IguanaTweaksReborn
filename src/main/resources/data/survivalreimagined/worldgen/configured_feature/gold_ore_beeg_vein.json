@@ -21,7 +21,7 @@
                 "target": {
                     "predicate_type": "survivalreimagined:random_block_tag_match",
                     "tag": "minecraft:stone_ore_replaceables",
-                    "probability": 0.025
+                    "probability": 0.02
                 },
                 "state": {
                     "Name": "survivalreimagined:rich_gold_ore"
@@ -31,7 +31,7 @@
                 "target": {
                     "predicate_type": "survivalreimagined:random_block_tag_match",
                     "tag": "minecraft:stone_ore_replaceables",
-                    "probability": 0.075
+                    "probability": 0.06
                 },
                 "state": {
                     "Name": "minecraft:gold_ore"
@@ -41,7 +41,7 @@
                 "target": {
                     "predicate_type": "survivalreimagined:random_block_tag_match",
                     "tag": "minecraft:stone_ore_replaceables",
-                    "probability": 0.20
+                    "probability": 0.15
                 },
                 "state": {
                     "Name": "survivalreimagined:poor_gold_ore"
@@ -51,7 +51,7 @@
                 "target": {
                     "predicate_type": "survivalreimagined:random_block_tag_match",
                     "tag": "minecraft:deepslate_ore_replaceable",
-                    "probability": 0.025
+                    "probability": 0.02
                 },
                 "state": {
                     "Name": "survivalreimagined:rich_deepslate_gold_ore"
@@ -61,7 +61,7 @@
                 "target": {
                     "predicate_type": "survivalreimagined:random_block_tag_match",
                     "tag": "minecraft:deepslate_ore_replaceable",
-                    "probability": 0.075
+                    "probability": 0.06
                 },
                 "state": {
                     "Name": "minecraft:deepslate_gold_ore"
@@ -71,7 +71,7 @@
                 "target": {
                     "predicate_type": "survivalreimagined:random_block_tag_match",
                     "tag": "minecraft:deepslate_ore_replaceable",
-                    "probability": 0.20
+                    "probability": 0.15
                 },
                 "state": {
                     "Name": "survivalreimagined:poor_deepslate_gold_ore"
@@ -79,7 +79,7 @@
             }
         ],
         "surface_patch_config": {
-            "tries": 1,
+            "tries": 25,
             "xz_spread": 8,
             "y_spread": 5,
             "feature": {

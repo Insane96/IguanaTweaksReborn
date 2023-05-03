@@ -69,7 +69,7 @@ public class BeegOreVeinFeature extends Feature<OreWithRandomPatchConfiguration>
 
         if (placed == 0)
             return false;
-        int randomPatchToPlace = placed / 30;
+        int randomPatchToPlace = placed / configuration.patchConfiguration.tries();
         int placedRandomPatch = 0;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
         int xzSpread = configuration.patchConfiguration.xzSpread() + 1;
