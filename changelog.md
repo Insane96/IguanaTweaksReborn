@@ -3,10 +3,16 @@
 ## Upcoming
 * Rebalanced Combat stats
   * Players' Entity Reach is now reduced by 0.5 by default
+  * Re-enabled Stone and Flint swords
   * Swords, Shovels and Hoes get +0.5 entity reach (attacking with an axe or a pickaxe has reduced range compared to vanilla)
   * Tridents get +1 entity reach (unchanged)
   * Swords get -2 attack damage
   * Pickaxes get -1 attack damage
+* Rebalanced tools stats
+  * Slightly increased Stone durability and increased Netherite durability
+  * Slightly increased copper and flint efficiency
+  * Slightly Decreased Netherite efficiency
+  * Reduced flint base damage
 * Food can no longer be smelted in a furnace. Requires either a campfire or a smoker
 * Golden Pickaxes and Golden Axes now have higher attack speed
 * Added better attack invincibility
