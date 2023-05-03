@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.data.generator.client;
 
+import insane96mcp.shieldsplus.ShieldsPlus;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import net.minecraft.data.PackOutput;
@@ -41,7 +42,6 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(SoulSteel.HELMET.get());
         basicItem(SoulSteel.INGOT.get());
         basicItem(SoulSteel.NUGGET.get());
-        shield(SoulSteel.SHIELD.get());
     }
 
     private ItemModelBuilder handHeld(Item item) {
@@ -61,8 +61,8 @@ public class SRItemModelsProvider extends ItemModelProvider {
     private ItemModelBuilder shield(ResourceLocation item) {
         return getBuilder(item.toString())
                 .parent(new ModelFile.UncheckedModelFile("shieldsplus:item/wooden_shield"))
-                /*.override().predicate(new ResourceLocation("blocking"), 1)
+                .override().predicate(new ResourceLocation(ShieldsPlus.MOD_ID, "blocking"), 1)
                 .model(new ModelFile.UncheckedModelFile("shieldsplus:item/wooden_shield_blocking"))
-                .end()*/;
+                .end();
     }
 }
