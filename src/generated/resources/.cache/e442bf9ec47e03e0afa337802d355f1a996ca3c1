@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-03T12:10:39.2890597	Item Models: survivalreimagined
+// 1.19.4	2023-05-03T12:15:49.8033437	Item Models: survivalreimagined
 a7ba2469cf00e8e1b443bbece75501217bcd40e3 assets/survivalreimagined/models/item/poor_copper_ore.json
 3b60d903e9a9a82fc4a08cfd661baf9b65fb6ab1 assets/survivalreimagined/models/item/poor_deepslate_copper_ore.json
 fcab84ad1481180dc231aa22e80fe5a611577147 assets/survivalreimagined/models/item/poor_deepslate_gold_ore.json
@@ -12,6 +12,7 @@ c0f37fc88440b49460a192e779d26ebe6813605c assets/survivalreimagined/models/item/r
 47480519041adb7b3288f4860b74a55a2496c930 assets/survivalreimagined/models/item/rich_gold_ore.json
 eee169fd70a6ceefb55b444a5b5de58e6f97bc74 assets/survivalreimagined/models/item/rich_iron_ore.json
 135e3143924558d3af258a57b309704566b14b7a assets/survivalreimagined/models/item/soul_steel_axe.json
+99dc0b4278163d921ae2b9d29414a2b32ab4ecd4 assets/survivalreimagined/models/item/soul_steel_block.json
 990997b7565736b1e8c49b8aae2cd874b75ac74c assets/survivalreimagined/models/item/soul_steel_boots.json
 ca79a3fb5dbe4a6bcbfde681fdf5d67a4c1a4fb5 assets/survivalreimagined/models/item/soul_steel_chestplate.json
 1df51c825aaf9fda9fb41dbf63ea7313e655f1c9 assets/survivalreimagined/models/item/soul_steel_helmet.json

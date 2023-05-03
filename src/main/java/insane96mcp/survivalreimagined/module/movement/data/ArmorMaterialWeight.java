@@ -4,21 +4,36 @@ import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Optional;
+
+import static insane96mcp.survivalreimagined.module.movement.feature.WeightedEquipment.armorDurabilityRatio;
 
 @JsonAdapter(ArmorMaterialWeight.Serializer.class)
 public class ArmorMaterialWeight {
-	public String id;
+	public String materialName;
 	public double totalWeight;
 
-	public ArmorMaterialWeight(String id) {
-		this.id = id;
+	public ArmorMaterialWeight(String materialName) {
+		this.materialName = materialName;
 	}
 
-	public ArmorMaterialWeight(String id, double totalWeight) {
-		this.id = id;
+	public ArmorMaterialWeight(String materialName, double totalWeight) {
+		this.materialName = materialName;
 		this.totalWeight = totalWeight;
+	}
+
+	public Optional<Double> getStackWeight(ItemStack stack) {
+		ArmorItem armor = (ArmorItem) stack.getItem();
+		if (!armor.getMaterial().getName().equals(this.materialName))
+			return Optional.empty();
+		EquipmentSlot slot = armor.getEquipmentSlot();
+		double armorPieceSlowdown = this.totalWeight * armorDurabilityRatio.get(slot);
+		return Optional.of(-armorPieceSlowdown);
 	}
 
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<ArmorMaterialWeight>>(){}.getType();
@@ -35,7 +50,7 @@ public class ArmorMaterialWeight {
 		@Override
 		public JsonElement serialize(ArmorMaterialWeight src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
 			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty("id", src.id);
+			jsonObject.addProperty("id", src.materialName);
 			jsonObject.addProperty("total_weight", src.totalWeight);
 
 			return jsonObject;

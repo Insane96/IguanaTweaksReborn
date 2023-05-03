@@ -42,6 +42,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(SoulSteel.HELMET.get());
         basicItem(SoulSteel.INGOT.get());
         basicItem(SoulSteel.NUGGET.get());
+        withExistingParent("soul_steel_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "soul_steel_block"));
     }
 
     private ItemModelBuilder handHeld(Item item) {

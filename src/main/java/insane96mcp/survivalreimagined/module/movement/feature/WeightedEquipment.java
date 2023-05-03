@@ -33,24 +33,21 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 @Label(name = "Weighted Equipment", description = "Armor and Shield slows down the player. Material Weights and Enchantment Weights are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class WeightedEquipment extends SRFeature {
 	public static final ArrayList<ArmorMaterialWeight> MATERIAL_WEIGHTS_DEFAULTS = new ArrayList<>(Arrays.asList(
 			new ArmorMaterialWeight("leather", 0.025d),
-			new ArmorMaterialWeight("chained_copper", 0.05d),
+			new ArmorMaterialWeight("survivalreimagined:chained_copper", 0.05d),
 			new ArmorMaterialWeight("chainmail", 0.05d),
-			new ArmorMaterialWeight("golden", 0.025d),
+			new ArmorMaterialWeight("golden", 0.04d),
 			new ArmorMaterialWeight("iron", 0.075d),
-			new ArmorMaterialWeight("mithril", 0.08d),
+			new ArmorMaterialWeight("survivalreimagined:mithril", 0.08d),
 			new ArmorMaterialWeight("diamond", 0.10d),
+			new ArmorMaterialWeight("survivalreimagined:soul_steel", 0.08d),
 			new ArmorMaterialWeight("netherite", 0.15d)
 	));
 	public static final ArrayList<ArmorMaterialWeight> materialWeight = new ArrayList<>();
@@ -75,7 +72,7 @@ public class WeightedEquipment extends SRFeature {
 	public static Double shieldSlowdown = 0d;
 
 	// 11 - 16 - 15 - 13
-	private static final HashMap<EquipmentSlot, Double> armorDurabilityRatio = new HashMap<>();
+	public static final HashMap<EquipmentSlot, Double> armorDurabilityRatio = new HashMap<>();
 
 	public WeightedEquipment(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -143,21 +140,17 @@ public class WeightedEquipment extends SRFeature {
 		if (!(itemStack.getItem() instanceof ArmorItem))
 			return 0d;
 		double slowdown = 0d;
-		boolean noMaterialSlowdown = false;
+		boolean hasMaterialSlowdown = false;
 		for (ArmorMaterialWeight armorMaterialWeight : materialWeight) {
-			//noinspection ConstantConditions
-			if (!ForgeRegistries.ITEMS.getKey(itemStack.getItem()).getPath().contains(armorMaterialWeight.id))
-				continue;
-			ArmorItem armor = (ArmorItem) itemStack.getItem();
-			EquipmentSlot slot = armor.getEquipmentSlot();
-			double armorPieceSlowdown = armorMaterialWeight.totalWeight * armorDurabilityRatio.get(slot);
-			if (armorMaterialWeight.totalWeight == 0d)
-				noMaterialSlowdown = true;
-			slowdown = -armorPieceSlowdown;
-			break;
+			Optional<Double> armorMaterialSlowdown = armorMaterialWeight.getStackWeight(itemStack);
+			if (armorMaterialSlowdown.isPresent()){
+				slowdown = armorMaterialSlowdown.get();
+				hasMaterialSlowdown = true;
+				break;
+			}
 		}
 		//If no slowdown was found in the material weight
-		if (slowdown == 0d && !noMaterialSlowdown) {
+		if (!hasMaterialSlowdown) {
 			ArmorItem armorItem = (ArmorItem) itemStack.getItem();
 			Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(armorItem.getEquipmentSlot());
 			double armor = 0d;
