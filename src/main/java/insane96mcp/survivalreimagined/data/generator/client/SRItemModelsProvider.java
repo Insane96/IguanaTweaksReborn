@@ -55,14 +55,14 @@ public class SRItemModelsProvider extends ItemModelProvider {
     }
 
     private ItemModelBuilder shield(Item item) {
-        return handHeld(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)));
+        return shield(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)));
     }
 
     private ItemModelBuilder shield(ResourceLocation item) {
         return getBuilder(item.toString())
                 .parent(new ModelFile.UncheckedModelFile("shieldsplus:item/wooden_shield"))
-                .override().predicate(new ResourceLocation("blocking"), 1)
+                /*.override().predicate(new ResourceLocation("blocking"), 1)
                 .model(new ModelFile.UncheckedModelFile("shieldsplus:item/wooden_shield_blocking"))
-                .end();
+                .end()*/;
     }
 }

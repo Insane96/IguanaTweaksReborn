@@ -2,7 +2,7 @@
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
         {
-            "item": "survivalreimagined:steel_ingot"
+            "item": "survivalreimagined:soul_steel_ingot"
         },
         {
             "item": "minecraft:flint"

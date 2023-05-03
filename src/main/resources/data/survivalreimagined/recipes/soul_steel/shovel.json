@@ -1,0 +1,14 @@
+{
+  "left": {
+    "item": "minecraft:iron_shovel"
+  },
+  "right": {
+    "item": "survivalreimagined:soul_steel_ingot"
+  },
+  "amount": 1,
+  "result": {
+    "item": "survivalreimagined:soul_steel_shovel"
+  },
+  "keep_durability": true,
+  "chance_to_break": 0.075
+}

@@ -23,5 +23,7 @@ public class SRBlockModelsProvider extends BlockModelProvider {
             cubeAll("poor_deepslate_%s_ore".formatted(poorRichOre), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/poor_deepslate_%s_ore".formatted(poorRichOre)));
             cubeAll("rich_deepslate_%s_ore".formatted(poorRichOre), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/rich_deepslate_%s_ore".formatted(poorRichOre)));
         }
+
+        cubeAll(SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_steel_block"));
     }
 }

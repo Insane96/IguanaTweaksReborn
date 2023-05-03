@@ -34,7 +34,7 @@ public class SoulSteel extends Feature {
 
 	public static final RegistryObject<Item> NUGGET = SRItems.REGISTRY.register("soul_steel_nugget", () -> new Item(new Item.Properties().fireResistant()));
 
-	private static final ILItemTier ITEM_TIER = new ILItemTier(3, 2156, 8f, 2.0f, 5, () -> Ingredient.of(INGOT.get()));
+	private static final ILItemTier ITEM_TIER = new ILItemTier(3, 2356, 7f, 2.0f, 5, () -> Ingredient.of(INGOT.get()));
 
 	public static final RegistryObject<Item> SWORD = SRItems.REGISTRY.register("soul_steel_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties().fireResistant()));
 	public static final RegistryObject<Item> SHOVEL = SRItems.REGISTRY.register("soul_steel_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties().fireResistant()));
@@ -47,14 +47,14 @@ public class SoulSteel extends Feature {
 		p_266652_.put(ArmorItem.Type.LEGGINGS, 5);
 		p_266652_.put(ArmorItem.Type.CHESTPLATE, 6);
 		p_266652_.put(ArmorItem.Type.HELMET, 3);
-	}), 3, SoundEvents.ARMOR_EQUIP_IRON, 2f, 0.05f, () -> Ingredient.of(INGOT.get()));
+	}), 3, SoundEvents.ARMOR_EQUIP_IRON, 1f, 0.05f, () -> Ingredient.of(INGOT.get()));
 
 	public static final RegistryObject<Item> HELMET = SRItems.REGISTRY.register("soul_steel_helmet", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties().fireResistant()));
 	public static final RegistryObject<Item> CHESTPLATE = SRItems.REGISTRY.register("soul_steel_chestplate", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant()));
 	public static final RegistryObject<Item> LEGGINGS = SRItems.REGISTRY.register("soul_steel_leggings", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant()));
 	public static final RegistryObject<Item> BOOTS = SRItems.REGISTRY.register("soul_steel_boots", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.BOOTS, new Item.Properties().fireResistant()));
 
-	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("soul_steel", 5d, 756, INGOT, 3, Rarity.COMMON);
+	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("soul_steel", 6d, 756, INGOT, 3, Rarity.COMMON);
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRItems.registerShield("soul_steel_shield", SHIELD_MATERIAL, true);
 

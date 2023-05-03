@@ -1,0 +1,14 @@
+{
+  "left": {
+    "item": "minecraft:iron_axe"
+  },
+  "right": {
+    "item": "survivalreimagined:soul_steel_ingot"
+  },
+  "amount": 3,
+  "result": {
+    "item": "survivalreimagined:soul_steel_axe"
+  },
+  "keep_durability": true,
+  "chance_to_break": 0.075
+}

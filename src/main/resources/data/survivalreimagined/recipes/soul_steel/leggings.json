@@ -1,0 +1,14 @@
+{
+  "left": {
+    "item": "minecraft:iron_leggings"
+  },
+  "right": {
+    "item": "survivalreimagined:soul_steel_ingot"
+  },
+  "amount": 7,
+  "result": {
+    "item": "survivalreimagined:soul_steel_leggings"
+  },
+  "keep_durability": true,
+  "chance_to_break": 0.075
+}

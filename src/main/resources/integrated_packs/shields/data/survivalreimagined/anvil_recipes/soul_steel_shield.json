@@ -1,0 +1,14 @@
+{
+  "left": {
+    "item": "minecraft:shield"
+  },
+  "right": {
+    "item": "survivalreimagined:soul_steelingot"
+  },
+  "amount": 4,
+  "result": {
+    "item": "survivalreimagined:soul_steel_shield"
+  },
+  "keep_durability": true,
+  "chance_to_break": 0.075
+}

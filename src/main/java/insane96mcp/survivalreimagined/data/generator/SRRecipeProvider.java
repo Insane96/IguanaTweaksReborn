@@ -5,6 +5,7 @@ import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeat
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
+import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.world.feature.Fire;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
@@ -197,6 +198,23 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Mithril.NUGGET.get(), 9)
                 .requires(Mithril.INGOT.get(), 1)
                 .unlockedBy("has_ingot", has(Mithril.INGOT.get()))
+                .save(writer);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, SoulSteel.BLOCK.block().get(), 1)
+                .requires(SoulSteel.INGOT.get(), 9)
+                .unlockedBy("has_ingot", has(SoulSteel.INGOT.get()))
+                .save(writer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, SoulSteel.INGOT.get(), 9)
+                .requires(SoulSteel.BLOCK.block().get(), 1)
+                .unlockedBy("has_ingot", has(SoulSteel.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_ingot_from_block");
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, SoulSteel.INGOT.get(), 1)
+                .requires(SoulSteel.NUGGET.get(), 9)
+                .unlockedBy("has_nuggets", has(SoulSteel.NUGGET.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_ingot_from_nuggets");
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, SoulSteel.NUGGET.get(), 9)
+                .requires(SoulSteel.INGOT.get(), 1)
+                .unlockedBy("has_ingot", has(SoulSteel.INGOT.get()))
                 .save(writer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ExplosiveBarrel.BLOCK_ITEM.get())

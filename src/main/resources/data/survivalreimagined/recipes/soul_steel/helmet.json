@@ -1,0 +1,14 @@
+{
+  "left": {
+    "item": "minecraft:iron_helmet"
+  },
+  "right": {
+    "item": "survivalreimagined:soul_steel_ingot"
+  },
+  "amount": 5,
+  "result": {
+    "item": "survivalreimagined:soul_steel_helmet"
+  },
+  "keep_durability": true,
+  "chance_to_break": 0.075
+}
