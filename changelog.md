@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Added Passable Foliage mod
 * Rebalanced Combat stats
   * Players' Entity Reach is now reduced by 0.5 by default
   * Re-enabled Stone and Flint swords

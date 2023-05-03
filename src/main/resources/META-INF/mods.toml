@@ -69,10 +69,16 @@ license="All rights reserved"
     ordering="NONE"
     side="BOTH"
 
-
 [[dependencies.survivalreimagined]]
     modId="sereneseasons"
     mandatory=true
     versionRange="[8.2.0.39,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.survivalreimagined]]
+    modId="passablefoliage"
+    mandatory=true
+    versionRange="[7.0.0,)"
     ordering="NONE"
     side="BOTH"
