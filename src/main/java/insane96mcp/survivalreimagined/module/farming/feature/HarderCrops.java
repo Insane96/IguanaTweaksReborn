@@ -7,6 +7,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.network.message.HarderCropsSync;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -45,13 +47,12 @@ public class HarderCrops extends SRFeature {
 		if (!this.isEnabled())
 			return;
 
-		resetOriginalHardness();
-		applyHardness();
+		applyHardness(hardness.floatValue(), onlyFullyGrown);
 	}
 
-	ArrayList<BlockState> changedStates = new ArrayList<>();
+	static ArrayList<BlockState> changedStates = new ArrayList<>();
 
-	private void resetOriginalHardness() {
+	private static void resetOriginalHardness() {
 		if (changedStates.isEmpty()) {
 			for (Block block : ForgeRegistries.BLOCKS.getValues()) {
 				boolean isInTag = isBlockInTag(block, HARDER_CROPS_TAG);
@@ -71,7 +72,8 @@ public class HarderCrops extends SRFeature {
 		}
 	}
 
-	private void applyHardness() {
+	public static void applyHardness(float hardness, boolean onlyFullyGrown) {
+		resetOriginalHardness();
 		for (Block block : ForgeRegistries.BLOCKS.getValues()) {
 			boolean isInTag = isBlockInTag(block, HARDER_CROPS_TAG);
 			boolean isBlacklisted = isBlockInTag(block, HARDER_CROPS_BLACKLIST_TAG);
@@ -83,15 +85,23 @@ public class HarderCrops extends SRFeature {
 				//I have doubts that this always takes the fully grown modded crops
 				BlockState state = block.getStateDefinition().getPossibleStates().get(block.getStateDefinition().getPossibleStates().size() - 1);
 				if (state.destroySpeed == 0f)
-					state.destroySpeed = hardness.floatValue();
+					state.destroySpeed = hardness;
 			}
 			else {
 				block.getStateDefinition().getPossibleStates().forEach(blockState -> {
 					if (blockState.destroySpeed == 0f)
-						blockState.destroySpeed = hardness.floatValue();
+						blockState.destroySpeed = hardness;
 				});
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void syncHardness(OnDatapackSyncEvent event) {
+		if (event.getPlayer() == null)
+			event.getPlayerList().getPlayers().forEach(player -> HarderCropsSync.sync(player, hardness.floatValue(), onlyFullyGrown));
+		else
+			HarderCropsSync.sync(event.getPlayer(), hardness.floatValue(), onlyFullyGrown);
 	}
 
 	@SubscribeEvent

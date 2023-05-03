@@ -257,9 +257,7 @@ public class SRFeature extends Feature {
             Gson gson = new GsonBuilder().create();
 
             if (event.getPlayer() == null) {
-                event.getPlayerList().getPlayers().forEach(player -> {
-                    JsonConfigSyncMessage.sync(this.configType, gson.toJson(this.list, this.listType), player);
-                });
+                event.getPlayerList().getPlayers().forEach(player -> JsonConfigSyncMessage.sync(this.configType, gson.toJson(this.list, this.listType), player));
             }
             else {
                 JsonConfigSyncMessage.sync(this.configType, gson.toJson(this.list, this.listType), event.getPlayer());
@@ -275,7 +273,7 @@ public class SRFeature extends Feature {
     }
 
     @SubscribeEvent
-    public void onDataPackSync(TagsUpdatedEvent event) {
+    public void onTagsUpdatedEvent(TagsUpdatedEvent event) {
         if (event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED) {
             for (JsonConfig<?> jsonConfig : JSON_CONFIGS) {
                 jsonConfig.onLoad(true);
