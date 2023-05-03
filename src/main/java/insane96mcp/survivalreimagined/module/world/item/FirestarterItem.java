@@ -27,7 +27,7 @@ public class FirestarterItem extends FlintAndSteelItem implements Vanishable {
 
     @Override
     public int getUseDuration(ItemStack p_41454_) {
-        return 100;
+        return 80;
     }
 
     @Override
@@ -74,13 +74,13 @@ public class FirestarterItem extends FlintAndSteelItem implements Vanishable {
         }
         else {
             if (tickCount % 3 == 1) {
-                if (tickCount <= 70)
+                if (tickCount <= 60)
                     level.addParticle(ParticleTypes.SMOKE, hitresult.getLocation().x, hitresult.getLocation().y, hitresult.getLocation().z, 0.0d, 0.1d, 0.0d);
-                if (tickCount <= 30)
+                if (tickCount <= 25)
                     level.addParticle(ParticleTypes.FLAME, hitresult.getLocation().x, hitresult.getLocation().y, hitresult.getLocation().z, 0.0d, 0.1d, 0.0d);
             }
 
-            if (tickCount == 80 || tickCount == 40) {
+            if (tickCount == 60 || tickCount == 30) {
                 level.playSound(player, hitresult.getBlockPos(), SoundEvents.FIRE_AMBIENT, SoundSource.BLOCKS);
             }
         }
