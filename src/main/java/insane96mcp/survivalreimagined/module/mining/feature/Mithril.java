@@ -55,7 +55,7 @@ public class Mithril extends Feature {
 		p_266652_.put(ArmorItem.Type.LEGGINGS, 5);
 		p_266652_.put(ArmorItem.Type.CHESTPLATE, 6);
 		p_266652_.put(ArmorItem.Type.HELMET, 2);
-	}), 6, SoundEvents.ARMOR_EQUIP_IRON, 1f, 0.04f, () -> Ingredient.of(INGOT.get()));
+	}), 6, SoundEvents.ARMOR_EQUIP_IRON, 1f, 0.03f, () -> Ingredient.of(INGOT.get()));
 
 	public static final RegistryObject<Item> HELMET = SRItems.REGISTRY.register("mithril_helmet", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties()));
 	public static final RegistryObject<Item> CHESTPLATE = SRItems.REGISTRY.register("mithril_chestplate", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()));

@@ -13,6 +13,7 @@
   * Slightly increased copper and flint efficiency
   * Slightly Decreased Netherite efficiency
   * Reduced flint base damage
+* Rebalanced armor durability
 * Food can no longer be smelted in a furnace. Requires either a campfire or a smoker
 * Golden Pickaxes and Golden Axes now have higher attack speed
 * Added better attack invincibility

@@ -40,12 +40,12 @@ import java.util.*;
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class WeightedEquipment extends SRFeature {
 	public static final ArrayList<ArmorMaterialWeight> MATERIAL_WEIGHTS_DEFAULTS = new ArrayList<>(Arrays.asList(
-			new ArmorMaterialWeight("leather", 0.025d),
+			new ArmorMaterialWeight("leather", 0.01d),
 			new ArmorMaterialWeight("survivalreimagined:chained_copper", 0.05d),
-			new ArmorMaterialWeight("chainmail", 0.05d),
-			new ArmorMaterialWeight("golden", 0.04d),
+			new ArmorMaterialWeight("chainmail", 0.04d),
 			new ArmorMaterialWeight("iron", 0.075d),
 			new ArmorMaterialWeight("survivalreimagined:mithril", 0.08d),
+			new ArmorMaterialWeight("golden", 0.04d),
 			new ArmorMaterialWeight("diamond", 0.10d),
 			new ArmorMaterialWeight("survivalreimagined:soul_steel", 0.08d),
 			new ArmorMaterialWeight("netherite", 0.15d)
@@ -65,7 +65,7 @@ public class WeightedEquipment extends SRFeature {
 	@Label(name = "Percentage Increase per Toughness", description = """
 						This value times the Armor Toughness worn by the player is a percentage increase of the Slowdown per Armor.
 						Total percentage slowdown is '(slowness_per_armor * armor_points) * (1 + (toughness * percentage_per_toughness))'
-						E.g. with 'Slowness per Armor' set to 0.02 and this set to 0.04 and the player wearing Diamond Armor the slowdown is '(0.02 * 20) * (1 + (8 * 0.04))' = '0.4 * 1.32'= '0.528' = -52.8% Speed applied to the player.""")
+						E.g. with 'Slowness per Armor' set to 0.005 and this set to 0.025 and the player wearing Diamond Armor the slowdown is '(0.005 * 20) * (1 + (8 * 0.025))' = '0.1 * 1.2'= '0.12' = -12% Speed applied to the player.""")
 	public static Double percentagePerToughness = 0.025d;
 	@Config(min = 0, max = 1d)
 	@Label(name = "Shield Slowdown", description = "Shields will slowdown the player by this percentage.")
@@ -182,6 +182,7 @@ public class WeightedEquipment extends SRFeature {
 		return slowdown;
 	}
 
+	//TODO Add full set slowdown to tooltip
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onTooltip(ItemTooltipEvent event) {
