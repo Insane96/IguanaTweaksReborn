@@ -17,6 +17,7 @@
   * Slightly Decreased Netherite efficiency
   * Reduced flint base damage
 * Rebalanced armor durability
+* Chainmail armor is now craftable from leather armor and chains
 * Food can no longer be smelted in a furnace. Requires either a campfire or a smoker
 * Players' Ghosts now die after 7 minutes
 * Golden Pickaxes and Golden Axes now have higher attack speed

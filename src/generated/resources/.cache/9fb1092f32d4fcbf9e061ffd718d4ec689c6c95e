@@ -1,5 +1,13 @@
-// 1.19.4	2023-05-03T12:07:37.9422931	Recipes
+// 1.19.4	2023-05-03T17:03:36.9314997	Recipes
+af698c2bd5f0dc23d7e09c2cd791677bcc6fbdd1 data/minecraft/advancements/recipes/combat/chainmail_boots.json
+bf3bc8a4397cfb7f8a085ad15d50907c42987e5d data/minecraft/advancements/recipes/combat/chainmail_chestplate.json
+3abddf0812d89a44a0f8c0d92b0f46858c8cdd5b data/minecraft/advancements/recipes/combat/chainmail_helmet.json
+112738949a05d6a3d788faa35548f0c2f7361a40 data/minecraft/advancements/recipes/combat/chainmail_leggings.json
 5b4e6b53b741ad6916f64d55df3b642e8f0a6664 data/minecraft/advancements/recipes/misc/flint.json
+eb51267f9f14f9d8ed211dc64e31ead99b0cbf1f data/minecraft/recipes/chainmail_boots.json
+74035b7a47cee1d42c475229ab656dd0d36309a2 data/minecraft/recipes/chainmail_chestplate.json
+b633816c399591c64c5ca628f769063285878b79 data/minecraft/recipes/chainmail_helmet.json
+42848bcf576620c3361441c62c2581b2043e717c data/minecraft/recipes/chainmail_leggings.json
 0dc1aaa21a170e67404766d86860c17db4a78b46 data/minecraft/recipes/flint.json
 e611d44bd92b2fdeb5684cfcfb7f77dfb2c3332e data/survivalreimagined/advancements/recipes/building_blocks/flint_block.json
 da4d5dfac321b571b7743e38359776ace36099f2 data/survivalreimagined/advancements/recipes/building_blocks/mithril_block.json

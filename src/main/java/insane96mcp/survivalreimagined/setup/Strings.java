@@ -34,7 +34,6 @@ public class Strings {
 		public static final String NO_EFFICIENCY_ITEM = "survivalreimagined.no_efficiency_item";
 		public static final String NO_DAMAGE_ITEM = "survivalreimagined.no_damage_item";
 
-		public static final String ARMOR_SLOWDOWN = "survivalreimagined.armor_slowdown";
 		public static final String SPAWNER_REACTIVATOR = SurvivalReimagined.MOD_ID + ".spawner_reactivator";
 		public static final String NO_SPAWN_POINT = SurvivalReimagined.MOD_ID + ".no_spawn_point";
 	}

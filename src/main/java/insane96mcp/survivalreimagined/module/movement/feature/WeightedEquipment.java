@@ -39,6 +39,8 @@ import java.util.*;
 @Label(name = "Weighted Equipment", description = "Armor and Shield slows down the player. Material Weights and Enchantment Weights are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class WeightedEquipment extends SRFeature {
+	public static final String ARMOR_SLOWDOWN = "survivalreimagined.armor_slowdown";
+
 	public static final ArrayList<ArmorMaterialWeight> MATERIAL_WEIGHTS_DEFAULTS = new ArrayList<>(Arrays.asList(
 			new ArmorMaterialWeight("leather", 0.01d),
 			new ArmorMaterialWeight("survivalreimagined:chained_copper", 0.05d),
@@ -192,7 +194,7 @@ public class WeightedEquipment extends SRFeature {
 		double slowdown = -getArmorSlowdown(stack) * 100d;
 		if (slowdown <= 0d)
 			return;
-		event.getToolTip().add(Component.translatable(Strings.Translatable.ARMOR_SLOWDOWN, Utils.formatDecimal(slowdown, "#.#")).withStyle(ChatFormatting.RED));
+		event.getToolTip().add(Component.translatable(ARMOR_SLOWDOWN, Utils.formatDecimal(slowdown, "#.#")).withStyle(ChatFormatting.RED));
 	}
 
 	@OnlyIn(Dist.CLIENT)

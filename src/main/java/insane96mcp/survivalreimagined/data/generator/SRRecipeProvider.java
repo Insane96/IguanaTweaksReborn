@@ -146,6 +146,42 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_chain", has(Items.CHAIN))
                 .save(writer);
 
+        //Chainmail Armor
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.CHAINMAIL_HELMET)
+                .pattern("ccc")
+                .pattern("clc")
+                .define('c', Items.CHAIN)
+                .define('l', Items.LEATHER_HELMET)
+                .unlockedBy("has_leather_armor", has(Items.LEATHER_HELMET))
+                .unlockedBy("has_chain", has(Items.CHAIN))
+                .save(writer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.CHAINMAIL_CHESTPLATE)
+                .pattern("clc")
+                .pattern("ccc")
+                .pattern("ccc")
+                .define('c', Items.CHAIN)
+                .define('l', Items.LEATHER_CHESTPLATE)
+                .unlockedBy("has_leather_armor", has(Items.LEATHER_CHESTPLATE))
+                .unlockedBy("has_chain", has(Items.CHAIN))
+                .save(writer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.CHAINMAIL_LEGGINGS)
+                .pattern("ccc")
+                .pattern("clc")
+                .pattern("c c")
+                .define('c', Items.CHAIN)
+                .define('l', Items.LEATHER_LEGGINGS)
+                .unlockedBy("has_leather_armor", has(Items.LEATHER_LEGGINGS))
+                .unlockedBy("has_chain", has(Items.CHAIN))
+                .save(writer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.CHAINMAIL_BOOTS)
+                .pattern("clc")
+                .pattern("c c")
+                .define('c', Items.CHAIN)
+                .define('l', Items.LEATHER_BOOTS)
+                .unlockedBy("has_leather_armor", has(Items.LEATHER_BOOTS))
+                .unlockedBy("has_chain", has(Items.CHAIN))
+                .save(writer);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Crate.BLOCK_ITEM.get())
                 .pattern("nnn")
                 .pattern("ibi")

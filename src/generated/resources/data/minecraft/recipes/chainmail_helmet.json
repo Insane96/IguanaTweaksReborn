@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "c": {
+      "item": "minecraft:chain"
+    },
+    "l": {
+      "item": "minecraft:leather_helmet"
+    }
+  },
+  "pattern": [
+    "ccc",
+    "clc"
+  ],
+  "result": {
+    "item": "minecraft:chainmail_helmet"
+  },
+  "show_notification": true
+}
