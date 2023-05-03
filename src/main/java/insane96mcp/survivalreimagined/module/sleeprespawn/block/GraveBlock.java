@@ -132,6 +132,7 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
                     zombie.lootTable = new ResourceLocation("minecraft:empty");
                     zombie.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, 0d);
                     zombie.getPersistentData().putBoolean(Death.PLAYER_GHOST, true);
+                    zombie.getPersistentData().putLong(Death.SPAWNED_GAME_TIME, level.getGameTime());
                     zombie.getPersistentData().putBoolean(EAStrings.Tags.Zombie.MINER, true);
                     zombie.getPersistentData().putBoolean("mobspropertiesrandomness:processed", true);
                     //zombie.setCustomName(Component.translatable(Death.PLAYER_GHOST_LANG, player.getName().getString()));

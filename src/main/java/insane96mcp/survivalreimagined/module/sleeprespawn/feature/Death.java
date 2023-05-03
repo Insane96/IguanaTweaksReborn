@@ -46,6 +46,7 @@ public class Death extends Feature {
 	public static final RegistryObject<BlockEntityType<?>> GRAVE_BLOCK_ENTITY_TYPE = SRBlockEntityTypes.REGISTRY.register("grave", () -> BlockEntityType.Builder.of(GraveBlockEntity::new, GRAVE.block().get()).build(null));
 
 	public static final String PLAYER_GHOST = SurvivalReimagined.RESOURCE_PREFIX + "player_ghost";
+	public static final String SPAWNED_GAME_TIME = SurvivalReimagined.RESOURCE_PREFIX + "spawned_game_time";
 	public static final String PLAYER_GHOST_LANG = SurvivalReimagined.MOD_ID + ".player_ghost";
 	public static final String XP_TO_DROP = SurvivalReimagined.RESOURCE_PREFIX + "xp_to_drop";
 
@@ -128,9 +129,12 @@ public class Death extends Feature {
 				|| !event.getEntity().getPersistentData().contains(PLAYER_GHOST))
 			return;
 
-		if (event.getEntity().level.hasNearbyAlivePlayer(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 80))
-			event.getEntity().setGlowingTag(true);
-		event.getEntity().setTicksFrozen(0);
+		Zombie zombie = (Zombie) event.getEntity();
+		if (zombie.level.hasNearbyAlivePlayer(zombie.getX(), zombie.getY(), zombie.getZ(), 80))
+			zombie.setGlowingTag(true);
+		zombie.setTicksFrozen(0);
+		if (zombie.level.getGameTime() > zombie.getPersistentData().getLong(SPAWNED_GAME_TIME) + 9000)
+			zombie.kill();
 	}
 
 	@SubscribeEvent
