@@ -74,7 +74,7 @@ public class PiercingPickaxes extends Feature {
 				|| !(event.getItemStack().getItem() instanceof PickaxeItem pickaxeItem))
 			return;
 
-		event.getToolTip().add(Component.literal(" ").append(Component.translatable(PIERCING_TOOLTIP, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(pickaxeItem.getAttackDamage()))).withStyle(ChatFormatting.DARK_GREEN));
+		event.getToolTip().add(Component.literal(" ").append(Component.translatable(PIERCING_TOOLTIP, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(pickaxeItem.getAttackDamage() * piercingRatio))).withStyle(ChatFormatting.DARK_GREEN));
 	}
 
 }
