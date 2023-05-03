@@ -38,9 +38,9 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
-@Label(name = "Fire")
+@Label(name = "Coal & Fire")
 @LoadFeature(module = Modules.Ids.WORLD)
-public class Fire extends Feature {
+public class CoalFire extends Feature {
 
     public static final RegistryObject<Block> CHARCOAL_LAYER = SRBlocks.REGISTRY.register("charcoal_layer", () -> new PilableLayerBlock(BlockBehaviour.Properties.of(Material.MOSS, MaterialColor.COLOR_BLACK).strength(0.5F).sound(SoundType.MOSS_CARPET).isViewBlocking((state, blockGetter, pos) -> state.getValue(PilableLayerBlock.LAYERS) >= 8), Items.CHARCOAL));
     public static final RegistryObject<BlockItem> CHARCOAL_LAYER_ITEM = SRItems.REGISTRY.register("charcoal_layer", () -> new BlockItem(CHARCOAL_LAYER.get(), new Item.Properties()));
@@ -75,7 +75,7 @@ public class Fire extends Feature {
     @Label(name = "Unlit campfire", description = "If true, campfires must be lit")
     public static Boolean unlitCampfires = true;
 
-    public Fire(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+    public CoalFire(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_charcoal_smelting", net.minecraft.network.chat.Component.literal("Survival Reimagined No Charcoal Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableCharcoalSmelting));
         Blocks.CAMPFIRE.defaultBlockState = Blocks.CAMPFIRE.defaultBlockState().setValue(CampfireBlock.LIT, Boolean.FALSE);
@@ -152,11 +152,11 @@ public class Fire extends Feature {
     }
 
     public static boolean changeFireSpreadSpeed() {
-        return Feature.isEnabled(Fire.class) && fireSpreadSpeedMultiplier != 1d;
+        return Feature.isEnabled(CoalFire.class) && fireSpreadSpeedMultiplier != 1d;
     }
 
     public static boolean areCampfiresUnlit() {
-        return Feature.isEnabled(Fire.class) && unlitCampfires;
+        return Feature.isEnabled(CoalFire.class) && unlitCampfires;
     }
 
     @SubscribeEvent

@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.survivalreimagined.event.SREventFactory;
-import insane96mcp.survivalreimagined.module.world.feature.Fire;
+import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -22,7 +22,7 @@ public class FireBlockMixin {
 
 	@Inject(at = @At("RETURN"), method = "getFireTickDelay", cancellable = true)
 	private static void setFireTickDelay(RandomSource p_221149_, CallbackInfoReturnable<Integer> cir) {
-		if (Fire.changeFireSpreadSpeed())
-			cir.setReturnValue((int) (cir.getReturnValue() / Fire.fireSpreadSpeedMultiplier));
+		if (CoalFire.changeFireSpreadSpeed())
+			cir.setReturnValue((int) (cir.getReturnValue() / CoalFire.fireSpreadSpeedMultiplier));
 	}
 }

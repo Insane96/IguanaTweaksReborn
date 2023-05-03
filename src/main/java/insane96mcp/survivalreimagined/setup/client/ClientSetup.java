@@ -11,7 +11,7 @@ import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
-import insane96mcp.survivalreimagined.module.world.feature.Fire;
+import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import insane96mcp.survivalreimagined.setup.SREntityTypes;
 import net.minecraft.client.Minecraft;
@@ -52,8 +52,6 @@ public class ClientSetup {
             event.accept(FlintExpansion.SWORD.get());
             event.accept(FlintExpansion.SHIELD.get());
             event.accept(CopperTools.SWORD.get());
-            event.accept(Mithril.SWORD.get());
-            event.accept(SoulSteel.SWORD.get());
 
             event.accept(ChainedCopperArmor.HELMET.get());
             event.accept(ChainedCopperArmor.CHESTPLATE.get());
@@ -64,12 +62,14 @@ public class ClientSetup {
             event.accept(Mithril.CHESTPLATE.get());
             event.accept(Mithril.LEGGINGS.get());
             event.accept(Mithril.BOOTS.get());
+            event.accept(Mithril.SWORD.get());
             event.accept(Mithril.SHIELD.get());
 
             event.accept(SoulSteel.HELMET.get());
             event.accept(SoulSteel.CHESTPLATE.get());
             event.accept(SoulSteel.LEGGINGS.get());
             event.accept(SoulSteel.BOOTS.get());
+            event.accept(SoulSteel.SWORD.get());
             event.accept(SoulSteel.SHIELD.get());
         }
         else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
@@ -77,7 +77,7 @@ public class ClientSetup {
             event.accept(SoulSteel.BLOCK.item().get());
             event.accept(FlintExpansion.FLINT_BLOCK_ITEM.get());
             event.accept(FlintExpansion.POLISHED_FLINT_BLOCK_ITEM.get());
-            event.accept(Fire.CHARCOAL_LAYER_ITEM.get());
+            event.accept(CoalFire.CHARCOAL_LAYER_ITEM.get());
             event.accept(Death.GRAVE.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {

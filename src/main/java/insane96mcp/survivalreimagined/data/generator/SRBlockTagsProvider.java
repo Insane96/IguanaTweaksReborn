@@ -8,7 +8,7 @@ import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
-import insane96mcp.survivalreimagined.module.world.feature.Fire;
+import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -45,7 +45,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(Crate.BLOCK.get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
-                .add(Fire.CHARCOAL_LAYER.get());
+                .add(CoalFire.CHARCOAL_LAYER.get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(Mithril.BLOCK.get(), Mithril.ORE.get(), Mithril.DEEPSLATE_ORE.get())
@@ -76,6 +76,9 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get());
         tag(BlockTags.COPPER_ORES)
                 .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get());
+
+        tag(BlockTags.BEACON_BASE_BLOCKS)
+                .add(Mithril.BLOCK.get(), SoulSteel.BLOCK.block().get());
 
         //Mod's tags
         tag(RESPAWN_OBELISK_BLOCKS_TO_ROT)

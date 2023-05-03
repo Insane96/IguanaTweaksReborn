@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.world.feature.Fire;
+import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
@@ -18,7 +18,7 @@ public abstract class CampfireBlockMixin {
 
 	@Inject(at = @At("RETURN"), method = "getStateForPlacement", cancellable = true)
 	private void onUpdateDestroyTarget(BlockPlaceContext blockPlaceContext, CallbackInfoReturnable<BlockState> cir) {
-		if (!Fire.areCampfiresUnlit())
+		if (!CoalFire.areCampfiresUnlit())
 			return;
 		LevelAccessor levelaccessor = blockPlaceContext.getLevel();
 		BlockPos blockpos = blockPlaceContext.getClickedPos();

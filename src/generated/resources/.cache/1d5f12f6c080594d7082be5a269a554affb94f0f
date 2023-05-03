@@ -1,4 +1,5 @@
-// 1.19.4	2023-05-02T17:27:38.8094879	Tags for minecraft:block mod id survivalreimagined
+// 1.19.4	2023-05-03T16:12:39.2236371	Tags for minecraft:block mod id survivalreimagined
+f9f8a2cb6713fbb17d4d0f03cb5c7f4596be1aa8 data/minecraft/tags/blocks/beacon_base_blocks.json
 d5819582440cadb8c17b7aff856539c50bc69af4 data/minecraft/tags/blocks/copper_ores.json
 72ec216a289a55b54a365aa57fe69c0a71bf4fe8 data/minecraft/tags/blocks/gold_ores.json
 033aecf42ef3d2b4f210e09a0cd49e3da5bffbff data/minecraft/tags/blocks/iron_ores.json
