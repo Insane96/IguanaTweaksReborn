@@ -6,7 +6,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ParticleUtils;
 import net.minecraft.util.RandomSource;
@@ -14,9 +13,7 @@ import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -93,11 +90,7 @@ public class PilableLayerBlock extends SnowLayerBlock implements Fallable {
 
     public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
         int i = state.getValue(LAYERS);
-        if (context.getItemInHand().is(this.asItem()) && i < MAX_HEIGHT) {
-            return true;
-        }
-
-        return i == 1;
+        return context.getItemInHand().is(this.asItem()) && i < MAX_HEIGHT;
     }
 
     public boolean canSurvive(BlockState state, LevelReader levelReader, BlockPos pos) {
@@ -106,14 +99,15 @@ public class PilableLayerBlock extends SnowLayerBlock implements Fallable {
 
     @Override
     public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @org.jetbrains.annotations.Nullable BlockEntity blockEntity, ItemStack stack) {
-        player.awardStat(Stats.BLOCK_MINED.get(this));
+        /*player.awardStat(Stats.BLOCK_MINED.get(this));
         player.causeFoodExhaustion(0.005F);
         if (stack.getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0 && this.asItem() != Items.AIR) {
             popResource(level, pos, new ItemStack(this.asItem()));
         }
         else {
             popResource(level, pos, new ItemStack(this.itemDropped));
-        }
+        }*/
+        super.playerDestroy(level, player, pos, state, blockEntity, stack);
         if (state.getValue(LAYERS) > 1)
             level.setBlock(pos, state.setValue(LAYERS, state.getValue(LAYERS) - 1), 3);
     }

@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.9.0
 * Added Passable Foliage mod
 * Added better attack invincibility
   * Attacking faster than 2 hits per second will make entities invulnerable for less time. Only works when wielding weapons.
