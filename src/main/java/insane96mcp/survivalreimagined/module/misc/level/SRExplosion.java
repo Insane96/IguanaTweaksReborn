@@ -287,7 +287,7 @@ public class SRExplosion extends Explosion {
 	}
 
 	public static SRExplosion explode(ServerLevel level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean poofParticles) {
-		SRExplosion explosion = new SRExplosion(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true, true, poofParticles);
+		SRExplosion explosion = new SRExplosion(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true, ExplosionOverhaul.creeperCollateral, poofParticles);
 		if (SREventFactory.onSRExplosionCreated(explosion)) return explosion;
 		explosion.gatherAffectedBlocks(!ExplosionOverhaul.disableExplosionRandomness);
 		if (ExplosionOverhaul.enableFlyingBlocks)
