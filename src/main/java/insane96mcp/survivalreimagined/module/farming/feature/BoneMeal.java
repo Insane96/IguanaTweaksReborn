@@ -5,18 +5,16 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.block.RichFarmlandBlock;
-import insane96mcp.survivalreimagined.setup.SRBlocks;
-import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -27,7 +25,6 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Collections;
 
@@ -35,8 +32,7 @@ import java.util.Collections;
 @LoadFeature(module = Modules.Ids.FARMING)
 public class BoneMeal extends Feature {
 
-	public static final RegistryObject<RichFarmlandBlock> RICH_FARMLAND = SRBlocks.REGISTRY.register("rich_farmland", () -> new RichFarmlandBlock(BlockBehaviour.Properties.of(Material.DIRT).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking((state, blockGetter, pos) -> true).isSuffocating((state, blockGetter, pos) -> true)));
-	public static final RegistryObject<BlockItem> RICH_FARMLAND_ITEM = SRItems.REGISTRY.register("rich_farmland", () -> new BlockItem(RICH_FARMLAND.get(), new Item.Properties()));
+	public static final BlockWithItem RICH_FARMLAND = BlockWithItem.register("rich_farmland", () -> new RichFarmlandBlock(BlockBehaviour.Properties.of(Material.DIRT).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking((state, blockGetter, pos) -> true).isSuffocating((state, blockGetter, pos) -> true)));
 
 	public static final TagKey<Item> ITEM_BLACKLIST = SRItemTagsProvider.create("nerfed_bone_meal_blacklist");
 	public static final TagKey<Block> BLOCK_BLACKLIST = SRBlockTagsProvider.create("nerfed_bone_meal_blacklist");
@@ -79,7 +75,7 @@ public class BoneMeal extends Feature {
 			else if (event.getLevel().getBlockState(event.getPos().below()).is(Blocks.FARMLAND) && event.getEntity().isCrouching())
 				farmlandPos = event.getPos().below();
 			if (farmlandPos != null) {
-				event.getLevel().setBlockAndUpdate(farmlandPos, RICH_FARMLAND.get().defaultBlockState().setValue(FarmBlock.MOISTURE, event.getLevel().getBlockState(farmlandPos).getValue(FarmBlock.MOISTURE)));
+				event.getLevel().setBlockAndUpdate(farmlandPos, RICH_FARMLAND.block().get().defaultBlockState().setValue(FarmBlock.MOISTURE, event.getLevel().getBlockState(farmlandPos).getValue(FarmBlock.MOISTURE)));
 				event.getEntity().swing(event.getEntity().getMainHandItem().getItem() == event.getStack().getItem() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, true);
 				event.setResult(Event.Result.ALLOW);
 				hasRichedFarmland = true;

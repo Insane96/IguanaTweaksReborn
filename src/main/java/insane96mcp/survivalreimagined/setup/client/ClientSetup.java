@@ -73,24 +73,24 @@ public class ClientSetup {
             event.accept(SoulSteel.SHIELD.get());
         }
         else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(Mithril.BLOCK_ITEM.get());
+            event.accept(Mithril.BLOCK.item().get());
             event.accept(SoulSteel.BLOCK.item().get());
-            event.accept(FlintExpansion.FLINT_BLOCK_ITEM.get());
-            event.accept(FlintExpansion.POLISHED_FLINT_BLOCK_ITEM.get());
-            event.accept(CoalFire.CHARCOAL_LAYER_ITEM.get());
+            event.accept(FlintExpansion.FLINT_BLOCK.item().get());
+            event.accept(FlintExpansion.POLISHED_FLINT_BLOCK.item().get());
+            event.accept(CoalFire.CHARCOAL_LAYER.item().get());
             event.accept(Death.GRAVE.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
-            event.accept(Respawn.RESPAWN_OBELISK_ITEM.get());
-            event.accept(Crate.BLOCK_ITEM.get());
+            event.accept(Respawn.RESPAWN_OBELISK.item().get());
+            event.accept(Crate.BLOCK.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
-            event.accept(Minecarts.NETHER_INFUSED_POWERED_RAIL_ITEM.get());
-            event.accept(ExplosiveBarrel.BLOCK_ITEM.get());
+            event.accept(Minecarts.NETHER_INFUSED_POWERED_RAIL.item().get());
+            event.accept(ExplosiveBarrel.BLOCK.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
-            event.accept(Mithril.ORE_ITEM.get());
-            event.accept(Mithril.DEEPSLATE_ORE_ITEM.get());
+            event.accept(Mithril.ORE.item().get());
+            event.accept(Mithril.DEEPSLATE_ORE.item().get());
             event.accept(Crops.CARROT_SEEDS.get());
             event.accept(Crops.POTATO_SEEDS.get());
             event.accept(OreGeneration.COPPER_ORE_ROCK.item().get());
@@ -108,7 +108,7 @@ public class ClientSetup {
             event.accept(OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().item().get());
             event.accept(OreGeneration.POOR_RICH_GOLD_ORE.richOre().item().get());
             event.accept(OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().item().get());
-            event.accept(BoneMeal.RICH_FARMLAND_ITEM.get());
+            event.accept(BoneMeal.RICH_FARMLAND.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
             event.accept(Mithril.INGOT.get());

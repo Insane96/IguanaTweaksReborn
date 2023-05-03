@@ -9,11 +9,11 @@ import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
-import insane96mcp.survivalreimagined.setup.SRBlocks;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -52,10 +52,8 @@ public class FlintExpansion extends Feature {
 	public static final RegistryObject<Item> HOE = SRItems.REGISTRY.register("flint_hoe", () -> new HoeItem(ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRItems.registerShield("flint_shield", SHIELD_MATERIAL);
-	public static final RegistryObject<Block> FLINT_BLOCK = SRBlocks.REGISTRY.register("flint_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 5.0F)));
-	public static final RegistryObject<BlockItem> FLINT_BLOCK_ITEM = SRItems.REGISTRY.register("flint_block", () -> new BlockItem(FLINT_BLOCK.get(), new Item.Properties()));
-	public static final RegistryObject<Block> POLISHED_FLINT_BLOCK = SRBlocks.REGISTRY.register("polished_flint_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 5.0F)));
-	public static final RegistryObject<BlockItem> POLISHED_FLINT_BLOCK_ITEM = SRItems.REGISTRY.register("polished_flint_block", () -> new BlockItem(POLISHED_FLINT_BLOCK.get(), new Item.Properties()));
+	public static final BlockWithItem FLINT_BLOCK = BlockWithItem.register("flint_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 5.0F)));
+	public static final BlockWithItem POLISHED_FLINT_BLOCK = BlockWithItem.register("polished_flint_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 5.0F)));
 
 	@Config
 	@Label(name = "Disable Wooden Tools", description = "Makes wooden items deal no damage and not able to break blocks.")

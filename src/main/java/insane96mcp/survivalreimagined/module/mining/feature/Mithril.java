@@ -7,9 +7,9 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
+import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.item.SRArmorMaterial;
-import insane96mcp.survivalreimagined.setup.SRBlocks;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvents;
@@ -30,17 +30,13 @@ import java.util.EnumMap;
 @LoadFeature(module = Modules.Ids.MINING)
 public class Mithril extends Feature {
 
-	public static final RegistryObject<Block> BLOCK = SRBlocks.REGISTRY.register("mithril_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
-	public static final RegistryObject<Block> ORE = SRBlocks.REGISTRY.register("mithril_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5)));
-	public static final RegistryObject<Block> DEEPSLATE_ORE = SRBlocks.REGISTRY.register("deepslate_mithril_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(ORE.get()).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), UniformInt.of(2, 5)));
+	public static final BlockWithItem BLOCK = BlockWithItem.register("mithril_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
+	public static final BlockWithItem ORE = BlockWithItem.register("mithril_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5)));
+	public static final BlockWithItem DEEPSLATE_ORE = BlockWithItem.register("deepslate_mithril_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(ORE.block().get()).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), UniformInt.of(2, 5)));
 
 	public static final RegistryObject<Item> INGOT = SRItems.REGISTRY.register("mithril_ingot", () -> new Item(new Item.Properties()));
 
 	public static final RegistryObject<Item> NUGGET = SRItems.REGISTRY.register("mithril_nugget", () -> new Item(new Item.Properties()));
-
-	public static final RegistryObject<Item> BLOCK_ITEM = SRItems.REGISTRY.register("mithril_block", () -> new BlockItem(BLOCK.get(), new Item.Properties()));
-	public static final RegistryObject<Item> ORE_ITEM = SRItems.REGISTRY.register("mithril_ore", () -> new BlockItem(ORE.get(), new Item.Properties()));
-	public static final RegistryObject<Item> DEEPSLATE_ORE_ITEM = SRItems.REGISTRY.register("deepslate_mithril_ore", () -> new BlockItem(DEEPSLATE_ORE.get(), new Item.Properties().rarity(Rarity.COMMON)));
 
 	private static final ILItemTier ITEM_TIER = new ILItemTier(2, 780, 6.5f, 2.5f, 11, () -> Ingredient.of(INGOT.get()));
 

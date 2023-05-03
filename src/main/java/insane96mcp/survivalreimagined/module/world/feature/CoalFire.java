@@ -5,6 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.event.BlockBurntEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
@@ -12,7 +13,6 @@ import insane96mcp.survivalreimagined.module.world.block.PilableLayerBlock;
 import insane96mcp.survivalreimagined.module.world.entity.PilableFallingLayerEntity;
 import insane96mcp.survivalreimagined.module.world.item.FirestarterItem;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
-import insane96mcp.survivalreimagined.setup.SRBlocks;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.packs.PackType;
@@ -21,7 +21,10 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -42,8 +45,7 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.WORLD)
 public class CoalFire extends Feature {
 
-    public static final RegistryObject<Block> CHARCOAL_LAYER = SRBlocks.REGISTRY.register("charcoal_layer", () -> new PilableLayerBlock(BlockBehaviour.Properties.of(Material.MOSS, MaterialColor.COLOR_BLACK).strength(0.5F).sound(SoundType.MOSS_CARPET).isViewBlocking((state, blockGetter, pos) -> state.getValue(PilableLayerBlock.LAYERS) >= 8), Items.CHARCOAL));
-    public static final RegistryObject<BlockItem> CHARCOAL_LAYER_ITEM = SRItems.REGISTRY.register("charcoal_layer", () -> new BlockItem(CHARCOAL_LAYER.get(), new Item.Properties()));
+    public static final BlockWithItem CHARCOAL_LAYER = BlockWithItem.register("charcoal_layer", () -> new PilableLayerBlock(BlockBehaviour.Properties.of(Material.MOSS, MaterialColor.COLOR_BLACK).strength(0.5F).sound(SoundType.MOSS_CARPET).isViewBlocking((state, blockGetter, pos) -> state.getValue(PilableLayerBlock.LAYERS) >= 8), Items.CHARCOAL));
 
     public static final RegistryObject<Item> FIRESTARTER = SRItems.REGISTRY.register("firestarter", () -> new FirestarterItem(new Item.Properties().stacksTo(1).defaultDurability(11)));
 
@@ -90,7 +92,7 @@ public class CoalFire extends Feature {
 
         if (event.getLevel().getRandom().nextDouble() < charcoalFromBurntLogsChance
                 && event.getState().is(BlockTags.LOGS_THAT_BURN)) {
-            PilableFallingLayerEntity.fall((Level) event.getLevel(), event.getPos(), CHARCOAL_LAYER.get().defaultBlockState());
+            PilableFallingLayerEntity.fall((Level) event.getLevel(), event.getPos(), CHARCOAL_LAYER.block().get().defaultBlockState());
         }
     }
 

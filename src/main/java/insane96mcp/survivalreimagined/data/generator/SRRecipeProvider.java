@@ -82,22 +82,22 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('L', ItemTags.LOGS)
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.FLINT_BLOCK_ITEM.get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.FLINT_BLOCK.item().get())
                 .requires(Items.FLINT, 9)
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.FLINT, 9)
-                .requires(FlintExpansion.FLINT_BLOCK_ITEM.get(), 1)
-                .unlockedBy("has_flint_block_item", has(FlintExpansion.FLINT_BLOCK_ITEM.get()))
+                .requires(FlintExpansion.FLINT_BLOCK.item().get(), 1)
+                .unlockedBy("has_flint_block_item", has(FlintExpansion.FLINT_BLOCK.item().get()))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.POLISHED_FLINT_BLOCK_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.POLISHED_FLINT_BLOCK.item().get())
                 .pattern("ff")
                 .pattern("ff")
-                .define('f', FlintExpansion.FLINT_BLOCK_ITEM.get())
-                .unlockedBy("has_flint_block", has(FlintExpansion.FLINT_BLOCK_ITEM.get()))
+                .define('f', FlintExpansion.FLINT_BLOCK.item().get())
+                .unlockedBy("has_flint_block", has(FlintExpansion.FLINT_BLOCK.item().get()))
                 .save(writer);
-        SingleItemRecipeBuilder.stonecutting(Ingredient.of(FlintExpansion.FLINT_BLOCK_ITEM.get()), RecipeCategory.BUILDING_BLOCKS, FlintExpansion.POLISHED_FLINT_BLOCK_ITEM.get())
-                .unlockedBy("has_flint_block", has(FlintExpansion.FLINT_BLOCK_ITEM.get()))
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(FlintExpansion.FLINT_BLOCK.item().get()), RecipeCategory.BUILDING_BLOCKS, FlintExpansion.POLISHED_FLINT_BLOCK.item().get())
+                .unlockedBy("has_flint_block", has(FlintExpansion.FLINT_BLOCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "stonecutter_polished_flint_block");
 
         ConditionalRecipe.builder()
@@ -182,7 +182,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_chain", has(Items.CHAIN))
                 .save(writer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Crate.BLOCK_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Crate.BLOCK.item().get())
                 .pattern("nnn")
                 .pattern("ibi")
                 .pattern("nnn")
@@ -203,7 +203,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_mithril_nugget", has(Mithril.NUGGET.get()))
                 .save(writer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, Minecarts.NETHER_INFUSED_POWERED_RAIL_ITEM.get(), 4)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, Minecarts.NETHER_INFUSED_POWERED_RAIL.item().get(), 4)
                 .requires(Items.POWERED_RAIL, 4)
                 .requires(Items.NETHER_BRICK, 4)
                 .requires(Items.FIRE_CHARGE, 1)
@@ -219,12 +219,12 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_ancient_lapis", has(AncientLapis.ANCIENT_LAPIS.get()))
                 .save(writer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Mithril.BLOCK_ITEM.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Mithril.BLOCK.item().get(), 1)
                 .requires(Mithril.INGOT.get(), 9)
                 .unlockedBy("has_ingot", has(Mithril.INGOT.get()))
                 .save(writer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Mithril.INGOT.get(), 9)
-                .requires(Mithril.BLOCK_ITEM.get(), 1)
+                .requires(Mithril.BLOCK.item().get(), 1)
                 .unlockedBy("has_ingot", has(Mithril.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_ingot_from_block");
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Mithril.INGOT.get(), 1)
@@ -253,7 +253,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_ingot", has(SoulSteel.INGOT.get()))
                 .save(writer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ExplosiveBarrel.BLOCK_ITEM.get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ExplosiveBarrel.BLOCK.item().get())
                 .requires(Items.TNT, 1)
                 .requires(Items.BARREL, 1)
                 .requires(Items.GUNPOWDER, 2)
@@ -412,43 +412,43 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blasting_chained_copper_boots");
 
         SimpleCookingRecipeBuilder.smelting(
-                        Ingredient.of(Mithril.ORE.get()),
+                        Ingredient.of(Mithril.ORE.item().get()),
                         RecipeCategory.MISC,
                         Mithril.NUGGET.get(),
                         1f,
                         800
                 )
-                .unlockedBy("has_mithril_ore", has(Mithril.ORE.get()))
+                .unlockedBy("has_mithril_ore", has(Mithril.ORE.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_nugget_from_smelting_ore");
 
         SimpleCookingRecipeBuilder.smelting(
-                        Ingredient.of(Mithril.DEEPSLATE_ORE.get()),
+                        Ingredient.of(Mithril.DEEPSLATE_ORE.item().get()),
                         RecipeCategory.MISC,
                         Mithril.NUGGET.get(),
                         1f,
                         800
                 )
-                .unlockedBy("has_mithril_ore", has(Mithril.DEEPSLATE_ORE.get()))
+                .unlockedBy("has_mithril_ore", has(Mithril.DEEPSLATE_ORE.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_nugget_from_smelting_deepslate_ore");
 
         SimpleCookingRecipeBuilder.blasting(
-                        Ingredient.of(Mithril.ORE.get()),
+                        Ingredient.of(Mithril.ORE.item().get()),
                         RecipeCategory.MISC,
                         Mithril.NUGGET.get(),
                         1f,
                         200
                 )
-                .unlockedBy("has_mithril_ore", has(Mithril.ORE.get()))
+                .unlockedBy("has_mithril_ore", has(Mithril.ORE.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_nugget_from_blasting_ore");
 
         SimpleCookingRecipeBuilder.blasting(
-                        Ingredient.of(Mithril.DEEPSLATE_ORE.get()),
+                        Ingredient.of(Mithril.DEEPSLATE_ORE.item().get()),
                         RecipeCategory.MISC,
                         Mithril.NUGGET.get(),
                         1f,
                         200
                 )
-                .unlockedBy("has_mithril_ore", has(Mithril.DEEPSLATE_ORE.get()))
+                .unlockedBy("has_mithril_ore", has(Mithril.DEEPSLATE_ORE.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_nugget_from_blasting_deepslate_ore");
 
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.TOOLS, Mithril.AXE.get())

@@ -42,33 +42,33 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         //Vanilla Tags
         tag(BlockTags.MINEABLE_WITH_AXE)
-                .add(Crate.BLOCK.get());
+                .add(Crate.BLOCK.block().get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
-                .add(CoalFire.CHARCOAL_LAYER.get());
+                .add(CoalFire.CHARCOAL_LAYER.block().get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(Mithril.BLOCK.get(), Mithril.ORE.get(), Mithril.DEEPSLATE_ORE.get())
+                .add(Mithril.BLOCK.block().get(), Mithril.ORE.block().get(), Mithril.DEEPSLATE_ORE.block().get())
                 .add(SoulSteel.BLOCK.block().get())
                 .add(OreGeneration.IRON_ORE_ROCK.block().get()).add(OreGeneration.COPPER_ORE_ROCK.block().get()).add(OreGeneration.GOLD_ORE_ROCK.block().get())
                 .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get())
                 .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get())
                 .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get())
-                .add(FlintExpansion.FLINT_BLOCK.get()).add(FlintExpansion.POLISHED_FLINT_BLOCK.get())
+                .add(FlintExpansion.FLINT_BLOCK.block().get()).add(FlintExpansion.POLISHED_FLINT_BLOCK.block().get())
                 .add(Death.GRAVE.block().get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(Crate.BLOCK.get())
+                .add(Crate.BLOCK.block().get())
                 .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get())
                 .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get());
 
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get())
-                .add(Mithril.BLOCK.get(), Mithril.ORE.get(), Mithril.DEEPSLATE_ORE.get())
+                .add(Mithril.BLOCK.block().get(), Mithril.ORE.block().get(), Mithril.DEEPSLATE_ORE.block().get())
                 .add(SoulSteel.BLOCK.block().get());
 
         tag(BlockTags.RAILS)
-                .add(Minecarts.NETHER_INFUSED_POWERED_RAIL.get());
+                .add(Minecarts.NETHER_INFUSED_POWERED_RAIL.block().get());
 
         tag(BlockTags.IRON_ORES)
                 .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get());
@@ -78,7 +78,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get());
 
         tag(BlockTags.BEACON_BASE_BLOCKS)
-                .add(Mithril.BLOCK.get(), SoulSteel.BLOCK.block().get());
+                .add(Mithril.BLOCK.block().get(), SoulSteel.BLOCK.block().get());
 
         //Mod's tags
         tag(RESPAWN_OBELISK_BLOCKS_TO_ROT)

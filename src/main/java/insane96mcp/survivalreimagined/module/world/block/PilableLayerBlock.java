@@ -31,6 +31,7 @@ import javax.annotation.Nullable;
 public class PilableLayerBlock extends SnowLayerBlock implements Fallable {
     public static final int MAX_HEIGHT = 8;
     private final Item itemDropped;
+    //TODO Change itemDropped to loot table
     public PilableLayerBlock(Properties properties, Item itemDropped) {
         super(properties);
         this.itemDropped = itemDropped;
