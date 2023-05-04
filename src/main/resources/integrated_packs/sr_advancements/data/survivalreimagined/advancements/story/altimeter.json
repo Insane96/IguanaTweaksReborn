@@ -14,7 +14,7 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/iron_pickaxe",
+	"parent": "survivalreimagined:story/mithril_pickaxe",
 	"criteria": {
 		"altimeter": {
 			"trigger": "minecraft:inventory_changed",
