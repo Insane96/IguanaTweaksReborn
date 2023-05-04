@@ -10,31 +10,31 @@ import java.util.function.Supplier;
 
 import static insane96mcp.survivalreimagined.network.NetworkHandler.CHANNEL;
 
-public class HarderCropsSync {
+public class HarderCropsSyncMessage {
 	float hardness;
 	boolean onlyFullyGrown;
 
-	public HarderCropsSync(float hardness, boolean onlyFullyGrown) {
+	public HarderCropsSyncMessage(float hardness, boolean onlyFullyGrown) {
 		this.hardness = hardness;
 		this.onlyFullyGrown = onlyFullyGrown;
 	}
 
-	public static void encode(HarderCropsSync pkt, FriendlyByteBuf buf) {
+	public static void encode(HarderCropsSyncMessage pkt, FriendlyByteBuf buf) {
 		buf.writeFloat(pkt.hardness);
 		buf.writeBoolean(pkt.onlyFullyGrown);
 	}
 
-	public static HarderCropsSync decode(FriendlyByteBuf buf) {
-		return new HarderCropsSync(buf.readFloat(), buf.readBoolean());
+	public static HarderCropsSyncMessage decode(FriendlyByteBuf buf) {
+		return new HarderCropsSyncMessage(buf.readFloat(), buf.readBoolean());
 	}
 
-	public static void handle(final HarderCropsSync message, Supplier<NetworkEvent.Context> ctx) {
+	public static void handle(final HarderCropsSyncMessage message, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> HarderCrops.applyHardness(message.hardness, message.onlyFullyGrown));
 		ctx.get().setPacketHandled(true);
 	}
 
 	public static void sync(ServerPlayer player, float hardness, boolean onlyFullyGrown) {
-		Object msg = new HarderCropsSync(hardness, onlyFullyGrown);
+		Object msg = new HarderCropsSyncMessage(hardness, onlyFullyGrown);
 		CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 	}
 }

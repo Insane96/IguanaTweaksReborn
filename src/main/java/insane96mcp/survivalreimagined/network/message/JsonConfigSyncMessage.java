@@ -6,6 +6,7 @@ import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.ItemStats;
 import insane96mcp.survivalreimagined.module.items.feature.StackSizes;
 import insane96mcp.survivalreimagined.module.mining.feature.CustomHardness;
+import insane96mcp.survivalreimagined.module.mining.feature.GlobalHardness;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -60,7 +61,9 @@ public class JsonConfigSyncMessage {
         CUSTOM_FOOD_STACK_SIZES(StackSizes::handleCustomStackSizesPacket),
         CUSTOM_FOOD_PROPERTIES(FoodDrinks::handleCustomFoodPropertiesPacket),
         CUSTOM_BLOCK_HARDNESS(CustomHardness::handleCustomBlockHardnessPacket),
-        PLANTS_GROWTH(PlantsGrowth::handlePlantsGrowthPacket);
+        PLANTS_GROWTH(PlantsGrowth::handlePlantsGrowthPacket),
+        DIMENSION_HARDNESS(GlobalHardness::handleDimensionHardnessPacket),
+        DEPTH_HARDNESS(GlobalHardness::handleDepthHardnessPacket);
 
         final Consumer<String> consumer;
 

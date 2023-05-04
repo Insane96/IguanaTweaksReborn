@@ -34,7 +34,8 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(6, MessageSpawnerStatusSync.class, MessageSpawnerStatusSync::encode, MessageSpawnerStatusSync::decode, MessageSpawnerStatusSync::handle);
 		CHANNEL.registerMessage(7, JsonConfigSyncMessage.class, JsonConfigSyncMessage::encode, JsonConfigSyncMessage::decode, JsonConfigSyncMessage::handle);
 		CHANNEL.registerMessage(8, SyncInvulnerableTimeMessage.class, SyncInvulnerableTimeMessage::encode, SyncInvulnerableTimeMessage::decode, SyncInvulnerableTimeMessage::handle);
-		CHANNEL.registerMessage(9, HarderCropsSync.class, HarderCropsSync::encode, HarderCropsSync::decode, HarderCropsSync::handle);
+		CHANNEL.registerMessage(9, HarderCropsSyncMessage.class, HarderCropsSyncMessage::encode, HarderCropsSyncMessage::decode, HarderCropsSyncMessage::handle);
+		CHANNEL.registerMessage(10, GlobalHardnessSyncMessage.class, GlobalHardnessSyncMessage::encode, GlobalHardnessSyncMessage::decode, GlobalHardnessSyncMessage::handle);
 		MinecraftForge.EVENT_BUS.register(new NetworkHandler());
 	}
 

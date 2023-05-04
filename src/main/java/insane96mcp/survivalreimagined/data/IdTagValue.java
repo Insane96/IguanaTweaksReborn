@@ -22,11 +22,6 @@ public class IdTagValue extends IdTagMatcher {
 		this.value = value;
 	}
 
-	public IdTagValue(String dimension, double value) {
-		super(Type.ID, "minecraft:air", dimension);
-		this.value = value;
-	}
-
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<IdTagValue>>(){}.getType();
 
 	public static class Serializer implements JsonDeserializer<IdTagValue>, JsonSerializer<IdTagValue> {

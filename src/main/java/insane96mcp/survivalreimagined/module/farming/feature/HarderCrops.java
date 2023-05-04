@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.network.message.HarderCropsSync;
+import insane96mcp.survivalreimagined.network.message.HarderCropsSyncMessage;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -99,9 +99,9 @@ public class HarderCrops extends SRFeature {
 	@SubscribeEvent
 	public void syncHardness(OnDatapackSyncEvent event) {
 		if (event.getPlayer() == null)
-			event.getPlayerList().getPlayers().forEach(player -> HarderCropsSync.sync(player, hardness.floatValue(), onlyFullyGrown));
+			event.getPlayerList().getPlayers().forEach(player -> HarderCropsSyncMessage.sync(player, hardness.floatValue(), onlyFullyGrown));
 		else
-			HarderCropsSync.sync(event.getPlayer(), hardness.floatValue(), onlyFullyGrown);
+			HarderCropsSyncMessage.sync(event.getPlayer(), hardness.floatValue(), onlyFullyGrown);
 	}
 
 	@SubscribeEvent
