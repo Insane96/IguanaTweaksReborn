@@ -45,6 +45,10 @@ public class FoodDrinks extends SRFeature {
 			.food(new FoodProperties.Builder().nutrition(3).saturationMod(0.6F).build())
 	));
 
+	public static final RegistryObject<Item> OVER_EASY_EGG = SRItems.REGISTRY.register("over_easy_egg", () -> new Item(new Item.Properties()
+			.food(new FoodProperties.Builder().nutrition(4).saturationMod(0.6F).build())
+	));
+
 	public static final TagKey<Item> FOOD_BLACKLIST = SRItemTagsProvider.create("food_drinks_no_hunger_changes");
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(
@@ -54,7 +58,7 @@ public class FoodDrinks extends SRFeature {
 
 	//TODO Change this to formula
 	@Config(min = 0d, max = 20d)
-	@Label(name = "Food Hunger Multiplier", description = "Food's hunger restored will be multiplied by this value (rounded up). E.g. With this set to 0.5 a Cooked Porkchop would restore 4 hunger instead of 8. Setting to 1 will disable this feature.")
+	@Label(name = "Food Hunger Multiplier", description = "Food's hunger restored will be multiplied by this value (rounded up). E.g. With this set to 0.5 a Cooked Pork-chop would restore 4 hunger instead of 8. Setting to 1 will disable this feature.")
 	public static Double foodHungerMultiplier = 1d;
 	//TODO Change this to formula
 	@Config(min = 0d, max = 64d)

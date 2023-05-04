@@ -275,6 +275,16 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_mushroom", has(Items.RED_MUSHROOM))
                 .save(writer);
 
+        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(Items.EGG), RecipeCategory.FOOD, FoodDrinks.OVER_EASY_EGG.get(), 0.35f, 600)
+                .unlockedBy("has_egg", has(Items.EGG))
+                .save(writer, "over_easy_egg_from_campfire");
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(Items.EGG), RecipeCategory.FOOD, FoodDrinks.OVER_EASY_EGG.get(), 0.35f, 200)
+                .unlockedBy("has_egg", has(Items.EGG))
+                .save(writer, "over_easy_egg_from_smelting");
+        SimpleCookingRecipeBuilder.smoking(Ingredient.of(Items.EGG), RecipeCategory.FOOD, FoodDrinks.OVER_EASY_EGG.get(), 0.35f, 100)
+                .unlockedBy("has_egg", has(Items.EGG))
+                .save(writer, "over_easy_egg_from_smoking");
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, CoalFire.FIRESTARTER.get())
                 .requires(Items.FLINT, 2)
                 .requires(Items.IRON_INGOT, 1)

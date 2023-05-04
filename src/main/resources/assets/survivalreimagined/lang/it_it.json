@@ -92,6 +92,10 @@
 	"item.survivalreimagined.altimeter": "Altimetro",
 	"survivalreimagined.item_fragment.appliable_to": "Applicabile a: ",
 
+	"item.survivalreimagined.brown_mushroom_stew": "Zuppa di funghi marroni",
+	"item.survivalreimagined.red_mushroom_stew": "Zuppa di funghi rossi",
+	"item.survivalreimagined.over_easy_egg": "Uovo all'occhio di bue",
+
 	"item.survivalreimagined.chained_copper_helmet": "Elmo di rame a catene",
 	"item.survivalreimagined.chained_copper_chestplate": "Corazza di rame a catene",
 	"item.survivalreimagined.chained_copper_leggings": "Gambiere di rame a catene",

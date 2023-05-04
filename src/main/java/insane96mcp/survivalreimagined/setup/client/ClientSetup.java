@@ -47,6 +47,7 @@ public class ClientSetup {
             event.accept(SoulSteel.PICKAXE.get());
             event.accept(SoulSteel.SHOVEL.get());
             event.accept(SoulSteel.HOE.get());
+            event.accept(CoalFire.FIRESTARTER.get());
         }
         else if (event.getTab() == CreativeModeTabs.COMBAT) {
             event.accept(FlintExpansion.SWORD.get());

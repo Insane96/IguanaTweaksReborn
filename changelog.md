@@ -4,6 +4,7 @@
 * Added Passable Foliage mod
 * Added better attack invincibility
   * Attacking faster than 2 hits per second will make entities invulnerable for less time. Only works when wielding weapons.
+* Added over-easy egg
 * Rebalanced Combat stats
   * Players' Entity Reach is now reduced by 0.5 by default
   * Re-enabled Stone and Flint swords
