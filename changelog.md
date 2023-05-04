@@ -1,10 +1,14 @@
 # Changelog
 
+## Alpha 3.9.1
+* Added over-easy egg
+* Charcoal can now be placed as layer and layers now fall on top of each-other properly
+* Fixes and improvements
+
 ## Alpha 3.9.0
 * Added Passable Foliage mod
 * Added better attack invincibility
   * Attacking faster than 2 hits per second will make entities invulnerable for less time. Only works when wielding weapons.
-* Added over-easy egg
 * Rebalanced Combat stats
   * Players' Entity Reach is now reduced by 0.5 by default
   * Re-enabled Stone and Flint swords
@@ -22,14 +26,13 @@
 * Food can no longer be smelted in a furnace. Requires either a campfire or a smoker
 * Players' Ghosts now die after 7:30 minutes
 * Beeg veins are now variable size and the ore rocks on top now generate more the more ores generated below
-* Charcoal can now be placed as layer and layers now fall on top of each-other properly
 * Golden Pickaxes and Golden Axes now have higher attack speed
 
 ## Alpha 3.8.1
 * Respawn obelisk now requires only at least one catalyst block to activate, and will only try to break one of the catalysts instead of each one of them. Tweaked some chances.
 * Slabs (not double) now take half the time to break
 * Items from graves now despawn faster
-* playerSleepingPercentage gamerule is now set to 1
+* playerSleepingPercentage gamerule is now set to 1 to let tired player rest
 * Fixes
 
 ## Alpha 3.8.0
