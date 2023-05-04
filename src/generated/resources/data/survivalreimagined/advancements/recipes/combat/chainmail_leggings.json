@@ -18,7 +18,7 @@
         "items": [
           {
             "items": [
-              "minecraft:leather_boots"
+              "minecraft:leather_leggings"
             ]
           }
         ]
@@ -27,7 +27,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:chainmail_boots"
+        "recipe": "survivalreimagined:chainmail_leggings"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -41,7 +41,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:chainmail_boots"
+      "survivalreimagined:chainmail_leggings"
     ]
   }
 }

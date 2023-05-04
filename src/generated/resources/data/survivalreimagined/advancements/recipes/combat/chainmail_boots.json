@@ -1,12 +1,24 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_egg": {
+    "has_chain": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:egg"
+              "minecraft:chain"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_leather_armor": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:leather_boots"
             ]
           }
         ]
@@ -15,20 +27,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:over_easy_egg_from_smoking"
+        "recipe": "survivalreimagined:chainmail_boots"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_egg",
+      "has_leather_armor",
+      "has_chain",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:over_easy_egg_from_smoking"
+      "survivalreimagined:chainmail_boots"
     ]
   }
 }

@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:over_easy_egg_from_smelting"
+        "recipe": "survivalreimagined:over_easy_egg_from_smoking"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:over_easy_egg_from_smelting"
+      "survivalreimagined:over_easy_egg_from_smoking"
     ]
   }
 }

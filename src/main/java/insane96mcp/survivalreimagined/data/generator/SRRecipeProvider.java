@@ -89,7 +89,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.FLINT, 9)
                 .requires(FlintExpansion.FLINT_BLOCK.item().get(), 1)
                 .unlockedBy("has_flint_block_item", has(FlintExpansion.FLINT_BLOCK.item().get()))
-                .save(writer);
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "flint_from_block");
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.POLISHED_FLINT_BLOCK.item().get())
                 .pattern("ff")
                 .pattern("ff")
@@ -154,7 +154,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('l', Items.LEATHER_HELMET)
                 .unlockedBy("has_leather_armor", has(Items.LEATHER_HELMET))
                 .unlockedBy("has_chain", has(Items.CHAIN))
-                .save(writer);
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "chainmail_helmet");
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.CHAINMAIL_CHESTPLATE)
                 .pattern("clc")
                 .pattern("ccc")
@@ -163,7 +163,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('l', Items.LEATHER_CHESTPLATE)
                 .unlockedBy("has_leather_armor", has(Items.LEATHER_CHESTPLATE))
                 .unlockedBy("has_chain", has(Items.CHAIN))
-                .save(writer);
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "chainmail_chestplate");
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.CHAINMAIL_LEGGINGS)
                 .pattern("ccc")
                 .pattern("clc")
@@ -172,7 +172,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('l', Items.LEATHER_LEGGINGS)
                 .unlockedBy("has_leather_armor", has(Items.LEATHER_LEGGINGS))
                 .unlockedBy("has_chain", has(Items.CHAIN))
-                .save(writer);
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "chainmail_leggings");
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.CHAINMAIL_BOOTS)
                 .pattern("clc")
                 .pattern("c c")
@@ -180,7 +180,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('l', Items.LEATHER_BOOTS)
                 .unlockedBy("has_leather_armor", has(Items.LEATHER_BOOTS))
                 .unlockedBy("has_chain", has(Items.CHAIN))
-                .save(writer);
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "chainmail_boots");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Crate.BLOCK.item().get())
                 .pattern("nnn")
@@ -277,13 +277,13 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(Items.EGG), RecipeCategory.FOOD, FoodDrinks.OVER_EASY_EGG.get(), 0.35f, 600)
                 .unlockedBy("has_egg", has(Items.EGG))
-                .save(writer, "over_easy_egg_from_campfire");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "over_easy_egg_from_campfire");
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(Items.EGG), RecipeCategory.FOOD, FoodDrinks.OVER_EASY_EGG.get(), 0.35f, 200)
                 .unlockedBy("has_egg", has(Items.EGG))
-                .save(writer, "over_easy_egg_from_smelting");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "over_easy_egg_from_smelting");
         SimpleCookingRecipeBuilder.smoking(Ingredient.of(Items.EGG), RecipeCategory.FOOD, FoodDrinks.OVER_EASY_EGG.get(), 0.35f, 100)
                 .unlockedBy("has_egg", has(Items.EGG))
-                .save(writer, "over_easy_egg_from_smoking");
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "over_easy_egg_from_smoking");
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, CoalFire.FIRESTARTER.get())
                 .requires(Items.FLINT, 2)

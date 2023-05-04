@@ -67,7 +67,7 @@ public class BoneMeal extends Feature {
 	public void readConfig(ModConfigEvent event) {
 		super.readConfig(event);
 		if (compostableRottenFlesh)
-			ComposterBlock.COMPOSTABLES.put(Items.ROTTEN_FLESH, 0.35f);
+			ComposterBlock.COMPOSTABLES.put(Items.ROTTEN_FLESH, 0.5f);
 	}
 
 	/**

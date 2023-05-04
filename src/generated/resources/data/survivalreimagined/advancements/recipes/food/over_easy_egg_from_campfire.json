@@ -1,24 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_chain": {
+    "has_egg": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:chain"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_leather_armor": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "minecraft:leather_helmet"
+              "minecraft:egg"
             ]
           }
         ]
@@ -27,21 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:chainmail_helmet"
+        "recipe": "survivalreimagined:over_easy_egg_from_campfire"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_leather_armor",
-      "has_chain",
+      "has_egg",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:chainmail_helmet"
+      "survivalreimagined:over_easy_egg_from_campfire"
     ]
   }
 }
