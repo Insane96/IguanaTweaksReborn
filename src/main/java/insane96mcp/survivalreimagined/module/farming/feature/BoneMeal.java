@@ -17,6 +17,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.util.Collections;
 
@@ -53,8 +55,19 @@ public class BoneMeal extends Feature {
 	@Label(name = "Rich Farmland Chance to Decay", description = "Chance for a Rich farmland to decay back to farmland")
 	public static Double richFarmlandChanceToDecay = 0.05d;
 
+	@Config
+	@Label(name = "Compostable Rotten Flesh")
+	public static Boolean compostableRottenFlesh = true;
+
 	public BoneMeal(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	@Override
+	public void readConfig(ModConfigEvent event) {
+		super.readConfig(event);
+		if (compostableRottenFlesh)
+			ComposterBlock.COMPOSTABLES.put(Items.ROTTEN_FLESH, 0.35f);
 	}
 
 	/**

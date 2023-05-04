@@ -2,6 +2,7 @@
 
 ## Alpha 3.9.1
 * Added over-easy egg
+* Rotten Flesh can now be composted
 * Charcoal can now be placed as layer and layers now fall on top of each-other properly
 * Fixes and improvements
 
