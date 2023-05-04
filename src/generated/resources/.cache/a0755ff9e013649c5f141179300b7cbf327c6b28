@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-02T17:27:38.8074859	Tags for minecraft:item mod id survivalreimagined
+// 1.19.4	2023-05-04T12:47:08.8244802	Tags for minecraft:item mod id survivalreimagined
 69b3bc40337a5469f8baefcf596d5d4a13138bc3 data/minecraft/tags/items/axes.json
 adc16da4b77b38de59bb7b6b016a1a541dafdaf0 data/minecraft/tags/items/hoes.json
 85c9717cae87b5089abd2ac71d8cc85782d8907a data/minecraft/tags/items/pickaxes.json
@@ -11,6 +11,6 @@ b1eaa8c6251363a43fec48d3a61979cccb61a40a data/survivalreimagined/tags/items/ener
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/no_damage.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/no_efficiency.json
 ed812d11a070d92ca88d1d889a167aa4dcda4159 data/survivalreimagined/tags/items/no_stack_size_changes.json
-6d67060fc5efb8077b0425f5c97e1eb90d7a9988 data/survivalreimagined/tags/items/raw_food.json
+a04a8c101c6e237ccf2a8020c1f226ec9f2f1639 data/survivalreimagined/tags/items/raw_food.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/reduced_knockback.json
 3c136ad71b9cc1a962b06ab779e09369ea8e25a9 data/survivalreimagined/tags/items/spawner_reactivator.json

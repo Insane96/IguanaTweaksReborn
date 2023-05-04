@@ -1,7 +1,8 @@
 package insane96mcp.survivalreimagined.data.generator.client;
 
-import insane96mcp.shieldsplus.ShieldsPlus;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
+import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -42,6 +43,9 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(SoulSteel.HELMET.get());
         basicItem(SoulSteel.INGOT.get());
         basicItem(SoulSteel.NUGGET.get());
+        shield(SoulSteel.SHIELD.get());
+        shield(Mithril.SHIELD.get());
+
         withExistingParent("soul_steel_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_steel_block"));
 
         basicItem(FoodDrinks.OVER_EASY_EGG.get());
@@ -64,7 +68,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
     private ItemModelBuilder shield(ResourceLocation item) {
         return getBuilder(item.toString())
                 .parent(new ModelFile.UncheckedModelFile("shieldsplus:item/wooden_shield"))
-                .override().predicate(new ResourceLocation(ShieldsPlus.MOD_ID, "blocking"), 1)
+                .override().predicate(new ResourceLocation("blocking"), 1)
                 .model(new ModelFile.UncheckedModelFile("shieldsplus:item/wooden_shield_blocking"))
                 .end();
     }
