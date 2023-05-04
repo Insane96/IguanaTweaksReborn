@@ -15,7 +15,7 @@
 	"survivalreimagined.no_efficiency_item": "This item is old and rusty, can't mine anything",
 	"survivalreimagined.tool_efficiency": "%.1f Tool Efficiency",
 	"survivalreimagined.bonus_tool_efficiency": "(+%.1f from Efficiency)",
-	"survivalreimagined.piercing_damage": "%.1f Piercing Damage",
+	"attribute.name.piercing_damage": "Piercing Damage",
 
 	"survivalreimagined.weak_hoe": "This hoe is too weak to till soil",
 	"survivalreimagined.till_cooldown": "%.1f Till Cooldown",

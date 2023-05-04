@@ -46,7 +46,7 @@
 	"item.survivalreimagined.flint_shield": "Scudo di selce",
 	"survivalreimagined.tool_efficiency": "%.1f Efficienza attrezzo",
 	"survivalreimagined.bonus_tool_efficiency": "(+%.1f da Efficienza)",
-	"survivalreimagined.piercing_damage": "%.1f Danno perforante",
+	"attribute.name.piercing_damage": "Danno perforante",
 
 	"item.survivalreimagined.copper_axe": "Ascia di selce rinforzata con rame",
 	"item.survivalreimagined.copper_pickaxe": "Piccone di selce rinforzato con rame",
