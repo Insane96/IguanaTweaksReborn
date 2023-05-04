@@ -147,27 +147,6 @@ public class Hoes extends SRFeature {
 		if (!this.isEnabled())
 			return;
 
-		//TODO Remake the modifiers list, it doesn't sum up multiple modifiers
-		/*List<Component> toRemove = new ArrayList<>();
-		boolean hasModifiersTooltip = false;
-
-		for (Component mutableComponent : event.getToolTip()) {
-			if (mutableComponent.getContents() instanceof TranslatableContents t && t.getKey().startsWith("item.modifiers.")) {
-				hasModifiersTooltip = true;
-			}
-
-			if (!hasModifiersTooltip)
-				continue;
-			List<Component> siblings = mutableComponent.getSiblings();
-			for (Component component : siblings) {
-				if (component.getContents() instanceof TranslatableContents translatableContents && translatableContents.getKey().startsWith("attribute.modifier.")) {
-					toRemove.add(mutableComponent);
-				}
-			}
-		}
-
-		toRemove.forEach(component -> event.getToolTip().remove(component));*/
-
 		if (Utils.isItemInTag(event.getItemStack().getItem(), DISABLED_HOES)) {
 			event.getToolTip().add(Component.translatable(TOO_WEAK).withStyle(ChatFormatting.RED));
 		}

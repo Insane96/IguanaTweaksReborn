@@ -32,7 +32,6 @@ public class PilableLayerBlock extends SnowLayerBlock implements Fallable {
     public static final int MAX_HEIGHT = 8;
     @Nullable
     private final Item itemPlacer;
-    //TODO Change itemDropped to loot table
     public PilableLayerBlock(Properties properties) {
         this(properties, null);
     }

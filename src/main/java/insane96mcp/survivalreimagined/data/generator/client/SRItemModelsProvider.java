@@ -47,7 +47,6 @@ public class SRItemModelsProvider extends ItemModelProvider {
         shield(Mithril.SHIELD.get());
 
         withExistingParent("soul_steel_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_steel_block"));
-
         basicItem(FoodDrinks.OVER_EASY_EGG.get());
     }
 

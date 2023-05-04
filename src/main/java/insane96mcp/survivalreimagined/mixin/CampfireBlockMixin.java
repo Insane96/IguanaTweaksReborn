@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class CampfireBlockMixin {
 
 	@Inject(at = @At("RETURN"), method = "getStateForPlacement", cancellable = true)
-	private void onUpdateDestroyTarget(BlockPlaceContext blockPlaceContext, CallbackInfoReturnable<BlockState> cir) {
+	private void onGetStateForPlacement(BlockPlaceContext blockPlaceContext, CallbackInfoReturnable<BlockState> cir) {
 		if (!CoalFire.areCampfiresUnlit())
 			return;
 		LevelAccessor levelaccessor = blockPlaceContext.getLevel();

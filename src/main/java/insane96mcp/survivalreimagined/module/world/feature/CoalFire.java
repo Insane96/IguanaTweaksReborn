@@ -54,7 +54,7 @@ public class CoalFire extends Feature {
     public static Double fireSpreadSpeedMultiplier = 4d;
 
     @Config(min = 0d, max = 1d)
-    @Label(name = "Charcoal from burnt logs chance", description = "Chance for logs to release charcoal when burnt")
+    @Label(name = "Charcoal from burnt logs chance", description = "Chance for logs to release charcoal layer when burnt")
     public static Double charcoalFromBurntLogsChance = 0.8d;
 
     @Config
@@ -72,7 +72,7 @@ public class CoalFire extends Feature {
     public static Double twoFlintFireStarterIgniteChance = 0.35d;
     @Config(min = 0d, max = 1d)
     @Label(name = "Two flint fire starter.Break Chance", description = "Chance for the flint to break when using two flints")
-    public static Double twoFlintFireStarterBreakChance = 0.3d;
+    public static Double twoFlintFireStarterBreakChance = 0.35d;
     @Config
     @Label(name = "Unlit campfire", description = "If true, campfires must be lit")
     public static Boolean unlitCampfires = true;
