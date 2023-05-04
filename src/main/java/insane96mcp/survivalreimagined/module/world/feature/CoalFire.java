@@ -156,12 +156,13 @@ public class CoalFire extends Feature {
     @SubscribeEvent
     public void onCharcoalRightClick(PlayerInteractEvent.RightClickBlock event) {
         if (!this.isEnabled()
-                || !event.getItemStack().is(Items.CHARCOAL)
-                || event.getLevel().isClientSide)
+                || !event.getItemStack().is(Items.CHARCOAL))
             return;
 
         UseOnContext context = new UseOnContext(event.getLevel(), event.getEntity(), event.getHand(), event.getItemStack(), event.getHitVec());
-        CHARCOAL_LAYER.item().get().useOn(context);
+        if (CHARCOAL_LAYER.item().get().useOn(context).shouldSwing()) {
+            event.getEntity().swing(event.getHand());
+        }
     }
 
     public static boolean changeFireSpreadSpeed() {

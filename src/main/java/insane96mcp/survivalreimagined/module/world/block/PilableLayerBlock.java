@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
@@ -22,16 +23,23 @@ import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 
 public class PilableLayerBlock extends SnowLayerBlock implements Fallable {
     public static final int MAX_HEIGHT = 8;
-    private final Item itemDropped;
+    @Nullable
+    private final Item itemPlacer;
     //TODO Change itemDropped to loot table
-    public PilableLayerBlock(Properties properties, Item itemDropped) {
+    public PilableLayerBlock(Properties properties) {
+        this(properties, null);
+    }
+
+    public PilableLayerBlock(Properties properties, Item itemPlacer) {
         super(properties);
-        this.itemDropped = itemDropped;
+        this.itemPlacer = itemPlacer;
     }
 
     @Nullable
@@ -47,7 +55,7 @@ public class PilableLayerBlock extends SnowLayerBlock implements Fallable {
 
     public static boolean isFree(BlockState state) {
         Material material = state.getMaterial();
-        return state.isAir() || state.is(BlockTags.FIRE) || material.isLiquid() || state.canBeReplaced() || state.getBlock() instanceof PilableLayerBlock;
+        return state.isAir() || state.is(BlockTags.FIRE) || material.isLiquid() || (material.isReplaceable() && !(state.getBlock() instanceof PilableLayerBlock));
     }
 
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
@@ -57,6 +65,11 @@ public class PilableLayerBlock extends SnowLayerBlock implements Fallable {
                 ParticleUtils.spawnParticleBelow(level, pos, random, new BlockParticleOption(ParticleTypes.FALLING_DUST, state));
             }
         }
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState p_56625_, BlockGetter p_56626_, BlockPos p_56627_, CollisionContext p_56628_) {
+        return SHAPE_BY_LAYER[p_56625_.getValue(LAYERS)];
     }
 
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState state1, boolean p_53237_) {
@@ -70,10 +83,8 @@ public class PilableLayerBlock extends SnowLayerBlock implements Fallable {
 
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         BlockState stateBelow = level.getBlockState(pos.below());
-        if (isFree(stateBelow)) {
-            //Don't fall if there are 8 layers below (is full block)
-            if (stateBelow.is(this) && stateBelow.getValue(LAYERS) == 8)
-                return;
+        //Don't fall if there are 8 layers below (is full block)
+        if (isFree(stateBelow) || (stateBelow.is(this) && stateBelow.getValue(LAYERS) < MAX_HEIGHT)) {
             if (pos.getY() >= level.getMinBuildHeight()) {
                 PilableFallingLayerEntity fallingblockentity = PilableFallingLayerEntity.fall(level, pos, state);
                 this.falling(fallingblockentity);
@@ -90,7 +101,7 @@ public class PilableLayerBlock extends SnowLayerBlock implements Fallable {
 
     public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
         int i = state.getValue(LAYERS);
-        return context.getItemInHand().is(this.asItem()) && i < MAX_HEIGHT;
+        return (context.getItemInHand().is(this.asItem()) || (this.itemPlacer != null && context.getItemInHand().is(this.itemPlacer))) && i < MAX_HEIGHT;
     }
 
     public boolean canSurvive(BlockState state, LevelReader levelReader, BlockPos pos) {

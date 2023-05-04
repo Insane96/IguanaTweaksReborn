@@ -84,19 +84,19 @@ public class PilableFallingLayerEntity extends FallingBlockEntity {
                     }
                 }
                 else {
-                    BlockState onState = this.level.getBlockState(pos);
+                    BlockState inState = this.level.getBlockState(pos);
                     this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, -0.5D, 0.7D));
-                    if (!onState.is(Blocks.MOVING_PISTON)) {
+                    if (!inState.is(Blocks.MOVING_PISTON)) {
                         if (!this.cancelDrop) {
-                            boolean canBeReplaced = onState.canBeReplaced(new DirectionalPlaceContext(this.level, pos, Direction.DOWN, new ItemStack(blockState.getBlock().asItem()), Direction.UP));
+                            boolean canBeReplaced = inState.canBeReplaced(new DirectionalPlaceContext(this.level, pos, Direction.DOWN, new ItemStack(blockState.getBlock().asItem()), Direction.UP));
                             boolean isFree = PilableLayerBlock.isFree(this.level.getBlockState(pos.below()));
                             boolean canSurvive = this.blockState.canSurvive(this.level, pos) && !isFree;
                             if (canBeReplaced && canSurvive) {
                                 int remaining = 0;
 
-                                if (onState.is(blockState.getBlock())) {
+                                if (inState.is(blockState.getBlock())) {
                                     int layers = blockState.getValue(PilableLayerBlock.LAYERS);
-                                    int toLayers = onState.getValue(PilableLayerBlock.LAYERS);
+                                    int toLayers = inState.getValue(PilableLayerBlock.LAYERS);
                                     int total = layers + toLayers;
                                     int target = Mth.clamp(total, 1, 8);
                                     remaining = total - target;
@@ -108,7 +108,7 @@ public class PilableFallingLayerEntity extends FallingBlockEntity {
                                             new ClientboundBlockUpdatePacket(pos, this.level.getBlockState(pos)));
 
                                     if (block instanceof Fallable fallable) {
-                                        fallable.onLand(this.level, pos, blockState, onState, this);
+                                        fallable.onLand(this.level, pos, blockState, inState, this);
                                     }
                                     this.discard();
 
