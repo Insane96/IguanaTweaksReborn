@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.combat.feature;
 
+import com.google.common.collect.Multimap;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -11,22 +12,28 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.combat.data.ItemAttributeModifier;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.Strings;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction. Item modifiers are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.COMBAT)
@@ -147,6 +154,92 @@ public class Stats extends SRFeature {
 
 			AttributeModifier modifier = new AttributeModifier(itemAttributeModifier.uuid, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
 			event.addModifier(itemAttributeModifier.attribute, modifier);
+		}
+	}
+
+	@SubscribeEvent
+	public void onItemTooltipEvent(ItemTooltipEvent event) {
+		if (!this.isEnabled()
+				|| event.getItemStack().getItem() instanceof PotionItem)
+			return;
+
+		List<Component> toRemove = new ArrayList<>();
+		boolean hasModifiersTooltip = false;
+
+		for (Component mutableComponent : event.getToolTip()) {
+			if (mutableComponent.getContents() instanceof TranslatableContents t) {
+				if (t.getKey().startsWith("item.modifiers."))
+					hasModifiersTooltip = true;
+				else if (t.getKey().startsWith("attribute.modifier."))
+					toRemove.add(mutableComponent);
+			}
+
+			if (!hasModifiersTooltip) {
+				continue;
+			}
+			List<Component> siblings = mutableComponent.getSiblings();
+			for (Component component : siblings) {
+				if (component.getContents() instanceof TranslatableContents translatableContents && translatableContents.getKey().startsWith("attribute.modifier.")) {
+					toRemove.add(mutableComponent);
+				}
+			}
+		}
+
+		toRemove.forEach(component -> event.getToolTip().remove(component));
+
+		for(EquipmentSlot equipmentslot : EquipmentSlot.values()) {
+			Multimap<Attribute, AttributeModifier> multimap = event.getItemStack().getAttributeModifiers(equipmentslot);
+			if (!multimap.isEmpty()) {
+				for(Attribute attribute : multimap.keySet()) {
+					Map<AttributeModifier.Operation, List<AttributeModifier>> modifiersByOperation = multimap.get(attribute).stream().collect(Collectors.groupingBy(AttributeModifier::getOperation));
+					modifiersByOperation.forEach((operation, modifier) -> {
+						double amount = modifier.stream().mapToDouble(AttributeModifier::getAmount).sum();
+						if (amount == 0d)
+							return;
+
+						boolean isEqualTooltip = false;
+						if (event.getEntity() != null) {
+							if (attribute.equals(Attributes.ATTACK_DAMAGE)) {
+								amount += event.getEntity().getAttributeBaseValue(Attributes.ATTACK_DAMAGE);
+								amount += EnchantmentHelper.getDamageBonus(event.getItemStack(), MobType.UNDEFINED);
+								isEqualTooltip = true;
+							}
+							else if (attribute.equals(Attributes.ATTACK_SPEED)) {
+								amount += event.getEntity().getAttributeBaseValue(Attributes.ATTACK_SPEED);
+								isEqualTooltip = true;
+							}
+						}
+
+						MutableComponent component = null;
+						String translationString = "attribute.modifier.plus.";
+						if (isEqualTooltip)
+							translationString = "attribute.modifier.equals.";
+						else if (amount < 0)
+							translationString = "attribute.modifier.take.";
+						switch (operation) {
+							case ADDITION -> {
+								if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE))
+									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount * 10)), Component.translatable(attribute.getDescriptionId()));
+								else
+									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount)), Component.translatable(attribute.getDescriptionId()));
+							}
+							case MULTIPLY_BASE -> {
+								component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount * 100)) + "%", Component.translatable(attribute.getDescriptionId()));
+							}
+							case MULTIPLY_TOTAL -> {
+								component = Component.literal("x").append(Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount) + 1), Component.translatable(attribute.getDescriptionId())));
+							}
+						}
+						if (isEqualTooltip)
+							component = CommonComponents.space().append(component.withStyle(ChatFormatting.DARK_GREEN));
+						else if (amount > 0)
+							component.withStyle(ChatFormatting.BLUE);
+						else
+							component.withStyle(ChatFormatting.RED);
+						event.getToolTip().add(component);
+					});
+				}
+			}
 		}
 	}
 
