@@ -21,9 +21,6 @@ public class Nerfs extends Feature {
 	@Label(name = "Iron from Golems only when killed by Player", description = "If true, Iron golems will only drop Iron when killed by the player.")
 	public static Boolean ironRequiresPlayer = true;
 	@Config
-	@Label(name = "No Ice Boats", description = "If true, boats will no longer go stupidly fast on ice.")
-	public static Boolean noIceBoat = true;
-	@Config
 	@Label(name = "No Coordinates", description = "If true, renderDebugInfo is enabled by default. Requires a world restart")
 	public static Boolean noCoordinates = true;
 	@Config
@@ -41,10 +38,6 @@ public class Nerfs extends Feature {
 
 		if (ironRequiresPlayer && event.getEntity() instanceof IronGolem && !(event.getSource().getDirectEntity() instanceof Player))
 			event.getDrops().removeIf(itemEntity -> itemEntity.getItem().is(Items.IRON_INGOT));
-	}
-
-	public static float getBoatFriction(float glide) {
-		return noIceBoat ? 0.45f : glide;
 	}
 
 	@SubscribeEvent
