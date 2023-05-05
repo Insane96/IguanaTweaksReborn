@@ -11,13 +11,12 @@ import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Custom Hardness", description = "Change specific blocks hardness as well as black and whitelist. Custom Hardness are controlled via json in this feature's folder. Requires a Minecraft restart if you remove a block from the list.")
 @LoadFeature(module = Modules.Ids.MINING)
 public class CustomHardness extends SRFeature {
-	public static final ArrayList<IdTagValue> CUSTOM_HARDNESSES_DEFAULT = new ArrayList<>(Arrays.asList(
+	public static final ArrayList<IdTagValue> CUSTOM_HARDNESSES_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:coal_ore", 2.5d),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:copper_ore", 2.5d),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_ore", 3d),
@@ -69,7 +68,6 @@ public class CustomHardness extends SRFeature {
 
 	public static void handleCustomBlockHardnessPacket(String json) {
 		loadAndReadJson(json, customHardnesses, CUSTOM_HARDNESSES_DEFAULT, IdTagValue.LIST_TYPE);
-		//processBlockHardness(customHardnesses, true);
 	}
 
 	private static final Object mutex = new Object();

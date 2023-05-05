@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-03T16:12:39.2236371	Tags for minecraft:block mod id survivalreimagined
+// 1.19.4	2023-05-05T18:37:22.4593822	Tags for minecraft:block mod id survivalreimagined
 f9f8a2cb6713fbb17d4d0f03cb5c7f4596be1aa8 data/minecraft/tags/blocks/beacon_base_blocks.json
 d5819582440cadb8c17b7aff856539c50bc69af4 data/minecraft/tags/blocks/copper_ores.json
 72ec216a289a55b54a365aa57fe69c0a71bf4fe8 data/minecraft/tags/blocks/gold_ores.json
@@ -10,8 +10,7 @@ a9b9725d70e83f3d2d8e6e0396b663d87db8655b data/minecraft/tags/blocks/mineable/sho
 479fdc5a16a9e1acab5c335f39ebd5b8f4855532 data/minecraft/tags/blocks/needs_stone_tool.json
 dc70421b7d35675f9461f0a1e20d96310bb6d594 data/minecraft/tags/blocks/rails.json
 27d8f8140167f00ac523f12020236dc5cd2419c2 data/survivalreimagined/tags/blocks/depth_multiplier_blacklist.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/blocks/harder_crops.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/blocks/harder_crops_blacklist.json
+8ea87c74c07fbf1238a50b7e77176e0bf90d9b4e data/survivalreimagined/tags/blocks/harder_crops.json
 27d8f8140167f00ac523f12020236dc5cd2419c2 data/survivalreimagined/tags/blocks/hardness_blacklist.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/blocks/nerfed_bone_meal_blacklist.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/blocks/no_block_xp_multiplier.json

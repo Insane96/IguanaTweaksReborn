@@ -34,8 +34,7 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(6, MessageSpawnerStatusSync.class, MessageSpawnerStatusSync::encode, MessageSpawnerStatusSync::decode, MessageSpawnerStatusSync::handle);
 		CHANNEL.registerMessage(7, JsonConfigSyncMessage.class, JsonConfigSyncMessage::encode, JsonConfigSyncMessage::decode, JsonConfigSyncMessage::handle);
 		CHANNEL.registerMessage(8, SyncInvulnerableTimeMessage.class, SyncInvulnerableTimeMessage::encode, SyncInvulnerableTimeMessage::decode, SyncInvulnerableTimeMessage::handle);
-		CHANNEL.registerMessage(9, HarderCropsSyncMessage.class, HarderCropsSyncMessage::encode, HarderCropsSyncMessage::decode, HarderCropsSyncMessage::handle);
-		CHANNEL.registerMessage(10, GlobalHardnessSyncMessage.class, GlobalHardnessSyncMessage::encode, GlobalHardnessSyncMessage::decode, GlobalHardnessSyncMessage::handle);
+		CHANNEL.registerMessage(9, GlobalHardnessSyncMessage.class, GlobalHardnessSyncMessage::encode, GlobalHardnessSyncMessage::decode, GlobalHardnessSyncMessage::handle);
 		MinecraftForge.EVENT_BUS.register(new NetworkHandler());
 	}
 
@@ -45,6 +44,7 @@ public class NetworkHandler {
 	private static final Map<UUID, Float> lastExhaustionLevels = new HashMap<>();
 	private static final Map<UUID, Float> lastSaturationLevels = new HashMap<>();
 
+	//TODO Move
 	@SubscribeEvent
 	public void onLivingTickEvent(LivingEvent.LivingTickEvent event) {
 		if (!(event.getEntity() instanceof ServerPlayer player))

@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.data.generator;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
+import insane96mcp.survivalreimagined.module.farming.feature.HarderCrops;
 import insane96mcp.survivalreimagined.module.items.feature.Crate;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
@@ -27,8 +28,6 @@ import java.util.concurrent.CompletableFuture;
 public class SRBlockTagsProvider extends BlockTagsProvider {
     public static final TagKey<Block> RESPAWN_OBELISK_BLOCKS_TO_ROT = create("structures/respawn_obelisk/blocks_to_rot");
     public static final TagKey<Block> OBSIDIANS = create("obsidians");
-    public static final TagKey<Block> HARDER_CROPS = create("harder_crops");
-    public static final TagKey<Block> HARDER_CROPS_BLACKLIST = create("harder_crops_blacklist");
     public static final TagKey<Block> HARDNESS_BLACKLIST = create("hardness_blacklist");
     public static final TagKey<Block> DEPTH_MULTIPLIER_BLACKLIST = create("depth_multiplier_blacklist");
     public static final TagKey<Block> TALL_GRASS = create("tall_grass");
@@ -87,8 +86,8 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
         tag(OBSIDIANS)
                 .add(Blocks.OBSIDIAN).add(Blocks.CRYING_OBSIDIAN);
 
-        tag(HARDER_CROPS);
-        tag(HARDER_CROPS_BLACKLIST);
+        tag(HarderCrops.HARDER_CROPS_TAG)
+                .add(Blocks.WHEAT, Blocks.CARROTS, Blocks.POTATOES, Blocks.BEETROOTS);
 
         tag(HARDNESS_BLACKLIST)
                 .addTag(OBSIDIANS);

@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.network.message;
 
 import insane96mcp.survivalreimagined.module.combat.feature.Stats;
+import insane96mcp.survivalreimagined.module.farming.feature.HarderCrops;
 import insane96mcp.survivalreimagined.module.farming.feature.PlantsGrowth;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.ItemStats;
@@ -63,7 +64,7 @@ public class JsonConfigSyncMessage {
         CUSTOM_BLOCK_HARDNESS(CustomHardness::handleCustomBlockHardnessPacket),
         PLANTS_GROWTH(PlantsGrowth::handlePlantsGrowthPacket),
         DIMENSION_HARDNESS(GlobalHardness::handleDimensionHardnessPacket),
-        DEPTH_HARDNESS(GlobalHardness::handleDepthHardnessPacket);
+        DEPTH_HARDNESS(GlobalHardness::handleDepthHardnessPacket), HARDER_CROPS(HarderCrops::handleSyncPacket);
 
         final Consumer<String> consumer;
 
