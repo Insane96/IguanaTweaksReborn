@@ -90,7 +90,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(FlintExpansion.FLINT_BLOCK.item().get(), 1)
                 .unlockedBy("has_flint_block_item", has(FlintExpansion.FLINT_BLOCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "flint_from_block");
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.POLISHED_FLINT_BLOCK.item().get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.POLISHED_FLINT_BLOCK.item().get(), 4)
                 .pattern("ff")
                 .pattern("ff")
                 .define('f', FlintExpansion.FLINT_BLOCK.item().get())
