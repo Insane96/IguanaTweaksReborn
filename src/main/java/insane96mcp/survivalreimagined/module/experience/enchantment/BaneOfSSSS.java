@@ -41,7 +41,7 @@ public class BaneOfSSSS extends Enchantment {
 
     @Override
     public boolean checkCompatibility(Enchantment enchantment) {
-        return !(enchantment instanceof DamageEnchantment) && !(enchantment == this);
+        return !(enchantment instanceof DamageEnchantment) && super.checkCompatibility(enchantment);
     }
 
     @Override

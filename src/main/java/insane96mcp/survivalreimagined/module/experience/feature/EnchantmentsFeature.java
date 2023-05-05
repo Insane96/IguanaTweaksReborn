@@ -33,6 +33,7 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -142,6 +143,16 @@ public class EnchantmentsFeature extends Feature {
 			return;
 
 		event.setNewSpeed(event.getNewSpeed() + Blasting.getMiningSpeedBoost(event.getEntity(), event.getState()));
+	}
+
+	@SubscribeEvent
+	public void onExperienceDropped(LivingExperienceDropEvent event) {
+		if (!this.isEnabled()
+				|| event.getAttackingPlayer() == null)
+			return;
+		int lvl = EnchantmentHelper.getEnchantmentLevel(SREnchantments.SMARTNESS.get(), event.getAttackingPlayer());
+		if (lvl > 0)
+			event.setDroppedExperience(Smartness.getIncreasedExperience(lvl, event.getDroppedExperience()));
 	}
 
 	@SubscribeEvent

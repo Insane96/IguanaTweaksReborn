@@ -1,6 +1,8 @@
 # Changelog
 
 ## Alpha 3.9.2
+* Added Smartness enchantment
+  * Increases experience dropped by mobs by 50% per level. Incompatible with Looting
 * Fixes and advancements
 
 ## Alpha 3.9.1
