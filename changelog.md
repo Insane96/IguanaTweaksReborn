@@ -4,6 +4,7 @@
 * Added over-easy egg
 * Rotten Flesh can now be composted
 * Charcoal can now be placed as layer and layers now fall on top of each-other properly
+* Ghasts now drop 5x more gunpowder
 * Fixes and improvements
 
 ## Alpha 3.9.0
