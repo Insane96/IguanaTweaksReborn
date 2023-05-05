@@ -214,5 +214,7 @@
 	"advancements.sr_story.anvil_transform_block.title": "Anvils are heavy",
 	"advancements.sr_story.anvil_transform_block.description": "Make an anvil fall on a block to make another block.",
 	"advancements.sr_story.smoker.title": "Smoking hot",
-	"advancements.sr_story.smoker.description": "Since furnaces are too hot to cook food, a Smoker should do it."
+	"advancements.sr_story.smoker.description": "Since furnaces are too hot to cook food, a Smoker should do it.",
+	"advancements.sr_story.winter_is_coming.title": "Winter is coming",
+	"advancements.sr_story.winter_is_coming.description": "It's autumn! Make sure to stack up food and wood before Winter as almost nothing grows and animals don't spawn. Also a calendar can help keep track of the season."
 }
