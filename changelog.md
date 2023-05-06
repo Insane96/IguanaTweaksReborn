@@ -1,6 +1,8 @@
 # Changelog
 
 ## Alpha 3.9.2
+* Added Timber Trees feature
+  * Makes trees fall when cut
 * Added Smartness enchantment
   * Increases experience dropped by mobs by 50% per level. Incompatible with Looting
 * Added durability to gear and increased durability of some materials

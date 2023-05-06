@@ -3,7 +3,7 @@ package insane96mcp.survivalreimagined.module.misc.level;
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
 import insane96mcp.survivalreimagined.event.SREventFactory;
-import insane96mcp.survivalreimagined.module.misc.entity.ExplosionFallingBlockEntity;
+import insane96mcp.survivalreimagined.module.misc.entity.SRFallingBlockEntity;
 import insane96mcp.survivalreimagined.module.misc.feature.ExplosionOverhaul;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.Util;
@@ -131,7 +131,7 @@ public class SRExplosion extends Explosion {
 			block.wasExploded(this.level, BlockPos.containing(this.getPosition()), this);
 			BlockPos blockpos1 = blockpos.immutable();
 			this.level.setBlockAndUpdate(blockpos1, Blocks.AIR.defaultBlockState());
-			ExplosionFallingBlockEntity fallingBlockEntity = new ExplosionFallingBlockEntity(this.level, blockpos1.getX() + 0.5f, blockpos1.getY() + 2.0625f, blockpos1.getZ() + 0.5f, blockstate);
+			SRFallingBlockEntity fallingBlockEntity = new SRFallingBlockEntity(this.level, blockpos1.getX() + 0.5f, blockpos1.getY() + 2.0625f, blockpos1.getZ() + 0.5f, blockstate);
 			fallingBlockEntity.time = 1;
 			fallingBlockEntity.source = this.source;
 			this.level.addFreshEntity(fallingBlockEntity);
@@ -144,7 +144,7 @@ public class SRExplosion extends Explosion {
 		List<Entity> list = gatherAffectedEntities(affectedEntitiesRadius);
 		net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.level, this, list, affectedEntitiesRadius);
 		for(Entity entity : list) {
-			if (entity.tickCount == 0 && !(entity instanceof PartEntity<?>)  && !(entity instanceof ExplosionFallingBlockEntity)  && !ExplosionOverhaul.affectJustSpawnedEntities)
+			if (entity.tickCount == 0 && !(entity instanceof PartEntity<?>)  && !(entity instanceof SRFallingBlockEntity)  && !ExplosionOverhaul.affectJustSpawnedEntities)
 				continue;
 			if (entity.ignoreExplosion())
 				continue;
@@ -158,7 +158,7 @@ public class SRExplosion extends Explosion {
 			if (d13 == 0.00)
 				continue;
 			//xDistance = xDistance / d13;
-			if (!(entity instanceof ExplosionFallingBlockEntity))
+			if (!(entity instanceof SRFallingBlockEntity))
 				yDistance = yDistance / d13;
 			//zDistance = zDistance / d13;
 			double blockDensity = getSeenPercent(this.getPosition(), entity);
@@ -184,7 +184,7 @@ public class SRExplosion extends Explosion {
 					if (knockbackScaleWithSize)
 						d11 *= this.radius;
 					d11 = Math.max(d11, this.radius * 0.05d);
-					if (entity instanceof ExplosionFallingBlockEntity || ExplosionOverhaul.shouldTakeReducedKnockback(entity))
+					if (entity instanceof SRFallingBlockEntity || ExplosionOverhaul.shouldTakeReducedKnockback(entity))
 						d11 *= 0.2d;
 					entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, yDistance * d11, zDistance * d11));
 					if (entity instanceof Player player) {
