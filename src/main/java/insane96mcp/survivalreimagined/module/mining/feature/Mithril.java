@@ -38,7 +38,7 @@ public class Mithril extends Feature {
 
 	public static final RegistryObject<Item> NUGGET = SRItems.REGISTRY.register("mithril_nugget", () -> new Item(new Item.Properties()));
 
-	private static final ILItemTier ITEM_TIER = new ILItemTier(2, 780, 6.5f, 2.5f, 11, () -> Ingredient.of(INGOT.get()));
+	private static final ILItemTier ITEM_TIER = new ILItemTier(2, 520, 6.5f, 2.5f, 11, () -> Ingredient.of(INGOT.get()));
 
 	public static final RegistryObject<Item> SWORD = SRItems.REGISTRY.register("mithril_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> SHOVEL = SRItems.REGISTRY.register("mithril_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));

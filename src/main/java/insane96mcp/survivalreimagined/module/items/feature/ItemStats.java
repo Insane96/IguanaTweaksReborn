@@ -42,7 +42,7 @@ import java.util.List;
 public class ItemStats extends SRFeature {
 
 	public static final String TOOL_EFFICIENCY = "survivalreimagined.tool_efficiency";
-	public static final String BONUS_TOOL_EFFICIENCY = "survivalreimagined.bonus_tool_efficiency";
+	public static final String TOOL_DURABILITY = "survivalreimagined.tool_durability";
 	public static final TagKey<Item> NO_DAMAGE = SRItemTagsProvider.create("no_damage");
 	public static final TagKey<Item> NO_EFFICIENCY = SRItemTagsProvider.create("no_efficiency");
 
@@ -52,8 +52,11 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/flint", 48),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/golden", 52),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/copper", 75),
-
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", 3347),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/iron", 375),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/mithril", 780),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/diamond", 2341),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/soul_steel", 3534),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", 3047),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 86),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:carrot_on_a_stick", 63),
@@ -122,8 +125,8 @@ public class ItemStats extends SRFeature {
 	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();
 
 	@Config
-	@Label(name = "Disabled items tooltip", description = "If set to true items in the 'no_damage_items' and 'no_efficiency_items' will get a tooltip.")
-	public static Boolean disabledItemsTooltip = true;
+	@Label(name = "More Items Tooltips", description = "If set to true items in the 'no_damage_items' and 'no_efficiency_items' will get a tooltip. Items with durability get a durability tooltip. Tools get an efficiency tooltip.")
+	public static Boolean moreItemsTooltips = true;
 
 	public ItemStats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -214,10 +217,10 @@ public class ItemStats extends SRFeature {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled()
-				|| !disabledItemsTooltip)
+				|| !moreItemsTooltips)
 			return;
 
 		if (Utils.isItemInTag(event.getItemStack().getItem(), NO_DAMAGE)) {
@@ -233,8 +236,9 @@ public class ItemStats extends SRFeature {
 			if (efficiency > 0)
 				toolEfficiency += bonusToolEfficiency;
 			event.getToolTip().add(Component.literal(" ").append(Component.translatable(TOOL_EFFICIENCY, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(toolEfficiency))).withStyle(ChatFormatting.DARK_GREEN));
-			/*if (efficiency > 0)
-				event.getToolTip().add(Component.literal("  ").append(Component.translatable(BONUS_TOOL_EFFICIENCY, ONE_DECIMAL_FORMATTER.format(bonusToolEfficiency)).withStyle(ChatFormatting.GRAY)));*/
 		}
+
+		if (event.getItemStack().isDamageableItem())
+			event.getToolTip().add(Component.translatable(TOOL_DURABILITY, event.getItemStack().getMaxDamage() - event.getItemStack().getDamageValue(), event.getItemStack().getMaxDamage()).withStyle(ChatFormatting.GRAY));
 	}
 }

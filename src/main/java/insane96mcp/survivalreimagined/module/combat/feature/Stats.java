@@ -29,6 +29,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
@@ -68,6 +69,10 @@ public class Stats extends SRFeature {
 	@Config
 	@Label(name = "Arrows don't trigger invincibility frames", description = "If true, Arrows will no longer trigger the invincibility frames (like Combat Test Snapshots).")
 	public static Boolean arrowsNoInvincFrames = true;
+
+	@Config
+	@Label(name = "Fix tooltips", description = "Vanilla tooltips on gear don't sum up multiple modifiers (e.g. a sword would have \"4 Attack Damage\" and \"-2 Attack Damage\" instead of \"2 Attack Damage\". This might break other mods messing with Tooltips (e.g. Quark's improved tooltips)")
+	public static Boolean fixTooltips = true;
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -157,9 +162,10 @@ public class Stats extends SRFeature {
 		}
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onItemTooltipEvent(ItemTooltipEvent event) {
 		if (!this.isEnabled()
+				|| !fixTooltips
 				|| event.getItemStack().getItem() instanceof PotionItem)
 			return;
 

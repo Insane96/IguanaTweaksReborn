@@ -3,6 +3,7 @@
 ## Alpha 3.9.2
 * Added Smartness enchantment
   * Increases experience dropped by mobs by 50% per level. Incompatible with Looting
+* Added durability to gear and increased durability of some materials
 * Fixes and advancements
 
 ## Alpha 3.9.1
