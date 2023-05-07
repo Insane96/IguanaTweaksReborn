@@ -53,7 +53,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/golden", 52),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/copper", 75),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/iron", 375),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/mithril", 780),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/mithril", 855),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/diamond", 2341),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/soul_steel", 3534),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", 3047),
