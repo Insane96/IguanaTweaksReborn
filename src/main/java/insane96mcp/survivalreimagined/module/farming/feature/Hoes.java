@@ -128,7 +128,8 @@ public class Hoes extends SRFeature {
 						.forEach(pos -> {
 							BlockState state = event.getPlayer().level.getBlockState(pos);
 							if (!state.getMaterial().isReplaceable()
-									|| !state.getFluidState().isEmpty())
+									|| !state.getFluidState().isEmpty()
+									|| state == event.getState())
 								return;
 							event.getPlayer().getLevel().destroyBlock(pos, false);
 						});
