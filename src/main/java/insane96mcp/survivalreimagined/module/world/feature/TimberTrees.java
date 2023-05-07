@@ -1,12 +1,14 @@
 package insane96mcp.survivalreimagined.module.world.feature;
 
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.entity.SRFallingBlockEntity;
+import insane96mcp.survivalreimagined.module.world.data.LogsLeavesPair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -15,6 +17,7 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,16 +27,26 @@ import java.util.List;
 
 @Label(name = "Timber Trees", description = "Trees fall when cut.")
 @LoadFeature(module = Modules.Ids.WORLD)
-public class TimberTrees extends Feature {
+public class TimberTrees extends SRFeature {
+
+    public static final ArrayList<LogsLeavesPair> LOGS_LEAVES_PAIRS_DEFAULT = new ArrayList<>(List.of(
+            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:oak_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:oak_leaves")),
+            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:birch_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:birch_leaves")),
+            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:spruce_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:spruce_leaves")),
+            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:jungle_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:jungle_leaves")),
+            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:dark_oak_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:dark_oak_leaves")),
+            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:acacia_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:acacia_leaves")),
+            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:mangrove_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:mangrove_leaves"))
+    ));
+    public static final ArrayList<LogsLeavesPair> logsLeavesPairs = new ArrayList<>();
 
     @Config
     @Label(name = "Requires axe")
     public static Boolean requiresAxe = false;
 
-    static List<Direction> directions = List.of(Direction.UP, Direction.EAST, Direction.NORTH, Direction.WEST, Direction.SOUTH);
-
     public TimberTrees(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
+        JSON_CONFIGS.add(new SRFeature.JsonConfig<>("logs_leaves_pairs.json", logsLeavesPairs, LOGS_LEAVES_PAIRS_DEFAULT, LogsLeavesPair.LIST_TYPE));
     }
 
     @SubscribeEvent
@@ -50,11 +63,13 @@ public class TimberTrees extends Feature {
             return;
         //Vec3 dir = new Vec3(event.getPlayer().getDirection().getNormal().getX(), event.getPlayer().getDirection().getNormal().getY(), event.getPlayer().getDirection().getNormal().getZ());
         List<BlockPos> blocks = getTreeBlocks(event.getPos(), event.getState(), event.getLevel());
+        Direction direction = event.getLevel().getRandom().nextDouble() < 0.05d ? event.getPlayer().getDirection().getOpposite() : event.getPlayer().getDirection();
         blocks.forEach(pos -> {
             double distanceFromBrokenBlock = Math.sqrt(pos.distSqr(event.getPos()));
             Vec3i relative = new BlockPos(pos.getX() - event.getPos().getX(), pos.getY() - event.getPos().getY(), pos.getZ() - event.getPos().getZ());
-            BlockPos fallingBlockPos = pos.relative(event.getPlayer().getDirection(), (int) distanceFromBrokenBlock).above(relative.getY());
+            BlockPos fallingBlockPos = pos.relative(direction, (int) distanceFromBrokenBlock).above(relative.getY());
             SRFallingBlockEntity fallingBlock = new SRFallingBlockEntity((Level) event.getLevel(), fallingBlockPos, event.getLevel().getBlockState(pos));
+            fallingBlock.setHurtsEntities(2f, 1024);
             event.getLevel().addFreshEntity(fallingBlock);
             event.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         });
@@ -77,23 +92,31 @@ public class TimberTrees extends Feature {
             if (stateToCheck.is(state.getBlock()))
                 logs++;
         }
+        //AtomicReference<Block> leaves = new AtomicReference<>();
+        //logsLeavesPairs.stream().filter(logsLeavesPair -> logsLeavesPair.log.matchesBlock(state.getBlock())).findFirst().ifPresent(pair -> leaves.set(ForgeRegistries.BLOCKS.getValue(pair.leaves.location)));
         do {
             List<BlockPos> posToCheckTmp = new ArrayList<>(posToCheck);
             posToCheck.clear();
             for (BlockPos p : posToCheckTmp) {
-                for (Direction direction : directions) {
-                    blockPos.set(p.relative(direction));
+                BlockState currState = level.getBlockState(p);
+                Iterable<BlockPos> positionsToLoop = BlockPos.betweenClosed(p.offset(-1, -1, -1), p.offset(1, 1, 1));
+                for (BlockPos positionToLoop : positionsToLoop) {
+                    blockPos.set(positionToLoop);
                     stateToCheck = level.getBlockState(blockPos);
                     if (stateToCheck.isAir())
                         continue;
-                    if (stateToCheck.is(BlockTags.LEAVES))
+                    BlockPos posImmutable = blockPos.immutable();
+                    boolean isValidLeaves = stateToCheck.is(BlockTags.LEAVES) && !stateToCheck.getValue(LeavesBlock.PERSISTENT);
+                    boolean isSameLog = stateToCheck.is(state.getBlock());
+                    boolean isInDistance = xzDistance(posImmutable, pos) <= 7;
+                    boolean isCurrLeaves = currState.is(BlockTags.LEAVES) && !currState.getValue(LeavesBlock.PERSISTENT);
+                    boolean isCorrectLeavesDistance = isValidLeaves && isCurrLeaves && (stateToCheck.getValue(LeavesBlock.DISTANCE) > currState.getValue(LeavesBlock.DISTANCE) || (stateToCheck.getValue(LeavesBlock.DISTANCE).equals(currState.getValue(LeavesBlock.DISTANCE)) && level.getRandom().nextBoolean()));
+                    if (isValidLeaves)
                         foundLeaves = true;
-                    if (!blocks.contains(blockPos.immutable()) && (stateToCheck.is(state.getBlock()) || stateToCheck.is(BlockTags.LEAVES))) {
-                        BlockPos posImmutable = blockPos.immutable();
+                    if (!blocks.contains(posImmutable) && (isSameLog || isValidLeaves) && isInDistance && (!isValidLeaves || !isCurrLeaves || isCorrectLeavesDistance)) {
                         blocks.add(posImmutable);
-                        if (xzDistance(posImmutable, pos) < 5)
-                            posToCheck.add(posImmutable);
-                        if (stateToCheck.is(state.getBlock()))
+                        posToCheck.add(posImmutable);
+                        if (isSameLog)
                             logs++;
                     }
                 }
