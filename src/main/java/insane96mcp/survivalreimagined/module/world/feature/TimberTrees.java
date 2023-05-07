@@ -65,6 +65,8 @@ public class TimberTrees extends SRFeature {
         List<BlockPos> blocks = getTreeBlocks(event.getPos(), event.getState(), event.getLevel());
         Direction direction = event.getLevel().getRandom().nextDouble() < 0.05d ? event.getPlayer().getDirection().getOpposite() : event.getPlayer().getDirection();
         blocks.forEach(pos -> {
+            if (pos.equals(event.getPos()))
+                return;
             double distanceFromBrokenBlock = Math.sqrt(pos.distSqr(event.getPos()));
             Vec3i relative = new BlockPos(pos.getX() - event.getPos().getX(), pos.getY() - event.getPos().getY(), pos.getZ() - event.getPos().getZ());
             BlockPos fallingBlockPos = pos.relative(direction, (int) distanceFromBrokenBlock).above(relative.getY());
