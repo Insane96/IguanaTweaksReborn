@@ -8,6 +8,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.sleeprespawn.data.SRMobEffectInstance;
+import insane96mcp.survivalreimagined.module.sleeprespawn.utils.TirednessHelper;
 import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -62,8 +63,8 @@ public class SleepingEffects extends SRFeature {
 				|| (hungerDepletedOnWakeUp == 0 && effectsOnWakeUp.isEmpty()))
 			return;
 
-		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach((player) -> {
-			float tirednessOnWakeUp = Mth.clamp(player.getPersistentData().getFloat(Tiredness.TIREDNESS_TAG) - Tiredness.tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
+		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach(player -> {
+			float tirednessOnWakeUp = Mth.clamp(TirednessHelper.get(player) - Tiredness.tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
 			if (dizzyWhenToTired && Feature.isEnabled(Tiredness.class) && tirednessOnWakeUp == 0f)
 				return;
 
