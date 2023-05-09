@@ -20,6 +20,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -156,11 +157,13 @@ public class CoalFire extends Feature {
     @SubscribeEvent
     public void onCharcoalRightClick(PlayerInteractEvent.RightClickBlock event) {
         if (!this.isEnabled()
-                || !event.getItemStack().is(Items.CHARCOAL))
+                || !event.getItemStack().is(Items.CHARCOAL)
+                || event.getCancellationResult().consumesAction())
             return;
 
         UseOnContext context = new UseOnContext(event.getLevel(), event.getEntity(), event.getHand(), event.getItemStack(), event.getHitVec());
-        if (CHARCOAL_LAYER.item().get().useOn(context).shouldSwing()) {
+        InteractionResult result = CHARCOAL_LAYER.item().get().useOn(context);
+        if (result.shouldSwing()) {
             event.getEntity().swing(event.getHand());
         }
     }
