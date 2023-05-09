@@ -130,8 +130,7 @@ public class Death extends Feature {
 			return;
 
 		Zombie zombie = (Zombie) event.getEntity();
-		if (zombie.level.hasNearbyAlivePlayer(zombie.getX(), zombie.getY(), zombie.getZ(), 80))
-			zombie.setGlowingTag(true);
+		zombie.setGlowingTag(zombie.level.hasNearbyAlivePlayer(zombie.getX(), zombie.getY(), zombie.getZ(), 80));
 		zombie.setTicksFrozen(0);
 		if (zombie.level.getGameTime() > zombie.getPersistentData().getLong(SPAWNED_GAME_TIME) + 9000)
 			zombie.kill();
