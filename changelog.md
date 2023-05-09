@@ -1,5 +1,8 @@
 # Changelog
 
+## Alpha 3.9.3
+* Fixed timber getting more trees than expected
+
 ## Alpha 3.9.2
 * Added Timber Trees feature
   * Makes trees fall when cut

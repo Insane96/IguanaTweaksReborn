@@ -71,7 +71,7 @@ public class TimberTrees extends SRFeature {
             Vec3i relative = new BlockPos(pos.getX() - event.getPos().getX(), pos.getY() - event.getPos().getY(), pos.getZ() - event.getPos().getZ());
             BlockPos fallingBlockPos = pos.relative(direction, (int) distanceFromBrokenBlock).above(relative.getY());
             SRFallingBlockEntity fallingBlock = new SRFallingBlockEntity((Level) event.getLevel(), fallingBlockPos, event.getLevel().getBlockState(pos));
-            fallingBlock.setHurtsEntities(2f, 1024);
+            //fallingBlock.setHurtsEntities(2f, 1024);
             event.getLevel().addFreshEntity(fallingBlock);
             event.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         });
@@ -101,7 +101,8 @@ public class TimberTrees extends SRFeature {
             posToCheck.clear();
             for (BlockPos p : posToCheckTmp) {
                 BlockState currState = level.getBlockState(p);
-                Iterable<BlockPos> positionsToLoop = BlockPos.betweenClosed(p.offset(-1, -1, -1), p.offset(1, 1, 1));
+                //TODO Logs must check radius, instead leaves only directions
+                Iterable<BlockPos> positionsToLoop = getPositionsToCheck(p, currState);
                 for (BlockPos positionToLoop : positionsToLoop) {
                     blockPos.set(positionToLoop);
                     stateToCheck = level.getBlockState(blockPos);
@@ -112,7 +113,7 @@ public class TimberTrees extends SRFeature {
                     boolean isSameLog = stateToCheck.is(state.getBlock());
                     boolean isInDistance = xzDistance(posImmutable, pos) <= 7;
                     boolean isCurrLeaves = currState.is(BlockTags.LEAVES) && !currState.getValue(LeavesBlock.PERSISTENT);
-                    boolean isCorrectLeavesDistance = isValidLeaves && isCurrLeaves && (stateToCheck.getValue(LeavesBlock.DISTANCE) > currState.getValue(LeavesBlock.DISTANCE) || (stateToCheck.getValue(LeavesBlock.DISTANCE).equals(currState.getValue(LeavesBlock.DISTANCE)) && level.getRandom().nextBoolean()));
+                    boolean isCorrectLeavesDistance = isValidLeaves && isCurrLeaves && (stateToCheck.getValue(LeavesBlock.DISTANCE) > currState.getValue(LeavesBlock.DISTANCE) /*|| (stateToCheck.getValue(LeavesBlock.DISTANCE).equals(currState.getValue(LeavesBlock.DISTANCE)) && level.getRandom().nextBoolean())*/);
                     if (isValidLeaves)
                         foundLeaves = true;
                     if (!blocks.contains(posImmutable) && (isSameLog || isValidLeaves) && isInDistance && (!isValidLeaves || !isCurrLeaves || isCorrectLeavesDistance)) {
@@ -130,6 +131,20 @@ public class TimberTrees extends SRFeature {
             }
         } while (checks < 1000 && !posToCheck.isEmpty());
         return blocks;
+    }
+
+    public static final List<Direction> DIRECTIONS = List.of(Direction.UP, Direction.EAST, Direction.NORTH, Direction.SOUTH, Direction.WEST);
+    public static Iterable<BlockPos> getPositionsToCheck(BlockPos pos, BlockState state) {
+        if (state.is(BlockTags.LOGS))
+            return BlockPos.betweenClosed(pos.offset(-1, 0, -1), pos.offset(1, 1, 1));
+        else
+        {
+            List<BlockPos> posses = new ArrayList<>();
+            for (Direction d : DIRECTIONS) {
+                posses.add(pos.relative(d));
+            }
+            return posses;
+        }
     }
 
     public static int xzDistance(BlockPos pos1, BlockPos pos2) {
