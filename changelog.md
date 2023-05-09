@@ -4,6 +4,7 @@
 * Critical Hits now deal 25% more damage instead of 50%
 * Fixed timber getting more trees than expected
 * Fixed spiders attack reach and skeletons riding them
+* Creeper cena now deals more knockback
 
 ## Alpha 3.9.2
 * Added Timber Trees feature
