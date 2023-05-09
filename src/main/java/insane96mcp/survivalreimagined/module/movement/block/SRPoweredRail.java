@@ -7,14 +7,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.PoweredRailBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class NetherInfusedRailBlock extends PoweredRailBlock {
-    public NetherInfusedRailBlock(Properties properties) {
+public class SRPoweredRail extends PoweredRailBlock {
+    final float baseSpeed;
+    public SRPoweredRail(Properties properties, float baseSpeed) {
         super(properties, true);
+        this.baseSpeed = baseSpeed;
     }
 
     @Override
     public float getRailMaxSpeed(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
-        if (!(cart instanceof MinecartFurnace)) return cart.isInWater() ? 0.50f : 1.00f;
-        else return super.getRailMaxSpeed(state, level, pos, cart);
+        if (cart instanceof MinecartFurnace) return cart.isInWater() ? this.baseSpeed * 0.375f : this.baseSpeed * 0.5f;
+        else return cart.isInWater() ? this.baseSpeed * 0.5f : this.baseSpeed;
     }
 }

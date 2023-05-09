@@ -6,7 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.LootPurgerModifier;
-import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
+import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceLootModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
@@ -133,7 +133,7 @@ public class Loot extends Feature {
 		}
 
 		for (WoodTypes woodTypes : WOOD_TYPES) {
-			provider.add(path + "trees/" + woodTypes.name, new ReplaceDropModifier.Builder(new LootItemCondition[] {
+			provider.add(path + "trees/" + woodTypes.name, new ReplaceLootModifier.Builder(new LootItemCondition[] {
 							LootItemEntityPropertyCondition.hasProperties(
 											LootContext.EntityTarget.THIS,
 											new EntityPredicate.Builder().equipment(

@@ -1,0 +1,7 @@
+{
+  "type": "survivalreimagined:replace_drop",
+  "chests_only": true,
+  "conditions": [],
+  "item_to_replace": "minecraft:powered_rail",
+  "new_item": "survivalreimagined:golden_powered_rail"
+}

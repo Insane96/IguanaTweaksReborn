@@ -6,7 +6,6 @@ import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
-import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import net.minecraft.data.PackOutput;
@@ -201,14 +200,6 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('i', Items.IRON_INGOT)
                 .define('r', Items.REDSTONE)
                 .unlockedBy("has_mithril_nugget", has(Mithril.NUGGET.get()))
-                .save(writer);
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, Minecarts.NETHER_INFUSED_POWERED_RAIL.item().get(), 4)
-                .requires(Items.POWERED_RAIL, 4)
-                .requires(Items.NETHER_BRICK, 4)
-                .requires(Items.FIRE_CHARGE, 1)
-                .unlockedBy("has_powered_rail", has(Items.POWERED_RAIL))
-                .unlockedBy("has_nether_brick", has(Items.NETHER_BRICK))
                 .save(writer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AncientLapis.ANCIENT_LAPIS.get(), 1)

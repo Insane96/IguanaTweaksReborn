@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.data.lootmodifier;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mobs.feature.Equipment;
+import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.world.feature.Loot;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
@@ -18,5 +19,6 @@ public class SRGlobalLootModifierProvider extends GlobalLootModifierProvider {
         Equipment.addGlobalLoot(this);
         Loot.addGlobalLoot(this);
         FlintExpansion.addGlobalLoot(this);
+        Minecarts.addGlobalLoot(this);
     }
 }

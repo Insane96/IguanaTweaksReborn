@@ -69,7 +69,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.block().get(), CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.block().get());
 
         tag(BlockTags.RAILS)
-                .add(Minecarts.NETHER_INFUSED_POWERED_RAIL.block().get());
+                .add(Minecarts.COPPER_POWERED_RAIL.block().get(), Minecarts.GOLDEN_POWERED_RAIL.block().get(), Minecarts.NETHER_INFUSED_POWERED_RAIL.block().get());
 
         tag(BlockTags.IRON_ORES)
                 .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get());

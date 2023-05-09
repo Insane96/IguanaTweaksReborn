@@ -10,7 +10,7 @@ import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.BlockWithItem;
-import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceDropModifier;
+import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceLootModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
@@ -97,23 +97,23 @@ public class FlintExpansion extends Feature {
 	private static final String path = "flint_tools/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "replace_wooden_sword", new ReplaceDropModifier.Builder(Items.WOODEN_SWORD, SWORD.get())
+		provider.add(path + "replace_wooden_sword", new ReplaceLootModifier.Builder(Items.WOODEN_SWORD, SWORD.get())
 				.applyToChestsOnly()
 				.build()
 		);
-		provider.add(path + "replace_wooden_axe", new ReplaceDropModifier.Builder(Items.WOODEN_AXE, AXE.get())
+		provider.add(path + "replace_wooden_axe", new ReplaceLootModifier.Builder(Items.WOODEN_AXE, AXE.get())
 				.applyToChestsOnly()
 				.build()
 		);
-		provider.add(path + "replace_wooden_shovel", new ReplaceDropModifier.Builder(Items.WOODEN_SHOVEL, SHOVEL.get())
+		provider.add(path + "replace_wooden_shovel", new ReplaceLootModifier.Builder(Items.WOODEN_SHOVEL, SHOVEL.get())
 				.applyToChestsOnly()
 				.build()
 		);
-		provider.add(path + "replace_wooden_pickaxe", new ReplaceDropModifier.Builder(Items.WOODEN_PICKAXE, PICKAXE.get())
+		provider.add(path + "replace_wooden_pickaxe", new ReplaceLootModifier.Builder(Items.WOODEN_PICKAXE, PICKAXE.get())
 				.applyToChestsOnly()
 				.build()
 		);
-		provider.add(path + "replace_wooden_hoe", new ReplaceDropModifier.Builder(Items.WOODEN_HOE, HOE.get())
+		provider.add(path + "replace_wooden_hoe", new ReplaceLootModifier.Builder(Items.WOODEN_HOE, HOE.get())
 				.applyToChestsOnly()
 				.build()
 		);

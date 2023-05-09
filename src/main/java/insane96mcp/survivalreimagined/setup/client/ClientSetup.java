@@ -86,6 +86,8 @@ public class ClientSetup {
             event.accept(Crate.BLOCK.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
+            event.accept(Minecarts.COPPER_POWERED_RAIL.item().get());
+            event.accept(Minecarts.GOLDEN_POWERED_RAIL.item().get());
             event.accept(Minecarts.NETHER_INFUSED_POWERED_RAIL.item().get());
             event.accept(ExplosiveBarrel.BLOCK.item().get());
         }

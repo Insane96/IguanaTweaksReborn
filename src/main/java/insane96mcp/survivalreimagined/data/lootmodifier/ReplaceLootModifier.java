@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
-public class ReplaceDropModifier extends LootModifier {
-    public static final Supplier<Codec<ReplaceDropModifier>> CODEC = Suppliers.memoize(() ->
+public class ReplaceLootModifier extends LootModifier {
+    public static final Supplier<Codec<ReplaceLootModifier>> CODEC = Suppliers.memoize(() ->
             RecordCodecBuilder.create(inst -> codecStart(inst).and(
                     inst.group(
                             ForgeRegistries.ITEMS.getCodec().fieldOf("item_to_replace").forGetter(m -> m.itemToReplace),
@@ -29,14 +29,14 @@ public class ReplaceDropModifier extends LootModifier {
                             Codec.list(Codec.FLOAT).optionalFieldOf("chances", List.of(1f)).forGetter(m -> m.chances),
                             Codec.list(Codec.FLOAT).optionalFieldOf("multipliers", List.of(1f)).forGetter(m -> m.multipliers),
                             Codec.BOOL.fieldOf("chests_only").forGetter(m -> m.chestsOnly)
-                    )).apply(inst, ReplaceDropModifier::new)
+                    )).apply(inst, ReplaceLootModifier::new)
             ));
 
     //Item to replace
     private final Item itemToReplace;
     //Item to replace with
     private final Item newItem;
-    //List of multipliers, where the first is for no-fortune applied and the subsequent ones are for increasing level of fortune
+    //Amount to replace. Set to -1 to replace all
     private int amountToReplace;
     //List of chances, where the first is for no-fortune applied and the subsequent ones are for increasing level of fortune
     private List<Float> chances;
@@ -44,11 +44,11 @@ public class ReplaceDropModifier extends LootModifier {
     private List<Float> multipliers;
     private boolean chestsOnly;
 
-    public ReplaceDropModifier(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem) {
+    public ReplaceLootModifier(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem) {
         this(conditionsIn, itemToReplace, newItem, -1, List.of(1f), List.of(1f), false);
     }
 
-    public ReplaceDropModifier(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem, int amountToReplace, List<Float> chances, List<Float> multipliers, boolean chestsOnly) {
+    public ReplaceLootModifier(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem, int amountToReplace, List<Float> chances, List<Float> multipliers, boolean chestsOnly) {
         super(conditionsIn);
         this.itemToReplace = itemToReplace;
         this.newItem = newItem;
@@ -93,37 +93,37 @@ public class ReplaceDropModifier extends LootModifier {
     }
 
     public static class Builder {
-        final ReplaceDropModifier replaceDropModifier;
+        final ReplaceLootModifier replaceLootModifier;
         public Builder(Item itemToReplace, Item newItem) {
             this(new LootItemCondition[0], itemToReplace, newItem);
         }
 
         public Builder(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem) {
-            replaceDropModifier = new ReplaceDropModifier(conditionsIn, itemToReplace, newItem);
+            replaceLootModifier = new ReplaceLootModifier(conditionsIn, itemToReplace, newItem);
         }
 
         public Builder setAmountToReplace(int amount) {
-            replaceDropModifier.amountToReplace = amount;
+            replaceLootModifier.amountToReplace = amount;
             return this;
         }
 
         public Builder setChances(List<Float> chances) {
-            replaceDropModifier.chances = chances;
+            replaceLootModifier.chances = chances;
             return this;
         }
 
         public Builder setMultipliers(List<Float> multipliers) {
-            replaceDropModifier.multipliers = multipliers;
+            replaceLootModifier.multipliers = multipliers;
             return this;
         }
 
         public Builder applyToChestsOnly() {
-            replaceDropModifier.chestsOnly = true;
+            replaceLootModifier.chestsOnly = true;
             return this;
         }
 
-        public ReplaceDropModifier build() {
-            return replaceDropModifier;
+        public ReplaceLootModifier build() {
+            return replaceLootModifier;
         }
     }
 

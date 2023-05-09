@@ -89,6 +89,8 @@
 	"block.survivalreimagined.mithril_block": "Mithril Block",
 	"block.survivalreimagined.mithril_ore": "Mithril Ore",
 	"block.survivalreimagined.deepslate_mithril_ore": "Deepslate Mithril Ore",
+	"block.survivalreimagined.copper_powered_rail": "Copper Powered Rail",
+	"block.survivalreimagined.golden_powered_rail": "Golden Powered Rail",
 	"block.survivalreimagined.nether_infused_powered_rail": "Nether Infused Powered Rail",
 	"block.survivalreimagined.respawn_obelisk": "Respawn Obelisk",
 	"block.survivalreimagined.crate": "Crate",

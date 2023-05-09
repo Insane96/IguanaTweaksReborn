@@ -1,5 +1,5 @@
-// 1.19.4	2023-05-02T13:28:16.464006	Global Loot Modifiers : survivalreimagined
-27236afd98f150339fc19b52654d64b30414ecbf data/forge/loot_modifiers/global_loot_modifiers.json
+// 1.19.4	2023-05-09T17:30:29.0712313	Global Loot Modifiers : survivalreimagined
+39a7359f560cc142a72eb890e9162120c1bf20bc data/forge/loot_modifiers/global_loot_modifiers.json
 2f328d6839506c7a620db89ed01aa0e11f420ea7 data/survivalreimagined/loot_modifiers/chest_loot/chests/abandoned_mineshaft.json
 8febba22a3053fe0a1e622e4e78e30f8cab9b9f9 data/survivalreimagined/loot_modifiers/chest_loot/chests/buried_treasure.json
 864f8f73bf8f0f38226a024a3e66a2d6f99d042c data/survivalreimagined/loot_modifiers/chest_loot/chests/desert_pyramid.json
@@ -53,3 +53,4 @@ e70a419ea51da3210518ecd890d6b80ad23420d2 data/survivalreimagined/loot_modifiers/
 6c691166ff1b2af6349ccb3c29e5a1e451e9ebde data/survivalreimagined/loot_modifiers/flint_tools/replace_wooden_pickaxe.json
 ea8de3d9f8ddfd205e0ace0129e4d0c860e1f531 data/survivalreimagined/loot_modifiers/flint_tools/replace_wooden_shovel.json
 de1f993a136fbcf06e5ab1463e9518ce2768ca40 data/survivalreimagined/loot_modifiers/flint_tools/replace_wooden_sword.json
+0291f6995e79a7977c9d326e321c92f6f9559b20 data/survivalreimagined/loot_modifiers/minecarts/replace_vanilla_powered_rails.json
