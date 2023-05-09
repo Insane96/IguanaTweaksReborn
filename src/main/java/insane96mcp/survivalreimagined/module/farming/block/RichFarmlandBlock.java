@@ -60,7 +60,7 @@ public class RichFarmlandBlock extends FarmBlock {
     @Override
     public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
         PlantType type = plantable.getPlantType(world, pos.relative(facing));
-        return type == PlantType.CROP;
+        return type == PlantType.CROP || type == PlantType.PLAINS;
     }
 
     public static void turnToFarmland(@Nullable Entity entity, BlockState state, Level level, BlockPos pos) {
