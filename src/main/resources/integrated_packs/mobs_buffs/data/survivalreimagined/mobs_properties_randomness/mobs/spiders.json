@@ -10,7 +10,7 @@
             ]
         },
         {
-            "scale": 0.75,
+            "scale": 0.7,
             "scale_types": [
                 "pehkui:model_width",
                 "pehkui:model_height"
