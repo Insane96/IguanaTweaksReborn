@@ -44,7 +44,8 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(Crate.BLOCK.block().get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
-                .add(CoalFire.CHARCOAL_LAYER.block().get());
+                .add(CoalFire.CHARCOAL_LAYER.block().get())
+                .add(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.block().get(), CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.block().get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(Mithril.BLOCK.block().get(), Mithril.ORE.block().get(), Mithril.DEEPSLATE_ORE.block().get())
@@ -64,7 +65,8 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get())
                 .add(Mithril.BLOCK.block().get(), Mithril.ORE.block().get(), Mithril.DEEPSLATE_ORE.block().get())
-                .add(SoulSteel.BLOCK.block().get());
+                .add(SoulSteel.BLOCK.block().get())
+                .add(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.block().get(), CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.block().get());
 
         tag(BlockTags.RAILS)
                 .add(Minecarts.NETHER_INFUSED_POWERED_RAIL.block().get());

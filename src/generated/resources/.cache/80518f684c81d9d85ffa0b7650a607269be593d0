@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-02T18:25:30.0647849	Block Models: survivalreimagined
+// 1.19.4	2023-05-09T10:31:11.7701115	Block Models: survivalreimagined
 6849daf97afe34b41e324aadc9afe89d9d1b9e98 assets/survivalreimagined/models/block/poor_copper_ore.json
 c31afa0b07d8a01f08e816391cbc29ce40880a82 assets/survivalreimagined/models/block/poor_deepslate_copper_ore.json
 6bb1fff76a86f49fa72c589cc54c4f03edc8e21c assets/survivalreimagined/models/block/poor_deepslate_gold_ore.json
@@ -11,4 +11,6 @@ f9e60b46acbe2da135bda18707e26f24a3ec309f assets/survivalreimagined/models/block/
 0694991983f512173482e980d7012268cfdb74b2 assets/survivalreimagined/models/block/rich_deepslate_iron_ore.json
 5dcddb4b0232a7dcc6423f758d488c288d0e594f assets/survivalreimagined/models/block/rich_gold_ore.json
 a6d150ff7e5e26db395a6d24c4e917ece6dbda4e assets/survivalreimagined/models/block/rich_iron_ore.json
+217c2a676058c757ac9f9de346122b3d24b7412d assets/survivalreimagined/models/block/soul_sand_hellish_coal_ore.json
+3b21a3be08a24359e88a3ce98d322c4efc2a618a assets/survivalreimagined/models/block/soul_soil_hellish_coal_ore.json
 21c244274acc4da0a6bb71ecbb70d49d18735236 assets/survivalreimagined/models/block/soul_steel_block.json

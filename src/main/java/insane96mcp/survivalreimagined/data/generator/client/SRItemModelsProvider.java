@@ -4,6 +4,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
+import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -47,7 +48,12 @@ public class SRItemModelsProvider extends ItemModelProvider {
         shield(Mithril.SHIELD.get());
 
         withExistingParent("soul_steel_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_steel_block"));
+
         basicItem(FoodDrinks.OVER_EASY_EGG.get());
+
+        basicItem(CoalFire.HELLISH_COAL.get());
+        withExistingParent("soul_sand_hellish_coal_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_sand_hellish_coal_ore"));
+        withExistingParent("soul_soil_hellish_coal_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_soil_hellish_coal_ore"));
     }
 
     private ItemModelBuilder handHeld(Item item) {

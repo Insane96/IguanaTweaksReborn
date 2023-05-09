@@ -110,6 +110,8 @@ public class ClientSetup {
             event.accept(OreGeneration.POOR_RICH_GOLD_ORE.richOre().item().get());
             event.accept(OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().item().get());
             event.accept(BoneMeal.RICH_FARMLAND.item().get());
+            event.accept(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.block().get());
+            event.accept(CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.block().get());
         }
         else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
             event.accept(Mithril.INGOT.get());
@@ -118,6 +120,7 @@ public class ClientSetup {
             event.accept(SoulSteel.NUGGET.get());
             event.accept(AncientLapis.ANCIENT_LAPIS.get());
             event.accept(EnchantmentsFeature.CLEANSED_LAPIS.get());
+            event.accept(CoalFire.HELLISH_COAL.get());
         }
         else if (event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
             event.accept(FoodDrinks.BROWN_MUSHROOM_STEW.get());

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.2,
+  "ingredient": {
+    "item": "survivalreimagined:soul_sand_hellish_coal_ore"
+  },
+  "result": "survivalreimagined:hellish_coal"
+}

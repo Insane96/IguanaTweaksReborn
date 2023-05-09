@@ -461,6 +461,43 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_mithril_ore", has(Mithril.DEEPSLATE_ORE.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_nugget_from_blasting_deepslate_ore");
 
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.item().get()),
+                        RecipeCategory.MISC,
+                        CoalFire.HELLISH_COAL.get(),
+                        1.2f,
+                        200
+                )
+                .unlockedBy("has_hellish_coal_ore", has(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.item().get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "hellish_coal_from_smelting_soul_sand_ore");
+        SimpleCookingRecipeBuilder.smelting(
+                        Ingredient.of(CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.item().get()),
+                        RecipeCategory.MISC,
+                        CoalFire.HELLISH_COAL.get(),
+                        1.2f,
+                        200
+                )
+                .unlockedBy("has_hellish_coal_ore", has(CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.item().get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "hellish_coal_from_smelting_soul_soil_ore");
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.item().get()),
+                        RecipeCategory.MISC,
+                        CoalFire.HELLISH_COAL.get(),
+                        1.2f,
+                        100
+                )
+                .unlockedBy("has_hellish_coal_ore", has(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.item().get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "hellish_coal_from_blasting_soul_sand_ore");
+        SimpleCookingRecipeBuilder.blasting(
+                        Ingredient.of(CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.item().get()),
+                        RecipeCategory.MISC,
+                        CoalFire.HELLISH_COAL.get(),
+                        1.2f,
+                        100
+                )
+                .unlockedBy("has_hellish_coal_ore", has(CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.item().get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "hellish_coal_from_blasting_soul_soil_ore");
+
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.TOOLS, Mithril.AXE.get())
                 .unlocks("has_mithril", has(Mithril.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "mithril_axe");

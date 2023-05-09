@@ -7,6 +7,8 @@
     "survivalreimagined:mithril_block",
     "survivalreimagined:mithril_ore",
     "survivalreimagined:deepslate_mithril_ore",
-    "survivalreimagined:soul_steel_block"
+    "survivalreimagined:soul_steel_block",
+    "survivalreimagined:soul_sand_hellish_coal_ore",
+    "survivalreimagined:soul_soil_hellish_coal_ore"
   ]
 }

@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.data.generator.client;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -24,6 +25,12 @@ public class SRBlockModelsProvider extends BlockModelProvider {
             cubeAll("rich_deepslate_%s_ore".formatted(poorRichOre), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/rich_deepslate_%s_ore".formatted(poorRichOre)));
         }
 
-        cubeAll(SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_steel_block"));
+        cubeAll("soul_steel_block", "block/soul_steel_block");
+        cubeAll("soul_sand_hellish_coal_ore", "block/soul_sand_hellish_coal_ore");
+        cubeAll("soul_soil_hellish_coal_ore", "block/soul_soil_hellish_coal_ore");
+    }
+
+    public BlockModelBuilder cubeAll(String name, String texture) {
+        return super.cubeAll(SurvivalReimagined.RESOURCE_PREFIX + name, new ResourceLocation(SurvivalReimagined.MOD_ID, texture));
     }
 }

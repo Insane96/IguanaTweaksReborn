@@ -9,6 +9,7 @@ import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.event.BlockBurntEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
+import insane96mcp.survivalreimagined.module.world.block.HellishCoalOreBlock;
 import insane96mcp.survivalreimagined.module.world.block.PilableLayerBlock;
 import insane96mcp.survivalreimagined.module.world.entity.PilableFallingLayerEntity;
 import insane96mcp.survivalreimagined.module.world.item.FirestarterItem;
@@ -19,6 +20,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -39,6 +41,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -49,6 +52,10 @@ public class CoalFire extends Feature {
     public static final BlockWithItem CHARCOAL_LAYER = BlockWithItem.register("charcoal_layer", () -> new PilableLayerBlock(BlockBehaviour.Properties.of(Material.MOSS, MaterialColor.COLOR_BLACK).strength(0.5F).sound(SoundType.MOSS_CARPET).isViewBlocking((state, blockGetter, pos) -> state.getValue(PilableLayerBlock.LAYERS) >= 8), Items.CHARCOAL));
 
     public static final RegistryObject<Item> FIRESTARTER = SRItems.REGISTRY.register("firestarter", () -> new FirestarterItem(new Item.Properties().stacksTo(1).defaultDurability(11)));
+
+    public static final BlockWithItem SOUL_SAND_HELLISH_COAL_ORE = BlockWithItem.register("soul_sand_hellish_coal_ore", () -> new HellishCoalOreBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_SAND).strength(2f).sound(SoundType.SOUL_SAND), UniformInt.of(1, 3)));
+    public static final BlockWithItem SOUL_SOIL_HELLISH_COAL_ORE = BlockWithItem.register("soul_soil_hellish_coal_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_SOIL).strength(2f).sound(SoundType.SOUL_SOIL), UniformInt.of(1, 3)));
+    public static final RegistryObject<Item> HELLISH_COAL = SRItems.REGISTRY.register("hellish_coal", () -> new Item(new Item.Properties().fireResistant()));
 
     @Config(min = 0d, max = 100)
     @Label(name = "Fire spread speed multiplier", description = "How much faster fire ticks and spreads.")
@@ -186,5 +193,11 @@ public class CoalFire extends Feature {
             return;
 
         event.setNewSpeed(event.getNewSpeed() / 5f);
+    }
+
+    @SubscribeEvent
+    public void onFurnaceFuelBurnTime(FurnaceFuelBurnTimeEvent event) {
+        if (event.getItemStack().is(HELLISH_COAL.get()))
+            event.setBurnTime(2400);
     }
 }
