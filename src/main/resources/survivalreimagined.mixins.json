@@ -35,6 +35,7 @@
         "PotionItemMixin",
         "ProtectionEnchantmentMixin",
         "SpiderAttackGoalMixin",
+        "SpiderMixin",
         "SpringFeatureMixin",
         "ThrownExperienceBottleMixin",
         "VillagerMixin",
