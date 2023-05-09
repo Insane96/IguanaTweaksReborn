@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.module.misc.level;
 
 import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.event.SREventFactory;
 import insane96mcp.survivalreimagined.module.misc.entity.SRFallingBlockEntity;
 import insane96mcp.survivalreimagined.module.misc.feature.ExplosionOverhaul;
@@ -47,18 +48,17 @@ import java.util.Optional;
 import java.util.Set;
 
 public class SRExplosion extends Explosion {
+	public static final String KNOCKBACK_MULTIPLIER_TAG = SurvivalReimagined.RESOURCE_PREFIX + "explosion_knockback_multiplier";
 	ObjectArrayList<Pair<ItemStack, BlockPos>> droppedItems = new ObjectArrayList<>();
-	boolean dealsKnockback;
 	boolean creeperCollateral;
 	public final boolean poofParticles;
 
 	public SRExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean creeperCollateral) {
-		this(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true, creeperCollateral, true);
+		this(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, creeperCollateral, true);
 	}
 
-	public SRExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean dealsKnockback, boolean creeperCollateral, boolean poofParticles) {
+	public SRExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean creeperCollateral, boolean poofParticles) {
 		super(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction);
-		this.dealsKnockback = dealsKnockback;
 		this.creeperCollateral = creeperCollateral;
 		this.poofParticles = poofParticles;
 	}
@@ -176,21 +176,20 @@ public class SRExplosion extends Explosion {
 				}
 				entity.hurt(source, damageAmount);
 
-				if (this.dealsKnockback) {
-					double d11 = d10;
-					if (entity instanceof LivingEntity) {
-						d11 = getKnockbackReduction((LivingEntity) entity, d11);
-					}
-					if (knockbackScaleWithSize)
-						d11 *= this.radius;
-					d11 = Mth.clamp(d11, this.radius * 0.05d, 10d);
-					if (entity instanceof SRFallingBlockEntity || ExplosionOverhaul.shouldTakeReducedKnockback(entity))
-						d11 *= 0.2d;
-					entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, yDistance * d11, zDistance * d11));
-					if (entity instanceof Player player) {
-						if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
-							this.getHitPlayers().put(player, new Vec3(xDistance * d11, yDistance * d11, zDistance * d11));
-						}
+				double d11 = d10;
+				if (entity instanceof LivingEntity) {
+					d11 = getKnockbackReduction((LivingEntity) entity, d11);
+				}
+				if (knockbackScaleWithSize)
+					d11 *= this.radius;
+				d11 = Mth.clamp(d11, this.radius * 0.05d, 10d);
+				if (entity instanceof SRFallingBlockEntity || ExplosionOverhaul.shouldTakeReducedKnockback(entity))
+					d11 *= 0.2d;
+				d11 *= getKnockbackMultiplier(this.source);
+				entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, yDistance * d11, zDistance * d11));
+				if (entity instanceof Player player) {
+					if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
+						this.getHitPlayers().put(player, new Vec3(xDistance * d11, yDistance * d11, zDistance * d11));
 					}
 				}
 			}
@@ -287,7 +286,7 @@ public class SRExplosion extends Explosion {
 	}
 
 	public static SRExplosion explode(ServerLevel level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean poofParticles) {
-		SRExplosion explosion = new SRExplosion(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, true, ExplosionOverhaul.creeperCollateral, poofParticles);
+		SRExplosion explosion = new SRExplosion(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, ExplosionOverhaul.creeperCollateral, poofParticles);
 		if (SREventFactory.onSRExplosionCreated(explosion)) return explosion;
 		explosion.gatherAffectedBlocks(!ExplosionOverhaul.disableExplosionRandomness);
 		if (ExplosionOverhaul.enableFlyingBlocks)
@@ -305,5 +304,9 @@ public class SRExplosion extends Explosion {
 			}
 		}
 		return explosion;
+	}
+
+	public static float getKnockbackMultiplier(@Nullable Entity entity) {
+		return entity != null && entity.getPersistentData().contains(KNOCKBACK_MULTIPLIER_TAG) ? entity.getPersistentData().getFloat(KNOCKBACK_MULTIPLIER_TAG) : 1f;
 	}
 }
