@@ -3,6 +3,7 @@
 ## Alpha 3.9.3
 * Overhauled rails
   * Added Copper Rails and Golden Rails
+* Added M.A. Jump enchantment
 * Critical Hits now deal 25% more damage instead of 50%
 * Fixed timber getting more trees than expected
 * Fixed spiders attack reach and skeletons riding them

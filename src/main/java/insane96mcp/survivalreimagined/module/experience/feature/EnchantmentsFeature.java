@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.experience.feature;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -13,6 +14,9 @@ import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SREnchantments;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.Utils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,14 +32,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -81,7 +83,6 @@ public class EnchantmentsFeature extends Feature {
 	public static Boolean cleansedLapisDataPack = true;
 
 	//TODO Make enchantments deactivable
-
 	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "cleansed_lapis", net.minecraft.network.chat.Component.literal("Survival Reimagined Cleansed Lapis"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cleansedLapisDataPack));
@@ -183,6 +184,30 @@ public class EnchantmentsFeature extends Feature {
 
 		baneOfSssssOnAttack(attacker, event.getEntity(), event);
 		waterCoolantOnAttack(attacker, event.getEntity(), event);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public void onJump(InputEvent.Key event) {
+		if (!this.isEnabled()
+				|| Minecraft.getInstance().player == null
+				|| event.getAction() != InputConstants.PRESS
+				|| event.getKey() != Minecraft.getInstance().options.keyJump.getKey().getValue())
+			return;
+
+		LocalPlayer player = Minecraft.getInstance().player;
+		if (DoubleJump.extraJump(player)) {
+			player.connection.send(new ServerboundMovePlayerPacket.PosRot(player.getX(), player.getY(), player.getZ(), player.getYRot(), player.getXRot(), false));
+		}
+	}
+
+	@SubscribeEvent
+	public void onLivingFall(LivingFallEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof LocalPlayer player))
+			return;
+
+		player.getPersistentData().putInt("double_jumps", 0);
 	}
 
 	public void baneOfSssssOnAttack(LivingEntity attacker, LivingEntity entity, LivingHurtEvent event) {
