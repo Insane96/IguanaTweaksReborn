@@ -10,13 +10,13 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantment.*;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
+import insane96mcp.survivalreimagined.network.message.JumpMidAirMessage;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SREnchantments;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
@@ -197,7 +197,7 @@ public class EnchantmentsFeature extends Feature {
 
 		LocalPlayer player = Minecraft.getInstance().player;
 		if (DoubleJump.extraJump(player)) {
-			player.connection.send(new ServerboundMovePlayerPacket.PosRot(player.getX(), player.getY(), player.getZ(), player.getYRot(), player.getXRot(), false));
+			JumpMidAirMessage.jumpMidAir(player);
 		}
 	}
 

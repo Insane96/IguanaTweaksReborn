@@ -54,6 +54,7 @@ public class DoubleJump extends Enchantment {
         }
         entity.playSound(SoundEvents.FIREWORK_ROCKET_LAUNCH, 0.5f, 2f);
         entity.getPersistentData().putInt("double_jumps", entity.getPersistentData().getInt("double_jumps") + 1);
+        //Set fallDistance to 0 to prevent falling sound client-side
         entity.fallDistance = 0f;
         return true;
     }
