@@ -13,6 +13,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.loading.FMLLoader;
 
 @Label(name = "Nerfs", description = "Various Nerfs")
 @LoadFeature(module = Modules.Ids.MISC)
@@ -45,7 +46,7 @@ public class Nerfs extends Feature {
 		if (!this.isEnabled())
 			return;
 
-		if (noCoordinates)
+		if (noCoordinates && FMLLoader.isProduction())
 			event.getServer().getGameRules().getRule(GameRules.RULE_REDUCEDDEBUGINFO).set(true, event.getServer());
 		if (reducedRandomTickSpeed)
 			event.getServer().getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(1, event.getServer());
