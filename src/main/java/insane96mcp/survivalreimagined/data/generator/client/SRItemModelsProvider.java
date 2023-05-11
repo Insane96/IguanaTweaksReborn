@@ -54,6 +54,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(SoulSteel.NUGGET.get());
         shield(SoulSteel.SHIELD.get());
         withExistingParent("soul_steel_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_steel_block"));
+        withExistingParent("blast_furnace", new ResourceLocation("block/blast_furnace"));
 
         handHeld(FlintExpansion.AXE.get());
         handHeld(FlintExpansion.PICKAXE.get());
@@ -98,6 +99,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(Mithril.INGOT.get());
         basicItem(Mithril.NUGGET.get());
         shield(Mithril.SHIELD.get());
+        withExistingParent("mithril_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/mithril_block"));
         withExistingParent("deepslate_mithril_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/deepslate_mithril_ore"));
         withExistingParent("mithril_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/mithril_ore"));
 

@@ -6,6 +6,7 @@ import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
+import insane96mcp.survivalreimagined.module.mining.client.MultiBlockBlastFurnaceScreen;
 import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
@@ -15,6 +16,7 @@ import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import insane96mcp.survivalreimagined.setup.SREntityTypes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.FallingBlockRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -140,6 +142,8 @@ public class ClientSetup {
                         return 96f;
                     return (float) livingEntity.getY();
                 }));
+
+        MenuScreens.register(SoulSteel.MENU_TYPE.get(), MultiBlockBlastFurnaceScreen::new);
     }
 
     public static void entityRenderEvent(EntityRenderersEvent.RegisterRenderers event) {

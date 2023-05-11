@@ -24,6 +24,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -58,6 +59,7 @@ public class SurvivalReimagined
     public static final ResourceLocation GUI_ICONS = new ResourceLocation(SurvivalReimagined.MOD_ID, "textures/gui/icons.png");
 
     public static DecimalFormat ONE_DECIMAL_FORMATTER;
+    public static final RecipeBookType MULTI_ITEM_RECIPE_BOOK_TYPE = RecipeBookType.create("multi_item_smelting");
 
     public SurvivalReimagined() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SRClientConfig.CONFIG_SPEC, MOD_ID + "/client.toml");
@@ -81,6 +83,8 @@ public class SurvivalReimagined
         SRItems.REGISTRY.register(modEventBus);
         SRFeatureType.REGISTRY.register(modEventBus);
         SRRuleTestType.REGISTRY.register(modEventBus);
+        SRRecipeTypes.REGISTRY.register(modEventBus);
+        SRMenuType.REGISTRY.register(modEventBus);
         SREnchantments.REGISTRY.register(modEventBus);
         SREntityTypes.REGISTRY.register(modEventBus);
         SRGlobalLootModifiers.REGISTRY.register(modEventBus);

@@ -201,6 +201,7 @@ public class EnchantmentsFeature extends Feature {
 		}
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onLivingFall(LivingFallEvent event) {
 		if (!this.isEnabled()
