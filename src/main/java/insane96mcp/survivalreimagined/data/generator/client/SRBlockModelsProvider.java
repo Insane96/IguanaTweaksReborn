@@ -28,6 +28,13 @@ public class SRBlockModelsProvider extends BlockModelProvider {
         cubeAll("soul_steel_block", "block/soul_steel_block");
         cubeAll("soul_sand_hellish_coal_ore", "block/soul_sand_hellish_coal_ore");
         cubeAll("soul_soil_hellish_coal_ore", "block/soul_soil_hellish_coal_ore");
+
+        cubeBottomTop("crate", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate_side"), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate_bottom"), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate_top"));
+        cubeBottomTop("crate_open", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate_side"), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate_bottom"), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate_top_open"));
+
+        cubeAll("mithril_block", "block/mithril_block");
+        cubeAll("mithril_ore", "block/mithril_ore");
+        cubeAll("deepslate_mithril_ore", "block/deepslate_mithril_ore");
     }
 
     public BlockModelBuilder cubeAll(String name, String texture) {

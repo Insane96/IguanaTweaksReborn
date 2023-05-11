@@ -1,9 +1,17 @@
 package insane96mcp.survivalreimagined.data.generator.client;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
+import insane96mcp.survivalreimagined.module.experience.feature.UnbreakingOverhaul;
+import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
+import insane96mcp.survivalreimagined.module.items.feature.AncientLapis;
+import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
+import insane96mcp.survivalreimagined.module.items.feature.CopperTools;
+import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
+import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -45,12 +53,71 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(SoulSteel.INGOT.get());
         basicItem(SoulSteel.NUGGET.get());
         shield(SoulSteel.SHIELD.get());
-        shield(Mithril.SHIELD.get());
-
         withExistingParent("soul_steel_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_steel_block"));
 
-        basicItem(FoodDrinks.OVER_EASY_EGG.get());
+        handHeld(FlintExpansion.AXE.get());
+        handHeld(FlintExpansion.PICKAXE.get());
+        handHeld(FlintExpansion.SHOVEL.get());
+        handHeld(FlintExpansion.HOE.get());
+        handHeld(FlintExpansion.SWORD.get());
+        shield(FlintExpansion.SHIELD.get());
+        withExistingParent("flint_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/flint_block"));
+        withExistingParent("polished_flint_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/polished_flint_block"));
 
+        basicItem(EnchantmentsFeature.CLEANSED_LAPIS.get());
+
+        basicItem(AncientLapis.ANCIENT_LAPIS.get());
+
+        basicItem(Crops.CARROT_SEEDS.get());
+        basicItem(Crops.POTATO_SEEDS.get());
+
+        basicItem(ChainedCopperArmor.BOOTS.get());
+        basicItem(ChainedCopperArmor.LEGGINGS.get());
+        basicItem(ChainedCopperArmor.CHESTPLATE.get());
+        basicItem(ChainedCopperArmor.HELMET.get());
+
+        handHeld(CopperTools.AXE.get());
+        handHeld(CopperTools.PICKAXE.get());
+        handHeld(CopperTools.SHOVEL.get());
+        handHeld(CopperTools.HOE.get());
+        handHeld(CopperTools.SWORD.get());
+
+        withExistingParent("charcoal_layer", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/charcoal_layer/height_2"));
+
+        withExistingParent("crate", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate"));
+
+        handHeld(Mithril.AXE.get());
+        handHeld(Mithril.PICKAXE.get());
+        handHeld(Mithril.SHOVEL.get());
+        handHeld(Mithril.HOE.get());
+        handHeld(Mithril.SWORD.get());
+        basicItem(Mithril.BOOTS.get());
+        basicItem(Mithril.LEGGINGS.get());
+        basicItem(Mithril.CHESTPLATE.get());
+        basicItem(Mithril.HELMET.get());
+        basicItem(Mithril.INGOT.get());
+        basicItem(Mithril.NUGGET.get());
+        shield(Mithril.SHIELD.get());
+        withExistingParent("deepslate_mithril_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/deepslate_mithril_ore"));
+        withExistingParent("mithril_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/mithril_ore"));
+
+        basicItemWithTexture(Minecarts.COPPER_POWERED_RAIL.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/copper_powered_rail"));
+        withExistingParent("golden_powered_rail", new ResourceLocation("item/powered_rail"));
+        basicItemWithTexture(Minecarts.NETHER_INFUSED_POWERED_RAIL.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/nether_infused_powered_rail"));
+
+        basicItem(UnbreakingOverhaul.ITEM_FRAGMENT.get());
+
+        basicItem(FoodDrinks.OVER_EASY_EGG.get());
+        basicItem(FoodDrinks.BROWN_MUSHROOM_STEW.get());
+        basicItem(FoodDrinks.RED_MUSHROOM_STEW.get());
+
+        withExistingParent("explosive_barrel", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/explosive_barrel"));
+
+        withExistingParent("respawn_obelisk", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/respawn_obelisk_disabled"));
+
+        withExistingParent("rich_farmland", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/rich_farmland"));
+
+        basicItem(CoalFire.FIRESTARTER.get());
         basicItem(CoalFire.HELLISH_COAL.get());
         withExistingParent("soul_sand_hellish_coal_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_sand_hellish_coal_ore"));
         withExistingParent("soul_soil_hellish_coal_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_soil_hellish_coal_ore"));
@@ -76,5 +143,17 @@ public class SRItemModelsProvider extends ItemModelProvider {
                 .override().predicate(new ResourceLocation("blocking"), 1)
                 .model(new ModelFile.UncheckedModelFile("shieldsplus:item/wooden_shield_blocking"))
                 .end();
+    }
+
+    public ItemModelBuilder basicItemWithTexture(Item item, ResourceLocation texture)
+    {
+        return basicItemWithTexture(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)), texture);
+    }
+
+    public ItemModelBuilder basicItemWithTexture(ResourceLocation item, ResourceLocation texture)
+    {
+        return getBuilder(item.toString())
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", texture);
     }
 }

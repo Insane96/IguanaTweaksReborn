@@ -1,4 +1,9 @@
-// 1.19.4	2023-05-09T10:31:11.7701115	Block Models: survivalreimagined
+// 1.19.4	2023-05-11T09:49:22.618012	Block Models: survivalreimagined
+09c38bce2833dbff4a2862829413ac6383df4a5b assets/survivalreimagined/models/block/crate.json
+b921563f569de0dadfd7bc3b88172d94105a0616 assets/survivalreimagined/models/block/crate_open.json
+683314f282dd6313852e1e9b8dc9990b97b279d1 assets/survivalreimagined/models/block/deepslate_mithril_ore.json
+e2ea1b49e06d7e7a61c6623116d4f36bdf9a4419 assets/survivalreimagined/models/block/mithril_block.json
+133a99b2ba56bc139c9fddc81255ac76a2054ea7 assets/survivalreimagined/models/block/mithril_ore.json
 6849daf97afe34b41e324aadc9afe89d9d1b9e98 assets/survivalreimagined/models/block/poor_copper_ore.json
 c31afa0b07d8a01f08e816391cbc29ce40880a82 assets/survivalreimagined/models/block/poor_deepslate_copper_ore.json
 6bb1fff76a86f49fa72c589cc54c4f03edc8e21c assets/survivalreimagined/models/block/poor_deepslate_gold_ore.json
