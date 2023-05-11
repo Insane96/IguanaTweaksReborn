@@ -78,7 +78,7 @@ public class MultiItemSmeltingRecipe implements Recipe<Container> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return null;
+        return SoulSteel.RECIPE_SERIALIZER.get();
     }
     /**
      * Gets the experience of this recipe
