@@ -65,11 +65,11 @@ public abstract class AbstractMultiBlockFurnaceScreen<T extends AbstractMultiBlo
         blit(pPoseStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
         if (this.menu.isLit()) {
             int k = this.menu.getLitProgress();
-            blit(pPoseStack, leftPos + 13, topPos + 33 + 12 - k, 176, 12 - k, 14, k + 1);
+            blit(pPoseStack, leftPos + 16, topPos + 35 + 12 - k, 176, 12 - k, 14, k + 1);
         }
 
         int l = this.menu.getBurnProgress();
-        blit(pPoseStack, leftPos + 105, topPos + 33, 176, 14, l + 1, 16);
+        blit(pPoseStack, leftPos + 105, topPos + 34, 176, 14, l + 1, 16);
     }
 
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {

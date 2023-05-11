@@ -44,11 +44,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu.FUEL_SLOT;
+import static insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu.RESULT_SLOT;
+
 public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible {
 
     private static final int[] SLOTS_FOR_UP = AbstractMultiBlockFurnaceMenu.INGREDIENT_SLOTS.clone();
-    private static final int[] SLOTS_FOR_DOWN = new int[]{AbstractMultiBlockFurnaceMenu.RESULT_SLOT, AbstractMultiBlockFurnaceMenu.FUEL_SLOT};
-    private static final int[] SLOTS_FOR_SIDES = new int[]{AbstractMultiBlockFurnaceMenu.FUEL_SLOT};
+    private static final int[] SLOTS_FOR_DOWN = new int[]{AbstractMultiBlockFurnaceMenu.RESULT_SLOT, FUEL_SLOT};
+    private static final int[] SLOTS_FOR_SIDES = new int[]{FUEL_SLOT};
     public static final int DATA_LIT_TIME = 0;
     public static final int DATA_LIT_DURATION = 1;
     public static final int DATA_COOKING_PROGRESS = 2;
@@ -138,12 +141,12 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
             --pBlockEntity.litTime;
         }
 
-        ItemStack itemstack = pBlockEntity.items.get(1);
-        boolean flag2 = !pBlockEntity.items.get(0).isEmpty();
-        boolean flag3 = !itemstack.isEmpty();
-        if (pBlockEntity.isLit() || flag3 && flag2) {
+        ItemStack fuelStack = pBlockEntity.items.get(FUEL_SLOT);
+        boolean hasInputItem = !pBlockEntity.items.get(0).isEmpty();
+        boolean hasFuel = !fuelStack.isEmpty();
+        if (pBlockEntity.isLit() || hasFuel && hasInputItem) {
             Recipe<?> recipe;
-            if (flag2) {
+            if (hasInputItem) {
                 recipe = pBlockEntity.quickCheck.getRecipeFor(pBlockEntity, pLevel).orElse(null);
             } else {
                 recipe = null;
@@ -151,18 +154,18 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
 
             int i = pBlockEntity.getMaxStackSize();
             if (!pBlockEntity.isLit() && pBlockEntity.canBurn(pLevel.registryAccess(), recipe, pBlockEntity.items, i)) {
-                pBlockEntity.litTime = pBlockEntity.getBurnDuration(itemstack);
+                pBlockEntity.litTime = pBlockEntity.getBurnDuration(fuelStack);
                 pBlockEntity.litDuration = pBlockEntity.litTime;
                 if (pBlockEntity.isLit()) {
                     flag1 = true;
-                    if (itemstack.hasCraftingRemainingItem())
-                        pBlockEntity.items.set(1, itemstack.getCraftingRemainingItem());
+                    if (fuelStack.hasCraftingRemainingItem())
+                        pBlockEntity.items.set(FUEL_SLOT, fuelStack.getCraftingRemainingItem());
                     else
-                    if (flag3) {
-                        Item item = itemstack.getItem();
-                        itemstack.shrink(1);
-                        if (itemstack.isEmpty()) {
-                            pBlockEntity.items.set(1, itemstack.getCraftingRemainingItem());
+                    if (hasFuel) {
+                        Item item = fuelStack.getItem();
+                        fuelStack.shrink(1);
+                        if (fuelStack.isEmpty()) {
+                            pBlockEntity.items.set(FUEL_SLOT, fuelStack.getCraftingRemainingItem());
                         }
                     }
                 }
@@ -231,15 +234,15 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
             return false;
         ItemStack itemstack = slotStacks.get(0);
         ItemStack itemstack1 = ((Recipe<WorldlyContainer>) recipe).assemble(this, registryAccess);
-        ItemStack itemstack2 = slotStacks.get(2);
+        ItemStack itemstack2 = slotStacks.get(RESULT_SLOT);
         if (itemstack2.isEmpty()) {
-            slotStacks.set(2, itemstack1.copy());
+            slotStacks.set(RESULT_SLOT, itemstack1.copy());
         } else if (itemstack2.is(itemstack1.getItem())) {
             itemstack2.grow(itemstack1.getCount());
         }
 
-        if (itemstack.is(Blocks.WET_SPONGE.asItem()) && !slotStacks.get(1).isEmpty() && slotStacks.get(1).is(Items.BUCKET)) {
-            slotStacks.set(1, new ItemStack(Items.WATER_BUCKET));
+        if (itemstack.is(Blocks.WET_SPONGE.asItem()) && !slotStacks.get(FUEL_SLOT).isEmpty() && slotStacks.get(1).is(Items.BUCKET)) {
+            slotStacks.set(FUEL_SLOT, new ItemStack(Items.WATER_BUCKET));
         }
 
         itemstack.shrink(1);

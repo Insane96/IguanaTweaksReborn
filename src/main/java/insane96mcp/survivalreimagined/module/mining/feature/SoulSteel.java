@@ -13,11 +13,9 @@ import insane96mcp.survivalreimagined.module.items.item.SRArmorMaterial;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockBlastFurnaceBlock;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockBlastFurnaceBlockEntity;
 import insane96mcp.survivalreimagined.module.mining.crafting.MultiItemSmeltingRecipe;
+import insane96mcp.survivalreimagined.module.mining.data.MultiItemSmeltingSerializer;
 import insane96mcp.survivalreimagined.module.mining.inventory.MultiBlockBlastFurnaceMenu;
-import insane96mcp.survivalreimagined.setup.SRBlockEntityTypes;
-import insane96mcp.survivalreimagined.setup.SRItems;
-import insane96mcp.survivalreimagined.setup.SRMenuType;
-import insane96mcp.survivalreimagined.setup.SRRecipeTypes;
+import insane96mcp.survivalreimagined.setup.*;
 import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.flag.FeatureFlags;
@@ -47,7 +45,11 @@ public class SoulSteel extends Feature {
 			return "multi_item_smelting";
 		}
 	});
+	public static final RegistryObject<MultiItemSmeltingSerializer> RECIPE_SERIALIZER = SRRecipeSerializers.REGISTRY.register("multi_item_smelting", () -> new MultiItemSmeltingSerializer(MultiItemSmeltingRecipe::new, 400));
 	public static final RegistryObject<MenuType<MultiBlockBlastFurnaceMenu>> MENU_TYPE = SRMenuType.REGISTRY.register("blast_furnace", () -> new MenuType<>(MultiBlockBlastFurnaceMenu::new, FeatureFlags.VANILLA_SET));
+
+
+
 
 	public static final BlockWithItem BLOCK = BlockWithItem.register("soul_steel_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 9.0F).sound(SoundType.METAL)), new Item.Properties().fireResistant());
 

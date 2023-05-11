@@ -1,0 +1,19 @@
+{
+    "type": "survivalreimagined:multi_item_smelting",
+    "category": "misc",
+    "cookingtime": 200,
+    "experience": 0.7,
+    "group": "copper_ingot",
+    "ingredients": [
+        {
+            "item": "minecraft:raw_copper"
+        },
+        {
+            "item": "minecraft:raw_iron"
+        },
+        {
+            "item": "minecraft:raw_iron"
+        }
+    ],
+    "result": "minecraft:diamond"
+}

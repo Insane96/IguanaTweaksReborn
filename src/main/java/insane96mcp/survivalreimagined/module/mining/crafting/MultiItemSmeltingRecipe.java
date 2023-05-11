@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.mining.crafting;
 
+import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -17,13 +18,13 @@ public class MultiItemSmeltingRecipe implements Recipe<Container> {
     protected final ResourceLocation id;
     private final CookingBookCategory category;
     protected final String group;
-    protected final Ingredient[] ingredients;
-    protected final ItemStack result;
-    protected final float experience;
+    final NonNullList<Ingredient> ingredients;
+    public final ItemStack result;
+    final float experience;
     protected final int cookingTime;
 
-    public MultiItemSmeltingRecipe(RecipeType<?> pType, ResourceLocation pId, String pGroup, CookingBookCategory pCategory, Ingredient[] ingredients, ItemStack pResult, float pExperience, int pCookingTime) {
-        this.type = pType;
+    public MultiItemSmeltingRecipe(ResourceLocation pId, String pGroup, CookingBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float pExperience, int pCookingTime) {
+        this.type = SoulSteel.RECIPE_TYPE.get();
         this.category = pCategory;
         this.id = pId;
         this.group = pGroup;
@@ -44,6 +45,7 @@ public class MultiItemSmeltingRecipe implements Recipe<Container> {
                 if (ingredient.test(container.getItem(slot))) {
                     checkedSlots.add(slot);
                     ingredientMatches = true;
+                    break;
                 }
             }
             if (!ingredientMatches)
@@ -70,7 +72,7 @@ public class MultiItemSmeltingRecipe implements Recipe<Container> {
     @Override
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> nonnulllist = NonNullList.create();
-        nonnulllist.addAll(List.of(this.ingredients));
+        nonnulllist.addAll(this.ingredients);
         return nonnulllist;
     }
 

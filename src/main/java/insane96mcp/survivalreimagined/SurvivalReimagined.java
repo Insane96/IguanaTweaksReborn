@@ -84,6 +84,7 @@ public class SurvivalReimagined
         SRFeatureType.REGISTRY.register(modEventBus);
         SRRuleTestType.REGISTRY.register(modEventBus);
         SRRecipeTypes.REGISTRY.register(modEventBus);
+        SRRecipeSerializers.REGISTRY.register(modEventBus);
         SRMenuType.REGISTRY.register(modEventBus);
         SREnchantments.REGISTRY.register(modEventBus);
         SREntityTypes.REGISTRY.register(modEventBus);
