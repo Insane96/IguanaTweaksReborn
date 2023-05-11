@@ -26,7 +26,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.RecipeHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
@@ -35,7 +34,6 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -44,8 +42,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu.FUEL_SLOT;
-import static insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu.RESULT_SLOT;
+import static insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu.*;
 
 public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible {
 
@@ -143,6 +140,12 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
 
         ItemStack fuelStack = pBlockEntity.items.get(FUEL_SLOT);
         boolean hasInputItem = !pBlockEntity.items.get(0).isEmpty();
+        for (int slot : INGREDIENT_SLOTS) {
+            if (!pBlockEntity.items.get(slot).isEmpty()) {
+                hasInputItem = true;
+                break;
+            }
+        }
         boolean hasFuel = !fuelStack.isEmpty();
         if (pBlockEntity.isLit() || hasFuel && hasInputItem) {
             Recipe<?> recipe;
@@ -162,7 +165,6 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
                         pBlockEntity.items.set(FUEL_SLOT, fuelStack.getCraftingRemainingItem());
                     else
                     if (hasFuel) {
-                        Item item = fuelStack.getItem();
                         fuelStack.shrink(1);
                         if (fuelStack.isEmpty()) {
                             pBlockEntity.items.set(FUEL_SLOT, fuelStack.getCraftingRemainingItem());
@@ -232,20 +234,18 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
         if (recipe == null
                 || !this.canBurn(registryAccess, recipe, slotStacks, stackSize))
             return false;
-        ItemStack itemstack = slotStacks.get(0);
         ItemStack itemstack1 = ((Recipe<WorldlyContainer>) recipe).assemble(this, registryAccess);
         ItemStack itemstack2 = slotStacks.get(RESULT_SLOT);
         if (itemstack2.isEmpty()) {
             slotStacks.set(RESULT_SLOT, itemstack1.copy());
-        } else if (itemstack2.is(itemstack1.getItem())) {
+        }
+        else if (itemstack2.is(itemstack1.getItem())) {
             itemstack2.grow(itemstack1.getCount());
         }
 
-        if (itemstack.is(Blocks.WET_SPONGE.asItem()) && !slotStacks.get(FUEL_SLOT).isEmpty() && slotStacks.get(1).is(Items.BUCKET)) {
-            slotStacks.set(FUEL_SLOT, new ItemStack(Items.WATER_BUCKET));
+        for (int slot : INGREDIENT_SLOTS) {
+            slotStacks.get(slot).shrink(1);
         }
-
-        itemstack.shrink(1);
         return true;
     }
 
