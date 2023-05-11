@@ -132,7 +132,10 @@ public class Stamina extends Feature {
                 || !(event.getEntity() instanceof ServerPlayer player))
             return;
 
-        StaminaHandler.consumeStamina(player, staminaConsumedOnJump);
+        int consumed = staminaConsumedOnJump;
+        if (player.hasEffect(SRMobEffects.VIGOUR.get()))
+            consumed -= player.getEffect(SRMobEffects.VIGOUR.get()).getAmplifier() + 1;
+        StaminaHandler.consumeStamina(player, consumed);
     }
 
     static ResourceLocation PLAYER_HEALTH_ELEMENT = new ResourceLocation("minecraft", "player_health");
