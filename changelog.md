@@ -1,6 +1,6 @@
 # Changelog
 
-## Alpha 3.9.3
+## Alpha 3.10.0
 * Overhauled rails
   * Added Copper Rails and Golden Rails
 * Added M.A. Jump enchantment
@@ -8,6 +8,7 @@
 * Fixed timber getting more trees than expected
 * Fixed spiders attack reach and skeletons riding them
 * Creeper cena now deals more knockback
+* Started working on better Blast Furnace
 
 ## Alpha 3.9.2
 * Added Timber Trees feature
