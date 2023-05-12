@@ -44,7 +44,7 @@ public class FlintExpansion extends Feature {
 
 	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("flint", 3d, 33, () -> Items.FLINT, 9, Rarity.COMMON);
 
-	public static final BlockWithItem FLINT_ROCK = BlockWithItem.register("flint_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.25F, 1F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
+	public static final BlockWithItem FLINT_ROCK = BlockWithItem.register("flint_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 1F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
 
 	private static final ILItemTier ITEM_TIER = new ILItemTier(1, 99, 6f, 1f, 9, () -> Ingredient.of(Items.FLINT));
 

@@ -1,9 +1,9 @@
 {
     "type": "minecraft:random_patch",
     "config": {
-        "tries": 24,
-        "xz_spread": 5,
-        "y_spread": 3,
+        "tries": 6,
+        "xz_spread": 8,
+        "y_spread": 5,
         "feature": {
             "feature": {
                 "type": "minecraft:simple_block",
@@ -20,7 +20,13 @@
                         ]
                     }
                 }
-            }
+            },
+            "placement": [
+                {
+                    "type": "minecraft:heightmap",
+                    "heightmap": "OCEAN_FLOOR_WG"
+                }
+            ]
         }
     }
 }
