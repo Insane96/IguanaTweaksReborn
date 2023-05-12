@@ -79,6 +79,10 @@ public class NoHunger extends Feature {
     @Label(name = "Convert Hunger to Weakness", description = "If true, Hunger effect is replaced by Weakness")
     public static Boolean convertHungerToWeakness = true;
 
+    @Config
+    @Label(name = "Render armor at Hunger", description = "(Client Only) Armor is rendered at the place of Hunger bar")
+    public static Boolean renderArmorAtHunger = true;
+
     public NoHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -235,10 +239,46 @@ public class NoHunger extends Feature {
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    public void removeFoodBar(final RenderGuiOverlayEvent.Pre event)
-    {
-        if (this.isEnabled() && event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type()))
-            event.setCanceled(true);
+    public void removeFoodBar(final RenderGuiOverlayEvent.Pre event) {
+        if (this.isEnabled()) {
+            if (event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type())) {
+                event.setCanceled(true);
+            }
+            if (event.getOverlay().equals(VanillaGuiOverlay.ARMOR_LEVEL.type()) && renderArmorAtHunger) {
+                event.setCanceled(true);
+                Minecraft mc = Minecraft.getInstance();
+                ForgeGui gui = (ForgeGui) mc.gui;
+                if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
+                    renderArmor(event.getPoseStack(), event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());
+                }
+            }
+        }
+    }
+
+    protected void renderArmor(PoseStack poseStack, int width, int height) {
+        Minecraft mc = Minecraft.getInstance();
+        ForgeGui gui = (ForgeGui) mc.gui;
+        mc.getProfiler().push("armor");
+
+        RenderSystem.enableBlend();
+        int left = width / 2 + 83;
+        int top = height - gui.rightHeight;
+
+        int level = mc.player.getArmorValue();
+        for (int i = 1; level > 0 && i < 20; i += 2)
+        {
+            if (i < level)
+                GuiComponent.blit(poseStack, left, top, 34, 9, 9, 9);
+            else if (i == level)
+                GuiComponent.blit(poseStack, left, top, 25, 9, 9, 9);
+            else
+                GuiComponent.blit(poseStack, left, top, 16, 9, 9, 9);
+            left -= 8;
+        }
+        gui.rightHeight += 10;
+
+        RenderSystem.disableBlend();
+        mc.getProfiler().pop();
     }
 
     static ResourceLocation PLAYER_HEALTH_ELEMENT = new ResourceLocation("minecraft", "player_health");
@@ -274,7 +314,7 @@ public class NoHunger extends Feature {
             return;
         RenderSystem.setShaderTexture(0, SurvivalReimagined.GUI_ICONS);
         Stamina.setColor(1.2f - (saturationModifier / 1.2f), 0.78f, 0.17f, 1f);
-        mc.gui.blit(poseStack, right, top, (int) UV_ARROW.x, (int) UV_ARROW.y, 9, 9);
+        GuiComponent.blit(poseStack, right, top, (int) UV_ARROW.x, (int) UV_ARROW.y, 9, 9);
         Stamina.resetColor();
 
         // rebind default icons
@@ -293,7 +333,7 @@ public class NoHunger extends Feature {
         if (playerEntity == null)
             return;
 
-        if (mc.options.advancedItemTooltips) {
+        if (!mc.options.reducedDebugInfo().get() && mc.options.advancedItemTooltips) {
             FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
             //noinspection ConstantConditions
             float heal = getFoodHealing(food);
