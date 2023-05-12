@@ -8,7 +8,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
-import insane96mcp.survivalreimagined.module.world.block.OreRockBlock;
+import insane96mcp.survivalreimagined.module.world.block.GroundRockBlock;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.Item;
@@ -25,9 +25,9 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.WORLD)
 public class OreGeneration extends Feature {
 
-    public static final BlockWithItem IRON_ORE_ROCK = BlockWithItem.register("iron_ore_rock", () -> new OreRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
-    public static final BlockWithItem GOLD_ORE_ROCK = BlockWithItem.register("gold_ore_rock", () -> new OreRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
-    public static final BlockWithItem COPPER_ORE_ROCK = BlockWithItem.register("copper_ore_rock", () -> new OreRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
+    public static final BlockWithItem IRON_ORE_ROCK = BlockWithItem.register("iron_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
+    public static final BlockWithItem GOLD_ORE_ROCK = BlockWithItem.register("gold_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
+    public static final BlockWithItem COPPER_ORE_ROCK = BlockWithItem.register("copper_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
 
     public static final PoorRichOre POOR_RICH_IRON_ORE = PoorRichOre.register("iron", Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE);
     public static final PoorRichOre POOR_RICH_COPPER_ORE = PoorRichOre.register("copper", Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE);

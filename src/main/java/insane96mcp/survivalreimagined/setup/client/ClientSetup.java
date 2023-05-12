@@ -114,8 +114,9 @@ public class ClientSetup {
             event.accept(OreGeneration.POOR_RICH_GOLD_ORE.richOre().item().get());
             event.accept(OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().item().get());
             event.accept(BoneMeal.RICH_FARMLAND.item().get());
-            event.accept(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.block().get());
-            event.accept(CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.block().get());
+            event.accept(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.item().get());
+            event.accept(CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.item().get());
+            event.accept(FlintExpansion.FLINT_ROCK.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
             event.accept(Mithril.INGOT.get());

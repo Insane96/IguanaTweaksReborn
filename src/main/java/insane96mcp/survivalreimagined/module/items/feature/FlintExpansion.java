@@ -13,6 +13,7 @@ import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceLootModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
+import insane96mcp.survivalreimagined.module.world.block.GroundRockBlock;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.setup.Strings;
@@ -42,6 +43,8 @@ import net.minecraftforge.registries.RegistryObject;
 public class FlintExpansion extends Feature {
 
 	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("flint", 3d, 33, () -> Items.FLINT, 9, Rarity.COMMON);
+
+	public static final BlockWithItem FLINT_ROCK = BlockWithItem.register("flint_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.25F, 1F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
 
 	private static final ILItemTier ITEM_TIER = new ILItemTier(1, 99, 6f, 1f, 9, () -> Ingredient.of(Items.FLINT));
 

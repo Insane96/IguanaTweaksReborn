@@ -1,0 +1,7 @@
+{
+    "parent": "survivalreimagined:block/ore_rock",
+    "textures": {
+        "particle": "survivalreimagined:block/flint_block",
+        "texture": "survivalreimagined:block/flint_block"
+    }
+}
