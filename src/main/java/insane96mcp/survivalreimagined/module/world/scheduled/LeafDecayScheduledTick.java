@@ -18,6 +18,7 @@ public class LeafDecayScheduledTick extends ScheduledTickTask {
     }
 
     public void run() {
-        this.level.getBlockState(this.pos).randomTick(this.level, this.pos, this.randomSource);
+        if (this.level.isLoaded(this.pos))
+            this.level.getBlockState(this.pos).randomTick(this.level, this.pos, this.randomSource);
     }
 }
