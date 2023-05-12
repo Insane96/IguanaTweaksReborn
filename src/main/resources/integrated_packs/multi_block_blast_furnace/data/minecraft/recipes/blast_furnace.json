@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "III",
+        "IXI",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:smooth_stone"
+        },
+        "I": {
+            "item": "minecraft:iron_ingot"
+        },
+        "X": {
+            "item": "minecraft:furnace"
+        }
+    },
+    "result": {
+        "item": "survivalreimagined:blast_furnace"
+    }
+}

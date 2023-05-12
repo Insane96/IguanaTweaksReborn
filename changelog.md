@@ -1,9 +1,10 @@
 # Changelog
 
 ## Alpha 3.10.1
-* Firestarters now generate in chests instead of Flint and Steel
-In the overworld
+* Blast furnaces now require a multi block structure
+  In the overworld
 * Flint rocks now generate in the world that drop Flint
+* Firestarters now generate in chests instead of Flint and Steel
 * Armor is now rendered in place of Hunger bar
 
 ## Alpha 3.10.0

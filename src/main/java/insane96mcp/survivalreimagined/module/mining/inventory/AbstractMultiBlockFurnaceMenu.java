@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.module.mining.inventory;
 
-import insane96mcp.survivalreimagined.module.mining.crafting.MultiItemSmeltingRecipe;
+import insane96mcp.survivalreimagined.module.mining.crafting.AbstractMultiItemSmeltingRecipe;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -25,14 +25,14 @@ public class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Container> {
     private final Container container;
     private final ContainerData data;
     protected final Level level;
-    final RecipeType<? extends MultiItemSmeltingRecipe> recipeType;
+    final RecipeType<? extends AbstractMultiItemSmeltingRecipe> recipeType;
     private final RecipeBookType recipeBookType;
 
-    public AbstractMultiBlockFurnaceMenu(MenuType<?> pMenuType, RecipeType<? extends MultiItemSmeltingRecipe> pRecipeType, RecipeBookType pRecipeBookType, int pContainerId, Inventory pPlayerInventory) {
+    public AbstractMultiBlockFurnaceMenu(MenuType<?> pMenuType, RecipeType<? extends AbstractMultiItemSmeltingRecipe> pRecipeType, RecipeBookType pRecipeBookType, int pContainerId, Inventory pPlayerInventory) {
         this(pMenuType, pRecipeType, pRecipeBookType, pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(DATA_COUNT));
     }
 
-    protected AbstractMultiBlockFurnaceMenu(MenuType<?> pMenuType, RecipeType<? extends MultiItemSmeltingRecipe> pRecipeType, RecipeBookType pRecipeBookType, int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData pData) {
+    protected AbstractMultiBlockFurnaceMenu(MenuType<?> pMenuType, RecipeType<? extends AbstractMultiItemSmeltingRecipe> pRecipeType, RecipeBookType pRecipeBookType, int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData pData) {
         super(pMenuType, pContainerId);
         this.recipeType = pRecipeType;
         this.recipeBookType = pRecipeBookType;
@@ -46,7 +46,7 @@ public class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Container> {
         this.addSlot(new Slot(pContainer, 2, 61, 44));
         this.addSlot(new Slot(pContainer, 3, 79, 44));
         this.addSlot(new MultiBlockFurnaceFuelSlot(this, pContainer, FUEL_SLOT, 15, 13));
-        this.addSlot(new FurnaceResultSlot(pPlayerInventory.player, pContainer, RESULT_SLOT, 142, 35));
+        this.addSlot(new MultiBlockFurnaceResultSlot(pPlayerInventory.player, pContainer, RESULT_SLOT, 142, 35));
 
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 9; ++j) {
@@ -119,7 +119,7 @@ public class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Container> {
             ItemStack itemStackInSlot = slot.getItem();
             itemstack = itemStackInSlot.copy();
             if (pSlot == RESULT_SLOT) {
-                if (!this.moveItemStackTo(itemStackInSlot, 3, 39, true)) {
+                if (!this.moveItemStackTo(itemStackInSlot, INV_SLOT_START, USE_ROW_SLOT_END, true)) {
                     return ItemStack.EMPTY;
                 }
 
@@ -138,7 +138,7 @@ public class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Container> {
                     }
                 }
                 else if (pSlot >= INV_SLOT_START && pSlot < INV_SLOT_END) {
-                    if (!this.moveItemStackTo(itemStackInSlot, 30, 39, false)) {
+                    if (!this.moveItemStackTo(itemStackInSlot, USE_ROW_SLOT_START, USE_ROW_SLOT_END, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
@@ -177,7 +177,7 @@ public class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Container> {
     }
 
     protected boolean canSmelt(ItemStack pStack) {
-        return this.level.getRecipeManager().getRecipeFor((RecipeType<MultiItemSmeltingRecipe>)this.recipeType, new SimpleContainer(pStack), this.level).isPresent();
+        return this.level.getRecipeManager().getRecipeFor((RecipeType<AbstractMultiItemSmeltingRecipe>)this.recipeType, new SimpleContainer(pStack), this.level).isPresent();
     }
 
     public int getBurnProgress() {

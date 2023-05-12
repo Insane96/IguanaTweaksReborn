@@ -3,9 +3,10 @@ package insane96mcp.survivalreimagined.module.mining.data;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import insane96mcp.survivalreimagined.module.mining.crafting.MultiItemSmeltingRecipe;
+import insane96mcp.survivalreimagined.module.mining.crafting.AbstractMultiItemSmeltingRecipe;
 import insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -16,16 +17,14 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class MultiItemSmeltingSerializer implements RecipeSerializer<MultiItemSmeltingRecipe> {
-    private final int defaultCookingTime;
-    private final CookieBaker<MultiItemSmeltingRecipe> factory;
+public class MultiItemSmeltingSerializer implements RecipeSerializer<AbstractMultiItemSmeltingRecipe> {
+    private final CookieBaker<AbstractMultiItemSmeltingRecipe> factory;
 
-    public MultiItemSmeltingSerializer(CookieBaker<MultiItemSmeltingRecipe> pFactory, int pDefaultCookingTime) {
-        this.defaultCookingTime = pDefaultCookingTime;
+    public MultiItemSmeltingSerializer(CookieBaker<AbstractMultiItemSmeltingRecipe> pFactory) {
         this.factory = pFactory;
     }
 
-    public MultiItemSmeltingRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
+    public AbstractMultiItemSmeltingRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
         String group = GsonHelper.getAsString(pJson, "group", "");
         CookingBookCategory category = CookingBookCategory.CODEC.byName(GsonHelper.getAsString(pJson, "category", null), CookingBookCategory.MISC);
         NonNullList<Ingredient> ingredients = itemsFromJson(GsonHelper.getAsJsonArray(pJson, "ingredients"));
@@ -44,9 +43,10 @@ public class MultiItemSmeltingSerializer implements RecipeSerializer<MultiItemSm
             ResourceLocation resourcelocation = new ResourceLocation(s1);
             result = new ItemStack(ForgeRegistries.ITEMS.getValue(resourcelocation));
         }
+        float doubleOutputChance = GsonHelper.getAsFloat(pJson, "double_output_chance", 0f);
         float experience = GsonHelper.getAsFloat(pJson, "experience", 0.0F);
-        int cookingTime = GsonHelper.getAsInt(pJson, "cookingtime", this.defaultCookingTime);
-        return this.factory.create(pRecipeId, group, category, ingredients, result, experience, cookingTime);
+        int cookingTime = GsonHelper.getAsInt(pJson, "cookingtime");
+        return this.factory.create(pRecipeId, group, category, ingredients, result, doubleOutputChance, experience, cookingTime);
     }
 
     private static NonNullList<Ingredient> itemsFromJson(JsonArray pIngredientArray) {
@@ -60,7 +60,7 @@ public class MultiItemSmeltingSerializer implements RecipeSerializer<MultiItemSm
         return nonnulllist;
     }
 
-    public MultiItemSmeltingRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
+    public AbstractMultiItemSmeltingRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
         String group = pBuffer.readUtf();
         CookingBookCategory category = pBuffer.readEnum(CookingBookCategory.class);
         int ingredientsAmount = pBuffer.readVarInt();
@@ -68,12 +68,13 @@ public class MultiItemSmeltingSerializer implements RecipeSerializer<MultiItemSm
 
         ingredients.replaceAll(ignored -> Ingredient.fromNetwork(pBuffer));
         ItemStack itemstack = pBuffer.readItem();
-        float f = pBuffer.readFloat();
-        int i = pBuffer.readVarInt();
-        return this.factory.create(pRecipeId, group, category, ingredients, itemstack, f, i);
+        float doubleOutputChance = pBuffer.readFloat();
+        float experience = pBuffer.readFloat();
+        int cookingTime = pBuffer.readVarInt();
+        return this.factory.create(pRecipeId, group, category, ingredients, itemstack, doubleOutputChance, experience, cookingTime);
     }
 
-    public void toNetwork(FriendlyByteBuf pBuffer, MultiItemSmeltingRecipe pRecipe) {
+    public void toNetwork(FriendlyByteBuf pBuffer, AbstractMultiItemSmeltingRecipe pRecipe) {
         pBuffer.writeUtf(pRecipe.getGroup());
         pBuffer.writeEnum(pRecipe.category());
         pBuffer.writeVarInt(pRecipe.getIngredients().size());
@@ -82,12 +83,13 @@ public class MultiItemSmeltingSerializer implements RecipeSerializer<MultiItemSm
             ingredient.toNetwork(pBuffer);
         }
 
-        pBuffer.writeItem(pRecipe.result);
+        pBuffer.writeItem(pRecipe.getResultItem(RegistryAccess.EMPTY));
+        pBuffer.writeFloat(pRecipe.getDoubleOutputChance());
         pBuffer.writeFloat(pRecipe.getExperience());
         pBuffer.writeVarInt(pRecipe.getCookingTime());
     }
 
-    public interface CookieBaker<T extends MultiItemSmeltingRecipe> {
-        T create(ResourceLocation pId, String pGroup, CookingBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float pExperience, int pCookingTime);
+    public interface CookieBaker<T extends AbstractMultiItemSmeltingRecipe> {
+        T create(ResourceLocation pId, String pGroup, CookingBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputchance, float pExperience, int pCookingTime);
     }
 }

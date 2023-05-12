@@ -45,6 +45,8 @@
 
 	"survivalreimagined.spawner_reactivator": "This item can reactivate a Mob Spawner",
 
+	"survialreimagined.multi_block_structure": "Requires a multi block structure to work",
+
 	"item.survivalreimagined.flint_axe": "Flint Axe",
 	"item.survivalreimagined.flint_pickaxe": "Flint Pickaxe",
 	"item.survivalreimagined.flint_sword": "Flint Sword",
@@ -168,8 +170,8 @@
 	"advancements.sr_story.furnace.description": "Obtain a Furnace, the campfire might help smelting the Copper.\nQuite slow and primitive",
 	"advancements.sr_story.torch.title": "Shed some light",
 	"advancements.sr_story.torch.description": "Obtain a torch, the campfire and some sticks might come in handy",
-	"advancements.sr_story.blast_furnace.title": "Explosive, but not really",
-	"advancements.sr_story.blast_furnace.description": "Obtain a Blast Furnace, will make smelting stuff definitely faster and more fuel efficient",
+	"advancements.sr_story.blast_furnace.title": "Bricks required",
+	"advancements.sr_story.blast_furnace.description": "Obtain a Blast Furnace, then build a 3x3x3 structure to use it. The structure must have Stone Bricks at the bottom + Blast furnace in any of the sides, Bricks in the middle layer and Bricks or Brick Stairs at the top. The middle block can be anything.",
 	"advancements.sr_story.anvil.title": "Metal equipment anyone?",
 	"advancements.sr_story.anvil.description": "Obtain an anvil",
 	"advancements.sr_story.iron_pickaxe.title": "Shiny metal pick",

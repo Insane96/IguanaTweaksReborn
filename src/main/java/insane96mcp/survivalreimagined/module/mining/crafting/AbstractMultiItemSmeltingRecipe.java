@@ -1,10 +1,11 @@
 package insane96mcp.survivalreimagined.module.mining.crafting;
 
-import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
+import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -13,23 +14,30 @@ import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MultiItemSmeltingRecipe implements Recipe<Container> {
+public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Container> {
     protected final RecipeType<?> type;
     protected final ResourceLocation id;
     private final CookingBookCategory category;
     protected final String group;
     final NonNullList<Ingredient> ingredients;
-    public final ItemStack result;
     final float experience;
+    final float doubleOutputChance;
+    private final ItemStack result;
     protected final int cookingTime;
 
-    public MultiItemSmeltingRecipe(ResourceLocation pId, String pGroup, CookingBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float pExperience, int pCookingTime) {
-        this.type = SoulSteel.RECIPE_TYPE.get();
+    private static final RandomSource RANDOM = RandomSource.create();
+
+    public AbstractMultiItemSmeltingRecipe(RecipeType<?> type, ResourceLocation pId, String pGroup, CookingBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputChance, float pExperience, int pCookingTime) {
+        this.type = type;
         this.category = pCategory;
         this.id = pId;
         this.group = pGroup;
-        this.ingredients = ingredients;
+        this.ingredients = NonNullList.withSize(4, Ingredient.EMPTY);
+        for (int i = 0; i < ingredients.size(); i++) {
+            this.ingredients.set(i, ingredients.get(i));
+        }
         this.result = pResult;
+        this.doubleOutputChance = doubleOutputChance;
         this.experience = pExperience;
         this.cookingTime = pCookingTime;
     }
@@ -55,8 +63,11 @@ public class MultiItemSmeltingRecipe implements Recipe<Container> {
     }
 
     @Override
-    public ItemStack assemble(Container p_44001_, RegistryAccess p_267165_) {
-        return this.result.copy();
+    public ItemStack assemble(Container container, RegistryAccess registryAccess) {
+        ItemStack stack = this.result.copy();
+        if (RANDOM.nextFloat() < doubleOutputChance)
+            stack.setCount(stack.getCount() + 1);
+        return stack;
     }
 
     @Override
@@ -78,7 +89,11 @@ public class MultiItemSmeltingRecipe implements Recipe<Container> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return SoulSteel.RECIPE_SERIALIZER.get();
+        return MultiBlockFurnaces.RECIPE_SERIALIZER.get();
+    }
+
+    public float getDoubleOutputChance() {
+        return this.doubleOutputChance;
     }
     /**
      * Gets the experience of this recipe

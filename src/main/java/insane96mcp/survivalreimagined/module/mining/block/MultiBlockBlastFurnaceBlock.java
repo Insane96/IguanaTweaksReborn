@@ -1,8 +1,9 @@
 package insane96mcp.survivalreimagined.module.mining.block;
 
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
-import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
+import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.utils.Utils;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -17,10 +18,12 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.AbstractMap;
@@ -72,7 +75,7 @@ public class MultiBlockBlastFurnaceBlock extends AbstractMultiBlockFurnace {
 
     @javax.annotation.Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return createTicker(pLevel, pBlockEntityType, SoulSteel.BLAST_FURNACE_BLOCK_ENTITY_TYPE.get());
+        return createTicker(pLevel, pBlockEntityType, MultiBlockFurnaces.BLAST_FURNACE_BLOCK_ENTITY_TYPE.get());
     }
 
     @Override
@@ -130,5 +133,10 @@ public class MultiBlockBlastFurnaceBlock extends AbstractMultiBlockFurnace {
             double d7 = direction$axis == Direction.Axis.Z ? direction.getStepZ() * 0.52D : d4;
             pLevel.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
         }
+    }
+
+    @Override
+    public String getDescriptionId() {
+        return Util.makeDescriptionId("block", ForgeRegistries.BLOCKS.getKey(Blocks.BLAST_FURNACE));
     }
 }

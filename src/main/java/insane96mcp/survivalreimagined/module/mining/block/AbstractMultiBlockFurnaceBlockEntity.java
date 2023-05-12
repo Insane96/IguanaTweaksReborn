@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.module.mining.block;
 
 import com.google.common.collect.Lists;
-import insane96mcp.survivalreimagined.module.mining.crafting.MultiItemSmeltingRecipe;
+import insane96mcp.survivalreimagined.module.mining.crafting.AbstractMultiItemSmeltingRecipe;
 import insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -55,7 +55,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
     public static final int DATA_COOKING_TOTAL_TIME = 3;
     public static final int BURN_TIME_STANDARD = 200;
     public static final int BURN_COOL_SPEED = 4;
-    private final RecipeType<? extends MultiItemSmeltingRecipe> recipeType;
+    private final RecipeType<? extends AbstractMultiItemSmeltingRecipe> recipeType;
     protected NonNullList<ItemStack> items = NonNullList.withSize(AbstractMultiBlockFurnaceMenu.SLOT_COUNT, ItemStack.EMPTY);
     int litTime;
     int litDuration;
@@ -90,9 +90,9 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
         }
     };
     private final Object2IntOpenHashMap<ResourceLocation> recipesUsed = new Object2IntOpenHashMap<>();
-    private final RecipeManager.CachedCheck<Container, ? extends MultiItemSmeltingRecipe> quickCheck;
+    private final RecipeManager.CachedCheck<Container, ? extends AbstractMultiItemSmeltingRecipe> quickCheck;
 
-    protected AbstractMultiBlockFurnaceBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, RecipeType<? extends MultiItemSmeltingRecipe> pRecipeType) {
+    protected AbstractMultiBlockFurnaceBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, RecipeType<? extends AbstractMultiItemSmeltingRecipe> pRecipeType) {
         super(pType, pPos, pBlockState);
         this.quickCheck = RecipeManager.createCheck((RecipeType)pRecipeType);
         this.recipeType = pRecipeType;
@@ -230,10 +230,9 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
                 return true;
             else if (!resultSlotStack.sameItem(resultStack))
                 return false;
-            else if (resultSlotStack.getCount() + resultStack.getCount() <= stackSize && resultSlotStack.getCount() + resultStack.getCount() <= resultSlotStack.getMaxStackSize()) // Forge fix: make furnace respect stack sizes in furnace recipes
-                return true;
-            else
-                return resultSlotStack.getCount() + resultStack.getCount() <= resultStack.getMaxStackSize(); // Forge fix: make furnace respect stack sizes in furnace recipes
+            else if (resultSlotStack.getCount() >= resultStack.getMaxStackSize())
+                return false;
+            return resultSlotStack.getCount() + resultStack.getCount() < stackSize;
         }
     }
 
@@ -261,7 +260,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
     }
 
     private static int getTotalCookTime(Level pLevel, AbstractMultiBlockFurnaceBlockEntity pBlockEntity) {
-        return pBlockEntity.quickCheck.getRecipeFor(pBlockEntity, pLevel).map(MultiItemSmeltingRecipe::getCookingTime).orElse(BURN_TIME_STANDARD);
+        return pBlockEntity.quickCheck.getRecipeFor(pBlockEntity, pLevel).map(AbstractMultiItemSmeltingRecipe::getCookingTime).orElse(BURN_TIME_STANDARD);
     }
 
     @Override
@@ -406,7 +405,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
 
     @Override
     public int getMaxStackSize() {
-        return 128;
+        return 68;
     }
 
     net.minecraftforge.common.util.LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =

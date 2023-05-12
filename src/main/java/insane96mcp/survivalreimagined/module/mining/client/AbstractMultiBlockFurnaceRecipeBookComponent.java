@@ -21,13 +21,6 @@ public abstract class AbstractMultiBlockFurnaceRecipeBookComponent extends Recip
         this.filterButton.initTextureValues(152, 182, 28, 18, RECIPE_BOOK_LOCATION);
     }
 
-    public void slotClicked(@Nullable Slot pSlot) {
-        super.slotClicked(pSlot);
-        if (pSlot != null && pSlot.index < this.menu.getSize()) {
-            this.ghostRecipe.clear();
-        }
-    }
-
     public void setupGhostRecipe(Recipe<?> pRecipe, List<Slot> pSlots) {
         ItemStack itemstack = pRecipe.getResultItem(this.minecraft.level.registryAccess());
         this.ghostRecipe.setRecipe(pRecipe);
