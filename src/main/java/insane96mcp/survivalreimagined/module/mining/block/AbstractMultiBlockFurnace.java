@@ -45,7 +45,10 @@ public abstract class AbstractMultiBlockFurnace extends BaseEntityBlock {
 
     protected abstract void openContainer(Level pLevel, BlockPos pPos, Player pPlayer);
 
-
+    /**
+     * Returns true if the multi-block structure is valid
+     */
+    public abstract boolean isValidMultiBlock(Level level, BlockPos pos);
 
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());

@@ -46,7 +46,7 @@ import static insane96mcp.survivalreimagined.module.mining.inventory.AbstractMul
 
 public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible {
 
-    private static final int[] SLOTS_FOR_UP = AbstractMultiBlockFurnaceMenu.INGREDIENT_SLOTS.clone();
+    private static final int[] SLOTS_FOR_UP = new int[] {INGREDIENT_SLOTS[0]};
     private static final int[] SLOTS_FOR_DOWN = new int[]{AbstractMultiBlockFurnaceMenu.RESULT_SLOT, FUEL_SLOT};
     private static final int[] SLOTS_FOR_SIDES = new int[]{FUEL_SLOT};
     public static final int DATA_LIT_TIME = 0;
@@ -62,23 +62,25 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
     int cookingProgress;
     int cookingTotalTime;
 
+    boolean isValid = false;
+
     protected final ContainerData dataAccess = new ContainerData() {
         public int get(int dataId) {
             return switch (dataId) {
-                case 0 -> AbstractMultiBlockFurnaceBlockEntity.this.litTime;
-                case 1 -> AbstractMultiBlockFurnaceBlockEntity.this.litDuration;
-                case 2 -> AbstractMultiBlockFurnaceBlockEntity.this.cookingProgress;
-                case 3 -> AbstractMultiBlockFurnaceBlockEntity.this.cookingTotalTime;
+                case DATA_LIT_TIME -> AbstractMultiBlockFurnaceBlockEntity.this.litTime;
+                case DATA_LIT_DURATION -> AbstractMultiBlockFurnaceBlockEntity.this.litDuration;
+                case DATA_COOKING_PROGRESS -> AbstractMultiBlockFurnaceBlockEntity.this.cookingProgress;
+                case DATA_COOKING_TOTAL_TIME -> AbstractMultiBlockFurnaceBlockEntity.this.cookingTotalTime;
                 default -> 0;
             };
         }
 
         public void set(int dataId, int data) {
             switch (dataId) {
-                case 0 -> AbstractMultiBlockFurnaceBlockEntity.this.litTime = data;
-                case 1 -> AbstractMultiBlockFurnaceBlockEntity.this.litDuration = data;
-                case 2 -> AbstractMultiBlockFurnaceBlockEntity.this.cookingProgress = data;
-                case 3 -> AbstractMultiBlockFurnaceBlockEntity.this.cookingTotalTime = data;
+                case DATA_LIT_TIME -> AbstractMultiBlockFurnaceBlockEntity.this.litTime = data;
+                case DATA_LIT_DURATION -> AbstractMultiBlockFurnaceBlockEntity.this.litDuration = data;
+                case DATA_COOKING_PROGRESS -> AbstractMultiBlockFurnaceBlockEntity.this.cookingProgress = data;
+                case DATA_COOKING_TOTAL_TIME -> AbstractMultiBlockFurnaceBlockEntity.this.cookingTotalTime = data;
             }
 
         }
@@ -132,6 +134,11 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
 
 
     public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, AbstractMultiBlockFurnaceBlockEntity pBlockEntity) {
+        if (pLevel.getGameTime() % 20 == 11) {
+            pBlockEntity.isValid = ((AbstractMultiBlockFurnace)pState.getBlock()).isValidMultiBlock(pLevel, pPos);
+        }
+        if (!pBlockEntity.isValid)
+            return;
         boolean flag = pBlockEntity.isLit();
         boolean flag1 = false;
         if (pBlockEntity.isLit()) {

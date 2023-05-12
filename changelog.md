@@ -4,6 +4,7 @@
 * Firestarters now generate in chests instead of Flint and Steel
 In the overworld
 * Flint rocks now generate in the world that drop Flint
+* Armor is now rendered in place of Hunger bar
 
 ## Alpha 3.10.0
 * Overhauled rails

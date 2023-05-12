@@ -3,7 +3,6 @@ package insane96mcp.survivalreimagined.module.mining.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu;
-import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
@@ -28,34 +27,34 @@ public abstract class AbstractMultiBlockFurnaceScreen<T extends AbstractMultiBlo
     public void init() {
         super.init();
         this.widthTooNarrow = this.width < 379;
-        this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
+        /*this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
         this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
         this.addRenderableWidget(new ImageButton(this.leftPos + 20, this.height / 2 - 31, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
             this.recipeBookComponent.toggleVisibility();
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
             button.setPosition(this.leftPos + 20, this.height / 2 - 31);
-        }));
+        }));*/
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
     }
 
     public void containerTick() {
         super.containerTick();
-        this.recipeBookComponent.tick();
+        //this.recipeBookComponent.tick();
     }
 
     public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         this.renderBackground(pPoseStack);
-        if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
+        /*if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
             this.renderBg(pPoseStack, pPartialTick, pMouseX, pMouseY);
             this.recipeBookComponent.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
-        } else {
-            this.recipeBookComponent.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
+        } else {*/
+            //this.recipeBookComponent.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
             super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
-            this.recipeBookComponent.renderGhostRecipe(pPoseStack, this.leftPos, this.topPos, true, pPartialTick);
-        }
+            //this.recipeBookComponent.renderGhostRecipe(pPoseStack, this.leftPos, this.topPos, true, pPartialTick);
+        //}
 
         this.renderTooltip(pPoseStack, pMouseX, pMouseY);
-        this.recipeBookComponent.renderTooltip(pPoseStack, this.leftPos, this.topPos, pMouseX, pMouseY);
+        //this.recipeBookComponent.renderTooltip(pPoseStack, this.leftPos, this.topPos, pMouseX, pMouseY);
     }
 
     protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
@@ -73,11 +72,11 @@ public abstract class AbstractMultiBlockFurnaceScreen<T extends AbstractMultiBlo
     }
 
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
-        if (this.recipeBookComponent.mouseClicked(pMouseX, pMouseY, pButton)) {
+        /*if (this.recipeBookComponent.mouseClicked(pMouseX, pMouseY, pButton)) {
             return true;
-        } else {
-            return this.widthTooNarrow && this.recipeBookComponent.isVisible() ? true : super.mouseClicked(pMouseX, pMouseY, pButton);
-        }
+        } else {*/
+            return /*this.widthTooNarrow && this.recipeBookComponent.isVisible() ? true :*/ super.mouseClicked(pMouseX, pMouseY, pButton);
+        //}
     }
 
     /**
@@ -89,7 +88,7 @@ public abstract class AbstractMultiBlockFurnaceScreen<T extends AbstractMultiBlo
     }
 
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
-        return this.recipeBookComponent.keyPressed(pKeyCode, pScanCode, pModifiers) ? false : super.keyPressed(pKeyCode, pScanCode, pModifiers);
+        return /*this.recipeBookComponent.keyPressed(pKeyCode, pScanCode, pModifiers) ? false :*/ super.keyPressed(pKeyCode, pScanCode, pModifiers);
     }
 
     protected boolean hasClickedOutside(double pMouseX, double pMouseY, int pGuiLeft, int pGuiTop, int pMouseButton) {
@@ -98,11 +97,11 @@ public abstract class AbstractMultiBlockFurnaceScreen<T extends AbstractMultiBlo
     }
 
     public boolean charTyped(char pCodePoint, int pModifiers) {
-        return this.recipeBookComponent.charTyped(pCodePoint, pModifiers) ? true : super.charTyped(pCodePoint, pModifiers);
+        return /*this.recipeBookComponent.charTyped(pCodePoint, pModifiers) ? true :*/ super.charTyped(pCodePoint, pModifiers);
     }
 
     public void recipesUpdated() {
-        this.recipeBookComponent.recipesUpdated();
+        //this.recipeBookComponent.recipesUpdated();
     }
 
     public RecipeBookComponent getRecipeBookComponent() {

@@ -1,23 +1,65 @@
 package insane96mcp.survivalreimagined.module.mining.block;
 
+import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
+import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class MultiBlockBlastFurnaceBlock extends AbstractMultiBlockFurnace{
+import java.util.AbstractMap;
+import java.util.Map;
+
+public class MultiBlockBlastFurnaceBlock extends AbstractMultiBlockFurnace {
+
+    public static TagKey<Block> BOTTOM_BLOCKS_TAG = SRBlockTagsProvider.create("blast_furnace/bottom_blocks");
+    public static TagKey<Block> MIDDLE_BLOCKS_TAG = SRBlockTagsProvider.create("blast_furnace/middle_blocks");
+    public static TagKey<Block> TOP_BLOCKS_TAG = SRBlockTagsProvider.create("blast_furnace/top_blocks");
+    public static Map<Vec3i, TagKey<Block>> RELATIVE_POS_BLOCK_TAGS = Map.ofEntries(
+            new AbstractMap.SimpleEntry<>(new Vec3i(-1, -1, -1), BOTTOM_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(-1, -1, 0), BOTTOM_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(-1, -1, 1), BOTTOM_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(0, -1, -1), BOTTOM_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(0, -1, 1), BOTTOM_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(1, -1, -1), BOTTOM_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(1, -1, 0), BOTTOM_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(1, -1, 1), BOTTOM_BLOCKS_TAG),
+
+            new AbstractMap.SimpleEntry<>(new Vec3i(-1, 0, -1), MIDDLE_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(-1, 0, 0), MIDDLE_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(-1, 0, 1), MIDDLE_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(0, 0, -1), MIDDLE_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(0, 0, 1), MIDDLE_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(1, 0, -1), MIDDLE_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(1, 0, 0), MIDDLE_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(1, 0, 1), MIDDLE_BLOCKS_TAG),
+
+            new AbstractMap.SimpleEntry<>(new Vec3i(-1, 1, -1), TOP_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(-1, 1, 0), TOP_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(-1, 1, 1), TOP_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(0, 1, -1), TOP_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(0, 1, 1), TOP_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(1, 1, -1), TOP_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(1, 1, 0), TOP_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(1, 1, 1), TOP_BLOCKS_TAG)
+    );
+
     public MultiBlockBlastFurnaceBlock(Properties pProperties) {
         super(pProperties);
     }
@@ -37,9 +79,34 @@ public class MultiBlockBlastFurnaceBlock extends AbstractMultiBlockFurnace{
     protected void openContainer(Level pLevel, BlockPos pPos, Player pPlayer) {
         BlockEntity blockentity = pLevel.getBlockEntity(pPos);
         if (blockentity instanceof MultiBlockBlastFurnaceBlockEntity) {
-            pPlayer.openMenu((MenuProvider)blockentity);
-            pPlayer.awardStat(Stats.INTERACT_WITH_BLAST_FURNACE);
+            if (this.isValidMultiBlock(pLevel, pPos)) {
+                pPlayer.openMenu((MenuProvider)blockentity);
+                pPlayer.awardStat(Stats.INTERACT_WITH_BLAST_FURNACE);
+            }
+            else {
+                pPlayer.sendSystemMessage(Component.literal("Multiblock structure not valid."));
+            }
         }
+    }
+
+    @Override
+    public boolean isValidMultiBlock(Level level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        Direction direction = state.getValue(FACING);
+        BlockPos midBlock = pos.relative(direction.getOpposite()).above();
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+        boolean hasFoundThisBlock = false;
+        for (Map.Entry<Vec3i, TagKey<Block>> entry : RELATIVE_POS_BLOCK_TAGS.entrySet()) {
+            mutableBlockPos.set(midBlock.offset(entry.getKey()));
+            Block block = level.getBlockState(mutableBlockPos).getBlock();
+            if (block.equals(this) && !hasFoundThisBlock) {
+                hasFoundThisBlock = true;
+                continue;
+            }
+            if (!Utils.isBlockInTag(block, entry.getValue()))
+                return false;
+        }
+        return true;
     }
 
     /**

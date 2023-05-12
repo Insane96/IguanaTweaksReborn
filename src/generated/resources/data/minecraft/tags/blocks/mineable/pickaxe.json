@@ -4,6 +4,7 @@
     "survivalreimagined:mithril_ore",
     "survivalreimagined:deepslate_mithril_ore",
     "survivalreimagined:soul_steel_block",
+    "survivalreimagined:blast_furnace",
     "survivalreimagined:iron_ore_rock",
     "survivalreimagined:copper_ore_rock",
     "survivalreimagined:gold_ore_rock",
@@ -21,6 +22,7 @@
     "survivalreimagined:rich_deepslate_copper_ore",
     "survivalreimagined:flint_block",
     "survivalreimagined:polished_flint_block",
+    "survivalreimagined:flint_rock",
     "survivalreimagined:grave"
   ]
 }
