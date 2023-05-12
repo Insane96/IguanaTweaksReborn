@@ -3,6 +3,7 @@
 ## Alpha 3.10.1
 * Firestarters now generate in chests instead of Flint and Steel
 In the overworld
+* Flint rocks now generate in the world that drop Flint
 
 ## Alpha 3.10.0
 * Overhauled rails
