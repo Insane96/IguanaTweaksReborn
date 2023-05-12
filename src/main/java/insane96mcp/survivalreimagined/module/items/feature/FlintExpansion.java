@@ -94,27 +94,32 @@ public class FlintExpansion extends Feature {
 		}
 	}
 
-	private static final String path = "flint_tools/";
+	private static final String path = "flint_expansion/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
 		provider.add(path + "replace_wooden_sword", new ReplaceLootModifier.Builder(Items.WOODEN_SWORD, SWORD.get())
 				.applyToChestsOnly()
+				.keepDurability()
 				.build()
 		);
 		provider.add(path + "replace_wooden_axe", new ReplaceLootModifier.Builder(Items.WOODEN_AXE, AXE.get())
 				.applyToChestsOnly()
+				.keepDurability()
 				.build()
 		);
 		provider.add(path + "replace_wooden_shovel", new ReplaceLootModifier.Builder(Items.WOODEN_SHOVEL, SHOVEL.get())
 				.applyToChestsOnly()
+				.keepDurability()
 				.build()
 		);
 		provider.add(path + "replace_wooden_pickaxe", new ReplaceLootModifier.Builder(Items.WOODEN_PICKAXE, PICKAXE.get())
 				.applyToChestsOnly()
+				.keepDurability()
 				.build()
 		);
 		provider.add(path + "replace_wooden_hoe", new ReplaceLootModifier.Builder(Items.WOODEN_HOE, HOE.get())
 				.applyToChestsOnly()
+				.keepDurability()
 				.build()
 		);
 	}

@@ -15,8 +15,8 @@ import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
 public class ReplaceLootModifier extends LootModifier {
@@ -28,7 +28,8 @@ public class ReplaceLootModifier extends LootModifier {
                             Codec.INT.optionalFieldOf("amount_to_replace", -1).forGetter(m -> m.amountToReplace),
                             Codec.list(Codec.FLOAT).optionalFieldOf("chances", List.of(1f)).forGetter(m -> m.chances),
                             Codec.list(Codec.FLOAT).optionalFieldOf("multipliers", List.of(1f)).forGetter(m -> m.multipliers),
-                            Codec.BOOL.fieldOf("chests_only").forGetter(m -> m.chestsOnly)
+                            Codec.BOOL.optionalFieldOf("keep_durability", false).forGetter(m -> m.chestsOnly),
+                            Codec.BOOL.optionalFieldOf("chests_only", false).forGetter(m -> m.chestsOnly)
                     )).apply(inst, ReplaceLootModifier::new)
             ));
 
@@ -42,19 +43,24 @@ public class ReplaceLootModifier extends LootModifier {
     private List<Float> chances;
     //List of multipliers, where the first is for no-fortune applied and the subsequent ones are for increasing level of fortune
     private List<Float> multipliers;
+    /**
+     * If true, durability % is transposed to the new item. Only works if amountToReplace is -1
+     */
+    private boolean keepDurability;
     private boolean chestsOnly;
 
     public ReplaceLootModifier(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem) {
-        this(conditionsIn, itemToReplace, newItem, -1, List.of(1f), List.of(1f), false);
+        this(conditionsIn, itemToReplace, newItem, -1, List.of(1f), List.of(1f), false, false);
     }
 
-    public ReplaceLootModifier(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem, int amountToReplace, List<Float> chances, List<Float> multipliers, boolean chestsOnly) {
+    public ReplaceLootModifier(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem, int amountToReplace, List<Float> chances, List<Float> multipliers, boolean keepDurability, boolean chestsOnly) {
         super(conditionsIn);
         this.itemToReplace = itemToReplace;
         this.newItem = newItem;
         this.amountToReplace = amountToReplace;
         this.chances = chances;
         this.multipliers = multipliers;
+        this.keepDurability = keepDurability;
         this.chestsOnly = chestsOnly;
     }
 
@@ -63,32 +69,42 @@ public class ReplaceLootModifier extends LootModifier {
         if (this.chestsOnly && !context.getQueriedLootTableId().getPath().contains("chests/"))
             return generatedLoot;
 
-        AtomicInteger amount = new AtomicInteger();
+        List<ItemStack> toRemove = new ArrayList<>();
+        List<ItemStack> toAdd = new ArrayList<>();
         generatedLoot.stream().filter(stack -> stack.getItem().equals(itemToReplace))
-                .forEach(stack -> amount.addAndGet(stack.getCount()));
-        if (amount.get() == 0)
-            return generatedLoot;
+                .forEach(stack -> {
+                    ItemStack toolStack = context.getParamOrNull(LootContextParams.TOOL);
+                    int fortuneLvl = toolStack != null ? toolStack.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE) : 0;
+                    float chance = this.chances.get(Math.min(fortuneLvl, this.chances.size() - 1));
+                    if (context.getRandom().nextDouble() >= chance)
+                        return;
 
-        ItemStack itemstack = context.getParamOrNull(LootContextParams.TOOL);
-        int i = itemstack != null ? itemstack.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE) : 0;
-        float chance = this.chances.get(Math.min(i, this.chances.size() - 1));
-        if (context.getRandom().nextDouble() >= chance)
-            return generatedLoot;
+                    float multiplier = this.multipliers.get(Math.min(fortuneLvl, this.multipliers.size() - 1));
+                    boolean keepDurability = this.keepDurability && itemToReplace.canBeDepleted() && newItem.canBeDepleted();
+                    float percentageDurability = 1f;
+                    if (keepDurability) {
+                        percentageDurability = (float)stack.getDamageValue() / stack.getMaxDamage();
+                    }
+                    toRemove.add(stack);
+                    if (amountToReplace == -1) {
+                        ItemStack newItemStack = new ItemStack(newItem, (int) (stack.getCount() * multiplier));
+                        if (keepDurability) {
+                            newItemStack.setDamageValue((int) (newItemStack.getMaxDamage() * percentageDurability));
+                        }
+                        toAdd.add(newItemStack);
+                    }
+                    else {
+                        ItemStack replacedStack = new ItemStack(this.newItem, (int) (Math.min(stack.getCount(), amountToReplace) * multiplier));
+                        toAdd.add(replacedStack);
+                        if (amountToReplace < stack.getCount()) {
+                            ItemStack oldStack = new ItemStack(this.itemToReplace, stack.getCount() - amountToReplace);
+                            toAdd.add(oldStack);
+                        }
+                    }
+                });
 
-        float multiplier = this.multipliers.get(Math.min(i, this.multipliers.size() - 1));
-
-        generatedLoot.removeIf(stack -> stack.getItem().equals(itemToReplace));
-        if (amountToReplace == -1) {
-            generatedLoot.add(new ItemStack(newItem, (int) (amount.get() * multiplier)));
-        }
-        else {
-            ItemStack replacedStack = new ItemStack(this.newItem, (int) (Math.min(amount.get(), amountToReplace) * multiplier));
-            generatedLoot.add(replacedStack);
-            if (amountToReplace < amount.get()) {
-                ItemStack oldStack = new ItemStack(this.itemToReplace, amount.get() - amountToReplace);
-                generatedLoot.add(oldStack);
-            }
-        }
+        generatedLoot.removeAll(toRemove);
+        generatedLoot.addAll(toAdd);
         return generatedLoot;
     }
 
@@ -119,6 +135,11 @@ public class ReplaceLootModifier extends LootModifier {
 
         public Builder applyToChestsOnly() {
             replaceLootModifier.chestsOnly = true;
+            return this;
+        }
+
+        public Builder keepDurability() {
+            replaceLootModifier.keepDurability = true;
             return this;
         }
 

@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.BlockWithItem;
+import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceLootModifier;
 import insane96mcp.survivalreimagined.event.BlockBurntEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
@@ -15,6 +16,7 @@ import insane96mcp.survivalreimagined.module.world.entity.PilableFallingLayerEnt
 import insane96mcp.survivalreimagined.module.world.item.FirestarterItem;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRItems;
+import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
@@ -37,8 +39,11 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.TierSortingRegistry;
+import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
@@ -199,5 +204,17 @@ public class CoalFire extends Feature {
     public void onFurnaceFuelBurnTime(FurnaceFuelBurnTimeEvent event) {
         if (event.getItemStack().is(HELLISH_COAL.get()))
             event.setBurnTime(2400);
+    }
+
+    private static final String path = "coal_fire/";
+
+    public static void addGlobalLoot(GlobalLootModifierProvider provider) {
+        provider.add(path + "replace_flint_and_steel", new ReplaceLootModifier.Builder(new LootItemCondition[] {
+                    LocationCheck.checkLocation(new LocationPredicate.Builder().setDimension(Level.OVERWORLD)).build()
+                }, Items.FLINT_AND_STEEL, FIRESTARTER.get())
+                .applyToChestsOnly()
+                .keepDurability()
+                .build()
+        );
     }
 }

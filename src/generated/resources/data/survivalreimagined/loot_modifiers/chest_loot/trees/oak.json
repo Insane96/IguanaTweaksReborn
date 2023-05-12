@@ -1,6 +1,5 @@
 {
   "type": "survivalreimagined:replace_drop",
-  "chests_only": false,
   "conditions": [
     {
       "condition": "minecraft:inverted",

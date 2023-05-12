@@ -1,5 +1,9 @@
 # Changelog
 
+## Alpha 3.10.1
+* Firestarters now generate in chests instead of Flint and Steel
+In the overworld
+
 ## Alpha 3.10.0
 * Overhauled rails
   * Added Copper Rails and Golden Rails
