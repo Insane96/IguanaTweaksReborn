@@ -5,6 +5,7 @@
 * Flint rocks now generate in the world that drop Flint
 * Firestarters now generate in chests instead of Flint and Steel in the overworld
 * Armor is now rendered in place of Hunger bar
+* Graves can now be smelted/blasted into iron ingots
 
 ## Alpha 3.10.0
 * Overhauled rails
