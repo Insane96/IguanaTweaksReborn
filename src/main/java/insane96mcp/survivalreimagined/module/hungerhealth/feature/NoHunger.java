@@ -275,7 +275,8 @@ public class NoHunger extends Feature {
                 GuiComponent.blit(poseStack, left, top, 16, 9, 9, 9);
             left -= 8;
         }
-        gui.rightHeight += 10;
+        if (level > 0)
+            gui.rightHeight += 10;
 
         RenderSystem.disableBlend();
         mc.getProfiler().pop();

@@ -126,7 +126,7 @@ public class CoalFire extends Feature {
 
         event.getEntity().swing(event.getHand(), true);
         event.setCanceled(true);
-        event.getEntity().getCooldowns().addCooldown(event.getItemStack().getItem(), 10);
+        event.getEntity().getCooldowns().addCooldown(event.getItemStack().getItem(), 15);
 
         if (ignite < twoFlintFireStarterIgniteChance) {
             UseOnContext context = new UseOnContext(event.getEntity(), event.getHand(), new BlockHitResult(event.getHitVec().getLocation(), event.getHitVec().getDirection(), event.getPos(), event.getHitVec().isInside()));
@@ -194,7 +194,7 @@ public class CoalFire extends Feature {
                 || !ironCoal
                 || !(event.getState().is(Blocks.COAL_ORE) || event.getState().is(Blocks.DEEPSLATE_COAL_ORE))
                 || !(event.getEntity().getMainHandItem().getItem() instanceof TieredItem tieredItem)
-                || !TierSortingRegistry.getTiersLowerThan(Tiers.IRON).contains(tieredItem.getTier()))
+                || TierSortingRegistry.getTiersLowerThan(Tiers.IRON).contains(tieredItem.getTier()))
             return;
 
         event.setNewSpeed(event.getNewSpeed() / 5f);
