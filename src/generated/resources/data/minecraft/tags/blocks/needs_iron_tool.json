@@ -4,9 +4,10 @@
     "survivalreimagined:rich_gold_ore",
     "survivalreimagined:poor_deepslate_gold_ore",
     "survivalreimagined:rich_deepslate_gold_ore",
-    "survivalreimagined:mithril_block",
-    "survivalreimagined:mithril_ore",
-    "survivalreimagined:deepslate_mithril_ore",
+    "survivalreimagined:durium_block",
+    "survivalreimagined:durium_ore",
+    "survivalreimagined:deepslate_durium_ore",
+    "survivalreimagined:durium_scrap",
     "survivalreimagined:soul_steel_block",
     "survivalreimagined:soul_sand_hellish_coal_ore",
     "survivalreimagined:soul_soil_hellish_coal_ore"

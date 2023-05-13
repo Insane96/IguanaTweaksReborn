@@ -1,6 +1,0 @@
-{
-    "type": "forge:add_features",
-    "biomes": "#minecraft:is_overworld",
-    "features": "survivalreimagined:mithril_ore_hidden",
-    "step": "underground_ores"
-}

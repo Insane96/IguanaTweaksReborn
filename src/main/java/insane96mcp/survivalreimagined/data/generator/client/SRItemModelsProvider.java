@@ -9,7 +9,7 @@ import insane96mcp.survivalreimagined.module.items.feature.AncientLapis;
 import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.feature.CopperTools;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
-import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
+import insane96mcp.survivalreimagined.module.mining.feature.Durium;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
@@ -87,21 +87,23 @@ public class SRItemModelsProvider extends ItemModelProvider {
 
         withExistingParent("crate", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate"));
 
-        handHeld(Mithril.AXE.get());
-        handHeld(Mithril.PICKAXE.get());
-        handHeld(Mithril.SHOVEL.get());
-        handHeld(Mithril.HOE.get());
-        handHeld(Mithril.SWORD.get());
-        basicItem(Mithril.BOOTS.get());
-        basicItem(Mithril.LEGGINGS.get());
-        basicItem(Mithril.CHESTPLATE.get());
-        basicItem(Mithril.HELMET.get());
-        basicItem(Mithril.INGOT.get());
-        basicItem(Mithril.NUGGET.get());
-        shield(Mithril.SHIELD.get());
-        withExistingParent("mithril_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/mithril_block"));
-        withExistingParent("deepslate_mithril_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/deepslate_mithril_ore"));
-        withExistingParent("mithril_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/mithril_ore"));
+        handHeld(Durium.AXE.get());
+        handHeld(Durium.PICKAXE.get());
+        handHeld(Durium.SHOVEL.get());
+        handHeld(Durium.HOE.get());
+        handHeld(Durium.SWORD.get());
+        basicItem(Durium.BOOTS.get());
+        basicItem(Durium.LEGGINGS.get());
+        basicItem(Durium.CHESTPLATE.get());
+        basicItem(Durium.HELMET.get());
+        basicItem(Durium.INGOT.get());
+        basicItem(Durium.NUGGET.get());
+        basicItem(Durium.SCRAP_PIECE.get());
+        shield(Durium.SHIELD.get());
+        withExistingParent("durium_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/durium_block"));
+        withExistingParent("deepslate_durium_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/deepslate_durium_ore"));
+        withExistingParent("durium_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/durium_ore"));
+        withExistingParent("durium_scrap", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/durium_scrap"));
 
         basicItemWithTexture(Minecarts.COPPER_POWERED_RAIL.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/copper_powered_rail"));
         withExistingParent("golden_powered_rail", new ResourceLocation("item/powered_rail"));

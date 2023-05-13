@@ -1,8 +1,9 @@
 {
   "values": [
-    "survivalreimagined:mithril_block",
-    "survivalreimagined:mithril_ore",
-    "survivalreimagined:deepslate_mithril_ore",
+    "survivalreimagined:durium_block",
+    "survivalreimagined:durium_ore",
+    "survivalreimagined:deepslate_durium_ore",
+    "survivalreimagined:durium_scrap",
     "survivalreimagined:soul_steel_block",
     "survivalreimagined:blast_furnace",
     "survivalreimagined:iron_ore_rock",

@@ -7,7 +7,7 @@ import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.mining.client.MultiBlockBlastFurnaceScreen;
-import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
+import insane96mcp.survivalreimagined.module.mining.feature.Durium;
 import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
@@ -42,10 +42,10 @@ public class ClientSetup {
             event.accept(CopperTools.PICKAXE.get());
             event.accept(CopperTools.SHOVEL.get());
             event.accept(CopperTools.HOE.get());
-            event.accept(Mithril.AXE.get());
-            event.accept(Mithril.PICKAXE.get());
-            event.accept(Mithril.SHOVEL.get());
-            event.accept(Mithril.HOE.get());
+            event.accept(Durium.AXE.get());
+            event.accept(Durium.PICKAXE.get());
+            event.accept(Durium.SHOVEL.get());
+            event.accept(Durium.HOE.get());
             event.accept(SoulSteel.AXE.get());
             event.accept(SoulSteel.PICKAXE.get());
             event.accept(SoulSteel.SHOVEL.get());
@@ -62,12 +62,12 @@ public class ClientSetup {
             event.accept(ChainedCopperArmor.LEGGINGS.get());
             event.accept(ChainedCopperArmor.BOOTS.get());
 
-            event.accept(Mithril.HELMET.get());
-            event.accept(Mithril.CHESTPLATE.get());
-            event.accept(Mithril.LEGGINGS.get());
-            event.accept(Mithril.BOOTS.get());
-            event.accept(Mithril.SWORD.get());
-            event.accept(Mithril.SHIELD.get());
+            event.accept(Durium.HELMET.get());
+            event.accept(Durium.CHESTPLATE.get());
+            event.accept(Durium.LEGGINGS.get());
+            event.accept(Durium.BOOTS.get());
+            event.accept(Durium.SWORD.get());
+            event.accept(Durium.SHIELD.get());
 
             event.accept(SoulSteel.HELMET.get());
             event.accept(SoulSteel.CHESTPLATE.get());
@@ -77,7 +77,8 @@ public class ClientSetup {
             event.accept(SoulSteel.SHIELD.get());
         }
         else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(Mithril.BLOCK.item().get());
+            event.accept(Durium.SCRAP_BLOCK.item().get());
+            event.accept(Durium.BLOCK.item().get());
             event.accept(SoulSteel.BLOCK.item().get());
             event.accept(FlintExpansion.FLINT_BLOCK.item().get());
             event.accept(FlintExpansion.POLISHED_FLINT_BLOCK.item().get());
@@ -96,8 +97,8 @@ public class ClientSetup {
             event.accept(ExplosiveBarrel.BLOCK.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
-            event.accept(Mithril.ORE.item().get());
-            event.accept(Mithril.DEEPSLATE_ORE.item().get());
+            event.accept(Durium.ORE.item().get());
+            event.accept(Durium.DEEPSLATE_ORE.item().get());
             event.accept(Crops.CARROT_SEEDS.get());
             event.accept(Crops.POTATO_SEEDS.get());
             event.accept(OreGeneration.COPPER_ORE_ROCK.item().get());
@@ -121,8 +122,9 @@ public class ClientSetup {
             event.accept(FlintExpansion.FLINT_ROCK.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(Mithril.INGOT.get());
-            event.accept(Mithril.NUGGET.get());
+            event.accept(Durium.SCRAP_PIECE.get());
+            event.accept(Durium.INGOT.get());
+            event.accept(Durium.NUGGET.get());
             event.accept(SoulSteel.INGOT.get());
             event.accept(SoulSteel.NUGGET.get());
             event.accept(AncientLapis.ANCIENT_LAPIS.get());

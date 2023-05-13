@@ -1,9 +1,9 @@
-// 1.19.4	2023-05-04T12:47:08.8244802	Tags for minecraft:item mod id survivalreimagined
-69b3bc40337a5469f8baefcf596d5d4a13138bc3 data/minecraft/tags/items/axes.json
-adc16da4b77b38de59bb7b6b016a1a541dafdaf0 data/minecraft/tags/items/hoes.json
-85c9717cae87b5089abd2ac71d8cc85782d8907a data/minecraft/tags/items/pickaxes.json
-b2c725133ecfb4d840bc2e02aa20f1fecec44db7 data/minecraft/tags/items/shovels.json
-ddb286ef8e3998c7f6b10a40cc6926a885390b55 data/minecraft/tags/items/swords.json
+// 1.19.4	2023-05-13T18:29:58.0403954	Tags for minecraft:item mod id survivalreimagined
+14defd0bc5a65bdae5a85da408a5726ad9430e87 data/minecraft/tags/items/axes.json
+7270fe4aa82a86de22d38e0ab6bafacf3e1cda15 data/minecraft/tags/items/hoes.json
+a759572492029e776c716bbafb447fb747e735b5 data/minecraft/tags/items/pickaxes.json
+cbea8d777e8c24ecaba82c71b80d0a246a113e11 data/minecraft/tags/items/shovels.json
+bb737e5db2ca2976755c36038b865d70938ae9d8 data/minecraft/tags/items/swords.json
 66522314243d5119f3610b4a75a66c92faddf431 data/survivalreimagined/tags/items/disabled_hoes.json
 b1eaa8c6251363a43fec48d3a61979cccb61a40a data/survivalreimagined/tags/items/energy_boost.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/food_drinks_no_hunger_changes.json

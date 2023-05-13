@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "survivalreimagined:durium_ingot"
+    },
+    {
+      "item": "survivalreimagined:durium_ingot"
+    },
+    {
+      "item": "survivalreimagined:durium_ingot"
+    },
+    {
+      "item": "survivalreimagined:durium_ingot"
+    },
+    {
+      "item": "survivalreimagined:durium_ingot"
+    },
+    {
+      "item": "survivalreimagined:durium_ingot"
+    },
+    {
+      "item": "survivalreimagined:durium_ingot"
+    },
+    {
+      "item": "survivalreimagined:durium_ingot"
+    },
+    {
+      "item": "survivalreimagined:durium_ingot"
+    }
+  ],
+  "result": {
+    "item": "survivalreimagined:durium_block"
+  }
+}

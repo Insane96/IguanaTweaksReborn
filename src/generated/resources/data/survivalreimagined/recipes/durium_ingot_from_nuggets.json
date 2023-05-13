@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "survivalreimagined:durium_nugget"
+    },
+    {
+      "item": "survivalreimagined:durium_nugget"
+    },
+    {
+      "item": "survivalreimagined:durium_nugget"
+    },
+    {
+      "item": "survivalreimagined:durium_nugget"
+    },
+    {
+      "item": "survivalreimagined:durium_nugget"
+    },
+    {
+      "item": "survivalreimagined:durium_nugget"
+    },
+    {
+      "item": "survivalreimagined:durium_nugget"
+    },
+    {
+      "item": "survivalreimagined:durium_nugget"
+    },
+    {
+      "item": "survivalreimagined:durium_nugget"
+    }
+  ],
+  "result": {
+    "item": "survivalreimagined:durium_ingot"
+  }
+}

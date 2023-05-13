@@ -14,6 +14,7 @@ import insane96mcp.survivalreimagined.module.mining.data.MultiItemSmeltingSerial
 import insane96mcp.survivalreimagined.module.mining.inventory.MultiBlockBlastFurnaceMenu;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.*;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
@@ -21,6 +22,8 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Multi Block Furnaces", description = "Add new multi block furnaces")
@@ -45,5 +48,14 @@ public class MultiBlockFurnaces extends Feature {
 	public MultiBlockFurnaces(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "multi_block_blast_furnace", net.minecraft.network.chat.Component.literal("Survival Reimagined Multi Block Blast Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && blastFurnaceDataPack));
+	}
+
+	@SubscribeEvent
+	public void onRightClickBlastFurnace(PlayerInteractEvent.RightClickBlock event) {
+		if (!this.isEnabled()
+				|| !event.getLevel().getBlockState(event.getHitVec().getBlockPos()).is(Blocks.BLAST_FURNACE))
+			return;
+
+		event.getEntity().sendSystemMessage(Component.literal("This block is not valid. Break and place it back."));
 	}
 }

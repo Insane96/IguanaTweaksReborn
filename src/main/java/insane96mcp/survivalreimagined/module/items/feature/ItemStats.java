@@ -53,7 +53,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/golden", 52),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/copper", 75),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/iron", 375),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/mithril", 855),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/durium", 855),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/diamond", 2341),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/soul_steel", 3534),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", 3047),
@@ -83,10 +83,10 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_leggings", 90),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_boots", 78),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:mithril_helmet", 96),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:mithril_chestplate", 128),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:mithril_leggings", 120),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:mithril_boots", 104),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_helmet", 96),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_chestplate", 128),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_leggings", 120),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_boots", 104),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 72),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", 96),
@@ -116,7 +116,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/flint", 3.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/copper", 6.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iron", 4d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/mithril", 4.5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/durium", 4.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/soul_steel", 5.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/diamond", 7d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/netherite", 8d)

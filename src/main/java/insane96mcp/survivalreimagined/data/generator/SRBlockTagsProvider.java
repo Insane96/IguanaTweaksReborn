@@ -6,7 +6,7 @@ import insane96mcp.survivalreimagined.module.farming.feature.HarderCrops;
 import insane96mcp.survivalreimagined.module.items.feature.Crate;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockBlastFurnaceBlock;
-import insane96mcp.survivalreimagined.module.mining.feature.Mithril;
+import insane96mcp.survivalreimagined.module.mining.feature.Durium;
 import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
@@ -50,7 +50,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.block().get(), CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.block().get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(Mithril.BLOCK.block().get(), Mithril.ORE.block().get(), Mithril.DEEPSLATE_ORE.block().get())
+                .add(Durium.BLOCK.block().get(), Durium.ORE.block().get(), Durium.DEEPSLATE_ORE.block().get(), Durium.SCRAP_BLOCK.block().get())
                 .add(SoulSteel.BLOCK.block().get(), MultiBlockFurnaces.BLAST_FURNACE.block().get())
                 .add(OreGeneration.IRON_ORE_ROCK.block().get()).add(OreGeneration.COPPER_ORE_ROCK.block().get()).add(OreGeneration.GOLD_ORE_ROCK.block().get())
                 .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get())
@@ -66,7 +66,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
 
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get())
-                .add(Mithril.BLOCK.block().get(), Mithril.ORE.block().get(), Mithril.DEEPSLATE_ORE.block().get())
+                .add(Durium.BLOCK.block().get(), Durium.ORE.block().get(), Durium.DEEPSLATE_ORE.block().get(), Durium.SCRAP_BLOCK.block().get())
                 .add(SoulSteel.BLOCK.block().get())
                 .add(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.block().get(), CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.block().get());
 
@@ -81,7 +81,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get());
 
         tag(BlockTags.BEACON_BASE_BLOCKS)
-                .add(Mithril.BLOCK.block().get(), SoulSteel.BLOCK.block().get());
+                .add(Durium.BLOCK.block().get(), SoulSteel.BLOCK.block().get());
 
         //Mod's tags
         tag(RESPAWN_OBELISK_BLOCKS_TO_ROT)
