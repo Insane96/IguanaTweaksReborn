@@ -519,10 +519,10 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         recycleArmorBlasting(writer, Items.DIAMOND_CHESTPLATE, Items.DIAMOND, 200, 8);
         recycleArmorBlasting(writer, Items.DIAMOND_LEGGINGS, Items.DIAMOND, 200, 7);
         recycleArmorBlasting(writer, Items.DIAMOND_BOOTS, Items.DIAMOND, 200, 4);
-        recycleArmorBlasting(writer, Items.NETHERITE_HELMET, Items.DIAMOND, 200, 5);
-        recycleArmorBlasting(writer, Items.NETHERITE_CHESTPLATE, Items.DIAMOND, 200, 8);
-        recycleArmorBlasting(writer, Items.NETHERITE_LEGGINGS, Items.DIAMOND, 200, 7);
-        recycleArmorBlasting(writer, Items.NETHERITE_BOOTS, Items.DIAMOND, 200, 4);
+        recycleArmorBlasting(writer, Items.NETHERITE_HELMET, Items.NETHERITE_INGOT, 200, 1);
+        recycleArmorBlasting(writer, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_INGOT, 200, 1);
+        recycleArmorBlasting(writer, Items.NETHERITE_LEGGINGS, Items.NETHERITE_INGOT, 200, 1);
+        recycleArmorBlasting(writer, Items.NETHERITE_BOOTS, Items.NETHERITE_INGOT, 200, 1);
 
         recycleArmorBlasting(writer, CopperTools.PICKAXE.get(), Items.COPPER_INGOT, 200, 3);
         recycleArmorBlasting(writer, CopperTools.AXE.get(), Items.COPPER_INGOT, 200, 3);
@@ -554,11 +554,11 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         recycleArmorBlasting(writer, Items.DIAMOND_SHOVEL, Items.DIAMOND, 200, 1);
         recycleArmorBlasting(writer, Items.DIAMOND_HOE, Items.DIAMOND, 200, 2);
         recycleArmorBlasting(writer, Items.DIAMOND_SWORD, Items.DIAMOND, 200, 2);
-        recycleArmorBlasting(writer, Items.NETHERITE_PICKAXE, Items.DIAMOND, 200, 3);
-        recycleArmorBlasting(writer, Items.NETHERITE_AXE, Items.DIAMOND, 200, 3);
-        recycleArmorBlasting(writer, Items.NETHERITE_SHOVEL, Items.DIAMOND, 200, 1);
-        recycleArmorBlasting(writer, Items.NETHERITE_HOE, Items.DIAMOND, 200, 2);
-        recycleArmorBlasting(writer, Items.NETHERITE_SWORD, Items.DIAMOND, 200, 2);
+        recycleArmorBlasting(writer, Items.NETHERITE_PICKAXE, Items.NETHERITE_INGOT, 200, 1);
+        recycleArmorBlasting(writer, Items.NETHERITE_AXE, Items.NETHERITE_INGOT, 200, 1);
+        recycleArmorBlasting(writer, Items.NETHERITE_SHOVEL, Items.NETHERITE_INGOT, 200, 1);
+        recycleArmorBlasting(writer, Items.NETHERITE_HOE, Items.NETHERITE_INGOT, 200, 1);
+        recycleArmorBlasting(writer, Items.NETHERITE_SWORD, Items.NETHERITE_INGOT, 200, 1);
 
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Mithril.INGOT.get()), RecipeCategory.TOOLS, Mithril.AXE.get())
                 .unlocks("has_mithril", has(Mithril.INGOT.get()))

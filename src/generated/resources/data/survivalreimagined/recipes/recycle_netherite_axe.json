@@ -8,8 +8,8 @@
     }
   ],
   "recycle": {
-    "amount_at_full_durability": 3,
+    "amount_at_full_durability": 1,
     "ratio": 0.75
   },
-  "result": "minecraft:diamond"
+  "result": "minecraft:netherite_ingot"
 }
