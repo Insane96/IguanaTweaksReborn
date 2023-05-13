@@ -270,7 +270,7 @@ public class NoHunger extends Feature {
             if (i < level)
                 GuiComponent.blit(poseStack, left, top, 34, 9, 9, 9);
             else if (i == level)
-                GuiComponent.blit(poseStack, left, top, 34, 9, -9, 9);
+                GuiComponent.blit(poseStack, left, top, 25, 9, 9, 9);
             else
                 GuiComponent.blit(poseStack, left, top, 16, 9, 9, 9);
             left -= 8;

@@ -7,6 +7,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.item.SRArmorMaterial;
@@ -22,6 +23,9 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.MissingMappingsEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.EnumMap;
@@ -67,5 +71,39 @@ public class Durium extends Feature {
 
 	public Durium(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	@SubscribeEvent
+	public void missingMappings(MissingMappingsEvent event) {
+		if (event.getMappings(ForgeRegistries.Keys.BLOCKS, SurvivalReimagined.MOD_ID).isEmpty()
+				&& event.getMappings(ForgeRegistries.Keys.ITEMS, SurvivalReimagined.MOD_ID).isEmpty())
+			return;
+
+		event.getMappings(ForgeRegistries.Keys.BLOCKS, SurvivalReimagined.MOD_ID).forEach(blockMapping -> {
+			switch (blockMapping.getKey().toString()) {
+				case "survivalreimagined:mithril_ore" -> blockMapping.remap(Durium.ORE.block().get());
+				case "survivalreimagined:deepslate_mithril_ore" -> blockMapping.remap(Durium.DEEPSLATE_ORE.block().get());
+				case "survivalreimagined:mithril_block" -> blockMapping.remap(Durium.BLOCK.block().get());
+			}
+		});
+		event.getMappings(ForgeRegistries.Keys.ITEMS, SurvivalReimagined.MOD_ID).forEach(blockMapping -> {
+			switch (blockMapping.getKey().toString()) {
+				case "survivalreimagined:mithril_nugget" -> blockMapping.remap(Durium.NUGGET.get());
+				case "survivalreimagined:mithril_ingot" -> blockMapping.remap(Durium.INGOT.get());
+				case "survivalreimagined:mithril_block" -> blockMapping.remap(Durium.BLOCK.item().get());
+				case "survivalreimagined:mithril_ore" -> blockMapping.remap(Durium.ORE.item().get());
+				case "survivalreimagined:deepslate_mithril_ore" -> blockMapping.remap(Durium.DEEPSLATE_ORE.item().get());
+				case "survivalreimagined:mithril_pickaxe" -> blockMapping.remap(Durium.PICKAXE.get());
+				case "survivalreimagined:mithril_axe" -> blockMapping.remap(Durium.AXE.get());
+				case "survivalreimagined:mithril_sword" -> blockMapping.remap(Durium.SWORD.get());
+				case "survivalreimagined:mithril_hoe" -> blockMapping.remap(Durium.HOE.get());
+				case "survivalreimagined:mithril_shovel" -> blockMapping.remap(Durium.SHOVEL.get());
+				case "survivalreimagined:mithril_helmet" -> blockMapping.remap(Durium.HELMET.get());
+				case "survivalreimagined:mithril_chestplate" -> blockMapping.remap(Durium.CHESTPLATE.get());
+				case "survivalreimagined:mithril_leggings" -> blockMapping.remap(Durium.LEGGINGS.get());
+				case "survivalreimagined:mithril_boots" -> blockMapping.remap(Durium.BOOTS.get());
+				case "survivalreimagined:mithril_shield" -> blockMapping.remap(Durium.SHIELD.get());
+			}
+		});
 	}
 }

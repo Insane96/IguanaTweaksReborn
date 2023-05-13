@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:durium_ingot"
+		},
+		"title": {
+			"translate": "advancements.sr_story.durium_ingot.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.durium_ingot.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/iron_pickaxe",
+	"criteria": {
+		"durium_ingot": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"survivalreimagined:durium_ingot"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"durium_ingot"
+		]
+	]
+}

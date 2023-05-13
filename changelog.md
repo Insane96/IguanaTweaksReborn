@@ -1,6 +1,8 @@
 # Changelog
 
 ## Alpha 3.10.1
+* Mithril is now Durium
+  * Can be made in a Blast Furnace by alloying Durium Scrap Block, Clay and Sand
 * Blast furnaces now require a multi block structure
   * Can recycle gear
   * Can alloy stuff

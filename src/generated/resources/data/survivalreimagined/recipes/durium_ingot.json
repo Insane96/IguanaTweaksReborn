@@ -1,0 +1,17 @@
+{
+  "type": "survivalreimagined:multi_item_blasting",
+  "category": "misc",
+  "cookingtime": 800,
+  "ingredients": [
+    {
+      "item": "survivalreimagined:durium_scrap"
+    },
+    {
+      "tag": "minecraft:sand"
+    },
+    {
+      "item": "minecraft:clay_ball"
+    }
+  ],
+  "result": "survivalreimagined:durium_ingot"
+}

@@ -1,0 +1,46 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:durium_pickaxe"
+		},
+		"title": {
+			"translate": "advancements.sr_story.durium_gear.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.durium_gear.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/durium_ingot",
+	"criteria": {
+		"durium_gear": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"survivalreimagined:durium_pickaxe",
+							"survivalreimagined:durium_axe",
+							"survivalreimagined:durium_shovel",
+							"survivalreimagined:durium_hoe",
+							"survivalreimagined:durium_sword",
+							"survivalreimagined:durium_helmet",
+							"survivalreimagined:durium_chestplate",
+							"survivalreimagined:durium_leggings",
+							"survivalreimagined:durium_boots",
+							"survivalreimagined:durium_shield"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"durium_gear"
+		]
+	]
+}
