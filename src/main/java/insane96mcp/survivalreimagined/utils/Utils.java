@@ -9,8 +9,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Objects;
 
 public class Utils {
     public static boolean isItemInTag(Item item, ResourceLocation tag) {
@@ -70,5 +73,13 @@ public class Utils {
         random.setSeed(random.nextLong());
         random.setSeed(random.nextLong());
         return random;
+    }
+
+    public static float getPercentageDurabilityLeft(ItemStack itemStack) {
+        Objects.requireNonNull(itemStack, "itemStack can't be null");
+        if (!itemStack.isDamageableItem())
+            return 0f;
+
+        return ((float) itemStack.getMaxDamage() - itemStack.getDamageValue()) / itemStack.getMaxDamage();
     }
 }

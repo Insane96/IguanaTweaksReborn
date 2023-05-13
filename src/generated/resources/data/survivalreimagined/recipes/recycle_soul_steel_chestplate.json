@@ -1,0 +1,15 @@
+{
+  "type": "survivalreimagined:multi_item_blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "ingredients": [
+    {
+      "item": "survivalreimagined:soul_steel_chestplate"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 72,
+    "ratio": 0.75
+  },
+  "result": "survivalreimagined:soul_steel_nugget"
+}

@@ -105,12 +105,11 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
         tag(BoneMeal.BLOCK_BLACKLIST);
 
         tag(MultiBlockBlastFurnaceBlock.BOTTOM_BLOCKS_TAG)
-                .addTag(BlockTags.STONE_BRICKS);
+                .add(Blocks.SMOOTH_STONE, Blocks.SMOOTH_STONE_SLAB);
         tag(MultiBlockBlastFurnaceBlock.MIDDLE_BLOCKS_TAG)
                 .add(Blocks.BRICKS);
         tag(MultiBlockBlastFurnaceBlock.TOP_BLOCKS_TAG)
                 .add(Blocks.BRICKS, Blocks.BRICK_STAIRS);
-
     }
 
     public static TagKey<Block> create(String tagName) {

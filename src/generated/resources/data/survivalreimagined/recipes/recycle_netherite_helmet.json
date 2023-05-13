@@ -1,0 +1,15 @@
+{
+  "type": "survivalreimagined:multi_item_blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_helmet"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 5,
+    "ratio": 0.75
+  },
+  "result": "minecraft:diamond"
+}

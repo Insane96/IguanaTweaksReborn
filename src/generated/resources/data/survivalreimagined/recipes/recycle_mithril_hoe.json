@@ -1,0 +1,15 @@
+{
+  "type": "survivalreimagined:multi_item_blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "ingredients": [
+    {
+      "item": "survivalreimagined:mithril_hoe"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 9,
+    "ratio": 0.75
+  },
+  "result": "survivalreimagined:mithril_nugget"
+}

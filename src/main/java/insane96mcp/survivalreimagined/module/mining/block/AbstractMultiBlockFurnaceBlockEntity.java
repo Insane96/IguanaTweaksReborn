@@ -28,7 +28,6 @@ import net.minecraft.world.inventory.RecipeHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -379,7 +378,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
         for(Object2IntMap.Entry<ResourceLocation> entry : this.recipesUsed.object2IntEntrySet()) {
             pLevel.getRecipeManager().byKey(entry.getKey()).ifPresent((p_155023_) -> {
                 list.add(p_155023_);
-                createExperience(pLevel, pPopVec, entry.getIntValue(), ((AbstractCookingRecipe)p_155023_).getExperience());
+                createExperience(pLevel, pPopVec, entry.getIntValue(), ((AbstractMultiItemSmeltingRecipe)p_155023_).getExperience());
             });
         }
 
@@ -405,7 +404,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
 
     @Override
     public int getMaxStackSize() {
-        return 68;
+        return 96;
     }
 
     net.minecraftforge.common.util.LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
