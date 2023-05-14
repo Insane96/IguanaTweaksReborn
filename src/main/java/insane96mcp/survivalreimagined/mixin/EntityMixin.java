@@ -16,7 +16,7 @@ public abstract class EntityMixin {
 
     @Shadow public abstract void resetFallDistance();
 
-    @Shadow
+    @Shadow(remap = false)
     protected Object2DoubleMap<FluidType> forgeFluidTypeHeight;
 
     @Inject(at = @At(value = "RETURN"), method = "fireImmune", cancellable = true)

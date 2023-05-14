@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import insane96mcp.survivalreimagined.module.mining.crafting.AbstractMultiItemSmeltingRecipe;
-import insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -17,10 +16,10 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class MultiItemSmeltingSerializer implements RecipeSerializer<AbstractMultiItemSmeltingRecipe> {
+public abstract class AbstractMultiItemSmeltingSerializer implements RecipeSerializer<AbstractMultiItemSmeltingRecipe> {
     private final CookieBaker<AbstractMultiItemSmeltingRecipe> factory;
 
-    public MultiItemSmeltingSerializer(CookieBaker<AbstractMultiItemSmeltingRecipe> pFactory) {
+    public AbstractMultiItemSmeltingSerializer(CookieBaker<AbstractMultiItemSmeltingRecipe> pFactory) {
         this.factory = pFactory;
     }
 
@@ -31,8 +30,8 @@ public class MultiItemSmeltingSerializer implements RecipeSerializer<AbstractMul
         if (ingredients.isEmpty()) {
             throw new JsonParseException("No ingredients for shapeless recipe");
         }
-        else if (ingredients.size() > AbstractMultiBlockFurnaceMenu.INGREDIENT_SLOTS.length) {
-            throw new JsonParseException("Too many ingredients for multi item smelting recipe. The maximum is %d".formatted(AbstractMultiBlockFurnaceMenu.INGREDIENT_SLOTS.length));
+        else if (ingredients.size() > getIngredientSlotsCount()) {
+            throw new JsonParseException("Too many ingredients for multi item smelting recipe. The maximum is %d".formatted(getIngredientSlotsCount()));
         }
         //Forge: Check if primitive string to keep vanilla or an object which can contain a count field.
         if (!pJson.has("result")) throw new com.google.gson.JsonSyntaxException("Missing result, expected to find a string or object");
@@ -106,4 +105,6 @@ public class MultiItemSmeltingSerializer implements RecipeSerializer<AbstractMul
     public interface CookieBaker<T extends AbstractMultiItemSmeltingRecipe> {
         T create(ResourceLocation pId, String pGroup, CookingBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputchance, float pExperience, int pCookingTime, AbstractMultiItemSmeltingRecipe.Recycle recycle);
     }
+
+    abstract int getIngredientSlotsCount();
 }

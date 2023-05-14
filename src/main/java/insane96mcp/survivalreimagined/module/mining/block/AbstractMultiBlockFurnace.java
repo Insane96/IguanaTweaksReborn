@@ -17,7 +17,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -70,8 +69,8 @@ public abstract class AbstractMultiBlockFurnace extends BaseEntityBlock {
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, LivingEntity pPlacer, ItemStack pStack) {
         if (pStack.hasCustomHoverName()) {
             BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-            if (blockentity instanceof AbstractFurnaceBlockEntity) {
-                ((AbstractFurnaceBlockEntity)blockentity).setCustomName(pStack.getHoverName());
+            if (blockentity instanceof AbstractMultiBlockFurnaceBlockEntity) {
+                ((AbstractMultiBlockFurnaceBlockEntity)blockentity).setCustomName(pStack.getHoverName());
             }
         }
 
@@ -80,10 +79,10 @@ public abstract class AbstractMultiBlockFurnace extends BaseEntityBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (!pState.is(pNewState.getBlock())) {
             BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-            if (blockentity instanceof AbstractFurnaceBlockEntity) {
+            if (blockentity instanceof AbstractMultiBlockFurnaceBlockEntity) {
                 if (pLevel instanceof ServerLevel) {
-                    Containers.dropContents(pLevel, pPos, (AbstractFurnaceBlockEntity)blockentity);
-                    ((AbstractFurnaceBlockEntity)blockentity).getRecipesToAwardAndPopExperience((ServerLevel)pLevel, Vec3.atCenterOf(pPos));
+                    Containers.dropContents(pLevel, pPos, (AbstractMultiBlockFurnaceBlockEntity)blockentity);
+                    ((AbstractMultiBlockFurnaceBlockEntity)blockentity).getRecipesToAwardAndPopExperience((ServerLevel)pLevel, Vec3.atCenterOf(pPos));
                 }
 
                 pLevel.updateNeighbourForOutputSignal(pPos, this);

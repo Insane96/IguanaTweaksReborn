@@ -13,7 +13,9 @@ import insane96mcp.survivalreimagined.module.mining.block.MultiBlockSoulBlastFur
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockSoulBlastFurnaceBlockEntity;
 import insane96mcp.survivalreimagined.module.mining.crafting.MultiItemBlastingRecipe;
 import insane96mcp.survivalreimagined.module.mining.crafting.MultiItemSoulBlastingRecipe;
-import insane96mcp.survivalreimagined.module.mining.data.MultiItemSmeltingSerializer;
+import insane96mcp.survivalreimagined.module.mining.data.AbstractMultiItemSmeltingSerializer;
+import insane96mcp.survivalreimagined.module.mining.data.MultiItemBlastingSerializer;
+import insane96mcp.survivalreimagined.module.mining.data.MultiItemSoulBlastingSerializer;
 import insane96mcp.survivalreimagined.module.mining.inventory.MultiBlockBlastFurnaceMenu;
 import insane96mcp.survivalreimagined.module.mining.inventory.MultiBlockSoulBlastFurnaceMenu;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
@@ -42,7 +44,7 @@ public class MultiBlockFurnaces extends Feature {
 			return "multi_item_blasting";
 		}
 	});
-	public static final RegistryObject<MultiItemSmeltingSerializer> BLASTING_RECIPE_SERIALIZER = SRRecipeSerializers.REGISTRY.register("multi_item_blasting", () -> new MultiItemSmeltingSerializer(MultiItemBlastingRecipe::new));
+	public static final RegistryObject<AbstractMultiItemSmeltingSerializer> BLASTING_RECIPE_SERIALIZER = SRRecipeSerializers.REGISTRY.register("multi_item_blasting", MultiItemBlastingSerializer::new);
 	public static final RegistryObject<MenuType<MultiBlockBlastFurnaceMenu>> BLAST_FURNACE_MENU_TYPE = SRMenuType.REGISTRY.register("blast_furnace", () -> new MenuType<>(MultiBlockBlastFurnaceMenu::new, FeatureFlags.VANILLA_SET));
 
 	public static final BlockWithItem SOUL_BLAST_FURNACE = BlockWithItem.register("soul_blast_furnace", () -> new MultiBlockSoulBlastFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE)));
@@ -54,7 +56,7 @@ public class MultiBlockFurnaces extends Feature {
 			return "multi_item_soul_blasting";
 		}
 	});
-	public static final RegistryObject<MultiItemSmeltingSerializer> SOUL_BLASTING_RECIPE_SERIALIZER = SRRecipeSerializers.REGISTRY.register("multi_item_soul_blasting", () -> new MultiItemSmeltingSerializer(MultiItemSoulBlastingRecipe::new));
+	public static final RegistryObject<AbstractMultiItemSmeltingSerializer> SOUL_BLASTING_RECIPE_SERIALIZER = SRRecipeSerializers.REGISTRY.register("multi_item_soul_blasting", MultiItemSoulBlastingSerializer::new);
 	public static final RegistryObject<MenuType<MultiBlockSoulBlastFurnaceMenu>> SOUL_BLAST_FURNACE_MENU_TYPE = SRMenuType.REGISTRY.register("soul_blast_furnace", () -> new MenuType<>(MultiBlockSoulBlastFurnaceMenu::new, FeatureFlags.VANILLA_SET));
 
 	@Config

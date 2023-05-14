@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
-import insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -37,12 +36,12 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
 
     private static final RandomSource RANDOM = RandomSource.create();
 
-    public AbstractMultiItemSmeltingRecipe(RecipeType<?> type, ResourceLocation pId, String pGroup, CookingBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputChance, float pExperience, int pCookingTime, @Nullable Recycle recycle) {
+    public AbstractMultiItemSmeltingRecipe(RecipeType<?> type, ResourceLocation pId, String pGroup, CookingBookCategory pCategory, int maxIngredients, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputChance, float pExperience, int pCookingTime, @Nullable Recycle recycle) {
         this.type = type;
         this.category = pCategory;
         this.id = pId;
         this.group = pGroup;
-        this.ingredients = NonNullList.withSize(4, Ingredient.EMPTY);
+        this.ingredients = NonNullList.withSize(maxIngredients, Ingredient.EMPTY);
         for (int i = 0; i < ingredients.size(); i++) {
             this.ingredients.set(i, ingredients.get(i));
         }
@@ -58,7 +57,7 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
         List<Integer> checkedSlots = new ArrayList<>();
         for (Ingredient ingredient : ingredients) {
             boolean ingredientMatches = false;
-            for (int slot : AbstractMultiBlockFurnaceMenu.INGREDIENT_SLOTS) {
+            for (int slot : getIngredientSlots()) {
                 if (checkedSlots.contains(slot))
                     continue;
                 if (ingredient.test(container.getItem(slot))) {
@@ -78,7 +77,7 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
         ItemStack stack = this.result.copy();
         if (this.recycle != null) {
             ItemStack containerStack;
-            for (int slot : AbstractMultiBlockFurnaceMenu.INGREDIENT_SLOTS) {
+            for (int slot : getIngredientSlots()) {
                 containerStack = container.getItem(slot);
                 if (containerStack != ItemStack.EMPTY) {
                     stack.setCount((int) (Utils.getPercentageDurabilityLeft(containerStack) * this.recycle.amountAtFullDurability * this.recycle.ratio));
@@ -186,4 +185,6 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
             pBuffer.writeFloat(this.ratio);
         }
     }
+
+    abstract int[] getIngredientSlots();
 }

@@ -10,10 +10,15 @@ import net.minecraft.world.level.block.Blocks;
 
 public class MultiItemBlastingRecipe extends AbstractMultiItemSmeltingRecipe {
     public MultiItemBlastingRecipe(ResourceLocation pId, String pGroup, CookingBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputChance, float pExperience, int pCookingTime, Recycle recycle) {
-        super(MultiBlockFurnaces.BLASTING_RECIPE_TYPE.get(), pId, pGroup, pCategory, ingredients, pResult, doubleOutputChance, pExperience, pCookingTime, recycle);
+        super(MultiBlockFurnaces.BLASTING_RECIPE_TYPE.get(), pId, pGroup, pCategory, 4, ingredients, pResult, doubleOutputChance, pExperience, pCookingTime, recycle);
     }
 
     public ItemStack getToastSymbol() {
         return new ItemStack(Blocks.BLAST_FURNACE);
+    }
+
+    @Override
+    int[] getIngredientSlots() {
+        return new int[] {0, 1, 2, 3};
     }
 }

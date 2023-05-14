@@ -7,7 +7,7 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "survivalreimagined:blast_furnace",
+                    "name": "survivalreimagined:soul_blast_furnace",
                     "functions": [
                         {
                             "function": "minecraft:copy_name",

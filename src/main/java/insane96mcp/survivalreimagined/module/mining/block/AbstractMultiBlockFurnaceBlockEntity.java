@@ -3,6 +3,8 @@ package insane96mcp.survivalreimagined.module.mining.block;
 import com.google.common.collect.Lists;
 import insane96mcp.survivalreimagined.module.mining.crafting.AbstractMultiItemSmeltingRecipe;
 import insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu;
+import insane96mcp.survivalreimagined.module.mining.inventory.MultiBlockBlastFurnaceMenu;
+import insane96mcp.survivalreimagined.module.mining.inventory.MultiBlockSoulBlastFurnaceMenu;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -41,12 +43,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu.*;
+import static insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu.FUEL_SLOT;
+import static insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu.RESULT_SLOT;
 
 public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible {
-
-    private static final int[] SLOTS_FOR_UP = new int[] {INGREDIENT_SLOTS[0]};
-    private static final int[] SLOTS_FOR_DOWN = new int[]{AbstractMultiBlockFurnaceMenu.RESULT_SLOT, FUEL_SLOT};
+    private static final int[] SLOTS_FOR_DOWN = new int[]{RESULT_SLOT, FUEL_SLOT};
     private static final int[] SLOTS_FOR_SIDES = new int[]{FUEL_SLOT};
     public static final int DATA_LIT_TIME = 0;
     public static final int DATA_LIT_DURATION = 1;
@@ -108,13 +109,12 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
         this.litTime = pTag.getInt("BurnTime");
         this.cookingProgress = pTag.getInt("CookTime");
         this.cookingTotalTime = pTag.getInt("CookTimeTotal");
-        this.litDuration = this.getBurnDuration(this.items.get(1));
+        this.litDuration = this.getBurnDuration(this.items.get(FUEL_SLOT));
         CompoundTag compoundtag = pTag.getCompound("RecipesUsed");
 
         for(String s : compoundtag.getAllKeys()) {
             this.recipesUsed.put(new ResourceLocation(s), compoundtag.getInt(s));
         }
-
     }
 
     protected void saveAdditional(CompoundTag pTag) {
@@ -124,13 +124,9 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
         pTag.putInt("CookTimeTotal", this.cookingTotalTime);
         ContainerHelper.saveAllItems(pTag, this.items);
         CompoundTag compoundtag = new CompoundTag();
-        this.recipesUsed.forEach((p_187449_, p_187450_) -> {
-            compoundtag.putInt(p_187449_.toString(), p_187450_);
-        });
+        this.recipesUsed.forEach((p_187449_, p_187450_) -> compoundtag.putInt(p_187449_.toString(), p_187450_));
         pTag.put("RecipesUsed", compoundtag);
     }
-
-
 
     public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, AbstractMultiBlockFurnaceBlockEntity pBlockEntity) {
         if (pLevel.getGameTime() % 20 == 11) {
@@ -146,7 +142,12 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
 
         ItemStack fuelStack = pBlockEntity.items.get(FUEL_SLOT);
         boolean hasInputItem = !pBlockEntity.items.get(0).isEmpty();
-        for (int slot : INGREDIENT_SLOTS) {
+        int[] inputSlots = new int[0];
+        if (pBlockEntity instanceof MultiBlockBlastFurnaceBlockEntity)
+            inputSlots = MultiBlockBlastFurnaceMenu.getIngredientSlots();
+        else if (pBlockEntity instanceof MultiBlockSoulBlastFurnaceBlockEntity)
+            inputSlots = MultiBlockSoulBlastFurnaceMenu.getIngredientSlots();
+        for (int slot : inputSlots) {
             if (!pBlockEntity.items.get(slot).isEmpty()) {
                 hasInputItem = true;
                 break;
@@ -162,7 +163,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
             }
 
             int i = pBlockEntity.getMaxStackSize();
-            if (!pBlockEntity.isLit() && pBlockEntity.canBurn(pLevel.registryAccess(), recipe, pBlockEntity.items, i)) {
+            if (!pBlockEntity.isLit() && pBlockEntity.canBurn(pLevel.registryAccess(), recipe, inputSlots, pBlockEntity.items, i)) {
                 pBlockEntity.litTime = pBlockEntity.getBurnDuration(fuelStack);
                 pBlockEntity.litDuration = pBlockEntity.litTime;
                 if (pBlockEntity.isLit()) {
@@ -179,12 +180,12 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
                 }
             }
 
-            if (pBlockEntity.isLit() && pBlockEntity.canBurn(pLevel.registryAccess(), recipe, pBlockEntity.items, i)) {
+            if (pBlockEntity.isLit() && pBlockEntity.canBurn(pLevel.registryAccess(), recipe, inputSlots, pBlockEntity.items, i)) {
                 ++pBlockEntity.cookingProgress;
                 if (pBlockEntity.cookingProgress == pBlockEntity.cookingTotalTime) {
                     pBlockEntity.cookingProgress = 0;
                     pBlockEntity.cookingTotalTime = getTotalCookTime(pLevel, pBlockEntity);
-                    if (pBlockEntity.burn(pLevel.registryAccess(), recipe, pBlockEntity.items, i)) {
+                    if (pBlockEntity.burn(pLevel.registryAccess(), recipe, inputSlots, pBlockEntity.items, i)) {
                         pBlockEntity.setRecipeUsed(recipe);
                     }
 
@@ -209,9 +210,9 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
 
     }
 
-    private boolean canBurn(RegistryAccess registryAccess, @javax.annotation.Nullable Recipe<?> recipe, NonNullList<ItemStack> slotsStacks, int stackSize) {
+    private boolean canBurn(RegistryAccess registryAccess, @javax.annotation.Nullable Recipe<?> recipe, int[] inputSlots, NonNullList<ItemStack> slotsStacks, int stackSize) {
         boolean hasIngredient = false;
-        for (int slot : AbstractMultiBlockFurnaceMenu.INGREDIENT_SLOTS) {
+        for (int slot : inputSlots) {
             if (!slotsStacks.get(slot).isEmpty())
                 hasIngredient = true;
         }
@@ -235,9 +236,9 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
         }
     }
 
-    private boolean burn(RegistryAccess registryAccess, @javax.annotation.Nullable Recipe<?> recipe, NonNullList<ItemStack> slotStacks, int stackSize) {
+    private boolean burn(RegistryAccess registryAccess, @javax.annotation.Nullable Recipe<?> recipe, int[] inputSlots, NonNullList<ItemStack> slotStacks, int stackSize) {
         if (recipe == null
-                || !this.canBurn(registryAccess, recipe, slotStacks, stackSize))
+                || !this.canBurn(registryAccess, recipe, inputSlots, slotStacks, stackSize))
             return false;
         ItemStack itemstack1 = ((Recipe<WorldlyContainer>) recipe).assemble(this, registryAccess);
         ItemStack itemstack2 = slotStacks.get(RESULT_SLOT);
@@ -248,7 +249,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
             itemstack2.grow(itemstack1.getCount());
         }
 
-        for (int slot : INGREDIENT_SLOTS) {
+        for (int slot : inputSlots) {
             slotStacks.get(slot).shrink(1);
         }
         return true;
@@ -267,8 +268,16 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
         if (pSide == Direction.DOWN) {
             return SLOTS_FOR_DOWN;
         } else {
-            return pSide == Direction.UP ? SLOTS_FOR_UP : SLOTS_FOR_SIDES;
+            if (pSide != Direction.UP) {
+                return SLOTS_FOR_SIDES;
+            }
+
+            if (this instanceof MultiBlockBlastFurnaceBlockEntity)
+                return MultiBlockBlastFurnaceMenu.getIngredientSlots();
+            else if (this instanceof MultiBlockSoulBlastFurnaceBlockEntity)
+                return MultiBlockSoulBlastFurnaceMenu.getIngredientSlots();
         }
+        return new int[0];
     }
 
     @Override
@@ -335,7 +344,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
             pStack.setCount(this.getMaxStackSize());
         }
 
-        if (pSlot == 0 && !flag) {
+        if (pSlot < FUEL_SLOT && !flag) {
             this.cookingTotalTime = getTotalCookTime(this.level, this);
             this.cookingProgress = 0;
             this.setChanged();

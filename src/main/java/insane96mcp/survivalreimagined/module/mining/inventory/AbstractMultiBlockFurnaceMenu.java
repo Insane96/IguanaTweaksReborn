@@ -12,11 +12,13 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-public class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Container> {
-    public static final int[] INGREDIENT_SLOTS = new int[] {0, 1, 2, 3};
-    public static final int FUEL_SLOT = INGREDIENT_SLOTS[INGREDIENT_SLOTS.length - 1] + 1;
+import java.util.List;
+
+public abstract class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Container> {
+    public static final int[] INVENTORY_SLOTS = new int[] {0, 1, 2, 3, 4, 5};
+    public static final int FUEL_SLOT = 6;
     public static final int RESULT_SLOT = FUEL_SLOT + 1;
-    public static final int SLOT_COUNT = 6;
+    public static final int SLOT_COUNT = 8;
     public static final int DATA_COUNT = 4;
     private static final int INV_SLOT_START = RESULT_SLOT + 1;
     private static final int INV_SLOT_END = INV_SLOT_START + 27;
@@ -28,11 +30,7 @@ public class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Container> {
     final RecipeType<? extends AbstractMultiItemSmeltingRecipe> recipeType;
     private final RecipeBookType recipeBookType;
 
-    public AbstractMultiBlockFurnaceMenu(MenuType<?> pMenuType, RecipeType<? extends AbstractMultiItemSmeltingRecipe> pRecipeType, RecipeBookType pRecipeBookType, int pContainerId, Inventory pPlayerInventory) {
-        this(pMenuType, pRecipeType, pRecipeBookType, pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(DATA_COUNT));
-    }
-
-    protected AbstractMultiBlockFurnaceMenu(MenuType<?> pMenuType, RecipeType<? extends AbstractMultiItemSmeltingRecipe> pRecipeType, RecipeBookType pRecipeBookType, int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData pData) {
+    protected AbstractMultiBlockFurnaceMenu(MenuType<?> pMenuType, RecipeType<? extends AbstractMultiItemSmeltingRecipe> pRecipeType, RecipeBookType pRecipeBookType, int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData pData, List<Slot> perMenuSlots) {
         super(pMenuType, pContainerId);
         this.recipeType = pRecipeType;
         this.recipeBookType = pRecipeBookType;
@@ -41,10 +39,12 @@ public class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Container> {
         this.container = pContainer;
         this.data = pData;
         this.level = pPlayerInventory.player.level;
-        this.addSlot(new Slot(pContainer, 0, 51, 26));
-        this.addSlot(new Slot(pContainer, 1, 69, 26));
-        this.addSlot(new Slot(pContainer, 2, 61, 44));
-        this.addSlot(new Slot(pContainer, 3, 79, 44));
+
+        perMenuSlots.forEach(AbstractMultiBlockFurnaceMenu.this::addSlot);
+        if (this instanceof MultiBlockSoulBlastFurnaceMenu)
+            this.addSlot(new MultiBlockSoulBlastFurnaceFuelSlot(this, pContainer, FUEL_SLOT, 15, 13));
+        else
+            this.addSlot(new MultiBlockFurnaceFuelSlot(this, pContainer, FUEL_SLOT, 15, 13));
         this.addSlot(new MultiBlockFurnaceResultSlot(pPlayerInventory.player, pContainer, RESULT_SLOT, 142, 35));
 
         for(int i = 0; i < 3; ++i) {
@@ -68,12 +68,7 @@ public class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Container> {
     }
 
     @Override
-    public void clearCraftingContent() {
-        for (int slot : INGREDIENT_SLOTS) {
-            this.getSlot(slot).set(ItemStack.EMPTY);
-        }
-        this.getSlot(RESULT_SLOT).set(ItemStack.EMPTY);
-    }
+    public abstract void clearCraftingContent();
 
     @Override
     public boolean recipeMatches(Recipe<? super Container> pRecipe) {
