@@ -1,0 +1,14 @@
+{
+  "type": "survivalreimagined:multi_item_soul_blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "ingredients": [
+    {
+      "item": "survivalreimagined:chained_copper_boots"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 6
+  },
+  "result": "minecraft:iron_nugget"
+}

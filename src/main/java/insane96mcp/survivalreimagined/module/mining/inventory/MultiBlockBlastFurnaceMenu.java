@@ -25,11 +25,11 @@ public class MultiBlockBlastFurnaceMenu extends AbstractMultiBlockFurnaceMenu {
     }
 
     public MultiBlockBlastFurnaceMenu(int pContainerId, Inventory pPlayerInventory) {
-        super(MultiBlockFurnaces.MENU_TYPE.get(), MultiBlockFurnaces.BLASTING_RECIPE_TYPE.get(), SurvivalReimagined.MULTI_ITEM_RECIPE_BOOK_TYPE, pContainerId, pPlayerInventory);
+        super(MultiBlockFurnaces.BLAST_FURNACE_MENU_TYPE.get(), MultiBlockFurnaces.BLASTING_RECIPE_TYPE.get(), SurvivalReimagined.MULTI_ITEM_RECIPE_BOOK_TYPE, pContainerId, pPlayerInventory);
     }
 
     public MultiBlockBlastFurnaceMenu(int pContainerId, Inventory pPlayerInventory, Container pBlastFurnaceContainer, ContainerData pBlastFurnaceData) {
-        super(MultiBlockFurnaces.MENU_TYPE.get(), MultiBlockFurnaces.BLASTING_RECIPE_TYPE.get(), SurvivalReimagined.MULTI_ITEM_RECIPE_BOOK_TYPE, pContainerId, pPlayerInventory, pBlastFurnaceContainer, pBlastFurnaceData);
+        super(MultiBlockFurnaces.BLAST_FURNACE_MENU_TYPE.get(), MultiBlockFurnaces.BLASTING_RECIPE_TYPE.get(), SurvivalReimagined.MULTI_ITEM_RECIPE_BOOK_TYPE, pContainerId, pPlayerInventory, pBlastFurnaceContainer, pBlastFurnaceData);
     }
 
     @Override

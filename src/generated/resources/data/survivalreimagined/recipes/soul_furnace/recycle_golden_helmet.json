@@ -1,0 +1,14 @@
+{
+  "type": "survivalreimagined:multi_item_soul_blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "ingredients": [
+    {
+      "item": "minecraft:golden_helmet"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 45
+  },
+  "result": "minecraft:gold_nugget"
+}

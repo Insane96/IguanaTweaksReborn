@@ -1,0 +1,14 @@
+{
+  "type": "survivalreimagined:multi_item_soul_blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "ingredients": [
+    {
+      "item": "minecraft:golden_pickaxe"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 27
+  },
+  "result": "minecraft:gold_nugget"
+}

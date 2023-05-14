@@ -6,6 +6,7 @@ import insane96mcp.survivalreimagined.module.farming.feature.HarderCrops;
 import insane96mcp.survivalreimagined.module.items.feature.Crate;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockBlastFurnaceBlock;
+import insane96mcp.survivalreimagined.module.mining.block.MultiBlockSoulBlastFurnaceBlock;
 import insane96mcp.survivalreimagined.module.mining.feature.Durium;
 import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
@@ -51,13 +52,14 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(Durium.BLOCK.block().get(), Durium.ORE.block().get(), Durium.DEEPSLATE_ORE.block().get(), Durium.SCRAP_BLOCK.block().get())
-                .add(SoulSteel.BLOCK.block().get(), MultiBlockFurnaces.BLAST_FURNACE.block().get())
+                .add(SoulSteel.BLOCK.block().get())
                 .add(OreGeneration.IRON_ORE_ROCK.block().get()).add(OreGeneration.COPPER_ORE_ROCK.block().get()).add(OreGeneration.GOLD_ORE_ROCK.block().get())
                 .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get())
                 .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get())
                 .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get())
                 .add(FlintExpansion.FLINT_BLOCK.block().get(), FlintExpansion.POLISHED_FLINT_BLOCK.block().get(), FlintExpansion.FLINT_ROCK.block().get())
-                .add(Death.GRAVE.block().get());
+                .add(Death.GRAVE.block().get())
+                .add(MultiBlockFurnaces.BLAST_FURNACE.block().get(), MultiBlockFurnaces.SOUL_BLAST_FURNACE.block().get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(Crate.BLOCK.block().get())
@@ -110,6 +112,13 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(Blocks.BRICKS);
         tag(MultiBlockBlastFurnaceBlock.TOP_BLOCKS_TAG)
                 .add(Blocks.BRICKS, Blocks.BRICK_STAIRS);
+
+        tag(MultiBlockSoulBlastFurnaceBlock.BOTTOM_BLOCKS_TAG)
+                .add(Blocks.GILDED_BLACKSTONE, Blocks.CHISELED_POLISHED_BLACKSTONE, Blocks.POLISHED_BLACKSTONE, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS, Blocks.POLISHED_BLACKSTONE_BRICKS);
+        tag(MultiBlockSoulBlastFurnaceBlock.MIDDLE_BLOCKS_TAG)
+                .add(Blocks.RED_NETHER_BRICKS);
+        tag(MultiBlockSoulBlastFurnaceBlock.TOP_BLOCKS_TAG)
+                .add(Blocks.RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICK_STAIRS);
     }
 
     public static TagKey<Block> create(String tagName) {

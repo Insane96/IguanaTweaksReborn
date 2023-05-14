@@ -6,6 +6,7 @@ import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.mining.data.MultiItemSmeltingRecipeBuilder;
 import insane96mcp.survivalreimagined.module.mining.feature.Durium;
+import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
@@ -238,13 +239,22 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_piece", has(Durium.SCRAP_PIECE.get()))
                 .save(writer);
         MultiItemSmeltingRecipeBuilder.blasting(
-                    NonNullList.of(Ingredient.EMPTY, Ingredient.of(Durium.SCRAP_BLOCK.item().get()), Ingredient.of(ItemTags.SAND), Ingredient.of(Items.CLAY_BALL)),
-                    RecipeCategory.MISC,
-                    Durium.INGOT.get(),
-                    800
+                        NonNullList.of(Ingredient.EMPTY, Ingredient.of(Durium.SCRAP_BLOCK.item().get()), Ingredient.of(ItemTags.SAND), Ingredient.of(Items.CLAY_BALL)),
+                        RecipeCategory.MISC,
+                        Durium.INGOT.get(),
+                        800
                 )
                 .unlockedBy("has_scrap_block", has(Durium.SCRAP_BLOCK.item().get()))
-                .save(writer);
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_ingot_from_blasting");
+        MultiItemSmeltingRecipeBuilder.soulBlasting(
+                        NonNullList.of(Ingredient.EMPTY, Ingredient.of(Durium.SCRAP_BLOCK.item().get()), Ingredient.of(ItemTags.SAND), Ingredient.of(Items.CLAY_BALL)),
+                        RecipeCategory.MISC,
+                        Durium.INGOT.get(),
+                        400
+                )
+                .doubleOutputChance(0.4f)
+                .unlockedBy("has_scrap_block", has(Durium.SCRAP_BLOCK.item().get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_ingot_from_soul_blasting");
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, SoulSteel.BLOCK.block().get(), 1)
                 .requires(SoulSteel.INGOT.get(), 9)
@@ -299,6 +309,18 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(Items.FLINT, 2)
                 .requires(Items.IRON_INGOT, 1)
                 .unlockedBy("has_iron_nugget", has(Items.IRON_NUGGET))
+                .save(writer);
+
+        //Soul Blast Furnace
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, MultiBlockFurnaces.SOUL_BLAST_FURNACE.item().get())
+                .pattern("GNG")
+                .pattern("GFG")
+                .pattern("BBB")
+                .define('G', Items.GOLD_INGOT)
+                .define('N', Items.NETHERITE_INGOT)
+                .define('F', MultiBlockFurnaces.BLAST_FURNACE.item().get())
+                .define('B', Items.BLACKSTONE)
+                .unlockedBy("has_netherite", has(Items.NETHERITE_INGOT))
                 .save(writer);
 
         SimpleCookingRecipeBuilder.smelting(
@@ -649,6 +671,15 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         cookingTime)
                 .recycle(amountAtMaxDurability, 0.75f)
                 .unlockedBy("has_armor", has(itemToRecycle))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "recycle_" + ForgeRegistries.ITEMS.getKey(itemToRecycle).getPath());
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blast_furnace/recycle_" + ForgeRegistries.ITEMS.getKey(itemToRecycle).getPath());
+
+        MultiItemSmeltingRecipeBuilder.soulBlasting(
+                        NonNullList.of(Ingredient.EMPTY, Ingredient.of(itemToRecycle)),
+                        RecipeCategory.COMBAT,
+                        output,
+                        cookingTime)
+                .recycle(amountAtMaxDurability)
+                .unlockedBy("has_armor", has(itemToRecycle))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_furnace/recycle_" + ForgeRegistries.ITEMS.getKey(itemToRecycle).getPath());
     }
 }

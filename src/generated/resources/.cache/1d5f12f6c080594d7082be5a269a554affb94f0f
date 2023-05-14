@@ -1,10 +1,10 @@
-// 1.19.4	2023-05-13T18:29:58.0413965	Tags for minecraft:block mod id survivalreimagined
+// 1.19.4	2023-05-14T09:14:38.0619902	Tags for minecraft:block mod id survivalreimagined
 01a9f37859e04f41b429d3a515c1a30b09f41438 data/minecraft/tags/blocks/beacon_base_blocks.json
 d5819582440cadb8c17b7aff856539c50bc69af4 data/minecraft/tags/blocks/copper_ores.json
 72ec216a289a55b54a365aa57fe69c0a71bf4fe8 data/minecraft/tags/blocks/gold_ores.json
 033aecf42ef3d2b4f210e09a0cd49e3da5bffbff data/minecraft/tags/blocks/iron_ores.json
 e5885ef0a617164dd018ba56e7626506ebfde1c9 data/minecraft/tags/blocks/mineable/axe.json
-5fc6db69257a3cc4547993e33dd23eb5aec2ae35 data/minecraft/tags/blocks/mineable/pickaxe.json
+d7ec883e47b93861191da7f4167efe273382b47e data/minecraft/tags/blocks/mineable/pickaxe.json
 609b2e1cd54c6042251244ac19e1465a0f802706 data/minecraft/tags/blocks/mineable/shovel.json
 fcf77ede41c3967cf4b820f52290296b42d6ec4f data/minecraft/tags/blocks/needs_iron_tool.json
 479fdc5a16a9e1acab5c335f39ebd5b8f4855532 data/minecraft/tags/blocks/needs_stone_tool.json
@@ -18,5 +18,8 @@ a8607b824def8e491631b4ca5d6969fe654262ad data/survivalreimagined/tags/blocks/bla
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/blocks/nerfed_bone_meal_blacklist.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/blocks/no_block_xp_multiplier.json
 858b4736f63a64046a40e9dbd025c709c79d7cb2 data/survivalreimagined/tags/blocks/obsidians.json
+06b7323cde486f1b5b40ebd4c127e41888258634 data/survivalreimagined/tags/blocks/soul_blast_furnace/bottom_blocks.json
+70eec382418226d039f1a1487a586c6dc5bd387c data/survivalreimagined/tags/blocks/soul_blast_furnace/middle_blocks.json
+e04549e09a4a1b25ae9b458c2e0cf20d80fb246c data/survivalreimagined/tags/blocks/soul_blast_furnace/top_blocks.json
 ac37cd654850943fcc007084876459bf0f24c761 data/survivalreimagined/tags/blocks/structures/respawn_obelisk/blocks_to_rot.json
 c9886fc6bfa99b22909fe8b51a89b534144880e8 data/survivalreimagined/tags/blocks/tall_grass.json

@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:multi_item_soul_blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "group": "iron_ingot",
+  "double_output_chance": 0.4,
+  "ingredients": [
+    {
+      "item": "minecraft:iron_door"
+    }
+  ],
+  "result": "minecraft:iron_ingot"
+}

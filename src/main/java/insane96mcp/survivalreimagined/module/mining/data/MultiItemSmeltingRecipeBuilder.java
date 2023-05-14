@@ -50,7 +50,11 @@ public class MultiItemSmeltingRecipeBuilder implements RecipeBuilder {
     }
 
     public static MultiItemSmeltingRecipeBuilder blasting(NonNullList<Ingredient> pIngredient, RecipeCategory pCategory, ItemLike pResult, int pCookingTime) {
-        return new MultiItemSmeltingRecipeBuilder(pCategory, determineBlastingRecipeCategory(pResult), pResult, pIngredient, pCookingTime, MultiBlockFurnaces.RECIPE_SERIALIZER.get());
+        return new MultiItemSmeltingRecipeBuilder(pCategory, determineBlastingRecipeCategory(pResult), pResult, pIngredient, pCookingTime, MultiBlockFurnaces.BLASTING_RECIPE_SERIALIZER.get());
+    }
+
+    public static MultiItemSmeltingRecipeBuilder soulBlasting(NonNullList<Ingredient> pIngredient, RecipeCategory pCategory, ItemLike pResult, int pCookingTime) {
+        return new MultiItemSmeltingRecipeBuilder(pCategory, determineBlastingRecipeCategory(pResult), pResult, pIngredient, pCookingTime, MultiBlockFurnaces.SOUL_BLASTING_RECIPE_SERIALIZER.get());
     }
 
     private static CookingBookCategory determineBlastingRecipeCategory(ItemLike pResult) {

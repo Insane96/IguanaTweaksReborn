@@ -4,8 +4,12 @@
 * Mithril is now Durium
   * Can be made in a Blast Furnace by alloying Durium Scrap Block, Clay and Sand
 * Blast furnaces now require a multi block structure
-  * Can recycle gear
+  * Can recycle gear (75% return)
   * Can alloy stuff
+* Added Soul Blast Furnaces. An upgraded version of a Blast Furnace
+  * Alloys stuff faster
+  * Has 40% chance to output one more ingot when smelting / alloying them
+  * Recycling yelds 100% of materials used
 * Flint rocks now generate in the world that drop Flint
 * Firestarters now generate in chests instead of Flint and Steel in the overworld
 * Armor is now rendered in place of Hunger bar

@@ -9,9 +9,13 @@ import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockBlastFurnaceBlock;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockBlastFurnaceBlockEntity;
+import insane96mcp.survivalreimagined.module.mining.block.MultiBlockSoulBlastFurnaceBlock;
+import insane96mcp.survivalreimagined.module.mining.block.MultiBlockSoulBlastFurnaceBlockEntity;
 import insane96mcp.survivalreimagined.module.mining.crafting.MultiItemBlastingRecipe;
+import insane96mcp.survivalreimagined.module.mining.crafting.MultiItemSoulBlastingRecipe;
 import insane96mcp.survivalreimagined.module.mining.data.MultiItemSmeltingSerializer;
 import insane96mcp.survivalreimagined.module.mining.inventory.MultiBlockBlastFurnaceMenu;
+import insane96mcp.survivalreimagined.module.mining.inventory.MultiBlockSoulBlastFurnaceMenu;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.*;
 import net.minecraft.network.chat.Component;
@@ -38,16 +42,32 @@ public class MultiBlockFurnaces extends Feature {
 			return "multi_item_blasting";
 		}
 	});
-	public static final RegistryObject<MultiItemSmeltingSerializer> RECIPE_SERIALIZER = SRRecipeSerializers.REGISTRY.register("multi_item_blasting", () -> new MultiItemSmeltingSerializer(MultiItemBlastingRecipe::new));
-	public static final RegistryObject<MenuType<MultiBlockBlastFurnaceMenu>> MENU_TYPE = SRMenuType.REGISTRY.register("blast_furnace", () -> new MenuType<>(MultiBlockBlastFurnaceMenu::new, FeatureFlags.VANILLA_SET));
+	public static final RegistryObject<MultiItemSmeltingSerializer> BLASTING_RECIPE_SERIALIZER = SRRecipeSerializers.REGISTRY.register("multi_item_blasting", () -> new MultiItemSmeltingSerializer(MultiItemBlastingRecipe::new));
+	public static final RegistryObject<MenuType<MultiBlockBlastFurnaceMenu>> BLAST_FURNACE_MENU_TYPE = SRMenuType.REGISTRY.register("blast_furnace", () -> new MenuType<>(MultiBlockBlastFurnaceMenu::new, FeatureFlags.VANILLA_SET));
+
+	public static final BlockWithItem SOUL_BLAST_FURNACE = BlockWithItem.register("soul_blast_furnace", () -> new MultiBlockSoulBlastFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE)));
+	public static final RegistryObject<BlockEntityType<MultiBlockSoulBlastFurnaceBlockEntity>> SOUL_BLAST_FURNACE_BLOCK_ENTITY_TYPE = SRBlockEntityTypes.REGISTRY.register("soul_blast_furnace", () -> BlockEntityType.Builder.of(MultiBlockSoulBlastFurnaceBlockEntity::new, SOUL_BLAST_FURNACE.block().get()).build(null));
+
+	public static final RegistryObject<RecipeType<MultiItemSoulBlastingRecipe>> SOUL_BLASTING_RECIPE_TYPE = SRRecipeTypes.REGISTRY.register("multi_item_soul_blasting", () -> new RecipeType<>() {
+		@Override
+		public String toString() {
+			return "multi_item_soul_blasting";
+		}
+	});
+	public static final RegistryObject<MultiItemSmeltingSerializer> SOUL_BLASTING_RECIPE_SERIALIZER = SRRecipeSerializers.REGISTRY.register("multi_item_soul_blasting", () -> new MultiItemSmeltingSerializer(MultiItemSoulBlastingRecipe::new));
+	public static final RegistryObject<MenuType<MultiBlockSoulBlastFurnaceMenu>> SOUL_BLAST_FURNACE_MENU_TYPE = SRMenuType.REGISTRY.register("soul_blast_furnace", () -> new MenuType<>(MultiBlockSoulBlastFurnaceMenu::new, FeatureFlags.VANILLA_SET));
 
 	@Config
 	@Label(name = "Blast Furnace Datapack", description = "Enables a data pack that changes the Blast Furnace recipe to give the multi block blast furnace recipe and adds Multi Block blast furnace recipes.")
 	public static Boolean blastFurnaceDataPack = true;
+	@Config
+	@Label(name = "Soul Blast Furnace Datapack", description = "Enables a data pack that adds Multi Block soul blast furnace recipes.")
+	public static Boolean soulBlastFurnaceDataPack = true;
 
 	public MultiBlockFurnaces(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "multi_block_blast_furnace", net.minecraft.network.chat.Component.literal("Survival Reimagined Multi Block Blast Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && blastFurnaceDataPack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "multi_block_soul_blast_furnace", net.minecraft.network.chat.Component.literal("Survival Reimagined Multi Block Soul Blast Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && soulBlastFurnaceDataPack));
 	}
 
 	@SubscribeEvent

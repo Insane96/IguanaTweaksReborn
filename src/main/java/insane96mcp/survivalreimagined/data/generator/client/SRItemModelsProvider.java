@@ -55,6 +55,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         shield(SoulSteel.SHIELD.get());
         withExistingParent("soul_steel_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_steel_block"));
         withExistingParent("blast_furnace", new ResourceLocation("block/blast_furnace"));
+        withExistingParent("soul_blast_furnace", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_blast_furnace"));
 
         handHeld(FlintExpansion.AXE.get());
         handHeld(FlintExpansion.PICKAXE.get());

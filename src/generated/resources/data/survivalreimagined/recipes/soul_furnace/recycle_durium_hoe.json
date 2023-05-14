@@ -1,0 +1,14 @@
+{
+  "type": "survivalreimagined:multi_item_soul_blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "ingredients": [
+    {
+      "item": "survivalreimagined:durium_hoe"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 9
+  },
+  "result": "survivalreimagined:durium_nugget"
+}

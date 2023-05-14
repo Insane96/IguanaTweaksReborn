@@ -1,0 +1,14 @@
+{
+  "type": "survivalreimagined:multi_item_soul_blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_axe"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 1
+  },
+  "result": "minecraft:netherite_ingot"
+}

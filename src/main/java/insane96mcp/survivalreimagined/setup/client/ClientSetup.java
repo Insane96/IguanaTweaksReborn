@@ -7,6 +7,7 @@ import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.mining.client.MultiBlockBlastFurnaceScreen;
+import insane96mcp.survivalreimagined.module.mining.client.MultiBlockSoulBlastFurnaceScreen;
 import insane96mcp.survivalreimagined.module.mining.feature.Durium;
 import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
@@ -89,6 +90,7 @@ public class ClientSetup {
             event.accept(Respawn.RESPAWN_OBELISK.item().get());
             event.accept(Crate.BLOCK.item().get());
             event.accept(MultiBlockFurnaces.BLAST_FURNACE.item().get());
+            event.accept(MultiBlockFurnaces.SOUL_BLAST_FURNACE.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.accept(Minecarts.COPPER_POWERED_RAIL.item().get());
@@ -148,7 +150,8 @@ public class ClientSetup {
                     return (float) livingEntity.getY();
                 }));
 
-        MenuScreens.register(MultiBlockFurnaces.MENU_TYPE.get(), MultiBlockBlastFurnaceScreen::new);
+        MenuScreens.register(MultiBlockFurnaces.BLAST_FURNACE_MENU_TYPE.get(), MultiBlockBlastFurnaceScreen::new);
+        MenuScreens.register(MultiBlockFurnaces.SOUL_BLAST_FURNACE_MENU_TYPE.get(), MultiBlockSoulBlastFurnaceScreen::new);
     }
 
     public static void entityRenderEvent(EntityRenderersEvent.RegisterRenderers event) {

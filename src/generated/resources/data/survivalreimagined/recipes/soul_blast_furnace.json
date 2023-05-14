@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "minecraft:blackstone"
+    },
+    "F": {
+      "item": "survivalreimagined:blast_furnace"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "pattern": [
+    "GNG",
+    "GFG",
+    "BBB"
+  ],
+  "result": {
+    "item": "survivalreimagined:soul_blast_furnace"
+  },
+  "show_notification": true
+}

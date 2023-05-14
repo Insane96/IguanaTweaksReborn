@@ -111,7 +111,7 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return MultiBlockFurnaces.RECIPE_SERIALIZER.get();
+        return MultiBlockFurnaces.BLASTING_RECIPE_SERIALIZER.get();
     }
 
     public float getDoubleOutputChance() {
