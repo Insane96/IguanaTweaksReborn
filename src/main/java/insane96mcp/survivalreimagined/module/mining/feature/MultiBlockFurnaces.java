@@ -78,5 +78,6 @@ public class MultiBlockFurnaces extends Feature {
 			return;
 
 		event.getEntity().sendSystemMessage(Component.literal("This block is not valid. Break and place it back."));
+		event.setCanceled(true);
 	}
 }
