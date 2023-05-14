@@ -256,6 +256,7 @@ public class NoHunger extends Feature {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     protected void renderArmor(PoseStack poseStack, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
         ForgeGui gui = (ForgeGui) mc.gui;
