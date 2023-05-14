@@ -272,6 +272,23 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(SoulSteel.INGOT.get(), 1)
                 .unlockedBy("has_ingot", has(SoulSteel.INGOT.get()))
                 .save(writer);
+        MultiItemSmeltingRecipeBuilder.blasting(
+                        NonNullList.of(Ingredient.EMPTY, Ingredient.of(Items.IRON_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(CoalFire.HELLISH_COAL.get()), Ingredient.of(Items.SOUL_SAND, Items.SOUL_SOIL)),
+                        RecipeCategory.MISC,
+                        SoulSteel.INGOT.get(),
+                        800
+                )
+                .unlockedBy("has_hellish_coal", has(CoalFire.HELLISH_COAL.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_ingot_from_blasting");
+        MultiItemSmeltingRecipeBuilder.soulBlasting(
+                        NonNullList.of(Ingredient.EMPTY, Ingredient.of(Items.IRON_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(CoalFire.HELLISH_COAL.get()), Ingredient.of(Items.SOUL_SAND, Items.SOUL_SOIL)),
+                        RecipeCategory.MISC,
+                        SoulSteel.INGOT.get(),
+                        400
+                )
+                .doubleOutputChance(0.4f)
+                .unlockedBy("has_hellish_coal", has(CoalFire.HELLISH_COAL.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_ingot_from_soul_blasting");
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ExplosiveBarrel.BLOCK.item().get())
                 .requires(Items.TNT, 1)

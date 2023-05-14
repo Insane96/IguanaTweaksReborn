@@ -1,0 +1,25 @@
+{
+  "type": "survivalreimagined:multi_item_blasting",
+  "category": "misc",
+  "cookingtime": 800,
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "survivalreimagined:hellish_coal"
+    },
+    [
+      {
+        "item": "minecraft:soul_sand"
+      },
+      {
+        "item": "minecraft:soul_soil"
+      }
+    ]
+  ],
+  "result": "survivalreimagined:soul_steel_ingot"
+}
