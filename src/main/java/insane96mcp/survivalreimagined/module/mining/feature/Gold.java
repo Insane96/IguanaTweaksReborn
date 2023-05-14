@@ -85,6 +85,7 @@ public class Gold extends Feature {
 				|| !(event.getItemStack().getItem() instanceof TieredItem tieredItem)
 				|| tieredItem.getTier() != Tiers.GOLD
 				|| event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_FORTUNE) > 0
+				|| event.getItemStack().getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0
 				|| event.getItemStack().getEnchantmentLevel(Enchantments.MOB_LOOTING) > 0)
 			return;
 

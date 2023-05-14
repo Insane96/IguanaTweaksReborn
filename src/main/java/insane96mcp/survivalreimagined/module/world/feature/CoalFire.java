@@ -198,6 +198,7 @@ public class CoalFire extends Feature {
         event.setNewSpeed(event.getNewSpeed() / 5f);
     }
 
+    //TODO Move to Item#getBurnTime
     @SubscribeEvent
     public void onFurnaceFuelBurnTime(FurnaceFuelBurnTimeEvent event) {
         if (event.getItemStack().is(HELLISH_COAL.get()))
