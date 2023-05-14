@@ -32,13 +32,6 @@ public class Gold extends Feature {
 	public static Boolean luckyGold = true;
 
 	@Config
-	@Label(name = "Equipment Crafting Data Pack", description = """
-			Enables the following changes to vanilla data pack:
-			* Gold Armor requires leather armor to be crafted in an anvil
-			* Gold Tools require flint tools to be crafted in an anvil""")
-	public static Boolean equipmentCraftingDataPack = true;
-
-	@Config
 	@Label(name = "Gold Smelting Data Pack", description = """
 			Enables the following changes to vanilla data pack:
 			* Smelting gold in a furnace takes 4x time""")
@@ -46,7 +39,6 @@ public class Gold extends Feature {
 
 	public Gold(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "gold_equipment_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Gold Equipment Crafting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && equipmentCraftingDataPack));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "gold_smelting", net.minecraft.network.chat.Component.literal("Survival Reimagined Gold Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && goldSmeltingDataPack));
 	}
 
