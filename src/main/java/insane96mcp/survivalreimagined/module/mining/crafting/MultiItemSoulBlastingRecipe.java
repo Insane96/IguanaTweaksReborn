@@ -7,6 +7,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class MultiItemSoulBlastingRecipe extends AbstractMultiItemSmeltingRecipe {
@@ -26,5 +27,10 @@ public class MultiItemSoulBlastingRecipe extends AbstractMultiItemSmeltingRecipe
     @Override
     int[] getIngredientSlots() {
         return new int[] {0, 1, 2, 3, 4, 5};
+    }
+
+    @Override
+    public RecipeSerializer<?> getSerializer() {
+        return MultiBlockFurnaces.SOUL_BLASTING_RECIPE_SERIALIZER.get();
     }
 }

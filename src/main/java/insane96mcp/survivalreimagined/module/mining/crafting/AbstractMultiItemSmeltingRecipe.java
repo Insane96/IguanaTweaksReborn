@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
-import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -110,7 +109,7 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return MultiBlockFurnaces.BLASTING_RECIPE_SERIALIZER.get();
+        return null;
     }
 
     public float getDoubleOutputChance() {
