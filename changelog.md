@@ -8,8 +8,9 @@
   * Can alloy stuff
 * Added Soul Blast Furnaces. An upgraded version of a Blast Furnace
   * Alloys stuff faster
-  * Has 40% chance to output one more ingot when smelting / alloying them
+  * Has 40% chance to output one more ingot when smelting and 20% when alloying them
   * Recycling yelds 100% of materials used
+* Netherite can now be alloyed in blast furnaces from less material compared to crafting
 * Flint rocks now generate in the world that drop Flint
 * Firestarters now generate in chests instead of Flint and Steel in the overworld
 * Armor is now rendered in place of Hunger bar

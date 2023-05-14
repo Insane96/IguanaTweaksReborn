@@ -2,7 +2,7 @@
   "type": "survivalreimagined:multi_item_soul_blasting",
   "category": "misc",
   "cookingtime": 400,
-  "double_output_chance": 0.4,
+  "double_output_chance": 0.2,
   "ingredients": [
     {
       "item": "minecraft:iron_ingot"
