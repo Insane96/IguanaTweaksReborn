@@ -88,8 +88,8 @@ public class Durium extends Feature {
 		});
 		event.getMappings(ForgeRegistries.Keys.ITEMS, SurvivalReimagined.MOD_ID).forEach(blockMapping -> {
 			switch (blockMapping.getKey().toString()) {
-				case "survivalreimagined:mithril_nugget" -> blockMapping.remap(Durium.NUGGET.get());
-				case "survivalreimagined:mithril_ingot" -> blockMapping.remap(Durium.INGOT.get());
+				case "survivalreimagined:mithril_nugget" -> blockMapping.remap(Durium.SCRAP_PIECE.get());
+				case "survivalreimagined:mithril_ingot" -> blockMapping.remap(Durium.SCRAP_BLOCK.item().get());
 				case "survivalreimagined:mithril_block" -> blockMapping.remap(Durium.BLOCK.item().get());
 				case "survivalreimagined:mithril_ore" -> blockMapping.remap(Durium.ORE.item().get());
 				case "survivalreimagined:deepslate_mithril_ore" -> blockMapping.remap(Durium.DEEPSLATE_ORE.item().get());

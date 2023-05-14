@@ -15,6 +15,7 @@ import insane96mcp.survivalreimagined.module.movement.feature.Stamina;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.MessageFoodRegenSync;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
+import insane96mcp.survivalreimagined.utils.ClientUtils;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -268,11 +269,11 @@ public class NoHunger extends Feature {
         for (int i = 1; level > 0 && i < 20; i += 2)
         {
             if (i < level)
-                GuiComponent.blit(poseStack, left, top, 34, 9, 9, 9);
+                GuiComponent.blit(poseStack, left, top, 34, 9, 9, 9, 256, 256);
             else if (i == level)
-                GuiComponent.blit(poseStack, left, top, 25, 9, 9, 9);
+                ClientUtils.blitVericallyMirrored(poseStack, left, top, 25, 9, 9, 9, 256, 256);
             else
-                GuiComponent.blit(poseStack, left, top, 16, 9, 9, 9);
+                GuiComponent.blit(poseStack, left, top, 16, 9, 9, 9, 256, 256);
             left -= 8;
         }
         if (level > 0)
