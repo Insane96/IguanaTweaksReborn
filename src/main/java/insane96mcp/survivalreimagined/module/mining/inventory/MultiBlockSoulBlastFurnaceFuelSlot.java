@@ -16,10 +16,6 @@ public class MultiBlockSoulBlastFurnaceFuelSlot extends MultiBlockFurnaceFuelSlo
         return pStack.is(Items.LAVA_BUCKET) || isBucket(pStack);
     }
 
-    public int getMaxStackSize(ItemStack pStack) {
-        return isBucket(pStack) ? 1 : super.getMaxStackSize(pStack);
-    }
-
     public static boolean isBucket(ItemStack pStack) {
         return pStack.is(Items.BUCKET);
     }

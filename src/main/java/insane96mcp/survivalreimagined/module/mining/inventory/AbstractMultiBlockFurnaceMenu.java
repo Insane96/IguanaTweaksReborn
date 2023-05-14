@@ -45,7 +45,6 @@ public class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Container> {
         this.addSlot(new Slot(pContainer, 1, 69, 26));
         this.addSlot(new Slot(pContainer, 2, 61, 44));
         this.addSlot(new Slot(pContainer, 3, 79, 44));
-        this.addSlot(new MultiBlockFurnaceFuelSlot(this, pContainer, FUEL_SLOT, 15, 13));
         this.addSlot(new MultiBlockFurnaceResultSlot(pPlayerInventory.player, pContainer, RESULT_SLOT, 142, 35));
 
         for(int i = 0; i < 3; ++i) {
