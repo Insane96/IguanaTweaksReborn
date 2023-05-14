@@ -12,8 +12,9 @@
   * Recycling yelds 100% of materials used
 * Netherite can now be alloyed in blast furnaces from less material compared to crafting
 * Flint rocks now generate in the world that drop Flint
+* Shallow water is no longer safe to fall into
 * Firestarters now generate in chests instead of Flint and Steel in the overworld
-* Armor is now rendered in place of Hunger bar
+* Armor is now rendered in place of Hunger bar. That side felt so empty
 * Graves can now be smelted/blasted into iron ingots
 
 ## Alpha 3.10.0
