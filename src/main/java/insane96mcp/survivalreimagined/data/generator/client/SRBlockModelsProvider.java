@@ -32,7 +32,7 @@ public class SRBlockModelsProvider extends BlockModelProvider {
         cubeBottomTop("crate", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate_side"), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate_bottom"), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate_top"));
         cubeBottomTop("crate_open", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate_side"), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate_bottom"), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate_top_open"));
 
-        cubeAll("durium_scrap", "block/durium_scrap");
+        cubeAll("durium_scrap_block", "block/durium_scrap_block");
         cubeAll("durium_block", "block/durium_block");
         cubeAll("durium_ore", "block/durium_ore");
         cubeAll("deepslate_durium_ore", "block/deepslate_durium_ore");

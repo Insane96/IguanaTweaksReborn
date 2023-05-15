@@ -7,18 +7,18 @@ license="All rights reserved"
     displayName="Survival Reimagined"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/iguanatweaks-reborn"
     #logoFile="examplemod.png"
-    credits = "Thanks to Iguana for the original Mod. Effect Icons made by hamzaa#1200. Injured sound by thecheeseman from freesound.org. Stamina overlay code from AppleSkin exhaustion code. Tocinin#8975 for the Flint Blocks textures."
+    credits = "Thanks to Iguana for the original Mod. Effect Icons made by hamzaa#1200. Injured sound by thecheeseman from freesound.org. Stamina overlay code from AppleSkin exhaustion code. Tocinin#8975 for the Flint Blocks textures. Carboniglio for Alpha testing and many ideas. kioraSperlusenta for bearing with me in livestream."
     authors = "Insane96MCP"
     description = '''
-    Multiple changes to make Minecraft Harder.
+    Multiple changes to bring back Survival in Minecraft.
     Movement Restrictions, Farming, Mining, Explosions and much more.
 
     Formerly known as Iguana Tweaks Reborn
     '''
     # Catalogue icon
-    itemIcon = "survivalreimagined:flint_pickaxe"
+    # itemIcon = "survivalreimagined:flint_pickaxe"
     # Configured background
-    configBackground = "minecraft:textures/block/cobblestone.png"
+    configBackground = "survivalreimagined:textures/block/rich_farmland_moist.png"
 
 [[dependencies.survivalreimagined]]
     modId="forge"

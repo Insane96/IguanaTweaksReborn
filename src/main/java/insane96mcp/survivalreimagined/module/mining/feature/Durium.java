@@ -36,7 +36,7 @@ public class Durium extends Feature {
 
 	public static final BlockWithItem ORE = BlockWithItem.register("durium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5)));
 	public static final BlockWithItem DEEPSLATE_ORE = BlockWithItem.register("deepslate_durium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(ORE.block().get()).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), UniformInt.of(2, 5)));
-	public static final BlockWithItem SCRAP_BLOCK = BlockWithItem.register("durium_scrap", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
+	public static final BlockWithItem SCRAP_BLOCK = BlockWithItem.register("durium_scrap_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
 	public static final RegistryObject<Item> SCRAP_PIECE = SRItems.REGISTRY.register("durium_scrap_piece", () -> new Item(new Item.Properties()));
 
 	public static final BlockWithItem BLOCK = BlockWithItem.register("durium_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
@@ -89,7 +89,7 @@ public class Durium extends Feature {
 		event.getMappings(ForgeRegistries.Keys.ITEMS, SurvivalReimagined.MOD_ID).forEach(blockMapping -> {
 			switch (blockMapping.getKey().toString()) {
 				case "survivalreimagined:mithril_nugget" -> blockMapping.remap(Durium.SCRAP_PIECE.get());
-				case "survivalreimagined:mithril_ingot" -> blockMapping.remap(Durium.SCRAP_BLOCK.item().get());
+				case "survivalreimagined:mithril_ingot", "survivalreimagined:durium_scrap" -> blockMapping.remap(Durium.SCRAP_BLOCK.item().get());
 				case "survivalreimagined:mithril_block" -> blockMapping.remap(Durium.BLOCK.item().get());
 				case "survivalreimagined:mithril_ore" -> blockMapping.remap(Durium.ORE.item().get());
 				case "survivalreimagined:deepslate_mithril_ore" -> blockMapping.remap(Durium.DEEPSLATE_ORE.item().get());

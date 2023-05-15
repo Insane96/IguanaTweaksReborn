@@ -104,7 +104,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         withExistingParent("durium_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/durium_block"));
         withExistingParent("deepslate_durium_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/deepslate_durium_ore"));
         withExistingParent("durium_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/durium_ore"));
-        withExistingParent("durium_scrap", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/durium_scrap"));
+        withExistingParent("durium_scrap_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/durium_scrap_block"));
 
         basicItemWithTexture(Minecarts.COPPER_POWERED_RAIL.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/copper_powered_rail"));
         withExistingParent("golden_powered_rail", new ResourceLocation("item/powered_rail"));

@@ -5,7 +5,7 @@
   "double_output_chance": 0.2,
   "ingredients": [
     {
-      "item": "survivalreimagined:durium_scrap"
+      "item": "survivalreimagined:durium_scrap_block"
     },
     {
       "tag": "minecraft:sand"

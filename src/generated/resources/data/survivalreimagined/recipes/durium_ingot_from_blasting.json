@@ -4,7 +4,7 @@
   "cookingtime": 800,
   "ingredients": [
     {
-      "item": "survivalreimagined:durium_scrap"
+      "item": "survivalreimagined:durium_scrap_block"
     },
     {
       "tag": "minecraft:sand"
