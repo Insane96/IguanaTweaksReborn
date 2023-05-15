@@ -12,15 +12,33 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Enchantment.class)
 public class EnchantmentMixin {
 	@Inject(at = @At("RETURN"), method = "canEnchant", cancellable = true)
-	private void onCanEnchant(ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
+	private void onCanEnchant(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
 		if (EnchantmentsFeature.disableEnchantment((Enchantment) (Object) this))
-			callback.setReturnValue(false);
+			cir.setReturnValue(false);
 	}
 
 	@Inject(at = @At("RETURN"), method = "canApplyAtEnchantingTable", cancellable = true, remap = false)
-	private void onCanApplyAtEnchantingTable(ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
+	private void onCanApplyAtEnchantingTable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
 		if (EnchantmentsFeature.disableEnchantment((Enchantment) (Object) this))
-			callback.setReturnValue(false);
+			cir.setReturnValue(false);
+	}
+
+	@Inject(at = @At("RETURN"), method = "isTradeable", cancellable = true, remap = false)
+	private void onIsTradeable(CallbackInfoReturnable<Boolean> cir) {
+		if (EnchantmentsFeature.disableEnchantment((Enchantment) (Object) this))
+			cir.setReturnValue(false);
+	}
+
+	@Inject(at = @At("RETURN"), method = "isDiscoverable", cancellable = true, remap = false)
+	private void onIsDiscoverable(CallbackInfoReturnable<Boolean> cir) {
+		if (EnchantmentsFeature.disableEnchantment((Enchantment) (Object) this))
+			cir.setReturnValue(false);
+	}
+
+	@Inject(at = @At("RETURN"), method = "isAllowedOnBooks", cancellable = true, remap = false)
+	private void onIsAllowedOnBooks(CallbackInfoReturnable<Boolean> cir) {
+		if (EnchantmentsFeature.disableEnchantment((Enchantment) (Object) this))
+			cir.setReturnValue(false);
 	}
 
 	@Inject(at = @At("RETURN"), method = "getMaxLevel", cancellable = true)
