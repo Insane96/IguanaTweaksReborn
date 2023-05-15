@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
@@ -39,6 +40,13 @@ public class SREventFactory {
     {
         PostEntityHurtEvent event = new PostEntityHurtEvent(livingEntity, damageSource, amount);
         MinecraftForge.EVENT_BUS.post(event);
+    }
+
+    public static float onPlayerExhaustionEvent(Player player, float amount)
+    {
+        PlayerExhaustionEvent event = new PlayerExhaustionEvent(player, amount);
+        MinecraftForge.EVENT_BUS.post(event);
+        return event.getAmount();
     }
 
     public static void onFallingBlockLand(FallingBlockEntity fallingBlock)

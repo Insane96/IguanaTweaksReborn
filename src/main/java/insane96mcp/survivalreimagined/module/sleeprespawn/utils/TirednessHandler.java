@@ -3,7 +3,7 @@ package insane96mcp.survivalreimagined.module.sleeprespawn.utils;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import net.minecraft.world.entity.LivingEntity;
 
-public class TirednessHelper {
+public class TirednessHandler {
     public static final String TIREDNESS_TAG = SurvivalReimagined.RESOURCE_PREFIX + "tiredness";
 
     public static float get(LivingEntity entity) {

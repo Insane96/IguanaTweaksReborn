@@ -7,6 +7,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.insanelib.util.Utils;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.combat.feature.Stats;
@@ -39,7 +40,7 @@ import java.util.*;
 @Label(name = "Weighted Equipment", description = "Armor and Shield slows down the player. Material Weights and Enchantment Weights are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class WeightedEquipment extends SRFeature {
-	public static final String ARMOR_SLOWDOWN = "survivalreimagined.armor_slowdown";
+	public static final String ARMOR_SLOWDOWN = SurvivalReimagined.MOD_ID + ".armor_slowdown";
 
 	public static final ArrayList<ArmorMaterialWeight> MATERIAL_WEIGHTS_DEFAULTS = new ArrayList<>(Arrays.asList(
 			new ArmorMaterialWeight("leather", 0.01d),
@@ -184,7 +185,6 @@ public class WeightedEquipment extends SRFeature {
 		return slowdown;
 	}
 
-	//TODO Add full set slowdown to tooltip
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onTooltip(ItemTooltipEvent event) {

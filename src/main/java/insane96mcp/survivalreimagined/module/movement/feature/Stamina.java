@@ -40,7 +40,6 @@ import org.lwjgl.opengl.GL11;
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class Stamina extends Feature {
 
-    //TODO Think about using exhaustion to consume stamina
     public static final String STAMINA = SurvivalReimagined.RESOURCE_PREFIX + "stamina";
     public static final String STAMINA_LOCKED = SurvivalReimagined.RESOURCE_PREFIX + "stamina_locked";
 

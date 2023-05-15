@@ -5,10 +5,10 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.event.PlayerExhaustionEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -68,15 +68,16 @@ public class ExhaustionIncrease extends Feature {
 		event.player.causeFoodExhaustion(passiveExhaustion.floatValue());
 	}
 
-	public static float increaseHungerEffectiveness(Player player, float amount) {
-		if (!isEnabled(ExhaustionIncrease.class)
+	@SubscribeEvent
+	public void onExhaustion(PlayerExhaustionEvent event) {
+		if (!this.isEnabled()
 				|| !effectiveHunger
-				|| !player.hasEffect(MobEffects.HUNGER))
-			return amount;
+				|| !event.getEntity().hasEffect(MobEffects.HUNGER))
+			return;
 
 		//noinspection ConstantConditions
-		int amp = player.getEffect(MobEffects.HUNGER).getAmplifier() + 1;
-		return amount * (amp * 1f + 1);
+		int amp = event.getEntity().getEffect(MobEffects.HUNGER).getAmplifier() + 1;
+		event.setAmount(event.getAmount() * (amp * 1f + 1));
 	}
 
 	@Override

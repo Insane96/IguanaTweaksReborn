@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.network.message;
 
-import insane96mcp.survivalreimagined.module.sleeprespawn.utils.TirednessHelper;
+import insane96mcp.survivalreimagined.module.sleeprespawn.utils.TirednessHandler;
 import insane96mcp.survivalreimagined.network.NetworkHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
@@ -23,7 +23,7 @@ public class MessageTirednessSync {
 	}
 
 	public static void handle(final MessageTirednessSync message, Supplier<NetworkEvent.Context> ctx) {
-		ctx.get().enqueueWork(() -> TirednessHelper.set(NetworkHelper.getSidedPlayer(ctx.get()), message.tiredness));
+		ctx.get().enqueueWork(() -> TirednessHandler.set(NetworkHelper.getSidedPlayer(ctx.get()), message.tiredness));
 		ctx.get().setPacketHandled(true);
 	}
 }

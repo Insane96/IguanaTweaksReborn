@@ -62,32 +62,32 @@ public class MultiItemSmeltingRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public RecipeBuilder unlockedBy(String pCriterionName, CriterionTriggerInstance pCriterionTrigger) {
+    public MultiItemSmeltingRecipeBuilder unlockedBy(String pCriterionName, CriterionTriggerInstance pCriterionTrigger) {
         this.advancement.addCriterion(pCriterionName, pCriterionTrigger);
         return this;
     }
 
     @Override
-    public RecipeBuilder group(@Nullable String pGroupName) {
+    public MultiItemSmeltingRecipeBuilder group(@Nullable String pGroupName) {
         this.group = pGroupName;
         return this;
     }
 
-    public RecipeBuilder experience(float experience) {
+    public MultiItemSmeltingRecipeBuilder experience(float experience) {
         this.experience = experience;
         return this;
     }
 
-    public RecipeBuilder doubleOutputChance(float doubleOutputChance) {
+    public MultiItemSmeltingRecipeBuilder doubleOutputChance(float doubleOutputChance) {
         this.doubleOutputChance = doubleOutputChance;
         return this;
     }
 
-    public RecipeBuilder recycle(int amountAtMaxDurability) {
+    public MultiItemSmeltingRecipeBuilder recycle(int amountAtMaxDurability) {
         return this.recycle(amountAtMaxDurability, 1f);
     }
 
-    public RecipeBuilder recycle(int amountAtMaxDurability, float ratio) {
+    public MultiItemSmeltingRecipeBuilder recycle(int amountAtMaxDurability, float ratio) {
         this.recycle = new AbstractMultiItemSmeltingRecipe.Recycle(amountAtMaxDurability, ratio);
         return this;
     }

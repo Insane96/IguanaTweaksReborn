@@ -12,7 +12,7 @@ import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.sleeprespawn.data.EnergyBoostItem;
-import insane96mcp.survivalreimagined.module.sleeprespawn.utils.TirednessHelper;
+import insane96mcp.survivalreimagined.module.sleeprespawn.utils.TirednessHandler;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.MessageTirednessSync;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
@@ -127,7 +127,7 @@ public class Tiredness extends SRFeature {
 			return;
 
 		ServerPlayer serverPlayer = (ServerPlayer) event.player;
-		float tiredness = TirednessHelper.get(serverPlayer);
+		float tiredness = TirednessHandler.get(serverPlayer);
 		applyTired(tiredness, serverPlayer);
 		tickEnergyBoostEffect(serverPlayer);
 	}
@@ -138,7 +138,7 @@ public class Tiredness extends SRFeature {
 
 		//noinspection ConstantConditions
 		int effectLevel = player.getEffect(SRMobEffects.ENERGY_BOOST.get()).getAmplifier() + 1;
-		float newTiredness = TirednessHelper.subtractAndGet(player, 0.01f * effectLevel);
+		float newTiredness = TirednessHandler.subtractAndGet(player, 0.01f * effectLevel);
 
 		if (player.tickCount % 20 == 0) {
 			Object msg = new MessageTirednessSync(newTiredness);
@@ -171,8 +171,8 @@ public class Tiredness extends SRFeature {
 
 		ServerPlayer serverPlayer = (ServerPlayer) player;
 
-		float tiredness = TirednessHelper.get(serverPlayer);
-		float newTiredness = TirednessHelper.addAndGet(serverPlayer, amount * tirednessGainMultiplier.floatValue());
+		float tiredness = TirednessHandler.get(serverPlayer);
+		float newTiredness = TirednessHandler.addAndGet(serverPlayer, amount * tirednessGainMultiplier.floatValue());
 		if (tiredness < tirednessToSleep && newTiredness >= tirednessToSleep) {
 			serverPlayer.displayClientMessage(Component.translatable(TIRED_ENOUGH), false);
 		}
@@ -201,13 +201,13 @@ public class Tiredness extends SRFeature {
 
 		ServerPlayer player = (ServerPlayer) event.getEntity();
 
-		if (TirednessHelper.get(player) < tirednessToSleep) {
+		if (TirednessHandler.get(player) < tirednessToSleep) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.displayClientMessage(Component.translatable(NOT_TIRED), true);
 			if (!shouldPreventSpawnPoint)
 				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, true);
 		}
-		else if (TirednessHelper.get(player) > tirednessToEffect) {
+		else if (TirednessHandler.get(player) > tirednessToEffect) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.startSleeping(event.getPos());
 			((ServerLevel)player.level).updateSleepingPlayerList();
@@ -222,11 +222,11 @@ public class Tiredness extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach(player -> {
-			float tirednessOnWakeUp = Mth.clamp(TirednessHelper.get(player) - tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
+			float tirednessOnWakeUp = Mth.clamp(TirednessHandler.get(player) - tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
 			int duration = (int) (vigourDuration - (tirednessOnWakeUp * vigourPenalty));
 			if (duration > 0)
 				player.addEffect(new MobEffectInstance(SRMobEffects.VIGOUR.get(), duration * 20, vigourAmplifier, false, false));
-			TirednessHelper.set(player, tirednessOnWakeUp);
+			TirednessHandler.set(player, tirednessOnWakeUp);
 		});
 	}
 
@@ -240,7 +240,7 @@ public class Tiredness extends SRFeature {
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public static boolean canSleepDuringDay(Player player) {
 		return isEnabled(Tiredness.class)
-				&& TirednessHelper.get(player) > tirednessToEffect;
+				&& TirednessHandler.get(player) > tirednessToEffect;
 	}
 
 	@SubscribeEvent
@@ -256,7 +256,7 @@ public class Tiredness extends SRFeature {
 		if (!this.isEnabled())
 			return;
 
-		float tiredness = TirednessHelper.get(event.getOriginal());
+		float tiredness = TirednessHandler.get(event.getOriginal());
 		switch (onDeathBehaviour) {
 			case RESET -> tiredness = 0;
 			case KEEP -> {
@@ -272,7 +272,7 @@ public class Tiredness extends SRFeature {
 			}
 		}
 
-		TirednessHelper.set(event.getEntity(), tiredness);
+		TirednessHandler.set(event.getEntity(), tiredness);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -323,7 +323,7 @@ public class Tiredness extends SRFeature {
 	private static void renderTiredness(PoseStack matrixStack, int left, int top) {
 		Player player = (Player)Minecraft.getInstance().getCameraEntity();
 		assert player != null : "Minecraft.getInstance().getCameraEntity() is null";
-		float tiredness = TirednessHelper.get(player);
+		float tiredness = TirednessHandler.get(player);
 		int numberOfZ = 0;
 		if (tiredness < tirednessToSleep) {
 			numberOfZ += tiredness / (tirednessToSleep / 6);
@@ -361,7 +361,7 @@ public class Tiredness extends SRFeature {
 		if (playerEntity == null)
 			return;
 		if (mc.options.renderDebug && !mc.showOnlyReducedInfo()) {
-			event.getLeft().add(String.format("Tiredness: %s", new DecimalFormat("#.#").format(TirednessHelper.get(playerEntity))));
+			event.getLeft().add(String.format("Tiredness: %s", new DecimalFormat("#.#").format(TirednessHandler.get(playerEntity))));
 		}
 	}
 }

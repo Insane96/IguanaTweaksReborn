@@ -244,6 +244,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         Durium.INGOT.get(),
                         800
                 )
+                .experience(1f)
                 .unlockedBy("has_scrap_block", has(Durium.SCRAP_BLOCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_ingot_from_blasting");
         MultiItemSmeltingRecipeBuilder.soulBlasting(
@@ -252,6 +253,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         Durium.INGOT.get(),
                         400
                 )
+                .experience(1f)
                 .doubleOutputChance(0.2f)
                 .unlockedBy("has_scrap_block", has(Durium.SCRAP_BLOCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_ingot_from_soul_blasting");
@@ -278,6 +280,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         SoulSteel.INGOT.get(),
                         800
                 )
+                .experience(2f)
                 .unlockedBy("has_hellish_coal", has(CoalFire.HELLISH_COAL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_ingot_from_blasting");
         MultiItemSmeltingRecipeBuilder.soulBlasting(
@@ -286,6 +289,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         SoulSteel.INGOT.get(),
                         400
                 )
+                .experience(2f)
                 .doubleOutputChance(0.2f)
                 .unlockedBy("has_hellish_coal", has(CoalFire.HELLISH_COAL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_ingot_from_soul_blasting");

@@ -15,7 +15,7 @@ import static insane96mcp.survivalreimagined.module.movement.feature.WeightedEqu
 
 @JsonAdapter(ArmorMaterialWeight.Serializer.class)
 public class ArmorMaterialWeight {
-	public String materialName;
+	public final String materialName;
 	public double totalWeight;
 
 	public ArmorMaterialWeight(String materialName) {

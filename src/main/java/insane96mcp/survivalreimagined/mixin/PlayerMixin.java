@@ -1,10 +1,8 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.effect.Vigour;
 import insane96mcp.survivalreimagined.event.SREventFactory;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.experience.feature.PlayerExperience;
-import insane96mcp.survivalreimagined.module.hungerhealth.feature.ExhaustionIncrease;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
@@ -56,9 +54,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@ModifyVariable(method = "causeFoodExhaustion", argsOnly = true, at = @At("HEAD"))
 	private float applyHungerToFoodExhaustion(float amount) {
-		float newAmount = ExhaustionIncrease.increaseHungerEffectiveness((Player) (Object) this, amount);
-		newAmount = Vigour.decreaseExhaustionConsumption((Player) (Object) this, newAmount);
-		return newAmount;
+		return SREventFactory.onPlayerExhaustionEvent((Player) (Object) this, amount);
 	}
 
 	//Changes efficiency formula
