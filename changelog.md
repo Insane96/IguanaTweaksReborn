@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Invincibility frames are now synced when hit by arrows
+
 ## Alpha 3.10.1
 * Mithril is now Durium
   * Can be made in a Blast Furnace by alloying Durium Scrap Block, Clay and Sand

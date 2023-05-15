@@ -32,7 +32,7 @@ public class Knockback extends Feature {
 	public static final TagKey<Item> REDUCED_KNOCKBACK = SRItemTagsProvider.create("reduced_knockback");
 
 	@Config
-	@Label(name = "No Weapon No Knockback", description = "If true the player will deal no knockback when not using an item that doesn't have the attack damage attribute.")
+	@Label(name = "No Weapon Penalty", description = "If true the player will deal reduced knockback when not using an item that doesn't have the attack damage attribute.")
 	public static Boolean noItemNoKnockback = true;
 
 	@Config(min = 0d, max = 1d)
@@ -71,16 +71,16 @@ public class Knockback extends Feature {
 
 		boolean isInTag = Utils.isItemInTag(itemStack.getItem(), REDUCED_KNOCKBACK);
 
-		boolean preventKnockback = false;
+		boolean reducedKnockback = false;
 		Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(EquipmentSlot.MAINHAND);
 		if ((!attributeModifiers.containsKey(Attributes.ATTACK_DAMAGE) && noItemNoKnockback) || isInTag) {
-			preventKnockback = true;
+			reducedKnockback = true;
 		}
 		int ticksSinceLastSwing = player.getPersistentData().getInt(Strings.Tags.TIME_SINCE_LAST_SWING);
 		float cooldown = Mth.clamp((ticksSinceLastSwing + 0.5f) / player.getCurrentItemAttackStrengthDelay(), 0.0F, 1.0F);
 		if (cooldown <= 0.9f)
-			preventKnockback = true;
-		if (preventKnockback) {
+			reducedKnockback = true;
+		if (reducedKnockback) {
 			if (knockbackReduction == 0d)
 				event.setCanceled(true);
 			else

@@ -2,6 +2,8 @@ package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.survivalreimagined.module.combat.feature.Stats;
+import insane96mcp.survivalreimagined.network.message.SyncInvulnerableTimeMessage;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,8 +20,10 @@ public abstract class AbstractArrowMixin {
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", shift = At.Shift.AFTER), method = "onHitEntity")
     private void onHitEntity(EntityHitResult entityHitResult, CallbackInfo ci) {
-        if (Stats.disableArrowInvFrames())
+        if (Stats.disableArrowInvFrames()) {
             entityHitResult.getEntity().invulnerableTime = 0;
+            SyncInvulnerableTimeMessage.sync((ServerLevel) entityHitResult.getEntity().level, entityHitResult.getEntity(), 0);
+        }
     }
 
     @SuppressWarnings("InvalidInjectorMethodSignature")
