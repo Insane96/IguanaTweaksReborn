@@ -101,7 +101,6 @@ public class TimberTrees extends SRFeature {
             posToCheck.clear();
             for (BlockPos p : posToCheckTmp) {
                 BlockState currState = level.getBlockState(p);
-                //TODO Logs must check radius, instead leaves only directions
                 Iterable<BlockPos> positionsToLoop = getPositionsToCheck(p, currState);
                 for (BlockPos positionToLoop : positionsToLoop) {
                     blockPos.set(positionToLoop);
