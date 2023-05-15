@@ -3,6 +3,7 @@
   "category": "misc",
   "cookingtime": 400,
   "double_output_chance": 0.2,
+  "experience": 1.0,
   "ingredients": [
     {
       "item": "survivalreimagined:durium_scrap_block"
