@@ -32,9 +32,8 @@ public class OtherExperience extends Feature {
 				|| xpBottleBonus == 0)
 			return;
 
-		if (xpBottle.level instanceof ServerLevel) {
+		if (xpBottle.level instanceof ServerLevel)
 			ExperienceOrb.award((ServerLevel)xpBottle.level, xpBottle.position(), xpBottleBonus);
-		}
 	}
 
 	public static boolean isFreeRenaming() {

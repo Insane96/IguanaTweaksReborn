@@ -10,6 +10,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Global Experience", description = "Decrease / Increase every experience point dropped in the world")
@@ -20,13 +21,13 @@ public class GlobalExperience extends Feature {
 
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Global Experience Multiplier", description = "Experience dropped will be multiplied by this value.\nCan be set to 0 to disable experience drop from any source.")
-	public static Double globalMultiplier = 1.25d;
+	public static Double globalMultiplier = 1.30d;
 
 	public GlobalExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onXPOrbDrop(EntityJoinLevelEvent event) {
 		if (!this.isEnabled()
 				|| globalMultiplier == 1.0d
