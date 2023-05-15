@@ -13,9 +13,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -68,8 +71,11 @@ public class UnbreakingOverhaul extends Feature {
 		if (event.getOriginal().getEnchantmentLevel(Enchantments.UNBREAKING) <= 0)
 			return;
 
-		//TODO Use StoredEnchantments instead of Enchantments
 		ItemStack itemStack = new ItemStack(ITEM_FRAGMENT.get());
+		event.getOriginal().getAllEnchantments().forEach((enchantment, lvl) -> {
+			EnchantmentInstance instance = new EnchantmentInstance(enchantment, lvl);
+			EnchantedBookItem.addEnchantment(itemStack, instance);
+		});
 		event.getOriginal().getAllEnchantments().forEach(itemStack::enchant);
 		if (!itemStack.hasTag())
 			itemStack.setTag(new CompoundTag());
@@ -98,7 +104,7 @@ public class UnbreakingOverhaul extends Feature {
 			return;
 		MutableInt cost = new MutableInt(0);
 		ItemStack output = event.getLeft().copy();
-		event.getRight().getAllEnchantments().forEach((enchantment, lvl) -> {
+		EnchantmentHelper.deserializeEnchantments(EnchantedBookItem.getEnchantments(event.getRight())).forEach((enchantment, lvl) -> {
 			if (!enchantment.canEnchant(output))
 				return;
 			switch (enchantment.getRarity()) {
