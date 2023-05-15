@@ -51,6 +51,7 @@ public class BoneMeal extends Feature {
 	@Config(min = 1)
 	@Label(name = "Rich Farmland Extra Ticks", description = "How many extra random ticks does Rich Farmland give to the crop sitting on top?")
 	public static Integer richFarmlandExtraTicks = 3;
+	//TODO Make rich farmland have a rich property set to 7 that goes rich-- when it ticks
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Rich Farmland Chance to Decay", description = "Chance for a Rich farmland to decay back to farmland")
 	public static Double richFarmlandChanceToDecay = 0.05d;

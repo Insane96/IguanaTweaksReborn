@@ -68,6 +68,7 @@ public class UnbreakingOverhaul extends Feature {
 		if (event.getOriginal().getEnchantmentLevel(Enchantments.UNBREAKING) <= 0)
 			return;
 
+		//TODO Use StoredEnchantments instead of Enchantments
 		ItemStack itemStack = new ItemStack(ITEM_FRAGMENT.get());
 		event.getOriginal().getAllEnchantments().forEach(itemStack::enchant);
 		if (!itemStack.hasTag())
@@ -80,6 +81,7 @@ public class UnbreakingOverhaul extends Feature {
 
 	@SubscribeEvent
 	public void onAnvilUpdate(AnvilUpdateEvent event) {
+		//noinspection DataFlowIssue
 		if (!this.isEnabled()
 				|| !enchantedItemFragment
 				|| !event.getRight().is(ITEM_FRAGMENT.get())
@@ -116,6 +118,7 @@ public class UnbreakingOverhaul extends Feature {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onTooltip(ItemTooltipEvent event) {
+		//noinspection DataFlowIssue
 		if (!event.getItemStack().is(ITEM_FRAGMENT.get())
 				|| !event.getItemStack().hasTag()
 				|| !event.getItemStack().getTag().contains("appliable_to"))
