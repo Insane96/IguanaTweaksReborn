@@ -28,7 +28,7 @@ public class PlayerExperience extends Feature {
 	@Label(name = "Dropped Experience on Death", description = """
 						On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this.
 						Due to Minecraft limitations this is incompatible with other mods that change the level scaling (e.g. Allurement's 'Remove level Scaling').""")
-	public static Double droppedExperienceOnDeath = 0.9d;
+	public static Double droppedExperienceOnDeath = 0.85d;
 	@Config(min = -1d, max = 1d)
 	@Label(name = "Pickup XP Faster", description = "Players will pick up experience faster")
 	public static Boolean pickUpFaster = true;

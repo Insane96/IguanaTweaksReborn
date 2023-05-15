@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Invincibility frames are now synced when hit by arrows
+* Reduced experience dropped by players by 5%
 
 ## Alpha 3.10.1
 * Mithril is now Durium
