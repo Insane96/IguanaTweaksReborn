@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 @Label(name = "Gold Absorption", description = "Players with Gold armor and shield will be granted 1 regenerating heart of absorption.")
-@LoadFeature(module = Modules.Ids.COMBAT)
+@LoadFeature(module = Modules.Ids.COMBAT, enabledByDefault = false)
 public class GoldenAbsorption extends Feature {
 
 	private static final String GOLDEN_ABSORPTION = SurvivalReimagined.RESOURCE_PREFIX + "golden_absorption";

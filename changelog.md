@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Disabled Golden Absorption. Gold armor and shield now grant +2 max health
 * Invincibility frames are now synced when hit by arrows
 * Reduced experience dropped by players by 5%
 

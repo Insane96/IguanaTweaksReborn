@@ -178,14 +178,14 @@ public class Stamina extends Feature {
             setColor(0.7f, 0.7f, 0.7f, .7f);
         else
             setColor(1f, 1f, 1f, 0.43f);
-        for (int h = halfHeartsMaxStamina - 1; h >= 0; h--) {
-            if (h < halfHeartsStamina)
+        for (int hp = halfHeartsMaxStamina - 1; hp >= 0; hp--) {
+            if (hp < halfHeartsStamina)
                 continue;
             int v = (int) UV_STAMINA.y;
             int width;
             int u;
             int r = 0;
-            if (h % 2 == 0) {
+            if (hp % 2 == 0) {
                 width = 5;
                 u = (int) UV_STAMINA.x;
             }
@@ -198,7 +198,7 @@ public class Stamina extends Feature {
                 top += random.nextInt(2);
             }*/
 
-            GuiComponent.blit(poseStack, right + (h / 2 * 8) + r, top, u, v, width, height);
+            GuiComponent.blit(poseStack, right + (hp / 2 * 8) + r - (hp / 20 * 80), top - (hp / 20 * 10), u, v, width, height);
         }
         resetColor();
 
