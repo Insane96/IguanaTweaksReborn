@@ -4,6 +4,7 @@
 * Disabled Golden Absorption. Gold armor and shield now grant +2 max health
 * Invincibility frames are now synced when hit by arrows
 * Reduced experience dropped by players by 5%
+* Re-enabled backwards slowdown
 
 ## Alpha 3.10.1
 * Mithril is now Durium

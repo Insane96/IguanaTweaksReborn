@@ -7,6 +7,8 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.network.message.SyncZzaMessage;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.event.TickEvent;
@@ -15,7 +17,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.UUID;
 
 @Label(name = "Backwards slowdown", description = "Player's slowed down when walking backwards.")
-@LoadFeature(module = Modules.Ids.MOVEMENT, enabledByDefault = false)
+@LoadFeature(module = Modules.Ids.MOVEMENT)
 public class BackwardsSlowdown extends Feature {
 
 	private final UUID BACKWARD_WALK_SLOWDOWN_UUID = UUID.fromString("3c085336-5bee-465f-b4a8-6677f245e7fc");
@@ -28,7 +30,6 @@ public class BackwardsSlowdown extends Feature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
-	//TODO Sync to server and re-enable
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
@@ -41,5 +42,7 @@ public class BackwardsSlowdown extends Feature {
 		if (event.player.zza < 0f) {
 			MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, BACKWARD_WALK_SLOWDOWN_UUID, "Survival Reimagined backward slowdown", -slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
+		if (event.player instanceof LocalPlayer localPlayer)
+			SyncZzaMessage.sync(localPlayer, localPlayer.zza);
 	}
 }

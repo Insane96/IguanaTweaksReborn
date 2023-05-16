@@ -34,6 +34,9 @@ public class DesirePaths extends Feature {
 
 	public static ArrayList<BlockTransformation> transformationList;
 
+	@Config(min = 0d, max = 1d)
+	@Label(name = "Chance to transform", description = "Chance for blocks to transform each tick")
+	public static Double chanceToTransform = 0.3d;
 	@Config
 	@Label(name = "Break Tall Grass", description = "Tall grass is broken when grass is transformed")
 	public static Boolean breakTallGrass = true;
@@ -75,7 +78,8 @@ public class DesirePaths extends Feature {
 					if (!blockTransformation.matchesBlock(state.getBlock()))
 						continue;
 
-					if (event.player.getRandom().nextFloat() < 0.05f) {
+					float r = event.player.getRandom().nextFloat();
+					if (r < chanceToTransform.floatValue()) {
 						Block block = ForgeRegistries.BLOCKS.getValue(blockTransformation.transformTo);
 						if (block == null) continue;
 						event.player.level.setBlockAndUpdate(pos, block.defaultBlockState());
