@@ -18,7 +18,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Sleeping and Spawn Point", description = "Changes to sleeping and spawn points")
-@LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
+@LoadFeature(module = Modules.Ids.SLEEP_RESPAWN, enabledByDefault = false)
 public class Sleeping extends Feature {
 
 	@Config

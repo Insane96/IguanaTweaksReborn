@@ -10,9 +10,9 @@ import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.server.packs.PackType;
 
-@Label(name = "Other Materials", description = "Various changes for all the materials that don't require a new feature because too low changes.")
+@Label(name = "Misc Materials", description = "Various changes for different materials.")
 @LoadFeature(module = Modules.Ids.MINING)
-public class OtherMaterials extends Feature {
+public class MiscMaterials extends Feature {
 	@Config
 	@Label(name = "Copper Smelting Data Pack", description = """
 			Enables the following changes to vanilla data pack:
@@ -30,7 +30,7 @@ public class OtherMaterials extends Feature {
 	@Label(name = "Alloying Netherite Data Pack", description = "Enables a data pack that adds a recipe to alloy netherite in a Blast or Soul furnace, requiring less materials")
 	public static Boolean alloyingNetheriteDataPack = true;
 
-	public OtherMaterials(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public MiscMaterials(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_smelting", net.minecraft.network.chat.Component.literal("Survival Reimagined Copper Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperSmeltingDataPack));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "anvil_equipment_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Anvil Equipment Crafting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && anvilEquipmentCrafting));

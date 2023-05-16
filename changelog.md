@@ -13,7 +13,7 @@
   * Can alloy stuff
 * Added Soul Blast Furnaces. An upgraded version of a Blast Furnace
   * Alloys stuff faster
-  * Has 40% chance to output one more ingot  when smelting and 20% when alloying ingots
+  * Has 40% chance to output one more ingot when smelting and 20% when alloying ingots
   * Recycling yelds 100% of materials used
   * Requires lava buckets
   * Has more slots

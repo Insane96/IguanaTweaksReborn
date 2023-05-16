@@ -28,6 +28,7 @@ public class BackwardsSlowdown extends Feature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
+	//TODO Sync to server and re-enable
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()

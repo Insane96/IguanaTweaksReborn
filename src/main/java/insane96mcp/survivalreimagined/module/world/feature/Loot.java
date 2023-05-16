@@ -39,7 +39,7 @@ public class Loot extends Feature {
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "better_loot", net.minecraft.network.chat.Component.literal("Survival Reimagined Better Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && betterStructureLoot));
 	}
 
-	private static final String path = "chest_loot/";
+	private static final String path = "world_loot/";
 
 	private static final List<ResourceLocation> VILLAGERS_LOOT = List.of(
 			new ResourceLocation("minecraft:chests/village/village_armorer"),

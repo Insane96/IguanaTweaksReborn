@@ -43,7 +43,7 @@ public class EnhancedAI extends SRFeature {
         Module.getFeature(SkeletonFleeTarget.class).readConfig(event);
 
         Module.getFeature(SkeletonShoot.class).setConfigOption("Spammer chance", 0d);
-        Module.getFeature(SkeletonFleeTarget.class).readConfig(event);
+        Module.getFeature(SkeletonShoot.class).readConfig(event);
 
         Module.getFeature(ThrowingWeb.class).setConfigOption("Slowness.Amplifier", 1);
         Module.getFeature(ThrowingWeb.class).setConfigOption("Slowness.Stacking Amplifier", false);

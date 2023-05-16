@@ -22,7 +22,7 @@ public class DataPacks extends Feature {
     @Label(name = "Hardcore Torches", description = """
             Changes vanilla torch recipes.
             * Torches can be only made on Campfires early on in the game
-            * With shears you can make 2 torches out of coal
+            * With shears you can make 3 torches out of coal
             * With Fire Charges you can make them later in the game.""")
     public static Boolean hardcoreTorches = true;
 
@@ -54,7 +54,7 @@ public class DataPacks extends Feature {
     public static Boolean disableVillages = true;
 
     @Config
-    @Label(name = "Fishing Loot Changes", description = "If true a datapack will be enabled that changes Loot.")
+    @Label(name = "Fishing Loot Changes", description = "If true a datapack will be enabled that changes fishing Loot.")
     public static Boolean fishingLootChanges = true;
 
     @Config

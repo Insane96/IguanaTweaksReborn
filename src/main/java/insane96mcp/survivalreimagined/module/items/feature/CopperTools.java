@@ -28,11 +28,11 @@ public class CopperTools extends Feature {
 	public static final RegistryObject<Item> HOE = SRItems.REGISTRY.register("copper_hoe", () -> new HoeItem(ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
 	@Config
-	@Label(name = "Disable Crafting recipes in anvil", description = "Disable copper tools recipes.")
-	public static Boolean disableCopperRecipes = true;
+	@Label(name = "Enable crafting recipes in anvil", description = "Disable copper tools recipes.")
+	public static Boolean enableCopperToolsRecipes = true;
 
 	public CopperTools(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_tools_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Copper Tools Crafting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableCopperRecipes));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_tools_crafting", net.minecraft.network.chat.Component.literal("Survival Reimagined Copper Tools Crafting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && enableCopperToolsRecipes));
 	}
 }

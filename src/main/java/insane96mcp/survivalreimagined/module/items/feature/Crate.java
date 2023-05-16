@@ -58,6 +58,7 @@ public class Crate extends Feature {
 		if (cratesInInventory >= slownessAtCrates) {
 			double slowness = (cratesInInventory - (slownessAtCrates - 1)) * slownessPerCrate;
 			MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, CRATE_WEIGHT_UUID, "Crate weight penalty", -slowness, AttributeModifier.Operation.MULTIPLY_BASE, false);
+			//TODO Grant advancement
 		}
 	}
 }
