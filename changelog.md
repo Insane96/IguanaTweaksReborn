@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.10.2
 * Disabled Golden Absorption. Gold armor and shield now grant +2 max health
 * Invincibility frames are now synced when hit by arrows
 * Glass can now break if entities fall on it

@@ -283,7 +283,7 @@ public class Tiredness extends SRFeature {
 				return;
 			assert Minecraft.getInstance().player != null : "Minecraft.getInstance().player is null";
 			boolean isMounted = Minecraft.getInstance().player.getVehicle() instanceof LivingEntity;
-			if (isEnabled(Tiredness.class) && !isMounted && !Minecraft.getInstance().options.hideGui && gui.shouldDrawSurvivalElements())
+			if (isEnabled(Tiredness.class) && !isMounted && gui.shouldDrawSurvivalElements())
 			{
 				gui.setupOverlayRenderState(true, false, SurvivalReimagined.GUI_ICONS);
 				int left = screenWidth / 2 + 91;
