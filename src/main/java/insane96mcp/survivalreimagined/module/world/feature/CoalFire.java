@@ -14,6 +14,7 @@ import insane96mcp.survivalreimagined.module.world.block.HellishCoalOreBlock;
 import insane96mcp.survivalreimagined.module.world.block.PilableLayerBlock;
 import insane96mcp.survivalreimagined.module.world.entity.PilableFallingLayerEntity;
 import insane96mcp.survivalreimagined.module.world.item.FirestarterItem;
+import insane96mcp.survivalreimagined.module.world.item.SimpleFuelItem;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.advancements.critereon.LocationPredicate;
@@ -44,7 +45,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -58,7 +58,7 @@ public class CoalFire extends Feature {
 
     public static final BlockWithItem SOUL_SAND_HELLISH_COAL_ORE = BlockWithItem.register("soul_sand_hellish_coal_ore", () -> new HellishCoalOreBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_SAND).strength(2f).sound(SoundType.SOUL_SAND), UniformInt.of(1, 3)));
     public static final BlockWithItem SOUL_SOIL_HELLISH_COAL_ORE = BlockWithItem.register("soul_soil_hellish_coal_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_SOIL).strength(2f).sound(SoundType.SOUL_SOIL), UniformInt.of(1, 3)));
-    public static final RegistryObject<Item> HELLISH_COAL = SRItems.REGISTRY.register("hellish_coal", () -> new Item(new Item.Properties().fireResistant()));
+    public static final RegistryObject<Item> HELLISH_COAL = SRItems.REGISTRY.register("hellish_coal", () -> new SimpleFuelItem(new Item.Properties().fireResistant(), 2400));
 
     @Config(min = 0d, max = 100)
     @Label(name = "Fire spread speed multiplier", description = "How much faster fire ticks and spreads.")
@@ -196,13 +196,6 @@ public class CoalFire extends Feature {
             return;
 
         event.setNewSpeed(event.getNewSpeed() / 5f);
-    }
-
-    //TODO Move to Item#getBurnTime
-    @SubscribeEvent
-    public void onFurnaceFuelBurnTime(FurnaceFuelBurnTimeEvent event) {
-        if (event.getItemStack().is(HELLISH_COAL.get()))
-            event.setBurnTime(2400);
     }
 
     private static final String path = "coal_fire/";
