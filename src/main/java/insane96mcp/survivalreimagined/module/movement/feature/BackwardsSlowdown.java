@@ -42,7 +42,7 @@ public class BackwardsSlowdown extends Feature {
 		if (event.player.zza < 0f) {
 			MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, BACKWARD_WALK_SLOWDOWN_UUID, "Survival Reimagined backward slowdown", -slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
-		if (event.player instanceof LocalPlayer localPlayer)
+		if (event.player instanceof LocalPlayer localPlayer && localPlayer.tickCount % 2 == 0)
 			SyncZzaMessage.sync(localPlayer, localPlayer.zza);
 	}
 }
