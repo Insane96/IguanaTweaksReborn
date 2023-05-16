@@ -36,7 +36,7 @@ public class DesirePaths extends Feature {
 
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Chance to transform", description = "Chance for blocks to transform each tick")
-	public static Double chanceToTransform = 0.3d;
+	public static Double chanceToTransform = 0.04d;
 	@Config
 	@Label(name = "Break Tall Grass", description = "Tall grass is broken when grass is transformed")
 	public static Boolean breakTallGrass = true;
@@ -70,22 +70,22 @@ public class DesirePaths extends Feature {
 		AABB bb = event.player.getBoundingBox();
 		int mX = Mth.floor(bb.minX);
 		int mZ = Mth.floor(bb.minZ);
+		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 		for (int x2 = mX; x2 < bb.maxX; x2++) {
 			for (int z2 = mZ; z2 < bb.maxZ; z2++) {
-				BlockPos pos = event.player.getOnPos();
+				pos.set(x2, event.player.position().y - 1.0E-5F, z2);
 				BlockState state = event.player.level.getBlockState(pos);
 				for (BlockTransformation blockTransformation : transformationList) {
 					if (!blockTransformation.matchesBlock(state.getBlock()))
 						continue;
 
-					float r = event.player.getRandom().nextFloat();
-					if (r < chanceToTransform.floatValue()) {
+					if (event.player.getRandom().nextFloat() < chanceToTransform.floatValue()) {
 						Block block = ForgeRegistries.BLOCKS.getValue(blockTransformation.transformTo);
 						if (block == null) continue;
 						event.player.level.setBlockAndUpdate(pos, block.defaultBlockState());
 
 						if (!breakTallGrass) continue;
-						pos = BlockPos.containing(x2, event.player.position().y + 0.002d, z2);
+						pos.set(x2, event.player.position().y + 0.002d, z2);
 						state = event.player.level.getBlockState(pos);
 						if (Utils.isBlockInTag(state.getBlock(), TALL_GRASS)) {
 							event.player.level.destroyBlock(pos, false, event.player);
