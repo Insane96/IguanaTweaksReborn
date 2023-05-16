@@ -8,10 +8,12 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
+import insane96mcp.survivalreimagined.data.trigger.MakeRichFarmlandTrigger;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.block.RichFarmlandBlock;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -93,6 +95,7 @@ public class BoneMeal extends Feature {
 				event.getEntity().swing(event.getEntity().getMainHandItem().getItem() == event.getStack().getItem() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, true);
 				event.setResult(Event.Result.ALLOW);
 				hasRichedFarmland = true;
+				MakeRichFarmlandTrigger.TRIGGER.trigger((ServerPlayer) event.getEntity());
 			}
 		}
 		if (!hasRichedFarmland) {

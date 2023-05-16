@@ -14,28 +14,15 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/smoker",
+	"parent": "survivalreimagined:story/durium_ingot",
 	"criteria": {
-		"crate": {
-			"trigger": "minecraft:inventory_changed",
-			"conditions": {
-				"items": [
-					{
-						"items": [
-							"survivalreimagined:crate"
-						],
-						"count": {
-							"min": 2,
-							"max": 64
-						}
-					}
-				]
-			}
+		"overweight": {
+			"trigger": "survivalreimagined:overweight_crate_carry"
 		}
 	},
 	"requirements": [
 		[
-			"crate"
+			"overweight"
 		]
 	]
 }

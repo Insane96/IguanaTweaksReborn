@@ -29,7 +29,7 @@ public class RichFarmlandBlock extends FarmBlock {
     public static final int MAX_RICHNESS = 7;
     public RichFarmlandBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(MOISTURE, 0).setValue(RICHNESS, 7));
+        this.registerDefaultState(this.stateDefinition.any().setValue(MOISTURE, 0).setValue(RICHNESS, MAX_RICHNESS));
     }
 
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {

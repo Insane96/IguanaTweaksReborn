@@ -17,23 +17,7 @@
 	"parent": "survivalreimagined:story/furnace",
 	"criteria": {
 		"rich_farmland": {
-			"trigger": "minecraft:using_item",
-			"conditions": {
-				"player": [
-					{
-						"condition": "minecraft:block_state_property",
-						"block": "minecraft:farmland",
-						"properties": {
-							"moisture": "7"
-						}
-					}
-				],
-				"item": {
-					"items": [
-						"minecraft:bone_meal"
-					]
-				}
-			}
+			"trigger": "survivalreimagined:make_rich_farmland"
 		}
 	},
 	"requirements": [

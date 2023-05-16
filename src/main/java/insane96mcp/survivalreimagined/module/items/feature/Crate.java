@@ -7,10 +7,12 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.base.BlockWithItem;
+import insane96mcp.survivalreimagined.data.trigger.OverweightCrateCarryTrigger;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.block.CrateBlock;
 import insane96mcp.survivalreimagined.module.items.block.CrateBlockEntity;
 import insane96mcp.survivalreimagined.setup.SRBlockEntityTypes;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -58,7 +60,8 @@ public class Crate extends Feature {
 		if (cratesInInventory >= slownessAtCrates) {
 			double slowness = (cratesInInventory - (slownessAtCrates - 1)) * slownessPerCrate;
 			MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, CRATE_WEIGHT_UUID, "Crate weight penalty", -slowness, AttributeModifier.Operation.MULTIPLY_BASE, false);
-			//TODO Grant advancement
+			if (event.player.tickCount % 20 == 4 && event.player instanceof ServerPlayer serverPlayer)
+				OverweightCrateCarryTrigger.TRIGGER.trigger(serverPlayer);
 		}
 	}
 }
