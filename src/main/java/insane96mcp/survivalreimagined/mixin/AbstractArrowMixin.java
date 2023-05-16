@@ -22,7 +22,8 @@ public abstract class AbstractArrowMixin {
     private void onHitEntity(EntityHitResult entityHitResult, CallbackInfo ci) {
         if (Stats.disableArrowInvFrames()) {
             entityHitResult.getEntity().invulnerableTime = 0;
-            SyncInvulnerableTimeMessage.sync((ServerLevel) entityHitResult.getEntity().level, entityHitResult.getEntity(), 0);
+            if (!entityHitResult.getEntity().isInvulnerable() && entityHitResult.getEntity().level instanceof ServerLevel serverLevel)
+                SyncInvulnerableTimeMessage.sync(serverLevel, entityHitResult.getEntity(), 2);
         }
     }
 

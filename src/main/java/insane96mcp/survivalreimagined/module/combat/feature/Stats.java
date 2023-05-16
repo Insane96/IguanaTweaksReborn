@@ -236,7 +236,7 @@ public class Stats extends SRFeature {
 									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount)), Component.translatable(attribute.getDescriptionId()));
 							}
 							case MULTIPLY_BASE -> {
-								component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount * 100)) + "%", Component.translatable(attribute.getDescriptionId()));
+								component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount * 100)), Component.translatable(attribute.getDescriptionId()));
 							}
 							case MULTIPLY_TOTAL -> {
 								component = Component.literal("x").append(Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount) + 1), Component.translatable(attribute.getDescriptionId())));

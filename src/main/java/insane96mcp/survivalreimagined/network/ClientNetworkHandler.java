@@ -14,6 +14,8 @@ public class ClientNetworkHandler {
         executor.tell(new TickTask(0, () -> {
             Level level = Minecraft.getInstance().level;
             LivingEntity entity = (LivingEntity) level.getEntity(entityId);
+            if (entity == null)
+                return;
             entity.invulnerableTime = invulnerableTime;
             entity.hurtTime = invulnerableTime;
         }));
