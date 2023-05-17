@@ -39,6 +39,7 @@
 	"effect.survivalreimagined.vigour.description": "Decreases hunger consumption by 20% per level.",
 
 	"survivalreimagined.food_stats": "%.1f Health / %.1f sec",
+	"survivalreimagined.food_stats_percentage": "%.0f%% Missing Health",
 
 	"container.repair.free": "No Cost",
 	"survivalreimagined.item_repaired": "Item got repaired",

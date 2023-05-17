@@ -33,6 +33,7 @@
 	"effect.survivalreimagined.vigour.description": "Riduce il consumo della barra della fame del 20% per livello.",
 
 	"survivalreimagined.food_stats": "%.1f Vita / %.1f sec",
+	"survivalreimagined.food_stats_percentage": "%.0f%% Vita Mancante",
 
 	"container.repair.free": "Nessun costo",
 	"survivalreimagined.item_repaired": "L'oggetto é stato riparato",

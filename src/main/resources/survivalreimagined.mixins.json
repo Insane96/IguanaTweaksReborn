@@ -12,6 +12,7 @@
         "BaseSpawnerMixin",
         "BeaconBlockEntityMixin",
         "BoatMixin",
+        "CakeBlockMixin",
         "CampfireBlockMixin",
         "ConduitBlockEntityMixin",
         "DigDurabilityEnchantmentMixin",

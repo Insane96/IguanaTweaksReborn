@@ -10,6 +10,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
+import insane96mcp.survivalreimagined.event.CakeEatEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.movement.feature.Stamina;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
@@ -32,6 +33,8 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -44,6 +47,7 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
+import org.jetbrains.annotations.Nullable;
 
 @Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
@@ -54,6 +58,7 @@ public class NoHunger extends Feature {
     private static final String FOOD_REGEN_STRENGTH = SurvivalReimagined.RESOURCE_PREFIX + "food_regen_strength";
 
     private static final String FOOD_STATS_TRANSLATABLE = SurvivalReimagined.MOD_ID + ".food_stats";
+    private static final String FOOD_STATS_PERCENTAGE_TRANSLATABLE = SurvivalReimagined.MOD_ID + ".food_stats_percentage";
 
     public static final TagKey<Item> RAW_FOOD = SRItemTagsProvider.create("raw_food");
 
@@ -83,6 +88,10 @@ public class NoHunger extends Feature {
     @Config
     @Label(name = "Render armor at Hunger", description = "(Client Only) Armor is rendered at the place of Hunger bar")
     public static Boolean renderArmorAtHunger = true;
+
+    @Config
+    @Label(name = "Buff cakes", description = "Make cakes restore 40% missing health")
+    public static Boolean buffCakes = true;
 
     public NoHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -133,25 +142,37 @@ public class NoHunger extends Feature {
     public void onPlayerEat(LivingEntityUseItemEvent.Finish event) {
         if (!this.isEnabled()
                 || !event.getItem().isEdible()
-                || !(event.getEntity() instanceof Player)
+                || !(event.getEntity() instanceof Player player)
                 || event.getEntity().level.isClientSide)
             return;
 
-        healOnEat(event);
+        Item item = event.getItem().getItem();
+        healOnEat(player, item, item.getFoodProperties(event.getItem(), player));
+    }
+
+    private static final FoodProperties CAKE_FOOD_PROPERTIES = new FoodProperties.Builder().nutrition(2).saturationMod(0.1f).build();
+
+    @SubscribeEvent
+    public void onCakeEat(CakeEatEvent event) {
+        if (!this.isEnabled()
+                || ((Level)event.getLevel()).isClientSide)
+            return;
+
+        healOnEat(event.getEntity(), null, CAKE_FOOD_PROPERTIES);
     }
 
     @SuppressWarnings("ConstantConditions")
-    public void healOnEat(LivingEntityUseItemEvent.Finish event) {
-        if (foodHealHealthMultiplier == 0d
-                || !(event.getEntity() instanceof Player player))
+    public void healOnEat(Player player, @Nullable Item item, FoodProperties foodProperties) {
+        if (foodHealHealthMultiplier == 0d)
             return;
-        FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), player);
-        boolean isRawFood = isRawFood(event.getItem().getItem());
+        boolean isRawFood = item != null && isRawFood(item);
         if (player.getRandom().nextDouble() < rawFoodPoisonChance && isRawFood) {
-            player.addEffect(new MobEffectInstance(MobEffects.POISON, food.getNutrition() * 20 * 3));
+            player.addEffect(new MobEffectInstance(MobEffects.POISON, foodProperties.getNutrition() * 20 * 3));
         }
 
-        float heal = getFoodHealing(food);
+        float heal = getFoodHealing(foodProperties);
+        if (buffCakes && item == null)
+            heal = (player.getMaxHealth() - player.getHealth()) * 0.4f;
         if (isRawFood && rawFoodHealPercentage != 1d)
             heal *= rawFoodHealPercentage;
 
@@ -159,7 +180,7 @@ public class NoHunger extends Feature {
             player.heal(heal);
         }
         else {
-            float strength = getFoodHealingStrength(food) / 20f;
+            float strength = getFoodHealingStrength(foodProperties) / 20f;
             setFoodRegenLeft(player, heal);
             setFoodRegenStrength(player, strength);
         }
@@ -327,8 +348,10 @@ public class NoHunger extends Feature {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onTooltip(ItemTooltipEvent event) {
+        boolean isCake = event.getItemStack().is(Items.CAKE);
+
         if (!this.isEnabled()
-                || !event.getItemStack().getItem().isEdible())
+                || (!event.getItemStack().getItem().isEdible() && !isCake))
             return;
 
         Minecraft mc = Minecraft.getInstance();
@@ -337,12 +360,21 @@ public class NoHunger extends Feature {
             return;
 
         if (!mc.options.reducedDebugInfo().get() && mc.options.advancedItemTooltips) {
-            FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
+            FoodProperties food;
+            if (isCake)
+                food = CAKE_FOOD_PROPERTIES;
+            else
+                food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
             //noinspection ConstantConditions
             float heal = getFoodHealing(food);
+            if (buffCakes && isCake)
+                heal = (playerEntity.getMaxHealth() - playerEntity.getHealth()) * 0.4f;
             //Half heart per second by default
             float strength = getFoodHealingStrength(food);
-            event.getToolTip().add(Component.translatable(FOOD_STATS_TRANSLATABLE, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal), SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
+            if (buffCakes && isCake)
+                event.getToolTip().add(Component.translatable(FOOD_STATS_PERCENTAGE_TRANSLATABLE, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(40f)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+            else
+                event.getToolTip().add(Component.translatable(FOOD_STATS_TRANSLATABLE, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal), SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
         }
     }
 }
