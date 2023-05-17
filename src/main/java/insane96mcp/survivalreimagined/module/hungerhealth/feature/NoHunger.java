@@ -172,7 +172,7 @@ public class NoHunger extends Feature {
 
         float heal = getFoodHealing(foodProperties);
         if (buffCakes && item == null)
-            heal = (player.getMaxHealth() - player.getHealth()) * 0.4f;
+            heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.4f, 1f);
         if (isRawFood && rawFoodHealPercentage != 1d)
             heal *= rawFoodHealPercentage;
 
@@ -284,7 +284,7 @@ public class NoHunger extends Feature {
         mc.getProfiler().push("armor");
 
         RenderSystem.enableBlend();
-        int left = width / 2 + 83;
+        int left = width / 2 + 82;
         int top = height - gui.rightHeight;
 
         int level = mc.player.getArmorValue();
@@ -367,8 +367,6 @@ public class NoHunger extends Feature {
                 food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
             //noinspection ConstantConditions
             float heal = getFoodHealing(food);
-            if (buffCakes && isCake)
-                heal = (playerEntity.getMaxHealth() - playerEntity.getHealth()) * 0.4f;
             //Half heart per second by default
             float strength = getFoodHealingStrength(food);
             if (buffCakes && isCake)

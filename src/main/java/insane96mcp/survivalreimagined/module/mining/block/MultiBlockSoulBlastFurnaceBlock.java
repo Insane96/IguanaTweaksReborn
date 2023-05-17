@@ -37,6 +37,7 @@ public class MultiBlockSoulBlastFurnaceBlock extends AbstractMultiBlockFurnace {
             new AbstractMap.SimpleEntry<>(new Vec3i(-1, -1, 1), BOTTOM_BLOCKS_TAG),
             new AbstractMap.SimpleEntry<>(new Vec3i(0, -1, -1), BOTTOM_BLOCKS_TAG),
             new AbstractMap.SimpleEntry<>(new Vec3i(0, -1, 1), BOTTOM_BLOCKS_TAG),
+            new AbstractMap.SimpleEntry<>(new Vec3i(0, -1, 0), BOTTOM_BLOCKS_TAG),
             new AbstractMap.SimpleEntry<>(new Vec3i(1, -1, -1), BOTTOM_BLOCKS_TAG),
             new AbstractMap.SimpleEntry<>(new Vec3i(1, -1, 0), BOTTOM_BLOCKS_TAG),
             new AbstractMap.SimpleEntry<>(new Vec3i(1, -1, 1), BOTTOM_BLOCKS_TAG),

@@ -21,6 +21,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -38,6 +39,7 @@ import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -134,6 +136,45 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
         }
         if (!pBlockEntity.isValid)
             return;
+
+        if (pLevel.getGameTime() % 20 == 12) {
+            BlockPos posBehind = pPos.relative(pState.getValue(AbstractMultiBlockFurnace.FACING).getOpposite()).above();
+            AABB aabb = new AABB(posBehind.getX(), posBehind.getY(), posBehind.getZ(), posBehind.getX() + 1f, posBehind.getY() + 1f, posBehind.getZ() + 1f);
+            List<ItemEntity> entitiesOfClass = pLevel.getEntitiesOfClass(ItemEntity.class, aabb);
+            if (!entitiesOfClass.isEmpty()) {
+                ItemEntity itemEntity = entitiesOfClass.get(0);
+                ItemStack itemStack = itemEntity.getItem();
+
+                int[] inventorySlots = new int[0];
+                if (pBlockEntity instanceof MultiBlockBlastFurnaceBlockEntity)
+                    inventorySlots = MultiBlockBlastFurnaceMenu.getIngredientSlots();
+                else if (pBlockEntity instanceof MultiBlockSoulBlastFurnaceBlockEntity)
+                    inventorySlots = MultiBlockSoulBlastFurnaceMenu.getIngredientSlots();
+
+                for (int slot = 0; slot < inventorySlots.length && !itemStack.isEmpty(); ++slot) {
+                    ItemStack destinationStack = pBlockEntity.getItem(slot);
+                    boolean hasPlacedItem = false;
+                    if (destinationStack.isEmpty()) {
+                        pBlockEntity.setItem(slot, itemStack);
+                        itemStack = ItemStack.EMPTY;
+                        hasPlacedItem = true;
+                    }
+                    else if (canMergeItems(destinationStack, itemStack)) {
+                        int placeableItemsCount = itemStack.getMaxStackSize() - destinationStack.getCount();
+                        int actuallyPlaceableItemsCount = Math.min(itemStack.getCount(), placeableItemsCount);
+                        itemStack.shrink(actuallyPlaceableItemsCount);
+                        destinationStack.grow(actuallyPlaceableItemsCount);
+                        hasPlacedItem = actuallyPlaceableItemsCount > 0;
+                    }
+
+                    if (hasPlacedItem)
+                        pBlockEntity.setChanged();
+                }
+                if (itemStack.isEmpty())
+                    itemEntity.discard();
+            }
+        }
+
         boolean flag = pBlockEntity.isLit();
         boolean flag1 = false;
         if (pBlockEntity.isLit()) {
@@ -261,6 +302,16 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
 
     private static int getTotalCookTime(Level pLevel, AbstractMultiBlockFurnaceBlockEntity pBlockEntity) {
         return pBlockEntity.quickCheck.getRecipeFor(pBlockEntity, pLevel).map(AbstractMultiItemSmeltingRecipe::getCookingTime).orElse(BURN_TIME_STANDARD);
+    }
+
+    private static boolean canMergeItems(ItemStack stack1, ItemStack stack2) {
+        if (!stack1.is(stack2.getItem())
+                || stack1.getDamageValue() != stack2.getDamageValue()) {
+            return false;
+        }
+        else {
+            return stack1.getCount() <= stack1.getMaxStackSize() && ItemStack.tagMatches(stack1, stack2);
+        }
     }
 
     @Override
