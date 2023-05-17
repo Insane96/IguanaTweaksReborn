@@ -4,14 +4,14 @@
         "width": {
             "type": "minecraft:uniform",
             "value": {
-                "max_inclusive": 10,
-                "min_inclusive": 6
+                "max_inclusive": 15,
+                "min_inclusive": 10
             }
         },
         "height": {
             "type": "minecraft:uniform",
             "value": {
-                "max_inclusive": 18,
+                "max_inclusive": 20,
                 "min_inclusive": 15
             }
         },

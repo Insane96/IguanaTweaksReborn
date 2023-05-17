@@ -6,6 +6,7 @@
 * Glass can now break if entities fall on it
 * Re-enabled backwards slowdown
 * Reduced experience dropped by players by 5%
+* Increased beeg veins size
 
 ## Alpha 3.10.1
 * Mithril is now Durium

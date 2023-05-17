@@ -4,15 +4,15 @@
         "width": {
             "type": "minecraft:uniform",
             "value": {
-                "max_inclusive": 13,
-                "min_inclusive": 10
+                "max_inclusive": 17,
+                "min_inclusive": 12
             }
         },
         "height": {
             "type": "minecraft:uniform",
             "value": {
-                "max_inclusive": 13,
-                "min_inclusive": 10
+                "max_inclusive": 17,
+                "min_inclusive": 12
             }
         },
         "discard_chance_on_air_exposure": 0.5,
