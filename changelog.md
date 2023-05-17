@@ -1,6 +1,8 @@
 # Changelog
 
 ## 3.10.2
+* Added Better ladders
+  * Descend faster and crouch when inventory is open
 * Each cake bite now restores 40% of missing health
 * Disabled Golden Absorption. Gold armor and shield now grant +2 max health
 * Invincibility frames are now synced when hit by arrows

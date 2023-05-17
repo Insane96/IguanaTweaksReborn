@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.network.message.SyncZzaMessage;
+import insane96mcp.survivalreimagined.network.message.SyncMovementDirection;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -43,6 +43,6 @@ public class BackwardsSlowdown extends Feature {
 			MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, BACKWARD_WALK_SLOWDOWN_UUID, "Survival Reimagined backward slowdown", -slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
 		if (event.player instanceof LocalPlayer localPlayer && localPlayer.tickCount % 2 == 0)
-			SyncZzaMessage.sync(localPlayer, localPlayer.zza);
+			SyncMovementDirection.sync(localPlayer);
 	}
 }
