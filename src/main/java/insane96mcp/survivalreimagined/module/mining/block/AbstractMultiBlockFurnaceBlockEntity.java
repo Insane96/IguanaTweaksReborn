@@ -137,46 +137,8 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
         if (!pBlockEntity.isValid)
             return;
 
-        if (pLevel.getGameTime() % 20 == 12) {
-            BlockPos posBehind = pPos.relative(pState.getValue(AbstractMultiBlockFurnace.FACING).getOpposite()).above();
-            AABB aabb = new AABB(posBehind.getX(), posBehind.getY(), posBehind.getZ(), posBehind.getX() + 1f, posBehind.getY() + 1f, posBehind.getZ() + 1f);
-            List<ItemEntity> entitiesOfClass = pLevel.getEntitiesOfClass(ItemEntity.class, aabb);
-            if (!entitiesOfClass.isEmpty()) {
-                ItemEntity itemEntity = entitiesOfClass.get(0);
-                ItemStack itemStack = itemEntity.getItem();
-
-                int[] inventorySlots = new int[0];
-                if (pBlockEntity instanceof MultiBlockBlastFurnaceBlockEntity)
-                    inventorySlots = MultiBlockBlastFurnaceMenu.getIngredientSlots();
-                else if (pBlockEntity instanceof MultiBlockSoulBlastFurnaceBlockEntity)
-                    inventorySlots = MultiBlockSoulBlastFurnaceMenu.getIngredientSlots();
-
-                for (int slot = 0; slot < inventorySlots.length && !itemStack.isEmpty(); ++slot) {
-                    ItemStack destinationStack = pBlockEntity.getItem(slot);
-                    boolean hasPlacedItem = false;
-                    if (destinationStack.isEmpty()) {
-                        pBlockEntity.setItem(slot, itemStack);
-                        itemStack = ItemStack.EMPTY;
-                        hasPlacedItem = true;
-                    }
-                    else if (canMergeItems(destinationStack, itemStack)) {
-                        int placeableItemsCount = itemStack.getMaxStackSize() - destinationStack.getCount();
-                        int actuallyPlaceableItemsCount = Math.min(itemStack.getCount(), placeableItemsCount);
-                        itemStack.shrink(actuallyPlaceableItemsCount);
-                        destinationStack.grow(actuallyPlaceableItemsCount);
-                        hasPlacedItem = actuallyPlaceableItemsCount > 0;
-                    }
-
-                    if (hasPlacedItem)
-                        pBlockEntity.setChanged();
-                }
-                if (itemStack.isEmpty())
-                    itemEntity.discard();
-            }
-        }
-
-        boolean flag = pBlockEntity.isLit();
-        boolean flag1 = false;
+        boolean isLit = pBlockEntity.isLit();
+        boolean setChanged = false;
         if (pBlockEntity.isLit()) {
             --pBlockEntity.litTime;
         }
@@ -208,7 +170,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
                 pBlockEntity.litTime = pBlockEntity.getBurnDuration(fuelStack);
                 pBlockEntity.litDuration = pBlockEntity.litTime;
                 if (pBlockEntity.isLit()) {
-                    flag1 = true;
+                    setChanged = true;
                     if (fuelStack.hasCraftingRemainingItem())
                         pBlockEntity.items.set(FUEL_SLOT, fuelStack.getCraftingRemainingItem());
                     else
@@ -230,7 +192,43 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
                         pBlockEntity.setRecipeUsed(recipe);
                     }
 
-                    flag1 = true;
+                    setChanged = true;
+
+                    BlockPos posBehind = pPos.relative(pState.getValue(AbstractMultiBlockFurnace.FACING).getOpposite()).above();
+                    AABB aabb = new AABB(posBehind.getX(), posBehind.getY(), posBehind.getZ(), posBehind.getX() + 1f, posBehind.getY() + 1f, posBehind.getZ() + 1f);
+                    List<ItemEntity> entitiesOfClass = pLevel.getEntitiesOfClass(ItemEntity.class, aabb);
+                    if (!entitiesOfClass.isEmpty()) {
+                        ItemEntity itemEntity = entitiesOfClass.get(0);
+                        ItemStack itemStack = itemEntity.getItem();
+
+                        int[] inventorySlots = new int[0];
+                        if (pBlockEntity instanceof MultiBlockBlastFurnaceBlockEntity)
+                            inventorySlots = MultiBlockBlastFurnaceMenu.getIngredientSlots();
+                        else if (pBlockEntity instanceof MultiBlockSoulBlastFurnaceBlockEntity)
+                            inventorySlots = MultiBlockSoulBlastFurnaceMenu.getIngredientSlots();
+
+                        for (int slot = 0; slot < inventorySlots.length && !itemStack.isEmpty(); ++slot) {
+                            ItemStack destinationStack = pBlockEntity.getItem(slot);
+                            boolean hasPlacedItem = false;
+                            if (destinationStack.isEmpty()) {
+                                pBlockEntity.setItem(slot, itemStack);
+                                itemStack = ItemStack.EMPTY;
+                                hasPlacedItem = true;
+                            }
+                            else if (canMergeItems(destinationStack, itemStack)) {
+                                int placeableItemsCount = itemStack.getMaxStackSize() - destinationStack.getCount();
+                                int actuallyPlaceableItemsCount = Math.min(itemStack.getCount(), placeableItemsCount);
+                                itemStack.shrink(actuallyPlaceableItemsCount);
+                                destinationStack.grow(actuallyPlaceableItemsCount);
+                                hasPlacedItem = actuallyPlaceableItemsCount > 0;
+                            }
+
+                            if (hasPlacedItem)
+                                pBlockEntity.setChanged();
+                        }
+                        if (itemStack.isEmpty())
+                            itemEntity.discard();
+                    }
                 }
             } else {
                 pBlockEntity.cookingProgress = 0;
@@ -239,13 +237,13 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
             pBlockEntity.cookingProgress = Mth.clamp(pBlockEntity.cookingProgress - 2, 0, pBlockEntity.cookingTotalTime);
         }
 
-        if (flag != pBlockEntity.isLit()) {
-            flag1 = true;
+        if (isLit != pBlockEntity.isLit()) {
+            setChanged = true;
             pState = pState.setValue(AbstractFurnaceBlock.LIT, pBlockEntity.isLit());
             pLevel.setBlock(pPos, pState, 3);
         }
 
-        if (flag1) {
+        if (setChanged) {
             setChanged(pLevel, pPos, pState);
         }
 
