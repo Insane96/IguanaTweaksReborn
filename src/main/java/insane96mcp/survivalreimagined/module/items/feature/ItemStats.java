@@ -62,6 +62,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:carrot_on_a_stick", 63),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:fishing_rod", 33),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shears", 119),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:trident", 375),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_helmet", 18),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_chestplate", 24),
