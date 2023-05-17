@@ -6,6 +6,7 @@
 * Each cake bite now restores 40% of missing health
 * Disabled Golden Absorption. Gold armor and shield now grant +2 max health
 * Multiblock furnaces now pick up items from the inside of the structure everytime an item has finished smelting
+* Falling onto a ladder no longer cancels fall damage
 * Invincibility frames are now synced when hit by arrows
 * Glass can now break if entities fall on it
 * Re-enabled backwards slowdown

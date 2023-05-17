@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public class LivingEntityMixin {
+public abstract class LivingEntityMixin {
 
     @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isSprinting()Z"), method = "jumpFromGround")
     public boolean onSprintJumpCheck(LivingEntity instance) {
@@ -31,5 +31,12 @@ public class LivingEntityMixin {
     @Inject(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;gameEvent(Lnet/minecraft/world/level/gameevent/GameEvent;)V"))
     private void onPostDamage(DamageSource damageSource, float amount, CallbackInfo ci) {
         SREventFactory.onPostHurtEntity((LivingEntity)(Object)this, damageSource, amount);
+    }
+
+    @Redirect(method = "handleOnClimbable", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;resetFallDistance()V"))
+    public void onResetFallDamageOnClimbables(LivingEntity instance) {
+        if (instance.fallDistance > 0f)
+            instance.causeFallDamage(instance.fallDistance, 1f, instance.damageSources().fall());
+        instance.resetFallDistance();
     }
 }
