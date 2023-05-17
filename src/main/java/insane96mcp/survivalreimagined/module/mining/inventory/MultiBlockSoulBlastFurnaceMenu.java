@@ -13,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 
 import java.util.List;
-import java.util.Optional;
 
 public class MultiBlockSoulBlastFurnaceMenu extends AbstractMultiBlockFurnaceMenu {
 
@@ -42,8 +41,7 @@ public class MultiBlockSoulBlastFurnaceMenu extends AbstractMultiBlockFurnaceMen
 
     @Override
     protected boolean canSmelt(ItemStack pStack) {
-        Optional<AbstractMultiItemSmeltingRecipe> recipe = this.level.getRecipeManager().getRecipeFor((RecipeType<AbstractMultiItemSmeltingRecipe>)this.recipeType, new SimpleContainer(pStack), this.level);
-        return recipe.isPresent();
+        return this.level.getRecipeManager().getAllRecipesFor((RecipeType<AbstractMultiItemSmeltingRecipe>)this.recipeType).stream().anyMatch(recipe -> recipe.hasIngredient(pStack, this.level));
     }
 
     public static int[] getIngredientSlots() {

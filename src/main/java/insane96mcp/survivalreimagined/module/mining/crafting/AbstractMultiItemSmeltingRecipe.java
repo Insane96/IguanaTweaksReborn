@@ -71,6 +71,14 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
         return true;
     }
 
+    public boolean hasIngredient(ItemStack stack, Level pLevel) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.test(stack))
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public ItemStack assemble(Container container, RegistryAccess registryAccess) {
         ItemStack stack = this.result.copy();

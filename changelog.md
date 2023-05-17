@@ -7,6 +7,7 @@
 * Re-enabled backwards slowdown
 * Reduced experience dropped by players by 5%
 * Increased beeg veins size
+* Increased Trident durability
 
 ## Alpha 3.10.1
 * Mithril is now Durium

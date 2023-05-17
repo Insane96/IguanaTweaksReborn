@@ -2,7 +2,6 @@ package insane96mcp.survivalreimagined.module.mining.inventory;
 
 import insane96mcp.survivalreimagined.module.mining.crafting.AbstractMultiItemSmeltingRecipe;
 import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -171,7 +170,7 @@ public abstract class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Conta
     }
 
     protected boolean canSmelt(ItemStack pStack) {
-        return this.level.getRecipeManager().getRecipeFor((RecipeType<AbstractMultiItemSmeltingRecipe>)this.recipeType, new SimpleContainer(pStack), this.level).isPresent();
+        return this.level.getRecipeManager().getAllRecipesFor((RecipeType<AbstractMultiItemSmeltingRecipe>)this.recipeType).stream().anyMatch(recipe -> recipe.hasIngredient(pStack, this.level));
     }
 
     public int getBurnProgress() {
