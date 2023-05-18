@@ -46,7 +46,8 @@ public abstract class AbstractMultiBlockFurnace extends BaseEntityBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (pLevel.isClientSide) {
             return InteractionResult.SUCCESS;
-        } else {
+        }
+        else {
             this.openContainer(pLevel, pPos, pPlayer);
             return InteractionResult.CONSUME;
         }
