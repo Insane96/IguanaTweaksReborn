@@ -1,8 +1,11 @@
 package insane96mcp.survivalreimagined.module.mining.inventory;
 
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.mining.block.ForgeBlockEntity;
 import insane96mcp.survivalreimagined.module.mining.crafting.ForgeRecipe;
+import insane96mcp.survivalreimagined.module.mining.feature.Forging;
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -28,10 +31,14 @@ public class ForgeMenu extends RecipeBookMenu<Container> {
     final RecipeType<? extends ForgeRecipe> recipeType;
     private final RecipeBookType recipeBookType;
 
-    protected ForgeMenu(MenuType<?> pMenuType, RecipeType<? extends ForgeRecipe> pRecipeType, RecipeBookType pRecipeBookType, int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData pData) {
-        super(pMenuType, pContainerId);
-        this.recipeType = pRecipeType;
-        this.recipeBookType = pRecipeBookType;
+    public ForgeMenu(int pContainerId, Inventory pPlayerInventory) {
+        this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(DATA_COUNT));
+    }
+
+    public ForgeMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData pData) {
+        super(Forging.FORGE_MENU_TYPE.get(), pContainerId);
+        this.recipeType = Forging.FORGE_RECIPE_TYPE.get();
+        this.recipeBookType = SurvivalReimagined.FORGING_RECIPE_BOOK_TYPE;
         checkContainerSize(pContainer, SLOT_COUNT);
         checkContainerDataCount(pData, DATA_COUNT);
         this.container = pContainer;
@@ -39,8 +46,8 @@ public class ForgeMenu extends RecipeBookMenu<Container> {
         this.level = pPlayerInventory.player.level;
 
         this.addSlot(new Slot(pContainer, INGREDIENT_SLOT, 56, 17));
-        this.addSlot(new Slot(pContainer, GEAR_SLOT, 56, 17));
-        this.addSlot(new ForgeResultSlot(pPlayerInventory.player, pContainer, RESULT_SLOT, 142, 35));
+        this.addSlot(new Slot(pContainer, GEAR_SLOT, 56, 53));
+        this.addSlot(new ForgeResultSlot(pPlayerInventory.player, pContainer, RESULT_SLOT, 116, 35));
 
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 9; ++j) {
@@ -174,15 +181,11 @@ public class ForgeMenu extends RecipeBookMenu<Container> {
     }
 
     public int getForgeProgress() {
-        int smashesRequired = this.data.get(ForgeBlockEntity.DATA_SMASHES);
+        int smashesRequired = this.data.get(ForgeBlockEntity.DATA_SMASHES_REQUIRED);
         if (smashesRequired == 0) {
             smashesRequired = 5;
         }
 
-        return this.data.get(ForgeBlockEntity.DATA_SMASHES_REQUIRED) * 13 / smashesRequired;
-    }
-
-    public boolean isLit() {
-        return this.data.get(0) > 0;
+        return this.data.get(ForgeBlockEntity.DATA_SMASHES) * 13 / smashesRequired;
     }
 }

@@ -59,7 +59,8 @@ public class SurvivalReimagined
     public static final ResourceLocation GUI_ICONS = new ResourceLocation(SurvivalReimagined.MOD_ID, "textures/gui/icons.png");
 
     public static DecimalFormat ONE_DECIMAL_FORMATTER;
-    public static final RecipeBookType MULTI_ITEM_RECIPE_BOOK_TYPE = RecipeBookType.create("multi_item_smelting");
+    public static final RecipeBookType MULTI_ITEM_RECIPE_BOOK_TYPE = RecipeBookType.create(SurvivalReimagined.RESOURCE_PREFIX + "multi_item_smelting");
+    public static final RecipeBookType FORGING_RECIPE_BOOK_TYPE = RecipeBookType.create(SurvivalReimagined.RESOURCE_PREFIX + "forging");
 
     public SurvivalReimagined() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SRClientConfig.CONFIG_SPEC, MOD_ID + "/client.toml");
@@ -68,6 +69,7 @@ public class SurvivalReimagined
         MinecraftForge.EVENT_BUS.register(SpawnerDataAttacher.class);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(ClientSetup::entityRenderEvent);
+        modEventBus.addListener(ClientSetup::onRegisterRecipeBookCategories);
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::gatherData);

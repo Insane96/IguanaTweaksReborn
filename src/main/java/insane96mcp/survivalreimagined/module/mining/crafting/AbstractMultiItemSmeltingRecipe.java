@@ -100,7 +100,7 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
 
     @Override
     public boolean canCraftInDimensions(int pWidth, int pHeight) {
-        return false;
+        return true;
     }
 
     @Override

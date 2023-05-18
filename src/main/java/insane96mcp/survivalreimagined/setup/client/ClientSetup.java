@@ -1,14 +1,17 @@
 package insane96mcp.survivalreimagined.setup.client;
 
+import com.google.common.collect.ImmutableList;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
+import insane96mcp.survivalreimagined.module.mining.client.ForgeScreen;
 import insane96mcp.survivalreimagined.module.mining.client.MultiBlockBlastFurnaceScreen;
 import insane96mcp.survivalreimagined.module.mining.client.MultiBlockSoulBlastFurnaceScreen;
 import insane96mcp.survivalreimagined.module.mining.feature.Durium;
+import insane96mcp.survivalreimagined.module.mining.feature.Forging;
 import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
@@ -18,17 +21,22 @@ import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import insane96mcp.survivalreimagined.setup.SREntityTypes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.FallingBlockRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterRecipeBookCategoriesEvent;
 import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.List;
 
 public class ClientSetup {
     public static void creativeTabsBuildContents(final CreativeModeTabEvent.BuildContents event)
@@ -91,6 +99,7 @@ public class ClientSetup {
             event.accept(Crate.BLOCK.item().get());
             event.accept(MultiBlockFurnaces.BLAST_FURNACE.item().get());
             event.accept(MultiBlockFurnaces.SOUL_BLAST_FURNACE.item().get());
+            event.accept(Forging.FORGE.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.accept(Minecarts.COPPER_POWERED_RAIL.item().get());
@@ -152,9 +161,26 @@ public class ClientSetup {
 
         MenuScreens.register(MultiBlockFurnaces.BLAST_FURNACE_MENU_TYPE.get(), MultiBlockBlastFurnaceScreen::new);
         MenuScreens.register(MultiBlockFurnaces.SOUL_BLAST_FURNACE_MENU_TYPE.get(), MultiBlockSoulBlastFurnaceScreen::new);
+        MenuScreens.register(Forging.FORGE_MENU_TYPE.get(), ForgeScreen::new);
     }
 
     public static void entityRenderEvent(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(SREntityTypes.PILABLE_FALLING_LAYER.get(), FallingBlockRenderer::new);
+    }
+
+    static RecipeBookCategories BLAST_FURNACE_SEARCH = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "blast_furnace_search", new ItemStack(Items.COMPASS));
+    static RecipeBookCategories BLAST_FURNACE_ANY = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "blast_furnace_any", new ItemStack(MultiBlockFurnaces.BLAST_FURNACE.item().get()));
+    public static final List<RecipeBookCategories> BLAST_FURNACE_CATEGORIES = ImmutableList.of(BLAST_FURNACE_SEARCH, BLAST_FURNACE_ANY);
+    static RecipeBookCategories SOUL_BLAST_FURNACE_SEARCH = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "soul_blast_furnace_search", new ItemStack(Items.COMPASS));
+    static RecipeBookCategories SOUL_BLAST_FURNACE_ANY = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "soul_blast_furnace_any", new ItemStack(MultiBlockFurnaces.SOUL_BLAST_FURNACE.item().get()));
+    public static final List<RecipeBookCategories> SOUL_BLAST_FURNACE_CATEGORIES = ImmutableList.of(SOUL_BLAST_FURNACE_SEARCH, SOUL_BLAST_FURNACE_ANY);
+    static RecipeBookCategories FORGE_SEARCH = RecipeBookCategories.create("FORGE_SEARCH", new ItemStack(Items.COMPASS));
+    static RecipeBookCategories FORGE_MISC = RecipeBookCategories.create("FORGE_MISC", new ItemStack(Forging.FORGE.item().get()));
+    public static final List<RecipeBookCategories> FORGE_CATEGORIES = ImmutableList.of(FORGE_SEARCH, FORGE_MISC);
+
+    public static void onRegisterRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
+        event.registerBookCategories(SurvivalReimagined.FORGING_RECIPE_BOOK_TYPE, FORGE_CATEGORIES);
+        event.registerAggregateCategory(FORGE_SEARCH, ImmutableList.of(FORGE_MISC));
+        event.registerRecipeCategoryFinder(Forging.FORGE_RECIPE_TYPE.get(), r -> FORGE_MISC);
     }
 }

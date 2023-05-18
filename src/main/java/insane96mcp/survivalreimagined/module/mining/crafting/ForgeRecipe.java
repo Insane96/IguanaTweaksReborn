@@ -1,26 +1,31 @@
 package insane96mcp.survivalreimagined.module.mining.crafting;
 
+import insane96mcp.survivalreimagined.module.mining.feature.Forging;
 import insane96mcp.survivalreimagined.module.mining.inventory.ForgeMenu;
+import insane96mcp.survivalreimagined.setup.client.SRBookCategory;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 public class ForgeRecipe implements Recipe<Container> {
     protected final RecipeType<?> type;
     protected final ResourceLocation id;
-    private final CookingBookCategory category;
+    private final SRBookCategory category;
     final Ingredient gear;
     final Ingredient ingredient;
     final int ingredientAmount;
     private final ItemStack result;
     protected final int smashesRequired;
 
-    public ForgeRecipe(RecipeType<?> type, ResourceLocation pId, CookingBookCategory pCategory, Ingredient gear, Ingredient ingredient, int ingredientAmount, ItemStack pResult, int smashesRequired) {
-        this.type = type;
+    public ForgeRecipe(ResourceLocation pId, SRBookCategory pCategory, Ingredient ingredient, int ingredientAmount, Ingredient gear, ItemStack pResult, int smashesRequired) {
+        this.type = Forging.FORGE_RECIPE_TYPE.get();
         this.category = pCategory;
         this.id = pId;
         this.gear = gear;
@@ -44,7 +49,7 @@ public class ForgeRecipe implements Recipe<Container> {
 
     @Override
     public boolean canCraftInDimensions(int pWidth, int pHeight) {
-        return false;
+        return true;
     }
 
     @Override
@@ -92,7 +97,7 @@ public class ForgeRecipe implements Recipe<Container> {
         return this.type;
     }
 
-    public CookingBookCategory category() {
+    public SRBookCategory category() {
         return this.category;
     }
 }

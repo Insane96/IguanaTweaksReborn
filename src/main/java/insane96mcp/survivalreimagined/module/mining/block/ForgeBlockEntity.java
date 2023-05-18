@@ -1,10 +1,10 @@
 package insane96mcp.survivalreimagined.module.mining.block;
 
 import com.google.common.collect.Lists;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.mining.crafting.ForgeRecipe;
+import insane96mcp.survivalreimagined.module.mining.feature.Forging;
 import insane96mcp.survivalreimagined.module.mining.inventory.ForgeMenu;
-import insane96mcp.survivalreimagined.module.mining.inventory.MultiBlockBlastFurnaceMenu;
-import insane96mcp.survivalreimagined.module.mining.inventory.MultiBlockSoulBlastFurnaceMenu;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -31,7 +31,6 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -39,6 +38,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class ForgeBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, RecipeHolder, StackedContentsCompatible {
+    private static final int[] SLOTS_FOR_UP = new int[]{ForgeMenu.INGREDIENT_SLOT};
+    private static final int[] SLOTS_FOR_DOWN = new int[]{ForgeMenu.RESULT_SLOT};
+    private static final int[] SLOTS_FOR_SIDES = new int[]{ForgeMenu.GEAR_SLOT};
     public static final int DATA_SMASHES_REQUIRED = 0;
     public static final int DATA_SMASHES = 1;
     protected NonNullList<ItemStack> items = NonNullList.withSize(ForgeMenu.SLOT_COUNT, ItemStack.EMPTY);
@@ -69,10 +71,10 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
     private final Object2IntOpenHashMap<ResourceLocation> recipesUsed = new Object2IntOpenHashMap<>();
     private final RecipeManager.CachedCheck<Container, ? extends ForgeRecipe> quickCheck;
 
-    protected ForgeBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, RecipeType<? extends ForgeRecipe> pRecipeType) {
-        super(pType, pPos, pBlockState);
-        this.quickCheck = RecipeManager.createCheck((RecipeType)pRecipeType);
-        this.recipeType = pRecipeType;
+    public ForgeBlockEntity(BlockPos pPos, BlockState pBlockState) {
+        super(Forging.FORGE_BLOCK_ENTITY_TYPE.get(), pPos, pBlockState);
+        //noinspection unchecked,rawtypes
+        this.quickCheck = RecipeManager.createCheck((RecipeType)Forging.FORGE_RECIPE_TYPE.get());
     }
 
     public void load(CompoundTag pTag) {
@@ -99,10 +101,6 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
     }
 
     public static void onUse(Level pLevel, BlockPos pPos, BlockState pState, ForgeBlockEntity pBlockEntity) {
-
-    }
-
-    public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, ForgeBlockEntity pBlockEntity) {
         boolean setChanged = false;
 
         ItemStack resultStack = pBlockEntity.items.get(ForgeMenu.RESULT_SLOT);
@@ -185,32 +183,19 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
         return pBlockEntity.quickCheck.getRecipeFor(pBlockEntity, pLevel).map(ForgeRecipe::getSmashesRequired).orElse(10);
     }
 
-    private static boolean canMergeItems(ItemStack stack1, ItemStack stack2) {
-        if (!stack1.is(stack2.getItem())
-                || stack1.getDamageValue() != stack2.getDamageValue()) {
-            return false;
-        }
-        else {
-            return stack1.getCount() <= stack1.getMaxStackSize() && ItemStack.tagMatches(stack1, stack2);
-        }
-    }
-
-    //TODO Allow automatic forging
+    //TODO Allow automatic forging via Dispenser
     @Override
     public int[] getSlotsForFace(Direction pSide) {
         if (pSide == Direction.DOWN) {
-            return ForgeMenu.RESULT_SLOT;
-        } else {
+            return SLOTS_FOR_DOWN;
+        }
+        else {
             if (pSide != Direction.UP) {
                 return SLOTS_FOR_SIDES;
             }
 
-            if (this instanceof MultiBlockBlastFurnaceBlockEntity)
-                return MultiBlockBlastFurnaceMenu.getIngredientSlots();
-            else if (this instanceof MultiBlockSoulBlastFurnaceBlockEntity)
-                return MultiBlockSoulBlastFurnaceMenu.getIngredientSlots();
+            return SLOTS_FOR_UP;
         }
-        return new int[0];
     }
 
     @Override
@@ -225,12 +210,12 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
 
     @Override
     protected Component getDefaultName() {
-        return null;
+        return Component.translatable(SurvivalReimagined.MOD_ID + ".container.forge");
     }
 
     @Override
     protected AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory) {
-        return null;
+        return new ForgeMenu(pContainerId, pInventory, this, this.dataAccess);
     }
 
     @Override
