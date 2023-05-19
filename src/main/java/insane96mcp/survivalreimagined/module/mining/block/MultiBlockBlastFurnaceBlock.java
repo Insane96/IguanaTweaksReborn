@@ -88,7 +88,7 @@ public class MultiBlockBlastFurnaceBlock extends AbstractMultiBlockFurnace {
                 pPlayer.awardStat(Stats.INTERACT_WITH_BLAST_FURNACE);
             }
             else {
-                pPlayer.sendSystemMessage(Component.literal("Multiblock structure not valid."));
+                pPlayer.sendSystemMessage(Component.literal("Multi block structure not valid. Must have a bottom layer of Smooth Stone, a middle and top layer of Bricks (top layer can be stairs). The center middle and center top blocks of the 3x3x3 can be anything"));
             }
         }
     }
