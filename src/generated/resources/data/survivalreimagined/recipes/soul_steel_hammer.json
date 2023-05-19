@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:forging",
+  "amount": 5,
+  "category": "forge_misc",
+  "gear": {
+    "item": "survivalreimagined:iron_hammer"
+  },
+  "ingredient": {
+    "item": "survivalreimagined:soul_steel_ingot"
+  },
+  "result": "survivalreimagined:soul_steel_hammer",
+  "smashes_required": 35
+}

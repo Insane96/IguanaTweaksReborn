@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "M": {
+      "tag": "minecraft:stone_crafting_materials"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "MMM",
+    "MSM",
+    " S "
+  ],
+  "result": {
+    "item": "survivalreimagined:stone_hammer"
+  },
+  "show_notification": true
+}

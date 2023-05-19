@@ -33,7 +33,7 @@ public class ForgeRecipeBuilder implements RecipeBuilder {
     private final RecipeSerializer<? extends ForgeRecipe> serializer;
     private final Advancement.Builder advancement = Advancement.Builder.advancement();
 
-    public ForgeRecipeBuilder(RecipeCategory pCategory, SRBookCategory pBookCategory, ItemLike pResult, Ingredient ingredient, int ingredientAmount, Ingredient gear, int smashesRequired, RecipeSerializer<? extends ForgeRecipe> pSerializer) {
+    public ForgeRecipeBuilder(RecipeCategory pCategory, SRBookCategory pBookCategory, Ingredient ingredient, int ingredientAmount, Ingredient gear, ItemLike pResult, int smashesRequired, RecipeSerializer<? extends ForgeRecipe> pSerializer) {
         this.category = pCategory;
         this.bookCategory = pBookCategory;
         this.ingredient = ingredient;
@@ -44,8 +44,8 @@ public class ForgeRecipeBuilder implements RecipeBuilder {
         this.serializer = pSerializer;
     }
 
-    public static ForgeRecipeBuilder forging(RecipeCategory pCategory, ItemLike pResult, Ingredient ingredient, int ingredientAmount, Ingredient gear, int smashesRequired) {
-        return new ForgeRecipeBuilder(pCategory, SRBookCategory.FORGE_MISC, pResult, ingredient, ingredientAmount, gear, smashesRequired, Forging.FORGE_RECIPE_SERIALIZER.get());
+    public static ForgeRecipeBuilder forging(RecipeCategory pCategory, Ingredient ingredient, int ingredientAmount, Ingredient gear, ItemLike pResult, int smashesRequired) {
+        return new ForgeRecipeBuilder(pCategory, SRBookCategory.FORGE_MISC, ingredient, ingredientAmount, gear, pResult, smashesRequired, Forging.FORGE_RECIPE_SERIALIZER.get());
     }
 
     @Override
@@ -108,7 +108,7 @@ public class ForgeRecipeBuilder implements RecipeBuilder {
         public void serializeRecipeData(JsonObject pJson) {
             pJson.addProperty("category", this.category.getSerializedName());
             pJson.add("ingredient", this.ingredient.toJson());
-            pJson.add("ingredient", this.ingredient.toJson());
+            pJson.addProperty("amount", this.ingredientAmount);
             pJson.add("gear", this.gear.toJson());
             pJson.addProperty("result", ForgeRegistries.ITEMS.getKey(this.result).toString());
             pJson.addProperty("smashes_required", this.smashesRequired);

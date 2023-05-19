@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:forging",
+  "amount": 5,
+  "category": "forge_misc",
+  "gear": {
+    "item": "survivalreimagined:golden_hammer"
+  },
+  "ingredient": {
+    "item": "minecraft:diamond"
+  },
+  "result": "survivalreimagined:diamond_hammer",
+  "smashes_required": 25
+}

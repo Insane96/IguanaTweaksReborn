@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:forging",
+  "amount": 5,
+  "category": "forge_misc",
+  "gear": {
+    "item": "survivalreimagined:flint_hammer"
+  },
+  "ingredient": {
+    "item": "minecraft:gold_ingot"
+  },
+  "result": "survivalreimagined:golden_hammer",
+  "smashes_required": 5
+}

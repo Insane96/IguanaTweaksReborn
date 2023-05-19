@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:forging",
+  "amount": 5,
+  "category": "forge_misc",
+  "gear": {
+    "item": "survivalreimagined:stone_hammer"
+  },
+  "ingredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": "survivalreimagined:iron_hammer",
+  "smashes_required": 15
+}
