@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:forging",
+  "category": "forge_misc",
+  "ingredient": {
+    "item": "minecraft:gold_ingot"
+  },
+  "amount": 3,
+  "gear": {
+    "item": "survivalreimagined:flint_pickaxe"
+  },
+  "result": "minecraft:golden_pickaxe",
+  "smashes_required": 5
+}

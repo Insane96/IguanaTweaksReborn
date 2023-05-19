@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:forging",
+  "category": "forge_misc",
+  "ingredient": {
+    "item": "minecraft:gold_ingot"
+  },
+  "amount": 5,
+  "gear": {
+    "item": "minecraft:leather_helmet"
+  },
+  "result": "minecraft:golden_helmet",
+  "smashes_required": 5
+}

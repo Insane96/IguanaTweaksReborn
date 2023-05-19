@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:forging",
+  "category": "forge_misc",
+  "ingredient": {
+    "item": "minecraft:copper_ingot"
+  },
+  "amount": 2,
+  "gear": {
+    "item": "survivalreimagined:flint_sword"
+  },
+  "result": "minecraft:copper_sword",
+  "smashes_required": 7
+}

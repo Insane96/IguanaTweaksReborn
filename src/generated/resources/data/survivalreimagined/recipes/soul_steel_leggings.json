@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "c": {
+      "item": "survivalreimagined:soul_steel_ingot"
+    }
+  },
+  "pattern": [
+    "ccc",
+    "c c",
+    "c c"
+  ],
+  "result": {
+    "item": "survivalreimagined:soul_steel_leggings"
+  },
+  "show_notification": true
+}

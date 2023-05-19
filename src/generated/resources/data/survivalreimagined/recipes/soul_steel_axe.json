@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "f": {
+      "item": "survivalreimagined:soul_steel_ingot"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "ff",
+    "fs",
+    " s"
+  ],
+  "result": {
+    "item": "survivalreimagined:soul_steel_axe"
+  },
+  "show_notification": true
+}

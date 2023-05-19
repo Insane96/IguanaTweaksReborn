@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": {
+      "tag": "minecraft:logs"
+    },
+    "f": {
+      "item": "survivalreimagined:soul_steel_ingot"
+    }
+  },
+  "pattern": [
+    " f ",
+    "fLf",
+    " f "
+  ],
+  "result": {
+    "item": "survivalreimagined:soul_steel_shield"
+  },
+  "show_notification": true
+}

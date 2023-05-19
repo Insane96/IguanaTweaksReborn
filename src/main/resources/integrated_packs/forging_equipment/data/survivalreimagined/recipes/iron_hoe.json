@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:forging",
+  "category": "forge_misc",
+  "ingredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "amount": 2,
+  "gear": {
+    "item": "minecraft:stone_hoe"
+  },
+  "result": "minecraft:iron_hoe",
+  "smashes_required": 25
+}

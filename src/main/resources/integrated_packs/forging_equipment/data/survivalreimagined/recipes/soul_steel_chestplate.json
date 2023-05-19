@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:forging",
+  "category": "forge_misc",
+  "ingredient": {
+    "item": "survivalreimagined:soul_steel_ingot"
+  },
+  "amount": 8,
+  "gear": {
+    "item": "minecraft:iron_chestplate"
+  },
+  "result": "survivalreimagined:soul_steel_chestplate",
+  "smashes_required": 35
+}

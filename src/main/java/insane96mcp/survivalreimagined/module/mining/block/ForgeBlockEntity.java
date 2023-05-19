@@ -102,7 +102,7 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
         pTag.put("RecipesUsed", compoundtag);
     }
 
-    public static boolean onUse(Level pLevel, BlockPos pPos, BlockState pState, ForgeBlockEntity pBlockEntity) {
+    public static boolean onUse(Level pLevel, BlockPos pPos, BlockState pState, ForgeBlockEntity pBlockEntity, int smashes) {
         ItemStack resultStack = pBlockEntity.items.get(ForgeMenu.RESULT_SLOT);
         if (!resultStack.isEmpty())
             return false;
@@ -118,8 +118,8 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
 
         int maxStackSize = pBlockEntity.getMaxStackSize();
         if (pBlockEntity.canForge(pLevel.registryAccess(), recipe, pBlockEntity.items, maxStackSize)) {
-            ++pBlockEntity.smashes;
-            if (pBlockEntity.smashes == pBlockEntity.smashesRequired) {
+            pBlockEntity.smashes += smashes;
+            if (pBlockEntity.smashes >= pBlockEntity.smashesRequired) {
                 pBlockEntity.smashes = 0;
                 pBlockEntity.smashesRequired = getSmashesRequired(pLevel, pBlockEntity);
                 if (pBlockEntity.forge(pLevel.registryAccess(), recipe, pBlockEntity.items, maxStackSize)) {

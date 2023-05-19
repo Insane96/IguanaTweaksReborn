@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:forging",
+  "category": "forge_misc",
+  "ingredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "amount": 5,
+  "gear": {
+    "item": "suvivalreimagined:chained_copper_helmet"
+  },
+  "result": "minecraft:iron_helmet",
+  "smashes_required": 25
+}

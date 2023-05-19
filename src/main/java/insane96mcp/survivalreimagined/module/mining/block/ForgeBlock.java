@@ -10,6 +10,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -52,11 +53,12 @@ public class ForgeBlock extends BaseEntityBlock {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (pHand == InteractionHand.OFF_HAND)
             return InteractionResult.PASS;
-        if (pPlayer.getItemInHand(pHand).getItem() instanceof ForgeHammerItem forgeHammerItem && !pPlayer.getCooldowns().isOnCooldown(forgeHammerItem) && pLevel.getBlockEntity(pPos) instanceof ForgeBlockEntity forgeBlockEntity) {
-            if (ForgeBlockEntity.onUse(pLevel, pPos, pState, forgeBlockEntity)) {
+        ItemStack stack = pPlayer.getItemInHand(pHand);
+        if (stack.getItem() instanceof ForgeHammerItem forgeHammerItem && !pPlayer.getCooldowns().isOnCooldown(forgeHammerItem) && pLevel.getBlockEntity(pPos) instanceof ForgeBlockEntity forgeBlockEntity) {
+            if (ForgeBlockEntity.onUse(pLevel, pPos, pState, forgeBlockEntity, forgeHammerItem.getSmashesOnHit(stack, pPlayer.getRandom()))) {
+                pPlayer.getCooldowns().addCooldown(forgeHammerItem, forgeHammerItem.getUseCooldown(stack));
                 if (pPlayer instanceof ServerPlayer serverPlayer)
-                    pPlayer.getItemInHand(pHand).hurt(1, pLevel.random, serverPlayer);
-                pPlayer.getCooldowns().addCooldown(forgeHammerItem, forgeHammerItem.getUseCooldown());
+                    stack.hurtAndBreak(1, serverPlayer, (player) -> player.broadcastBreakEvent(pHand));
                 return InteractionResult.sidedSuccess(pLevel.isClientSide);
             }
             return InteractionResult.PASS;

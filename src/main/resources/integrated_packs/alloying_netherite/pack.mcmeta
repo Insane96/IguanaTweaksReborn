@@ -1,6 +1,6 @@
 {
     "pack": {
-        "description": "Changes Blast Furnace recipe to give the Multi Block Blast furnace recipe and adds Multi Block blast furnace recipes",
+        "description": "Makes Netherite blast-able in a Soul Blast Furnace with less materials than crafting",
         "pack_format": 11
     }
 }

@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:forging",
+  "category": "forge_misc",
+  "ingredient": {
+    "item": "minecraft:diamond"
+  },
+  "amount": 3,
+  "gear": {
+    "item": "minecraft:golden_pickaxe"
+  },
+  "result": "minecraft:diamond_pickaxe",
+  "smashes_required": 25
+}

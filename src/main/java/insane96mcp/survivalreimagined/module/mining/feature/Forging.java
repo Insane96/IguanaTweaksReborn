@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.module.mining.feature;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
@@ -14,7 +15,9 @@ import insane96mcp.survivalreimagined.module.mining.crafting.ForgeRecipe;
 import insane96mcp.survivalreimagined.module.mining.data.ForgeRecipeSerializer;
 import insane96mcp.survivalreimagined.module.mining.inventory.ForgeMenu;
 import insane96mcp.survivalreimagined.module.mining.item.ForgeHammerItem;
+import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.*;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
@@ -49,8 +52,18 @@ public class Forging extends Feature {
 	public static final RegistryObject<ForgeHammerItem> DIAMOND_HAMMER = SRItems.REGISTRY.register("diamond_hammer", () -> new ForgeHammerItem(Tiers.DIAMOND, 25, new Item.Properties()));
 	public static final RegistryObject<ForgeHammerItem> SOUL_STEEL_HAMMER = SRItems.REGISTRY.register("soul_steel_hammer", () -> new ForgeHammerItem(SoulSteel.ITEM_TIER, 40, new Item.Properties()));
 	public static final RegistryObject<ForgeHammerItem> NETHERITE_HAMMER = SRItems.REGISTRY.register("netherite_hammer", () -> new ForgeHammerItem(Tiers.NETHERITE, 20, new Item.Properties()));
+	@Config
+	@Label(name = "Forging Equipment Crafting Data Pack", description = """
+			Enables the following changes to vanilla data pack:
+			* All metal gear requires a forge to be made
+			* Diamond Gear requires Gold gear to be forged
+			* Gold Gear requires Flint/Leather gear to be forged
+			* Iron Gear requires Stone / Chained Copper gear to be forged
+			* Buckets and Shears require a forge to be made""")
+	public static Boolean forgingEquipment = true;
 
 	public Forging(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "forging_equipment", net.minecraft.network.chat.Component.literal("Survival Reimagined Forging Equipment"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && forgingEquipment));
 	}
 }
