@@ -14,7 +14,7 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/anvil",
+	"parent": "survivalreimagined:story/forge",
 	"criteria": {
 		"shears": {
 			"trigger": "survivalreimagined:anvil_repair",

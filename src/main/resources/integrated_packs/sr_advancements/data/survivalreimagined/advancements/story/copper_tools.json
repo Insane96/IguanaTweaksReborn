@@ -14,7 +14,7 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/anvil",
+	"parent": "survivalreimagined:story/forge",
 	"criteria": {
 		"copper_tools": {
 			"trigger": "survivalreimagined:anvil_repair",

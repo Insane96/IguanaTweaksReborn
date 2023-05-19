@@ -1,13 +1,13 @@
 {
 	"display": {
 		"icon": {
-			"item": "minecraft:anvil"
+			"item": "survivalreimagined:forge"
 		},
 		"title": {
-			"translate": "advancements.sr_story.anvil.title"
+			"translate": "advancements.sr_story.forge.title"
 		},
 		"description": {
-			"translate": "advancements.sr_story.anvil.description"
+			"translate": "advancements.sr_story.forge.description"
 		},
 		"frame": "task",
 		"show_toast": true,
@@ -16,13 +16,13 @@
 	},
 	"parent": "survivalreimagined:story/blast_furnace",
 	"criteria": {
-		"anvil": {
+		"forge": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
 						"items": [
-							"minecraft:anvil"
+							"survivalreimagined:forge"
 						]
 					}
 				]
@@ -31,7 +31,7 @@
 	},
 	"requirements": [
 		[
-			"anvil"
+			"forge"
 		]
 	]
 }

@@ -14,7 +14,7 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/durium_pickaxe",
+	"parent": "survivalreimagined:story/durium_gear",
 	"criteria": {
 		"altimeter": {
 			"trigger": "minecraft:inventory_changed",
