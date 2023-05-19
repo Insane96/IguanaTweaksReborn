@@ -1,22 +1,13 @@
 {
-    "type": "minecraft:crafting_shaped",
-    "pattern": [
-        " L ",
-        "CBC",
-        " L "
-    ],
-    "key": {
-        "C": {
-            "item": "minecraft:copper_ingot"
-        },
-        "B": {
-            "item": "survivalreimagined:flint_shield"
-        },
-        "L": {
-            "item": "minecraft:leather"
-        }
+    "type": "survivalreimagined:forging",
+    "category": "forge_misc",
+    "ingredient": {
+        "item": "minecraft:copper_ingot"
     },
-    "result": {
-        "item": "shieldsplus:copper_shield"
-    }
+    "amount": 4,
+    "gear": {
+        "item": "survivalreimagined:flint_shield"
+    },
+    "result": "shieldsplus:copper_shield",
+    "smashes_required": 7
 }
