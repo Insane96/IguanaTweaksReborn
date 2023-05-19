@@ -1,18 +1,23 @@
 # Changelog
 
-## 3.10.2
+## 3.11.0
+* Added Forge
+  * Replaces anvil recipes
 * Added Better ladders
   * Descend faster and crouch when inventory is open
+* Falling onto a climbable no longer cancels fall damage
 * Each cake bite now restores 40% of missing health
-* Disabled Golden Absorption. Gold armor and shield now grant +2 max health
 * Multiblock furnaces now pick up items from the inside of the structure everytime an item has finished smelting
-* Falling onto a ladder no longer cancels fall damage
+* Unbreaking now requires fewer levels to pop out
+* Increased beeg veins size
+* Increased Trident durability
+
+## 3.10.2
+* Disabled Golden Absorption. Gold armor and shield now grant +2 max health
 * Invincibility frames are now synced when hit by arrows
 * Glass can now break if entities fall on it
 * Re-enabled backwards slowdown
 * Reduced experience dropped by players by 5%
-* Increased beeg veins size
-* Increased Trident durability
 
 ## Alpha 3.10.1
 * Mithril is now Durium

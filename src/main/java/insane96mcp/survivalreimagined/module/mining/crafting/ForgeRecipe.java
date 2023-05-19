@@ -83,7 +83,7 @@ public class ForgeRecipe implements Recipe<Container> {
     }
 
     /**
-     * Gets the times required to smash the anvil with the hammer to craft the item
+     * Gets the times required to smash the forge with the hammer to craft the item
      */
     public int getSmashesRequired() {
         return this.smashesRequired;

@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.data.generator;
 
+import insane96mcp.shieldsplus.setup.SPItems;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
@@ -81,10 +82,10 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, FlintExpansion.SHIELD.get())
                 .pattern(" f ")
-                .pattern("fLf")
+                .pattern("fWf")
                 .pattern(" f ")
                 .define('f', Items.FLINT)
-                .define('L', ItemTags.LOGS)
+                .define('W', SPItems.WOODEN_SHIELD.get())
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.FLINT_BLOCK.item().get())
@@ -375,10 +376,10 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, SoulSteel.SHIELD.get())
                 .pattern(" f ")
-                .pattern("fLf")
+                .pattern("fWf")
                 .pattern(" f ")
                 .define('f', SoulSteel.INGOT.get())
-                .define('L', ItemTags.LOGS)
+                .define('W', SPItems.WOODEN_SHIELD.get())
                 .unlockedBy("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, SoulSteel.HELMET.get())

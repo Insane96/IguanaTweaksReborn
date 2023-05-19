@@ -2,6 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
+    "C": {
+      "item": "minecraft:copper_block"
+    },
     "I": {
       "item": "minecraft:iron_block"
     },
@@ -15,7 +18,7 @@
   "pattern": [
     "ISI",
     " c ",
-    "ccc"
+    "cCc"
   ],
   "result": {
     "item": "survivalreimagined:forge"
