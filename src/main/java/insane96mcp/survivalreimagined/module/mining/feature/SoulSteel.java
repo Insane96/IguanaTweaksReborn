@@ -33,7 +33,7 @@ public class SoulSteel extends Feature {
 
 	public static final RegistryObject<Item> NUGGET = SRItems.REGISTRY.register("soul_steel_nugget", () -> new Item(new Item.Properties().fireResistant()));
 
-	private static final ILItemTier ITEM_TIER = new ILItemTier(3, 2356, 8f, 2.0f, 5, () -> Ingredient.of(INGOT.get()));
+    public static final ILItemTier ITEM_TIER = new ILItemTier(3, 2356, 8f, 2.0f, 5, () -> Ingredient.of(INGOT.get()));
 
 	public static final RegistryObject<Item> SWORD = SRItems.REGISTRY.register("soul_steel_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties().fireResistant()));
 	public static final RegistryObject<Item> SHOVEL = SRItems.REGISTRY.register("soul_steel_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties().fireResistant()));

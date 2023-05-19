@@ -4,8 +4,10 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
+import insane96mcp.survivalreimagined.module.mining.data.ForgeRecipeBuilder;
 import insane96mcp.survivalreimagined.module.mining.data.MultiItemSmeltingRecipeBuilder;
 import insane96mcp.survivalreimagined.module.mining.feature.Durium;
+import insane96mcp.survivalreimagined.module.mining.feature.Forging;
 import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
@@ -14,6 +16,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -624,6 +627,9 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         recycleArmorBlasting(writer, Items.NETHERITE_HOE, Items.NETHERITE_INGOT, 200, 1);
         recycleArmorBlasting(writer, Items.NETHERITE_SWORD, Items.NETHERITE_INGOT, 200, 1);
 
+        hammerCraftingRecipe(writer, Forging.STONE_HAMMER.get(), ItemTags.STONE_CRAFTING_MATERIALS);
+        hammerCraftingRecipe(writer, Forging.FLINT_HAMMER.get(), Items.FLINT);
+
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.AXE.get())
                 .unlocks("has_durium", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_axe");
@@ -702,5 +708,28 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .recycle(amountAtMaxDurability)
                 .unlockedBy("has_armor", has(itemToRecycle))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_furnace/recycle_" + ForgeRegistries.ITEMS.getKey(itemToRecycle).getPath());
+    }
+
+    private void hammerCraftingRecipe(Consumer<FinishedRecipe> writer, Item hammer, Item material) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, hammer)
+                .pattern("MMM")
+                .pattern("MSM")
+                .pattern(" S ")
+                .define('S', Items.STICK)
+                .define('N', material)
+                .unlockedBy("has_material", has(material))
+                .save(writer);
+    }
+
+    private void hammerCraftingRecipe(Consumer<FinishedRecipe> writer, Item hammer, TagKey<Item> materialTag) {
+        ForgeRecipeBuilder.forging(RecipeCategory.MISC, )
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, hammer)
+                .pattern("MMM")
+                .pattern("MSM")
+                .pattern(" S ")
+                .define('S', Items.STICK)
+                .define('N', materialTag)
+                .unlockedBy("has_material", has(materialTag))
+                .save(writer);
     }
 }

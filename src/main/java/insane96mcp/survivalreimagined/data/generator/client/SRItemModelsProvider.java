@@ -10,6 +10,7 @@ import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.feature.CopperTools;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mining.feature.Durium;
+import insane96mcp.survivalreimagined.module.mining.feature.Forging;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
@@ -126,6 +127,16 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(CoalFire.HELLISH_COAL.get());
         withExistingParent("soul_sand_hellish_coal_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_sand_hellish_coal_ore"));
         withExistingParent("soul_soil_hellish_coal_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_soil_hellish_coal_ore"));
+
+        handHeld(Forging.STONE_HAMMER.get());
+        handHeld(Forging.FLINT_HAMMER.get());
+        handHeld(Forging.COPPER_HAMMER.get());
+        handHeld(Forging.GOLDEN_HAMMER.get());
+        handHeld(Forging.IRON_HAMMER.get());
+        handHeld(Forging.DURIUM_HAMMER.get());
+        handHeld(Forging.DIAMOND_HAMMER.get());
+        handHeld(Forging.SOUL_STEEL_HAMMER.get());
+        handHeld(Forging.NETHERITE_HAMMER.get());
     }
 
     private ItemModelBuilder handHeld(Item item) {

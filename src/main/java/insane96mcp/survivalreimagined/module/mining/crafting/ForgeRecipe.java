@@ -18,9 +18,9 @@ public class ForgeRecipe implements Recipe<Container> {
     protected final RecipeType<?> type;
     protected final ResourceLocation id;
     private final SRBookCategory category;
-    final Ingredient gear;
     final Ingredient ingredient;
     final int ingredientAmount;
+    final Ingredient gear;
     private final ItemStack result;
     protected final int smashesRequired;
 
@@ -28,9 +28,9 @@ public class ForgeRecipe implements Recipe<Container> {
         this.type = Forging.FORGE_RECIPE_TYPE.get();
         this.category = pCategory;
         this.id = pId;
-        this.gear = gear;
         this.ingredient = ingredient;
         this.ingredientAmount = ingredientAmount;
+        this.gear = gear;
         this.result = pResult;
         this.smashesRequired = smashesRequired;
     }

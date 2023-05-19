@@ -6,17 +6,19 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.items.feature.CopperTools;
+import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mining.block.ForgeBlock;
 import insane96mcp.survivalreimagined.module.mining.block.ForgeBlockEntity;
 import insane96mcp.survivalreimagined.module.mining.crafting.ForgeRecipe;
 import insane96mcp.survivalreimagined.module.mining.data.ForgeRecipeSerializer;
 import insane96mcp.survivalreimagined.module.mining.inventory.ForgeMenu;
-import insane96mcp.survivalreimagined.setup.SRBlockEntityTypes;
-import insane96mcp.survivalreimagined.setup.SRMenuType;
-import insane96mcp.survivalreimagined.setup.SRRecipeSerializers;
-import insane96mcp.survivalreimagined.setup.SRRecipeTypes;
+import insane96mcp.survivalreimagined.module.mining.item.ForgeHammerItem;
+import insane96mcp.survivalreimagined.setup.*;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -37,6 +39,16 @@ public class Forging extends Feature {
 	});
 	public static final RegistryObject<ForgeRecipeSerializer> FORGE_RECIPE_SERIALIZER = SRRecipeSerializers.REGISTRY.register("forging", ForgeRecipeSerializer::new);
 	public static final RegistryObject<MenuType<ForgeMenu>> FORGE_MENU_TYPE = SRMenuType.REGISTRY.register("forge", () -> new MenuType<>(ForgeMenu::new, FeatureFlags.VANILLA_SET));
+
+	public static final RegistryObject<ForgeHammerItem> STONE_HAMMER = SRItems.REGISTRY.register("stone_hammer", () -> new ForgeHammerItem(Tiers.STONE, 50, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> FLINT_HAMMER = SRItems.REGISTRY.register("flint_hammer", () -> new ForgeHammerItem(FlintExpansion.ITEM_TIER, 35, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> COPPER_HAMMER = SRItems.REGISTRY.register("copper_hammer", () -> new ForgeHammerItem(CopperTools.ITEM_TIER, 20, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> GOLDEN_HAMMER = SRItems.REGISTRY.register("golden_hammer", () -> new ForgeHammerItem(Tiers.GOLD, 10, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> IRON_HAMMER = SRItems.REGISTRY.register("iron_hammer", () -> new ForgeHammerItem(Tiers.IRON, 40, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> DURIUM_HAMMER = SRItems.REGISTRY.register("durium_hammer", () -> new ForgeHammerItem(Durium.ITEM_TIER, 35, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> DIAMOND_HAMMER = SRItems.REGISTRY.register("diamond_hammer", () -> new ForgeHammerItem(Tiers.DIAMOND, 25, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> SOUL_STEEL_HAMMER = SRItems.REGISTRY.register("soul_steel_hammer", () -> new ForgeHammerItem(SoulSteel.ITEM_TIER, 40, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> NETHERITE_HAMMER = SRItems.REGISTRY.register("netherite_hammer", () -> new ForgeHammerItem(Tiers.NETHERITE, 20, new Item.Properties()));
 
 	public Forging(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

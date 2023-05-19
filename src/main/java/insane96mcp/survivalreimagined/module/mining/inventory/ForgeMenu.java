@@ -186,6 +186,6 @@ public class ForgeMenu extends RecipeBookMenu<Container> {
             smashesRequired = 5;
         }
 
-        return this.data.get(ForgeBlockEntity.DATA_SMASHES) * 13 / smashesRequired;
+        return this.data.get(ForgeBlockEntity.DATA_SMASHES) * 24 / smashesRequired;
     }
 }

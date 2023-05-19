@@ -45,7 +45,7 @@ public class Durium extends Feature {
 
 	public static final RegistryObject<Item> NUGGET = SRItems.REGISTRY.register("durium_nugget", () -> new Item(new Item.Properties()));
 
-	private static final ILItemTier ITEM_TIER = new ILItemTier(2, 570, 6.5f, 2.5f, 11, () -> Ingredient.of(INGOT.get()));
+	public static final ILItemTier ITEM_TIER = new ILItemTier(2, 570, 6.5f, 2.5f, 11, () -> Ingredient.of(INGOT.get()));
 
 	public static final RegistryObject<Item> SWORD = SRItems.REGISTRY.register("durium_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> SHOVEL = SRItems.REGISTRY.register("durium_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));

@@ -15,6 +15,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
@@ -100,18 +102,16 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
         pTag.put("RecipesUsed", compoundtag);
     }
 
-    public static void onUse(Level pLevel, BlockPos pPos, BlockState pState, ForgeBlockEntity pBlockEntity) {
-        boolean setChanged = false;
-
+    public static boolean onUse(Level pLevel, BlockPos pPos, BlockState pState, ForgeBlockEntity pBlockEntity) {
         ItemStack resultStack = pBlockEntity.items.get(ForgeMenu.RESULT_SLOT);
         if (!resultStack.isEmpty())
-            return;
+            return false;
 
         ItemStack ingredientStack = pBlockEntity.items.get(ForgeMenu.INGREDIENT_SLOT);
         ItemStack gearStack = pBlockEntity.items.get(ForgeMenu.GEAR_SLOT);
         if (ingredientStack.isEmpty() || gearStack.isEmpty()) {
             pBlockEntity.smashes = 0;
-            return;
+            return false;
         }
 
         Recipe<?> recipe = pBlockEntity.quickCheck.getRecipeFor(pBlockEntity, pLevel).orElse(null);
@@ -125,16 +125,19 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
                 if (pBlockEntity.forge(pLevel.registryAccess(), recipe, pBlockEntity.items, maxStackSize)) {
                     pBlockEntity.setRecipeUsed(recipe);
                 }
+                pLevel.playSound(null, pPos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 0.5f, 0.8f);
 
-                setChanged = true;
+                setChanged(pLevel, pPos, pState);
             }
+            else {
+                pLevel.playSound(null, pPos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 0.5f, 1.7f);
+            }
+            return true;
         }
         else {
             pBlockEntity.smashes = 0;
+            return false;
         }
-
-        if (setChanged)
-            setChanged(pLevel, pPos, pState);
     }
 
     private boolean canForge(RegistryAccess registryAccess, @javax.annotation.Nullable Recipe<?> recipe, NonNullList<ItemStack> slotsStacks, int stackSize) {

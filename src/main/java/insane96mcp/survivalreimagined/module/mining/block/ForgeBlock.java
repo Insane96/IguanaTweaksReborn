@@ -1,7 +1,11 @@
 package insane96mcp.survivalreimagined.module.mining.block;
 
+import insane96mcp.survivalreimagined.module.mining.item.ForgeHammerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -18,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -45,12 +50,41 @@ public class ForgeBlock extends BaseEntityBlock {
     }
 
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (pLevel.isClientSide) {
-            return InteractionResult.SUCCESS;
+        if (pHand == InteractionHand.OFF_HAND)
+            return InteractionResult.PASS;
+        if (pPlayer.getItemInHand(pHand).getItem() instanceof ForgeHammerItem forgeHammerItem && !pPlayer.getCooldowns().isOnCooldown(forgeHammerItem) && pLevel.getBlockEntity(pPos) instanceof ForgeBlockEntity forgeBlockEntity) {
+            if (ForgeBlockEntity.onUse(pLevel, pPos, pState, forgeBlockEntity)) {
+                if (pPlayer instanceof ServerPlayer serverPlayer)
+                    pPlayer.getItemInHand(pHand).hurt(1, pLevel.random, serverPlayer);
+                pPlayer.getCooldowns().addCooldown(forgeHammerItem, forgeHammerItem.getUseCooldown());
+                return InteractionResult.sidedSuccess(pLevel.isClientSide);
+            }
+            return InteractionResult.PASS;
         }
         else {
-            this.openContainer(pLevel, pPos, pPlayer);
-            return InteractionResult.CONSUME;
+            if (pLevel.isClientSide) {
+                return InteractionResult.SUCCESS;
+            }
+            else {
+                this.openContainer(pLevel, pPos, pPlayer);
+                return InteractionResult.CONSUME;
+            }
+        }
+    }
+
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
+        if (!pState.is(pNewState.getBlock())) {
+            BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+            if (blockentity instanceof ForgeBlockEntity) {
+                if (pLevel instanceof ServerLevel) {
+                    Containers.dropContents(pLevel, pPos, (ForgeBlockEntity)blockentity);
+                    ((ForgeBlockEntity)blockentity).getRecipesToAward((ServerLevel)pLevel, Vec3.atCenterOf(pPos));
+                }
+
+                pLevel.updateNeighbourForOutputSignal(pPos, this);
+            }
+
+            super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
         }
     }
 

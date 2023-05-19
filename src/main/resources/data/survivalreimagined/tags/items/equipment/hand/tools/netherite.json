@@ -4,6 +4,7 @@
         "minecraft:netherite_pickaxe",
         "minecraft:netherite_axe",
         "minecraft:netherite_shovel",
-        "minecraft:netherite_hoe"
+        "minecraft:netherite_hoe",
+        "survivalreimagined:netherite_hammer"
     ]
 }

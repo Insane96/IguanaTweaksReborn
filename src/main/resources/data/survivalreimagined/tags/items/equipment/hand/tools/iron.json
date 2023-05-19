@@ -4,6 +4,7 @@
         "minecraft:iron_pickaxe",
         "minecraft:iron_axe",
         "minecraft:iron_shovel",
-        "minecraft:iron_hoe"
+        "minecraft:iron_hoe",
+        "survivalreimagined:iron_hammer"
     ]
 }
