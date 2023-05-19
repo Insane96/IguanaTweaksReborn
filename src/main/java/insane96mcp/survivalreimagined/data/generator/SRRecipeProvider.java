@@ -777,10 +777,11 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Forging.FORGE.item().get())
                 .pattern("ISI")
                 .pattern(" c ")
-                .pattern("ccc")
+                .pattern("cCc")
                 .define('S', Items.SMOOTH_STONE)
                 .define('I', Items.IRON_BLOCK)
                 .define('c', Items.COPPER_INGOT)
+                .define('C', Items.COPPER_BLOCK)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
                 .save(writer);
 
@@ -834,6 +835,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         output,
                         cookingTime)
                 .recycle(amountAtMaxDurability, 0.75f)
+                .group("recycle_" + ForgeRegistries.ITEMS.getKey(output).getPath())
                 .unlockedBy("has_armor", has(itemToRecycle))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "blast_furnace/recycle_" + ForgeRegistries.ITEMS.getKey(itemToRecycle).getPath());
 
@@ -844,6 +846,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         cookingTime)
                 .recycle(amountAtMaxDurability)
                 .unlockedBy("has_armor", has(itemToRecycle))
+                .group("recycle_" + ForgeRegistries.ITEMS.getKey(output).getPath())
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_furnace/recycle_" + ForgeRegistries.ITEMS.getKey(itemToRecycle).getPath());
     }
 

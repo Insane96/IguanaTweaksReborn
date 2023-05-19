@@ -8,6 +8,6 @@
   "gear": {
     "item": "survivalreimagined:flint_axe"
   },
-  "result": "minecraft:copper_axe",
+  "result": "survivalreimagined:copper_axe",
   "smashes_required": 7
 }

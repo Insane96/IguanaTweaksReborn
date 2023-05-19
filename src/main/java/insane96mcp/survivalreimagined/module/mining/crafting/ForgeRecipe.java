@@ -100,4 +100,9 @@ public class ForgeRecipe implements Recipe<Container> {
     public SRBookCategory category() {
         return this.category;
     }
+
+    @Override
+    public ItemStack getToastSymbol() {
+        return new ItemStack(Forging.FORGE.item().get());
+    }
 }

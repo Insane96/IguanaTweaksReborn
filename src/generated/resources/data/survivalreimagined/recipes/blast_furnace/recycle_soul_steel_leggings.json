@@ -2,6 +2,7 @@
   "type": "survivalreimagined:multi_item_blasting",
   "category": "misc",
   "cookingtime": 200,
+  "group": "recycle_soul_steel_nugget",
   "ingredients": [
     {
       "item": "survivalreimagined:soul_steel_leggings"

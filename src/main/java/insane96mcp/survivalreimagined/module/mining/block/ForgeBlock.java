@@ -54,14 +54,17 @@ public class ForgeBlock extends BaseEntityBlock {
         if (pHand == InteractionHand.OFF_HAND)
             return InteractionResult.PASS;
         ItemStack stack = pPlayer.getItemInHand(pHand);
-        if (stack.getItem() instanceof ForgeHammerItem forgeHammerItem && !pPlayer.getCooldowns().isOnCooldown(forgeHammerItem) && pLevel.getBlockEntity(pPos) instanceof ForgeBlockEntity forgeBlockEntity) {
-            if (ForgeBlockEntity.onUse(pLevel, pPos, pState, forgeBlockEntity, forgeHammerItem.getSmashesOnHit(stack, pPlayer.getRandom()))) {
+        if (stack.getItem() instanceof ForgeHammerItem forgeHammerItem && pLevel.getBlockEntity(pPos) instanceof ForgeBlockEntity forgeBlockEntity) {
+            if (!pPlayer.getCooldowns().isOnCooldown(forgeHammerItem) && ForgeBlockEntity.onUse(pLevel, pPos, pState, forgeBlockEntity, forgeHammerItem.getSmashesOnHit(stack, pPlayer.getRandom()))) {
                 pPlayer.getCooldowns().addCooldown(forgeHammerItem, forgeHammerItem.getUseCooldown(stack));
                 if (pPlayer instanceof ServerPlayer serverPlayer)
                     stack.hurtAndBreak(1, serverPlayer, (player) -> player.broadcastBreakEvent(pHand));
                 return InteractionResult.sidedSuccess(pLevel.isClientSide);
             }
-            return InteractionResult.PASS;
+            if (!pPlayer.getCooldowns().isOnCooldown(forgeHammerItem))
+                return InteractionResult.SUCCESS;
+            else
+                return InteractionResult.PASS;
         }
         else {
             if (pLevel.isClientSide) {

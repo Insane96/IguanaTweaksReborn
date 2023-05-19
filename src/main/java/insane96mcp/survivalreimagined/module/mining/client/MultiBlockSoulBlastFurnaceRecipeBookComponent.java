@@ -2,7 +2,7 @@ package insane96mcp.survivalreimagined.module.mining.client;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.world.item.Items;
 
 import java.util.Set;
 
@@ -14,6 +14,6 @@ public class MultiBlockSoulBlastFurnaceRecipeBookComponent extends AbstractMulti
     }
 
     protected Set<Item> getFuelItems() {
-        return AbstractFurnaceBlockEntity.getFuel().keySet();
+        return Set.of(Items.LAVA_BUCKET);
     }
 }

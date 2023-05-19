@@ -279,13 +279,13 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
         if (recipe == null
                 || !this.canBurn(registryAccess, recipe, inputSlots, slotStacks, stackSize))
             return false;
-        ItemStack itemstack1 = ((Recipe<WorldlyContainer>) recipe).assemble(this, registryAccess);
-        ItemStack itemstack2 = slotStacks.get(RESULT_SLOT);
-        if (itemstack2.isEmpty()) {
-            slotStacks.set(RESULT_SLOT, itemstack1.copy());
+        ItemStack resultStack = ((Recipe<WorldlyContainer>) recipe).assemble(this, registryAccess);
+        ItemStack resultSlotStack = slotStacks.get(RESULT_SLOT);
+        if (resultSlotStack.isEmpty()) {
+            this.setItem(RESULT_SLOT, resultStack.copy());
         }
-        else if (itemstack2.is(itemstack1.getItem())) {
-            itemstack2.grow(itemstack1.getCount());
+        else if (resultSlotStack.is(resultStack.getItem())) {
+            resultSlotStack.grow(resultStack.getCount());
         }
 
         for (int slot : inputSlots) {
@@ -389,9 +389,9 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
         ItemStack itemstack = this.items.get(pSlot);
         boolean flag = !pStack.isEmpty() && pStack.sameItem(itemstack) && ItemStack.tagMatches(pStack, itemstack);
         this.items.set(pSlot, pStack);
-        if (pStack.getCount() > this.getMaxStackSize()) {
+        /*if (pStack.getCount() > this.getMaxStackSize()) {
             pStack.setCount(this.getMaxStackSize());
-        }
+        }*/
 
         if (pSlot < FUEL_SLOT && !flag) {
             this.cookingTotalTime = getTotalCookTime(this.level, this);

@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.mining.client;
 
+import insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.inventory.Slot;
@@ -24,14 +25,12 @@ public abstract class AbstractMultiBlockFurnaceRecipeBookComponent extends Recip
     public void setupGhostRecipe(Recipe<?> pRecipe, List<Slot> pSlots) {
         ItemStack itemstack = pRecipe.getResultItem(this.minecraft.level.registryAccess());
         this.ghostRecipe.setRecipe(pRecipe);
-        this.ghostRecipe.addIngredient(Ingredient.of(itemstack), (pSlots.get(2)).x, (pSlots.get(2)).y);
+        this.ghostRecipe.addIngredient(Ingredient.of(itemstack), (pSlots.get(AbstractMultiBlockFurnaceMenu.RESULT_SLOT)).x, (pSlots.get(AbstractMultiBlockFurnaceMenu.RESULT_SLOT)).y);
         NonNullList<Ingredient> nonnulllist = pRecipe.getIngredients();
-        Slot slot = pSlots.get(1);
+        Slot slot = pSlots.get(AbstractMultiBlockFurnaceMenu.FUEL_SLOT);
         if (slot.getItem().isEmpty()) {
             if (this.fuels == null) {
-                this.fuels = Ingredient.of(this.getFuelItems().stream().filter((p_274685_) -> {
-                    return p_274685_.isEnabled(this.minecraft.level.enabledFeatures());
-                }).map(ItemStack::new));
+                this.fuels = Ingredient.of(this.getFuelItems().stream().filter((item) -> item.isEnabled(this.minecraft.level.enabledFeatures())).map(ItemStack::new));
             }
 
             this.ghostRecipe.addIngredient(this.fuels, slot.x, slot.y);
@@ -39,7 +38,7 @@ public abstract class AbstractMultiBlockFurnaceRecipeBookComponent extends Recip
 
         Iterator<Ingredient> iterator = nonnulllist.iterator();
 
-        for(int i = 0; i < 2; ++i) {
+        for(int i = 0; i < 6; ++i) {
             if (!iterator.hasNext()) {
                 return;
             }

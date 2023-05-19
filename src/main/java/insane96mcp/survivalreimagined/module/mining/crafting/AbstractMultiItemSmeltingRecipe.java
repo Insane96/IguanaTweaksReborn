@@ -8,11 +8,13 @@ import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
@@ -194,4 +196,22 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
     }
 
     abstract int[] getIngredientSlots();
+
+    @Override
+    public boolean isIncomplete() {
+        NonNullList<Ingredient> nonnulllist = this.getIngredients();
+        return nonnulllist.isEmpty() || nonnulllist.stream().anyMatch(AbstractMultiItemSmeltingRecipe::hasNoElements);
+    }
+
+    public static boolean hasNoElements(Ingredient ingredient)
+    {
+        ItemStack[] items = ingredient.getItems();
+        if (items.length == 1)
+        {
+            //If we potentially added a barrier due to the ingredient being an empty tag, try and check if it is the stack we added
+            ItemStack item = items[0];
+            return item.getItem() == Items.BARRIER && item.getHoverName() instanceof MutableComponent hoverName && hoverName.getString().startsWith("Empty Tag: ");
+        }
+        return false;
+    }
 }

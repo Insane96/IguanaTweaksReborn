@@ -2,6 +2,7 @@
   "type": "survivalreimagined:multi_item_blasting",
   "category": "misc",
   "cookingtime": 200,
+  "group": "recycle_gold_nugget",
   "ingredients": [
     {
       "item": "minecraft:golden_shovel"

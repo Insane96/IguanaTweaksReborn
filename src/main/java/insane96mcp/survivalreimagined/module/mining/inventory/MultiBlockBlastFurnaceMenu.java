@@ -4,7 +4,6 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.mining.crafting.AbstractMultiItemSmeltingRecipe;
 import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
@@ -17,7 +16,7 @@ import java.util.List;
 public class MultiBlockBlastFurnaceMenu extends AbstractMultiBlockFurnaceMenu {
 
     public MultiBlockBlastFurnaceMenu(int pContainerId, Inventory pPlayerInventory) {
-        this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(DATA_COUNT));
+        this(pContainerId, pPlayerInventory, new ContainerOverMaxStack(SLOT_COUNT), new SimpleContainerData(DATA_COUNT));
     }
 
     public MultiBlockBlastFurnaceMenu(int pContainerId, Inventory pPlayerInventory, Container pBlastFurnaceContainer, ContainerData pBlastFurnaceData) {

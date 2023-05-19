@@ -6,8 +6,8 @@
   },
   "amount": 4,
   "gear": {
-    "item": "suvivalreimagined:chained_copper_boots"
+    "item": "survivalreimagined:chained_copper_boots"
   },
   "result": "minecraft:iron_boots",
-  "smashes_required": 25
+  "smashes_required": 15
 }

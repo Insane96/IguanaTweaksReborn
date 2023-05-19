@@ -8,6 +8,6 @@
   "gear": {
     "item": "survivalreimagined:flint_pickaxe"
   },
-  "result": "minecraft:copper_pickaxe",
+  "result": "survivalreimagined:copper_pickaxe",
   "smashes_required": 7
 }

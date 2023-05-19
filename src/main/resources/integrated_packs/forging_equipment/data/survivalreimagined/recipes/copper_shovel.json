@@ -8,6 +8,6 @@
   "gear": {
     "item": "survivalreimagined:flint_shovel"
   },
-  "result": "minecraft:copper_shovel",
+  "result": "survivalreimagined:copper_shovel",
   "smashes_required": 7
 }

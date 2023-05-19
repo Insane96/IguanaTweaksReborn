@@ -60,6 +60,16 @@ public class ClientSetup {
             event.accept(SoulSteel.SHOVEL.get());
             event.accept(SoulSteel.HOE.get());
             event.accept(CoalFire.FIRESTARTER.get());
+
+            event.accept(Forging.STONE_HAMMER.get());
+            event.accept(Forging.FLINT_HAMMER.get());
+            event.accept(Forging.COPPER_HAMMER.get());
+            event.accept(Forging.GOLDEN_HAMMER.get());
+            event.accept(Forging.IRON_HAMMER.get());
+            event.accept(Forging.DURIUM_HAMMER.get());
+            event.accept(Forging.DIAMOND_HAMMER.get());
+            event.accept(Forging.SOUL_STEEL_HAMMER.get());
+            event.accept(Forging.NETHERITE_HAMMER.get());
         }
         else if (event.getTab() == CreativeModeTabs.COMBAT) {
             event.accept(FlintExpansion.SWORD.get());

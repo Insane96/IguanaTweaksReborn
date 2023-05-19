@@ -2,6 +2,7 @@
   "type": "survivalreimagined:multi_item_soul_blasting",
   "category": "misc",
   "cookingtime": 200,
+  "group": "recycle_netherite_ingot",
   "ingredients": [
     {
       "item": "minecraft:netherite_chestplate"
