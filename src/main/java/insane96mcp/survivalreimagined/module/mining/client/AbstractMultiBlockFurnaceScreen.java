@@ -33,7 +33,7 @@ public abstract class AbstractMultiBlockFurnaceScreen<T extends AbstractMultiBlo
         this.addRenderableWidget(new ImageButton(this.leftPos + 13, this.height / 2 - 32, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
             this.recipeBookComponent.toggleVisibility();
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-            button.setPosition(this.leftPos + 20, this.height / 2 - 31);
+            button.setPosition(this.leftPos + 13, this.height / 2 - 32);
         }));
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
     }

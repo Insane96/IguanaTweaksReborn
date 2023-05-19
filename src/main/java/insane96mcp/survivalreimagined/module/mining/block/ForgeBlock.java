@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.module.mining.block;
 import insane96mcp.survivalreimagined.module.mining.item.ForgeHammerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
@@ -60,6 +61,9 @@ public class ForgeBlock extends BaseEntityBlock {
                 if (pPlayer instanceof ServerPlayer serverPlayer)
                     stack.hurtAndBreak(1, serverPlayer, (player) -> player.broadcastBreakEvent(pHand));
                 return InteractionResult.sidedSuccess(pLevel.isClientSide);
+            }
+            else if (!pLevel.isClientSide && !pPlayer.getCooldowns().isOnCooldown(forgeHammerItem)) {
+                pPlayer.displayClientMessage(Component.literal("No recipe found in the Forge"), true);
             }
             if (!pPlayer.getCooldowns().isOnCooldown(forgeHammerItem))
                 return InteractionResult.SUCCESS;
