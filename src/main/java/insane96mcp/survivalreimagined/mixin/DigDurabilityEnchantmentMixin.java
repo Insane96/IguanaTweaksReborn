@@ -18,12 +18,12 @@ public abstract class DigDurabilityEnchantmentMixin {
 	@Inject(at = @At("RETURN"), method = "getMinCost", cancellable = true)
 	private void onGetMinCost(int lvl, CallbackInfoReturnable<Integer> cir) {
 		if (UnbreakingOverhaul.isMaxOneLevel())
-			cir.setReturnValue(25);
+			cir.setReturnValue(15);
 	}
 
 	@Inject(at = @At("RETURN"), method = "getMaxCost", cancellable = true)
 	private void onGetMaxCost(int lvl, CallbackInfoReturnable<Integer> cir) {
 		if (UnbreakingOverhaul.isMaxOneLevel())
-			cir.setReturnValue(60);
+			cir.setReturnValue(65);
 	}
 }
