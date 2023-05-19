@@ -21,7 +21,7 @@ public class MultiBlockSoulBlastFurnaceMenu extends AbstractMultiBlockFurnaceMen
     }
 
     public MultiBlockSoulBlastFurnaceMenu(int pContainerId, Inventory pPlayerInventory, Container pBlastFurnaceContainer, ContainerData pBlastFurnaceData) {
-        super(MultiBlockFurnaces.SOUL_BLAST_FURNACE_MENU_TYPE.get(), MultiBlockFurnaces.SOUL_BLASTING_RECIPE_TYPE.get(), SurvivalReimagined.MULTI_ITEM_RECIPE_BOOK_TYPE, pContainerId, pPlayerInventory, pBlastFurnaceContainer, pBlastFurnaceData, List.of(
+        super(MultiBlockFurnaces.SOUL_BLAST_FURNACE_MENU_TYPE.get(), MultiBlockFurnaces.SOUL_BLASTING_RECIPE_TYPE.get(), SurvivalReimagined.MULTI_ITEM_SOUL_BLASTING_RECIPE_BOOK_TYPE, pContainerId, pPlayerInventory, pBlastFurnaceContainer, pBlastFurnaceData, List.of(
                 new Slot(pBlastFurnaceContainer, 0, 43, 26),
                 new Slot(pBlastFurnaceContainer, 1, 61, 26),
                 new Slot(pBlastFurnaceContainer, 2, 79, 26),
