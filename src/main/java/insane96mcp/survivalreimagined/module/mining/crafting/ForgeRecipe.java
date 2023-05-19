@@ -79,7 +79,7 @@ public class ForgeRecipe implements Recipe<Container> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return null;
+        return Forging.FORGE_RECIPE_SERIALIZER.get();
     }
 
     /**

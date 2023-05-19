@@ -11,6 +11,8 @@ import insane96mcp.survivalreimagined.network.message.SyncMovementDirection;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -30,6 +32,7 @@ public class BackwardsSlowdown extends Feature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()

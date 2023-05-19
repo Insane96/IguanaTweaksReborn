@@ -4,13 +4,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import insane96mcp.survivalreimagined.module.mining.crafting.AbstractMultiItemSmeltingRecipe;
+import insane96mcp.survivalreimagined.setup.client.SRBookCategory;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -25,7 +25,7 @@ public abstract class AbstractMultiItemSmeltingSerializer implements RecipeSeria
 
     public AbstractMultiItemSmeltingRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson) {
         String group = GsonHelper.getAsString(pJson, "group", "");
-        CookingBookCategory category = CookingBookCategory.CODEC.byName(GsonHelper.getAsString(pJson, "category", null), CookingBookCategory.MISC);
+        SRBookCategory category = SRBookCategory.CODEC.byName(GsonHelper.getAsString(pJson, "category", null), this.getDefaultBookCategory());
         NonNullList<Ingredient> ingredients = itemsFromJson(GsonHelper.getAsJsonArray(pJson, "ingredients"));
         if (ingredients.isEmpty()) {
             throw new JsonParseException("No ingredients for shapeless recipe");
@@ -54,6 +54,8 @@ public abstract class AbstractMultiItemSmeltingSerializer implements RecipeSeria
         return this.factory.create(pRecipeId, group, category, ingredients, result, doubleOutputChance, experience, cookingTime, recycle);
     }
 
+    protected abstract SRBookCategory getDefaultBookCategory();
+
     private static NonNullList<Ingredient> itemsFromJson(JsonArray pIngredientArray) {
         NonNullList<Ingredient> nonnulllist = NonNullList.create();
 
@@ -67,7 +69,7 @@ public abstract class AbstractMultiItemSmeltingSerializer implements RecipeSeria
 
     public AbstractMultiItemSmeltingRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
         String group = pBuffer.readUtf();
-        CookingBookCategory category = pBuffer.readEnum(CookingBookCategory.class);
+        SRBookCategory category = pBuffer.readEnum(SRBookCategory.class);
         int ingredientsAmount = pBuffer.readVarInt();
         NonNullList<Ingredient> ingredients = NonNullList.withSize(ingredientsAmount, Ingredient.EMPTY);
 
@@ -103,7 +105,7 @@ public abstract class AbstractMultiItemSmeltingSerializer implements RecipeSeria
     }
 
     public interface CookieBaker<T extends AbstractMultiItemSmeltingRecipe> {
-        T create(ResourceLocation pId, String pGroup, CookingBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputchance, float pExperience, int pCookingTime, AbstractMultiItemSmeltingRecipe.Recycle recycle);
+        T create(ResourceLocation pId, String pGroup, SRBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputchance, float pExperience, int pCookingTime, AbstractMultiItemSmeltingRecipe.Recycle recycle);
     }
 
     abstract int getIngredientSlotsCount();

@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
+import insane96mcp.survivalreimagined.setup.client.SRBookCategory;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -15,7 +16,10 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
@@ -25,7 +29,7 @@ import java.util.List;
 public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Container> {
     protected final RecipeType<?> type;
     protected final ResourceLocation id;
-    private final CookingBookCategory category;
+    private final SRBookCategory category;
     protected final String group;
     final NonNullList<Ingredient> ingredients;
     final float experience;
@@ -37,7 +41,7 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
 
     private static final RandomSource RANDOM = RandomSource.create();
 
-    public AbstractMultiItemSmeltingRecipe(RecipeType<?> type, ResourceLocation pId, String pGroup, CookingBookCategory pCategory, int maxIngredients, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputChance, float pExperience, int pCookingTime, @Nullable Recycle recycle) {
+    public AbstractMultiItemSmeltingRecipe(RecipeType<?> type, ResourceLocation pId, String pGroup, SRBookCategory pCategory, int maxIngredients, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputChance, float pExperience, int pCookingTime, @Nullable Recycle recycle) {
         this.type = type;
         this.category = pCategory;
         this.id = pId;
@@ -159,7 +163,7 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
         return this.recycle;
     }
 
-    public CookingBookCategory category() {
+    public SRBookCategory category() {
         return this.category;
     }
 

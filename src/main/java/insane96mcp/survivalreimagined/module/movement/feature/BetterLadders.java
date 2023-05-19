@@ -25,8 +25,9 @@ public class BetterLadders extends Feature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public void onPlayerTick2(TickEvent.PlayerTickEvent event) {
+	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
 				|| event.phase == TickEvent.Phase.END
 				|| !(event.player instanceof LocalPlayer localPlayer))

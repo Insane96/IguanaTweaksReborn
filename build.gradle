@@ -61,7 +61,7 @@ minecraft {
         }
 
         server {
-            workingDirectory project.file('run')
+            workingDirectory project.file('run_server')
 
             property 'forge.logging.markers', 'REGISTRIES'
 

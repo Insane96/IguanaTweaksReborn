@@ -43,7 +43,7 @@ public class ForgeRecipeSerializer implements RecipeSerializer<ForgeRecipe> {
     public ForgeRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
         SRBookCategory category = pBuffer.readEnum(SRBookCategory.class);
         Ingredient ingredient = Ingredient.fromNetwork(pBuffer);
-        int ingredientAmount = pBuffer.readInt();
+        int ingredientAmount = pBuffer.readVarInt();
         Ingredient gear = Ingredient.fromNetwork(pBuffer);
         ItemStack result = pBuffer.readItem();
         int smashesRequired = pBuffer.readVarInt();
@@ -53,10 +53,10 @@ public class ForgeRecipeSerializer implements RecipeSerializer<ForgeRecipe> {
     public void toNetwork(FriendlyByteBuf pBuffer, ForgeRecipe pRecipe) {
         pBuffer.writeEnum(pRecipe.category());
         pRecipe.getIngredient().toNetwork(pBuffer);
-        pBuffer.writeInt(pRecipe.getIngredientAmount());
+        pBuffer.writeVarInt(pRecipe.getIngredientAmount());
         pRecipe.getGear().toNetwork(pBuffer);
         pBuffer.writeItem(pRecipe.getResultItem(RegistryAccess.EMPTY));
-        pBuffer.writeFloat(pRecipe.getSmashesRequired());
+        pBuffer.writeVarInt(pRecipe.getSmashesRequired());
     }
 
     public interface CookieBaker<T extends ForgeRecipe> {
