@@ -1,6 +1,5 @@
 package insane96mcp.survivalreimagined;
 
-import insane96mcp.survivalreimagined.data.SRAnvilRecipeReloadListener;
 import insane96mcp.survivalreimagined.data.SRDataReloadListener;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
@@ -100,7 +99,6 @@ public class SurvivalReimagined
     public void onAddReloadListener(AddReloadListenerEvent event) {
         SRDataReloadListener.reloadContext = event.getConditionContext();
         event.addListener(SRDataReloadListener.INSTANCE);
-        event.addListener(SRAnvilRecipeReloadListener.INSTANCE);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
