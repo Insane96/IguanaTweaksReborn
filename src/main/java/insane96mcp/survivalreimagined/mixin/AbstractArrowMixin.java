@@ -2,8 +2,6 @@ package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.survivalreimagined.module.combat.feature.Stats;
-import insane96mcp.survivalreimagined.network.message.SyncInvulnerableTimeMessage;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,8 +20,8 @@ public abstract class AbstractArrowMixin {
     private void onHitEntity(EntityHitResult entityHitResult, CallbackInfo ci) {
         if (Stats.disableArrowInvFrames()) {
             entityHitResult.getEntity().invulnerableTime = 0;
-            if (!entityHitResult.getEntity().isInvulnerable() && entityHitResult.getEntity().level instanceof ServerLevel serverLevel)
-                SyncInvulnerableTimeMessage.sync(serverLevel, entityHitResult.getEntity(), 2);
+            /*if (!entityHitResult.getEntity().isInvulnerable() && entityHitResult.getEntity().level instanceof ServerLevel serverLevel)
+                SyncInvulnerableTimeMessage.sync(serverLevel, entityHitResult.getEntity(), 2);*/
         }
     }
 
