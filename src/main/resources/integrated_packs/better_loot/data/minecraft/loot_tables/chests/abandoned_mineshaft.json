@@ -294,14 +294,28 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "weight": 5,
-                    "name": "minecraft:powered_rail",
+                    "weight": 10,
+                    "name": "survivalreimagined:copper_powered_rail",
                     "functions": [
                         {
                             "function": "minecraft:set_count",
                             "count": {
                                 "min": 4,
                                 "max": 7
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 5,
+                    "name": "survivalreimagined:golden_powered_rail",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "min": 2,
+                                "max": 4
                             }
                         }
                     ]
@@ -322,7 +336,7 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "weight": 10,
+                    "weight": 7,
                     "name": "minecraft:oak_planks",
                     "functions": [
                         {
@@ -336,7 +350,7 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "weight": 10,
+                    "weight": 7,
                     "name": "minecraft:oak_fence",
                     "functions": [
                         {
@@ -347,51 +361,6 @@
                             }
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "rolls": 1,
-            "entries": [
-                {
-                    "type": "minecraft:item",
-                    "name": "minecraft:golden_pickaxe",
-                    "functions": [
-                        {
-                            "function": "minecraft:set_nbt",
-                            "tag": "{HideFlags:1,RepairCost:29,Enchantments:[{id:\"minecraft:efficiency\",lvl:5},{id:\"minecraft:unbreaking\",lvl:50}]}"
-                        },
-                        {
-                            "function": "minecraft:set_name",
-                            "name": {
-                                "text": "Stone Eater",
-                                "color": "gold",
-                                "bold": true,
-                                "italic": false
-                            }
-                        },
-                        {
-                            "function": "minecraft:set_lore",
-                            "lore": [
-                                {
-                                    "text": "Efficency V",
-                                    "color": "gray",
-                                    "italic": false
-                                },
-                                {
-                                    "text": "Unbreaking L",
-                                    "color": "gray",
-                                    "italic": false
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
-            "conditions": [
-                {
-                    "condition": "minecraft:random_chance",
-                    "chance": 0.1
                 }
             ]
         }

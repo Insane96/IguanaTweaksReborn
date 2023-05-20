@@ -43,11 +43,6 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "weight": 2,
-                    "name": "minecraft:golden_carrot"
-                },
-                {
-                    "type": "minecraft:item",
                     "weight": 4,
                     "name": "minecraft:iron_horse_armor"
                 },
