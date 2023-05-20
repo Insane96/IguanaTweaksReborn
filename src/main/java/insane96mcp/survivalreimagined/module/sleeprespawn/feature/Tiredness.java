@@ -225,7 +225,7 @@ public class Tiredness extends SRFeature {
 			float tirednessOnWakeUp = Mth.clamp(TirednessHandler.get(player) - tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
 			int duration = (int) (vigourDuration - (tirednessOnWakeUp * vigourPenalty));
 			if (duration > 0)
-				player.addEffect(new MobEffectInstance(SRMobEffects.VIGOUR.get(), duration * 20, vigourAmplifier, true, true));
+				player.addEffect(new MobEffectInstance(SRMobEffects.VIGOUR.get(), duration * 20, vigourAmplifier, false, false, true));
 			TirednessHandler.set(player, tirednessOnWakeUp);
 		});
 	}

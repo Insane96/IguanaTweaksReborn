@@ -26,6 +26,7 @@ public class ForgeHammerItem extends TieredItem {
     public ForgeHammerItem(Tier pTier, int useCooldown, Properties pProperties) {
         super(pTier, pProperties);
         this.useCooldown = useCooldown;
+        this.maxDamage = (int) (this.maxDamage / 3f);
     }
 
     public int getUseCooldown(ItemStack stack) {
