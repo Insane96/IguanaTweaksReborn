@@ -59,6 +59,10 @@ public class Hoes extends SRFeature {
 	@Label(name = "Efficiency cooldown reduction", description = "Each Efficiency level reduces the cooldown of hoes by this many ticks.")
 	public static Integer efficiencyCooldownReduction = 1;
 
+	@Config
+	@Label(name = "Trigger only for farmland")
+	public static Boolean triggerOnlyForFarmland = true;
+
 	public Hoes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("hoes_stats.json", hoesStats, HOES_STATS_DEFAULT, HoeStat.LIST_TYPE));
@@ -83,7 +87,7 @@ public class Hoes extends SRFeature {
 		if (event.getPlayer() != null && event.getPlayer().level.isClientSide)
 			return;
 		BlockState finalState = event.getState().getBlock().getToolModifiedState(event.getState(), event.getContext(), event.getToolAction(), true);
-		if (finalState == null || !finalState.is(Blocks.FARMLAND))
+		if (finalState == null || (!finalState.is(Blocks.FARMLAND) && triggerOnlyForFarmland))
 			return;
 		if (!isHoeDisabled)
 			harderTilling(event);
