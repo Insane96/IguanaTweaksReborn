@@ -18,6 +18,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -75,12 +76,14 @@ public class Hoes extends SRFeature {
 		if (!this.isEnabled()
 				|| event.getPlayer() == null
 				|| event.isSimulated()
-				|| event.getToolAction() != ToolActions.HOE_TILL
-				|| event.getState().getBlock().getToolModifiedState(event.getState(), event.getContext(), event.getToolAction(), true) == null)
+				|| event.getToolAction() != ToolActions.HOE_TILL)
 			return;
 
 		boolean isHoeDisabled = disabledHoes(event);
 		if (event.getPlayer() != null && event.getPlayer().level.isClientSide)
+			return;
+		BlockState finalState = event.getState().getBlock().getToolModifiedState(event.getState(), event.getContext(), event.getToolAction(), true);
+		if (finalState == null || !finalState.is(Blocks.FARMLAND))
 			return;
 		if (!isHoeDisabled)
 			harderTilling(event);
