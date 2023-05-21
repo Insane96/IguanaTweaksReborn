@@ -269,6 +269,8 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
             this.smashes = 0;
             this.setChanged();
         }
+
+        //TODO Sync to client
     }
 
     @Override

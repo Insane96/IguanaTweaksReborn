@@ -42,7 +42,7 @@ public class UnbreakingOverhaul extends Feature {
 	@Label(name = "Enchanted Item Fragment", description = "Enable Enchanted Item Fragments.")
 	public static Boolean enchantedItemFragment = true;
 
-	public static RegistryObject<Item> ITEM_FRAGMENT = SRItems.REGISTRY.register("item_fragment", () -> new Item(new Item.Properties().stacksTo(1)));
+	public static RegistryObject<Item> ITEM_FRAGMENT = SRItems.REGISTRY.register("item_fragment", () -> new EnchantedBookItem(new Item.Properties().stacksTo(1)));
 
 	public UnbreakingOverhaul(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -87,21 +87,22 @@ public class UnbreakingOverhaul extends Feature {
 
 	@SubscribeEvent
 	public void onAnvilUpdate(AnvilUpdateEvent event) {
-		//noinspection DataFlowIssue
 		if (!this.isEnabled()
 				|| !enchantedItemFragment
 				|| !event.getRight().is(ITEM_FRAGMENT.get())
-				|| !event.getRight().hasTag()
-				|| !event.getRight().getTag().contains("appliable_to")
 				|| !event.getLeft().isEnchantable()
 				|| event.getLeft().isEnchanted())
 			return;
 
-		Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(event.getRight().getTag().getString("appliable_to")));
-		if (item == null)
-			return;
-		if (!event.getLeft().is(item))
-			return;
+		ResourceLocation appliableTo = null;
+		if (event.getRight().hasTag())
+			//noinspection DataFlowIssue
+			appliableTo = ResourceLocation.tryParse(event.getRight().getTag().getString("appliable_to"));
+		if (appliableTo != null) {
+			Item item = ForgeRegistries.ITEMS.getValue(appliableTo);
+			if (item == null || !event.getLeft().is(item))
+				return;
+		}
 		MutableInt cost = new MutableInt(0);
 		ItemStack output = event.getLeft().copy();
 		EnchantmentHelper.deserializeEnchantments(EnchantedBookItem.getEnchantments(event.getRight())).forEach((enchantment, lvl) -> {
