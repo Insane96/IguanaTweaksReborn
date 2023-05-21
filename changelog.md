@@ -10,6 +10,8 @@
 * Block experience multiplier reduced (2.25x -> 2x)
 * Overall reduced forge smashes required
 * Portal now requires either Gold Blocks or Crying obsidian
+* Falling on leaves now cancels fall damage only from 8 blocks and has only 20% damage reduction instead of 50%
+* Heavily nerfed drowned trident's and slightly nerfed skeleton's damages
 
 ## 3.11.0
 * Added Forge

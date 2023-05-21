@@ -18,6 +18,8 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import snownee.kiwi.config.KiwiConfigManager;
+import snownee.passablefoliage.PassableFoliageCommonConfig;
 
 @Label(name = "Fast Leaf Decay", description = "Makes leaves decay faster")
 @LoadFeature(module = Modules.Ids.WORLD)
@@ -33,6 +35,14 @@ public class FastLeafDecay extends Feature {
 
 	public FastLeafDecay(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	@Override
+	public void loadConfigOptions() {
+		super.loadConfigOptions();
+		PassableFoliageCommonConfig.fallDamageReduction = 0.2f;
+		PassableFoliageCommonConfig.fallDamageThreshold = 8;
+		KiwiConfigManager.getHandler(PassableFoliageCommonConfig.class).save();
 	}
 
 	@SubscribeEvent
