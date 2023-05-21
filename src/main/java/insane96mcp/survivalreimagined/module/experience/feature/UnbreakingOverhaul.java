@@ -76,7 +76,7 @@ public class UnbreakingOverhaul extends Feature {
 			EnchantmentInstance instance = new EnchantmentInstance(enchantment, lvl);
 			EnchantedBookItem.addEnchantment(itemStack, instance);
 		});
-		event.getOriginal().getAllEnchantments().forEach(itemStack::enchant);
+		//event.getOriginal().getAllEnchantments().forEach(itemStack::enchant);
 		if (!itemStack.hasTag())
 			itemStack.setTag(new CompoundTag());
 		itemStack.getTag().putString("appliable_to", ForgeRegistries.ITEMS.getKey(event.getOriginal().getItem()).toString());
