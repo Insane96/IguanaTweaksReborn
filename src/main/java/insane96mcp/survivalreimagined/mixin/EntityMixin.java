@@ -20,7 +20,7 @@ public abstract class EntityMixin {
     protected Object2DoubleMap<FluidType> forgeFluidTypeHeight;
 
     @Inject(at = @At(value = "RETURN"), method = "fireImmune", cancellable = true)
-    private void onLateTick(CallbackInfoReturnable<Boolean> cir) {
+    private void onFireImmune(CallbackInfoReturnable<Boolean> cir) {
         if (Misc.isFireImmune((Entity) (Object) this))
             cir.setReturnValue(true);
     }
