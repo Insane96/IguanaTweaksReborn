@@ -3,6 +3,9 @@
 ## 3.11.1
 * Fishing is now slowed down based off season
 * Hammers are now usable as weapons
+* Overall reduced block hardness
+* Efficiency now scales exponentially again (not like vanilla)
+  * Formula changed from +`(75 * lvl)`% efficiency to +`(15 * (lvl * lvl + 1))`% efficiency
 * Global experience multiplier increased (1.3x -> 1.5x)
 * Block experience multiplier reduced (2.25x -> 2x)
 * Overall reduced forge smashes required

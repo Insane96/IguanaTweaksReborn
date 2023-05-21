@@ -230,10 +230,11 @@ public class ItemStats extends SRFeature {
 			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_EFFICIENCY_ITEM).withStyle(ChatFormatting.RED));
 		}
 		else if (event.getItemStack().getItem() instanceof DiggerItem diggerItem){
-			int efficiency = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
+			int lvl = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
 			float toolEfficiency = diggerItem.speed;
-			float bonusToolEfficiency = diggerItem.speed * (efficiency * 0.75f);
-			if (efficiency > 0)
+			float baseEfficiency = 0.15f;
+			float bonusToolEfficiency = diggerItem.speed * (baseEfficiency * (lvl * lvl + 1));
+			if (lvl > 0)
 				toolEfficiency += bonusToolEfficiency;
 			event.getToolTip().add(Component.literal(" ").append(Component.translatable(TOOL_EFFICIENCY, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(toolEfficiency))).withStyle(ChatFormatting.DARK_GREEN));
 		}

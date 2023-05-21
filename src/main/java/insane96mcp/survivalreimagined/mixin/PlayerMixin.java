@@ -64,7 +64,8 @@ public abstract class PlayerMixin extends LivingEntity {
 		int lvl = EnchantmentHelper.getBlockEfficiency((Player) (Object) this);
 		//Remove vanilla efficiency
 		efficiency -= (float)(lvl * lvl + 1);
-		efficiency *= 0.75f * lvl + 1;
+		float baseEfficiency = 0.15f;
+		efficiency *= 1f + (baseEfficiency * (lvl * lvl + 1));
 		return efficiency;
 	}
 
