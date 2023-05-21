@@ -14,12 +14,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
+import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -44,6 +46,15 @@ public class PiercingPickaxes extends Feature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
+	public static void piercingDamageAttribute(EntityAttributeModificationEvent event) {
+		for (EntityType<? extends LivingEntity> entityType : event.getTypes()) {
+			if (event.has(entityType, PIERCING_DAMAGE.get()))
+				continue;
+
+			event.add(entityType, PIERCING_DAMAGE.get(), 0d);
+		}
+	}
+
 	@SuppressWarnings("DataFlowIssue")
 	@SubscribeEvent
 	public void onPostEntityDamaged(PostEntityHurtEvent event) {
@@ -55,6 +66,8 @@ public class PiercingPickaxes extends Feature {
 			return;
 
 		AttributeInstance piercingInstance = attacker.getAttribute(PIERCING_DAMAGE.get());
+		if (piercingInstance.getValue() <= 0d)
+			return;
 		DamageSource piercingDamageSource;
 		if (attacker instanceof Player)
 			piercingDamageSource = attacker.damageSources().source(PIERCING_PLAYER_ATTACK, attacker);

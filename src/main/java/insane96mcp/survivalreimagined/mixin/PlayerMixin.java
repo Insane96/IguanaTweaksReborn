@@ -69,7 +69,7 @@ public abstract class PlayerMixin extends LivingEntity {
 		return efficiency;
 	}
 
-	@Inject(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setHealth(F)V"))
+	@Inject(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setHealth(F)V", shift = At.Shift.AFTER))
 	private void onPostDamage(DamageSource damageSource, float amount, CallbackInfo ci) {
 		SREventFactory.onPostHurtEntity(this, damageSource, amount);
 	}

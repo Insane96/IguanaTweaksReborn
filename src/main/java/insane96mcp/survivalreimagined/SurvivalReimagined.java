@@ -8,6 +8,7 @@ import insane96mcp.survivalreimagined.data.generator.client.SRBlockModelsProvide
 import insane96mcp.survivalreimagined.data.generator.client.SRBlockStatesProvider;
 import insane96mcp.survivalreimagined.data.generator.client.SRItemModelsProvider;
 import insane96mcp.survivalreimagined.data.lootmodifier.SRGlobalLootModifierProvider;
+import insane96mcp.survivalreimagined.module.combat.feature.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerData;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerDataAttacher;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
@@ -75,6 +76,7 @@ public class SurvivalReimagined
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(ClientSetup::creativeTabsBuildContents);
         modEventBus.addListener(this::addPackFinders);
+        modEventBus.addListener(PiercingPickaxes::piercingDamageAttribute);
         modEventBus.register(Tiredness.class);
         modEventBus.register(SpawnerData.class);
         SRSoundEvents.REGISTRY.register(modEventBus);
