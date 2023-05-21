@@ -95,9 +95,12 @@ public class UnbreakingOverhaul extends Feature {
 			return;
 
 		ResourceLocation appliableTo = null;
-		if (event.getRight().hasTag())
+		if (event.getRight().hasTag()) {
 			//noinspection DataFlowIssue
-			appliableTo = ResourceLocation.tryParse(event.getRight().getTag().getString("appliable_to"));
+			String s = event.getRight().getTag().getString("appliable_to");
+			if (!s.isBlank())
+				appliableTo = ResourceLocation.tryParse(s);
+		}
 		if (appliableTo != null) {
 			Item item = ForgeRegistries.ITEMS.getValue(appliableTo);
 			if (item == null || !event.getLeft().is(item))
