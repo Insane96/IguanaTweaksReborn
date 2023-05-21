@@ -5,6 +5,10 @@
         {
             "condition": "survivalreimagined:current_season",
             "season": "WINTER"
+        },
+        {
+            "condition": "survivalreimagined:block_tag_match",
+            "block_tag": "minecraft:leaves"
         }
     ],
     "tag": "minecraft:saplings",
