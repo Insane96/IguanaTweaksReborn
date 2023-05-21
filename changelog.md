@@ -3,6 +3,7 @@
 ## 3.11.1
 * Global experience multiplier increased (1.3x -> 1.5x)
 * Block experience multiplier reduced (2.25x -> 2x)
+* Overall reduced forge smashes required
 
 ## 3.11.0
 * Added Forge

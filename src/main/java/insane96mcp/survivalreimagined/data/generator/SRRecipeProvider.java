@@ -788,14 +788,14 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         hammerCraftingRecipe(writer, Forging.STONE_HAMMER.get(), ItemTags.STONE_CRAFTING_MATERIALS);
         hammerCraftingRecipe(writer, Forging.FLINT_HAMMER.get(), Items.FLINT);
-        forgeRecipe(writer, Items.COPPER_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.COPPER_HAMMER.get(), 7);
-        forgeRecipe(writer, Items.IRON_INGOT, 5, Forging.STONE_HAMMER.get(), Forging.IRON_HAMMER.get(), 15);
+        forgeRecipe(writer, Items.COPPER_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.COPPER_HAMMER.get(), 6);
+        forgeRecipe(writer, Items.IRON_INGOT, 5, Forging.STONE_HAMMER.get(), Forging.IRON_HAMMER.get(), 10);
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Forging.DURIUM_HAMMER.get())
                 .unlocks("has_material", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_hammer");
-        forgeRecipe(writer, Items.GOLD_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.GOLDEN_HAMMER.get(), 5);
-        forgeRecipe(writer, Items.DIAMOND, 5, Forging.GOLDEN_HAMMER.get(), Forging.DIAMOND_HAMMER.get(), 25);
-        forgeRecipe(writer, SoulSteel.INGOT.get(), 5, Forging.IRON_HAMMER.get(), Forging.SOUL_STEEL_HAMMER.get(), 35);
+        forgeRecipe(writer, Items.GOLD_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.GOLDEN_HAMMER.get(), 4);
+        forgeRecipe(writer, Items.DIAMOND, 5, Forging.GOLDEN_HAMMER.get(), Forging.DIAMOND_HAMMER.get(), 16);
+        forgeRecipe(writer, SoulSteel.INGOT.get(), 5, Forging.IRON_HAMMER.get(), Forging.SOUL_STEEL_HAMMER.get(), 20);
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.DIAMOND_HAMMER.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.TOOLS, Forging.NETHERITE_HAMMER.get())
                 .unlocks("has_material", has(Items.NETHERITE_INGOT))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "netherite_hammer");
