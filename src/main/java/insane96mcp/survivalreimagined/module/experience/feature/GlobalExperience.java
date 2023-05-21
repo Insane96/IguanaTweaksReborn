@@ -2,7 +2,6 @@ package insane96mcp.survivalreimagined.module.experience.feature;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
-import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
@@ -21,7 +20,7 @@ public class GlobalExperience extends Feature {
 
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Global Experience Multiplier", description = "Experience dropped will be multiplied by this value.\nCan be set to 0 to disable experience drop from any source.")
-	public static Double globalMultiplier = 1.30d;
+	public static Double globalMultiplier = 1.50d;
 
 	public GlobalExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

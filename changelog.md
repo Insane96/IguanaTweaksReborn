@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.11.1
+* Global experience multiplier increased (1.3x -> 1.5x)
+* Block experience multiplier reduced (2.25x -> 2x)
+
 ## 3.11.0
 * Added Forge
   * Replaces anvil recipes
@@ -11,6 +15,7 @@
 * Unbreaking now requires fewer levels to pop out
 * Increased beeg veins size
 * Increased Trident durability
+* Increased global experience
 
 ## 3.10.2
 * Disabled Golden Absorption. Gold armor and shield now grant +2 max health
