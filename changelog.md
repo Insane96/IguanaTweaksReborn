@@ -1,6 +1,7 @@
 # Changelog
 
 ## 3.11.1
+* Fishing is now slowed down based off season
 * Global experience multiplier increased (1.3x -> 1.5x)
 * Block experience multiplier reduced (2.25x -> 2x)
 * Overall reduced forge smashes required

@@ -9,11 +9,13 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import sereneseasons.api.season.Season;
+import sereneseasons.api.season.SeasonHelper;
 import sereneseasons.config.FertilityConfig;
 import sereneseasons.config.ServerConfig;
 import sereneseasons.handler.season.SeasonHandler;
@@ -40,6 +42,10 @@ public class Seasons extends Feature {
 			* Sets the starting season to mid summer
 			""")
 	public static Boolean changeSereneSeasonsConfig = true;
+
+	@Config
+	@Label(name = "Season based fishing time")
+	public static Boolean seasonBasedFishingTime = true;
 
 	public Seasons(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -73,5 +79,21 @@ public class Seasons extends Feature {
 			seasonData.setDirty();
 			SeasonHandler.sendSeasonUpdate(event.level);
 		}
+	}
+
+	public static boolean shouldSlowdownFishing(Level level) {
+		if (!Feature.isEnabled(Seasons.class)
+				|| !seasonBasedFishingTime)
+			return false;
+
+		Season season = SeasonHelper.getSeasonState(level).getSeason();
+		//Chance to slowdown fishing
+		float rng = switch (season) {
+			case SPRING -> 0.1F;
+			case SUMMER -> 0.0F;
+			case AUTUMN -> 0.2F;
+			case WINTER -> 0.5F;
+		};
+		return level.getRandom().nextFloat() < rng;
 	}
 }
