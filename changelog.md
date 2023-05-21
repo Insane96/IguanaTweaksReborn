@@ -2,6 +2,7 @@
 
 ## 3.11.1
 * Fishing is now slowed down based off season
+* Hammers are now usable as weapons
 * Global experience multiplier increased (1.3x -> 1.5x)
 * Block experience multiplier reduced (2.25x -> 2x)
 * Overall reduced forge smashes required

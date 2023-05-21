@@ -48,6 +48,7 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_sword", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .4d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_axe", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .25d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_pickaxe", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .3d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:golden_hammer", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .125d, AttributeModifier.Operation.ADDITION),
 
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_helmet", UUID.fromString("3f22e9a3-0916-43ab-a93f-ba52e5ae28e5"), EquipmentSlot.HEAD, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", UUID.fromString("f700b45a-0c51-40f8-9f59-836c519d64d5"), EquipmentSlot.CHEST, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
@@ -94,6 +95,7 @@ public class Stats extends SRFeature {
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShovelItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH.get(), 0.5d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(HoeItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH.get(), 0.5d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH.get(), 1d, AttributeModifier.Operation.ADDITION));
+			//CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ForgeHammerItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH.get(), -0.25d, AttributeModifier.Operation.ADDITION));
 
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(SwordItem.class, UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -2d, AttributeModifier.Operation.ADDITION));
 			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(PickaxeItem.class, UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));

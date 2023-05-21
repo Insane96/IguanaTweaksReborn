@@ -13,7 +13,6 @@ import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.mining.item.ForgeHammerItem;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -152,10 +151,7 @@ public class ItemStats extends SRFeature {
 		for (IdTagValue durability : list) {
 			List<Item> items = getAllItems(durability, isclientSide);
 			for (Item item : items) {
-				if (item instanceof ForgeHammerItem)
-					item.maxDamage = (int) (durability.value / 3);
-				else
-					item.maxDamage = (int) durability.value;
+				item.maxDamage = (int) durability.value;
 			}
 		}
 	}

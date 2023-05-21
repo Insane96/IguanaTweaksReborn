@@ -59,7 +59,7 @@ public class ForgeBlock extends BaseEntityBlock {
             if (!pPlayer.getCooldowns().isOnCooldown(forgeHammerItem) && ForgeBlockEntity.onUse(pLevel, pPos, pState, forgeBlockEntity, forgeHammerItem.getSmashesOnHit(stack, pPlayer.getRandom()))) {
                 pPlayer.getCooldowns().addCooldown(forgeHammerItem, forgeHammerItem.getUseCooldown(stack));
                 if (pPlayer instanceof ServerPlayer serverPlayer)
-                    stack.hurtAndBreak(1, serverPlayer, (player) -> player.broadcastBreakEvent(pHand));
+                    stack.hurtAndBreak(forgeHammerItem.getUseDamageTaken(), serverPlayer, (player) -> player.broadcastBreakEvent(pHand));
                 return InteractionResult.sidedSuccess(pLevel.isClientSide);
             }
             else if (!pLevel.isClientSide && !pPlayer.getCooldowns().isOnCooldown(forgeHammerItem)) {
