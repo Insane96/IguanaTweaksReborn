@@ -1,6 +1,9 @@
 # Changelog
 
 ## Upcoming
+* Anvils
+  * Items upgraded in Smithing Table can now be partially repaired with base material (e.g. Netherite tools can be repaired with Diamonds)
+  * Moved free rename and repair cap to this
 * Sped up hammers forging speed
 * 20 stamina are now consumed when hitting things
 

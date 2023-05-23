@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import insane96mcp.survivalreimagined.module.experience.feature.OtherExperience;
+import insane96mcp.survivalreimagined.module.experience.feature.Anvils;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
 import net.minecraft.network.chat.Component;
@@ -41,7 +41,7 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 			constant = @Constant(intValue = 40)
 	)
 	private int tooExpensiveCap(int cap) {
-		return OtherExperience.anvilRepairCap;
+		return Anvils.anvilRepairCap;
 	}
 
 	//Show no cost text

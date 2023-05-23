@@ -1,0 +1,147 @@
+package insane96mcp.survivalreimagined.module.experience.feature;
+
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.data.trigger.AnvilTransformBlockTrigger;
+import insane96mcp.survivalreimagined.event.FallingBlockLandEvent;
+import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.experience.data.TwinIdTagMatcher;
+import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.AnvilScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Label(name = "Anvils", description = "Make anvils usable to create blocks. Use the anvil_transformations.json file in the feature's folder to change or add block transformations.")
+@LoadFeature(module = Modules.Ids.EXPERIENCE)
+public class Anvils extends SRFeature {
+
+    @Config
+    @Label(name = "Enable Block Transformation")
+    public static Boolean enableBlockTransformation = false;
+    public static final ArrayList<TwinIdTagMatcher> ANVIL_TRANSFORMATIONS_DEFAULT = new ArrayList<>(List.of(
+            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "minecraft:stone", IdTagMatcher.Type.ID,"minecraft:cobblestone"),
+            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "minecraft:cobblestone", IdTagMatcher.Type.ID,"minecraft:gravel"),
+            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "minecraft:gravel", IdTagMatcher.Type.ID,"minecraft:sand"),
+            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "minecraft:sandstone", IdTagMatcher.Type.ID,"minecraft:sand")
+    ));
+    public static final ArrayList<TwinIdTagMatcher> anvilTransformations = new ArrayList<>();
+
+    @Config(min = 0)
+    @Label(name = "Anvil Repair Cap", description = "Set the cap for repairing items in the anvil (vanilla is 40)")
+    public static Integer anvilRepairCap = 1024;
+    @Config
+    @Label(name = "Remove rename cost", description = "Removes cost of renaming items in Anvil")
+    public static Boolean freeRenaming = true;
+    @Config
+    @Label(name = "Partially repair Upgraded items with base material", description = "E.g. Netherite Tools can be repaired up to 60% of max durability with Diamonds. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
+    public static Boolean partiallyRepairUpgradedItemsWithBaseMaterial = true;
+    public static final ArrayList<TwinIdTagMatcher> PARTIAL_REPAIR_ITEMS = new ArrayList<>(List.of(
+            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", IdTagMatcher.Type.ID,"minecraft:diamond"),
+            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/netherite", IdTagMatcher.Type.ID,"minecraft:diamond"),
+            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "shieldsplus:netherite_shield", IdTagMatcher.Type.ID,"minecraft:diamond"),
+            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/durium", IdTagMatcher.Type.ID,"minecraft:iron_ingot"),
+            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/durium", IdTagMatcher.Type.ID,"minecraft:iron_ingot"),
+            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "survivalreimagined:durium_shield", IdTagMatcher.Type.ID,"minecraft:iron_ingot")
+    ));
+    public static final ArrayList<TwinIdTagMatcher> partialRepairItems = new ArrayList<>();
+
+    public Anvils(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+        super(module, enabledByDefault, canBeDisabled);
+        JSON_CONFIGS.add(new JsonConfig<>("anvil_transformations.json", anvilTransformations, ANVIL_TRANSFORMATIONS_DEFAULT, TwinIdTagMatcher.LIST_TYPE));
+        JSON_CONFIGS.add(new JsonConfig<>("anvil_partial_repair_items.json", partialRepairItems, PARTIAL_REPAIR_ITEMS, TwinIdTagMatcher.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.PARTIAL_REPAIR_ITEMS));
+    }
+
+    public static void handleSyncPacket(String json) {
+        loadAndReadJson(json, partialRepairItems, PARTIAL_REPAIR_ITEMS, TwinIdTagMatcher.LIST_TYPE);
+    }
+
+    public static boolean isFreeRenaming() {
+        return isEnabled(OtherExperience.class) && freeRenaming;
+    }
+
+    public static boolean isRepairItem(ItemStack left, ItemStack right) {
+        if (!Feature.isEnabled(Anvils.class)
+                || !partiallyRepairUpgradedItemsWithBaseMaterial)
+            return false;
+
+        for (TwinIdTagMatcher anvilRepairItem : partialRepairItems) {
+            if (anvilRepairItem.matchesItems(left.getItem(), right.getItem()))
+                return true;
+        }
+        return false;
+    }
+
+    @SubscribeEvent
+    public void onAnvilLand(FallingBlockLandEvent event) {
+        if (!this.isEnabled()
+            || !enableBlockTransformation
+            || !event.getFallingBlock().blockState.is(BlockTags.ANVIL)
+            || event.getFallingBlock().time < 7)
+            return;
+
+        for (TwinIdTagMatcher anvilTransformation : anvilTransformations) {
+            if (anvilTransformation.idTagMatcherA.matchesBlock(event.getFallingBlock().getBlockStateOn().getBlock())) {
+                Optional<Block> block = anvilTransformation.idTagMatcherB.getAllBlocks().stream().findAny();
+                block.ifPresent(b -> {
+                    event.getFallingBlock().level.setBlock(event.getFallingBlock().getOnPos(), b.defaultBlockState(), 3);
+
+                    if (event.getEntity().level instanceof ServerLevel serverLevel) {
+                        AABB aabb = event.getEntity().getBoundingBox().inflate(4d);
+                        for (ServerPlayer player : serverLevel.players()) {
+                            if (aabb.contains(player.getX(), player.getY(), player.getZ())) {
+                                AnvilTransformBlockTrigger.TRIGGER.trigger(player);
+                            }
+                        }
+                    }
+                });
+                if (block.isPresent())
+                    break;
+            }
+        }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public void onTooltip(ItemTooltipEvent event) {
+        if (!this.isEnabled()
+                || !partiallyRepairUpgradedItemsWithBaseMaterial)
+            return;
+
+        Minecraft mc = Minecraft.getInstance();
+        if (!(mc.screen instanceof AnvilScreen))
+            return;
+
+        for (TwinIdTagMatcher partiallyRepairItem : partialRepairItems) {
+            if (partiallyRepairItem.idTagMatcherA.matchesItem(event.getItemStack().getItem())) {
+                Optional<Item> item = partiallyRepairItem.idTagMatcherB.getAllItems().stream().findAny();
+                item.ifPresent(i -> {
+                    event.getToolTip().add(Component.empty());
+                    event.getToolTip().add(Component.literal("Can be partially repaired with ").append(i.getDescription()).withStyle(ChatFormatting.GREEN));
+                });
+                if (item.isPresent())
+                    break;
+            }
+        }
+    }
+}

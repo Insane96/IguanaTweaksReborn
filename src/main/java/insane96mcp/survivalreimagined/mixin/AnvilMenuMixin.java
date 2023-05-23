@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
+import insane96mcp.survivalreimagined.module.experience.feature.Anvils;
 import insane96mcp.survivalreimagined.module.experience.feature.OtherExperience;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -24,9 +25,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
-//Shamelessly stolen from Charm
 
-@Mixin(AnvilMenu.class)
+@Mixin(value = AnvilMenu.class, priority = 1001)
 public class AnvilMenuMixin extends ItemCombinerMenu {
 
 	@Shadow
@@ -56,6 +56,8 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		cir.setReturnValue((player.getAbilities().instabuild || player.experienceLevel >= this.cost.get()));
 	}
 
+	private boolean isPartialRepairItem;
+
 	@Inject(
 			at = @At("HEAD"),
 			method = "createResult",
@@ -65,6 +67,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		if (!Feature.isEnabled(OtherExperience.class))
 			return;
 
+		isPartialRepairItem = false;
 		ItemStack left = this.inputSlots.getItem(0);
 		this.cost.set(1);
 		int mergeCost = 0;
@@ -84,20 +87,39 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			if (!right.isEmpty()) {
 				if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player)) return;
 				isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
-				if (leftCopy.isDamageableItem() && leftCopy.getItem().isValidRepairItem(left, right)) {
-					int repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
-					if (repairSteps <= 0) {
-						this.resultSlots.setItem(0, ItemStack.EMPTY);
-						this.cost.set(0);
-						return;
-					}
-
+				boolean isPartialRepairItem = Anvils.isRepairItem(leftCopy, right);
+				if (leftCopy.isDamageableItem() && (leftCopy.getItem().isValidRepairItem(left, right) || isPartialRepairItem)) {
 					int repairItemCountCost;
-					for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount(); ++repairItemCountCost) {
-						int j3 = leftCopy.getDamageValue() - repairSteps;
-						leftCopy.setDamageValue(j3);
-						++mergeCost;
-						repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
+					if (isPartialRepairItem) {
+						int maxRepair = (int) (leftCopy.getMaxDamage() * 0.4f);
+						int repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
+						if (repairSteps <= 0) {
+							this.resultSlots.setItem(0, ItemStack.EMPTY);
+							this.cost.set(0);
+							return;
+						}
+
+						for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount() && leftCopy.getDamageValue() > maxRepair; ++repairItemCountCost) {
+							int dmgAfterRepair = leftCopy.getDamageValue() - repairSteps;
+							leftCopy.setDamageValue(Math.max(maxRepair, dmgAfterRepair));
+							++mergeCost;
+							repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
+						}
+					}
+					else {
+						int repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
+						if (repairSteps <= 0) {
+							this.resultSlots.setItem(0, ItemStack.EMPTY);
+							this.cost.set(0);
+							return;
+						}
+
+						for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount(); ++repairItemCountCost) {
+							int dmgAfterRepair = leftCopy.getDamageValue() - repairSteps;
+							leftCopy.setDamageValue(dmgAfterRepair);
+							++mergeCost;
+							repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
+						}
 					}
 
 					this.repairItemCountCost = repairItemCountCost;
@@ -110,10 +132,10 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 					}
 
 					if (leftCopy.isDamageableItem() && !isEnchantedBook) {
-						int l = left.getMaxDamage() - left.getDamageValue();
-						int i1 = right.getMaxDamage() - right.getDamageValue();
-						int j1 = i1 + leftCopy.getMaxDamage() * 12 / 100;
-						int k1 = l + j1;
+						int leftDurabilityLeft = left.getMaxDamage() - left.getDamageValue();
+						int rightDurabilityLeft = right.getMaxDamage() - right.getDamageValue();
+						int j1 = rightDurabilityLeft + leftCopy.getMaxDamage() * 12 / 100;
+						int k1 = leftDurabilityLeft + j1;
 						int l1 = leftCopy.getMaxDamage() - k1;
 						if (l1 < 0) {
 							l1 = 0;
@@ -126,8 +148,8 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 					}
 
 					Map<Enchantment, Integer> rightEnchantment = EnchantmentHelper.getEnchantments(right);
-					boolean flag2 = false;
-					boolean flag3 = false;
+					boolean canEnchant2 = false;
+					boolean cannotEnchant = false;
 
 					for(Enchantment enchantment1 : rightEnchantment.keySet()) {
 						if (enchantment1 != null) {
@@ -147,9 +169,9 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 							}
 
 							if (!canEnchant) {
-								flag3 = true;
+								cannotEnchant = true;
 							} else {
-								flag2 = true;
+								canEnchant2 = true;
 								if (rightLvl > enchantment1.getMaxLevel() && leftLvl == rightLvl /*Added to allow over max level enchantment books to be applied to items*/) {
 									rightLvl = enchantment1.getMaxLevel();
 								}
@@ -174,7 +196,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 						}
 					}
 
-					if (flag3 && !flag2) {
+					if (cannotEnchant && !canEnchant2) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
 						this.cost.set(0);
 						return;
@@ -196,18 +218,18 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 				leftCopy = ItemStack.EMPTY;
 
 			this.cost.set(baseCost + mergeCost);
-			if (isRenaming && !OtherExperience.isFreeRenaming())
+			if (isRenaming && !Anvils.isFreeRenaming())
 				this.cost.set(this.cost.get() + COST_RENAME);
 			if (mergeCost <= 0 && !isRenaming) {
 				leftCopy = ItemStack.EMPTY;
 			}
 
-			if (isRenaming && OtherExperience.isFreeRenaming() && mergeCost <= 0) {
+			if (isRenaming && Anvils.isFreeRenaming() && mergeCost <= 0) {
 				this.cost.set(0);
 			}
 
 			//Set Too Expensive cap
-			if (this.cost.get() >= OtherExperience.anvilRepairCap && !this.player.getAbilities().instabuild) {
+			if (this.cost.get() >= Anvils.anvilRepairCap && !this.player.getAbilities().instabuild) {
 				leftCopy = ItemStack.EMPTY;
 			}
 
