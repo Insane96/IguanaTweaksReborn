@@ -44,7 +44,7 @@ public class SleepingEffects extends SRFeature {
 	public static Boolean noSleepIfHungry = false;
 
 	@Config
-	@Label(name = "Dizzy when tired", description = "Apply the effects only when too tired")
+	@Label(name = "Dizzy when tired", description = "Apply the bad effects only when too tired")
 	public static Boolean dizzyWhenToTired = true;
 
 	public SleepingEffects(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -65,8 +65,6 @@ public class SleepingEffects extends SRFeature {
 
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach(player -> {
 			float tirednessOnWakeUp = Mth.clamp(TirednessHandler.get(player) - Tiredness.tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
-			if (dizzyWhenToTired && Feature.isEnabled(Tiredness.class) && tirednessOnWakeUp == 0f)
-				return;
 
 			player.getFoodData().eat(-hungerDepletedOnWakeUp, 1.0f);
 			//For some reasons saturation can go below 0, so I get it back up to 0
@@ -74,6 +72,8 @@ public class SleepingEffects extends SRFeature {
 				player.getFoodData().eat(1, -player.getFoodData().getSaturationLevel() / 2f);
 			for (MobEffectInstance mobEffectInstance : effectsOnWakeUp) {
 				if (mobEffectInstance.getEffect().isBeneficial() && player.getFoodData().getFoodLevel() <= 0)
+					continue;
+				if (dizzyWhenToTired && Feature.isEnabled(Tiredness.class) && tirednessOnWakeUp == 0f && !mobEffectInstance.getEffect().isBeneficial())
 					continue;
 				player.addEffect(new MobEffectInstance(mobEffectInstance));
 			}
