@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Sped up hammers forging speed
+
 ## 3.11.1
 * Fishing is now slowed down based off season
 * Hammers are now usable as weapons
