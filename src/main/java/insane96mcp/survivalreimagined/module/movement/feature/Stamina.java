@@ -21,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec2;
@@ -32,6 +33,7 @@ import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
 import org.lwjgl.opengl.GL11;
@@ -50,6 +52,10 @@ public class Stamina extends Feature {
     @Config(min = 0)
     @Label(name = "Stamina consumed on jump", description = "How much stamina the player consumes on each jump")
     public static Integer staminaConsumedOnJump = 5;
+
+    @Config(min = 0)
+    @Label(name = "Stamina on hit")
+    public static Integer staminaConsumedOnHit = 20;
 
     @Config
     @Label(name = "Disable Sprinting", description = "Disable sprinting altogether")
@@ -134,8 +140,22 @@ public class Stamina extends Feature {
 
         int consumed = staminaConsumedOnJump;
         if (player.hasEffect(SRMobEffects.VIGOUR.get()))
-            consumed -= player.getEffect(SRMobEffects.VIGOUR.get()).getAmplifier() + 1;
+            consumed *= 1f - (player.getEffect(SRMobEffects.VIGOUR.get()).getAmplifier() + 1) * 0.2f;
         StaminaHandler.consumeStamina(player, consumed);
+    }
+
+    @SubscribeEvent
+    public void onPlayerPunch(final AttackEntityEvent event) {
+        if (!this.isEnabled()
+                || staminaConsumedOnHit == 0
+                || !(event.getTarget() instanceof LivingEntity)
+                || event.getEntity().level.isClientSide)
+            return;
+
+        int consumed = staminaConsumedOnHit;
+        if (event.getEntity().hasEffect(SRMobEffects.VIGOUR.get()))
+            consumed *= 1f - (event.getEntity().getEffect(SRMobEffects.VIGOUR.get()).getAmplifier() + 1) * 0.2f;
+        StaminaHandler.consumeStamina(event.getEntity(), consumed);
     }
 
     static ResourceLocation PLAYER_HEALTH_ELEMENT = new ResourceLocation("minecraft", "player_health");
