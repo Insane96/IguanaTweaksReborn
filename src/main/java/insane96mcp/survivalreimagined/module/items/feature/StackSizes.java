@@ -211,6 +211,7 @@ public class StackSizes extends SRFeature {
         }
     }
 
+    //TODO Not working when full inventory
     /**
      * Fixes soups, potions, etc. consuming that don't work properly when stacked
      */

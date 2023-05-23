@@ -62,7 +62,7 @@ public class SRItemTagsProvider extends ItemTagsProvider {
                 .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT);
 
         tag(StackSizes.NO_STACK_SIZE_CHANGES)
-                .add(Items.ROTTEN_FLESH);
+                .add(Items.ROTTEN_FLESH, Items.SPIDER_EYE);
 
         tag(FoodDrinks.FOOD_BLACKLIST);
         tag(BoneMeal.ITEM_BLACKLIST);

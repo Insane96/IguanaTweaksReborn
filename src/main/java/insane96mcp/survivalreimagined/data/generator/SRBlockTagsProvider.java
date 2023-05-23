@@ -4,6 +4,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.HarderCrops;
 import insane96mcp.survivalreimagined.module.items.feature.Crate;
+import insane96mcp.survivalreimagined.module.items.feature.ExplosiveBarrel;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockBlastFurnaceBlock;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockSoulBlastFurnaceBlock;
@@ -45,7 +46,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         //Vanilla Tags
         tag(BlockTags.MINEABLE_WITH_AXE)
-                .add(Crate.BLOCK.block().get());
+                .add(Crate.BLOCK.block().get(), ExplosiveBarrel.BLOCK.block().get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(CoalFire.CHARCOAL_LAYER.block().get())
