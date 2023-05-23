@@ -115,7 +115,7 @@ public class Loot extends Feature {
 				.build()
 		);
 		provider.add(path + "chests/simple_dungeon", new LootPurgerModifier.Builder(new ResourceLocation("minecraft:chests/simple_dungeon"), 2000)
-				.setMultiplierAtStart(0.4f)
+				.setMultiplierAtStart(0.6f)
 				.applyToDamageable()
 				.build()
 		);
