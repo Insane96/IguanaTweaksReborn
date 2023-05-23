@@ -211,7 +211,7 @@ public class StackSizes extends SRFeature {
         }
     }
 
-    //TODO Not working when full inventory
+
     /**
      * Fixes soups, potions, etc. consuming that don't work properly when stacked
      */
@@ -224,7 +224,8 @@ public class StackSizes extends SRFeature {
                 ItemStack newResult = original.copy();
                 newResult.setCount(original.getCount() - 1);
                 event.setResultStack(newResult);
-                player.addItem(result);
+                if (!player.addItem(result))
+                    player.drop(newResult, true);
             }
         }
     }
