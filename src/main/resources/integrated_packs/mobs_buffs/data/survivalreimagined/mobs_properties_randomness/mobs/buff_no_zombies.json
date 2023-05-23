@@ -18,11 +18,11 @@
             "id": "minecraft:generic.movement_speed",
             "modifier_name": "More Speed for Mobs",
             "amount": {
-                "value": 0.07,
+                "value": 0.084,
                 "difficulty_modifier": {
                     "operation": "multiply",
-                    "easy": 0.5,
-                    "hard": 1.5
+                    "easy": 0.75,
+                    "hard": 1.25
                 },
                 "time_existed_modifier": {
                     "bonus_percentage": 0.5,
