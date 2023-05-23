@@ -56,7 +56,7 @@ public class Stamina extends Feature {
 
     @Config(min = 0)
     @Label(name = "Stamina on hit")
-    public static Integer staminaConsumedOnHit = 20;
+    public static Integer staminaConsumedOnHit = 0;
 
     @Config
     @Label(name = "Disable Sprinting", description = "Disable sprinting altogether")
