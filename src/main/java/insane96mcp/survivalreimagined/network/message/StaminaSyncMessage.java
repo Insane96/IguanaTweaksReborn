@@ -7,26 +7,26 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class MessageStaminaSync {
+public class StaminaSyncMessage {
 
     int stamina;
     boolean staminaLocked;
 
-    public MessageStaminaSync(int stamina, boolean staminaLocked) {
+    public StaminaSyncMessage(int stamina, boolean staminaLocked) {
         this.stamina = stamina;
         this.staminaLocked = staminaLocked;
     }
 
-    public static void encode(MessageStaminaSync pkt, FriendlyByteBuf buf) {
+    public static void encode(StaminaSyncMessage pkt, FriendlyByteBuf buf) {
         buf.writeInt(pkt.stamina);
         buf.writeBoolean(pkt.staminaLocked);
     }
 
-    public static MessageStaminaSync decode(FriendlyByteBuf buf) {
-        return new MessageStaminaSync(buf.readInt(), buf.readBoolean());
+    public static StaminaSyncMessage decode(FriendlyByteBuf buf) {
+        return new StaminaSyncMessage(buf.readInt(), buf.readBoolean());
     }
 
-    public static void handle(final MessageStaminaSync message, Supplier<NetworkEvent.Context> ctx) {
+    public static void handle(final StaminaSyncMessage message, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             NetworkHelper.getSidedPlayer(ctx.get()).getPersistentData().putInt(Stamina.STAMINA, message.stamina);
             NetworkHelper.getSidedPlayer(ctx.get()).getPersistentData().putBoolean(Stamina.STAMINA_LOCKED, message.staminaLocked);

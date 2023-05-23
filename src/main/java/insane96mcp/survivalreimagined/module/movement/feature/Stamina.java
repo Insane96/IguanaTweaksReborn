@@ -12,11 +12,12 @@ import insane96mcp.survivalreimagined.event.PlayerSprintEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.movement.handler.StaminaHandler;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
-import insane96mcp.survivalreimagined.network.message.MessageStaminaSync;
+import insane96mcp.survivalreimagined.network.message.StaminaSyncMessage;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -99,7 +100,7 @@ public class Stamina extends Feature {
         } else if ((StaminaHandler.getStamina(player) != StaminaHandler.getMaxStamina(player) && StaminaHandler.getMaxStamina(player) >= 40)
                 //Trigger the sync for clients
                 || player.tickCount == 1) {
-            //Slower regeneration if stamina il locked
+            //Slower regeneration if stamina is locked
             if (StaminaHandler.isStaminaLocked(player) && player.tickCount % 3 == 0)
                 return;
             StaminaHandler.regenStamina(player);
@@ -115,7 +116,7 @@ public class Stamina extends Feature {
 
         if (shouldSync) {
             //Sync stamina to client
-            Object msg = new MessageStaminaSync(StaminaHandler.getStamina(player), StaminaHandler.isStaminaLocked(player));
+            Object msg = new StaminaSyncMessage(StaminaHandler.getStamina(player), StaminaHandler.isStaminaLocked(player));
             NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
@@ -148,14 +149,18 @@ public class Stamina extends Feature {
     public void onPlayerPunch(final AttackEntityEvent event) {
         if (!this.isEnabled()
                 || staminaConsumedOnHit == 0
-                || !(event.getTarget() instanceof LivingEntity)
-                || event.getEntity().level.isClientSide)
+                || !(event.getTarget() instanceof LivingEntity))
             return;
 
         int consumed = staminaConsumedOnHit;
         if (event.getEntity().hasEffect(SRMobEffects.VIGOUR.get()))
             consumed *= 1f - (event.getEntity().getEffect(SRMobEffects.VIGOUR.get()).getAmplifier() + 1) * 0.2f;
-        StaminaHandler.consumeStamina(event.getEntity(), consumed);
+        if (StaminaHandler.getStamina(event.getEntity()) - consumed <= 0) {
+            event.setCanceled(true);
+            event.getEntity().displayClientMessage(Component.literal("Not enough stamina to attack"), true);
+        }
+        else
+            StaminaHandler.consumeStamina(event.getEntity(), consumed);
     }
 
     static ResourceLocation PLAYER_HEALTH_ELEMENT = new ResourceLocation("minecraft", "player_health");

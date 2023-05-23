@@ -174,6 +174,7 @@ public class Tiredness extends SRFeature {
 		float tiredness = TirednessHandler.get(serverPlayer);
 		float newTiredness = TirednessHandler.addAndGet(serverPlayer, amount * tirednessGainMultiplier.floatValue());
 		if (tiredness < tirednessToSleep && newTiredness >= tirednessToSleep) {
+			//TODO Add effect
 			serverPlayer.displayClientMessage(Component.translatable(TIRED_ENOUGH), false);
 		}
 

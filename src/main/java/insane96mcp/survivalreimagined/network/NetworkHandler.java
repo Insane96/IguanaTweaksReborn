@@ -29,7 +29,7 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(1, MessageExhaustionSync.class, MessageExhaustionSync::encode, MessageExhaustionSync::decode, MessageExhaustionSync::handle);
 		CHANNEL.registerMessage(2, MessageSaturationSync.class, MessageSaturationSync::encode, MessageSaturationSync::decode, MessageSaturationSync::handle);
 		CHANNEL.registerMessage(3, MessageTirednessSync.class, MessageTirednessSync::encode, MessageTirednessSync::decode, MessageTirednessSync::handle);
-		CHANNEL.registerMessage(4, MessageStaminaSync.class, MessageStaminaSync::encode, MessageStaminaSync::decode, MessageStaminaSync::handle);
+		CHANNEL.registerMessage(4, StaminaSyncMessage.class, StaminaSyncMessage::encode, StaminaSyncMessage::decode, StaminaSyncMessage::handle);
 		CHANNEL.registerMessage(5, MessageFoodRegenSync.class, MessageFoodRegenSync::encode, MessageFoodRegenSync::decode, MessageFoodRegenSync::handle);
 		CHANNEL.registerMessage(6, MessageSpawnerStatusSync.class, MessageSpawnerStatusSync::encode, MessageSpawnerStatusSync::decode, MessageSpawnerStatusSync::handle);
 		CHANNEL.registerMessage(7, JsonConfigSyncMessage.class, JsonConfigSyncMessage::encode, JsonConfigSyncMessage::decode, JsonConfigSyncMessage::handle);
