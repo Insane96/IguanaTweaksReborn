@@ -38,8 +38,7 @@ public class GlobalHardness extends SRFeature {
 	public static final ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier = new ArrayList<>();
 
 	public static final ArrayList<DepthHardnessDimension> DEPTH_MULTIPLIER_DIMENSION_DEFAULT = new ArrayList<>(List.of(
-			new DepthHardnessDimension("minecraft:overworld", 0.01d, 63, -64),
-			new DepthHardnessDimension("minecraft:overworld", -0.64d, 4, 3)
+			new DepthHardnessDimension("minecraft:overworld", 0.01d, 63, 0)
 	));
 	public static final ArrayList<DepthHardnessDimension> depthMultiplierDimension = new ArrayList<>();
 
