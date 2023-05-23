@@ -1,13 +1,11 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.feature;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
-import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
@@ -29,7 +27,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.GameRules;
-import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
@@ -82,9 +79,6 @@ public class Tiredness extends SRFeature {
 	@Config(min = 0d)
 	@Label(name = "Tiredness per level", description = "Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
 	public static Double tirednessPerLevel = 50d;
-	@Config
-	@Label(name = "Show Tiredness Bar", description = "If true the tiredness bar will be shown.")
-	public static Boolean showTirednessBar = false;
 	@Config(min = 0d)
 	@Label(name = "Default Energy Boost Duration Multiplier", description = "By default if omitted in the json, food items will give 1 second of Energy Boost per effective nourishment (hunger + saturation) of the food. This multiplies the duration of the effect")
 	public static Double defaultEnergyBoostDurationMultiplier = 5d;
@@ -253,8 +247,9 @@ public class Tiredness extends SRFeature {
 	}
 
 	@SubscribeEvent
-	public void onPlayerClone(PlayerEvent.Clone event) {
-		if (!this.isEnabled())
+	public void onPlayerRespawn(PlayerEvent.Clone event) {
+		if (!this.isEnabled()
+			|| !event.isWasDeath())
 			return;
 
 		float tiredness = TirednessHandler.get(event.getOriginal());
@@ -279,20 +274,6 @@ public class Tiredness extends SRFeature {
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void registerGui(RegisterGuiOverlaysEvent event) {
-		event.registerAbove(VanillaGuiOverlay.FOOD_LEVEL.id(), "tiredness", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
-			if (!showTirednessBar)
-				return;
-			assert Minecraft.getInstance().player != null : "Minecraft.getInstance().player is null";
-			boolean isMounted = Minecraft.getInstance().player.getVehicle() instanceof LivingEntity;
-			if (isEnabled(Tiredness.class) && !isMounted && gui.shouldDrawSurvivalElements())
-			{
-				gui.setupOverlayRenderState(true, false, SurvivalReimagined.GUI_ICONS);
-				int left = screenWidth / 2 + 91;
-				int top = screenHeight - gui.rightHeight;
-				renderTiredness(mStack, left, top);
-				gui.rightHeight += 10;
-			}
-		});
 		event.registerAbove(VanillaGuiOverlay.SLEEP_FADE.id(), "tired_overlay", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
 			assert Minecraft.getInstance().player != null : "Minecraft.getInstance().player is null";
 			if (isEnabled(Tiredness.class) && gui.shouldDrawSurvivalElements())
@@ -314,42 +295,6 @@ public class Tiredness extends SRFeature {
 				Minecraft.getInstance().getProfiler().pop();
 			}
 		});
-	}
-
-	private static final Vec2 UV_NOT_TIRED = new Vec2(0, 0);
-	private static final Vec2 UV_SLEEPY = new Vec2(9, 0);
-	private static final Vec2 UV_TIRED = new Vec2(18, 0);
-
-	@OnlyIn(Dist.CLIENT)
-	private static void renderTiredness(PoseStack matrixStack, int left, int top) {
-		Player player = (Player)Minecraft.getInstance().getCameraEntity();
-		assert player != null : "Minecraft.getInstance().getCameraEntity() is null";
-		float tiredness = TirednessHandler.get(player);
-		int numberOfZ = 0;
-		if (tiredness < tirednessToSleep) {
-			numberOfZ += tiredness / (tirednessToSleep / 6);
-		}
-		else if (tiredness < tirednessToEffect) {
-			float tirednessBetweenSleepEffect = (float) (tirednessToEffect - tirednessToSleep);
-			numberOfZ += 6 + ((tiredness - tirednessToSleep) / (tirednessBetweenSleepEffect / 2));
-		}
-		else {
-			float tirednessToBlind = (float) (tirednessPerLevel * 5);
-			numberOfZ += 8 + ((tiredness - tirednessToEffect) / (tirednessToBlind / 2));
-		}
-		numberOfZ = Mth.clamp(numberOfZ, 0, 10);
-		Minecraft.getInstance().getProfiler().push("tiredness");
-		for(int i = 0; i < numberOfZ; ++i) {
-			Vec2 uv = UV_NOT_TIRED;
-			if (i >= 8)
-				uv = UV_TIRED;
-			else if (i >= 6)
-				uv = UV_SLEEPY;
-
-			int x = left - (i * 8) - 9;
-			GuiComponent.blit(matrixStack, x, top, (int) uv.x, (int) uv.y, 9, 9);
-		}
-		Minecraft.getInstance().getProfiler().pop();
 	}
 
 	@OnlyIn(Dist.CLIENT)
