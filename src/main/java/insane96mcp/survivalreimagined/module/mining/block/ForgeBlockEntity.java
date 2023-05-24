@@ -169,9 +169,12 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
         if (!this.canForge(registryAccess, recipe, slotStacks, stackSize))
             return false;
         ItemStack resultStack = ((Recipe<WorldlyContainer>) recipe).assemble(this, registryAccess);
-        int dmg = slotStacks.get(ForgeMenu.GEAR_SLOT).getDamageValue();
+        ItemStack gearSlotStack = slotStacks.get(ForgeMenu.GEAR_SLOT);
+        int dmg = gearSlotStack.getDamageValue();
         if (dmg > 0)
             resultStack.setDamageValue(dmg);
+        if (gearSlotStack.hasTag())
+            resultStack.setTag(gearSlotStack.getTag());
         ItemStack resultSlotStack = slotStacks.get(ForgeMenu.RESULT_SLOT);
         if (resultSlotStack.isEmpty()) {
             slotStacks.set(ForgeMenu.RESULT_SLOT, resultStack.copy());
@@ -181,7 +184,7 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
         }
 
         slotStacks.get(ForgeMenu.INGREDIENT_SLOT).shrink(((ForgeRecipe)recipe).getIngredientAmount());
-        slotStacks.get(ForgeMenu.GEAR_SLOT).shrink(1);
+        gearSlotStack.shrink(1);
         return true;
     }
 
