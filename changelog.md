@@ -26,7 +26,7 @@
   * Descend faster and crouch when inventory is open
 * Falling onto a climbable no longer cancels fall damage
 * Each cake bite now restores 40% of missing health
-* Multiblock furnaces now pick up items from the inside of the structure everytime an item has finished smelting
+* Multi block furnaces now pick up items from the inside of the structure everytime an item has finished smelting
 * Unbreaking now requires fewer levels to pop out
 * Increased beeg veins size
 * Increased Trident durability
@@ -48,7 +48,7 @@
 * Added Soul Blast Furnaces. An upgraded version of a Blast Furnace
   * Alloys stuff faster
   * Has 40% chance to output one more ingot when smelting and 20% when alloying ingots
-  * Recycling yelds 100% of materials used
+  * Recycling yields 100% of materials used
   * Requires lava buckets
   * Has more slots
 * Netherite can now be alloyed in blast furnaces from less material compared to crafting
@@ -130,7 +130,7 @@
   * Added Remove Lava Pockets. This ... removes lava pockets from the nether
   * Moved No nether roof from Data Packs to this
 * Added Rich Farmland
-  * Use bonemeal on farmland or crouching on crops to transform it into rich farmland. This farmland ticks 3 times faster than normal farmland
+  * Use bone meal on farmland or crouching on crops to transform it into rich farmland. This farmland ticks 3 times faster than normal farmland
 * Added Fast Leaf Decay
   * Leaves decay faster
 * Fire
@@ -210,11 +210,11 @@
 * Unbreaking Overhaul
   * When a tool with unbreaking breaks, an Item fragment pops out with the same enchantments of the item that broke. Can be applied to a new item in an anvil to transfer the enchantments
 * Added Golden Absorption
-  * Wearing Gold Armor or shield gives one regnerating heart of absorption per piece (capped to the player health)
+  * Wearing Gold Armor or shield gives one regenerating heart of absorption per piece (capped to the player health)
 * Starting season is now Mid-Summer
 * Breaking a tree without an axe now drops planks
 * Buckets now require the Nether to be made
-* Sheeps now have a low chance to drop wool on death
+* Sheep now have a low chance to drop wool on death
 * Squids and fishes now come in various sizes
 * Fishes no longer spawn in winter
 * Removed Gold Nuggets drop from Zombified Piglins
@@ -335,9 +335,9 @@
 * Removed toughness and bonus toughness from iron and netherite armor
 * Increased hoes cooldowns, but now efficiency reduces the cooldown by 1 tick per level
 * Blast furnaces now take 2x time to smelt ores
-* Added a global switch to disable all datapacks
+* Added a global switch to disable all data packs
 * Food now takes 2x to cook in a furnace
-* Mithril ore drops and ores per chunk increased but decreased ores per vein
+* Mithril Ore's drops and ores per chunk increased but decreased ores per vein
 * Increased iron nuggets drop with fortune
 * Stamina now regenerates faster when locked
 * Tridents now have +0.5 attack range
