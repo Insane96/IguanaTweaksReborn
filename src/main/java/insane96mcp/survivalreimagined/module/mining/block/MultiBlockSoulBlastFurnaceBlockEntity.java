@@ -25,6 +25,11 @@ public class MultiBlockSoulBlastFurnaceBlockEntity extends AbstractMultiBlockFur
         return new MultiBlockSoulBlastFurnaceMenu(pContainerId, pInventory, this, this.dataAccess);
     }
 
+    @Override
+    public int[] getIngredientSlots() {
+        return  MultiBlockSoulBlastFurnaceMenu.getIngredientSlots();
+    }
+
     protected int getBurnDuration(ItemStack pFuel) {
         return super.getBurnDuration(pFuel) / 2;
     }

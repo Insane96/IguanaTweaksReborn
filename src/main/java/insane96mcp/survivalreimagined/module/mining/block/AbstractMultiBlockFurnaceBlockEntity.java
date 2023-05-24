@@ -3,8 +3,6 @@ package insane96mcp.survivalreimagined.module.mining.block;
 import com.google.common.collect.Lists;
 import insane96mcp.survivalreimagined.module.mining.crafting.AbstractMultiItemSmeltingRecipe;
 import insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu;
-import insane96mcp.survivalreimagined.module.mining.inventory.MultiBlockBlastFurnaceMenu;
-import insane96mcp.survivalreimagined.module.mining.inventory.MultiBlockSoulBlastFurnaceMenu;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -44,6 +42,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 import static insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu.FUEL_SLOT;
 import static insane96mcp.survivalreimagined.module.mining.inventory.AbstractMultiBlockFurnaceMenu.RESULT_SLOT;
@@ -145,11 +144,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
 
         ItemStack fuelStack = pBlockEntity.items.get(FUEL_SLOT);
         boolean hasInputItem = !pBlockEntity.items.get(0).isEmpty();
-        int[] inputSlots = new int[0];
-        if (pBlockEntity instanceof MultiBlockBlastFurnaceBlockEntity)
-            inputSlots = MultiBlockBlastFurnaceMenu.getIngredientSlots();
-        else if (pBlockEntity instanceof MultiBlockSoulBlastFurnaceBlockEntity)
-            inputSlots = MultiBlockSoulBlastFurnaceMenu.getIngredientSlots();
+        int[] inputSlots = pBlockEntity.getIngredientSlots();
         for (int slot : inputSlots) {
             if (!pBlockEntity.items.get(slot).isEmpty()) {
                 hasInputItem = true;
@@ -198,36 +193,50 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
                     AABB aabb = new AABB(posBehind.getX(), posBehind.getY(), posBehind.getZ(), posBehind.getX() + 1f, posBehind.getY() + 1f, posBehind.getZ() + 1f);
                     List<ItemEntity> entitiesOfClass = pLevel.getEntitiesOfClass(ItemEntity.class, aabb);
                     if (!entitiesOfClass.isEmpty()) {
-                        ItemEntity itemEntity = entitiesOfClass.get(0);
-                        ItemStack itemStack = itemEntity.getItem();
+                        int[] ingredientSlots = pBlockEntity.getIngredientSlots();
 
-                        int[] inventorySlots = new int[0];
-                        if (pBlockEntity instanceof MultiBlockBlastFurnaceBlockEntity)
-                            inventorySlots = MultiBlockBlastFurnaceMenu.getIngredientSlots();
-                        else if (pBlockEntity instanceof MultiBlockSoulBlastFurnaceBlockEntity)
-                            inventorySlots = MultiBlockSoulBlastFurnaceMenu.getIngredientSlots();
-
-                        for (int slot = 0; slot < inventorySlots.length && !itemStack.isEmpty(); ++slot) {
+                        boolean isInventoryEmpty = true;
+                        for (int slot = 0; slot < ingredientSlots.length; slot++) {
                             ItemStack destinationStack = pBlockEntity.getItem(slot);
-                            boolean hasPlacedItem = false;
-                            if (destinationStack.isEmpty()) {
-                                pBlockEntity.setItem(slot, itemStack);
-                                itemStack = ItemStack.EMPTY;
-                                hasPlacedItem = true;
+                            if (!destinationStack.isEmpty()) {
+                                isInventoryEmpty = false;
+                                break;
                             }
-                            else if (canMergeItems(destinationStack, itemStack)) {
-                                int placeableItemsCount = itemStack.getMaxStackSize() - destinationStack.getCount();
-                                int actuallyPlaceableItemsCount = Math.min(itemStack.getCount(), placeableItemsCount);
-                                itemStack.shrink(actuallyPlaceableItemsCount);
-                                destinationStack.grow(actuallyPlaceableItemsCount);
-                                hasPlacedItem = actuallyPlaceableItemsCount > 0;
-                            }
-
-                            if (hasPlacedItem)
-                                pBlockEntity.setChanged();
                         }
-                        if (itemStack.isEmpty())
-                            itemEntity.discard();
+
+                        //If ingredient slots are empty pickup 1 of the first item found
+                        if (isInventoryEmpty) {
+                            ItemEntity itemEntity = entitiesOfClass.get(0);
+                            ItemStack itemStack = itemEntity.getItem().copy();
+                            itemStack.setCount(1);
+
+                            pBlockEntity.setItem(ingredientSlots[0], itemStack);
+                            itemEntity.getItem().shrink(1);
+                            if (itemEntity.getItem().isEmpty())
+                                itemEntity.discard();
+                        }
+                        //If not, try to refill the items in the slots
+                        else {
+                            for (int slot = 0; slot < ingredientSlots.length; ++slot) {
+                                ItemStack destinationStack = pBlockEntity.getItem(slot);
+                                if (destinationStack.isEmpty() || destinationStack.getCount() >= destinationStack.getMaxStackSize())
+                                    continue;
+                                Optional<ItemEntity> oAvailableItem = entitiesOfClass.stream().filter(itemEntity -> itemEntity.getItem().is(destinationStack.getItem())).findFirst();
+                                if (oAvailableItem.isEmpty()) {
+                                    continue;
+                                }
+                                ItemStack newStack = oAvailableItem.get().getItem().copy();
+                                newStack.setCount(1);
+                                if (canMergeItems(destinationStack, newStack)) {
+                                    int placeableItemsCount = newStack.getMaxStackSize() - destinationStack.getCount();
+                                    int actuallyPlaceableItemsCount = Math.min(newStack.getCount(), placeableItemsCount);
+                                    oAvailableItem.get().getItem().shrink(actuallyPlaceableItemsCount);
+                                    destinationStack.grow(actuallyPlaceableItemsCount);
+                                }
+                                if (oAvailableItem.get().getItem().isEmpty())
+                                    oAvailableItem.get().discard();
+                            }
+                        }
                     }
                 }
             } else {
@@ -316,17 +325,14 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
     public int[] getSlotsForFace(Direction pSide) {
         if (pSide == Direction.DOWN) {
             return SLOTS_FOR_DOWN;
-        } else {
+        }
+        else {
             if (pSide != Direction.UP) {
                 return SLOTS_FOR_SIDES;
             }
 
-            if (this instanceof MultiBlockBlastFurnaceBlockEntity)
-                return MultiBlockBlastFurnaceMenu.getIngredientSlots();
-            else if (this instanceof MultiBlockSoulBlastFurnaceBlockEntity)
-                return MultiBlockSoulBlastFurnaceMenu.getIngredientSlots();
+            return this.getIngredientSlots();
         }
-        return new int[0];
     }
 
     @Override
@@ -493,4 +499,6 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
         super.reviveCaps();
         this.handlers = net.minecraftforge.items.wrapper.SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
     }
+
+    public abstract int[] getIngredientSlots();
 }
