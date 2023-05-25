@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.feature;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -31,6 +32,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -297,6 +299,8 @@ public class Tiredness extends SRFeature {
 		});
 	}
 
+	final List<String> testingPlayers = List.of("Dev", "Insane96MCP", "Carboniglio2");
+
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void debugScreen(CustomizeGuiOverlayEvent.DebugText event) {
@@ -309,5 +313,17 @@ public class Tiredness extends SRFeature {
 		if (mc.options.renderDebug && !mc.showOnlyReducedInfo()) {
 			event.getLeft().add(String.format("Tiredness: %s", new DecimalFormat("#.#").format(TirednessHandler.get(playerEntity))));
 		}
+		if ((!mc.options.renderDebug || mc.options.reducedDebugInfo().get()) && testingPlayers.contains(mc.player.getName())) {
+			String toDraw = String.format("Tiredness: %s", new DecimalFormat("#.#").format(TirednessHandler.get(playerEntity)));
+			int scaledHeight = mc.getWindow().getGuiScaledHeight();
+			int top = scaledHeight - mc.font.lineHeight - 1;
+			int left = 2;
+			drawOnScreenWithBackground(event.getPoseStack(), left, top, toDraw, -1873784752, 14737632);
+		}
+	}
+
+	private static void drawOnScreenWithBackground(PoseStack mStack, int x, int y, String text, int backgroundColor, int textColor) {
+		ForgeGui.fill(mStack, x - 1, y - 1, x + Minecraft.getInstance().font.width(text) + 1, y + Minecraft.getInstance().font.lineHeight - 1, backgroundColor);
+		Minecraft.getInstance().font.draw(mStack, text, x, y, textColor);
 	}
 }
