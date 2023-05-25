@@ -706,74 +706,74 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "hellish_coal_from_blasting_soul_soil_ore");
 
         //Recycle recipes
-        recycleArmorBlasting(writer, ChainedCopperArmor.HELMET.get(), Items.IRON_NUGGET, 200, 6);
-        recycleArmorBlasting(writer, ChainedCopperArmor.CHESTPLATE.get(), Items.IRON_NUGGET, 200, 9);
-        recycleArmorBlasting(writer, ChainedCopperArmor.LEGGINGS.get(), Items.IRON_NUGGET, 200, 9);
-        recycleArmorBlasting(writer, ChainedCopperArmor.BOOTS.get(), Items.IRON_NUGGET, 200, 6);
-        recycleArmorBlasting(writer, Items.IRON_HELMET, Items.IRON_NUGGET, 200, 45);
-        recycleArmorBlasting(writer, Items.IRON_CHESTPLATE, Items.IRON_NUGGET, 200, 72);
-        recycleArmorBlasting(writer, Items.IRON_LEGGINGS, Items.IRON_NUGGET, 200, 63);
-        recycleArmorBlasting(writer, Items.IRON_BOOTS, Items.IRON_NUGGET, 200, 36);
-        recycleArmorBlasting(writer, Durium.HELMET.get(), Durium.NUGGET.get(), 200, 9);
-        recycleArmorBlasting(writer, Durium.CHESTPLATE.get(), Durium.NUGGET.get(), 200, 9);
-        recycleArmorBlasting(writer, Durium.LEGGINGS.get(), Durium.NUGGET.get(), 200, 9);
-        recycleArmorBlasting(writer, Durium.BOOTS.get(), Durium.NUGGET.get(), 200, 9);
-        recycleArmorBlasting(writer, Items.GOLDEN_HELMET, Items.GOLD_NUGGET, 200, 45);
-        recycleArmorBlasting(writer, Items.GOLDEN_CHESTPLATE, Items.GOLD_NUGGET, 200, 72);
-        recycleArmorBlasting(writer, Items.GOLDEN_LEGGINGS, Items.GOLD_NUGGET, 200, 63);
-        recycleArmorBlasting(writer, Items.GOLDEN_BOOTS, Items.GOLD_NUGGET, 200, 36);
-        recycleArmorBlasting(writer, SoulSteel.HELMET.get(), SoulSteel.NUGGET.get(), 200, 45);
-        recycleArmorBlasting(writer, SoulSteel.CHESTPLATE.get(), SoulSteel.NUGGET.get(), 200, 72);
-        recycleArmorBlasting(writer, SoulSteel.LEGGINGS.get(), SoulSteel.NUGGET.get(), 200, 63);
-        recycleArmorBlasting(writer, SoulSteel.BOOTS.get(), SoulSteel.NUGGET.get(), 200, 36);
-        recycleArmorBlasting(writer, Items.CHAINMAIL_HELMET, Items.IRON_NUGGET, 200, 15);
-        recycleArmorBlasting(writer, Items.CHAINMAIL_CHESTPLATE, Items.IRON_NUGGET, 200, 24);
-        recycleArmorBlasting(writer, Items.CHAINMAIL_LEGGINGS, Items.IRON_NUGGET, 200, 21);
-        recycleArmorBlasting(writer, Items.CHAINMAIL_BOOTS, Items.IRON_NUGGET, 200, 12);
-        recycleArmorBlasting(writer, Items.DIAMOND_HELMET, Items.DIAMOND, 200, 5);
-        recycleArmorBlasting(writer, Items.DIAMOND_CHESTPLATE, Items.DIAMOND, 200, 8);
-        recycleArmorBlasting(writer, Items.DIAMOND_LEGGINGS, Items.DIAMOND, 200, 7);
-        recycleArmorBlasting(writer, Items.DIAMOND_BOOTS, Items.DIAMOND, 200, 4);
-        recycleArmorBlasting(writer, Items.NETHERITE_HELMET, Items.NETHERITE_INGOT, 200, 1);
-        recycleArmorBlasting(writer, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_INGOT, 200, 1);
-        recycleArmorBlasting(writer, Items.NETHERITE_LEGGINGS, Items.NETHERITE_INGOT, 200, 1);
-        recycleArmorBlasting(writer, Items.NETHERITE_BOOTS, Items.NETHERITE_INGOT, 200, 1);
+        recycleGearBlasting(writer, ChainedCopperArmor.HELMET.get(), Items.IRON_NUGGET, 200, 6);
+        recycleGearBlasting(writer, ChainedCopperArmor.CHESTPLATE.get(), Items.IRON_NUGGET, 200, 9);
+        recycleGearBlasting(writer, ChainedCopperArmor.LEGGINGS.get(), Items.IRON_NUGGET, 200, 9);
+        recycleGearBlasting(writer, ChainedCopperArmor.BOOTS.get(), Items.IRON_NUGGET, 200, 6);
+        recycleGearBlasting(writer, Items.IRON_HELMET, Items.IRON_NUGGET, 200, 45);
+        recycleGearBlasting(writer, Items.IRON_CHESTPLATE, Items.IRON_NUGGET, 200, 72);
+        recycleGearBlasting(writer, Items.IRON_LEGGINGS, Items.IRON_NUGGET, 200, 63);
+        recycleGearBlasting(writer, Items.IRON_BOOTS, Items.IRON_NUGGET, 200, 36);
+        recycleGearBlasting(writer, Durium.HELMET.get(), Durium.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, Durium.CHESTPLATE.get(), Durium.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, Durium.LEGGINGS.get(), Durium.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, Durium.BOOTS.get(), Durium.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, Items.GOLDEN_HELMET, Items.GOLD_NUGGET, 200, 45);
+        recycleGearBlasting(writer, Items.GOLDEN_CHESTPLATE, Items.GOLD_NUGGET, 200, 72);
+        recycleGearBlasting(writer, Items.GOLDEN_LEGGINGS, Items.GOLD_NUGGET, 200, 63);
+        recycleGearBlasting(writer, Items.GOLDEN_BOOTS, Items.GOLD_NUGGET, 200, 36);
+        recycleGearBlasting(writer, SoulSteel.HELMET.get(), SoulSteel.NUGGET.get(), 200, 45);
+        recycleGearBlasting(writer, SoulSteel.CHESTPLATE.get(), SoulSteel.NUGGET.get(), 200, 72);
+        recycleGearBlasting(writer, SoulSteel.LEGGINGS.get(), SoulSteel.NUGGET.get(), 200, 63);
+        recycleGearBlasting(writer, SoulSteel.BOOTS.get(), SoulSteel.NUGGET.get(), 200, 36);
+        recycleGearBlasting(writer, Items.CHAINMAIL_HELMET, Items.IRON_NUGGET, 200, 15);
+        recycleGearBlasting(writer, Items.CHAINMAIL_CHESTPLATE, Items.IRON_NUGGET, 200, 24);
+        recycleGearBlasting(writer, Items.CHAINMAIL_LEGGINGS, Items.IRON_NUGGET, 200, 21);
+        recycleGearBlasting(writer, Items.CHAINMAIL_BOOTS, Items.IRON_NUGGET, 200, 12);
+        recycleGearBlasting(writer, Items.DIAMOND_HELMET, Items.DIAMOND, 200, 5);
+        recycleGearBlasting(writer, Items.DIAMOND_CHESTPLATE, Items.DIAMOND, 200, 8);
+        recycleGearBlasting(writer, Items.DIAMOND_LEGGINGS, Items.DIAMOND, 200, 7);
+        recycleGearBlasting(writer, Items.DIAMOND_BOOTS, Items.DIAMOND, 200, 4);
+        recycleGearBlasting(writer, Items.NETHERITE_HELMET, Items.NETHERITE_INGOT, 200, 1);
+        recycleGearBlasting(writer, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_INGOT, 200, 1);
+        recycleGearBlasting(writer, Items.NETHERITE_LEGGINGS, Items.NETHERITE_INGOT, 200, 1);
+        recycleGearBlasting(writer, Items.NETHERITE_BOOTS, Items.NETHERITE_INGOT, 200, 1);
 
-        recycleArmorBlasting(writer, CopperTools.PICKAXE.get(), Items.COPPER_INGOT, 200, 3);
-        recycleArmorBlasting(writer, CopperTools.AXE.get(), Items.COPPER_INGOT, 200, 3);
-        recycleArmorBlasting(writer, CopperTools.SHOVEL.get(), Items.COPPER_INGOT, 200, 1);
-        recycleArmorBlasting(writer, CopperTools.HOE.get(), Items.COPPER_INGOT, 200, 2);
-        recycleArmorBlasting(writer, CopperTools.SWORD.get(), Items.COPPER_INGOT, 200, 2);
-        recycleArmorBlasting(writer, Items.IRON_PICKAXE, Items.IRON_NUGGET, 200, 27);
-        recycleArmorBlasting(writer, Items.IRON_AXE, Items.IRON_NUGGET, 200, 27);
-        recycleArmorBlasting(writer, Items.IRON_SHOVEL, Items.IRON_NUGGET, 200, 9);
-        recycleArmorBlasting(writer, Items.IRON_HOE, Items.IRON_NUGGET, 200, 18);
-        recycleArmorBlasting(writer, Items.IRON_SWORD, Items.IRON_NUGGET, 200, 18);
-        recycleArmorBlasting(writer, Durium.PICKAXE.get(), Durium.NUGGET.get(), 200, 9);
-        recycleArmorBlasting(writer, Durium.AXE.get(), Durium.NUGGET.get(), 200, 9);
-        recycleArmorBlasting(writer, Durium.SHOVEL.get(), Durium.NUGGET.get(), 200, 9);
-        recycleArmorBlasting(writer, Durium.HOE.get(), Durium.NUGGET.get(), 200, 9);
-        recycleArmorBlasting(writer, Durium.SWORD.get(), Durium.NUGGET.get(), 200, 9);
-        recycleArmorBlasting(writer, Items.GOLDEN_PICKAXE, Items.GOLD_NUGGET, 200, 27);
-        recycleArmorBlasting(writer, Items.GOLDEN_AXE, Items.GOLD_NUGGET, 200, 27);
-        recycleArmorBlasting(writer, Items.GOLDEN_SHOVEL, Items.GOLD_NUGGET, 200, 9);
-        recycleArmorBlasting(writer, Items.GOLDEN_HOE, Items.GOLD_NUGGET, 200, 18);
-        recycleArmorBlasting(writer, Items.GOLDEN_SWORD, Items.GOLD_NUGGET, 200, 18);
-        recycleArmorBlasting(writer, SoulSteel.PICKAXE.get(), SoulSteel.NUGGET.get(), 200, 27);
-        recycleArmorBlasting(writer, SoulSteel.AXE.get(), SoulSteel.NUGGET.get(), 200, 27);
-        recycleArmorBlasting(writer, SoulSteel.SHOVEL.get(), SoulSteel.NUGGET.get(), 200, 9);
-        recycleArmorBlasting(writer, SoulSteel.HOE.get(), SoulSteel.NUGGET.get(), 200, 18);
-        recycleArmorBlasting(writer, SoulSteel.SWORD.get(), SoulSteel.NUGGET.get(), 200, 18);
-        recycleArmorBlasting(writer, Items.DIAMOND_PICKAXE, Items.DIAMOND, 200, 3);
-        recycleArmorBlasting(writer, Items.DIAMOND_AXE, Items.DIAMOND, 200, 3);
-        recycleArmorBlasting(writer, Items.DIAMOND_SHOVEL, Items.DIAMOND, 200, 1);
-        recycleArmorBlasting(writer, Items.DIAMOND_HOE, Items.DIAMOND, 200, 2);
-        recycleArmorBlasting(writer, Items.DIAMOND_SWORD, Items.DIAMOND, 200, 2);
-        recycleArmorBlasting(writer, Items.NETHERITE_PICKAXE, Items.NETHERITE_INGOT, 200, 1);
-        recycleArmorBlasting(writer, Items.NETHERITE_AXE, Items.NETHERITE_INGOT, 200, 1);
-        recycleArmorBlasting(writer, Items.NETHERITE_SHOVEL, Items.NETHERITE_INGOT, 200, 1);
-        recycleArmorBlasting(writer, Items.NETHERITE_HOE, Items.NETHERITE_INGOT, 200, 1);
-        recycleArmorBlasting(writer, Items.NETHERITE_SWORD, Items.NETHERITE_INGOT, 200, 1);
+        recycleGearBlasting(writer, CopperTools.PICKAXE.get(), Items.COPPER_INGOT, 200, 3);
+        recycleGearBlasting(writer, CopperTools.AXE.get(), Items.COPPER_INGOT, 200, 3);
+        recycleGearBlasting(writer, CopperTools.SHOVEL.get(), Items.COPPER_INGOT, 200, 1);
+        recycleGearBlasting(writer, CopperTools.HOE.get(), Items.COPPER_INGOT, 200, 2);
+        recycleGearBlasting(writer, CopperTools.SWORD.get(), Items.COPPER_INGOT, 200, 2);
+        recycleGearBlasting(writer, Items.IRON_PICKAXE, Items.IRON_NUGGET, 200, 27);
+        recycleGearBlasting(writer, Items.IRON_AXE, Items.IRON_NUGGET, 200, 27);
+        recycleGearBlasting(writer, Items.IRON_SHOVEL, Items.IRON_NUGGET, 200, 9);
+        recycleGearBlasting(writer, Items.IRON_HOE, Items.IRON_NUGGET, 200, 18);
+        recycleGearBlasting(writer, Items.IRON_SWORD, Items.IRON_NUGGET, 200, 18);
+        recycleGearBlasting(writer, Durium.PICKAXE.get(), Durium.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, Durium.AXE.get(), Durium.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, Durium.SHOVEL.get(), Durium.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, Durium.HOE.get(), Durium.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, Durium.SWORD.get(), Durium.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, Items.GOLDEN_PICKAXE, Items.GOLD_NUGGET, 200, 27);
+        recycleGearBlasting(writer, Items.GOLDEN_AXE, Items.GOLD_NUGGET, 200, 27);
+        recycleGearBlasting(writer, Items.GOLDEN_SHOVEL, Items.GOLD_NUGGET, 200, 9);
+        recycleGearBlasting(writer, Items.GOLDEN_HOE, Items.GOLD_NUGGET, 200, 18);
+        recycleGearBlasting(writer, Items.GOLDEN_SWORD, Items.GOLD_NUGGET, 200, 18);
+        recycleGearBlasting(writer, SoulSteel.PICKAXE.get(), SoulSteel.NUGGET.get(), 200, 27);
+        recycleGearBlasting(writer, SoulSteel.AXE.get(), SoulSteel.NUGGET.get(), 200, 27);
+        recycleGearBlasting(writer, SoulSteel.SHOVEL.get(), SoulSteel.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, SoulSteel.HOE.get(), SoulSteel.NUGGET.get(), 200, 18);
+        recycleGearBlasting(writer, SoulSteel.SWORD.get(), SoulSteel.NUGGET.get(), 200, 18);
+        recycleGearBlasting(writer, Items.DIAMOND_PICKAXE, Items.DIAMOND, 200, 3);
+        recycleGearBlasting(writer, Items.DIAMOND_AXE, Items.DIAMOND, 200, 3);
+        recycleGearBlasting(writer, Items.DIAMOND_SHOVEL, Items.DIAMOND, 200, 1);
+        recycleGearBlasting(writer, Items.DIAMOND_HOE, Items.DIAMOND, 200, 2);
+        recycleGearBlasting(writer, Items.DIAMOND_SWORD, Items.DIAMOND, 200, 2);
+        recycleGearBlasting(writer, Items.NETHERITE_PICKAXE, Items.NETHERITE_INGOT, 200, 1);
+        recycleGearBlasting(writer, Items.NETHERITE_AXE, Items.NETHERITE_INGOT, 200, 1);
+        recycleGearBlasting(writer, Items.NETHERITE_SHOVEL, Items.NETHERITE_INGOT, 200, 1);
+        recycleGearBlasting(writer, Items.NETHERITE_HOE, Items.NETHERITE_INGOT, 200, 1);
+        recycleGearBlasting(writer, Items.NETHERITE_SWORD, Items.NETHERITE_INGOT, 200, 1);
 
         //Forge recipes
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Forging.FORGE.item().get())
@@ -830,7 +830,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         }
     }
 
-    private void recycleArmorBlasting(Consumer<FinishedRecipe> writer, Item itemToRecycle, Item output, int cookingTime, int amountAtMaxDurability) {
+    private void recycleGearBlasting(Consumer<FinishedRecipe> writer, Item itemToRecycle, Item output, int cookingTime, int amountAtMaxDurability) {
         MultiItemSmeltingRecipeBuilder.blasting(
                         NonNullList.of(Ingredient.EMPTY, Ingredient.of(itemToRecycle)),
                         RecipeCategory.COMBAT,
@@ -845,7 +845,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         NonNullList.of(Ingredient.EMPTY, Ingredient.of(itemToRecycle)),
                         RecipeCategory.COMBAT,
                         output,
-                        cookingTime)
+                        cookingTime / 2)
                 .recycle(amountAtMaxDurability)
                 .unlockedBy("has_armor", has(itemToRecycle))
                 .group("recycle_" + ForgeRegistries.ITEMS.getKey(output).getPath())

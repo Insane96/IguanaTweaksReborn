@@ -7,6 +7,7 @@
 * Sped up hammers forging speed
 * Increased Spiders and Skeletons loot
 * Coal ore is no longer discarded when exposed to air
+* Soul Furnaces now consume more fuel but smelt and recycle twice as fast
 
 ## 3.11.1
 * Fishing is now slowed down based off season
