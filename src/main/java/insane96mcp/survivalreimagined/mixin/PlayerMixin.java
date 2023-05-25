@@ -46,13 +46,13 @@ public abstract class PlayerMixin extends LivingEntity {
 			callback.setReturnValue(exp);
 	}
 
-	@Inject(at = @At("HEAD"), method = "causeFoodExhaustion")
-	private void causeFoodExhaustion(float amount, CallbackInfo ci) {
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/food/FoodData;addExhaustion(F)V", shift = At.Shift.AFTER), method = "causeFoodExhaustion")
+	private void onCauseFoodExhaustion(float amount, CallbackInfo ci) {
 		Tiredness.onFoodExhaustion((Player) (Object) this, amount);
 	}
 
 	@ModifyVariable(method = "causeFoodExhaustion", argsOnly = true, at = @At("HEAD"))
-	private float applyHungerToFoodExhaustion(float amount) {
+	private float changeExhaustionAmount(float amount) {
 		return SREventFactory.onPlayerExhaustionEvent((Player) (Object) this, amount);
 	}
 
