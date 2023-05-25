@@ -52,7 +52,7 @@ public class UnbreakingOverhaul extends Feature {
 	public void loadConfigOptions() {
 		super.loadConfigOptions();
 		if (maxOneLevel)
-			Enchantments.UNBREAKING.rarity = Enchantment.Rarity.VERY_RARE;
+			Enchantments.UNBREAKING.rarity = Enchantment.Rarity.RARE;
 		else
 			Enchantments.UNBREAKING.rarity = Enchantment.Rarity.UNCOMMON;
 	}
@@ -94,15 +94,15 @@ public class UnbreakingOverhaul extends Feature {
 				|| event.getLeft().isEnchanted())
 			return;
 
-		ResourceLocation appliableTo = null;
+		ResourceLocation applicableTo = null;
 		if (event.getRight().hasTag()) {
 			//noinspection DataFlowIssue
 			String s = event.getRight().getTag().getString("applicable_to");
 			if (!s.isBlank())
-				appliableTo = ResourceLocation.tryParse(s);
+				applicableTo = ResourceLocation.tryParse(s);
 		}
-		if (appliableTo != null) {
-			Item item = ForgeRegistries.ITEMS.getValue(appliableTo);
+		if (applicableTo != null) {
+			Item item = ForgeRegistries.ITEMS.getValue(applicableTo);
 			if (item == null || !event.getLeft().is(item))
 				return;
 		}
@@ -134,9 +134,9 @@ public class UnbreakingOverhaul extends Feature {
 				|| !event.getItemStack().getTag().contains("applicable_to"))
 			return;
 
-		Item appliableTo = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(event.getItemStack().getTag().getString("applicable_to")));
-		if (appliableTo == null)
+		Item applicableTo = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(event.getItemStack().getTag().getString("applicable_to")));
+		if (applicableTo == null)
 			return;
-		event.getToolTip().add(Component.translatable(SurvivalReimagined.MOD_ID + ".item_fragment.applicable_to").append(appliableTo.getDescription().copy().withStyle(ChatFormatting.AQUA)));
+		event.getToolTip().add(Component.translatable(SurvivalReimagined.MOD_ID + ".item_fragment.applicable_to").append(applicableTo.getDescription().copy().withStyle(ChatFormatting.AQUA)));
 	}
 }
