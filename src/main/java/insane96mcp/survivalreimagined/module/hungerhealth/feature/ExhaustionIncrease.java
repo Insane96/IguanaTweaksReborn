@@ -79,9 +79,4 @@ public class ExhaustionIncrease extends Feature {
 		int amp = event.getEntity().getEffect(MobEffects.HUNGER).getAmplifier() + 1;
 		event.setAmount(event.getAmount() * (amp * 1f + 1));
 	}
-
-	@Override
-	public boolean isEnabled() {
-		return super.isEnabled() && !Feature.isEnabled(NoHunger.class);
-	}
 }
