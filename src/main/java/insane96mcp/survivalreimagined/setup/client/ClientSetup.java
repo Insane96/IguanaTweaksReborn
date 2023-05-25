@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.setup.client;
 
 import com.google.common.collect.ImmutableList;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.module.experience.feature.AncientLapis;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;

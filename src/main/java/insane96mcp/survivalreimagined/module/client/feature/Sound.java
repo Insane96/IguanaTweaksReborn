@@ -8,7 +8,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.ClientModules;
 
 @Label(name = "Sound", description = "Changes to sounds")
-@LoadFeature(module = ClientModules.Ids.CLIENT)
+@LoadFeature(module = ClientModules.Ids.CLIENT, enabledByDefault = false)
 public class Sound extends Feature {
 
     @Config

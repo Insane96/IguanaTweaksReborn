@@ -248,7 +248,7 @@ public class EnchantmentsFeature extends Feature {
 		if (!this.isEnabled()
 				|| !preventFarmlandTramplingWithFeatherFalling
 				|| !(event.getEntity() instanceof LivingEntity entity)
-				|| EnchantmentHelper.getEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.FALL_PROTECTION, entity) <= 0)
+				|| EnchantmentHelper.getEnchantmentLevel(Enchantments.FALL_PROTECTION, entity) <= 0)
 			return;
 
 		event.setCanceled(true);
@@ -256,7 +256,7 @@ public class EnchantmentsFeature extends Feature {
 
 	private void processBow(AbstractArrow arrow) {
 		if (powerEnchantmentDamage != 0.5d && arrow.getOwner() instanceof LivingEntity) {
-			int powerLevel = EnchantmentHelper.getEnchantmentLevel(net.minecraft.world.item.enchantment.Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
+			int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
 			if (powerLevel == 0)
 				return;
 			double powerReduction = 0.5d - powerEnchantmentDamage;

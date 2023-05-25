@@ -33,6 +33,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 @Label(name = "Unbreaking overhaul", description = "Changes how Unbreaking works.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class UnbreakingOverhaul extends Feature {
+	public static final String APPLICABLE_TO = SurvivalReimagined.MOD_ID + ".item_fragment.applicable_to";
 
 	@Config
 	@Label(name = "Max I level", description = "Unbreaking max level is set to 1. Also changes the cost and the rarity.")
@@ -137,6 +138,6 @@ public class UnbreakingOverhaul extends Feature {
 		Item applicableTo = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(event.getItemStack().getTag().getString("applicable_to")));
 		if (applicableTo == null)
 			return;
-		event.getToolTip().add(Component.translatable(SurvivalReimagined.MOD_ID + ".item_fragment.applicable_to").append(applicableTo.getDescription().copy().withStyle(ChatFormatting.AQUA)));
+		event.getToolTip().add(Component.translatable(APPLICABLE_TO).append(applicableTo.getDescription().copy().withStyle(ChatFormatting.AQUA)));
 	}
 }

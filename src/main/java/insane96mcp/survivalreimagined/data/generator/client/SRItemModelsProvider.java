@@ -1,11 +1,11 @@
 package insane96mcp.survivalreimagined.data.generator.client;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.module.experience.feature.AncientLapis;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.experience.feature.UnbreakingOverhaul;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
-import insane96mcp.survivalreimagined.module.items.feature.AncientLapis;
 import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.feature.CopperTools;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;

@@ -9,6 +9,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.data.PlantGrowthModifier;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
@@ -179,23 +180,23 @@ public class PlantsGrowth extends SRFeature {
 			return;
 		for (PlantGrowthModifier plantGrowthModifier : plantsList) {
 			if (plantGrowthModifier.matchesBlock(blockItem.getBlock())) {
-				List<Season> unfertileSeasons = new ArrayList<>();
+				List<Season> infertileSeasons = new ArrayList<>();
 				event.getToolTip().add(Component.translatable("desc.sereneseasons.fertile_seasons").append(":"));
 				for (PlantGrowthModifier.SeasonMultiplier seasonMultiplier : plantGrowthModifier.seasonsMultipliers) {
 					if (seasonMultiplier.multiplier() == 0f)
-						unfertileSeasons.add(seasonMultiplier.season());
+						infertileSeasons.add(seasonMultiplier.season());
 				}
-				if (unfertileSeasons.isEmpty())
-					event.getToolTip().add(Component.translatable(" ").append(Component.translatable("desc.sereneseasons.year_round")).withStyle(ChatFormatting.LIGHT_PURPLE));
+				if (infertileSeasons.isEmpty())
+					event.getToolTip().add(CommonComponents.space().append(Component.translatable("desc.sereneseasons.year_round")).withStyle(ChatFormatting.LIGHT_PURPLE));
 				else {
-					if (!unfertileSeasons.contains(Season.SPRING))
-						event.getToolTip().add(Component.translatable(" ").append(Component.translatable("desc.sereneseasons.spring")).withStyle(ChatFormatting.GREEN));
-					if (!unfertileSeasons.contains(Season.SUMMER))
-						event.getToolTip().add(Component.translatable(" ").append(Component.translatable("desc.sereneseasons.summer")).withStyle(ChatFormatting.YELLOW));
-					if (!unfertileSeasons.contains(Season.AUTUMN))
-						event.getToolTip().add(Component.translatable(" ").append(Component.translatable("desc.sereneseasons.autumn")).withStyle(ChatFormatting.GOLD));
-					if (!unfertileSeasons.contains(Season.WINTER))
-						event.getToolTip().add(Component.translatable(" ").append(Component.translatable("desc.sereneseasons.winter")).withStyle(ChatFormatting.AQUA));
+					if (!infertileSeasons.contains(Season.SPRING))
+						event.getToolTip().add(CommonComponents.space().append(Component.translatable("desc.sereneseasons.spring")).withStyle(ChatFormatting.GREEN));
+					if (!infertileSeasons.contains(Season.SUMMER))
+						event.getToolTip().add(CommonComponents.space().append(Component.translatable("desc.sereneseasons.summer")).withStyle(ChatFormatting.YELLOW));
+					if (!infertileSeasons.contains(Season.AUTUMN))
+						event.getToolTip().add(CommonComponents.space().append(Component.translatable("desc.sereneseasons.autumn")).withStyle(ChatFormatting.GOLD));
+					if (!infertileSeasons.contains(Season.WINTER))
+						event.getToolTip().add(CommonComponents.space().append(Component.translatable("desc.sereneseasons.winter")).withStyle(ChatFormatting.AQUA));
 				}
 			}
 		}

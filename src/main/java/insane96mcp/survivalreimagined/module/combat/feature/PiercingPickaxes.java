@@ -91,14 +91,4 @@ public class PiercingPickaxes extends Feature {
 
 		event.addModifier(PIERCING_DAMAGE.get(), new AttributeModifier(PICKAXE_PIERCING_MODIFIER_UUID, "Piercing Pickaxes modifier", pickaxeItem.getAttackDamage() * piercingRatio, AttributeModifier.Operation.ADDITION));
 	}
-
-	/*@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	public void onTooltip(ItemTooltipEvent event) {
-		if (!this.isEnabled()
-				|| !(event.getItemStack().getItem() instanceof PickaxeItem pickaxeItem))
-			return;
-
-		event.getToolTip().add(Component.literal(" ").append(Component.translatable(PIERCING_TOOLTIP, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(pickaxeItem.getAttackDamage() * piercingRatio))).withStyle(ChatFormatting.DARK_GREEN));
-	}*/
 }

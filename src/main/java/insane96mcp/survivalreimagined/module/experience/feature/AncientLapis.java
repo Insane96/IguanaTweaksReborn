@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.items.feature;
+package insane96mcp.survivalreimagined.module.experience.feature;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @Label(name = "Ancient Lapis", description = "Add an item that increases the level of an enchantment, up to 1 level above the limit.")
-@LoadFeature(module = Modules.Ids.ITEMS)
+@LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class AncientLapis extends Feature {
 	public static final RegistryObject<Item> ANCIENT_LAPIS = SRItems.REGISTRY.register("ancient_lapis", () -> new Item(new Item.Properties().fireResistant()));
 

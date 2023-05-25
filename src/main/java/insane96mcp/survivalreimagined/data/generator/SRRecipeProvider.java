@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.data.generator;
 
 import insane96mcp.shieldsplus.setup.SPItems;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.module.experience.feature.AncientLapis;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;

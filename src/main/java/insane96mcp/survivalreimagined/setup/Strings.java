@@ -29,7 +29,6 @@ public class Strings {
 		public static final String NO_FOOD_FOR_SLEEP = "survivalreimagined.no_food_for_sleep";
 		public static final String DECORATIVE_BEDS = "survivalreimagined.decorative_beds";
 		public static final String ENJOY_THE_NIGHT = "survivalreimagined.enjoy_the_night";
-		public static final String ITEM_REPAIRED = "survivalreimagined.item_repaired";
 
 		public static final String NO_EFFICIENCY_ITEM = "survivalreimagined.no_efficiency_item";
 		public static final String NO_DAMAGE_ITEM = "survivalreimagined.no_damage_item";

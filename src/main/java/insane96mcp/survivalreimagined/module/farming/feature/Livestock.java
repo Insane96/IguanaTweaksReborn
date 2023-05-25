@@ -45,7 +45,7 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.FARMING)
 public class Livestock extends SRFeature {
 
-	public static final String MILK_COOLDOWN_TRANSLATION = SurvivalReimagined.MOD_ID + ".milk_cooldown";
+	public static final String MILK_COOLDOWN_LANG = SurvivalReimagined.MOD_ID + ".milk_cooldown";
 	public static final String MILK_COOLDOWN = SurvivalReimagined.RESOURCE_PREFIX + "milk_cooldown";
 
 	public static final ArrayList<LivestockData> GROWTH_SLOWNDOWN_DEFAULT = new ArrayList<>(List.of(
@@ -276,7 +276,7 @@ public class Livestock extends SRFeature {
 			event.setCanceled(true);
 			if (!player.level.isClientSide) {
 				animal.playSound(SoundEvents.COW_HURT, 0.4F, (event.getEntity().level.random.nextFloat() - event.getEntity().level.random.nextFloat()) * 0.2F + 1.2F);
-				MutableComponent message = Component.translatable(MILK_COOLDOWN_TRANSLATION, animal.getDisplayName());
+				MutableComponent message = Component.translatable(MILK_COOLDOWN_LANG, animal.getDisplayName());
 				player.displayClientMessage(message, true);
 			}
 			else
