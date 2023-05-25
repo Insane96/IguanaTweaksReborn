@@ -6,6 +6,7 @@
   * Moved free rename and repair cap to this
 * Sped up hammers forging speed
 * Increased Spiders and Skeletons loot
+* Coal ore is no longer discarded when exposed to air
 
 ## 3.11.1
 * Fishing is now slowed down based off season

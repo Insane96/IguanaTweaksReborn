@@ -34,10 +34,6 @@ public class OreGeneration extends Feature {
     public static final PoorRichOre POOR_RICH_GOLD_ORE = PoorRichOre.register("gold", Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE);
 
     @Config
-    @Label(name = "Reduce exposed coal", description = "Enables a data pack will be enabled that reduces the coal exposed to air.")
-    public static Boolean reduceExposedCoal = true;
-
-    @Config
     @Label(name = "Poor and Rich Iron Generation", description = "Enables a Data Pack that changes Iron generation, including Poor and Rich Ores.")
     public static Boolean ironGenerationDataPack = true;
     @Config
@@ -49,10 +45,9 @@ public class OreGeneration extends Feature {
 
     public OreGeneration(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "coal_generation", net.minecraft.network.chat.Component.literal("Survival Reimagined Coal Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && reduceExposedCoal));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "iron_generation", net.minecraft.network.chat.Component.literal("Survival Reimagined Iron Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && ironGenerationDataPack));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "gold_generation", net.minecraft.network.chat.Component.literal("Survival Reimagined Gold Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && goldGenerationDataPack));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_generation", net.minecraft.network.chat.Component.literal("Survival Reimagined Copper Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperGenerationDataPack));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "iron_generation", Component.literal("Survival Reimagined Iron Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && ironGenerationDataPack));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "gold_generation", Component.literal("Survival Reimagined Gold Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && goldGenerationDataPack));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_generation", Component.literal("Survival Reimagined Copper Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperGenerationDataPack));
     }
 
     public record PoorRichOre(BlockWithItem poorOre, BlockWithItem poorDeepslateOre, BlockWithItem richOre, BlockWithItem richDeepslateOre) {
