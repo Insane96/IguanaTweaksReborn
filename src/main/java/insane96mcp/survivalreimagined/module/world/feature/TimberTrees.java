@@ -63,10 +63,12 @@ public class TimberTrees extends SRFeature {
             return;
         //Vec3 dir = new Vec3(event.getPlayer().getDirection().getNormal().getX(), event.getPlayer().getDirection().getNormal().getY(), event.getPlayer().getDirection().getNormal().getZ());
         List<BlockPos> blocks = getTreeBlocks(event.getPos(), event.getState(), event.getLevel());
-        Direction direction = event.getLevel().getRandom().nextDouble() < 0.05d ? event.getPlayer().getDirection().getOpposite() : event.getPlayer().getDirection();
-        blocks.forEach(pos -> {
+        Direction direction = event.getPlayer().getDirection();
+        if (event.getLevel().getRandom().nextDouble() < 0.05d)
+            direction = direction.getOpposite();
+        for (BlockPos pos : blocks) {
             if (pos.equals(event.getPos()))
-                return;
+                continue;
             double distanceFromBrokenBlock = Math.sqrt(pos.distSqr(event.getPos()));
             Vec3i relative = new BlockPos(pos.getX() - event.getPos().getX(), pos.getY() - event.getPos().getY(), pos.getZ() - event.getPos().getZ());
             BlockPos fallingBlockPos = pos.relative(direction, (int) distanceFromBrokenBlock).above(relative.getY());
@@ -74,7 +76,7 @@ public class TimberTrees extends SRFeature {
             //fallingBlock.setHurtsEntities(2f, 1024);
             event.getLevel().addFreshEntity(fallingBlock);
             event.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-        });
+        }
     }
 
     private static List<BlockPos> getTreeBlocks(BlockPos pos, BlockState state, LevelAccessor level) {

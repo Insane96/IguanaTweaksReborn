@@ -7,13 +7,13 @@
 * Sped up hammers forging speed
 * Increased Spiders and Skeletons loot
 * Coal ore is no longer discarded when exposed to air
-* Soul Furnaces now consume more fuel but smelt and recycle twice as fast
+* Soul Furnaces now consume twice the fuel but smelt and recycle twice as fast
 
 ## 3.11.1
 * Fishing is now slowed down based off season
 * Hammers are now usable as weapons
 * Overall reduced block hardness
-* Efficiency now scales exponentially again (not like vanilla)
+* Efficiency now scales exponentially again (still different from vanilla)
   * Formula changed from +`(75 * lvl)`% efficiency to +`(15 * (lvl * lvl + 1))`% efficiency
 * Global experience multiplier increased (1.3x -> 1.5x)
 * Block experience multiplier reduced (2.25x -> 2x)
