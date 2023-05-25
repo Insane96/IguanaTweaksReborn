@@ -39,7 +39,7 @@ public class Gold extends Feature {
 
 	public Gold(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "gold_smelting", net.minecraft.network.chat.Component.literal("Survival Reimagined Gold Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && goldSmeltingDataPack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "gold_smelting", Component.literal("Survival Reimagined Gold Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && goldSmeltingDataPack));
 	}
 
 	@SubscribeEvent

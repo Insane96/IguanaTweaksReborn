@@ -56,8 +56,6 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		cir.setReturnValue((player.getAbilities().instabuild || player.experienceLevel >= this.cost.get()));
 	}
 
-	private boolean isPartialRepairItem;
-
 	@Inject(
 			at = @At("HEAD"),
 			method = "createResult",
@@ -67,7 +65,6 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		if (!Feature.isEnabled(OtherExperience.class))
 			return;
 
-		isPartialRepairItem = false;
 		ItemStack left = this.inputSlots.getItem(0);
 		this.cost.set(1);
 		int mergeCost = 0;
@@ -87,11 +84,11 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			if (!right.isEmpty()) {
 				if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player)) return;
 				isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
-				boolean isPartialRepairItem = Anvils.isRepairItem(leftCopy, right);
+				boolean isPartialRepairItem = Anvils.isPartialRepairItem(leftCopy, right);
 				if (leftCopy.isDamageableItem() && (leftCopy.getItem().isValidRepairItem(left, right) || isPartialRepairItem)) {
 					int repairItemCountCost;
 					if (isPartialRepairItem) {
-						int maxRepair = (int) (leftCopy.getMaxDamage() * 0.4f);
+						int maxPartialRepairDurLeft = (int) (leftCopy.getMaxDamage() * 0.4f);
 						int repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
 						if (repairSteps <= 0) {
 							this.resultSlots.setItem(0, ItemStack.EMPTY);
@@ -99,9 +96,9 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 							return;
 						}
 
-						for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount() && leftCopy.getDamageValue() > maxRepair; ++repairItemCountCost) {
+						for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount() && leftCopy.getDamageValue() > maxPartialRepairDurLeft; ++repairItemCountCost) {
 							int dmgAfterRepair = leftCopy.getDamageValue() - repairSteps;
-							leftCopy.setDamageValue(Math.max(maxRepair, dmgAfterRepair));
+							leftCopy.setDamageValue(Math.max(maxPartialRepairDurLeft, dmgAfterRepair));
 							++mergeCost;
 							repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
 						}

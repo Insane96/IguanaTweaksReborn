@@ -38,6 +38,7 @@ import java.util.List;
 public class Respawn extends SRFeature {
 
 	public static final String LOOSE_RESPAWN_POINT_SET = SurvivalReimagined.MOD_ID + ".loose_bed_respawn_point_set";
+	public static final String FAIL_RESPAWN_OBELISK_LANG = SurvivalReimagined.MOD_ID + ".fail_respawn_obelisk";
 
 	@Config(min = 0)
 	@Label(name = "Loose World Spawn Range", description = "The range from world spawn where players will respawn.")
@@ -161,7 +162,7 @@ public class Respawn extends SRFeature {
 			return;
 
 		if (!event.getEntity().getLevel().getBlockState(pos).getValue(RespawnObeliskBlock.ENABLED)) {
-			player.sendSystemMessage(Component.literal("You couldn't respawn at the obelisk because it was disabled."));
+			player.sendSystemMessage(Component.translatable(FAIL_RESPAWN_OBELISK_LANG));
 			return;
 		}
 		RespawnObeliskBlock.onObeliskRespawn(event.getEntity(), event.getEntity().level, pos);

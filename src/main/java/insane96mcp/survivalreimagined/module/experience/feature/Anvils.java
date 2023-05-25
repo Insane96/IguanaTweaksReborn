@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.trigger.AnvilTransformBlockTrigger;
 import insane96mcp.survivalreimagined.event.FallingBlockLandEvent;
@@ -35,6 +36,8 @@ import java.util.Optional;
 @Label(name = "Anvils", description = "Make anvils usable to create blocks. Use the anvil_transformations.json file in the feature's folder to change or add block transformations.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class Anvils extends SRFeature {
+
+    public static final String PARTIALLY_REPAIRED_LANG = SurvivalReimagined.MOD_ID + ".can_be_partially_repaired";
 
     @Config
     @Label(name = "Enable Block Transformation")
@@ -80,7 +83,7 @@ public class Anvils extends SRFeature {
         return isEnabled(OtherExperience.class) && freeRenaming;
     }
 
-    public static boolean isRepairItem(ItemStack left, ItemStack right) {
+    public static boolean isPartialRepairItem(ItemStack left, ItemStack right) {
         if (!Feature.isEnabled(Anvils.class)
                 || !partiallyRepairUpgradedItemsWithBaseMaterial)
             return false;
@@ -134,12 +137,12 @@ public class Anvils extends SRFeature {
 
         for (TwinIdTagMatcher partiallyRepairItem : partialRepairItems) {
             if (partiallyRepairItem.idTagMatcherA.matchesItem(event.getItemStack().getItem())) {
-                Optional<Item> item = partiallyRepairItem.idTagMatcherB.getAllItems().stream().findAny();
-                item.ifPresent(i -> {
+                Optional<Item> oItem = partiallyRepairItem.idTagMatcherB.getAllItems().stream().findAny();
+                oItem.ifPresent(item -> {
                     event.getToolTip().add(Component.empty());
-                    event.getToolTip().add(Component.literal("Can be partially repaired with ").append(i.getDescription()).withStyle(ChatFormatting.GREEN));
+                    event.getToolTip().add(Component.translatable(PARTIALLY_REPAIRED_LANG, item.getDescription()).withStyle(ChatFormatting.GREEN));
                 });
-                if (item.isPresent())
+                if (oItem.isPresent())
                     break;
             }
         }

@@ -17,6 +17,7 @@ import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
@@ -236,7 +237,7 @@ public class ItemStats extends SRFeature {
 			float bonusToolEfficiency = diggerItem.speed * (baseEfficiency * (lvl * lvl + 1));
 			if (lvl > 0)
 				toolEfficiency += bonusToolEfficiency;
-			event.getToolTip().add(Component.literal(" ").append(Component.translatable(TOOL_EFFICIENCY, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(toolEfficiency))).withStyle(ChatFormatting.DARK_GREEN));
+			event.getToolTip().add(CommonComponents.space().append(Component.translatable(TOOL_EFFICIENCY, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(toolEfficiency))).withStyle(ChatFormatting.DARK_GREEN));
 		}
 
 		if (event.getItemStack().isDamageableItem())

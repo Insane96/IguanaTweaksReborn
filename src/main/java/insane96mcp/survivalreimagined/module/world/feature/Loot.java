@@ -13,6 +13,7 @@ import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.advancements.critereon.EntityEquipmentPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.ItemTags;
@@ -36,7 +37,7 @@ public class Loot extends Feature {
 
 	public Loot(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "better_loot", net.minecraft.network.chat.Component.literal("Survival Reimagined Better Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && betterStructureLoot));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "better_loot", Component.literal("Survival Reimagined Better Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && betterStructureLoot));
 	}
 
 	private static final String path = "world_loot/";

@@ -10,6 +10,7 @@ import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
@@ -22,7 +23,7 @@ public class StatsBuffs extends Feature {
 
     public StatsBuffs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "mobs_buffs", net.minecraft.network.chat.Component.literal("Survival Reimagined Mobs Stats Buffs"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && enableDataPack));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "mobs_buffs", Component.literal("Survival Reimagined Mobs Stats Buffs"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && enableDataPack));
     }
 
     @Override

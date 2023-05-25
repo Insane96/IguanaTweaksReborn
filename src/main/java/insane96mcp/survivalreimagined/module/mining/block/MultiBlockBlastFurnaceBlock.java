@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.mining.block;
 
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -88,7 +89,7 @@ public class MultiBlockBlastFurnaceBlock extends AbstractMultiBlockFurnace {
                 pPlayer.awardStat(Stats.INTERACT_WITH_BLAST_FURNACE);
             }
             else {
-                pPlayer.sendSystemMessage(Component.literal("Multi block structure not valid. Must have a bottom layer of Smooth Stone, a middle and top layer of Bricks (top layer can be stairs). The center middle and center top blocks of the 3x3x3 can be anything"));
+                pPlayer.sendSystemMessage(Component.translatable(getInvalidStructureLang()));
             }
         }
     }
@@ -111,6 +112,11 @@ public class MultiBlockBlastFurnaceBlock extends AbstractMultiBlockFurnace {
                 return false;
         }
         return true;
+    }
+
+    @Override
+    protected String getInvalidStructureLang() {
+        return SurvivalReimagined.MOD_ID + ".blast_furnace_invalid_structure";
     }
 
     /**

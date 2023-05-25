@@ -68,7 +68,7 @@ public class FlintExpansion extends Feature {
 
 	public FlintExpansion(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "disable_wooden_tools", net.minecraft.network.chat.Component.literal("Survival Reimagined Disable Wooden Tools"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableWoodenToolsRecipe));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "disable_wooden_tools", Component.literal("Survival Reimagined Disable Wooden Tools"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableWoodenToolsRecipe));
 	}
 
 	@SubscribeEvent

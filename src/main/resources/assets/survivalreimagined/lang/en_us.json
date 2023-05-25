@@ -7,6 +7,7 @@
 	"survivalreimagined.decorative_beds": "Beds are just a nice decoration. No sleep allowed",
 	"survivalreimagined.no_spawn_point": "You cannot set a respawn point. Better leave a trace from the world's spawn.",
 	"survivalreimagined.loose_bed_respawn_point_set": "Your respawn point is loose, you'll respawn in a radius from your bed.",
+	"survivalreimagined.fail_respawn_obelisk": "You couldn't respawn at the obelisk because it was disabled.",
 	"survivalreimagined.enjoy_the_night": "Your respawn point has been set. Enjoy the night!",
 	"survivalreimagined.not_tired": "You're not tired enough to sleep",
 	"survivalreimagined.tired_enough": "You start feeling tired",
@@ -19,12 +20,24 @@
 	"survivalreimagined.tool_durability": "Durability: %d/%d",
 	"attribute.name.piercing_damage": "Piercing Damage",
 
+	"survivalreimagined.no_forge_recipe": "No recipe found in the Forge",
+
+	"survivalreimagined.blast_furnace_invalid_structure": "Multi block structure not valid. Must have a bottom layer of Smooth Stone, a middle and top layer of Bricks (top layer can be stairs). The center middle and center top blocks of the 3x3x3 can be anything.",
+	"survivalreimagined.soul_blast_furnace_invalid_structure": "Multi block structure not valid. Must have a bottom layer of worked Blackstone, a middle and top layer of Red Nether Bricks (top layer can be stairs). The center middle and center top blocks of the 3x3x3 can be anything.",
+	"survivalreimagined.invalid_blast_furnace": "This block is not valid. Break and place it back.",
+	"survivalreimagined.can_be_partially_repaired": "Can be partially repaired with %s",
+
 	"survivalreimagined.weak_hoe": "This hoe is too weak to till soil",
 	"survivalreimagined.till_cooldown": "%.1f Till Cooldown",
 	"survivalreimagined.scythe_radius": "%d Scythe radius",
 
 	"survivalreimagined.hammer_cooldown": "%f Forge Cooldown",
 	"survivalreimagined.hammer_durability": "%f Durability Used",
+
+	"survivalreimagined.requires_catalyst": "Can't activate. The Obelisk requires at least one catalyst block",
+	"survivalreimagined.obelisk_disabled": "Respawn Obelisk disabled because there are no catalysts left. Your respawn point has been reset",
+
+	"survivalreimagined.requires_corners": "The portal needs Gold Blocks or Crying Obsidian in the corners to be activated",
 
 	"survivalreimagined.armor_slowdown": "-%s%% Speed",
 
@@ -150,7 +163,7 @@
 	"item.survivalreimagined.cleansed_lapis": "Cleansed Lapis",
 	"item.survivalreimagined.item_fragment": "Item Fragment",
 	"item.survivalreimagined.altimeter": "Altimeter",
-	"survivalreimagined.item_fragment.appliable_to": "Appliable to: ",
+	"survivalreimagined.item_fragment.applicable_to": "Applicable to: ",
 	"survivalreimagined.innate_luck": "Innate Luck",
 
 	"item.survivalreimagined.brown_mushroom_stew": "Brown Mushroom Stew",
@@ -211,7 +224,7 @@
 	"advancements.sr_story.chained_copper_armor.title": "Early protection",
 	"advancements.sr_story.chained_copper_armor.description": "Obtain a full set of Chained Copper Armor",
 	"advancements.sr_story.durium_ingot.title": "Alloying",
-	"advancements.sr_story.durium_ingot.description": "Obtain a Durium Ingot by alloying Duranium Scrap Block, Clay and Sand in a Blast Furnace",
+	"advancements.sr_story.durium_ingot.description": "Obtain a Durium Ingot by alloying Durium Scrap Block, Clay and Sand in a Blast Furnace",
 	"advancements.sr_story.durium_gear.title": "Stiffer than iron",
 	"advancements.sr_story.durium_gear.description": "Obtain any Durium Gear by upgrading a Iron gear in the Smithing Table",
 	"advancements.sr_story.seeds.title": "Seedy Business",
@@ -246,7 +259,7 @@
 	"advancements.sr_story.firestarter.title": "Starting Fires",
 	"advancements.sr_story.firestarter.description": "Craft a Firestarter to create fire more consistently.",
 	"advancements.sr_story.rich_farmland.title": "Better use for Bone Meal",
-	"advancements.sr_story.rich_farmland.description": "Use Bone Meal on Farmland (or on crops while chrouching) to create Rich Farmland. Rich farmland makes crops grow faster, but decays after a while.",
+	"advancements.sr_story.rich_farmland.description": "Use Bone Meal on Farmland (or on crops while crouching) to create Rich Farmland. Rich farmland makes crops grow faster, but decays after a while.",
 	"advancements.sr_story.smoker.title": "Smoking hot",
 	"advancements.sr_story.smoker.description": "Since furnaces are too hot to cook food, a Smoker should do it.",
 	"advancements.sr_story.winter_is_coming.title": "Winter is coming",

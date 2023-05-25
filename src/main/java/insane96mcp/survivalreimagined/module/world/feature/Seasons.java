@@ -8,6 +8,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
@@ -49,8 +50,8 @@ public class Seasons extends Feature {
 
 	public Seasons(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "serene_seasons_changes", net.minecraft.network.chat.Component.literal("Survival Reimagined Serene Seasons Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && sereneSeasonsChanges));
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_saplings_in_winter", net.minecraft.network.chat.Component.literal("Survival Reimagined No Saplings in Winter"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && noSaplingsInWinter));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "serene_seasons_changes", Component.literal("Survival Reimagined Serene Seasons Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && sereneSeasonsChanges));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_saplings_in_winter", Component.literal("Survival Reimagined No Saplings in Winter"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && noSaplingsInWinter));
 	}
 
 	@Override

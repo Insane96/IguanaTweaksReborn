@@ -154,4 +154,6 @@ public abstract class AbstractMultiBlockFurnace extends BaseEntityBlock {
     public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         pTooltip.add(Component.translatable(MULTI_BLOCK_TOOLTIP));
     }
+
+    protected abstract String getInvalidStructureLang();
 }

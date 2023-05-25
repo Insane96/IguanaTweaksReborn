@@ -19,6 +19,7 @@ import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -90,7 +91,7 @@ public class CoalFire extends Feature {
 
     public CoalFire(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_charcoal_smelting", net.minecraft.network.chat.Component.literal("Survival Reimagined No Charcoal Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableCharcoalSmelting));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_charcoal_smelting", Component.literal("Survival Reimagined No Charcoal Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableCharcoalSmelting));
         Blocks.CAMPFIRE.defaultBlockState = Blocks.CAMPFIRE.defaultBlockState().setValue(CampfireBlock.LIT, Boolean.FALSE);
         Blocks.SOUL_CAMPFIRE.defaultBlockState = Blocks.SOUL_CAMPFIRE.defaultBlockState().setValue(CampfireBlock.LIT, Boolean.FALSE);
     }

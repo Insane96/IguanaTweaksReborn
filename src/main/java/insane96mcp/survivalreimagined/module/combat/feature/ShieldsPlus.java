@@ -8,6 +8,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 
 @Label(name = "Shields+", description = "Changes to Shields+.")
@@ -19,6 +20,6 @@ public class ShieldsPlus extends Feature {
 
 	public ShieldsPlus(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "shields", net.minecraft.network.chat.Component.literal("Survival Reimagined Shields"), () -> super.isEnabled() && !DataPacks.disableAllDataPacks && shieldsPlusCompatDataPack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "shields", Component.literal("Survival Reimagined Shields"), () -> super.isEnabled() && !DataPacks.disableAllDataPacks && shieldsPlusCompatDataPack));
 	}
 }

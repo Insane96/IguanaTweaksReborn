@@ -79,7 +79,7 @@ public class UnbreakingOverhaul extends Feature {
 		//event.getOriginal().getAllEnchantments().forEach(itemStack::enchant);
 		if (!itemStack.hasTag())
 			itemStack.setTag(new CompoundTag());
-		itemStack.getTag().putString("appliable_to", ForgeRegistries.ITEMS.getKey(event.getOriginal().getItem()).toString());
+		itemStack.getTag().putString("applicable_to", ForgeRegistries.ITEMS.getKey(event.getOriginal().getItem()).toString());
 		ItemEntity itemEntity = new ItemEntity(event.getEntity().level, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), itemStack);
 		itemEntity.setDefaultPickUpDelay();
 		event.getEntity().level.addFreshEntity(itemEntity);
@@ -97,7 +97,7 @@ public class UnbreakingOverhaul extends Feature {
 		ResourceLocation appliableTo = null;
 		if (event.getRight().hasTag()) {
 			//noinspection DataFlowIssue
-			String s = event.getRight().getTag().getString("appliable_to");
+			String s = event.getRight().getTag().getString("applicable_to");
 			if (!s.isBlank())
 				appliableTo = ResourceLocation.tryParse(s);
 		}
@@ -131,12 +131,12 @@ public class UnbreakingOverhaul extends Feature {
 		//noinspection DataFlowIssue
 		if (!event.getItemStack().is(ITEM_FRAGMENT.get())
 				|| !event.getItemStack().hasTag()
-				|| !event.getItemStack().getTag().contains("appliable_to"))
+				|| !event.getItemStack().getTag().contains("applicable_to"))
 			return;
 
-		Item appliableTo = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(event.getItemStack().getTag().getString("appliable_to")));
+		Item appliableTo = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(event.getItemStack().getTag().getString("applicable_to")));
 		if (appliableTo == null)
 			return;
-		event.getToolTip().add(Component.translatable(SurvivalReimagined.MOD_ID + ".item_fragment.appliable_to").append(appliableTo.getDescription().copy().withStyle(ChatFormatting.AQUA)));
+		event.getToolTip().add(Component.translatable(SurvivalReimagined.MOD_ID + ".item_fragment.applicable_to").append(appliableTo.getDescription().copy().withStyle(ChatFormatting.AQUA)));
 	}
 }

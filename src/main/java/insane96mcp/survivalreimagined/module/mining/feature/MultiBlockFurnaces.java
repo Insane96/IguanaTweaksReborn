@@ -5,6 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockBlastFurnaceBlock;
@@ -34,6 +35,8 @@ import net.minecraftforge.registries.RegistryObject;
 @Label(name = "Multi Block Furnaces", description = "Add new multi block furnaces")
 @LoadFeature(module = Modules.Ids.MINING)
 public class MultiBlockFurnaces extends Feature {
+	public static final String INVALID_FURNACE_LANG = SurvivalReimagined.MOD_ID + ".invalid_blast_furnace";
+
 	public static final BlockWithItem BLAST_FURNACE = BlockWithItem.register("blast_furnace", () -> new MultiBlockBlastFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE)));
 	public static final RegistryObject<BlockEntityType<MultiBlockBlastFurnaceBlockEntity>> BLAST_FURNACE_BLOCK_ENTITY_TYPE = SRBlockEntityTypes.REGISTRY.register("blast_furnace", () -> BlockEntityType.Builder.of(MultiBlockBlastFurnaceBlockEntity::new, BLAST_FURNACE.block().get()).build(null));
 
@@ -67,8 +70,8 @@ public class MultiBlockFurnaces extends Feature {
 
 	public MultiBlockFurnaces(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "multi_block_blast_furnace", net.minecraft.network.chat.Component.literal("Survival Reimagined Multi Block Blast Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && blastFurnaceDataPack));
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "multi_block_soul_blast_furnace", net.minecraft.network.chat.Component.literal("Survival Reimagined Multi Block Soul Blast Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && soulBlastFurnaceDataPack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "multi_block_blast_furnace", Component.literal("Survival Reimagined Multi Block Blast Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && blastFurnaceDataPack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "multi_block_soul_blast_furnace", Component.literal("Survival Reimagined Multi Block Soul Blast Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && soulBlastFurnaceDataPack));
 	}
 
 	@SubscribeEvent
@@ -77,7 +80,7 @@ public class MultiBlockFurnaces extends Feature {
 				|| !event.getLevel().getBlockState(event.getHitVec().getBlockPos()).is(Blocks.BLAST_FURNACE))
 			return;
 
-		event.getEntity().sendSystemMessage(Component.literal("This block is not valid. Break and place it back."));
+		event.getEntity().sendSystemMessage(Component.translatable(INVALID_FURNACE_LANG));
 		event.setCanceled(true);
 	}
 }

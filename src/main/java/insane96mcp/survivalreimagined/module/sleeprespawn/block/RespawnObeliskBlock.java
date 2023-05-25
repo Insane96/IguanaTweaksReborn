@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.block;
 
 import com.google.common.collect.ImmutableList;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.data.trigger.ActivateRespawnObeliskTrigger;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
@@ -32,6 +33,9 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class RespawnObeliskBlock extends Block {
+    public static final String REQUIRES_CATALYST_LANG = SurvivalReimagined.MOD_ID + ".requires_catalyst";
+    public static final String OBELISK_DISABLED = SurvivalReimagined.MOD_ID + ".obelisk_disabled";
+
     public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
 
     private static final ImmutableList<Vec3i> CATALYST_RELATIVE_POSITIONS = ImmutableList.of(
@@ -66,7 +70,7 @@ public class RespawnObeliskBlock extends Block {
             }
             else {
                 if (!level.isClientSide && hand == InteractionHand.MAIN_HAND)
-                    player.sendSystemMessage(Component.literal("Can't activate. The Obelisk requires at least one catalyst block."));
+                    player.displayClientMessage(Component.translatable(REQUIRES_CATALYST_LANG), false);
                 return InteractionResult.PASS;
             }
         }
@@ -137,7 +141,7 @@ public class RespawnObeliskBlock extends Block {
         if (!hasCatalyst) {
             level.setBlock(respawnPos, level.getBlockState(respawnPos).setValue(RespawnObeliskBlock.ENABLED, false), 3);
             level.playSound(null, respawnPos.getX(), respawnPos.getY(), respawnPos.getZ(), SoundEvents.RESPAWN_ANCHOR_DEPLETE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
-            player.sendSystemMessage(Component.literal("Respawn Obelisk disabled because there are no catalysts left. Your respawn point has been reset"));
+            player.displayClientMessage(Component.translatable(OBELISK_DISABLED), false);
             if (player instanceof ServerPlayer serverPlayer) {
                 serverPlayer.setRespawnPosition(player.level.dimension(), null, 0f, false, false);
             }

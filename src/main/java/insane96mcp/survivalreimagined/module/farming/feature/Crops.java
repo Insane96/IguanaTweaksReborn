@@ -15,6 +15,7 @@ import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRBlocks;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Chicken;
@@ -68,7 +69,7 @@ public class Crops extends Feature {
 
 	public Crops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_seed_renew", net.minecraft.network.chat.Component.literal("Survival Reimagined No Seed Renew"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && noSeedRenewDatapack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_seed_renew", Component.literal("Survival Reimagined No Seed Renew"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && noSeedRenewDatapack));
 	}
 
 	@SubscribeEvent

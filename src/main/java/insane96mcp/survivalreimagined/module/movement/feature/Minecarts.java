@@ -11,6 +11,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.module.movement.block.SRPoweredRail;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.item.Items;
@@ -35,7 +36,7 @@ public class Minecarts extends Feature {
 
 	public Minecarts(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "better_rails", net.minecraft.network.chat.Component.literal("Survival Reimagined Better Rails"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "better_rails", Component.literal("Survival Reimagined Better Rails"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
 	}
 
 	@SubscribeEvent

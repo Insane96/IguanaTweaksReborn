@@ -5,6 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
@@ -25,6 +26,8 @@ import org.apache.commons.lang3.mutable.MutableInt;
 @Label(name = "Fire")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class Nether extends Feature {
+    public static final String REQUIRES_CORNERS_LANG = SurvivalReimagined.MOD_ID + ".requires_corners";
+
     @Config
     @Label(name = "Disable Nether Roof and 8 block ratio", description = "Makes the nether 128 blocks high instead of 256, effectively disabling the \"Nether Roof\" and removes the 8 block ratio between nether and end.")
     public static Boolean disableNetherRoof = true;
@@ -40,7 +43,7 @@ public class Nether extends Feature {
 
     public Nether(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_nether_roof", net.minecraft.network.chat.Component.literal("Survival Reimagined No Nether Roof"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableNetherRoof));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_nether_roof", Component.literal("Survival Reimagined No Nether Roof"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableNetherRoof));
     }
 
     public static boolean shouldDisableLavaPockets(SpringConfiguration configuration) {
@@ -70,7 +73,7 @@ public class Nether extends Feature {
 
             for(Player player : level.players()) {
                 if (aabb.contains(player.getX(), player.getY(), player.getZ())) {
-                    player.sendSystemMessage(Component.literal("The portal needs Gold Blocks or Crying Obsidian in the corner to be activated"));
+                    player.sendSystemMessage(Component.translatable(REQUIRES_CORNERS_LANG));
                 }
             }
             event.setCanceled(true);

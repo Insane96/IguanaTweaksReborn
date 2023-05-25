@@ -17,6 +17,7 @@ import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
@@ -85,7 +86,7 @@ public class EnchantmentsFeature extends Feature {
 	//TODO Make enchantments deactivable
 	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "cleansed_lapis", net.minecraft.network.chat.Component.literal("Survival Reimagined Cleansed Lapis"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cleansedLapisDataPack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "cleansed_lapis", Component.literal("Survival Reimagined Cleansed Lapis"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cleansedLapisDataPack));
 	}
 
 	public static boolean disableEnchantment(Enchantment enchantment) {

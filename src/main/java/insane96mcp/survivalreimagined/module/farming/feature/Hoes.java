@@ -13,6 +13,7 @@ import insane96mcp.survivalreimagined.module.farming.data.HoeStat;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -166,9 +167,9 @@ public class Hoes extends SRFeature {
 
 				int efficiency = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
 				int cooldown = hoeStat.cooldown - (efficiency * efficiencyCooldownReduction);
-				event.getToolTip().add(Component.literal(" ").append(Component.translatable(TILL_COOLDOWN, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
+				event.getToolTip().add(CommonComponents.space().append(Component.translatable(TILL_COOLDOWN, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
 				if (hoeStat.scytheRadius > 0)
-					event.getToolTip().add(Component.literal(" ").append(Component.translatable(SCYTHE_RADIUS, hoeStat.scytheRadius).withStyle(ChatFormatting.DARK_GREEN)));
+					event.getToolTip().add(CommonComponents.space().append(Component.translatable(SCYTHE_RADIUS, hoeStat.scytheRadius).withStyle(ChatFormatting.DARK_GREEN)));
 				break;
 			}
 		}
