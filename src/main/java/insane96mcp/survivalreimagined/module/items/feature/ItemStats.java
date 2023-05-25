@@ -42,8 +42,8 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class ItemStats extends SRFeature {
 
-	public static final String TOOL_EFFICIENCY = "survivalreimagined.tool_efficiency";
-	public static final String TOOL_DURABILITY = "survivalreimagined.tool_durability";
+	public static final String TOOL_EFFICIENCY_LANG = "survivalreimagined.tool_efficiency";
+	public static final String TOOL_DURABILITY_LANG = "survivalreimagined.tool_durability";
 	public static final TagKey<Item> NO_DAMAGE = SRItemTagsProvider.create("no_damage");
 	public static final TagKey<Item> NO_EFFICIENCY = SRItemTagsProvider.create("no_efficiency");
 
@@ -237,10 +237,10 @@ public class ItemStats extends SRFeature {
 			float bonusToolEfficiency = diggerItem.speed * (baseEfficiency * (lvl * lvl + 1));
 			if (lvl > 0)
 				toolEfficiency += bonusToolEfficiency;
-			event.getToolTip().add(CommonComponents.space().append(Component.translatable(TOOL_EFFICIENCY, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(toolEfficiency))).withStyle(ChatFormatting.DARK_GREEN));
+			event.getToolTip().add(CommonComponents.space().append(Component.translatable(TOOL_EFFICIENCY_LANG, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(toolEfficiency))).withStyle(ChatFormatting.DARK_GREEN));
 		}
 
 		if (event.getItemStack().isDamageableItem())
-			event.getToolTip().add(Component.translatable(TOOL_DURABILITY, event.getItemStack().getMaxDamage() - event.getItemStack().getDamageValue(), event.getItemStack().getMaxDamage()).withStyle(ChatFormatting.GRAY));
+			event.getToolTip().add(Component.translatable(TOOL_DURABILITY_LANG, event.getItemStack().getMaxDamage() - event.getItemStack().getDamageValue(), event.getItemStack().getMaxDamage()).withStyle(ChatFormatting.GRAY));
 	}
 }

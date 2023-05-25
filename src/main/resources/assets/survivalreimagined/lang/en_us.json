@@ -1,91 +1,66 @@
 {
-	"death.fell.accident.water": "%s thought could drop in shallow water safely",
-
-
 	"survivalreimagined:experience_module": "Experience",
 	"survivalreimagined.can_be_partially_repaired": "Can be partially repaired with %s",
 	"survivalreimagined.item_fragment.applicable_to": "Applicable to: ",
+	"container.repair.free": "No Cost",
 	"item.survivalreimagined.ancient_lapis": "Ancient Lapis",
 	"item.survivalreimagined.cleansed_lapis": "Cleansed Lapis",
 	"item.survivalreimagined.item_fragment": "Item Fragment",
+	"enchantment.survivalreimagined.magnetic": "Magnetic",
+	"enchantment.survivalreimagined.magic_protection": "Magic Protection",
+	"enchantment.survivalreimagined.expanded": "Expanded",
+	"enchantment.survivalreimagined.blasting": "Blasting",
+	"enchantment.survivalreimagined.step_up": "Step Up",
+	"enchantment.survivalreimagined.bane_of_sssss": "Bane of SSSSS",
+	"enchantment.survivalreimagined.water_coolant": "Water Coolant",
+	"enchantment.survivalreimagined.smartness": "Smartness",
+	"enchantment.survivalreimagined.ma_jump": "M.A. Jump",
+
+
+	"survivalreimagined:combat_module": "Combat",
+
+	"attribute.name.piercing_damage": "Piercing Damage",
 
 
 	"survivalreimagined:farming_module": "Farming",
+
 	"survivalreimagined.weak_hoe": "This hoe is too weak to till soil",
 	"survivalreimagined.till_cooldown": "%.1f Till Cooldown",
 	"survivalreimagined.scythe_radius": "%d Scythe radius",
+
 	"survivalreimagined.milk_cooldown": "This %s's fluid is not yet ready",
+
 	"block.survivalreimagined.rich_farmland": "Rich Farmland",
+
+	"block.minecraft.carrots.seeds": "Carrot Seeds",
+	"block.minecraft.potatoes.seeds": "Potato Seeds",
 
 
 	"survivalreimagined:hunger_health_module": "Hunger & Health",
+	"survivalreimagined.food_stats": "%.1f Health / %.1f sec",
+	"survivalreimagined.food_stats_percentage": "%.0f%% Missing Health",
+	"effect.survivalreimagined.injured": "Injured",
+	"effect.survivalreimagined.injured.description": "Obtained when damaged too many times in a row. Reduces health regen by 20% per level.",
+	"effect.survivalreimagined.well_fed": "Well Fed",
+	"effect.survivalreimagined.well_fed.description": "Obtained when eating from low hunger. Increases health regen by 25% per level.",
+	"item.survivalreimagined.brown_mushroom_stew": "Brown Mushroom Stew",
+	"item.survivalreimagined.red_mushroom_stew": "Red Mushroom Stew",
+	"item.survivalreimagined.over_easy_egg": "Over Easy Egg",
 
 
-	"survivalreimagined.no_food_for_sleep": "You're too hungry and can't fall asleep",
-	"survivalreimagined.decorative_beds": "Beds are just a nice decoration. No sleep allowed",
-	"survivalreimagined.no_spawn_point": "You cannot set a respawn point. Better leave a trace from the world's spawn.",
-	"survivalreimagined.loose_bed_respawn_point_set": "Your respawn point is loose, you'll respawn in a radius from your bed.",
-	"survivalreimagined.fail_respawn_obelisk": "You couldn't respawn at the obelisk because it was disabled.",
-	"survivalreimagined.enjoy_the_night": "Your respawn point has been set. Enjoy the night!",
-	"survivalreimagined.not_tired": "You're not tired enough to sleep",
-	"survivalreimagined.tired_enough": "You start feeling tired",
-	"survivalreimagined.too_tired": "You should really get some sleep",
-	"survivalreimagined.player_ghost": "%s's Ghost",
+	"survivalreimagined:items_module": "Items",
 
 	"survivalreimagined.no_damage_item": "This item blade is not sharp, hits like a fist",
 	"survivalreimagined.no_efficiency_item": "This item is old and rusty, can't mine anything",
 	"survivalreimagined.tool_efficiency": "%.1f Tool Efficiency",
 	"survivalreimagined.tool_durability": "Durability: %d/%d",
-	"attribute.name.piercing_damage": "Piercing Damage",
 
-	"survivalreimagined.no_forge_recipe": "No recipe found in the Forge",
+	"item.survivalreimagined.altimeter": "Altimeter",
 
-	"survivalreimagined.blast_furnace_invalid_structure": "Multi block structure not valid. Must have a bottom layer of Smooth Stone, a middle and top layer of Bricks (top layer can be stairs). The center middle and center top blocks of the 3x3x3 can be anything.",
-	"survivalreimagined.soul_blast_furnace_invalid_structure": "Multi block structure not valid. Must have a bottom layer of worked Blackstone, a middle and top layer of Red Nether Bricks (top layer can be stairs). The center middle and center top blocks of the 3x3x3 can be anything.",
-	"survivalreimagined.invalid_blast_furnace": "This block is not valid. Break and place it back.",
-
-	"survivalreimagined.hammer_cooldown": "%f Forge Cooldown",
-	"survivalreimagined.hammer_durability": "%f Durability Used",
-
-	"survivalreimagined.requires_catalyst": "Can't activate. The Obelisk requires at least one catalyst block",
-	"survivalreimagined.obelisk_disabled": "Respawn Obelisk disabled because there are no catalysts left. Your respawn point has been reset",
-
-	"survivalreimagined.requires_corners": "The portal needs Gold Blocks or Crying Obsidian in the corners to be activated",
-
-	"survivalreimagined.armor_slowdown": "-%s%% Speed",
-
-	"effect.survivalreimagined.injured": "Injured",
-	"effect.survivalreimagined.well_fed": "Well Fed",
-	"effect.survivalreimagined.fed": "Fed",
-	"effect.survivalreimagined.tired": "Tired",
-	"effect.survivalreimagined.energy_boost": "Energy Boost",
-	"effect.survivalreimagined.vigour": "Vigour",
-
-	"effect.survivalreimagined.injured.description": "Obtained when damaged too many times in a row. Reduces health regen by 20% per level.",
-	"effect.survivalreimagined.well_fed.description": "Obtained when eating from low hunger. Increases health regen by 25% per level.",
-	"effect.survivalreimagined.tired.description": "Obtained when haven't slept in a while. Reduces movement speed and sight.",
-	"effect.survivalreimagined.energy_boost.description": "Decreases tiredness by 0.2 each second per level.",
-	"effect.survivalreimagined.vigour.description": "Decreases hunger consumption by 20% per level.",
-
-	"survivalreimagined.food_stats": "%.1f Health / %.1f sec",
-	"survivalreimagined.food_stats_percentage": "%.0f%% Missing Health",
-
-	"container.repair.free": "No Cost",
-
-	"survivalreimagined.container.crate": "Crate",
-
-	"survivalreimagined.spawner_reactivator": "This item can reactivate a Mob Spawner",
-
-	"survivalreimagined.multi_block_structure": "Requires a multi block structure to work",
-
-	"item.survivalreimagined.flint_axe": "Flint Axe",
-	"item.survivalreimagined.flint_pickaxe": "Flint Pickaxe",
-	"item.survivalreimagined.flint_sword": "Flint Sword",
-	"item.survivalreimagined.flint_shovel": "Flint Shovel",
-	"item.survivalreimagined.flint_hoe": "Flint Hoe",
-	"item.survivalreimagined.flint_shield": "Flint Shield",
-
-	"item.survivalreimagined.firestarter": "Firestarter",
+	"item.survivalreimagined.chained_copper_helmet": "Chained Copper Helmet",
+	"item.survivalreimagined.chained_copper_chestplate": "Chained Copper Chestplate",
+	"item.survivalreimagined.chained_copper_leggings": "Chained Copper Leggings",
+	"item.survivalreimagined.chained_copper_boots": "Chained Copper Boots",
 
 	"item.survivalreimagined.copper_axe": "Copper Reinforced Flint Axe",
 	"item.survivalreimagined.copper_pickaxe": "Copper Reinforced Flint Pickaxe",
@@ -93,19 +68,24 @@
 	"item.survivalreimagined.copper_shovel": "Copper Reinforced Flint Shovel",
 	"item.survivalreimagined.copper_hoe": "Copper Reinforced Flint Hoe",
 
-	"item.survivalreimagined.soul_steel_axe": "Soul Steel Axe",
-	"item.survivalreimagined.soul_steel_pickaxe": "Soul Steel Pickaxe",
-	"item.survivalreimagined.soul_steel_sword": "Soul Steel Sword",
-	"item.survivalreimagined.soul_steel_shovel": "Soul Steel Shovel",
-	"item.survivalreimagined.soul_steel_hoe": "Soul Steel Hoe",
-	"item.survivalreimagined.soul_steel_shield": "Soul Steel Shield",
-	"item.survivalreimagined.soul_steel_helmet": "Soul Steel Helmet",
-	"item.survivalreimagined.soul_steel_chestplate": "Soul Steel Chestplate",
-	"item.survivalreimagined.soul_steel_leggings": "Soul Steel Leggings",
-	"item.survivalreimagined.soul_steel_boots": "Soul Steel Boots",
-	"item.survivalreimagined.soul_steel_nugget": "Soul Steel Nugget",
-	"item.survivalreimagined.soul_steel_ingot": "Soul Steel Ingot",
-	"block.survivalreimagined.soul_steel_block": "Soul Steel Block",
+	"survivalreimagined.container.crate": "Crate",
+	"block.survivalreimagined.crate": "Crate",
+	"survivalreimagined.crate_weighted": "Slows down if %d or more are carried",
+
+	"block.survivalreimagined.explosive_barrel": "Explosive Barrel",
+	"survivalreimagined.unstable": "WARNING! Highly unstable",
+
+	"item.survivalreimagined.flint_axe": "Flint Axe",
+	"item.survivalreimagined.flint_pickaxe": "Flint Pickaxe",
+	"item.survivalreimagined.flint_sword": "Flint Sword",
+	"item.survivalreimagined.flint_shovel": "Flint Shovel",
+	"item.survivalreimagined.flint_hoe": "Flint Hoe",
+	"item.survivalreimagined.flint_shield": "Flint Shield",
+	"block.survivalreimagined.flint_block": "Flint Block",
+	"block.survivalreimagined.polished_flint_block": "Polished Flint Block",
+	"block.survivalreimagined.flint_rock": "Flint Rock",
+
+	"survivalreimagined:mining_module": "Mining",
 
 	"item.survivalreimagined.durium_axe": "Durium Axe",
 	"item.survivalreimagined.durium_pickaxe": "Durium Pickaxe",
@@ -124,13 +104,101 @@
 	"block.survivalreimagined.durium_block": "Durium Block",
 	"block.survivalreimagined.durium_ore": "Durium Ore",
 	"block.survivalreimagined.deepslate_durium_ore": "Deepslate Durium Ore",
+
+	"survivalreimagined.no_forge_recipe": "No recipe found in the Forge",
+	"survivalreimagined.hammer_cooldown": "%f Forge Cooldown",
+	"survivalreimagined.hammer_durability": "%f Durability Used",
+	"block.survivalreimagined.forge": "Forge",
+	"survivalreimagined.container.forge": "Forge",
+	"item.survivalreimagined.stone_hammer": "Stone Forge Hammer",
+	"item.survivalreimagined.flint_hammer": "Flint Forge Hammer",
+	"item.survivalreimagined.copper_hammer": "Copper Reinforced Flint Forge Hammer",
+	"item.survivalreimagined.golden_hammer": "Golden Forge Hammer",
+	"item.survivalreimagined.iron_hammer": "Iron Forge Hammer",
+	"item.survivalreimagined.durium_hammer": "Durium Forge Hammer",
+	"item.survivalreimagined.diamond_hammer": "Diamond Forge Hammer",
+	"item.survivalreimagined.soul_steel_hammer": "Soul Steel Forge Hammer",
+	"item.survivalreimagined.netherite_hammer": "Netherite Forge Hammer",
+
+	"survivalreimagined.innate_luck": "Innate Luck",
+
+	"survivalreimagined.multi_block_structure": "Requires a multi block structure to work",
+	"survivalreimagined.blast_furnace_invalid_structure": "Multi block structure not valid. Must have a bottom layer of Smooth Stone, a middle and top layer of Bricks (top layer can be stairs). The center middle and center top blocks of the 3x3x3 can be anything.",
+	"survivalreimagined.soul_blast_furnace_invalid_structure": "Multi block structure not valid. Must have a bottom layer of worked Blackstone, a middle and top layer of Red Nether Bricks (top layer can be stairs). The center middle and center top blocks of the 3x3x3 can be anything.",
+	"survivalreimagined.invalid_blast_furnace": "This block is not valid. Break and place it back.",
+	"block.survivalreimagined.soul_blast_furnace": "Soul Blast Furnace",
+	"survivalreimagined.container.soul_blast_furnace": "Soul Blast Furnace",
+
+	"item.survivalreimagined.soul_steel_axe": "Soul Steel Axe",
+	"item.survivalreimagined.soul_steel_pickaxe": "Soul Steel Pickaxe",
+	"item.survivalreimagined.soul_steel_sword": "Soul Steel Sword",
+	"item.survivalreimagined.soul_steel_shovel": "Soul Steel Shovel",
+	"item.survivalreimagined.soul_steel_hoe": "Soul Steel Hoe",
+	"item.survivalreimagined.soul_steel_shield": "Soul Steel Shield",
+	"item.survivalreimagined.soul_steel_helmet": "Soul Steel Helmet",
+	"item.survivalreimagined.soul_steel_chestplate": "Soul Steel Chestplate",
+	"item.survivalreimagined.soul_steel_leggings": "Soul Steel Leggings",
+	"item.survivalreimagined.soul_steel_boots": "Soul Steel Boots",
+	"item.survivalreimagined.soul_steel_nugget": "Soul Steel Nugget",
+	"item.survivalreimagined.soul_steel_ingot": "Soul Steel Ingot",
+	"block.survivalreimagined.soul_steel_block": "Soul Steel Block",
+
+
+	"survivalreimagined:misc_module": "Misc",
+
+
+	"survivalreimagined:mobs_module": "Mobs",
+
+
+	"survivalreimagined:movement_module": "Movement",
+
 	"block.survivalreimagined.copper_powered_rail": "Copper Powered Rail",
 	"block.survivalreimagined.golden_powered_rail": "Golden Powered Rail",
 	"block.survivalreimagined.nether_infused_powered_rail": "Nether Infused Powered Rail",
+
+	"survivalreimagined.armor_slowdown": "-%s%% Speed",
+
+
+	"survivalreimagined:sleep_respawn_module": "Sleep & Respawn",
+
+	"block.survivalreimagined.grave": "Grave",
+	"survivalreimagined.player_ghost": "%s's Ghost",
+
+	"survivalreimagined.loose_bed_respawn_point_set": "Your respawn point is loose, you'll respawn in a radius from your bed.",
+	"survivalreimagined.requires_catalyst": "Can't activate. The Obelisk requires at least one catalyst block",
+	"survivalreimagined.obelisk_disabled": "Respawn Obelisk disabled because there are no catalysts left. Your respawn point has been reset",
+	"survivalreimagined.fail_respawn_obelisk": "You couldn't respawn at the obelisk because it was disabled.",
 	"block.survivalreimagined.respawn_obelisk": "Respawn Obelisk",
-	"block.survivalreimagined.crate": "Crate",
-	"block.survivalreimagined.explosive_barrel": "Explosive Barrel",
-	"block.survivalreimagined.flint_rock": "Flint Rock",
+
+	"survivalreimagined.decorative_beds": "Beds are just a nice decoration. No sleep allowed",
+	"survivalreimagined.no_spawn_point": "You cannot set a respawn point. Better leave a trace from the world's spawn.",
+	"survivalreimagined.enjoy_the_night": "Your respawn point has been set. Enjoy the night!",
+
+	"survivalreimagined.no_food_for_sleep": "You're too hungry and can't fall asleep",
+
+	"effect.survivalreimagined.tired": "Tired",
+	"effect.survivalreimagined.tired.description": "Obtained when haven't slept in a while. Reduces movement speed and sight.",
+	"effect.survivalreimagined.energy_boost": "Energy Boost",
+	"effect.survivalreimagined.energy_boost.description": "Decreases tiredness by 0.2 each second per level.",
+	"effect.survivalreimagined.vigour": "Vigour",
+	"effect.survivalreimagined.vigour.description": "Decreases hunger/stamina consumption by 20% per level.",
+	"survivalreimagined.not_tired": "You're not tired enough to sleep",
+	"survivalreimagined.tired_enough": "You start feeling tired",
+	"survivalreimagined.too_tired": "You should really get some sleep",
+
+
+	"survivalreimagined:world_module": "World",
+
+	"item.survivalreimagined.firestarter": "Firestarter",
+	"block.survivalreimagined.charcoal_layer": "Charcoal Layer",
+	"block.survivalreimagined.soul_sand_hellish_coal_ore": "Soul Sand Hellish Coal Ore",
+	"block.survivalreimagined.soul_soil_hellish_coal_ore": "Soul Soil Hellish Coal Ore",
+	"item.survivalreimagined.hellish_coal": "Hellish Coal",
+
+	"death.fell.accident.water": "%s thought could drop in shallow water safely",
+
+	"survivalreimagined.requires_corners": "The portal needs Gold Blocks or Crying Obsidian in the corners to be activated",
+
 	"block.survivalreimagined.iron_ore_rock": "Iron Ore Rock",
 	"block.survivalreimagined.gold_ore_rock": "Gold Ore Rock",
 	"block.survivalreimagined.copper_ore_rock": "Copper Ore Rock",
@@ -146,55 +214,10 @@
 	"block.survivalreimagined.rich_deepslate_iron_ore": "Rich Deepslate Iron Ore",
 	"block.survivalreimagined.rich_deepslate_gold_ore": "Rich Deepslate Gold Ore",
 	"block.survivalreimagined.rich_deepslate_copper_ore": "Rich Deepslate Copper Ore",
-	"block.survivalreimagined.flint_block": "Flint Block",
-	"block.survivalreimagined.polished_flint_block": "Polished Flint Block",
-	"block.survivalreimagined.charcoal_layer": "Charcoal Layer",
-	"block.survivalreimagined.grave": "Grave",
-	"block.survivalreimagined.soul_blast_furnace": "Soul Blast Furnace",
-	"survivalreimagined.container.soul_blast_furnace": "Soul Blast Furnace",
-	"block.survivalreimagined.forge": "Forge",
-	"survivalreimagined.container.forge": "Forge",
-	"item.survivalreimagined.stone_hammer": "Stone Forge Hammer",
-	"item.survivalreimagined.flint_hammer": "Flint Forge Hammer",
-	"item.survivalreimagined.copper_hammer": "Copper Reinforced Flint Forge Hammer",
-	"item.survivalreimagined.golden_hammer": "Golden Forge Hammer",
-	"item.survivalreimagined.iron_hammer": "Iron Forge Hammer",
-	"item.survivalreimagined.durium_hammer": "Durium Forge Hammer",
-	"item.survivalreimagined.diamond_hammer": "Diamond Forge Hammer",
-	"item.survivalreimagined.soul_steel_hammer": "Soul Steel Forge Hammer",
-	"item.survivalreimagined.netherite_hammer": "Netherite Forge Hammer",
 
-	"block.minecraft.carrots.seeds": "Carrot Seeds",
-	"block.minecraft.potatoes.seeds": "Potato Seeds",
+	"survivalreimagined.spawner_reactivator": "This item can reactivate a Mob Spawner",
 
-	"survivalreimagined.crate_weighted": "Slows down if %d or more are carried",
-	"survivalreimagined.unstable": "WARNING! Highly unstable",
 
-	"item.survivalreimagined.altimeter": "Altimeter",
-	"survivalreimagined.innate_luck": "Innate Luck",
-
-	"item.survivalreimagined.brown_mushroom_stew": "Brown Mushroom Stew",
-	"item.survivalreimagined.red_mushroom_stew": "Red Mushroom Stew",
-	"item.survivalreimagined.over_easy_egg": "Over Easy Egg",
-
-	"block.survivalreimagined.soul_sand_hellish_coal_ore": "Soul Sand Hellish Coal Ore",
-	"block.survivalreimagined.soul_soil_hellish_coal_ore": "Soul Soil Hellish Coal Ore",
-	"item.survivalreimagined.hellish_coal": "Hellish Coal",
-
-	"item.survivalreimagined.chained_copper_helmet": "Chained Copper Helmet",
-	"item.survivalreimagined.chained_copper_chestplate": "Chained Copper Chestplate",
-	"item.survivalreimagined.chained_copper_leggings": "Chained Copper Leggings",
-	"item.survivalreimagined.chained_copper_boots": "Chained Copper Boots",
-
-	"enchantment.survivalreimagined.magnetic": "Magnetic",
-	"enchantment.survivalreimagined.magic_protection": "Magic Protection",
-	"enchantment.survivalreimagined.expanded": "Expanded",
-	"enchantment.survivalreimagined.blasting": "Blasting",
-	"enchantment.survivalreimagined.step_up": "Step Up",
-	"enchantment.survivalreimagined.bane_of_sssss": "Bane of SSSSS",
-	"enchantment.survivalreimagined.water_coolant": "Water Coolant",
-	"enchantment.survivalreimagined.smartness": "Smartness",
-	"enchantment.survivalreimagined.ma_jump": "M.A. Jump",
 
 	"advancements.sr_story.root.title": "Survival Reimagined",
 	"advancements.sr_story.root.description": "How to progress with Survival Reimagined",

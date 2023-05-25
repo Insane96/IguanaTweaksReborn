@@ -57,8 +57,8 @@ public class NoHunger extends Feature {
     private static final String FOOD_REGEN_LEFT = SurvivalReimagined.RESOURCE_PREFIX + "food_regen_left";
     private static final String FOOD_REGEN_STRENGTH = SurvivalReimagined.RESOURCE_PREFIX + "food_regen_strength";
 
-    private static final String FOOD_STATS_TRANSLATABLE = SurvivalReimagined.MOD_ID + ".food_stats";
-    private static final String FOOD_STATS_PERCENTAGE_TRANSLATABLE = SurvivalReimagined.MOD_ID + ".food_stats_percentage";
+    private static final String FOOD_STATS_LANG = SurvivalReimagined.MOD_ID + ".food_stats";
+    private static final String FOOD_STATS_PERCENTAGE_LANG = SurvivalReimagined.MOD_ID + ".food_stats_percentage";
 
     public static final TagKey<Item> RAW_FOOD = SRItemTagsProvider.create("raw_food");
 
@@ -370,9 +370,9 @@ public class NoHunger extends Feature {
             //Half heart per second by default
             float strength = getFoodHealingStrength(food);
             if (buffCakes && isCake)
-                event.getToolTip().add(Component.translatable(FOOD_STATS_PERCENTAGE_TRANSLATABLE, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(40f)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+                event.getToolTip().add(Component.translatable(FOOD_STATS_PERCENTAGE_LANG, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(40f)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
             else
-                event.getToolTip().add(Component.translatable(FOOD_STATS_TRANSLATABLE, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal), SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+                event.getToolTip().add(Component.translatable(FOOD_STATS_LANG, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal), SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
         }
     }
 }

@@ -34,9 +34,6 @@ public class Nether extends Feature {
     @Config
     @Label(name = "Portal requires Gold Blocks or Crying Obsidians", description = "The portal requires Gold blocks or Crying Obsidians in the corners to turn it on (in the overworld).")
     public static Boolean portalRequiresGoldBlock = true;
-    /*@Config
-    @Label(name = "Entering the Nether requires Diamond Pickaxe advancement", description = "If the player hasn't unlocked the Diamond Pickaxe advancement he can't enter the Nether.")
-    public static Boolean requireDiamondPickAdvancement = true;*/
     @Config
     @Label(name = "Remove Lava Pockets", description = "If true, lava pockets in the nether are removed.")
     public static Boolean removeLavaPockets = true;

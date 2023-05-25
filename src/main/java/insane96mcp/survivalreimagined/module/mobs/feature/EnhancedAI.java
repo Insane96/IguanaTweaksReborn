@@ -42,6 +42,7 @@ public class EnhancedAI extends SRFeature {
         Module.getFeature(SkeletonFleeTarget.class).setConfigOption("Avoid Player chance", 0.25d);
         Module.getFeature(SkeletonFleeTarget.class).readConfig(event);
 
+        //Controlled via MPR
         Module.getFeature(SkeletonShoot.class).setConfigOption("Spammer chance", 0d);
         Module.getFeature(SkeletonShoot.class).readConfig(event);
 

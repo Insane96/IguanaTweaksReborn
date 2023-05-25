@@ -7,7 +7,6 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
-import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.BlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.item.SRArmorMaterial;
@@ -23,9 +22,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.MissingMappingsEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.EnumMap;
@@ -73,7 +69,7 @@ public class Durium extends Feature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void missingMappings(MissingMappingsEvent event) {
 		if (event.getMappings(ForgeRegistries.Keys.BLOCKS, SurvivalReimagined.MOD_ID).isEmpty()
 				&& event.getMappings(ForgeRegistries.Keys.ITEMS, SurvivalReimagined.MOD_ID).isEmpty())
@@ -105,5 +101,5 @@ public class Durium extends Feature {
 				case "survivalreimagined:mithril_shield" -> blockMapping.remap(Durium.SHIELD.get());
 			}
 		});
-	}
+	}*/
 }

@@ -12,10 +12,6 @@ import insane96mcp.survivalreimagined.module.Modules;
 public class Boats extends Feature {
 
 	@Config
-	@Label(name = "Firework rocket boats")
-	public static Boolean fireworkRocketBoats = false;
-
-	@Config
 	@Label(name = "No Ice Boats", description = "If true, boats will no longer go stupidly fast on ice.")
 	public static Boolean noIceBoat = true;
 
