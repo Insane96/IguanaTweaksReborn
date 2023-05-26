@@ -207,13 +207,8 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
                         //If ingredient slots are empty pickup 1 of the first item found
                         if (isInventoryEmpty) {
                             ItemEntity itemEntity = entitiesOfClass.get(0);
-                            ItemStack itemStack = itemEntity.getItem().copy();
-                            itemStack.setCount(1);
-
-                            pBlockEntity.setItem(ingredientSlots[0], itemStack);
-                            itemEntity.getItem().shrink(1);
-                            if (itemEntity.getItem().isEmpty())
-                                itemEntity.discard();
+                            pBlockEntity.setItem(ingredientSlots[0], itemEntity.getItem().copy());
+                            itemEntity.discard();
                         }
                         //If not, try to refill the items in the slots
                         else {
