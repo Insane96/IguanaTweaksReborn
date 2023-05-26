@@ -313,7 +313,7 @@ public class Tiredness extends SRFeature {
 		if (mc.options.renderDebug && !mc.showOnlyReducedInfo()) {
 			event.getLeft().add(String.format("Tiredness: %s", new DecimalFormat("#.#").format(TirednessHandler.get(playerEntity))));
 		}
-		if ((!mc.options.renderDebug || mc.options.reducedDebugInfo().get()) && testingPlayers.contains(mc.player.getName())) {
+		if (!mc.options.renderDebug || mc.options.reducedDebugInfo().get()) {
 			String toDraw = String.format("Tiredness: %s", new DecimalFormat("#.#").format(TirednessHandler.get(playerEntity)));
 			int scaledHeight = mc.getWindow().getGuiScaledHeight();
 			int top = scaledHeight - mc.font.lineHeight - 1;
