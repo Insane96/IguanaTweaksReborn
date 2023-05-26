@@ -39,7 +39,7 @@ public class Misc extends Feature {
     public static Boolean slowerPoison = true;
 
     @Config
-    @Label(name = "Less burn time for Kelp block", description = "Kelp blocks smelt 12 items instead of 20")
+    @Label(name = "Less burn time for Kelp block", description = "Kelp blocks smelt 16 items instead of 20")
     public static Boolean lessBurnTimeForKelpBlock = true;
 
     @Config
@@ -70,7 +70,7 @@ public class Misc extends Feature {
                 || !event.getItemStack().is(Items.DRIED_KELP_BLOCK))
             return;
 
-        event.setBurnTime(2400);
+        event.setBurnTime(3200);
     }
 
     @SubscribeEvent

@@ -70,13 +70,13 @@ public class Fog extends Feature {
                 case SPRING -> 0.7F;
                 case SUMMER -> 0.85F;
                 case AUTUMN -> 0.6F;
-                case WINTER -> 15F;
+                case WINTER -> 16F;
             };
             float far = switch (SeasonHelper.getSeasonState(entity.level).getSeason()) {
                 case SPRING -> 0.8F;
                 case SUMMER -> 0.9F;
                 case AUTUMN -> 0.75F;
-                case WINTER -> 40F;
+                case WINTER -> 48F;
             };
             if (near <= 1f) event.setNearPlaneDistance(renderDistance * near);
             else event.setNearPlaneDistance(near);
