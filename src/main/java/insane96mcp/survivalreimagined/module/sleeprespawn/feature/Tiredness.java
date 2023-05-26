@@ -74,13 +74,13 @@ public class Tiredness extends SRFeature {
 	public static Boolean shouldPreventSpawnPoint = false;
 	@Config(min = 0d)
 	@Label(name = "Tiredness to sleep", description = "Tiredness required to be able to sleep.")
-	public static Double tirednessToSleep = 350d;
+	public static Double tirednessToSleep = 500d;
 	@Config(min = 0d)
 	@Label(name = "Tiredness for effect", description = "Tiredness required to get the Tired effect.")
-	public static Double tirednessToEffect = 400d;
+	public static Double tirednessToEffect = 600d;
 	@Config(min = 0d)
 	@Label(name = "Tiredness per level", description = "Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
-	public static Double tirednessPerLevel = 50d;
+	public static Double tirednessPerLevel = 75d;
 	@Config(min = 0d)
 	@Label(name = "Default Energy Boost Duration Multiplier", description = "By default if omitted in the json, food items will give 1 second of Energy Boost per effective nourishment (hunger + saturation) of the food. This multiplies the duration of the effect")
 	public static Double defaultEnergyBoostDurationMultiplier = 5d;
