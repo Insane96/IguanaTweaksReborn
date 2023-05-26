@@ -7,7 +7,10 @@
 * Sped up hammers forging speed
 * Increased Spiders and Skeletons loot
 * Coal ore is no longer discarded when exposed to air
+* Spawner's mobs now drop 1x the experience normal mobs drop (was 0.5x but due to a bug was actually 1x)
+* Non-spawners mobs now drop 50% more experience
 * Soul Furnaces now consume twice the fuel but smelt and recycle twice as fast
+* Minor balance fixes
 
 ## 3.11.1
 * Fishing is now slowed down based off season

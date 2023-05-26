@@ -14,30 +14,39 @@ import net.minecraft.world.entity.Mob;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Experience From Spawners' Mobs", description = "Decrease / Increase experience dropped mobs spawned by Spawners")
+@Label(name = "Mobs Experience", description = "Decrease / Increase experience dropped by mobs")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
-public class SpawnerMobsExperience extends Feature {
+public class MobsExperience extends Feature {
 	public static final ResourceLocation NO_SPAWNER_XP_MULTIPLIER = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_spawner_xp_multiplier");
 	@Config(min = 0, max = 128d)
 	@Label(name = "Mobs from Spawners Multiplier", description = """
 						Experience dropped from mobs that come from spawners will be multiplied by this multiplier.
 						Experience dropped by mobs from spawners are still affected by 'Global Experience Multiplier'
 						Can be set to 0 to disable experience drop from mob that come from spawners.""")
-	public static Double mobsFromSpawnersMultiplier = 0.5d;
+	public static Double mobsFromSpawnersMultiplier = 1d;
 
-	public SpawnerMobsExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	@Config(min = 0, max = 128d)
+	@Label(name = "Natural Mobs Multiplier", description = """
+						Experience dropped from mobs that DON'T come from spawners will be multiplied by this multiplier.
+						Experience dropped from mobs that DON'T come from spawners is still affected by 'Global Experience Multiplier'
+						Can be set to 0 to disable experience drop from mob that DON'T come from spawners.""")
+	public static Double naturalMobsMultiplier = 1.5d;
+
+	public MobsExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
 	@SubscribeEvent
 	public void setExperienceMultiplier(EntityJoinLevelEvent event) {
 		if (!this.isEnabled()
-				|| mobsFromSpawnersMultiplier == 1d
+				|| (mobsFromSpawnersMultiplier == 1d && naturalMobsMultiplier == 1d)
 				|| !(event.getEntity() instanceof Mob mob)
-				|| !mob.getPersistentData().getBoolean(ILStrings.Tags.SPAWNED_FROM_SPAWNER)
-				|| !Utils.isEntityInTag(mob, NO_SPAWNER_XP_MULTIPLIER))
+				|| Utils.isEntityInTag(mob, NO_SPAWNER_XP_MULTIPLIER))
 			return;
 
-		mob.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, mobsFromSpawnersMultiplier);
+		if (mob.getPersistentData().getBoolean(ILStrings.Tags.SPAWNED_FROM_SPAWNER))
+			mob.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, mobsFromSpawnersMultiplier);
+		else
+			mob.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, naturalMobsMultiplier);
 	}
 }
