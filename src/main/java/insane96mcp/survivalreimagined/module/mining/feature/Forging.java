@@ -47,7 +47,7 @@ public class Forging extends Feature {
 	public static final RegistryObject<ForgeHammerItem> STONE_HAMMER = SRItems.REGISTRY.register("stone_hammer", () -> new ForgeHammerItem(12f, 0.5f, Tiers.STONE, 30, 4, new Item.Properties()));
 	public static final RegistryObject<ForgeHammerItem> FLINT_HAMMER = SRItems.REGISTRY.register("flint_hammer", () -> new ForgeHammerItem(12f, 0.5f, FlintExpansion.ITEM_TIER, 21, 4, new Item.Properties()));
 	public static final RegistryObject<ForgeHammerItem> GOLDEN_HAMMER = SRItems.REGISTRY.register("golden_hammer", () -> new ForgeHammerItem(12f, 0.5f, Tiers.GOLD, 6, 4, new Item.Properties()));
-	public static final RegistryObject<ForgeHammerItem> COPPER_HAMMER = SRItems.REGISTRY.register("copper_hammer", () -> new ForgeHammerItem(9f, 0.55f, CopperTools.ITEM_TIER, 12, 4, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> COPPER_HAMMER = SRItems.REGISTRY.register("copper_hammer", () -> new ForgeHammerItem(9f, 0.55f, CopperTools.ITEM_TIER, 12, 3, new Item.Properties()));
 	public static final RegistryObject<ForgeHammerItem> IRON_HAMMER = SRItems.REGISTRY.register("iron_hammer", () -> new ForgeHammerItem(9f, 0.55f, Tiers.IRON, 24, 4, new Item.Properties()));
 	public static final RegistryObject<ForgeHammerItem> DURIUM_HAMMER = SRItems.REGISTRY.register("durium_hammer", () -> new ForgeHammerItem(9f, 0.55f, Durium.ITEM_TIER, 21, 4, new Item.Properties()));
 	public static final RegistryObject<ForgeHammerItem> DIAMOND_HAMMER = SRItems.REGISTRY.register("diamond_hammer", () -> new ForgeHammerItem(7f, 0.6f, Tiers.DIAMOND, 15, 3, new Item.Properties()));
