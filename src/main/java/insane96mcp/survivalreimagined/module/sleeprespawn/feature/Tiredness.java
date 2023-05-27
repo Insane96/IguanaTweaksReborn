@@ -77,7 +77,7 @@ public class Tiredness extends SRFeature {
 	public static Double tirednessToSleep = 500d;
 	@Config(min = 0d)
 	@Label(name = "Tiredness for effect", description = "Tiredness required to get the Tired effect.")
-	public static Double tirednessToEffect = 600d;
+	public static Double tirednessToEffect = 575d;
 	@Config(min = 0d)
 	@Label(name = "Tiredness per level", description = "Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
 	public static Double tirednessPerLevel = 75d;

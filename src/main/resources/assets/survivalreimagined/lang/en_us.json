@@ -236,9 +236,7 @@
 	"advancements.sr_story.torch.title": "Shed some light",
 	"advancements.sr_story.torch.description": "Obtain a torch, the campfire and some sticks might come in handy",
 	"advancements.sr_story.blast_furnace.title": "Bricks required",
-	"advancements.sr_story.blast_furnace.description": "Obtain a Blast Furnace, then build a 3x3x3 structure to use it. The structure must have Smooth Stone at the bottom + Blast furnace in any of the sides, Bricks in the middle and top layers (stairs also work for the top layer). The middle blocks can be anything.",
-	"advancements.sr_story.soul_blast_furnace.title": "Is this a duplication glitch?",
-	"advancements.sr_story.soul_blast_furnace.description": "Obtain a Soul Blast Furnace, then build a 3x3x3 structure to use it. The structure must have worked Blackstone at the bottom + Soul Blast furnace in any of the sides, Red Nether Bricks in the middle and top layer (stairs also work for the top layer). The middle blocks can be anything.",
+	"advancements.sr_story.blast_furnace.description": "Obtain a Blast Furnace, then build a 3x3x3 structure to use it. The structure must have Smooth Stone at the bottom + Blast furnace in any of the sides, Bricks in the middle and top layers (stairs also work for the top layer). The middle and middle top block can be empty.",
 	"advancements.sr_story.forge.title": "Metal equipment anyone?",
 	"advancements.sr_story.forge.description": "Obtain a Forge",
 	"advancements.sr_story.iron_pickaxe.title": "Shiny metal pick",
@@ -269,7 +267,7 @@
 	"advancements.sr_story.activate_respawn_obelisk.description": "Activate a Respawn Obelisk by placing at least a precious block at the same height and set the respawn point.",
 	"advancements.sr_story.crate.title": "This is heavy",
 	"advancements.sr_story.crate.description": "Get a movement speed penalty by transporting more than one Crate.",
-	"advancements.sr_story.copper_tools.title": "An alternative to Iron",
+	"advancements.sr_story.copper_tools.title": "A fast alternative to Iron",
 	"advancements.sr_story.copper_tools.description": "Obtain a Copper Reinforced Flint Tool in a Forge.",
 	"advancements.sr_story.bucket.title": "Moses one block at time",
 	"advancements.sr_story.bucket.description": "Obtain an Iron Bucket in a Forge.",
@@ -284,7 +282,7 @@
 	"advancements.sr_story.explosive_barrel.title": "WARNING! Unstable",
 	"advancements.sr_story.explosive_barrel.description": "Craft an Explosive Barrel. Warning: explodes easily.",
 	"advancements.sr_story.altimeter.title": "Ups and downs",
-	"advancements.sr_story.altimeter.description": "Craft an Altimeter to roughly know your height. Each layer on the Altimeter represents 32 blocks from Bedrock.",
+	"advancements.sr_story.altimeter.description": "Craft an Altimeter to roughly know your height. Each layer on the Altimeter represents 16 blocks from Bedrock.",
 	"advancements.sr_story.diamond_armor.description": "Equip a full set of diamond armor by upgrading Gold armor in a Forge.",
 	"advancements.sr_story.firestarter.title": "Starting Fires",
 	"advancements.sr_story.firestarter.description": "Craft a Firestarter to create fire more consistently.",
@@ -293,5 +291,12 @@
 	"advancements.sr_story.smoker.title": "Smoking hot",
 	"advancements.sr_story.smoker.description": "Since furnaces are too hot to cook food, a Smoker should do it.",
 	"advancements.sr_story.winter_is_coming.title": "Winter is coming",
-	"advancements.sr_story.winter_is_coming.description": "It's autumn! Make sure to stack up food and wood before Winter as almost nothing grows and animals don't spawn. Also a calendar can help keep track of the season."
+	"advancements.sr_story.winter_is_coming.description": "It's autumn! Make sure to stack up food and wood before Winter as almost nothing grows and animals don't spawn. Also a calendar can help keep track of the season.",
+
+	"advancements.sr_nether.soul_blast_furnace.title": "Is this a duplication glitch?",
+	"advancements.sr_nether.soul_blast_furnace.description": "Obtain a Soul Blast Furnace, then build a 3x3x3 structure to use it. The structure must have worked Blackstone at the bottom + Soul Blast furnace in any of the sides, Red Nether Bricks in the middle and top layer (stairs also work for the top layer). The middle and middle top block can be empty.",
+	"advancements.sr_nether.hellish_coal.title": "Hot Coal",
+	"advancements.sr_nether.hellish_coal.description": "Obtain Hellish Coal.",
+	"advancements.sr_nether.soul_steel_ingot.title": "A durable alternative to Diamond",
+	"advancements.sr_nether.soul_steel_ingot.description": "Obtain a Soul Steel Ingot in a Soul Blast Furnace."
 }
