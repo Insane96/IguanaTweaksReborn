@@ -70,7 +70,7 @@ public class Fog extends Feature {
                 case SPRING -> 0.7F;
                 case SUMMER -> 0.85F;
                 case AUTUMN -> 0.6F;
-                case WINTER -> 16F;
+                case WINTER -> 24F;
             };
             float far = switch (SeasonHelper.getSeasonState(entity.level).getSeason()) {
                 case SPRING -> 0.8F;
