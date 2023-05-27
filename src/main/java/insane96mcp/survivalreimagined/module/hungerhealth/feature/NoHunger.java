@@ -225,8 +225,8 @@ public class NoHunger extends Feature {
     }
 
     public static float getFoodHealingStrength(FoodProperties food) {
-        //Clamped between 0.1 and 0.5 hp/s
-        return Mth.clamp(0.5f * (1.4f - food.getSaturationModifier()), 0.1f, 0.5f);
+        //Clamped between 0.2 and 0.5 hp/s
+        return Mth.clamp(0.5f * (1.4f - food.getSaturationModifier()), 0.2f, 0.5f);
     }
 
     private static void consumeAndHealFromFoodRegen(Player player) {
