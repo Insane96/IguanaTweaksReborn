@@ -337,10 +337,15 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
 
     @Override
     public boolean canTakeItemThroughFace(int pIndex, ItemStack pStack, Direction pDirection) {
-        if (pDirection == Direction.DOWN && pIndex == 1) {
+        if (pDirection == Direction.DOWN && pIndex == FUEL_SLOT) {
             return pStack.is(Items.WATER_BUCKET) || pStack.is(Items.BUCKET);
-        } else {
-            return true;
+        }
+        else {
+            for (int slot = 0; slot < getIngredientSlots().length; slot++) {
+                if (slot == pIndex)
+                    return true;
+            }
+            return false;
         }
     }
 
