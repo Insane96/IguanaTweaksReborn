@@ -4,6 +4,7 @@
 * Anvils
   * Items upgraded in Smithing Table can now be partially repaired with base material (e.g. Netherite tools can be repaired with Diamonds)
   * Moved free rename and repair cap to this
+* You can now bome meal dirt adjacent to grass to grow grass
 * Sped up hammers forging speed
 * Increased Spiders and Skeletons loot
 * Coal ore is no longer discarded when exposed to air

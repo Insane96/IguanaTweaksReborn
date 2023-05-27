@@ -13,6 +13,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.block.RichFarmlandBlock;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
@@ -59,6 +60,10 @@ public class BoneMeal extends Feature {
 	public static Double richFarmlandChanceToDecay = 0.5d;
 
 	@Config
+	@Label(name = "Bone meal dirt to grass", description = "If true, you can bone meal dirt that's near a grass block to get grass block.")
+	public static Boolean boneMealDirtToGrass = true;
+
+	@Config
 	@Label(name = "Compostable Rotten Flesh")
 	public static Boolean compostableRottenFlesh = true;
 
@@ -71,6 +76,8 @@ public class BoneMeal extends Feature {
 		super.readConfig(event);
 		if (compostableRottenFlesh)
 			ComposterBlock.COMPOSTABLES.put(Items.ROTTEN_FLESH, 0.5f);
+		else
+			ComposterBlock.COMPOSTABLES.removeFloat(Items.ROTTEN_FLESH);
 	}
 
 	/**
@@ -80,10 +87,10 @@ public class BoneMeal extends Feature {
 	public void onBonemeal(BonemealEvent event) {
 		if (event.isCanceled()
 				|| event.getResult() == Event.Result.DENY
+				|| event.isCanceled()
 				|| !this.isEnabled()
 				|| event.getLevel().isClientSide)
 			return;
-		boolean hasRichedFarmland = false;
 		if (farmlandToRich){
 			BlockPos farmlandPos = null;
 			if (event.getBlock().is(Blocks.FARMLAND))
@@ -94,16 +101,37 @@ public class BoneMeal extends Feature {
 				event.getLevel().setBlockAndUpdate(farmlandPos, RICH_FARMLAND.block().get().defaultBlockState().setValue(FarmBlock.MOISTURE, event.getLevel().getBlockState(farmlandPos).getValue(FarmBlock.MOISTURE)));
 				event.getEntity().swing(event.getEntity().getMainHandItem().getItem() == event.getStack().getItem() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, true);
 				event.setResult(Event.Result.ALLOW);
-				hasRichedFarmland = true;
 				MakeRichFarmlandTrigger.TRIGGER.trigger((ServerPlayer) event.getEntity());
 			}
 		}
-		if (!hasRichedFarmland) {
+		if (event.getResult() != Event.Result.ALLOW) {
 			BoneMealResult result = applyBoneMeal(event.getLevel(), event.getStack(), event.getBlock(), event.getPos());
 			if (result == BoneMealResult.ALLOW)
 				event.setResult(Event.Result.ALLOW);
 			else if (result == BoneMealResult.CANCEL)
 				event.setCanceled(true);
+		}
+
+		if (event.getResult() != Event.Result.ALLOW) {
+			tryBoneMealDirt(event, event.getLevel(), event.getBlock(), event.getPos());
+		}
+	}
+
+	private void tryBoneMealDirt(BonemealEvent event, Level level, BlockState state, BlockPos pos) {
+		if (!state.is(Blocks.DIRT)
+				|| !level.getBlockState(pos.above()).isAir())
+			return;
+
+		for (Direction direction : Direction.values()) {
+			if (direction == Direction.UP || direction == Direction.DOWN)
+				continue;
+
+			if (level.getBlockState(pos.relative(direction)).is(Blocks.GRASS_BLOCK)) {
+				level.setBlockAndUpdate(pos, Blocks.GRASS_BLOCK.defaultBlockState());
+				event.getEntity().swing(event.getEntity().getMainHandItem().getItem() == event.getStack().getItem() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, true);
+				event.setResult(Event.Result.ALLOW);
+				break;
+			}
 		}
 	}
 
@@ -112,6 +140,8 @@ public class BoneMeal extends Feature {
 		CANCEL,
 		ALLOW
 	}
+
+
 
 	public BoneMealResult applyBoneMeal(Level level, ItemStack stack, BlockState state, BlockPos pos) {
 		if (Utils.isItemInTag(stack.getItem(), ITEM_BLACKLIST) || Utils.isBlockInTag(state.getBlock(), BLOCK_BLACKLIST))
