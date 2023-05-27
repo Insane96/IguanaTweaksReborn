@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.module.mining.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import insane96mcp.insanelib.util.MathHelper;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
@@ -61,17 +62,18 @@ public class ForgeHammerItem extends TieredItem implements Vanishable {
 
     public int getSmashesOnHit(ItemStack stack, RandomSource random) {
         int smashes = 1;
-        //Each fortune level adds a chance to smash +1 time each right click
-        int fortune = stack.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE);
-        if (fortune <= 0)
+        //Each efficiency level adds 50% chance to +1 smash
+        int efficiency = stack.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
+        if (efficiency <= 0)
             return smashes;
-        //E.g. with Fortune 3 you'll get between 1 and 4 smashes
-        return Mth.nextInt(random, smashes, fortune + smashes);
+        //E.g. with Efficiency 3 you'll get 2 smashes, 50% chance to be 3
+        int bonusSmashes = MathHelper.getAmountWithDecimalChance(random, 0.5f * efficiency);
+        return Mth.nextInt(random, smashes, bonusSmashes + smashes);
     }
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return enchantment == Enchantments.BLOCK_EFFICIENCY || enchantment.category == EnchantmentCategory.BREAKABLE || enchantment == Enchantments.BLOCK_FORTUNE || enchantment.category == EnchantmentCategory.VANISHABLE;
+        return enchantment == Enchantments.BLOCK_EFFICIENCY || enchantment.category == EnchantmentCategory.BREAKABLE || enchantment.category == EnchantmentCategory.VANISHABLE;
     }
 
     public int getUseDamageTaken() {
