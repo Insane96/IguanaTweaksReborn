@@ -43,13 +43,13 @@ public class Hoes extends SRFeature {
 
 	public static final ArrayList<HoeStat> HOES_STATS_DEFAULT = new ArrayList<>(Arrays.asList(
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 40, 4, 0),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:flint_hoe", 30, 4, 1),
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 18, 4, 1),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:copper_hoe", 10, 4, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:iron_hoe", 20, 4, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:durium_hoe", 18, 4, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_hoe", 15, 3, 2),
+			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:flint_hoe", 30, 4, 1),
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:golden_hoe", 5, 1, 0),
+			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:copper_hoe", 10, 3, 2),
+			new HoeStat(IdTagMatcher.Type.ID, "minecraft:iron_hoe", 20, 3, 2),
+			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:durium_hoe", 18, 3, 2),
+			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_hoe", 15, 3, 2),
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:diamond_hoe", 15, 3, 3),
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:netherite_hoe", 10, 2, 3)
 	));

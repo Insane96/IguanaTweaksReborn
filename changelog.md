@@ -2,6 +2,7 @@
 
 ## 3.11.3
 * Creeper Cena explosion is now stronger (only block, deals the same damage as a normal creeper)
+* Rebalanced Forge Hammers and Hoes durability multipliers
 
 ## 3.11.2
 * Anvils
