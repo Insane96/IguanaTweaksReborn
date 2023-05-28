@@ -49,7 +49,7 @@ public class ExplosionOverhaul extends Feature {
 	public static Boolean enableFlyingBlocks = false;
 	@Config
 	@Label(name = "Creeper collateral", description = "If true, creepers explosions will drop no blocks.")
-	public static Boolean creeperCollateral = true;
+	public static Boolean creeperCollateral = false;
 
 	public ExplosionOverhaul(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

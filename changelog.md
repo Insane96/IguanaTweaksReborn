@@ -7,6 +7,7 @@
 * Levers and Glass can now be mined efficiently with Pickaxes
 * Creeper Cena explosion is now stronger (only block, deals the same damage as a normal creeper)
 * Rebalanced Forge Hammers and Hoes durability multipliers
+* Disabled creeper collateral
 
 ## 3.11.2
 * Anvils
