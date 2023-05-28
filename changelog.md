@@ -1,6 +1,7 @@
 # Changelog
 
 ## 3.11.3
+* Netherite is now upgraded from Soul Steel
 * Levers and Glass can now be mined efficiently with Pickaxes
 * Creeper Cena explosion is now stronger (only block, deals the same damage as a normal creeper)
 * Rebalanced Forge Hammers and Hoes durability multipliers
