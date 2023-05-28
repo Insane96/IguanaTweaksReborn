@@ -42,7 +42,7 @@ public class Respawn extends SRFeature {
 
 	@Config(min = 0)
 	@Label(name = "Loose World Spawn Range", description = "The range from world spawn where players will respawn.")
-	public static MinMax looseWorldSpawnRange = new MinMax(128d, 256d);
+	public static MinMax looseWorldSpawnRange = new MinMax(192d, 256d);
 
 	@Config(min = 0)
 	@Label(name = "Loose Bed Spawn Range", description = "The range from beds where players will respawn.")
