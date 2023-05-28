@@ -1,7 +1,7 @@
 {
 	"display": {
 		"icon": {
-			"item": "sereneseasons:ss_item"
+			"item": "sereneseasons:ss_icon"
 		},
 		"title": {
 			"translate": "advancements.sr_story.winter_is_coming.title"

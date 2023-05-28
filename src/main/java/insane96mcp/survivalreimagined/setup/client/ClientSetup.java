@@ -16,6 +16,7 @@ import insane96mcp.survivalreimagined.module.mining.feature.Forging;
 import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
+import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Cloth;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
@@ -152,6 +153,7 @@ public class ClientSetup {
             event.accept(AncientLapis.ANCIENT_LAPIS.get());
             event.accept(EnchantmentsFeature.CLEANSED_LAPIS.get());
             event.accept(CoalFire.HELLISH_COAL.get());
+            event.accept(Cloth.CLOTH.get());
         }
         else if (event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
             event.accept(FoodDrinks.BROWN_MUSHROOM_STEW.get());

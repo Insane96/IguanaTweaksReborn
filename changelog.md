@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.12.0
+* Added Cloth
+  * Drops from zombies
+  * Required to make a bed
+  * Can be used to make Chainmail armor
+
 ## 3.11.3
 * Heavily reduced armor slowdown
 * Increased Chainmail armor durability

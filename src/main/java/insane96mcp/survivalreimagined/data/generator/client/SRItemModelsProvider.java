@@ -13,6 +13,7 @@ import insane96mcp.survivalreimagined.module.mining.feature.Durium;
 import insane96mcp.survivalreimagined.module.mining.feature.Forging;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
+import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Cloth;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -137,6 +138,8 @@ public class SRItemModelsProvider extends ItemModelProvider {
         handHeld(Forging.DIAMOND_HAMMER.get());
         handHeld(Forging.SOUL_STEEL_HAMMER.get());
         handHeld(Forging.NETHERITE_HAMMER.get());
+
+        basicItem(Cloth.CLOTH.get());
     }
 
     private ItemModelBuilder handHeld(Item item) {

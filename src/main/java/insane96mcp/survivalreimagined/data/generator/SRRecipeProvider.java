@@ -12,6 +12,7 @@ import insane96mcp.survivalreimagined.module.mining.feature.Durium;
 import insane96mcp.survivalreimagined.module.mining.feature.Forging;
 import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
+import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Cloth;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import net.minecraft.core.NonNullList;
@@ -196,37 +197,37 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         //Chainmail Armor
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.CHAINMAIL_HELMET)
-                .pattern("ccc")
-                .pattern("clc")
+                .pattern("CcC")
+                .pattern("c c")
                 .define('c', Items.CHAIN)
-                .define('l', Items.LEATHER_HELMET)
-                .unlockedBy("has_leather_armor", has(Items.LEATHER_HELMET))
+                .define('C', Cloth.CLOTH.get())
+                .unlockedBy("has_cloth", has(Cloth.CLOTH.get()))
                 .unlockedBy("has_chain", has(Items.CHAIN))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "chainmail_helmet");
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.CHAINMAIL_CHESTPLATE)
-                .pattern("clc")
-                .pattern("ccc")
+                .pattern("C C")
+                .pattern("cCc")
                 .pattern("ccc")
                 .define('c', Items.CHAIN)
-                .define('l', Items.LEATHER_CHESTPLATE)
-                .unlockedBy("has_leather_armor", has(Items.LEATHER_CHESTPLATE))
+                .define('C', Cloth.CLOTH.get())
+                .unlockedBy("has_cloth", has(Cloth.CLOTH.get()))
                 .unlockedBy("has_chain", has(Items.CHAIN))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "chainmail_chestplate");
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.CHAINMAIL_LEGGINGS)
-                .pattern("ccc")
-                .pattern("clc")
+                .pattern("CCC")
+                .pattern("c c")
                 .pattern("c c")
                 .define('c', Items.CHAIN)
-                .define('l', Items.LEATHER_LEGGINGS)
-                .unlockedBy("has_leather_armor", has(Items.LEATHER_LEGGINGS))
+                .define('C', Cloth.CLOTH.get())
+                .unlockedBy("has_cloth", has(Cloth.CLOTH.get()))
                 .unlockedBy("has_chain", has(Items.CHAIN))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "chainmail_leggings");
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, Items.CHAINMAIL_BOOTS)
-                .pattern("clc")
+                .pattern("C C")
                 .pattern("c c")
                 .define('c', Items.CHAIN)
-                .define('l', Items.LEATHER_BOOTS)
-                .unlockedBy("has_leather_armor", has(Items.LEATHER_BOOTS))
+                .define('C', Cloth.CLOTH.get())
+                .unlockedBy("has_cloth", has(Cloth.CLOTH.get()))
                 .unlockedBy("has_chain", has(Items.CHAIN))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "chainmail_boots");
 

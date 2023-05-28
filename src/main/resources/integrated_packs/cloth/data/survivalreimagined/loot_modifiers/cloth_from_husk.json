@@ -1,0 +1,10 @@
+{
+    "type": "survivalreimagined:inject_loot_table",
+    "conditions": [
+        {
+            "condition": "forge:loot_table_id",
+            "loot_table_id": "minecraft:entities/husk"
+        }
+    ],
+    "loot_table": "survivalreimagined:entities/cloth_from_zombies"
+}

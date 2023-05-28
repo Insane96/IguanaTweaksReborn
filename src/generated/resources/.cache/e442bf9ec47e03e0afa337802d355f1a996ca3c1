@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-19T09:36:03.4605256	Item Models: survivalreimagined
+// 1.19.4	2023-05-28T17:22:18.6120624	Item Models: survivalreimagined
 0e14a5fda7239c8fc0a79813151a4eba3c430f5f assets/survivalreimagined/models/item/ancient_lapis.json
 9db8ff6b8f62a90066f9ec6f113f30579ef147b4 assets/survivalreimagined/models/item/blast_furnace.json
 fe69cbb0039b59fd572532480721ff573ee4aa76 assets/survivalreimagined/models/item/brown_mushroom_stew.json
@@ -9,6 +9,7 @@ f5a0227e6430d5c6e672a642e6c1b21d9e52b29d assets/survivalreimagined/models/item/c
 a4ee0ef43139d0cf3af8e8a88efd2541c11d4937 assets/survivalreimagined/models/item/chained_copper_leggings.json
 44e66dc6724b3f9509355770f51c7026a1c85fab assets/survivalreimagined/models/item/charcoal_layer.json
 dc2c10d74cb0f83f462733fd16a69b83f5969e33 assets/survivalreimagined/models/item/cleansed_lapis.json
+da1f37e50a562765adde7e91a3ef6c44faed8e45 assets/survivalreimagined/models/item/cloth.json
 e00e1b31aafd1f93ea1c783b454a92f7ba4c24e6 assets/survivalreimagined/models/item/copper_axe.json
 6d35c2477c570c2630e49f1942487fd3971a82e0 assets/survivalreimagined/models/item/copper_hammer.json
 c8a8d07845cd63104aa1fe3631a0bf289b18b2c9 assets/survivalreimagined/models/item/copper_hoe.json

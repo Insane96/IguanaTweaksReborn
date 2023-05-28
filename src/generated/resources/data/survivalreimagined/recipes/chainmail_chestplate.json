@@ -2,16 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
+    "C": {
+      "item": "survivalreimagined:cloth"
+    },
     "c": {
       "item": "minecraft:chain"
-    },
-    "l": {
-      "item": "minecraft:leather_chestplate"
     }
   },
   "pattern": [
-    "clc",
-    "ccc",
+    "C C",
+    "cCc",
     "ccc"
   ],
   "result": {
