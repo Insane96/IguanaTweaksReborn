@@ -2,6 +2,7 @@
 
 ## 3.11.3
 * Heavily reduced armor slowdown
+* Increased Chainmail armor durability
 * Netherite is now upgraded from Soul Steel
 * Levers and Glass can now be mined efficiently with Pickaxes
 * Creeper Cena explosion is now stronger (only block, deals the same damage as a normal creeper)

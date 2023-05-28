@@ -70,10 +70,10 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_leggings", 23),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_boots", 20),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_helmet", 54),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_chestplate", 72),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_leggings", 68),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_boots", 59),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_helmet", 108),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_chestplate", 144),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_leggings", 135),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_boots", 117),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_helmet", 36),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_chestplate", 48),
