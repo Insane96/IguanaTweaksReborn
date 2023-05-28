@@ -299,8 +299,6 @@ public class Tiredness extends SRFeature {
 		});
 	}
 
-	final List<String> testingPlayers = List.of("Dev", "Insane96MCP", "Carboniglio2");
-
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void debugScreen(CustomizeGuiOverlayEvent.DebugText event) {
@@ -313,13 +311,13 @@ public class Tiredness extends SRFeature {
 		if (mc.options.renderDebug && !mc.showOnlyReducedInfo()) {
 			event.getLeft().add(String.format("Tiredness: %s", new DecimalFormat("#.#").format(TirednessHandler.get(playerEntity))));
 		}
-		if (!mc.options.renderDebug || mc.options.reducedDebugInfo().get()) {
+		/*if (!mc.options.renderDebug || mc.options.reducedDebugInfo().get()) {
 			String toDraw = String.format("Tiredness: %s", new DecimalFormat("#.#").format(TirednessHandler.get(playerEntity)));
 			int scaledHeight = mc.getWindow().getGuiScaledHeight();
 			int top = scaledHeight - mc.font.lineHeight - 1;
 			int left = 2;
 			drawOnScreenWithBackground(event.getPoseStack(), left, top, toDraw, -1873784752, 14737632);
-		}
+		}*/
 	}
 
 	private static void drawOnScreenWithBackground(PoseStack mStack, int x, int y, String text, int backgroundColor, int textColor) {
