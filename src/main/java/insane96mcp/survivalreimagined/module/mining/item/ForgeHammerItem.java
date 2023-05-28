@@ -53,11 +53,7 @@ public class ForgeHammerItem extends TieredItem implements Vanishable {
     }
 
     public int getUseCooldown(ItemStack stack) {
-        int useCooldown = this.useCooldown;
-        //Each efficiency level decreases cooldown by 10%
-        int efficiency = stack.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
-        //Capped to minimum half a second
-        return Math.max((int) (useCooldown * (1f - (0.1f * efficiency))), 10);
+        return this.useCooldown;
     }
 
     public int getSmashesOnHit(ItemStack stack, RandomSource random) {
