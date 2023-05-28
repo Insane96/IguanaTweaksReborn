@@ -1,9 +1,9 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        " L ",
+        " C ",
         "CBC",
-        " L "
+        " C "
     ],
     "key": {
         "C": {
@@ -11,9 +11,6 @@
         },
         "B": {
             "item": "survivalreimagined:flint_shield"
-        },
-        "L": {
-            "item": "minecraft:leather"
         }
     },
     "result": {
