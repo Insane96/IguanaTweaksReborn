@@ -37,7 +37,7 @@ license="All rights reserved"
 [[dependencies.survivalreimagined]]
     modId="insanelib"
     mandatory=true
-    versionRange="[1.9.1,)"
+    versionRange="[1.9.2,)"
     ordering="NONE"
     side="BOTH"
 
@@ -65,7 +65,7 @@ license="All rights reserved"
 [[dependencies.survivalreimagined]]
     modId="enhancedai"
     mandatory=true
-    versionRange="[1.10.3,)"
+    versionRange="[1.12.1,)"
     ordering="NONE"
     side="BOTH"
 

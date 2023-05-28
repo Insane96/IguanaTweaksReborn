@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.11.3
+* Creeper Cena explosion is now stronger (only block, deals the same damage as a normal creeper)
+
 ## 3.11.2
 * Anvils
   * Items upgraded in Smithing Table can now be partially repaired with base material (e.g. Netherite tools can be repaired with Diamonds)
