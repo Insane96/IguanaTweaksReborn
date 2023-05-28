@@ -1,6 +1,7 @@
 # Changelog
 
 ## 3.11.3
+* Levers and Glass can now be mined efficiently with Pickaxes
 * Creeper Cena explosion is now stronger (only block, deals the same damage as a normal creeper)
 * Rebalanced Forge Hammers and Hoes durability multipliers
 
