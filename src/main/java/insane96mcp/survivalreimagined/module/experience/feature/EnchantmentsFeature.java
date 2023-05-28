@@ -7,19 +7,16 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.data.lootmodifier.InjectLootTableModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantment.*;
-import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.network.message.JumpMidAirMessage;
-import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SREnchantments;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -35,6 +32,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -79,14 +77,9 @@ public class EnchantmentsFeature extends Feature {
 	@Label(name = "Prevent farmland trampling with Feather Falling")
 	public static Boolean preventFarmlandTramplingWithFeatherFalling = true;
 
-	@Config
-	@Label(name = "Cleansed Lapis DataPack", description = "Enables a datapack that adds Cleansed Lapis drop from lapis ore")
-	public static Boolean cleansedLapisDataPack = true;
-
 	//TODO Make enchantments deactivable
 	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "cleansed_lapis", Component.literal("Survival Reimagined Cleansed Lapis"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cleansedLapisDataPack));
 	}
 
 	public static boolean disableEnchantment(Enchantment enchantment) {
@@ -274,5 +267,12 @@ public class EnchantmentsFeature extends Feature {
 
 	public static boolean isInfinityOverhaulEnabled() {
 		return Feature.isEnabled(EnchantmentsFeature.class) && infinityOverhaul;
+	}
+
+	private static final String path = "experience/enchantments";
+
+	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
+		provider.add(path + "blocks/lapis_ore", new InjectLootTableModifier(new ResourceLocation("minecraft:blocks/lapis_ore"), new ResourceLocation("survivalreimagined:blocks/cleansed_lapis")));
+		provider.add(path + "blocks/deepslate_lapis_ore", new InjectLootTableModifier(new ResourceLocation("minecraft:blocks/deepslate_lapis_ore"), new ResourceLocation("survivalreimagined:blocks/cleansed_lapis")));
 	}
 }

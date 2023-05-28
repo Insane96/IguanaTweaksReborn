@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
-//TODO Use this for cleansed lapis too
 public class InjectLootTableModifier extends LootModifier {
     public static final Supplier<Codec<InjectLootTableModifier>> CODEC = Suppliers.memoize(() ->
             RecordCodecBuilder.create(inst -> codecStart(inst).and(

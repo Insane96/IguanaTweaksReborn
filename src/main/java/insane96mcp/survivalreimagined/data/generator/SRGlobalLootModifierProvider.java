@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.data.generator;
 
+import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mobs.feature.Equipment;
@@ -22,6 +23,6 @@ public class SRGlobalLootModifierProvider extends GlobalLootModifierProvider {
         FlintExpansion.addGlobalLoot(this);
         Minecarts.addGlobalLoot(this);
         CoalFire.addGlobalLoot(this);
-        //Cloth.addGlobalLoot(this);
+        EnchantmentsFeature.addGlobalLoot(this);
     }
 }
