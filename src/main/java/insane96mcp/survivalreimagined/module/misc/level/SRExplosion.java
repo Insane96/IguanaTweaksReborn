@@ -49,9 +49,13 @@ import java.util.Set;
 
 public class SRExplosion extends Explosion {
 	public static final String KNOCKBACK_MULTIPLIER_TAG = SurvivalReimagined.RESOURCE_PREFIX + "explosion_knockback_multiplier";
+	public static final String BASE_RESISTANCE_ADD_TAG = SurvivalReimagined.RESOURCE_PREFIX + "explosion_base_resistance_add";
+	public static final String RAY_STRENGTH_MULTIPLIER_TAG = SurvivalReimagined.RESOURCE_PREFIX + "explosion_ray_strength_multiplier";
 	ObjectArrayList<Pair<ItemStack, BlockPos>> droppedItems = new ObjectArrayList<>();
 	boolean creeperCollateral;
 	public final boolean poofParticles;
+	private float baseResistanceAdd = 0.3f;
+	private float rayStrengthMultiplier = 0.3f;
 
 	public SRExplosion(Level level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, Explosion.BlockInteraction blockInteraction, boolean creeperCollateral) {
 		this(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, creeperCollateral, true);
@@ -61,6 +65,22 @@ public class SRExplosion extends Explosion {
 		super(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction);
 		this.creeperCollateral = creeperCollateral;
 		this.poofParticles = poofParticles;
+		if (source != null) {
+			if (source.getPersistentData().contains(BASE_RESISTANCE_ADD_TAG))
+				this.baseResistanceAdd = source.getPersistentData().getFloat(BASE_RESISTANCE_ADD_TAG);
+			if (source.getPersistentData().contains(RAY_STRENGTH_MULTIPLIER_TAG))
+				this.rayStrengthMultiplier = source.getPersistentData().getFloat(RAY_STRENGTH_MULTIPLIER_TAG);
+		}
+	}
+
+	public SRExplosion setBaseResistanceAdd(float baseResistanceAdd) {
+		this.baseResistanceAdd = baseResistanceAdd;
+		return this;
+	}
+
+	public SRExplosion rayStrengthMultiplier(float rayStrengthMultiplier) {
+		this.rayStrengthMultiplier = rayStrengthMultiplier;
+		return this;
 	}
 
 	public void gatherAffectedBlocks(boolean randomize) {
@@ -91,10 +111,9 @@ public class SRExplosion extends Explosion {
 							Optional<Float> optional = this.damageCalculator.getBlockExplosionResistance(this, this.level, blockpos, blockstate, fluidstate);
 							if (optional.isPresent()) {
 								float resistance = optional.get();
-								float multiplier = 0.3f;
 								/*if (blockstate.getMaterial().equals(Material.STONE) /*&& this.stoneResistanceDivider >= 0)
 									multiplier /= 5f;*/
-								rayStrength -= (resistance + 0.3F) * multiplier;
+								rayStrength -= (resistance + baseResistanceAdd) * rayStrengthMultiplier;
 							}
 							if (rayStrength > 0.0F && this.damageCalculator.shouldBlockExplode(this, this.level, blockpos, blockstate, rayStrength)) {
 								set.add(blockpos);
