@@ -8,6 +8,7 @@
 * Added Cyan Flower
   * Generates in snowy biomes
 * Cleansed lapis now has greatly increased chance to drop
+* Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe
 
 ## 0.11.3
 * Heavily reduced armor slowdown

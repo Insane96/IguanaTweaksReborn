@@ -126,7 +126,7 @@ public class TimberTrees extends SRFeature {
                 }
                 checks++;
             }
-            if (posToCheck.isEmpty() && (!foundLeaves || logs < 2)) {
+            if (posToCheck.isEmpty() && (!foundLeaves || logs < 3)) {
                 blocks.clear();
                 break;
             }

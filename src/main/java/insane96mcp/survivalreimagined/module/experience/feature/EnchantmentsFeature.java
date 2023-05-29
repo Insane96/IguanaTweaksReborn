@@ -25,9 +25,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
@@ -39,6 +38,7 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -159,15 +159,15 @@ public class EnchantmentsFeature extends Feature {
 		Expanded.applyDestroyAnimation(event);
 	}
 
-	@SubscribeEvent
+	//Priority high: run before Timber Trees
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onBlockBreak(BlockEvent.BreakEvent event) {
 		if (!this.isEnabled())
 			return;
 
-		Vec3 viewVector = event.getPlayer().getViewVector(1f);
-		Vec3 endClip = event.getPlayer().getEyePosition().add(viewVector.x * event.getPlayer().getEntityReach(), viewVector.y * event.getPlayer().getEntityReach(), viewVector.z * event.getPlayer().getEntityReach());
-		BlockHitResult blockHitResult = event.getLevel().clip(new ClipContext(event.getPlayer().getEyePosition(), endClip, ClipContext.Block.VISUAL, ClipContext.Fluid.NONE, event.getPlayer()));
-		Expanded.apply(event.getPlayer(), event.getPlayer().getLevel(), event.getPos(), blockHitResult.getDirection(), event.getState());
+		HitResult pick = event.getPlayer().pick(event.getPlayer().getEntityReach() + 0.5d, 1f, false);
+		if (pick instanceof BlockHitResult blockHitResult)
+			Expanded.apply(event.getPlayer(), event.getPlayer().getLevel(), event.getPos(), blockHitResult.getDirection(), event.getState());
 	}
 
 	@SubscribeEvent
