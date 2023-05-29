@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "survivalreimagined:block/cyan_flower"
+  }
+}

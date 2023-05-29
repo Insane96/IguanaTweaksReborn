@@ -36,6 +36,13 @@ public class SRBlockModelsProvider extends BlockModelProvider {
         cubeAll("durium_block", "block/durium_block");
         cubeAll("durium_ore", "block/durium_ore");
         cubeAll("deepslate_durium_ore", "block/deepslate_durium_ore");
+
+        cross("cyan_flower", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/cyan_flower"));
+        flowerPotCross("potted_cyan_flower", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/cyan_flower"));
+    }
+
+    public BlockModelBuilder flowerPotCross(String name, ResourceLocation plant) {
+        return singleTexture(name, ResourceLocation.tryParse(BLOCK_FOLDER + "/flower_pot_cross"), "plant", plant);
     }
 
     public BlockModelBuilder cubeAll(String name, String texture) {

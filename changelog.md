@@ -5,6 +5,8 @@
   * Drops from zombies
   * Required to make a bed
   * Can be used to make Chainmail armor
+* Added Cyan Flower
+  * Generates in cold biomes
 * Cleansed lapis now has greatly increased chance to drop
 
 ## 3.11.3

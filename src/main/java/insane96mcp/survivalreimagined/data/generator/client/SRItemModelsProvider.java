@@ -140,6 +140,10 @@ public class SRItemModelsProvider extends ItemModelProvider {
         handHeld(Forging.NETHERITE_HAMMER.get());
 
         basicItem(Cloth.CLOTH.get());
+
+        basicItem(Cloth.CLOTH.get());
+
+        withExistingParent("cyan_flower", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/cyan_flower"));
     }
 
     private ItemModelBuilder handHeld(Item item) {
