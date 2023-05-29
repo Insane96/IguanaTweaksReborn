@@ -1,6 +1,6 @@
 {
     "type": "forge:add_features",
-    "biomes": "#forge:is_cold/overworld",
-    "features": "survivalreimagined:cyan_flower_plains",
+    "biomes": "#forge:is_snowy",
+    "features": "survivalreimagined:cyan_flower",
     "step": "vegetal_decoration"
 }

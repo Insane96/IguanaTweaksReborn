@@ -37,7 +37,7 @@ public class SRBlockModelsProvider extends BlockModelProvider {
         cubeAll("durium_ore", "block/durium_ore");
         cubeAll("deepslate_durium_ore", "block/deepslate_durium_ore");
 
-        cross("cyan_flower", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/cyan_flower"));
+        cross("cyan_flower", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/cyan_flower")).renderType("cutout");
         flowerPotCross("potted_cyan_flower", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/cyan_flower"));
     }
 

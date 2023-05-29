@@ -20,6 +20,7 @@ import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Cloth;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
+import insane96mcp.survivalreimagined.module.world.feature.CyanFlower;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import insane96mcp.survivalreimagined.setup.SREntityTypes;
 import net.minecraft.client.Minecraft;
@@ -143,6 +144,7 @@ public class ClientSetup {
             event.accept(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.item().get());
             event.accept(CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.item().get());
             event.accept(FlintExpansion.FLINT_ROCK.item().get());
+            event.accept(CyanFlower.FLOWER.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
             event.accept(Durium.SCRAP_PIECE.get());
