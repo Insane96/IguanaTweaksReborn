@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.12.0
+## 0.12.0
 * Added Cloth
   * Drops from zombies
   * Required to make a bed
@@ -9,7 +9,7 @@
   * Generates in cold biomes
 * Cleansed lapis now has greatly increased chance to drop
 
-## 3.11.3
+## 0.11.3
 * Heavily reduced armor slowdown
 * Increased Chainmail armor durability
 * Netherite is now upgraded from Soul Steel
@@ -18,7 +18,7 @@
 * Rebalanced Forge Hammers and Hoes durability multipliers
 * Disabled creeper collateral
 
-## 3.11.2
+## 0.11.2
 * Anvils
   * Items upgraded in Smithing Table can now be partially repaired with base material (e.g. Netherite tools can be repaired with Diamonds)
   * Moved free rename and repair cap to this
@@ -31,7 +31,7 @@
 * Soul Furnaces now consume twice the fuel but smelt and recycle twice as fast
 * Minor balance fixes
 
-## 3.11.1
+## 0.11.1
 * Fishing is now slowed down based off season
 * Hammers are now usable as weapons
 * Overall reduced block hardness
@@ -44,7 +44,7 @@
 * Falling on leaves now cancels fall damage only from 8 blocks and has only 20% damage reduction instead of 50%
 * Heavily nerfed drowned trident's and slightly nerfed skeleton's damages
 
-## 3.11.0
+## 0.11.0
 * Added Forge
   * Replaces anvil recipes
 * Added Better ladders
@@ -57,14 +57,14 @@
 * Increased Trident durability
 * Increased global experience
 
-## 3.10.2
+## 0.10.2
 * Disabled Golden Absorption. Gold armor and shield now grant +2 max health
 * Invincibility frames are now synced when hit by arrows
 * Glass can now break if entities fall on it
 * Re-enabled backwards slowdown
 * Reduced experience dropped by players by 5%
 
-## Alpha 3.10.1
+## 0.10.1
 * Mithril is now Durium
   * Can be made in a Blast Furnace by alloying Durium Scrap Block, Clay and Sand
 * Blast furnaces now require a multi block structure
@@ -83,7 +83,7 @@
 * Armor is now rendered in place of Hunger bar. That side felt so empty
 * Graves can now be smelted/blasted into iron ingots
 
-## Alpha 3.10.0
+## 0.10.0
 * Overhauled rails
   * Added Copper Rails and Golden Rails
 * Added M.A. Jump enchantment
@@ -93,7 +93,7 @@
 * Creeper cena now deals more knockback
 * Started working on better Blast Furnace
 
-## Alpha 3.9.2
+## 0.9.2
 * Added Timber Trees feature
   * Makes trees fall when cut
 * Added Smartness enchantment
@@ -102,14 +102,14 @@
 * Tiredness is no longer reset on death
 * Fixes and advancements
 
-## Alpha 3.9.1
+## 0.9.1
 * Added over-easy egg
 * Rotten Flesh can now be composted
 * Charcoal can now be placed as layer and layers now fall on top of each-other properly
 * Ghasts now drop 5x more gunpowder
 * Fixes and improvements
 
-## Alpha 3.9.0
+## 0.9.0
 * Added Passable Foliage mod
 * Added better attack invincibility
   * Attacking faster than 2 hits per second will make entities invulnerable for less time. Only works when wielding weapons.
@@ -132,14 +132,14 @@
 * Beeg veins are now variable size and the ore rocks on top now generate more the more ores generated below
 * Golden Pickaxes and Golden Axes now have higher attack speed
 
-## Alpha 3.8.1
+## 0.8.1
 * Respawn obelisk now requires only at least one catalyst block to activate, and will only try to break one of the catalysts instead of each one of them. Tweaked some chances.
 * Slabs (not double) now take half the time to break
 * Items from graves now despawn faster
 * playerSleepingPercentage gamerule is now set to 1 to let tired player rest
 * Fixes
 
-## Alpha 3.8.0
+## 0.8.0
 * Changed death (again)
   * Dying now summons a grave. Breaking the grave will give back your items and summon the players' ghost with the xp, like before.
   * As before, if you die again, the grave breaks, dropping everything
@@ -174,7 +174,7 @@
 * Coal is now minable only with tools that can mine diamonds
 * Poison now damages entities much slower
 
-## Alpha 3.7.1
+## 0.7.1
 * Added Anvil feature
   * An anvil dropping on a block may transform it
 * Added charcoal layer
@@ -191,7 +191,7 @@
 * Phantoms now vary in size
 * Ghost zombies health and damage now scales with the xp stored
 
-## Alpha 3.7.0
+## 0.7.0
 * Added Explosive Barrels
   * Highly unstable will explode instantly
 * Added Altimeter
@@ -221,13 +221,13 @@
 * Fixed stuff using tags not syncing to client
 * Rain Fog no longer affects players below Y 48
 
-## Alpha 3.6.1
+## 0.6.1
 * Some stuff is now synced client-side
 * Charcoal can now only be obtained from burning Logs. Also increased chance (40% -> 60%)
   * Also fixed charcoal not dropping from logs
 * Increased Gold Armor Durability
 
-## Alpha 3.6.0
+## 0.6.0
 * Added Beeg Ore Veins
   * Veins that generate underground with lots of ores. On the surface, rocks can be found that mark the veins below
 * Fog now changes when it's raining
@@ -245,7 +245,7 @@
 * Removed Gold Nuggets drop from Zombified Piglins
 * Miner Zombies now have a higher chance to spawn in Hard
 
-## Alpha 3.5.0
+## 0.5.0
 * Added Copper Reinforced Flint Tools
   * Fast but low durability
   * Iron tools are now made from Stone Tools instead of Flint
@@ -259,12 +259,12 @@
 * Chickens can no longer be bred, use eggs
 * Starting season is now mid-Summer
 
-## Alpha 3.4.1
+## 0.4.1
 * Renamed Iridium to Mithril
 * Wild crops now generate more commonly
 * Fixed crash in creative
 
-## Alpha 3.4.0
+## 0.4.0
 * Added Crate
   * An early-mid game shulker to transport items around. Having more than one in the inventory will slow the player down
 * Added Wild Crops
@@ -275,7 +275,7 @@
   * Wheat seeds can now be obtained from Wandering Traders
 * Mod now runs on servers
 
-## Alpha 3.3.0
+## 0.3.0
 * Advancements!
   * First step towards new advancements
 * Re-enabled spawn points
@@ -315,10 +315,10 @@
 * Re-enabled Flint and Stone Hoes
 * Smoker recipe now requires mithril
 
-## Alpha 3.2.2
+## 0.2.2
 * Successfully(?) updated to MC 1.19.4
 
-## Alpha 3.2.1
+## 0.2.1
 * Farmland is no longer trampled if the trampler is wearing Feather Falling
 * Crops broken by non-entities (e.g. Water) now drop nothing
 * Sheep no longer regrow wool 100% of the time after eating
@@ -333,7 +333,7 @@
   * Tool now takes 1 damage per block broken
   * No longer works if the tool is not correct for the block broken
 
-## Alpha 3.2.0
+## 0.2.0
 * Enchantments
   * Added Magnetic enchantment for Pants
   * Added Magic Protection enchantment for armor
@@ -370,7 +370,7 @@
 * Torch recipe now crafts 3
 * Reduced Tools efficiency and reduced global block hardness, but re-enabled depth hardness
 
-## Alpha 3.1.0
+## 0.1.0
 * Added EnhancedAI mod
   * Mobs are tougher to fight as they have a few more tricks up their sleeve
 * Added Mithril, a new ore found at any height plus a lot generates hidden about 16 blocks below the sea level
@@ -397,7 +397,7 @@
 * Desire paths no longer trigger if going slow enough (e.g. when sneaking)
 * Villages no longer generate until I find a way to make them not so much useful
 
-## Alpha 3.0.2
+## 0.0.2
 * Added Shields+
   * Removed the shield changes in the mod, using Shields+ ones
   * Added Flint Shields and disabled wooden shields
@@ -418,7 +418,7 @@
 * Deepslate ore is now less hard to break
 * Fixed arrows dealing the wrong amount of damage (and skeletons dealing tons of damage)
 
-## Alpha 3.0.1
+## 0.0.1
 * Shears now Require an anvil to make (flint + 2 iron ingots)
   * Durability has been increased (33% -> 50% of vanilla durability)
 * Torches in campfire now take less time to make (30 seconds -> 15 seconds)
@@ -438,5 +438,5 @@
   * Added Desire paths, walking on the same path over and over has a chance to transform grass into dirt and dirt into coarse dirt
   * Moved loot purger to it
 
-## Alpha 3.0.0
+## 0.0.0
 * First Alpha
