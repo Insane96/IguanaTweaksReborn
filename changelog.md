@@ -7,6 +7,7 @@
   * Can be used to make Chainmail armor
 * Added Cyan Flower
   * Generates in snowy biomes
+* Added Gravity Defying enchantment
 * Cleansed lapis now has greatly increased chance to drop
 * Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe
 

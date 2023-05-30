@@ -114,6 +114,7 @@ public class EnchantmentsFeature extends Feature {
 			return;
 
 		StepUp.applyAttributeModifier(event);
+		GravityDefying.applyAttributeModifier(event);
 	}
 
 	@SubscribeEvent
@@ -198,11 +199,12 @@ public class EnchantmentsFeature extends Feature {
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onLivingFall(LivingFallEvent event) {
-		if (!this.isEnabled()
-				|| !(event.getEntity() instanceof LocalPlayer player))
+		if (!this.isEnabled())
 			return;
 
-		player.getPersistentData().putInt("double_jumps", 0);
+		if (event.getEntity() instanceof LocalPlayer player)
+			player.getPersistentData().putInt("double_jumps", 0);
+		GravityDefying.applyFallDamageReduction(event);
 	}
 
 	public void baneOfSssssOnAttack(LivingEntity attacker, LivingEntity entity, LivingHurtEvent event) {

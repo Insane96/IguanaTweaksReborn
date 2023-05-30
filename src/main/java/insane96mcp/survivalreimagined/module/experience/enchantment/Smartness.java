@@ -27,6 +27,6 @@ public class Smartness extends Enchantment {
     }
 
     public static int getIncreasedExperience(int lvl, int experience) {
-        return (int) (experience * (1 + lvl * .4f));
+        return (int) (experience * (1 + lvl * .5f));
     }
 }
