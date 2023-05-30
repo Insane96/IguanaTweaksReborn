@@ -166,42 +166,53 @@ public class Expanded extends Enchantment {
         vertices.endBatch();
     }
 
-    public static List<BlockPos> getMinedBlocks(int expansion, boolean square, Level level, LivingEntity entity, BlockPos targetPos, Direction face) {
+    /**
+     *
+     * @param forward If true, its relative to direction, else opposite
+     */
+    public static BlockPos getRelative(BlockPos targetPos, boolean playerRelative, boolean forward, Direction direction) {
+        if (!playerRelative) {
+            if (forward)
+                return targetPos.above();
+            else
+                return targetPos.below();
+        }
+        else {
+            if (forward)
+                return targetPos.relative(direction);
+            else
+                return targetPos.relative(direction.getOpposite());
+        }
+    }
+
+    public static final int[] MAX_BLOCKS_MINED = new int[] { 0, 3, 9, 16 };
+
+    public static List<BlockPos> getMinedBlocks(int lvl, boolean square, Level level, LivingEntity entity, BlockPos targetPos, Direction face) {
         List<BlockPos> minedBlocks = new ArrayList<>();
-        boolean upDown = false;
+        boolean playerRelative = false;
         if (face == Direction.UP || face == Direction.DOWN) {
             face = entity.getDirection();
-            upDown = true;
+            playerRelative = true;
         }
 
+        //Clamp level to 3
+        if (lvl > 3)
+            lvl = 3;
+
         if (square) {
-            if (!upDown) {
-                if (expansion >= 1) {
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.below());
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.above());
-                }
-                if (expansion >= 2) {
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getClockWise()).above());
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getCounterClockWise()).above());
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getClockWise()).below());
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getCounterClockWise()).below());
-                }
+            if (lvl >= 1) {
+                addIfCanBeMined(minedBlocks, level, targetPos, getRelative(targetPos, playerRelative, true, face));
+                addIfCanBeMined(minedBlocks, level, targetPos, getRelative(targetPos, playerRelative, false, face));
             }
-            else {
-                if (expansion >= 1) {
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face));
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getOpposite()));
+            if (lvl >= 2) {
+                for (int i = lvl - 1; i > 0; i--) {
+                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getClockWise(), i));
+                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getCounterClockWise(), i));
+                    addIfCanBeMined(minedBlocks, level, targetPos, getRelative(targetPos.relative(face.getClockWise(), i), playerRelative, true, face));
+                    addIfCanBeMined(minedBlocks, level, targetPos, getRelative(targetPos.relative(face.getCounterClockWise(), i), playerRelative, true, face));
+                    addIfCanBeMined(minedBlocks, level, targetPos, getRelative(targetPos.relative(face.getClockWise(), i), playerRelative, false, face));
+                    addIfCanBeMined(minedBlocks, level, targetPos, getRelative(targetPos.relative(face.getCounterClockWise(), i), playerRelative, false, face));
                 }
-                if (expansion >= 2) {
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getClockWise()).relative(face));
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getCounterClockWise()).relative(face));
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getClockWise()).relative(face.getOpposite()));
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getCounterClockWise()).relative(face.getOpposite()));
-                }
-            }
-            if (expansion >= 2) {
-                addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getClockWise()));
-                addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getCounterClockWise()));
             }
         }
         else {
@@ -209,7 +220,7 @@ public class Expanded extends Enchantment {
             posToCheck.add(targetPos);
             List<BlockPos> explored = new ArrayList<>();
             AtomicInteger toMine = new AtomicInteger(0);
-            while (!posToCheck.isEmpty() && toMine.intValue() < (expansion == 1 ? 3 - 1 : 9 - 1)) {
+            while (!posToCheck.isEmpty() && toMine.intValue() < MAX_BLOCKS_MINED[lvl] - 1) {
                 List<BlockPos> posToCheckTmp = new ArrayList<>();
                 for (BlockPos pos : posToCheck) {
                     Direction.stream().forEach(direction -> {
@@ -222,7 +233,7 @@ public class Expanded extends Enchantment {
                         }
                         explored.add(relativePos);
                     });
-                    if (toMine.intValue() >= (expansion == 1 ? 3 - 1 : 9 - 1)) {
+                    if (toMine.intValue() >= MAX_BLOCKS_MINED[lvl] - 1) {
                         posToCheckTmp.clear();
                         break;
                     }
