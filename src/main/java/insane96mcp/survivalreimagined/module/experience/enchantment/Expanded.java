@@ -76,7 +76,7 @@ public class Expanded extends Enchantment {
             return;
         List<BlockPos> minedBlocks = getMinedBlocks(enchLevel, heldStack.getItem() instanceof PickaxeItem || heldStack.getItem() instanceof ShovelItem, level, entity, pos, face);
         for (BlockPos minedBlock : minedBlocks) {
-            if (level instanceof ServerLevel) {
+            if (level instanceof ServerLevel && (entity instanceof Player player && !player.getAbilities().flying)) {
                 BlockState minedBlockState = level.getBlockState(minedBlock);
                 BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(minedBlock) : null;
                 LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) level)).withRandom(level.getRandom()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(minedBlock)).withParameter(LootContextParams.TOOL, entity.getMainHandItem()).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, entity);
@@ -220,7 +220,7 @@ public class Expanded extends Enchantment {
             posToCheck.add(targetPos);
             List<BlockPos> explored = new ArrayList<>();
             AtomicInteger toMine = new AtomicInteger(0);
-            while (!posToCheck.isEmpty() && toMine.intValue() < MAX_BLOCKS_MINED[lvl] - 1) {
+            while (!posToCheck.isEmpty() && toMine.intValue() < MAX_BLOCKS_MINED[lvl]) {
                 List<BlockPos> posToCheckTmp = new ArrayList<>();
                 for (BlockPos pos : posToCheck) {
                     Direction.stream().forEach(direction -> {
@@ -233,7 +233,7 @@ public class Expanded extends Enchantment {
                         }
                         explored.add(relativePos);
                     });
-                    if (toMine.intValue() >= MAX_BLOCKS_MINED[lvl] - 1) {
+                    if (toMine.intValue() >= MAX_BLOCKS_MINED[lvl]) {
                         posToCheckTmp.clear();
                         break;
                     }
