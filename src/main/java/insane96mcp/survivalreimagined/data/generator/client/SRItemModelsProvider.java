@@ -15,6 +15,7 @@ import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Cloth;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
+import insane96mcp.survivalreimagined.module.world.feature.CyanFlower;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -141,9 +142,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
 
         basicItem(Cloth.CLOTH.get());
 
-        basicItem(Cloth.CLOTH.get());
-
-        withExistingParent("cyan_flower", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/cyan_flower"));
+        basicItemWithTexture(CyanFlower.FLOWER.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/cyan_flower"));
     }
 
     private ItemModelBuilder handHeld(Item item) {

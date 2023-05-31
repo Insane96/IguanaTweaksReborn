@@ -9,14 +9,14 @@
   * Generates in snowy biomes
 * Added Gravity Defying enchantment
 * Cleansed lapis now has greatly increased chance to drop
-* Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe
+* Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe. Also Expanded III now mines more blocks instead of being the same of lvl II
 
 ## 0.11.3
 * Heavily reduced armor slowdown
 * Increased Chainmail armor durability
 * Netherite is now upgraded from Soul Steel
 * Levers and Glass can now be mined efficiently with Pickaxes
-* Creeper Cena explosion is now stronger (only block, deals the same damage as a normal creeper)
+* Creeper Cena explosion is now stronger (breaks more blocks, deals the same damage as a normal creeper)
 * Rebalanced Forge Hammers and Hoes durability multipliers
 * Disabled creeper collateral
 

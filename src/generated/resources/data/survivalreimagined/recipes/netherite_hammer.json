@@ -4,7 +4,7 @@
     "item": "minecraft:netherite_ingot"
   },
   "base": {
-    "item": "survivalreimagined:diamond_hammer"
+    "item": "survivalreimagined:soul_steel_hammer"
   },
   "result": {
     "item": "survivalreimagined:netherite_hammer"

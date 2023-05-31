@@ -14,6 +14,7 @@ import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Cloth;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
+import insane96mcp.survivalreimagined.module.world.feature.CyanFlower;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.PackOutput;
@@ -484,6 +485,12 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_iron_nugget", has(Items.IRON_NUGGET))
                 .save(writer);
 
+        //Cyan flowers
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, Items.CYAN_DYE)
+                .requires(CyanFlower.FLOWER.item().get())
+                .unlockedBy("has_flower", has(CyanFlower.FLOWER.item().get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "cyan_dye_from_cyan_flower");
+
         //Soul Blast Furnace
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, MultiBlockFurnaces.SOUL_BLAST_FURNACE.item().get())
                 .pattern("GNG")
@@ -798,7 +805,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         forgeRecipe(writer, Items.GOLD_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.GOLDEN_HAMMER.get(), 4);
         forgeRecipe(writer, Items.DIAMOND, 5, Forging.GOLDEN_HAMMER.get(), Forging.DIAMOND_HAMMER.get(), 16);
         forgeRecipe(writer, SoulSteel.INGOT.get(), 5, Forging.IRON_HAMMER.get(), Forging.SOUL_STEEL_HAMMER.get(), 20);
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.DIAMOND_HAMMER.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.TOOLS, Forging.NETHERITE_HAMMER.get())
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.SOUL_STEEL_HAMMER.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.TOOLS, Forging.NETHERITE_HAMMER.get())
                 .unlocks("has_material", has(Items.NETHERITE_INGOT))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "netherite_hammer");
 
@@ -831,12 +838,12 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         }
     }
 
-    private void recycleGearBlasting(Consumer<FinishedRecipe> writer, Item itemToRecycle, Item output, int cookingTime, int amountAtMaxDurability) {
+    private void recycleGearBlasting(Consumer<FinishedRecipe> writer, Item itemToRecycle, Item output, int baseCookingTime, int amountAtMaxDurability) {
         MultiItemSmeltingRecipeBuilder.blasting(
                         NonNullList.of(Ingredient.EMPTY, Ingredient.of(itemToRecycle)),
                         RecipeCategory.COMBAT,
                         output,
-                        cookingTime)
+                        baseCookingTime)
                 .recycle(amountAtMaxDurability, 0.75f)
                 .group("recycle_" + ForgeRegistries.ITEMS.getKey(output).getPath())
                 .unlockedBy("has_armor", has(itemToRecycle))
@@ -846,7 +853,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         NonNullList.of(Ingredient.EMPTY, Ingredient.of(itemToRecycle)),
                         RecipeCategory.COMBAT,
                         output,
-                        cookingTime / 2)
+                        baseCookingTime / 2)
                 .recycle(amountAtMaxDurability)
                 .unlockedBy("has_armor", has(itemToRecycle))
                 .group("recycle_" + ForgeRegistries.ITEMS.getKey(output).getPath())
