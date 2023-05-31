@@ -2,6 +2,8 @@ package insane96mcp.survivalreimagined.setup.client;
 
 import com.google.common.collect.ImmutableList;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.module.combat.client.FletchingScreen;
+import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
 import insane96mcp.survivalreimagined.module.experience.feature.AncientLapis;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
@@ -177,6 +179,7 @@ public class ClientSetup {
         MenuScreens.register(MultiBlockFurnaces.BLAST_FURNACE_MENU_TYPE.get(), MultiBlockBlastFurnaceScreen::new);
         MenuScreens.register(MultiBlockFurnaces.SOUL_BLAST_FURNACE_MENU_TYPE.get(), MultiBlockSoulBlastFurnaceScreen::new);
         MenuScreens.register(Forging.FORGE_MENU_TYPE.get(), ForgeScreen::new);
+        MenuScreens.register(Fletching.FLETCHING_MENU_TYPE.get(), FletchingScreen::new);
     }
 
     public static void entityRenderEvent(EntityRenderersEvent.RegisterRenderers event) {
@@ -189,15 +192,14 @@ public class ClientSetup {
     static RecipeBookCategories SOUL_BLAST_FURNACE_SEARCH = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "soul_blast_furnace_search", new ItemStack(Items.COMPASS));
     static RecipeBookCategories SOUL_BLAST_FURNACE_MISC = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "soul_blast_furnace_misc", new ItemStack(MultiBlockFurnaces.SOUL_BLAST_FURNACE.item().get()));
     public static final List<RecipeBookCategories> SOUL_BLAST_FURNACE_CATEGORIES = ImmutableList.of(SOUL_BLAST_FURNACE_SEARCH, SOUL_BLAST_FURNACE_MISC);
-    static RecipeBookCategories FORGE_SEARCH = RecipeBookCategories.create("FORGE_SEARCH", new ItemStack(Items.COMPASS));
-    static RecipeBookCategories FORGE_MISC = RecipeBookCategories.create("FORGE_MISC", new ItemStack(Forging.FORGE.item().get()));
+    static RecipeBookCategories FORGE_SEARCH = RecipeBookCategories.create("forge_search", new ItemStack(Items.COMPASS));
+    static RecipeBookCategories FORGE_MISC = RecipeBookCategories.create("forge_misc", new ItemStack(Forging.FORGE.item().get()));
     public static final List<RecipeBookCategories> FORGE_CATEGORIES = ImmutableList.of(FORGE_SEARCH, FORGE_MISC);
+    static RecipeBookCategories FLETCHING_SEARCH = RecipeBookCategories.create("fletching_search", new ItemStack(Items.COMPASS));
+    static RecipeBookCategories FLETCHING_MISC = RecipeBookCategories.create("fletching_misc", new ItemStack(Items.FLETCHING_TABLE));
+    public static final List<RecipeBookCategories> FLETCHING_CATEGORIES = ImmutableList.of(FLETCHING_SEARCH, FLETCHING_MISC);
 
     public static void onRegisterRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
-        event.registerBookCategories(SurvivalReimagined.FORGING_RECIPE_BOOK_TYPE, FORGE_CATEGORIES);
-        event.registerAggregateCategory(FORGE_SEARCH, ImmutableList.of(FORGE_MISC));
-        event.registerRecipeCategoryFinder(Forging.FORGE_RECIPE_TYPE.get(), r -> FORGE_MISC);
-
         event.registerBookCategories(SurvivalReimagined.MULTI_ITEM_BLASTING_RECIPE_BOOK_TYPE, BLAST_FURNACE_CATEGORIES);
         event.registerAggregateCategory(BLAST_FURNACE_SEARCH, ImmutableList.of(BLAST_FURNACE_MISC));
         event.registerRecipeCategoryFinder(MultiBlockFurnaces.BLASTING_RECIPE_TYPE.get(), r -> BLAST_FURNACE_MISC);
@@ -205,5 +207,13 @@ public class ClientSetup {
         event.registerBookCategories(SurvivalReimagined.MULTI_ITEM_SOUL_BLASTING_RECIPE_BOOK_TYPE, SOUL_BLAST_FURNACE_CATEGORIES);
         event.registerAggregateCategory(SOUL_BLAST_FURNACE_SEARCH, ImmutableList.of(SOUL_BLAST_FURNACE_MISC));
         event.registerRecipeCategoryFinder(MultiBlockFurnaces.SOUL_BLASTING_RECIPE_TYPE.get(), r -> SOUL_BLAST_FURNACE_MISC);
+
+        event.registerBookCategories(SurvivalReimagined.FORGING_RECIPE_BOOK_TYPE, FORGE_CATEGORIES);
+        event.registerAggregateCategory(FORGE_SEARCH, ImmutableList.of(FORGE_MISC));
+        event.registerRecipeCategoryFinder(Forging.FORGE_RECIPE_TYPE.get(), r -> FORGE_MISC);
+
+        event.registerBookCategories(SurvivalReimagined.FLETCHING_RECIPE_BOOK_TYPE, FLETCHING_CATEGORIES);
+        event.registerAggregateCategory(FLETCHING_SEARCH, ImmutableList.of(FLETCHING_MISC));
+        event.registerRecipeCategoryFinder(Fletching.FLETCHING_RECIPE_TYPE.get(), r -> FLETCHING_MISC);
     }
 }

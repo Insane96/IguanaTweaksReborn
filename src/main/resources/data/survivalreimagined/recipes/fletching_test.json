@@ -1,0 +1,11 @@
+{
+    "type": "survivalreimagined:fletching",
+    "category": "fletching_misc",
+    "ingredient": "minecraft:stick",
+    "catalyst1": "minecraft:feather",
+    "catalyst2": "minecraft:flint",
+    "result": {
+        "item": "minecraft:arrow",
+        "count": 6
+    }
+}

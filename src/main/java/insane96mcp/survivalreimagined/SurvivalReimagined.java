@@ -62,6 +62,7 @@ public class SurvivalReimagined
     public static final RecipeBookType MULTI_ITEM_BLASTING_RECIPE_BOOK_TYPE = RecipeBookType.create(SurvivalReimagined.RESOURCE_PREFIX + "multi_item_blasting");
     public static final RecipeBookType MULTI_ITEM_SOUL_BLASTING_RECIPE_BOOK_TYPE = RecipeBookType.create(SurvivalReimagined.RESOURCE_PREFIX + "multi_item_soul_blasting");
     public static final RecipeBookType FORGING_RECIPE_BOOK_TYPE = RecipeBookType.create(SurvivalReimagined.RESOURCE_PREFIX + "forging");
+    public static final RecipeBookType FLETCHING_RECIPE_BOOK_TYPE = RecipeBookType.create(SurvivalReimagined.RESOURCE_PREFIX + "fletching");
 
     public SurvivalReimagined() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, SRClientConfig.CONFIG_SPEC, MOD_ID + "/client.toml");
