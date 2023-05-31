@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-31T10:30:10.8821621	Item Models: survivalreimagined
+// 1.19.4	2023-05-31T20:44:06.2361489	Item Models: survivalreimagined
 0e14a5fda7239c8fc0a79813151a4eba3c430f5f assets/survivalreimagined/models/item/ancient_lapis.json
 9db8ff6b8f62a90066f9ec6f113f30579ef147b4 assets/survivalreimagined/models/item/blast_furnace.json
 fe69cbb0039b59fd572532480721ff573ee4aa76 assets/survivalreimagined/models/item/brown_mushroom_stew.json
@@ -20,6 +20,7 @@ e0e84b517da7d6322072fedaeedad742e28adc3c assets/survivalreimagined/models/item/c
 d05f315bee3487abdcb08362954c0eba53b26d9c assets/survivalreimagined/models/item/crate.json
 a89581a8d0e55a0af95b417eb27617ea58b14904 assets/survivalreimagined/models/item/cyan_flower.json
 833ddfa92dff84951bb9dbd9b7fae7bc7b9e6c99 assets/survivalreimagined/models/item/deepslate_durium_ore.json
+1b2e38b083f6d93e8e37b465ddca6784025d084b assets/survivalreimagined/models/item/diamond_arrow.json
 0ab11ef35d2313a9f39b673bf0adc3fd4cd152ab assets/survivalreimagined/models/item/diamond_hammer.json
 9888cf558c4b3d8b2b371b5ef633751a88e12d50 assets/survivalreimagined/models/item/durium_axe.json
 8c9360fd2932a2d64f524369f766e3cf3832e151 assets/survivalreimagined/models/item/durium_block.json
@@ -64,6 +65,7 @@ c95b12048414c1fa9c7c7ccab108a3c6f35847d8 assets/survivalreimagined/models/item/p
 7baa2981a451f8e086846bfb71512f2675c47804 assets/survivalreimagined/models/item/poor_gold_ore.json
 1c294a328bb816d3ead545fbba2b7f1b5d1a8437 assets/survivalreimagined/models/item/poor_iron_ore.json
 1d36c36543bbc97dab7755919248cf052e11454e assets/survivalreimagined/models/item/potato_seeds.json
+3fae77c8186db20eef9896d8b9b9050fc515488b assets/survivalreimagined/models/item/quartz_arrow.json
 5cd57536227d41e33140a1195d510a7f95b4b548 assets/survivalreimagined/models/item/red_mushroom_stew.json
 81060ae12a63189e102c8f0847873e2eb53956af assets/survivalreimagined/models/item/respawn_obelisk.json
 2031da8981631611c5cd5db2c8cbc82eb90b4bee assets/survivalreimagined/models/item/rich_copper_ore.json

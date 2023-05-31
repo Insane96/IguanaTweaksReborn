@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.data.generator;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
 import insane96mcp.survivalreimagined.module.combat.feature.Knockback;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Hoes;
@@ -43,6 +44,7 @@ public class SRItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.SWORDS).add(FlintExpansion.SWORD.get(), Durium.SWORD.get(), CopperTools.SWORD.get(), SoulSteel.SWORD.get());
         tag(ItemTags.HOES).add(FlintExpansion.HOE.get(), Durium.HOE.get(), CopperTools.HOE.get(), SoulSteel.HOE.get());
 
+        tag(ItemTags.ARROWS).add(Fletching.QUARTZ_ARROW.get(), Fletching.DIAMOND_ARROW.get());
         //Mod's
         tag(Hoes.DISABLED_HOES)
                 .add(Items.WOODEN_HOE);

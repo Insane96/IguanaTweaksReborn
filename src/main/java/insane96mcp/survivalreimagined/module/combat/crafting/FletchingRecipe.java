@@ -67,7 +67,8 @@ public class FletchingRecipe implements Recipe<Container> {
         NonNullList<Ingredient> nonnulllist = NonNullList.create();
         nonnulllist.add(Ingredient.of(this.baseIngredient));
         nonnulllist.add(Ingredient.of(this.catalyst1));
-        nonnulllist.add(Ingredient.of(this.catalyst2));
+        if (this.catalyst2 != null)
+            nonnulllist.add(Ingredient.of(this.catalyst2));
         return nonnulllist;
     }
 

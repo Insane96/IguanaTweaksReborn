@@ -1,0 +1,13 @@
+{
+    "type": "survivalreimagined:fletching",
+    "category": "fletching_misc",
+    "ingredient": {
+        "item": "minecraft:arrow",
+        "count": 2
+    },
+    "catalyst1": "minecraft:quartz",
+    "result": {
+        "item": "survivalreimagined:quartz_arrow",
+        "count": 2
+    }
+}

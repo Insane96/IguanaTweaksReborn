@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.data.generator.client;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
 import insane96mcp.survivalreimagined.module.experience.feature.AncientLapis;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.experience.feature.UnbreakingOverhaul;
@@ -141,6 +142,9 @@ public class SRItemModelsProvider extends ItemModelProvider {
         handHeld(Forging.NETHERITE_HAMMER.get());
 
         basicItem(Cloth.CLOTH.get());
+
+        basicItem(Fletching.QUARTZ_ARROW.get());
+        basicItem(Fletching.DIAMOND_ARROW.get());
 
         basicItemWithTexture(CyanFlower.FLOWER.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/cyan_flower"));
     }
