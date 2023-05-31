@@ -8,6 +8,8 @@
 * Added Cyan Flower
   * Generates in snowy biomes
 * Added Gravity Defying enchantment
+* Added Elytra Nerf Feature
+  * When using an elytra in non-End dimensions the player falls faster
 * Cleansed lapis now has greatly increased chance to drop
 * Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe. Also Expanded III now mines more blocks instead of being the same of lvl II
 
