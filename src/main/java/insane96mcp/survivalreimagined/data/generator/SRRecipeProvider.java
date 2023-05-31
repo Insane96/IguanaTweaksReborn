@@ -6,6 +6,7 @@ import insane96mcp.survivalreimagined.module.experience.feature.AncientLapis;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
+import insane96mcp.survivalreimagined.module.mining.data.ForgeRecipeBuilder;
 import insane96mcp.survivalreimagined.module.mining.data.MultiItemSmeltingRecipeBuilder;
 import insane96mcp.survivalreimagined.module.mining.feature.Durium;
 import insane96mcp.survivalreimagined.module.mining.feature.Forging;

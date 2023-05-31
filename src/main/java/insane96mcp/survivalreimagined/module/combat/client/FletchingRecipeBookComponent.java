@@ -1,9 +1,9 @@
 package insane96mcp.survivalreimagined.module.combat.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import insane96mcp.survivalreimagined.module.combat.crafting.FletchingRecipe;
+import insane96mcp.survivalreimagined.module.combat.inventory.FletchingMenu;
 import insane96mcp.survivalreimagined.module.mining.client.GhostRecipeAmount;
-import insane96mcp.survivalreimagined.module.mining.crafting.ForgeRecipe;
-import insane96mcp.survivalreimagined.module.mining.inventory.ForgeMenu;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.inventory.Slot;
@@ -33,17 +33,17 @@ public class FletchingRecipeBookComponent extends RecipeBookComponent {
         ItemStack resultStack = pRecipe.getResultItem(this.minecraft.level.registryAccess());
         this.ghostRecipeAmount.setRecipe(pRecipe);
         this.ghostRecipe.setRecipe(pRecipe);
-        this.ghostRecipeAmount.addIngredient(Ingredient.of(resultStack), 1, (pSlots.get(ForgeMenu.RESULT_SLOT)).x, (pSlots.get(ForgeMenu.RESULT_SLOT)).y);
+        this.ghostRecipeAmount.addIngredient(Ingredient.of(resultStack), resultStack.getCount(), (pSlots.get(FletchingMenu.RESULT_SLOT)).x, (pSlots.get(FletchingMenu.RESULT_SLOT)).y);
         NonNullList<Ingredient> nonnulllist = pRecipe.getIngredients();
         Iterator<Ingredient> iterator = nonnulllist.iterator();
-        for(int i = 0; i < 2; ++i) {
+        for(int i = 0; i < 3; ++i) {
             if (!iterator.hasNext()) {
                 return;
             }
             Ingredient ingredient = iterator.next();
             if (!ingredient.isEmpty()) {
                 Slot slot1 = pSlots.get(i);
-                this.ghostRecipeAmount.addIngredient(ingredient, i == 1 ? 1 : ((ForgeRecipe)pRecipe).getIngredientAmount(), slot1.x, slot1.y);
+                this.ghostRecipeAmount.addIngredient(ingredient, ((FletchingRecipe)pRecipe).getIngredientAmount(i), slot1.x, slot1.y);
             }
         }
     }

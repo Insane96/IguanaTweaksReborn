@@ -32,10 +32,10 @@ public class FletchingScreen extends AbstractContainerScreen<FletchingMenu> impl
         this.widthTooNarrow = this.width < 379;
         this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
         this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-        this.addRenderableWidget(new ImageButton(this.leftPos + 20, this.height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (p_274677_) -> {
+        this.addRenderableWidget(new ImageButton(this.leftPos + 15, this.height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (p_274677_) -> {
             this.recipeBookComponent.toggleVisibility();
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-            ((ImageButton)p_274677_).setPosition(this.leftPos + 20, this.height / 2 - 49);
+            ((ImageButton)p_274677_).setPosition(this.leftPos + 15, this.height / 2 - 49);
         }));
         this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
     }
@@ -62,6 +62,9 @@ public class FletchingScreen extends AbstractContainerScreen<FletchingMenu> impl
 
     protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
         RenderSystem.setShaderTexture(0, this.texture);
+        int leftPos = this.leftPos;
+        int topPos = this.topPos;
+        blit(pPoseStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
 
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {

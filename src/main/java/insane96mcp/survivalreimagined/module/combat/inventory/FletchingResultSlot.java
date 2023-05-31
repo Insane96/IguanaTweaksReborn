@@ -1,18 +1,24 @@
 package insane96mcp.survivalreimagined.module.combat.inventory;
 
-import net.minecraft.server.level.ServerPlayer;
+import insane96mcp.survivalreimagined.module.combat.crafting.FletchingRecipe;
+import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.Optional;
+
 public class FletchingResultSlot extends Slot {
+    private final CraftingContainer craftSlots;
     private final Player player;
     private int removeCount;
 
-    public FletchingResultSlot(Player pPlayer, Container pContainer, int pSlot, int pXPosition, int pYPosition) {
+    public FletchingResultSlot(Player pPlayer, CraftingContainer craftSlots, Container pContainer, int pSlot, int pXPosition, int pYPosition) {
         super(pContainer, pSlot, pXPosition, pYPosition);
         this.player = pPlayer;
+        this.craftSlots = craftSlots;
     }
 
     /**
@@ -35,7 +41,16 @@ public class FletchingResultSlot extends Slot {
 
     public void onTake(Player pPlayer, ItemStack pStack) {
         this.checkTakeAchievements(pStack);
-        super.onTake(pPlayer, pStack);
+        net.minecraftforge.common.ForgeHooks.setCraftingPlayer(pPlayer);
+        Optional<FletchingRecipe> oRecipe = pPlayer.level.getRecipeManager().getRecipeFor(Fletching.FLETCHING_RECIPE_TYPE.get(), this.craftSlots, pPlayer.level);
+        net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
+        if (oRecipe.isEmpty())
+            return;
+        FletchingRecipe recipe = oRecipe.get();
+        this.craftSlots.removeItem(0, recipe.getBaseIngredient().getCount());
+        this.craftSlots.removeItem(1, recipe.getCatalyst1().getCount());
+        if (recipe.getCatalyst2() != null)
+            this.craftSlots.removeItem(2, recipe.getCatalyst2().getCount());
     }
 
     /**
@@ -45,17 +60,5 @@ public class FletchingResultSlot extends Slot {
     protected void onQuickCraft(ItemStack pStack, int pAmount) {
         this.removeCount += pAmount;
         this.checkTakeAchievements(pStack);
-    }
-
-    /**
-     * @param pStack the output - ie, iron ingots, and pickaxes, not ore and wood.
-     */
-    protected void checkTakeAchievements(ItemStack pStack) {
-        pStack.onCraftedBy(this.player.level, this.player, this.removeCount);
-        if (this.player instanceof ServerPlayer && this.container instanceof FletchingTableBlockEntity fletchingTableBlockEntity) {
-            fletchingTableBlockEntity.awardUsedRecipes(this.player);
-        }
-
-        this.removeCount = 0;
     }
 }

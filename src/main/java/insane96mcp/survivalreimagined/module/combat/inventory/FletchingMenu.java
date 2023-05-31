@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.combat.inventory;
 
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.combat.crafting.FletchingRecipe;
 import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -13,7 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 
 import java.util.Optional;
 
@@ -33,6 +33,7 @@ public class FletchingMenu extends RecipeBookMenu<CraftingContainer> {
     private final ContainerLevelAccess access;
     private final Player player;
     final RecipeType<? extends FletchingRecipe> recipeType;
+    private final RecipeBookType recipeBookType;
 
     public FletchingMenu(int pContainerId, Inventory pPlayerInventory) {
         this(pContainerId, pPlayerInventory, ContainerLevelAccess.NULL);
@@ -43,12 +44,13 @@ public class FletchingMenu extends RecipeBookMenu<CraftingContainer> {
         this.access = pAccess;
         this.player = pPlayerInventory.player;
         this.recipeType = Fletching.FLETCHING_RECIPE_TYPE.get();
+        this.recipeBookType = SurvivalReimagined.FLETCHING_RECIPE_BOOK_TYPE;
         this.level = pPlayerInventory.player.level;
 
-        this.addSlot(new Slot(this.craftSlots, INGREDIENT_SLOT, 36, 35));
-        this.addSlot(new Slot(this.craftSlots, INGREDIENT_SLOT, 56, 35));
-        this.addSlot(new Slot(this.craftSlots, INGREDIENT_SLOT, 76, 35));
-        this.addSlot(new ResultSlot(pPlayerInventory.player, this.craftSlots, this.resultSlots, RESULT_SLOT, 116, 35));
+        this.addSlot(new Slot(this.craftSlots, INGREDIENT_SLOT, 56, 26));
+        this.addSlot(new Slot(this.craftSlots, CATALYST_1_SLOT, 47, 44));
+        this.addSlot(new Slot(this.craftSlots, CATALYST_2_SLOT, 65, 44));
+        this.addSlot(new FletchingResultSlot(pPlayerInventory.player, this.craftSlots, this.resultSlots, RESULT_SLOT, 124, 35));
 
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 9; ++j) {
@@ -148,21 +150,21 @@ public class FletchingMenu extends RecipeBookMenu<CraftingContainer> {
     protected static void slotChangedCraftingGrid(AbstractContainerMenu pMenu, Level pLevel, Player pPlayer, CraftingContainer pContainer, ResultContainer pResult) {
         if (!pLevel.isClientSide) {
             ServerPlayer serverplayer = (ServerPlayer)pPlayer;
-            ItemStack itemstack = ItemStack.EMPTY;
-            Optional<FletchingRecipe> optional = pLevel.getServer().getRecipeManager().getRecipeFor(Fletching.FLETCHING_RECIPE_TYPE.get(), pContainer, pLevel);
-            if (optional.isPresent()) {
-                FletchingRecipe craftingrecipe = optional.get();
-                if (pResult.setRecipeUsed(pLevel, serverplayer, craftingrecipe)) {
-                    ItemStack itemstack1 = craftingrecipe.assemble(pContainer, pLevel.registryAccess());
+            ItemStack resultStack = ItemStack.EMPTY;
+            Optional<FletchingRecipe> oFletchingRecipe = pLevel.getServer().getRecipeManager().getRecipeFor(Fletching.FLETCHING_RECIPE_TYPE.get(), pContainer, pLevel);
+            if (oFletchingRecipe.isPresent()) {
+                FletchingRecipe fletchingRecipe = oFletchingRecipe.get();
+                if (pResult.setRecipeUsed(pLevel, serverplayer, fletchingRecipe)) {
+                    ItemStack itemstack1 = fletchingRecipe.assemble(pContainer, pLevel.registryAccess());
                     if (itemstack1.isItemEnabled(pLevel.enabledFeatures())) {
-                        itemstack = itemstack1;
+                        resultStack = itemstack1;
                     }
                 }
             }
 
-            pResult.setItem(RESULT_SLOT, itemstack);
-            pMenu.setRemoteSlot(RESULT_SLOT, itemstack);
-            serverplayer.connection.send(new ClientboundContainerSetSlotPacket(pMenu.containerId, pMenu.incrementStateId(), RESULT_SLOT, itemstack));
+            pResult.setItem(RESULT_SLOT, resultStack);
+            pMenu.setRemoteSlot(RESULT_SLOT, resultStack);
+            serverplayer.connection.send(new ClientboundContainerSetSlotPacket(pMenu.containerId, pMenu.incrementStateId(), RESULT_SLOT, resultStack));
         }
     }
 
@@ -175,7 +177,7 @@ public class FletchingMenu extends RecipeBookMenu<CraftingContainer> {
      * Determines whether supplied player can use this container
      */
     public boolean stillValid(Player pPlayer) {
-        return stillValid(this.access, pPlayer, Blocks.CRAFTING_TABLE);
+        return stillValid(this.access, pPlayer, Fletching.FLETCHING_TABLE.block().get());
     }
 
     public boolean canTakeItemForPickAll(ItemStack pStack, Slot pSlot) {
@@ -199,7 +201,7 @@ public class FletchingMenu extends RecipeBookMenu<CraftingContainer> {
     }
 
     public RecipeBookType getRecipeBookType() {
-        return RecipeBookType.CRAFTING;
+        return this.recipeBookType;
     }
 
     public boolean shouldMoveToInventory(int pSlotIndex) {

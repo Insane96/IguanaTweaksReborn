@@ -115,6 +115,7 @@ public class ClientSetup {
             event.accept(MultiBlockFurnaces.BLAST_FURNACE.item().get());
             event.accept(MultiBlockFurnaces.SOUL_BLAST_FURNACE.item().get());
             event.accept(Forging.FORGE.item().get());
+            event.accept(Fletching.FLETCHING_TABLE.item().get());
         }
         else if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.accept(Minecarts.COPPER_POWERED_RAIL.item().get());

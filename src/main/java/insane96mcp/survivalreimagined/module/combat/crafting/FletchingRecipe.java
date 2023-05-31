@@ -84,6 +84,23 @@ public class FletchingRecipe implements Recipe<Container> {
         return this.catalyst2;
     }
 
+    public int getIngredientAmount(int slot) {
+        switch (slot) {
+            case 0 -> {
+                return this.baseIngredient.getCount();
+            }
+            case 1 -> {
+                return this.catalyst1.getCount();
+            }
+            case 2 -> {
+                if (this.catalyst2 != null)
+                    return this.catalyst2.getCount();
+                return 0;
+            }
+        }
+        return 0;
+    }
+
     @Override
     public RecipeSerializer<?> getSerializer() {
         return Fletching.FLETCHING_RECIPE_SERIALIZER.get();
