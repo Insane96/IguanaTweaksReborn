@@ -23,14 +23,16 @@ public class ExplosiveArrow extends Arrow {
     @Override
     protected void onHitBlock(BlockHitResult pResult) {
         super.onHitBlock(pResult);
-        this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2f, Level.ExplosionInteraction.MOB);
         this.discard();
+        if (!this.level.isClientSide)
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2f, Level.ExplosionInteraction.MOB);
     }
 
     @Override
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
-        this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2f, Level.ExplosionInteraction.MOB);
         this.discard();
+        if (!this.level.isClientSide)
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2f, Level.ExplosionInteraction.MOB);
     }
 }

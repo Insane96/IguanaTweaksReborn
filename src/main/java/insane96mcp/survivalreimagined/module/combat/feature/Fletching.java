@@ -46,21 +46,21 @@ public class Fletching extends Feature {
 			EntityType.Builder.<Arrow>of(Arrow::new, MobCategory.MISC)
 					.sized(0.5F, 0.5F)
 					.clientTrackingRange(4)
-					.updateInterval(20)
+					.updateInterval(3)
 					.build("quartz_arrow"));
 
 	public static final RegistryObject<EntityType<Arrow>> DIAMOND_ARROW = SREntityTypes.REGISTRY.register("diamond_arrow", () ->
 			EntityType.Builder.<Arrow>of(Arrow::new, MobCategory.MISC)
 					.sized(0.5F, 0.5F)
 					.clientTrackingRange(4)
-					.updateInterval(20)
+					.updateInterval(3)
 					.build("diamond_arrow"));
 
 	public static final RegistryObject<EntityType<ExplosiveArrow>> EXPLOSIVE_ARROW = SREntityTypes.REGISTRY.register("explosive_arrow", () ->
 			EntityType.Builder.<ExplosiveArrow>of(ExplosiveArrow::new, MobCategory.MISC)
 					.sized(0.5F, 0.5F)
 					.clientTrackingRange(4)
-					.updateInterval(20)
+					.updateInterval(3)
 					.build("explosive_arrow"));
 
 	public static final RegistryObject<SRArrow> QUARTZ_ARROW_ITEM = SRItems.REGISTRY.register("quartz_arrow", () -> new SRArrow(QUARTZ_ARROW::get, 2.5f, new Item.Properties()));
