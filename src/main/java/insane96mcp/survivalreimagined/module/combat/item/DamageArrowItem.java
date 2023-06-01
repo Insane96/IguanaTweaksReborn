@@ -26,6 +26,7 @@ public class DamageArrowItem extends ArrowItem {
         Arrow arrow = arrowType.get().create(pLevel);
         if (arrow == null)
             return super.createArrow(pLevel, pStack, pShooter);
+        arrow.setPos(pShooter.getX(), pShooter.getEyeY() - (double)0.1F, pShooter.getZ());
         arrow.setOwner(pShooter);
         arrow.setBaseDamage(baseDamage);
         return arrow;
