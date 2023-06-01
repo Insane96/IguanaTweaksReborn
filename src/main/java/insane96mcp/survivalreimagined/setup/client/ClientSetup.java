@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.setup.client;
 import com.google.common.collect.ImmutableList;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.combat.client.FletchingScreen;
+import insane96mcp.survivalreimagined.module.combat.client.SRArrowRenderer;
 import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
 import insane96mcp.survivalreimagined.module.experience.feature.AncientLapis;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
@@ -99,6 +100,10 @@ public class ClientSetup {
             event.accept(SoulSteel.BOOTS.get());
             event.accept(SoulSteel.SWORD.get());
             event.accept(SoulSteel.SHIELD.get());
+
+            event.accept(Fletching.QUARTZ_ARROW_ITEM.get());
+            event.accept(Fletching.DIAMOND_ARROW_ITEM.get());
+            event.accept(Fletching.EXPLOSIVE_ARROW_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(Durium.SCRAP_BLOCK.item().get());
@@ -185,6 +190,9 @@ public class ClientSetup {
 
     public static void entityRenderEvent(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(SREntityTypes.PILABLE_FALLING_LAYER.get(), FallingBlockRenderer::new);
+        event.registerEntityRenderer(Fletching.QUARTZ_ARROW.get(), SRArrowRenderer::new);
+        event.registerEntityRenderer(Fletching.DIAMOND_ARROW.get(), SRArrowRenderer::new);
+        event.registerEntityRenderer(Fletching.EXPLOSIVE_ARROW.get(), SRArrowRenderer::new);
     }
 
     static RecipeBookCategories BLAST_FURNACE_SEARCH = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "blast_furnace_search", new ItemStack(Items.COMPASS));

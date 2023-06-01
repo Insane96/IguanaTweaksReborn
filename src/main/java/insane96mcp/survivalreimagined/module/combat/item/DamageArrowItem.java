@@ -1,23 +1,32 @@
 package insane96mcp.survivalreimagined.module.combat.item;
 
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import java.util.function.Supplier;
+
 public class DamageArrowItem extends ArrowItem {
     final float baseDamage; // Vanilla arrow is 2.0
+    final Supplier<EntityType<? extends Arrow>> arrowType;
 
-    public DamageArrowItem(float baseDamage, Properties pProperties) {
+    public DamageArrowItem(Supplier<EntityType<? extends Arrow>> arrowType, float baseDamage, Properties pProperties) {
         super(pProperties);
+        this.arrowType = arrowType;
         this.baseDamage = baseDamage;
     }
 
     @Override
     public AbstractArrow createArrow(Level pLevel, ItemStack pStack, LivingEntity pShooter) {
-        AbstractArrow arrow = super.createArrow(pLevel, pStack, pShooter);
+        Arrow arrow = arrowType.get().create(pLevel);
+        if (arrow == null)
+            return super.createArrow(pLevel, pStack, pShooter);
+        arrow.setOwner(pShooter);
         arrow.setBaseDamage(baseDamage);
         return arrow;
     }

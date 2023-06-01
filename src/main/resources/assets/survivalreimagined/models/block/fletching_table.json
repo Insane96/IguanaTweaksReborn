@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "minecraft:block/birch_planks",
+    "east": "survivalreimagined:block/fletching_table_side",
+    "north": "survivalreimagined:block/fletching_table_front",
+    "particle": "survivalreimagined:block/fletching_table_front",
+    "south": "survivalreimagined:block/fletching_table_front",
+    "up": "survivalreimagined:block/fletching_table_top",
+    "west": "survivalreimagined:block/fletching_table_side"
+  }
+}

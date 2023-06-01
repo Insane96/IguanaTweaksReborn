@@ -1,0 +1,13 @@
+{
+    "type": "survivalreimagined:fletching",
+    "category": "fletching_misc",
+    "ingredient": {
+        "item": "minecraft:arrow",
+        "count": 4
+    },
+    "catalyst1": "minecraft:tnt",
+    "result": {
+        "item": "survivalreimagined:explosive_arrow",
+        "count": 4
+    }
+}

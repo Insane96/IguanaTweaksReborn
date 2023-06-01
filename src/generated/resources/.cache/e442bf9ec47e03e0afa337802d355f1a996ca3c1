@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-31T20:44:06.2361489	Item Models: survivalreimagined
+// 1.19.4	2023-06-01T10:54:35.5384169	Item Models: survivalreimagined
 0e14a5fda7239c8fc0a79813151a4eba3c430f5f assets/survivalreimagined/models/item/ancient_lapis.json
 9db8ff6b8f62a90066f9ec6f113f30579ef147b4 assets/survivalreimagined/models/item/blast_furnace.json
 fe69cbb0039b59fd572532480721ff573ee4aa76 assets/survivalreimagined/models/item/brown_mushroom_stew.json
@@ -39,6 +39,7 @@ ee7260d98231b7e4c6902458b7e58305a2f15380 assets/survivalreimagined/models/item/d
 313300a16ea7cc01a54c0ec8099ea9bf05edd0ac assets/survivalreimagined/models/item/durium_shield.json
 d2635ca2b9618624f4b09cf7bb03a0916ee0d1c9 assets/survivalreimagined/models/item/durium_shovel.json
 0e01aae5dcaf86c626ea5af0d554c8d20135c11b assets/survivalreimagined/models/item/durium_sword.json
+b93d7500b2a6bb1e416411a76e33cf9e71e9bc1e assets/survivalreimagined/models/item/explosive_arrow.json
 eaa15259b4477c3c14e08ee23e4d157a5fbf5bbc assets/survivalreimagined/models/item/explosive_barrel.json
 8fc4dda3f0425d16ceb59e1d494e3958ab7261dc assets/survivalreimagined/models/item/firestarter.json
 ddf36beda8e2d5149e8ba799e877065463886deb assets/survivalreimagined/models/item/flint_axe.json
