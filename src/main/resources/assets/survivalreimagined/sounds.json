@@ -2,5 +2,9 @@
     "injured": {
         "subtitle": "survivalreimagined.subtitle.injured",
         "sounds": [ "survivalreimagined:injured" ]
+    },
+    "primed_mining_charge": {
+        "subtitle": "survivalreimagined.subtitle.primed_mining_charge",
+        "sounds": [ "minecraft:entity.tnt.primed" ]
     }
 }

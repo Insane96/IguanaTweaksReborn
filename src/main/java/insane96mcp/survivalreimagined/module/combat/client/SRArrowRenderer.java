@@ -8,9 +8,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.projectile.Arrow;
 
 public class SRArrowRenderer extends ArrowRenderer<Arrow> {
-    public static final ResourceLocation QUARTZ_ARROW_LOCATION = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "textures/entity/projectiles/quartz.png");
-    public static final ResourceLocation DIAMOND_ARROW_LOCATION = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "textures/entity/projectiles/diamond.png");
-    public static final ResourceLocation EXPLOSIVE_ARROW_LOCATION = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "textures/entity/projectiles/explosive.png");
+    public static final ResourceLocation QUARTZ_ARROW_LOCATION = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "textures/entity/projectiles/quartz_arrow.png");
+    public static final ResourceLocation DIAMOND_ARROW_LOCATION = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "textures/entity/projectiles/diamond_arrow.png");
+    public static final ResourceLocation EXPLOSIVE_ARROW_LOCATION = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "textures/entity/projectiles/explosive_arrow.png");
     public SRArrowRenderer(EntityRendererProvider.Context pContext) {
         super(pContext);
     }

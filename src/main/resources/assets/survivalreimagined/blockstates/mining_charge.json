@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "survivalreimagined:block/mining_charge",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "survivalreimagined:block/mining_charge",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "survivalreimagined:block/mining_charge",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "survivalreimagined:block/mining_charge",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "survivalreimagined:block/mining_charge"
+    },
+    "facing=west": {
+      "model": "survivalreimagined:block/mining_charge",
+      "x": 90,
+      "y": 270
+    }
+  }
+}
