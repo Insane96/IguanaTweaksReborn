@@ -16,8 +16,11 @@
 * Added Elytra Nerf Feature
   * When using an elytra in non-End dimensions, the player falls faster
 * Cleansed lapis now has greatly increased chance to drop
-* Buffed Feather Falling
 * Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe. Also Expanded III now mines more blocks instead of being the same as lvl II
+* Buffed Feather Falling
+* Durium
+  * Now requires a Forge to be made, instead of Smithing table
+  * Drops from ore increased by 3x
 * The Season now starts in early summer instead of mid-summer
 * Increased random tick speed to 2 from 1
   * Doubles the speed of plants, crops and much more stuff growing
