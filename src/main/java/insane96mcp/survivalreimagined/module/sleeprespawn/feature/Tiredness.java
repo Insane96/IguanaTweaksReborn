@@ -320,6 +320,7 @@ public class Tiredness extends SRFeature {
 		}*/
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	private static void drawOnScreenWithBackground(PoseStack mStack, int x, int y, String text, int backgroundColor, int textColor) {
 		ForgeGui.fill(mStack, x - 1, y - 1, x + Minecraft.getInstance().font.width(text) + 1, y + Minecraft.getInstance().font.lineHeight - 1, backgroundColor);
 		Minecraft.getInstance().font.draw(mStack, text, x, y, textColor);
