@@ -129,6 +129,8 @@
 
 	"survivalreimagined.innate_luck": "Innate Luck",
 
+	"block.survivalreimagined.mining_charge": "Mining Charge",
+
 	"survivalreimagined.multi_block_structure": "Requires a multi block structure to work",
 	"survivalreimagined.blast_furnace_invalid_structure": "Multi block structure not valid. Must have a bottom layer of Smooth Stone, a middle and top layer of Bricks (top layer can be stairs). The center middle and center top blocks of the 3x3x3 can be anything.",
 	"survivalreimagined.soul_blast_furnace_invalid_structure": "Multi block structure not valid. Must have a bottom layer of worked Blackstone, a middle and top layer of Red Nether Bricks (top layer can be stairs). The center middle and center top blocks of the 3x3x3 can be anything.",

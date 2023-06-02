@@ -8,10 +8,7 @@ import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.mining.data.ForgeRecipeBuilder;
 import insane96mcp.survivalreimagined.module.mining.data.MultiItemSmeltingRecipeBuilder;
-import insane96mcp.survivalreimagined.module.mining.feature.Durium;
-import insane96mcp.survivalreimagined.module.mining.feature.Forging;
-import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
-import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
+import insane96mcp.survivalreimagined.module.mining.feature.*;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Cloth;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import insane96mcp.survivalreimagined.module.world.feature.CyanFlower;
@@ -490,6 +487,16 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(CyanFlower.FLOWER.item().get())
                 .unlockedBy("has_flower", has(CyanFlower.FLOWER.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "cyan_dye_from_cyan_flower");
+
+        //Mining Charge
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, MiningCharge.MINING_CHARGE.item().get())
+                .pattern("GGG")
+                .pattern("SsS")
+                .define('G', Items.GUNPOWDER)
+                .define('S', Items.SAND)
+                .define('s', Items.SLIME_BALL)
+                .unlockedBy("has_gunpowder", has(Items.GUNPOWDER))
+                .save(writer);
 
         //Soul Blast Furnace
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, MultiBlockFurnaces.SOUL_BLAST_FURNACE.item().get())

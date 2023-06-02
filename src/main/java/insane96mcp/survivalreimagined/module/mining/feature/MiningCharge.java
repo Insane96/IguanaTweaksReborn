@@ -24,7 +24,7 @@ public class MiningCharge extends Feature {
 
 	public static final BlockWithItem MINING_CHARGE = BlockWithItem.register("mining_charge", () -> new MiningChargeBlock(BlockBehaviour.Properties.copy(Blocks.TNT)));
 
-	public static final RegistryObject<EntityType<PrimedMiningCharge>> PRIMED_MINING_CHARGE = SREntityTypes.REGISTRY.register("mining_charge", () -> EntityType.Builder.<PrimedMiningCharge>of(PrimedMiningCharge::new, MobCategory.MISC).fireImmune().sized(0.98F, 0.98F).clientTrackingRange(10).updateInterval(10).build("mining_charge"));
+	public static final RegistryObject<EntityType<PrimedMiningCharge>> PRIMED_MINING_CHARGE = SREntityTypes.REGISTRY.register("mining_charge", () -> EntityType.Builder.<PrimedMiningCharge>of(PrimedMiningCharge::new, MobCategory.MISC).fireImmune().sized(0.735F, 0.735F).clientTrackingRange(10).updateInterval(10).build("mining_charge"));
 
 	public static final RegistryObject<SoundEvent> PRIMED_MINING_CHARGE_SOUND = SRSoundEvents.REGISTRY.register("primed_mining_charge", () -> SoundEvent.createFixedRangeEvent(new ResourceLocation("entity.tnt.primed"), 16f));
 

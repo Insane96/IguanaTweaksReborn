@@ -1,6 +1,9 @@
 # Changelog
 
 ## 0.12.0
+* Added Fletching Table
+  * Craft more arrows
+  * 3 new types of arrows
 * Added Cloth
   * Drops from zombies
   * Required to make a bed
@@ -11,7 +14,7 @@
 * Added Elytra Nerf Feature
   * When using an elytra in non-End dimensions the player falls faster
 * Cleansed lapis now has greatly increased chance to drop
-* Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe. Also Expanded III now mines more blocks instead of being the same of lvl II
+* Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe. Also Expanded III now mines more blocks instead of being the same as lvl II
 
 ## 0.11.3
 * Heavily reduced armor slowdown

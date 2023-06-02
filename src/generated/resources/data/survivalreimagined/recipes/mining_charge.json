@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "S": {
+      "item": "minecraft:sand"
+    },
+    "s": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "SsS"
+  ],
+  "result": {
+    "item": "survivalreimagined:mining_charge"
+  },
+  "show_notification": true
+}

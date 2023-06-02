@@ -1,14 +1,14 @@
 {
   "parent": "minecraft:block/block",
   "textures": {
-    "top": "survivalreimagined:block/forge_top",
-    "side": "survivalreimagined:block/forge_side",
-    "particle": "block/slime_block",
+    "top": "minecraft:block/tnt_top",
+    "side": "minecraft:block/tnt_side",
+    "particle": "block/tnt_side",
     "bottom": "block/slime_block"
   },
   "elements": [
     {
-      "name": "Anvil base",
+      "name": "Charge",
       "from": [2, 0, 2],
       "to": [14, 6, 14],
       "faces": {
@@ -24,7 +24,7 @@
   "display": {
     "fixed": {
       "rotation": [0, 90, 0],
-      "scale": [0.5, 0.5, 0.5]
+      "scale": [0.6, 0.6, 0.6]
     }
   }
 }
