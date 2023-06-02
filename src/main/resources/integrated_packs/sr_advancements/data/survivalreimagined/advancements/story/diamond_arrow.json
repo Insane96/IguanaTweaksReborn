@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:diamond_arrow"
+		},
+		"title": {
+			"translate": "advancements.sr_story.diamond_arrow.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.diamond_arrow.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "minecraft:story/mine_diamond",
+	"criteria": {
+		"diamond_arrow": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"survivalreimagined:diamond_arrow"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"diamond_arrow"
+		]
+	]
+}

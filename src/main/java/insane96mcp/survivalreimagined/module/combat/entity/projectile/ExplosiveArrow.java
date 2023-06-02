@@ -20,6 +20,7 @@ public class ExplosiveArrow extends Arrow {
         super(pLevel, pShooter);
     }
 
+    //TODO overwrite both to have more control
     @Override
     protected void onHitBlock(BlockHitResult pResult) {
         super.onHitBlock(pResult);

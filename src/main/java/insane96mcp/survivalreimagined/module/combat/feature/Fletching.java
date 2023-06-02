@@ -74,8 +74,6 @@ public class Fletching extends Feature {
 			* Adds more arrows recipes""")
 	public static Boolean dataPack = true;
 
-
-	//TODO Flint arrow texture pack
 	public Fletching(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "fletching", Component.literal("Survival Reimagined Forging Equipment"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));

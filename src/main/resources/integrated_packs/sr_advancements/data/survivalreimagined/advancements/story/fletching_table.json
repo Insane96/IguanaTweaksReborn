@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:fletching_table"
+		},
+		"title": {
+			"translate": "advancements.sr_story.fletching_table.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.fletching_table.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/furnace",
+	"criteria": {
+		"fletching_table": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"survivalreimagined:fletching_table"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"fletching_table"
+		]
+	]
+}
