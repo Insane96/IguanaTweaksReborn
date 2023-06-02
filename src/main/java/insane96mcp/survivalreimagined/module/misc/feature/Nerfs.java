@@ -25,7 +25,7 @@ public class Nerfs extends Feature {
 	@Label(name = "No Coordinates", description = "If true, renderDebugInfo is enabled by default. Requires a world restart")
 	public static Boolean noCoordinates = true;
 	@Config
-	@Label(name = "Reduced Random Tick Speed", description = "If true, randomTickSpeed is set to 1 from 3")
+	@Label(name = "Reduced Random Tick Speed", description = "If true, randomTickSpeed is set to 2 from 3")
 	public static Boolean reducedRandomTickSpeed = true;
 
 	public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -49,6 +49,6 @@ public class Nerfs extends Feature {
 		if (noCoordinates && FMLLoader.isProduction())
 			event.getServer().getGameRules().getRule(GameRules.RULE_REDUCEDDEBUGINFO).set(true, event.getServer());
 		if (reducedRandomTickSpeed)
-			event.getServer().getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(1, event.getServer());
+			event.getServer().getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(2, event.getServer());
 	}
 }

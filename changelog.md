@@ -14,12 +14,13 @@
   * Generates in snowy biomes
 * Added Gravity Defying enchantment
 * Added Elytra Nerf Feature
-  * When using an elytra in non-End dimensions the player falls faster
+  * When using an elytra in non-End dimensions, the player falls faster
 * Cleansed lapis now has greatly increased chance to drop
 * Buffed Feather Falling
 * Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe. Also Expanded III now mines more blocks instead of being the same as lvl II
-* Season now starts in early summer instead of mid summer
-* 
+* The Season now starts in early summer instead of mid-summer
+* Increased random tick speed to 2 from 1
+  * Doubles the speed of plants, crops and much more stuff growing
 
 ## 0.11.3
 * Heavily reduced armor slowdown
@@ -33,7 +34,7 @@
 ## 0.11.2
 * Anvils
   * Items upgraded in Smithing Table can now be partially repaired with base material (e.g. Netherite tools can be repaired with Diamonds)
-  * Moved free rename and repair cap to this
+  * Moved "free rename" and "repair cap" to this
 * You can now bone meal dirt adjacent to grass to grow grass
 * Sped up hammers forging speed
 * Increased Spiders and Skeletons loot
