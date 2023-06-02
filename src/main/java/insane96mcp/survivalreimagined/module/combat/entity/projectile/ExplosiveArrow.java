@@ -30,9 +30,9 @@ public class ExplosiveArrow extends Arrow {
         this.setDeltaMovement(vec3);
         Vec3 vec31 = vec3.normalize().scale(0.05F);
         this.setPosRaw(this.getX() - vec31.x, this.getY() - vec31.y, this.getZ() - vec31.z);
-        this.discard();
         if (!this.level.isClientSide)
             this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2f, Level.ExplosionInteraction.BLOCK);
+        this.discard();
     }
 
     @Override
@@ -69,9 +69,9 @@ public class ExplosiveArrow extends Arrow {
 
         boolean isEnderman = entityHit.getType() == EntityType.ENDERMAN;
         if (!isEnderman && entityHit.hurt(damagesource, 0.01f)) {
-            this.discard();
             if (!this.level.isClientSide)
                 this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2f, Level.ExplosionInteraction.BLOCK);
+            this.discard();
         }
         else {
             this.setDeltaMovement(this.getDeltaMovement().scale(-0.1D));
