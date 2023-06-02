@@ -76,6 +76,9 @@ public class EnchantmentsFeature extends Feature {
 	@Config
 	@Label(name = "Prevent farmland trampling with Feather Falling")
 	public static Boolean preventFarmlandTramplingWithFeatherFalling = true;
+	@Config
+	@Label(name = "Buff Feather Falling", description = "Increases the damage protection from Feather Falling. From 12% per level to 16% per level")
+	public static Boolean buffFeatherFalling = true;
 
 	//TODO Make enchantments deactivable
 	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -269,6 +272,10 @@ public class EnchantmentsFeature extends Feature {
 
 	public static boolean isInfinityOverhaulEnabled() {
 		return Feature.isEnabled(EnchantmentsFeature.class) && infinityOverhaul;
+	}
+
+	public static boolean isFeatherFallingBuffed() {
+		return Feature.isEnabled(EnchantmentsFeature.class) && buffFeatherFalling;
 	}
 
 	private static final String path = "experience/enchantments";

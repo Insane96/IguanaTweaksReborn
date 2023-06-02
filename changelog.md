@@ -8,12 +8,15 @@
   * Drops from zombies
   * Required to make a bed
   * Can be used to make Chainmail armor
+* Added mining charge
+  * Breaks blocks in a 3x3x3 area
 * Added Cyan Flower
   * Generates in snowy biomes
 * Added Gravity Defying enchantment
 * Added Elytra Nerf Feature
   * When using an elytra in non-End dimensions the player falls faster
 * Cleansed lapis now has greatly increased chance to drop
+* Buffed Feather Falling
 * Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe. Also Expanded III now mines more blocks instead of being the same as lvl II
 
 ## 0.11.3
