@@ -18,6 +18,8 @@
 * Cleansed lapis now has greatly increased chance to drop
 * Buffed Feather Falling
 * Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe. Also Expanded III now mines more blocks instead of being the same as lvl II
+* Season now starts in early summer instead of mid summer
+* 
 
 ## 0.11.3
 * Heavily reduced armor slowdown

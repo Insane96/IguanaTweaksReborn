@@ -66,7 +66,7 @@ public class Seasons extends Feature {
 	@SubscribeEvent
 	public void onServerStart(ServerStartedEvent event) {
 		if (changeSereneSeasonsConfig) {
-			ServerConfig.startingSubSeason.set(5);
+			ServerConfig.startingSubSeason.set(4);
 			ServerConfig.progressSeasonWhileOffline.set(false);
 		}
 	}
@@ -75,7 +75,7 @@ public class Seasons extends Feature {
 	public void onPreLevelTick(TickEvent.LevelTickEvent event) {
 		if (!event.level.isClientSide && event.level.getGameTime() == 0 && changeSereneSeasonsConfig) {
 			SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(event.level);
-			seasonData.seasonCycleTicks = SeasonTime.ZERO.getSubSeasonDuration() * Season.SubSeason.MID_SUMMER.ordinal();
+			seasonData.seasonCycleTicks = SeasonTime.ZERO.getSubSeasonDuration() * Season.SubSeason.EARLY_SUMMER.ordinal();
 			//seasonData.seasonCycleTicks = event.level.random.nextInt(12) * SeasonTime.ZERO.getSubSeasonDuration();
 			seasonData.setDirty();
 			SeasonHandler.sendSeasonUpdate(event.level);
