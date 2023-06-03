@@ -23,6 +23,7 @@
   * Now requires a Forge to be made, instead of Smithing table
   * Drops from ore increased by 3x
 * The Season now starts in early summer instead of mid-summer
+* Golden armor and shield now give speed
 * Increased random tick speed to 2 from 1
   * Doubles the speed of plants, crops and much more stuff growing
 * Reduced poor ore generation and heavily lowered iron ore chance to discard on exposure

@@ -80,7 +80,7 @@ public class Stamina extends Feature {
                 if (player.getRandom().nextDouble() < 0.2d * (vigourInstance.getAmplifier() + 1))
                     return;
             }
-            //If the tired effect is active consume one more stamina per level above I
+            //If the tired effect is active, consume one more stamina per level above I
             if (player.hasEffect(SRMobEffects.TIRED.get())) {
                 MobEffectInstance tiredInstance = player.getEffect(SRMobEffects.TIRED.get());
                 //noinspection DataFlowIssue
@@ -90,7 +90,8 @@ public class Stamina extends Feature {
                 return;
             StaminaHandler.consumeStamina(player, amountConsumed);
             shouldSync = true;
-        } else if ((StaminaHandler.getStamina(player) != StaminaHandler.getMaxStamina(player) && StaminaHandler.getMaxStamina(player) >= 40)
+        }
+        else if ((StaminaHandler.getStamina(player) != StaminaHandler.getMaxStamina(player) && StaminaHandler.getMaxStamina(player) >= 40)
                 //Trigger the sync for clients
                 || player.tickCount == 1) {
             //Slower regeneration if stamina is locked

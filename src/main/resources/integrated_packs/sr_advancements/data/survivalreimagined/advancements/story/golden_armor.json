@@ -14,19 +14,21 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/iron_armor",
+	"parent": "survivalreimagined:story/furnace",
 	"criteria": {
 		"golden_armor": {
-			"trigger": "survivalreimagined:anvil_repair",
+			"trigger": "minecraft:inventory_changed",
 			"conditions": {
-				"output": {
-					"items": [
-						"minecraft:golden_helmet",
-						"minecraft:golden_chestplate",
-						"minecraft:golden_leggings",
-						"minecraft:golden_boots"
-					]
-				}
+				"items": [
+					{
+						"items": [
+							"minecraft:golden_helmet",
+							"minecraft:golden_chestplate",
+							"minecraft:golden_leggings",
+							"minecraft:golden_boots"
+						]
+					}
+				]
 			}
 		}
 	},
