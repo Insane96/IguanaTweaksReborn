@@ -9,5 +9,6 @@
     "item": "survivalreimagined:chained_copper_boots"
   },
   "result": "minecraft:iron_boots",
-  "smashes_required": 10
+  "smashes_required": 10,
+  "experience": 5
 }

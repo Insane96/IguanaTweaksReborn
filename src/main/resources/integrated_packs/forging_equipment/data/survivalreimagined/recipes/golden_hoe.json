@@ -9,5 +9,6 @@
     "item": "survivalreimagined:flint_hoe"
   },
   "result": "minecraft:golden_hoe",
-  "smashes_required": 6
+  "smashes_required": 6,
+  "experience": 3
 }

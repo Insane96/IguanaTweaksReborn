@@ -9,5 +9,6 @@
     "item": "minecraft:iron_shovel"
   },
   "result": "survivalreimagined:soul_steel_shovel",
-  "smashes_required": 20
+  "smashes_required": 20,
+  "experience": 10
 }

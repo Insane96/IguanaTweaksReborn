@@ -9,5 +9,6 @@
     "item": "minecraft:golden_leggings"
   },
   "result": "minecraft:diamond_leggings",
-  "smashes_required": 22
+  "smashes_required": 22,
+  "experience": 11
 }

@@ -9,5 +9,6 @@
     "item": "minecraft:leather_chestplate"
   },
   "result": "minecraft:golden_chestplate",
-  "smashes_required": 6
+  "smashes_required": 6,
+  "experience": 3
 }

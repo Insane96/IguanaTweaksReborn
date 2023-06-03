@@ -9,5 +9,6 @@
     "item": "minecraft:iron_chestplate"
   },
   "result": "survivalreimagined:durium_chestplate",
-  "smashes_required": 20
+  "smashes_required": 20,
+  "experience": 10
 }

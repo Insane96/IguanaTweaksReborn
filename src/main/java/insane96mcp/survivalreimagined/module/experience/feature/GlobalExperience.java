@@ -32,7 +32,8 @@ public class GlobalExperience extends Feature {
 		if (!this.isEnabled()
 				|| globalMultiplier == 1.0d
 				|| !(event.getEntity() instanceof ExperienceOrb xpOrb)
-				|| xpOrb.getPersistentData().getBoolean(XP_PROCESSED))
+				|| xpOrb.getPersistentData().getBoolean(XP_PROCESSED)
+				|| event.getLevel().isClientSide)
 			return;
 
 		if (globalMultiplier == 0d)

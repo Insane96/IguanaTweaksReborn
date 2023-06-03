@@ -9,5 +9,6 @@
     "item": "minecraft:golden_sword"
   },
   "result": "minecraft:diamond_sword",
-  "smashes_required": 16
+  "smashes_required": 16,
+  "experience": 8
 }

@@ -774,12 +774,12 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         hammerCraftingRecipe(writer, Forging.STONE_HAMMER.get(), ItemTags.STONE_CRAFTING_MATERIALS);
         hammerCraftingRecipe(writer, Forging.FLINT_HAMMER.get(), Items.FLINT);
-        forgeRecipe(writer, Items.COPPER_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.COPPER_HAMMER.get(), 6);
-        forgeRecipe(writer, Items.IRON_INGOT, 5, Forging.STONE_HAMMER.get(), Forging.IRON_HAMMER.get(), 10);
-        forgeRecipe(writer, Durium.INGOT.get(), 5, Forging.IRON_HAMMER.get(), Forging.DURIUM_HAMMER.get(), 13);
-        forgeRecipe(writer, Items.GOLD_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.GOLDEN_HAMMER.get(), 4);
-        forgeRecipe(writer, Items.DIAMOND, 5, Forging.GOLDEN_HAMMER.get(), Forging.DIAMOND_HAMMER.get(), 16);
-        forgeRecipe(writer, SoulSteel.INGOT.get(), 5, Forging.IRON_HAMMER.get(), Forging.SOUL_STEEL_HAMMER.get(), 20);
+        forgeRecipe(writer, Items.COPPER_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.COPPER_HAMMER.get(), 6, 3f);
+        forgeRecipe(writer, Items.IRON_INGOT, 5, Forging.STONE_HAMMER.get(), Forging.IRON_HAMMER.get(), 10, 5f);
+        forgeRecipe(writer, Durium.INGOT.get(), 5, Forging.IRON_HAMMER.get(), Forging.DURIUM_HAMMER.get(), 13, 6.5f);
+        forgeRecipe(writer, Items.GOLD_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.GOLDEN_HAMMER.get(), 4, 2f);
+        forgeRecipe(writer, Items.DIAMOND, 5, Forging.GOLDEN_HAMMER.get(), Forging.DIAMOND_HAMMER.get(), 16, 8f);
+        forgeRecipe(writer, SoulSteel.INGOT.get(), 5, Forging.IRON_HAMMER.get(), Forging.SOUL_STEEL_HAMMER.get(), 20, 10f);
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.SOUL_STEEL_HAMMER.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.TOOLS, Forging.NETHERITE_HAMMER.get())
                 .unlocks("has_material", has(Items.NETHERITE_INGOT))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "netherite_hammer");
@@ -856,14 +856,16 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_material", has(materialTag))
                 .save(writer);
     }
-    private void forgeRecipe(Consumer<FinishedRecipe> writer, Item material, int amount, Item gear, Item result, int smashesRequired) {
+    private void forgeRecipe(Consumer<FinishedRecipe> writer, Item material, int amount, Item gear, Item result, int smashesRequired, float experience) {
         ForgeRecipeBuilder.forging(RecipeCategory.TOOLS, Ingredient.of(material), amount, Ingredient.of(gear), result, smashesRequired)
+                .awardExperience(experience)
                 .unlockedBy("has_material", has(material))
                 .save(writer);
     }
 
-    private void forgeRecipe(Consumer<FinishedRecipe> writer, TagKey<Item> materialTag, int amount, Item gear, Item result, int smashesRequired) {
+    private void forgeRecipe(Consumer<FinishedRecipe> writer, TagKey<Item> materialTag, int amount, Item gear, Item result, int smashesRequired, float experience) {
         ForgeRecipeBuilder.forging(RecipeCategory.TOOLS, Ingredient.of(materialTag), amount, Ingredient.of(gear), result, smashesRequired)
+                .awardExperience(experience)
                 .unlockedBy("has_material", has(materialTag))
                 .save(writer);
     }

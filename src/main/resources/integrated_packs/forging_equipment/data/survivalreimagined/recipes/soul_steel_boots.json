@@ -9,5 +9,6 @@
     "item": "minecraft:iron_boots"
   },
   "result": "survivalreimagined:soul_steel_boots",
-  "smashes_required": 20
+  "smashes_required": 20,
+  "experience": 10
 }

@@ -9,5 +9,6 @@
     "item": "minecraft:golden_pickaxe"
   },
   "result": "minecraft:diamond_pickaxe",
-  "smashes_required": 16
+  "smashes_required": 16,
+  "experience": 8
 }

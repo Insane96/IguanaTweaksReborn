@@ -9,5 +9,6 @@
     "item": "minecraft:iron_sword"
   },
   "result": "survivalreimagined:durium_sword",
-  "smashes_required": 13
+  "smashes_required": 13,
+  "experience": 6.5
 }

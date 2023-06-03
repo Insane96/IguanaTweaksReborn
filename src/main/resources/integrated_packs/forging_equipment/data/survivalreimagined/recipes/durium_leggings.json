@@ -9,5 +9,6 @@
     "item": "minecraft:iron_leggings"
   },
   "result": "survivalreimagined:durium_leggings",
-  "smashes_required": 18
+  "smashes_required": 18,
+  "experience": 9
 }

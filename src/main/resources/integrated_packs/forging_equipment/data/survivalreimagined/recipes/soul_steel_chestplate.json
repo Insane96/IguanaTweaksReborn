@@ -9,5 +9,6 @@
     "item": "minecraft:iron_chestplate"
   },
   "result": "survivalreimagined:soul_steel_chestplate",
-  "smashes_required": 30
+  "smashes_required": 30,
+  "experience": 15
 }

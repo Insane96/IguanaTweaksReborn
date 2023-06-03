@@ -9,5 +9,6 @@
     "item": "minecraft:stone_shovel"
   },
   "result": "minecraft:iron_shovel",
-  "smashes_required": 10
+  "smashes_required": 10,
+  "experience": 5
 }

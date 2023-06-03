@@ -30,6 +30,7 @@ public class ForgeRecipeBuilder implements RecipeBuilder {
     final Ingredient gear;
     private final Item result;
     protected final int smashesRequired;
+    protected float experience;
     private final RecipeSerializer<? extends ForgeRecipe> serializer;
     private final Advancement.Builder advancement = Advancement.Builder.advancement();
 
@@ -46,6 +47,11 @@ public class ForgeRecipeBuilder implements RecipeBuilder {
 
     public static ForgeRecipeBuilder forging(RecipeCategory pCategory, Ingredient ingredient, int ingredientAmount, Ingredient gear, ItemLike pResult, int smashesRequired) {
         return new ForgeRecipeBuilder(pCategory, SRBookCategory.FORGE_MISC, ingredient, ingredientAmount, gear, pResult, smashesRequired, Forging.FORGE_RECIPE_SERIALIZER.get());
+    }
+
+    public ForgeRecipeBuilder awardExperience(float experience) {
+        this.experience = experience;
+        return this;
     }
 
     @Override
@@ -68,7 +74,7 @@ public class ForgeRecipeBuilder implements RecipeBuilder {
     public void save(Consumer<FinishedRecipe> pFinishedRecipeConsumer, ResourceLocation pRecipeId) {
         this.ensureValid(pRecipeId);
         this.advancement.parent(ROOT_RECIPE_ADVANCEMENT).addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(pRecipeId)).rewards(AdvancementRewards.Builder.recipe(pRecipeId)).requirements(RequirementsStrategy.OR);
-        pFinishedRecipeConsumer.accept(new ForgeRecipeBuilder.Result(pRecipeId, this.bookCategory, this.ingredient, this.ingredientAmount, this.gear, this.result, this.smashesRequired, this.advancement, pRecipeId.withPrefix("recipes/" + this.category.getFolderName() + "/"), this.serializer));
+        pFinishedRecipeConsumer.accept(new ForgeRecipeBuilder.Result(pRecipeId, this.bookCategory, this.ingredient, this.ingredientAmount, this.gear, this.result, this.smashesRequired, this.experience, this.advancement, pRecipeId.withPrefix("recipes/" + this.category.getFolderName() + "/"), this.serializer));
     }
 
     /**
@@ -88,11 +94,12 @@ public class ForgeRecipeBuilder implements RecipeBuilder {
         private final Ingredient gear;
         private final Item result;
         private final int smashesRequired;
+        private final float experience;
         private final Advancement.Builder advancement;
         private final ResourceLocation advancementId;
         private final RecipeSerializer<? extends ForgeRecipe> serializer;
 
-        public Result(ResourceLocation id, SRBookCategory bookCategory, Ingredient ingredient, int ingredientAmount, Ingredient gear, ItemLike pResult, int smashesRequired, Advancement.Builder pAdvancement, ResourceLocation pAdvancementId, RecipeSerializer<? extends ForgeRecipe> pSerializer) {
+        public Result(ResourceLocation id, SRBookCategory bookCategory, Ingredient ingredient, int ingredientAmount, Ingredient gear, ItemLike pResult, int smashesRequired, float experience, Advancement.Builder pAdvancement, ResourceLocation pAdvancementId, RecipeSerializer<? extends ForgeRecipe> pSerializer) {
             this.id = id;
             this.category = bookCategory;
             this.ingredient = ingredient;
@@ -100,6 +107,7 @@ public class ForgeRecipeBuilder implements RecipeBuilder {
             this.gear = gear;
             this.result = pResult.asItem();
             this.smashesRequired = smashesRequired;
+            this.experience = experience;
             this.serializer = pSerializer;
             this.advancement = pAdvancement;
             this.advancementId = pAdvancementId;
@@ -112,6 +120,8 @@ public class ForgeRecipeBuilder implements RecipeBuilder {
             pJson.add("gear", this.gear.toJson());
             pJson.addProperty("result", ForgeRegistries.ITEMS.getKey(this.result).toString());
             pJson.addProperty("smashes_required", this.smashesRequired);
+            if (this.experience > 0)
+                pJson.addProperty("experience", this.experience);
         }
 
         public RecipeSerializer<?> getType() {

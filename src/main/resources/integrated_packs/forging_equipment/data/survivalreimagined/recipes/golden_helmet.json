@@ -9,5 +9,6 @@
     "item": "minecraft:leather_helmet"
   },
   "result": "minecraft:golden_helmet",
-  "smashes_required": 4
+  "smashes_required": 4,
+  "experience": 2
 }

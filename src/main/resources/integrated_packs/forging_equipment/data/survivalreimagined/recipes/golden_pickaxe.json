@@ -9,5 +9,6 @@
     "item": "survivalreimagined:flint_pickaxe"
   },
   "result": "minecraft:golden_pickaxe",
-  "smashes_required": 6
+  "smashes_required": 6,
+  "experience": 3
 }

@@ -9,5 +9,6 @@
     "item": "survivalreimagined:durium_ingot"
   },
   "result": "minecraft:bucket",
-  "smashes_required": 10
+  "smashes_required": 10,
+  "experience": 5
 }

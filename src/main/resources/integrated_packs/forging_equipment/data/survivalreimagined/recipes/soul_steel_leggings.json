@@ -9,5 +9,6 @@
     "item": "minecraft:iron_leggings"
   },
   "result": "survivalreimagined:soul_steel_leggings",
-  "smashes_required": 27
+  "smashes_required": 27,
+  "experience": 13.5
 }

@@ -9,5 +9,6 @@
     "item": "minecraft:stone_hoe"
   },
   "result": "minecraft:iron_hoe",
-  "smashes_required": 10
+  "smashes_required": 10,
+  "experience": 5
 }

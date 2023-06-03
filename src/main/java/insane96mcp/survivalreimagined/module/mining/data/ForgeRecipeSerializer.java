@@ -37,7 +37,8 @@ public class ForgeRecipeSerializer implements RecipeSerializer<ForgeRecipe> {
             result = new ItemStack(ForgeRegistries.ITEMS.getValue(resourcelocation));
         }
         int smashesRequired = GsonHelper.getAsInt(pJson, "smashes_required");
-        return this.factory.create(pRecipeId, category, ingredient, ingredientAmount, gear, result, smashesRequired);
+        float experience = GsonHelper.getAsFloat(pJson, "experience", 0);
+        return this.factory.create(pRecipeId, category, ingredient, ingredientAmount, gear, result, smashesRequired, experience);
     }
 
     public ForgeRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer) {
@@ -47,7 +48,8 @@ public class ForgeRecipeSerializer implements RecipeSerializer<ForgeRecipe> {
         Ingredient gear = Ingredient.fromNetwork(pBuffer);
         ItemStack result = pBuffer.readItem();
         int smashesRequired = pBuffer.readVarInt();
-        return this.factory.create(pRecipeId, category, ingredient, ingredientAmount, gear, result, smashesRequired);
+        float experience = pBuffer.readFloat();
+        return this.factory.create(pRecipeId, category, ingredient, ingredientAmount, gear, result, smashesRequired, experience);
     }
 
     public void toNetwork(FriendlyByteBuf pBuffer, ForgeRecipe pRecipe) {
@@ -57,9 +59,10 @@ public class ForgeRecipeSerializer implements RecipeSerializer<ForgeRecipe> {
         pRecipe.getGear().toNetwork(pBuffer);
         pBuffer.writeItem(pRecipe.getResultItem(RegistryAccess.EMPTY));
         pBuffer.writeVarInt(pRecipe.getSmashesRequired());
+        pBuffer.writeFloat(pRecipe.getExperience());
     }
 
     public interface CookieBaker<T extends ForgeRecipe> {
-        T create(ResourceLocation pId, SRBookCategory pCategory, Ingredient ingredient, int ingredientAmount, Ingredient gear, ItemStack pResult, int smashesRequired);
+        T create(ResourceLocation pId, SRBookCategory pCategory, Ingredient ingredient, int ingredientAmount, Ingredient gear, ItemStack pResult, int smashesRequired, float experience);
     }
 }

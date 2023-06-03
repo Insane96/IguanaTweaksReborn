@@ -15,11 +15,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -300,14 +303,33 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
         return null;
     }
 
-    public List<Recipe<?>> getRecipesToAward(ServerLevel pLevel, Vec3 pPopVec) {
+    public List<Recipe<?>> getRecipesToAwardAndPopExperience(ServerLevel pLevel, Vec3 pPopVec) {
         List<Recipe<?>> list = Lists.newArrayList();
 
         for(Object2IntMap.Entry<ResourceLocation> entry : this.recipesUsed.object2IntEntrySet()) {
-            pLevel.getRecipeManager().byKey(entry.getKey()).ifPresent(list::add);
+            pLevel.getRecipeManager().byKey(entry.getKey()).ifPresent((p_155023_) -> {
+                list.add(p_155023_);
+                createExperience(pLevel, pPopVec, entry.getIntValue(), ((ForgeRecipe)p_155023_).getExperience());
+            });
         }
 
         return list;
+    }
+
+    private void createExperience(ServerLevel pLevel, Vec3 pPopVec, int recipeAmount, float experience) {
+        int xp = Mth.floor((float)recipeAmount * experience);
+        float mod = Mth.frac((float)recipeAmount * experience);
+        if (mod != 0.0F && Math.random() < (double)mod) {
+            ++xp;
+        }
+
+        ExperienceOrb.award(pLevel, pPopVec, xp);
+    }
+
+    public void awardUsedRecipesAndPopExperience(ServerPlayer pPlayer) {
+        List<Recipe<?>> list = this.getRecipesToAwardAndPopExperience(pPlayer.getLevel(), pPlayer.position());
+        pPlayer.awardRecipes(list);
+        this.recipesUsed.clear();
     }
 
     @Override

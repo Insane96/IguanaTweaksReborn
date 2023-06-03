@@ -9,5 +9,6 @@
     "item": "survivalreimagined:flint_hoe"
   },
   "result": "survivalreimagined:copper_hoe",
-  "smashes_required": 6
+  "smashes_required": 6,
+  "experience": 3
 }

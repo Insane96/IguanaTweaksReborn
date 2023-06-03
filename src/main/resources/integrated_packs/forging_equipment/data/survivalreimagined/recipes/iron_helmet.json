@@ -9,5 +9,6 @@
     "item": "survivalreimagined:chained_copper_helmet"
   },
   "result": "minecraft:iron_helmet",
-  "smashes_required": 12
+  "smashes_required": 12,
+  "experience": 6
 }

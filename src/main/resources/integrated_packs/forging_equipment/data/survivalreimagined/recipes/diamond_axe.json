@@ -9,5 +9,6 @@
     "item": "minecraft:golden_axe"
   },
   "result": "minecraft:diamond_axe",
-  "smashes_required": 16
+  "smashes_required": 16,
+  "experience": 8
 }

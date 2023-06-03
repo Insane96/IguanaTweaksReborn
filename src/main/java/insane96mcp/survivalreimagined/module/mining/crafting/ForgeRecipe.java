@@ -23,8 +23,9 @@ public class ForgeRecipe implements Recipe<Container> {
     final Ingredient gear;
     private final ItemStack result;
     protected final int smashesRequired;
+    protected final float experience;
 
-    public ForgeRecipe(ResourceLocation pId, SRBookCategory pCategory, Ingredient ingredient, int ingredientAmount, Ingredient gear, ItemStack pResult, int smashesRequired) {
+    public ForgeRecipe(ResourceLocation pId, SRBookCategory pCategory, Ingredient ingredient, int ingredientAmount, Ingredient gear, ItemStack pResult, int smashesRequired, float experience) {
         this.type = Forging.FORGE_RECIPE_TYPE.get();
         this.category = pCategory;
         this.id = pId;
@@ -33,6 +34,7 @@ public class ForgeRecipe implements Recipe<Container> {
         this.gear = gear;
         this.result = pResult;
         this.smashesRequired = smashesRequired;
+        this.experience = experience;
     }
 
     @Override
@@ -87,6 +89,10 @@ public class ForgeRecipe implements Recipe<Container> {
      */
     public int getSmashesRequired() {
         return this.smashesRequired;
+    }
+
+    public float getExperience() {
+        return this.experience;
     }
 
     public ResourceLocation getId() {

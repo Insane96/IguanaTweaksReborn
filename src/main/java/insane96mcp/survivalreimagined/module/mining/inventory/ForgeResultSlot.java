@@ -48,14 +48,11 @@ public class ForgeResultSlot extends Slot {
         this.checkTakeAchievements(pStack);
     }
 
-    /**
-     *
-     * @param pStack the output - ie, iron ingots, and pickaxes, not ore and wood.
-     */
+    //TODO Award experience for forging
     protected void checkTakeAchievements(ItemStack pStack) {
         pStack.onCraftedBy(this.player.level, this.player, this.removeCount);
         if (this.player instanceof ServerPlayer && this.container instanceof ForgeBlockEntity forgeBlockEntity) {
-            forgeBlockEntity.awardUsedRecipes(this.player);
+            forgeBlockEntity.awardUsedRecipesAndPopExperience((ServerPlayer)this.player);
         }
 
         this.removeCount = 0;

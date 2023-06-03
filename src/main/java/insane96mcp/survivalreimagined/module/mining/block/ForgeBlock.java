@@ -90,7 +90,7 @@ public class ForgeBlock extends BaseEntityBlock {
             if (blockentity instanceof ForgeBlockEntity) {
                 if (pLevel instanceof ServerLevel) {
                     Containers.dropContents(pLevel, pPos, (ForgeBlockEntity)blockentity);
-                    ((ForgeBlockEntity)blockentity).getRecipesToAward((ServerLevel)pLevel, Vec3.atCenterOf(pPos));
+                    ((ForgeBlockEntity)blockentity).getRecipesToAwardAndPopExperience((ServerLevel)pLevel, Vec3.atCenterOf(pPos));
                 }
 
                 pLevel.updateNeighbourForOutputSignal(pPos, this);

@@ -2,6 +2,7 @@
   "type": "survivalreimagined:forging",
   "amount": 5,
   "category": "forge_misc",
+  "experience": 10.0,
   "gear": {
     "item": "survivalreimagined:iron_hammer"
   },

@@ -9,5 +9,6 @@
     "item": "minecraft:iron_sword"
   },
   "result": "survivalreimagined:soul_steel_sword",
-  "smashes_required": 20
+  "smashes_required": 20,
+  "experience": 10
 }

@@ -9,5 +9,6 @@
     "item": "survivalreimagined:flint_shovel"
   },
   "result": "minecraft:golden_shovel",
-  "smashes_required": 6
+  "smashes_required": 6,
+  "experience": 3
 }

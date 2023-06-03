@@ -9,5 +9,6 @@
     "item": "minecraft:golden_hoe"
   },
   "result": "minecraft:diamond_hoe",
-  "smashes_required": 16
+  "smashes_required": 16,
+  "experience": 8
 }
