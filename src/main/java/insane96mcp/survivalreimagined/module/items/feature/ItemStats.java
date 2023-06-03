@@ -95,20 +95,20 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_leggings", 90),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_boots", 78),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 198),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", 264),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", 248),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_boots", 215),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 218),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", 291),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", 273),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_boots", 237),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_helmet", 274),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_chestplate", 365),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_leggings", 342),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_boots", 296),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_helmet", 294),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_chestplate", 392),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_leggings", 368),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_boots", 319),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 334),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", 445),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 417),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 361)
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 355),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", 474),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 444),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 385)
 	));
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 
