@@ -287,18 +287,18 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         NonNullList.of(Ingredient.EMPTY, Ingredient.of(Durium.SCRAP_BLOCK.item().get()), Ingredient.of(ItemTags.SAND), Ingredient.of(Items.CLAY_BALL)),
                         RecipeCategory.MISC,
                         Durium.INGOT.get(),
-                        800
+                        400
                 )
-                .experience(1f)
+                .experience(1.5f)
                 .unlockedBy("has_scrap_block", has(Durium.SCRAP_BLOCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_ingot_from_blasting");
         MultiItemSmeltingRecipeBuilder.soulBlasting(
                         NonNullList.of(Ingredient.EMPTY, Ingredient.of(Durium.SCRAP_BLOCK.item().get()), Ingredient.of(ItemTags.SAND), Ingredient.of(Items.CLAY_BALL)),
                         RecipeCategory.MISC,
                         Durium.INGOT.get(),
-                        400
+                        200
                 )
-                .experience(1f)
+                .experience(1.5f)
                 .doubleOutputChance(0.2f)
                 .unlockedBy("has_scrap_block", has(Durium.SCRAP_BLOCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_ingot_from_soul_blasting");
