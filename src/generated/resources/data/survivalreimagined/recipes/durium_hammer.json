@@ -1,12 +1,13 @@
 {
-  "type": "minecraft:smithing",
-  "addition": {
-    "item": "survivalreimagined:durium_ingot"
-  },
-  "base": {
+  "type": "survivalreimagined:forging",
+  "amount": 5,
+  "category": "forge_misc",
+  "gear": {
     "item": "survivalreimagined:iron_hammer"
   },
-  "result": {
-    "item": "survivalreimagined:durium_hammer"
-  }
+  "ingredient": {
+    "item": "survivalreimagined:durium_ingot"
+  },
+  "result": "survivalreimagined:durium_hammer",
+  "smashes_required": 13
 }
