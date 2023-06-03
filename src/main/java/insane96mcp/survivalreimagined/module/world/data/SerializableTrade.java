@@ -11,7 +11,9 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
@@ -70,7 +72,16 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 		if (this.enchantRandomly != null)
 			result = EnchantmentHelper.enchantItem(random, result, random.nextInt(this.enchantRandomly.minLevel, this.enchantRandomly.maxLevel + 1), this.enchantRandomly.treasure);
 		for (EnchantmentInstance enchantmentInstance : this.enchantments) {
-			result.enchant(enchantmentInstance.enchantment, enchantmentInstance.level);
+			if (result.is(Items.ENCHANTED_BOOK))
+				EnchantedBookItem.addEnchantment(result, new EnchantmentInstance(enchantmentInstance.enchantment, enchantmentInstance.level));
+			else if (result.is(Items.BOOK)) {
+				CompoundTag tag = result.getTag();
+				result = new ItemStack(Items.ENCHANTED_BOOK, result.getCount());
+				result.setTag(tag);
+				EnchantedBookItem.addEnchantment(result, new EnchantmentInstance(enchantmentInstance.enchantment, enchantmentInstance.level));
+			}
+			else
+				result.enchant(enchantmentInstance.enchantment, enchantmentInstance.level);
 		}
 		return new MerchantOffer(this.itemA, this.itemB == null ? ItemStack.EMPTY : this.itemB, result, this.maxUses, this.xp, 1f);
 	}
