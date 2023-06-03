@@ -2,7 +2,7 @@
     "type": "minecraft:ore",
     "config": {
         "size": 10,
-        "discard_chance_on_air_exposure": 0.3,
+        "discard_chance_on_air_exposure": 0.1,
         "targets": [
             {
                 "target": {
@@ -18,7 +18,7 @@
                 "target": {
                     "predicate_type": "survivalreimagined:random_block_tag_match",
                     "tag": "minecraft:stone_ore_replaceables",
-                    "probability": 0.50
+                    "probability": 0.60
                 },
                 "state": {
                     "Name": "minecraft:iron_ore"
@@ -48,7 +48,7 @@
                 "target": {
                     "predicate_type": "survivalreimagined:random_block_tag_match",
                     "tag": "minecraft:deepslate_ore_replaceables",
-                    "probability": 0.50
+                    "probability": 0.60
                 },
                 "state": {
                     "Name": "minecraft:deepslate_iron_ore"

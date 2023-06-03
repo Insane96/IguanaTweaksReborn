@@ -24,6 +24,7 @@
 * The Season now starts in early summer instead of mid-summer
 * Increased random tick speed to 2 from 1
   * Doubles the speed of plants, crops and much more stuff growing
+* Increased reduced poor ore generation and heavily lowered iron ore chance to discard on exposure
 
 ## 0.11.3
 * Heavily reduced armor slowdown
