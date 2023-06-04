@@ -1,11 +1,11 @@
 # Changelog
 
-## Upcoming
+## 0.12.1
+* Tentative shields durability balance changes
 * Health regeneration speed is now fixed to 0.5hp/s and no longer depends on saturation modifier
 * Golden shield now protects 100 damage instead of giving a speed boost
 * Firestarter now properly lit up TNT and Mining charges
 * Shield forging now gives XP
-* Shields no longer get damaged for amounts <= 1
 * Slowed down some plant growth
 * Durium now requires Smithing table again
 * Cutting pumpkins with shears now gives edible Pumpkin Pulp, instead of seeds

@@ -108,7 +108,14 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 355),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", 474),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 444),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 385)
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 385),
+
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_shield", 58),
+			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", 68),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_shield", 672),
+			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:diamond_shield", 602),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_shield", 865),
+			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:netherite_shield", 1044)
 	));
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 

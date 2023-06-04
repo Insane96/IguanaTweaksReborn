@@ -5,7 +5,6 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.shieldsplus.module.base.feature.BaseFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
@@ -28,8 +27,5 @@ public class ShieldsPlus extends Feature {
 	@Override
 	public void readConfig(ModConfigEvent event) {
 		super.readConfig(event);
-
-		Module.getFeature(BaseFeature.class).setConfigOption("Min Shield Hurt Damage", 1.5d);
-		Module.getFeature(BaseFeature.class).readConfig(event);
 	}
 }
