@@ -10,6 +10,7 @@
 * Durium now requires Smithing table again
 * Cutting pumpkins with shears now gives edible Pumpkin Pulp, instead of seeds
 * Pumpkins and Melons crafting now only give one seed, and melon seeds require a melon and no longer a slice
+* Thorns no longer breaks items faster
 
 ## 0.12.0
 * Added Fletching Table

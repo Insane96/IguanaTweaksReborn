@@ -4,12 +4,10 @@ import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.PumpkinBlock;
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Debug(export = true)
 @Mixin(PumpkinBlock.class)
 public abstract class PumpkinBlockMixin {
     @Redirect(method = "use", at = @At(value = "NEW", target = "(Lnet/minecraft/world/level/ItemLike;I)Lnet/minecraft/world/item/ItemStack;"))
