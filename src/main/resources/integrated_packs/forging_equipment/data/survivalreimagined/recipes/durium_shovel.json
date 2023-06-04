@@ -1,0 +1,13 @@
+{
+  "type": "survivalreimagined:forging",
+  "category": "forge_misc",
+  "ingredient": {
+    "item": "survivalreimagined:durium_ingot"
+  },
+  "amount": 1,
+  "gear": {
+    "item": "minecraft:iron_shovel"
+  },
+  "result": "survivalreimagined:durium_shovel",
+  "smashes_required": 16
+}
