@@ -6,6 +6,7 @@
 * Shield forging now gives XP
 * Shields no longer get damaged for amounts <= 1
 * Slowed down some plant growth
+* Durium now requires Smithing table again
 
 ## 0.12.0
 * Added Fletching Table
