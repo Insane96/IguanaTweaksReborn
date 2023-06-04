@@ -58,11 +58,11 @@ public class ForgeHammerItem extends TieredItem implements Vanishable {
 
     public int getSmashesOnHit(ItemStack stack, RandomSource random) {
         int smashes = 1;
-        //Each efficiency level adds a 50% chance to +1 smash
+        //Each efficiency level adds 50% chance to +1 smash
         int efficiency = stack.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
         if (efficiency <= 0)
             return smashes;
-        //E.g., with Efficiency 3 you'll get 2 smashes, 50% chance to be 3
+        //E.g. with Efficiency 3 you'll get 2 smashes, 50% chance to be 3
         int bonusSmashes = MathHelper.getAmountWithDecimalChance(random, 0.5f * efficiency);
         return Mth.nextInt(random, smashes, bonusSmashes + smashes);
     }

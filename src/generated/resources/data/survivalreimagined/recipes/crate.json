@@ -2,20 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "D": {
-      "item": "survivalreimagined:durium_ingot"
-    },
     "b": {
       "item": "minecraft:barrel"
     },
     "i": {
       "item": "minecraft:iron_ingot"
+    },
+    "n": {
+      "item": "survivalreimagined:durium_nugget"
     }
   },
   "pattern": [
-    " D ",
+    "nnn",
     "ibi",
-    " D "
+    "nnn"
   ],
   "result": {
     "item": "survivalreimagined:crate"

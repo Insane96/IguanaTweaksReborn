@@ -24,11 +24,8 @@
   * When using an elytra in non-End dimensions, the player falls faster
 * Forge recipes now award experience
 * Cleansed lapis now has greatly increased chance to drop
-* Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe. Also Expanded III now mines more blocks instead of being the same as lvl II
 * Buffed Feather Falling
-* Durium
-  * Now requires a Forge to be made, instead of Smithing table
-  * Drops from ore increased by 3x
+* Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe. Also Expanded III now mines more blocks instead of being the same as lvl II
 * The Season now starts in early summer instead of mid-summer
 * Golden armor and shield now give speed
 * Increased random tick speed to 2 from 1

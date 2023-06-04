@@ -230,13 +230,13 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "chainmail_boots");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Crate.BLOCK.item().get())
-                .pattern(" D ")
+                .pattern("nnn")
                 .pattern("ibi")
-                .pattern(" D ")
-                .define('D', Durium.INGOT.get())
+                .pattern("nnn")
+                .define('n', Durium.NUGGET.get())
                 .define('i', Items.IRON_INGOT)
                 .define('b', Items.BARREL)
-                .unlockedBy("has_durium_ingot", has(Durium.INGOT.get()))
+                .unlockedBy("has_durium_nugget", has(Durium.NUGGET.get()))
                 .unlockedBy("has_barrel", has(Items.BARREL))
                 .save(writer);
 
@@ -302,6 +302,36 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .doubleOutputChance(0.2f)
                 .unlockedBy("has_scrap_block", has(Durium.SCRAP_BLOCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_ingot_from_soul_blasting");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.AXE.get())
+                .unlocks("has_durium", has(Durium.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_axe");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_PICKAXE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.PICKAXE.get())
+                .unlocks("has_durium", has(Durium.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_pickaxe");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SHOVEL), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.SHOVEL.get())
+                .unlocks("has_durium", has(Durium.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_shovel");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HOE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.HOE.get())
+                .unlocks("has_durium", has(Durium.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_how");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SWORD), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.SWORD.get())
+                .unlocks("has_durium", has(Durium.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_sword");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.SHIELD.get())
+                .unlocks("has_durium", has(Durium.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_shield");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HELMET), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.HELMET.get())
+                .unlocks("has_durium", has(Durium.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_helmet");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_CHESTPLATE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.CHESTPLATE.get())
+                .unlocks("has_durium", has(Durium.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_chestplate");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_LEGGINGS), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.LEGGINGS.get())
+                .unlocks("has_durium", has(Durium.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_leggings");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.BOOTS.get())
+                .unlocks("has_durium", has(Durium.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_boots");
 
         //Soul Steel
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, SoulSteel.AXE.get())

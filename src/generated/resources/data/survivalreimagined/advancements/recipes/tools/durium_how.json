@@ -1,24 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_barrel": {
+    "has_durium": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:barrel"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_durium_nugget": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "survivalreimagined:durium_nugget"
+              "survivalreimagined:durium_ingot"
             ]
           }
         ]
@@ -27,21 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "survivalreimagined:crate"
+        "recipe": "survivalreimagined:durium_how"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_durium_nugget",
-      "has_barrel",
+      "has_durium",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "survivalreimagined:crate"
+      "survivalreimagined:durium_how"
     ]
   }
 }
