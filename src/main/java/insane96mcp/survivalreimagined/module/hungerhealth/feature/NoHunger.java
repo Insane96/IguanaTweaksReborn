@@ -26,7 +26,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -226,7 +225,8 @@ public class NoHunger extends Feature {
 
     public static float getFoodHealingStrength(FoodProperties food) {
         //Clamped between 0.25 and 0.5 hp/s
-        return Mth.clamp(0.5f * (1.4f - food.getSaturationModifier()), 0.25f, 0.5f);
+        //return Mth.clamp(0.5f * (1.4f - food.getSaturationModifier()), 0.25f, 0.5f);
+        return 0.5f;
     }
 
     private static void consumeAndHealFromFoodRegen(Player player) {
