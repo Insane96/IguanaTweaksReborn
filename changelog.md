@@ -5,6 +5,7 @@
 * Firestarter now properly lit up TNT and Mining charges
 * Shield forging now gives XP
 * Shields no longer get damaged for amounts <= 1
+* Slowed down some plant growth
 
 ## 0.12.0
 * Added Fletching Table

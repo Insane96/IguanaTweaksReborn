@@ -44,6 +44,7 @@ public class PlantsGrowth extends SRFeature {
 					.addSeasonMultiplier(Season.SPRING, 0f)
 					.addSeasonMultiplier(Season.AUTUMN, 0f).build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:cocoa")
+					.setGrowthMultiplier(2f)
 					.setNoSunglightMultipler(2.5f, 10)
 					.setNightTimeMultiplier(1.5f)
 					.setGrowthBiomes(new ArrayList<>(List.of(
@@ -53,10 +54,12 @@ public class PlantsGrowth extends SRFeature {
 					.addSeasonMultiplier(Season.SPRING, 0f)
 					.addSeasonMultiplier(Season.AUTUMN, 0f).build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:nether_wart")
+					.setGrowthMultiplier(2f)
 					.setGrowthBiomes(new ArrayList<>(List.of(
 							new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_nether")
 					)), 3f).build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:chorus_flower")
+					.setGrowthMultiplier(2f)
 					.setGrowthBiomes(new ArrayList<>(List.of(
 							new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_end")
 					)), 0f).build(),
@@ -77,6 +80,7 @@ public class PlantsGrowth extends SRFeature {
 					.addSeasonMultiplier(Season.SPRING, 0f)
 					.addSeasonMultiplier(Season.SUMMER, 0f).build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:sweet_berry_bush")
+					.setGrowthMultiplier(2f)
 					.setNoSunglightMultipler(2.5f, 10)
 					.setNightTimeMultiplier(1.5f)
 					.setGrowthBiomes(new ArrayList<>(List.of(
@@ -84,7 +88,7 @@ public class PlantsGrowth extends SRFeature {
 					)), 3f)
 					.addSeasonMultiplier(Season.WINTER, 0f).build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:kelp")
-					.setGrowthMultiplier(1.25f)
+					.setGrowthMultiplier(2f)
 					.setNightTimeMultiplier(1.25f)
 					.setGrowthBiomes(new ArrayList<>(List.of(
 							new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:is_ocean"),
