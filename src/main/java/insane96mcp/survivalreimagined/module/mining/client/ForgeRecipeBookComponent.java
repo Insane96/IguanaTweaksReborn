@@ -16,9 +16,6 @@ import java.util.List;
 
 public class ForgeRecipeBookComponent extends RecipeBookComponent {
     protected final GhostRecipeAmount ghostRecipeAmount = new GhostRecipeAmount();
-    protected void initFilterButtonTextures() {
-        this.filterButton.initTextureValues(152, 182, 28, 18, RECIPE_BOOK_LOCATION);
-    }
 
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
