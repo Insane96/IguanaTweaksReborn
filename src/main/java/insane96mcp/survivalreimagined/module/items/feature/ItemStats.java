@@ -126,6 +126,10 @@ public class ItemStats extends SRFeature {
 	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();
 
 	@Config
+	@Label(name = "Override shield blocking damage", description = "If true copper shield will block 4 damage and Golden shields will block 100 damage. Requires a restart.")
+	public static Boolean overrideShieldBlockDamage = true;
+
+	@Config
 	@Label(name = "More Items Tooltips", description = "If set to true items in the 'no_damage_items' and 'no_efficiency_items' will get a tooltip. Items with durability get a durability tooltip. Tools get an efficiency tooltip.")
 	public static Boolean moreItemsTooltips = true;
 
@@ -138,7 +142,10 @@ public class ItemStats extends SRFeature {
 	@Override
 	public void readConfig(ModConfigEvent event) {
 		super.readConfig(event);
-		SPItems.COPPER_SHIELD.get().blockingDamageOverride = 4d;
+		if (overrideShieldBlockDamage) {
+			SPItems.COPPER_SHIELD.get().blockingDamageOverride = 4d;
+			SPItems.GOLDEN_SHIELD.get().blockingDamageOverride = 100d;
+		}
 	}
 
 	@Override

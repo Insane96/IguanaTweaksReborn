@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Golden shield now protects 100 damage instead of giving a speed boost
+
 ## 0.12.0
 * Added Fletching Table
   * Craft more arrows

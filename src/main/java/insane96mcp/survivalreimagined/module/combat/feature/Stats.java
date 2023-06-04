@@ -53,8 +53,8 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_helmet", UUID.fromString("3f22e9a3-0916-43ab-a93f-ba52e5ae28e5"), EquipmentSlot.HEAD, Attributes.MOVEMENT_SPEED, 0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", UUID.fromString("f700b45a-0c51-40f8-9f59-836c519d64d5"), EquipmentSlot.CHEST, Attributes.MOVEMENT_SPEED, 0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_leggings", UUID.fromString("4f1caa92-2558-4416-829c-9faf922d7137"), EquipmentSlot.LEGS, Attributes.MOVEMENT_SPEED, 0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_boots", UUID.fromString("dc49f564-489f-4f70-ab50-ce85cc4bfa85"), EquipmentSlot.FEET, Attributes.MOVEMENT_SPEED, 0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", UUID.fromString("51def2a9-8222-4d2d-824e-3d1afc6be89c"), EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, 0.1d, AttributeModifier.Operation.MULTIPLY_BASE)
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_boots", UUID.fromString("dc49f564-489f-4f70-ab50-ce85cc4bfa85"), EquipmentSlot.FEET, Attributes.MOVEMENT_SPEED, 0.05d, AttributeModifier.Operation.MULTIPLY_BASE)/*,
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", UUID.fromString("51def2a9-8222-4d2d-824e-3d1afc6be89c"), EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, 0.1d, AttributeModifier.Operation.MULTIPLY_BASE)*/
 	));
 	public static final ArrayList<ItemAttributeModifier> itemModifiers = new ArrayList<>();
 
