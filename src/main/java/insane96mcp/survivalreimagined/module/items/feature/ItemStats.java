@@ -111,7 +111,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 385),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_shield", 82),
-			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", 68),
+			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", 82),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_shield", 672),
 			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:diamond_shield", 602),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_shield", 865),
