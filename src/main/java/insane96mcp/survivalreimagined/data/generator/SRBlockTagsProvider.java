@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.data.generator;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.HarderCrops;
 import insane96mcp.survivalreimagined.module.items.feature.Crate;
@@ -46,7 +47,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         //Vanilla Tags
         tag(BlockTags.MINEABLE_WITH_AXE)
-                .add(Crate.BLOCK.block().get(), ExplosiveBarrel.BLOCK.block().get());
+                .add(Crate.BLOCK.block().get(), ExplosiveBarrel.BLOCK.block().get(), Fletching.FLETCHING_TABLE.block().get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(CoalFire.CHARCOAL_LAYER.block().get())

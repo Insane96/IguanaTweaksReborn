@@ -8,6 +8,8 @@
 * Shields no longer get damaged for amounts <= 1
 * Slowed down some plant growth
 * Durium now requires Smithing table again
+* Cutting pumpkins with shears now gives edible Pumpkin Pulp, instead of seeds
+* Pumpkins and Melons crafting now only give one seed, and melon seeds require a melon and no longer a slice
 
 ## 0.12.0
 * Added Fletching Table

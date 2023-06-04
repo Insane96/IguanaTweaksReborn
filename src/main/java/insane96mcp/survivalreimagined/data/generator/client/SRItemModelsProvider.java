@@ -119,6 +119,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(FoodDrinks.OVER_EASY_EGG.get());
         basicItem(FoodDrinks.BROWN_MUSHROOM_STEW.get());
         basicItem(FoodDrinks.RED_MUSHROOM_STEW.get());
+        basicItem(FoodDrinks.PUMPKIN_PULP.get());
 
         withExistingParent("explosive_barrel", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/explosive_barrel"));
 

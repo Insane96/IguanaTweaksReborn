@@ -36,9 +36,11 @@
         "PlayerMixin",
         "PotionItemMixin",
         "ProtectionEnchantmentMixin",
+        "PumpkinBlockMixin",
         "SpiderAttackGoalMixin",
         "SpiderMixin",
         "SpringFeatureMixin",
+        "ThornsEnchantmentMixin",
         "ThrownExperienceBottleMixin",
         "VillagerMixin",
         "ZombieMixin"

@@ -50,6 +50,10 @@ public class FoodDrinks extends SRFeature {
 			.food(new FoodProperties.Builder().nutrition(4).saturationMod(0.6F).build())
 	));
 
+	public static final RegistryObject<Item> PUMPKIN_PULP = SRItems.REGISTRY.register("pumpkin_pulp", () -> new Item(new Item.Properties()
+			.food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).build())
+	));
+
 	public static final TagKey<Item> FOOD_BLACKLIST = SRItemTagsProvider.create("food_drinks_no_hunger_changes");
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(
@@ -74,7 +78,7 @@ public class FoodDrinks extends SRFeature {
 	public static Boolean eatingSpeedBasedOffFood = true;
 	@Config
 	@Label(name = "Eating Speed Formula", description = "The formula to calculate the ticks required to eat a food. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. The default formula increases the time to eat exponentially when higher effectiveness.")
-	public static String eatingSpeedFormula = "MAX((32 * effectiveness^1.35) / IF(fast_food, 2, 1) * 0.04, 32 / IF(fast_food, 2, 1))"; //max((32 * x^1.4) * 0.04, 24)
+	public static String eatingSpeedFormula = "MAX((32 * effectiveness^1.35) / IF(fast_food, 2, 1) * 0.04, 32 / IF(fast_food, 2, 1))"; //max((32 * x^1.35) * 0.04, 32) or, if the food is fast eat max((32 * x^1.35) / 2 * 0.04, 32 / 2)
 	@Config
 	@Label(name = "Stop consuming on hit", description = "If true, eating/drinking stops when the player's hit.")
 	public static Boolean stopConsumingOnHit = true;
