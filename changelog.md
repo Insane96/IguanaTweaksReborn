@@ -30,7 +30,7 @@
 * Golden armor and shield now give speed
 * Increased random tick speed to 2 from 1
   * Doubles the speed of plants, crops and much more stuff growing
-* Reduced poor ore generation and heavily lowered iron ore chance to discard on exposure
+* Increased reduced poor ore generation and heavily lowered iron ore chance to discard on exposure
 
 ## 0.11.3
 * Heavily reduced armor slowdown
