@@ -9,5 +9,6 @@
         "item": "minecraft:shield"
     },
     "result": "survivalreimagined:durium_shield",
-    "smashes_required": 25
+    "smashes_required": 15,
+    "experience": 7.5
 }

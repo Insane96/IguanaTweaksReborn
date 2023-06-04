@@ -9,5 +9,6 @@
         "item": "survivalreimagined:flint_shield"
     },
     "result": "shieldsplus:golden_shield",
-    "smashes_required": 5
+    "smashes_required": 4,
+    "experience": 2
 }

@@ -9,5 +9,6 @@
         "item": "minecraft:shield"
     },
     "result": "survivalreimagined:soul_steel_shield",
-    "smashes_required": 35
+    "smashes_required": 22,
+    "experience": 11
 }

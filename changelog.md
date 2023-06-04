@@ -3,6 +3,7 @@
 ## Upcoming
 * Golden shield now protects 100 damage instead of giving a speed boost
 * Firestarter now properly lit up TNT and Mining charges
+* Shield forging now gives XP
 
 ## 0.12.0
 * Added Fletching Table

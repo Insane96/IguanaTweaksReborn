@@ -9,5 +9,6 @@
         "item": "shieldsplus:golden_shield"
     },
     "result": "shieldsplus:diamond_shield",
-    "smashes_required": 25
+    "smashes_required": 18,
+    "experience": 9
 }
