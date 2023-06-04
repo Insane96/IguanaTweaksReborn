@@ -80,7 +80,7 @@ public class EnchantmentsFeature extends Feature {
 	@Label(name = "Buff Feather Falling", description = "Increases the damage protection from Feather Falling. From 12% per level to 16% per level")
 	public static Boolean buffFeatherFalling = true;
 	@Config
-	@Label(name = "Buff Thorns", description = "Thorns no longer deals damage to items.")
+	@Label(name = "Buff Thorns", description = "Thorns no longer damages items.")
 	public static Boolean buffThorns = true;
 
 	//TODO Make enchantments deactivable

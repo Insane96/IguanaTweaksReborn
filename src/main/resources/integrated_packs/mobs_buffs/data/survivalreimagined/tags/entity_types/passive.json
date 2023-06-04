@@ -36,6 +36,8 @@
         "minecraft:glow_squid",
         "minecraft:skeleton_horse",
         "minecraft:zombie_horse",
-        "minecraft:strider"
+        "minecraft:strider",
+        "minecraft:snow_golem",
+        "minecraft:iron_golem"
     ]
 }

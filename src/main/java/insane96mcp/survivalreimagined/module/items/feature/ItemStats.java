@@ -50,7 +50,7 @@ public class ItemStats extends SRFeature {
 	public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/wooden", 33),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/stone", 71),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/flint", 48),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/flint", 52),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/golden", 52),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/copper", 75),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/iron", 375),
@@ -110,7 +110,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 444),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 385),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_shield", 58),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_shield", 82),
 			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", 68),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_shield", 672),
 			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:diamond_shield", 602),
