@@ -230,13 +230,13 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "chainmail_boots");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Crate.BLOCK.item().get())
-                .pattern(" D ")
+                .pattern("nnn")
                 .pattern("ibi")
-                .pattern(" D ")
-                .define('D', Durium.INGOT.get())
+                .pattern("nnn")
+                .define('n', Durium.NUGGET.get())
                 .define('i', Items.IRON_INGOT)
                 .define('b', Items.BARREL)
-                .unlockedBy("has_durium_ingot", has(Durium.INGOT.get()))
+                .unlockedBy("has_durium_nugget", has(Durium.NUGGET.get()))
                 .unlockedBy("has_barrel", has(Items.BARREL))
                 .save(writer);
 
