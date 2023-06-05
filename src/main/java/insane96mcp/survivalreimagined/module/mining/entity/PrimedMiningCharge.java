@@ -86,7 +86,7 @@ public class PrimedMiningCharge extends Entity implements TraceableEntity {
 
     protected void explode() {
         BlockPos explosionCenter = this.blockPosition().relative(this.direction, 2);
-        Iterable<BlockPos> positions = BlockPos.betweenClosed(explosionCenter.offset(-1, -1, -1), explosionCenter.offset(1, 1, 1));
+        Iterable<BlockPos> positions = BlockPos.betweenClosed(explosionCenter.offset(-1, -1, -1), explosionCenter.offset(1, 1, 1).relative(this.direction, 2));
         for (BlockPos pos : positions) {
             BlockState blockstate = this.level.getBlockState(pos);
             if (!blockstate.isAir()) {
@@ -101,7 +101,7 @@ public class PrimedMiningCharge extends Entity implements TraceableEntity {
             }
         }
         this.level.playSound(null, explosionCenter, SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 1.0f, 1.25f);
-        List<Entity> entitiesInExplosion = this.level.getEntities(null, new AABB(explosionCenter.offset(-3, -3, -3), explosionCenter.offset(3, 3, 3)));
+        List<Entity> entitiesInExplosion = this.level.getEntities(null, new AABB(explosionCenter.offset(-3, -3, -3), explosionCenter.offset(3, 3, 3).relative(this.direction, 2)));
         for (Entity entity : entitiesInExplosion) {
             if (entity.tickCount == 0)
                 continue;
