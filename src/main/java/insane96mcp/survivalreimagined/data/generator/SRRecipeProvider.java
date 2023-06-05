@@ -229,7 +229,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_chain", has(Items.CHAIN))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "chainmail_boots");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Crate.BLOCK.item().get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Crate.ITEM.get())
                 .pattern("nnn")
                 .pattern("ibi")
                 .pattern("nnn")

@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
-import insane96mcp.survivalreimagined.base.BlockWithItem;
+import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.item.SRArmorMaterial;
 import insane96mcp.survivalreimagined.setup.SRItems;
@@ -30,12 +30,12 @@ import java.util.EnumMap;
 @LoadFeature(module = Modules.Ids.MINING)
 public class Durium extends Feature {
 
-	public static final BlockWithItem ORE = BlockWithItem.register("durium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5)));
-	public static final BlockWithItem DEEPSLATE_ORE = BlockWithItem.register("deepslate_durium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(ORE.block().get()).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), UniformInt.of(2, 5)));
-	public static final BlockWithItem SCRAP_BLOCK = BlockWithItem.register("durium_scrap_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
+	public static final SimpleBlockWithItem ORE = SimpleBlockWithItem.register("durium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5)));
+	public static final SimpleBlockWithItem DEEPSLATE_ORE = SimpleBlockWithItem.register("deepslate_durium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(ORE.block().get()).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), UniformInt.of(2, 5)));
+	public static final SimpleBlockWithItem SCRAP_BLOCK = SimpleBlockWithItem.register("durium_scrap_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
 	public static final RegistryObject<Item> SCRAP_PIECE = SRItems.REGISTRY.register("durium_scrap_piece", () -> new Item(new Item.Properties()));
 
-	public static final BlockWithItem BLOCK = BlockWithItem.register("durium_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
+	public static final SimpleBlockWithItem BLOCK = SimpleBlockWithItem.register("durium_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
 
 	public static final RegistryObject<Item> INGOT = SRItems.REGISTRY.register("durium_ingot", () -> new Item(new Item.Properties()));
 

@@ -5,7 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.base.BlockWithItem;
+import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.data.trigger.MakeRichFarmlandTrigger;
@@ -37,7 +37,7 @@ import java.util.Collections;
 @LoadFeature(module = Modules.Ids.FARMING)
 public class BoneMeal extends Feature {
 
-	public static final BlockWithItem RICH_FARMLAND = BlockWithItem.register("rich_farmland", () -> new RichFarmlandBlock(BlockBehaviour.Properties.of(Material.DIRT).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking((state, blockGetter, pos) -> true).isSuffocating((state, blockGetter, pos) -> true)));
+	public static final SimpleBlockWithItem RICH_FARMLAND = SimpleBlockWithItem.register("rich_farmland", () -> new RichFarmlandBlock(BlockBehaviour.Properties.of(Material.DIRT).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking((state, blockGetter, pos) -> true).isSuffocating((state, blockGetter, pos) -> true)));
 
 	public static final TagKey<Item> ITEM_BLACKLIST = SRItemTagsProvider.create("nerfed_bone_meal_blacklist");
 	public static final TagKey<Block> BLOCK_BLACKLIST = SRBlockTagsProvider.create("nerfed_bone_meal_blacklist");

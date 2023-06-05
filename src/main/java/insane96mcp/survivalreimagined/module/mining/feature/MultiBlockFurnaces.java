@@ -6,7 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.base.BlockWithItem;
+import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockBlastFurnaceBlock;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockBlastFurnaceBlockEntity;
@@ -37,7 +37,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class MultiBlockFurnaces extends Feature {
 	public static final String INVALID_FURNACE_LANG = SurvivalReimagined.MOD_ID + ".invalid_blast_furnace";
 
-	public static final BlockWithItem BLAST_FURNACE = BlockWithItem.register("blast_furnace", () -> new MultiBlockBlastFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE)));
+	public static final SimpleBlockWithItem BLAST_FURNACE = SimpleBlockWithItem.register("blast_furnace", () -> new MultiBlockBlastFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE)));
 	public static final RegistryObject<BlockEntityType<MultiBlockBlastFurnaceBlockEntity>> BLAST_FURNACE_BLOCK_ENTITY_TYPE = SRBlockEntityTypes.REGISTRY.register("blast_furnace", () -> BlockEntityType.Builder.of(MultiBlockBlastFurnaceBlockEntity::new, BLAST_FURNACE.block().get()).build(null));
 
 	public static final RegistryObject<RecipeType<MultiItemBlastingRecipe>> BLASTING_RECIPE_TYPE = SRRecipeTypes.REGISTRY.register("multi_item_blasting", () -> new RecipeType<>() {
@@ -49,7 +49,7 @@ public class MultiBlockFurnaces extends Feature {
 	public static final RegistryObject<MultiItemBlastingSerializer> BLASTING_RECIPE_SERIALIZER = SRRecipeSerializers.REGISTRY.register("multi_item_blasting", MultiItemBlastingSerializer::new);
 	public static final RegistryObject<MenuType<MultiBlockBlastFurnaceMenu>> BLAST_FURNACE_MENU_TYPE = SRMenuType.REGISTRY.register("blast_furnace", () -> new MenuType<>(MultiBlockBlastFurnaceMenu::new, FeatureFlags.VANILLA_SET));
 
-	public static final BlockWithItem SOUL_BLAST_FURNACE = BlockWithItem.register("soul_blast_furnace", () -> new MultiBlockSoulBlastFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE)));
+	public static final SimpleBlockWithItem SOUL_BLAST_FURNACE = SimpleBlockWithItem.register("soul_blast_furnace", () -> new MultiBlockSoulBlastFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.BLAST_FURNACE)));
 	public static final RegistryObject<BlockEntityType<MultiBlockSoulBlastFurnaceBlockEntity>> SOUL_BLAST_FURNACE_BLOCK_ENTITY_TYPE = SRBlockEntityTypes.REGISTRY.register("soul_blast_furnace", () -> BlockEntityType.Builder.of(MultiBlockSoulBlastFurnaceBlockEntity::new, SOUL_BLAST_FURNACE.block().get()).build(null));
 
 	public static final RegistryObject<RecipeType<MultiItemSoulBlastingRecipe>> SOUL_BLASTING_RECIPE_TYPE = SRRecipeTypes.REGISTRY.register("multi_item_soul_blasting", () -> new RecipeType<>() {

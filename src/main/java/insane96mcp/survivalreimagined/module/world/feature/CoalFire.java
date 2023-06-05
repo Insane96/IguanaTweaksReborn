@@ -5,7 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.base.BlockWithItem;
+import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceLootModifier;
 import insane96mcp.survivalreimagined.event.BlockBurntEvent;
 import insane96mcp.survivalreimagined.module.Modules;
@@ -53,12 +53,12 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.WORLD)
 public class CoalFire extends Feature {
 
-    public static final BlockWithItem CHARCOAL_LAYER = BlockWithItem.register("charcoal_layer", () -> new PilableLayerBlock(BlockBehaviour.Properties.of(Material.MOSS, MaterialColor.COLOR_BLACK).strength(0.5F).sound(SoundType.MOSS_CARPET).isViewBlocking((state, blockGetter, pos) -> state.getValue(PilableLayerBlock.LAYERS) >= 8), Items.CHARCOAL));
+    public static final SimpleBlockWithItem CHARCOAL_LAYER = SimpleBlockWithItem.register("charcoal_layer", () -> new PilableLayerBlock(BlockBehaviour.Properties.of(Material.MOSS, MaterialColor.COLOR_BLACK).strength(0.5F).sound(SoundType.MOSS_CARPET).isViewBlocking((state, blockGetter, pos) -> state.getValue(PilableLayerBlock.LAYERS) >= 8), Items.CHARCOAL));
 
     public static final RegistryObject<Item> FIRESTARTER = SRItems.REGISTRY.register("firestarter", () -> new FirestarterItem(new Item.Properties().stacksTo(1).defaultDurability(11)));
 
-    public static final BlockWithItem SOUL_SAND_HELLISH_COAL_ORE = BlockWithItem.register("soul_sand_hellish_coal_ore", () -> new HellishCoalOreBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_SAND).strength(2f).sound(SoundType.SOUL_SAND), UniformInt.of(1, 3)));
-    public static final BlockWithItem SOUL_SOIL_HELLISH_COAL_ORE = BlockWithItem.register("soul_soil_hellish_coal_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_SOIL).strength(2f).sound(SoundType.SOUL_SOIL), UniformInt.of(1, 3)));
+    public static final SimpleBlockWithItem SOUL_SAND_HELLISH_COAL_ORE = SimpleBlockWithItem.register("soul_sand_hellish_coal_ore", () -> new HellishCoalOreBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_SAND).strength(2f).sound(SoundType.SOUL_SAND), UniformInt.of(1, 3)));
+    public static final SimpleBlockWithItem SOUL_SOIL_HELLISH_COAL_ORE = SimpleBlockWithItem.register("soul_soil_hellish_coal_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_SOIL).strength(2f).sound(SoundType.SOUL_SOIL), UniformInt.of(1, 3)));
     public static final RegistryObject<Item> HELLISH_COAL = SRItems.REGISTRY.register("hellish_coal", () -> new SimpleFuelItem(new Item.Properties().fireResistant(), 2400));
 
     @Config(min = 0d, max = 100)

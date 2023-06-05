@@ -5,7 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.base.BlockWithItem;
+import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.feature.CopperTools;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
@@ -32,7 +32,7 @@ import net.minecraftforge.registries.RegistryObject;
 @Label(name = "Forging")
 @LoadFeature(module = Modules.Ids.MINING)
 public class Forging extends Feature {
-	public static final BlockWithItem FORGE = BlockWithItem.register("forge", () -> new ForgeBlock(BlockBehaviour.Properties.copy(Blocks.ANVIL)));
+	public static final SimpleBlockWithItem FORGE = SimpleBlockWithItem.register("forge", () -> new ForgeBlock(BlockBehaviour.Properties.copy(Blocks.ANVIL)));
 	public static final RegistryObject<BlockEntityType<ForgeBlockEntity>> FORGE_BLOCK_ENTITY_TYPE = SRBlockEntityTypes.REGISTRY.register("forge", () -> BlockEntityType.Builder.of(ForgeBlockEntity::new, FORGE.block().get()).build(null));
 
 	public static final RegistryObject<RecipeType<ForgeRecipe>> FORGE_RECIPE_TYPE = SRRecipeTypes.REGISTRY.register("forging", () -> new RecipeType<>() {

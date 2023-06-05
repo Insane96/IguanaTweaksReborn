@@ -5,7 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.base.BlockWithItem;
+import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceLootModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
@@ -26,9 +26,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @LoadFeature(module = Modules.Ids.MOVEMENT, canBeDisabled = false)
 public class Minecarts extends Feature {
 
-	public static final BlockWithItem NETHER_INFUSED_POWERED_RAIL = BlockWithItem.register("nether_infused_powered_rail", () -> new SRPoweredRail(BlockBehaviour.Properties.copy(Blocks.POWERED_RAIL), 1f));
-	public static final BlockWithItem GOLDEN_POWERED_RAIL = BlockWithItem.register("golden_powered_rail", () -> new SRPoweredRail(BlockBehaviour.Properties.copy(Blocks.POWERED_RAIL), 0.7f));
-	public static final BlockWithItem COPPER_POWERED_RAIL = BlockWithItem.register("copper_powered_rail", () -> new SRPoweredRail(BlockBehaviour.Properties.copy(Blocks.POWERED_RAIL).sound(SoundType.COPPER), 0.3f));
+	public static final SimpleBlockWithItem NETHER_INFUSED_POWERED_RAIL = SimpleBlockWithItem.register("nether_infused_powered_rail", () -> new SRPoweredRail(BlockBehaviour.Properties.copy(Blocks.POWERED_RAIL), 1f));
+	public static final SimpleBlockWithItem GOLDEN_POWERED_RAIL = SimpleBlockWithItem.register("golden_powered_rail", () -> new SRPoweredRail(BlockBehaviour.Properties.copy(Blocks.POWERED_RAIL), 0.7f));
+	public static final SimpleBlockWithItem COPPER_POWERED_RAIL = SimpleBlockWithItem.register("copper_powered_rail", () -> new SRPoweredRail(BlockBehaviour.Properties.copy(Blocks.POWERED_RAIL).sound(SoundType.COPPER), 0.3f));
 
 	@Config
 	@Label(name = "Data Pack", description = "If true, enables a data pack that makes rails cheaper and adds recipes for new rails")

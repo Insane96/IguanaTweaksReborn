@@ -4,7 +4,7 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.base.BlockWithItem;
+import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.mining.block.MiningChargeBlock;
 import insane96mcp.survivalreimagined.module.mining.entity.PrimedMiningCharge;
@@ -22,7 +22,7 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.MINING)
 public class MiningCharge extends Feature {
 
-	public static final BlockWithItem MINING_CHARGE = BlockWithItem.register("mining_charge", () -> new MiningChargeBlock(BlockBehaviour.Properties.copy(Blocks.TNT)));
+	public static final SimpleBlockWithItem MINING_CHARGE = SimpleBlockWithItem.register("mining_charge", () -> new MiningChargeBlock(BlockBehaviour.Properties.copy(Blocks.TNT)));
 
 	public static final RegistryObject<EntityType<PrimedMiningCharge>> PRIMED_MINING_CHARGE = SREntityTypes.REGISTRY.register("mining_charge", () -> EntityType.Builder.<PrimedMiningCharge>of(PrimedMiningCharge::new, MobCategory.MISC).fireImmune().sized(0.735F, 0.735F).clientTrackingRange(10).updateInterval(10).build("mining_charge"));
 

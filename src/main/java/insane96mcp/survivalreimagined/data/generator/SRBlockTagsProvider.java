@@ -47,7 +47,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         //Vanilla Tags
         tag(BlockTags.MINEABLE_WITH_AXE)
-                .add(Crate.BLOCK.block().get(), ExplosiveBarrel.BLOCK.block().get(), Fletching.FLETCHING_TABLE.block().get());
+                .add(Crate.BLOCK.get(), ExplosiveBarrel.BLOCK.block().get(), Fletching.FLETCHING_TABLE.block().get());
 
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(CoalFire.CHARCOAL_LAYER.block().get())
@@ -66,7 +66,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(Forging.FORGE.block().get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(Crate.BLOCK.block().get())
+                .add(Crate.BLOCK.get())
                 .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get())
                 .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get());
 

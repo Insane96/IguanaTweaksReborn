@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
-import insane96mcp.survivalreimagined.base.BlockWithItem;
+import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.item.SRArmorMaterial;
 import insane96mcp.survivalreimagined.setup.SRItems;
@@ -27,7 +27,7 @@ import java.util.EnumMap;
 @Label(name = "Soul Steel", description = "Add Soul Steel, a new metal made by alloying Iron, Soul Sand and Hellish Coal")
 @LoadFeature(module = Modules.Ids.MINING)
 public class SoulSteel extends Feature {
-	public static final BlockWithItem BLOCK = BlockWithItem.register("soul_steel_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 9.0F).sound(SoundType.METAL)), new Item.Properties().fireResistant());
+	public static final SimpleBlockWithItem BLOCK = SimpleBlockWithItem.register("soul_steel_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 9.0F).sound(SoundType.METAL)), new Item.Properties().fireResistant());
 
 	public static final RegistryObject<Item> INGOT = SRItems.REGISTRY.register("soul_steel_ingot", () -> new Item(new Item.Properties().fireResistant()));
 

@@ -114,7 +114,7 @@ public class ClientSetup {
         }
         else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(Respawn.RESPAWN_OBELISK.item().get());
-            event.accept(Crate.BLOCK.item().get());
+            event.accept(Crate.ITEM.get());
             event.accept(MultiBlockFurnaces.BLAST_FURNACE.item().get());
             event.accept(MultiBlockFurnaces.SOUL_BLAST_FURNACE.item().get());
             event.accept(Forging.FORGE.item().get());

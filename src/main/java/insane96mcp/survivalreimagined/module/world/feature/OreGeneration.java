@@ -5,7 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.base.BlockWithItem;
+import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.module.world.block.GroundRockBlock;
@@ -26,9 +26,9 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.WORLD)
 public class OreGeneration extends Feature {
 
-    public static final BlockWithItem IRON_ORE_ROCK = BlockWithItem.register("iron_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
-    public static final BlockWithItem GOLD_ORE_ROCK = BlockWithItem.register("gold_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
-    public static final BlockWithItem COPPER_ORE_ROCK = BlockWithItem.register("copper_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
+    public static final SimpleBlockWithItem IRON_ORE_ROCK = SimpleBlockWithItem.register("iron_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
+    public static final SimpleBlockWithItem GOLD_ORE_ROCK = SimpleBlockWithItem.register("gold_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
+    public static final SimpleBlockWithItem COPPER_ORE_ROCK = SimpleBlockWithItem.register("copper_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
 
     public static final PoorRichOre POOR_RICH_IRON_ORE = PoorRichOre.register("iron", Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE);
     public static final PoorRichOre POOR_RICH_COPPER_ORE = PoorRichOre.register("copper", Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE);
@@ -51,12 +51,12 @@ public class OreGeneration extends Feature {
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_generation", Component.literal("Survival Reimagined Copper Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperGenerationDataPack));
     }
 
-    public record PoorRichOre(BlockWithItem poorOre, BlockWithItem poorDeepslateOre, BlockWithItem richOre, BlockWithItem richDeepslateOre) {
+    public record PoorRichOre(SimpleBlockWithItem poorOre, SimpleBlockWithItem poorDeepslateOre, SimpleBlockWithItem richOre, SimpleBlockWithItem richDeepslateOre) {
         public static PoorRichOre register(String oreName, Block vanillaOre, Block vanillaDeepslateOre) {
-            BlockWithItem poorOre = BlockWithItem.register("poor_%s_ore".formatted(oreName), () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(vanillaOre).strength(2f, 4.5f)));
-            BlockWithItem richOre = BlockWithItem.register("rich_%s_ore".formatted(oreName), () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(vanillaOre).strength(4f, 2f)));
-            BlockWithItem poorDeepslateOre = BlockWithItem.register("poor_deepslate_%s_ore".formatted(oreName), () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(vanillaDeepslateOre).strength(3f, 4.5f)));
-            BlockWithItem richDeepslateOre = BlockWithItem.register("rich_deepslate_%s_ore".formatted(oreName), () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(vanillaDeepslateOre).strength(6f, 2f)));
+            SimpleBlockWithItem poorOre = SimpleBlockWithItem.register("poor_%s_ore".formatted(oreName), () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(vanillaOre).strength(2f, 4.5f)));
+            SimpleBlockWithItem richOre = SimpleBlockWithItem.register("rich_%s_ore".formatted(oreName), () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(vanillaOre).strength(4f, 2f)));
+            SimpleBlockWithItem poorDeepslateOre = SimpleBlockWithItem.register("poor_deepslate_%s_ore".formatted(oreName), () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(vanillaDeepslateOre).strength(3f, 4.5f)));
+            SimpleBlockWithItem richDeepslateOre = SimpleBlockWithItem.register("rich_deepslate_%s_ore".formatted(oreName), () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(vanillaDeepslateOre).strength(6f, 2f)));
             return new PoorRichOre(poorOre, poorDeepslateOre, richOre, richDeepslateOre);
         }
 

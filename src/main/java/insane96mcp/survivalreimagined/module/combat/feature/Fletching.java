@@ -5,7 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.base.BlockWithItem;
+import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.combat.block.SRFletchingTableBlock;
 import insane96mcp.survivalreimagined.module.combat.crafting.FletchingRecipe;
@@ -31,7 +31,7 @@ import net.minecraftforge.registries.RegistryObject;
 @Label(name = "Fletching table", description = "Gives a use to the fletching table.")
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class Fletching extends Feature {
-	public static final BlockWithItem FLETCHING_TABLE = BlockWithItem.register("fletching_table", () -> new SRFletchingTableBlock(BlockBehaviour.Properties.copy(Blocks.FLETCHING_TABLE)));
+	public static final SimpleBlockWithItem FLETCHING_TABLE = SimpleBlockWithItem.register("fletching_table", () -> new SRFletchingTableBlock(BlockBehaviour.Properties.copy(Blocks.FLETCHING_TABLE)));
 
 	public static final RegistryObject<RecipeType<FletchingRecipe>> FLETCHING_RECIPE_TYPE = SRRecipeTypes.REGISTRY.register("fletching", () -> new RecipeType<>() {
 		@Override
