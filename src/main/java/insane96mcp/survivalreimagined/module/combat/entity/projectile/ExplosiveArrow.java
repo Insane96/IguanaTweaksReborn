@@ -9,7 +9,6 @@ import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
 
 public class ExplosiveArrow extends Arrow {
     public ExplosiveArrow(EntityType<? extends Arrow> pEntityType, Level pLevel) {
@@ -26,10 +25,6 @@ public class ExplosiveArrow extends Arrow {
 
     @Override
     protected void onHitBlock(BlockHitResult pResult) {
-        Vec3 vec3 = pResult.getLocation().subtract(this.getX(), this.getY(), this.getZ());
-        this.setDeltaMovement(vec3);
-        Vec3 vec31 = vec3.normalize().scale(0.05F);
-        this.setPosRaw(this.getX() - vec31.x, this.getY() - vec31.y, this.getZ() - vec31.z);
         if (!this.level.isClientSide)
             this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2.5f, Level.ExplosionInteraction.BLOCK);
         this.discard();
