@@ -1,6 +1,7 @@
 # Changelog
 
 ## 0.12.1
+* Lodestones are now cheaper to craft
 * Tentative shields durability balance changes
 * Health regeneration speed is now fixed to 0.5hp/s and no longer depends on saturation modifier
 * Golden shield now protects 100 damage instead of giving a speed boost

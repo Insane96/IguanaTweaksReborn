@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "SSS",
+        "S#S",
+        "SSS"
+    ],
+    "key": {
+        "#": {
+            "item": "survivalreimagined:durium_ingot"
+        },
+        "S": {
+            "item": "minecraft:chiseled_stone_bricks"
+        }
+    },
+    "result": {
+        "item": "minecraft:lodestone"
+    }
+}

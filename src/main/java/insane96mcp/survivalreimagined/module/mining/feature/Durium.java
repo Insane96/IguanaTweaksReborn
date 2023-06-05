@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.module.mining.feature;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
@@ -10,8 +11,12 @@ import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.item.SRArmorMaterial;
+import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
+import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.Util;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.*;
@@ -65,41 +70,12 @@ public class Durium extends Feature {
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRItems.registerShield("durium_shield", SHIELD_MATERIAL);
 
+	@Config
+	@Label(name = "Durium Lodestone", description = "Enables a data pack that makes Lodestone require Durium instead of Netherite.")
+	public static Boolean duriumLodestone = true;
+
 	public Durium(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "durium_lodestone", Component.literal("Survival Reimagined Durium Lodestone"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && duriumLodestone));
 	}
-
-	/*@SubscribeEvent
-	public void missingMappings(MissingMappingsEvent event) {
-		if (event.getMappings(ForgeRegistries.Keys.BLOCKS, SurvivalReimagined.MOD_ID).isEmpty()
-				&& event.getMappings(ForgeRegistries.Keys.ITEMS, SurvivalReimagined.MOD_ID).isEmpty())
-			return;
-
-		event.getMappings(ForgeRegistries.Keys.BLOCKS, SurvivalReimagined.MOD_ID).forEach(blockMapping -> {
-			switch (blockMapping.getKey().toString()) {
-				case "survivalreimagined:mithril_ore" -> blockMapping.remap(Durium.ORE.block().get());
-				case "survivalreimagined:deepslate_mithril_ore" -> blockMapping.remap(Durium.DEEPSLATE_ORE.block().get());
-				case "survivalreimagined:mithril_block" -> blockMapping.remap(Durium.BLOCK.block().get());
-			}
-		});
-		event.getMappings(ForgeRegistries.Keys.ITEMS, SurvivalReimagined.MOD_ID).forEach(blockMapping -> {
-			switch (blockMapping.getKey().toString()) {
-				case "survivalreimagined:mithril_nugget" -> blockMapping.remap(Durium.SCRAP_PIECE.get());
-				case "survivalreimagined:mithril_ingot", "survivalreimagined:durium_scrap" -> blockMapping.remap(Durium.SCRAP_BLOCK.item().get());
-				case "survivalreimagined:mithril_block" -> blockMapping.remap(Durium.BLOCK.item().get());
-				case "survivalreimagined:mithril_ore" -> blockMapping.remap(Durium.ORE.item().get());
-				case "survivalreimagined:deepslate_mithril_ore" -> blockMapping.remap(Durium.DEEPSLATE_ORE.item().get());
-				case "survivalreimagined:mithril_pickaxe" -> blockMapping.remap(Durium.PICKAXE.get());
-				case "survivalreimagined:mithril_axe" -> blockMapping.remap(Durium.AXE.get());
-				case "survivalreimagined:mithril_sword" -> blockMapping.remap(Durium.SWORD.get());
-				case "survivalreimagined:mithril_hoe" -> blockMapping.remap(Durium.HOE.get());
-				case "survivalreimagined:mithril_shovel" -> blockMapping.remap(Durium.SHOVEL.get());
-				case "survivalreimagined:mithril_helmet" -> blockMapping.remap(Durium.HELMET.get());
-				case "survivalreimagined:mithril_chestplate" -> blockMapping.remap(Durium.CHESTPLATE.get());
-				case "survivalreimagined:mithril_leggings" -> blockMapping.remap(Durium.LEGGINGS.get());
-				case "survivalreimagined:mithril_boots" -> blockMapping.remap(Durium.BOOTS.get());
-				case "survivalreimagined:mithril_shield" -> blockMapping.remap(Durium.SHIELD.get());
-			}
-		});
-	}*/
 }

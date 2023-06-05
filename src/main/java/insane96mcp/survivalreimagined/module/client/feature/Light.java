@@ -12,7 +12,7 @@ import insane96mcp.survivalreimagined.module.ClientModules;
 public class Light extends Feature {
 
     @Config
-    @Label(name = "No Night Vision Flashing", description = "If true night vision will no longer flash 10 seconds before expiring, instead will slowly fade out 4 seconds before expiring.")
+    @Label(name = "No Night Vision Flashing", description = "If true night vision will no longer flash 10 seconds before expiring, instead will slowly fade out 2 seconds before expiring.")
     public static Boolean noNightVisionFlashing = true;
 
     public Light(Module module, boolean enabledByDefault, boolean canBeDisabled) {
