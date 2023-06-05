@@ -1,13 +1,14 @@
 package insane96mcp.survivalreimagined.module.combat.entity.projectile;
 
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
 public class TorchArrow extends Arrow {
@@ -27,62 +28,10 @@ public class TorchArrow extends Arrow {
     protected void onHitBlock(BlockHitResult pResult) {
         Vec3 vec3 = pResult.getLocation().subtract(this.getX(), this.getY(), this.getZ());
         this.setDeltaMovement(vec3);
-        Vec3 vec31 = vec3.normalize().scale(0.05F);
+        Vec3 vec31 = vec3.normalize().scale(0.5F);
         this.setPosRaw(this.getX() - vec31.x, this.getY() - vec31.y, this.getZ() - vec31.z);
         if (!this.level.isClientSide)
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2.5f, Level.ExplosionInteraction.BLOCK);
+            this.level.setBlockAndUpdate(this.blockPosition(), Blocks.TORCH.getStateForPlacement(new BlockPlaceContext(this.level, null, InteractionHand.MAIN_HAND, ItemStack.EMPTY, pResult)));
         this.discard();
-    }
-
-    @Override
-    protected void onHitEntity(EntityHitResult pResult) {
-        Entity entityHit = pResult.getEntity();
-        /*if (this.getPierceLevel() > 0) {
-            if (this.piercingIgnoreEntityIds == null) {
-                this.piercingIgnoreEntityIds = new IntOpenHashSet(5);
-            }
-
-            if (this.piercedAndKilledEntities == null) {
-                this.piercedAndKilledEntities = Lists.newArrayListWithCapacity(5);
-            }
-
-            if (this.piercingIgnoreEntityIds.size() >= this.getPierceLevel() + 1) {
-                this.discard();
-                return;
-            }
-
-            this.piercingIgnoreEntityIds.add(entityHit.getId());
-        }*/
-
-        Entity owner = this.getOwner();
-        DamageSource damagesource;
-        if (owner == null) {
-            damagesource = this.damageSources().arrow(this, this);
-        }
-        else {
-            damagesource = this.damageSources().arrow(this, owner);
-            if (owner instanceof LivingEntity) {
-                ((LivingEntity)owner).setLastHurtMob(entityHit);
-            }
-        }
-
-        boolean isEnderman = entityHit.getType() == EntityType.ENDERMAN;
-        if (!isEnderman && entityHit.hurt(damagesource, 0.01f)) {
-            if (!this.level.isClientSide)
-                this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2.5f, Level.ExplosionInteraction.BLOCK);
-            this.discard();
-        }
-        else {
-            this.setDeltaMovement(this.getDeltaMovement().scale(-0.1D));
-            this.setYRot(this.getYRot() + 180.0F);
-            this.yRotO += 180.0F;
-            if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D) {
-                if (this.pickup == Pickup.ALLOWED) {
-                    this.spawnAtLocation(this.getPickupItem(), 0.1F);
-                }
-
-                this.discard();
-            }
-        }
     }
 }
