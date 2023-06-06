@@ -1,28 +1,28 @@
 {
 	"display": {
 		"icon": {
-			"item": "survivalreimagined:explosive_arrow"
+			"item": "survivalreimagined:torch_arrow"
 		},
 		"title": {
-			"translate": "advancements.sr_story.explosive_arrow.title"
+			"translate": "advancements.sr_story.torch_arrow.title"
 		},
 		"description": {
-			"translate": "advancements.sr_story.explosive_arrow.description"
+			"translate": "advancements.sr_story.torch_arrow.description"
 		},
 		"frame": "task",
 		"show_toast": true,
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/torch_arrow",
+	"parent": "survivalreimagined:story/fletching_table",
 	"criteria": {
-		"explosive_arrow": {
+		"torch_arrow": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
 						"items": [
-							"survivalreimagined:explosive_arrow"
+							"survivalreimagined:torch_arrow"
 						]
 					}
 				]
@@ -31,7 +31,7 @@
 	},
 	"requirements": [
 		[
-			"explosive_arrow"
+			"torch_arrow"
 		]
 	]
 }

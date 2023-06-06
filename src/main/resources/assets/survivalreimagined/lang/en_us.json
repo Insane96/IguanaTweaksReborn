@@ -26,6 +26,7 @@
 	"item.survivalreimagined.quartz_arrow": "Quartz Arrow",
 	"item.survivalreimagined.diamond_arrow": "Diamond Arrow",
 	"item.survivalreimagined.explosive_arrow": "Explosive Arrow",
+	"item.survivalreimagined.torch_arrow": "Torch Arrow",
 
 	"container.fletching": "Fletching",
 
@@ -306,14 +307,16 @@
 	"advancements.sr_story.smoker.description": "Since furnaces are too hot to cook food, a Smoker should do it.",
 	"advancements.sr_story.winter_is_coming.title": "Winter is coming",
 	"advancements.sr_story.winter_is_coming.description": "It's autumn! Make sure to stack up food and wood before Winter as almost nothing grows and animals don't spawn. Also a calendar can help keep track of the season.",
-	"advancements.sr_story.fletching_table.title": "Fletching arrows",
+	"advancements.sr_story.fletching_table.title": "§oI shoot my arrows in the air sometimes",
 	"advancements.sr_story.fletching_table.description": "Make a Fletching table to be able to make more arrows.",
 	"advancements.sr_story.diamond_arrow.title": "Diamond tip",
 	"advancements.sr_story.diamond_arrow.description": "Make Diamond arrows that deal much more damage than base arrows.",
 	"advancements.sr_story.quartz_arrow.title": "White tip",
 	"advancements.sr_story.quartz_arrow.description": "Make Quartz arrows that deal more damage than base arrows.",
-	"advancements.sr_story.explosive_arrow.title": "§oI shoot my arrows in the air sometimes",
+	"advancements.sr_story.explosive_arrow.title": "Arrow goes boom",
 	"advancements.sr_story.explosive_arrow.description": "Make explosive arrows.",
+	"advancements.sr_story.torch_arrow.title": "Big caves require torching",
+	"advancements.sr_story.torch_arrow.description": "Make torch arrows.",
 
 	"advancements.sr_nether.soul_blast_furnace.title": "Is this a duplication glitch?",
 	"advancements.sr_nether.soul_blast_furnace.description": "Obtain a Soul Blast Furnace, then build a 3x3x3 structure to use it. The structure must have worked Blackstone at the bottom + Soul Blast furnace in any of the sides, Red Nether Bricks in the middle and top layer (stairs also work for the top layer). The middle and middle top block can be empty.",

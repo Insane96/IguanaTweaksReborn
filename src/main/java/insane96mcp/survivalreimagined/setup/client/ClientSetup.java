@@ -102,6 +102,7 @@ public class ClientSetup {
             event.accept(Fletching.QUARTZ_ARROW_ITEM.get());
             event.accept(Fletching.DIAMOND_ARROW_ITEM.get());
             event.accept(Fletching.EXPLOSIVE_ARROW_ITEM.get());
+            event.accept(Fletching.TORCH_ARROW_ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(Durium.SCRAP_BLOCK.item().get());
@@ -192,6 +193,7 @@ public class ClientSetup {
         event.registerEntityRenderer(Fletching.QUARTZ_ARROW.get(), SRArrowRenderer::new);
         event.registerEntityRenderer(Fletching.DIAMOND_ARROW.get(), SRArrowRenderer::new);
         event.registerEntityRenderer(Fletching.EXPLOSIVE_ARROW.get(), SRArrowRenderer::new);
+        event.registerEntityRenderer(Fletching.TORCH_ARROW.get(), SRArrowRenderer::new);
         event.registerEntityRenderer(MiningCharge.PRIMED_MINING_CHARGE.get(), MiningChargeRenderer::new);
     }
 

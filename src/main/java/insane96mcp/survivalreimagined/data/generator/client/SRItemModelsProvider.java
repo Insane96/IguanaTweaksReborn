@@ -147,6 +147,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(Fletching.QUARTZ_ARROW_ITEM.get());
         basicItem(Fletching.DIAMOND_ARROW_ITEM.get());
         basicItem(Fletching.EXPLOSIVE_ARROW_ITEM.get());
+        basicItem(Fletching.TORCH_ARROW_ITEM.get());
 
         basicItemWithTexture(CyanFlower.FLOWER.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/cyan_flower"));
     }

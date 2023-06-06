@@ -11,6 +11,7 @@ import insane96mcp.survivalreimagined.module.combat.block.SRFletchingTableBlock;
 import insane96mcp.survivalreimagined.module.combat.crafting.FletchingRecipe;
 import insane96mcp.survivalreimagined.module.combat.data.FletchingRecipeSerializer;
 import insane96mcp.survivalreimagined.module.combat.entity.projectile.ExplosiveArrow;
+import insane96mcp.survivalreimagined.module.combat.entity.projectile.TorchArrow;
 import insane96mcp.survivalreimagined.module.combat.inventory.FletchingMenu;
 import insane96mcp.survivalreimagined.module.combat.item.SRArrow;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
@@ -63,9 +64,17 @@ public class Fletching extends Feature {
 					.updateInterval(3)
 					.build("explosive_arrow"));
 
+	public static final RegistryObject<EntityType<TorchArrow>> TORCH_ARROW = SREntityTypes.REGISTRY.register("torch_arrow", () ->
+			EntityType.Builder.<TorchArrow>of(TorchArrow::new, MobCategory.MISC)
+					.sized(0.5F, 0.5F)
+					.clientTrackingRange(4)
+					.updateInterval(3)
+					.build("torch_arrow"));
+
 	public static final RegistryObject<SRArrow> QUARTZ_ARROW_ITEM = SRItems.REGISTRY.register("quartz_arrow", () -> new SRArrow(QUARTZ_ARROW::get, 2.5f, new Item.Properties()));
 	public static final RegistryObject<SRArrow> DIAMOND_ARROW_ITEM = SRItems.REGISTRY.register("diamond_arrow", () -> new SRArrow(DIAMOND_ARROW::get, 3.33f, new Item.Properties()));
 	public static final RegistryObject<SRArrow> EXPLOSIVE_ARROW_ITEM = SRItems.REGISTRY.register("explosive_arrow", () -> new SRArrow(EXPLOSIVE_ARROW::get, 0f, new Item.Properties()));
+	public static final RegistryObject<SRArrow> TORCH_ARROW_ITEM = SRItems.REGISTRY.register("torch_arrow", () -> new SRArrow(TORCH_ARROW::get, 2f, new Item.Properties()));
 
 	@Config
 	@Label(name = "Fletching Data Pack", description = """

@@ -1,15 +1,17 @@
 package insane96mcp.survivalreimagined.module.combat.entity.projectile;
 
-import net.minecraft.world.InteractionHand;
+import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.WallTorchBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 
 public class TorchArrow extends Arrow {
     public TorchArrow(EntityType<? extends Arrow> pEntityType, Level pLevel) {
@@ -26,12 +28,31 @@ public class TorchArrow extends Arrow {
 
     @Override
     protected void onHitBlock(BlockHitResult pResult) {
-        Vec3 vec3 = pResult.getLocation().subtract(this.getX(), this.getY(), this.getZ());
-        this.setDeltaMovement(vec3);
-        Vec3 vec31 = vec3.normalize().scale(0.5F);
-        this.setPosRaw(this.getX() - vec31.x, this.getY() - vec31.y, this.getZ() - vec31.z);
-        if (!this.level.isClientSide)
-            this.level.setBlockAndUpdate(this.blockPosition(), Blocks.TORCH.getStateForPlacement(new BlockPlaceContext(this.level, null, InteractionHand.MAIN_HAND, ItemStack.EMPTY, pResult)));
-        this.discard();
+        if (this.level.isClientSide) {
+            super.onHitBlock(pResult);
+            return;
+        }
+        Direction direction = pResult.getDirection();
+        BlockPos pos = pResult.getBlockPos().relative(direction);
+        BlockState hitState = this.level.getBlockState(pos);
+        if ((hitState.isAir() || hitState.canBeReplaced()) && direction != Direction.DOWN) {
+            BlockState stateToPlace;
+            if (direction == Direction.UP)
+                stateToPlace = Blocks.TORCH.defaultBlockState();
+            else
+                stateToPlace = Blocks.WALL_TORCH.defaultBlockState().setValue(WallTorchBlock.FACING, direction);
+            if (stateToPlace.canSurvive(this.level, pos)) {
+                this.level.setBlock(pos, stateToPlace, 2);
+                this.playSound(stateToPlace.getSoundType().getPlaceSound());
+                this.discard();
+                return;
+            }
+        }
+        super.onHitBlock(pResult);
+    }
+
+    @Override
+    protected ItemStack getPickupItem() {
+        return new ItemStack(Fletching.TORCH_ARROW_ITEM.get());
     }
 }

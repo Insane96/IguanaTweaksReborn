@@ -44,7 +44,7 @@ public class SRItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.SWORDS).add(FlintExpansion.SWORD.get(), Durium.SWORD.get(), CopperTools.SWORD.get(), SoulSteel.SWORD.get());
         tag(ItemTags.HOES).add(FlintExpansion.HOE.get(), Durium.HOE.get(), CopperTools.HOE.get(), SoulSteel.HOE.get());
 
-        tag(ItemTags.ARROWS).add(Fletching.QUARTZ_ARROW_ITEM.get(), Fletching.DIAMOND_ARROW_ITEM.get(), Fletching.EXPLOSIVE_ARROW_ITEM.get());
+        tag(ItemTags.ARROWS).add(Fletching.QUARTZ_ARROW_ITEM.get(), Fletching.DIAMOND_ARROW_ITEM.get(), Fletching.EXPLOSIVE_ARROW_ITEM.get(), Fletching.TORCH_ARROW_ITEM.get());
         //Mod's
         tag(Hoes.DISABLED_HOES)
                 .add(Items.WOODEN_HOE);
