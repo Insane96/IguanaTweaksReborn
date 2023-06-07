@@ -4,6 +4,7 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.survivalreimagined.module.combat.feature.Stats;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
@@ -28,10 +29,8 @@ public abstract class AbstractArrowMixin extends Projectile {
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", shift = At.Shift.AFTER), method = "onHitEntity")
     private void onHitEntity(EntityHitResult entityHitResult, CallbackInfo ci) {
-        if (Stats.disableArrowInvFrames()) {
+        if (Stats.disableArrowInvFrames() && this.getOwner() instanceof Player) {
             entityHitResult.getEntity().invulnerableTime = 0;
-            /*if (!entityHitResult.getEntity().isInvulnerable() && entityHitResult.getEntity().level instanceof ServerLevel serverLevel)
-                SyncInvulnerableTimeMessage.sync(serverLevel, entityHitResult.getEntity(), 2);*/
         }
     }
 
