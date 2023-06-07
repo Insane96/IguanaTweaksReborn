@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-06T08:33:38.9401951	Item Models: survivalreimagined
+// 1.19.4	2023-06-07T16:26:28.3744542	Item Models: survivalreimagined
 0e14a5fda7239c8fc0a79813151a4eba3c430f5f assets/survivalreimagined/models/item/ancient_lapis.json
 9db8ff6b8f62a90066f9ec6f113f30579ef147b4 assets/survivalreimagined/models/item/blast_furnace.json
 fe69cbb0039b59fd572532480721ff573ee4aa76 assets/survivalreimagined/models/item/brown_mushroom_stew.json
@@ -68,6 +68,7 @@ c95b12048414c1fa9c7c7ccab108a3c6f35847d8 assets/survivalreimagined/models/item/p
 1d36c36543bbc97dab7755919248cf052e11454e assets/survivalreimagined/models/item/potato_seeds.json
 91960a8845fbf54f57feea19246ccfbabb205132 assets/survivalreimagined/models/item/pumpkin_pulp.json
 3fae77c8186db20eef9896d8b9b9050fc515488b assets/survivalreimagined/models/item/quartz_arrow.json
+3e7680957efcfc53de3aaafb147ff9d760f80b37 assets/survivalreimagined/models/item/recall_idol.json
 5cd57536227d41e33140a1195d510a7f95b4b548 assets/survivalreimagined/models/item/red_mushroom_stew.json
 81060ae12a63189e102c8f0847873e2eb53956af assets/survivalreimagined/models/item/respawn_obelisk.json
 2031da8981631611c5cd5db2c8cbc82eb90b4bee assets/survivalreimagined/models/item/rich_copper_ore.json

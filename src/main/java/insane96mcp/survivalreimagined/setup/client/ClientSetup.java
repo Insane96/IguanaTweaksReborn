@@ -74,6 +74,8 @@ public class ClientSetup {
             event.accept(Forging.DIAMOND_HAMMER.get());
             event.accept(Forging.SOUL_STEEL_HAMMER.get());
             event.accept(Forging.NETHERITE_HAMMER.get());
+
+            event.accept(RecallIdol.ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.COMBAT) {
             event.accept(FlintExpansion.SWORD.get());

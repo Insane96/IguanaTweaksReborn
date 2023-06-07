@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.data.generator;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
+import insane96mcp.survivalreimagined.module.items.feature.RecallIdol;
 import insane96mcp.survivalreimagined.module.mobs.feature.Equipment;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
@@ -15,6 +16,7 @@ public class SRGlobalLootModifierProvider extends GlobalLootModifierProvider {
         super(output, modid);
     }
 
+
     @Override
     protected void start() {
         Crops.addGlobalLoot(this);
@@ -24,5 +26,6 @@ public class SRGlobalLootModifierProvider extends GlobalLootModifierProvider {
         Minecarts.addGlobalLoot(this);
         CoalFire.addGlobalLoot(this);
         EnchantmentsFeature.addGlobalLoot(this);
+        RecallIdol.addGlobalLoot(this);
     }
 }

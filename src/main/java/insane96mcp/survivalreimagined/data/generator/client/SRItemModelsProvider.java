@@ -10,6 +10,7 @@ import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.feature.CopperTools;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
+import insane96mcp.survivalreimagined.module.items.feature.RecallIdol;
 import insane96mcp.survivalreimagined.module.mining.feature.Durium;
 import insane96mcp.survivalreimagined.module.mining.feature.Forging;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
@@ -148,6 +149,8 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(Fletching.DIAMOND_ARROW_ITEM.get());
         basicItem(Fletching.EXPLOSIVE_ARROW_ITEM.get());
         basicItem(Fletching.TORCH_ARROW_ITEM.get());
+
+        basicItem(RecallIdol.ITEM.get());
 
         basicItemWithTexture(CyanFlower.FLOWER.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/cyan_flower"));
     }

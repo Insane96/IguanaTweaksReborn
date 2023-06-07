@@ -1,6 +1,9 @@
 # Changelog
 
 ## 0.12.1
+* Added torch arrows
+  * Place a torch on the point they land on
+  * Set on fire entities hit (stacking)
 * Lodestones are now cheaper to craft
 * Tentative shields durability balance changes
 * Mining charge now breaks 3x3x5
