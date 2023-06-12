@@ -1,0 +1,6 @@
+{
+    "type": "forge:add_features",
+    "biomes": "#forge:is_hot/overworld",
+    "features": "survivalreimagined:solium_moss",
+    "step": "vegetal_decoration"
+}

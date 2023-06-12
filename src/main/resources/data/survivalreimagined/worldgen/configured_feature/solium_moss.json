@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:multiface_growth",
+    "config": {
+        "block": "survivalreimagined:solium_moss",
+        "search_range": 20,
+        "chance_of_spreading": 0.95,
+        "can_place_on_floor": true,
+        "can_place_on_ceiling": true,
+        "can_place_on_wall": true,
+        "can_be_placed_on": [
+            "minecraft:stone",
+            "minecraft:sand",
+            "minecraft:dirt",
+            "minecraft:gravel",
+            "minecraft:grass_block"
+        ]
+    }
+}

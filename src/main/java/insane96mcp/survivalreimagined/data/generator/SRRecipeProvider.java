@@ -259,41 +259,41 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer);
 
         //Solarium
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Solarium.SOLIUM_MOSS_BALL.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Solarium.SOLARIUM_BALL.get())
                 .pattern("ss")
                 .pattern("ss")
                 .define('s', Solarium.SOLIUM_MOSS.item().get())
                 .unlockedBy("has_solium_moss", has(Solarium.SOLIUM_MOSS.item().get()))
                 .save(writer);
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Solarium.SOLIUM_MOSS_BALL.get()), RecipeCategory.TOOLS, Solarium.AXE.get())
-                .unlocks("has_solium_moss_ball", has(Solarium.SOLIUM_MOSS_BALL.get()))
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.AXE.get())
+                .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_axe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_PICKAXE), Ingredient.of(Solarium.SOLIUM_MOSS_BALL.get()), RecipeCategory.TOOLS, Solarium.PICKAXE.get())
-                .unlocks("has_solium_moss_ball", has(Solarium.SOLIUM_MOSS_BALL.get()))
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_PICKAXE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.PICKAXE.get())
+                .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_pickaxe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SHOVEL), Ingredient.of(Solarium.SOLIUM_MOSS_BALL.get()), RecipeCategory.TOOLS, Solarium.SHOVEL.get())
-                .unlocks("has_solium_moss_ball", has(Solarium.SOLIUM_MOSS_BALL.get()))
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SHOVEL), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.SHOVEL.get())
+                .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_shovel");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HOE), Ingredient.of(Solarium.SOLIUM_MOSS_BALL.get()), RecipeCategory.TOOLS, Solarium.HOE.get())
-                .unlocks("has_solium_moss_ball", has(Solarium.SOLIUM_MOSS_BALL.get()))
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HOE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.HOE.get())
+                .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_hoe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SWORD), Ingredient.of(Solarium.SOLIUM_MOSS_BALL.get()), RecipeCategory.COMBAT, Solarium.SWORD.get())
-                .unlocks("has_solium_moss_ball", has(Solarium.SOLIUM_MOSS_BALL.get()))
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SWORD), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.SWORD.get())
+                .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_sword");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(Solarium.SOLIUM_MOSS_BALL.get()), RecipeCategory.COMBAT, Solarium.SHIELD.get())
-                .unlocks("has_solium_moss_ball", has(Solarium.SOLIUM_MOSS_BALL.get()))
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.SHIELD.get())
+                .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_shield");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HELMET), Ingredient.of(Solarium.SOLIUM_MOSS_BALL.get()), RecipeCategory.COMBAT, Solarium.HELMET.get())
-                .unlocks("has_solium_moss_ball", has(Solarium.SOLIUM_MOSS_BALL.get()))
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HELMET), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.HELMET.get())
+                .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_helmet");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_CHESTPLATE), Ingredient.of(Solarium.SOLIUM_MOSS_BALL.get()), RecipeCategory.COMBAT, Solarium.CHESTPLATE.get())
-                .unlocks("has_solium_moss_ball", has(Solarium.SOLIUM_MOSS_BALL.get()))
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_CHESTPLATE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.CHESTPLATE.get())
+                .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_chestplate");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_LEGGINGS), Ingredient.of(Solarium.SOLIUM_MOSS_BALL.get()), RecipeCategory.COMBAT, Solarium.LEGGINGS.get())
-                .unlocks("has_solium_moss_ball", has(Solarium.SOLIUM_MOSS_BALL.get()))
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_LEGGINGS), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.LEGGINGS.get())
+                .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_leggings");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Solarium.SOLIUM_MOSS_BALL.get()), RecipeCategory.COMBAT, Solarium.BOOTS.get())
-                .unlocks("has_solium_moss_ball", has(Solarium.SOLIUM_MOSS_BALL.get()))
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.BOOTS.get())
+                .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_boots");
 
         //Durium Block, Ingot, Nugget, Scrap, smithing
@@ -845,8 +845,8 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         hammerCraftingRecipe(writer, Forging.FLINT_HAMMER.get(), Items.FLINT);
         forgeRecipe(writer, Items.COPPER_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.COPPER_HAMMER.get(), 6);
         forgeRecipe(writer, Items.IRON_INGOT, 5, Forging.STONE_HAMMER.get(), Forging.IRON_HAMMER.get(), 10);
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(Solarium.SOLIUM_MOSS_BALL.get()), RecipeCategory.TOOLS, Forging.SOLARIUM_HAMMER.get())
-                .unlocks("has_material", has(Solarium.SOLIUM_MOSS_BALL.get()))
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Forging.SOLARIUM_HAMMER.get())
+                .unlocks("has_material", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_hammer");
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Forging.DURIUM_HAMMER.get())
                 .unlocks("has_material", has(Durium.INGOT.get()))

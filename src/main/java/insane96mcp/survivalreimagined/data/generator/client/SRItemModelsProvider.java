@@ -13,6 +13,7 @@ import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.items.feature.RecallIdol;
 import insane96mcp.survivalreimagined.module.mining.feature.Durium;
 import insane96mcp.survivalreimagined.module.mining.feature.Forging;
+import insane96mcp.survivalreimagined.module.mining.feature.Solarium;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Cloth;
@@ -93,6 +94,17 @@ public class SRItemModelsProvider extends ItemModelProvider {
 
         withExistingParent("crate", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/crate"));
 
+        handHeld(Solarium.AXE.get());
+        handHeld(Solarium.PICKAXE.get());
+        handHeld(Solarium.SHOVEL.get());
+        handHeld(Solarium.HOE.get());
+        handHeld(Solarium.SWORD.get());
+        basicItem(Solarium.BOOTS.get());
+        basicItem(Solarium.LEGGINGS.get());
+        basicItem(Solarium.CHESTPLATE.get());
+        basicItem(Solarium.HELMET.get());
+        basicItem(Solarium.SOLARIUM_BALL.get());
+
         handHeld(Durium.AXE.get());
         handHeld(Durium.PICKAXE.get());
         handHeld(Durium.SHOVEL.get());
@@ -138,6 +150,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         handHeld(Forging.COPPER_HAMMER.get());
         handHeld(Forging.GOLDEN_HAMMER.get());
         handHeld(Forging.IRON_HAMMER.get());
+        handHeld(Forging.SOLARIUM_HAMMER.get());
         handHeld(Forging.DURIUM_HAMMER.get());
         handHeld(Forging.DIAMOND_HAMMER.get());
         handHeld(Forging.SOUL_STEEL_HAMMER.get());

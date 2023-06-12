@@ -3,14 +3,18 @@ package insane96mcp.survivalreimagined.event;
 import insane96mcp.survivalreimagined.module.misc.level.SRExplosion;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
+import org.jetbrains.annotations.Nullable;
 
 public class SREventFactory {
 
@@ -60,5 +64,12 @@ public class SREventFactory {
     {
         FallingBlockLandEvent event = new FallingBlockLandEvent(fallingBlock);
         MinecraftForge.EVENT_BUS.post(event);
+    }
+
+    public static int getHurtAmount(ItemStack stack, int amount, RandomSource random, @Nullable ServerPlayer player)
+    {
+        HurtItemStackEvent event = new HurtItemStackEvent(stack, amount, random, player);
+        MinecraftForge.EVENT_BUS.post(event);
+        return event.getAmount();
     }
 }

@@ -49,7 +49,7 @@ public class WanderingTrader extends SRFeature {
             new SerializableTrade(new ItemStack(Items.LAPIS_LAZULI, 16), new ItemStack(Items.EMERALD), 2),
             new SerializableTrade(new ItemStack(Items.IRON_INGOT, 8), new ItemStack(Items.EMERALD), 2),
             new SerializableTrade(new ItemStack(Items.GOLD_INGOT, 4), new ItemStack(Items.EMERALD), 3),
-            new SerializableTrade(new ItemStack(Solarium.SOLIUM_MOSS_BALL.get(), 3), new ItemStack(Items.EMERALD), 3),
+            new SerializableTrade(new ItemStack(Solarium.SOLARIUM_BALL.get(), 3), new ItemStack(Items.EMERALD), 3),
             new SerializableTrade(new ItemStack(Durium.INGOT.get(), 2), new ItemStack(Items.EMERALD), 3),
             new SerializableTrade(new ItemStack(Items.DIAMOND, 2), new ItemStack(Items.EMERALD), 2),
             new SerializableTrade(new ItemStack(Items.LEATHER, 4), new ItemStack(Items.EMERALD), 2),

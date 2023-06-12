@@ -19,10 +19,10 @@ public class SRBlockModelsProvider extends BlockModelProvider {
     @Override
     protected void registerModels() {
         for (String poorRichOre : poorRichOres) {
-            cubeAll("poor_%s_ore".formatted(poorRichOre), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/poor_%s_ore".formatted(poorRichOre)));
-            cubeAll("rich_%s_ore".formatted(poorRichOre), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/rich_%s_ore".formatted(poorRichOre)));
-            cubeAll("poor_deepslate_%s_ore".formatted(poorRichOre), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/poor_deepslate_%s_ore".formatted(poorRichOre)));
-            cubeAll("rich_deepslate_%s_ore".formatted(poorRichOre), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/rich_deepslate_%s_ore".formatted(poorRichOre)));
+            cubeAll("poor_%s_ore".formatted(poorRichOre), "block/poor_%s_ore".formatted(poorRichOre));
+            cubeAll("rich_%s_ore".formatted(poorRichOre), "block/rich_%s_ore".formatted(poorRichOre));
+            cubeAll("poor_deepslate_%s_ore".formatted(poorRichOre), "block/poor_deepslate_%s_ore".formatted(poorRichOre));
+            cubeAll("rich_deepslate_%s_ore".formatted(poorRichOre), "block/rich_deepslate_%s_ore".formatted(poorRichOre));
         }
 
         cubeAll("soul_steel_block", "block/soul_steel_block");

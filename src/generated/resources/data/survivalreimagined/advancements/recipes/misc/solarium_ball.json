@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "survivalreimagined:solium_moss_boss"
+        "recipe": "survivalreimagined:solarium_ball"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "survivalreimagined:solium_moss_boss"
+      "survivalreimagined:solarium_ball"
     ]
   }
 }

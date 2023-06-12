@@ -121,7 +121,6 @@ public class ClientSetup {
         else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(Durium.SCRAP_BLOCK.item().get());
             event.accept(Durium.BLOCK.item().get());
-            event.accept(Solarium.BLOCK.item().get());
             event.accept(SoulSteel.BLOCK.item().get());
             event.accept(FlintExpansion.FLINT_BLOCK.item().get());
             event.accept(FlintExpansion.POLISHED_FLINT_BLOCK.item().get());
@@ -174,7 +173,7 @@ public class ClientSetup {
             event.accept(Durium.SCRAP_PIECE.get());
             event.accept(Durium.INGOT.get());
             event.accept(Durium.NUGGET.get());
-            event.accept(Solarium.SOLIUM_MOSS_BALL.get());
+            event.accept(Solarium.SOLARIUM_BALL.get());
             event.accept(SoulSteel.INGOT.get());
             event.accept(SoulSteel.NUGGET.get());
             event.accept(AncientLapis.ANCIENT_LAPIS.get());

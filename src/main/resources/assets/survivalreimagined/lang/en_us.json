@@ -98,6 +98,20 @@
 
 	"survivalreimagined:mining_module": "Mining",
 
+	"survivalreimagined:innate_solarium": "Tools take reduced damage when used in sky light",
+	"item.survivalreimagined.solarium_axe": "Solarium Axe",
+	"item.survivalreimagined.solarium_pickaxe": "Solarium Pickaxe",
+	"item.survivalreimagined.solarium_sword": "Solarium Sword",
+	"item.survivalreimagined.solarium_shovel": "Solarium Shovel",
+	"item.survivalreimagined.solarium_hoe": "Solarium Hoe",
+	"item.survivalreimagined.solarium_shield": "Solarium Shield",
+	"item.survivalreimagined.solarium_helmet": "Solarium Helmet",
+	"item.survivalreimagined.solarium_chestplate": "Solarium Chestplate",
+	"item.survivalreimagined.solarium_leggings": "Solarium Leggings",
+	"item.survivalreimagined.solarium_boots": "Solarium Boots",
+	"item.survivalreimagined.solium_moss": "Solium Moss",
+	"item.survivalreimagined.solarium_ball": "Solarium Ball",
+
 	"item.survivalreimagined.durium_axe": "Durium Axe",
 	"item.survivalreimagined.durium_pickaxe": "Durium Pickaxe",
 	"item.survivalreimagined.durium_sword": "Durium Sword",
