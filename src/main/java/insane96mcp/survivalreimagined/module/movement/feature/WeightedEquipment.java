@@ -47,6 +47,7 @@ public class WeightedEquipment extends SRFeature {
 			new ArmorMaterialWeight("survivalreimagined:chained_copper", 0d),
 			new ArmorMaterialWeight("chainmail", 0d),
 			new ArmorMaterialWeight("iron", 0.01d),
+			new ArmorMaterialWeight("survivalreimagined:solarium", 0.011d),
 			new ArmorMaterialWeight("survivalreimagined:durium", 0.025d),
 			new ArmorMaterialWeight("gold", 0d),
 			new ArmorMaterialWeight("diamond", 0.05d),

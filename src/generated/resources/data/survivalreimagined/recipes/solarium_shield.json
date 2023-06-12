@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "survivalreimagined:solium_moss_boss"
+  },
+  "base": {
+    "item": "minecraft:shield"
+  },
+  "result": {
+    "item": "survivalreimagined:solarium_shield"
+  }
+}

@@ -59,6 +59,10 @@ public class ClientSetup {
             event.accept(Durium.PICKAXE.get());
             event.accept(Durium.SHOVEL.get());
             event.accept(Durium.HOE.get());
+            event.accept(Solarium.AXE.get());
+            event.accept(Solarium.PICKAXE.get());
+            event.accept(Solarium.SHOVEL.get());
+            event.accept(Solarium.HOE.get());
             event.accept(SoulSteel.AXE.get());
             event.accept(SoulSteel.PICKAXE.get());
             event.accept(SoulSteel.SHOVEL.get());
@@ -70,6 +74,7 @@ public class ClientSetup {
             event.accept(Forging.COPPER_HAMMER.get());
             event.accept(Forging.GOLDEN_HAMMER.get());
             event.accept(Forging.IRON_HAMMER.get());
+            event.accept(Forging.SOLARIUM_HAMMER.get());
             event.accept(Forging.DURIUM_HAMMER.get());
             event.accept(Forging.DIAMOND_HAMMER.get());
             event.accept(Forging.SOUL_STEEL_HAMMER.get());
@@ -94,6 +99,13 @@ public class ClientSetup {
             event.accept(Durium.SWORD.get());
             event.accept(Durium.SHIELD.get());
 
+            event.accept(Solarium.HELMET.get());
+            event.accept(Solarium.CHESTPLATE.get());
+            event.accept(Solarium.LEGGINGS.get());
+            event.accept(Solarium.BOOTS.get());
+            event.accept(Solarium.SWORD.get());
+            event.accept(Solarium.SHIELD.get());
+
             event.accept(SoulSteel.HELMET.get());
             event.accept(SoulSteel.CHESTPLATE.get());
             event.accept(SoulSteel.LEGGINGS.get());
@@ -109,6 +121,7 @@ public class ClientSetup {
         else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(Durium.SCRAP_BLOCK.item().get());
             event.accept(Durium.BLOCK.item().get());
+            event.accept(Solarium.BLOCK.item().get());
             event.accept(SoulSteel.BLOCK.item().get());
             event.accept(FlintExpansion.FLINT_BLOCK.item().get());
             event.accept(FlintExpansion.POLISHED_FLINT_BLOCK.item().get());
@@ -133,6 +146,7 @@ public class ClientSetup {
         else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(Durium.ORE.item().get());
             event.accept(Durium.DEEPSLATE_ORE.item().get());
+            event.accept(Solarium.SOLIUM_MOSS.item().get());
             event.accept(Crops.CARROT_SEEDS.get());
             event.accept(Crops.POTATO_SEEDS.get());
             event.accept(OreGeneration.COPPER_ORE_ROCK.item().get());
@@ -160,6 +174,7 @@ public class ClientSetup {
             event.accept(Durium.SCRAP_PIECE.get());
             event.accept(Durium.INGOT.get());
             event.accept(Durium.NUGGET.get());
+            event.accept(Solarium.SOLIUM_MOSS_BALL.get());
             event.accept(SoulSteel.INGOT.get());
             event.accept(SoulSteel.NUGGET.get());
             event.accept(AncientLapis.ANCIENT_LAPIS.get());

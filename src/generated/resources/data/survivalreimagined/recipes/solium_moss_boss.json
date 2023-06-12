@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "item": "survivalreimagined:solium_moss"
+    }
+  },
+  "pattern": [
+    "ss",
+    "ss"
+  ],
+  "result": {
+    "item": "survivalreimagined:solium_moss_boss"
+  },
+  "show_notification": true
+}
