@@ -89,7 +89,7 @@ public class PrimedMiningCharge extends Entity implements TraceableEntity {
         Iterable<BlockPos> positions = BlockPos.betweenClosed(explosionCenter.offset(-1, -1, -1), explosionCenter.offset(1, 1, 1).relative(this.direction, 2));
         for (BlockPos pos : positions) {
             BlockState blockstate = this.level.getBlockState(pos);
-            if (!blockstate.isAir()) {
+            if (!blockstate.isAir() && blockstate.getDestroySpeed(this.level, pos) < 5) {
                 this.level.getProfiler().push("mining_charge_explosion");
                 if (this.level instanceof ServerLevel) {
                     BlockEntity blockEntity = blockstate.hasBlockEntity() ? this.level.getBlockEntity(pos) : null;
