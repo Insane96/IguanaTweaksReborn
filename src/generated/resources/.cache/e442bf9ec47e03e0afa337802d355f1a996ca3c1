@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-12T19:25:06.5207427	Item Models: survivalreimagined
+// 1.19.4	2023-06-13T08:09:54.2789375	Item Models: survivalreimagined
 0e14a5fda7239c8fc0a79813151a4eba3c430f5f assets/survivalreimagined/models/item/ancient_lapis.json
 9db8ff6b8f62a90066f9ec6f113f30579ef147b4 assets/survivalreimagined/models/item/blast_furnace.json
 fe69cbb0039b59fd572532480721ff573ee4aa76 assets/survivalreimagined/models/item/brown_mushroom_stew.json
@@ -87,6 +87,7 @@ c5e69b1259389230549dd5c1274cd0bb007bf292 assets/survivalreimagined/models/item/s
 f3f49fb1d00af2e9351b028a8004ffc169ec2d37 assets/survivalreimagined/models/item/solarium_hoe.json
 eddf1589eefb601223998e14a8f39dbaf98ea306 assets/survivalreimagined/models/item/solarium_leggings.json
 eacd24f8760dacb624819cf831dcc4b925d3384a assets/survivalreimagined/models/item/solarium_pickaxe.json
+313300a16ea7cc01a54c0ec8099ea9bf05edd0ac assets/survivalreimagined/models/item/solarium_shield.json
 4b944e84714b172bba0f464add41da31ad73ad04 assets/survivalreimagined/models/item/solarium_shovel.json
 55c1e6a7a81506ff695d261418ee6e2e2c69becc assets/survivalreimagined/models/item/solarium_sword.json
 0de9f1fa270a582ba4edaf3970f0b69141a2d168 assets/survivalreimagined/models/item/soul_blast_furnace.json

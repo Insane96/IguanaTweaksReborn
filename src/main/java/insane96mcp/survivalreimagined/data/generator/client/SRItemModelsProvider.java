@@ -104,6 +104,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(Solarium.CHESTPLATE.get());
         basicItem(Solarium.HELMET.get());
         basicItem(Solarium.SOLARIUM_BALL.get());
+        shield(Solarium.SHIELD.get());
 
         handHeld(Durium.AXE.get());
         handHeld(Durium.PICKAXE.get());

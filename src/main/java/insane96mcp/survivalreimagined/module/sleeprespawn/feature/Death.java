@@ -24,6 +24,8 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -69,7 +71,10 @@ public class Death extends Feature {
 				|| (player.getInventory().isEmpty() && player.experienceLevel == 0))
 			return;
 
-		player.getLevel().setBlock(player.blockPosition(), GRAVE.block().get().defaultBlockState(), 3);
+		BlockState grave = GRAVE.block().get().defaultBlockState();
+		if (player.level.getFluidState(player.blockPosition()).getType() == Fluids.WATER)
+			grave.setValue(GraveBlock.WATERLOGGED, true);
+		player.getLevel().setBlock(player.blockPosition(), grave, 3);
 		if (player.getLevel().getBlockState(player.blockPosition().below()).canBeReplaced())
 			player.getLevel().setBlock(player.blockPosition().below(), Blocks.COARSE_DIRT.defaultBlockState(), 3);
 		GraveBlockEntity graveBlockEntity = (GraveBlockEntity) player.getLevel().getBlockEntity(player.blockPosition());
