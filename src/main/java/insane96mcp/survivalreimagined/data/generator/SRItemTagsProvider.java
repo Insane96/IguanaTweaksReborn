@@ -50,7 +50,7 @@ public class SRItemTagsProvider extends ItemTagsProvider {
         tag(Hoes.DISABLED_HOES)
                 .add(Items.WOODEN_HOE);
 
-        tag(Tiredness.ENERGY_BOOST)
+        tag(Tiredness.ENERGY_BOOST_ITEM_TAG)
                 .add(Items.COOKIE)
                 .addOptional(new ResourceLocation("farmersdelight:chocolate_pie_slice")).addOptional(new ResourceLocation("create:bar_of_chocolate")).addOptional(new ResourceLocation("create:chocolate_glazed_berries"));
 

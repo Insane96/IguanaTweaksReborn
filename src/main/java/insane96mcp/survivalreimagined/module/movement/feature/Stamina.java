@@ -11,6 +11,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.event.PlayerSprintEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.movement.handler.StaminaHandler;
+import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.StaminaSyncMessage;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
@@ -81,8 +82,8 @@ public class Stamina extends Feature {
                     return;
             }
             //If the tired effect is active, consume one more stamina per level above I
-            if (player.hasEffect(SRMobEffects.TIRED.get())) {
-                MobEffectInstance tiredInstance = player.getEffect(SRMobEffects.TIRED.get());
+            if (player.hasEffect(Tiredness.TIRED.get())) {
+                MobEffectInstance tiredInstance = player.getEffect(Tiredness.TIRED.get());
                 //noinspection DataFlowIssue
                 amountConsumed += tiredInstance.getAmplifier();
             }

@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.ILMobEffect;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
@@ -23,8 +24,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.GameRules;
@@ -45,6 +50,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -55,10 +61,15 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class Tiredness extends SRFeature {
 
+	public static final RegistryObject<MobEffect> TIRED = SRMobEffects.REGISTRY.register("tired", () -> new ILMobEffect(MobEffectCategory.HARMFUL, 0x818894, false)
+			.addAttributeModifier(Attributes.MOVEMENT_SPEED, "697c48dd-6bbd-4082-8501-040bb9812c09", -0.06F, AttributeModifier.Operation.MULTIPLY_TOTAL)
+			.addAttributeModifier(Attributes.ATTACK_SPEED, "40c789ef-d30d-4a27-8f46-13fe0edbb259", -0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+	public static final RegistryObject<MobEffect> ENERGY_BOOST = SRMobEffects.REGISTRY.register("energy_boost", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x857965, true));
+
 	public static final String NOT_TIRED = "survivalreimagined.not_tired";
 	public static final String TIRED_ENOUGH = "survivalreimagined.tired_enough";
 	public static final String TOO_TIRED = "survivalreimagined.too_tired";
-	public static final TagKey<Item> ENERGY_BOOST = SRItemTagsProvider.create("energy_boost");
+	public static final TagKey<Item> ENERGY_BOOST_ITEM_TAG = SRItemTagsProvider.create("energy_boost");
 
 	public static final List<EnergyBoostItem> ENERGY_BOOST_ITEMS_DEFAULT = new ArrayList<>(Arrays.asList(
 			new EnergyBoostItem(IdTagMatcher.Type.TAG, "survivalreimagined:energy_boost"),
@@ -129,11 +140,11 @@ public class Tiredness extends SRFeature {
 	}
 
 	private void tickEnergyBoostEffect(ServerPlayer player) {
-		if (!player.hasEffect(SRMobEffects.ENERGY_BOOST.get()))
+		if (!player.hasEffect(ENERGY_BOOST.get()))
 			return;
 
 		//noinspection ConstantConditions
-		int effectLevel = player.getEffect(SRMobEffects.ENERGY_BOOST.get()).getAmplifier() + 1;
+		int effectLevel = player.getEffect(ENERGY_BOOST.get()).getAmplifier() + 1;
 		float newTiredness = TirednessHandler.subtractAndGet(player, 0.01f * effectLevel);
 
 		if (player.tickCount % 20 == 0) {
@@ -144,9 +155,9 @@ public class Tiredness extends SRFeature {
 
 	private void applyTired(float tiredness, ServerPlayer player) {
 		if (tiredness >= tirednessToEffect && player.tickCount % 20 == 0) {
-			if (!player.hasEffect(SRMobEffects.TIRED.get()))
+			if (!player.hasEffect(TIRED.get()))
 				player.displayClientMessage(Component.translatable(TOO_TIRED), false);
-			player.addEffect(new MobEffectInstance(SRMobEffects.TIRED.get(), 25, Math.min((int) ((tiredness - tirednessToEffect) / tirednessPerLevel), 4), true, false, true));
+			player.addEffect(new MobEffectInstance(TIRED.get(), 25, Math.min((int) ((tiredness - tirednessToEffect) / tirednessPerLevel), 4), true, false, true));
 		}
 	}
 
@@ -181,11 +192,11 @@ public class Tiredness extends SRFeature {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onTiredBreakSpeed(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled()
-				|| !event.getEntity().hasEffect(SRMobEffects.TIRED.get()))
+				|| !event.getEntity().hasEffect(TIRED.get()))
 			return;
 
 		//noinspection ConstantConditions
-		int level = event.getEntity().getEffect(SRMobEffects.TIRED.get()).getAmplifier() + 1;
+		int level = event.getEntity().getEffect(TIRED.get()).getAmplifier() + 1;
 		event.setNewSpeed(event.getNewSpeed() * (1 - (level * 0.05f)));
 	}
 
@@ -281,10 +292,10 @@ public class Tiredness extends SRFeature {
 			if (isEnabled(Tiredness.class) && gui.shouldDrawSurvivalElements())
 			{
 				LocalPlayer player = Minecraft.getInstance().player;
-				if (!player.hasEffect(SRMobEffects.TIRED.get()))
+				if (!player.hasEffect(TIRED.get()))
 					return;
 				//noinspection DataFlowIssue
-				int amplifier = player.getEffect(SRMobEffects.TIRED.get()).getAmplifier() + 1;
+				int amplifier = player.getEffect(TIRED.get()).getAmplifier() + 1;
 				Minecraft.getInstance().getProfiler().push("tired_overlay");
 				RenderSystem.disableDepthTest();
 				float opacity = (amplifier * 20f) / 100.0F;

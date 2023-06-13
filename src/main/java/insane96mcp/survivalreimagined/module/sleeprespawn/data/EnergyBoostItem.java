@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
-import insane96mcp.survivalreimagined.setup.SRMobEffects;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -47,7 +46,7 @@ public class EnergyBoostItem extends IdTagMatcher {
             duration = this.duration;
         }
 
-        player.addEffect(MCUtils.createEffectInstance(SRMobEffects.ENERGY_BOOST.get(), duration, this.amplifier, true, false, true, false));
+        player.addEffect(MCUtils.createEffectInstance(Tiredness.ENERGY_BOOST.get(), duration, this.amplifier, true, false, true, false));
     }
 
     public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<EnergyBoostItem>>(){}.getType();
