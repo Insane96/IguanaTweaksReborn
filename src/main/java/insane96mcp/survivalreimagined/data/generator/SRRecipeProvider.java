@@ -259,10 +259,8 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer);
 
         //Solarium
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Solarium.SOLARIUM_BALL.get())
-                .pattern("ss")
-                .pattern("ss")
-                .define('s', Solarium.SOLIUM_MOSS.item().get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Solarium.SOLARIUM_BALL.get())
+                .requires(Solarium.SOLIUM_MOSS.item().get(), 9)
                 .unlockedBy("has_solium_moss", has(Solarium.SOLIUM_MOSS.item().get()))
                 .save(writer);
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.AXE.get())

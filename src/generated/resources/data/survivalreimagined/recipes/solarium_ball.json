@@ -1,17 +1,36 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "key": {
-    "s": {
+  "ingredients": [
+    {
+      "item": "survivalreimagined:solium_moss"
+    },
+    {
+      "item": "survivalreimagined:solium_moss"
+    },
+    {
+      "item": "survivalreimagined:solium_moss"
+    },
+    {
+      "item": "survivalreimagined:solium_moss"
+    },
+    {
+      "item": "survivalreimagined:solium_moss"
+    },
+    {
+      "item": "survivalreimagined:solium_moss"
+    },
+    {
+      "item": "survivalreimagined:solium_moss"
+    },
+    {
+      "item": "survivalreimagined:solium_moss"
+    },
+    {
       "item": "survivalreimagined:solium_moss"
     }
-  },
-  "pattern": [
-    "ss",
-    "ss"
   ],
   "result": {
     "item": "survivalreimagined:solarium_ball"
-  },
-  "show_notification": true
+  }
 }
