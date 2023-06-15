@@ -13,12 +13,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -56,23 +58,32 @@ public class TimberTrees extends SRFeature {
             || (requiresAxe && !(event.getPlayer().getMainHandItem().getItem() instanceof AxeItem)))
             return;
 
-        if (event.getLevel().getBlockState(event.getPos().north()).is(event.getState().getBlock())
-                || event.getLevel().getBlockState(event.getPos().south()).is(event.getState().getBlock())
-                || event.getLevel().getBlockState(event.getPos().east()).is(event.getState().getBlock())
-                || event.getLevel().getBlockState(event.getPos().west()).is(event.getState().getBlock()))
+        BlockPos brokenPos = event.getPos();
+        if (event.getLevel().getBlockState(brokenPos.north()).is(event.getState().getBlock())
+                || event.getLevel().getBlockState(brokenPos.south()).is(event.getState().getBlock())
+                || event.getLevel().getBlockState(brokenPos.east()).is(event.getState().getBlock())
+                || event.getLevel().getBlockState(brokenPos.west()).is(event.getState().getBlock()))
             return;
-        //Vec3 dir = new Vec3(event.getPlayer().getDirection().getNormal().getX(), event.getPlayer().getDirection().getNormal().getY(), event.getPlayer().getDirection().getNormal().getZ());
-        List<BlockPos> blocks = getTreeBlocks(event.getPos(), event.getState(), event.getLevel());
+        List<BlockPos> blocks = getTreeBlocks(brokenPos, event.getState(), event.getLevel());
         Direction direction = event.getPlayer().getDirection();
-        if (event.getLevel().getRandom().nextDouble() < 0.05d)
-            direction = direction.getOpposite();
+        /*if (event.getLevel().getRandom().nextDouble() < 0.05d)
+            direction = direction.getOpposite();*/
         for (BlockPos pos : blocks) {
-            if (pos.equals(event.getPos()))
+            if (pos.equals(brokenPos))
                 continue;
-            double distanceFromBrokenBlock = Math.sqrt(pos.distSqr(event.getPos()));
-            Vec3i relative = new BlockPos(pos.getX() - event.getPos().getX(), pos.getY() - event.getPos().getY(), pos.getZ() - event.getPos().getZ());
-            BlockPos fallingBlockPos = pos.relative(direction, (int) distanceFromBrokenBlock).above(relative.getY());
-            SRFallingBlockEntity fallingBlock = new SRFallingBlockEntity((Level) event.getLevel(), fallingBlockPos, event.getLevel().getBlockState(pos));
+            Vec3i relative = new BlockPos(pos.getX() - brokenPos.getX(), pos.getY() - brokenPos.getY(), pos.getZ() - brokenPos.getZ());
+            int verticalDistance = relative.getY();
+            int horizontalDistance;
+            if (direction.getAxis() == Direction.Axis.X)
+                horizontalDistance = relative.getX();
+            else
+                horizontalDistance = relative.getZ();
+            horizontalDistance *= direction.getAxisDirection().opposite().getStep();
+            BlockPos fallingBlockPos = pos.relative(direction, verticalDistance + horizontalDistance).above(horizontalDistance);
+            //TODO rotate logs
+            BlockState state = event.getLevel().getBlockState(pos);
+            SRFallingBlockEntity fallingBlock = new SRFallingBlockEntity((Level) event.getLevel(), fallingBlockPos, state);
+            fallingBlock.move(MoverType.SELF, new Vec3(0, 0.1d * horizontalDistance, 0));
             //fallingBlock.setHurtsEntities(2f, 1024);
             event.getLevel().addFreshEntity(fallingBlock);
             event.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);

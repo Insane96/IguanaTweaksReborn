@@ -89,12 +89,13 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 					if (!blockstate.is(Blocks.MOVING_PISTON)) {
 						if (!this.cancelDrop) {
 							boolean canBeReplaced = blockstate.canBeReplaced(new DirectionalPlaceContext(this.level, blockpos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
+							//boolean isHarderThanInside = blockstate.getDestroySpeed(this.level, blockpos) < this.blockState.getDestroySpeed(this.level, blockpos);
 							boolean isFree = FallingBlock.isFree(this.level.getBlockState(blockpos.below())) && (!isConcretePowder || !canBeHydrated);
 							boolean canSurviveAndIsNotFree = this.blockState.canSurvive(this.level, blockpos) && !isFree;
 							if (canBeReplaced && canSurviveAndIsNotFree)
-								place(blockstate, block, blockpos, false);
+								this.place(blockstate, block, blockpos, true);
 							else
-								place(blockstate, block, blockpos.above(), false);
+								this.tryStackAbove(blockpos);
 						}
 						else {
 							this.discard();
@@ -105,6 +106,24 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 			}
 
 			this.setDeltaMovement(this.getDeltaMovement().scale(0.98D));
+		}
+	}
+
+	public void tryStackAbove(BlockPos pos) {
+		BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ());
+		while (true) {
+			blockPos.set(blockPos.above());
+			if (blockPos.getY() - pos.getY() > 12)
+				break;
+			BlockState stateAt = this.level.getBlockState(blockPos);
+			BlockState stateOn = this.level.getBlockState(blockPos.below());
+			boolean canBeReplaced = stateAt.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
+			boolean isHarderThanInside = stateAt.getDestroySpeed(this.level, blockPos) < this.blockState.getDestroySpeed(this.level, blockPos);
+			boolean canSurvive = this.blockState.canSurvive(this.level, blockPos);
+			if (canBeReplaced && isHarderThanInside && canSurvive) {
+				this.place(stateOn, this.blockState.getBlock(), blockPos, true);
+				break;
+			}
 		}
 	}
 
