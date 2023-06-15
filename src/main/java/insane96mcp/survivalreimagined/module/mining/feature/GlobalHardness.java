@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.mining.feature;
 
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -86,18 +87,23 @@ public class GlobalHardness extends SRFeature {
 		ResourceLocation dimensionId = level.dimension().location();
 		BlockState blockState = level.getBlockState(pos);
 		Block block = blockState.getBlock();
-		double blockGlobalHardness = getBlockGlobalHardnessMultiplier(block, dimensionId);
-		blockGlobalHardness += getDepthHardnessMultiplier(block, dimensionId, pos, true);
-		if (blockGlobalHardness == 1d)
+		double blockHardnessMultiplier = getBlockHardnessMultiplier(block, dimensionId, pos);
+		if (blockHardnessMultiplier == 1d)
 			return;
-		double multiplier = 1d / blockGlobalHardness;
+		double multiplier = 1d / blockHardnessMultiplier;
 		event.setNewSpeed((float) (event.getNewSpeed() * multiplier));
+	}
+
+	public static double getBlockHardnessMultiplier(Block block, ResourceLocation dimensionId, BlockPos pos) {
+		double blockHardness = getBlockGlobalHardnessMultiplier(block, dimensionId);
+		blockHardness += getDepthHardnessMultiplier(block, dimensionId, pos, true);
+		return blockHardness;
 	}
 
 	/**
 	 * Returns 1d when no changes must be made, else will return a multiplier for block hardness
 	 */
-	public double getBlockGlobalHardnessMultiplier(Block block, ResourceLocation dimensionId) {
+	public static double getBlockGlobalHardnessMultiplier(Block block, ResourceLocation dimensionId) {
 		if (Utils.isBlockInTag(block, HARDNESS_BLACKLIST))
 			return 1d;
 
@@ -113,8 +119,8 @@ public class GlobalHardness extends SRFeature {
 	/**
 	 * Returns an additive multiplier based off the depth of the block broken
 	 */
-	public double getDepthHardnessMultiplier(Block block, ResourceLocation dimensionId, BlockPos pos, boolean processCustomHardness) {
-		if (!this.isEnabled())
+	public static double getDepthHardnessMultiplier(Block block, ResourceLocation dimensionId, BlockPos pos, boolean processCustomHardness) {
+		if (!Feature.isEnabled(GlobalHardness.class))
 			return 0d;
 
 		if (!processCustomHardness)

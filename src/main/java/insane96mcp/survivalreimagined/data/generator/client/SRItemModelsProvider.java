@@ -11,10 +11,7 @@ import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.feature.CopperTools;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.items.feature.RecallIdol;
-import insane96mcp.survivalreimagined.module.mining.feature.Durium;
-import insane96mcp.survivalreimagined.module.mining.feature.Forging;
-import insane96mcp.survivalreimagined.module.mining.feature.Solarium;
-import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
+import insane96mcp.survivalreimagined.module.mining.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Cloth;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
@@ -106,6 +103,21 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(Solarium.SOLARIUM_BALL.get());
         shield(Solarium.SHIELD.get());
 
+        handHeld(Keego.AXE.get());
+        handHeld(Keego.PICKAXE.get());
+        handHeld(Keego.SHOVEL.get());
+        handHeld(Keego.HOE.get());
+        handHeld(Keego.SWORD.get());
+        basicItem(Keego.BOOTS.get());
+        basicItem(Keego.LEGGINGS.get());
+        basicItem(Keego.CHESTPLATE.get());
+        basicItem(Keego.HELMET.get());
+        basicItem(Keego.SHARD.get());
+        basicItem(Keego.GEM.get());
+        shield(Keego.SHIELD.get());
+        withExistingParent("keego_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/keego_ore"));
+        withExistingParent("keego_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/keego_block"));
+
         handHeld(Durium.AXE.get());
         handHeld(Durium.PICKAXE.get());
         handHeld(Durium.SHOVEL.get());
@@ -156,6 +168,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         handHeld(Forging.DIAMOND_HAMMER.get());
         handHeld(Forging.SOUL_STEEL_HAMMER.get());
         handHeld(Forging.NETHERITE_HAMMER.get());
+        handHeld(Forging.KEEGO_HAMMER.get());
 
         basicItem(Cloth.CLOTH.get());
 

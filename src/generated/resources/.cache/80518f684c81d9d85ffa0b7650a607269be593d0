@@ -1,4 +1,4 @@
-// 1.19.4	2023-05-29T14:15:41.1139107	Block Models: survivalreimagined
+// 1.19.4	2023-06-15T10:50:12.975686	Block Models: survivalreimagined
 09c38bce2833dbff4a2862829413ac6383df4a5b assets/survivalreimagined/models/block/crate.json
 b921563f569de0dadfd7bc3b88172d94105a0616 assets/survivalreimagined/models/block/crate_open.json
 20d797949b631be155089fa8cf3933a1227940d0 assets/survivalreimagined/models/block/cyan_flower.json
@@ -6,6 +6,8 @@ f9ab59c119d6fa9743ef0efc167479ba5117aa82 assets/survivalreimagined/models/block/
 27c1a46777933485517c76966ec257a14a81571f assets/survivalreimagined/models/block/durium_block.json
 a47ed873febb080fce01d7a83dfcf190658a909c assets/survivalreimagined/models/block/durium_ore.json
 964eed4a52199aa5a4f2bcd7646ccfc8c7480c20 assets/survivalreimagined/models/block/durium_scrap_block.json
+3b3ba175e8829ba629c580dc18902282becea16c assets/survivalreimagined/models/block/keego_block.json
+3fb3618ceb9f92fbc2bfd3f0159d4d1450326896 assets/survivalreimagined/models/block/keego_ore.json
 6849daf97afe34b41e324aadc9afe89d9d1b9e98 assets/survivalreimagined/models/block/poor_copper_ore.json
 c31afa0b07d8a01f08e816391cbc29ce40880a82 assets/survivalreimagined/models/block/poor_deepslate_copper_ore.json
 6bb1fff76a86f49fa72c589cc54c4f03edc8e21c assets/survivalreimagined/models/block/poor_deepslate_gold_ore.json

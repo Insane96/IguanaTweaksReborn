@@ -1,18 +1,38 @@
 {
-    "type": "minecraft:multiface_growth",
+    "type": "minecraft:flower",
     "config": {
-        "block": "survivalreimagined:solium_moss",
-        "search_range": 20,
-        "chance_of_spreading": 0.95,
-        "can_place_on_floor": true,
-        "can_place_on_ceiling": true,
-        "can_place_on_wall": true,
-        "can_be_placed_on": [
-            "minecraft:stone",
-            "minecraft:sand",
-            "minecraft:dirt",
-            "minecraft:gravel",
-            "minecraft:grass_block"
-        ]
+        "tries": 256,
+        "xz_spread": 8,
+        "y_spread": 4,
+        "feature": {
+            "feature": {
+                "type": "minecraft:simple_block",
+                "config": {
+                    "to_place": {
+                        "type": "minecraft:weighted_state_provider",
+                        "entries": [
+                            {
+                                "weight": 1,
+                                "data": {
+                                    "Name": "survivalreimagined:solium_moss",
+                                    "Properties": {
+                                        "down": "true"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "placement": [
+                {
+                    "type": "minecraft:block_predicate_filter",
+                    "predicate": {
+                        "type": "minecraft:matching_blocks",
+                        "blocks": "minecraft:air"
+                    }
+                }
+            ]
+        }
     }
 }

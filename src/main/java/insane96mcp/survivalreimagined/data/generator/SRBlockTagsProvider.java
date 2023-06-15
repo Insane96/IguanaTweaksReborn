@@ -9,10 +9,7 @@ import insane96mcp.survivalreimagined.module.items.feature.ExplosiveBarrel;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockBlastFurnaceBlock;
 import insane96mcp.survivalreimagined.module.mining.block.MultiBlockSoulBlastFurnaceBlock;
-import insane96mcp.survivalreimagined.module.mining.feature.Durium;
-import insane96mcp.survivalreimagined.module.mining.feature.Forging;
-import insane96mcp.survivalreimagined.module.mining.feature.MultiBlockFurnaces;
-import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
+import insane96mcp.survivalreimagined.module.mining.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Death;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
@@ -46,6 +43,9 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         //Vanilla Tags
+        tag(BlockTags.MINEABLE_WITH_HOE)
+                .add(Solarium.SOLIUM_MOSS.block().get());
+
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(Crate.BLOCK.get(), ExplosiveBarrel.BLOCK.block().get(), Fletching.FLETCHING_TABLE.block().get());
 

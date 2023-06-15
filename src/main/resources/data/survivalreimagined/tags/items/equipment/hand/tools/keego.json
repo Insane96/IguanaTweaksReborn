@@ -1,0 +1,10 @@
+{
+    "replace": false,
+    "values": [
+        "survivalreimagined:keego_pickaxe",
+        "survivalreimagined:keego_axe",
+        "survivalreimagined:keego_shovel",
+        "survivalreimagined:keego_hoe",
+        "survivalreimagined:keego_hammer"
+    ]
+}

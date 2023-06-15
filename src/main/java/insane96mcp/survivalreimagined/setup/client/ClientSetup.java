@@ -67,6 +67,10 @@ public class ClientSetup {
             event.accept(SoulSteel.PICKAXE.get());
             event.accept(SoulSteel.SHOVEL.get());
             event.accept(SoulSteel.HOE.get());
+            event.accept(Keego.AXE.get());
+            event.accept(Keego.PICKAXE.get());
+            event.accept(Keego.SHOVEL.get());
+            event.accept(Keego.HOE.get());
             event.accept(CoalFire.FIRESTARTER.get());
 
             event.accept(Forging.STONE_HAMMER.get());
@@ -79,12 +83,13 @@ public class ClientSetup {
             event.accept(Forging.DIAMOND_HAMMER.get());
             event.accept(Forging.SOUL_STEEL_HAMMER.get());
             event.accept(Forging.NETHERITE_HAMMER.get());
+            event.accept(Forging.KEEGO_HAMMER.get());
 
             event.accept(RecallIdol.ITEM.get());
         }
         else if (event.getTab() == CreativeModeTabs.COMBAT) {
             event.accept(FlintExpansion.SWORD.get());
-            event.accept(FlintExpansion.SHIELD.get());
+            //event.accept(FlintExpansion.SHIELD.get());
             event.accept(CopperTools.SWORD.get());
 
             event.accept(ChainedCopperArmor.HELMET.get());
@@ -97,14 +102,21 @@ public class ClientSetup {
             event.accept(Durium.LEGGINGS.get());
             event.accept(Durium.BOOTS.get());
             event.accept(Durium.SWORD.get());
-            event.accept(Durium.SHIELD.get());
+            //event.accept(Durium.SHIELD.get());
 
             event.accept(Solarium.HELMET.get());
             event.accept(Solarium.CHESTPLATE.get());
             event.accept(Solarium.LEGGINGS.get());
             event.accept(Solarium.BOOTS.get());
             event.accept(Solarium.SWORD.get());
-            event.accept(Solarium.SHIELD.get());
+            //event.accept(Solarium.SHIELD.get());
+
+            event.accept(Keego.HELMET.get());
+            event.accept(Keego.CHESTPLATE.get());
+            event.accept(Keego.LEGGINGS.get());
+            event.accept(Keego.BOOTS.get());
+            event.accept(Keego.SWORD.get());
+            //event.accept(Keego.SHIELD.get());
 
             event.accept(SoulSteel.HELMET.get());
             event.accept(SoulSteel.CHESTPLATE.get());
@@ -122,6 +134,7 @@ public class ClientSetup {
             event.accept(Durium.SCRAP_BLOCK.item().get());
             event.accept(Durium.BLOCK.item().get());
             event.accept(SoulSteel.BLOCK.item().get());
+            event.accept(Keego.BLOCK.item().get());
             event.accept(FlintExpansion.FLINT_BLOCK.item().get());
             event.accept(FlintExpansion.POLISHED_FLINT_BLOCK.item().get());
             event.accept(CoalFire.CHARCOAL_LAYER.item().get());
@@ -145,6 +158,7 @@ public class ClientSetup {
         else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(Durium.ORE.item().get());
             event.accept(Durium.DEEPSLATE_ORE.item().get());
+            event.accept(Keego.ORE.item().get());
             event.accept(Solarium.SOLIUM_MOSS.item().get());
             event.accept(Crops.CARROT_SEEDS.get());
             event.accept(Crops.POTATO_SEEDS.get());
@@ -176,6 +190,8 @@ public class ClientSetup {
             event.accept(Solarium.SOLARIUM_BALL.get());
             event.accept(SoulSteel.INGOT.get());
             event.accept(SoulSteel.NUGGET.get());
+            event.accept(Keego.SHARD.get());
+            event.accept(Keego.GEM.get());
             event.accept(AncientLapis.ANCIENT_LAPIS.get());
             event.accept(EnchantmentsFeature.CLEANSED_LAPIS.get());
             event.accept(CoalFire.HELLISH_COAL.get());

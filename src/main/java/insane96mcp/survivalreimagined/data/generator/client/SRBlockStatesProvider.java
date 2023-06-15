@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.data.generator.client;
 
 import insane96mcp.survivalreimagined.module.mining.feature.Durium;
+import insane96mcp.survivalreimagined.module.mining.feature.Keego;
 import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
 import insane96mcp.survivalreimagined.module.world.feature.CyanFlower;
@@ -20,6 +21,8 @@ public class SRBlockStatesProvider extends BlockStateProvider {
         simpleBlock(Durium.ORE.block().get());
         simpleBlock(Durium.DEEPSLATE_ORE.block().get());
         simpleBlock(SoulSteel.BLOCK.block().get());
+        simpleBlock(Keego.ORE.block().get());
+        simpleBlock(Keego.BLOCK.block().get());
         simpleBlock(CoalFire.SOUL_SAND_HELLISH_COAL_ORE.block().get());
         simpleBlock(CoalFire.SOUL_SOIL_HELLISH_COAL_ORE.block().get());
         simpleBlock(CyanFlower.FLOWER.block().get());
