@@ -12,6 +12,7 @@ import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.item.SRArmorMaterial;
+import insane96mcp.survivalreimagined.module.mining.block.SoliumMossBlock;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -40,7 +42,7 @@ public class Solarium extends Feature {
 
 	public static final TagKey<Item> SOLARIUM_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/solarium"));
 
-	public static final SimpleBlockWithItem SOLIUM_MOSS = SimpleBlockWithItem.register("solium_moss", () -> new GlowLichenBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.GLOW_LICHEN).noCollission().strength(0.4F).sound(SoundType.GLOW_LICHEN).lightLevel(GlowLichenBlock.emission(9))));
+	public static final SimpleBlockWithItem SOLIUM_MOSS = SimpleBlockWithItem.register("solium_moss", () -> new SoliumMossBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.GLOW_LICHEN).noCollission().strength(0.4F).sound(SoundType.GLOW_LICHEN).lightLevel(GlowLichenBlock.emission(9))));
 	public static final RegistryObject<Item> SOLARIUM_BALL = SRItems.REGISTRY.register("solarium_ball", () -> new Item(new Item.Properties()));
 
 	public static final ILItemTier ITEM_TIER = new ILItemTier(2, 307, 5.5f, 1.5f, 12, () -> Ingredient.of(SOLARIUM_BALL.get()));
@@ -104,5 +106,15 @@ public class Solarium extends Feature {
 				++newAmount;
 		}
 		event.setAmount(newAmount);
+	}
+
+	@SubscribeEvent
+	public void onBlockBreak(PlayerEvent.BreakSpeed event) {
+		if (!this.isEnabled()
+				|| !event.getState().is(SOLIUM_MOSS.block().get())
+				|| !(event.getEntity().getMainHandItem().getItem() instanceof ShearsItem))
+			return;
+
+		event.setNewSpeed(event.getOriginalSpeed() * 5f);
 	}
 }
