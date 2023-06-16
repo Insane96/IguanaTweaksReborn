@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-15T14:01:52.4294855	Recipes
+// 1.19.4	2023-06-16T10:40:11.0407341	Recipes
 180b53a99dee746d5e72a5aecf52eb5a9cc8cd7c data/survivalreimagined/advancements/recipes/building_blocks/durium_block.json
 e611d44bd92b2fdeb5684cfcfb7f77dfb2c3332e data/survivalreimagined/advancements/recipes/building_blocks/flint_block.json
 aa91b9f6bc3b587f526159db255556a85df8f972 data/survivalreimagined/advancements/recipes/building_blocks/polished_flint_block.json
@@ -434,7 +434,7 @@ cc8135118a9bb7c4c3fa10cdf37f43ff7ac0ab92 data/survivalreimagined/recipes/gold_in
 879045db3443b143d96e90547fc88416319a1cda data/survivalreimagined/recipes/iron_hammer.json
 2e96ede51465381e8b04c87e9bc484c1730f989e data/survivalreimagined/recipes/iron_ingot_from_blasting_rock.json
 7c0705c26c522c5a559fd728a8382c08cdc301f0 data/survivalreimagined/recipes/iron_ingot_from_smelting_rock.json
-76ee875c38cff6f70188d6a907369a65b93a8eb3 data/survivalreimagined/recipes/mining_charge.json
+59318e79f3127d0aeadb6d4a3e19dc5e7c5fe6d0 data/survivalreimagined/recipes/mining_charge.json
 eb986f2767a862111c3151c9edfe96cf790dfe53 data/survivalreimagined/recipes/netherite_hammer.json
 85597007ce3b3f7c2033b5aeccbb9701c0ebf322 data/survivalreimagined/recipes/over_easy_egg_from_campfire.json
 2cc5dd53ebc5510d5a1a80e109d7b48e269f8fd6 data/survivalreimagined/recipes/over_easy_egg_from_smelting.json

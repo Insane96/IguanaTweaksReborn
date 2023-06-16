@@ -8,6 +8,8 @@ import insane96mcp.survivalreimagined.data.generator.SRRecipeProvider;
 import insane96mcp.survivalreimagined.data.generator.client.SRBlockModelsProvider;
 import insane96mcp.survivalreimagined.data.generator.client.SRBlockStatesProvider;
 import insane96mcp.survivalreimagined.data.generator.client.SRItemModelsProvider;
+import insane96mcp.survivalreimagined.module.combat.dispenser.SRArrowDispenseBehaviour;
+import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
 import insane96mcp.survivalreimagined.module.combat.feature.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerData;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerDataAttacher;
@@ -25,6 +27,7 @@ import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.inventory.RecipeBookType;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -106,6 +109,13 @@ public class SurvivalReimagined
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         NetworkHandler.init();
+
+        event.enqueueWork(() -> {
+            DispenserBlock.registerBehavior(Fletching.QUARTZ_ARROW_ITEM.get(), new SRArrowDispenseBehaviour());
+            DispenserBlock.registerBehavior(Fletching.DIAMOND_ARROW_ITEM.get(), new SRArrowDispenseBehaviour());
+            DispenserBlock.registerBehavior(Fletching.EXPLOSIVE_ARROW_ITEM.get(), new SRArrowDispenseBehaviour());
+            DispenserBlock.registerBehavior(Fletching.TORCH_ARROW_ITEM.get(), new SRArrowDispenseBehaviour());
+        });
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {

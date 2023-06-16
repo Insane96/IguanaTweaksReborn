@@ -1,38 +1,19 @@
 # Changelog
 
-## 0.12.1
-* Added torch arrows
-  * Place a torch on the point they land on
-  * Set on fire entities hit (stacking)
-* Lodestones are now cheaper to craft
-* Tentative shields durability balance changes
-* Increased Flint, Stone and Copper reinforced flint tools
-* Slightly increased Stone tools efficiency
-* Mining charge now breaks 3x3x5
-* Health regeneration speed is now fixed to 0.5hp/s and no longer depends on saturation modifier
-* Golden shield now protects 100 damage instead of giving a speed boost
-* Firestarter now properly lit up TNT and Mining charges
-* Shield forging now gives XP
-* Slowed down some plant growth
-* Durium now requires Smithing table again
-* Cutting pumpkins with shears now gives edible Pumpkin Pulp, instead of seeds
-* Pumpkins and Melons crafting now only give one seed, and melon seeds require a melon and no longer a slice
-* Copper reinforced flint tools now require less copper to be made
-* Thorns Enchantment no longer damages items
-* Arrows bypass invinc frames now only works for player's fired arrows
-* Firestarter now takes 3 seconds instead of 4 to light up fire
-* Falling trees now fall better
-
 ## 0.12.0
+* Added Solarium Equipment
+  * Solium moss can be found in hot biomes lying on the ground, 9 solium moss make a Solarium Ball, which can upgrade iron equipment in a smithing table
+  * Solarium equipment takes 1/4 damage when used in the sun (reduced by nighttime, rain and thunder)
 * Added Fletching Table
   * Craft more arrows
-  * 3 new types of arrows
+  * 4 new types of arrows
+  * Torch arrows place a torch on the point they land on or set on fire entities hit (stacking)
 * Added Cloth
   * Drops from zombies
   * Required to make a bed
-  * Can be used to make Chainmail armor
+  * Can be used to make Chainmail armor and bundles if enabled
 * Added mining charge
-  * Breaks blocks in a 3x3x3 area
+  * Breaks blocks in a 3x3x5 area
 * Added Cyan Flower
   * Generates in snowy biomes
 * Added Gravity Defying enchantment
@@ -42,11 +23,24 @@
 * Cleansed lapis now has greatly increased chance to drop
 * Buffed Feather Falling
 * Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe. Also Expanded III now mines more blocks instead of being the same as lvl II
-* The Season now starts in early summer instead of mid-summer
-* Golden armor and shield now give speed
+* New worlds now start in early summer instead of mid-summer
+* Lodestones are now cheaper to craft
+* Tentative shields durability balance changes
+* Increased Flint, Stone and Copper reinforced flint tools
+* Slightly increased Stone tools efficiency
+* Health regeneration speed is now fixed to 0.5hp/s and no longer depends on saturation modifier
+* Firestarter now properly lit up TNT and Mining charges
+* Cutting pumpkins with shears now gives edible Pumpkin Pulp, instead of seeds
+* Pumpkins and Melons crafting now only give one seed, and melon seeds require a melon and no longer a slice
+* Thorns Enchantment no longer damages items
+* Arrows bypass invinc frames now only works for player's fired arrows
+* Firestarter now takes 3 seconds instead of 4 to light up fire
+* Falling trees now fall better
+* Golden armor now give speed
+* Golden shield now protects 100 damage
 * Increased random tick speed to 2 from 1
   * Doubles the speed of plants, crops and much more stuff growing
-* Increased reduced poor ore generation and heavily lowered iron ore chance to discard on exposure
+* Reduced poor ore generation
 
 ## 0.11.3
 * Heavily reduced armor slowdown

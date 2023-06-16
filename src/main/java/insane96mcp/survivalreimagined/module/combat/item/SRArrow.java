@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.combat.item;
 
+import net.minecraft.core.Position;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,6 +32,16 @@ public class SRArrow extends ArrowItem {
         if (pShooter instanceof Player) {
             arrow.pickup = AbstractArrow.Pickup.ALLOWED;
         }
+        arrow.setBaseDamage(baseDamage);
+        return arrow;
+    }
+
+    public AbstractArrow createDispenserArrow(Level pLevel, Position pos, ItemStack pStack) {
+        Arrow arrow = arrowType.get().create(pLevel);
+        if (arrow == null)
+            return super.createArrow(pLevel, pStack, null);
+        arrow.setPos(pos.x(), pos.y(), pos.z());
+        arrow.pickup = AbstractArrow.Pickup.ALLOWED;
         arrow.setBaseDamage(baseDamage);
         return arrow;
     }

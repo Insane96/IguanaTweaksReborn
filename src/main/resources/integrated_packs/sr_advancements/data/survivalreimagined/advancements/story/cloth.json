@@ -1,28 +1,28 @@
 {
 	"display": {
 		"icon": {
-			"item": "survivalreimagined:explosive_barrel"
+			"item": "survivalreimagined:cloth"
 		},
 		"title": {
-			"translate": "advancements.sr_story.explosive_barrel.title"
+			"translate": "advancements.sr_story.cloth.title"
 		},
 		"description": {
-			"translate": "advancements.sr_story.explosive_barrel.description"
+			"translate": "advancements.sr_story.cloth.description"
 		},
 		"frame": "task",
 		"show_toast": true,
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/mining_charge",
+	"parent": "minecraft:adventure/kill_a_mob",
 	"criteria": {
-		"explosive_barrel": {
+		"cloth": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
 						"items": [
-							"survivalreimagined:explosive_barrel"
+							"survivalreimagined:cloth"
 						]
 					}
 				]
@@ -31,7 +31,7 @@
 	},
 	"requirements": [
 		[
-			"explosive_barrel"
+			"cloth"
 		]
 	]
 }

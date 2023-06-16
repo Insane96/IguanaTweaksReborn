@@ -527,10 +527,12 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         //Mining Charge
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, MiningCharge.MINING_CHARGE.item().get())
-                .pattern("GGG")
-                .pattern("SsS")
+                .pattern("GTG")
+                .pattern("CsC")
+                .pattern("CCC")
                 .define('G', Items.GUNPOWDER)
-                .define('S', Items.SAND)
+                .define('C', Durium.NUGGET.get())
+                .define('T', Items.TNT)
                 .define('s', Items.SLIME_BALL)
                 .unlockedBy("has_gunpowder", has(Items.GUNPOWDER))
                 .save(writer);

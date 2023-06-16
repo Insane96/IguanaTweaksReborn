@@ -11,7 +11,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -21,11 +20,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class PrimedMiningCharge extends Entity implements TraceableEntity {
     private static final EntityDataAccessor<Integer> DATA_FUSE_ID = SynchedEntityData.defineId(PrimedMiningCharge.class, EntityDataSerializers.INT);
@@ -85,8 +82,23 @@ public class PrimedMiningCharge extends Entity implements TraceableEntity {
     }
 
     protected void explode() {
-        BlockPos explosionCenter = this.blockPosition().relative(this.direction, 2);
-        Iterable<BlockPos> positions = BlockPos.betweenClosed(explosionCenter.offset(-1, -1, -1), explosionCenter.offset(1, 1, 1).relative(this.direction, 2));
+        int relativeX, relativeY, relativeZ;
+        if (this.direction.getAxis() == Direction.Axis.X) {
+            relativeX = 0;
+            relativeY = 1;
+            relativeZ = 1;
+        }
+        else if (this.direction.getAxis() == Direction.Axis.Y) {
+            relativeX = 1;
+            relativeY = 0;
+            relativeZ = 1;
+        }
+        else {
+            relativeX = 1;
+            relativeY = 1;
+            relativeZ = 0;
+        }
+        Iterable<BlockPos> positions = BlockPos.betweenClosed(this.blockPosition().relative(this.direction, 1).offset(-relativeX, -relativeY, -relativeZ), this.blockPosition().relative(this.direction, 5).offset(relativeX, relativeY, relativeZ));
         for (BlockPos pos : positions) {
             BlockState blockstate = this.level.getBlockState(pos);
             if (!blockstate.isAir() && blockstate.getDestroySpeed(this.level, pos) < 5) {
@@ -100,16 +112,16 @@ public class PrimedMiningCharge extends Entity implements TraceableEntity {
                 this.level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
             }
         }
-        this.level.playSound(null, explosionCenter, SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 1.0f, 1.25f);
-        List<Entity> entitiesInExplosion = this.level.getEntities(null, new AABB(explosionCenter.offset(-3, -3, -3), explosionCenter.offset(3, 3, 3).relative(this.direction, 2)));
+        this.level.playSound(null, this.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 1.0f, 1.25f);
+        /*List<Entity> entitiesInExplosion = this.level.getEntities(null, new AABB(explosionCenter.offset(-3, -3, -3), explosionCenter.offset(3, 3, 3).relative(this.direction, 2)));
         for (Entity entity : entitiesInExplosion) {
             if (entity.tickCount == 0)
                 continue;
             DamageSource damageSource = level.damageSources().explosion(this, this.owner);
             entity.hurt(damageSource, 15f);
-        }
+        }*/
         if (this.level instanceof ServerLevel serverLevel)
-            serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, explosionCenter.getCenter().x, explosionCenter.getCenter().y, explosionCenter.getCenter().z, 1, 0d, 0d, 0d, 0d);
+            serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.blockPosition().relative(this.direction, 3).getCenter().x, this.blockPosition().relative(this.direction, 3).getCenter().y, this.blockPosition().relative(this.direction, 3).getCenter().z, 1, 0d, 0d, 0d, 0d);
     }
 
     protected void addAdditionalSaveData(CompoundTag pCompound) {
