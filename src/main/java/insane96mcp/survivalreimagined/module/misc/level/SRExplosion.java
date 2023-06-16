@@ -71,6 +71,8 @@ public class SRExplosion extends Explosion {
 			if (source.getPersistentData().contains(RAY_STRENGTH_MULTIPLIER_TAG))
 				this.rayStrengthMultiplier = source.getPersistentData().getFloat(RAY_STRENGTH_MULTIPLIER_TAG);
 		}
+		if (ExplosionOverhaul.limitExplosionSize != -1)
+			this.radius = Math.min(ExplosionOverhaul.limitExplosionSize, this.radius);
 	}
 
 	public SRExplosion setBaseResistanceAdd(float baseResistanceAdd) {
@@ -101,11 +103,11 @@ public class SRExplosion extends Explosion {
 							rayStrength = this.radius;
 						else
 							rayStrength = this.radius * (0.7F + this.level.getRandom().nextFloat() * 0.6F);
-						double d4 = this.getPosition().x();
-						double d6 = this.getPosition().y();
-						double d8 = this.getPosition().z();
+						double x = this.getPosition().x();
+						double y = this.getPosition().y();
+						double z = this.getPosition().z();
 						for(float f1 = 0.3F; rayStrength > 0.0F; rayStrength -= 0.22500001F) {
-							BlockPos blockpos = BlockPos.containing(d4, d6, d8);
+							BlockPos blockpos = BlockPos.containing(x, y, z);
 							BlockState blockstate = this.level.getBlockState(blockpos);
 							FluidState fluidstate = this.level.getFluidState(blockpos);
 							Optional<Float> optional = this.damageCalculator.getBlockExplosionResistance(this, this.level, blockpos, blockstate, fluidstate);
@@ -118,9 +120,9 @@ public class SRExplosion extends Explosion {
 							if (rayStrength > 0.0F && this.damageCalculator.shouldBlockExplode(this, this.level, blockpos, blockstate, rayStrength)) {
 								set.add(blockpos);
 							}
-							d4 += d0 * (double)0.3F;
-							d6 += d1 * (double)0.3F;
-							d8 += d2 * (double)0.3F;
+							x += d0 * (double)0.3F;
+							y += d1 * (double)0.3F;
+							z += d2 * (double)0.3F;
 						}
 					}
 				}

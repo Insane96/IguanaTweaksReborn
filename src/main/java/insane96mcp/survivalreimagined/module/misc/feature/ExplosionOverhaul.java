@@ -50,6 +50,9 @@ public class ExplosionOverhaul extends Feature {
 	@Config
 	@Label(name = "Creeper collateral", description = "If true, creepers explosions will drop no blocks.")
 	public static Boolean creeperCollateral = false;
+	@Config
+	@Label(name = "Limit explosion size", description = "Disabled if set to -1.")
+	public static Integer limitExplosionSize = 12;
 
 	public ExplosionOverhaul(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
