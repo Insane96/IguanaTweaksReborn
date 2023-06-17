@@ -2,7 +2,6 @@ package insane96mcp.survivalreimagined.module.world.feature;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
-import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
@@ -68,7 +67,7 @@ public class DesirePaths extends Feature {
 				|| !event.player.isOnGround())
 			return;
 
-		AABB bb = event.player.getBoundingBox();
+		AABB bb = event.player.getBoundingBox().deflate(0.01d, 0d, 0.01d);
 		int mX = Mth.floor(bb.minX);
 		int mZ = Mth.floor(bb.minZ);
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();

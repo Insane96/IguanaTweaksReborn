@@ -15,7 +15,6 @@ import insane96mcp.survivalreimagined.module.world.feature.CyanFlower;
 import insane96mcp.survivalreimagined.module.world.feature.OreGeneration;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -534,7 +533,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('C', Durium.NUGGET.get())
                 .define('T', Items.TNT)
                 .define('s', Items.SLIME_BALL)
-                .unlockedBy("has_gunpowder", has(Items.GUNPOWDER))
+                .unlockedBy("has_tnt", has(Items.TNT))
                 .save(writer);
 
         //Soul Blast Furnace
