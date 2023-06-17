@@ -65,7 +65,10 @@ public class Anvils extends SRFeature {
             new TwinIdTagMatcher(IdTagMatcher.Type.ID, "shieldsplus:netherite_shield", IdTagMatcher.Type.ID,"survivalreimagined:soul_steel_ingot"),
             new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/durium", IdTagMatcher.Type.ID,"minecraft:iron_ingot"),
             new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/durium", IdTagMatcher.Type.ID,"minecraft:iron_ingot"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "survivalreimagined:durium_shield", IdTagMatcher.Type.ID,"minecraft:iron_ingot")
+            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "survivalreimagined:durium_shield", IdTagMatcher.Type.ID,"minecraft:iron_ingot"),
+            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/solarium", IdTagMatcher.Type.ID,"minecraft:iron_ingot"),
+            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/solarium", IdTagMatcher.Type.ID,"minecraft:iron_ingot"),
+            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "survivalreimagined:solarium_shield", IdTagMatcher.Type.ID,"minecraft:iron_ingot")
     ));
     public static final ArrayList<TwinIdTagMatcher> partialRepairItems = new ArrayList<>();
 
