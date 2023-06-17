@@ -6,13 +6,54 @@
             "bonus_rolls": 0,
             "entries": [
                 {
-                    "type": "minecraft:item",
-                    "name": "survivalreimagined:solium_moss"
-                }
-            ],
-            "conditions": [
-                {
-                    "condition": "minecraft:survives_explosion"
+                    "type": "minecraft:alternatives",
+                    "children": [
+                        {
+                            "type": "minecraft:item",
+                            "name": "survivalreimagined:solium_moss",
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:alternative",
+                                    "terms": [
+                                        {
+                                            "condition": "minecraft:match_tool",
+                                            "predicate": {
+                                                "items": [
+                                                    "minecraft:shears"
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "condition": "minecraft:match_tool",
+                                            "predicate": {
+                                                "enchantments": [
+                                                    {
+                                                        "enchantment": "minecraft:silk_touch",
+                                                        "levels": {
+                                                            "min": 1
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "minecraft:item",
+                            "name": "survivalreimagined:solium_moss",
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:random_chance",
+                                    "chance": 0.25
+                                },
+                                {
+                                    "condition": "minecraft:survives_explosion"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }
