@@ -22,6 +22,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
@@ -57,10 +58,22 @@ public class Anvils extends SRFeature {
     @Label(name = "Remove rename cost", description = "Removes cost of renaming items in Anvil")
     public static Boolean freeRenaming = true;
     @Config
-    @Label(name = "No repair cost increase")
-    public static Boolean noRepairCostIncrease = false;
+    @Label(name = "No repair cost increase and repair cost based off Enchantments")
+    public static Boolean noRepairCostIncreaseAndEnchCost = true;
+    @Config(min = 0)
+    @Label(name = "Enchantments cost by rarity.Common", description = "Vanilla default: 1")
+    public static Integer enchantmentCostCommon = 1;
+    @Config(min = 0)
+    @Label(name = "Enchantments cost by rarity.Uncommon", description = "Vanilla default: 2")
+    public static Integer enchantmentCostUncommon = 2;
+    @Config(min = 0)
+    @Label(name = "Enchantments cost by rarity.Rare", description = "Vanilla default: 4")
+    public static Integer enchantmentCostRare = 3;
+    @Config(min = 0)
+    @Label(name = "Enchantments cost by rarity.Very Rare", description = "Vanilla default: 8")
+    public static Integer enchantmentCostVeryRare = 5;
     @Config
-    @Label(name = "Partially repair Upgraded items with base material", description = "E.g. Netherite Tools can be repaired up to 60% of max durability with Diamonds. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
+    @Label(name = "Partially repair Smithed items with base material", description = "E.g. Netherite Tools can be repaired up to 70% of max durability with Diamonds. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
     public static Boolean partiallyRepairUpgradedItemsWithBaseMaterial = true;
     public static final ArrayList<TwinIdTagMatcher> PARTIAL_REPAIR_ITEMS = new ArrayList<>(List.of(
             new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", IdTagMatcher.Type.ID,"survivalreimagined:soul_steel_ingot"),
@@ -83,14 +96,6 @@ public class Anvils extends SRFeature {
 
     public static void handleSyncPacket(String json) {
         loadAndReadJson(json, partialRepairItems, PARTIAL_REPAIR_ITEMS, TwinIdTagMatcher.LIST_TYPE);
-    }
-
-    public static boolean isFreeRenaming() {
-        return isEnabled(OtherExperience.class) && freeRenaming;
-    }
-
-    public static boolean isNoRepairCostIncrease() {
-        return isEnabled(OtherExperience.class) && noRepairCostIncrease;
     }
 
     public static boolean isPartialRepairItem(ItemStack left, ItemStack right) {
@@ -156,5 +161,14 @@ public class Anvils extends SRFeature {
                     break;
             }
         }
+    }
+
+    public static int getRarityCost(Enchantment enchantment) {
+        return switch (enchantment.getRarity()) {
+            case COMMON -> enchantmentCostCommon;
+            case UNCOMMON -> enchantmentCostUncommon;
+            case RARE -> enchantmentCostRare;
+            case VERY_RARE -> enchantmentCostVeryRare;
+        };
     }
 }

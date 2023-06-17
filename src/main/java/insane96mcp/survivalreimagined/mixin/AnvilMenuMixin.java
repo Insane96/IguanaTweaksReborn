@@ -89,8 +89,9 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			boolean isPartialRepairItem = Anvils.isPartialRepairItem(resultStack, right);
 			if (resultStack.isDamageableItem() && (resultStack.getItem().isValidRepairItem(left, right) || isPartialRepairItem)) {
 				int repairItemCountCost;
+				//If it's a partial repair item, repair up to 70% of max durability
 				if (isPartialRepairItem) {
-					int maxPartialRepairDurLeft = (int) (resultStack.getMaxDamage() * 0.4f);
+					int maxPartialRepairDurLeft = (int) (resultStack.getMaxDamage() * 0.3f);
 					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
 					if (repairSteps <= 0) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
@@ -101,11 +102,12 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 					for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount() && resultStack.getDamageValue() > maxPartialRepairDurLeft; ++repairItemCountCost) {
 						int dmgAfterRepair = resultStack.getDamageValue() - repairSteps;
 						resultStack.setDamageValue(Math.max(maxPartialRepairDurLeft, dmgAfterRepair));
-						++mergeCost;
+						if (!Anvils.noRepairCostIncreaseAndEnchCost)
+							++mergeCost;
 						repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
 					}
 				}
-				//Vanilla behaviour
+				//Otherwise, vanilla behaviour
 				else {
 					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
 					if (repairSteps <= 0) {
@@ -117,10 +119,19 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 					for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount(); ++repairItemCountCost) {
 						int dmgAfterRepair = resultStack.getDamageValue() - repairSteps;
 						resultStack.setDamageValue(dmgAfterRepair);
-						++mergeCost;
+						if (!Anvils.noRepairCostIncreaseAndEnchCost)
+							++mergeCost;
 						repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
 					}
 				}
+
+				if (Anvils.noRepairCostIncreaseAndEnchCost) {
+					for (Enchantment leftEnchantment : leftEnchantments.keySet()) {
+						int lvl = leftEnchantments.get(leftEnchantment);
+						mergeCost += lvl * Anvils.getRarityCost(leftEnchantment);
+					}
+				}
+
 
 				this.repairItemCountCost = repairItemCountCost;
 			}
@@ -157,11 +168,10 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 						int rightLvl = rightEnchantments.get(rightEnchantment);
 						rightLvl = leftLvl == rightLvl ? rightLvl + 1 : Math.max(rightLvl, leftLvl);
 						boolean canEnchant2 = rightEnchantment.canEnchant(left);
-						if (this.player.getAbilities().instabuild || left.is(Items.ENCHANTED_BOOK)) {
+						if (this.player.getAbilities().instabuild || left.is(Items.ENCHANTED_BOOK))
 							canEnchant2 = true;
-						}
 
-						for(Enchantment enchantment : leftEnchantments.keySet()) {
+						for (Enchantment enchantment : leftEnchantments.keySet()) {
 							if (enchantment != rightEnchantment && !rightEnchantment.isCompatibleWith(enchantment)) {
 								canEnchant2 = false;
 								++mergeCost;
@@ -173,26 +183,18 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 						}
 						else {
 							canEnchant = true;
-							if (rightLvl > rightEnchantment.getMaxLevel() && leftLvl == rightLvl /*Added to allow over max level enchantment books to be applied to items*/) {
+							if (rightLvl > rightEnchantment.getMaxLevel() && leftLvl == rightLvl /*Added to allow over max level enchantment books to be applied to items*/)
 								rightLvl = rightEnchantment.getMaxLevel();
-							}
 
 							leftEnchantments.put(rightEnchantment, rightLvl);
-							int enchantmentRarityCost = switch (rightEnchantment.getRarity()) {
-								case COMMON -> 1;
-								case UNCOMMON -> 2;
-								case RARE -> 4;
-								case VERY_RARE -> 8;
-							};
+							int enchantmentRarityCost = Anvils.getRarityCost(rightEnchantment);
 
-							if (isEnchantedBook) {
+							if (isEnchantedBook)
 								enchantmentRarityCost = Math.max(1, enchantmentRarityCost / 2);
-							}
 
 							mergeCost += enchantmentRarityCost * rightLvl;
-							if (left.getCount() > 1) {
+							if (left.getCount() > 1)
 								mergeCost = 40;
-							}
 						}
 					}
 				}
@@ -219,12 +221,12 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			resultStack = ItemStack.EMPTY;
 
 		this.cost.set(baseCost + mergeCost);
-		if (isRenaming && !Anvils.isFreeRenaming())
+		if (isRenaming && !Anvils.freeRenaming)
 			this.cost.set(this.cost.get() + COST_RENAME);
-		if (mergeCost <= 0 && !isRenaming)
-			resultStack = ItemStack.EMPTY;
+		/*if (mergeCost <= 0 && !isRenaming)
+			resultStack = ItemStack.EMPTY;*/
 
-		if (isRenaming && Anvils.isFreeRenaming() && mergeCost <= 0)
+		if (isRenaming && Anvils.freeRenaming && mergeCost <= 0)
 			this.cost.set(0);
 
 		//Set Too Expensive cap
@@ -239,7 +241,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			if (mergeCost >= 1)
 				toolRepairCost = AnvilMenu.calculateIncreasedRepairCost(toolRepairCost);
 
-			if (!Anvils.isNoRepairCostIncrease())
+			if (!Anvils.noRepairCostIncreaseAndEnchCost)
 				resultStack.setRepairCost(toolRepairCost);
 			EnchantmentHelper.setEnchantments(leftEnchantments, resultStack);
 		}

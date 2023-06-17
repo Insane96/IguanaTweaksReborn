@@ -19,6 +19,10 @@
 * Added Gravity Defying enchantment
 * Added Elytra Nerf Feature
   * When using an elytra in non-End dimensions, the player falls faster
+* More Anvils overhaul
+  * Added "No repair cost increase and repair cost based off Enchantments"
+    * Makes XP cost for repairing in an anvil no longer increase and based off enchantments
+  * Lowered enchantments rarity costs (and made them configurable) 
 * Forge recipes now award experience
 * Cleansed lapis now has greatly increased chance to drop
 * Buffed Feather Falling

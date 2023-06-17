@@ -112,12 +112,7 @@ public class UnbreakingOverhaul extends Feature {
 		EnchantmentHelper.deserializeEnchantments(EnchantedBookItem.getEnchantments(event.getRight())).forEach((enchantment, lvl) -> {
 			if (!enchantment.canEnchant(output))
 				return;
-			switch (enchantment.getRarity()) {
-				case COMMON -> cost.add(1 * lvl);
-				case UNCOMMON -> cost.add(2 * lvl);
-				case RARE -> cost.add(4 * lvl);
-				case VERY_RARE -> cost.add(8 * lvl);
-			}
+			cost.add(Anvils.getRarityCost(enchantment) * lvl);
 			output.enchant(enchantment, lvl);
 		});
 
