@@ -2,7 +2,6 @@ package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.survivalreimagined.module.experience.feature.Anvils;
-import insane96mcp.survivalreimagined.module.experience.feature.OtherExperience;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -62,7 +61,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			cancellable = true
 	)
 	public void createResult(CallbackInfo ci) {
-		if (!Feature.isEnabled(OtherExperience.class))
+		if (!Feature.isEnabled(Anvils.class))
 			return;
 
 		ItemStack left = this.inputSlots.getItem(0);
@@ -70,183 +69,184 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		int mergeCost = 0;
 		int baseCost = 0;
 		boolean isRenaming = false;
+
 		if (left.isEmpty()) {
 			this.resultSlots.setItem(0, ItemStack.EMPTY);
 			this.cost.set(0);
-		} else {
-			ItemStack leftCopy = left.copy();
-			ItemStack right = this.inputSlots.getItem(1);
-			Map<Enchantment, Integer> leftEnchantments = EnchantmentHelper.getEnchantments(leftCopy);
-			baseCost += left.getBaseRepairCost() + (right.isEmpty() ? 0 : right.getBaseRepairCost());
-			this.repairItemCountCost = 0;
-			boolean isEnchantedBook = false;
-
-			if (!right.isEmpty()) {
-				if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player)) return;
-				isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
-				boolean isPartialRepairItem = Anvils.isPartialRepairItem(leftCopy, right);
-				if (leftCopy.isDamageableItem() && (leftCopy.getItem().isValidRepairItem(left, right) || isPartialRepairItem)) {
-					int repairItemCountCost;
-					if (isPartialRepairItem) {
-						int maxPartialRepairDurLeft = (int) (leftCopy.getMaxDamage() * 0.4f);
-						int repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
-						if (repairSteps <= 0) {
-							this.resultSlots.setItem(0, ItemStack.EMPTY);
-							this.cost.set(0);
-							return;
-						}
-
-						for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount() && leftCopy.getDamageValue() > maxPartialRepairDurLeft; ++repairItemCountCost) {
-							int dmgAfterRepair = leftCopy.getDamageValue() - repairSteps;
-							leftCopy.setDamageValue(Math.max(maxPartialRepairDurLeft, dmgAfterRepair));
-							++mergeCost;
-							repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
-						}
-					}
-					else {
-						int repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
-						if (repairSteps <= 0) {
-							this.resultSlots.setItem(0, ItemStack.EMPTY);
-							this.cost.set(0);
-							return;
-						}
-
-						for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount(); ++repairItemCountCost) {
-							int dmgAfterRepair = leftCopy.getDamageValue() - repairSteps;
-							leftCopy.setDamageValue(dmgAfterRepair);
-							++mergeCost;
-							repairSteps = Math.min(leftCopy.getDamageValue(), leftCopy.getMaxDamage() / 4);
-						}
-					}
-
-					this.repairItemCountCost = repairItemCountCost;
-				}
-				else {
-					if (!isEnchantedBook && (!leftCopy.is(right.getItem()) || !leftCopy.isDamageableItem())) {
-						this.resultSlots.setItem(0, ItemStack.EMPTY);
-						this.cost.set(0);
-						return;
-					}
-
-					if (leftCopy.isDamageableItem() && !isEnchantedBook) {
-						int leftDurabilityLeft = left.getMaxDamage() - left.getDamageValue();
-						int rightDurabilityLeft = right.getMaxDamage() - right.getDamageValue();
-						int j1 = rightDurabilityLeft + leftCopy.getMaxDamage() * 12 / 100;
-						int k1 = leftDurabilityLeft + j1;
-						int l1 = leftCopy.getMaxDamage() - k1;
-						if (l1 < 0) {
-							l1 = 0;
-						}
-
-						if (l1 < leftCopy.getDamageValue()) {
-							leftCopy.setDamageValue(l1);
-							mergeCost += 2;
-						}
-					}
-
-					Map<Enchantment, Integer> rightEnchantment = EnchantmentHelper.getEnchantments(right);
-					boolean canEnchant2 = false;
-					boolean cannotEnchant = false;
-
-					for(Enchantment enchantment1 : rightEnchantment.keySet()) {
-						if (enchantment1 != null) {
-							int leftLvl = leftEnchantments.getOrDefault(enchantment1, 0);
-							int rightLvl = rightEnchantment.get(enchantment1);
-							rightLvl = leftLvl == rightLvl ? rightLvl + 1 : Math.max(rightLvl, leftLvl);
-							boolean canEnchant = enchantment1.canEnchant(left);
-							if (this.player.getAbilities().instabuild || left.is(Items.ENCHANTED_BOOK)) {
-								canEnchant = true;
-							}
-
-							for(Enchantment enchantment : leftEnchantments.keySet()) {
-								if (enchantment != enchantment1 && !enchantment1.isCompatibleWith(enchantment)) {
-									canEnchant = false;
-									++mergeCost;
-								}
-							}
-
-							if (!canEnchant) {
-								cannotEnchant = true;
-							} else {
-								canEnchant2 = true;
-								if (rightLvl > enchantment1.getMaxLevel() && leftLvl == rightLvl /*Added to allow over max level enchantment books to be applied to items*/) {
-									rightLvl = enchantment1.getMaxLevel();
-								}
-
-								leftEnchantments.put(enchantment1, rightLvl);
-								int enchantmentRarityCost = switch (enchantment1.getRarity()) {
-									case COMMON -> 1;
-									case UNCOMMON -> 2;
-									case RARE -> 4;
-									case VERY_RARE -> 8;
-								};
-
-								if (isEnchantedBook) {
-									enchantmentRarityCost = Math.max(1, enchantmentRarityCost / 2);
-								}
-
-								mergeCost += enchantmentRarityCost * rightLvl;
-								if (left.getCount() > 1) {
-									mergeCost = 40;
-								}
-							}
-						}
-					}
-
-					if (cannotEnchant && !canEnchant2) {
-						this.resultSlots.setItem(0, ItemStack.EMPTY);
-						this.cost.set(0);
-						return;
-					}
-				}
-			}
-
-			if (StringUtils.isBlank(this.itemName)) {
-				if (left.hasCustomHoverName()) {
-					isRenaming = true;
-					leftCopy.resetHoverName();
-				}
-			}
-			else if (!this.itemName.equals(left.getHoverName().getString())) {
-				isRenaming = true;
-				leftCopy.setHoverName(Component.literal(this.itemName));
-			}
-			if (isEnchantedBook && !leftCopy.isBookEnchantable(right))
-				leftCopy = ItemStack.EMPTY;
-
-			this.cost.set(baseCost + mergeCost);
-			if (isRenaming && !Anvils.isFreeRenaming())
-				this.cost.set(this.cost.get() + COST_RENAME);
-			if (mergeCost <= 0 && !isRenaming) {
-				leftCopy = ItemStack.EMPTY;
-			}
-
-			if (isRenaming && Anvils.isFreeRenaming() && mergeCost <= 0) {
-				this.cost.set(0);
-			}
-
-			//Set Too Expensive cap
-			if (this.cost.get() >= Anvils.anvilRepairCap && !this.player.getAbilities().instabuild) {
-				leftCopy = ItemStack.EMPTY;
-			}
-
-			if (!leftCopy.isEmpty()) {
-				int toolRepairCost = leftCopy.getBaseRepairCost();
-				if (!right.isEmpty() && toolRepairCost < right.getBaseRepairCost()) {
-					toolRepairCost = right.getBaseRepairCost();
-				}
-
-				if (mergeCost >= 1) {
-					toolRepairCost = AnvilMenu.calculateIncreasedRepairCost(toolRepairCost);
-				}
-
-				leftCopy.setRepairCost(toolRepairCost);
-				EnchantmentHelper.setEnchantments(leftEnchantments, leftCopy);
-			}
-
-			this.resultSlots.setItem(0, leftCopy);
-			this.broadcastChanges();
+			return;
 		}
+
+		ItemStack resultStack = left.copy();
+		ItemStack right = this.inputSlots.getItem(1);
+		Map<Enchantment, Integer> leftEnchantments = EnchantmentHelper.getEnchantments(resultStack);
+		baseCost += left.getBaseRepairCost() + (right.isEmpty() ? 0 : right.getBaseRepairCost());
+		this.repairItemCountCost = 0;
+		boolean isEnchantedBook = false;
+
+		if (!right.isEmpty()) {
+			if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player)) return;
+			isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
+			boolean isPartialRepairItem = Anvils.isPartialRepairItem(resultStack, right);
+			if (resultStack.isDamageableItem() && (resultStack.getItem().isValidRepairItem(left, right) || isPartialRepairItem)) {
+				int repairItemCountCost;
+				if (isPartialRepairItem) {
+					int maxPartialRepairDurLeft = (int) (resultStack.getMaxDamage() * 0.4f);
+					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
+					if (repairSteps <= 0) {
+						this.resultSlots.setItem(0, ItemStack.EMPTY);
+						this.cost.set(0);
+						return;
+					}
+
+					for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount() && resultStack.getDamageValue() > maxPartialRepairDurLeft; ++repairItemCountCost) {
+						int dmgAfterRepair = resultStack.getDamageValue() - repairSteps;
+						resultStack.setDamageValue(Math.max(maxPartialRepairDurLeft, dmgAfterRepair));
+						++mergeCost;
+						repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
+					}
+				}
+				//Vanilla behaviour
+				else {
+					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
+					if (repairSteps <= 0) {
+						this.resultSlots.setItem(0, ItemStack.EMPTY);
+						this.cost.set(0);
+						return;
+					}
+
+					for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount(); ++repairItemCountCost) {
+						int dmgAfterRepair = resultStack.getDamageValue() - repairSteps;
+						resultStack.setDamageValue(dmgAfterRepair);
+						++mergeCost;
+						repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
+					}
+				}
+
+				this.repairItemCountCost = repairItemCountCost;
+			}
+			else {
+				if (!isEnchantedBook && (!resultStack.is(right.getItem()) || !resultStack.isDamageableItem())) {
+					this.resultSlots.setItem(0, ItemStack.EMPTY);
+					this.cost.set(0);
+					return;
+				}
+
+				if (resultStack.isDamageableItem() && !isEnchantedBook) {
+					int leftDurabilityLeft = left.getMaxDamage() - left.getDamageValue();
+					int rightDurabilityLeft = right.getMaxDamage() - right.getDamageValue();
+					int j1 = rightDurabilityLeft + resultStack.getMaxDamage() * 12 / 100;
+					int k1 = leftDurabilityLeft + j1;
+					int l1 = resultStack.getMaxDamage() - k1;
+					if (l1 < 0) {
+						l1 = 0;
+					}
+
+					if (l1 < resultStack.getDamageValue()) {
+						resultStack.setDamageValue(l1);
+						mergeCost += 2;
+					}
+				}
+
+				Map<Enchantment, Integer> rightEnchantments = EnchantmentHelper.getEnchantments(right);
+				boolean canEnchant = false;
+				boolean cannotEnchant = false;
+
+				for (Enchantment rightEnchantment : rightEnchantments.keySet()) {
+					if (rightEnchantment != null) {
+						int leftLvl = leftEnchantments.getOrDefault(rightEnchantment, 0);
+						int rightLvl = rightEnchantments.get(rightEnchantment);
+						rightLvl = leftLvl == rightLvl ? rightLvl + 1 : Math.max(rightLvl, leftLvl);
+						boolean canEnchant2 = rightEnchantment.canEnchant(left);
+						if (this.player.getAbilities().instabuild || left.is(Items.ENCHANTED_BOOK)) {
+							canEnchant2 = true;
+						}
+
+						for(Enchantment enchantment : leftEnchantments.keySet()) {
+							if (enchantment != rightEnchantment && !rightEnchantment.isCompatibleWith(enchantment)) {
+								canEnchant2 = false;
+								++mergeCost;
+							}
+						}
+
+						if (!canEnchant2) {
+							cannotEnchant = true;
+						}
+						else {
+							canEnchant = true;
+							if (rightLvl > rightEnchantment.getMaxLevel() && leftLvl == rightLvl /*Added to allow over max level enchantment books to be applied to items*/) {
+								rightLvl = rightEnchantment.getMaxLevel();
+							}
+
+							leftEnchantments.put(rightEnchantment, rightLvl);
+							int enchantmentRarityCost = switch (rightEnchantment.getRarity()) {
+								case COMMON -> 1;
+								case UNCOMMON -> 2;
+								case RARE -> 4;
+								case VERY_RARE -> 8;
+							};
+
+							if (isEnchantedBook) {
+								enchantmentRarityCost = Math.max(1, enchantmentRarityCost / 2);
+							}
+
+							mergeCost += enchantmentRarityCost * rightLvl;
+							if (left.getCount() > 1) {
+								mergeCost = 40;
+							}
+						}
+					}
+				}
+
+				if (cannotEnchant && !canEnchant) {
+					this.resultSlots.setItem(0, ItemStack.EMPTY);
+					this.cost.set(0);
+					return;
+				}
+			}
+		}
+
+		if (StringUtils.isBlank(this.itemName)) {
+			if (left.hasCustomHoverName()) {
+				isRenaming = true;
+				resultStack.resetHoverName();
+			}
+		}
+		else if (!this.itemName.equals(left.getHoverName().getString())) {
+			isRenaming = true;
+			resultStack.setHoverName(Component.literal(this.itemName));
+		}
+		if (isEnchantedBook && !resultStack.isBookEnchantable(right))
+			resultStack = ItemStack.EMPTY;
+
+		this.cost.set(baseCost + mergeCost);
+		if (isRenaming && !Anvils.isFreeRenaming())
+			this.cost.set(this.cost.get() + COST_RENAME);
+		if (mergeCost <= 0 && !isRenaming)
+			resultStack = ItemStack.EMPTY;
+
+		if (isRenaming && Anvils.isFreeRenaming() && mergeCost <= 0)
+			this.cost.set(0);
+
+		//Set Too Expensive cap
+		if (this.cost.get() >= Anvils.anvilRepairCap && !this.player.getAbilities().instabuild)
+			resultStack = ItemStack.EMPTY;
+
+		if (!resultStack.isEmpty()) {
+			int toolRepairCost = resultStack.getBaseRepairCost();
+			if (!right.isEmpty() && toolRepairCost < right.getBaseRepairCost())
+				toolRepairCost = right.getBaseRepairCost();
+
+			if (mergeCost >= 1)
+				toolRepairCost = AnvilMenu.calculateIncreasedRepairCost(toolRepairCost);
+
+			if (!Anvils.isNoRepairCostIncrease())
+				resultStack.setRepairCost(toolRepairCost);
+			EnchantmentHelper.setEnchantments(leftEnchantments, resultStack);
+		}
+
+		this.resultSlots.setItem(0, resultStack);
+		this.broadcastChanges();
+
 		ci.cancel();
 	}
 

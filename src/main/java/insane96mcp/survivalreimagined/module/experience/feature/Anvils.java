@@ -57,6 +57,9 @@ public class Anvils extends SRFeature {
     @Label(name = "Remove rename cost", description = "Removes cost of renaming items in Anvil")
     public static Boolean freeRenaming = true;
     @Config
+    @Label(name = "No repair cost increase")
+    public static Boolean noRepairCostIncrease = false;
+    @Config
     @Label(name = "Partially repair Upgraded items with base material", description = "E.g. Netherite Tools can be repaired up to 60% of max durability with Diamonds. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
     public static Boolean partiallyRepairUpgradedItemsWithBaseMaterial = true;
     public static final ArrayList<TwinIdTagMatcher> PARTIAL_REPAIR_ITEMS = new ArrayList<>(List.of(
@@ -84,6 +87,10 @@ public class Anvils extends SRFeature {
 
     public static boolean isFreeRenaming() {
         return isEnabled(OtherExperience.class) && freeRenaming;
+    }
+
+    public static boolean isNoRepairCostIncrease() {
+        return isEnabled(OtherExperience.class) && noRepairCostIncrease;
     }
 
     public static boolean isPartialRepairItem(ItemStack left, ItemStack right) {
