@@ -61,7 +61,7 @@ public class Keego extends Feature {
 
 	public static final SimpleBlockWithItem BLOCK = SimpleBlockWithItem.register("keego_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
 
-	public static final RegistryObject<Item> GEM = SRItems.REGISTRY.register("keego_gem", () -> new Item(new Item.Properties()));
+	public static final RegistryObject<Item> GEM = SRItems.REGISTRY.register("keego", () -> new Item(new Item.Properties()));
 
 	public static final ILItemTier ITEM_TIER = new ILItemTier(2, 570, 6.5f, 2.5f, 11, () -> Ingredient.of(GEM.get()));
 

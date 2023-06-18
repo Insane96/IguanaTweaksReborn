@@ -23,7 +23,7 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.commons.lang3.mutable.MutableInt;
 
-@Label(name = "Fire")
+@Label(name = "Nether")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class Nether extends Feature {
     public static final String REQUIRES_CORNERS_LANG = SurvivalReimagined.MOD_ID + ".requires_corners";
