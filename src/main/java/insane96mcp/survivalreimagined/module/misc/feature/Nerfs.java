@@ -27,6 +27,9 @@ public class Nerfs extends Feature {
 	@Config
 	@Label(name = "Reduced Random Tick Speed", description = "If true, randomTickSpeed is set to 2 from 3")
 	public static Boolean reducedRandomTickSpeed = true;
+	@Config
+	@Label(name = "Reduced mob cramming", description = "If true, maxEntityCramming game rule is set to 6 from 24")
+	public static Boolean reducedMobCramming = true;
 
 	public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -50,5 +53,7 @@ public class Nerfs extends Feature {
 			event.getServer().getGameRules().getRule(GameRules.RULE_REDUCEDDEBUGINFO).set(true, event.getServer());
 		if (reducedRandomTickSpeed)
 			event.getServer().getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(2, event.getServer());
+		if (reducedMobCramming)
+			event.getServer().getGameRules().getRule(GameRules.RULE_MAX_ENTITY_CRAMMING).set(6, event.getServer());
 	}
 }
