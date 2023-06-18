@@ -27,6 +27,7 @@
   * Entity cramming is set to 6
 * Added The End feature
   * Contains a data pack that increases end cities generation
+* Better End City loot
 * Forge recipes now award experience
 * Cleansed lapis now has greatly increased chance to drop
 * Buffed Feather Falling
