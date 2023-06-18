@@ -11,7 +11,7 @@
 * Added Cloth
   * Drops from zombies
   * Required to make a bed
-  * Can be used to make Chainmail armor and bundles if enabled
+  * Can be used to make Chainmail armor and bundles
 * Added mining charge
   * Breaks blocks in a 3x3x5 area
 * Added Cyan Flower
@@ -23,6 +23,10 @@
   * Added "No repair cost increase and repair cost based off Enchantments"
     * Makes XP cost for repairing in an anvil no longer increase and based off enchantments
   * Lowered enchantments rarity costs (and made them configurable) 
+* Added "Reduced mob cramming"
+  * Entity cramming is set to 6
+* Added The End feature
+  * Contains a data pack that increases end cities generation
 * Forge recipes now award experience
 * Cleansed lapis now has greatly increased chance to drop
 * Buffed Feather Falling
