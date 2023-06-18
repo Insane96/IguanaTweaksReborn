@@ -14,6 +14,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -99,17 +100,20 @@ public class PrimedMiningCharge extends Entity implements TraceableEntity {
             relativeZ = 0;
         }
         Iterable<BlockPos> positions = BlockPos.betweenClosed(this.blockPosition().relative(this.direction, 1).offset(-relativeX, -relativeY, -relativeZ), this.blockPosition().relative(this.direction, 5).offset(relativeX, relativeY, relativeZ));
+        Explosion explosion = new Explosion(this.level, this.owner, this.getX(), this.getY(), this.getZ(), 3, false, Explosion.BlockInteraction.KEEP);
         for (BlockPos pos : positions) {
-            BlockState blockstate = this.level.getBlockState(pos);
-            if (!blockstate.isAir() && blockstate.getDestroySpeed(this.level, pos) < 5) {
+            BlockState blockState = this.level.getBlockState(pos);
+            if (!blockState.isAir() && blockState.getExplosionResistance(this.level, pos, explosion) < 10) {
                 this.level.getProfiler().push("mining_charge_explosion");
                 if (this.level instanceof ServerLevel) {
-                    BlockEntity blockEntity = blockstate.hasBlockEntity() ? this.level.getBlockEntity(pos) : null;
+                    BlockEntity blockEntity = blockState.hasBlockEntity() ? this.level.getBlockEntity(pos) : null;
                     LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withRandom(this.level.getRandom()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, this);
-                    blockstate.getDrops(lootcontext$builder).forEach((stack) -> this.level.addFreshEntity(new ItemEntity(this.level, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, stack)));
+                    blockState.getDrops(lootcontext$builder).forEach((stack) -> this.level.addFreshEntity(new ItemEntity(this.level, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, stack)));
                 }
                 this.level.getProfiler().pop();
-                this.level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                blockState.getBlock().onBlockExploded(blockState, this.level, pos, explosion);
+                if (this.level.getBlockState(pos).getExplosionResistance(this.level, pos, explosion) < 10)
+                    this.level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
             }
         }
         this.level.playSound(null, this.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 1.0f, 1.25f);
