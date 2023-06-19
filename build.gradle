@@ -112,6 +112,9 @@ repositories {
         }
     }
     maven {
+        url 'https://www.dogforce-games.com/maven/'
+    }
+    maven {
         url = "https://jitpack.io"
     }
 }
@@ -142,6 +145,7 @@ dependencies {
     implementation fg.deobf("com.github.Virtuoel:Pehkui:${pehkui_version}-${mc_version}-forge")
     implementation fg.deobf("curse.maven:kiwi-303657:4501836")
     implementation fg.deobf("curse.maven:passable-foliage-379887:4511198")
+    runtimeOnly fg.deobf("curse.maven:tool-belt-260262:4441247")
 
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
