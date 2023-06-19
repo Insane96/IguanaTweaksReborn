@@ -2,7 +2,6 @@
 
 ## 0.12.0
 * Added Toolbelt mod
-  * 
 * Added Solarium Equipment
   * Solium moss can be found in hot biomes lying on the ground, 9 solium moss make a Solarium Ball, which can upgrade iron equipment in a smithing table
   * Solarium equipment takes 1/4 damage when used in the sun (reduced by nighttime, rain and thunder)
@@ -24,7 +23,7 @@
 * More Anvils overhaul
   * Added "No repair cost increase and repair cost based off Enchantments"
     * Makes XP cost for repairing in an anvil no longer increase and based off enchantments
-  * Lowered enchantments rarity costs (and made them configurable) 
+  * Lowered enchantments' rarity costs (and made them configurable) 
 * Added "Reduced mob cramming"
   * Entity cramming is set to 6
 * Added The End feature

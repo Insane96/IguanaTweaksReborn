@@ -365,6 +365,10 @@
 	"advancements.sr_story.chainmail.description": "Obtain a Chainmail piece of armor",
 	"advancements.sr_story.solarium.title": "Praise the sun",
 	"advancements.sr_story.solarium.description": "Obtain a Solarium Equipment by Smithing Iron with a Solarium Ball",
+	"advancements.sr_story.toolbelt.title": "Steve the builder",
+	"advancements.sr_story.toolbelt.description": "Obtain a tool belt. Place items in it by right click, equip it with 'V' and open the wheel with 'R'",
+	"advancements.sr_story.toolbelt_upgrade.title": "More slots for the belt",
+	"advancements.sr_story.toolbelt_upgrade.description": "Obtain a belt pouch and use an anvil to upgrade the Tool Belt",
 
 	"advancements.sr_nether.soul_blast_furnace.title": "Is this a duplication glitch?",
 	"advancements.sr_nether.soul_blast_furnace.description": "Obtain a Soul Blast Furnace, then build a 3x3x3 structure to use it. The structure must have worked Blackstone at the bottom + Soul Blast furnace in any of the sides, Red Nether Bricks in the middle and top layer (stairs also work for the top layer). The middle and middle top block can be empty.",

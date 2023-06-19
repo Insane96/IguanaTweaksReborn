@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "toolbelt:pouch"
+		},
+		"title": {
+			"translate": "advancements.sr_story.toolbelt_upgrade.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.toolbelt_upgrade.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/furnace",
+	"criteria": {
+		"pouch": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"toolbelt:pouch"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"pouch"
+		]
+	]
+}
