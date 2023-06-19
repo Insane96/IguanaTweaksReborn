@@ -79,7 +79,9 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		ItemStack resultStack = left.copy();
 		ItemStack right = this.inputSlots.getItem(1);
 		Map<Enchantment, Integer> leftEnchantments = EnchantmentHelper.getEnchantments(resultStack);
-		baseCost += left.getBaseRepairCost() + (right.isEmpty() ? 0 : right.getBaseRepairCost());
+		//Don't add the repair cost of the items if remove repair cost increase
+		if (!Anvils.noRepairCostIncreaseAndEnchCost)
+			baseCost += left.getBaseRepairCost() + (right.isEmpty() ? 0 : right.getBaseRepairCost());
 		this.repairItemCountCost = 0;
 		boolean isEnchantedBook = false;
 
