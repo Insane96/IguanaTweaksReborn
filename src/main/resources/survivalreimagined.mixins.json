@@ -5,7 +5,6 @@
     "refmap": "survivalreimagined.refmap.json",
     "mixins": [
         "AbstractArrowMixin",
-        "AbstractHorseMixin",
         "AnvilMenuMixin",
         "ApplyBonusCountMixin",
         "ArrowInfiniteEnchantmentMixin",

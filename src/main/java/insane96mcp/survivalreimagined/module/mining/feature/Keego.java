@@ -54,7 +54,7 @@ public class Keego extends Feature {
 	public static final TagKey<Item> KEEGO_HAND_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/hand/keego"));
 	public static final TagKey<Item> KEEGO_ARMOR_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/armor/keego"));
 
-	public static final RegistryObject<MobEffect> MOVEMENT_MOMENTUM = SRMobEffects.REGISTRY.register("movement_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false).addAttributeModifier(Attributes.MOVEMENT_SPEED, "544cf3ee-676f-4685-aec7-a6b3d64875b0", 0.01d, AttributeModifier.Operation.MULTIPLY_BASE));
+	public static final RegistryObject<MobEffect> MOVEMENT_MOMENTUM = SRMobEffects.REGISTRY.register("movement_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false).addAttributeModifier(Attributes.MOVEMENT_SPEED, "544cf3ee-676f-4685-aec7-a6b3d64875b0", 0.05d, AttributeModifier.Operation.MULTIPLY_BASE));
 	public static final RegistryObject<MobEffect> ATTACK_MOMENTUM = SRMobEffects.REGISTRY.register("attack_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false).addAttributeModifier(Attributes.ATTACK_SPEED, "f6fe8408-b88c-4e51-8892-8b20574cfc49", 0.05d, AttributeModifier.Operation.ADDITION));
 	public static final RegistryObject<MobEffect> MINING_MOMENTUM = SRMobEffects.REGISTRY.register("mining_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false));
 
@@ -131,22 +131,17 @@ public class Keego extends Feature {
 		AtomicInteger maxAmplifier = new AtomicInteger(0);
 		event.player.getInventory().armor.forEach(stack -> {
 			if (stack.is(KEEGO_ARMOR_EQUIPMENT))
-				maxAmplifier.addAndGet(8);
+				maxAmplifier.addAndGet(2);
 		});
 		if (maxAmplifier.get() == 0)
 			return;
-		/*AtomicInteger blocksRequired = new AtomicInteger(8);
-		event.player.getInventory().armor.forEach(stack -> {
-			if (stack.is(KEEGO_ARMOR_EQUIPMENT))
-				blocksRequired.decrementAndGet();
-		});*/
 		if (event.player.walkDist % 5 < event.player.walkDistO % 5) {
 			int amplifier = 0;
 			if (event.player.hasEffect(MOVEMENT_MOMENTUM.get()))
 				//noinspection DataFlowIssue
 				amplifier = event.player.getEffect(MOVEMENT_MOMENTUM.get()).getAmplifier() + 1;
 
-			event.player.addEffect(new MobEffectInstance(MOVEMENT_MOMENTUM.get(), 20, Math.min(amplifier, maxAmplifier.get()), false, false, true));
+			event.player.addEffect(new MobEffectInstance(MOVEMENT_MOMENTUM.get(), 100, Math.min(amplifier, maxAmplifier.get() - 1), false, false, true));
 		}
 
 	}
