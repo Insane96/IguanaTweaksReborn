@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
+import insane96mcp.survivalreimagined.module.combat.feature.AttackInvincibility;
 import insane96mcp.survivalreimagined.module.combat.feature.Stats;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,7 +30,7 @@ public abstract class AbstractArrowMixin extends Projectile {
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", shift = At.Shift.AFTER), method = "onHitEntity")
     private void onHitEntity(EntityHitResult entityHitResult, CallbackInfo ci) {
-        if (Stats.disableArrowInvFrames() && this.getOwner() instanceof Player) {
+        if (AttackInvincibility.disableArrowInvFrames() && this.getOwner() instanceof Player) {
             entityHitResult.getEntity().invulnerableTime = 0;
         }
     }

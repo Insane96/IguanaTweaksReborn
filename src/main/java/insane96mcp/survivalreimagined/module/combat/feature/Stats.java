@@ -73,9 +73,6 @@ public class Stats extends SRFeature {
 	@Config
 	@Label(name = "Disable Crit Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
 	public static Boolean disableCritArrowsBonusDamage = true;
-	@Config
-	@Label(name = "Arrows don't trigger invincibility frames", description = "If true, Arrows will no longer trigger the invincibility frames (like Combat Test Snapshots).")
-	public static Boolean arrowsNoInvincFrames = true;
 
 	@Config
 	@Label(name = "Fix tooltips", description = "Vanilla tooltips on gear don't sum up multiple modifiers (e.g. a sword would have \"4 Attack Damage\" and \"-2 Attack Damage\" instead of \"2 Attack Damage\". This might break other mods messing with Tooltips (e.g. Quark's improved tooltips)")
@@ -257,7 +254,4 @@ public class Stats extends SRFeature {
 		}
 	}
 
-	public static boolean disableArrowInvFrames() {
-		return isEnabled(Stats.class) && arrowsNoInvincFrames;
-	}
 }
