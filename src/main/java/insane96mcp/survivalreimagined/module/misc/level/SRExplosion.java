@@ -169,7 +169,7 @@ public class SRExplosion extends Explosion {
 				continue;
 			if (entity.ignoreExplosion())
 				continue;
-			double distanceRatio = (Mth.sqrt((float) entity.distanceToSqr(this.getPosition())) / affectedEntitiesRadius);
+			double distanceRatio = Mth.sqrt((float) entity.distanceToSqr(this.getPosition())) / affectedEntitiesRadius;
 			if (distanceRatio > 1.0D)
 				continue;
 			double xDistance = entity.getX() - this.getPosition().x;
@@ -185,7 +185,7 @@ public class SRExplosion extends Explosion {
 			double blockDensity = getSeenPercent(this.getPosition(), entity);
 			double d10 = (1.0D - distanceRatio) * blockDensity;
 			//Damage Entities in the explosion radius
-			float damageAmount = (float) ((int) ((d10 * d10 + d10) / 2.0D * 7.0D * (double) affectedEntitiesRadius + 1.0D));
+			float damageAmount = (float) ((int) ((d10 * d10 + d10) / 2.0D * ExplosionOverhaul.explosionDamageCalculationMultiplier * (double) affectedEntitiesRadius + 1.0D));
 			if (blockDensity > 0d) {
 				DamageSource source = this.getDamageSource();
 				if (entity instanceof ServerPlayer player && blockingDamageReduction > 0d) {

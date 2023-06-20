@@ -33,6 +33,7 @@
   * Contains a data pack that increases end cities generation
 * Better End City loot
 * Forge recipes now award experience
+* Reduced explosions damage (configurable)
 * Cleansed lapis now has greatly increased chance to drop
 * Buffed Feather Falling
 * Expanded now works properly when looking down, and works as vein mining when on an Axe/Hoe. Also Expanded III now mines more blocks instead of being the same as lvl II
