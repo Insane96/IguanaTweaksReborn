@@ -47,7 +47,6 @@
 * Cutting pumpkins with shears now gives edible Pumpkin Pulp, instead of seeds
 * Pumpkins and Melons crafting now only give one seed, and melon seeds require a melon and no longer a slice
 * Thorns Enchantment no longer damages items
-* Arrows bypass invinc frames now only works for player's fired arrows
 * Firestarter now takes 3 seconds instead of 4 to light up fire
 * Falling trees now fall better
 * Golden armor now give speed
