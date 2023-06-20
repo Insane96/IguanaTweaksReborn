@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.world.feature.FastLeafDecay;
+import insane96mcp.survivalreimagined.module.world.feature.Leaves;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -15,6 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class LeavesBlockMixin {
 	@Inject(method = "randomTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;removeBlock(Lnet/minecraft/core/BlockPos;Z)Z", shift = At.Shift.AFTER))
 	private void onRandomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource randomSource, CallbackInfo ci) {
-		FastLeafDecay.decayAdjacentLeaves(level, pos, randomSource);
+		Leaves.decayAdjacentLeaves(level, pos, randomSource);
 	}
 }

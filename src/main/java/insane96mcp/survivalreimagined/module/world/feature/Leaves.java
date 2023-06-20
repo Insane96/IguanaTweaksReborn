@@ -21,9 +21,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import snownee.kiwi.config.KiwiConfigManager;
 import snownee.passablefoliage.PassableFoliageCommonConfig;
 
-@Label(name = "Fast Leaf Decay", description = "Makes leaves decay faster")
+@Label(name = "Leaves", description = "Makes leaves decay faster and if Passable Foliage is installed, changes some values")
 @LoadFeature(module = Modules.Ids.WORLD)
-public class FastLeafDecay extends Feature {
+public class Leaves extends Feature {
 
 	@Config(min = 1)
 	@Label(name = "Min ticks to decay")
@@ -33,7 +33,7 @@ public class FastLeafDecay extends Feature {
 	@Label(name = "Max ticks to decay")
 	public static Integer maxTicksToDecay = 400;
 
-	public FastLeafDecay(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public Leaves(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
@@ -46,15 +46,15 @@ public class FastLeafDecay extends Feature {
 	}
 
 	@SubscribeEvent
-	public void onLogBroken(BlockEvent.BreakEvent event) {
+	public void onLogOrLeavesBroken(BlockEvent.BreakEvent event) {
 		if (!(event.getLevel() instanceof ServerLevel serverLevel)
-				|| !(serverLevel.getBlockState(event.getPos()).is(BlockTags.LOGS)))
+				|| (!serverLevel.getBlockState(event.getPos()).is(BlockTags.LOGS) && !serverLevel.getBlockState(event.getPos()).is(BlockTags.LEAVES)))
 			return;
 		decayAdjacentLeaves(serverLevel, event.getPos(), event.getLevel().getRandom());
 	}
 
 	public static void decayAdjacentLeaves(ServerLevel level, BlockPos pos, RandomSource random) {
-		if (!Feature.isEnabled(FastLeafDecay.class))
+		if (!Feature.isEnabled(Leaves.class))
 			return;
 
 		Direction.stream().forEach(direction -> {
