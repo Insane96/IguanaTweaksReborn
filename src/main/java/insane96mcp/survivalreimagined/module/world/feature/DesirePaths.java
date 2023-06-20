@@ -36,7 +36,7 @@ public class DesirePaths extends Feature {
 
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Chance to transform", description = "Chance for blocks to transform each tick")
-	public static Double chanceToTransform = 0.01d;
+	public static Double chanceToTransform = 0.008d;
 	@Config
 	@Label(name = "Break Tall Grass", description = "Tall grass is broken when grass is transformed")
 	public static Boolean breakTallGrass = true;

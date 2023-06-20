@@ -36,6 +36,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -43,6 +44,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.EnumMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Label(name = "Keego", description = "Add a new Netherite alternative which makes you go fast")
 @LoadFeature(module = Modules.Ids.MINING)
@@ -117,28 +119,37 @@ public class Keego extends Feature {
 		event.getPlayer().addEffect(new MobEffectInstance(MINING_MOMENTUM.get(), duration, Math.min(amplifier, 31), false, false, true));
 	}
 
-	/*@SubscribeEvent
+	@SubscribeEvent
 	public void onMoving(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
 				|| event.player.level.isClientSide
-				|| event.player.walkDist - event.player.walkDistO < 0.04f
+				|| event.player.isCrouching()
 				|| event.phase == TickEvent.Phase.START
 				|| event.player.getAbilities().instabuild)
 			return;
 
-		int amplifier = 0;
-		if (event.player.hasEffect(MOVEMENT_MOMENTUM.get()))
-			//noinspection DataFlowIssue
-			amplifier = event.player.getEffect(MOVEMENT_MOMENTUM.get()).getAmplifier() + 1;
-
-		AtomicInteger maxAmplifier = new AtomicInteger();
+		AtomicInteger maxAmplifier = new AtomicInteger(0);
 		event.player.getInventory().armor.forEach(stack -> {
 			if (stack.is(KEEGO_ARMOR_EQUIPMENT))
-				maxAmplifier.incrementAndGet();
+				maxAmplifier.addAndGet(8);
 		});
+		if (maxAmplifier.get() == 0)
+			return;
+		/*AtomicInteger blocksRequired = new AtomicInteger(8);
+		event.player.getInventory().armor.forEach(stack -> {
+			if (stack.is(KEEGO_ARMOR_EQUIPMENT))
+				blocksRequired.decrementAndGet();
+		});*/
+		if (event.player.walkDist % 5 < event.player.walkDistO % 5) {
+			int amplifier = 0;
+			if (event.player.hasEffect(MOVEMENT_MOMENTUM.get()))
+				//noinspection DataFlowIssue
+				amplifier = event.player.getEffect(MOVEMENT_MOMENTUM.get()).getAmplifier() + 1;
 
-		event.player.addEffect(new MobEffectInstance(MOVEMENT_MOMENTUM.get(), 20, Math.min(amplifier, maxAmplifier.get()), false, false, true));
-	}*/
+			event.player.addEffect(new MobEffectInstance(MOVEMENT_MOMENTUM.get(), 20, Math.min(amplifier, maxAmplifier.get()), false, false, true));
+		}
+
+	}
 
 	@SubscribeEvent
 	public void onAttack(LivingHurtEvent event) {
