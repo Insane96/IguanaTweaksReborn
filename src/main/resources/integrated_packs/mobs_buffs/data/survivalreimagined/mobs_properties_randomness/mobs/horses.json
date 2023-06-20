@@ -1,0 +1,11 @@
+{
+    "target": "#survivalreimagined:horses",
+    "attributes": [
+        {
+            "id": "minecraft:generic.movement_speed",
+            "modifier_name": "More speed for horses",
+            "amount": 0.25,
+            "operation": "addition"
+        }
+    ]
+}
