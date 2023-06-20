@@ -84,7 +84,7 @@ public class NoHunger extends Feature {
     public static Double rawFoodHealPercentage = 1d;
     @Config(min = 0d, max = 1f)
     @Label(name = "Raw food.Poison Chance", description = "Raw food has this chance to poison the player. Raw food is defined in the survivalreimagined:raw_food tag")
-    public static Double rawFoodPoisonChance = 0.6d;
+    public static Double rawFoodPoisonChance = 0.7d;
 
     @Config
     @Label(name = "Convert Hunger to Weakness", description = "If true, Hunger effect is replaced by Weakness")
@@ -248,7 +248,7 @@ public class NoHunger extends Feature {
                     .and("effectiveness", Utils.getFoodEffectiveness(food))
                     .and("fast_food", food.isFastFood())
                     .evaluate();
-            return result.getNumberValue().intValue();
+            return result.getNumberValue().floatValue();
         }
         catch (Exception ex) {
             LogHelper.error("Failed to evaluate or parse eating speed formula: %s", expression);
