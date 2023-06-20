@@ -1,8 +1,9 @@
 # Changelog
 
 ## 0.12.0
-* Added support for Toolbelt mod
+* Added support for Tool Belt mod
   * Adds advancements
+* Passable Foliage is no longer a hard dependency
 * Added Solarium Equipment
   * Solium moss can be found in hot biomes lying on the ground, 9 solium moss make a Solarium Ball, which can upgrade iron equipment in a smithing table
   * Solarium equipment takes 1/4 damage when used in the sun (reduced by nighttime, rain and thunder)
@@ -40,7 +41,7 @@
 * Tentative shields durability balance changes
 * Increased Flint, Stone and Copper reinforced flint tools
 * Slightly increased Stone tools efficiency
-* Health regeneration speed is now fixed to 0.5hp/s and no longer depends on saturation modifier
+* Health regeneration is now faster with better foods
 * Firestarter now properly lit up TNT and Mining charges
 * Cutting pumpkins with shears now gives edible Pumpkin Pulp, instead of seeds
 * Pumpkins and Melons crafting now only give one seed, and melon seeds require a melon and no longer a slice

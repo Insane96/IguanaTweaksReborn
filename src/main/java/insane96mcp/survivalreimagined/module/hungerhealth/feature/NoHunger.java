@@ -1,5 +1,7 @@
 package insane96mcp.survivalreimagined.module.hungerhealth.feature;
 
+import com.ezylang.evalex.Expression;
+import com.ezylang.evalex.data.EvaluationValue;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.insanelib.base.Feature;
@@ -17,6 +19,7 @@ import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.MessageFoodRegenSync;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
 import insane96mcp.survivalreimagined.utils.ClientUtils;
+import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -66,10 +69,13 @@ public class NoHunger extends Feature {
     public static Boolean enablePassiveRegen = false;
     @Config
     @Label(name = "Passive Health Regen.Regen Speed", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%")
-    public static MinMax passiveRegenerationTime = new MinMax(120, 180);
+    public static MinMax passiveRegenerationTime = new MinMax(120, 3600);
     @Config(min = 0d)
     @Label(name = "Food Heal.Health Multiplier", description = "When eating you'll get healed by hunger restored multiplied by this percentage. (Set to 1 to have the same effect as pre-beta 1.8 food")
     public static Double foodHealHealthMultiplier = 0.3d;
+    @Config
+    @Label(name = "Food Heal.Heal Strength", description = "How much HP does food regen each second? If 'Instant Heal' is enabled, this has no effect. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
+    public static String foodHealStrength = "MAX(0.1, 1 * saturation_modifier)";
     @Config
     @Label(name = "Food Heal.Instant Heal", description = "If true, health is regenerated instantly instead of over time")
     public static Boolean foodHealInstantly = false;
@@ -83,6 +89,10 @@ public class NoHunger extends Feature {
     @Config
     @Label(name = "Convert Hunger to Weakness", description = "If true, Hunger effect is replaced by Weakness")
     public static Boolean convertHungerToWeakness = true;
+
+    @Config
+    @Label(name = "Convert Saturation to Haste", description = "If true, Saturation effect is replaced by Haste")
+    public static Boolean convertSaturationToHaste = true;
 
     @Config
     @Label(name = "Render armor at Hunger", description = "(Client Only) Armor is rendered at the place of Hunger bar")
@@ -125,7 +135,7 @@ public class NoHunger extends Feature {
             event.player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, effect.getDuration() + 1, effect.getAmplifier(), effect.isAmbient(), effect.isVisible(), effect.showIcon()));
             event.player.removeEffect(MobEffects.HUNGER);
         }
-        if (event.player.hasEffect(MobEffects.SATURATION)) {
+        if (event.player.hasEffect(MobEffects.SATURATION) && convertSaturationToHaste) {
             MobEffectInstance effect = event.player.getEffect(MobEffects.SATURATION);
             //noinspection ConstantConditions; Checking with hasEffect
             event.player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, (effect.getDuration() + 1) * 20, effect.getAmplifier(), effect.isAmbient(), effect.isVisible(), effect.showIcon()));
@@ -167,6 +177,7 @@ public class NoHunger extends Feature {
         boolean isRawFood = item != null && isRawFood(item);
         if (player.getRandom().nextDouble() < rawFoodPoisonChance && isRawFood) {
             player.addEffect(new MobEffectInstance(MobEffects.POISON, foodProperties.getNutrition() * 20 * 3));
+            return;
         }
 
         float heal = getFoodHealing(foodProperties);
@@ -223,10 +234,26 @@ public class NoHunger extends Feature {
         return (float) (Math.pow(food.getNutrition(), 1.5f) * foodHealHealthMultiplier.floatValue());
     }
 
+    /**
+     * Returns the hp regenerated each second
+     */
     public static float getFoodHealingStrength(FoodProperties food) {
-        //Clamped between 0.25 and 0.5 hp/s
-        //return Mth.clamp(0.5f * (1.4f - food.getSaturationModifier()), 0.25f, 0.5f);
-        return 0.5f;
+
+        Expression expression = new Expression(foodHealStrength);
+        try {
+            //noinspection ConstantConditions
+            EvaluationValue result = expression
+                    .with("hunger", food.getNutrition())
+                    .and("saturation_modifier", food.getSaturationModifier())
+                    .and("effectiveness", Utils.getFoodEffectiveness(food))
+                    .and("fast_food", food.isFastFood())
+                    .evaluate();
+            return result.getNumberValue().intValue();
+        }
+        catch (Exception ex) {
+            LogHelper.error("Failed to evaluate or parse eating speed formula: %s", expression);
+            return 0.5f;
+        }
     }
 
     private static void consumeAndHealFromFoodRegen(Player player) {
