@@ -4,7 +4,7 @@
         {
             "id": "minecraft:generic.movement_speed",
             "modifier_name": "More speed for horses",
-            "amount": 0.1,
+            "amount": 0.225,
             "operation": "addition"
         }
     ]
