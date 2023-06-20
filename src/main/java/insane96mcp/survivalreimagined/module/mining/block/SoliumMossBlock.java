@@ -16,7 +16,7 @@ public class SoliumMossBlock extends GlowLichenBlock {
 
     @Override
     public void performBonemeal(ServerLevel level, RandomSource randomSource, BlockPos pos, BlockState state) {
-        if (randomSource.nextInt(3) == 0)
+        if (randomSource.nextInt(5) == 0)
             super.performBonemeal(level, randomSource, pos, state);
     }
 
@@ -29,5 +29,25 @@ public class SoliumMossBlock extends GlowLichenBlock {
             return super.isValidBonemealTarget(serverLevel, pos, state, isClient);
         }
         return false;
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        int light = level.getBrightness(LightLayer.SKY, pos);
+
+        int dayTime = (int) (level.dayTime() % 24000);
+        boolean isDayTime = dayTime < 12786 || dayTime >= 23216;
+        boolean isRain = level.isRaining();
+        boolean isThunder = level.isThundering();
+
+        int chanceToGrow = 5;
+        if (!isDayTime) chanceToGrow *= 2;
+        if (!isRain) chanceToGrow *= 2;
+        if (!isThunder) chanceToGrow *= 2;
+        chanceToGrow *= light / 15f;
+        if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt(chanceToGrow) == 0)) {
+            super.performBonemeal(level, random, pos, state);
+            net.minecraftforge.common.ForgeHooks.onCropsGrowPost(level, pos, state);
+        }
     }
 }

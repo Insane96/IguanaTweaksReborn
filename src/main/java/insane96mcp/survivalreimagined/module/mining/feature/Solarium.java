@@ -42,7 +42,7 @@ public class Solarium extends Feature {
 
 	public static final TagKey<Item> SOLARIUM_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/solarium"));
 
-	public static final SimpleBlockWithItem SOLIUM_MOSS = SimpleBlockWithItem.register("solium_moss", () -> new SoliumMossBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.GLOW_LICHEN).noCollission().strength(0.4F).sound(SoundType.GLOW_LICHEN).lightLevel(GlowLichenBlock.emission(9))));
+	public static final SimpleBlockWithItem SOLIUM_MOSS = SimpleBlockWithItem.register("solium_moss", () -> new SoliumMossBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.GLOW_LICHEN).noCollission().strength(0.4F).sound(SoundType.GLOW_LICHEN).lightLevel(GlowLichenBlock.emission(9)).randomTicks()));
 	public static final RegistryObject<Item> SOLARIUM_BALL = SRItems.REGISTRY.register("solarium_ball", () -> new Item(new Item.Properties()));
 
 	public static final ILItemTier ITEM_TIER = new ILItemTier(2, 307, 5.5f, 1.5f, 12, () -> Ingredient.of(SOLARIUM_BALL.get()));
