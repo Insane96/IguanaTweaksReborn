@@ -78,7 +78,7 @@ license="All rights reserved"
 
 [[dependencies.survivalreimagined]]
     modId="passablefoliage"
-    mandatory=true
+    mandatory=false
     versionRange="[7.0.0,)"
     ordering="NONE"
     side="BOTH"

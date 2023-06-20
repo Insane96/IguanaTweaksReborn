@@ -7,6 +7,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.scheduled.ScheduledTasks;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.world.integration.PassableFoliage;
 import insane96mcp.survivalreimagined.module.world.scheduled.LeafDecayScheduledTick;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,8 +19,7 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import snownee.kiwi.config.KiwiConfigManager;
-import snownee.passablefoliage.PassableFoliageCommonConfig;
+import net.minecraftforge.fml.ModList;
 
 @Label(name = "Leaves", description = "Makes leaves decay faster and if Passable Foliage is installed, changes some values")
 @LoadFeature(module = Modules.Ids.WORLD)
@@ -33,6 +33,10 @@ public class Leaves extends Feature {
 	@Label(name = "Max ticks to decay")
 	public static Integer maxTicksToDecay = 400;
 
+	@Config
+	@Label(name = "Change passable foliage config")
+	public static Boolean changePassableFoliageConfig = true;
+
 	public Leaves(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
@@ -40,9 +44,10 @@ public class Leaves extends Feature {
 	@Override
 	public void loadConfigOptions() {
 		super.loadConfigOptions();
-		PassableFoliageCommonConfig.fallDamageReduction = 0.2f;
-		PassableFoliageCommonConfig.fallDamageThreshold = 8;
-		KiwiConfigManager.getHandler(PassableFoliageCommonConfig.class).save();
+
+		if (ModList.get().isLoaded("passablefoliage") && changePassableFoliageConfig) {
+			PassableFoliage.changeConfigOptions();
+		}
 	}
 
 	@SubscribeEvent
