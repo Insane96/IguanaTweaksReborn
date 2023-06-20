@@ -1,5 +1,5 @@
 {
-  "type": "survivalreimagined:drop_multiplier",
+  "type": "survivalreimagined:replace_drop",
   "conditions": [
     {
       "condition": "minecraft:entity_properties",
@@ -9,6 +9,6 @@
       }
     }
   ],
-  "item": "minecraft:carrot",
-  "multiplier": 0.0
+  "item_to_replace": "minecraft:iron_ingot",
+  "new_item": "minecraft:gold_ingot"
 }

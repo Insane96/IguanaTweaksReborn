@@ -114,6 +114,11 @@ public class Livestock extends SRFeature {
 
 	public static final ArrayList<LivestockData> breedingFailChance = new ArrayList<>();
 
+	//TODO
+	/*@Config
+	@Label(name = "Chicken from egg chance", description = "Changes the chance for a chicken to come out from an egg. Vanilla is 8")
+	public static Integer chickenFromEggChance = 4;*/
+
 	@Config
 	@Label(name = "Loot DataPack", description = "Enables a datapack that changes food drops")
 	public static Boolean lootDataPack = true;

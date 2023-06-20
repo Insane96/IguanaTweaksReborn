@@ -85,7 +85,7 @@ license="All rights reserved"
 
 [[dependencies.survivalreimagined]]
     modId="toolbelt"
-    mandatory=true
+    mandatory=false
     versionRange="[1.20.0,)"
     ordering="NONE"
     side="BOTH"

@@ -4,12 +4,16 @@ import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.EntityTypePredicate;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -116,6 +120,10 @@ public class ReplaceLootModifier extends LootModifier {
 
         public Builder(LootItemCondition[] conditionsIn, Item itemToReplace, Item newItem) {
             replaceLootModifier = new ReplaceLootModifier(conditionsIn, itemToReplace, newItem);
+        }
+
+        public Builder(EntityType<?> entityType, Item itemToReplace, Item newItem) {
+            this.replaceLootModifier = new ReplaceLootModifier(new LootItemCondition[] {LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, new EntityPredicate.Builder().entityType(EntityTypePredicate.of(entityType)).build()).build()}, itemToReplace, newItem);
         }
 
         public Builder setAmountToReplace(int amount) {

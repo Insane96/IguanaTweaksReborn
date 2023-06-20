@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
+import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceLootModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.farming.block.SeedsBlockItem;
 import insane96mcp.survivalreimagined.module.farming.block.WildCropBlock;
@@ -144,6 +145,7 @@ public class Crops extends Feature {
 	@SubscribeEvent
 	public void onTryToSeedChickens(PlayerInteractEvent.EntityInteract event) {
 		if (!this.isEnabled()
+				|| !noSeedRenewDatapack
 				|| !(event.getTarget() instanceof Chicken)
 				|| !CHICKEN_FOOD_ITEMS.test(event.getItemStack()))
 			return;
@@ -158,15 +160,17 @@ public class Crops extends Feature {
 	private static final String path = "crops/";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "no_carrot_from_zombie", new DropMultiplierModifier.Builder(EntityType.ZOMBIE, Items.CARROT, 0f).build());
-		provider.add(path + "no_potato_from_zombie", new DropMultiplierModifier.Builder(EntityType.ZOMBIE, Items.POTATO, 0f).build());
-		provider.add(path + "no_baked_potato_from_zombie", new DropMultiplierModifier.Builder(EntityType.ZOMBIE, Items.BAKED_POTATO, 0f).build());
-		provider.add(path + "no_carrot_from_husk", new DropMultiplierModifier.Builder(EntityType.HUSK, Items.CARROT, 0f).build());
-		provider.add(path + "no_potato_from_husk", new DropMultiplierModifier.Builder(EntityType.HUSK, Items.POTATO, 0f).build());
-		provider.add(path + "no_baked_potato_from_husk", new DropMultiplierModifier.Builder(EntityType.HUSK, Items.BAKED_POTATO, 0f).build());
-		provider.add(path + "no_carrot_from_zombie_villager", new DropMultiplierModifier.Builder(EntityType.ZOMBIE_VILLAGER, Items.CARROT, 0f).build());
-		provider.add(path + "no_potato_from_zombie_villager", new DropMultiplierModifier.Builder(EntityType.ZOMBIE_VILLAGER, Items.POTATO, 0f).build());
-		provider.add(path + "no_baked_potato_from_zombie_villager", new DropMultiplierModifier.Builder(EntityType.ZOMBIE_VILLAGER, Items.BAKED_POTATO, 0f).build());
+		provider.add(path + "replace_carrot_from_zombie", new ReplaceLootModifier.Builder(EntityType.ZOMBIE, Items.CARROT, Items.IRON_INGOT).build());
+		provider.add(path + "replace_potato_from_zombie", new ReplaceLootModifier.Builder(EntityType.ZOMBIE, Items.POTATO, Items.IRON_INGOT).build());
+		provider.add(path + "replace_baked_potato_from_zombie", new ReplaceLootModifier.Builder(EntityType.ZOMBIE, Items.BAKED_POTATO, Items.IRON_INGOT).build());
+		provider.add(path + "replace_carrot_from_husk", new ReplaceLootModifier.Builder(EntityType.HUSK, Items.CARROT, Items.GOLD_INGOT).build());
+		provider.add(path + "replace_potato_from_husk", new ReplaceLootModifier.Builder(EntityType.HUSK, Items.POTATO, Items.GOLD_INGOT).build());
+		provider.add(path + "replace_baked_potato_from_husk", new ReplaceLootModifier.Builder(EntityType.HUSK, Items.BAKED_POTATO, Items.GOLD_INGOT).build());
+		provider.add(path + "replace_iron_ingot_from_husk", new ReplaceLootModifier.Builder(EntityType.HUSK, Items.IRON_INGOT, Items.GOLD_INGOT).build());
+		provider.add(path + "replace_carrot_from_zombie_villager", new ReplaceLootModifier.Builder(EntityType.ZOMBIE_VILLAGER, Items.CARROT, Items.EMERALD).build());
+		provider.add(path + "replace_potato_from_zombie_villager", new ReplaceLootModifier.Builder(EntityType.ZOMBIE_VILLAGER, Items.POTATO, Items.EMERALD).build());
+		provider.add(path + "replace_baked_potato_from_zombie_villager", new ReplaceLootModifier.Builder(EntityType.ZOMBIE_VILLAGER, Items.BAKED_POTATO, Items.EMERALD).build());
+		provider.add(path + "replace_iron_ingot_from_zombie_villager", new ReplaceLootModifier.Builder(EntityType.ZOMBIE_VILLAGER, Items.IRON_INGOT, Items.EMERALD).build());
 
 		provider.add(path + "no_seeds_from_grass", new DropMultiplierModifier.Builder(Blocks.GRASS, Items.WHEAT_SEEDS, 0f).build());
 		provider.add(path + "no_seeds_from_tall_grass", new DropMultiplierModifier.Builder(Blocks.TALL_GRASS, Items.WHEAT_SEEDS, 0f).build());

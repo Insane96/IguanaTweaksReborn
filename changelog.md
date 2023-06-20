@@ -1,7 +1,8 @@
 # Changelog
 
 ## 0.12.0
-* Added Toolbelt mod
+* Added support for Toolbelt mod
+  * Adds advancements
 * Added Solarium Equipment
   * Solium moss can be found in hot biomes lying on the ground, 9 solium moss make a Solarium Ball, which can upgrade iron equipment in a smithing table
   * Solarium equipment takes 1/4 damage when used in the sun (reduced by nighttime, rain and thunder)

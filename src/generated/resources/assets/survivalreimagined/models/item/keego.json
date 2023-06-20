@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "survivalreimagined:item/keego_gem"
+    "layer0": "survivalreimagined:item/keego"
   }
 }
