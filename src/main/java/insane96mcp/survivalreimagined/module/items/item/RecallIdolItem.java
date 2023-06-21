@@ -51,8 +51,10 @@ public class RecallIdolItem extends Item {
 		} else {
 			optional = Optional.empty();
 		}
-		optional.ifPresent(vec3 -> player.teleportTo(vec3.x, vec3.y, vec3.z));
-		stack.shrink(1);
+		optional.ifPresent(vec3 -> {
+			player.teleportTo(vec3.x, vec3.y, vec3.z);
+			stack.shrink(1);
+		});
 		//TODO totem like animation and sounds when using
 		return stack;
 	}
