@@ -1,0 +1,6 @@
+{
+    "type": "forge:add_features",
+    "biomes": "#minecraft:is_nether",
+    "features": "survivalreimagined:keego_ore_top",
+    "step": "underground_ores"
+}
