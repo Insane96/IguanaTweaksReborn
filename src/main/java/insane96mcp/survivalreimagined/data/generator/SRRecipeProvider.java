@@ -2,8 +2,6 @@ package insane96mcp.survivalreimagined.data.generator;
 
 import insane96mcp.shieldsplus.setup.SPItems;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.module.experience.feature.AncientLapis;
-import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.mining.data.ForgeRecipeBuilder;
@@ -250,12 +248,12 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_durium_nugget", has(Durium.NUGGET.get()))
                 .save(writer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, AncientLapis.ANCIENT_LAPIS.get(), 1)
-                .requires(EnchantmentsFeature.CLEANSED_LAPIS.get(), 1)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Lapis.ANCIENT_LAPIS.get(), 1)
+                .requires(Lapis.CLEANSED_LAPIS.get(), 1)
                 .requires(Items.NETHERITE_SCRAP, 1)
                 .requires(Items.EXPERIENCE_BOTTLE, 1)
                 .unlockedBy("has_netherite_scrap", has(Items.NETHERITE_SCRAP))
-                .unlockedBy("has_ancient_lapis", has(AncientLapis.ANCIENT_LAPIS.get()))
+                .unlockedBy("has_cleansed_lapis", has(Lapis.CLEANSED_LAPIS.get()))
                 .save(writer);
 
         //Solarium

@@ -5,8 +5,6 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.combat.client.FletchingScreen;
 import insane96mcp.survivalreimagined.module.combat.client.SRArrowRenderer;
 import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
-import insane96mcp.survivalreimagined.module.experience.feature.AncientLapis;
-import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
@@ -192,8 +190,8 @@ public class ClientSetup {
             event.accept(SoulSteel.NUGGET.get());
             event.accept(Keego.SHARD.get());
             event.accept(Keego.GEM.get());
-            event.accept(AncientLapis.ANCIENT_LAPIS.get());
-            event.accept(EnchantmentsFeature.CLEANSED_LAPIS.get());
+            event.accept(Lapis.CLEANSED_LAPIS.get());
+            event.accept(Lapis.ANCIENT_LAPIS.get());
             event.accept(CoalFire.HELLISH_COAL.get());
             event.accept(Cloth.CLOTH.get());
         }

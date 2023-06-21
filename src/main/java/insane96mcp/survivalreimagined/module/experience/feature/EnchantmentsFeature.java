@@ -7,12 +7,10 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.data.lootmodifier.InjectLootTableModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantment.*;
 import insane96mcp.survivalreimagined.network.message.JumpMidAirMessage;
 import insane96mcp.survivalreimagined.setup.SREnchantments;
-import insane96mcp.survivalreimagined.setup.SRItems;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -20,8 +18,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -31,8 +27,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.common.data.GlobalLootModifierProvider;
-import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.*;
@@ -40,13 +34,11 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.RegistryObject;
 
-@Label(name = "Enchantments", description = "Change some enchantments and anvil related stuff.")
+@Label(name = "Enchantments", description = "Change some enchantments related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class EnchantmentsFeature extends Feature {
 
-	public static final RegistryObject<Item> CLEANSED_LAPIS = SRItems.REGISTRY.register("cleansed_lapis", () -> new Item(new Item.Properties()));
 	public static final ResourceLocation WATER_COOLANT_AFFECTED = new ResourceLocation(SurvivalReimagined.MOD_ID, "water_coolant_affected");
 
 	@Config
@@ -91,27 +83,6 @@ public class EnchantmentsFeature extends Feature {
 	public static boolean disableEnchantment(Enchantment enchantment) {
 		return (enchantment == net.minecraft.world.item.enchantment.Enchantments.ALL_DAMAGE_PROTECTION && protectionNerf == ProtectionNerf.DISABLE)
 				|| (enchantment == Enchantments.BANE_OF_ARTHROPODS && replaceBaneOfArthropods);
-	}
-
-	@SubscribeEvent
-	public void onAnvilUse(AnvilUpdateEvent event) {
-		if (!this.isEnabled()
-				|| !mendingOverhaul)
-			return;
-
-		ItemStack left = event.getLeft();
-		if (left.getBaseRepairCost() <= 0)
-			return;
-
-		ItemStack right = event.getRight();
-		if (!right.is(CLEANSED_LAPIS.get()))
-			return;
-
-		ItemStack result = left.copy();
-		result.setRepairCost(0);
-		event.setCost(0);
-		event.setMaterialCost(1);
-		event.setOutput(result);
 	}
 
 	@SubscribeEvent
@@ -279,12 +250,5 @@ public class EnchantmentsFeature extends Feature {
 
 	public static boolean isFeatherFallingBuffed() {
 		return Feature.isEnabled(EnchantmentsFeature.class) && buffFeatherFalling;
-	}
-
-	private static final String path = "experience/enchantments";
-
-	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
-		provider.add(path + "blocks/lapis_ore", new InjectLootTableModifier(new ResourceLocation("minecraft:blocks/lapis_ore"), new ResourceLocation("survivalreimagined:blocks/cleansed_lapis")));
-		provider.add(path + "blocks/deepslate_lapis_ore", new InjectLootTableModifier(new ResourceLocation("minecraft:blocks/deepslate_lapis_ore"), new ResourceLocation("survivalreimagined:blocks/cleansed_lapis")));
 	}
 }

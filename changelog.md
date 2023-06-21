@@ -16,6 +16,9 @@
   * Drops from zombies
   * Required to make a bed
   * Can be used to make Chainmail armor and bundles
+* Renamed Ancient Lapis feature to Lapis
+  * Moved Cleansed Lapis here and changed what it does: now increases the level of an enchantment by 1, up to max level
+  * Ancient lapis can now only increase the enchantments level above the max (no longer increases any enchantment by 1)
 * Added mining charge
   * Breaks blocks in a 3x3x5 area
 * Added Cyan Flower
@@ -51,6 +54,7 @@
 * Firestarter now properly lit up TNT and Mining charges
 * Cutting pumpkins with shears now gives edible Pumpkin Pulp, instead of seeds
 * Pumpkins and Melons crafting now only give one seed, and melon seeds require a melon and no longer a slice
+* Infinity is now more common at lower levels
 * Thorns Enchantment no longer damages items
 * Firestarter now takes 3 seconds instead of 4 to light up fire
 * Falling trees now fall better

@@ -2,8 +2,6 @@ package insane96mcp.survivalreimagined.data.generator.client;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
-import insane96mcp.survivalreimagined.module.experience.feature.AncientLapis;
-import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.experience.feature.UnbreakingOverhaul;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
@@ -69,9 +67,8 @@ public class SRItemModelsProvider extends ItemModelProvider {
         withExistingParent("flint_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/flint_block"));
         withExistingParent("polished_flint_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/polished_flint_block"));
 
-        basicItem(EnchantmentsFeature.CLEANSED_LAPIS.get());
-
-        basicItem(AncientLapis.ANCIENT_LAPIS.get());
+        basicItem(Lapis.CLEANSED_LAPIS.get());
+        basicItem(Lapis.ANCIENT_LAPIS.get());
 
         basicItem(Crops.CARROT_SEEDS.get());
         basicItem(Crops.POTATO_SEEDS.get());
