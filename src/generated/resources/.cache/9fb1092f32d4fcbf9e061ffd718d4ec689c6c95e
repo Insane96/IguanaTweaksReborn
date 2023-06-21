@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-16T15:40:16.0557367	Recipes
+// 1.19.4	2023-06-21T19:26:28.6500239	Recipes
 180b53a99dee746d5e72a5aecf52eb5a9cc8cd7c data/survivalreimagined/advancements/recipes/building_blocks/durium_block.json
 e611d44bd92b2fdeb5684cfcfb7f77dfb2c3332e data/survivalreimagined/advancements/recipes/building_blocks/flint_block.json
 aa91b9f6bc3b587f526159db255556a85df8f972 data/survivalreimagined/advancements/recipes/building_blocks/polished_flint_block.json
@@ -174,7 +174,7 @@ c4fe9ca399c38e625fe931c7bde9d62fedc9ac4f data/survivalreimagined/advancements/re
 d64fcb59a2b690c6bf61030349d051e8510c4bb1 data/survivalreimagined/advancements/recipes/food/over_easy_egg_from_smelting.json
 6bc953380aeee39cab63fc9d90922778c5270d84 data/survivalreimagined/advancements/recipes/food/over_easy_egg_from_smoking.json
 d77938b134481bb5ff393ca35a5043c2be3b46b9 data/survivalreimagined/advancements/recipes/food/red_mushroom_stew.json
-ec625ed0bc257473416ddbb24c10df0c10075e61 data/survivalreimagined/advancements/recipes/misc/ancient_lapis.json
+7d5a92a461be3369bb0105d382050c343f2c193c data/survivalreimagined/advancements/recipes/misc/ancient_lapis.json
 3f3ffce078d9d71d022bd0f31b5d4c26e7dab5ad data/survivalreimagined/advancements/recipes/misc/blasting_chained_copper_boots.json
 477b61b7b097f6ffce413b5100f127ddd2a2276a data/survivalreimagined/advancements/recipes/misc/blasting_chained_copper_chestplate.json
 6fd700f6b304410cf7b187943209bee3fd631d70 data/survivalreimagined/advancements/recipes/misc/blasting_chained_copper_helmet.json

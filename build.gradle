@@ -146,6 +146,8 @@ dependencies {
     implementation fg.deobf("curse.maven:kiwi-303657:4501836")
     implementation fg.deobf("curse.maven:passable-foliage-379887:4511198")
     runtimeOnly fg.deobf("curse.maven:tool-belt-260262:4441247")
+    //Needed for data gen
+    runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-${mc_version}:1.8.0")
 
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"

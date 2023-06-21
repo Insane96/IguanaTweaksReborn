@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_ancient_lapis": {
+    "has_cleansed_lapis": {
       "conditions": {
         "items": [
           {
             "items": [
-              "survivalreimagined:ancient_lapis"
+              "survivalreimagined:cleansed_lapis"
             ]
           }
         ]
@@ -35,7 +35,7 @@
   "requirements": [
     [
       "has_netherite_scrap",
-      "has_ancient_lapis",
+      "has_cleansed_lapis",
       "has_the_recipe"
     ]
   ],
