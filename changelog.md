@@ -27,10 +27,14 @@
   * Added "No repair cost increase and repair cost based off Enchantments"
     * Makes XP cost for repairing in an anvil no longer increase and based off enchantments
   * Lowered enchantments' rarity costs (and made them configurable) 
+* Smelting and Blasting
+  * Ore blocks blasted in a blast furnace now have 40% chance to double the output and will always give two ingots in a soul furnace
+  * Copper now smelts / blasts twice as faster
+  * Gold can no longer be smelted in a Furnace
 * Added "Reduced mob cramming"
   * Entity cramming is set to 6
 * Added The End feature
-  * Contains a data pack that increases end cities generation
+  * Enables a data pack that increases end cities generation
 * Better End City loot
 * Forge recipes now award experience
 * Reduced explosions damage (configurable)

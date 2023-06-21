@@ -16,7 +16,7 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class ShieldsPlus extends Feature {
 	@Config
-	@Label(name = "Shields+ Compat DataPack", description = "Removes wooden shields and changes the crafting recipes of metal shields.")
+	@Label(name = "Shields+ Compat DataPack", description = "Removes wooden shields and changes the crafting recipes of metal shields to require a Forge.")
 	public static Boolean shieldsPlusCompatDataPack = true;
 
 	public ShieldsPlus(Module module, boolean enabledByDefault, boolean canBeDisabled) {

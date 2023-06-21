@@ -5,7 +5,7 @@
   "experience": 0.7,
   "group": "copper_ingot",
   "ingredient": {
-    "item": "minecraft:raw_copper"
+    "item": "minecraft:deepslate_copper_ore"
   },
   "result": "minecraft:copper_ingot"
 }

@@ -1,6 +1,6 @@
 {
     "pack": {
-        "description": "Makes Raw Gold and Nether Gold ore take much more time to smelt in a furnace",
+        "description": "Disables Gold smelting in a furnace",
         "pack_format": 12
     }
 }
