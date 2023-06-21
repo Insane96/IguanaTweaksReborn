@@ -12,12 +12,12 @@ public abstract class ArrowInfiniteEnchantmentMixin {
 	@Inject(at = @At("RETURN"), method = "getMinCost", cancellable = true)
 	private void onGetMinCost(int lvl, CallbackInfoReturnable<Integer> cir) {
 		if (EnchantmentsFeature.isInfinityOverhaulEnabled())
-			cir.setReturnValue(lvl * 12);
+			cir.setReturnValue(1 + (lvl - 1) * 10);
 	}
 
 	@Inject(at = @At("RETURN"), method = "getMaxCost", cancellable = true)
 	private void onGetMaxCost(int lvl, CallbackInfoReturnable<Integer> cir) {
 		if (EnchantmentsFeature.isInfinityOverhaulEnabled())
-			cir.setReturnValue(65);
+			cir.setReturnValue(50);
 	}
 }
