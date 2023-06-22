@@ -53,6 +53,7 @@
 * Tentative shields durability balance changes
 * Increased Flint, Stone and Copper reinforced flint tools' durability
 * Slightly increased Stone tools efficiency
+* Logs now drop logs instead of planks
 * Health regeneration is now faster with better foods
 * Firestarter now properly lit up TNT and Mining charges
 * Cutting pumpkins with shears now gives edible Pumpkin Pulp, instead of seeds

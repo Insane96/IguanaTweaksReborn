@@ -6,22 +6,14 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.LootPurgerModifier;
-import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceLootModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
-import net.minecraft.advancements.critereon.EntityEquipmentPredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 
 import java.util.List;
@@ -133,7 +125,7 @@ public class Loot extends Feature {
 			);
 		}
 
-		for (WoodTypes woodTypes : WOOD_TYPES) {
+		/*for (WoodTypes woodTypes : WOOD_TYPES) {
 			provider.add(path + "trees/" + woodTypes.name, new ReplaceLootModifier.Builder(new LootItemCondition[] {
 							LootItemEntityPropertyCondition.hasProperties(
 											LootContext.EntityTarget.THIS,
@@ -149,6 +141,6 @@ public class Loot extends Feature {
 							.setMultipliers(List.of(2.0f))
 							.build()
 			);
-		}
+		}*/
 	}
 }
