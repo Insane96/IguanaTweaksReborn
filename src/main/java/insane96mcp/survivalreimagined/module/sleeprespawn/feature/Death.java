@@ -9,7 +9,6 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.feature.GlobalExperience;
-import insane96mcp.survivalreimagined.module.experience.feature.PlayerExperience;
 import insane96mcp.survivalreimagined.module.sleeprespawn.block.GraveBlock;
 import insane96mcp.survivalreimagined.module.sleeprespawn.block.GraveBlockEntity;
 import insane96mcp.survivalreimagined.setup.SRBlockEntityTypes;
@@ -92,12 +91,12 @@ public class Death extends Feature {
 				items.add(itemStack);
 		});
 		graveBlockEntity.setItems(items);
-		int xpDropped = PlayerExperience.getExperienceOnDeath(player, true);
-		graveBlockEntity.setXpStored(xpDropped);
+		//int xpDropped = PlayerExperience.getExperienceOnDeath(player, true);
+		//graveBlockEntity.setXpStored(xpDropped);
 		graveBlockEntity.setOwner(player.getUUID());
 		graveBlockEntity.setDeathNumber(player.getStats().getValue(Stats.CUSTOM.get(Stats.DEATHS)) + 1);
-		player.setExperienceLevels(0);
-		player.setExperiencePoints(0);
+		/*player.setExperienceLevels(0);
+		player.setExperiencePoints(0);*/
 		player.getInventory().clearContent();
 	}
 

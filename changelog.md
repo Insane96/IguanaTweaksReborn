@@ -18,7 +18,7 @@
   * Can be used to make Chainmail armor and bundles
 * Renamed Ancient Lapis feature to Lapis
   * Moved Cleansed Lapis here and changed what it does: now increases the level of an enchantment by 1, up to max level
-  * Ancient lapis can now only increase the enchantments level above the max (no longer increases any enchantment by 1)
+  * Ancient lapis can now only increase enchantments level above the max (no longer increases any enchantment by 1)
 * Added mining charge
   * Breaks blocks in a 3x3x5 area
 * Added Cyan Flower
@@ -40,6 +40,7 @@
   * Enables a data pack that increases end cities generation
 * Better End City loot
 * Forge recipes now award experience
+* On Death experience is now dropped like normal, instead of spawning a ghost on grave break
 * Reduced explosions damage (configurable)
 * Cleansed lapis now has greatly increased chance to drop
 * Buffed Feather Falling
@@ -48,7 +49,7 @@
 * New worlds now start in early summer instead of mid-summer
 * Lodestones are now cheaper to craft
 * Tentative shields durability balance changes
-* Increased Flint, Stone and Copper reinforced flint tools
+* Increased Flint, Stone and Copper reinforced flint tools' durability
 * Slightly increased Stone tools efficiency
 * Health regeneration is now faster with better foods
 * Firestarter now properly lit up TNT and Mining charges
