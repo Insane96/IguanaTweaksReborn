@@ -51,10 +51,10 @@ public class Forging extends Feature {
 	public static final RegistryObject<ForgeHammerItem> IRON_HAMMER = SRItems.REGISTRY.register("iron_hammer", () -> new ForgeHammerItem(9f, 0.55f, Tiers.IRON, 22, 3, new Item.Properties()));
 	public static final RegistryObject<ForgeHammerItem> SOLARIUM_HAMMER = SRItems.REGISTRY.register("solarium_hammer", () -> new ForgeHammerItem(9f, 0.55f, Solarium.ITEM_TIER, 24, 3, new Item.Properties()));
 	public static final RegistryObject<ForgeHammerItem> DURIUM_HAMMER = SRItems.REGISTRY.register("durium_hammer", () -> new ForgeHammerItem(9f, 0.55f, Durium.ITEM_TIER, 18, 3, new Item.Properties()));
-	public static final RegistryObject<ForgeHammerItem> DIAMOND_HAMMER = SRItems.REGISTRY.register("diamond_hammer", () -> new ForgeHammerItem(7f, 0.6f, Tiers.DIAMOND, 14, 3, new Item.Properties()));
-	public static final RegistryObject<ForgeHammerItem> SOUL_STEEL_HAMMER = SRItems.REGISTRY.register("soul_steel_hammer", () -> new ForgeHammerItem(7f, 0.6f, SoulSteel.ITEM_TIER, 20, 3, new Item.Properties()));
-	public static final RegistryObject<ForgeHammerItem> NETHERITE_HAMMER = SRItems.REGISTRY.register("netherite_hammer", () -> new ForgeHammerItem(5f, 0.65f, Tiers.NETHERITE, 16, 2, new Item.Properties()));
-	public static final RegistryObject<ForgeHammerItem> KEEGO_HAMMER = SRItems.REGISTRY.register("keego_hammer", () -> new ForgeHammerItem(5f, 0.65f, Keego.ITEM_TIER, 15, 2, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> DIAMOND_HAMMER = SRItems.REGISTRY.register("diamond_hammer", () -> new ForgeHammerItem(6f, 0.6f, Tiers.DIAMOND, 14, 3, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> SOUL_STEEL_HAMMER = SRItems.REGISTRY.register("soul_steel_hammer", () -> new ForgeHammerItem(6f, 0.6f, SoulSteel.ITEM_TIER, 20, 3, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> NETHERITE_HAMMER = SRItems.REGISTRY.register("netherite_hammer", () -> new ForgeHammerItem(3f, 0.65f, Tiers.NETHERITE, 16, 2, new Item.Properties()));
+	public static final RegistryObject<ForgeHammerItem> KEEGO_HAMMER = SRItems.REGISTRY.register("keego_hammer", () -> new ForgeHammerItem(3f, 0.65f, Keego.ITEM_TIER, 15, 2, new Item.Properties()));
 	@Config
 	@Label(name = "Forging Equipment Crafting Data Pack", description = """
 			Enables the following changes to vanilla data pack:

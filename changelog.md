@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Reduced Durium Base AD (2.5 -> 2)
+* Reduced late game hammers damage
+
 ## 0.12.0
 * Added support for Tool Belt mod
   * Adds advancements
