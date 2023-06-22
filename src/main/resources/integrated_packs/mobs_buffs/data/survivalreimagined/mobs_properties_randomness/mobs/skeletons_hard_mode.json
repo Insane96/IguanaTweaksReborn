@@ -1,0 +1,21 @@
+{
+    "target": "#minecraft:skeletons",
+    "set_nbt": [
+        {
+            "nbt_tag": "enhancedai:shooting_range",
+            "type": "double",
+            "value": {
+                "value": 40
+            },
+            "persistent_data": true
+        }
+    ],
+    "conditions": {
+        "advancements_done": [
+            {
+                "advancements": [ "minecraft:end/kill_dragon" ],
+                "player_mode": "any"
+            }
+        ]
+    }
+}

@@ -1,8 +1,12 @@
 # Changelog
 
 ## Upcoming
+* Added Hard mode
+  * When the dragon is killed mobs will gain 2x health, speed, etc. but will also drop 75% more xp
+  * With that, the base buffs have been reduced
 * Reduced Durium Base AD (2.5 -> 2)
 * Reduced late game hammers damage
+* Axe damage reduced by 1
 
 ## 0.12.0
 * Added support for Tool Belt mod

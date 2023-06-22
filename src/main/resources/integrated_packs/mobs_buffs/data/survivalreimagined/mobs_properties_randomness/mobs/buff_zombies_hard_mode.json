@@ -1,24 +1,24 @@
 {
-    "target": "#survivalreimagined:mobs_no_bosses_no_zombies",
+    "target": "#survivalreimagined:zombies",
     "attributes": [
         {
             "id": "minecraft:generic.max_health",
-            "modifier_name": "More Health for Mobs",
+            "modifier_name": "More Health for Zombies in Hard Mode",
             "amount": {
-                "value": 0.3,
+                "value": 0.4,
                 "difficulty_modifier": {
                     "operation": "add",
-                    "easy": -0.1,
-                    "hard": 0.2
+                    "easy": -0.2,
+                    "hard": 0.3
                 }
             },
             "operation": "multiply_base"
         },
         {
             "id": "minecraft:generic.movement_speed",
-            "modifier_name": "More Speed for Mobs",
+            "modifier_name": "More Speed for Zombies in Hard Mode",
             "amount": {
-                "value": 0.042,
+                "value": 0.048,
                 "difficulty_modifier": {
                     "operation": "multiply",
                     "easy": 0.75,
@@ -34,9 +34,9 @@
         },
         {
             "id": "minecraft:generic.follow_range",
-            "modifier_name": "More Follow Range for Mobs",
+            "modifier_name": "More Follow Range for Zombies in Hard Mode",
             "amount": {
-                "value": 8,
+                "value": 4,
                 "difficulty_modifier": {
                     "operation": "multiply",
                     "easy": 0.5,
@@ -47,8 +47,8 @@
         },
         {
             "id": "enhancedai:generic.xray_follow_range",
-            "chance": 0.15,
-            "modifier_name": "More XRay Range for Mobs",
+            "chance": 0.25,
+            "modifier_name": "More XRay Range for Zombies in Hard Mode",
             "amount": {
                 "value": 16,
                 "difficulty_modifier": {
@@ -61,9 +61,18 @@
         },
         {
             "id": "forge:swim_speed",
-            "modifier_name": "More Swim Speed for Mobs",
+            "modifier_name": "More Swim Speed for Zombies in Hard Mode",
             "amount": 1.2,
             "operation": "multiply_base"
         }
-    ]
+    ],
+    "experience_multiplier": 1.75,
+    "conditions": {
+        "advancements_done": [
+            {
+                "advancements": [ "minecraft:end/kill_dragon" ],
+                "player_mode": "any"
+            }
+        ]
+    }
 }

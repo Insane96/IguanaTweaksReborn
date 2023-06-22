@@ -16,5 +16,15 @@
                 "pehkui:model_height"
             ]
         }
+    ],
+    "attributes": [
+        {
+            "id": "minecraft:generic.movement_speed",
+            "modifier_name": "Slowdown spiders",
+            "amount": {
+                "value": -0.05
+            },
+            "operation": "multiply_base"
+        }
     ]
 }

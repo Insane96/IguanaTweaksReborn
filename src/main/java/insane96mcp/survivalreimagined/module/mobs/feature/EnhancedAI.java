@@ -8,6 +8,7 @@ import insane96mcp.enhancedai.modules.zombie.feature.DiggerZombie;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -37,6 +38,7 @@ public class EnhancedAI extends SRFeature {
 
         //Controlled via MPR
         Module.getFeature(SkeletonShoot.class).setConfigOption("Spammer chance", 0d);
+        Module.getFeature(SkeletonShoot.class).setConfigOption("Shooting Range", new MinMax(24));
         Module.getFeature(SkeletonShoot.class).readConfig(event);
 
         Module.getFeature(Movement.class).setConfigOption("Swim Speed Multiplier", 1d);

@@ -4,7 +4,7 @@
         {
             "id": "minecraft:generic.attack_damage",
             "modifier_name": "Less Damage for Vindicators",
-            "amount": -0.333,
+            "amount": -0.4,
             "operation": "multiply_base"
         }
     ]

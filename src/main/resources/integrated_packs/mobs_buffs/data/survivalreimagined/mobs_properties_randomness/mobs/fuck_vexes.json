@@ -10,7 +10,7 @@
         {
             "id": "minecraft:generic.attack_damage",
             "modifier_name": "Less Damage for Vexes",
-            "amount": -0.40,
+            "amount": -0.50,
             "operation": "multiply_base"
         }
     ]
