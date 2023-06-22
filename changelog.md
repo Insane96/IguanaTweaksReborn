@@ -2,7 +2,7 @@
 
 ## Upcoming
 * Added Hard mode
-  * When the dragon is killed mobs will gain 2x health, speed, etc. but will also drop 75% more xp
+  * When the dragon is killed, mobs will gain 2x health, speed, etc. and 20% more attack damage. They will also drop 75% more xp
   * With that, the base buffs have been reduced
 * Reduced Durium Base AD (2.5 -> 2)
 * Reduced late game hammers damage

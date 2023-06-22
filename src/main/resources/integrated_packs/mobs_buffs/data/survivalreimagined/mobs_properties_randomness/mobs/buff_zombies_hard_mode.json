@@ -15,6 +15,19 @@
             "operation": "multiply_base"
         },
         {
+            "id": "minecraft:generic.attack_damage",
+            "modifier_name": "More AD for Zombies in Hard Mode",
+            "amount": {
+                "value": 0.2,
+                "difficulty_modifier": {
+                    "operation": "add",
+                    "easy": -0.1,
+                    "hard": 0.1
+                }
+            },
+            "operation": "multiply_base"
+        },
+        {
             "id": "minecraft:generic.movement_speed",
             "modifier_name": "More Speed for Zombies in Hard Mode",
             "amount": {
