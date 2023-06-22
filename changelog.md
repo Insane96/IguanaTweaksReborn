@@ -29,7 +29,9 @@
 * More Anvils overhaul
   * Added "No repair cost increase and repair cost based off Enchantments"
     * Makes XP cost for repairing in an anvil no longer increase and based off enchantments
-  * Lowered enchantments' rarity costs (and made them configurable) 
+  * Lowered enchantments' rarity costs (and made them configurable)
+  * Items upgraded in Smithing Table can now be partially repaired with base material (e.g. Netherite tools can be repaired with Diamonds)
+  * Moved "free rename" and "repair cap" to this
 * Smelting and Blasting
   * Ore blocks blasted in a blast furnace now have 40% chance to double the output and will always give two ingots in a soul furnace
   * Copper now smelts / blasts twice as faster
@@ -64,8 +66,6 @@
 * Increased random tick speed to 2 from 1
   * Doubles the speed of plants, crops and much more stuff growing
 * Reduced poor ore generation
-
-## 0.11.3
 * Heavily reduced armor slowdown
 * Increased Chainmail armor durability
 * Netherite is now upgraded from Soul Steel
@@ -73,11 +73,6 @@
 * Creeper Cena explosion is now stronger (breaks more blocks, deals the same damage as a normal creeper)
 * Rebalanced Forge Hammers and Hoes durability multipliers
 * Disabled creeper collateral
-
-## 0.11.2
-* Anvils
-  * Items upgraded in Smithing Table can now be partially repaired with base material (e.g. Netherite tools can be repaired with Diamonds)
-  * Moved "free rename" and "repair cap" to this
 * You can now bone meal dirt adjacent to grass to grow grass
 * Sped up hammers forging speed
 * Increased Spiders and Skeletons loot
