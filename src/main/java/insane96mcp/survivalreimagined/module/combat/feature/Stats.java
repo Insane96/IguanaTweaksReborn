@@ -39,6 +39,7 @@ import java.util.stream.Collectors;
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction. Item modifiers are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class Stats extends SRFeature {
+	//TODO Drop in favor of Item Tags
 	static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = new ArrayList<>();
 
 	public static final ArrayList<ItemAttributeModifier> ITEM_MODIFIERS_DEFAULT = new ArrayList<>(Arrays.asList(

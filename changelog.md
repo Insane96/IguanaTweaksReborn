@@ -1,9 +1,10 @@
 # Changelog
 
-## Upcoming
+## 0.12.1
 * Added Hard mode
   * When the dragon is killed, mobs will gain 2x health, speed, etc. and 20% more attack damage. They will also drop 75% more xp
   * With that, the base buffs have been reduced
+  * Mobs bonus speed is now the same from the start and no longer increases over 60 minutes
 * Reduced Durium Base AD (2.5 -> 2)
 * Reduced late game hammers damage
 * Axe damage reduced by 1

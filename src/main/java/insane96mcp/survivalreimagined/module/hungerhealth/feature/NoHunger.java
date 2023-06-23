@@ -75,7 +75,7 @@ public class NoHunger extends Feature {
     public static Double foodHealHealthMultiplier = 0.3d;
     @Config
     @Label(name = "Food Heal.Heal Strength", description = "How much HP does food regen each second? If 'Instant Heal' is enabled, this has no effect. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
-    public static String foodHealStrength = "MAX(0.1, 1 * saturation_modifier)";
+    public static String foodHealStrength = "MAX(0.1, 0.75 * saturation_modifier)";
     @Config
     @Label(name = "Food Heal.Instant Heal", description = "If true, health is regenerated instantly instead of over time")
     public static Boolean foodHealInstantly = false;
