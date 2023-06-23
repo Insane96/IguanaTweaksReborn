@@ -9,7 +9,8 @@
             "scale_types": [
                 "pehkui:width",
                 "pehkui:height"
-            ]
+            ],
+            "operation": "set"
         }
     ]
 }

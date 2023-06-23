@@ -8,7 +8,8 @@
             },
             "scale_types": [
                 "pehkui:base"
-            ]
+            ],
+            "operation": "set"
         }
     ]
 }

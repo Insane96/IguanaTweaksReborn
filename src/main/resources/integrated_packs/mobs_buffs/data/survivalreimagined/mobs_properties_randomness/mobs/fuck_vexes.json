@@ -1,17 +1,33 @@
 {
     "target": "minecraft:vex",
+    "equipment": {
+        "main_hand": {
+            "override": true,
+            "items": [
+                {
+                    "id": "minecraft:air"
+                }
+            ]
+        }
+    },
     "attributes": [
         {
             "id": "minecraft:generic.max_health",
             "modifier_name": "Less health for Vexes",
             "amount": -8,
             "operation": "addition"
-        },
+        }
+    ],
+    "scale_pehkui": [
         {
-            "id": "minecraft:generic.attack_damage",
-            "modifier_name": "Less Damage for Vexes",
-            "amount": -0.50,
-            "operation": "multiply_base"
+            "scale": {
+                "value": 1.2
+            },
+            "scale_types": [
+                "pehkui:width",
+                "pehkui:height"
+            ],
+            "operation": "set"
         }
     ]
 }
