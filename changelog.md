@@ -4,6 +4,7 @@
 * Increased the percentage of creeper that can walk fuse (~~10%~~ -> 75%)
 * Fixed Cyan Flower dropping nothing
 * Fixed copper tools advancement
+* Fixed hammers taking no damage when used as weapon
 
 ## 0.12.1
 * Added Hard mode
