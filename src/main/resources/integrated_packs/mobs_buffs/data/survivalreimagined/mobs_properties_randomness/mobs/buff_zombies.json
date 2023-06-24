@@ -57,7 +57,7 @@
         {
             "id": "forge:swim_speed",
             "modifier_name": "More Swim Speed for Zombies",
-            "amount": 1.2,
+            "amount": 2,
             "operation": "multiply_base"
         }
     ],

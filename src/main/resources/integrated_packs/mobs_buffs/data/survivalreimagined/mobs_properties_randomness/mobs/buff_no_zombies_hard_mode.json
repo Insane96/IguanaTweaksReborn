@@ -70,7 +70,7 @@
         {
             "id": "forge:swim_speed",
             "modifier_name": "More Swim Speed for Mobs in Hard Mode",
-            "amount": 1.2,
+            "amount": 1.5,
             "operation": "multiply_base"
         }
     ],
