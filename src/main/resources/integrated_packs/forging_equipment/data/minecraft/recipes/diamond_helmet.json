@@ -1,7 +1,14 @@
 {
-  "conditions": [
-    {
-      "type": "forge:false"
-    }
-  ]
+  "type": "survivalreimagined:forging",
+  "category": "forge_misc",
+  "ingredient": {
+    "item": "minecraft:diamond"
+  },
+  "amount": 5,
+  "gear": {
+    "item": "minecraft:golden_helmet"
+  },
+  "result": "minecraft:diamond_helmet",
+  "smashes_required": 18,
+  "experience": 9
 }

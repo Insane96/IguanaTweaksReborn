@@ -1,7 +1,14 @@
 {
-  "conditions": [
-    {
-      "type": "forge:false"
-    }
-  ]
+  "type": "survivalreimagined:forging",
+  "category": "forge_misc",
+  "ingredient": {
+    "item": "minecraft:diamond"
+  },
+  "amount": 4,
+  "gear": {
+    "item": "minecraft:golden_boots"
+  },
+  "result": "minecraft:diamond_boots",
+  "smashes_required": 16,
+  "experience": 8
 }

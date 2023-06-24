@@ -1,7 +1,14 @@
 {
-  "conditions": [
-    {
-      "type": "forge:false"
-    }
-  ]
+  "type": "survivalreimagined:forging",
+  "category": "forge_misc",
+  "ingredient": {
+    "item": "minecraft:diamond"
+  },
+  "amount": 1,
+  "gear": {
+    "item": "minecraft:golden_shovel"
+  },
+  "result": "minecraft:diamond_shovel",
+  "smashes_required": 16,
+  "experience": 8
 }

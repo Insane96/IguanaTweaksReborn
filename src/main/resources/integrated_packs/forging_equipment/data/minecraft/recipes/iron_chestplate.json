@@ -1,7 +1,14 @@
 {
-  "conditions": [
-    {
-      "type": "forge:false"
-    }
-  ]
+  "type": "survivalreimagined:forging",
+  "category": "forge_misc",
+  "ingredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "amount": 8,
+  "gear": {
+    "item": "survivalreimagined:chained_copper_chestplate"
+  },
+  "result": "minecraft:iron_chestplate",
+  "smashes_required": 16,
+  "experience": 8
 }
