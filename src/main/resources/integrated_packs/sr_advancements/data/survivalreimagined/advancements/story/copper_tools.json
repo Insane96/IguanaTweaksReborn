@@ -17,16 +17,14 @@
 	"parent": "survivalreimagined:story/forge",
 	"criteria": {
 		"copper_tools": {
-			"trigger": "survivalreimagined:anvil_repair",
+			"trigger": "inventory_changed",
 			"conditions": {
-				"output": {
-					"items": [
-						"survivalreimagined:copper_pickaxe",
-						"survivalreimagined:copper_axe",
-						"survivalreimagined:copper_shovel",
-						"survivalreimagined:copper_hoe"
-					]
-				}
+				"items": [
+					"survivalreimagined:copper_pickaxe",
+					"survivalreimagined:copper_axe",
+					"survivalreimagined:copper_shovel",
+					"survivalreimagined:copper_hoe"
+				]
 			}
 		}
 	},

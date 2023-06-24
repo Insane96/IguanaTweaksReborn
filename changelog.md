@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.12.2
+* Increased the percentage of creeper that can walk fuse (~~10%~~ -> 75%)
+* Fixed Cyan Flower dropping nothing
+* Fixed copper tools advancement
+
 ## 0.12.1
 * Added Hard mode
   * When the dragon is killed, mobs will gain 2x health, speed, etc. and 20% more attack damage. They will also drop 75% more xp

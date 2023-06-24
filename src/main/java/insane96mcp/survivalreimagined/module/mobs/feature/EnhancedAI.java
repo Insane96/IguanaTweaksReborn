@@ -25,6 +25,7 @@ public class EnhancedAI extends SRFeature {
     public void readConfig(ModConfigEvent event) {
         super.readConfig(event);
 
+        Module.getFeature(CreeperSwell.class).setConfigOption("Walking Fuse Chance", 0.75d);
         Module.getFeature(CreeperSwell.class).setConfigOption("Cena.Particles", false);
         Module.getFeature(CreeperSwell.class).setConfigOption("Cena.Explosion power", 3.0d);
         Module.getFeature(CreeperSwell.class).readConfig(event);
@@ -41,7 +42,8 @@ public class EnhancedAI extends SRFeature {
         Module.getFeature(SkeletonShoot.class).setConfigOption("Shooting Range", new MinMax(24));
         Module.getFeature(SkeletonShoot.class).readConfig(event);
 
-        Module.getFeature(Movement.class).setConfigOption("Swim Speed Multiplier", 1d);
+        //Controlled via MPR
+        Module.getFeature(Movement.class).setConfigOption("Swim Speed Multiplier", 0d);
         Module.getFeature(Movement.class).readConfig(event);
 
         Module.getFeature(DiggerZombie.class).setConfigOption("Digger Speed Multiplier", 1.5d);
