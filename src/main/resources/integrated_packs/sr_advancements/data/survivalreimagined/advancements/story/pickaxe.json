@@ -4,10 +4,10 @@
 			"item": "minecraft:stone_pickaxe"
 		},
 		"title": {
-			"translate": "advancements.sr_story.stone_pickaxe.title"
+			"translate": "advancements.sr_story.pickaxe.title"
 		},
 		"description": {
-			"translate": "advancements.sr_story.stone_pickaxe.description"
+			"translate": "advancements.sr_story.pickaxe.description"
 		},
 		"frame": "task",
 		"show_toast": true,
@@ -16,13 +16,15 @@
 	},
 	"parent": "survivalreimagined:story/flint_pickaxe",
 	"criteria": {
-		"stone_pickaxe": {
+		"pickaxe": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
 						"items": [
-							"minecraft:stone_pickaxe"
+							"minecraft:stone_pickaxe",
+							"minecraft:iron_pickaxe",
+							"survivalreimagined:copper_pickaxe"
 						]
 					}
 				]
@@ -31,7 +33,7 @@
 	},
 	"requirements": [
 		[
-			"stone_pickaxe"
+			"pickaxe"
 		]
 	]
 }
