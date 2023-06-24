@@ -1,6 +1,8 @@
 # Changelog
 
 ## 0.12.2
+* Added Bonking Shovels
+  * Shovels deal bonus knockback
 * Increased the percentage of creeper that can walk fuse (~~10%~~ -> 75%)
 * Fixed Cyan Flower dropping nothing
 * Fixed copper tools advancement
