@@ -4,6 +4,7 @@
 * Disabled Terrain slowdown. Would no longer work in 1.20
   * With this, armor slowdown has been increased
 * Diamond and Soul Steel now have swapped armor protection
+* Removed Stats > "Adjust weapons". It's now done with item_modifiers.json
 
 ## 0.12.1
 * Added Hard mode
