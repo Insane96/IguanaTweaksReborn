@@ -10,18 +10,18 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 @JsonAdapter(ItemAttributeModifier.Serializer.class)
 public class ItemAttributeModifier extends IdTagMatcher {
-	public Class<? extends Item> itemClass;
 	public UUID uuid;
 	public EquipmentSlot slot;
-	public Attribute attribute;
+	//Use supplier due to default modifiers loading at runtime and modded attributes are not yet registered
+	public Supplier<Attribute> attribute;
 	public double amount;
 	public AttributeModifier.Operation operation;
 
@@ -29,7 +29,7 @@ public class ItemAttributeModifier extends IdTagMatcher {
 		super(type, id);
 	}
 
-	public ItemAttributeModifier(IdTagMatcher.Type type, String id, UUID uuid, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
+	public ItemAttributeModifier(IdTagMatcher.Type type, String id, UUID uuid, EquipmentSlot slot, Supplier<Attribute> attribute, double amount, AttributeModifier.Operation operation) {
 		super(type, id);
 		this.slot = slot;
 		this.uuid = uuid;
@@ -38,21 +38,13 @@ public class ItemAttributeModifier extends IdTagMatcher {
 		this.operation = operation;
 	}
 
-	public ItemAttributeModifier(Class<? extends Item> itemClass, UUID uuid, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
-		super(Type.ID, "minecraft:air");
-		this.itemClass = itemClass;
-		this.uuid = uuid;
+	public ItemAttributeModifier(IdTagMatcher.Type type, String id, UUID uuid, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
+		super(type, id);
 		this.slot = slot;
-		this.attribute = attribute;
+		this.uuid = uuid;
+		this.attribute = () -> attribute;
 		this.amount = amount;
 		this.operation = operation;
-	}
-
-	public boolean matches(Item item) {
-		if (this.itemClass != null)
-			return item.getClass().equals(this.itemClass);
-		else
-			return this.matchesItem(item);
 	}
 
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<ItemAttributeModifier>>(){}.getType();
@@ -112,7 +104,7 @@ public class ItemAttributeModifier extends IdTagMatcher {
 			if (attribute == null) {
 				throw new JsonParseException("Invalid attribute: %s".formatted(sAttribute));
 			}
-			itemAttributeModifier.attribute = attribute;
+			itemAttributeModifier.attribute = () -> attribute;
 
 			itemAttributeModifier.amount = GsonHelper.getAsDouble(json.getAsJsonObject(), "amount");
 
@@ -136,7 +128,7 @@ public class ItemAttributeModifier extends IdTagMatcher {
 			}
 			jsonObject.addProperty("uuid", src.uuid.toString());
 			jsonObject.addProperty("slot", src.slot.getName());
-			jsonObject.addProperty("attribute", ForgeRegistries.ATTRIBUTES.getKey(src.attribute).toString());
+			jsonObject.addProperty("attribute", ForgeRegistries.ATTRIBUTES.getKey(src.attribute.get()).toString());
 			jsonObject.addProperty("amount", src.amount);
 			jsonObject.addProperty("operation", AttributeModifierOperation.getNameFromOperation(src.operation));
 			return jsonObject;

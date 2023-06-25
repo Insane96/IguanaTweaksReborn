@@ -10,7 +10,6 @@ import insane96mcp.insanelib.util.Utils;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.combat.feature.Stats;
 import insane96mcp.survivalreimagined.module.movement.data.ArmorEnchantmentWeight;
 import insane96mcp.survivalreimagined.module.movement.data.ArmorMaterialWeight;
 import insane96mcp.survivalreimagined.setup.Strings;
@@ -26,7 +25,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShieldItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
@@ -35,7 +33,10 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Optional;
 
 @Label(name = "Weighted Equipment", description = "Armor and Shield slows down the player. Material Weights and Enchantment Weights are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
@@ -72,9 +73,6 @@ public class WeightedEquipment extends SRFeature {
 						Total percentage slowdown is '(slowness_per_armor * armor_points) * (1 + (toughness * percentage_per_toughness))'
 						E.g. with 'Slowness per Armor' set to 0.005 and this set to 0.025 and the player wearing Diamond Armor the slowdown is '(0.005 * 20) * (1 + (8 * 0.025))' = '0.1 * 1.2'= '0.12' = -12% Speed applied to the player.""")
 	public static Double percentagePerToughness = 0.025d;
-	@Config(min = 0, max = 1d)
-	@Label(name = "Shield Slowdown", description = "Shields will slowdown the player by this percentage.")
-	public static Double shieldSlowdown = 0d;
 
 	// 11 - 16 - 15 - 13
 	public static final HashMap<EquipmentSlot, Double> armorDurabilityRatio = new HashMap<>();
@@ -101,11 +99,6 @@ public class WeightedEquipment extends SRFeature {
 	@Override
 	public void readConfig(final ModConfigEvent event) {
 		super.readConfig(event);
-		Stats.removeClassItemAttributeModifier(ShieldItem.class);
-		if (shieldSlowdown > 0d) {
-			Stats.addClassItemAttributeModifier(ShieldItem.class, UUID.fromString("ef620642-7e4d-43cb-88e3-feee47a531a0"), EquipmentSlot.MAINHAND, Attributes.MOVEMENT_SPEED, -shieldSlowdown, AttributeModifier.Operation.MULTIPLY_BASE);
-			Stats.addClassItemAttributeModifier(ShieldItem.class, UUID.fromString("49c54369-7541-4cb4-8ee2-63863457427d"), EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, -shieldSlowdown, AttributeModifier.Operation.MULTIPLY_BASE);
-		}
 	}
 
 	//Can't use ItemAttributeModifierEvent as I need all the modifiers of the item (ItemStack#getAttributeModifiers) and that causes a loop

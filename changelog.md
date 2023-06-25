@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.12.2
+* Disabled Terrain slowdown. Would no longer work in 1.20
+  * With this, armor slowdown has been increased
+* Diamond and Soul Steel now have swapped armor protection
+
 ## 0.12.1
 * Added Hard mode
   * When the dragon is killed, mobs will gain 2x health, speed, etc. and 20% more attack damage. They will also drop 75% more xp

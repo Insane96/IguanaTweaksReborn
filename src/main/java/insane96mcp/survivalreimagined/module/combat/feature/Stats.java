@@ -23,7 +23,8 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
@@ -31,7 +32,6 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,9 +39,6 @@ import java.util.stream.Collectors;
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction. Item modifiers are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class Stats extends SRFeature {
-	//TODO Drop in favor of Item Tags
-	static final List<ItemAttributeModifier> CLASS_ATTRIBUTE_MODIFIER = new ArrayList<>();
-
 	public static final ArrayList<ItemAttributeModifier> ITEM_MODIFIERS_DEFAULT = new ArrayList<>(Arrays.asList(
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", UUID.fromString("da2b677f-467c-49b1-bdf0-070ee782bc0f"), EquipmentSlot.HEAD, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", UUID.fromString("796d3f0c-89e4-47e8-9f95-3a3d5506f70f"), EquipmentSlot.FEET, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
@@ -73,8 +70,16 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_helmet", UUID.fromString("8b68e416-bf07-4c21-ab8e-d58ac3574d31"), EquipmentSlot.HEAD, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_chestplate", UUID.fromString("74d42a8e-d4a3-4c52-ac66-33ab2128e146"), EquipmentSlot.CHEST, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_leggings", UUID.fromString("de6a0547-fc18-4e84-b87a-d0333aa06854"), EquipmentSlot.LEGS, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_boots", UUID.fromString("30db05c5-7c2f-4fa8-86d8-e8661e42f197"), EquipmentSlot.FEET, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION)/*,
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", UUID.fromString("51def2a9-8222-4d2d-824e-3d1afc6be89c"), EquipmentSlot.OFFHAND, Attributes.MOVEMENT_SPEED, 0.1d, AttributeModifier.Operation.MULTIPLY_BASE)*/
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_boots", UUID.fromString("30db05c5-7c2f-4fa8-86d8-e8661e42f197"), EquipmentSlot.FEET, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION),
+
+			new ItemAttributeModifier(IdTagMatcher.Type.TAG, "minecraft:swords", UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 0.5d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.TAG, "minecraft:hoes", UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 0.5d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:trident", UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 1d, AttributeModifier.Operation.ADDITION),
+
+			new ItemAttributeModifier(IdTagMatcher.Type.TAG, "minecraft:axes", UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -2d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.TAG, "minecraft:swords", UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.TAG, "minecraft:pickaxes", UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:trident", UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION)
 	));
 	public static final ArrayList<ItemAttributeModifier> itemModifiers = new ArrayList<>();
 
@@ -83,46 +88,16 @@ public class Stats extends SRFeature {
 	@Label(name = "Reduce player attack range", description = "If true, player attack range is reduced by 0.5.")
 	public static Boolean reducePlayerAttackRange = true;
 	@Config
-	@Label(name = "Adjust weapons", description = """
-			If true the following changes to items are made:
-				* Sword, Shovels and Hoes get +0.5 entity reach distance
-				* Tridents get +1 entity reach distance
-				* Swords get -2 damage
-				* Pickaxes get -1 damage""")
-	public static Boolean adjustWeapons = true;
-	@Config
 	@Label(name = "Disable Crit Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
 	public static Boolean disableCritArrowsBonusDamage = true;
 
 	@Config
-	@Label(name = "Fix tooltips", description = "Vanilla tooltips on gear don't sum up multiple modifiers (e.g. a sword would have \"4 Attack Damage\" and \"-2 Attack Damage\" instead of \"2 Attack Damage\". This might break other mods messing with Tooltips (e.g. Quark's improved tooltips)")
+	@Label(name = "Fix tooltips", description = "Vanilla tooltips on gear don't sum up multiple modifiers (e.g. a sword would have \"4 Attack Damage\" and \"-2 Attack Damage\" instead of \"2 Attack Damage\". This might break other mods messing with these Tooltips (e.g. Quark's improved tooltips)")
 	public static Boolean fixTooltips = true;
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("item_modifiers.json", itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.ITEM_ATTRIBUTE_MODIFIERS));
-	}
-
-	@Override
-	public void readConfig(final ModConfigEvent event) {
-		super.readConfig(event);
-		CLASS_ATTRIBUTE_MODIFIER.clear();
-		if (adjustWeapons) {
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(SwordItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH.get(), 0.5d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ShovelItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH.get(), 0.5d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(HoeItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH.get(), 0.5d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH.get(), 1d, AttributeModifier.Operation.ADDITION));
-			//CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(ForgeHammerItem.class, UUID.fromString("55c71d5e-fc26-418a-b531-d50c66bfb589"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH.get(), -0.25d, AttributeModifier.Operation.ADDITION));
-
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(SwordItem.class, UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -2d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(PickaxeItem.class, UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
-
-			/*CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, UUID.fromString("324a87bd-89ea-4d1b-866a-ce49d360d632"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(AxeItem.class, UUID.fromString("a60ab219-6c3a-453b-a55c-41e9c83f9c0f"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH.get(), -0.5d, AttributeModifier.Operation.ADDITION));
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(TridentItem.class, UUID.fromString("f98cb9bc-3fa7-4fb5-b07a-babe8e35f967"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION));*/
-		}
 	}
 
 	@SubscribeEvent
@@ -146,45 +121,19 @@ public class Stats extends SRFeature {
 		loadAndReadJson(json, itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE);
 	}
 
-	public static void addClassItemAttributeModifier(Class<? extends Item> itemClass, UUID uuid, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
-		synchronized (CLASS_ATTRIBUTE_MODIFIER) {
-			CLASS_ATTRIBUTE_MODIFIER.add(new ItemAttributeModifier(itemClass, uuid, slot, attribute, amount, operation));
-		}
-	}
-
-	public static void removeClassItemAttributeModifier(Class<? extends Item> itemClass) {
-		synchronized (CLASS_ATTRIBUTE_MODIFIER) {
-			CLASS_ATTRIBUTE_MODIFIER.removeIf(iam -> iam.itemClass.equals(itemClass));
-		}
-	}
-
 	@SubscribeEvent
 	public void onAttributeEvent(ItemAttributeModifierEvent event) {
 		if (!this.isEnabled())
 			return;
 
-		classAttributeModifiers(event);
-		itemAttributeModifiers(event);
-	}
-
-	private void classAttributeModifiers(ItemAttributeModifierEvent event) {
-		for (ItemAttributeModifier itemAttributeModifier : CLASS_ATTRIBUTE_MODIFIER) {
-			if (itemAttributeModifier.itemClass.equals(event.getItemStack().getItem().getClass()) && itemAttributeModifier.slot.equals(event.getSlotType())) {
-				AttributeModifier modifier = new AttributeModifier(itemAttributeModifier.uuid, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
-				event.addModifier(itemAttributeModifier.attribute, modifier);
-			}
-		}
-	}
-
-	private void itemAttributeModifiers(ItemAttributeModifierEvent event) {
 		for (ItemAttributeModifier itemAttributeModifier : itemModifiers) {
-			if (!itemAttributeModifier.matches(event.getItemStack().getItem()))
+			if (!itemAttributeModifier.matchesItem(event.getItemStack().getItem()))
 				continue;
 			if (event.getSlotType() != itemAttributeModifier.slot)
 				continue;
 
 			AttributeModifier modifier = new AttributeModifier(itemAttributeModifier.uuid, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
-			event.addModifier(itemAttributeModifier.attribute, modifier);
+			event.addModifier(itemAttributeModifier.attribute.get(), modifier);
 		}
 	}
 

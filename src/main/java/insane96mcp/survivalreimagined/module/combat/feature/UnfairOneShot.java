@@ -28,7 +28,7 @@ public class UnfairOneShot extends Feature {
 
 		if (player.getHealth() >= 15 && player.getHealth() - event.getAmount() <= 0) {
 			event.setAmount(player.getHealth() - 1f);
-			player.level.playSound(null, player.blockPosition(), SRSoundEvents.INJURED.get(), SoundSource.PLAYERS, 1.0f, 0.8f);
+			player.level.playSound(null, player.blockPosition(), SRSoundEvents.INJURED.get(), SoundSource.PLAYERS, 1.5f, 0.8f);
 		}
 	}
 }
