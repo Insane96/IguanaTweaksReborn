@@ -111,6 +111,11 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_leggings", 368),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_boots", 319),
 
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_helmet", 294),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_chestplate", 392),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_leggings", 368),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_boots", 319),
+
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 355),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", 474),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 444),
@@ -121,6 +126,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_shield", 672),
 			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:diamond_shield", 602),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_shield", 865),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_shield", 552),
 			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:netherite_shield", 1044)
 	));
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();

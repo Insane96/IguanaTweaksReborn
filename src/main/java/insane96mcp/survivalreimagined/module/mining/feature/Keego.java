@@ -73,7 +73,7 @@ public class Keego extends Feature {
 	public static final RegistryObject<Item> AXE = SRItems.REGISTRY.register("keego_axe", () -> new AxeItem(ITEM_TIER, 6.0F, -3.2F, new Item.Properties()));
 	public static final RegistryObject<Item> HOE = SRItems.REGISTRY.register("keego_hoe", () -> new HoeItem(ITEM_TIER, -2, -1.0F, new Item.Properties()));
 
-	private static final SRArmorMaterial ARMOR_MATERIAL = new SRArmorMaterial("survivalreimagined:keego", 20, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
+	private static final SRArmorMaterial ARMOR_MATERIAL = new SRArmorMaterial("survivalreimagined:keego", 22, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
 		p_266652_.put(ArmorItem.Type.BOOTS, 3);
 		p_266652_.put(ArmorItem.Type.LEGGINGS, 5);
 		p_266652_.put(ArmorItem.Type.CHESTPLATE, 6);
