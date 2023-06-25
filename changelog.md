@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.12.2
+## 0.12.1 part 2
 * Added Bonking Shovels
   * Shovels deal bonus knockback
 * Increased the percentage of creeper that can walk fuse (~~10%~~ -> 75%)
