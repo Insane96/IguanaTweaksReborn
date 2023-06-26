@@ -5,6 +5,7 @@
   * With this, armor slowdown has been increased
 * Rebalanced Tier 3 and 4 armor materials
   * Diamond is now the only tier 3 material and has lower protection than vanilla. Can be upgraded to Soul Steel, Netherite or Keego, which are now alternative tier 4 materials
+* Increased mobs follow range
 * Soul Steel now requires Durium to be alloyed instead of iron 
 * Removed Stats > "Adjust weapons". It's now done with item_modifiers.json
 

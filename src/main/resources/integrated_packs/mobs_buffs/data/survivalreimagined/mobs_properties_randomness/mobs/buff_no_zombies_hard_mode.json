@@ -44,7 +44,7 @@
             "id": "minecraft:generic.follow_range",
             "modifier_name": "More Follow Range for Mobs in Hard Mode",
             "amount": {
-                "value": 8,
+                "value": 16,
                 "difficulty_modifier": {
                     "operation": "multiply",
                     "easy": 0.5,
