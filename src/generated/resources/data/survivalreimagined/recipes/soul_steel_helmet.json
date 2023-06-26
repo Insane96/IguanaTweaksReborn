@@ -1,17 +1,12 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "equipment",
-  "key": {
-    "c": {
-      "item": "survivalreimagined:soul_steel_ingot"
-    }
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "survivalreimagined:soul_steel_ingot"
   },
-  "pattern": [
-    "ccc",
-    "c c"
-  ],
+  "base": {
+    "item": "minecraft:diamond_helmet"
+  },
   "result": {
     "item": "survivalreimagined:soul_steel_helmet"
-  },
-  "show_notification": true
+  }
 }

@@ -22,14 +22,10 @@ public class MiscMaterials extends Feature {
 	@Config
 	@Label(name = "Alloying Netherite Data Pack", description = "Enables a data pack that adds a recipe to alloy netherite in a Blast or Soul furnace, requiring less materials")
 	public static Boolean alloyingNetheriteDataPack = true;
-	@Config
-	@Label(name = "Netherite from Soul Steel Data Pack", description = "Enables a data pack that makes Netherite craftable from Soul Steel gear instead of Diamond.")
-	public static Boolean netheriteFromSoulSteel = true;
 
 	public MiscMaterials(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_smelting", Component.literal("Survival Reimagined Copper Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperSmeltingDataPack));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "alloying_netherite", Component.literal("Survival Reimagined Netherite Alloy"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && alloyingNetheriteDataPack));
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "netherite_from_soul_steel", Component.literal("Survival Reimagined Netherite from Soul Steel"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && netheriteFromSoulSteel));
 	}
 }

@@ -1,21 +1,12 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "equipment",
-  "key": {
-    "f": {
-      "item": "survivalreimagined:soul_steel_ingot"
-    },
-    "s": {
-      "item": "minecraft:stick"
-    }
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "survivalreimagined:soul_steel_ingot"
   },
-  "pattern": [
-    "fff",
-    " s ",
-    " s "
-  ],
+  "base": {
+    "item": "minecraft:diamond_pickaxe"
+  },
   "result": {
     "item": "survivalreimagined:soul_steel_pickaxe"
-  },
-  "show_notification": true
+  }
 }

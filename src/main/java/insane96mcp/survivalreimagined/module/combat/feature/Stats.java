@@ -40,9 +40,6 @@ import java.util.stream.Collectors;
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class Stats extends SRFeature {
 	public static final ArrayList<ItemAttributeModifier> ITEM_MODIFIERS_DEFAULT = new ArrayList<>(Arrays.asList(
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", UUID.fromString("da2b677f-467c-49b1-bdf0-070ee782bc0f"), EquipmentSlot.HEAD, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", UUID.fromString("796d3f0c-89e4-47e8-9f95-3a3d5506f70f"), EquipmentSlot.FEET, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
-
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_sword", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .4d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_axe", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .25d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_pickaxe", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .3d, AttributeModifier.Operation.ADDITION),
@@ -63,14 +60,17 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", UUID.fromString("de6a0547-fc18-4e84-b87a-d0333aa06854"), EquipmentSlot.LEGS, Attributes.ARMOR_TOUGHNESS, -1, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:diamond_boots", UUID.fromString("30db05c5-7c2f-4fa8-86d8-e8661e42f197"), EquipmentSlot.FEET, Attributes.ARMOR_TOUGHNESS, -1, AttributeModifier.Operation.ADDITION),
 
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_helmet", UUID.fromString("ad33dadf-bf7b-4f40-83ed-f93f4721d28e"), EquipmentSlot.HEAD, Attributes.ARMOR, 0, AttributeModifier.Operation.ADDITION),
+			/*new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_helmet", UUID.fromString("ad33dadf-bf7b-4f40-83ed-f93f4721d28e"), EquipmentSlot.HEAD, Attributes.ARMOR, 0, AttributeModifier.Operation.ADDITION),*/
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_chestplate", UUID.fromString("f690ba04-4d3f-47d0-ad5d-809238b48f45"), EquipmentSlot.CHEST, Attributes.ARMOR, 1, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_leggings", UUID.fromString("0145a1f9-24c4-458f-b217-8bb1440e99b7"), EquipmentSlot.LEGS, Attributes.ARMOR, 1, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_boots", UUID.fromString("386b4fb6-f3ca-4a54-a455-4b48a179c17a"), EquipmentSlot.FEET, Attributes.ARMOR, 0, AttributeModifier.Operation.ADDITION),
+			/*new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_boots", UUID.fromString("386b4fb6-f3ca-4a54-a455-4b48a179c17a"), EquipmentSlot.FEET, Attributes.ARMOR, 0, AttributeModifier.Operation.ADDITION),*/
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_helmet", UUID.fromString("8b68e416-bf07-4c21-ab8e-d58ac3574d31"), EquipmentSlot.HEAD, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_chestplate", UUID.fromString("74d42a8e-d4a3-4c52-ac66-33ab2128e146"), EquipmentSlot.CHEST, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_leggings", UUID.fromString("de6a0547-fc18-4e84-b87a-d0333aa06854"), EquipmentSlot.LEGS, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_boots", UUID.fromString("30db05c5-7c2f-4fa8-86d8-e8661e42f197"), EquipmentSlot.FEET, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION),
+
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", UUID.fromString("da2b677f-467c-49b1-bdf0-070ee782bc0f"), EquipmentSlot.HEAD, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:netherite_boots", UUID.fromString("796d3f0c-89e4-47e8-9f95-3a3d5506f70f"), EquipmentSlot.FEET, Attributes.ARMOR, 1.0d, AttributeModifier.Operation.ADDITION),
 
 			new ItemAttributeModifier(IdTagMatcher.Type.TAG, "minecraft:swords", UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 0.5d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.TAG, "minecraft:hoes", UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 0.5d, AttributeModifier.Operation.ADDITION),
@@ -187,6 +187,10 @@ public class Stats extends SRFeature {
 							}
 							else if (attribute.equals(Attributes.ATTACK_SPEED)) {
 								amount += event.getEntity().getAttributeBaseValue(Attributes.ATTACK_SPEED);
+								isEqualTooltip = true;
+							}
+							else if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE)) {
+								amount += event.getEntity().getAttributeBaseValue(Attributes.KNOCKBACK_RESISTANCE);
 								isEqualTooltip = true;
 							}
 						}

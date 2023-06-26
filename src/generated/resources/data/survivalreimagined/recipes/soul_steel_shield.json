@@ -1,21 +1,12 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "category": "equipment",
-  "key": {
-    "W": {
-      "item": "shieldsplus:wooden_shield"
-    },
-    "f": {
-      "item": "survivalreimagined:soul_steel_ingot"
-    }
+  "type": "minecraft:smithing",
+  "addition": {
+    "item": "survivalreimagined:soul_steel_ingot"
   },
-  "pattern": [
-    " f ",
-    "fWf",
-    " f "
-  ],
+  "base": {
+    "item": "minecraft:shield"
+  },
   "result": {
     "item": "survivalreimagined:soul_steel_shield"
-  },
-  "show_notification": true
+  }
 }

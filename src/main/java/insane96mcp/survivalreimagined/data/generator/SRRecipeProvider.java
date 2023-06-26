@@ -369,80 +369,36 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_boots");
 
         //Soul Steel
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, SoulSteel.AXE.get())
-                .pattern("ff")
-                .pattern("fs")
-                .pattern(" s")
-                .define('f', SoulSteel.INGOT.get())
-                .define('s', Items.STICK)
-                .unlockedBy("has_soul_steel", has(SoulSteel.INGOT.get()))
-                .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, SoulSteel.SHOVEL.get())
-                .pattern("f")
-                .pattern("s")
-                .pattern("s")
-                .define('f', SoulSteel.INGOT.get())
-                .define('s', Items.STICK)
-                .unlockedBy("has_soul_steel", has(SoulSteel.INGOT.get()))
-                .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, SoulSteel.PICKAXE.get())
-                .pattern("fff")
-                .pattern(" s ")
-                .pattern(" s ")
-                .define('f', SoulSteel.INGOT.get())
-                .define('s', Items.STICK)
-                .unlockedBy("has_soul_steel", has(SoulSteel.INGOT.get()))
-                .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, SoulSteel.HOE.get())
-                .pattern("ff")
-                .pattern(" s")
-                .pattern(" s")
-                .define('f', SoulSteel.INGOT.get())
-                .define('s', Items.STICK)
-                .unlockedBy("has_soul_steel", has(SoulSteel.INGOT.get()))
-                .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, SoulSteel.SWORD.get())
-                .pattern("f")
-                .pattern("f")
-                .pattern("s")
-                .define('f', SoulSteel.INGOT.get())
-                .define('s', Items.STICK)
-                .unlockedBy("has_soul_steel", has(SoulSteel.INGOT.get()))
-                .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, SoulSteel.SHIELD.get())
-                .pattern(" f ")
-                .pattern("fWf")
-                .pattern(" f ")
-                .define('f', SoulSteel.INGOT.get())
-                .define('W', SPItems.WOODEN_SHIELD.get())
-                .unlockedBy("has_soul_steel", has(SoulSteel.INGOT.get()))
-                .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, SoulSteel.HELMET.get())
-                .pattern("ccc")
-                .pattern("c c")
-                .define('c', SoulSteel.INGOT.get())
-                .unlockedBy("has_soul_steel", has(SoulSteel.INGOT.get()))
-                .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, SoulSteel.CHESTPLATE.get())
-                .pattern("c c")
-                .pattern("ccc")
-                .pattern("ccc")
-                .define('c', SoulSteel.INGOT.get())
-                .unlockedBy("has_soul_steel", has(SoulSteel.INGOT.get()))
-                .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, SoulSteel.LEGGINGS.get())
-                .pattern("ccc")
-                .pattern("c c")
-                .pattern("c c")
-                .define('c', SoulSteel.INGOT.get())
-                .unlockedBy("has_soul_steel", has(SoulSteel.INGOT.get()))
-                .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, SoulSteel.BOOTS.get())
-                .pattern("c c")
-                .pattern("c c")
-                .define('c', SoulSteel.INGOT.get())
-                .unlockedBy("has_soul_steel", has(SoulSteel.INGOT.get()))
-                .save(writer);
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_AXE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.AXE.get())
+                .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_axe");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_PICKAXE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.PICKAXE.get())
+                .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_pickaxe");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_SHOVEL), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.SHOVEL.get())
+                .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_shovel");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_HOE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.HOE.get())
+                .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_hoe");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_SWORD), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.SWORD.get())
+                .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_sword");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.SHIELD.get())
+                .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_shield");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_HELMET), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.HELMET.get())
+                .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_helmet");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_CHESTPLATE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.CHESTPLATE.get())
+                .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_chestplate");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_LEGGINGS), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.LEGGINGS.get())
+                .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_leggings");
+        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_BOOTS), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.BOOTS.get())
+                .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_boots");
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, SoulSteel.BLOCK.block().get(), 1)
                 .requires(SoulSteel.INGOT.get(), 9)
                 .unlockedBy("has_ingot", has(SoulSteel.INGOT.get()))
@@ -460,7 +416,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_ingot", has(SoulSteel.INGOT.get()))
                 .save(writer);
         MultiItemSmeltingRecipeBuilder.blasting(
-                        NonNullList.of(Ingredient.EMPTY, Ingredient.of(Items.IRON_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(CoalFire.HELLISH_COAL.get()), Ingredient.of(Items.SOUL_SAND, Items.SOUL_SOIL)),
+                        NonNullList.of(Ingredient.EMPTY, Ingredient.of(Durium.INGOT.get()), Ingredient.of(Durium.INGOT.get()), Ingredient.of(CoalFire.HELLISH_COAL.get()), Ingredient.of(Items.SOUL_SAND, Items.SOUL_SOIL)),
                         RecipeCategory.MISC,
                         SoulSteel.INGOT.get(),
                         800
@@ -469,7 +425,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_hellish_coal", has(CoalFire.HELLISH_COAL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_ingot_from_blasting");
         MultiItemSmeltingRecipeBuilder.soulBlasting(
-                        NonNullList.of(Ingredient.EMPTY, Ingredient.of(Items.IRON_INGOT), Ingredient.of(Items.IRON_INGOT), Ingredient.of(CoalFire.HELLISH_COAL.get()), Ingredient.of(Items.SOUL_SAND, Items.SOUL_SOIL)),
+                        NonNullList.of(Ingredient.EMPTY, Ingredient.of(Durium.INGOT.get()), Ingredient.of(Durium.INGOT.get()), Ingredient.of(CoalFire.HELLISH_COAL.get()), Ingredient.of(Items.SOUL_SAND, Items.SOUL_SOIL)),
                         RecipeCategory.MISC,
                         SoulSteel.INGOT.get(),
                         400
@@ -478,6 +434,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .doubleOutputChance(0.2f)
                 .unlockedBy("has_hellish_coal", has(CoalFire.HELLISH_COAL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_ingot_from_soul_blasting");
+
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ExplosiveBarrel.BLOCK.item().get())
                 .requires(Items.TNT, 1)

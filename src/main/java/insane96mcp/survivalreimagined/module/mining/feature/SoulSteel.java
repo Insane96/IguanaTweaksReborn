@@ -46,7 +46,7 @@ public class SoulSteel extends Feature {
 		p_266652_.put(ArmorItem.Type.LEGGINGS, 5);
 		p_266652_.put(ArmorItem.Type.CHESTPLATE, 6);
 		p_266652_.put(ArmorItem.Type.HELMET, 3);
-	}), 6, SoundEvents.ARMOR_EQUIP_IRON, 1f, 0.05f, () -> Ingredient.of(INGOT.get()));
+	}), 18, SoundEvents.ARMOR_EQUIP_IRON, 1f, 0.05f, () -> Ingredient.of(INGOT.get()));
 
 	public static final RegistryObject<Item> HELMET = SRItems.REGISTRY.register("soul_steel_helmet", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties().fireResistant()));
 	public static final RegistryObject<Item> CHESTPLATE = SRItems.REGISTRY.register("soul_steel_chestplate", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant()));

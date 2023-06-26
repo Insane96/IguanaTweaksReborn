@@ -5,10 +5,10 @@
   "experience": 2.0,
   "ingredients": [
     {
-      "item": "minecraft:iron_ingot"
+      "item": "survivalreimagined:durium_ingot"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "survivalreimagined:durium_ingot"
     },
     {
       "item": "survivalreimagined:hellish_coal"
