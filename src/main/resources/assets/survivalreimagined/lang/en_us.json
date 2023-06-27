@@ -375,7 +375,9 @@
 	"advancements.sr_nether.soul_blast_furnace.title": "Is this a duplication glitch?",
 	"advancements.sr_nether.soul_blast_furnace.description": "Obtain a Soul Blast Furnace, then build a 3x3x3 structure to use it. The structure must have worked Blackstone at the bottom + Soul Blast furnace in any of the sides, Red Nether Bricks in the middle and top layer (stairs also work for the top layer). The middle and middle top block can be empty.",
 	"advancements.sr_nether.hellish_coal.title": "Hot Coal",
-	"advancements.sr_nether.hellish_coal.description": "Obtain Hellish Coal.",
-	"advancements.sr_nether.soul_steel_ingot.title": "A durable alternative to Diamond",
-	"advancements.sr_nether.soul_steel_ingot.description": "Obtain a Soul Steel Ingot in a Soul Blast Furnace."
+	"advancements.sr_nether.hellish_coal.description": "Obtain Hellish Coal",
+	"advancements.sr_nether.soul_steel_ingot.title": "\"Tier 4\" Material",
+	"advancements.sr_nether.soul_steel_ingot.description": "Obtain a Soul Steel Ingot in a Soul Blast Furnace",
+	"advancements.sr_nether.keego.title": "Momentum",
+	"advancements.sr_nether.keego.description": "Obtain Keego Equipment"
 }

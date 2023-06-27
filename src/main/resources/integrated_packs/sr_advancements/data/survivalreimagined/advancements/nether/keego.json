@@ -1,0 +1,45 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:keego_pickaxe"
+		},
+		"title": {
+			"translate": "advancements.sr_nether.keego.title"
+		},
+		"description": {
+			"translate": "advancements.sr_nether.keego.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "minecraft:nether/root",
+	"criteria": {
+		"keego": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"survivalreimagined:keego_pickaxe",
+							"survivalreimagined:keego_axe",
+							"survivalreimagined:keego_shovel",
+							"survivalreimagined:keego_sword",
+							"survivalreimagined:keego_hoe",
+							"survivalreimagined:keego_helmet",
+							"survivalreimagined:keego_chestplate",
+							"survivalreimagined:keego_leggings",
+							"survivalreimagined:keego_boots"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"keego"
+		]
+	]
+}
