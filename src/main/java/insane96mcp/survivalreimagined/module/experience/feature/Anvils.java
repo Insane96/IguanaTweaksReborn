@@ -8,8 +8,6 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
-import insane96mcp.survivalreimagined.data.trigger.AnvilTransformBlockTrigger;
-import insane96mcp.survivalreimagined.event.FallingBlockLandEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.data.TwinIdTagMatcher;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
@@ -17,14 +15,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -39,17 +32,6 @@ import java.util.Optional;
 public class Anvils extends SRFeature {
 
     public static final String PARTIALLY_REPAIRED_LANG = SurvivalReimagined.MOD_ID + ".can_be_partially_repaired";
-
-    @Config
-    @Label(name = "Enable Block Transformation")
-    public static Boolean enableBlockTransformation = false;
-    public static final ArrayList<TwinIdTagMatcher> ANVIL_TRANSFORMATIONS_DEFAULT = new ArrayList<>(List.of(
-            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "minecraft:stone", IdTagMatcher.Type.ID,"minecraft:cobblestone"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "minecraft:cobblestone", IdTagMatcher.Type.ID,"minecraft:gravel"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "minecraft:gravel", IdTagMatcher.Type.ID,"minecraft:sand"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "minecraft:sandstone", IdTagMatcher.Type.ID,"minecraft:sand")
-    ));
-    public static final ArrayList<TwinIdTagMatcher> anvilTransformations = new ArrayList<>();
 
     @Config(min = 0)
     @Label(name = "Anvil Repair Cap", description = "Set the cap for repairing items in the anvil (vanilla is 40)")
@@ -90,7 +72,6 @@ public class Anvils extends SRFeature {
 
     public Anvils(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        JSON_CONFIGS.add(new JsonConfig<>("anvil_transformations.json", anvilTransformations, ANVIL_TRANSFORMATIONS_DEFAULT, TwinIdTagMatcher.LIST_TYPE));
         JSON_CONFIGS.add(new JsonConfig<>("anvil_partial_repair_items.json", partialRepairItems, PARTIAL_REPAIR_ITEMS, TwinIdTagMatcher.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.PARTIAL_REPAIR_ITEMS));
     }
 
@@ -108,35 +89,6 @@ public class Anvils extends SRFeature {
                 return true;
         }
         return false;
-    }
-
-    @SubscribeEvent
-    public void onAnvilLand(FallingBlockLandEvent event) {
-        if (!this.isEnabled()
-            || !enableBlockTransformation
-            || !event.getFallingBlock().blockState.is(BlockTags.ANVIL)
-            || event.getFallingBlock().time < 7)
-            return;
-
-        for (TwinIdTagMatcher anvilTransformation : anvilTransformations) {
-            if (anvilTransformation.idTagMatcherA.matchesBlock(event.getFallingBlock().getBlockStateOn().getBlock())) {
-                Optional<Block> block = anvilTransformation.idTagMatcherB.getAllBlocks().stream().findAny();
-                block.ifPresent(b -> {
-                    event.getFallingBlock().level.setBlock(event.getFallingBlock().getOnPos(), b.defaultBlockState(), 3);
-
-                    if (event.getEntity().level instanceof ServerLevel serverLevel) {
-                        AABB aabb = event.getEntity().getBoundingBox().inflate(4d);
-                        for (ServerPlayer player : serverLevel.players()) {
-                            if (aabb.contains(player.getX(), player.getY(), player.getZ())) {
-                                AnvilTransformBlockTrigger.TRIGGER.trigger(player);
-                            }
-                        }
-                    }
-                });
-                if (block.isPresent())
-                    break;
-            }
-        }
     }
 
     @OnlyIn(Dist.CLIENT)
