@@ -5,6 +5,8 @@
   * With this, armor slowdown has been increased
 * Copper tools no longer require a Forge to be made
   * Lowered efficiency and durability
+* Added Combat Test Strength
+  * ~~+3 attack damage~~ -> +20% attack damage per level
 * Rebalanced Tier 3 and 4 materials
   * (Armor) Diamond is now the only tier 3 material and has lower protection than vanilla. Can be upgraded to Soul Steel, Netherite or Keego, which are now alternative tier 4 materials
   * (Tools and Weapons) Diamond is now the only tier 3 material and has average stats, same as Armor for Tier 4
