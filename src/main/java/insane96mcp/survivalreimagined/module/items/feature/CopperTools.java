@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class CopperTools extends Feature {
 
-	public static final ILItemTier ITEM_TIER = new ILItemTier(2, 143, 8f, 1.0f, 9, () -> Ingredient.of(Items.COPPER_INGOT));
+	public static final ILItemTier ITEM_TIER = new ILItemTier(1, 143, 8f, 1.0f, 9, () -> Ingredient.of(Items.COPPER_INGOT));
 
 	public static final RegistryObject<Item> SWORD = SRItems.REGISTRY.register("copper_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> SHOVEL = SRItems.REGISTRY.register("copper_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));

@@ -52,7 +52,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/stone", 71),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/flint", 55),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/golden", 63),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/copper", 49),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/copper", 39),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/iron", 375),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/solarium", 460),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/durium", 855),

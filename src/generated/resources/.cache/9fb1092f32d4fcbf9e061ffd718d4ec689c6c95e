@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-26T17:24:02.6298306	Recipes
+// 1.19.4	2023-06-27T21:49:05.5094298	Recipes
 180b53a99dee746d5e72a5aecf52eb5a9cc8cd7c data/survivalreimagined/advancements/recipes/building_blocks/durium_block.json
 e611d44bd92b2fdeb5684cfcfb7f77dfb2c3332e data/survivalreimagined/advancements/recipes/building_blocks/flint_block.json
 aa91b9f6bc3b587f526159db255556a85df8f972 data/survivalreimagined/advancements/recipes/building_blocks/polished_flint_block.json
@@ -354,7 +354,7 @@ d54f288aafa8df19a6549e35937fbe1a4fc7bcc8 data/survivalreimagined/recipes/chainma
 f0bb09b861f104b1bf6ffa6da3402bd9ac4b7bec data/survivalreimagined/recipes/chainmail_helmet.json
 57e348df72c901aab93179cba36a2df938bc9177 data/survivalreimagined/recipes/chainmail_leggings.json
 0308501006463347f887cfde839c738693f4c23c data/survivalreimagined/recipes/copper_axe.json
-5d1e73d3d17d4f19f1f6dc4d2e3957bc763bdad5 data/survivalreimagined/recipes/copper_hammer.json
+55c7ff2cfac7d7fefe4b6666fe8a087be2c97730 data/survivalreimagined/recipes/copper_hammer.json
 299d5c62578237ee3049dd6498b3d11fbdb64d00 data/survivalreimagined/recipes/copper_hoe.json
 992fd77a7b93dd2cc0c25bff29b3d42c4a7a518c data/survivalreimagined/recipes/copper_ingot_from_blasting_rock.json
 93065d75a972ac32996aa53f8ee9a75ed4aa782c data/survivalreimagined/recipes/copper_ingot_from_smelting_rock.json

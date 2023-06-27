@@ -1,14 +1,21 @@
 {
-  "type": "survivalreimagined:forging",
-  "amount": 5,
-  "category": "forge_misc",
-  "experience": 3.0,
-  "gear": {
-    "item": "survivalreimagined:flint_hammer"
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "M": {
+      "item": "minecraft:copper_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
   },
-  "ingredient": {
-    "item": "minecraft:copper_ingot"
+  "pattern": [
+    "MMM",
+    "MSM",
+    " S "
+  ],
+  "result": {
+    "item": "survivalreimagined:copper_hammer"
   },
-  "result": "survivalreimagined:copper_hammer",
-  "smashes_required": 6
+  "show_notification": true
 }
