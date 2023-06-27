@@ -3,7 +3,7 @@ package insane96mcp.survivalreimagined.module.sleeprespawn.block;
 import com.google.common.collect.ImmutableList;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.IdTagValue;
-import insane96mcp.survivalreimagined.data.trigger.ActivateRespawnObeliskTrigger;
+import insane96mcp.survivalreimagined.data.criterion.ActivateRespawnObeliskTrigger;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Respawn;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;

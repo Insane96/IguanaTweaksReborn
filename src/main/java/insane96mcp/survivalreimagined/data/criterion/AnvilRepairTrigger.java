@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.data.trigger;
+package insane96mcp.survivalreimagined.data.criterion;
 
 import com.google.gson.JsonObject;
 import insane96mcp.survivalreimagined.SurvivalReimagined;

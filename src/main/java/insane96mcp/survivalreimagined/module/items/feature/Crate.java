@@ -6,7 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.MCUtils;
-import insane96mcp.survivalreimagined.data.trigger.OverweightCrateCarryTrigger;
+import insane96mcp.survivalreimagined.data.criterion.OverweightCrateCarryTrigger;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.items.block.CrateBlock;
 import insane96mcp.survivalreimagined.module.items.block.CrateBlockEntity;

@@ -92,7 +92,7 @@ public class ForgeHammerItem extends TieredItem implements Vanishable {
 
     /**
      * Called when a {@link net.minecraft.world.level.block.Block} is destroyed using this Item. Return {@code true} to
-     * trigger the "Use Item" statistic.
+     * criterion the "Use Item" statistic.
      */
     public boolean mineBlock(ItemStack pStack, Level pLevel, BlockState pState, BlockPos pPos, LivingEntity pEntityLiving) {
         if (pState.getDestroySpeed(pLevel, pPos) != 0.0F) {
