@@ -65,13 +65,13 @@ public class Keego extends Feature {
 
 	public static final RegistryObject<Item> GEM = SRItems.REGISTRY.register("keego", () -> new Item(new Item.Properties()));
 
-	public static final ILItemTier ITEM_TIER = new ILItemTier(2, 570, 6.5f, 2.5f, 11, () -> Ingredient.of(GEM.get()));
+	public static final ILItemTier ITEM_TIER = new ILItemTier(4, 1338, 6.5f, 2.5f, 8, () -> Ingredient.of(GEM.get()));
 
 	public static final RegistryObject<Item> SWORD = SRItems.REGISTRY.register("keego_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> SHOVEL = SRItems.REGISTRY.register("keego_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
 	public static final RegistryObject<Item> PICKAXE = SRItems.REGISTRY.register("keego_pickaxe", () -> new PickaxeItem(ITEM_TIER, 1, -2.8F, new Item.Properties()));
 	public static final RegistryObject<Item> AXE = SRItems.REGISTRY.register("keego_axe", () -> new AxeItem(ITEM_TIER, 6.0F, -3.2F, new Item.Properties()));
-	public static final RegistryObject<Item> HOE = SRItems.REGISTRY.register("keego_hoe", () -> new HoeItem(ITEM_TIER, -2, -1.0F, new Item.Properties()));
+	public static final RegistryObject<Item> HOE = SRItems.REGISTRY.register("keego_hoe", () -> new HoeItem(ITEM_TIER, -2, -1.1F, new Item.Properties()));
 
 	private static final SRArmorMaterial ARMOR_MATERIAL = new SRArmorMaterial("survivalreimagined:keego", 22, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
 		p_266652_.put(ArmorItem.Type.BOOTS, 4);
@@ -85,7 +85,7 @@ public class Keego extends Feature {
 	public static final RegistryObject<Item> LEGGINGS = SRItems.REGISTRY.register("keego_leggings", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties()));
 	public static final RegistryObject<Item> BOOTS = SRItems.REGISTRY.register("keego_boots", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.BOOTS, new Item.Properties()));
 
-	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("keego", 5.5d, 452, GEM, 9, Rarity.COMMON);
+	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("keego", 6.5d, 452, GEM, 9, Rarity.COMMON);
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRItems.registerShield("keego_shield", SHIELD_MATERIAL);
 
