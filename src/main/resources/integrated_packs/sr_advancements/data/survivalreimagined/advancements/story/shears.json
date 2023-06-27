@@ -17,13 +17,15 @@
 	"parent": "survivalreimagined:story/forge",
 	"criteria": {
 		"shears": {
-			"trigger": "survivalreimagined:anvil_repair",
+			"trigger": "minecraft:inventory_changed",
 			"conditions": {
-				"output": {
-					"items": [
-						"minecraft:shears"
-					]
-				}
+				"items": [
+					{
+						"items": [
+							"minecraft:shears"
+						]
+					}
+				]
 			}
 		}
 	},

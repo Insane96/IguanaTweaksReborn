@@ -17,13 +17,15 @@
 	"parent": "survivalreimagined:story/forge",
 	"criteria": {
 		"iron_shield": {
-			"trigger": "survivalreimagined:anvil_repair",
+			"trigger": "minecraft:inventory_changed",
 			"conditions": {
-				"output": {
-					"items": [
-						"minecraft:shield"
-					]
-				}
+				"items": [
+					{
+						"items": [
+							"minecraft:shield"
+						]
+					}
+				]
 			}
 		}
 	},

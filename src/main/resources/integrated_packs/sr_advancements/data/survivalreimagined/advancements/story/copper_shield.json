@@ -14,7 +14,7 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/campfire",
+	"parent": "survivalreimagined:story/furnace",
 	"criteria": {
 		"copper_shield": {
 			"trigger": "minecraft:inventory_changed",
