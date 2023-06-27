@@ -89,6 +89,9 @@ public class Keego extends Feature {
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRItems.registerShield("keego_shield", SHIELD_MATERIAL);
 
+	//TODO Keego shield should increase the damaged blocked
+	//TODO Keego hammer decreases cooldown
+
 	public Keego(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}

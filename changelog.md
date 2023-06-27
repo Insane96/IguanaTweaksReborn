@@ -3,8 +3,9 @@
 ## 0.12.2
 * Disabled Terrain slowdown. Would no longer work in 1.20
   * With this, armor slowdown has been increased
-* Rebalanced Tier 3 and 4 armor materials
-  * Diamond is now the only tier 3 material and has lower protection than vanilla. Can be upgraded to Soul Steel, Netherite or Keego, which are now alternative tier 4 materials
+* Rebalanced Tier 3 and 4 materials
+  * (Armor) Diamond is now the only tier 3 material and has lower protection than vanilla. Can be upgraded to Soul Steel, Netherite or Keego, which are now alternative tier 4 materials
+  * (Tools and Weapons) Diamond is now the only tier 3 material and has average stats, same as Armor for Tier 4
 * Increased mobs follow range
 * Soul Steel now requires Durium to be alloyed instead of iron 
 * Removed Stats > "Adjust weapons". It's now done with item_modifiers.json
