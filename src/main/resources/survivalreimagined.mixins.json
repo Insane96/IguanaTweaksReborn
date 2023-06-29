@@ -17,6 +17,7 @@
         "ConduitBlockEntityMixin",
         "DigDurabilityEnchantmentMixin",
         "DiggerItemMixin",
+        "DrownedSwimUpGoalMixin",
         "EnchantmentMixin",
         "EntityMixin",
         "FallingBlockEntityMixin",
