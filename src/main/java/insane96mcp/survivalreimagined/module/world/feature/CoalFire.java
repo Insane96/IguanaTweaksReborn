@@ -30,7 +30,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -44,7 +43,6 @@ import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
@@ -185,18 +183,6 @@ public class CoalFire extends Feature {
 
     public static boolean areCampfiresUnlit() {
         return Feature.isEnabled(CoalFire.class) && unlitCampfires;
-    }
-
-    @SubscribeEvent
-    public void onCoalMine(PlayerEvent.BreakSpeed event) {
-        if (!this.isEnabled()
-                || !ironCoal
-                || !(event.getState().is(Blocks.COAL_ORE) || event.getState().is(Blocks.DEEPSLATE_COAL_ORE))
-                || !(event.getEntity().getMainHandItem().getItem() instanceof TieredItem tieredItem)
-                || tieredItem.getTier().getLevel() >= 2)
-            return;
-
-        event.setNewSpeed(event.getNewSpeed() / 5f);
     }
 
     private static final String path = "coal_fire/";
