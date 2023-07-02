@@ -1,5 +1,7 @@
 {
   "values": [
+    "minecraft:coal_ore",
+    "minecraft:deepslate_coal_ore",
     "survivalreimagined:poor_gold_ore",
     "survivalreimagined:rich_gold_ore",
     "survivalreimagined:poor_deepslate_gold_ore",

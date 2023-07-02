@@ -113,6 +113,10 @@ repositories {
     }
     maven {
         url 'https://www.dogforce-games.com/maven/'
+        content {
+            // Needed otherwise gradle goes crazy by downloading all the dependencies from here (failing)
+            includeGroup "dev.gigaherz.sewingkit"
+        }
     }
     maven {
         url = "https://jitpack.io"
