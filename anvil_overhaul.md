@@ -3,4 +3,4 @@
 * First off, Mending is removed, no longer exists, and actually it's no longer needed.
 * To fill this gap, anvil repairing has been changed.
   * Items no longer stack up cost ... you know, that cost that doubles each time you repair an item in an anvil, instead the cost to repair them is fixed and based off enchantments on the gear. So an item with no enchantments can be repaired for free.
-  * You may ask "What about netherite?", that's a pain to obtain
+  * You may ask "What about netherite? It's a pain to obtain and without mending would be an even bigger pain". Don't fear my fellow miner, me, Insane, have got you covered. Netherite equipment can now be repaired partially with Diamonds, up to 75% durability. 

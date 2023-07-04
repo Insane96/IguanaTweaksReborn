@@ -91,9 +91,9 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			boolean isPartialRepairItem = Anvils.isPartialRepairItem(resultStack, right);
 			if (resultStack.isDamageableItem() && (resultStack.getItem().isValidRepairItem(left, right) || isPartialRepairItem)) {
 				int repairItemCountCost;
-				//If it's a partial repair item, repair up to 70% of max durability
+				//If it's a partial repair item, repair up to 75% of max durability
 				if (isPartialRepairItem) {
-					int maxPartialRepairDurLeft = (int) (resultStack.getMaxDamage() * 0.3f);
+					int maxPartialRepairDurLeft = (int) (resultStack.getMaxDamage() * 0.25f);
 					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
 					if (repairSteps <= 0) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);

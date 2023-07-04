@@ -58,7 +58,7 @@ public class Anvils extends SRFeature {
     @Label(name = "Repair cost multiplier", description = "Multiplier for the levels required to repair an item.")
     public static Double repairCostMultiplier = 0.70d;
     @Config
-    @Label(name = "Partially repair Smithed items with base material", description = "E.g. Netherite Tools can be repaired up to 70% of max durability with Diamonds. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
+    @Label(name = "Partially repair Smithed items with base material", description = "E.g. Netherite Tools can be repaired up to 75% of max durability with Diamonds. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
     public static Boolean partiallyRepairUpgradedItemsWithBaseMaterial = true;
     public static final ArrayList<TwinIdTagMatcher> PARTIAL_REPAIR_ITEMS = new ArrayList<>(List.of(
             new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", IdTagMatcher.Type.ID,"survivalreimagined:soul_steel_ingot"),
