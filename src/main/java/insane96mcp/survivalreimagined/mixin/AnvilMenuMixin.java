@@ -185,7 +185,8 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 						}
 						else {
 							canEnchant = true;
-							if (rightLvl > rightEnchantment.getMaxLevel() && leftLvl == rightLvl /*Added to allow over max level enchantment books to be applied to items*/)
+							if (rightLvl > rightEnchantment.getMaxLevel()
+									&& leftLvl == rightLvl /*Added to allow over max level enchantment books to be applied to items*/)
 								rightLvl = rightEnchantment.getMaxLevel();
 
 							leftEnchantments.put(rightEnchantment, rightLvl);
@@ -195,8 +196,8 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 								enchantmentRarityCost = Math.max(1, enchantmentRarityCost / 2);
 
 							mergeCost += enchantmentRarityCost * rightLvl;
-							if (left.getCount() > 1)
-								mergeCost = 40;
+							/*if (left.getCount() > 1)
+								mergeCost = 40;*/
 						}
 					}
 				}
@@ -222,7 +223,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		if (isEnchantedBook && !resultStack.isBookEnchantable(right))
 			resultStack = ItemStack.EMPTY;
 
-		this.cost.set(baseCost + mergeCost);
+		this.cost.set((int) ((baseCost + mergeCost) * Anvils.repairCostMultiplier));
 		if (isRenaming && !Anvils.freeRenaming)
 			this.cost.set(this.cost.get() + COST_RENAME);
 		/*if (mergeCost <= 0 && !isRenaming)
@@ -230,21 +231,22 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 
 		if (isRenaming && Anvils.freeRenaming && mergeCost <= 0)
 			this.cost.set(0);
+		if (!isRenaming && right.isEmpty())
+			resultStack = ItemStack.EMPTY;
 
 		//Set Too Expensive cap
 		if (this.cost.get() >= Anvils.anvilRepairCap && !this.player.getAbilities().instabuild)
 			resultStack = ItemStack.EMPTY;
 
 		if (!resultStack.isEmpty()) {
-			int toolRepairCost = resultStack.getBaseRepairCost();
-			if (!right.isEmpty() && toolRepairCost < right.getBaseRepairCost())
-				toolRepairCost = right.getBaseRepairCost();
-
-			if (mergeCost >= 1)
-				toolRepairCost = AnvilMenu.calculateIncreasedRepairCost(toolRepairCost);
-
-			if (!Anvils.noRepairCostIncreaseAndEnchCost)
+			if (!Anvils.noRepairCostIncreaseAndEnchCost) {
+				int toolRepairCost = resultStack.getBaseRepairCost();
+				if (!right.isEmpty() && toolRepairCost < right.getBaseRepairCost())
+					toolRepairCost = right.getBaseRepairCost();
+				if (mergeCost >= 1)
+					toolRepairCost = AnvilMenu.calculateIncreasedRepairCost(toolRepairCost);
 				resultStack.setRepairCost(toolRepairCost);
+			}
 			EnchantmentHelper.setEnchantments(leftEnchantments, resultStack);
 		}
 

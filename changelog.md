@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.3
+* Levels required to repair an item are lowered by 30%
+
 ## 0.12.2
 * Disabled Terrain slowdown. Would no longer work in 1.20
   * With this, armor slowdown has been increased

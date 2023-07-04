@@ -54,6 +54,9 @@ public class Anvils extends SRFeature {
     @Config(min = 0)
     @Label(name = "Enchantments cost by rarity.Very Rare", description = "Vanilla default: 8")
     public static Integer enchantmentCostVeryRare = 5;
+    @Config(min = 0)
+    @Label(name = "Repair cost multiplier", description = "Multiplier for the levels required to repair an item.")
+    public static Double repairCostMultiplier = 0.70d;
     @Config
     @Label(name = "Partially repair Smithed items with base material", description = "E.g. Netherite Tools can be repaired up to 70% of max durability with Diamonds. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
     public static Boolean partiallyRepairUpgradedItemsWithBaseMaterial = true;
