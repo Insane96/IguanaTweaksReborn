@@ -371,6 +371,8 @@
 	"advancements.sr_story.toolbelt_upgrade.description": "Obtain a belt pouch and use an anvil to upgrade the Tool Belt",
 	"advancements.sr_story.hard_mode.title": "Hard Mode",
 	"advancements.sr_story.hard_mode.description": "You've unlocked Hard Mode. Mobs will drop more Experience but have buffed stats.",
+	"advancements.sr_story.unfair_oneshot.title": "Rolled a 20 on constitution",
+	"advancements.sr_story.unfair_oneshot.description": "If you get hit for enough damage that would kill you when your health is above 7.5 hearts, that's an unfair one-shot and you're left with half a heart",
 
 	"advancements.sr_nether.soul_blast_furnace.title": "Is this a duplication glitch?",
 	"advancements.sr_nether.soul_blast_furnace.description": "Obtain a Soul Blast Furnace, then build a 3x3x3 structure to use it. The structure must have worked Blackstone at the bottom + Soul Blast furnace in any of the sides, Red Nether Bricks in the middle and top layer (stairs also work for the top layer). The middle and middle top block can be empty.",
