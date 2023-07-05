@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.mining.feature;
+package insane96mcp.survivalreimagined.module.experience.feature;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -6,7 +6,6 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.InjectLootTableModifier;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.experience.feature.Anvils;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
@@ -27,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @Label(name = "Lapis", description = "New lapis for better enchanting.")
-@LoadFeature(module = Modules.Ids.MINING)
+@LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class Lapis extends Feature {
 
 	public static final RegistryObject<Item> CLEANSED_LAPIS = SRItems.REGISTRY.register("cleansed_lapis", () -> new Item(new Item.Properties()));
@@ -92,8 +91,6 @@ public class Lapis extends Feature {
 			else
 				enchantStack(result, ench.getKey(), ench.getValue());
 		}
-		/*if (result.getBaseRepairCost() < 25)
-			result.setRepairCost(25);*/
 
 		event.setCost(Anvils.getRarityCost(enchantmentChosen) * enchantmentLvlChosen + 1);
 		event.setMaterialCost(1);

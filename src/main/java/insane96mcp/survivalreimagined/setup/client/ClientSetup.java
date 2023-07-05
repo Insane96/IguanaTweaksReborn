@@ -5,6 +5,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.combat.client.FletchingScreen;
 import insane96mcp.survivalreimagined.module.combat.client.SRArrowRenderer;
 import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
+import insane96mcp.survivalreimagined.module.experience.feature.Lapis;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;

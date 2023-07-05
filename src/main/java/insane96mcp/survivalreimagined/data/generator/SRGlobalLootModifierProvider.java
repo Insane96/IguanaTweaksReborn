@@ -1,9 +1,9 @@
 package insane96mcp.survivalreimagined.data.generator;
 
+import insane96mcp.survivalreimagined.module.experience.feature.Lapis;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.items.feature.RecallIdol;
-import insane96mcp.survivalreimagined.module.mining.feature.Lapis;
 import insane96mcp.survivalreimagined.module.mobs.feature.Equipment;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
