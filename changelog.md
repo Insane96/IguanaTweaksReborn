@@ -1,7 +1,13 @@
 # Changelog
 
 ## 0.12.3
+* Removed Unbreaking Overhaul
+  * Item Fragments no longer exist
+  * Unbreaking works like vanilla
+  * Equipment base durabilities have been lowered
 * Levels required to repair an item are lowered by 30%
+* Easy Magic is now a recommended mod
+  * Lets you reroll enchantments, keeps items in enchanting table and ignores no collision blocks between enchanting table and bookshelves
 
 ## 0.12.2
 * Disabled Terrain slowdown. Would no longer work in 1.20

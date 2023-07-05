@@ -13,7 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Unfair one-shots", description = "Players be left with half a heart when too much damage that would kill them is dealth.")
+@Label(name = "Unfair one-shots", description = "Players be left with half a heart when too much damage that would kill them is dealt (only works for damage taken from mobs)")
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class UnfairOneShot extends Feature {
 	public UnfairOneShot(Module module, boolean enabledByDefault, boolean canBeDisabled) {

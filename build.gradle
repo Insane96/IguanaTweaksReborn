@@ -153,6 +153,9 @@ dependencies {
     //Needed for data gen
     runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-${mc_version}:1.8.0")
 
+    runtimeOnly fg.deobf("curse.maven:puzzles-lib-495476:4582313")
+    runtimeOnly fg.deobf("curse.maven:easy-magic-456239:4556546")
+
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 

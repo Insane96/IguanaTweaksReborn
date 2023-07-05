@@ -89,3 +89,10 @@ license="All rights reserved"
     versionRange="[1.20.0,)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.survivalreimagined]]
+    modId="easymagic"
+    mandatory=false
+    versionRange="[6.0.0,)"
+    ordering="NONE"
+    side="BOTH"

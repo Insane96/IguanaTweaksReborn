@@ -2,7 +2,6 @@ package insane96mcp.survivalreimagined.data.generator.client;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
-import insane96mcp.survivalreimagined.module.experience.feature.UnbreakingOverhaul;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
@@ -136,8 +135,6 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItemWithTexture(Minecarts.COPPER_POWERED_RAIL.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/copper_powered_rail"));
         withExistingParent("golden_powered_rail", new ResourceLocation("item/powered_rail"));
         basicItemWithTexture(Minecarts.NETHER_INFUSED_POWERED_RAIL.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/nether_infused_powered_rail"));
-
-        basicItem(UnbreakingOverhaul.ITEM_FRAGMENT.get());
 
         basicItem(FoodDrinks.OVER_EASY_EGG.get());
         basicItem(FoodDrinks.BROWN_MUSHROOM_STEW.get());
