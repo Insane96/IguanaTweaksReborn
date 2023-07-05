@@ -46,12 +46,12 @@ public class BaneOfSSSS extends Enchantment {
 
     @Override
     public boolean canEnchant(ItemStack stack) {
-        return EnchantmentsFeature.replaceBaneOfArthropods && (stack.getItem() instanceof AxeItem || super.canEnchant(stack));
+        return EnchantmentsFeature.isBaneOfSSSSSEnabled() && (stack.getItem() instanceof AxeItem || super.canEnchant(stack));
     }
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return EnchantmentsFeature.replaceBaneOfArthropods && super.canApplyAtEnchantingTable(stack);
+        return EnchantmentsFeature.isBaneOfSSSSSEnabled() && super.canApplyAtEnchantingTable(stack);
     }
 
     @Override

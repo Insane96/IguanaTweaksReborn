@@ -30,7 +30,6 @@
         "ItemStackMixin",
         "LeavesBlockMixin",
         "LivingEntityMixin",
-        "MendingEnchantmentMixin",
         "MerchantOfferMixin",
         "MilkBucketItemMixin",
         "MobEffectMixin",

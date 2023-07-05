@@ -1,12 +1,15 @@
 package insane96mcp.survivalreimagined.module.experience.feature;
 
+import com.google.gson.reflect.TypeToken;
 import com.mojang.blaze3d.platform.InputConstants;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantment.*;
 import insane96mcp.survivalreimagined.network.message.JumpMidAirMessage;
@@ -14,7 +17,10 @@ import insane96mcp.survivalreimagined.setup.SREnchantments;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -35,21 +41,21 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Label(name = "Enchantments", description = "Change some enchantments related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
-public class EnchantmentsFeature extends Feature {
+public class EnchantmentsFeature extends SRFeature {
 
-	public static final ResourceLocation WATER_COOLANT_AFFECTED = new ResourceLocation(SurvivalReimagined.MOD_ID, "water_coolant_affected");
+	public static final TagKey<EntityType<?>> WATER_COOLANT_AFFECTED = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(SurvivalReimagined.MOD_ID, "water_coolant_affected"));
 
-	@Config
-	@Label(name = "Mending overhaul", description = "Removes the mending enchantment and adds a new item that resets the repair cost of items.")
-	public static Boolean mendingOverhaul = true;
 	@Config
 	@Label(name = "Infinity overhaul", description = "Infinity can go up to level 4. Each level makes an arrow have 1 in level+1 chance to not consume.")
 	public static Boolean infinityOverhaul = true;
 	@Config
-	@Label(name = "Replace Bane of Arthropods", description = "Replace Bane of Arthropods with Bane of SSSSS, similar to Bane of Arthropods deals more damage to Spiders but also creepers.")
-	public static Boolean replaceBaneOfArthropods = true;
+	@Label(name = "Bane of SSSSS", description = "Enable Bane of SSSSS, similar to Bane of Arthropods deals more damage to Spiders but also creepers. Bane of arthropods is disabled via disabled_enchantments.json")
+	public static Boolean enableBaneOfSSSSS = true;
 
 	@Config
 	@Label(name = "Efficiency changed formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to (tool_efficiency + 75% * level)")
@@ -58,12 +64,6 @@ public class EnchantmentsFeature extends Feature {
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Power Enchantment Damage", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
 	public static Double powerEnchantmentDamage = 0.4d;
-	@Config
-	@Label(name = "Nerf Protection Enchantment", description = """
-						DISABLE: Disables protection enchantment.
-						NERF: Sets max protection level to 3 instead of 4
-						NONE: no changes to protection are done""")
-	public static ProtectionNerf protectionNerf = ProtectionNerf.DISABLE;
 
 	@Config
 	@Label(name = "Prevent farmland trampling with Feather Falling")
@@ -75,14 +75,30 @@ public class EnchantmentsFeature extends Feature {
 	@Label(name = "Buff Thorns", description = "Thorns no longer damages items.")
 	public static Boolean buffThorns = true;
 
-	//TODO Make enchantments deactivable
+	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
+			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:protection"),
+			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:mending"),
+			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:bane_of_arthropods")
+	));
+	public static final ArrayList<IdTagMatcher> disabledEnchantments = new ArrayList<>();
+
+	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<IdTagMatcher>>(){}.getType();
+
 	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+
+		JSON_CONFIGS.add(new SRFeature.JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, LIST_TYPE));
 	}
 
-	public static boolean disableEnchantment(Enchantment enchantment) {
-		return (enchantment == net.minecraft.world.item.enchantment.Enchantments.ALL_DAMAGE_PROTECTION && protectionNerf == ProtectionNerf.DISABLE)
-				|| (enchantment == Enchantments.BANE_OF_ARTHROPODS && replaceBaneOfArthropods);
+	public static boolean isEnchantmentDisabled(Enchantment enchantment) {
+		if (!Feature.isEnabled(EnchantmentsFeature.class))
+			return false;
+
+		for (IdTagMatcher idTagMatcher : disabledEnchantments) {
+			if (idTagMatcher.matchesEnchantment(enchantment))
+				return true;
+		}
+		return false;
 	}
 
 	@SubscribeEvent
@@ -236,19 +252,15 @@ public class EnchantmentsFeature extends Feature {
 		}
 	}
 
-	public enum ProtectionNerf {
-		NONE, NERF, DISABLE
-	}
-
-	public static boolean isMendingOverhaulEnabled() {
-		return Feature.isEnabled(EnchantmentsFeature.class) && mendingOverhaul;
-	}
-
 	public static boolean isInfinityOverhaulEnabled() {
 		return Feature.isEnabled(EnchantmentsFeature.class) && infinityOverhaul;
 	}
 
 	public static boolean isFeatherFallingBuffed() {
 		return Feature.isEnabled(EnchantmentsFeature.class) && buffFeatherFalling;
+	}
+
+	public static boolean isBaneOfSSSSSEnabled() {
+		return Feature.isEnabled(EnchantmentsFeature.class) && enableBaneOfSSSSS;
 	}
 }

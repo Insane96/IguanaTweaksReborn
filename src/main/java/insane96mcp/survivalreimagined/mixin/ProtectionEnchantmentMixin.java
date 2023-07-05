@@ -24,35 +24,6 @@ public class ProtectionEnchantmentMixin extends Enchantment {
 		super(rarityIn, category, slots);
 	}
 
-	@Override
-	public boolean isTreasureOnly() {
-		if (this.type == ProtectionEnchantment.Type.ALL && EnchantmentsFeature.protectionNerf == EnchantmentsFeature.ProtectionNerf.DISABLE)
-			return true;
-		return super.isTreasureOnly();
-	}
-
-	@Override
-	public boolean isTradeable() {
-		if (this.type == ProtectionEnchantment.Type.ALL && EnchantmentsFeature.protectionNerf == EnchantmentsFeature.ProtectionNerf.DISABLE)
-			return false;
-		return super.isTradeable();
-	}
-
-	@Override
-	public boolean isDiscoverable() {
-		if (this.type == ProtectionEnchantment.Type.ALL && EnchantmentsFeature.protectionNerf == EnchantmentsFeature.ProtectionNerf.DISABLE)
-			return false;
-		return super.isDiscoverable();
-	}
-
-	@Override
-	public int getMaxLevel() {
-		if (this.type == ProtectionEnchantment.Type.ALL && EnchantmentsFeature.protectionNerf == EnchantmentsFeature.ProtectionNerf.NERF)
-			return 3;
-
-		return 4;
-	}
-
 	@Inject(at = @At(value = "RETURN", ordinal = 3), method = "getDamageProtection", cancellable = true)
 	public void onFallDamageProtection(int pLevel, DamageSource pSource, CallbackInfoReturnable<Integer> cir) {
 		if (EnchantmentsFeature.isFeatherFallingBuffed())
