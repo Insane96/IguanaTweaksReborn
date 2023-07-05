@@ -5,7 +5,7 @@
   * Items no longer stack up cost ... you know, that cost that doubles each time you repair an item in an anvil, instead the cost to repair them is fixed and based off enchantments on the gear. So an item with no enchantments can be repaired for free.
   * You may ask "What about netherite? It's a pain to obtain and without mending would be an even bigger pain". Don't fear my fellow miner, me, Insane, have got you covered. Netherite equipment can now be repaired partially with Diamonds, up to 75% durability. This means that only 1 Netherite ingot is required to fully repair equipment.
   * Plus, as a bonus, renaming an item is free
-* Let's not talk about experience
+* Now, let's talk about experience
   * Experience has three major changes: the level curve, death and XP obtained
   * 
   * Plus, as a bonus, picking up XP is now faster
