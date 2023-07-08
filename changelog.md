@@ -4,7 +4,9 @@
 * Removed Unbreaking Overhaul
   * Item Fragments no longer exist
   * Unbreaking works like vanilla
-  * Equipment base durabilities have been lowered
+  * Equipment base durability has been lowered
+* Added Critical enchantment
+  * Increases critical damage, incompatible with other damage enchantments
 * Levels required to repair an item are lowered by 30%
 * Forging now resets the durability of the tool
 * Easy Magic is now a recommended mod

@@ -20,4 +20,5 @@ public class SREnchantments {
     public static final RegistryObject<Enchantment> SMARTNESS = REGISTRY.register("smartness", Smartness::new);
     public static final RegistryObject<Enchantment> MA_JUMP = REGISTRY.register("ma_jump", DoubleJump::new);
     public static final RegistryObject<Enchantment> GRAVITY_DEFYING = REGISTRY.register("gravity_defying", GravityDefying::new);
+    public static final RegistryObject<Enchantment> CRITICAL = REGISTRY.register("critical", Critical::new);
 }

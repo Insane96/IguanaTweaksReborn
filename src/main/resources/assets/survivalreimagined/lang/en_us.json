@@ -1,11 +1,9 @@
 {
 	"survivalreimagined:experience_module": "Experience",
 	"survivalreimagined.can_be_partially_repaired": "Can be partially repaired with %s",
-	"survivalreimagined.item_fragment.applicable_to": "Applicable to: ",
 	"container.repair.free": "No Cost",
 	"item.survivalreimagined.ancient_lapis": "Ancient Lapis",
 	"item.survivalreimagined.cleansed_lapis": "Cleansed Lapis",
-	"item.survivalreimagined.item_fragment": "Item Fragment",
 	"enchantment.survivalreimagined.magnetic": "Magnetic",
 	"enchantment.survivalreimagined.magic_protection": "Magic Protection",
 	"enchantment.survivalreimagined.expanded": "Expanded",
@@ -16,6 +14,7 @@
 	"enchantment.survivalreimagined.smartness": "Smartness",
 	"enchantment.survivalreimagined.ma_jump": "M.A. Jump",
 	"enchantment.survivalreimagined.gravity_defying": "Gravity Defying",
+	"enchantment.survivalreimagined.critical": "Critical",
 
 
 	"survivalreimagined:combat_module": "Combat",

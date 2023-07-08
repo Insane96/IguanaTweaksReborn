@@ -7,6 +7,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Critical Hits")
@@ -20,7 +21,8 @@ public class Critical extends Feature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
-	@SubscribeEvent
+	//Run before Critical enchantment
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onCriticalHit(CriticalHitEvent event) {
 		if (!this.isEnabled())
 			return;

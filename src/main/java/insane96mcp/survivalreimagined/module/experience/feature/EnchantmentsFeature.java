@@ -36,6 +36,7 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -172,6 +173,17 @@ public class EnchantmentsFeature extends SRFeature {
 
 		baneOfSssssOnAttack(attacker, event.getEntity(), event);
 		waterCoolantOnAttack(attacker, event.getEntity(), event);
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void onCriticalHit(CriticalHitEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		int lvl = event.getEntity().getMainHandItem().getEnchantmentLevel(SREnchantments.CRITICAL.get());
+		if (lvl <= 0)
+			return;
+		event.setDamageModifier(Critical.getCritAmount(lvl, event.getDamageModifier()));
 	}
 
 	@OnlyIn(Dist.CLIENT)
