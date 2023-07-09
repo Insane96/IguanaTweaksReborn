@@ -7,6 +7,9 @@
   * Equipment (Tier 2+) base durability has been lowered
 * Added Critical enchantment
   * Increases critical damage, incompatible with other damage enchantments
+* Experience to level up has been drastically reduced (from `3 * next level` to `2 * next level + 5`)
+  * Removed bonus experience from blocks, entities and any source. Bonus experience from XP Bottles is still active
+* Critical and Water Coolant enchantments now give off magic crit particles
 * Levels required to repair an item are lowered by 30%
 * Forging now resets the durability of the tool
 * Easy Magic is now a recommended mod

@@ -14,14 +14,14 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Global Experience", description = "Decrease / Increase every experience point dropped in the world")
-@LoadFeature(module = Modules.Ids.EXPERIENCE)
+@LoadFeature(module = Modules.Ids.EXPERIENCE, enabledByDefault = false)
 public class GlobalExperience extends Feature {
 
 	public static final String XP_PROCESSED = SurvivalReimagined.RESOURCE_PREFIX + "xp_processed";
 
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Global Experience Multiplier", description = "Experience dropped will be multiplied by this value.\nCan be set to 0 to disable experience drop from any source.")
-	public static Double globalMultiplier = 1.50d;
+	public static Double globalMultiplier = 1d;
 
 	public GlobalExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

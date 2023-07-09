@@ -15,7 +15,7 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Mobs Experience", description = "Decrease / Increase experience dropped by mobs")
-@LoadFeature(module = Modules.Ids.EXPERIENCE)
+@LoadFeature(module = Modules.Ids.EXPERIENCE, enabledByDefault = false)
 public class MobsExperience extends Feature {
 	public static final ResourceLocation NO_SPAWNER_XP_MULTIPLIER = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "no_spawner_xp_multiplier");
 	@Config(min = 0, max = 128d)
@@ -30,7 +30,7 @@ public class MobsExperience extends Feature {
 						Experience dropped from mobs that DON'T come from spawners will be multiplied by this multiplier.
 						Experience dropped from mobs that DON'T come from spawners is still affected by 'Global Experience Multiplier'
 						Can be set to 0 to disable experience drop from mob that DON'T come from spawners.""")
-	public static Double naturalMobsMultiplier = 1.5d;
+	public static Double naturalMobsMultiplier = 1d;
 
 	public MobsExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

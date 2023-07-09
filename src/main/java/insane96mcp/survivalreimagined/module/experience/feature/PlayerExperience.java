@@ -23,7 +23,7 @@ public class PlayerExperience extends Feature {
 						The experience required to level up is calculated by this formula. The variable available is 'current_level'
 						Set to empty to disable.
 						Incompatible with Allurement's 'Remove level Scaling' or any other mod that does something similar""")
-	public static String levelScalingFormula = "3 * (current_level + 1)";
+	public static String levelScalingFormula = "2 * (current_level + 5)";
 	@Config(min = -1d, max = 1d)
 	@Label(name = "Dropped Experience on Death", description = """
 						On death, players will drop this percentage of experience instead of max 7 levels. Setting to -1 will disable this.
