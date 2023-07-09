@@ -4,7 +4,7 @@
 * Removed Unbreaking Overhaul
   * Item Fragments no longer exist
   * Unbreaking works like vanilla
-  * Equipment base durability has been lowered
+  * Equipment (Tier 2+) base durability has been lowered
 * Added Critical enchantment
   * Increases critical damage, incompatible with other damage enchantments
 * Levels required to repair an item are lowered by 30%
