@@ -95,7 +95,7 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 							if (canBeReplaced && canSurviveAndIsNotFree)
 								this.place(blockstate, block, blockpos, true);
 							else
-								this.tryStackAbove(blockpos);
+								this.tryStackAboveOrMove(blockpos);
 						}
 						else {
 							this.discard();
@@ -109,22 +109,41 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 		}
 	}
 
-	public void tryStackAbove(BlockPos pos) {
+	public void tryStackAboveOrMove(BlockPos pos) {
 		BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ());
+		boolean maxStackReached = false;
 		while (true) {
 			blockPos.set(blockPos.above());
-			if (blockPos.getY() - pos.getY() > 12)
-				break;
-			BlockState stateAt = this.level.getBlockState(blockPos);
-			BlockState stateOn = this.level.getBlockState(blockPos.below());
-			boolean canBeReplaced = stateAt.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
-			boolean isHarderThanInside = stateAt.getDestroySpeed(this.level, blockPos) < this.blockState.getDestroySpeed(this.level, blockPos);
-			boolean canSurvive = this.blockState.canSurvive(this.level, blockPos);
-			if (canBeReplaced && isHarderThanInside && canSurvive) {
-				this.place(stateOn, this.blockState.getBlock(), blockPos, true);
+			if (blockPos.getY() - pos.getY() > 8) {
+				maxStackReached = true;
 				break;
 			}
+			if (this.tryPlace(blockPos))
+				break;
 		}
+		/*if (maxStackReached) {
+			List<Direction> directions = Util.shuffledCopy(Arrays.stream(Direction.values()).filter((direction) -> direction.getAxis().isHorizontal()).toArray(Direction[]::new), this.random);
+			for (Direction direction : directions) {
+				blockPos.set(blockPos.relative(direction));
+				if (this.level.getBlockState(blockPos).canBeReplaced()) {
+					this.setPos(this.position().relative(direction, 1d));
+					return;
+				}
+			}
+		}*/
+	}
+
+	public boolean tryPlace(BlockPos blockPos) {
+		BlockState stateAt = this.level.getBlockState(blockPos);
+		BlockState stateOn = this.level.getBlockState(blockPos.below());
+		boolean canBeReplaced = stateAt.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
+		boolean isHarderThanInside = stateAt.getDestroySpeed(this.level, blockPos) < this.blockState.getDestroySpeed(this.level, blockPos);
+		boolean canSurvive = this.blockState.canSurvive(this.level, blockPos);
+		if (canBeReplaced && isHarderThanInside && canSurvive) {
+			this.place(stateOn, this.blockState.getBlock(), blockPos, true);
+			return true;
+		}
+		return false;
 	}
 
 	public void place(BlockState state, Block block, BlockPos pos, boolean breakBlock) {
