@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.module.experience.enchantment;
 
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.utils.Utils;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -52,7 +53,10 @@ public class WaterCoolant extends Enchantment {
                 || !Utils.isEntityInTag(livingEntity, EnchantmentsFeature.WATER_COOLANT_AFFECTED))
             return;
 
-        if (lvl > 0)
+        if (lvl > 0) {
             livingEntity.setTicksFrozen(Entity.BASE_TICKS_REQUIRED_TO_FREEZE + 10 + (Entity.FREEZE_HURT_FREQUENCY * 2 * lvl));
+            if (attacker instanceof ServerPlayer player)
+                player.magicCrit(entity);
+        }
     }
 }
