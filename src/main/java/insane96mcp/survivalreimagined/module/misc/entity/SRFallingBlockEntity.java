@@ -111,24 +111,28 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 
 	public void tryStackAboveOrMove(BlockPos pos) {
 		BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ());
-		boolean maxStackReached = false;
+		//boolean maxStackReached = false;
 		while (true) {
 			blockPos.set(blockPos.above());
-			if (blockPos.getY() - pos.getY() > 8) {
-				maxStackReached = true;
+			if (blockPos.getY() - pos.getY() > 4) {
+				//maxStackReached = true;
+				if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+					this.discard();
+					this.callOnBrokenAfterFall(this.blockState.getBlock(), pos);
+					this.spawnAtLocation(this.blockState.getBlock());
+				}
 				break;
 			}
 			if (this.tryPlace(blockPos))
 				break;
 		}
 		/*if (maxStackReached) {
-			List<Direction> directions = Util.shuffledCopy(Arrays.stream(Direction.values()).filter((direction) -> direction.getAxis().isHorizontal()).toArray(Direction[]::new), this.random);
+			//List<Direction> directions = Util.shuffledCopy(Arrays.stream(Direction.values()).filter((direction) -> direction.getAxis().isHorizontal()).toArray(Direction[]::new), this.random);
+			Direction[] directions = Arrays.stream(Direction.values()).filter((direction) -> direction.getAxis().isHorizontal()).toArray(Direction[]::new);
 			for (Direction direction : directions) {
-				blockPos.set(blockPos.relative(direction));
-				if (this.level.getBlockState(blockPos).canBeReplaced()) {
-					this.setPos(this.position().relative(direction, 1d));
-					return;
-				}
+				blockPos.set(pos.relative(direction));
+				this.setPos(this.position().relative(direction, 1d));
+				break;
 			}
 		}*/
 	}

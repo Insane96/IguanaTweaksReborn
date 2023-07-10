@@ -4,11 +4,9 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.entity.SRFallingBlockEntity;
-import insane96mcp.survivalreimagined.module.world.data.LogsLeavesPair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -31,7 +29,7 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.WORLD)
 public class TimberTrees extends SRFeature {
 
-    public static final ArrayList<LogsLeavesPair> LOGS_LEAVES_PAIRS_DEFAULT = new ArrayList<>(List.of(
+    /*public static final ArrayList<LogsLeavesPair> LOGS_LEAVES_PAIRS_DEFAULT = new ArrayList<>(List.of(
             new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:oak_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:oak_leaves")),
             new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:birch_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:birch_leaves")),
             new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:spruce_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:spruce_leaves")),
@@ -40,7 +38,7 @@ public class TimberTrees extends SRFeature {
             new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:acacia_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:acacia_leaves")),
             new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:mangrove_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:mangrove_leaves"))
     ));
-    public static final ArrayList<LogsLeavesPair> logsLeavesPairs = new ArrayList<>();
+    public static final ArrayList<LogsLeavesPair> logsLeavesPairs = new ArrayList<>();*/
 
     @Config
     @Label(name = "Requires axe")
@@ -48,7 +46,7 @@ public class TimberTrees extends SRFeature {
 
     public TimberTrees(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        JSON_CONFIGS.add(new SRFeature.JsonConfig<>("logs_leaves_pairs.json", logsLeavesPairs, LOGS_LEAVES_PAIRS_DEFAULT, LogsLeavesPair.LIST_TYPE));
+        //JSON_CONFIGS.add(new SRFeature.JsonConfig<>("logs_leaves_pairs.json", logsLeavesPairs, LOGS_LEAVES_PAIRS_DEFAULT, LogsLeavesPair.LIST_TYPE));
     }
 
     @SubscribeEvent
