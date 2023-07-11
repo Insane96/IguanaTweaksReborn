@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.module.items.feature;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -13,6 +14,7 @@ import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -263,8 +265,7 @@ public class ItemStats extends SRFeature {
 		else if (event.getItemStack().getItem() instanceof DiggerItem diggerItem){
 			int lvl = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
 			float toolEfficiency = diggerItem.speed;
-			float baseEfficiency = 0.15f;
-			float bonusToolEfficiency = diggerItem.speed * (baseEfficiency * (lvl * lvl + 1));
+			float bonusToolEfficiency = getEfficiencyBonus(toolEfficiency, lvl);
 			if (lvl > 0)
 				toolEfficiency += bonusToolEfficiency;
 			event.getToolTip().add(CommonComponents.space().append(Component.translatable(TOOL_EFFICIENCY_LANG, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(toolEfficiency))).withStyle(ChatFormatting.DARK_GREEN));
@@ -272,5 +273,15 @@ public class ItemStats extends SRFeature {
 
 		if (event.getItemStack().isDamageableItem())
 			event.getToolTip().add(Component.translatable(TOOL_DURABILITY_LANG, event.getItemStack().getMaxDamage() - event.getItemStack().getDamageValue(), event.getItemStack().getMaxDamage()).withStyle(ChatFormatting.GRAY));
+	}
+
+	public static float getEfficiencyBonus(float toolEfficiency, int lvl) {
+		if (Feature.isEnabled(EnchantmentsFeature.class) && EnchantmentsFeature.changeEfficiencyFormula) {
+			float baseEfficiency = 0.15f;
+			return toolEfficiency * (baseEfficiency * (lvl * lvl + 1));
+		}
+		else {
+			return toolEfficiency + (lvl * lvl + 1);
+		}
 	}
 }

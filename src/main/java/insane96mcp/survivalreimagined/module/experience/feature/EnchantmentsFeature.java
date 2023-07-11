@@ -59,7 +59,7 @@ public class EnchantmentsFeature extends SRFeature {
 	public static Boolean enableBaneOfSSSSS = true;
 
 	@Config
-	@Label(name = "Efficiency changed formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to (tool_efficiency + 75% * level)")
+	@Label(name = "Better Efficiency Formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to tool_efficiency * (0.15 * (lvl * lvl + 1))")
 	public static Boolean changeEfficiencyFormula = true;
 
 	@Config(min = 0d, max = 10d)
@@ -79,7 +79,10 @@ public class EnchantmentsFeature extends SRFeature {
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
 			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:protection"),
 			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:mending"),
-			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:bane_of_arthropods")
+			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:bane_of_arthropods"),
+			new IdTagMatcher(IdTagMatcher.Type.ID, "allurement:reforming"),
+			new IdTagMatcher(IdTagMatcher.Type.ID, "allurement:alleviating")
+
 	));
 	public static final ArrayList<IdTagMatcher> disabledEnchantments = new ArrayList<>();
 
