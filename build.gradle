@@ -121,6 +121,8 @@ repositories {
     maven {
         url = "https://jitpack.io"
     }
+    // AppleCore
+    maven { url "https://maven.ryanliptak.com/" }
 }
 
 mixin {
@@ -155,6 +157,8 @@ dependencies {
 
     runtimeOnly fg.deobf("curse.maven:puzzles-lib-495476:4582313")
     runtimeOnly fg.deobf("curse.maven:easy-magic-456239:4556546")
+
+    runtimeOnly fg.deobf("squeek.appleskin:appleskin-forge:mc${mc_version}-2.4.3")
 
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"

@@ -330,7 +330,7 @@ public class HealthRegen extends Feature {
 	@SubscribeEvent
 	public void debugScreen(CustomizeGuiOverlayEvent.DebugText event) {
 		if (!this.isEnabled()
-			|| !Feature.isEnabled(NoHunger.class))
+			|| Feature.isEnabled(NoHunger.class))
 			return;
 		Minecraft mc = Minecraft.getInstance();
 		LocalPlayer playerEntity = mc.player;
