@@ -14,6 +14,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.event.CakeEatEvent;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.misc.feature.Misc;
 import insane96mcp.survivalreimagined.module.movement.feature.Stamina;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.MessageFoodRegenSync;
@@ -95,12 +96,16 @@ public class NoHunger extends Feature {
     public static Boolean convertSaturationToHaste = true;
 
     @Config
-    @Label(name = "Render armor at Hunger", description = "(Client Only) Armor is rendered at the place of Hunger bar")
+    @Label(name = "Render armor at Hunger", description = "(Client Only) Armor is rendered in the place of Hunger bar")
     public static Boolean renderArmorAtHunger = true;
 
     @Config
     @Label(name = "Buff cakes", description = "Make cakes restore 40% missing health")
     public static Boolean buffCakes = true;
+
+    @Config
+    @Label(name = "Slower poison", description = "If true, poison will damage the player every 80 ticks at level I instead of 25.")
+    public static Boolean slowerPoison = true;
 
     public NoHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -401,5 +406,9 @@ public class NoHunger extends Feature {
             else
                 event.getToolTip().add(Component.translatable(FOOD_STATS_LANG, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal), SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
         }
+    }
+
+    public static boolean isSlowerPoison() {
+        return isEnabled(Misc.class) && slowerPoison;
     }
 }

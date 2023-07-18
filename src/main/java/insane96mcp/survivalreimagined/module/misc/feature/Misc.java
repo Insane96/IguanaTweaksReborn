@@ -35,10 +35,6 @@ public class Misc extends Feature {
     public static Boolean preventFireWithResistance = true;
 
     @Config
-    @Label(name = "Slower poison", description = "If true, poison will damage the player twice as slow.")
-    public static Boolean slowerPoison = true;
-
-    @Config
     @Label(name = "Less burn time for Kelp block", description = "Kelp blocks smelt 16 items instead of 20")
     public static Boolean lessBurnTimeForKelpBlock = true;
 
@@ -57,10 +53,6 @@ public class Misc extends Feature {
             return false;
 
        return livingEntity.hasEffect(MobEffects.FIRE_RESISTANCE);
-    }
-
-    public static boolean isSlowerPoison() {
-        return isEnabled(Misc.class) && slowerPoison;
     }
 
     @SubscribeEvent
