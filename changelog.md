@@ -4,11 +4,11 @@
 * Re-Enabled hunger
   * Slower poison has been moved to Misc.Misc
   * No Hunger is now disabled by default
-  * Health regen is no enabled by default
-* Removed Unbreaking Overhaul
+  * Health regen is no longer enabled by default
+* Huge changes to Unbreaking Overhaul
   * Item Fragments no longer exist
-  * Unbreaking works like vanilla
-  * Equipment (Tier 2+) base durability has been lowered
+  * Unbreaking is now back to max lvl III
+  * Formula has changed, from 50%/66.7%/75%/80%/... to 25%/45%/60%/70%/... (at levels I/II/III/IV)
 * Added Critical enchantment
   * Increases critical damage, incompatible with other damage enchantments
 * Experience to level up has been drastically reduced (from `3 * next level` to `2 * next level + 5`)

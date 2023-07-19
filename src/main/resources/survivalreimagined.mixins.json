@@ -15,6 +15,7 @@
         "CakeBlockMixin",
         "CampfireBlockMixin",
         "ConduitBlockEntityMixin",
+        "DigDurabilityEnchantmentMixin",
         "DiggerItemMixin",
         "DrownedSwimUpGoalMixin",
         "EnchantmentMixin",
