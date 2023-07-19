@@ -800,16 +800,16 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         hammerCraftingRecipe(writer, Forging.STONE_HAMMER.get(), ItemTags.STONE_CRAFTING_MATERIALS);
         hammerCraftingRecipe(writer, Forging.FLINT_HAMMER.get(), Items.FLINT);
         hammerCraftingRecipe(writer, Forging.COPPER_HAMMER.get(), Items.COPPER_INGOT);
-        forgeRecipe(writer, Items.IRON_INGOT, 5, Forging.STONE_HAMMER.get(), Forging.IRON_HAMMER.get(), 10);
+        forgeRecipe(writer, Items.IRON_INGOT, 5, Forging.STONE_HAMMER.get(), Forging.IRON_HAMMER.get(), 10, 5f);
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Forging.SOLARIUM_HAMMER.get())
                 .unlocks("has_material", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_hammer");
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Forging.DURIUM_HAMMER.get())
                 .unlocks("has_material", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_hammer");
-        forgeRecipe(writer, Items.GOLD_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.GOLDEN_HAMMER.get(), 4);
-        forgeRecipe(writer, Items.DIAMOND, 5, Forging.GOLDEN_HAMMER.get(), Forging.DIAMOND_HAMMER.get(), 16);
-        forgeRecipe(writer, SoulSteel.INGOT.get(), 5, Forging.IRON_HAMMER.get(), Forging.SOUL_STEEL_HAMMER.get(), 20);
+        forgeRecipe(writer, Items.GOLD_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.GOLDEN_HAMMER.get(), 4, 2f);
+        forgeRecipe(writer, Items.DIAMOND, 5, Forging.GOLDEN_HAMMER.get(), Forging.DIAMOND_HAMMER.get(), 16, 8f);
+        forgeRecipe(writer, SoulSteel.INGOT.get(), 5, Forging.IRON_HAMMER.get(), Forging.SOUL_STEEL_HAMMER.get(), 20, 10f);
         LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.SOUL_STEEL_HAMMER.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.TOOLS, Forging.NETHERITE_HAMMER.get())
                 .unlocks("has_material", has(Items.NETHERITE_INGOT))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "netherite_hammer");
@@ -886,14 +886,16 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_material", has(materialTag))
                 .save(writer);
     }
-    private void forgeRecipe(Consumer<FinishedRecipe> writer, Item material, int amount, Item gear, Item result, int smashesRequired) {
+    private void forgeRecipe(Consumer<FinishedRecipe> writer, Item material, int amount, Item gear, Item result, int smashesRequired, float experience) {
         ForgeRecipeBuilder.forging(RecipeCategory.TOOLS, Ingredient.of(material), amount, Ingredient.of(gear), result, smashesRequired)
+                .awardExperience(experience)
                 .unlockedBy("has_material", has(material))
                 .save(writer);
     }
 
-    private void forgeRecipe(Consumer<FinishedRecipe> writer, TagKey<Item> materialTag, int amount, Item gear, Item result, int smashesRequired) {
+    private void forgeRecipe(Consumer<FinishedRecipe> writer, TagKey<Item> materialTag, int amount, Item gear, Item result, int smashesRequired, float experience) {
         ForgeRecipeBuilder.forging(RecipeCategory.TOOLS, Ingredient.of(materialTag), amount, Ingredient.of(gear), result, smashesRequired)
+                .awardExperience(experience)
                 .unlockedBy("has_material", has(materialTag))
                 .save(writer);
     }

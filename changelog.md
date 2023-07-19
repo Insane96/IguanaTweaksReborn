@@ -4,7 +4,7 @@
 * Re-Enabled hunger
   * Slower poison has been moved to Misc.Misc
   * No Hunger is now disabled by default
-  * Health regen is no longer enabled by default
+  * Health regen is no longer disabled by default
 * Huge changes to Unbreaking Overhaul
   * Item Fragments no longer exist
   * Unbreaking is now back to max lvl III

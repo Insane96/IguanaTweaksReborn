@@ -1,9 +1,9 @@
 {
   "type": "survivalreimagined:multi_item_soul_blasting",
   "category": "soul_blast_furnace_misc",
-  "cookingtime": 200,
+  "cookingtime": 400,
   "double_output_chance": 0.2,
-  "experience": 1.5,
+  "experience": 1.0,
   "ingredients": [
     {
       "item": "survivalreimagined:durium_scrap_block"
