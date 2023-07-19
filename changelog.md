@@ -1,6 +1,10 @@
 # Changelog
 
 ## 0.12.3
+* Re-Enabled hunger
+  * Slower poison has been moved to Misc.Misc
+  * No Hunger is now disabled by default
+  * Health regen is no enabled by default
 * Removed Unbreaking Overhaul
   * Item Fragments no longer exist
   * Unbreaking works like vanilla

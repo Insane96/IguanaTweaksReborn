@@ -36,7 +36,7 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 import java.text.DecimalFormat;
 
 @Label(name = "Hunger Health Regen", description = "Makes Health regen work differently, like in Combat Test snapshots. Can be customized. Also adds Well Fed and Injured effects. Hunger related stuff doesn't work (for obvious reasons) if No Hunger feature is enabled")
-@LoadFeature(module = Modules.Ids.HUNGER_HEALTH, enabledByDefault = false)
+@LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class HealthRegen extends Feature {
 	@Config
 	@Label(name = "Load Combat Test Config Options", description = "If true, restart the game and the following config options will be changed to the ones of the combat test snapshot and then set this back to false.")

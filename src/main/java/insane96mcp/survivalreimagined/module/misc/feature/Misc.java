@@ -41,6 +41,9 @@ public class Misc extends Feature {
     @Config
     @Label(name = "Falling breaking glass", description = "Falling on glass has a chance of breaking it. The higher the fall, the higher the chance")
     public static Boolean fallingBreakingGlass = true;
+    @Config
+    @Label(name = "Slower poison", description = "If true, poison will damage the player every 80 ticks at level I instead of 25.")
+    public static Boolean slowerPoison = true;
 
     public Misc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -53,6 +56,10 @@ public class Misc extends Feature {
             return false;
 
        return livingEntity.hasEffect(MobEffects.FIRE_RESISTANCE);
+    }
+
+    public static boolean isSlowerPoison() {
+        return isEnabled(Misc.class) && slowerPoison;
     }
 
     @SubscribeEvent

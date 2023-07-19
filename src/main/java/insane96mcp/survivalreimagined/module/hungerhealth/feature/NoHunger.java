@@ -14,7 +14,6 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.event.CakeEatEvent;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.misc.feature.Misc;
 import insane96mcp.survivalreimagined.module.movement.feature.Stamina;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.MessageFoodRegenSync;
@@ -53,7 +52,7 @@ import net.minecraftforge.network.NetworkDirection;
 import org.jetbrains.annotations.Nullable;
 
 @Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days.")
-@LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
+@LoadFeature(module = Modules.Ids.HUNGER_HEALTH, enabledByDefault = false)
 public class NoHunger extends Feature {
 
     private static final String PASSIVE_REGEN_TICK = SurvivalReimagined.RESOURCE_PREFIX + "passive_regen_ticks";
@@ -102,10 +101,6 @@ public class NoHunger extends Feature {
     @Config
     @Label(name = "Buff cakes", description = "Make cakes restore 40% missing health")
     public static Boolean buffCakes = true;
-
-    @Config
-    @Label(name = "Slower poison", description = "If true, poison will damage the player every 80 ticks at level I instead of 25.")
-    public static Boolean slowerPoison = true;
 
     public NoHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -408,7 +403,4 @@ public class NoHunger extends Feature {
         }
     }
 
-    public static boolean isSlowerPoison() {
-        return isEnabled(Misc.class) && slowerPoison;
-    }
 }
