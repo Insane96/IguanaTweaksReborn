@@ -16,6 +16,7 @@
 * Critical and Water Coolant enchantments now give off magic crit particles
 * Levels required to repair an item are lowered by 30%
 * Forging now resets the durability of the tool
+* Every mob has now XRay, instead of only a percentage, but instead of 16 (in normal) range, it's between 8 and 16 (in normal)
 * Easy Magic is now a recommended mod
   * Lets you re-roll enchantments, keeps items in enchanting table and ignores no collision blocks between enchanting table and bookshelves
 
@@ -28,7 +29,7 @@
   * ~~+3 attack damage~~ per level -> +20% attack damage per level
 * Rebalanced Tier 3 and 4 materials
   * (Armor) Diamond is now the only tier 3 material and has lower protection than vanilla. Can be upgraded to Soul Steel, Netherite or Keego, which are now alternative tier 4 materials
-  * (Tools and Weapons) Diamond is now the only tier 3 material and has average stats, same as Armor for Tier 4
+  * (Tools and Weapons) Diamond is now the only tier 3 material and has average stats, same as Armor for Tier 4 changes
 * Increased mobs follow range
 * Soul Steel now requires Durium to be alloyed instead of iron 
 * Removed Stats > "Adjust weapons". It's now done with item_modifiers.json
