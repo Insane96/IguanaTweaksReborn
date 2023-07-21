@@ -16,7 +16,7 @@
 * Critical and Water Coolant enchantments now give off magic crit particles
 * Levels required to repair an item are lowered by 30%
 * Forging now resets the durability of the tool
-* Every mob has now XRay, instead of only a percentage, but instead of 16 (in normal) range, it's between 8 and 16 (in normal)
+* 50% of mobs has now xray (100% in hard mode), and instead of 16 (in normal) range, it's between 8 and 16 (in normal)
 * Easy Magic is now a recommended mod
   * Lets you re-roll enchantments, keeps items in enchanting table and ignores no collision blocks between enchanting table and bookshelves
 
