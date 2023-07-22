@@ -173,11 +173,9 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
             return false;
         ItemStack resultStack = ((Recipe<WorldlyContainer>) recipe).assemble(this, registryAccess);
         ItemStack gearSlotStack = slotStacks.get(ForgeMenu.GEAR_SLOT);
-        /*int dmg = gearSlotStack.getDamageValue();
-        if (dmg > 0)
-            resultStack.setDamageValue(dmg);*/
         if (gearSlotStack.hasTag())
             resultStack.setTag(gearSlotStack.getTag());
+        resultStack.setDamageValue(0);
         ItemStack resultSlotStack = slotStacks.get(ForgeMenu.RESULT_SLOT);
         if (resultSlotStack.isEmpty()) {
             slotStacks.set(ForgeMenu.RESULT_SLOT, resultStack.copy());
