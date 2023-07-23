@@ -7,13 +7,23 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.event.PlayerExhaustionEvent;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.network.NetworkHandler;
+import insane96mcp.survivalreimagined.network.message.MessageExhaustionSync;
+import insane96mcp.survivalreimagined.network.message.MessageSaturationSync;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.network.NetworkDirection;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Label(name = "Exhaustion Increase", description = "Make the player consume more hunger with different actions. If hunger is disabled, still works for Tiredness.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
@@ -78,5 +88,38 @@ public class ExhaustionIncrease extends Feature {
 		//noinspection ConstantConditions
 		int amp = event.getEntity().getEffect(MobEffects.HUNGER).getAmplifier() + 1;
 		event.setAmount(event.getAmount() * (amp * 1f + 1));
+	}
+
+	/*
+	 * Sync exhaustion & saturation
+	 */
+	private static final Map<UUID, Float> lastExhaustionLevels = new HashMap<>();
+	private static final Map<UUID, Float> lastSaturationLevels = new HashMap<>();
+
+	@SubscribeEvent
+	public void onLivingTickEvent(LivingEvent.LivingTickEvent event) {
+		if (!(event.getEntity() instanceof ServerPlayer player))
+			return;
+		Float lastSaturationLevel = lastSaturationLevels.get(player.getUUID());
+		if (lastSaturationLevel == null || lastSaturationLevel != player.getFoodData().getSaturationLevel()) {
+			Object msg = new MessageSaturationSync(player.getFoodData().getSaturationLevel());
+			NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+			lastSaturationLevels.put(player.getUUID(), player.getFoodData().getSaturationLevel());
+		}
+		Float lastExhaustionLevel = lastExhaustionLevels.get(player.getUUID());
+		float exhaustionLevel = player.getFoodData().exhaustionLevel;
+		if (lastExhaustionLevel == null || Math.abs(lastExhaustionLevel - exhaustionLevel) >= 0.01f) {
+			Object msg = new MessageExhaustionSync(exhaustionLevel);
+			NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+			lastExhaustionLevels.put(player.getUUID(), exhaustionLevel);
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+		if (!(event.getEntity() instanceof ServerPlayer))
+			return;
+		lastExhaustionLevels.remove(event.getEntity().getUUID());
+		lastSaturationLevels.remove(event.getEntity().getUUID());
 	}
 }
