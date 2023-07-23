@@ -5,6 +5,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.mining.crafting.ForgeRecipe;
 import insane96mcp.survivalreimagined.module.mining.feature.Forging;
 import insane96mcp.survivalreimagined.module.mining.inventory.ForgeMenu;
+import insane96mcp.survivalreimagined.network.message.SyncForgeStatus;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -49,8 +50,8 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
     public static final int DATA_SMASHES_REQUIRED = 0;
     public static final int DATA_SMASHES = 1;
     protected NonNullList<ItemStack> items = NonNullList.withSize(ForgeMenu.SLOT_COUNT, ItemStack.EMPTY);
-    int smashesRequired;
-    int smashes;
+    public int smashesRequired;
+    public int smashes;
 
     protected final ContainerData dataAccess = new ContainerData() {
         public int get(int dataId) {
@@ -93,6 +94,9 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
         for(String s : compoundtag.getAllKeys()) {
             this.recipesUsed.put(new ResourceLocation(s), compoundtag.getInt(s));
         }
+
+        if (this.level instanceof ServerLevel serverLevel)
+            SyncForgeStatus.sync(serverLevel, this.getBlockPos(), this);
     }
 
     protected void saveAdditional(CompoundTag pTag) {
@@ -135,10 +139,16 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
             else {
                 pLevel.playSound(null, pPos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 0.5f, 1.7f);
             }
+
+            if (pLevel instanceof ServerLevel serverLevel)
+                SyncForgeStatus.sync(serverLevel, pBlockEntity.getBlockPos(), pBlockEntity);
             return true;
         }
         else {
             pBlockEntity.smashes = 0;
+
+            if (pLevel instanceof ServerLevel serverLevel)
+                SyncForgeStatus.sync(serverLevel, pBlockEntity.getBlockPos(), pBlockEntity);
             return false;
         }
     }
@@ -274,7 +284,8 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
             this.setChanged();
         }
 
-        //TODO Sync to client
+        if (this.level instanceof ServerLevel serverLevel)
+            SyncForgeStatus.sync(serverLevel, this.getBlockPos(), this);
     }
 
     @Override

@@ -10,10 +10,7 @@ import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
-import insane96mcp.survivalreimagined.module.mining.client.ForgeScreen;
-import insane96mcp.survivalreimagined.module.mining.client.MiningChargeRenderer;
-import insane96mcp.survivalreimagined.module.mining.client.MultiBlockBlastFurnaceScreen;
-import insane96mcp.survivalreimagined.module.mining.client.MultiBlockSoulBlastFurnaceScreen;
+import insane96mcp.survivalreimagined.module.mining.client.*;
 import insane96mcp.survivalreimagined.module.mining.feature.*;
 import insane96mcp.survivalreimagined.module.movement.feature.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Cloth;
@@ -226,6 +223,8 @@ public class ClientSetup {
         event.registerEntityRenderer(Fletching.EXPLOSIVE_ARROW.get(), SRArrowRenderer::new);
         event.registerEntityRenderer(Fletching.TORCH_ARROW.get(), SRArrowRenderer::new);
         event.registerEntityRenderer(MiningCharge.PRIMED_MINING_CHARGE.get(), MiningChargeRenderer::new);
+
+        event.registerBlockEntityRenderer(Forging.FORGE_BLOCK_ENTITY_TYPE.get(), ForgeRenderer::new);
     }
 
     static RecipeBookCategories BLAST_FURNACE_SEARCH = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "blast_furnace_search", new ItemStack(Items.COMPASS));

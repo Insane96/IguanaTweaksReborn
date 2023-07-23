@@ -32,7 +32,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class ForgeBlock extends BaseEntityBlock {
-    public static final String NO_RECIPE_LANG = SurvivalReimagined.MOD_ID + ".no_forge_recipe";
+    public static final String CANT_FORGE = SurvivalReimagined.MOD_ID + ".cant_forge";
 
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape BASE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D);
@@ -66,7 +66,7 @@ public class ForgeBlock extends BaseEntityBlock {
                 return InteractionResult.sidedSuccess(pLevel.isClientSide);
             }
             else if (!pLevel.isClientSide && !pPlayer.getCooldowns().isOnCooldown(forgeHammerItem)) {
-                pPlayer.displayClientMessage(Component.translatable(NO_RECIPE_LANG), true);
+                pPlayer.displayClientMessage(Component.translatable(CANT_FORGE), true);
             }
             if (!pPlayer.getCooldowns().isOnCooldown(forgeHammerItem))
                 return InteractionResult.SUCCESS;

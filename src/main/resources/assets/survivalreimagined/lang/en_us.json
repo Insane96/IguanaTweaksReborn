@@ -149,7 +149,7 @@
 	"block.survivalreimagined.durium_ore": "Durium Ore",
 	"block.survivalreimagined.deepslate_durium_ore": "Deepslate Durium Ore",
 
-	"survivalreimagined.no_forge_recipe": "No recipe found in the Forge",
+	"survivalreimagined.cant_forge": "Can't Forge, no recipe found or output slot occupied",
 	"survivalreimagined.hammer_cooldown": "%f Forge Cooldown",
 	"survivalreimagined.hammer_durability": "%f Durability Used",
 	"block.survivalreimagined.forge": "Forge",

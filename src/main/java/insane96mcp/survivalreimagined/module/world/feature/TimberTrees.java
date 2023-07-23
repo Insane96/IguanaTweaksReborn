@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.level.BlockEvent;
@@ -53,6 +54,8 @@ public class TimberTrees extends SRFeature {
     public void onBushesDamage(BlockEvent.BreakEvent event) {
         if (!this.isEnabled()
             || !event.getState().is(BlockTags.OVERWORLD_NATURAL_LOGS)
+            || !(event.getState().getBlock() instanceof RotatedPillarBlock)
+            || event.getState().getValue(RotatedPillarBlock.AXIS) != Direction.Axis.Y
             || (requiresAxe && !(event.getPlayer().getMainHandItem().getItem() instanceof AxeItem)))
             return;
 
@@ -78,8 +81,10 @@ public class TimberTrees extends SRFeature {
                 horizontalDistance = relative.getZ();
             horizontalDistance *= direction.getAxisDirection().opposite().getStep();
             BlockPos fallingBlockPos = pos.relative(direction, verticalDistance + horizontalDistance).above(horizontalDistance);
-            //TODO rotate logs
             BlockState state = event.getLevel().getBlockState(pos);
+            if (state.getBlock() instanceof RotatedPillarBlock) {
+                state = rotatePillar(state, direction.getAxis());
+            }
             SRFallingBlockEntity fallingBlock = new SRFallingBlockEntity((Level) event.getLevel(), fallingBlockPos, state);
             fallingBlock.move(MoverType.SELF, new Vec3(0, 0.1d * horizontalDistance, 0));
             //fallingBlock.setHurtsEntities(2f, 1024);
@@ -159,5 +164,25 @@ public class TimberTrees extends SRFeature {
 
     public static int xzDistance(BlockPos pos1, BlockPos pos2) {
         return pos1.atY(pos2.getY()).distManhattan(pos2);
+    }
+
+    public static BlockState rotatePillar(BlockState state, Direction.Axis axis) {
+        switch (axis) {
+            case X -> {
+                return switch (state.getValue(RotatedPillarBlock.AXIS)) {
+                    case X -> state.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Y);
+                    case Y -> state.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X);
+                    default -> state;
+                };
+            }
+            case Z -> {
+                return switch (state.getValue(RotatedPillarBlock.AXIS)) {
+                    case Y -> state.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Z);
+                    case Z -> state.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Y);
+                    default -> state;
+                };
+            }
+        }
+        return state;
     }
 }

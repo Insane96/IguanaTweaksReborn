@@ -14,6 +14,8 @@
 * Experience to level up has been drastically reduced (from `3 * next level` to `2 * next level + 5`)
   * Removed bonus experience from blocks, entities and any source. Bonus experience from XP Bottles is still active
 * Critical and Water Coolant enchantments now give off magic crit particles
+* Items in forge are now shown on the forge
+* You can now repair anvils by right-clicking them with an iron block
 * Levels required to repair an item are lowered by 30%
 * Forging now resets the durability of the tool
 * 50% of mobs has now xray (100% in hard mode), and instead of 16 (in normal) range, it's between 8 and 16 (in normal)

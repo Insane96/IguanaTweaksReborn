@@ -14,13 +14,21 @@ import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -73,6 +81,10 @@ public class Anvils extends SRFeature {
     ));
     public static final ArrayList<TwinIdTagMatcher> partialRepairItems = new ArrayList<>();
 
+    @Config
+    @Label(name = "Fix anvils with Iron Blocks")
+    public static Boolean allowFixingAnvils = true;
+
     public Anvils(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
         JSON_CONFIGS.add(new JsonConfig<>("anvil_partial_repair_items.json", partialRepairItems, PARTIAL_REPAIR_ITEMS, TwinIdTagMatcher.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.PARTIAL_REPAIR_ITEMS));
@@ -92,6 +104,28 @@ public class Anvils extends SRFeature {
                 return true;
         }
         return false;
+    }
+
+    @SubscribeEvent
+    public void onRightClickAnvil(PlayerInteractEvent.RightClickBlock event) {
+        if (!this.isEnabled()
+                || !allowFixingAnvils
+                || !event.getItemStack().is(Items.IRON_BLOCK))
+            return;
+
+        Direction direction = event.getLevel().getBlockState(event.getPos()).getValue(AnvilBlock.FACING);
+        boolean isChipped = event.getLevel().getBlockState(event.getPos()).is(Blocks.CHIPPED_ANVIL);
+        boolean isDamaged = event.getLevel().getBlockState(event.getPos()).is(Blocks.DAMAGED_ANVIL);
+        if (!isChipped && !isDamaged)
+            return;
+
+        event.setUseBlock(Event.Result.DENY);
+        event.setUseItem(Event.Result.DENY);
+        event.setResult(Event.Result.DENY);
+        event.setCanceled(true);
+        event.getItemStack().shrink(1);
+        event.getLevel().setBlockAndUpdate(event.getPos(), isChipped ? Blocks.ANVIL.defaultBlockState().setValue(AnvilBlock.FACING, direction) : Blocks.CHIPPED_ANVIL.defaultBlockState().setValue(AnvilBlock.FACING, direction));
+        event.getLevel().playSound(event.getEntity(), event.getPos(), SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1f, 1.5f);
     }
 
     @OnlyIn(Dist.CLIENT)
