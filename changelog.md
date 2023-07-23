@@ -17,6 +17,7 @@
 * Levels required to repair an item are lowered by 30%
 * Forging now resets the durability of the tool
 * 50% of mobs has now xray (100% in hard mode), and instead of 16 (in normal) range, it's between 8 and 16 (in normal)
+* Increased chance for creepers to be able to breach (7.5% -> 40%)
 * Easy Magic is now a recommended mod
   * Lets you re-roll enchantments, keeps items in enchanting table and ignores no collision blocks between enchanting table and bookshelves
 

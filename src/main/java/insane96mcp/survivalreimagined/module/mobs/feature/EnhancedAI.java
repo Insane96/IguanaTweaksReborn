@@ -26,6 +26,7 @@ public class EnhancedAI extends SRFeature {
         super.readConfig(event);
 
         Module.getFeature(CreeperSwell.class).setConfigOption("Walking Fuse Chance", 0.75d);
+        Module.getFeature(CreeperSwell.class).setConfigOption("Breach Chance", 0.4d);
         Module.getFeature(CreeperSwell.class).setConfigOption("Cena.Particles", false);
         Module.getFeature(CreeperSwell.class).setConfigOption("Cena.Explosion power", 3.0d);
         Module.getFeature(CreeperSwell.class).readConfig(event);
