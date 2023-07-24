@@ -40,5 +40,13 @@
             },
             "operation": "addition"
         }
-    ]
+    ],
+    "conditions": {
+        "advancements_done": [
+            {
+                "advancements": [ "minecraft:end/kill_dragon" ],
+                "player_mode": "any"
+            }
+        ]
+    }
 }
