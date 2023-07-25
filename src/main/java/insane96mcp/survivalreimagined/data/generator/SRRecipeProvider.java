@@ -160,36 +160,36 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ChainedCopperArmor.HELMET.get())
                 .pattern("cmc")
                 .pattern("m m")
-                .define('c', Items.CHAIN)
+                .define('c', Items.IRON_NUGGET)
                 .define('m', Items.COPPER_INGOT)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
-                .unlockedBy("has_chain", has(Items.CHAIN))
+                .unlockedBy("has_chain", has(Items.IRON_NUGGET))
                 .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ChainedCopperArmor.CHESTPLATE.get())
                 .pattern("c c")
                 .pattern("mcm")
                 .pattern("mmm")
-                .define('c', Items.CHAIN)
+                .define('c', Items.IRON_NUGGET)
                 .define('m', Items.COPPER_INGOT)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
-                .unlockedBy("has_chain", has(Items.CHAIN))
+                .unlockedBy("has_chain", has(Items.IRON_NUGGET))
                 .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ChainedCopperArmor.LEGGINGS.get())
                 .pattern("ccc")
                 .pattern("m m")
                 .pattern("m m")
-                .define('c', Items.CHAIN)
+                .define('c', Items.IRON_NUGGET)
                 .define('m', Items.COPPER_INGOT)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
-                .unlockedBy("has_chain", has(Items.CHAIN))
+                .unlockedBy("has_chain", has(Items.IRON_NUGGET))
                 .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ChainedCopperArmor.BOOTS.get())
                 .pattern("c c")
                 .pattern("m m")
-                .define('c', Items.CHAIN)
+                .define('c', Items.IRON_NUGGET)
                 .define('m', Items.COPPER_INGOT)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
-                .unlockedBy("has_chain", has(Items.CHAIN))
+                .unlockedBy("has_chain", has(Items.IRON_NUGGET))
                 .save(writer);
 
         //Chainmail Armor
@@ -510,7 +510,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         RecipeCategory.MISC,
                         Items.COPPER_INGOT,
                         0.7f,
-                        800
+                        400
                 )
                 .unlockedBy("has_copper_ore_rock", has(OreGeneration.COPPER_ORE_ROCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "copper_ingot_from_smelting_rock");
@@ -519,7 +519,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                         RecipeCategory.MISC,
                         Items.COPPER_INGOT,
                         0.7f,
-                        200
+                        100
                 )
                 .unlockedBy("has_copper_ore_rock", has(OreGeneration.COPPER_ORE_ROCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "copper_ingot_from_blasting_rock");

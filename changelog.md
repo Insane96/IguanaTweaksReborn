@@ -1,6 +1,7 @@
 # Changelog
 
 ## 0.12.4
+* Chained copper armor now requires nuggets instead of chains
 * Fixed combat test snapshot health regen changes not applying until config reload
 
 ## 0.12.3
