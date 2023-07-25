@@ -50,7 +50,7 @@ public class WeightedEquipment extends SRFeature {
 			new ArmorMaterialWeight("iron", 0.03d),
 			new ArmorMaterialWeight("survivalreimagined:solarium", 0.03d),
 			new ArmorMaterialWeight("survivalreimagined:durium", 0.04d),
-			new ArmorMaterialWeight("gold", 0.01d),
+			new ArmorMaterialWeight("gold", 0d),
 			new ArmorMaterialWeight("diamond", 0.06d),
 			new ArmorMaterialWeight("survivalreimagined:soul_steel", 0.08d),
 			new ArmorMaterialWeight("survivalreimagined:keego", 0.07d),
