@@ -119,6 +119,8 @@ public class HealthRegen extends Feature {
 			this.setConfigOption("Hunger Consumption Chance", 0.5d);
 
 			this.setConfigOption("Load Combat Test Config Options", false);
+
+			this.readConfig(event);
 		}
 	}
 

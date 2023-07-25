@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.4
+* Fixed combat test snapshot health regen changes not applying until config reload
+
 ## 0.12.3
 * Re-Enabled hunger
   * Slower poison has been moved to Misc.Misc
