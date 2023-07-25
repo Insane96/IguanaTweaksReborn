@@ -1,6 +1,8 @@
 # Changelog
 
 ## 0.12.4
+* Terrain slowdown is now enabled again with ice slowing down a lot
+* Players are now 5% slower
 * Chained copper armor now requires nuggets instead of chains
 * Fixed combat test snapshot health regen changes not applying until config reload
 
