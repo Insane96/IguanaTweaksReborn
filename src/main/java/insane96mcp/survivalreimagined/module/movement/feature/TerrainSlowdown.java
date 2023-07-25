@@ -4,6 +4,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.IdTagValue;
@@ -26,12 +27,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Label(name = "Terrain Slowdown", description = "Slowdown based off the terrain you're walking on. Custom Terrain Slowdown are controlled via json in this feature's folder")
-@LoadFeature(module = Modules.Ids.MOVEMENT, enabledByDefault = false)
+@LoadFeature(module = Modules.Ids.MOVEMENT)
 public class TerrainSlowdown extends SRFeature {
 	private static final UUID MATERIAL_SLOWDOWN_UUID = UUID.fromString("a849043f-b280-4789-bafd-5da8e8e1078e");
 
 	public static final ArrayList<IdTagValue> CUSTOM_TERRAIN_SLOWDOWN_DEFAULT = new ArrayList<>(List.of(
-
+		new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:ice", 0.55d)
 	));
 	public static final ArrayList<IdTagValue> customTerrainSlowdown = new ArrayList<>();
 	@Config

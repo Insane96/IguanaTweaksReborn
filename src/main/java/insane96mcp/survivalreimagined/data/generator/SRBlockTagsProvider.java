@@ -38,6 +38,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
     public static final TagKey<Block> DEPTH_MULTIPLIER_BLACKLIST = create("depth_multiplier_blacklist");
     public static final TagKey<Block> TALL_GRASS = create("tall_grass");
     public static final TagKey<Block> NO_BLOCK_XP_MULTIPLIER = create("no_block_xp_multiplier");
+    public static final TagKey<Block> GRASS_BLOCKS = create("grass_blocks");
 
     public SRBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, modId, existingFileHelper);
@@ -110,6 +111,9 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
 
         tag(TALL_GRASS)
                 .add(Blocks.GRASS).add(Blocks.TALL_GRASS).add(Blocks.FERN).add(Blocks.DEAD_BUSH);
+
+        tag(GRASS_BLOCKS)
+                .add(Blocks.GRASS_BLOCK, Blocks.PODZOL, Blocks.MYCELIUM);
 
         tag(NO_BLOCK_XP_MULTIPLIER);
         tag(BoneMeal.BLOCK_BLACKLIST);
