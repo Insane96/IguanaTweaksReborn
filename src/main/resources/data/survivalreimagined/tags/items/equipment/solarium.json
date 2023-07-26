@@ -3,6 +3,6 @@
     "values": [
         "#survivalreimagined:equipment/hand/solarium",
         "#survivalreimagined:equipment/armor/solarium",
-        "#survivalreimagined:equipment/shield/solarium"
+        "survivalreimagined:solarium_shield"
     ]
 }

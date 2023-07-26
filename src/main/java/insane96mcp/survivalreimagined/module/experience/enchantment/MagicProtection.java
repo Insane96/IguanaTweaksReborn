@@ -34,7 +34,7 @@ public class MagicProtection extends Enchantment {
 
     @Override
     public int getDamageProtection(int level, DamageSource source) {
-        return source.is(DamageTypes.MAGIC) ? level * 2 : 0;
+        return source.is(DamageTypes.MAGIC) || source.is(DamageTypes.INDIRECT_MAGIC) ? level * 2 : 0;
     }
 
     public boolean checkCompatibility(Enchantment other) {
