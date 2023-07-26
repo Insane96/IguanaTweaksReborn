@@ -368,6 +368,8 @@
 	"advancements.sr_story.toolbelt.description": "Obtain a tool belt. Place items in it by right click, equip it with 'V' and open the wheel with 'R'",
 	"advancements.sr_story.toolbelt_upgrade.title": "More slots for the belt",
 	"advancements.sr_story.toolbelt_upgrade.description": "Obtain a belt pouch and use an anvil to upgrade the Tool Belt",
+	"advancements.sr_story.woodcutter.title": "If a stone one exists ...",
+	"advancements.sr_story.woodcutter.description": "Obtain a Woodcutter",
 	"advancements.sr_story.hard_mode.title": "Hard Mode",
 	"advancements.sr_story.hard_mode.description": "You've unlocked Hard Mode. Mobs will drop more Experience but have buffed stats.",
 	"advancements.sr_story.unfair_oneshot.title": "Rolled a 20 on constitution",

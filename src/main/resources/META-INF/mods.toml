@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[44,)"
+loaderVersion="[45,46)"
 license="All rights reserved"
 [[mods]]
     modId="survivalreimagined"
@@ -23,7 +23,7 @@ license="All rights reserved"
 [[dependencies.survivalreimagined]]
     modId="forge"
     mandatory=true
-    versionRange="[44,)"
+    versionRange="[45,46)"
     ordering="NONE"
     side="BOTH"
 
@@ -94,5 +94,12 @@ license="All rights reserved"
     modId="easymagic"
     mandatory=false
     versionRange="[6.0.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.survivalreimagined]]
+    modId="corail_woodcutter"
+    mandatory=false
+    versionRange="[2.7.0,)"
     ordering="NONE"
     side="BOTH"
