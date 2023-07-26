@@ -185,7 +185,7 @@ public class EnchantmentsFeature extends SRFeature {
 		waterCoolantOnAttack(attacker, event.getEntity(), event);
 	}
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onCriticalHit(CriticalHitEvent event) {
 		if (!this.isEnabled())
 			return;
