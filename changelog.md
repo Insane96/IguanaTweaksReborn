@@ -6,6 +6,7 @@
 * Chained copper armor now requires nuggets instead of chains
 * Fixed combat test snapshot health regen changes not applying until config reload
 * If corail woodcutter is installed a new advancement will pop out
+* Removed random power (0.5) bonus damage
 
 ## 0.12.3
 * Re-Enabled hunger

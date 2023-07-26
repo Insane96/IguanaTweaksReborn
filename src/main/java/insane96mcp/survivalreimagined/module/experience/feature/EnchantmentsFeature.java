@@ -270,7 +270,7 @@ public class EnchantmentsFeature extends SRFeature {
 			if (powerLevel == 0)
 				return;
 			double powerReduction = 0.5d - powerEnchantmentDamage;
-			arrow.setBaseDamage(arrow.getBaseDamage() - (powerLevel * powerReduction + powerReduction));
+			arrow.setBaseDamage(arrow.getBaseDamage() - (powerLevel * powerReduction + 0.5d));
 		}
 	}
 
