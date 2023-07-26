@@ -4,9 +4,7 @@
         {
             "nbt_tag": "enhancedai:shooting_range",
             "type": "double",
-            "value": {
-                "value": 40
-            },
+            "value": 40,
             "persistent_data": true
         }
     ],

@@ -12,9 +12,7 @@
     },
     "scale_pehkui": [
         {
-            "scale": {
-                "value": 1.2
-            },
+            "scale": 1.2,
             "scale_types": [
                 "pehkui:width",
                 "pehkui:height"

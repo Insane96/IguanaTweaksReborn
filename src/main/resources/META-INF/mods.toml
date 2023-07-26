@@ -44,7 +44,7 @@ license="All rights reserved"
 [[dependencies.survivalreimagined]]
     modId="mobspropertiesrandomness"
     mandatory=true
-    versionRange="[4.3.0,)"
+    versionRange="[4.5.2,)"
     ordering="NONE"
     side="BOTH"
 
