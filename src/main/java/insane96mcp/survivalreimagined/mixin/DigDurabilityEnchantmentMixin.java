@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.experience.feature.UnbreakingOverhaul;
+import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.DigDurabilityEnchantment;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class DigDurabilityEnchantmentMixin {
 	@Inject(at = @At(value = "RETURN", ordinal = 1), method = "shouldIgnoreDurabilityDrop", cancellable = true)
 	private static void onGetMaxLevel(ItemStack stack, int lvl, RandomSource random, CallbackInfoReturnable<Boolean> cir) {
-		if (UnbreakingOverhaul.isTiConFormula()) {
+		if (EnchantmentsFeature.isUnbreakingOverhaul()) {
 			//Shamelessly stolen from TinkersConstruct/src/main/java/slimeknights/tconstruct/tools/modifiers/upgrades/general/ReinforcedModifier.java
 			float chance;
 			if (lvl < 5) {

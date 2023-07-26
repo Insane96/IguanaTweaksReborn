@@ -55,6 +55,12 @@ public class EnchantmentsFeature extends SRFeature {
 	@Label(name = "Infinity overhaul", description = "Infinity can go up to level 4. Each level makes an arrow have 1 in level+1 chance to not consume.")
 	public static Boolean infinityOverhaul = true;
 	@Config
+	@Label(name = "Less unbreakable unbreaking", description = "Unbreaking chance to not consume durability is changed from 50%/66.7%/75%/80%/... to 25%/45%/60%/70%/... (at levels I/II/III/IV)")
+	public static Boolean tiConFormula = true;
+	@Config
+	@Label(name = "Buff Thorns", description = "Thorns no longer damages items.")
+	public static Boolean buffThorns = true;
+	@Config
 	@Label(name = "Bane of SSSSS", description = "Enable Bane of SSSSS, similar to Bane of Arthropods deals more damage to Spiders but also creepers. Bane of arthropods is disabled via disabled_enchantments.json")
 	public static Boolean enableBaneOfSSSSS = true;
 
@@ -72,9 +78,6 @@ public class EnchantmentsFeature extends SRFeature {
 	@Config
 	@Label(name = "Buff Feather Falling", description = "Increases the damage protection from Feather Falling. From 12% per level to 16% per level")
 	public static Boolean buffFeatherFalling = true;
-	@Config
-	@Label(name = "Buff Thorns", description = "Thorns no longer damages items.")
-	public static Boolean buffThorns = true;
 
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
 			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:protection"),
@@ -88,7 +91,7 @@ public class EnchantmentsFeature extends SRFeature {
 
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<IdTagMatcher>>(){}.getType();
 
-	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+    public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 
 		JSON_CONFIGS.add(new SRFeature.JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, LIST_TYPE));
@@ -105,7 +108,11 @@ public class EnchantmentsFeature extends SRFeature {
 		return false;
 	}
 
-	@SubscribeEvent
+    public static boolean isUnbreakingOverhaul() {
+        return Feature.isEnabled(EnchantmentsFeature.class) && tiConFormula;
+    }
+
+    @SubscribeEvent
 	public void onAttributeModifiers(ItemAttributeModifierEvent event) {
 		if (!this.isEnabled())
 			return;
