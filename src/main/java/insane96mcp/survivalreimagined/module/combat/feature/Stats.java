@@ -92,6 +92,9 @@ public class Stats extends SRFeature {
 	@Label(name = "Reduce player attack range", description = "If true, player attack range is reduced by 0.5.")
 	public static Boolean reducePlayerAttackRange = true;
 	@Config
+	@Label(name = "Players movement speed reduction", description = "Reduces movement speed for players by this percentage.")
+	public static Double playersMovementSpeedReduction = 0.05d;
+	@Config
 	@Label(name = "Disable Crit Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
 	public static Boolean disableCritArrowsBonusDamage = true;
 
@@ -121,12 +124,13 @@ public class Stats extends SRFeature {
 	@SubscribeEvent
 	public void onPlayerJoinLevel(EntityJoinLevelEvent event) {
 		if (!this.isEnabled()
-				|| !reducePlayerAttackRange
 				|| !(event.getEntity() instanceof Player player))
 			return;
 
-		MCUtils.applyModifier(player, ForgeMod.ENTITY_REACH.get(), ATTACK_RANGE_REDUCTION_UUID, "Entity Reach reduction", -0.5d, AttributeModifier.Operation.ADDITION, false);
-		MCUtils.applyModifier(player, Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_REDUCTION_UUID, "Movement Speed reduction", -0.05d, AttributeModifier.Operation.MULTIPLY_BASE, false);
+		if (reducePlayerAttackRange)
+			MCUtils.applyModifier(player, ForgeMod.ENTITY_REACH.get(), ATTACK_RANGE_REDUCTION_UUID, "Entity Reach reduction", -0.5d, AttributeModifier.Operation.ADDITION, false);
+		if (playersMovementSpeedReduction != 0d)
+			MCUtils.applyModifier(player, Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_REDUCTION_UUID, "Movement Speed reduction", -playersMovementSpeedReduction, AttributeModifier.Operation.MULTIPLY_BASE, false);
 	}
 
 	@Override
