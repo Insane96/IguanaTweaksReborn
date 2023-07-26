@@ -35,7 +35,7 @@ public class Critical extends Enchantment {
     }
 
     public static float getCritAmount(int lvl, float baseCrit) {
-        return lvl * (baseCrit - 1) + 1;
+        return lvl * (baseCrit - 1) + 1 + (baseCrit - 1);
     }
 
     @Override
