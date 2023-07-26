@@ -10,6 +10,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.SyncInvulnerableTimeMessage;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -38,7 +39,7 @@ public class AttackInvincibility extends Feature {
 				|| !invincibilityFramesAttackSpeed
 				|| !(event.getDamageSource().getEntity() instanceof ServerPlayer serverPlayer)
 				|| serverPlayer.getAttribute(Attributes.ATTACK_SPEED).getValue() < 2f
-				/*|| (invincibilityFramesAttackSpeed && serverPlayer.getMainHandItem().getAttributeModifiers(EquipmentSlot.MAINHAND).isEmpty())*/)
+				|| !serverPlayer.getMainHandItem().getAttributeModifiers(EquipmentSlot.MAINHAND).containsKey(Attributes.ATTACK_SPEED))
 			return;
 
 		int time = (int) ((1f / serverPlayer.getAttribute(Attributes.ATTACK_SPEED).getValue()) * 20);
