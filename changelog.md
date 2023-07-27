@@ -1,6 +1,12 @@
 # Changelog
 
 ## 0.12.4
+* Small Thorns overhaul
+  * Incompatible with Protections, it now triggers each time instead of a random chance and deals damage based off 
+  * Still doesn't damage armor when triggered
+* Made repairing smithen items even better
+  * Items are now repaired for 50% durability when using the material of the tool (instead of 25%)
+  * Items can now be partially repaired up to 50% instead of 75%
 * Terrain slowdown is now enabled again with ice slowing down a lot
 * Players are now 5% slower
 * Chained copper armor now requires nuggets instead of chains

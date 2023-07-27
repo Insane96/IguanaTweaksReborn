@@ -88,12 +88,13 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		if (!right.isEmpty()) {
 			if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player)) return;
 			isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
-			boolean isPartialRepairItem = Anvils.isPartialRepairItem(resultStack, right);
+			boolean isPartialRepairItem = Anvils.isPartialRepairItem(left, right);
+			boolean isBetterRepairItem = Anvils.isBetterRepairItem(left);
 			if (resultStack.isDamageableItem() && (resultStack.getItem().isValidRepairItem(left, right) || isPartialRepairItem)) {
 				int repairItemCountCost;
-				//If it's a partial repair item, repair up to 75% of max durability
+				//If it's a partial repair item, repair up to 50% of max durability
 				if (isPartialRepairItem) {
-					int maxPartialRepairDurLeft = (int) (resultStack.getMaxDamage() * 0.25f);
+					int maxPartialRepairDurLeft = (int) (resultStack.getMaxDamage() * 0.5f);
 					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
 					if (repairSteps <= 0) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
@@ -111,7 +112,10 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 				}
 				//Otherwise, vanilla behaviour
 				else {
-					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
+					int repairStepsAmount = 4;
+					if (isBetterRepairItem)
+						repairStepsAmount = 2;
+					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / repairStepsAmount);
 					if (repairSteps <= 0) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
 						this.cost.set(0);
@@ -123,7 +127,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 						resultStack.setDamageValue(dmgAfterRepair);
 						if (!Anvils.noRepairCostIncreaseAndEnchCost)
 							++mergeCost;
-						repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
+						repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / repairStepsAmount);
 					}
 				}
 

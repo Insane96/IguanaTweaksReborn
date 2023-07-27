@@ -66,8 +66,8 @@ public class Anvils extends SRFeature {
     @Label(name = "Repair cost multiplier", description = "Multiplier for the levels required to repair an item.")
     public static Double repairCostMultiplier = 0.70d;
     @Config
-    @Label(name = "Partially repair Smithed items with base material", description = "E.g. Netherite Tools can be repaired up to 75% of max durability with Diamonds. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
-    public static Boolean partiallyRepairUpgradedItemsWithBaseMaterial = true;
+    @Label(name = "Better Smithed Items Repair", description = "With this enabled, Netherite tools can be repaired up to 50% of max durability with Diamonds, and also a Netherite ingot would repair 50% durability instead of 25%. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
+    public static Boolean betterSmithedItemsRepair = true;
     public static final ArrayList<TwinIdTagMatcher> PARTIAL_REPAIR_ITEMS = new ArrayList<>(List.of(
             new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", IdTagMatcher.Type.ID,"minecraft:diamond"),
             new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/netherite", IdTagMatcher.Type.ID,"minecraft:diamond"),
@@ -102,11 +102,23 @@ public class Anvils extends SRFeature {
 
     public static boolean isPartialRepairItem(ItemStack left, ItemStack right) {
         if (!Feature.isEnabled(Anvils.class)
-                || !partiallyRepairUpgradedItemsWithBaseMaterial)
+                || !betterSmithedItemsRepair)
             return false;
 
         for (TwinIdTagMatcher anvilRepairItem : partialRepairItems) {
             if (anvilRepairItem.matchesItems(left.getItem(), right.getItem()))
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean isBetterRepairItem(ItemStack left) {
+        if (!Feature.isEnabled(Anvils.class)
+                || !betterSmithedItemsRepair)
+            return false;
+
+        for (TwinIdTagMatcher anvilRepairItem : partialRepairItems) {
+            if (anvilRepairItem.idTagMatcherA.matchesItem(left.getItem()))
                 return true;
         }
         return false;
@@ -138,7 +150,7 @@ public class Anvils extends SRFeature {
     @SubscribeEvent
     public void onTooltip(ItemTooltipEvent event) {
         if (!this.isEnabled()
-                || !partiallyRepairUpgradedItemsWithBaseMaterial)
+                || !betterSmithedItemsRepair)
             return;
 
         Minecraft mc = Minecraft.getInstance();

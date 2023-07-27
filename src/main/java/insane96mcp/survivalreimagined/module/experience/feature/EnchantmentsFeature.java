@@ -1,6 +1,5 @@
 package insane96mcp.survivalreimagined.module.experience.feature;
 
-import com.google.gson.reflect.TypeToken;
 import com.mojang.blaze3d.platform.InputConstants;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -89,12 +88,10 @@ public class EnchantmentsFeature extends SRFeature {
 	));
 	public static final ArrayList<IdTagMatcher> disabledEnchantments = new ArrayList<>();
 
-	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<IdTagMatcher>>(){}.getType();
-
-    public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 
-		JSON_CONFIGS.add(new SRFeature.JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, LIST_TYPE));
+		JSON_CONFIGS.add(new SRFeature.JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, Utils.ID_TAG_MATCHER_LIST_TYPE));
 	}
 
 	public static boolean isEnchantmentDisabled(Enchantment enchantment) {

@@ -1,5 +1,7 @@
 package insane96mcp.survivalreimagined.utils;
 
+import com.google.gson.reflect.TypeToken;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -13,9 +15,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Utils {
+    public static final java.lang.reflect.Type ID_TAG_MATCHER_LIST_TYPE = new TypeToken<ArrayList<IdTagMatcher>>(){}.getType();
+
     public static boolean isItemInTag(Item item, ResourceLocation tag) {
         TagKey<Item> tagKey = TagKey.create(Registries.ITEM, tag);
         //noinspection ConstantConditions
