@@ -7,6 +7,7 @@
 * Made repairing smithen items even better
   * Items are now repaired for 50% durability when using the material of the tool (instead of 25%)
   * Items can now be partially repaired up to 50% instead of 75%
+* Experience obtained is now increased by 25%
 * Terrain slowdown is now enabled again with ice slowing down a lot
 * Players are now 5% slower
 * Chained copper armor now requires nuggets instead of chains
