@@ -58,8 +58,8 @@ public class EnchantmentsFeature extends SRFeature {
 	@Label(name = "Less unbreakable unbreaking", description = "Unbreaking chance to not consume durability is changed from 50%/66.7%/75%/80%/... to 25%/45%/60%/70%/... (at levels I/II/III/IV)")
 	public static Boolean tiConFormula = true;
 	@Config
-	@Label(name = "Buff Thorns", description = "Thorns no longer damages items.")
-	public static Boolean buffThorns = true;
+	@Label(name = "Small Thorns Overhaul", description = "Thorns is no longer compatible with other protections, but deals damage every time (higher levels deal more damage) and no longer damages items.")
+	public static Boolean thornsOverhaul = true;
 	@Config
 	@Label(name = "Bane of SSSSS", description = "Enable Bane of SSSSS, similar to Bane of Arthropods deals more damage to Spiders but also creepers. Bane of arthropods is disabled via disabled_enchantments.json")
 	public static Boolean enableBaneOfSSSSS = true;
@@ -108,9 +108,13 @@ public class EnchantmentsFeature extends SRFeature {
 		return false;
 	}
 
-    public static boolean isUnbreakingOverhaul() {
-        return Feature.isEnabled(EnchantmentsFeature.class) && tiConFormula;
-    }
+	public static boolean isUnbreakingOverhaul() {
+		return Feature.isEnabled(EnchantmentsFeature.class) && tiConFormula;
+	}
+
+	public static boolean isThornsOverhaul() {
+		return Feature.isEnabled(EnchantmentsFeature.class) && thornsOverhaul;
+	}
 
     @SubscribeEvent
 	public void onAttributeModifiers(ItemAttributeModifierEvent event) {

@@ -1,9 +1,12 @@
 package insane96mcp.survivalreimagined.mixin;
 
+import insane96mcp.survivalreimagined.module.experience.enchantment.MagicProtection;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.ArrowInfiniteEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ProtectionEnchantment;
+import net.minecraft.world.item.enchantment.ThornsEnchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -46,5 +49,17 @@ public class EnchantmentMixin {
 		//noinspection ConstantValue
 		if (EnchantmentsFeature.isInfinityOverhaulEnabled() && ((Enchantment)(Object) this) instanceof ArrowInfiniteEnchantment)
 			cir.setReturnValue(4);
+	}
+
+	@Inject(at = @At("RETURN"), method = "checkCompatibility", cancellable = true)
+	private void onCheckCompatibility(Enchantment other, CallbackInfoReturnable<Boolean> cir) {
+		if (!EnchantmentsFeature.isThornsOverhaul())
+			return;
+		//noinspection ConstantValue
+		if (((Enchantment)(Object) this) instanceof ThornsEnchantment) {
+			if ((other instanceof ProtectionEnchantment protectionEnchantment && protectionEnchantment.type != ProtectionEnchantment.Type.FALL)
+					|| other instanceof MagicProtection)
+				cir.setReturnValue(false);
+		}
 	}
 }
