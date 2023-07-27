@@ -11,7 +11,6 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.event.CakeEatEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.movement.feature.Stamina;
@@ -28,7 +27,6 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -62,8 +60,6 @@ public class NoHunger extends Feature {
     private static final String FOOD_STATS_LANG = SurvivalReimagined.MOD_ID + ".food_stats";
     private static final String FOOD_STATS_PERCENTAGE_LANG = SurvivalReimagined.MOD_ID + ".food_stats_percentage";
 
-    public static final TagKey<Item> RAW_FOOD = SRItemTagsProvider.create("raw_food");
-
     @Config
     @Label(name = "Passive Health Regen.Enable Passive Health Regen", description = "If true, Passive Regeneration is enabled")
     public static Boolean enablePassiveRegen = false;
@@ -82,9 +78,6 @@ public class NoHunger extends Feature {
     @Config
     @Label(name = "Raw food.Heal Multiplier", description = "If true, raw food will heal by this percentage (this is applied after 'Food Heal.Health Multiplier'). Raw food is defined in the survivalreimagined:raw_food tag")
     public static Double rawFoodHealPercentage = 1d;
-    @Config(min = 0d, max = 1f)
-    @Label(name = "Raw food.Poison Chance", description = "Raw food has this chance to poison the player. Raw food is defined in the survivalreimagined:raw_food tag")
-    public static Double rawFoodPoisonChance = 0.7d;
 
     @Config
     @Label(name = "Convert Hunger to Weakness", description = "If true, Hunger effect is replaced by Weakness")
@@ -174,11 +167,7 @@ public class NoHunger extends Feature {
     public void healOnEat(Player player, @Nullable Item item, FoodProperties foodProperties) {
         if (foodHealHealthMultiplier == 0d)
             return;
-        boolean isRawFood = item != null && isRawFood(item);
-        if (player.getRandom().nextDouble() < rawFoodPoisonChance && isRawFood) {
-            player.addEffect(new MobEffectInstance(MobEffects.POISON, foodProperties.getNutrition() * 20 * 3));
-            return;
-        }
+        boolean isRawFood = item != null && FoodDrinks.isRawFood(item);
 
         float heal = getFoodHealing(foodProperties);
         if (buffCakes && item == null)
@@ -280,10 +269,6 @@ public class NoHunger extends Feature {
             Object msg = new MessageFoodRegenSync(amount);
             NetworkHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
-    }
-
-    public static boolean isRawFood(Item item) {
-        return Utils.isItemInTag(item, RAW_FOOD);
     }
 
     @OnlyIn(Dist.CLIENT)

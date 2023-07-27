@@ -13,6 +13,7 @@
 * Fixed combat test snapshot health regen changes not applying until config reload
 * If corail woodcutter is installed a new advancement will pop out
 * Removed random power (0.5) bonus damage
+* Poisonus raw food is now part of Food & Drinks instead of No Hunger
 
 ## 0.12.3
 * Re-Enabled hunger

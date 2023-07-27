@@ -20,6 +20,8 @@ import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -28,6 +30,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -38,6 +41,8 @@ import java.util.List;
 @Label(name = "Foods & Drinks", description = "Changes to food nourishment and the speed on how food is eaten or how items are consumed. Custom Food Properties are controlled via json in this feature's folder. Removing entries from the json requires a minecraft restart.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class FoodDrinks extends SRFeature {
+
+	public static final TagKey<Item> RAW_FOOD = SRItemTagsProvider.create("raw_food");
 
 	public static final RegistryObject<Item> BROWN_MUSHROOM_STEW = SRItems.REGISTRY.register("brown_mushroom_stew", () -> new BowlFoodItem(new Item.Properties()
 			.food(new FoodProperties.Builder().nutrition(3).saturationMod(0.6F).build())
@@ -87,6 +92,10 @@ public class FoodDrinks extends SRFeature {
 	@Label(name = "No Furnace food and smoker recipe", description = "Food can no longer be smelted in furnaces and change smokers recipe to require Mithril ingot.")
 	public static Boolean noFurnaceFoodAndSmokerRecipe = true;
 
+	@Config(min = 0d, max = 1f)
+	@Label(name = "Raw food Poison Chance", description = "Raw food has this chance to poison the player. Raw food is defined in the survivalreimagined:raw_food tag")
+	public static Double rawFoodPoisonChance = 0.7d;
+
 	public FoodDrinks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_food_in_furnace", Component.literal("Survival Reimagined No Food in Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && noFurnaceFoodAndSmokerRecipe));
@@ -103,6 +112,21 @@ public class FoodDrinks extends SRFeature {
 
 	public static void handleCustomFoodPropertiesPacket(String json) {
 		loadAndReadJson(json, customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, CustomFoodProperties.LIST_TYPE);
+	}
+
+	@SubscribeEvent
+	public void onPlayerEat(LivingEntityUseItemEvent.Finish event) {
+		if (!this.isEnabled()
+				|| !event.getItem().isEdible()
+				|| !(event.getEntity() instanceof Player player)
+				|| event.getEntity().level.isClientSide)
+			return;
+
+		Item item = event.getItem().getItem();
+		if (player.getRandom().nextDouble() < rawFoodPoisonChance && isRawFood(item)) {
+			//noinspection DataFlowIssue
+			player.addEffect(new MobEffectInstance(MobEffects.POISON, item.getFoodProperties(event.getItem(), player).getNutrition() * 20 * 3));
+		}
 	}
 
 	private static CustomFoodProperties customFoodPropertiesCache;
@@ -201,5 +225,9 @@ public class FoodDrinks extends SRFeature {
 
 		//reset cache when reloading
 		customFoodPropertiesCache = null;
+	}
+
+	public static boolean isRawFood(Item item) {
+		return Utils.isItemInTag(item, RAW_FOOD);
 	}
 }

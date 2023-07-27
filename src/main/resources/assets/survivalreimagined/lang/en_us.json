@@ -54,6 +54,7 @@
 	"item.survivalreimagined.red_mushroom_stew": "Red Mushroom Stew",
 	"item.survivalreimagined.over_easy_egg": "Over Easy Egg",
 	"item.survivalreimagined.pumpkin_pulp": "Pumpkin Pulp",
+	"survivalreimagined.subtitle.injured": "Player gets injured",
 
 
 	"survivalreimagined:items_module": "Items",
@@ -372,7 +373,7 @@
 	"advancements.sr_story.woodcutter.description": "Obtain a Woodcutter",
 	"advancements.sr_story.hard_mode.title": "Hard Mode",
 	"advancements.sr_story.hard_mode.description": "You've unlocked Hard Mode. Mobs will drop more Experience but have buffed stats.",
-	"advancements.sr_story.unfair_oneshot.title": "Rolled a 20 on constitution",
+	"advancements.sr_story.unfair_oneshot.title": "Critical success on constitution",
 	"advancements.sr_story.unfair_oneshot.description": "If you get hit for enough damage that would kill you when your health is above 7.5 hearts, that's an unfair one-shot and you're left with half a heart",
 
 	"advancements.sr_nether.soul_blast_furnace.title": "Is this a duplication glitch?",

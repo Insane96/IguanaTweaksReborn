@@ -6,7 +6,6 @@ import insane96mcp.survivalreimagined.module.combat.feature.Knockback;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Hoes;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
-import insane96mcp.survivalreimagined.module.hungerhealth.feature.NoHunger;
 import insane96mcp.survivalreimagined.module.items.feature.CopperTools;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.items.feature.ItemStats;
@@ -62,7 +61,7 @@ public class SRItemTagsProvider extends ItemTagsProvider {
         tag(Spawners.SPAWNER_REACTIVATOR)
                 .add(Items.ECHO_SHARD);
 
-        tag(NoHunger.RAW_FOOD)
+        tag(FoodDrinks.RAW_FOOD)
                 .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT);
 
         tag(StackSizes.NO_STACK_SIZE_CHANGES)

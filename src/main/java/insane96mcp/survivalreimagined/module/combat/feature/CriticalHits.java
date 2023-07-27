@@ -12,12 +12,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Critical Hits")
 @LoadFeature(module = Modules.Ids.COMBAT)
-public class Critical extends Feature {
+public class CriticalHits extends Feature {
 	@Config(min = 0d)
 	@Label(name = "Critical hit damage multiplier", description = "How much damage a critical hit does. Vanilla is 1.5")
 	public static Double critDamageMultiplier = 1.30d;
 
-	public Critical(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public CriticalHits(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
