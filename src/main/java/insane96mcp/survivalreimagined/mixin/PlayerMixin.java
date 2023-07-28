@@ -1,7 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.survivalreimagined.event.SREventFactory;
-import insane96mcp.survivalreimagined.module.combat.feature.Knockback;
 import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.experience.feature.PlayerExperience;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
@@ -17,7 +16,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -74,10 +72,5 @@ public abstract class PlayerMixin extends LivingEntity {
 	@Inject(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setHealth(F)V", shift = At.Shift.AFTER))
 	private void onPostDamage(DamageSource damageSource, float amount, CallbackInfo ci) {
 		SREventFactory.onPostHurtEntity(this, damageSource, amount);
-	}
-
-	@ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;knockback(DDD)V", ordinal = 0), index = 0)
-	private double adjustKnockback(double strength) {
-		return Knockback.onKnockback((Player)(Object) this, strength);
 	}
 }

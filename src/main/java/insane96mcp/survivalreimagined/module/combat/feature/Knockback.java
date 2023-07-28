@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -50,9 +51,15 @@ public class Knockback extends Feature {
 		player.getPersistentData().putInt(Strings.Tags.TIME_SINCE_LAST_SWING, player.attackStrengthTicker);
 	}
 
-	public static double onKnockback(Player player, double strength) {
-		if (!Feature.isEnabled(Knockback.class)
-				|| player.getAbilities().instabuild) return strength;
+	@SubscribeEvent
+	public void onKnockback(LivingKnockBackEvent event) {
+		if (!this.isEnabled()
+				|| event.getEntity().lastHurtByPlayer == null
+				|| event.getEntity().lastHurtByPlayerTime != 100
+				|| !(event.getEntity().getLastHurtByMob() instanceof Player player)
+				|| player.getAbilities().instabuild)
+			return;
+
 		ItemStack itemStack = player.getMainHandItem();
 
 		boolean isInTag = Utils.isItemInTag(itemStack.getItem(), REDUCED_KNOCKBACK);
@@ -67,7 +74,6 @@ public class Knockback extends Feature {
 		if (cooldown <= 0.9f)
 			reducedKnockback = true;
 		if (reducedKnockback)
-			return strength * knockbackReduction;
-		return strength;
+			event.setStrength(event.getStrength() * knockbackReduction.floatValue());
 	}
 }
