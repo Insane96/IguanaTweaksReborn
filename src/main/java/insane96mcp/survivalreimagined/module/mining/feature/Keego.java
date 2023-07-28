@@ -34,8 +34,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -61,7 +60,7 @@ public class Keego extends Feature {
 	public static final SimpleBlockWithItem ORE = SimpleBlockWithItem.register("keego_ore", () -> new KeegoOreBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).strength(-1f, 9f), UniformInt.of(10, 15)));
 	public static final RegistryObject<Item> SHARD = SRItems.REGISTRY.register("keego_shard", () -> new Item(new Item.Properties()));
 
-	public static final SimpleBlockWithItem BLOCK = SimpleBlockWithItem.register("keego_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
+	public static final SimpleBlockWithItem BLOCK = SimpleBlockWithItem.register("keego_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
 
 	public static final RegistryObject<Item> GEM = SRItems.REGISTRY.register("keego", () -> new Item(new Item.Properties()));
 
@@ -125,7 +124,7 @@ public class Keego extends Feature {
 	@SubscribeEvent
 	public void onMoving(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
-				|| event.player.level.isClientSide
+				|| event.player.level().isClientSide
 				|| event.player.isCrouching()
 				|| event.phase == TickEvent.Phase.START
 				|| event.player.getAbilities().instabuild)

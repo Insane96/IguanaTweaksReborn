@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:blast_furnace/recycle_diamond_chestplate"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

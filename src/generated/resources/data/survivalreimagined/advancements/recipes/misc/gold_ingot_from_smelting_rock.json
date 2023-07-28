@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:gold_ingot_from_smelting_rock"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

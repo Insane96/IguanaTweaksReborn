@@ -27,8 +27,8 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.GlowLichenBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -42,7 +42,7 @@ public class Solarium extends Feature {
 
 	public static final TagKey<Item> SOLARIUM_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/solarium"));
 
-	public static final SimpleBlockWithItem SOLIUM_MOSS = SimpleBlockWithItem.register("solium_moss", () -> new SoliumMossBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.GLOW_LICHEN).noCollission().strength(0.4F).sound(SoundType.GLOW_LICHEN).lightLevel(GlowLichenBlock.emission(9)).randomTicks()));
+	public static final SimpleBlockWithItem SOLIUM_MOSS = SimpleBlockWithItem.register("solium_moss", () -> new SoliumMossBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_YELLOW).pushReaction(PushReaction.DESTROY).noCollission().strength(0.4F).sound(SoundType.GLOW_LICHEN).lightLevel(GlowLichenBlock.emission(9)).randomTicks()));
 	public static final RegistryObject<Item> SOLARIUM_BALL = SRItems.REGISTRY.register("solarium_ball", () -> new Item(new Item.Properties()));
 
 	public static final ILItemTier ITEM_TIER = new ILItemTier(2, 307, 5.5f, 1.5f, 12, () -> Ingredient.of(SOLARIUM_BALL.get()));
@@ -88,15 +88,15 @@ public class Solarium extends Feature {
 		if (!this.isEnabled()
 				|| !event.getStack().is(SOLARIUM_EQUIPMENT)
 				|| event.getPlayer() == null
-				|| !event.getPlayer().getLevel().canSeeSky(event.getPlayer().blockPosition()))
+				|| !event.getPlayer().level().canSeeSky(event.getPlayer().blockPosition()))
 			return;
 
-		int skyLight = event.getPlayer().getLevel().getBrightness(LightLayer.SKY, event.getPlayer().blockPosition());
-		if (event.getPlayer().getLevel().getDayTime() % 24000 > 12542)
+		int skyLight = event.getPlayer().level().getBrightness(LightLayer.SKY, event.getPlayer().blockPosition());
+		if (event.getPlayer().level().getDayTime() % 24000 > 12542)
 			skyLight /= 2;
-		if (event.getPlayer().getLevel().isRaining())
+		if (event.getPlayer().level().isRaining())
 			skyLight /= 2;
-		if (event.getPlayer().getLevel().isThundering())
+		if (event.getPlayer().level().isThundering())
 			skyLight /= 2;
 		int amount = event.getAmount();
 		int newAmount = 0;

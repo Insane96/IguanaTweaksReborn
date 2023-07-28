@@ -25,7 +25,7 @@ public class SeasonChangedTrigger extends SimpleCriterionTrigger<SeasonChangedTr
 	public static SeasonChangedTrigger TRIGGER = CriteriaTriggers.register(new SeasonChangedTrigger());
 
 	@Override
-	protected TriggerInstance createInstance(JsonObject jsonObject, EntityPredicate.Composite entityPredicateComposite, DeserializationContext context) {
+	protected TriggerInstance createInstance(JsonObject jsonObject, ContextAwarePredicate pPredicate, DeserializationContext context) {
 		List<Season.SubSeason> seasons = new ArrayList<>();
 		if (jsonObject.has("seasons")) {
 			JsonArray jsonArray = GsonHelper.getAsJsonArray(jsonObject, "seasons");
@@ -36,7 +36,7 @@ public class SeasonChangedTrigger extends SimpleCriterionTrigger<SeasonChangedTr
 				}
 			}
 		}
-		return new TriggerInstance(entityPredicateComposite, seasons);
+		return new TriggerInstance(pPredicate, seasons);
 	}
 
 	@Override
@@ -58,8 +58,8 @@ public class SeasonChangedTrigger extends SimpleCriterionTrigger<SeasonChangedTr
 
 	public static class TriggerInstance extends AbstractCriterionTriggerInstance {
 		public List<Season.SubSeason> seasons;
-		public TriggerInstance(EntityPredicate.Composite composite, List<Season.SubSeason> seasons) {
-			super(ID, composite);
+		public TriggerInstance(ContextAwarePredicate pPredicate, List<Season.SubSeason> seasons) {
+			super(ID, pPredicate);
 			this.seasons = seasons;
 		}
 

@@ -49,7 +49,7 @@ public class ForgeResultSlot extends Slot {
     }
 
     protected void checkTakeAchievements(ItemStack pStack) {
-        pStack.onCraftedBy(this.player.level, this.player, this.removeCount);
+        pStack.onCraftedBy(this.player.level(), this.player, this.removeCount);
         if (this.player instanceof ServerPlayer && this.container instanceof ForgeBlockEntity forgeBlockEntity) {
             forgeBlockEntity.awardUsedRecipesAndPopExperience((ServerPlayer)this.player);
         }

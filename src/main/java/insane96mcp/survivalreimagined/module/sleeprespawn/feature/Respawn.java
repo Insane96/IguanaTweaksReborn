@@ -22,8 +22,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -48,7 +48,7 @@ public class Respawn extends SRFeature {
 	@Label(name = "Loose Bed Spawn Range", description = "The range from beds where players will respawn.")
 	public static MinMax looseBedSpawnRange = new MinMax(128d, 192d);
 
-	public static final SimpleBlockWithItem RESPAWN_OBELISK = SimpleBlockWithItem.register("respawn_obelisk", () -> new RespawnObeliskBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops().strength(50.0F, 1200.0F).lightLevel(RespawnObeliskBlock::lightLevel)));
+	public static final SimpleBlockWithItem RESPAWN_OBELISK = SimpleBlockWithItem.register("respawn_obelisk", () -> new RespawnObeliskBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(50.0F, 1200.0F).lightLevel(RespawnObeliskBlock::lightLevel)));
 
 	public static final ArrayList<IdTagValue> RESPAWN_OBELISK_CATALYSTS_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_block", 0.75d),
@@ -100,7 +100,7 @@ public class Respawn extends SRFeature {
 		if (pos != null)
 			return null;
 
-		return getSpawnPositionInRange(player.level.getSharedSpawnPos(), looseWorldSpawnRange, player.level, player.level.random);
+		return getSpawnPositionInRange(player.level().getSharedSpawnPos(), looseWorldSpawnRange, player.level(), player.level().random);
 	}
 
 	@Nullable
@@ -111,10 +111,10 @@ public class Respawn extends SRFeature {
 		ServerPlayer player = (ServerPlayer) event.getEntity();
 		BlockPos pos = player.getRespawnPosition();
 		if (pos == null
-				|| !event.getEntity().getLevel().getBlockState(pos).is(BlockTags.BEDS))
+				|| !event.getEntity().level().getBlockState(pos).is(BlockTags.BEDS))
 			return null;
 
-		return getSpawnPositionInRange(pos, looseBedSpawnRange, player.level, player.level.random);
+		return getSpawnPositionInRange(pos, looseBedSpawnRange, player.level(), player.level().random);
 	}
 
 	@Nullable
@@ -138,7 +138,7 @@ public class Respawn extends SRFeature {
 				//Discard if there's lava below
 				if (stateBelow.getFluidState().is(FluidTags.LAVA))
 					break;
-				if (stateBelow.getMaterial().blocksMotion() || !stateBelow.getFluidState().isEmpty()) {
+				if (stateBelow.blocksMotion() || !stateBelow.getFluidState().isEmpty()) {
 					foundValidY = true;
 					break;
 				}
@@ -158,14 +158,14 @@ public class Respawn extends SRFeature {
 		ServerPlayer player = (ServerPlayer) event.getEntity();
 		BlockPos pos = player.getRespawnPosition();
 		if (pos == null
-				|| !event.getEntity().getLevel().getBlockState(pos).is(RESPAWN_OBELISK.block().get()))
+				|| !event.getEntity().level().getBlockState(pos).is(RESPAWN_OBELISK.block().get()))
 			return;
 
-		if (!event.getEntity().getLevel().getBlockState(pos).getValue(RespawnObeliskBlock.ENABLED)) {
+		if (!event.getEntity().level().getBlockState(pos).getValue(RespawnObeliskBlock.ENABLED)) {
 			player.sendSystemMessage(Component.translatable(FAIL_RESPAWN_OBELISK_LANG));
 			return;
 		}
-		RespawnObeliskBlock.onObeliskRespawn(event.getEntity(), event.getEntity().level, pos);
+		RespawnObeliskBlock.onObeliskRespawn(event.getEntity(), event.getEntity().level(), pos);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOW)
@@ -174,7 +174,7 @@ public class Respawn extends SRFeature {
 				|| event.isForced()
 				|| looseBedSpawnRange.min == 0d
 				|| event.getNewSpawn() == null
-				|| !event.getEntity().getLevel().getBlockState(event.getNewSpawn()).is(BlockTags.BEDS))
+				|| !event.getEntity().level().getBlockState(event.getNewSpawn()).is(BlockTags.BEDS))
 			return;
 
 		ServerPlayer player = (ServerPlayer) event.getEntity();
@@ -190,8 +190,8 @@ public class Respawn extends SRFeature {
 				|| !(event.getEntity() instanceof ServerPlayer player))
 			return;
 
-		if (player.getRespawnPosition() != null && player.level.getBlockState(player.getRespawnPosition()).is(RESPAWN_OBELISK.block().get()) && player.level.getBlockState(player.getRespawnPosition()).getValue(RespawnObeliskBlock.ENABLED)
-			&& event.getNewSpawn() != null && !player.level.getBlockState(event.getNewSpawn()).is(RESPAWN_OBELISK.block().get())) {
+		if (player.getRespawnPosition() != null && player.level().getBlockState(player.getRespawnPosition()).is(RESPAWN_OBELISK.block().get()) && player.level().getBlockState(player.getRespawnPosition()).getValue(RespawnObeliskBlock.ENABLED)
+			&& event.getNewSpawn() != null && !player.level().getBlockState(event.getNewSpawn()).is(RESPAWN_OBELISK.block().get())) {
 			event.setCanceled(true);
 		}
 	}

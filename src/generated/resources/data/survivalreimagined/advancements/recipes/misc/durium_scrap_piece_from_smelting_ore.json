@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:durium_scrap_piece_from_smelting_ore"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

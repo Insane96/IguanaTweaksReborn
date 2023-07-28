@@ -175,7 +175,7 @@ public class HealthRegen extends Feature {
 			if (duration == 0)
 				return;
 			playerEntity.addEffect(MCUtils.createEffectInstance(SRMobEffects.INJURED.get(), duration, 0, true, false, true, false));
-			playerEntity.level.playSound(null, playerEntity, SRSoundEvents.INJURED.get(), SoundSource.PLAYERS, 1f, 0.9f);
+			playerEntity.level().playSound(null, playerEntity, SRSoundEvents.INJURED.get(), SoundSource.PLAYERS, 1f, 0.9f);
 			listTag.remove(0);
 		}
 		playerEntity.getPersistentData().put(Strings.Tags.DAMAGE_HISTORY, listTag);
@@ -186,7 +186,7 @@ public class HealthRegen extends Feature {
 		if (!this.isEnabled()
 				|| !event.getItem().isEdible()
 				|| !(event.getEntity() instanceof Player)
-				|| event.getEntity().level.isClientSide)
+				|| event.getEntity().level().isClientSide)
 			return;
 
 		processWellFed(event);
@@ -256,7 +256,7 @@ public class HealthRegen extends Feature {
 	public static boolean tickFoodStats(FoodData foodStats, Player player) {
 		if (!Feature.isEnabled(HealthRegen.class))
 			return false;
-		Difficulty difficulty = player.level.getDifficulty();
+		Difficulty difficulty = player.level().getDifficulty();
 		foodStats.lastFoodLevel = foodStats.getFoodLevel();
 		if (foodStats.exhaustionLevel > maxExhaustion) {
 			foodStats.exhaustionLevel -= maxExhaustion;
@@ -273,7 +273,7 @@ public class HealthRegen extends Feature {
 	}
 
 	private static void tick(FoodData foodStats, Player player, Difficulty difficulty) {
-		boolean naturalRegen = player.level.getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION) && !Feature.isEnabled(NoHunger.class);
+		boolean naturalRegen = player.level().getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION) && !Feature.isEnabled(NoHunger.class);
 		if (naturalRegen && foodStats.saturationLevel > 0.0F && player.isHurt() && foodStats.foodLevel >= 20 && !disableSaturationRegenBoost) {
 			++foodStats.tickTimer;
 			if (foodStats.tickTimer >= 10) {
@@ -288,7 +288,7 @@ public class HealthRegen extends Feature {
 			if (foodStats.tickTimer >= getRegenSpeed(player)) {
 				player.heal(1.0F);
 				if (consumeHungerOnly) {
-					if (player.level.getRandom().nextDouble() < hungerConsumptionChance)
+					if (player.level().getRandom().nextDouble() < hungerConsumptionChance)
 						addHunger(foodStats, -1);
 				}
 				else

@@ -40,7 +40,7 @@ public class DeBuffs extends SRFeature {
 		if (!this.isEnabled()
 				|| event.phase != TickEvent.Phase.START
 				|| deBuffs.isEmpty()
-				|| event.player.level.isClientSide)
+				|| event.player.level().isClientSide)
 			return;
 
 		ServerPlayer player = (ServerPlayer) event.player;

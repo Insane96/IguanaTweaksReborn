@@ -44,7 +44,7 @@ public class FirestarterItem extends FlintAndSteelItem implements Vanishable {
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
         if (!(entity instanceof Player player))
             return stack;
-        BlockHitResult blockHitResult = getPlayerPOVHitResult(player.level, player, ClipContext.Fluid.NONE);
+        BlockHitResult blockHitResult = getPlayerPOVHitResult(player.level(), player, ClipContext.Fluid.NONE);
         BlockPos pos = blockHitResult.getBlockPos();
         BlockState state = level.getBlockState(pos);
         if (state.is(Blocks.TNT) || state.is(MiningCharge.MINING_CHARGE.block().get())) {

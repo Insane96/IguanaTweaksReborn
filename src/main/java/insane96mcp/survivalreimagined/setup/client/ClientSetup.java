@@ -31,7 +31,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterRecipeBookCategoriesEvent;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import java.text.DecimalFormat;
@@ -39,9 +39,9 @@ import java.text.DecimalFormatSymbols;
 import java.util.List;
 
 public class ClientSetup {
-    public static void creativeTabsBuildContents(final CreativeModeTabEvent.BuildContents event)
+    public static void onBuildCreativeModeTabContents(final BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES)
+        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES)
         {
             event.accept(FlintExpansion.AXE.get());
             event.accept(FlintExpansion.PICKAXE.get());
@@ -83,7 +83,7 @@ public class ClientSetup {
 
             event.accept(RecallIdol.ITEM.get());
         }
-        else if (event.getTab() == CreativeModeTabs.COMBAT) {
+        else if (event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.accept(FlintExpansion.SWORD.get());
             //event.accept(FlintExpansion.SHIELD.get());
             event.accept(CopperTools.SWORD.get());
@@ -126,7 +126,7 @@ public class ClientSetup {
             event.accept(Fletching.EXPLOSIVE_ARROW_ITEM.get());
             event.accept(Fletching.TORCH_ARROW_ITEM.get());
         }
-        else if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
+        else if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(Durium.SCRAP_BLOCK.item().get());
             event.accept(Durium.BLOCK.item().get());
             event.accept(SoulSteel.BLOCK.item().get());
@@ -136,7 +136,7 @@ public class ClientSetup {
             event.accept(CoalFire.CHARCOAL_LAYER.item().get());
             event.accept(Death.GRAVE.item().get());
         }
-        else if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+        else if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(Respawn.RESPAWN_OBELISK.item().get());
             event.accept(Crate.ITEM.get());
             event.accept(MultiBlockFurnaces.BLAST_FURNACE.item().get());
@@ -144,14 +144,14 @@ public class ClientSetup {
             event.accept(Forging.FORGE.item().get());
             event.accept(Fletching.FLETCHING_TABLE.item().get());
         }
-        else if (event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS) {
+        else if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.accept(Minecarts.COPPER_POWERED_RAIL.item().get());
             event.accept(Minecarts.GOLDEN_POWERED_RAIL.item().get());
             event.accept(Minecarts.NETHER_INFUSED_POWERED_RAIL.item().get());
             event.accept(ExplosiveBarrel.BLOCK.item().get());
             event.accept(MiningCharge.MINING_CHARGE.item().get());
         }
-        else if (event.getTab() == CreativeModeTabs.NATURAL_BLOCKS) {
+        else if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(Durium.ORE.item().get());
             event.accept(Durium.DEEPSLATE_ORE.item().get());
             event.accept(Keego.ORE.item().get());
@@ -179,7 +179,7 @@ public class ClientSetup {
             event.accept(FlintExpansion.FLINT_ROCK.item().get());
             event.accept(CyanFlower.FLOWER.item().get());
         }
-        else if (event.getTab() == CreativeModeTabs.INGREDIENTS) {
+        else if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(Durium.SCRAP_PIECE.get());
             event.accept(Durium.INGOT.get());
             event.accept(Durium.NUGGET.get());
@@ -193,7 +193,7 @@ public class ClientSetup {
             event.accept(CoalFire.HELLISH_COAL.get());
             event.accept(Cloth.CLOTH.get());
         }
-        else if (event.getTab() == CreativeModeTabs.FOOD_AND_DRINKS) {
+        else if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
             event.accept(FoodDrinks.BROWN_MUSHROOM_STEW.get());
             event.accept(FoodDrinks.RED_MUSHROOM_STEW.get());
         }

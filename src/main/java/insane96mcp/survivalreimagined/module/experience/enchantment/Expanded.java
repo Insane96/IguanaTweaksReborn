@@ -29,7 +29,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -79,8 +79,8 @@ public class Expanded extends Enchantment {
             if (level instanceof ServerLevel && (entity instanceof Player player && !player.getAbilities().flying)) {
                 BlockState minedBlockState = level.getBlockState(minedBlock);
                 BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(minedBlock) : null;
-                LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) level)).withRandom(level.getRandom()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(minedBlock)).withParameter(LootContextParams.TOOL, entity.getMainHandItem()).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, entity);
-                minedBlockState.getDrops(lootcontext$builder).forEach((stack) -> {
+                LootParams.Builder lootParams$Builder = (new LootParams.Builder((ServerLevel) level)).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(minedBlock)).withParameter(LootContextParams.TOOL, entity.getMainHandItem()).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, entity);
+                minedBlockState.getDrops(lootParams$Builder).forEach((stack) -> {
                     ItemEntity drop = new ItemEntity(level, minedBlock.getX() + 0.5d, minedBlock.getY() + 0.5d, minedBlock.getZ() + 0.5d, stack);
                     drop.setDefaultPickUpDelay();
                     level.addFreshEntity(drop);
@@ -249,8 +249,7 @@ public class Expanded extends Enchantment {
     private static boolean addIfCanBeMined(List<BlockPos> blockPos, Level level, BlockPos targetPos, BlockPos minedPos) {
         BlockState targetState = level.getBlockState(targetPos);
         BlockState minedState = level.getBlockState(minedPos);
-        if (targetState.getMaterial() == minedState.getMaterial()
-                && targetState.getDestroySpeed(level, targetPos) >= minedState.getDestroySpeed(level, minedPos) - 0.5d) {
+        if (targetState.getDestroySpeed(level, targetPos) >= minedState.getDestroySpeed(level, minedPos) - 0.5d) {
             blockPos.add(minedPos);
             return true;
         }

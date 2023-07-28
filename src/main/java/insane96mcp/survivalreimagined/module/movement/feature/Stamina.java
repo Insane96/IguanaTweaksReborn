@@ -1,7 +1,6 @@
 package insane96mcp.survivalreimagined.module.movement.feature;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -16,7 +15,7 @@ import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.StaminaSyncMessage;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -151,7 +150,7 @@ public class Stamina extends Feature {
             Minecraft mc = Minecraft.getInstance();
             ForgeGui gui = (ForgeGui) mc.gui;
             if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                renderStamina(gui, event.getPoseStack(), event.getPartialTick(), event.getWindow().getScreenWidth(), event.getWindow().getScreenHeight());
+                renderStamina(gui, event.getGuiGraphics(), event.getPartialTick(), event.getWindow().getScreenWidth(), event.getWindow().getScreenHeight());
             }
         }
     }
@@ -160,7 +159,7 @@ public class Stamina extends Feature {
     //protected static final RandomSource random = RandomSource.create();
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderStamina(ForgeGui gui, PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
+    public static void renderStamina(ForgeGui gui, GuiGraphics guiGraphics, float partialTicks, int screenWidth, int screenHeight) {
         int healthIconsOffset = 49;
 
         Minecraft mc = Minecraft.getInstance();
@@ -173,7 +172,6 @@ public class Stamina extends Feature {
         int top = mc.getWindow().getGuiScaledHeight() - healthIconsOffset + 9;
         int halfHeartsMaxStamina = Mth.ceil((float) StaminaHandler.getMaxStamina(player) / staminaPerHalfHeart);
         int halfHeartsStamina = Mth.ceil((float) StaminaHandler.getStamina(player) / staminaPerHalfHeart);
-        RenderSystem.setShaderTexture(0, SurvivalReimagined.GUI_ICONS);
         int height = 9;
         if (StaminaHandler.isStaminaLocked(player))
             setColor(0.7f, 0.7f, 0.7f, .7f);
@@ -199,12 +197,9 @@ public class Stamina extends Feature {
                 top += random.nextInt(2);
             }*/
 
-            GuiComponent.blit(poseStack, right + (hp / 2 * 8) + r - (hp / 20 * 80), top - (hp / 20 * 10), u, v, width, height);
+            guiGraphics.blit(SurvivalReimagined.GUI_ICONS, right + (hp / 2 * 8) + r - (hp / 20 * 80), top - (hp / 20 * 10), u, v, width, height);
         }
         resetColor();
-
-        // rebind default icons
-        RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
     }
 
     public static void setColor(float r, float g, float b, float alpha) {

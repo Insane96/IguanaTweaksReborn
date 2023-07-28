@@ -26,8 +26,8 @@ public class ExplosiveArrow extends Arrow {
     @Override
     protected void onHitBlock(BlockHitResult pResult) {
         float power = Math.min(1f + (float) this.getDeltaMovement().length(), 6f);
-        if (!this.level.isClientSide)
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), power, Level.ExplosionInteraction.BLOCK);
+        if (!this.level().isClientSide)
+            this.level().explode(this, this.getX(), this.getY(), this.getZ(), power, Level.ExplosionInteraction.BLOCK);
         this.discard();
     }
 
@@ -65,15 +65,15 @@ public class ExplosiveArrow extends Arrow {
 
         boolean isEnderman = entityHit.getType() == EntityType.ENDERMAN;
         if (!isEnderman && entityHit.hurt(damagesource, 0.01f)) {
-            if (!this.level.isClientSide)
-                this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2.5f, Level.ExplosionInteraction.BLOCK);
+            if (!this.level().isClientSide)
+                this.level().explode(this, this.getX(), this.getY(), this.getZ(), 2.5f, Level.ExplosionInteraction.BLOCK);
             this.discard();
         }
         else {
             this.setDeltaMovement(this.getDeltaMovement().scale(-0.1D));
             this.setYRot(this.getYRot() + 180.0F);
             this.yRotO += 180.0F;
-            if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D) {
+            if (!this.level().isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D) {
                 if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);
                 }

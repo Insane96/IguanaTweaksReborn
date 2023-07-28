@@ -19,18 +19,28 @@
 		"use_lodestone": {
 			"trigger": "minecraft:item_used_on_block",
 			"conditions": {
-				"item": {
-					"items": [
-						"minecraft:compass"
-					]
-				},
-				"location": {
-					"block": {
-						"blocks": [
-							"minecraft:lodestone"
-						]
+				"player": [
+					{
+						"condition": "minecraft:entity_properties",
+						"entity": "this",
+						"predicate": {
+							"location": {
+								"block": {
+									"blocks": [
+										"minecraft:lodestone"
+									]
+								}
+							},
+							"equipment": {
+								"mainhand": {
+									"items": [
+										"minecraft:compass"
+									]
+								}
+							}
+						}
 					}
-				}
+				]
 			}
 		}
 	},

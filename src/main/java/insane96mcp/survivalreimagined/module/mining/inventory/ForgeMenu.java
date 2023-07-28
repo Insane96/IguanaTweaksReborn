@@ -43,7 +43,7 @@ public class ForgeMenu extends RecipeBookMenu<Container> {
         checkContainerDataCount(pData, DATA_COUNT);
         this.container = pContainer;
         this.data = pData;
-        this.level = pPlayerInventory.player.level;
+        this.level = pPlayerInventory.player.level();
 
         this.addSlot(new Slot(pContainer, INGREDIENT_SLOT, 56, 17));
         this.addSlot(new Slot(pContainer, GEAR_SLOT, 56, 53));

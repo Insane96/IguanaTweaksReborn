@@ -21,7 +21,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
@@ -34,7 +35,7 @@ public class Crate extends Feature {
 
 	public static final UUID CRATE_WEIGHT_UUID = UUID.fromString("4ce89c45-a011-43fa-b9a8-7f2bd0ea2fc3");
 
-	public static final RegistryObject<CrateBlock> BLOCK = SRBlocks.REGISTRY.register("crate", () -> new CrateBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2f)));
+	public static final RegistryObject<CrateBlock> BLOCK = SRBlocks.REGISTRY.register("crate", () -> new CrateBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2f)));
 	public static final RegistryObject<CrateItem> ITEM = SRItems.REGISTRY.register("crate", () -> new CrateItem(BLOCK.get(), new Item.Properties().stacksTo(1)));
 
 	public static final RegistryObject<BlockEntityType<?>> BLOCK_ENTITY_TYPE = SRBlockEntityTypes.REGISTRY.register("crate", () -> BlockEntityType.Builder.of(CrateBlockEntity::new, BLOCK.get()).build(null));

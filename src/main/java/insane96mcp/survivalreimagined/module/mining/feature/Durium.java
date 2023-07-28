@@ -25,8 +25,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.EnumMap;
@@ -35,12 +35,12 @@ import java.util.EnumMap;
 @LoadFeature(module = Modules.Ids.MINING)
 public class Durium extends Feature {
 
-	public static final SimpleBlockWithItem ORE = SimpleBlockWithItem.register("durium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5)));
-	public static final SimpleBlockWithItem DEEPSLATE_ORE = SimpleBlockWithItem.register("deepslate_durium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(ORE.block().get()).color(MaterialColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), UniformInt.of(2, 5)));
-	public static final SimpleBlockWithItem SCRAP_BLOCK = SimpleBlockWithItem.register("durium_scrap_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
+	public static final SimpleBlockWithItem ORE = SimpleBlockWithItem.register("durium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F), UniformInt.of(2, 5)));
+	public static final SimpleBlockWithItem DEEPSLATE_ORE = SimpleBlockWithItem.register("deepslate_durium_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(ORE.block().get()).mapColor(MapColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE), UniformInt.of(2, 5)));
+	public static final SimpleBlockWithItem SCRAP_BLOCK = SimpleBlockWithItem.register("durium_scrap_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
 	public static final RegistryObject<Item> SCRAP_PIECE = SRItems.REGISTRY.register("durium_scrap_piece", () -> new Item(new Item.Properties()));
 
-	public static final SimpleBlockWithItem BLOCK = SimpleBlockWithItem.register("durium_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
+	public static final SimpleBlockWithItem BLOCK = SimpleBlockWithItem.register("durium_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
 
 	public static final RegistryObject<Item> INGOT = SRItems.REGISTRY.register("durium_ingot", () -> new Item(new Item.Properties()));
 

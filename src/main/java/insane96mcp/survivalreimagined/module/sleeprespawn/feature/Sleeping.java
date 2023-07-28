@@ -39,7 +39,7 @@ public class Sleeping extends Feature {
 	public void disableSleeping(PlayerSleepInBedEvent event) {
 		if (!this.isEnabled()
 				|| event.getResultStatus() != null
-				|| event.getEntity().level.isClientSide)
+				|| event.getEntity().level().isClientSide)
 			return;
 
 		if (disableSleeping) {
@@ -48,7 +48,7 @@ public class Sleeping extends Feature {
 			if (disableSpawnPoint) {
 				player.displayClientMessage(Component.translatable(Strings.Translatable.DECORATIVE_BEDS), false);
 			} else {
-				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, true);
+				player.setRespawnPosition(player.level().dimension(), event.getPos(), player.getYRot(), false, true);
 				player.displayClientMessage(Component.translatable(Strings.Translatable.ENJOY_THE_NIGHT), false);
 			}
 		}
@@ -66,7 +66,7 @@ public class Sleeping extends Feature {
 
 		event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 		player.startSleeping(event.getPos());
-		((ServerLevel)player.level).updateSleepingPlayerList();
+		((ServerLevel)player.level()).updateSleepingPlayerList();
 	}
 
 	@SubscribeEvent

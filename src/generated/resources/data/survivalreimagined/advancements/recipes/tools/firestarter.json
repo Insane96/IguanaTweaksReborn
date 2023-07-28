@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:firestarter"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

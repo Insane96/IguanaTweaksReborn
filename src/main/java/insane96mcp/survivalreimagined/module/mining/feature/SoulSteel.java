@@ -18,8 +18,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.EnumMap;
@@ -27,7 +26,7 @@ import java.util.EnumMap;
 @Label(name = "Soul Steel", description = "Add Soul Steel, a new metal made by alloying Iron, Soul Sand and Hellish Coal")
 @LoadFeature(module = Modules.Ids.MINING)
 public class SoulSteel extends Feature {
-	public static final SimpleBlockWithItem BLOCK = SimpleBlockWithItem.register("soul_steel_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 9.0F).sound(SoundType.METAL)), new Item.Properties().fireResistant());
+	public static final SimpleBlockWithItem BLOCK = SimpleBlockWithItem.register("soul_steel_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 9.0F).sound(SoundType.METAL)), new Item.Properties().fireResistant());
 
 	public static final RegistryObject<Item> INGOT = SRItems.REGISTRY.register("soul_steel_ingot", () -> new Item(new Item.Properties().fireResistant()));
 

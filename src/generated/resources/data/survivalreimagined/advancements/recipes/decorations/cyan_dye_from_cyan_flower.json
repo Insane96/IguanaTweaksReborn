@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:cyan_dye_from_cyan_flower"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

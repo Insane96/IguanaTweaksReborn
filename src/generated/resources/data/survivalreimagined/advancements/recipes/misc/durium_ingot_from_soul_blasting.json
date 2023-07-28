@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:durium_ingot_from_soul_blasting"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

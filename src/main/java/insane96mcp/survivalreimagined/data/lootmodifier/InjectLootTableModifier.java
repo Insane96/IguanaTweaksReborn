@@ -37,8 +37,8 @@ public class InjectLootTableModifier extends LootModifier {
 
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        LootTable lootTable1 = context.getLootTable(this.lootTable);
-        lootTable1.getRandomItemsRaw(context, generatedLoot::add);
+        LootTable lootTable1 = context.getResolver().getLootTable(this.lootTable);
+        lootTable1.getRandomItemsRaw(context, LootTable.createStackSplitter(context.getLevel(), generatedLoot::add));
         return generatedLoot;
     }
 

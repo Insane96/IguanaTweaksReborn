@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:copper_hammer"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

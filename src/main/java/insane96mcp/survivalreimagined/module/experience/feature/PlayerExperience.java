@@ -107,7 +107,7 @@ public class PlayerExperience extends Feature {
 	public static int getExperienceOnDeath(Player player, boolean ignoreGlobalXPMultiplier) {
 		if (!isEnabled(PlayerExperience.class)
 				|| (droppedExperienceOnDeath < 0 && !GlobalExperience.isEnabled(GlobalExperience.class))
-				|| player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
+				|| player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
 				|| player.isSpectator())
 			return -1;
 

@@ -27,8 +27,8 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
@@ -44,7 +44,7 @@ public class FlintExpansion extends Feature {
 
 	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("flint", 3d, 33, () -> Items.FLINT, 9, Rarity.COMMON);
 
-	public static final SimpleBlockWithItem FLINT_ROCK = SimpleBlockWithItem.register("flint_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 1F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
+	public static final SimpleBlockWithItem FLINT_ROCK = SimpleBlockWithItem.register("flint_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(0.5F, 1F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
 
 	public static final ILItemTier ITEM_TIER = new ILItemTier(1, 99, 6f, 1f, 9, () -> Ingredient.of(Items.FLINT));
 
@@ -55,8 +55,8 @@ public class FlintExpansion extends Feature {
 	public static final RegistryObject<Item> HOE = SRItems.REGISTRY.register("flint_hoe", () -> new HoeItem(ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRItems.registerShield("flint_shield", SHIELD_MATERIAL);
-	public static final SimpleBlockWithItem FLINT_BLOCK = SimpleBlockWithItem.register("flint_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 5.0F)));
-	public static final SimpleBlockWithItem POLISHED_FLINT_BLOCK = SimpleBlockWithItem.register("polished_flint_block", () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 5.0F)));
+	public static final SimpleBlockWithItem FLINT_BLOCK = SimpleBlockWithItem.register("flint_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 5.0F)));
+	public static final SimpleBlockWithItem POLISHED_FLINT_BLOCK = SimpleBlockWithItem.register("polished_flint_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 5.0F)));
 
 	@Config
 	@Label(name = "Disable Wooden Tools", description = "Makes wooden items deal no damage and not able to break blocks.")

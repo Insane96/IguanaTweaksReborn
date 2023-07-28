@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.0
+* Update to MC 1.20.1
+* Block stack reduction can no longer be reduced by material
+
 ## 0.12.4
 * Small Thorns overhaul
   * Incompatible with Protections, it now triggers each time instead of a random chance and deals damage based off 

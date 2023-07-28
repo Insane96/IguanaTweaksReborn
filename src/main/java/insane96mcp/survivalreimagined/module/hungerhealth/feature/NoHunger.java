@@ -3,7 +3,6 @@ package insane96mcp.survivalreimagined.module.hungerhealth.feature;
 import com.ezylang.evalex.Expression;
 import com.ezylang.evalex.data.EvaluationValue;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -22,7 +21,7 @@ import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -105,7 +104,7 @@ public class NoHunger extends Feature {
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (!this.isEnabled()
-                || event.player.level.isClientSide
+                || event.player.level().isClientSide
                 || event.phase.equals(TickEvent.Phase.START))
             return;
 
@@ -145,7 +144,7 @@ public class NoHunger extends Feature {
         if (!this.isEnabled()
                 || !event.getItem().isEdible()
                 || !(event.getEntity() instanceof Player player)
-                || event.getEntity().level.isClientSide)
+                || event.getEntity().level().isClientSide)
             return;
 
         Item item = event.getItem().getItem();
@@ -189,7 +188,7 @@ public class NoHunger extends Feature {
         float healthPerc = 1 - (player.getHealth() / player.getMaxHealth());
         int secs;
         secs = (int) ((passiveRegenerationTime.max - passiveRegenerationTime.min) * healthPerc + passiveRegenerationTime.min);
-        if (player.level.getDifficulty().equals(Difficulty.HARD))
+        if (player.level().getDifficulty().equals(Difficulty.HARD))
             secs *= 1.5d;
         if (player.hasEffect(SRMobEffects.WELL_FED.get())) {
             MobEffectInstance wellFed = player.getEffect(SRMobEffects.WELL_FED.get());
@@ -283,14 +282,15 @@ public class NoHunger extends Feature {
                 Minecraft mc = Minecraft.getInstance();
                 ForgeGui gui = (ForgeGui) mc.gui;
                 if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                    renderArmor(event.getPoseStack(), event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());
+                    renderArmor(event.getGuiGraphics(), event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());
                 }
             }
         }
     }
 
+    protected static final ResourceLocation GUI_ICONS_LOCATION = new ResourceLocation("textures/gui/icons.png");
     @OnlyIn(Dist.CLIENT)
-    protected void renderArmor(PoseStack poseStack, int width, int height) {
+    protected void renderArmor(GuiGraphics guiGraphics, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
         ForgeGui gui = (ForgeGui) mc.gui;
         mc.getProfiler().push("armor");
@@ -303,11 +303,11 @@ public class NoHunger extends Feature {
         for (int i = 1; level > 0 && i < 20; i += 2)
         {
             if (i < level)
-                GuiComponent.blit(poseStack, left, top, 34, 9, 9, 9, 256, 256);
+                guiGraphics.blit(GUI_ICONS_LOCATION, left, top, 34, 9, 9, 9, 256, 256);
             else if (i == level)
-                ClientUtils.blitVericallyMirrored(poseStack, left, top, 25, 9, 9, 9, 256, 256);
+                ClientUtils.blitVericallyMirrored(GUI_ICONS_LOCATION, guiGraphics, left, top, 25, 9, 9, 9, 256, 256);
             else
-                GuiComponent.blit(poseStack, left, top, 16, 9, 9, 9, 256, 256);
+                guiGraphics.blit(GUI_ICONS_LOCATION, left, top, 16, 9, 9, 9, 256, 256);
             left -= 8;
         }
         if (level > 0)
@@ -328,7 +328,7 @@ public class NoHunger extends Feature {
             Minecraft mc = Minecraft.getInstance();
             ForgeGui gui = (ForgeGui) mc.gui;
             if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                renderFoodRegen(gui, event.getPoseStack(), event.getPartialTick(), event.getWindow().getScreenWidth(), event.getWindow().getScreenHeight());
+                renderFoodRegen(gui, event.getGuiGraphics(), event.getPartialTick(), event.getWindow().getScreenWidth(), event.getWindow().getScreenHeight());
             }
         }
     }
@@ -336,7 +336,7 @@ public class NoHunger extends Feature {
     private static final Vec2 UV_ARROW = new Vec2(0, 18);
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderFoodRegen(ForgeGui gui, PoseStack poseStack, float partialTicks, int screenWidth, int screenHeight) {
+    public static void renderFoodRegen(ForgeGui gui, GuiGraphics guiGraphics, float partialTicks, int screenWidth, int screenHeight) {
         int healthIconsOffset = 49;
 
         Minecraft mc = Minecraft.getInstance();
@@ -348,13 +348,9 @@ public class NoHunger extends Feature {
         float saturationModifier = getFoodRegenStrength(player) * 20 * 2;
         if (saturationModifier == 0f)
             return;
-        RenderSystem.setShaderTexture(0, SurvivalReimagined.GUI_ICONS);
         Stamina.setColor(1.2f - (saturationModifier / 1.2f), 0.78f, 0.17f, 1f);
-        GuiComponent.blit(poseStack, right, top, (int) UV_ARROW.x, (int) UV_ARROW.y, 9, 9);
+        guiGraphics.blit(SurvivalReimagined.GUI_ICONS, right, top, (int) UV_ARROW.x, (int) UV_ARROW.y, 9, 9);
         Stamina.resetColor();
-
-        // rebind default icons
-        RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
     }
 
     @OnlyIn(Dist.CLIENT)

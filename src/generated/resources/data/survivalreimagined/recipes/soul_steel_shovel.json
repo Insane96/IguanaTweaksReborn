@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
   "addition": {
     "item": "survivalreimagined:soul_steel_ingot"
   },
@@ -8,5 +8,6 @@
   },
   "result": {
     "item": "survivalreimagined:soul_steel_shovel"
-  }
+  },
+  "template": []
 }

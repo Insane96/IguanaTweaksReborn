@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
@@ -71,12 +71,12 @@ public class PrimedMiningCharge extends Entity implements TraceableEntity {
         this.setFuse(fuse);
         if (fuse <= 0) {
             this.discard();
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide) {
                 this.explode();
             }
         } else {
-            if (this.level.isClientSide) {
-                this.level.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5D, this.getZ(), 0.0D, 0.0D, 0.0D);
+            if (this.level().isClientSide) {
+                this.level().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5D, this.getZ(), 0.0D, 0.0D, 0.0D);
             }
         }
 
@@ -101,23 +101,23 @@ public class PrimedMiningCharge extends Entity implements TraceableEntity {
         }
         Iterable<BlockPos> positions = BlockPos.betweenClosed(this.blockPosition().relative(this.direction, 1).offset(-relativeX, -relativeY, -relativeZ), this.blockPosition().relative(this.direction, 5).offset(relativeX, relativeY, relativeZ));
         //Fake explosion
-        Explosion explosion = new Explosion(this.level, this.owner, this.getX(), this.getY(), this.getZ(), 3, false, Explosion.BlockInteraction.KEEP);
+        Explosion explosion = new Explosion(this.level(), this.owner, this.getX(), this.getY(), this.getZ(), 3, false, Explosion.BlockInteraction.KEEP);
         for (BlockPos pos : positions) {
-            BlockState blockState = this.level.getBlockState(pos);
-            if (!blockState.isAir() && blockState.getExplosionResistance(this.level, pos, explosion) < 10) {
-                this.level.getProfiler().push("mining_charge_explosion");
-                if (this.level instanceof ServerLevel) {
-                    BlockEntity blockEntity = blockState.hasBlockEntity() ? this.level.getBlockEntity(pos) : null;
-                    LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withRandom(this.level.getRandom()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, this);
-                    blockState.getDrops(lootcontext$builder).forEach((stack) -> this.level.addFreshEntity(new ItemEntity(this.level, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, stack)));
+            BlockState blockState = this.level().getBlockState(pos);
+            if (!blockState.isAir() && blockState.getExplosionResistance(this.level(), pos, explosion) < 10) {
+                this.level().getProfiler().push("mining_charge_explosion");
+                if (this.level() instanceof ServerLevel) {
+                    BlockEntity blockEntity = blockState.hasBlockEntity() ? this.level().getBlockEntity(pos) : null;
+                    LootParams.Builder lootParams$Builder = (new LootParams.Builder((ServerLevel) this.level())).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, this);
+                    blockState.getDrops(lootParams$Builder).forEach((stack) -> this.level().addFreshEntity(new ItemEntity(this.level(), pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, stack)));
                 }
-                this.level.getProfiler().pop();
-                blockState.getBlock().onBlockExploded(blockState, this.level, pos, explosion);
-                if (this.level.getBlockState(pos).getExplosionResistance(this.level, pos, explosion) < 10)
-                    this.level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                this.level().getProfiler().pop();
+                blockState.getBlock().onBlockExploded(blockState, this.level(), pos, explosion);
+                if (this.level().getBlockState(pos).getExplosionResistance(this.level(), pos, explosion) < 10)
+                    this.level().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
             }
         }
-        this.level.playSound(null, this.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 1.0f, 1.25f);
+        this.level().playSound(null, this.blockPosition(), SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 1.0f, 1.25f);
         /*List<Entity> entitiesInExplosion = this.level.getEntities(null, new AABB(explosionCenter.offset(-3, -3, -3), explosionCenter.offset(3, 3, 3).relative(this.direction, 2)));
         for (Entity entity : entitiesInExplosion) {
             if (entity.tickCount == 0)
@@ -125,7 +125,7 @@ public class PrimedMiningCharge extends Entity implements TraceableEntity {
             DamageSource damageSource = level.damageSources().explosion(this, this.owner);
             entity.hurt(damageSource, 15f);
         }*/
-        if (this.level instanceof ServerLevel serverLevel)
+        if (this.level() instanceof ServerLevel serverLevel)
             serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, this.blockPosition().relative(this.direction, 3).getCenter().x, this.blockPosition().relative(this.direction, 3).getCenter().y, this.blockPosition().relative(this.direction, 3).getCenter().z, 1, 0d, 0d, 0d, 0d);
     }
 

@@ -26,8 +26,8 @@ public class OtherExperience extends Feature {
 				|| xpBottleBonus == 0)
 			return;
 
-		if (xpBottle.level instanceof ServerLevel)
-			ExperienceOrb.award((ServerLevel)xpBottle.level, xpBottle.position(), xpBottleBonus);
+		if (xpBottle.level() instanceof ServerLevel)
+			ExperienceOrb.award((ServerLevel)xpBottle.level(), xpBottle.position(), xpBottleBonus);
 	}
 
 }

@@ -18,11 +18,11 @@ public class AnvilRepairTrigger extends SimpleCriterionTrigger<AnvilRepairTrigge
 	public static AnvilRepairTrigger TRIGGER = CriteriaTriggers.register(new AnvilRepairTrigger());
 
 	@Override
-	protected TriggerInstance createInstance(JsonObject jsonObject, EntityPredicate.Composite entityPredicateComposite, DeserializationContext context) {
+	protected TriggerInstance createInstance(JsonObject jsonObject, ContextAwarePredicate pPredicate, DeserializationContext context) {
 		ItemPredicate item1Predicates = ItemPredicate.fromJson(jsonObject.get("input1"));
 		ItemPredicate item2Predicates = ItemPredicate.fromJson(jsonObject.get("input2"));
 		ItemPredicate outputPredicates = ItemPredicate.fromJson(jsonObject.get("output"));
-		return new TriggerInstance(entityPredicateComposite, item1Predicates, item2Predicates, outputPredicates);
+		return new TriggerInstance(pPredicate, item1Predicates, item2Predicates, outputPredicates);
 	}
 
 	@Override
@@ -47,8 +47,8 @@ public class AnvilRepairTrigger extends SimpleCriterionTrigger<AnvilRepairTrigge
 		private final ItemPredicate outputPredicate;
 
 
-		public TriggerInstance(EntityPredicate.Composite composite, ItemPredicate inputPredicate, ItemPredicate input2Predicate, ItemPredicate outputPredicate) {
-			super(ID, composite);
+		public TriggerInstance(ContextAwarePredicate pPredicate, ItemPredicate inputPredicate, ItemPredicate input2Predicate, ItemPredicate outputPredicate) {
+			super(ID, pPredicate);
 			this.inputPredicate = inputPredicate;
 			this.input2Predicate = input2Predicate;
 			this.outputPredicate = outputPredicate;

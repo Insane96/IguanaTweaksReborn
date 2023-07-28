@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:soul_furnace/recycle_soul_steel_hoe"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

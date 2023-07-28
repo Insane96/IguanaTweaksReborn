@@ -4,8 +4,8 @@ import com.google.gson.JsonObject;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,8 +18,8 @@ public class ActivateRespawnObeliskTrigger extends SimpleCriterionTrigger<Activa
 	public static ActivateRespawnObeliskTrigger TRIGGER = CriteriaTriggers.register(new ActivateRespawnObeliskTrigger());
 
 	@Override
-	protected TriggerInstance createInstance(JsonObject jsonObject, EntityPredicate.Composite entityPredicateComposite, DeserializationContext context) {
-		return new TriggerInstance(entityPredicateComposite);
+	protected TriggerInstance createInstance(JsonObject pJson, ContextAwarePredicate pPredicate, DeserializationContext pDeserializationContext) {
+		return new TriggerInstance(pPredicate);
 	}
 
 	@Override
@@ -32,8 +32,8 @@ public class ActivateRespawnObeliskTrigger extends SimpleCriterionTrigger<Activa
 	}
 
 	public static class TriggerInstance extends AbstractCriterionTriggerInstance {
-		public TriggerInstance(EntityPredicate.Composite composite) {
-			super(ID, composite);
+		public TriggerInstance(ContextAwarePredicate pPredicate) {
+			super(ID, pPredicate);
 		}
 
 		public boolean matches() {

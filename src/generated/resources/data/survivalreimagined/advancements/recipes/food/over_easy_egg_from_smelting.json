@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:over_easy_egg_from_smelting"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

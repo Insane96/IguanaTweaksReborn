@@ -87,7 +87,7 @@ public class Hoes extends SRFeature {
 			return;
 
 		boolean isHoeDisabled = disabledHoes(event);
-		if (event.getPlayer() != null && event.getPlayer().level.isClientSide)
+		if (event.getPlayer() != null && event.getPlayer().level().isClientSide)
 			return;
 		BlockState finalState = event.getState().getBlock().getToolModifiedState(event.getState(), event.getContext(), event.getToolAction(), true);
 		if (finalState == null || (!finalState.is(Blocks.FARMLAND) && triggerOnlyForFarmland))
@@ -130,18 +130,18 @@ public class Hoes extends SRFeature {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onBlockBreak(BlockEvent.BreakEvent event) {
 		if (!this.isEnabled()
-				|| !event.getState().getMaterial().isReplaceable())
+				|| !event.getState().canBeReplaced())
 			return;
 		for (HoeStat hoeStat : hoesStats) {
 			if (hoeStat.matchesItem(event.getPlayer().getMainHandItem().getItem(), null) && hoeStat.scytheRadius > 0) {
 				BlockPos.betweenClosedStream(event.getPos().offset(-hoeStat.scytheRadius, -(hoeStat.scytheRadius - 1), -hoeStat.scytheRadius), event.getPos().offset(hoeStat.scytheRadius, hoeStat.scytheRadius - 1, hoeStat.scytheRadius))
 						.forEach(pos -> {
-							BlockState state = event.getPlayer().level.getBlockState(pos);
-							if (!state.getMaterial().isReplaceable()
+							BlockState state = event.getPlayer().level().getBlockState(pos);
+							if (!state.canBeReplaced()
 									|| !state.getFluidState().isEmpty()
 									|| pos.equals(event.getPos()))
 								return;
-							event.getPlayer().getLevel().destroyBlock(pos, false);
+							event.getPlayer().level().destroyBlock(pos, false);
 						});
 				break;
 			}

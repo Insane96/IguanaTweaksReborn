@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:hellish_coal_from_blasting_soul_soil_ore"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -173,7 +173,7 @@ public class EnchantmentsFeature extends SRFeature {
 
 		HitResult pick = event.getPlayer().pick(event.getPlayer().getEntityReach() + 0.5d, 1f, false);
 		if (pick instanceof BlockHitResult blockHitResult)
-			Expanded.apply(event.getPlayer(), event.getPlayer().getLevel(), event.getPos(), blockHitResult.getDirection(), event.getState());
+			Expanded.apply(event.getPlayer(), event.getPlayer().level(), event.getPos(), blockHitResult.getDirection(), event.getState());
 	}
 
 	@SubscribeEvent

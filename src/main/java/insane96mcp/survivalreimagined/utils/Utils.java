@@ -71,10 +71,10 @@ public class Utils {
      */
     public static RandomSource syncedRandom(Player player) {
         RandomSource random = player.getRandom();
-        if (player.level.isClientSide)
-            random.setSeed(player.level.getGameTime() + 1);
+        if (player.level().isClientSide)
+            random.setSeed(player.level().getGameTime() + 1);
         else
-            random.setSeed(player.level.getGameTime());
+            random.setSeed(player.level().getGameTime());
         random.setSeed(random.nextLong());
         random.setSeed(random.nextLong());
         return random;

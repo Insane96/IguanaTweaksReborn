@@ -279,8 +279,8 @@ public class Livestock extends SRFeature {
 		int milkCooldown = cowNBT.getInt(MILK_COOLDOWN);
 		if (milkCooldown > 0) {
 			event.setCanceled(true);
-			if (!player.level.isClientSide) {
-				animal.playSound(SoundEvents.COW_HURT, 0.4F, (event.getEntity().level.random.nextFloat() - event.getEntity().level.random.nextFloat()) * 0.2F + 1.2F);
+			if (!player.level().isClientSide) {
+				animal.playSound(SoundEvents.COW_HURT, 0.4F, (event.getEntity().level().random.nextFloat() - event.getEntity().level().random.nextFloat()) * 0.2F + 1.2F);
 				MutableComponent message = Component.translatable(MILK_COOLDOWN_LANG, animal.getDisplayName());
 				player.displayClientMessage(message, true);
 			}

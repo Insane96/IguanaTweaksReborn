@@ -98,6 +98,7 @@ public abstract class AbstractMultiBlockFurnace extends BaseEntityBlock {
      * net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase#hasAnalogOutputSignal} whenever possible.
      * Implementing/overriding is fine.
      */
+    @Deprecated
     public boolean hasAnalogOutputSignal(BlockState pState) {
         return true;
     }
@@ -107,6 +108,7 @@ public abstract class AbstractMultiBlockFurnace extends BaseEntityBlock {
      * net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase#getAnalogOutputSignal} whenever possible.
      * Implementing/overriding is fine.
      */
+    @Deprecated
     public int getAnalogOutputSignal(BlockState pBlockState, Level pLevel, BlockPos pPos) {
         return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(pLevel.getBlockEntity(pPos));
     }
@@ -117,6 +119,7 @@ public abstract class AbstractMultiBlockFurnace extends BaseEntityBlock {
      * @deprecated call via {@link net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase#getRenderShape}
      * whenever possible. Implementing/overriding is fine.
      */
+    @Deprecated
     public RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
     }
@@ -127,6 +130,7 @@ public abstract class AbstractMultiBlockFurnace extends BaseEntityBlock {
      * @deprecated call via {@link net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase#rotate} whenever
      * possible. Implementing/overriding is fine.
      */
+    @Deprecated
     public BlockState rotate(BlockState pState, Rotation pRotation) {
         return pState.setValue(FACING, pRotation.rotate(pState.getValue(FACING)));
     }
@@ -137,6 +141,7 @@ public abstract class AbstractMultiBlockFurnace extends BaseEntityBlock {
      * @deprecated call via {@link net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase#mirror} whenever
      * possible. Implementing/overriding is fine.
      */
+    @Deprecated
     public BlockState mirror(BlockState pState, Mirror pMirror) {
         return pState.rotate(pMirror.getRotation(pState.getValue(FACING)));
     }

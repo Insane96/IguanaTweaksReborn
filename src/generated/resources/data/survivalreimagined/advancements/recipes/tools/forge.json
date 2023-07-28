@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:forge"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

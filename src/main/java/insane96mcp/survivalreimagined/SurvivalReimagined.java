@@ -18,7 +18,6 @@ import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.setup.*;
 import insane96mcp.survivalreimagined.setup.client.ClientSetup;
 import insane96mcp.survivalreimagined.setup.client.SRClientConfig;
-import insane96mcp.survivalreimagined.utils.Weights;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -78,7 +77,7 @@ public class SurvivalReimagined
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::gatherData);
-        modEventBus.addListener(ClientSetup::creativeTabsBuildContents);
+        modEventBus.addListener(ClientSetup::onBuildCreativeModeTabContents);
         modEventBus.addListener(this::addPackFinders);
         modEventBus.addListener(PiercingPickaxes::piercingDamageAttribute);
         modEventBus.register(Tiredness.class);
@@ -98,7 +97,6 @@ public class SurvivalReimagined
         SREntityTypes.REGISTRY.register(modEventBus);
         SRGlobalLootModifiers.REGISTRY.register(modEventBus);
         SRLootItemConditions.REGISTRY.register(modEventBus);
-        Weights.initMaterialWeight();
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)

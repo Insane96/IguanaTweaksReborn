@@ -271,7 +271,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
             ItemStack resultSlotStack = slotsStacks.get(AbstractMultiBlockFurnaceMenu.RESULT_SLOT);
             if (resultSlotStack.isEmpty())
                 return true;
-            else if (!resultSlotStack.sameItem(resultStack))
+            else if (!ItemStack.isSameItem(resultSlotStack, resultStack))
                 return false;
             else if (resultSlotStack.getCount() >= resultStack.getMaxStackSize())
                 return false;
@@ -312,7 +312,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
             return false;
         }
         else {
-            return stack1.getCount() <= stack1.getMaxStackSize() && ItemStack.tagMatches(stack1, stack2);
+            return stack1.getCount() <= stack1.getMaxStackSize() && ItemStack.isSameItemSameTags(stack1, stack2);
         }
     }
 
@@ -393,7 +393,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
     @Override
     public void setItem(int pSlot, ItemStack pStack) {
         ItemStack itemstack = this.items.get(pSlot);
-        boolean flag = !pStack.isEmpty() && pStack.sameItem(itemstack) && ItemStack.tagMatches(pStack, itemstack);
+        boolean flag = !pStack.isEmpty() && ItemStack.isSameItemSameTags(pStack, itemstack);
         this.items.set(pSlot, pStack);
         /*if (pStack.getCount() > this.getMaxStackSize()) {
             pStack.setCount(this.getMaxStackSize());
@@ -431,7 +431,7 @@ public abstract class AbstractMultiBlockFurnaceBlockEntity extends BaseContainer
     }
 
     public void awardUsedRecipesAndPopExperience(ServerPlayer pPlayer) {
-        List<Recipe<?>> list = this.getRecipesToAwardAndPopExperience(pPlayer.getLevel(), pPlayer.position());
+        List<Recipe<?>> list = this.getRecipesToAwardAndPopExperience((ServerLevel)pPlayer.level(), pPlayer.position());
         pPlayer.awardRecipes(list);
         this.recipesUsed.clear();
     }

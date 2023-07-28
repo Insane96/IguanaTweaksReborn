@@ -17,8 +17,8 @@ public abstract class FishingHookMixin extends Projectile {
     }
 
     @ModifyVariable(at = @At(value = "STORE", ordinal = 0), method = "catchingFish", ordinal = 0)
-    private int onDiscardOnLand(int i) {
-        if (Seasons.shouldSlowdownFishing(this.level))
+    private int onTimeUntilHookPerTick(int i) {
+        if (Seasons.shouldSlowdownFishing(this.level()))
             return i - 1;
         return i;
     }

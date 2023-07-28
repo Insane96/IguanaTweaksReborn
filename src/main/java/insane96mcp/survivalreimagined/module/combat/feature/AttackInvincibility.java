@@ -45,6 +45,6 @@ public class AttackInvincibility extends Feature {
 		int time = (int) ((1f / serverPlayer.getAttribute(Attributes.ATTACK_SPEED).getValue()) * 20);
 		event.getEntity().invulnerableTime = time;
 		event.getEntity().hurtTime = time;
-		SyncInvulnerableTimeMessage.sync((ServerLevel) event.getEntity().level, event.getEntity(), time);
+		SyncInvulnerableTimeMessage.sync((ServerLevel) event.getEntity().level(), event.getEntity(), time);
 	}
 }

@@ -43,5 +43,6 @@
     "recipes": [
       "survivalreimagined:chained_copper_chestplate"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

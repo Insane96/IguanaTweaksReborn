@@ -27,7 +27,7 @@ public class FletchingMenu extends RecipeBookMenu<CraftingContainer> {
     private static final int INV_SLOT_END = INV_SLOT_START + 27;
     private static final int USE_ROW_SLOT_START = INV_SLOT_END;
     private static final int USE_ROW_SLOT_END = USE_ROW_SLOT_START + 9;
-    private final CraftingContainer craftSlots = new CraftingContainer(this, 3, 1);
+    private final CraftingContainer craftSlots = new TransientCraftingContainer(this, 3, 1);
     private final ResultContainer resultSlots = new ResultContainer();
     protected final Level level;
     private final ContainerLevelAccess access;
@@ -45,7 +45,7 @@ public class FletchingMenu extends RecipeBookMenu<CraftingContainer> {
         this.player = pPlayerInventory.player;
         this.recipeType = Fletching.FLETCHING_RECIPE_TYPE.get();
         this.recipeBookType = SurvivalReimagined.FLETCHING_RECIPE_BOOK_TYPE;
-        this.level = pPlayerInventory.player.level;
+        this.level = pPlayerInventory.player.level();
 
         this.addSlot(new Slot(this.craftSlots, INGREDIENT_SLOT, 56, 26));
         this.addSlot(new Slot(this.craftSlots, CATALYST_1_SLOT, 47, 44));
@@ -73,7 +73,7 @@ public class FletchingMenu extends RecipeBookMenu<CraftingContainer> {
     }
 
     public boolean recipeMatches(Recipe<? super CraftingContainer> pRecipe) {
-        return pRecipe.matches(this.craftSlots, this.player.level);
+        return pRecipe.matches(this.craftSlots, this.player.level());
     }
 
     /**

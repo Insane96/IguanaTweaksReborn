@@ -15,8 +15,8 @@ public class OverweightCrateCarryTrigger extends SimpleCriterionTrigger<Overweig
 	public static OverweightCrateCarryTrigger TRIGGER = CriteriaTriggers.register(new OverweightCrateCarryTrigger());
 
 	@Override
-	protected TriggerInstance createInstance(JsonObject jsonObject, EntityPredicate.Composite entityPredicateComposite, DeserializationContext context) {
-		return new TriggerInstance(entityPredicateComposite);
+	protected TriggerInstance createInstance(JsonObject jsonObject, ContextAwarePredicate pPredicate, DeserializationContext context) {
+		return new TriggerInstance(pPredicate);
 	}
 
 	@Override
@@ -29,8 +29,8 @@ public class OverweightCrateCarryTrigger extends SimpleCriterionTrigger<Overweig
 	}
 
 	public static class TriggerInstance extends AbstractCriterionTriggerInstance {
-		public TriggerInstance(EntityPredicate.Composite composite) {
-			super(ID, composite);
+		public TriggerInstance(ContextAwarePredicate pPredicate) {
+			super(ID, pPredicate);
 		}
 
 		public JsonObject serializeToJson(SerializationContext context) {

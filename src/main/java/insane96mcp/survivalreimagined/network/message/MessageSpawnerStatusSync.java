@@ -29,7 +29,7 @@ public class MessageSpawnerStatusSync {
 
 	public static void handle(final MessageSpawnerStatusSync message, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-			if (NetworkHelper.getSidedPlayer(ctx.get()).level.getBlockEntity(message.pos) instanceof SpawnerBlockEntity spawnerBlockEntity) {
+			if (NetworkHelper.getSidedPlayer(ctx.get()).level().getBlockEntity(message.pos) instanceof SpawnerBlockEntity spawnerBlockEntity) {
 				spawnerBlockEntity.getCapability(SpawnerData.INSTANCE).ifPresent(iSpawner -> iSpawner.setDisabled(message.status));
 			}
 		});

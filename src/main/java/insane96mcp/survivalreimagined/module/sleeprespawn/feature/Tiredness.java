@@ -1,7 +1,5 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.feature;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -17,7 +15,6 @@ import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.MessageTirednessSync;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -36,9 +33,6 @@ import net.minecraft.world.level.GameRules;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -129,7 +123,7 @@ public class Tiredness extends SRFeature {
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
-				|| event.player.level.isClientSide
+				|| event.player.level().isClientSide
 				|| event.phase == TickEvent.Phase.START)
 			return;
 
@@ -173,7 +167,7 @@ public class Tiredness extends SRFeature {
 
 	public static void onFoodExhaustion(Player player, float amount) {
 		if (!isEnabled(Tiredness.class)
-				|| player.level.isClientSide)
+				|| player.level().isClientSide)
 			return;
 
 		ServerPlayer serverPlayer = (ServerPlayer) player;
@@ -204,7 +198,7 @@ public class Tiredness extends SRFeature {
 	public void notTiredToSleep(PlayerSleepInBedEvent event) {
 		if (!this.isEnabled()
 				|| event.getResultStatus() != null
-				|| event.getEntity().level.isClientSide)
+				|| event.getEntity().level().isClientSide)
 			return;
 
 		ServerPlayer player = (ServerPlayer) event.getEntity();
@@ -213,14 +207,14 @@ public class Tiredness extends SRFeature {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.displayClientMessage(Component.translatable(NOT_TIRED), true);
 			if (!shouldPreventSpawnPoint)
-				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, true);
+				player.setRespawnPosition(player.level().dimension(), event.getPos(), player.getYRot(), false, true);
 		}
 		else if (TirednessHandler.get(player) > tirednessToEffect) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.startSleeping(event.getPos());
-			((ServerLevel)player.level).updateSleepingPlayerList();
+			((ServerLevel)player.level()).updateSleepingPlayerList();
 			if (!shouldPreventSpawnPoint)
-				player.setRespawnPosition(player.level.dimension(), event.getPos(), player.getYRot(), false, true);
+				player.setRespawnPosition(player.level().dimension(), event.getPos(), player.getYRot(), false, true);
 		}
 	}
 
@@ -286,32 +280,6 @@ public class Tiredness extends SRFeature {
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public static void registerGui(RegisterGuiOverlaysEvent event) {
-		event.registerAbove(VanillaGuiOverlay.SLEEP_FADE.id(), "tired_overlay", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
-			assert Minecraft.getInstance().player != null : "Minecraft.getInstance().player is null";
-			if (isEnabled(Tiredness.class) && gui.shouldDrawSurvivalElements())
-			{
-				LocalPlayer player = Minecraft.getInstance().player;
-				if (!player.hasEffect(TIRED.get()))
-					return;
-				//noinspection DataFlowIssue
-				int amplifier = player.getEffect(TIRED.get()).getAmplifier() + 1;
-				Minecraft.getInstance().getProfiler().push("tired_overlay");
-				RenderSystem.disableDepthTest();
-				float opacity = (amplifier * 20f) / 100.0F;
-				if (opacity > 1.0F)
-					opacity = 1.0F - (amplifier * 20f - 100) / 10.0F;
-
-				int color = (int) (220.0F * opacity) << 24 | 1052704;
-				GuiComponent.fill(mStack, 0, 0, screenWidth, screenHeight, color);
-				RenderSystem.enableDepthTest();
-				Minecraft.getInstance().getProfiler().pop();
-			}
-		});
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent
 	public void debugScreen(CustomizeGuiOverlayEvent.DebugText event) {
 		if (!this.isEnabled())
 			return;
@@ -322,18 +290,5 @@ public class Tiredness extends SRFeature {
 		if (mc.options.renderDebug && !mc.showOnlyReducedInfo()) {
 			event.getLeft().add(String.format("Tiredness: %s", new DecimalFormat("#.#").format(TirednessHandler.get(playerEntity))));
 		}
-		/*if (!mc.options.renderDebug || mc.options.reducedDebugInfo().get()) {
-			String toDraw = String.format("Tiredness: %s", new DecimalFormat("#.#").format(TirednessHandler.get(playerEntity)));
-			int scaledHeight = mc.getWindow().getGuiScaledHeight();
-			int top = scaledHeight - mc.font.lineHeight - 1;
-			int left = 2;
-			drawOnScreenWithBackground(event.getPoseStack(), left, top, toDraw, -1873784752, 14737632);
-		}*/
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	private static void drawOnScreenWithBackground(PoseStack mStack, int x, int y, String text, int backgroundColor, int textColor) {
-		ForgeGui.fill(mStack, x - 1, y - 1, x + Minecraft.getInstance().font.width(text) + 1, y + Minecraft.getInstance().font.lineHeight - 1, backgroundColor);
-		Minecraft.getInstance().font.draw(mStack, text, x, y, textColor);
 	}
 }

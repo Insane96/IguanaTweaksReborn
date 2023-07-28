@@ -14,13 +14,11 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
-import insane96mcp.survivalreimagined.utils.Weights;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -61,15 +59,9 @@ public class StackSizes extends SRFeature {
     @Config(min = 0.01d, max = 64d)
     @Label(name = "Item Stack Multiplier", description = "Items max stack sizes (excluding blocks) will be multiplied by this value. Foods will be overridden by 'Food Stack Reduction' or 'Food Stack Multiplier' if are active. Setting to 1 will disable this feature.")
     public static Double itemStackMultiplier = 1d;
-    @Config
-    @Label(name = "Block Stack Reduction", description = "Blocks max stack sizes will be reduced based off their material.")
-    public static Boolean blockStackReduction = false;
     @Config(min = 0.01d, max = 64d)
-    @Label(name = "Block Stack Multiplier", description = "All the blocks max stack sizes will be multiplied by this value to increase / decrease them. This is applied after the reduction from 'Block Stack Reduction'.")
+    @Label(name = "Block Stack Multiplier", description = "All the blocks max stack sizes will be multiplied by this value to increase / decrease them.")
     public static Double blockStackMultiplier = 1.0d;
-    @Config
-    @Label(name = "Block Stack Affected by Material", description = "When true, block stacks are affected by both their material type and the block stack multiplier. If false, block stacks will be affected by the multiplier only.")
-    public static Boolean blockStackAffectedByMaterial = true;
 
 	public StackSizes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -137,7 +129,7 @@ public class StackSizes extends SRFeature {
 
     //Blocks
     public void processBlockStackSizes() {
-        if (!blockStackReduction)
+        if (blockStackMultiplier == 1d)
             return;
 
         for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
@@ -147,9 +139,7 @@ public class StackSizes extends SRFeature {
                     || isItemInTag(item, NO_STACK_SIZE_CHANGES))
                 continue;
 
-            Block block = ((BlockItem) item).getBlock();
-            double weight = blockStackAffectedByMaterial ? Weights.getWeightForState(block.defaultBlockState()) : 1d;
-            double stackSize = (entry.getValue() / weight) * blockStackMultiplier;
+            double stackSize = entry.getValue() * blockStackMultiplier;
             stackSize = Mth.clamp(stackSize, 1, 64);
             item.maxStackSize = (int) Math.round(stackSize);
         }

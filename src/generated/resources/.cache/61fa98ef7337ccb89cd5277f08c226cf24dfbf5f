@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-22T08:17:19.1754488	Global Loot Modifiers : survivalreimagined
+// 1.20.1	2023-07-28T11:00:21.4609853	Global Loot Modifiers : survivalreimagined
 fe3593bb86e470ab50f61d09c345db835d19ddc1 data/forge/loot_modifiers/global_loot_modifiers.json
 79eb71e29f2dad25a3776683994a0bb4eefa7672 data/survivalreimagined/loot_modifiers/coal_fire/replace_flint_and_steel.json
 028884e696651bf09c99667a31c10c80f618ecb8 data/survivalreimagined/loot_modifiers/crops/no_seeds_from_fern.json

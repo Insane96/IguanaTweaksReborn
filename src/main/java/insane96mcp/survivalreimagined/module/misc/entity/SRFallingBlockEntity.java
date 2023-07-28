@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -61,22 +61,22 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 			}
 
 			this.move(MoverType.SELF, this.getDeltaMovement());
-			if (!this.level.isClientSide) {
+			if (!this.level().isClientSide) {
 				BlockPos blockpos = this.blockPosition();
 				boolean isConcretePowder = this.blockState.getBlock() instanceof ConcretePowderBlock;
-				boolean canBeHydrated = isConcretePowder && this.blockState.canBeHydrated(this.level, blockpos, this.level.getFluidState(blockpos), blockpos);
+				boolean canBeHydrated = isConcretePowder && this.blockState.canBeHydrated(this.level(), blockpos, this.level().getFluidState(blockpos), blockpos);
 				double d0 = this.getDeltaMovement().lengthSqr();
 				if (isConcretePowder && d0 > 1.0D) {
-					BlockHitResult blockhitresult = this.level.clip(new ClipContext(new Vec3(this.xo, this.yo, this.zo), this.position(), ClipContext.Block.COLLIDER, ClipContext.Fluid.SOURCE_ONLY, this));
-					if (blockhitresult.getType() != HitResult.Type.MISS && this.blockState.canBeHydrated(this.level, blockpos, this.level.getFluidState(blockhitresult.getBlockPos()), blockhitresult.getBlockPos())) {
+					BlockHitResult blockhitresult = this.level().clip(new ClipContext(new Vec3(this.xo, this.yo, this.zo), this.position(), ClipContext.Block.COLLIDER, ClipContext.Fluid.SOURCE_ONLY, this));
+					if (blockhitresult.getType() != HitResult.Type.MISS && this.blockState.canBeHydrated(this.level(), blockpos, this.level().getFluidState(blockhitresult.getBlockPos()), blockhitresult.getBlockPos())) {
 						blockpos = blockhitresult.getBlockPos();
 						canBeHydrated = true;
 					}
 				}
 
-				if (!this.onGround && !canBeHydrated) {
-					if (!this.level.isClientSide && (this.time > 100 && (blockpos.getY() <= this.level.getMinBuildHeight() || blockpos.getY() > this.level.getMaxBuildHeight()) || this.time > 600)) {
-						if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+				if (!this.onGround() && !canBeHydrated) {
+					if (!this.level().isClientSide && (this.time > 100 && (blockpos.getY() <= this.level().getMinBuildHeight() || blockpos.getY() > this.level().getMaxBuildHeight()) || this.time > 600)) {
+						if (this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 							this.spawnAtLocation(block);
 						}
 
@@ -84,14 +84,14 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 					}
 				}
 				else {
-					BlockState blockstate = this.level.getBlockState(blockpos);
+					BlockState blockstate = this.level().getBlockState(blockpos);
 					this.setDeltaMovement(this.getDeltaMovement().multiply(0.7D, -0.5D, 0.7D));
 					if (!blockstate.is(Blocks.MOVING_PISTON)) {
 						if (!this.cancelDrop) {
-							boolean canBeReplaced = blockstate.canBeReplaced(new DirectionalPlaceContext(this.level, blockpos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
+							boolean canBeReplaced = blockstate.canBeReplaced(new DirectionalPlaceContext(this.level(), blockpos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
 							//boolean isHarderThanInside = blockstate.getDestroySpeed(this.level, blockpos) < this.blockState.getDestroySpeed(this.level, blockpos);
-							boolean isFree = FallingBlock.isFree(this.level.getBlockState(blockpos.below())) && (!isConcretePowder || !canBeHydrated);
-							boolean canSurviveAndIsNotFree = this.blockState.canSurvive(this.level, blockpos) && !isFree;
+							boolean isFree = FallingBlock.isFree(this.level().getBlockState(blockpos.below())) && (!isConcretePowder || !canBeHydrated);
+							boolean canSurviveAndIsNotFree = this.blockState.canSurvive(this.level(), blockpos) && !isFree;
 							if (canBeReplaced && canSurviveAndIsNotFree)
 								this.place(blockstate, block, blockpos, true);
 							else
@@ -116,7 +116,7 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 			blockPos.set(blockPos.above());
 			if (blockPos.getY() - pos.getY() > 4) {
 				//maxStackReached = true;
-				if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+				if (this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 					this.discard();
 					this.callOnBrokenAfterFall(this.blockState.getBlock(), pos);
 					this.spawnAtLocation(this.blockState.getBlock());
@@ -138,11 +138,11 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 	}
 
 	public boolean tryPlace(BlockPos blockPos) {
-		BlockState stateAt = this.level.getBlockState(blockPos);
-		BlockState stateOn = this.level.getBlockState(blockPos.below());
-		boolean canBeReplaced = stateAt.canBeReplaced(new DirectionalPlaceContext(this.level, blockPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
-		boolean isHarderThanInside = stateAt.getDestroySpeed(this.level, blockPos) < this.blockState.getDestroySpeed(this.level, blockPos);
-		boolean canSurvive = this.blockState.canSurvive(this.level, blockPos);
+		BlockState stateAt = this.level().getBlockState(blockPos);
+		BlockState stateOn = this.level().getBlockState(blockPos.below());
+		boolean canBeReplaced = stateAt.canBeReplaced(new DirectionalPlaceContext(this.level(), blockPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
+		boolean isHarderThanInside = stateAt.getDestroySpeed(this.level(), blockPos) < this.blockState.getDestroySpeed(this.level(), blockPos);
+		boolean canSurvive = this.blockState.canSurvive(this.level(), blockPos);
 		if (canBeReplaced && isHarderThanInside && canSurvive) {
 			this.place(stateOn, this.blockState.getBlock(), blockPos, true);
 			return true;
@@ -151,21 +151,21 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 	}
 
 	public void place(BlockState state, Block block, BlockPos pos, boolean breakBlock) {
-			if (this.blockState.hasProperty(BlockStateProperties.WATERLOGGED) && this.level.getFluidState(pos).getType() == Fluids.WATER) {
+			if (this.blockState.hasProperty(BlockStateProperties.WATERLOGGED) && this.level().getFluidState(pos).getType() == Fluids.WATER) {
 				this.blockState = this.blockState.setValue(BlockStateProperties.WATERLOGGED, Boolean.TRUE);
 			}
 
 			if (breakBlock)
-				this.level.destroyBlock(pos, false);
-			if (this.level.setBlock(pos, this.blockState, 3)) {
-				((ServerLevel)this.level).getChunkSource().chunkMap.broadcast(this, new ClientboundBlockUpdatePacket(pos, this.level.getBlockState(pos)));
+				this.level().destroyBlock(pos, false);
+			if (this.level().setBlock(pos, this.blockState, 3)) {
+				((ServerLevel)this.level()).getChunkSource().chunkMap.broadcast(this, new ClientboundBlockUpdatePacket(pos, this.level().getBlockState(pos)));
 				this.discard();
 				if (block instanceof Fallable) {
-					((Fallable)block).onLand(this.level, pos, this.blockState, state, this);
+					((Fallable)block).onLand(this.level(), pos, this.blockState, state, this);
 				}
 
 				if (this.blockData != null && this.blockState.hasBlockEntity()) {
-					BlockEntity blockentity = this.level.getBlockEntity(pos);
+					BlockEntity blockentity = this.level().getBlockEntity(pos);
 					if (blockentity != null) {
 						CompoundTag compoundtag = blockentity.saveWithoutMetadata();
 
@@ -184,7 +184,7 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 					}
 				}
 			}
-			else if (this.dropItem && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+			else if (this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 				this.discard();
 				this.callOnBrokenAfterFall(block, pos);
 				this.spawnAtLocation(block);
@@ -197,22 +197,22 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 		if (!(itemIn instanceof Block))
 			return super.spawnAtLocation(itemIn);
 
-		if (this.level.isClientSide)
+		if (this.level().isClientSide)
 			return null;
 
-		LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withRandom(this.level.getRandom()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.blockPosition())).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.THIS_ENTITY, this.source);
+		LootParams.Builder lootParams$Builder = (new LootParams.Builder((ServerLevel) this.level())).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.blockPosition())).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.THIS_ENTITY, this.source);
 
-		List<ItemStack> drops = this.getBlockState().getDrops(lootcontext$builder);
+		List<ItemStack> drops = this.getBlockState().getDrops(lootParams$Builder);
 
 		if (drops.isEmpty())
 			return null;
 		for (ItemStack stack : drops) {
-			ItemEntity itemEntity = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), stack);
+			ItemEntity itemEntity = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), stack);
 			itemEntity.setDefaultPickUpDelay();
 			if (captureDrops() != null)
 				captureDrops().add(itemEntity);
 			else
-				this.level.addFreshEntity(itemEntity);
+				this.level().addFreshEntity(itemEntity);
 		}
 		return null;
 	}

@@ -170,7 +170,7 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
             ItemStack resultSlotStack = slotsStacks.get(ForgeMenu.RESULT_SLOT);
             if (resultSlotStack.isEmpty())
                 return true;
-            else if (!resultSlotStack.sameItem(resultStack))
+            else if (!ItemStack.isSameItemSameTags(resultSlotStack, resultStack))
                 return false;
             else if (resultSlotStack.getCount() >= resultStack.getMaxStackSize())
                 return false;
@@ -272,7 +272,7 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
     @Override
     public void setItem(int pSlot, ItemStack pStack) {
         ItemStack itemstack = this.items.get(pSlot);
-        boolean flag = !pStack.isEmpty() && pStack.sameItem(itemstack) && ItemStack.tagMatches(pStack, itemstack);
+        boolean flag = !pStack.isEmpty() && ItemStack.isSameItemSameTags(pStack, itemstack);
         this.items.set(pSlot, pStack);
         if (pStack.getCount() > this.getMaxStackSize()) {
             pStack.setCount(this.getMaxStackSize());
@@ -336,7 +336,7 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
     }
 
     public void awardUsedRecipesAndPopExperience(ServerPlayer pPlayer) {
-        List<Recipe<?>> list = this.getRecipesToAwardAndPopExperience(pPlayer.getLevel(), pPlayer.position());
+        List<Recipe<?>> list = this.getRecipesToAwardAndPopExperience((ServerLevel) pPlayer.level(), pPlayer.position());
         pPlayer.awardRecipes(list);
         this.recipesUsed.clear();
     }

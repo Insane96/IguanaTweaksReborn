@@ -42,7 +42,7 @@ public class FletchingResultSlot extends Slot {
     public void onTake(Player pPlayer, ItemStack pStack) {
         this.checkTakeAchievements(pStack);
         net.minecraftforge.common.ForgeHooks.setCraftingPlayer(pPlayer);
-        Optional<FletchingRecipe> oRecipe = pPlayer.level.getRecipeManager().getRecipeFor(Fletching.FLETCHING_RECIPE_TYPE.get(), this.craftSlots, pPlayer.level);
+        Optional<FletchingRecipe> oRecipe = pPlayer.level().getRecipeManager().getRecipeFor(Fletching.FLETCHING_RECIPE_TYPE.get(), this.craftSlots, pPlayer.level());
         net.minecraftforge.common.ForgeHooks.setCraftingPlayer(null);
         if (oRecipe.isEmpty())
             return;

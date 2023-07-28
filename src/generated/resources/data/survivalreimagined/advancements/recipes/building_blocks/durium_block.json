@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:durium_block"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

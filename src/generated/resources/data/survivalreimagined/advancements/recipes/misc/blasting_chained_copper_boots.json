@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:blasting_chained_copper_boots"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

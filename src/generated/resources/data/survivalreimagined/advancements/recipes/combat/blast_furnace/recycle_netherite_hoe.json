@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:blast_furnace/recycle_netherite_hoe"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

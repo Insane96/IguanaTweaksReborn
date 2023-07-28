@@ -24,7 +24,7 @@ public class SREatBlock extends EatBlockGoal {
     public SREatBlock(Mob mob) {
         super(mob);
         this.mob = mob;
-        this.level = mob.level;
+        this.level = mob.level();
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
     }
 

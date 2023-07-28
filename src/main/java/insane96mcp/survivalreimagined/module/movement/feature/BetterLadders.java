@@ -33,13 +33,13 @@ public class BetterLadders extends Feature {
 				|| !(event.player instanceof LocalPlayer localPlayer))
 			return;
 
-		boolean scaffold = localPlayer.level.getBlockState(localPlayer.blockPosition()).isScaffolding(localPlayer);
+		boolean scaffold = localPlayer.level().getBlockState(localPlayer.blockPosition()).isScaffolding(localPlayer);
 		if (localPlayer.isCrouching() == scaffold
 				&& localPlayer.getRotationVector().x > 75f
 				&& localPlayer.onClimbable()
 				&& localPlayer.zza == 0f
 				&& !localPlayer.input.jumping
-				&& !localPlayer.isOnGround()
+				&& !localPlayer.onGround()
 				&& !localPlayer.getAbilities().flying) {
 			localPlayer.move(MoverType.SELF, new Vec3(0, -0.2f, 0));
 		}
@@ -54,10 +54,10 @@ public class BetterLadders extends Feature {
 		Player player = event.getEntity();
 		if (player.onClimbable()
 				&& !player.getAbilities().flying
-				&& !player.level.getBlockState(player.blockPosition()).isScaffolding(player)
+				&& !player.level().getBlockState(player.blockPosition()).isScaffolding(player)
 				&& Minecraft.getInstance().screen != null
 				&& !(player.zza == 0 && player.getXRot() > 75f)
-				&& !player.isOnGround()) {
+				&& !player.onGround()) {
 			Input input = event.getInput();
 			input.shiftKeyDown = true;
 		}

@@ -62,10 +62,10 @@ public class DesirePaths extends Feature {
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
-				|| event.player.level.isClientSide
+				|| event.player.level().isClientSide
 				|| event.player.walkDist - event.player.walkDistO < 0.04f
 				|| event.phase == TickEvent.Phase.START
-				|| !event.player.isOnGround())
+				|| !event.player.onGround())
 			return;
 
 		AABB bb = event.player.getBoundingBox().deflate(0.01d, 0d, 0.01d);
@@ -75,7 +75,7 @@ public class DesirePaths extends Feature {
 		for (int x2 = mX; x2 < bb.maxX; x2++) {
 			for (int z2 = mZ; z2 < bb.maxZ; z2++) {
 				pos.set(x2, event.player.position().y - 1.0E-5F, z2);
-				BlockState state = event.player.level.getBlockState(pos);
+				BlockState state = event.player.level().getBlockState(pos);
 				for (BlockTransformation blockTransformation : transformationList) {
 					if (!blockTransformation.matchesBlock(state.getBlock()))
 						continue;
@@ -83,13 +83,13 @@ public class DesirePaths extends Feature {
 					if (event.player.getRandom().nextFloat() < chanceToTransform.floatValue()) {
 						Block block = ForgeRegistries.BLOCKS.getValue(blockTransformation.transformTo);
 						if (block == null) continue;
-						event.player.level.setBlockAndUpdate(pos, block.defaultBlockState());
+						event.player.level().setBlockAndUpdate(pos, block.defaultBlockState());
 
 						if (!breakTallGrass) continue;
 						pos.set(x2, event.player.position().y + 0.002d, z2);
-						state = event.player.level.getBlockState(pos);
+						state = event.player.level().getBlockState(pos);
 						if (Utils.isBlockInTag(state.getBlock(), TALL_GRASS)) {
-							event.player.level.destroyBlock(pos, false, event.player);
+							event.player.level().destroyBlock(pos, false, event.player);
 						}
 					}
 				}

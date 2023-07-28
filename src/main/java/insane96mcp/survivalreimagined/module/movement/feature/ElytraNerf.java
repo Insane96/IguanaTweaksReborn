@@ -20,7 +20,7 @@ public class ElytraNerf extends Feature {
 
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Strength", description = "How much the player is pulled down when flying with elytra in non-end dimensions.")
-	public static Double pullStrength = 0.3d;
+	public static Double pullStrength = 0.35d;
 
 	public ElytraNerf(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -32,7 +32,7 @@ public class ElytraNerf extends Feature {
 		if (!this.isEnabled()
 				|| event.phase != TickEvent.Phase.START
 				|| !event.player.isFallFlying()
-				|| event.player.level.dimension() == Level.END)
+				|| event.player.level().dimension() == Level.END)
 			return;
 
 		event.player.move(MoverType.SELF, new Vec3(0, -pullStrength, 0));

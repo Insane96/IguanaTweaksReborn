@@ -33,7 +33,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -91,12 +91,12 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
         return new GraveBlockEntity(pos, state);
     }
 
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder context) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
         BlockEntity blockentity = context.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (blockentity instanceof GraveBlockEntity graveBlockEntity) {
-            context = context.withDynamicDrop(CONTENTS, (p_56218_, p_56219_) -> {
+            context = context.withDynamicDrop(CONTENTS, (consumer) -> {
                 for(ItemStack itemStack : graveBlockEntity.getItems()) {
-                    p_56219_.accept(itemStack);
+                    consumer.accept(itemStack);
                 }
             });
         }

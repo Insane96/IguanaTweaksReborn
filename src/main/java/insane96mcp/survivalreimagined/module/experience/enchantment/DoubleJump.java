@@ -38,7 +38,7 @@ public class DoubleJump extends Enchantment {
     }
 
     public static boolean extraJump(Player entity) {
-        if (entity.isOnGround()
+        if (entity.onGround()
                 || entity.onClimbable()
                 || entity.isInWaterOrBubble())
             return false;

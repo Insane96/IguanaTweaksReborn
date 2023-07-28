@@ -24,9 +24,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingConversionEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -43,7 +43,7 @@ import java.util.UUID;
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class Death extends Feature {
 
-	public static final SimpleBlockWithItem GRAVE = SimpleBlockWithItem.register("grave", () -> new GraveBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(1.5F, 6.0F)));
+	public static final SimpleBlockWithItem GRAVE = SimpleBlockWithItem.register("grave", () -> new GraveBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F)));
 	public static final RegistryObject<BlockEntityType<?>> GRAVE_BLOCK_ENTITY_TYPE = SRBlockEntityTypes.REGISTRY.register("grave", () -> BlockEntityType.Builder.of(GraveBlockEntity::new, GRAVE.block().get()).build(null));
 
 	public static final String PLAYER_GHOST = SurvivalReimagined.RESOURCE_PREFIX + "player_ghost";
@@ -65,18 +65,18 @@ public class Death extends Feature {
 	public void onPlayerDeath(LivingDeathEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getEntity() instanceof ServerPlayer player)
-				|| player.getLevel().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
-				|| player.level.isOutsideBuildHeight(player.blockPosition().getY())
+				|| player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
+				|| player.level().isOutsideBuildHeight(player.blockPosition().getY())
 				|| (player.getInventory().isEmpty() && player.experienceLevel == 0))
 			return;
 
 		BlockState grave = GRAVE.block().get().defaultBlockState();
-		if (player.level.getFluidState(player.blockPosition()).getType() == Fluids.WATER)
+		if (player.level().getFluidState(player.blockPosition()).getType() == Fluids.WATER)
 			grave.setValue(GraveBlock.WATERLOGGED, true);
-		player.getLevel().setBlock(player.blockPosition(), grave, 3);
-		if (player.getLevel().getBlockState(player.blockPosition().below()).canBeReplaced())
-			player.getLevel().setBlock(player.blockPosition().below(), Blocks.COARSE_DIRT.defaultBlockState(), 3);
-		GraveBlockEntity graveBlockEntity = (GraveBlockEntity) player.getLevel().getBlockEntity(player.blockPosition());
+		player.level().setBlock(player.blockPosition(), grave, 3);
+		if (player.level().getBlockState(player.blockPosition().below()).canBeReplaced())
+			player.level().setBlock(player.blockPosition().below(), Blocks.COARSE_DIRT.defaultBlockState(), 3);
+		GraveBlockEntity graveBlockEntity = (GraveBlockEntity) player.level().getBlockEntity(player.blockPosition());
 		List<ItemStack> items = new ArrayList<>();
 		player.getInventory().items.forEach(itemStack -> {
 			if (!itemStack.isEmpty())
@@ -113,15 +113,15 @@ public class Death extends Feature {
 
 	@SubscribeEvent
 	public void onLivingDeath(LivingDeathEvent event) {
-		if (event.getEntity().level.isClientSide
+		if (event.getEntity().level().isClientSide
 				|| !event.getEntity().getPersistentData().contains(PLAYER_GHOST))
 			return;
 
 		int experienceToDrop = event.getEntity().getPersistentData().getInt(XP_TO_DROP);
 		if (experienceToDrop > 0) {
-			ExperienceOrb xpOrb = new ExperienceOrb(event.getEntity().level, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), experienceToDrop);
+			ExperienceOrb xpOrb = new ExperienceOrb(event.getEntity().level(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), experienceToDrop);
 			xpOrb.getPersistentData().putBoolean(GlobalExperience.XP_PROCESSED, true);
-			event.getEntity().level.addFreshEntity(xpOrb);
+			event.getEntity().level().addFreshEntity(xpOrb);
 		}
 	}
 
@@ -129,14 +129,14 @@ public class Death extends Feature {
 	public void onEntityTick(LivingEvent.LivingTickEvent event) {
 		if (!this.isEnabled()
 				|| event.getEntity().tickCount % 20 != 2
-				|| event.getEntity().level.isClientSide
+				|| event.getEntity().level().isClientSide
 				|| !event.getEntity().getPersistentData().contains(PLAYER_GHOST))
 			return;
 
 		Zombie zombie = (Zombie) event.getEntity();
-		zombie.setGlowingTag(zombie.level.hasNearbyAlivePlayer(zombie.getX(), zombie.getY(), zombie.getZ(), 80));
+		zombie.setGlowingTag(zombie.level().hasNearbyAlivePlayer(zombie.getX(), zombie.getY(), zombie.getZ(), 80));
 		zombie.setTicksFrozen(0);
-		if (zombie.level.getGameTime() > zombie.getPersistentData().getLong(SPAWNED_GAME_TIME) + 9000)
+		if (zombie.level().getGameTime() > zombie.getPersistentData().getLong(SPAWNED_GAME_TIME) + 9000)
 			zombie.kill();
 	}
 

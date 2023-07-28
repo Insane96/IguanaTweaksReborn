@@ -36,7 +36,7 @@ import net.minecraft.world.level.block.piston.PistonMovingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -192,7 +192,7 @@ public class SRExplosion extends Explosion {
 					if (damageAmount > 0.0F && player.isDamageSourceBlocked(source)) {
 						damageAmount *= blockingDamageReduction;
 						player.hurtCurrentlyUsedShield(damageAmount);
-						player.level.broadcastEntityEvent(player, (byte) 29);
+						player.level().broadcastEntityEvent(player, (byte) 29);
 					}
 				}
 				entity.hurt(source, damageAmount);
@@ -230,11 +230,11 @@ public class SRExplosion extends Explosion {
 				this.level.getProfiler().push("explosion_blocks");
 				if (!doesCreeperCollateralApply() && blockstate.canDropFromExplosion(this.level, blockpos, this) && this.level instanceof ServerLevel) {
 					BlockEntity blockEntity = blockstate.hasBlockEntity() ? this.level.getBlockEntity(blockpos) : null;
-					LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) this.level)).withRandom(this.level.getRandom()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockpos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, this.source);
+					LootParams.Builder lootparams$builder = (new LootParams.Builder((ServerLevel) this.level)).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(blockpos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, this.source);
 					if (this.blockInteraction == Explosion.BlockInteraction.DESTROY_WITH_DECAY) {
-						lootcontext$builder.withParameter(LootContextParams.EXPLOSION_RADIUS, this.radius);
+						lootparams$builder.withParameter(LootContextParams.EXPLOSION_RADIUS, this.radius);
 					}
-					blockstate.getDrops(lootcontext$builder).forEach((stack) -> addBlockDrops(droppedItems, stack, immutableBlockPos));
+					blockstate.getDrops(lootparams$builder).forEach((stack) -> addBlockDrops(droppedItems, stack, immutableBlockPos));
 				}
 				blockstate.onBlockExploded(this.level, blockpos, this);
 				this.level.getProfiler().pop();

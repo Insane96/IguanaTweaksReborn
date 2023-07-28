@@ -43,5 +43,6 @@
     "recipes": [
       "survivalreimagined:ancient_lapis"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

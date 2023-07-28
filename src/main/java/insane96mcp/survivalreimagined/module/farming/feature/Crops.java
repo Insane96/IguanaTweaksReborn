@@ -29,7 +29,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -61,10 +62,10 @@ public class Crops extends Feature {
 
 	public static final RegistryObject<BlockItem> POTATO_SEEDS = SRItems.REGISTRY.register("potato_seeds", () -> new SeedsBlockItem(Blocks.POTATOES, new Item.Properties()));
 	public static final RegistryObject<BlockItem> CARROT_SEEDS = SRItems.REGISTRY.register("carrot_seeds", () -> new SeedsBlockItem(Blocks.CARROTS, new Item.Properties()));
-	public static final RegistryObject<WildCropBlock> WILD_WHEAT = SRBlocks.REGISTRY.register("wild_wheat", () -> new WildCropBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
-	public static final RegistryObject<WildCropBlock> WILD_CARROTS = SRBlocks.REGISTRY.register("wild_carrots", () -> new WildCropBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
-	public static final RegistryObject<WildCropBlock> WILD_POTATOES = SRBlocks.REGISTRY.register("wild_potatoes", () -> new WildCropBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
-	public static final RegistryObject<WildCropBlock> WILD_BEETROOTS = SRBlocks.REGISTRY.register("wild_beetroots", () -> new WildCropBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+	public static final RegistryObject<WildCropBlock> WILD_WHEAT = SRBlocks.REGISTRY.register("wild_wheat", () -> new WildCropBlock(BlockBehaviour.Properties.of().noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+	public static final RegistryObject<WildCropBlock> WILD_CARROTS = SRBlocks.REGISTRY.register("wild_carrots", () -> new WildCropBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+	public static final RegistryObject<WildCropBlock> WILD_POTATOES = SRBlocks.REGISTRY.register("wild_potatoes", () -> new WildCropBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+	public static final RegistryObject<WildCropBlock> WILD_BEETROOTS = SRBlocks.REGISTRY.register("wild_beetroots", () -> new WildCropBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
 
 	public ArrayList<PlantGrowthModifier> plantGrowthModifiers = new ArrayList<>();
 

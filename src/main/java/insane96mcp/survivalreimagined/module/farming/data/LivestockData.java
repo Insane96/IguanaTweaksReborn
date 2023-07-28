@@ -33,7 +33,7 @@ public class LivestockData extends IdTagValue {
 	}
 
 	public boolean matches(Entity entity) {
-		if (season != null && !season.equals(SeasonHelper.getSeasonState(entity.level).getSeason()))
+		if (season != null && !season.equals(SeasonHelper.getSeasonState(entity.level()).getSeason()))
 			return false;
 		return this.matchesEntity(entity);
 	}

@@ -83,7 +83,7 @@ public class GlobalHardness extends SRFeature {
 			return;
 
 		BlockPos pos = event.getPosition().get();
-		Level level = event.getEntity().level;
+		Level level = event.getEntity().level();
 		ResourceLocation dimensionId = level.dimension().location();
 		BlockState blockState = level.getBlockState(pos);
 		Block block = blockState.getBlock();

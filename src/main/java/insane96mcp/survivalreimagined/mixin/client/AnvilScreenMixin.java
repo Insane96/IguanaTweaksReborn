@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.mixin.client;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.survivalreimagined.module.experience.feature.Anvils;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
 import net.minecraft.network.chat.Component;
@@ -31,7 +31,7 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 	}
 
 	@Shadow
-	protected void renderErrorIcon(PoseStack p_266902_, int p_266822_, int p_267045_) {
+	protected void renderErrorIcon(GuiGraphics p_266902_, int p_266822_, int p_267045_) {
 
 	}
 
@@ -51,7 +51,7 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 					value = "TAIL"
 			)
 	)
-	public void renderLabels(PoseStack poseStack, int p_97891_, int p_97892_, CallbackInfo ci) {
+	public void renderLabels(GuiGraphics pGuiGraphics, int p_97891_, int p_97892_, CallbackInfo ci) {
 		if (this.menu.getCost() == 0 && this.menu.getSlot(2).hasItem()) {
 			int j = 8453920;
 			Component component = Component.translatable("container.repair.free");
@@ -61,8 +61,8 @@ public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 
 			int k = this.imageWidth - 8 - this.font.width(component) - 2;
 			int l = 69;
-			fill(poseStack, k - 2, 67, this.imageWidth - 8, 79, 1325400064);
-			this.font.drawShadow(poseStack, component, (float)k, 69.0F, j);
+			pGuiGraphics.fill(k - 2, 67, this.imageWidth - 8, 79, 1325400064);
+			pGuiGraphics.drawString(this.font, component, k, l, j);
 		}
 	}
 }

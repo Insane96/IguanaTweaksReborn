@@ -30,7 +30,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
@@ -109,12 +109,12 @@ public class CrateBlock extends BaseEntityBlock {
         super.playerWillDestroy(level, pos, state, player);
     }
 
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder context) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder context) {
         BlockEntity blockentity = context.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (blockentity instanceof CrateBlockEntity crateBlockEntity) {
-            context = context.withDynamicDrop(CONTENTS, (p_56218_, p_56219_) -> {
+            context = context.withDynamicDrop(CONTENTS, (p_56218_) -> {
                 for(int i = 0; i < crateBlockEntity.getContainerSize(); ++i) {
-                    p_56219_.accept(crateBlockEntity.getItem(i));
+                    p_56218_.accept(crateBlockEntity.getItem(i));
                 }
             });
         }

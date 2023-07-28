@@ -126,9 +126,9 @@ public class TimberTrees extends SRFeature {
                     BlockPos posImmutable = blockPos.immutable();
                     boolean isValidLeaves = stateToCheck.is(BlockTags.LEAVES) && !stateToCheck.getValue(LeavesBlock.PERSISTENT);
                     boolean isSameLog = stateToCheck.is(state.getBlock());
-                    boolean isInDistance = xzDistance(posImmutable, pos) <= 7;
+                    boolean isInDistance = xzDistance(posImmutable, pos) <= 8;
                     boolean isCurrLeaves = currState.is(BlockTags.LEAVES) && !currState.getValue(LeavesBlock.PERSISTENT);
-                    boolean isCorrectLeavesDistance = isValidLeaves && isCurrLeaves && (stateToCheck.getValue(LeavesBlock.DISTANCE) > currState.getValue(LeavesBlock.DISTANCE) /*|| (stateToCheck.getValue(LeavesBlock.DISTANCE).equals(currState.getValue(LeavesBlock.DISTANCE)) && level.getRandom().nextBoolean())*/);
+                    boolean isCorrectLeavesDistance = isValidLeaves && isCurrLeaves && (stateToCheck.getValue(LeavesBlock.DISTANCE) > currState.getValue(LeavesBlock.DISTANCE) || stateToCheck.getValue(LeavesBlock.DISTANCE) == 7 /*|| (stateToCheck.getValue(LeavesBlock.DISTANCE).equals(currState.getValue(LeavesBlock.DISTANCE)) && level.getRandom().nextBoolean())*/);
                     if (isValidLeaves)
                         foundLeaves = true;
                     if (!blocks.contains(posImmutable) && (isSameLog || isValidLeaves) && isInDistance && (!isValidLeaves || !isCurrLeaves || isCorrectLeavesDistance)) {

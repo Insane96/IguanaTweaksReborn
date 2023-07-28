@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:stonecutter_polished_flint_block"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

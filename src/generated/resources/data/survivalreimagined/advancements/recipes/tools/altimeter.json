@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:altimeter"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

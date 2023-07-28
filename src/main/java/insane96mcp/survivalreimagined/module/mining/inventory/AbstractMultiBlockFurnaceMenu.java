@@ -37,7 +37,7 @@ public abstract class AbstractMultiBlockFurnaceMenu extends RecipeBookMenu<Conta
         checkContainerDataCount(pData, DATA_COUNT);
         this.container = pContainer;
         this.data = pData;
-        this.level = pPlayerInventory.player.level;
+        this.level = pPlayerInventory.player.level();
 
         perMenuSlots.forEach(AbstractMultiBlockFurnaceMenu.this::addSlot);
         if (this instanceof MultiBlockSoulBlastFurnaceMenu)

@@ -13,7 +13,7 @@
                             "name": "survivalreimagined:solium_moss",
                             "conditions": [
                                 {
-                                    "condition": "minecraft:alternative",
+                                    "condition": "minecraft:all_of",
                                     "terms": [
                                         {
                                             "condition": "minecraft:match_tool",

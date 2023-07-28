@@ -43,5 +43,6 @@
     "recipes": [
       "survivalreimagined:crate"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

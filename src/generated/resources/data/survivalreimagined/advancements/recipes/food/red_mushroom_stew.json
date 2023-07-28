@@ -43,5 +43,6 @@
     "recipes": [
       "survivalreimagined:red_mushroom_stew"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

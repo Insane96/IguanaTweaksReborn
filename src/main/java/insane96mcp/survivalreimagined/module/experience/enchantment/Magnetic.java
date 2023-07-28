@@ -35,8 +35,7 @@ public class Magnetic extends Enchantment {
         if (level == 0)
             return;
 
-        //List<ItemEntity> itemsInRange = entity.level.getEntitiesOfClass(ItemEntity.class, entity.getBoundingBox().inflate(level + 2), itemEntity -> !itemEntity.hasPickUpDelay());
-        List<ItemEntity> itemsInRange = entity.level.getEntitiesOfClass(ItemEntity.class, entity.getBoundingBox().inflate(level + 2));
+        List<ItemEntity> itemsInRange = entity.level().getEntitiesOfClass(ItemEntity.class, entity.getBoundingBox().inflate(level + 2));
         for (ItemEntity itemEntity : itemsInRange) {
             Vec3 vecToEntity = new Vec3(entity.getX() - itemEntity.getX(), entity.getY() + (double)entity.getEyeHeight() / 2.0D - itemEntity.getY(), entity.getZ() - itemEntity.getZ());
             itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add(vecToEntity.normalize().scale(0.02d + level * 0.01d)));

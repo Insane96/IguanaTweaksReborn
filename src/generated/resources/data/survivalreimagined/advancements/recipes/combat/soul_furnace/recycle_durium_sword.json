@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:soul_furnace/recycle_durium_sword"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

@@ -1,9 +1,8 @@
 package insane96mcp.survivalreimagined.module.combat.client;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.combat.inventory.FletchingMenu;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -45,26 +44,25 @@ public class FletchingScreen extends AbstractContainerScreen<FletchingMenu> impl
         this.recipeBookComponent.tick();
     }
 
-    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-        this.renderBackground(pPoseStack);
+    public void render(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        this.renderBackground(guiGraphics);
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
-            this.renderBg(pPoseStack, pPartialTick, pMouseX, pMouseY);
-            this.recipeBookComponent.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
+            this.renderBg(guiGraphics, pPartialTick, pMouseX, pMouseY);
+            this.recipeBookComponent.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
         } else {
-            this.recipeBookComponent.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
-            super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
-            this.recipeBookComponent.renderGhostRecipeAmount(pPoseStack, this.leftPos, this.topPos, true, pPartialTick);
+            this.recipeBookComponent.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
+            super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
+            this.recipeBookComponent.renderGhostRecipeAmount(guiGraphics, this.leftPos, this.topPos, true, pPartialTick);
         }
 
-        this.renderTooltip(pPoseStack, pMouseX, pMouseY);
-        this.recipeBookComponent.renderTooltip(pPoseStack, this.leftPos, this.topPos, pMouseX, pMouseY);
+        this.renderTooltip(guiGraphics, pMouseX, pMouseY);
+        this.recipeBookComponent.renderTooltip(guiGraphics, this.leftPos, this.topPos, pMouseX, pMouseY);
     }
 
-    protected void renderBg(PoseStack pPoseStack, float pPartialTick, int pX, int pY) {
-        RenderSystem.setShaderTexture(0, this.texture);
+    protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pX, int pY) {
         int leftPos = this.leftPos;
         int topPos = this.topPos;
-        blit(pPoseStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(this.texture, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
 
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {

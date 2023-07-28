@@ -119,7 +119,7 @@ public class FoodDrinks extends SRFeature {
 		if (!this.isEnabled()
 				|| !event.getItem().isEdible()
 				|| !(event.getEntity() instanceof Player player)
-				|| event.getEntity().level.isClientSide)
+				|| event.getEntity().level().isClientSide)
 			return;
 
 		Item item = event.getItem().getItem();

@@ -12,16 +12,13 @@ import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.CombatEntry;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -53,20 +50,9 @@ public class Knockback extends Feature {
 		player.getPersistentData().putInt(Strings.Tags.TIME_SINCE_LAST_SWING, player.attackStrengthTicker);
 	}
 
-	@SubscribeEvent
-	public void onKnockback(LivingKnockBackEvent event) {
-		if (!this.isEnabled())
-			return;
-		LivingEntity attacker = event.getEntity().lastHurtByPlayer;
-		if (attacker == null)
-			attacker = event.getEntity().getKillCredit();
-		if (!(attacker instanceof Player player))
-			return;
-		if (player.getAbilities().instabuild)
-			return;
-		CombatEntry combatEntry = event.getEntity().getCombatTracker().getLastEntry();
-		if (combatEntry == null || !(combatEntry.getSource().getDirectEntity() instanceof Player))
-			return;
+	public static double onKnockback(Player player, double strength) {
+		if (!Feature.isEnabled(Knockback.class)
+				|| player.getAbilities().instabuild) return strength;
 		ItemStack itemStack = player.getMainHandItem();
 
 		boolean isInTag = Utils.isItemInTag(itemStack.getItem(), REDUCED_KNOCKBACK);
@@ -80,11 +66,8 @@ public class Knockback extends Feature {
 		float cooldown = Mth.clamp((ticksSinceLastSwing + 0.5f) / player.getCurrentItemAttackStrengthDelay(), 0.0F, 1.0F);
 		if (cooldown <= 0.9f)
 			reducedKnockback = true;
-		if (reducedKnockback) {
-			if (knockbackReduction == 0d)
-				event.setCanceled(true);
-			else
-				event.setStrength(event.getStrength() * knockbackReduction.floatValue());
-		}
+		if (reducedKnockback)
+			return strength * knockbackReduction;
+		return strength;
 	}
 }

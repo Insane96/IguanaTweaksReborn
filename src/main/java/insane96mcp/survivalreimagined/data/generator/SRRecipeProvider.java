@@ -262,34 +262,34 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(Solarium.SOLIUM_MOSS.item().get(), 9)
                 .unlockedBy("has_solium_moss", has(Solarium.SOLIUM_MOSS.item().get()))
                 .save(writer);
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.AXE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_AXE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.AXE.get())
                 .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_axe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_PICKAXE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.PICKAXE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_PICKAXE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.PICKAXE.get())
                 .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_pickaxe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SHOVEL), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.SHOVEL.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_SHOVEL), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.SHOVEL.get())
                 .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_shovel");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HOE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.HOE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_HOE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.HOE.get())
                 .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_hoe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SWORD), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.SWORD.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_SWORD), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.SWORD.get())
                 .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_sword");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.SHIELD.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.SHIELD), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.SHIELD.get())
                 .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_shield");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HELMET), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.HELMET.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_HELMET), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.HELMET.get())
                 .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_helmet");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_CHESTPLATE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.CHESTPLATE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_CHESTPLATE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.CHESTPLATE.get())
                 .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_chestplate");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_LEGGINGS), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.LEGGINGS.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_LEGGINGS), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.LEGGINGS.get())
                 .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_leggings");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.BOOTS.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.COMBAT, Solarium.BOOTS.get())
                 .unlocks("has_solium_moss_ball", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_boots");
 
@@ -338,66 +338,66 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_scrap_block", has(Durium.SCRAP_BLOCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_ingot_from_soul_blasting");
 
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_AXE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.AXE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_AXE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.AXE.get())
                 .unlocks("has_durium", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_axe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_PICKAXE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.PICKAXE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_PICKAXE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.PICKAXE.get())
                 .unlocks("has_durium", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_pickaxe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SHOVEL), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.SHOVEL.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_SHOVEL), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.SHOVEL.get())
                 .unlocks("has_durium", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_shovel");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HOE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.HOE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_HOE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Durium.HOE.get())
                 .unlocks("has_durium", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_hoe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_SWORD), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.SWORD.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_SWORD), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.SWORD.get())
                 .unlocks("has_durium", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_sword");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.SHIELD.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.SHIELD), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.SHIELD.get())
                 .unlocks("has_durium", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_shield");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_HELMET), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.HELMET.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_HELMET), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.HELMET.get())
                 .unlocks("has_durium", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_helmet");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_CHESTPLATE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.CHESTPLATE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_CHESTPLATE), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.CHESTPLATE.get())
                 .unlocks("has_durium", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_chestplate");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_LEGGINGS), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.LEGGINGS.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_LEGGINGS), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.LEGGINGS.get())
                 .unlocks("has_durium", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_leggings");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.BOOTS.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_BOOTS), Ingredient.of(Durium.INGOT.get()), RecipeCategory.COMBAT, Durium.BOOTS.get())
                 .unlocks("has_durium", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_boots");
 
         //Soul Steel
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_AXE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.AXE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_AXE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.AXE.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_axe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_PICKAXE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.PICKAXE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_PICKAXE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.PICKAXE.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_pickaxe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_SHOVEL), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.SHOVEL.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_SHOVEL), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.SHOVEL.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_shovel");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_HOE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.HOE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_HOE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.HOE.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_hoe");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_SWORD), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.SWORD.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_SWORD), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.SWORD.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_sword");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.SHIELD), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.SHIELD.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.SHIELD), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.SHIELD.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_shield");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_HELMET), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.HELMET.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_HELMET), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.HELMET.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_helmet");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_CHESTPLATE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.CHESTPLATE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_CHESTPLATE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.CHESTPLATE.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_chestplate");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_LEGGINGS), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.LEGGINGS.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_LEGGINGS), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.LEGGINGS.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_leggings");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Items.DIAMOND_BOOTS), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.BOOTS.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_BOOTS), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.BOOTS.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_boots");
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, SoulSteel.BLOCK.block().get(), 1)
@@ -801,16 +801,16 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         hammerCraftingRecipe(writer, Forging.FLINT_HAMMER.get(), Items.FLINT);
         hammerCraftingRecipe(writer, Forging.COPPER_HAMMER.get(), Items.COPPER_INGOT);
         forgeRecipe(writer, Items.IRON_INGOT, 5, Forging.STONE_HAMMER.get(), Forging.IRON_HAMMER.get(), 10, 5f);
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Forging.SOLARIUM_HAMMER.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Forging.SOLARIUM_HAMMER.get())
                 .unlocks("has_material", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_hammer");
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Forging.DURIUM_HAMMER.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Forging.DURIUM_HAMMER.get())
                 .unlocks("has_material", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_hammer");
         forgeRecipe(writer, Items.GOLD_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.GOLDEN_HAMMER.get(), 4, 2f);
         forgeRecipe(writer, Items.DIAMOND, 5, Forging.GOLDEN_HAMMER.get(), Forging.DIAMOND_HAMMER.get(), 16, 8f);
         forgeRecipe(writer, SoulSteel.INGOT.get(), 5, Forging.IRON_HAMMER.get(), Forging.SOUL_STEEL_HAMMER.get(), 20, 10f);
-        LegacyUpgradeRecipeBuilder.smithing(Ingredient.of(Forging.SOUL_STEEL_HAMMER.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.TOOLS, Forging.NETHERITE_HAMMER.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Forging.SOUL_STEEL_HAMMER.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.TOOLS, Forging.NETHERITE_HAMMER.get())
                 .unlocks("has_material", has(Items.NETHERITE_INGOT))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "netherite_hammer");
 

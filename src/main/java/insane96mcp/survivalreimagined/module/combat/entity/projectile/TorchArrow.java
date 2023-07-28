@@ -29,21 +29,21 @@ public class TorchArrow extends Arrow {
 
     @Override
     protected void onHitBlock(BlockHitResult pResult) {
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             super.onHitBlock(pResult);
             return;
         }
         Direction direction = pResult.getDirection();
         BlockPos pos = pResult.getBlockPos().relative(direction);
-        BlockState hitState = this.level.getBlockState(pos);
+        BlockState hitState = this.level().getBlockState(pos);
         if ((hitState.isAir() || hitState.canBeReplaced()) && direction != Direction.DOWN) {
             BlockState stateToPlace;
             if (direction == Direction.UP)
                 stateToPlace = Blocks.TORCH.defaultBlockState();
             else
                 stateToPlace = Blocks.WALL_TORCH.defaultBlockState().setValue(WallTorchBlock.FACING, direction);
-            if (stateToPlace.canSurvive(this.level, pos)) {
-                this.level.setBlock(pos, stateToPlace, 2);
+            if (stateToPlace.canSurvive(this.level(), pos)) {
+                this.level().setBlock(pos, stateToPlace, 2);
                 this.playSound(stateToPlace.getSoundType().getPlaceSound());
                 this.discard();
                 return;

@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:blast_furnace/recycle_diamond_sword"
     ]
-  }
+  },
+  "sends_telemetry_event": true
 }

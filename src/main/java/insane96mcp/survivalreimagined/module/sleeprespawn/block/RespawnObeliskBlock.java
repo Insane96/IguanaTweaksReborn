@@ -143,7 +143,7 @@ public class RespawnObeliskBlock extends Block {
             level.playSound(null, respawnPos.getX(), respawnPos.getY(), respawnPos.getZ(), SoundEvents.RESPAWN_ANCHOR_DEPLETE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             player.displayClientMessage(Component.translatable(OBELISK_DISABLED), false);
             if (player instanceof ServerPlayer serverPlayer) {
-                serverPlayer.setRespawnPosition(player.level.dimension(), null, 0f, false, false);
+                serverPlayer.setRespawnPosition(player.level().dimension(), null, 0f, false, false);
             }
         }
     }

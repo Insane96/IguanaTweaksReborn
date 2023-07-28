@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -76,7 +76,7 @@ public class Misc extends Feature {
     public void onFalling(LivingFallEvent event) {
         if (!this.isEnabled()
                 || !fallingBreakingGlass
-                || event.getEntity().level.isClientSide)
+                || event.getEntity().level().isClientSide)
             return;
 
         LivingEntity entity = event.getEntity();
@@ -90,14 +90,14 @@ public class Misc extends Feature {
         for (int x2 = mX; x2 < bb.maxX; x2++) {
             for (int z2 = mZ; z2 < bb.maxZ; z2++) {
                 pos.set(x2, entity.position().y - 1.0E-5F, z2);
-                BlockState state = entity.level.getBlockState(pos);
+                BlockState state = entity.level().getBlockState(pos);
                 if (state.is(Tags.Blocks.GLASS)) {
-                    BlockEntity blockEntity = state.hasBlockEntity() ? entity.level.getBlockEntity(pos) : null;
-                    LootContext.Builder lootcontext$builder = (new LootContext.Builder((ServerLevel) entity.level)).withRandom(entity.level.getRandom()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, entity);
+                    BlockEntity blockEntity = state.hasBlockEntity() ? entity.level().getBlockEntity(pos) : null;
+                    LootParams.Builder lootcontext$builder = (new LootParams.Builder((ServerLevel) entity.level())).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, entity);
                     state.getDrops(lootcontext$builder).forEach(stack ->
-                        entity.level.addFreshEntity(new ItemEntity(entity.level, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, stack))
+                        entity.level().addFreshEntity(new ItemEntity(entity.level(), pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, stack))
                     );
-                    entity.level.destroyBlock(pos, false);
+                    entity.level().destroyBlock(pos, false);
                 }
             }
         }

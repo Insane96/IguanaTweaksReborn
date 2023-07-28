@@ -1,9 +1,10 @@
 package insane96mcp.survivalreimagined.module.combat.client;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import insane96mcp.survivalreimagined.module.combat.crafting.FletchingRecipe;
 import insane96mcp.survivalreimagined.module.combat.inventory.FletchingMenu;
 import insane96mcp.survivalreimagined.module.mining.client.GhostRecipeAmount;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.inventory.Slot;
@@ -53,14 +54,14 @@ public class FletchingRecipeBookComponent extends RecipeBookComponent {
         super.slotClicked(pSlot);
     }
 
-    public void renderTooltip(PoseStack pPoseStack, int pRenderX, int pRenderY, int pMouseX, int pMouseY) {
+    public void renderTooltip(GuiGraphics guiGraphics, int pRenderX, int pRenderY, int pMouseX, int pMouseY) {
         if (this.isVisible()) {
-            this.renderGhostRecipeTooltip(pPoseStack, pRenderX, pRenderY, pMouseX, pMouseY);
+            this.renderGhostRecipeTooltip(guiGraphics, pRenderX, pRenderY, pMouseX, pMouseY);
         }
-        super.renderTooltip(pPoseStack, pRenderX, pRenderY, pMouseX, pMouseY);
+        super.renderTooltip(guiGraphics, pRenderX, pRenderY, pMouseX, pMouseY);
     }
 
-    private void renderGhostRecipeTooltip(PoseStack pPoseStack, int p_100376_, int p_100377_, int pMouseX, int pMouseY) {
+    private void renderGhostRecipeTooltip(GuiGraphics guiGraphics, int p_100376_, int p_100377_, int pMouseX, int pMouseY) {
         ItemStack itemstack = null;
 
         for(int i = 0; i < this.ghostRecipeAmount.size(); ++i) {
@@ -73,13 +74,13 @@ public class FletchingRecipeBookComponent extends RecipeBookComponent {
         }
 
         if (itemstack != null && this.minecraft.screen != null) {
-            this.minecraft.screen.renderComponentTooltip(pPoseStack, this.minecraft.screen.getTooltipFromItem(itemstack), pMouseX, pMouseY, itemstack);
+            guiGraphics.renderComponentTooltip(this.minecraft.font, Screen.getTooltipFromItem(this.minecraft, itemstack), pMouseX, pMouseY, itemstack);
         }
 
     }
 
-    public void renderGhostRecipeAmount(PoseStack pPoseStack, int pLeftPos, int pTopPos, boolean p_100326_, float pPartialTick) {
-        this.ghostRecipeAmount.render(pPoseStack, this.minecraft, pLeftPos, pTopPos, p_100326_, pPartialTick);
+    public void renderGhostRecipeAmount(GuiGraphics guiGraphics, int pLeftPos, int pTopPos, boolean p_100326_, float pPartialTick) {
+        this.ghostRecipeAmount.render(guiGraphics, this.minecraft, pLeftPos, pTopPos, p_100326_, pPartialTick);
     }
 
     public void addItemToSlot(Iterator<Ingredient> pIngredients, int pSlot, int pMaxAmount, int pY, int pX) {

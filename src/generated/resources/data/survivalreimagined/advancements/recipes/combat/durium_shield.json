@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:durium_shield"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

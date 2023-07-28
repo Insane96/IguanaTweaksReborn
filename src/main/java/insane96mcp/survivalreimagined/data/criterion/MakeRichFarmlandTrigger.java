@@ -15,8 +15,8 @@ public class MakeRichFarmlandTrigger extends SimpleCriterionTrigger<MakeRichFarm
 	public static MakeRichFarmlandTrigger TRIGGER = CriteriaTriggers.register(new MakeRichFarmlandTrigger());
 
 	@Override
-	protected TriggerInstance createInstance(JsonObject jsonObject, EntityPredicate.Composite entityPredicateComposite, DeserializationContext context) {
-		return new TriggerInstance(entityPredicateComposite);
+	protected TriggerInstance createInstance(JsonObject jsonObject, ContextAwarePredicate pPredicate, DeserializationContext context) {
+		return new TriggerInstance(pPredicate);
 	}
 
 	@Override
@@ -29,8 +29,8 @@ public class MakeRichFarmlandTrigger extends SimpleCriterionTrigger<MakeRichFarm
 	}
 
 	public static class TriggerInstance extends AbstractCriterionTriggerInstance {
-		public TriggerInstance(EntityPredicate.Composite composite) {
-			super(ID, composite);
+		public TriggerInstance(ContextAwarePredicate pPredicate) {
+			super(ID, pPredicate);
 		}
 
 		public JsonObject serializeToJson(SerializationContext context) {

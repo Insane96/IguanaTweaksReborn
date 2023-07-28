@@ -30,5 +30,6 @@
     "recipes": [
       "survivalreimagined:mining_charge"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

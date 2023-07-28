@@ -17,8 +17,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 
 import java.util.List;
 
@@ -26,9 +24,9 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.WORLD)
 public class OreGeneration extends Feature {
 
-    public static final SimpleBlockWithItem IRON_ORE_ROCK = SimpleBlockWithItem.register("iron_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
-    public static final SimpleBlockWithItem GOLD_ORE_ROCK = SimpleBlockWithItem.register("gold_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
-    public static final SimpleBlockWithItem COPPER_ORE_ROCK = SimpleBlockWithItem.register("copper_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
+    public static final SimpleBlockWithItem IRON_ORE_ROCK = SimpleBlockWithItem.register("iron_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of().strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
+    public static final SimpleBlockWithItem GOLD_ORE_ROCK = SimpleBlockWithItem.register("gold_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of().strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
+    public static final SimpleBlockWithItem COPPER_ORE_ROCK = SimpleBlockWithItem.register("copper_ore_rock", () -> new GroundRockBlock(BlockBehaviour.Properties.of().strength(0.5F, 2.0F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()));
 
     public static final PoorRichOre POOR_RICH_IRON_ORE = PoorRichOre.register("iron", Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE);
     public static final PoorRichOre POOR_RICH_COPPER_ORE = PoorRichOre.register("copper", Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE);

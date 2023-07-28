@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -53,8 +52,7 @@ public class PilableLayerBlock extends SnowLayerBlock implements Fallable {
     }
 
     public static boolean isFree(BlockState state) {
-        Material material = state.getMaterial();
-        return state.isAir() || state.is(BlockTags.FIRE) || material.isLiquid() || (material.isReplaceable() && !(state.getBlock() instanceof PilableLayerBlock));
+        return state.isAir() || state.is(BlockTags.FIRE) || state.liquid() || (state.canBeReplaced() && !(state.getBlock() instanceof PilableLayerBlock));
     }
 
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
