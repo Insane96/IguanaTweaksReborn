@@ -18,12 +18,14 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -130,10 +132,13 @@ public class Anvils extends SRFeature {
                 || !allowFixingAnvils
                 || !event.getItemStack().is(Items.IRON_BLOCK))
             return;
+        BlockState state = event.getLevel().getBlockState(event.getPos());
+        if (!state.is(BlockTags.ANVIL))
+            return;
 
-        Direction direction = event.getLevel().getBlockState(event.getPos()).getValue(AnvilBlock.FACING);
-        boolean isChipped = event.getLevel().getBlockState(event.getPos()).is(Blocks.CHIPPED_ANVIL);
-        boolean isDamaged = event.getLevel().getBlockState(event.getPos()).is(Blocks.DAMAGED_ANVIL);
+        Direction direction = state.getValue(AnvilBlock.FACING);
+        boolean isChipped = state.is(Blocks.CHIPPED_ANVIL);
+        boolean isDamaged = state.is(Blocks.DAMAGED_ANVIL);
         if (!isChipped && !isDamaged)
             return;
 

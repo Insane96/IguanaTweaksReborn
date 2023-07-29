@@ -9,9 +9,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfig;
-import net.minecraftforge.event.entity.player.PlayerSpawnPhantomsEvent;
 import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import sereneseasons.api.season.Season;
@@ -69,7 +67,7 @@ public class Spawning extends SRFeature {
         super.readConfig(event);
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     public void onPhantomsSpawn(PlayerSpawnPhantomsEvent event) {
         if (!this.isEnabled()
                 || !phantomsInTheEnd)
@@ -79,7 +77,7 @@ public class Spawning extends SRFeature {
             event.setResult(Event.Result.DENY);
         else if (event.getEntity().level().dimension() == Level.END)
             event.setResult(Event.Result.ALLOW);
-    }
+    }*/
 
     @SubscribeEvent
     public void onSeasonChanged(SeasonChangedEvent.Standard event) {
