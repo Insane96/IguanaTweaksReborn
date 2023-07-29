@@ -2,6 +2,8 @@
 
 ## 0.13.0
 * Update to MC 1.20.1
+* Added "Phantoms in the End"
+  * Makes Phantoms spawn in The End instead of the Overworld
 * Block stack reduction can no longer be reduced by material
 
 ## 0.12.4

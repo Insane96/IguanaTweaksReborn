@@ -37,7 +37,7 @@
     ],
     "experience_multiplier": 1.75,
     "conditions": {
-        "advancements_done": [
+        "advancements_unlocked": [
             {
                 "advancements": [ "minecraft:end/kill_dragon" ],
                 "player_mode": "any"

@@ -9,7 +9,9 @@ import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfig;
+import net.minecraftforge.event.entity.player.PlayerSpawnPhantomsEvent;
 import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import sereneseasons.api.season.Season;
@@ -54,6 +56,10 @@ public class Spawning extends SRFeature {
     @Label(name = "Stupid baby zombies", description = "Disable baby zombies spawning")
     public static Boolean disableBabyZombies = true;
 
+    @Config
+    @Label(name = "Phantoms in the End", description = "Prevents phantoms from spawning with the player's insomnia and makes them spawn in the End")
+    public static Boolean phantomsInTheEnd = true;
+
     public Spawning(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -64,7 +70,19 @@ public class Spawning extends SRFeature {
     }
 
     @SubscribeEvent
-    public void onMobSpawn(SeasonChangedEvent.Standard event) {
+    public void onPhantomsSpawn(PlayerSpawnPhantomsEvent event) {
+        if (!this.isEnabled()
+                || !phantomsInTheEnd)
+            return;
+
+        if (event.getEntity().level().dimension() == Level.OVERWORLD)
+            event.setResult(Event.Result.DENY);
+        else if (event.getEntity().level().dimension() == Level.END)
+            event.setResult(Event.Result.ALLOW);
+    }
+
+    @SubscribeEvent
+    public void onSeasonChanged(SeasonChangedEvent.Standard event) {
         if (!this.isEnabled())
             return;
 
