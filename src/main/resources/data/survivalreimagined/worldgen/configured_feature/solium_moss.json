@@ -1,9 +1,9 @@
 {
     "type": "minecraft:flower",
     "config": {
-        "tries": 256,
-        "xz_spread": 8,
-        "y_spread": 4,
+        "tries": 512,
+        "xz_spread": 9,
+        "y_spread": 9,
         "feature": {
             "feature": {
                 "type": "minecraft:simple_block",

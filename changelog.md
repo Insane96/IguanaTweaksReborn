@@ -6,7 +6,8 @@
   * Makes Phantoms spawn in The End instead of the Overworld
 * Block stack reduction can no longer be reduced by material
 * Fixed crash when placing Iron Blocks
-* Powder Snow is now harder to break
+* Powder Snow is now harder to break 
+* Solium moss now generates more per patch
 
 ## 0.12.4
 * Small Thorns overhaul
