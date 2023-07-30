@@ -50,7 +50,9 @@ public class CustomHardness extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_deepslate_gold_ore", 6.666d),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:ancient_debris", 12d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:obsidians", 33d)
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:obsidians", 33d),
+
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:powder_snow", 1.5d)
 	));
 	public static final ArrayList<IdTagValue> customHardnesses = new ArrayList<>();
 
