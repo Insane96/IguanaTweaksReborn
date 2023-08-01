@@ -1,0 +1,15 @@
+{
+  "type": "survivalreimagined:multi_item_soul_blasting",
+  "category": "soul_blast_furnace_misc",
+  "cookingtime": 100,
+  "group": "recycle_keego",
+  "ingredients": [
+    {
+      "item": "survivalreimagined:keego_helmet"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 1
+  },
+  "result": "survivalreimagined:keego"
+}

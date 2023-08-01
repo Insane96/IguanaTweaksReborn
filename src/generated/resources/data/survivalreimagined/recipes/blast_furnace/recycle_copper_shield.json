@@ -1,0 +1,16 @@
+{
+  "type": "survivalreimagined:multi_item_blasting",
+  "category": "blast_furnace_misc",
+  "cookingtime": 200,
+  "group": "recycle_copper_ingot",
+  "ingredients": [
+    {
+      "item": "shieldsplus:copper_shield"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 4,
+    "ratio": 0.75
+  },
+  "result": "minecraft:copper_ingot"
+}

@@ -732,10 +732,6 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         recycleGearBlasting(writer, Items.GOLDEN_CHESTPLATE, Items.GOLD_NUGGET, 200, 72);
         recycleGearBlasting(writer, Items.GOLDEN_LEGGINGS, Items.GOLD_NUGGET, 200, 63);
         recycleGearBlasting(writer, Items.GOLDEN_BOOTS, Items.GOLD_NUGGET, 200, 36);
-        recycleGearBlasting(writer, SoulSteel.HELMET.get(), SoulSteel.NUGGET.get(), 200, 45);
-        recycleGearBlasting(writer, SoulSteel.CHESTPLATE.get(), SoulSteel.NUGGET.get(), 200, 72);
-        recycleGearBlasting(writer, SoulSteel.LEGGINGS.get(), SoulSteel.NUGGET.get(), 200, 63);
-        recycleGearBlasting(writer, SoulSteel.BOOTS.get(), SoulSteel.NUGGET.get(), 200, 36);
         recycleGearBlasting(writer, Items.CHAINMAIL_HELMET, Items.IRON_NUGGET, 200, 15);
         recycleGearBlasting(writer, Items.CHAINMAIL_CHESTPLATE, Items.IRON_NUGGET, 200, 24);
         recycleGearBlasting(writer, Items.CHAINMAIL_LEGGINGS, Items.IRON_NUGGET, 200, 21);
@@ -748,6 +744,14 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         recycleGearBlasting(writer, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_INGOT, 200, 1);
         recycleGearBlasting(writer, Items.NETHERITE_LEGGINGS, Items.NETHERITE_INGOT, 200, 1);
         recycleGearBlasting(writer, Items.NETHERITE_BOOTS, Items.NETHERITE_INGOT, 200, 1);
+        recycleGearBlasting(writer, SoulSteel.HELMET.get(), SoulSteel.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, SoulSteel.CHESTPLATE.get(), SoulSteel.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, SoulSteel.LEGGINGS.get(), SoulSteel.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, SoulSteel.BOOTS.get(), SoulSteel.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, Keego.HELMET.get(), Keego.GEM.get(), 200, 1);
+        recycleGearBlasting(writer, Keego.CHESTPLATE.get(), Keego.GEM.get(), 200, 1);
+        recycleGearBlasting(writer, Keego.LEGGINGS.get(), Keego.GEM.get(), 200, 1);
+        recycleGearBlasting(writer, Keego.BOOTS.get(), Keego.GEM.get(), 200, 1);
 
         recycleGearBlasting(writer, CopperTools.PICKAXE.get(), Items.COPPER_INGOT, 200, 3);
         recycleGearBlasting(writer, CopperTools.AXE.get(), Items.COPPER_INGOT, 200, 3);
@@ -769,11 +773,6 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         recycleGearBlasting(writer, Items.GOLDEN_SHOVEL, Items.GOLD_NUGGET, 200, 9);
         recycleGearBlasting(writer, Items.GOLDEN_HOE, Items.GOLD_NUGGET, 200, 18);
         recycleGearBlasting(writer, Items.GOLDEN_SWORD, Items.GOLD_NUGGET, 200, 18);
-        recycleGearBlasting(writer, SoulSteel.PICKAXE.get(), SoulSteel.NUGGET.get(), 200, 27);
-        recycleGearBlasting(writer, SoulSteel.AXE.get(), SoulSteel.NUGGET.get(), 200, 27);
-        recycleGearBlasting(writer, SoulSteel.SHOVEL.get(), SoulSteel.NUGGET.get(), 200, 9);
-        recycleGearBlasting(writer, SoulSteel.HOE.get(), SoulSteel.NUGGET.get(), 200, 18);
-        recycleGearBlasting(writer, SoulSteel.SWORD.get(), SoulSteel.NUGGET.get(), 200, 18);
         recycleGearBlasting(writer, Items.DIAMOND_PICKAXE, Items.DIAMOND, 200, 3);
         recycleGearBlasting(writer, Items.DIAMOND_AXE, Items.DIAMOND, 200, 3);
         recycleGearBlasting(writer, Items.DIAMOND_SHOVEL, Items.DIAMOND, 200, 1);
@@ -784,6 +783,26 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         recycleGearBlasting(writer, Items.NETHERITE_SHOVEL, Items.NETHERITE_INGOT, 200, 1);
         recycleGearBlasting(writer, Items.NETHERITE_HOE, Items.NETHERITE_INGOT, 200, 1);
         recycleGearBlasting(writer, Items.NETHERITE_SWORD, Items.NETHERITE_INGOT, 200, 1);
+        recycleGearBlasting(writer, SoulSteel.PICKAXE.get(), SoulSteel.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, SoulSteel.AXE.get(), SoulSteel.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, SoulSteel.SHOVEL.get(), SoulSteel.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, SoulSteel.HOE.get(), SoulSteel.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, SoulSteel.SWORD.get(), SoulSteel.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, Keego.PICKAXE.get(), Keego.GEM.get(), 200, 1);
+        recycleGearBlasting(writer, Keego.AXE.get(), Keego.GEM.get(), 200, 1);
+        recycleGearBlasting(writer, Keego.SHOVEL.get(), Keego.GEM.get(), 200, 1);
+        recycleGearBlasting(writer, Keego.HOE.get(), Keego.GEM.get(), 200, 1);
+        recycleGearBlasting(writer, Keego.SWORD.get(), Keego.GEM.get(), 200, 1);
+
+        //Recycle Shields
+        recycleGearBlasting(writer, SPItems.COPPER_SHIELD.get(), Items.COPPER_INGOT, 200, 4);
+        recycleGearBlasting(writer, Items.SHIELD, Items.IRON_NUGGET, 200, 36);
+        recycleGearBlasting(writer, Durium.SHIELD.get(), Durium.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, SPItems.GOLDEN_SHIELD.get(), Items.GOLD_NUGGET, 200, 36);
+        recycleGearBlasting(writer, SPItems.DIAMOND_SHIELD.get(), Items.DIAMOND, 200, 1);
+        recycleGearBlasting(writer, SPItems.NETHERITE_SHIELD.get(), Items.NETHERITE_INGOT, 200, 1);
+        recycleGearBlasting(writer, SoulSteel.SHIELD.get(), SoulSteel.NUGGET.get(), 200, 9);
+        recycleGearBlasting(writer, Keego.SHIELD.get(), Keego.GEM.get(), 200, 1);
 
         //Forge recipes
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Forging.FORGE.item().get())

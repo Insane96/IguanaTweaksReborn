@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_armor": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "shieldsplus:golden_shield"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "survivalreimagined:soul_furnace/recycle_golden_shield"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_armor",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "survivalreimagined:soul_furnace/recycle_golden_shield"
+    ]
+  },
+  "sends_telemetry_event": true
+}

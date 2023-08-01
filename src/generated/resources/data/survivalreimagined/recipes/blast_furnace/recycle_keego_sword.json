@@ -1,0 +1,16 @@
+{
+  "type": "survivalreimagined:multi_item_blasting",
+  "category": "blast_furnace_misc",
+  "cookingtime": 200,
+  "group": "recycle_keego",
+  "ingredients": [
+    {
+      "item": "survivalreimagined:keego_sword"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 1,
+    "ratio": 0.75
+  },
+  "result": "survivalreimagined:keego"
+}

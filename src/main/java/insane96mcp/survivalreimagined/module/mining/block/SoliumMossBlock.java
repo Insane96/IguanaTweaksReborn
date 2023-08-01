@@ -40,12 +40,12 @@ public class SoliumMossBlock extends GlowLichenBlock {
         boolean isRain = level.isRaining();
         boolean isThunder = level.isThundering();
 
-        int chanceToGrow = 5;
-        if (!isDayTime) chanceToGrow *= 2;
-        if (!isRain) chanceToGrow *= 2;
-        if (!isThunder) chanceToGrow *= 2;
-        chanceToGrow *= light / 15f;
-        if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt(chanceToGrow) == 0)) {
+        int oneInChanceToGrow = 10;
+        if (!isDayTime) oneInChanceToGrow *= 2;
+        if (!isRain) oneInChanceToGrow *= 2;
+        if (!isThunder) oneInChanceToGrow *= 2;
+        oneInChanceToGrow *= light / 15f;
+        if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt(oneInChanceToGrow) == 0)) {
             super.performBonemeal(level, random, pos, state);
             net.minecraftforge.common.ForgeHooks.onCropsGrowPost(level, pos, state);
         }

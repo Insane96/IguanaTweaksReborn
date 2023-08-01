@@ -9,7 +9,7 @@
     }
   ],
   "recycle": {
-    "amount_at_full_durability": 36,
+    "amount_at_full_durability": 9,
     "ratio": 0.75
   },
   "result": "survivalreimagined:soul_steel_nugget"
