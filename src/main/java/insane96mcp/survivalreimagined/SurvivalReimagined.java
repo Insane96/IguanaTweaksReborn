@@ -83,6 +83,7 @@ public class SurvivalReimagined
         modEventBus.register(Tiredness.class);
         modEventBus.register(SpawnerData.class);
         SRSoundEvents.REGISTRY.register(modEventBus);
+        SRParticles.REGISTRY.register(modEventBus);
         SRMobEffects.REGISTRY.register(modEventBus);
         SRAttributes.REGISTRY.register(modEventBus);
         SRBlocks.REGISTRY.register(modEventBus);

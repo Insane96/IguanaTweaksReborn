@@ -1,0 +1,10 @@
+{
+    "replace": false,
+    "values": [
+        "survivalreimagined:coated_copper_pickaxe",
+        "survivalreimagined:coated_copper_axe",
+        "survivalreimagined:coated_copper_shovel",
+        "survivalreimagined:coated_copper_hoe",
+        "survivalreimagined:coated_copper_hammer"
+    ]
+}

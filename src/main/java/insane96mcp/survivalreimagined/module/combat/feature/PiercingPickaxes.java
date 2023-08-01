@@ -8,7 +8,9 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.event.PostEntityHurtEvent;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.items.feature.CopperToolsExtension;
 import insane96mcp.survivalreimagined.setup.SRAttributes;
+import insane96mcp.survivalreimagined.utils.MCUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +19,10 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
@@ -32,8 +37,8 @@ import java.util.UUID;
 public class PiercingPickaxes extends Feature {
 
 	public static final UUID PICKAXE_PIERCING_MODIFIER_UUID = UUID.fromString("b2c80704-fae6-45b0-a0c8-be6b1d2e9cb5");
-	ResourceKey<DamageType> PIERCING_MOB_ATTACK = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(SurvivalReimagined.MOD_ID, "piercing_mob_attack"));
-	ResourceKey<DamageType> PIERCING_PLAYER_ATTACK = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(SurvivalReimagined.MOD_ID, "piercing_player_attack"));
+	public static ResourceKey<DamageType> PIERCING_MOB_ATTACK = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(SurvivalReimagined.MOD_ID, "piercing_mob_attack"));
+	public static ResourceKey<DamageType> PIERCING_PLAYER_ATTACK = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(SurvivalReimagined.MOD_ID, "piercing_player_attack"));
 
 	public static final RegistryObject<Attribute> PIERCING_DAMAGE = SRAttributes.REGISTRY.register("piercing_damage", () -> new RangedAttribute("attribute.name.piercing_damage", 0d, 0d, 1024d));
 
@@ -62,24 +67,18 @@ public class PiercingPickaxes extends Feature {
 				|| !(event.getDamageSource().getDirectEntity() instanceof LivingEntity attacker)
 				|| event.getDamageSource().is(PIERCING_MOB_ATTACK)
 				|| event.getDamageSource().is(PIERCING_PLAYER_ATTACK)
+				|| event.getDamageSource().is(CopperToolsExtension.ELECTROCUTION_ATTACK)
 				|| attacker.getAttribute(PIERCING_DAMAGE.get()) == null)
 			return;
 
 		AttributeInstance piercingInstance = attacker.getAttribute(PIERCING_DAMAGE.get());
 		if (piercingInstance.getValue() <= 0d)
 			return;
-		DamageSource piercingDamageSource;
+		DamageSource piercingDamageSource = attacker.damageSources().source(PIERCING_MOB_ATTACK, attacker);
 		if (attacker instanceof Player)
 			piercingDamageSource = attacker.damageSources().source(PIERCING_PLAYER_ATTACK, attacker);
-		else
-			piercingDamageSource = attacker.damageSources().source(PIERCING_MOB_ATTACK, attacker);
 
-		AttributeModifier attributeModifier = new AttributeModifier("Piercing Knockback resistance", 1d, AttributeModifier.Operation.ADDITION);
-		if (event.getEntity().getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null)
-			event.getEntity().getAttribute(Attributes.KNOCKBACK_RESISTANCE).addTransientModifier(attributeModifier);
-		event.getEntity().hurt(piercingDamageSource, (float) piercingInstance.getValue());
-		if (event.getEntity().getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null)
-			event.getEntity().getAttribute(Attributes.KNOCKBACK_RESISTANCE).removeModifier(attributeModifier);
+		MCUtils.attackEntityIgnoreInvFrames(piercingDamageSource, (float) piercingInstance.getValue(), event.getEntity(), attacker, true);
 	}
 
 	@SubscribeEvent

@@ -105,7 +105,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_flint_block", has(FlintExpansion.FLINT_BLOCK.item().get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "stonecutter_polished_flint_block");
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CopperTools.AXE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CopperToolsExtension.COPPER_AXE.get())
                 .pattern("ff")
                 .pattern("fs")
                 .pattern(" s")
@@ -113,7 +113,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('s', Items.STICK)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CopperTools.SHOVEL.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CopperToolsExtension.COPPER_SHOVEL.get())
                 .pattern("f")
                 .pattern("s")
                 .pattern("s")
@@ -121,7 +121,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('s', Items.STICK)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CopperTools.PICKAXE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CopperToolsExtension.COPPER_PICKAXE.get())
                 .pattern("fff")
                 .pattern(" s ")
                 .pattern(" s ")
@@ -129,7 +129,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('s', Items.STICK)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CopperTools.HOE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CopperToolsExtension.COPPER_HOE.get())
                 .pattern("ff")
                 .pattern(" s")
                 .pattern(" s")
@@ -137,7 +137,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('s', Items.STICK)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
                 .save(writer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, CopperTools.SWORD.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, CopperToolsExtension.COPPER_SWORD.get())
                 .pattern("f")
                 .pattern("f")
                 .pattern("s")
@@ -145,6 +145,14 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('s', Items.STICK)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
                 .save(writer);
+
+        //Coated Copper
+        forgeRecipe(writer, Items.OBSIDIAN, 3, CopperToolsExtension.COPPER_PICKAXE.get(), CopperToolsExtension.COATED_PICKAXE.get(), 12, 6);
+        forgeRecipe(writer, Items.OBSIDIAN, 3, CopperToolsExtension.COPPER_AXE.get(), CopperToolsExtension.COATED_AXE.get(), 12, 6);
+        forgeRecipe(writer, Items.OBSIDIAN, 2, CopperToolsExtension.COPPER_SWORD.get(), CopperToolsExtension.COATED_SWORD.get(), 12, 6);
+        forgeRecipe(writer, Items.OBSIDIAN, 2, CopperToolsExtension.COPPER_HOE.get(), CopperToolsExtension.COATED_HOE.get(), 12, 6);
+        forgeRecipe(writer, Items.OBSIDIAN, 1, CopperToolsExtension.COPPER_SHOVEL.get(), CopperToolsExtension.COATED_SHOVEL.get(), 12, 6);
+        forgeRecipe(writer, Items.OBSIDIAN, 4, SPItems.COPPER_SHIELD.get(), CopperToolsExtension.COATED_SHIELD.get(), 12, 6);
 
         ConditionalRecipe.builder()
                 .addCondition(not(modLoaded("tconstruct")))
@@ -753,11 +761,11 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         recycleGearBlasting(writer, Keego.LEGGINGS.get(), Keego.GEM.get(), 200, 1);
         recycleGearBlasting(writer, Keego.BOOTS.get(), Keego.GEM.get(), 200, 1);
 
-        recycleGearBlasting(writer, CopperTools.PICKAXE.get(), Items.COPPER_INGOT, 200, 3);
-        recycleGearBlasting(writer, CopperTools.AXE.get(), Items.COPPER_INGOT, 200, 3);
-        recycleGearBlasting(writer, CopperTools.SHOVEL.get(), Items.COPPER_INGOT, 200, 1);
-        recycleGearBlasting(writer, CopperTools.HOE.get(), Items.COPPER_INGOT, 200, 2);
-        recycleGearBlasting(writer, CopperTools.SWORD.get(), Items.COPPER_INGOT, 200, 2);
+        recycleGearBlasting(writer, CopperToolsExtension.COPPER_PICKAXE.get(), Items.COPPER_INGOT, 200, 3);
+        recycleGearBlasting(writer, CopperToolsExtension.COPPER_AXE.get(), Items.COPPER_INGOT, 200, 3);
+        recycleGearBlasting(writer, CopperToolsExtension.COPPER_SHOVEL.get(), Items.COPPER_INGOT, 200, 1);
+        recycleGearBlasting(writer, CopperToolsExtension.COPPER_HOE.get(), Items.COPPER_INGOT, 200, 2);
+        recycleGearBlasting(writer, CopperToolsExtension.COPPER_SWORD.get(), Items.COPPER_INGOT, 200, 2);
         recycleGearBlasting(writer, Items.IRON_PICKAXE, Items.IRON_NUGGET, 200, 27);
         recycleGearBlasting(writer, Items.IRON_AXE, Items.IRON_NUGGET, 200, 27);
         recycleGearBlasting(writer, Items.IRON_SHOVEL, Items.IRON_NUGGET, 200, 9);
@@ -773,6 +781,11 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         recycleGearBlasting(writer, Items.GOLDEN_SHOVEL, Items.GOLD_NUGGET, 200, 9);
         recycleGearBlasting(writer, Items.GOLDEN_HOE, Items.GOLD_NUGGET, 200, 18);
         recycleGearBlasting(writer, Items.GOLDEN_SWORD, Items.GOLD_NUGGET, 200, 18);
+        recycleGearBlasting(writer, CopperToolsExtension.COATED_PICKAXE.get(), Items.OBSIDIAN, 200, 3);
+        recycleGearBlasting(writer, CopperToolsExtension.COATED_AXE.get(), Items.OBSIDIAN, 200, 3);
+        recycleGearBlasting(writer, CopperToolsExtension.COATED_SHOVEL.get(), Items.OBSIDIAN, 200, 1);
+        recycleGearBlasting(writer, CopperToolsExtension.COATED_HOE.get(), Items.OBSIDIAN, 200, 2);
+        recycleGearBlasting(writer, CopperToolsExtension.COATED_SWORD.get(), Items.OBSIDIAN, 200, 2);
         recycleGearBlasting(writer, Items.DIAMOND_PICKAXE, Items.DIAMOND, 200, 3);
         recycleGearBlasting(writer, Items.DIAMOND_AXE, Items.DIAMOND, 200, 3);
         recycleGearBlasting(writer, Items.DIAMOND_SHOVEL, Items.DIAMOND, 200, 1);
@@ -799,6 +812,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         recycleGearBlasting(writer, Items.SHIELD, Items.IRON_NUGGET, 200, 36);
         recycleGearBlasting(writer, Durium.SHIELD.get(), Durium.NUGGET.get(), 200, 9);
         recycleGearBlasting(writer, SPItems.GOLDEN_SHIELD.get(), Items.GOLD_NUGGET, 200, 36);
+        recycleGearBlasting(writer, CopperToolsExtension.COATED_SHIELD.get(), Items.OBSIDIAN, 200, 4);
         recycleGearBlasting(writer, SPItems.DIAMOND_SHIELD.get(), Items.DIAMOND, 200, 1);
         recycleGearBlasting(writer, SPItems.NETHERITE_SHIELD.get(), Items.NETHERITE_INGOT, 200, 1);
         recycleGearBlasting(writer, SoulSteel.SHIELD.get(), SoulSteel.NUGGET.get(), 200, 9);
@@ -827,6 +841,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlocks("has_material", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_hammer");
         forgeRecipe(writer, Items.GOLD_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.GOLDEN_HAMMER.get(), 4, 2f);
+        forgeRecipe(writer, Items.OBSIDIAN, 5, Forging.COPPER_HAMMER.get(), Forging.COATED_COPPER_HAMMER.get(), 12, 6f);
         forgeRecipe(writer, Items.DIAMOND, 5, Forging.GOLDEN_HAMMER.get(), Forging.DIAMOND_HAMMER.get(), 16, 8f);
         forgeRecipe(writer, SoulSteel.INGOT.get(), 5, Forging.IRON_HAMMER.get(), Forging.SOUL_STEEL_HAMMER.get(), 20, 10f);
         SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Forging.SOUL_STEEL_HAMMER.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.TOOLS, Forging.NETHERITE_HAMMER.get())

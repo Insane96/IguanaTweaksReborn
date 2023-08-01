@@ -1,0 +1,14 @@
+{
+  "type": "survivalreimagined:forging",
+  "amount": 1,
+  "category": "forge_misc",
+  "experience": 6.0,
+  "gear": {
+    "item": "survivalreimagined:copper_shovel"
+  },
+  "ingredient": {
+    "item": "minecraft:obsidian"
+  },
+  "result": "survivalreimagined:coated_copper_shovel",
+  "smashes_required": 12
+}

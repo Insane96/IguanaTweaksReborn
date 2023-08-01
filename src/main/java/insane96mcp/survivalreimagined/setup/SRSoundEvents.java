@@ -11,4 +11,5 @@ public class SRSoundEvents {
 	public static final DeferredRegister<SoundEvent> REGISTRY = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, SurvivalReimagined.MOD_ID);
 
 	public static final RegistryObject<SoundEvent> INJURED = REGISTRY.register("injured", () -> SoundEvent.createFixedRangeEvent(new ResourceLocation(SurvivalReimagined.MOD_ID, "injured"), 16f));
+	public static final RegistryObject<SoundEvent> ELECTROCUTION = REGISTRY.register("electrocution", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(SurvivalReimagined.MOD_ID, "electrocution")));
 }

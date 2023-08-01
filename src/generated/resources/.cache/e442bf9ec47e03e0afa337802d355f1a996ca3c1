@@ -1,4 +1,4 @@
-// 1.20.1	2023-07-28T11:00:21.458986	Item Models: survivalreimagined
+// 1.20.1	2023-08-01T12:11:24.6557491	Item Models: survivalreimagined
 0e14a5fda7239c8fc0a79813151a4eba3c430f5f assets/survivalreimagined/models/item/ancient_lapis.json
 9db8ff6b8f62a90066f9ec6f113f30579ef147b4 assets/survivalreimagined/models/item/blast_furnace.json
 fe69cbb0039b59fd572532480721ff573ee4aa76 assets/survivalreimagined/models/item/brown_mushroom_stew.json
@@ -10,6 +10,13 @@ a4ee0ef43139d0cf3af8e8a88efd2541c11d4937 assets/survivalreimagined/models/item/c
 44e66dc6724b3f9509355770f51c7026a1c85fab assets/survivalreimagined/models/item/charcoal_layer.json
 dc2c10d74cb0f83f462733fd16a69b83f5969e33 assets/survivalreimagined/models/item/cleansed_lapis.json
 da1f37e50a562765adde7e91a3ef6c44faed8e45 assets/survivalreimagined/models/item/cloth.json
+b7094db65c456ad12ab93f5871abe044cded43c7 assets/survivalreimagined/models/item/coated_copper_axe.json
+cd2d4520d987475218a83735b412cefa0c8365ef assets/survivalreimagined/models/item/coated_copper_hammer.json
+f4d7b0011e08e734409447d8fa8c37c35f689826 assets/survivalreimagined/models/item/coated_copper_hoe.json
+d85d31f104d3c1997a3d2c3db3fd0c44cd49706f assets/survivalreimagined/models/item/coated_copper_pickaxe.json
+313300a16ea7cc01a54c0ec8099ea9bf05edd0ac assets/survivalreimagined/models/item/coated_copper_shield.json
+f395d7b37b15643b6f84a7e0fef626ddef908a8c assets/survivalreimagined/models/item/coated_copper_shovel.json
+b23d76690759443d21ffba230525990f28af75b5 assets/survivalreimagined/models/item/coated_copper_sword.json
 e00e1b31aafd1f93ea1c783b454a92f7ba4c24e6 assets/survivalreimagined/models/item/copper_axe.json
 6d35c2477c570c2630e49f1942487fd3971a82e0 assets/survivalreimagined/models/item/copper_hammer.json
 c8a8d07845cd63104aa1fe3631a0bf289b18b2c9 assets/survivalreimagined/models/item/copper_hoe.json

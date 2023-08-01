@@ -6,5 +6,11 @@
     "primed_mining_charge": {
         "subtitle": "survivalreimagined.subtitle.primed_mining_charge",
         "sounds": [ "minecraft:entity.tnt.primed" ]
+    },
+    "electrocution": {
+        "subtitle": "survivalreimagined.subtitle.electrocution",
+        "sounds": [
+            "survivalreimagined:electrocution"
+        ]
     }
 }

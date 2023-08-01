@@ -1,0 +1,15 @@
+{
+  "type": "survivalreimagined:multi_item_soul_blasting",
+  "category": "soul_blast_furnace_misc",
+  "cookingtime": 100,
+  "group": "recycle_obsidian",
+  "ingredients": [
+    {
+      "item": "survivalreimagined:coated_copper_hoe"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 2
+  },
+  "result": "minecraft:obsidian"
+}

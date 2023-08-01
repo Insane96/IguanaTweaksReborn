@@ -6,7 +6,7 @@ import insane96mcp.survivalreimagined.module.combat.feature.Knockback;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Hoes;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
-import insane96mcp.survivalreimagined.module.items.feature.CopperTools;
+import insane96mcp.survivalreimagined.module.items.feature.CopperToolsExtension;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.items.feature.ItemStats;
 import insane96mcp.survivalreimagined.module.items.feature.StackSizes;
@@ -39,11 +39,11 @@ public class SRItemTagsProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         //Vanilla
-        tag(ItemTags.PICKAXES).add(FlintExpansion.PICKAXE.get(), Solarium.PICKAXE.get(), Durium.PICKAXE.get(), CopperTools.PICKAXE.get(), SoulSteel.PICKAXE.get(), Keego.PICKAXE.get());
-        tag(ItemTags.AXES).add(FlintExpansion.AXE.get(), Solarium.AXE.get(), Durium.AXE.get(), CopperTools.AXE.get(), SoulSteel.AXE.get(), Keego.AXE.get());
-        tag(ItemTags.SHOVELS).add(FlintExpansion.SHOVEL.get(), Solarium.SHOVEL.get(), Durium.SHOVEL.get(), CopperTools.SHOVEL.get(), SoulSteel.SHOVEL.get(), Keego.SHOVEL.get());
-        tag(ItemTags.SWORDS).add(FlintExpansion.SWORD.get(), Solarium.SWORD.get(), Durium.SWORD.get(), CopperTools.SWORD.get(), SoulSteel.SWORD.get(), Keego.SWORD.get());
-        tag(ItemTags.HOES).add(FlintExpansion.HOE.get(), Solarium.HOE.get(), Durium.HOE.get(), CopperTools.HOE.get(), SoulSteel.HOE.get(), Keego.HOE.get());
+        tag(ItemTags.PICKAXES).add(FlintExpansion.PICKAXE.get(), Solarium.PICKAXE.get(), Durium.PICKAXE.get(), CopperToolsExtension.COPPER_PICKAXE.get(), CopperToolsExtension.COATED_PICKAXE.get(), SoulSteel.PICKAXE.get(), Keego.PICKAXE.get());
+        tag(ItemTags.AXES).add(FlintExpansion.AXE.get(), Solarium.AXE.get(), Durium.AXE.get(), CopperToolsExtension.COPPER_AXE.get(), CopperToolsExtension.COATED_AXE.get(), SoulSteel.AXE.get(), Keego.AXE.get());
+        tag(ItemTags.SHOVELS).add(FlintExpansion.SHOVEL.get(), Solarium.SHOVEL.get(), Durium.SHOVEL.get(), CopperToolsExtension.COPPER_SHOVEL.get(), CopperToolsExtension.COATED_SHOVEL.get(), SoulSteel.SHOVEL.get(), Keego.SHOVEL.get());
+        tag(ItemTags.SWORDS).add(FlintExpansion.SWORD.get(), Solarium.SWORD.get(), Durium.SWORD.get(), CopperToolsExtension.COPPER_SWORD.get(), CopperToolsExtension.COATED_SWORD.get(), SoulSteel.SWORD.get(), Keego.SWORD.get());
+        tag(ItemTags.HOES).add(FlintExpansion.HOE.get(), Solarium.HOE.get(), Durium.HOE.get(), CopperToolsExtension.COPPER_HOE.get(), CopperToolsExtension.COATED_HOE.get(), SoulSteel.HOE.get(), Keego.HOE.get());
 
         tag(ItemTags.ARROWS).add(Fletching.QUARTZ_ARROW_ITEM.get(), Fletching.DIAMOND_ARROW_ITEM.get(), Fletching.EXPLOSIVE_ARROW_ITEM.get(), Fletching.TORCH_ARROW_ITEM.get());
         //Mod's

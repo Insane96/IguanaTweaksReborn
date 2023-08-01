@@ -2,8 +2,10 @@
 
 ## 0.13.0
 * Update to MC 1.20.1
+* Added Coated Copper Tools
+  * Can electrocute enemies
 * Added "Phantoms in the End"
-  * Makes Phantoms spawn in The End instead of the Overworld
+  * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest (Neo)Forge)
 * Shields can now be recycled in blast and soul furnaces
 * Block stack reduction can no longer be reduced by material
 * Fixed crash when placing Iron Blocks

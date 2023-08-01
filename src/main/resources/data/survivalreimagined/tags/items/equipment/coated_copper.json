@@ -1,0 +1,7 @@
+{
+    "replace": false,
+    "values": [
+        "#survivalreimagined:equipment/hand/coated_copper",
+        "survivalreimagined:coated_copper_shield"
+    ]
+}

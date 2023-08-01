@@ -47,10 +47,14 @@ public class ClientSetup {
             event.accept(FlintExpansion.PICKAXE.get());
             event.accept(FlintExpansion.SHOVEL.get());
             event.accept(FlintExpansion.HOE.get());
-            event.accept(CopperTools.AXE.get());
-            event.accept(CopperTools.PICKAXE.get());
-            event.accept(CopperTools.SHOVEL.get());
-            event.accept(CopperTools.HOE.get());
+            event.accept(CopperToolsExtension.COPPER_AXE.get());
+            event.accept(CopperToolsExtension.COPPER_PICKAXE.get());
+            event.accept(CopperToolsExtension.COPPER_SHOVEL.get());
+            event.accept(CopperToolsExtension.COPPER_HOE.get());
+            event.accept(CopperToolsExtension.COATED_AXE.get());
+            event.accept(CopperToolsExtension.COATED_PICKAXE.get());
+            event.accept(CopperToolsExtension.COATED_SHOVEL.get());
+            event.accept(CopperToolsExtension.COATED_HOE.get());
             event.accept(Durium.AXE.get());
             event.accept(Durium.PICKAXE.get());
             event.accept(Durium.SHOVEL.get());
@@ -76,6 +80,7 @@ public class ClientSetup {
             event.accept(Forging.IRON_HAMMER.get());
             event.accept(Forging.SOLARIUM_HAMMER.get());
             event.accept(Forging.DURIUM_HAMMER.get());
+            event.accept(Forging.COATED_COPPER_HAMMER.get());
             event.accept(Forging.DIAMOND_HAMMER.get());
             event.accept(Forging.SOUL_STEEL_HAMMER.get());
             event.accept(Forging.NETHERITE_HAMMER.get());
@@ -85,8 +90,12 @@ public class ClientSetup {
         }
         else if (event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.accept(FlintExpansion.SWORD.get());
-            //event.accept(FlintExpansion.SHIELD.get());
-            event.accept(CopperTools.SWORD.get());
+            event.accept(FlintExpansion.SHIELD.get());
+            event.accept(CopperToolsExtension.COPPER_SWORD.get());
+            event.accept(CopperToolsExtension.COPPER_AXE.get());
+            event.accept(CopperToolsExtension.COATED_SWORD.get());
+            event.accept(CopperToolsExtension.COATED_AXE.get());
+            event.accept(CopperToolsExtension.COATED_SHIELD.get());
 
             event.accept(ChainedCopperArmor.HELMET.get());
             event.accept(ChainedCopperArmor.CHESTPLATE.get());
@@ -98,21 +107,21 @@ public class ClientSetup {
             event.accept(Durium.LEGGINGS.get());
             event.accept(Durium.BOOTS.get());
             event.accept(Durium.SWORD.get());
-            //event.accept(Durium.SHIELD.get());
+            event.accept(Durium.SHIELD.get());
 
             event.accept(Solarium.HELMET.get());
             event.accept(Solarium.CHESTPLATE.get());
             event.accept(Solarium.LEGGINGS.get());
             event.accept(Solarium.BOOTS.get());
             event.accept(Solarium.SWORD.get());
-            //event.accept(Solarium.SHIELD.get());
+            event.accept(Solarium.SHIELD.get());
 
             event.accept(Keego.HELMET.get());
             event.accept(Keego.CHESTPLATE.get());
             event.accept(Keego.LEGGINGS.get());
             event.accept(Keego.BOOTS.get());
             event.accept(Keego.SWORD.get());
-            //event.accept(Keego.SHIELD.get());
+            event.accept(Keego.SHIELD.get());
 
             event.accept(SoulSteel.HELMET.get());
             event.accept(SoulSteel.CHESTPLATE.get());

@@ -28,5 +28,6 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(10, JumpMidAirMessage.class, JumpMidAirMessage::encode, JumpMidAirMessage::decode, JumpMidAirMessage::handle);
 		CHANNEL.registerMessage(11, SyncMovementDirection.class, SyncMovementDirection::encode, SyncMovementDirection::decode, SyncMovementDirection::handle);
 		CHANNEL.registerMessage(12, SyncForgeStatus.class, SyncForgeStatus::encode, SyncForgeStatus::decode, SyncForgeStatus::handle);
+		CHANNEL.registerMessage(12, ElectrocutionParticleMessage.class, ElectrocutionParticleMessage::encode, ElectrocutionParticleMessage::decode, ElectrocutionParticleMessage::handle);
 	}
 }

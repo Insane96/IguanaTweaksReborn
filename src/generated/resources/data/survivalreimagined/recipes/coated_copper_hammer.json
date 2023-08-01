@@ -1,0 +1,14 @@
+{
+  "type": "survivalreimagined:forging",
+  "amount": 5,
+  "category": "forge_misc",
+  "experience": 6.0,
+  "gear": {
+    "item": "survivalreimagined:copper_hammer"
+  },
+  "ingredient": {
+    "item": "minecraft:obsidian"
+  },
+  "result": "survivalreimagined:coated_copper_hammer",
+  "smashes_required": 12
+}

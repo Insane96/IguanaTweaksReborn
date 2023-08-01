@@ -1,0 +1,14 @@
+{
+  "type": "survivalreimagined:forging",
+  "amount": 2,
+  "category": "forge_misc",
+  "experience": 6.0,
+  "gear": {
+    "item": "survivalreimagined:copper_hoe"
+  },
+  "ingredient": {
+    "item": "minecraft:obsidian"
+  },
+  "result": "survivalreimagined:coated_copper_hoe",
+  "smashes_required": 12
+}

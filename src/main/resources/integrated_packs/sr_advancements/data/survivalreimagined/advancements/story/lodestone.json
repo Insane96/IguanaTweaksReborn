@@ -24,13 +24,6 @@
 						"condition": "minecraft:entity_properties",
 						"entity": "this",
 						"predicate": {
-							"location": {
-								"block": {
-									"blocks": [
-										"minecraft:lodestone"
-									]
-								}
-							},
 							"equipment": {
 								"mainhand": {
 									"items": [
@@ -40,13 +33,15 @@
 							}
 						}
 					}
+				],
+				"location": [
+					{
+						"condition": "minecraft:block_state_property",
+						"block": "minecraft:lodestone",
+						"properties": {}
+					}
 				]
 			}
 		}
-	},
-	"requirements": [
-		[
-			"use_lodestone"
-		]
-	]
+	}
 }

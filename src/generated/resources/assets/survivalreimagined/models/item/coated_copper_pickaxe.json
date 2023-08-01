@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "survivalreimagined:item/coated_copper_pickaxe"
+  }
+}
