@@ -11,6 +11,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.feature.GlobalExperience;
 import insane96mcp.survivalreimagined.module.sleeprespawn.block.GraveBlock;
 import insane96mcp.survivalreimagined.module.sleeprespawn.block.GraveBlockEntity;
+import insane96mcp.survivalreimagined.module.sleeprespawn.integration.ToolBelt;
 import insane96mcp.survivalreimagined.setup.SRBlockEntityTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -33,6 +34,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
@@ -90,6 +92,8 @@ public class Death extends Feature {
 			if (!itemStack.isEmpty())
 				items.add(itemStack);
 		});
+		if (ModList.get().isLoaded("toolbelt"))
+			ToolBelt.onDeath(items, player);
 		graveBlockEntity.setItems(items);
 		//int xpDropped = PlayerExperience.getExperienceOnDeath(player, true);
 		//graveBlockEntity.setXpStored(xpDropped);

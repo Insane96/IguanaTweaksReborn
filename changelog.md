@@ -4,10 +4,13 @@
 * Update to MC 1.20.1
 * Added "Phantoms in the End"
   * Makes Phantoms spawn in The End instead of the Overworld
+* Shields can now be recycled in blast and soul furnaces
 * Block stack reduction can no longer be reduced by material
 * Fixed crash when placing Iron Blocks
 * Powder Snow is now harder to break 
 * Solium moss now generates more per patch
+* Tool belts are now added to graves instead of dropping
+* Fixed Soul Steel being recyclable for more nuggets than used
 
 ## 0.12.4
 * Small Thorns overhaul
@@ -21,9 +24,9 @@
 * Players are now 5% slower
 * Chained copper armor now requires nuggets instead of chains
 * Fixed combat test snapshot health regen changes not applying until config reload
-* If corail woodcutter is installed a new advancement will pop out
+* If Corail woodcutter is installed a new advancement will pop out
 * Removed random power (0.5) bonus damage
-* Poisonus raw food is now part of Food & Drinks instead of No Hunger
+* Poisonous raw food is now part of Food & Drinks instead of No Hunger
 
 ## 0.12.3
 * Re-Enabled hunger
