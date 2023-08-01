@@ -67,6 +67,8 @@ public class Anvils extends SRFeature {
     @Config(min = 0)
     @Label(name = "Repair cost multiplier", description = "Multiplier for the levels required to repair an item.")
     public static Double repairCostMultiplier = 0.70d;
+
+    //TODO add custom repair items
     @Config
     @Label(name = "Better Smithed Items Repair", description = "With this enabled, Netherite tools can be repaired up to 50% of max durability with Diamonds, and also a Netherite ingot would repair 50% durability instead of 25%. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
     public static Boolean betterSmithedItemsRepair = true;

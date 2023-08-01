@@ -13,6 +13,10 @@
 * Powder Snow is now harder to break 
 * Solium moss now generates more per patch
 * Tool belts are now added to graves instead of dropping
+* Wandering Trader 
+  * Now buys wheat, carrots, potatoes and beetroots instead of wheat seeds
+  * No longer sells an enchanted book with unbreaking (replaced with a high level enchanted book)
+  * Now sells cleansed/ancient lapis as rare trade
 * Fixed Soul Steel being recyclable for more nuggets than used
 
 ## 0.12.4
