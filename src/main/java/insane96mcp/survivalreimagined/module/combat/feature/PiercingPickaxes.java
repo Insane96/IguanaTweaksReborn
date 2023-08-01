@@ -65,6 +65,7 @@ public class PiercingPickaxes extends Feature {
 	public void onPostEntityDamaged(PostEntityHurtEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getDamageSource().getDirectEntity() instanceof LivingEntity attacker)
+				|| event.getEntity().isDeadOrDying()
 				|| event.getDamageSource().is(PIERCING_MOB_ATTACK)
 				|| event.getDamageSource().is(PIERCING_PLAYER_ATTACK)
 				|| event.getDamageSource().is(CopperToolsExtension.ELECTROCUTION_ATTACK)

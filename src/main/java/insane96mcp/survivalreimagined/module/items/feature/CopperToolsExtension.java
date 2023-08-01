@@ -111,9 +111,8 @@ public class CopperToolsExtension extends Feature {
 		Entity lastEntityHit = attacked;
 		do {
 			List<LivingEntity> entitiesOfClass = attacker.level().getEntitiesOfClass(LivingEntity.class, lastEntityHit.getBoundingBox().inflate(range),
-					livingEntity ->
-							attacker.canAttack(livingEntity)
-									|| (livingEntity instanceof Player && attacker.canHarmPlayer((Player) livingEntity)));
+					livingEntity -> (attacker.canAttack(livingEntity)
+									|| (livingEntity instanceof Player && attacker.canHarmPlayer((Player) livingEntity))) && !livingEntity.isDeadOrDying());
 			LivingEntity target = MCUtils.getNearestEntity(entitiesOfClass, listOfHitEntities, attacked.position());
 			if (target == null)
 				break;
