@@ -14,7 +14,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -23,7 +22,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Tweaks", description = "Various stuff that doesn't fit in any other Feature.")
@@ -33,10 +31,6 @@ public class Tweaks extends Feature {
     @Config
     @Label(name = "Prevent fire with resistance", description = "If true, entities will no longer be set on fire if have Fire Resistance (like bedrock edition)")
     public static Boolean preventFireWithResistance = true;
-
-    @Config
-    @Label(name = "Less burn time for Kelp block", description = "Kelp blocks smelt 16 items instead of 20")
-    public static Boolean lessBurnTimeForKelpBlock = true;
 
     @Config
     @Label(name = "Falling breaking glass", description = "Falling on glass has a chance of breaking it. The higher the fall, the higher the chance")
@@ -83,16 +77,6 @@ public class Tweaks extends Feature {
 
     public static boolean isSlowerPoison() {
         return isEnabled(Tweaks.class) && slowerPoison;
-    }
-
-    @SubscribeEvent
-    public void onFuelBurnTime(FurnaceFuelBurnTimeEvent event) {
-        if (!this.isEnabled()
-                || !lessBurnTimeForKelpBlock
-                || !event.getItemStack().is(Items.DRIED_KELP_BLOCK))
-            return;
-
-        event.setBurnTime(3200);
     }
 
     @SubscribeEvent

@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.loading.FMLLoader;
@@ -30,8 +31,11 @@ public class Nerfs extends Feature {
 	@Config
 	@Label(name = "Reduced mob cramming", description = "If true, maxEntityCramming game rule is set to 6 from 24")
 	public static Boolean reducedMobCramming = true;
+    @Config
+    @Label(name = "Less burn time for Kelp block", description = "Kelp blocks smelt 16 items instead of 20")
+    public static Boolean lessBurnTimeForKelpBlock = true;
 
-	public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+    public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
@@ -55,5 +59,15 @@ public class Nerfs extends Feature {
 			event.getServer().getGameRules().getRule(GameRules.RULE_RANDOMTICKING).set(2, event.getServer());
 		if (reducedMobCramming)
 			event.getServer().getGameRules().getRule(GameRules.RULE_MAX_ENTITY_CRAMMING).set(6, event.getServer());
+	}
+
+	@SubscribeEvent
+	public void onFuelBurnTime(FurnaceFuelBurnTimeEvent event) {
+		if (!this.isEnabled()
+				|| !lessBurnTimeForKelpBlock
+				|| !event.getItemStack().is(Items.DRIED_KELP_BLOCK))
+			return;
+
+		event.setBurnTime(3200);
 	}
 }
