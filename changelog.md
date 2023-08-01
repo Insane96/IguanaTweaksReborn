@@ -1,9 +1,16 @@
 # Changelog
 
+* Seems Skeletons shoot from too far away
+* Better music timers?
+* Knockback doesn't work with bows
+* Think about reducing the armor slowdown since the player has -5% speed
+* https://github.com/VazkiiMods/Quark/commit/e69e625b4057a9e1b620887c40a7b9fcf1c15255 & https://github.com/VazkiiMods/Quark/commit/c259f0bb6c5e15014dc6af1368cba4705781195d
+
 ## 0.13.0
 * Update to MC 1.20.1
 * Added Coated Copper Tools
   * Can electrocute enemies
+* Sponges now soak more blocks
 * Added "Phantoms in the End"
   * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest (Neo)Forge)
 * Shields can now be recycled in blast and soul furnaces
@@ -13,6 +20,7 @@
 * Powder Snow is now harder to break 
 * Solium moss now generates more per patch
 * Tool belts are now added to graves instead of dropping
+* Renamed `Misc.Misc` feature to `Misc.Tweaks`
 * Wandering Trader 
   * Now buys wheat, carrots, potatoes and beetroots instead of wheat seeds
   * No longer sells an enchanted book with unbreaking (replaced with a high level enchanted book)

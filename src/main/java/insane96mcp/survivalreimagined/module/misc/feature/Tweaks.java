@@ -26,9 +26,9 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Misc", description = "Various stuff that doesn't fit in any other Feature.")
+@Label(name = "Tweaks", description = "Various stuff that doesn't fit in any other Feature.")
 @LoadFeature(module = Modules.Ids.MISC)
-public class Misc extends Feature {
+public class Tweaks extends Feature {
 
     @Config
     @Label(name = "Prevent fire with resistance", description = "If true, entities will no longer be set on fire if have Fire Resistance (like bedrock edition)")
@@ -44,13 +44,20 @@ public class Misc extends Feature {
     @Config
     @Label(name = "Slower poison", description = "If true, poison will damage the player every 80 ticks at level I instead of 25.")
     public static Boolean slowerPoison = true;
+    //TODO Remove when quark 1.20.1
+    @Config
+    @Label(name = "Maximum Sponge Soak Blocks", description = "The maximum amount of blocks a sponge can soak. (Vanilla is 64)")
+    public static Integer maxSpongeSoakBlocks = 256;
+    @Config
+    @Label(name = "Maximum Sponge Soak Range", description = "The maximum range at which sponges will check for soakable blocks. (Vanilla is 5)")
+    public static Integer maxSpongeSoakRange = 10;
 
-    public Misc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+    public Tweaks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
 
     public static boolean isFireImmune(Entity entity) {
-        if (!isEnabled(Misc.class)
+        if (!isEnabled(Tweaks.class)
                 || !preventFireWithResistance
                 || !(entity instanceof LivingEntity livingEntity))
             return false;
@@ -58,8 +65,24 @@ public class Misc extends Feature {
        return livingEntity.hasEffect(MobEffects.FIRE_RESISTANCE);
     }
 
+    public static int changeMaxSpongeSoakBlocks(int soakableBlocks) {
+        if (!isEnabled(Tweaks.class))
+            return soakableBlocks;
+
+        //Vanilla uses 65 and not 64
+        return maxSpongeSoakBlocks + 1;
+    }
+
+    public static int changeSpongeMaxRange(int range) {
+        if (!isEnabled(Tweaks.class))
+            return range;
+
+        //Vanilla uses 65 and not 64
+        return maxSpongeSoakRange + 1;
+    }
+
     public static boolean isSlowerPoison() {
-        return isEnabled(Misc.class) && slowerPoison;
+        return isEnabled(Tweaks.class) && slowerPoison;
     }
 
     @SubscribeEvent
