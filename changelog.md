@@ -1,8 +1,5 @@
 # Changelog
 
-* Hoppers do not work with blast furnaces
-* Forge renderer broken?
-
 ## 0.13.0
 * Update to MC 1.20.1
 * Added Coated Copper Tools
@@ -19,7 +16,7 @@
 * Ground flint is now actual ground flint
 * Reduced armor slowdown
 * Block stack reduction can no longer be reduced by material
-* Fixed crash when placing Iron Blocks
+* Hunger Depleted on Wake Up now properly consumes Saturation first and then hunger 
 * Powder Snow is now harder to break 
 * Solium moss now generates more per patch
 * Tool belts are now added to graves instead of dropping
@@ -28,6 +25,7 @@
   * Now buys wheat, carrots, potatoes and beetroots instead of wheat seeds
   * No longer sells an enchanted book with unbreaking (replaced with a high level enchanted book)
   * Now sells cleansed/ancient lapis as rare trade
+* Fixed crash when placing Iron Blocks
 * Fixed Soul Steel being recyclable for more nuggets than used
 * Fixed glass panes not begin breakable faster by pickaxe
 * Fixed multiblock furnaces not ejecting items to hoppers below

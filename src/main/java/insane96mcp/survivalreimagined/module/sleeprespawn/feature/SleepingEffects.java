@@ -16,6 +16,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodData;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.level.SleepFinishedTimeEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -37,8 +38,8 @@ public class SleepingEffects extends SRFeature {
 	public static final ArrayList<SRMobEffectInstance> effectsOnWakeUp = new ArrayList<>();
 
 	@Config(min = 0, max = 20)
-	@Label(name = "Hunger Depleted on Wake Up", description = "How much the hunger bar is depleted when you wake up in the morning. Saturation depleted is based off this value times 2. Setting to 0 will disable this feature.")
-	public static Integer hungerDepletedOnWakeUp = 11;
+	@Label(name = "Hunger Depleted on Wake Up", description = "How much the hunger bar is depleted when you wake up in the morning. Saturation is depleted before depleting hunger bar. Setting to 0 will disable this feature.")
+	public static Integer hungerDepletedOnWakeUp = 15;
 	@Config
 	@Label(name = "No Sleep If Hungry", description = "If the player's hunger bar is below 'Hunger Depleted on Wake Up' he can't sleep.")
 	public static Boolean noSleepIfHungry = false;
@@ -66,10 +67,14 @@ public class SleepingEffects extends SRFeature {
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach(player -> {
 			float tirednessOnWakeUp = Mth.clamp(TirednessHandler.get(player) - Tiredness.tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
 
-			player.getFoodData().eat(-hungerDepletedOnWakeUp, 1.0f);
-			//For some reasons saturation can go below 0, so I get it back up to 0
-			if (player.getFoodData().getSaturationLevel() < 0.0f)
-				player.getFoodData().eat(1, -player.getFoodData().getSaturationLevel() / 2f);
+			FoodData foodData = player.getFoodData();
+			int hungerToDeplete = hungerDepletedOnWakeUp;
+			if (foodData.getSaturationLevel() > 0) {
+				float saturation = foodData.saturationLevel;
+				foodData.setSaturation(saturation - Math.min(hungerToDeplete, saturation));
+				if (saturation < hungerToDeplete)
+					foodData.setFoodLevel((int) (foodData.foodLevel - Math.min(hungerToDeplete - saturation, foodData.foodLevel)));
+			}
 			for (MobEffectInstance mobEffectInstance : effectsOnWakeUp) {
 				if (mobEffectInstance.getEffect().isBeneficial() && player.getFoodData().getFoodLevel() <= 0)
 					continue;
