@@ -1,5 +1,8 @@
 # Changelog
 
+* Hoppers do not work with blast furnaces
+* Forge renderer broken?
+
 ## 0.13.0
 * Update to MC 1.20.1
 * Added Coated Copper Tools
@@ -26,6 +29,7 @@
   * No longer sells an enchanted book with unbreaking (replaced with a high level enchanted book)
   * Now sells cleansed/ancient lapis as rare trade
 * Fixed Soul Steel being recyclable for more nuggets than used
+* Fixed glass panes not begin breakable faster by pickaxe
 
 ## 0.12.4
 * Small Thorns overhaul
