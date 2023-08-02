@@ -45,15 +45,15 @@ public class WeightedEquipment extends SRFeature {
 
 	public static final ArrayList<ArmorMaterialWeight> MATERIAL_WEIGHTS_DEFAULTS = new ArrayList<>(Arrays.asList(
 			new ArmorMaterialWeight("leather", 0d),
-			new ArmorMaterialWeight("survivalreimagined:chained_copper", 0.01d),
-			new ArmorMaterialWeight("chainmail", 0.025d),
-			new ArmorMaterialWeight("iron", 0.03d),
-			new ArmorMaterialWeight("survivalreimagined:solarium", 0.03d),
-			new ArmorMaterialWeight("survivalreimagined:durium", 0.04d),
+			new ArmorMaterialWeight("survivalreimagined:chained_copper", 0d),
+			new ArmorMaterialWeight("chainmail", 0d),
+			new ArmorMaterialWeight("iron", 0.01d),
+			new ArmorMaterialWeight("survivalreimagined:solarium", 0.01d),
+			new ArmorMaterialWeight("survivalreimagined:durium", 0.025d),
 			new ArmorMaterialWeight("gold", 0d),
-			new ArmorMaterialWeight("diamond", 0.06d),
-			new ArmorMaterialWeight("survivalreimagined:soul_steel", 0.08d),
-			new ArmorMaterialWeight("survivalreimagined:keego", 0.07d),
+			new ArmorMaterialWeight("diamond", 0.05d),
+			new ArmorMaterialWeight("survivalreimagined:soul_steel", 0.075d),
+			new ArmorMaterialWeight("survivalreimagined:keego", 0.06d),
 			new ArmorMaterialWeight("netherite", 0.10d)
 	));
 	public static final ArrayList<ArmorMaterialWeight> materialWeight = new ArrayList<>();

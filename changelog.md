@@ -17,6 +17,7 @@
   * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest (Neo)Forge)
 * Shields can now be recycled in blast and soul furnaces
 * Ground flint is now actual ground flint
+* Reduced armor slowdown
 * Block stack reduction can no longer be reduced by material
 * Fixed crash when placing Iron Blocks
 * Powder Snow is now harder to break 
