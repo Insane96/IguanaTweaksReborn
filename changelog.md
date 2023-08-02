@@ -11,6 +11,8 @@
 * Added Coated Copper Tools
   * Can electrocute enemies
 * Sponges now soak more blocks
+* Nerfs
+  * Added "Remove Falling Block Dupe across dimensions"
 * Added "Phantoms in the End"
   * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest (Neo)Forge)
 * Shields can now be recycled in blast and soul furnaces

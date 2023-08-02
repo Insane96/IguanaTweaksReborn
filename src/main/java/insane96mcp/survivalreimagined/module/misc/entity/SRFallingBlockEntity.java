@@ -51,6 +51,9 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 	}
 
 	public void tick() {
+		//Fixes duping exploit through dimensions
+		if (this.isRemoved())
+			return;
 		if (this.blockState.isAir()) {
 			this.discard();
 		} else {
@@ -61,6 +64,9 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 			}
 
 			this.move(MoverType.SELF, this.getDeltaMovement());
+			//Fixes duping exploit through dimensions
+			if (this.isRemoved())
+				return;
 			if (!this.level().isClientSide) {
 				BlockPos blockpos = this.blockPosition();
 				boolean isConcretePowder = this.blockState.getBlock() instanceof ConcretePowderBlock;

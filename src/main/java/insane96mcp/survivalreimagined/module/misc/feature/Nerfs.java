@@ -31,12 +31,20 @@ public class Nerfs extends Feature {
 	@Config
 	@Label(name = "Reduced mob cramming", description = "If true, maxEntityCramming game rule is set to 6 from 24")
 	public static Boolean reducedMobCramming = true;
-    @Config
-    @Label(name = "Less burn time for Kelp block", description = "Kelp blocks smelt 16 items instead of 20")
-    public static Boolean lessBurnTimeForKelpBlock = true;
+	@Config
+	@Label(name = "Less burn time for Kelp block", description = "Kelp blocks smelt 16 items instead of 20")
+	public static Boolean lessBurnTimeForKelpBlock = true;
+
+	@Config
+	@Label(name = "Remove Falling Block Dupe across dimensions", description = "Prevents duping falling blocks when they travel across dimensions")
+	public static Boolean removeFallingBlockDupe = true;
 
     public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	public static boolean isFallingBlockDupe() {
+		return isEnabled(Nerfs.class) && removeFallingBlockDupe;
 	}
 
 	@SubscribeEvent
