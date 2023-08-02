@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +44,6 @@ public class TerrainSlowdown extends SRFeature {
 		super.loadConfigOptions();
 		//TODO Sync
 		JSON_CONFIGS.add(new JsonConfig<>("custom_terrain_slowdown.json", customTerrainSlowdown, CUSTOM_TERRAIN_SLOWDOWN_DEFAULT, IdTagValue.LIST_TYPE));
-	}
-
-	@Override
-	public void readConfig(final ModConfigEvent event) {
-		super.readConfig(event);
 	}
 
 	@Override

@@ -31,7 +31,6 @@ import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,11 +93,6 @@ public class WeightedEquipment extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-	}
-
-	@Override
-	public void readConfig(final ModConfigEvent event) {
-		super.readConfig(event);
 	}
 
 	//Can't use ItemAttributeModifierEvent as I need all the modifiers of the item (ItemStack#getAttributeModifiers) and that causes a loop

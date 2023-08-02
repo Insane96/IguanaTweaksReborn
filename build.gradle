@@ -159,8 +159,7 @@ dependencies {
     implementation fg.deobf("blank:InsaneLib:${lib_version}-mc${mc_version}")
     runtimeOnly fg.deobf("blank:MobsPropertiesRandomness:${mpr_version}-mc${mc_version}")
     implementation fg.deobf("blank:Shields+:${shields_plus_version}-mc${mc_version}")
-    //Hardcoded MC version as there is no 1.20.1 version
-    implementation fg.deobf("blank:EnhancedAI:${enhancedai_version}-mc1.20")
+    implementation fg.deobf("blank:EnhancedAI:${enhancedai_version}-mc${mc_version}")
 
     //runtimeOnly fg.deobf("curse.maven:selene-499980:4656567")
     //runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4602101")

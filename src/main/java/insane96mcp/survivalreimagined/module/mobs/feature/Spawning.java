@@ -13,7 +13,6 @@ import net.minecraftforge.event.entity.player.PlayerSpawnPhantomsEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import sereneseasons.api.season.Season;
 import sereneseasons.api.season.SeasonChangedEvent;
 import sereneseasons.api.season.SeasonHelper;
@@ -62,11 +61,6 @@ public class Spawning extends SRFeature {
 
     public Spawning(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-    }
-
-    @Override
-    public void readConfig(ModConfigEvent event) {
-        super.readConfig(event);
     }
 
     @SubscribeEvent

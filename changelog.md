@@ -1,14 +1,14 @@
 # Changelog
 
-* Seems Skeletons shoot from too far away
 * Better music timers?
-* Knockback doesn't work with bows
 
 ## 0.13.0
 * Update to MC 1.20.1
 * Added Coated Copper Tools
   * Can electrocute enemies
 * Sponges now soak more blocks
+* Client > Sounds renamed to Sounds & Music
+  * Music now plays twice as often
 * Nerfs
   * Added "Remove Falling Block Dupe across dimensions"
   * Added "Remove Piston exploits" (removes TNT duping)

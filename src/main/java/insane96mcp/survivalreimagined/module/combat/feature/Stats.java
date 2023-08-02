@@ -103,7 +103,7 @@ public class Stats extends SRFeature {
 	public static Boolean fixTooltips = true;
 
 	@Config
-	@Label(name = "Combat Test Strength", description = "Changes Strength effect from +3 damage per level to +20% damage per level")
+	@Label(name = "Combat Test Strength", description = "Changes Strength effect from +3 damage per level to +20% damage per level. (Requires a Minecraft restart)")
 	public static Boolean combatTestStrength = true;
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
