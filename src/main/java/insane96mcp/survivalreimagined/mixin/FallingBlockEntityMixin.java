@@ -21,7 +21,7 @@ public class FallingBlockEntityMixin {
             @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/item/FallingBlockEntity;move(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V", shift = At.Shift.AFTER)
     }, cancellable = true)
     public void stopTickingIfRemoved(CallbackInfo ci) {
-        if (Nerfs.isFallingBlockDupe() && ((FallingBlockEntity) (Object) this).isRemoved())
+        if (Nerfs.isFallingBlockDupeRemoved() && ((FallingBlockEntity) (Object) this).isRemoved())
             ci.cancel();
     }
 

@@ -38,13 +38,20 @@ public class Nerfs extends Feature {
 	@Config
 	@Label(name = "Remove Falling Block Dupe across dimensions", description = "Prevents duping falling blocks when they travel across dimensions")
 	public static Boolean removeFallingBlockDupe = true;
+	@Config
+	@Label(name = "Remove piston physics exploit", description = "Fixes several piston physics exploits like TNT duping")
+	public static Boolean removePistonPhysicsExploit = true;
 
     public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
-	public static boolean isFallingBlockDupe() {
+	public static boolean isFallingBlockDupeRemoved() {
 		return isEnabled(Nerfs.class) && removeFallingBlockDupe;
+	}
+
+	public static boolean isPistonPhysicsExploitEnabled() {
+		return isEnabled(Nerfs.class) && removePistonPhysicsExploit;
 	}
 
 	@SubscribeEvent

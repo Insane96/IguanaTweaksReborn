@@ -4,7 +4,6 @@
 * Better music timers?
 * Knockback doesn't work with bows
 * Think about reducing the armor slowdown since the player has -5% speed
-* https://github.com/VazkiiMods/Quark/commit/e69e625b4057a9e1b620887c40a7b9fcf1c15255 & https://github.com/VazkiiMods/Quark/commit/c259f0bb6c5e15014dc6af1368cba4705781195d
 
 ## 0.13.0
 * Update to MC 1.20.1
@@ -13,6 +12,7 @@
 * Sponges now soak more blocks
 * Nerfs
   * Added "Remove Falling Block Dupe across dimensions"
+  * Added "Remove Piston exploits" (removes TNT duping)
 * Added "Phantoms in the End"
   * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest (Neo)Forge)
 * Shields can now be recycled in blast and soul furnaces
