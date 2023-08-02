@@ -30,6 +30,7 @@
   * Now sells cleansed/ancient lapis as rare trade
 * Fixed Soul Steel being recyclable for more nuggets than used
 * Fixed glass panes not begin breakable faster by pickaxe
+* Fixed multiblock furnaces not ejecting items to hoppers below
 
 ## 0.12.4
 * Small Thorns overhaul
