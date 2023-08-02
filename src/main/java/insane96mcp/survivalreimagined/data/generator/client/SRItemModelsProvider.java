@@ -6,7 +6,7 @@ import insane96mcp.survivalreimagined.module.experience.feature.Lapis;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.ChainedCopperArmor;
-import insane96mcp.survivalreimagined.module.items.feature.CopperToolsExtension;
+import insane96mcp.survivalreimagined.module.items.feature.CopperToolsExpansion;
 import insane96mcp.survivalreimagined.module.items.feature.FlintExpansion;
 import insane96mcp.survivalreimagined.module.items.feature.RecallIdol;
 import insane96mcp.survivalreimagined.module.mining.feature.*;
@@ -78,18 +78,18 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(ChainedCopperArmor.CHESTPLATE.get());
         basicItem(ChainedCopperArmor.HELMET.get());
 
-        handHeld(CopperToolsExtension.COPPER_AXE.get());
-        handHeld(CopperToolsExtension.COPPER_PICKAXE.get());
-        handHeld(CopperToolsExtension.COPPER_SHOVEL.get());
-        handHeld(CopperToolsExtension.COPPER_HOE.get());
-        handHeld(CopperToolsExtension.COPPER_SWORD.get());
+        handHeld(CopperToolsExpansion.COPPER_AXE.get());
+        handHeld(CopperToolsExpansion.COPPER_PICKAXE.get());
+        handHeld(CopperToolsExpansion.COPPER_SHOVEL.get());
+        handHeld(CopperToolsExpansion.COPPER_HOE.get());
+        handHeld(CopperToolsExpansion.COPPER_SWORD.get());
 
-        handHeld(CopperToolsExtension.COATED_AXE.get());
-        handHeld(CopperToolsExtension.COATED_PICKAXE.get());
-        handHeld(CopperToolsExtension.COATED_SHOVEL.get());
-        handHeld(CopperToolsExtension.COATED_HOE.get());
-        handHeld(CopperToolsExtension.COATED_SWORD.get());
-        shield(CopperToolsExtension.COATED_SHIELD.get());
+        handHeld(CopperToolsExpansion.COATED_AXE.get());
+        handHeld(CopperToolsExpansion.COATED_PICKAXE.get());
+        handHeld(CopperToolsExpansion.COATED_SHOVEL.get());
+        handHeld(CopperToolsExpansion.COATED_HOE.get());
+        handHeld(CopperToolsExpansion.COATED_SWORD.get());
+        shield(CopperToolsExpansion.COATED_SHIELD.get());
 
         withExistingParent("charcoal_layer", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/charcoal_layer/height_2"));
 

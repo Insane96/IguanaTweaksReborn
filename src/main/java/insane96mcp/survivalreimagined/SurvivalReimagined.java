@@ -11,6 +11,7 @@ import insane96mcp.survivalreimagined.data.generator.client.SRItemModelsProvider
 import insane96mcp.survivalreimagined.module.combat.dispenser.SRArrowDispenseBehaviour;
 import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
 import insane96mcp.survivalreimagined.module.combat.feature.PiercingPickaxes;
+import insane96mcp.survivalreimagined.module.items.client.particle.ElectrocutionSparkParticle;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerData;
 import insane96mcp.survivalreimagined.module.misc.capability.SpawnerDataAttacher;
 import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
@@ -18,6 +19,7 @@ import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.setup.*;
 import insane96mcp.survivalreimagined.setup.client.ClientSetup;
 import insane96mcp.survivalreimagined.setup.client.SRClientConfig;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -27,6 +29,7 @@ import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -79,6 +82,7 @@ public class SurvivalReimagined
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(ClientSetup::onBuildCreativeModeTabContents);
         modEventBus.addListener(this::addPackFinders);
+        modEventBus.addListener(this::registerParticleFactories);
         modEventBus.addListener(PiercingPickaxes::piercingDamageAttribute);
         modEventBus.register(Tiredness.class);
         modEventBus.register(SpawnerData.class);
@@ -149,5 +153,8 @@ public class SurvivalReimagined
         }
     }
 
+    public void registerParticleFactories(RegisterParticleProvidersEvent event) {
+        Minecraft.getInstance().particleEngine.register(SRParticles.ELECTROCUTION_SPARKS.get(), ElectrocutionSparkParticle.Provider::new);
+    }
 
 }

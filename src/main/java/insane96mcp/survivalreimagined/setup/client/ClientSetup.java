@@ -47,14 +47,14 @@ public class ClientSetup {
             event.accept(FlintExpansion.PICKAXE.get());
             event.accept(FlintExpansion.SHOVEL.get());
             event.accept(FlintExpansion.HOE.get());
-            event.accept(CopperToolsExtension.COPPER_AXE.get());
-            event.accept(CopperToolsExtension.COPPER_PICKAXE.get());
-            event.accept(CopperToolsExtension.COPPER_SHOVEL.get());
-            event.accept(CopperToolsExtension.COPPER_HOE.get());
-            event.accept(CopperToolsExtension.COATED_AXE.get());
-            event.accept(CopperToolsExtension.COATED_PICKAXE.get());
-            event.accept(CopperToolsExtension.COATED_SHOVEL.get());
-            event.accept(CopperToolsExtension.COATED_HOE.get());
+            event.accept(CopperToolsExpansion.COPPER_AXE.get());
+            event.accept(CopperToolsExpansion.COPPER_PICKAXE.get());
+            event.accept(CopperToolsExpansion.COPPER_SHOVEL.get());
+            event.accept(CopperToolsExpansion.COPPER_HOE.get());
+            event.accept(CopperToolsExpansion.COATED_AXE.get());
+            event.accept(CopperToolsExpansion.COATED_PICKAXE.get());
+            event.accept(CopperToolsExpansion.COATED_SHOVEL.get());
+            event.accept(CopperToolsExpansion.COATED_HOE.get());
             event.accept(Durium.AXE.get());
             event.accept(Durium.PICKAXE.get());
             event.accept(Durium.SHOVEL.get());
@@ -91,11 +91,11 @@ public class ClientSetup {
         else if (event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.accept(FlintExpansion.SWORD.get());
             event.accept(FlintExpansion.SHIELD.get());
-            event.accept(CopperToolsExtension.COPPER_SWORD.get());
-            event.accept(CopperToolsExtension.COPPER_AXE.get());
-            event.accept(CopperToolsExtension.COATED_SWORD.get());
-            event.accept(CopperToolsExtension.COATED_AXE.get());
-            event.accept(CopperToolsExtension.COATED_SHIELD.get());
+            event.accept(CopperToolsExpansion.COPPER_SWORD.get());
+            event.accept(CopperToolsExpansion.COPPER_AXE.get());
+            event.accept(CopperToolsExpansion.COATED_SWORD.get());
+            event.accept(CopperToolsExpansion.COATED_AXE.get());
+            event.accept(CopperToolsExpansion.COATED_SHIELD.get());
 
             event.accept(ChainedCopperArmor.HELMET.get());
             event.accept(ChainedCopperArmor.CHESTPLATE.get());

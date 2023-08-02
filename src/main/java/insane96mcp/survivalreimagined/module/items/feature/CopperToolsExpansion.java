@@ -43,9 +43,9 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.ArrayList;
 import java.util.List;
 
-@Label(name = "Copper Tools Extension", description = "Two new set of tools")
+@Label(name = "Copper Tools Expansion", description = "Two new set of tools")
 @LoadFeature(module = Modules.Ids.ITEMS)
-public class CopperToolsExtension extends Feature {
+public class CopperToolsExpansion extends Feature {
 	public static final TagKey<Item> COATED_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/coated_copper"));
 
 	public static final ILItemTier COPPER_ITEM_TIER = new ILItemTier(1, 143, 8f, 1.0f, 9, () -> Ingredient.of(Items.COPPER_INGOT));
@@ -67,7 +67,7 @@ public class CopperToolsExtension extends Feature {
 
 	public static final RegistryObject<SPShieldItem> COATED_SHIELD = SRItems.registerShield("coated_copper_shield", COATED_SHIELD_MATERIAL);
 
-	public CopperToolsExtension(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public CopperToolsExpansion(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
@@ -102,7 +102,7 @@ public class CopperToolsExtension extends Feature {
 	private void electrocute(Player attacker, LivingEntity attacked) {
 		DamageSource damageSource = attacker.damageSources().source(ELECTROCUTION_ATTACK, attacker);
 		double range = 4.5d;
-		float secondaryDamage = (float) (1.5f * attacker.getAttributeValue(Attributes.ATTACK_DAMAGE));
+		float secondaryDamage = (float) (1.0f * attacker.getAttributeValue(Attributes.ATTACK_DAMAGE));
 		int hitEntities = 0;
 		IntList listIdsOfHitEntities = new IntArrayList();
 		List<LivingEntity> listOfHitEntities = new ArrayList<>();

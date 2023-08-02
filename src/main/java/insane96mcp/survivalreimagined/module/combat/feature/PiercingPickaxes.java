@@ -8,7 +8,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.event.PostEntityHurtEvent;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.items.feature.CopperToolsExtension;
+import insane96mcp.survivalreimagined.module.items.feature.CopperToolsExpansion;
 import insane96mcp.survivalreimagined.setup.SRAttributes;
 import insane96mcp.survivalreimagined.utils.MCUtils;
 import net.minecraft.core.registries.Registries;
@@ -68,7 +68,7 @@ public class PiercingPickaxes extends Feature {
 				|| event.getEntity().isDeadOrDying()
 				|| event.getDamageSource().is(PIERCING_MOB_ATTACK)
 				|| event.getDamageSource().is(PIERCING_PLAYER_ATTACK)
-				|| event.getDamageSource().is(CopperToolsExtension.ELECTROCUTION_ATTACK)
+				|| event.getDamageSource().is(CopperToolsExpansion.ELECTROCUTION_ATTACK)
 				|| attacker.getAttribute(PIERCING_DAMAGE.get()) == null)
 			return;
 
