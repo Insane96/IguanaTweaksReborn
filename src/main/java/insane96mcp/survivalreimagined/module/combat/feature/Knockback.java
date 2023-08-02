@@ -6,9 +6,9 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -28,6 +29,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class Knockback extends Feature {
 
 	public static final TagKey<Item> REDUCED_KNOCKBACK = SRItemTagsProvider.create("reduced_knockback");
+	public static final String TIME_SINCE_LAST_SWING = SurvivalReimagined.RESOURCE_PREFIX + "ticks_since_last_swing";
+	public static final String SHOULD_APPLY_NO_KNOCKBACK = SurvivalReimagined.RESOURCE_PREFIX + "should_apply_no_knockback";
 
 	@Config
 	@Label(name = "No Weapon Penalty", description = "If true the player will deal reduced knockback when not using an item that doesn't have the attack damage attribute.")
@@ -48,7 +51,15 @@ public class Knockback extends Feature {
 		Player player = event.getEntity();
 		if (player.getAbilities().instabuild)
 			return;
-		player.getPersistentData().putInt(Strings.Tags.TIME_SINCE_LAST_SWING, player.attackStrengthTicker);
+		player.getPersistentData().putInt(TIME_SINCE_LAST_SWING, player.attackStrengthTicker);
+	}
+
+	@SubscribeEvent
+	public void onLivingHurtEvent(LivingHurtEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getSource().getDirectEntity() instanceof Player player))
+			return;
+		player.getPersistentData().putBoolean(SHOULD_APPLY_NO_KNOCKBACK, true);
 	}
 
 	@SubscribeEvent
@@ -60,6 +71,9 @@ public class Knockback extends Feature {
 				|| player.getAbilities().instabuild)
 			return;
 
+		if (!player.getPersistentData().getBoolean(SHOULD_APPLY_NO_KNOCKBACK))
+			return;
+
 		ItemStack itemStack = player.getMainHandItem();
 
 		boolean isInTag = Utils.isItemInTag(itemStack.getItem(), REDUCED_KNOCKBACK);
@@ -69,11 +83,13 @@ public class Knockback extends Feature {
 		if ((!attributeModifiers.containsKey(Attributes.ATTACK_DAMAGE) && noItemNoKnockback) || isInTag) {
 			reducedKnockback = true;
 		}
-		int ticksSinceLastSwing = player.getPersistentData().getInt(Strings.Tags.TIME_SINCE_LAST_SWING);
+		int ticksSinceLastSwing = player.getPersistentData().getInt(TIME_SINCE_LAST_SWING);
 		float cooldown = Mth.clamp((ticksSinceLastSwing + 0.5f) / player.getCurrentItemAttackStrengthDelay(), 0.0F, 1.0F);
 		if (cooldown <= 0.9f)
 			reducedKnockback = true;
 		if (reducedKnockback)
 			event.setStrength(event.getStrength() * knockbackReduction.floatValue());
+		player.getPersistentData().putBoolean(SHOULD_APPLY_NO_KNOCKBACK, false);
+
 	}
 }

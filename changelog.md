@@ -3,7 +3,6 @@
 * Seems Skeletons shoot from too far away
 * Better music timers?
 * Knockback doesn't work with bows
-* Think about reducing the armor slowdown since the player has -5% speed
 
 ## 0.13.0
 * Update to MC 1.20.1

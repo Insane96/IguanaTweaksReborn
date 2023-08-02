@@ -7,7 +7,6 @@ import java.util.UUID;
 public class Strings {
 	public static class Tags {
 		public static final String SPAWNED_MOBS = SurvivalReimagined.RESOURCE_PREFIX + "spawned_mobs";
-		public static final String TIME_SINCE_LAST_SWING = SurvivalReimagined.RESOURCE_PREFIX + "ticks_since_last_swing";
 
 		public static final String SPAWNER_DATA = SurvivalReimagined.RESOURCE_PREFIX + "spawner_data";
 		public static final String DAMAGE_HISTORY = SurvivalReimagined.RESOURCE_PREFIX + "damage_history";
