@@ -1,7 +1,5 @@
 # Changelog
 
-* Better music timers?
-
 ## 0.13.0
 * Update to MC 1.20.1
 * Added Coated Copper Tools
