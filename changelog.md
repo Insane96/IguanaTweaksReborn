@@ -1,5 +1,9 @@
 # Changelog
 
+* EArly game enchanting table
+* More miners below sea level
+* Fishing has a chance to summon a guardian
+
 ## 0.13.0
 * Update to MC 1.20.1
 * Added Coated Copper Tools
