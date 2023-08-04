@@ -89,7 +89,7 @@ public class FoodDrinks extends SRFeature {
 	public static Boolean stopConsumingOnHit = true;
 
 	@Config
-	@Label(name = "No Furnace food and smoker recipe", description = "Food can no longer be smelted in furnaces and change smokers recipe to require Mithril ingot.")
+	@Label(name = "No Furnace food and smoker recipe", description = "Food can no longer be smelted in furnaces and change smokers recipe to require Mithril ingot.\nThis also enables a change to the smelt_item_function in loot tables to use smoker recipes instead of furnaces (otherwise, mobs wouldn't drop cooked food). Might have unintended side effects.")
 	public static Boolean noFurnaceFoodAndSmokerRecipe = true;
 
 	@Config(min = 0d, max = 1f)

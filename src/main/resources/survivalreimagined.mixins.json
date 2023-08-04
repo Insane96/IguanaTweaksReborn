@@ -41,6 +41,7 @@
         "PotionItemMixin",
         "ProtectionEnchantmentMixin",
         "PumpkinBlockMixin",
+        "SmeltItemFunctionMixin",
         "SpiderAttackGoalMixin",
         "SpiderMixin",
         "SpongeBlockMixin",
