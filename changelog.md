@@ -1,8 +1,10 @@
 # Changelog
 
-* EArly game enchanting table
+* EArly game enchanting table (make enchanting table nether bound)
 * More miners below sea level
 * Fishing has a chance to summon a guardian
+* Animals don't drop cooked food
+* Night vision might be bugged
 
 ## 0.13.0
 * Update to MC 1.20.1
@@ -33,6 +35,7 @@
 * Fixed Soul Steel being recyclable for more nuggets than used
 * Fixed glass panes not begin breakable faster by pickaxe
 * Fixed multiblock furnaces not ejecting items to hoppers below
+* Fixed fixing anvils opening the interface
 
 ## 0.12.4
 * Small Thorns overhaul

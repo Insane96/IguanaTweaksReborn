@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -144,11 +145,12 @@ public class Anvils extends SRFeature {
         if (!isChipped && !isDamaged)
             return;
 
-        event.setUseBlock(Event.Result.DENY);
-        event.setUseItem(Event.Result.DENY);
         event.setResult(Event.Result.DENY);
         event.setCanceled(true);
-        event.getItemStack().shrink(1);
+        event.setCancellationResult(InteractionResult.SUCCESS);
+        if (!event.getEntity().getAbilities().instabuild) {
+            event.getItemStack().shrink(1);
+        }
         event.getLevel().setBlockAndUpdate(event.getPos(), isChipped ? Blocks.ANVIL.defaultBlockState().setValue(AnvilBlock.FACING, direction) : Blocks.CHIPPED_ANVIL.defaultBlockState().setValue(AnvilBlock.FACING, direction));
         event.getLevel().playSound(event.getEntity(), event.getPos(), SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1f, 1.5f);
     }
