@@ -64,6 +64,12 @@
                     "operation": "add",
                     "easy": -0.05,
                     "hard": 0.075
+                },
+                "depth_modifier": {
+                    "operation": "add",
+                    "amount_per_step": 0.01,
+                    "step": 8,
+                    "starting_y": 80
                 }
             },
             "persistent_data": true

@@ -29,6 +29,7 @@
   * Now buys wheat, carrots, potatoes and beetroots instead of wheat seeds
   * No longer sells an enchanted book with unbreaking (replaced with a high level enchanted book)
   * Now sells cleansed/ancient lapis as rare trade
+* Miner zombies now spawn more frequently in caves
 * Fixed crash when placing Iron Blocks
 * Fixed Soul Steel being recyclable for more nuggets than used
 * Fixed glass panes not begin breakable faster by pickaxe
