@@ -11,6 +11,8 @@ import insane96mcp.survivalreimagined.module.ClientModules;
 @LoadFeature(module = ClientModules.Ids.CLIENT)
 public class Light extends Feature {
 
+    public static final int NIGHT_VISION_FADE_OUT_AT = 40;
+
     @Config
     @Label(name = "No Night Vision Flashing", description = "If true night vision will no longer flash 10 seconds before expiring, instead will slowly fade out 2 seconds before expiring.")
     public static Boolean noNightVisionFlashing = true;

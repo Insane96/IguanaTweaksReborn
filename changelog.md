@@ -36,6 +36,7 @@
 * Fixed glass panes not begin breakable faster by pickaxe
 * Fixed multiblock furnaces not ejecting items to hoppers below
 * Fixed fixing anvils opening the interface
+* Fixed night vision not fading out properly
 
 ## 0.12.4
 * Small Thorns overhaul
