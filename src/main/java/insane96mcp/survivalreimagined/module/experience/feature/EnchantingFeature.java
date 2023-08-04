@@ -11,8 +11,9 @@ import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
+import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 @Label(name = "Enchanting", description = "Change some enchanting related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
@@ -30,10 +31,8 @@ public class EnchantingFeature extends SRFeature {
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "enchanting_infuser_compat", Component.literal("Survival Reimagined Enchanting Infuser Compat"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && enchantingInfuserCompat));
 	}
 
-	@Override
-	public void readConfig(ModConfigEvent event) {
-		super.readConfig(event);
-
+	@SubscribeEvent
+	public void onServerStarted(ServerStartedEvent event) {
 		if (enchantingInfuserCompat && ModList.get().isLoaded("enchantinginfuser"))
 			EnchantingInfuser.setConfigOptions();
 	}
