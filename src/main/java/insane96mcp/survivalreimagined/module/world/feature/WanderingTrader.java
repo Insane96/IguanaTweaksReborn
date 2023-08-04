@@ -7,11 +7,11 @@ import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.feature.Lapis;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
-import insane96mcp.survivalreimagined.module.mining.feature.Durium;
-import insane96mcp.survivalreimagined.module.mining.feature.Solarium;
 import insane96mcp.survivalreimagined.module.world.data.SerializableTrade;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -45,30 +45,26 @@ public class WanderingTrader extends SRFeature {
             new SerializableTrade(new ItemStack(Items.EMERALD, 5), new ItemStack(Items.DARK_OAK_SAPLING), 3),
             new SerializableTrade(new ItemStack(Items.EMERALD, 5), new ItemStack(Items.JUNGLE_SAPLING), 3),
             new SerializableTrade(new ItemStack(Items.EMERALD, 5), new ItemStack(Items.NAUTILUS_SHELL), 5),
-            new SerializableTrade(new ItemStack(Items.ROTTEN_FLESH, 12), new ItemStack(Items.EMERALD), 2),
-            new SerializableTrade(new ItemStack(Items.LAPIS_LAZULI, 16), new ItemStack(Items.EMERALD), 2),
-            new SerializableTrade(new ItemStack(Items.IRON_INGOT, 8), new ItemStack(Items.EMERALD), 2),
-            new SerializableTrade(new ItemStack(Items.GOLD_INGOT, 4), new ItemStack(Items.EMERALD), 3),
-            new SerializableTrade(new ItemStack(Solarium.SOLARIUM_BALL.get(), 3), new ItemStack(Items.EMERALD), 3),
-            new SerializableTrade(new ItemStack(Durium.INGOT.get(), 2), new ItemStack(Items.EMERALD), 3),
-            new SerializableTrade(new ItemStack(Items.DIAMOND, 2), new ItemStack(Items.EMERALD), 2),
-            new SerializableTrade(new ItemStack(Items.LEATHER, 4), new ItemStack(Items.EMERALD), 2),
-            new SerializableTrade(new ItemStack(Items.WHEAT, 8), new ItemStack(Items.EMERALD), 2),
-            new SerializableTrade(new ItemStack(Items.CARROT, 8), new ItemStack(Items.EMERALD), 2),
-            new SerializableTrade(new ItemStack(Items.POTATO, 8), new ItemStack(Items.EMERALD), 2),
-            new SerializableTrade(new ItemStack(Items.BEETROOT, 8), new ItemStack(Items.EMERALD), 3)
+            new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.TROPICAL_FISH_BUCKET), 4),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.PUFFERFISH_BUCKET), 4),
+            new SerializableTrade(new ItemStack(Items.BAKED_POTATO, 4), new ItemStack(Items.EMERALD), 1),
+            new SerializableTrade(new ItemStack(Items.FERMENTED_SPIDER_EYE, 1), new ItemStack(Items.EMERALD, 3), 1),
+            new SerializableTrade(new ItemStack(Items.HAY_BLOCK, 1), new ItemStack(Items.EMERALD), 1),
+            new SerializableTrade(new ItemStack(Items.MILK_BUCKET, 1), new ItemStack(Items.EMERALD, 2), 1),
+            new SerializableTrade(PotionUtils.setPotion(new ItemStack(Items.POTION, 1), Potions.WATER), new ItemStack(Items.EMERALD), 1),
+            new SerializableTrade(new ItemStack(Items.WATER_BUCKET, 1), new ItemStack(Items.EMERALD, 2), 1)
     ));
 
     public static final ArrayList<SerializableTrade> wanderingTraderGenericTrades = new ArrayList<>();
 
     public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_RARE_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
             new SerializableTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(Items.BOOK), 1).enchantResult(10, 18, false),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(Items.BOOK), 1).enchantResult(18, 27, false),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.BOOK), 1).enchantResult(4, 8, false),
             new SerializableTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(Lapis.ANCIENT_LAPIS.get()), 1),
             new SerializableTrade(new ItemStack(Items.EMERALD, 4), new ItemStack(Lapis.CLEANSED_LAPIS.get()), 2),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.GUNPOWDER, 2), 8),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 4), new ItemStack(Items.TROPICAL_FISH_BUCKET), 4),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 4), new ItemStack(Items.PUFFERFISH_BUCKET), 4),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.GUNPOWDER, 4), 3),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.LILY_PAD, 5), 2),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.PACKED_ICE, 1), 6),
             new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.EXPERIENCE_BOTTLE), 8)
     ));
 
@@ -90,7 +86,7 @@ public class WanderingTrader extends SRFeature {
     }
 
     @SubscribeEvent
-    public void test(WandererTradesEvent event) {
+    public void onWanderingTradersEvent(WandererTradesEvent event) {
         event.getGenericTrades().clear();
         for (SerializableTrade serializableTrade : wanderingTraderGenericTrades) {
             event.getGenericTrades().add(serializableTrade);

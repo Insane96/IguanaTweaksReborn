@@ -1,6 +1,7 @@
 # Changelog
 
-* EArly game enchanting table (make enchanting table nether bound)
+* Early game enchanting table (make enchanting table nether bound)
+* Increase Wandering trader trades
 
 ## 0.13.0
 * Update to MC 1.20.1
@@ -30,7 +31,7 @@
 * Tool belts are now added to graves instead of dropping
 * Renamed `Misc.Misc` feature to `Misc.Tweaks`
 * Wandering Trader 
-  * Now buys wheat, carrots, potatoes and beetroots instead of wheat seeds
+  * Now buys the same stuff as snapshot 23w31a
   * No longer sells an enchanted book with unbreaking (replaced with a high level enchanted book)
   * Now sells cleansed/ancient lapis as rare trade
 * Miner zombies now spawn more frequently in caves
