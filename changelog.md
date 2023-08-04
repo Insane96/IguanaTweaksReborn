@@ -31,9 +31,11 @@
 * Tool belts are now added to graves instead of dropping
 * Renamed `Misc.Misc` feature to `Misc.Tweaks`
 * Wandering Trader 
+  * 2 buying trades are now guaranteed
   * Now buys the same stuff as snapshot 23w31a
-  * No longer sells an enchanted book with unbreaking (replaced with a high level enchanted book)
+  * No longer sells an enchanted book with unbreaking (replaced with a low level enchanted book)
   * Now sells cleansed/ancient lapis as rare trade
+  * Trades have been rebalanced as snapshot 23w31a
 * Miner zombies now spawn more frequently in caves
 * You can no longer wood cut pressure plates and buttons
 * Fixed crash when placing Iron Blocks

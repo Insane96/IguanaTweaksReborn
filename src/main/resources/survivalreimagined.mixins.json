@@ -49,6 +49,7 @@
         "ThornsEnchantmentMixin",
         "ThrownExperienceBottleMixin",
         "VillagerMixin",
+        "WanderingTraderMixin",
         "ZombieMixin"
     ],
     "minVersion": "0.8",

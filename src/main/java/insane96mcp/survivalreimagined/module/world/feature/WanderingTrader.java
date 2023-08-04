@@ -2,12 +2,14 @@ package insane96mcp.survivalreimagined.module.world.feature;
 
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.feature.Lapis;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.world.data.SerializableTrade;
+import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -46,13 +48,7 @@ public class WanderingTrader extends SRFeature {
             new SerializableTrade(new ItemStack(Items.EMERALD, 5), new ItemStack(Items.JUNGLE_SAPLING), 3),
             new SerializableTrade(new ItemStack(Items.EMERALD, 5), new ItemStack(Items.NAUTILUS_SHELL), 5),
             new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.TROPICAL_FISH_BUCKET), 4),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.PUFFERFISH_BUCKET), 4),
-            new SerializableTrade(new ItemStack(Items.BAKED_POTATO, 4), new ItemStack(Items.EMERALD), 1),
-            new SerializableTrade(new ItemStack(Items.FERMENTED_SPIDER_EYE, 1), new ItemStack(Items.EMERALD, 3), 1),
-            new SerializableTrade(new ItemStack(Items.HAY_BLOCK, 1), new ItemStack(Items.EMERALD), 1),
-            new SerializableTrade(new ItemStack(Items.MILK_BUCKET, 1), new ItemStack(Items.EMERALD, 2), 1),
-            new SerializableTrade(PotionUtils.setPotion(new ItemStack(Items.POTION, 1), Potions.WATER), new ItemStack(Items.EMERALD), 1),
-            new SerializableTrade(new ItemStack(Items.WATER_BUCKET, 1), new ItemStack(Items.EMERALD, 2), 1)
+            new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.PUFFERFISH_BUCKET), 4)
     ));
 
     public static final ArrayList<SerializableTrade> wanderingTraderGenericTrades = new ArrayList<>();
@@ -70,6 +66,29 @@ public class WanderingTrader extends SRFeature {
 
     public static final ArrayList<SerializableTrade> wanderingTraderRareTrades = new ArrayList<>();
 
+    public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_BUYING_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
+            new SerializableTrade(new ItemStack(Items.BAKED_POTATO, 4), new ItemStack(Items.EMERALD), 1),
+            new SerializableTrade(new ItemStack(Items.FERMENTED_SPIDER_EYE, 1), new ItemStack(Items.EMERALD, 3), 1),
+            new SerializableTrade(new ItemStack(Items.HAY_BLOCK, 1), new ItemStack(Items.EMERALD), 1),
+            new SerializableTrade(new ItemStack(Items.MILK_BUCKET, 1), new ItemStack(Items.EMERALD, 2), 1),
+            new SerializableTrade(PotionUtils.setPotion(new ItemStack(Items.POTION, 1), Potions.WATER), new ItemStack(Items.EMERALD), 1),
+            new SerializableTrade(new ItemStack(Items.WATER_BUCKET, 1), new ItemStack(Items.EMERALD, 2), 1)
+    ));
+
+    public static final ArrayList<SerializableTrade> wanderingTraderBuyingTrades = new ArrayList<>();
+
+    @Config
+    @Label(name = "Amount of Buying trades", description = "Vanilla is 0 pre 23w31a")
+    public static Integer buyingTrades = 2;
+
+    @Config
+    @Label(name = "Amount of Ordinary trades", description = "Vanilla is 5")
+    public static Integer ordinaryTrades = 6;
+
+    @Config
+    @Label(name = "Amount of Rare trades", description = "Vanilla is 1")
+    public static Integer rareTrades = 2;
+
     public WanderingTrader(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -81,6 +100,7 @@ public class WanderingTrader extends SRFeature {
         if (JSON_CONFIGS.isEmpty()) {
             JSON_CONFIGS.add(new JsonConfig<>("generic_trades.json", wanderingTraderGenericTrades, WANDERING_TRADER_GENERIC_TRADES_DEFAULT.get(), SerializableTrade.SERIALIZABLE_TRADE_LIST_TYPE));
             JSON_CONFIGS.add(new JsonConfig<>("rare_trades.json", wanderingTraderRareTrades, WANDERING_TRADER_RARE_TRADES_DEFAULT.get(), SerializableTrade.SERIALIZABLE_TRADE_LIST_TYPE));
+            JSON_CONFIGS.add(new JsonConfig<>("buying_trades.json", wanderingTraderBuyingTrades, WANDERING_TRADER_BUYING_TRADES_DEFAULT.get(), SerializableTrade.SERIALIZABLE_TRADE_LIST_TYPE));
         }
         super.loadJsonConfigs();
     }
@@ -95,5 +115,6 @@ public class WanderingTrader extends SRFeature {
         for (SerializableTrade serializableTrade : wanderingTraderRareTrades) {
             event.getRareTrades().add(serializableTrade);
         }
+        VillagerTrades.WANDERING_TRADER_TRADES.put(3, wanderingTraderBuyingTrades.toArray(new VillagerTrades.ItemListing[0]));
     }
 }
