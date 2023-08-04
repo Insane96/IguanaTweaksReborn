@@ -6,11 +6,14 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -41,6 +44,10 @@ public class Nerfs extends Feature {
 	@Config
 	@Label(name = "Remove piston physics exploit", description = "Fixes several piston physics exploits like TNT duping")
 	public static Boolean removePistonPhysicsExploit = true;
+
+	@Config(min = 0d, max = 1d)
+	@Label(name = "Fishing has a chance to fish a sea creature")
+	public static Double fishingCreatureChance = 0.05d;
 
     public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -84,5 +91,23 @@ public class Nerfs extends Feature {
 			return;
 
 		event.setBurnTime(3200);
+	}
+
+	@SubscribeEvent
+	public void onRetrieveBobber(ItemFishedEvent event) {
+		if (!this.isEnabled()
+				|| fishingCreatureChance == 0d
+				|| event.getHookEntity().level().random.nextFloat() > fishingCreatureChance)
+			return;
+
+		Guardian guardian = EntityType.GUARDIAN.create(event.getHookEntity().level());
+		guardian.setPos(event.getHookEntity().position().add(0, guardian.getBbHeight(), 0));
+		Player player = event.getHookEntity().getPlayerOwner();
+		double d0 = player.getX() - event.getHookEntity().getX();
+		double d1 = player.getY() - event.getHookEntity().getY();
+		double d2 = player.getZ() - event.getHookEntity().getZ();
+		guardian.setDeltaMovement(d0 * 0.1D, d1 * 0.1D + Math.sqrt(Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2)) * 0.08D, d2 * 0.1D);
+		event.getHookEntity().level().addFreshEntity(guardian);
+		event.setCanceled(true);
 	}
 }

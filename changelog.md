@@ -1,7 +1,6 @@
 # Changelog
 
 * EArly game enchanting table (make enchanting table nether bound)
-* More miners below sea level
 * Fishing has a chance to summon a guardian
 
 ## 0.13.0
@@ -14,6 +13,7 @@
 * Nerfs
   * Added "Remove Falling Block Dupe across dimensions"
   * Added "Remove Piston exploits" (removes TNT duping)
+  * When you fish, there's a small chance to fish a Guardian
 * Added "Phantoms in the End"
   * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest (Neo)Forge)
 * Shields can now be recycled in blast and soul furnaces
