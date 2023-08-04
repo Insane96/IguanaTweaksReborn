@@ -17,6 +17,8 @@
   * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest (Neo)Forge)
 * Shields can now be recycled in blast and soul furnaces
 * Ground flint is now actual ground flint
+* Unbreaking formula lowered again
+  * A few adjustments to tool durability have been made
 * Reduced armor slowdown
 * Block stack reduction can no longer be reduced by material
 * Hunger Depleted on Wake Up now properly consumes Saturation first and then hunger 

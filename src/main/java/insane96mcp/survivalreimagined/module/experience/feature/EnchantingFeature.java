@@ -44,9 +44,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-@Label(name = "Enchantments", description = "Change some enchantments related stuff and adds new enchantments.")
+@Label(name = "Enchanting", description = "Change some enchanting related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
-public class EnchantmentsFeature extends SRFeature {
+public class EnchantingFeature extends SRFeature {
 
 	public static final TagKey<EntityType<?>> WATER_COOLANT_AFFECTED = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(SurvivalReimagined.MOD_ID, "water_coolant_affected"));
 
@@ -55,7 +55,7 @@ public class EnchantmentsFeature extends SRFeature {
 	public static Boolean infinityOverhaul = true;
 	@Config
 	@Label(name = "Less unbreakable unbreaking", description = "Unbreaking chance to not consume durability is changed from 50%/66.7%/75%/80%/... to 25%/45%/60%/70%/... (at levels I/II/III/IV)")
-	public static Boolean unbreakingOverhaul = true;
+	public static Boolean tiConFormula = true;
 	@Config
 	@Label(name = "Small Thorns Overhaul", description = "Thorns is no longer compatible with other protections, but deals damage every time (higher levels deal more damage) and no longer damages items.")
 	public static Boolean thornsOverhaul = true;
@@ -88,14 +88,14 @@ public class EnchantmentsFeature extends SRFeature {
 	));
 	public static final ArrayList<IdTagMatcher> disabledEnchantments = new ArrayList<>();
 
-	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public EnchantingFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 
-		JSON_CONFIGS.add(new SRFeature.JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, Utils.ID_TAG_MATCHER_LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, Utils.ID_TAG_MATCHER_LIST_TYPE));
 	}
 
 	public static boolean isEnchantmentDisabled(Enchantment enchantment) {
-		if (!Feature.isEnabled(EnchantmentsFeature.class))
+		if (!Feature.isEnabled(EnchantingFeature.class))
 			return false;
 
 		for (IdTagMatcher idTagMatcher : disabledEnchantments) {
@@ -106,11 +106,11 @@ public class EnchantmentsFeature extends SRFeature {
 	}
 
 	public static boolean isUnbreakingOverhaul() {
-		return Feature.isEnabled(EnchantmentsFeature.class) && unbreakingOverhaul;
+		return Feature.isEnabled(EnchantingFeature.class) && tiConFormula;
 	}
 
 	public static boolean isThornsOverhaul() {
-		return Feature.isEnabled(EnchantmentsFeature.class) && thornsOverhaul;
+		return Feature.isEnabled(EnchantingFeature.class) && thornsOverhaul;
 	}
 
     @SubscribeEvent
@@ -276,14 +276,14 @@ public class EnchantmentsFeature extends SRFeature {
 	}
 
 	public static boolean isInfinityOverhaulEnabled() {
-		return Feature.isEnabled(EnchantmentsFeature.class) && infinityOverhaul;
+		return Feature.isEnabled(EnchantingFeature.class) && infinityOverhaul;
 	}
 
 	public static boolean isFeatherFallingBuffed() {
-		return Feature.isEnabled(EnchantmentsFeature.class) && buffFeatherFalling;
+		return Feature.isEnabled(EnchantingFeature.class) && buffFeatherFalling;
 	}
 
 	public static boolean isBaneOfSSSSSEnabled() {
-		return Feature.isEnabled(EnchantmentsFeature.class) && enableBaneOfSSSSS;
+		return Feature.isEnabled(EnchantingFeature.class) && enableBaneOfSSSSS;
 	}
 }
