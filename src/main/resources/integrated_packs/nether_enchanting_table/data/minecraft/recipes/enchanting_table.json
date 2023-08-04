@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" B ",
+		"D#D",
+		"###"
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:obsidian"
+		},
+		"B": {
+			"item": "minecraft:book"
+		},
+		"D": {
+			"item": "minecraft:netherite_scrap"
+		}
+	},
+	"result": {
+		"item": "minecraft:enchanting_table"
+	}
+}

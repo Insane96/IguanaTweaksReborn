@@ -1,0 +1,6 @@
+{
+    "pack": {
+        "description": "Disables the advanced enchanting infuser and changes the normal infuser to require end access",
+        "pack_format": 12
+    }
+}

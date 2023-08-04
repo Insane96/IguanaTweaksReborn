@@ -91,6 +91,13 @@ license="All rights reserved"
     side="BOTH"
 
 [[dependencies.survivalreimagined]]
+    modId="enchantinginfuser"
+    mandatory=false
+    versionRange="[8.0.1,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.survivalreimagined]]
     modId="easymagic"
     mandatory=false
     versionRange="[6.0.0,)"

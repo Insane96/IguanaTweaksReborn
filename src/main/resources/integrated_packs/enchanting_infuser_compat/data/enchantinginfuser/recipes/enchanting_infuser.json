@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " B ",
+    "A#A",
+    "#T#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "B": {
+      "item": "minecraft:end_rod"
+    },
+    "T": {
+      "item": "minecraft:enchanting_table"
+    }
+  },
+  "result": {
+    "item": "enchantinginfuser:enchanting_infuser"
+  }
+}

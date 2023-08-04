@@ -6,6 +6,9 @@
 * Update to MC 1.20.1
 * Added Coated Copper Tools
   * Can electrocute enemies
+* Added Enchanting Feature
+  * Enchanting Table now requires Nether access to be made
+  * Added compatibility with Enchanting Infuser
 * Sponges now soak more blocks
 * Client > Sounds renamed to Sounds & Music
   * Music now plays twice as often
