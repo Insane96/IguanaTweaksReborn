@@ -272,9 +272,16 @@ public class HealthRegen extends Feature {
 		return true;
 	}
 
+	/**
+	 * Different from Player#isHurt as doesn't return true if missing less than half a heart
+	 */
+	private static boolean isPlayerHurt(Player player) {
+		return player.getHealth() > 0 && player.getHealth() <= player.getMaxHealth() - 1;
+	}
+
 	private static void tick(FoodData foodStats, Player player, Difficulty difficulty) {
 		boolean naturalRegen = player.level().getGameRules().getBoolean(GameRules.RULE_NATURAL_REGENERATION) && !Feature.isEnabled(NoHunger.class);
-		if (naturalRegen && foodStats.saturationLevel > 0.0F && player.isHurt() && foodStats.foodLevel >= 20 && !disableSaturationRegenBoost) {
+		if (naturalRegen && foodStats.saturationLevel > 0.0F && isPlayerHurt(player) && foodStats.foodLevel >= 20 && !disableSaturationRegenBoost) {
 			++foodStats.tickTimer;
 			if (foodStats.tickTimer >= 10) {
 				float f = Math.min(foodStats.saturationLevel, 6.0F);
@@ -283,7 +290,7 @@ public class HealthRegen extends Feature {
 				foodStats.tickTimer = 0;
 			}
 		}
-		else if (naturalRegen && foodStats.foodLevel > regenWhenFoodAbove && player.isHurt()) {
+		else if (naturalRegen && foodStats.foodLevel > regenWhenFoodAbove && isPlayerHurt(player)) {
 			++foodStats.tickTimer;
 			if (foodStats.tickTimer >= getRegenSpeed(player)) {
 				player.heal(1.0F);

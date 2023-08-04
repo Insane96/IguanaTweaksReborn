@@ -1,7 +1,6 @@
 # Changelog
 
 * EArly game enchanting table (make enchanting table nether bound)
-* Fishing has a chance to summon a guardian
 
 ## 0.13.0
 * Update to MC 1.20.1
