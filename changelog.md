@@ -44,6 +44,7 @@
 * Fixed glass panes not begin breakable faster by pickaxe
 * Fixed multi-block furnaces not ejecting items to hoppers below
 * Fixed fixing anvils opening the interface
+* Fixed durium lodestone recipe
 * Fixed night vision not fading out properly
 * Fixed animals not dropping cooked food
 
