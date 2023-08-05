@@ -1,7 +1,6 @@
 # Changelog
 
 * Early game enchanting table (make enchanting table nether bound)
-* Increase Wandering trader trades
 
 ## 0.13.0
 * Update to MC 1.20.1
@@ -30,6 +29,7 @@
 * Solium moss now generates more per patch
 * Tool belts are now added to graves instead of dropping
 * Renamed `Misc.Misc` feature to `Misc.Tweaks`
+* Villagers and Zombie Villagers are now despawned on spawn
 * Wandering Trader 
   * 2 buying trades are now guaranteed
   * Now buys the same stuff as snapshot 23w31a
