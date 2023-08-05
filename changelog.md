@@ -16,6 +16,7 @@
   * Added "Remove Falling Block Dupe across dimensions"
   * Added "Remove Piston exploits" (removes TNT duping)
   * When you fish, there's a small chance to fish a Guardian
+* Rare Huge Coal veins can now generate in the world
 * Added "Phantoms in the End"
   * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest (Neo)Forge)
 * Shields can now be recycled in blast and soul furnaces
