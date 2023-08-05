@@ -6,6 +6,8 @@ import insane96mcp.survivalreimagined.module.combat.client.FletchingScreen;
 import insane96mcp.survivalreimagined.module.combat.client.SRArrowRenderer;
 import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
 import insane96mcp.survivalreimagined.module.experience.feature.Lapis;
+import insane96mcp.survivalreimagined.module.experience.feature.enchantingfeature.EnchantingFeature;
+import insane96mcp.survivalreimagined.module.experience.feature.enchantingfeature.EnsorcellerScreen;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
@@ -222,6 +224,7 @@ public class ClientSetup {
         MenuScreens.register(MultiBlockFurnaces.BLAST_FURNACE_MENU_TYPE.get(), MultiBlockBlastFurnaceScreen::new);
         MenuScreens.register(MultiBlockFurnaces.SOUL_BLAST_FURNACE_MENU_TYPE.get(), MultiBlockSoulBlastFurnaceScreen::new);
         MenuScreens.register(Forging.FORGE_MENU_TYPE.get(), ForgeScreen::new);
+        MenuScreens.register(EnchantingFeature.ENSORCELLER_MENU_TYPE.get(), EnsorcellerScreen::new);
         MenuScreens.register(Fletching.FLETCHING_MENU_TYPE.get(), FletchingScreen::new);
     }
 
