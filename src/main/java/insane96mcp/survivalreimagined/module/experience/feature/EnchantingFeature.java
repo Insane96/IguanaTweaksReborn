@@ -9,15 +9,20 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.integration.EnchantingInfuser;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
+import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Enchanting", description = "Change some enchanting related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class EnchantingFeature extends SRFeature {
+
+	public static final RegistryObject<Item> PARCHMENT = SRItems.REGISTRY.register("parchment", () -> new Item(new Item.Properties().stacksTo(1)));
 	@Config
 	@Label(name = "Nether Enchanting Table", description = "Enables a data pack that makes the enchanting table require nether access to be made")
 	public static Boolean netherEnchantingTable = true;
