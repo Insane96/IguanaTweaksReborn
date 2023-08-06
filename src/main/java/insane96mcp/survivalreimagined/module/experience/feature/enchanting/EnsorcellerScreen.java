@@ -20,8 +20,8 @@ public class EnsorcellerScreen extends AbstractContainerScreen<EnsorcellerMenu> 
 
         for (int buttonId = 0; buttonId < 2; ++buttonId) {
             double d0 = pMouseX - (double)(topLeftCornerX + 11);
-            double d1 = pMouseY - (double)(topLeftCornerY + 36 + 19 * buttonId);
-            if (d0 >= 0.0D && d1 >= 0.0D && d0 < 108.0D && d1 < 19.0D && this.menu.clickMenuButton(this.minecraft.player, buttonId)) {
+            double d1 = pMouseY - (double)(topLeftCornerY + 35 + 19 * buttonId);
+            if (d0 >= 0.0D && d1 >= 0.0D && d0 < 45 && d1 < 19.0D && this.menu.clickMenuButton(this.minecraft.player, buttonId)) {
                 this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, buttonId);
                 return true;
             }
@@ -35,25 +35,30 @@ public class EnsorcellerScreen extends AbstractContainerScreen<EnsorcellerMenu> 
         int topLeftCornerY = (this.height - this.imageHeight) / 2;
         pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX, topLeftCornerY, 0, 0, this.imageWidth, this.imageHeight);
         for (int step = 0; step < EnsorcellerMenu.MAX_STEPS; step++) {
-            if (step+1 <= this.menu.steps)
+            if (step + 1 <= this.menu.getSteps())
                 pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 92, topLeftCornerY + 72 - 5 * step, 0, 223, 44, 5);
             else
-                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 92, topLeftCornerY + 72 - 5 * step, 0, 239, 44, 5);
+                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 92, topLeftCornerY + 72 - 5 * step, 0, 228, 44, 5);
         }
         int x = pMouseX - (topLeftCornerX + 11);
-        int y = pMouseY - (topLeftCornerY + 36);
-        if (x >= 0 && y >= 0 && x < 45 && y < 19)
-            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 36, 0, 204, 45, 19);
+        int y = pMouseY - (topLeftCornerY + 35);
+        //Render Roll button
+        if (this.minecraft.player.experienceLevel < 1 && !this.minecraft.player.getAbilities().instabuild)
+            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 35, 0, 185, 45, 19);
+        else if (x >= 0 && y >= 0 && x < 45 && y < 19)
+            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 35, 0, 204, 45, 19);
         else
-            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 55, 0, 166, 45, 19);
+            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 35, 0, 166, 45, 19);
+
+        //Render enchant button
         if (!this.menu.canEnchant)
-            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 55, 0, 185, 45, 19);
+            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 54, 45, 185, 45, 19);
         else {
-            y = pMouseY - (topLeftCornerY + 55);
+            y = pMouseY - (topLeftCornerY + 54);
             if (x >= 0 && y >= 0 && x < 45 && y < 19)
-                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 55, 0, 204, 45, 19);
+                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 54, 45, 204, 45, 19);
             else
-                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 55, 0, 166, 45, 19);
+                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 54, 45, 166, 45, 19);
         }
     }
 

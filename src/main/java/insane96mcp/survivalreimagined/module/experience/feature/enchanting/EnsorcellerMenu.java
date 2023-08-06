@@ -4,14 +4,15 @@ import net.minecraft.Util;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -47,7 +48,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
     public boolean canEnchant;
 
     public EnsorcellerMenu(int pContainerId, Inventory pPlayerInventory) {
-        this(pContainerId, pPlayerInventory, ContainerLevelAccess.NULL, new SimpleContainerData(DATA_COUNT));
+        this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(DATA_COUNT));
     }
 
     protected EnsorcellerMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData pData) {
@@ -55,7 +56,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
         this.container = pContainer;
         this.data = pData;
         this.level = pPlayerInventory.player.level();
-        this.addSlot(new Slot(this.enchantSlots, 0, 26, 15) {
+        this.addSlot(new Slot(this.enchantSlots, 0, 26, 16) {
             public boolean mayPlace(ItemStack p_39508_) {
                 return true;
             }
@@ -73,7 +74,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
         for (int k = 0; k < 9; ++k) {
             this.addSlot(new Slot(pPlayerInventory, k, 8 + k * 18, 142));
         }
-        this.addDataSlot(DataSlot.standalone());
+        this.addDataSlots(pData);
     }
 
     @Override
@@ -81,16 +82,8 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
         if (pContainer != this.enchantSlots)
             return;
 
-        ItemStack itemstack = pContainer.getItem(0);
-        if (itemstack.isEmpty() || !itemstack.isEnchantable()) {
-            this.canEnchant = false;
-            return;
-        }
-
-        this.access.execute((level, blockPos) -> {
-            this.canEnchant = true;
-            this.broadcastChanges();
-        });
+        ItemStack itemStack = pContainer.getItem(0);
+        this.updateCanEnchant(itemStack);
     }
 
     @Override
@@ -101,68 +94,94 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
             return false;
         }
 
-        this.access.execute((level, blockPos) -> {
-            //Roll
-            if (pId == 0) {
-                if (player.experienceLevel <= 0 && !player.getAbilities().instabuild)
-                    return;
+        //Roll
+        if (pId == 0) {
+            if (player.experienceLevel <= 0 && !player.getAbilities().instabuild)
+                return false;
 
-                this.steps += this.random.nextInt(6) + 1;
+            this.incrementSteps(this.level.random.nextInt(6) + 1);
+            this.incrementLevelsUsed();
+            if (!player.getAbilities().instabuild)
                 player.experienceLevel -= 1;
-                if (this.steps > MAX_STEPS) {
-                    level.playSound(null, blockPos, SoundEvents.RESPAWN_ANCHOR_DEPLETE.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.8F);
-                    this.steps = 0;
-                }
+            if (this.getSteps() > MAX_STEPS) {
+                //this.level.levelEvent(LevelEvent.SOUND_CHORUS_DEATH, blockPos, SoundEvents.RESPAWN_ANCHOR_DEPLETE.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.8F);
+                this.setSteps(0);
             }
-            //Enchant
-            else if (this.steps > 0) {
-                ItemStack enchantableItem = this.enchantSlots.getItem(0);
-                if (enchantableItem.isEmpty())
-                    return;
+            this.updateCanEnchant(this.container.getItem(ITEM_SLOT));
+        }
+        //Enchant
+        else if (this.getSteps() > 0) {
+            ItemStack enchantableItem = this.enchantSlots.getItem(0);
+            if (enchantableItem.isEmpty())
+                return false;
 
-                ItemStack result = enchantableItem;
-                List<EnchantmentInstance> enchantments = this.getEnchantmentList(enchantableItem, this.steps == MAX_STEPS ? LVL_ON_JACKPOT : this.steps);
-                if (!enchantments.isEmpty()) {
-                    player.onEnchantmentPerformed(enchantableItem, 0);
-                    boolean isBook = enchantableItem.is(Items.BOOK);
-                    if (isBook) {
-                        result = new ItemStack(Items.ENCHANTED_BOOK);
-                        CompoundTag itemTag = enchantableItem.getTag();
-                        if (itemTag != null)
-                            result.setTag(itemTag);
+            ItemStack result = enchantableItem;
+            List<EnchantmentInstance> enchantments = this.getEnchantmentList(enchantableItem, this.getSteps() == MAX_STEPS ? LVL_ON_JACKPOT : this.getSteps());
+            if (!enchantments.isEmpty()) {
+                player.onEnchantmentPerformed(enchantableItem, 0);
+                boolean isBook = enchantableItem.is(Items.BOOK);
+                if (isBook) {
+                    result = new ItemStack(Items.ENCHANTED_BOOK);
+                    CompoundTag itemTag = enchantableItem.getTag();
+                    if (itemTag != null)
+                        result.setTag(itemTag);
 
-                        this.enchantSlots.setItem(0, result);
-                    }
-
-                    for (EnchantmentInstance enchantmentInstance : enchantments) {
-                        if (isBook)
-                            EnchantedBookItem.addEnchantment(result, enchantmentInstance);
-                        else
-                            result.enchant(enchantmentInstance.enchantment, enchantmentInstance.level);
-                    }
-
-                    player.awardStat(Stats.ENCHANT_ITEM);
-                    if (player instanceof ServerPlayer)
-                        CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer)player, result, this.rollPerformed);
-
-                    this.enchantSlots.setChanged();
-                    this.steps = 0;
-                    this.slotsChanged(this.enchantSlots);
-                    level.playSound(null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 1.25F);
+                    this.enchantSlots.setItem(0, result);
                 }
+
+                for (EnchantmentInstance enchantmentInstance : enchantments) {
+                    if (isBook)
+                        EnchantedBookItem.addEnchantment(result, enchantmentInstance);
+                    else
+                        result.enchant(enchantmentInstance.enchantment, enchantmentInstance.level);
+                }
+
+                player.awardStat(Stats.ENCHANT_ITEM);
+                if (player instanceof ServerPlayer)
+                    CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer)player, result, this.getLevelsUsed());
+
+                this.enchantSlots.setChanged();
+                this.setSteps(0);
+                this.slotsChanged(this.enchantSlots);
+                //this.level.playSound(null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, this.level.random.nextFloat() * 0.1F + 1.25F);
             }
-            this.broadcastChanges();
-        });
+        }
+        this.broadcastChanges();
         return true;
     }
 
+    private void updateCanEnchant(ItemStack stack) {
+        this.canEnchant = !stack.isEmpty() && stack.isEnchantable() && this.getSteps() > 0;
+        this.broadcastChanges();
+    }
+
     private List<EnchantmentInstance> getEnchantmentList(ItemStack pStack, int pLevel) {
-        List<EnchantmentInstance> list = EnchantmentHelper.selectEnchantment(this.random, pStack, pLevel, false);
+        List<EnchantmentInstance> list = EnchantmentHelper.selectEnchantment(this.level.random, pStack, pLevel, false);
         if (pStack.is(Items.BOOK) && list.size() > 1) {
-            list.remove(this.random.nextInt(list.size()));
+            list.remove(this.level.random.nextInt(list.size()));
         }
 
         return list;
+    }
+
+    public int getSteps() {
+        return this.data.get(EnsorcellerBlockEntity.DATA_STEPS);
+    }
+
+    public void setSteps(int steps) {
+        this.data.set(EnsorcellerBlockEntity.DATA_STEPS, steps);
+    }
+
+    public void incrementSteps(int steps) {
+        setSteps(getSteps() + steps);
+    }
+
+    public int getLevelsUsed() {
+        return this.data.get(EnsorcellerBlockEntity.DATA_ROLLS_PERFORMED);
+    }
+
+    public void incrementLevelsUsed() {
+        this.data.set(EnsorcellerBlockEntity.DATA_ROLLS_PERFORMED, this.data.get(EnsorcellerBlockEntity.DATA_ROLLS_PERFORMED) + 1);
     }
 
     @Override
@@ -202,12 +221,6 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player pPlayer) {
-        return stillValid(this.access, pPlayer, EnchantingFeature.ENSORCELLER.block().get());
-    }
-
-    @Override
-    public void removed(Player pPlayer) {
-        super.removed(pPlayer);
-        this.access.execute((level, blockPos) -> this.clearContainer(pPlayer, this.enchantSlots));
+        return this.container.stillValid(pPlayer);
     }
 }
