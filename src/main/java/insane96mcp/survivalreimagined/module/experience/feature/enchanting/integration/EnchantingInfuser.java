@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.experience.integration;
+package insane96mcp.survivalreimagined.module.experience.feature.enchanting.integration;
 
 import fuzs.enchantinginfuser.config.ServerConfig;
 

@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.experience.feature.enchantingfeature;
+package insane96mcp.survivalreimagined.module.experience.feature.enchanting;
 
 import net.minecraft.Util;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -7,24 +7,28 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.DataSlot;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
 public class EnsorcellerMenu extends AbstractContainerMenu {
+    public static final int ITEM_SLOT = 0;
+    public static final int SLOT_COUNT = 1;
+    public static final int DATA_COUNT = 2;
+    private static final int INV_SLOT_START = ITEM_SLOT + 1;
+    private static final int INV_SLOT_END = INV_SLOT_START + 27;
+    private static final int USE_ROW_SLOT_START = INV_SLOT_END;
+    private static final int USE_ROW_SLOT_END = USE_ROW_SLOT_START + 9;
     private final Container enchantSlots = new SimpleContainer(1) {
         /**
          * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think
@@ -35,21 +39,22 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
             EnsorcellerMenu.this.slotsChanged(this);
         }
     };
-    private final ContainerLevelAccess access;
-    private final RandomSource random = RandomSource.create();
-    public int rollPerformed;
-    public int steps;
+    private final Container container;
+    private final ContainerData data;
+    protected final Level level;
     public static final int MAX_STEPS = 12;
     public static final int LVL_ON_JACKPOT = 15;
     public boolean canEnchant;
 
     public EnsorcellerMenu(int pContainerId, Inventory pPlayerInventory) {
-        this(pContainerId, pPlayerInventory, ContainerLevelAccess.NULL);
+        this(pContainerId, pPlayerInventory, ContainerLevelAccess.NULL, new SimpleContainerData(DATA_COUNT));
     }
 
-    protected EnsorcellerMenu(int pContainerId, Inventory pPlayerInventory, ContainerLevelAccess pAccess) {
+    protected EnsorcellerMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData pData) {
         super(EnchantingFeature.ENSORCELLER_MENU_TYPE.get(), pContainerId);
-        this.access = pAccess;
+        this.container = pContainer;
+        this.data = pData;
+        this.level = pPlayerInventory.player.level();
         this.addSlot(new Slot(this.enchantSlots, 0, 26, 15) {
             public boolean mayPlace(ItemStack p_39508_) {
                 return true;

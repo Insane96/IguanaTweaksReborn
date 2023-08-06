@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.experience.feature.enchantingfeature;
+package insane96mcp.survivalreimagined.module.experience.feature.enchanting;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import net.minecraft.client.gui.GuiGraphics;

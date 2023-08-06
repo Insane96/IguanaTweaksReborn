@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.experience.feature.enchantingfeature;
+package insane96mcp.survivalreimagined.module.experience.feature.enchanting;
 
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.experience.integration.EnchantingInfuser;
+import insane96mcp.survivalreimagined.module.experience.feature.enchanting.integration.EnchantingInfuser;
 import insane96mcp.survivalreimagined.module.misc.feature.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRBlockEntityTypes;
