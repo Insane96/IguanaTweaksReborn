@@ -13,6 +13,18 @@ public class EnsorcellerScreen extends AbstractContainerScreen<EnsorcellerMenu> 
         super(pMenu, pPlayerInventory, pTitle);
     }
 
+    int stepAnim = 0;
+
+    @Override
+    protected void containerTick() {
+        if (this.stepAnim != this.menu.getSteps()) {
+            if (this.stepAnim < this.menu.getSteps())
+                this.stepAnim++;
+            else if (this.stepAnim > this.menu.getSteps())
+                this.stepAnim--;
+        }
+    }
+
     @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
         int topLeftCornerX = (this.width - this.imageWidth) / 2;
@@ -34,9 +46,8 @@ public class EnsorcellerScreen extends AbstractContainerScreen<EnsorcellerMenu> 
         int topLeftCornerX = (this.width - this.imageWidth) / 2;
         int topLeftCornerY = (this.height - this.imageHeight) / 2;
         pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX, topLeftCornerY, 0, 0, this.imageWidth, this.imageHeight);
-        //Render steps
         for (int step = 0; step < EnsorcellerMenu.MAX_STEPS; step++) {
-            if (step + 1 <= this.menu.getSteps())
+            if (step + 1 <= stepAnim)
                 pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 92, topLeftCornerY + 71 - 5 * step, 0, 223, 44, 5);
             else
                 pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 92, topLeftCornerY + 71 - 5 * step, 0, 228, 44, 5);

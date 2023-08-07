@@ -84,11 +84,12 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
             if (this.getSteps() == MAX_STEPS)
                 return false;
 
+            //This is executed only server side
             this.access.execute((level, blockPos) -> {
                 this.incrementSteps(this.level.random.nextInt(6) + 1);
                 this.incrementLevelsUsed();
                 if (!player.getAbilities().instabuild)
-                    player.experienceLevel -= 1;
+                    ((ServerPlayer)player).setExperienceLevels(player.experienceLevel - 1);
                 if (this.getSteps() > MAX_STEPS) {
                     level.playSound(null, blockPos, SoundEvents.RESPAWN_ANCHOR_DEPLETE.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.8F);
                     this.setSteps(0);
@@ -107,6 +108,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
             if (enchantableItem.isEmpty())
                 return false;
 
+            //This is executed only server side
             this.access.execute((level, blockPos) -> {
                 ItemStack result = enchantableItem;
                 List<EnchantmentInstance> enchantments = this.getEnchantmentList(enchantableItem, this.getSteps() == MAX_STEPS ? LVL_ON_JACKPOT : this.getSteps());
@@ -136,7 +138,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
                     this.container.setChanged();
                     this.setSteps(0);
                     this.slotsChanged(this.container);
-                    level.playSound(null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, this.level.random.nextFloat() * 0.1F + 1.25F);
+                    level.playSound(null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, 1.25F);
                 }
             });
         }
