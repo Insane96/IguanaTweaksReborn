@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "s": {
+      "item": "minecraft:stone_bricks"
+    }
+  },
+  "pattern": [
+    "iSi",
+    "sss"
+  ],
+  "result": {
+    "item": "survivalreimagined:ensorceller"
+  },
+  "show_notification": true
+}

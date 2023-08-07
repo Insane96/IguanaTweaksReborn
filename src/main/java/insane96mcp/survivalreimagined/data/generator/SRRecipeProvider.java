@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.data.generator;
 import insane96mcp.shieldsplus.setup.SPItems;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.experience.feature.Lapis;
+import insane96mcp.survivalreimagined.module.experience.feature.enchanting.EnchantingFeature;
 import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.feature.*;
 import insane96mcp.survivalreimagined.module.mining.data.ForgeRecipeBuilder;
@@ -144,6 +145,17 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('f', Items.COPPER_INGOT)
                 .define('s', Items.STICK)
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                .save(writer);
+
+
+        //Ensorcellator
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, EnchantingFeature.ENSORCELLER.item().get())
+                .pattern("iSi")
+                .pattern("sss")
+                .define('i', Items.IRON_INGOT)
+                .define('S', Items.SMOOTH_STONE)
+                .define('s', Items.STONE_BRICKS)
+                .unlockedBy("has_durium_scrap_piece", has(Items.IRON_INGOT))
                 .save(writer);
 
         //Coated Copper
