@@ -1,6 +1,8 @@
 package insane96mcp.survivalreimagined.module.experience.feature.enchanting;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -42,6 +44,21 @@ public class EnsorcellerBlock extends BaseEntityBlock {
         BlockEntity blockentity = pLevel.getBlockEntity(pPos);
         if (blockentity instanceof EnsorcellerBlockEntity) {
             pPlayer.openMenu((MenuProvider)blockentity);
+        }
+    }
+
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
+        if (!pState.is(pNewState.getBlock())) {
+            BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+            if (blockentity instanceof EnsorcellerBlockEntity) {
+                if (pLevel instanceof ServerLevel) {
+                    Containers.dropContents(pLevel, pPos, (EnsorcellerBlockEntity)blockentity);
+                }
+
+                pLevel.updateNeighbourForOutputSignal(pPos, this);
+            }
+
+            super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
         }
     }
 

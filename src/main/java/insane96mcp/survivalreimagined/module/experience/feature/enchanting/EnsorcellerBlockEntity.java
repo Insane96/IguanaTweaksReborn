@@ -1,6 +1,5 @@
 package insane96mcp.survivalreimagined.module.experience.feature.enchanting;
 
-import insane96mcp.survivalreimagined.module.mining.inventory.ForgeMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -14,26 +13,28 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
-    private static final int[] SLOTS_FOR_UP = new int[]{EnsorcellerMenu.ITEM_SLOT};
-    private static final int[] SLOTS_FOR_DOWN = new int[]{EnsorcellerMenu.ITEM_SLOT};
-
+    public static final int DATA_COUNT = 3;
     public static final int DATA_STEPS = 0;
     public static final int DATA_ROLLS_PERFORMED = 1;
+    public static final int DATA_CAN_ENCHANT = 2;
     protected NonNullList<ItemStack> items = NonNullList.withSize(EnsorcellerMenu.SLOT_COUNT, ItemStack.EMPTY);
     public int steps;
     public int rollsPerformed;
+    public boolean canEnchant;
 
     protected final ContainerData dataAccess = new ContainerData() {
         public int get(int dataId) {
             return switch (dataId) {
                 case DATA_STEPS -> EnsorcellerBlockEntity.this.steps;
                 case DATA_ROLLS_PERFORMED -> EnsorcellerBlockEntity.this.rollsPerformed;
+                case DATA_CAN_ENCHANT -> EnsorcellerBlockEntity.this.canEnchant ? 1 : 0;
                 default -> 0;
             };
         }
@@ -42,12 +43,13 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
             switch (dataId) {
                 case DATA_STEPS -> EnsorcellerBlockEntity.this.steps = data;
                 case DATA_ROLLS_PERFORMED -> EnsorcellerBlockEntity.this.rollsPerformed = data;
+                case DATA_CAN_ENCHANT -> EnsorcellerBlockEntity.this.canEnchant = data == 1;
             }
 
         }
 
         public int getCount() {
-            return ForgeMenu.DATA_COUNT;
+            return DATA_COUNT;
         }
     };
 
@@ -61,12 +63,14 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
         ContainerHelper.loadAllItems(pTag, this.items);
         this.steps = pTag.getInt("Steps");
         this.rollsPerformed = pTag.getInt("RollsPerformed");
+        this.canEnchant = pTag.getBoolean("CanEnchant");
     }
 
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
         pTag.putInt("Steps", this.steps);
         pTag.putInt("RollsPerformed", this.rollsPerformed);
+        pTag.putBoolean("CanEnchant", this.canEnchant);
         ContainerHelper.saveAllItems(pTag, this.items);
     }
 
@@ -92,7 +96,7 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
 
     @Override
     protected AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory) {
-        return new EnsorcellerMenu(pContainerId, pInventory, this, this.dataAccess);
+        return new EnsorcellerMenu(pContainerId, pInventory, this, this.dataAccess, ContainerLevelAccess.create(this.level, this.worldPosition));
     }
 
     @Override
@@ -127,7 +131,10 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
     }
 
     @Override
-    public void setItem(int pSlot, ItemStack pStack) {
+    public void setItem(int slot, ItemStack stack) {
+        this.items.set(slot, stack);
+        ItemStack itemInSlot = this.items.get(slot);
+        this.canEnchant = !itemInSlot.isEmpty() && itemInSlot.isEnchantable() && this.steps > 0;
         this.setChanged();
     }
 

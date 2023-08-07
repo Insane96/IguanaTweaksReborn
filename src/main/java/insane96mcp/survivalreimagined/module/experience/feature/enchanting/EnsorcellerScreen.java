@@ -34,16 +34,17 @@ public class EnsorcellerScreen extends AbstractContainerScreen<EnsorcellerMenu> 
         int topLeftCornerX = (this.width - this.imageWidth) / 2;
         int topLeftCornerY = (this.height - this.imageHeight) / 2;
         pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX, topLeftCornerY, 0, 0, this.imageWidth, this.imageHeight);
+        //Render steps
         for (int step = 0; step < EnsorcellerMenu.MAX_STEPS; step++) {
             if (step + 1 <= this.menu.getSteps())
-                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 92, topLeftCornerY + 72 - 5 * step, 0, 223, 44, 5);
+                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 92, topLeftCornerY + 71 - 5 * step, 0, 223, 44, 5);
             else
-                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 92, topLeftCornerY + 72 - 5 * step, 0, 228, 44, 5);
+                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 92, topLeftCornerY + 71 - 5 * step, 0, 228, 44, 5);
         }
         int x = pMouseX - (topLeftCornerX + 11);
         int y = pMouseY - (topLeftCornerY + 35);
         //Render Roll button
-        if (this.minecraft.player.experienceLevel < 1 && !this.minecraft.player.getAbilities().instabuild)
+        if ((this.minecraft.player.experienceLevel < 1 && !this.minecraft.player.getAbilities().instabuild) || this.menu.getSteps() == EnsorcellerMenu.MAX_STEPS)
             pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 35, 0, 185, 45, 19);
         else if (x >= 0 && y >= 0 && x < 45 && y < 19)
             pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 35, 0, 204, 45, 19);
@@ -51,7 +52,7 @@ public class EnsorcellerScreen extends AbstractContainerScreen<EnsorcellerMenu> 
             pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 35, 0, 166, 45, 19);
 
         //Render enchant button
-        if (!this.menu.canEnchant)
+        if (!this.menu.canEnchant())
             pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 54, 45, 185, 45, 19);
         else {
             y = pMouseY - (topLeftCornerY + 54);
