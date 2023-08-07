@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "survivalreimagined:ensorceller"
+		},
+		"title": {
+			"translate": "advancements.sr_story.ensorceller.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.ensorceller.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/blast_furnace",
+	"criteria": {
+		"ensorceller": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"survivalreimagined:ensorceller"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"ensorceller"
+		]
+	]
+}

@@ -1,0 +1,41 @@
+{
+    "display": {
+        "icon": {
+            "item": "survivalreimagined:coated_copper_sword"
+        },
+        "title": {
+            "translate": "advancements.sr_story.coated_copper_tools.title"
+        },
+        "description": {
+            "translate": "advancements.sr_story.coated_copper_tools.description"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "parent": "minecraft:story/form_obsidian",
+    "criteria": {
+        "coated_copper_tools": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "survivalreimagined:coated_copper_pickaxe",
+                            "survivalreimagined:coated_copper_sword",
+                            "survivalreimagined:coated_copper_axe",
+                            "survivalreimagined:coated_copper_shovel",
+                            "survivalreimagined:coated_copper_hoe"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "coated_copper_tools"
+        ]
+    ]
+}

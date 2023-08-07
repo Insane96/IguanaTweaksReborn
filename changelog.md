@@ -18,7 +18,7 @@
   * When you fish, there's a small chance to fish a Guardian
 * Rare Huge Coal veins can now generate in the world
 * Added "Phantoms in the End"
-  * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest (Neo)Forge)
+  * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest Forge)
 * Shields can now be recycled in blast and soul furnaces
 * Ground flint is now actual ground flint
 * Unbreaking formula lowered again
