@@ -870,6 +870,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
     private void addPoorRichOreRecipes(Consumer<FinishedRecipe> writer, OreGeneration.PoorRichOre poorRichOre, Item smeltOutput, float experience) {
         for (Item item : poorRichOre.getAllItems()) {
             String name = ForgeRegistries.ITEMS.getKey(item).getPath();
+            String metal = name.split("_")[1];
             SimpleCookingRecipeBuilder.smelting(
                             Ingredient.of(item),
                             RecipeCategory.MISC,
@@ -878,7 +879,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                             800
                     )
                     .unlockedBy("has_" + name, has(item))
-                    .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "gold_ingot_from_smelting_" + name);
+                    .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "ingot_from_smelting_" + name);
             SimpleCookingRecipeBuilder.blasting(
                             Ingredient.of(item),
                             RecipeCategory.MISC,
@@ -887,7 +888,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                             200
                     )
                     .unlockedBy("has_" + name, has(item))
-                    .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "gold_ingot_from_blasting_" + name);
+                    .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "ingot_from_blasting_" + name);
         }
     }
 

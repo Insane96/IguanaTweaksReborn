@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_poor_iron_ore": {
+    "has_rich_gold_ore": {
       "conditions": {
         "items": [
           {
             "items": [
-              "survivalreimagined:poor_iron_ore"
+              "survivalreimagined:rich_gold_ore"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "survivalreimagined:gold_ingot_from_smelting_poor_iron_ore"
+        "recipe": "survivalreimagined:ingot_from_smelting_rich_gold_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_poor_iron_ore",
+      "has_rich_gold_ore",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "survivalreimagined:gold_ingot_from_smelting_poor_iron_ore"
+      "survivalreimagined:ingot_from_smelting_rich_gold_ore"
     ]
   },
   "sends_telemetry_event": false

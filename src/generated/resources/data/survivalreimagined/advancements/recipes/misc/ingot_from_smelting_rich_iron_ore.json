@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "survivalreimagined:gold_ingot_from_smelting_rich_iron_ore"
+        "recipe": "survivalreimagined:ingot_from_smelting_rich_iron_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "survivalreimagined:gold_ingot_from_smelting_rich_iron_ore"
+      "survivalreimagined:ingot_from_smelting_rich_iron_ore"
     ]
   },
   "sends_telemetry_event": false

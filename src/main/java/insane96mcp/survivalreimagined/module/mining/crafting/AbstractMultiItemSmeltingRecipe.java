@@ -33,6 +33,7 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
     protected final String group;
     final NonNullList<Ingredient> ingredients;
     final float experience;
+    //TODO Change to multiplier
     final float doubleOutputChance;
     private final ItemStack result;
     protected final int cookingTime;
