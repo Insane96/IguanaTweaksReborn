@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.module.experience.feature.enchanting;
 
 import net.minecraft.Util;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -18,13 +19,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.EnchantmentTableBlock;
 
 import java.util.List;
 
 public class EnsorcellerMenu extends AbstractContainerMenu {
     public static final int ITEM_SLOT = 0;
     public static final int SLOT_COUNT = 1;
-    public static final int DATA_COUNT = 3;
     private static final int INV_SLOT_START = ITEM_SLOT + 1;
     private static final int INV_SLOT_END = INV_SLOT_START + 27;
     private static final int USE_ROW_SLOT_START = INV_SLOT_END;
@@ -35,20 +36,21 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
     protected final Level level;
     public static final int MAX_STEPS = 12;
     public static final int LVL_ON_JACKPOT = 16;
+    public DataSlot rollCost = DataSlot.standalone();
 
     public EnsorcellerMenu(int pContainerId, Inventory pPlayerInventory) {
-        this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(DATA_COUNT), ContainerLevelAccess.NULL);
+        this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(EnsorcellerBlockEntity.DATA_COUNT), ContainerLevelAccess.NULL);
     }
 
     protected EnsorcellerMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData pData, ContainerLevelAccess access) {
         super(EnchantingFeature.ENSORCELLER_MENU_TYPE.get(), pContainerId);
         checkContainerSize(pContainer, SLOT_COUNT);
-        checkContainerDataCount(pData, DATA_COUNT);
+        checkContainerDataCount(pData, EnsorcellerBlockEntity.DATA_COUNT);
         this.container = pContainer;
         this.data = pData;
         this.access = access;
         this.level = pPlayerInventory.player.level();
-        this.addSlot(new Slot(pContainer, ITEM_SLOT, 26, 16) {
+        this.addSlot(new Slot(pContainer, ITEM_SLOT, 36, 16) {
             public boolean mayPlace(ItemStack stack) {
                 return true;
             }
@@ -67,6 +69,14 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
             this.addSlot(new Slot(pPlayerInventory, k, 8 + k * 18, 142));
         }
         this.addDataSlots(pData);
+        this.addDataSlot(this.rollCost);
+        this.updateRollCost();
+    }
+
+    @Override
+    public void slotsChanged(Container pContainer) {
+        this.updateRollCost();
+        super.slotsChanged(pContainer);
     }
 
     @Override
@@ -95,10 +105,10 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
                     this.setSteps(0);
                 }
                 else if (this.getSteps() == MAX_STEPS) {
-                    level.playSound(null, blockPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 1.2F);
+                    level.playSound(null, blockPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0F, 0.6F);
                 }
                 else {
-                    level.playSound(null, blockPos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.8F);
+                    level.playSound(null, blockPos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.8F + this.getSteps() / 20f);
                 }
             });
         }
@@ -142,6 +152,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
                 }
             });
         }
+        this.updateRollCost();
         this.updateCanEnchant();
         this.broadcastChanges();
         return true;
@@ -154,6 +165,28 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
         }
 
         return list;
+    }
+
+    private void updateRollCost() {
+        this.access.execute((level, blockPos) -> {
+            float enchantPower = 0;
+
+            for (BlockPos offSetBlockPos : EnchantmentTableBlock.BOOKSHELF_OFFSETS) {
+                if (EnchantmentTableBlock.isValidBookShelf(level, blockPos, offSetBlockPos)) {
+                    enchantPower += level.getBlockState(blockPos.offset(offSetBlockPos)).getEnchantPowerBonus(level, blockPos.offset(offSetBlockPos));
+                }
+            }
+
+            int cost;
+            if (enchantPower < 3)
+                cost = 3;
+            else if (enchantPower < 6)
+                cost = 2;
+            else
+                cost = 1;
+
+            this.rollCost.set(cost);
+        });
     }
 
     private void updateCanEnchant() {

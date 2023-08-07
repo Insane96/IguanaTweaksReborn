@@ -1,12 +1,12 @@
 # Changelog
 
-* Early game enchanting table (make enchanting table nether bound)
-
 ## 0.13.0
 * Update to MC 1.20.1
 * Added Coated Copper Tools
   * Can electrocute enemies
 * Added Enchanting Feature
+  * Added Ensorceller
+    * A low level enchanting table for early game, made with stone, solarium and iron
   * Enchanting Table now requires Nether access to be made
   * Added compatibility with Enchanting Infuser
 * Sponges now soak more blocks
