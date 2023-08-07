@@ -175,7 +175,7 @@ dependencies {
     //Hardcoded MC version as there is no 1.20.1 version
     runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-1.20:1.8.0")
 
-    runtimeOnly fg.deobf("curse.maven:corail-woodcutter-331983:4637053")
+    runtimeOnly fg.deobf("curse.maven:corail-woodcutter-331983:4685515")
 
     implementation fg.deobf("curse.maven:puzzles-lib-495476:4660882")
     implementation fg.deobf("curse.maven:enchanting-infuser-forge-551151:4652863")
