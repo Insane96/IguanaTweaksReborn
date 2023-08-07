@@ -54,7 +54,7 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
     };
 
     protected EnsorcellerBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(EnchantingFeature.ENSORCELLER_BLOCK_ENTITY.get(), pPos, pBlockState);
+        super(EnchantingFeature.ENSORCELLER_BLOCK_ENTITY_TYPE.get(), pPos, pBlockState);
     }
 
     public void load(CompoundTag pTag) {

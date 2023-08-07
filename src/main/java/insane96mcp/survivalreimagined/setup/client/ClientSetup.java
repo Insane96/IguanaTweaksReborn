@@ -7,6 +7,7 @@ import insane96mcp.survivalreimagined.module.combat.client.SRArrowRenderer;
 import insane96mcp.survivalreimagined.module.combat.feature.Fletching;
 import insane96mcp.survivalreimagined.module.experience.feature.Lapis;
 import insane96mcp.survivalreimagined.module.experience.feature.enchanting.EnchantingFeature;
+import insane96mcp.survivalreimagined.module.experience.feature.enchanting.EnsorcellerRenderer;
 import insane96mcp.survivalreimagined.module.experience.feature.enchanting.EnsorcellerScreen;
 import insane96mcp.survivalreimagined.module.farming.feature.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.feature.Crops;
@@ -237,6 +238,7 @@ public class ClientSetup {
         event.registerEntityRenderer(MiningCharge.PRIMED_MINING_CHARGE.get(), MiningChargeRenderer::new);
 
         event.registerBlockEntityRenderer(Forging.FORGE_BLOCK_ENTITY_TYPE.get(), ForgeRenderer::new);
+        event.registerBlockEntityRenderer(EnchantingFeature.ENSORCELLER_BLOCK_ENTITY_TYPE.get(), EnsorcellerRenderer::new);
     }
 
     static RecipeBookCategories BLAST_FURNACE_SEARCH = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "blast_furnace_search", new ItemStack(Items.COMPASS));

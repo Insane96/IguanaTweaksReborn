@@ -22,6 +22,7 @@ public class ForgeRenderer implements BlockEntityRenderer<ForgeBlockEntity> {
     public ForgeRenderer(BlockEntityRendererProvider.Context pContext) {
 
     }
+
     @Override
     public void render(ForgeBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         Direction direction = blockEntity.getBlockState().getValue(ForgeBlock.FACING);

@@ -3,7 +3,10 @@
   "category": "misc",
   "key": {
     "S": {
-      "item": "minecraft:smooth_stone"
+      "item": "survivalreimagined:solarium_ball"
+    },
+    "c": {
+      "item": "survivalreimagined:cloth"
     },
     "i": {
       "item": "minecraft:iron_ingot"
@@ -13,6 +16,7 @@
     }
   },
   "pattern": [
+    " c ",
     "iSi",
     "sss"
   ],

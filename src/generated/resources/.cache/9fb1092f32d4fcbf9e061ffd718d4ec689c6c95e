@@ -1,4 +1,4 @@
-// 1.20.1	2023-08-07T11:33:16.2696204	Recipes
+// 1.20.1	2023-08-07T11:50:24.3625968	Recipes
 dfc51f50706769ded48481605ac0f276a1dc57fc data/survivalreimagined/advancements/recipes/building_blocks/durium_block.json
 8f93bf2435e83bd7daf400057864b04e9fc3beab data/survivalreimagined/advancements/recipes/building_blocks/flint_block.json
 8e153290c8f892809e1d2ec3f4fe8be69545ca69 data/survivalreimagined/advancements/recipes/building_blocks/polished_flint_block.json
@@ -471,7 +471,7 @@ f1c1ffac0ab574f66e22a6c46a230b9c1beffe80 data/survivalreimagined/recipes/durium_
 184135942657fd45f78a3e0c13f9fabb74b82159 data/survivalreimagined/recipes/durium_shield.json
 71251dbf54224f168119d4ccc5285408cec3e265 data/survivalreimagined/recipes/durium_shovel.json
 f067d6645e4d90ab823ef9b8cff7f08447f7b207 data/survivalreimagined/recipes/durium_sword.json
-2321f17c557fe6e1d91f0f8aa9a2bed6ba8b5037 data/survivalreimagined/recipes/ensorceller.json
+182a248a1d582fbbdef92cc8f2cef8902c05daf3 data/survivalreimagined/recipes/ensorceller.json
 b03269cee176a9fd7adbfb0d5dcda3d3bb80be39 data/survivalreimagined/recipes/explosive_barrel.json
 907ecb4086f4f9a382a1ee4886f096e202cad796 data/survivalreimagined/recipes/firestarter.json
 6a13e66182604d075c890f983131fb65f1ab7bf0 data/survivalreimagined/recipes/flint_axe.json

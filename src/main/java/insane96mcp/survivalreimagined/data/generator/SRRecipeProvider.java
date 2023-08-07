@@ -150,12 +150,14 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
 
         //Ensorcellator
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, EnchantingFeature.ENSORCELLER.item().get())
+                .pattern(" c ")
                 .pattern("iSi")
                 .pattern("sss")
+                .define('c', Cloth.CLOTH.get())
                 .define('i', Items.IRON_INGOT)
-                .define('S', Items.SMOOTH_STONE)
+                .define('S', Solarium.SOLARIUM_BALL.get())
                 .define('s', Items.STONE_BRICKS)
-                .unlockedBy("has_durium_scrap_piece", has(Items.IRON_INGOT))
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                 .save(writer);
 
         //Coated Copper
