@@ -42,8 +42,8 @@ public class Hoes extends SRFeature {
 
 	public static final ArrayList<HoeStat> HOES_STATS_DEFAULT = new ArrayList<>(Arrays.asList(
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 40, 4, 0),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 18, 4, 1),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:flint_hoe", 30, 4, 1),
+			new HoeStat(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 30, 4, 1),
+			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:flint_hoe", 22, 4, 1),
 			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:copper_hoe", 10, 3, 2),
 			new HoeStat(IdTagMatcher.Type.ID, "minecraft:iron_hoe", 20, 3, 2),
 			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:solarium_hoe", 22, 3, 2),
