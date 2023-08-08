@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.mining.feature.Gold;
+import insane96mcp.survivalreimagined.module.mining.Gold;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Tier;
 import org.spongepowered.asm.mixin.Mixin;

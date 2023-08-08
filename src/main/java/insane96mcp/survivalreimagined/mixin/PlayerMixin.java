@@ -1,9 +1,9 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.survivalreimagined.event.SREventFactory;
-import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
-import insane96mcp.survivalreimagined.module.experience.feature.PlayerExperience;
-import insane96mcp.survivalreimagined.module.sleeprespawn.feature.Tiredness;
+import insane96mcp.survivalreimagined.module.experience.PlayerExperience;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
+import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;

@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.network.message;
 
-import insane96mcp.survivalreimagined.module.misc.capability.SpawnerData;
+import insane96mcp.survivalreimagined.module.world.spawners.capability.SpawnerData;
 import insane96mcp.survivalreimagined.network.NetworkHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

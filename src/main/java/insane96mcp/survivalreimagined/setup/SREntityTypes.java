@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.setup;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.module.world.entity.PilableFallingLayerEntity;
+import insane96mcp.survivalreimagined.module.world.coalfire.PilableFallingLayerEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.registries.DeferredRegister;

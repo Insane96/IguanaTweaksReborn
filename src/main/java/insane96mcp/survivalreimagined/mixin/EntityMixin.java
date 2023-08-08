@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.misc.feature.Tweaks;
-import insane96mcp.survivalreimagined.module.world.feature.Fluids;
+import insane96mcp.survivalreimagined.module.misc.Tweaks;
+import insane96mcp.survivalreimagined.module.world.Fluids;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.common.ForgeMod;

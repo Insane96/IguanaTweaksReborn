@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.network.message;
 
-import insane96mcp.survivalreimagined.module.mining.block.ForgeBlockEntity;
+import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.block.ForgeBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

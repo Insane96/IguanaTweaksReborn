@@ -1,10 +1,10 @@
 package insane96mcp.survivalreimagined.data.generator.client;
 
-import insane96mcp.survivalreimagined.module.mining.feature.Durium;
-import insane96mcp.survivalreimagined.module.mining.feature.Keego;
-import insane96mcp.survivalreimagined.module.mining.feature.SoulSteel;
-import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
-import insane96mcp.survivalreimagined.module.world.feature.CyanFlower;
+import insane96mcp.survivalreimagined.module.mining.Durium;
+import insane96mcp.survivalreimagined.module.mining.SoulSteel;
+import insane96mcp.survivalreimagined.module.mining.keego.Keego;
+import insane96mcp.survivalreimagined.module.world.CyanFlower;
+import insane96mcp.survivalreimagined.module.world.coalfire.CoalFire;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;

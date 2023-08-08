@@ -1,8 +1,8 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
-import insane96mcp.survivalreimagined.module.combat.feature.AttackInvincibility;
-import insane96mcp.survivalreimagined.module.combat.feature.Stats;
+import insane96mcp.survivalreimagined.module.combat.AttackInvincibility;
+import insane96mcp.survivalreimagined.module.combat.stats.Stats;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;

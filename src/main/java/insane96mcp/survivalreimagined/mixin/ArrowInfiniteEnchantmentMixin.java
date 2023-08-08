@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.world.item.enchantment.ArrowInfiniteEnchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

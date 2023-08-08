@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.network.message;
 
-import insane96mcp.survivalreimagined.module.mining.feature.GlobalHardness;
+import insane96mcp.survivalreimagined.module.mining.blockhardness.BlockHardness;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -26,7 +26,7 @@ public class GlobalHardnessSyncMessage {
     }
 
     public static void handle(final GlobalHardnessSyncMessage message, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> GlobalHardness.hardnessMultiplier = (double) message.globalMultiplier);
+        ctx.get().enqueueWork(() -> BlockHardness.hardnessMultiplier = (double) message.globalMultiplier);
         ctx.get().setPacketHandled(true);
     }
 

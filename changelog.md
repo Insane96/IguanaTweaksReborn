@@ -1,5 +1,7 @@
 # Changelog
 
+* Merging enchanted tools should cost the result, and not the merge
+
 ## 0.13.0
 * Update to MC 1.20.1
 * Added Coated Copper Tools

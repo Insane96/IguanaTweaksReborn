@@ -25,9 +25,9 @@ public abstract class WanderingTraderMixin extends AbstractVillager {
 		VillagerTrades.ItemListing[] buyingTrades = VillagerTrades.WANDERING_TRADER_TRADES.get(3);
 		if (ordinaryTrades != null && rareTrades != null) {
 			MerchantOffers merchantoffers = this.getOffers();
-			this.addOffersFromItemListings(merchantoffers, buyingTrades, insane96mcp.survivalreimagined.module.world.feature.WanderingTrader.buyingTrades);
-			this.addOffersFromItemListings(merchantoffers, ordinaryTrades, insane96mcp.survivalreimagined.module.world.feature.WanderingTrader.ordinaryTrades);
-			this.addOffersFromItemListings(merchantoffers, rareTrades, insane96mcp.survivalreimagined.module.world.feature.WanderingTrader.rareTrades);
+			this.addOffersFromItemListings(merchantoffers, buyingTrades, insane96mcp.survivalreimagined.module.world.wanderingtrader.WanderingTrader.buyingTrades);
+			this.addOffersFromItemListings(merchantoffers, ordinaryTrades, insane96mcp.survivalreimagined.module.world.wanderingtrader.WanderingTrader.ordinaryTrades);
+			this.addOffersFromItemListings(merchantoffers, rareTrades, insane96mcp.survivalreimagined.module.world.wanderingtrader.WanderingTrader.rareTrades);
 		}
 		ci.cancel();
 	}

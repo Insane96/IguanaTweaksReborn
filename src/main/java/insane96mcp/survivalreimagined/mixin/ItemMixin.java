@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
-import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
+import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
 import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

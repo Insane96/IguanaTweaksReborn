@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;

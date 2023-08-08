@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.mixin.client;
 
 import insane96mcp.insanelib.base.Feature;
-import insane96mcp.survivalreimagined.module.combat.feature.SwingThroughGrass;
+import insane96mcp.survivalreimagined.module.combat.SwingThroughGrass;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;

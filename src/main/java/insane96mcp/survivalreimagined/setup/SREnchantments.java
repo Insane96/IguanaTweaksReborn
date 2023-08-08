@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.setup;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.module.experience.enchantment.*;
+import insane96mcp.survivalreimagined.module.experience.enchantments.enchantment.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

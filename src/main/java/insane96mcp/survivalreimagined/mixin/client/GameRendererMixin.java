@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin.client;
 
-import insane96mcp.survivalreimagined.module.client.feature.Light;
+import insane96mcp.survivalreimagined.module.client.Light;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;

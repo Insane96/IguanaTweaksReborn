@@ -3,7 +3,7 @@ package insane96mcp.survivalreimagined.mixin;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.event.SREventFactory;
-import insane96mcp.survivalreimagined.module.movement.feature.TerrainSlowdown;
+import insane96mcp.survivalreimagined.module.movement.TerrainSlowdown;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;

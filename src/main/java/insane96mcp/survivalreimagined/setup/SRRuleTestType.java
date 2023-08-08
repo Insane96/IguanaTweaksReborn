@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.setup;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.module.world.levelgen.RandomBlockTagMatchTest;
+import insane96mcp.survivalreimagined.module.world.oregeneration.RandomBlockTagMatchTest;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTestType;
 import net.minecraftforge.registries.DeferredRegister;

@@ -1,14 +1,13 @@
 package insane96mcp.survivalreimagined.network.message;
 
-import insane96mcp.survivalreimagined.module.combat.feature.Stats;
-import insane96mcp.survivalreimagined.module.experience.feature.Anvils;
-import insane96mcp.survivalreimagined.module.farming.feature.HarderCrops;
-import insane96mcp.survivalreimagined.module.farming.feature.PlantsGrowth;
-import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
-import insane96mcp.survivalreimagined.module.items.feature.ItemStats;
-import insane96mcp.survivalreimagined.module.items.feature.StackSizes;
-import insane96mcp.survivalreimagined.module.mining.feature.CustomHardness;
-import insane96mcp.survivalreimagined.module.mining.feature.GlobalHardness;
+import insane96mcp.survivalreimagined.module.combat.stats.Stats;
+import insane96mcp.survivalreimagined.module.experience.Anvils;
+import insane96mcp.survivalreimagined.module.farming.HarderCrops;
+import insane96mcp.survivalreimagined.module.farming.plantsgrowth.PlantsGrowth;
+import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
+import insane96mcp.survivalreimagined.module.items.ItemStats;
+import insane96mcp.survivalreimagined.module.items.StackSizes;
+import insane96mcp.survivalreimagined.module.mining.blockhardness.BlockHardness;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -62,10 +61,10 @@ public class JsonConfigSyncMessage {
         ITEM_ATTRIBUTE_MODIFIERS(Stats::handleItemAttributeModifiersPacket),
         CUSTOM_FOOD_STACK_SIZES(StackSizes::handleCustomStackSizesPacket),
         CUSTOM_FOOD_PROPERTIES(FoodDrinks::handleCustomFoodPropertiesPacket),
-        CUSTOM_BLOCK_HARDNESS(CustomHardness::handleCustomBlockHardnessPacket),
+        CUSTOM_BLOCK_HARDNESS(BlockHardness::handleCustomBlockHardnessPacket),
         PLANTS_GROWTH(PlantsGrowth::handlePlantsGrowthPacket),
-        DIMENSION_HARDNESS(GlobalHardness::handleDimensionHardnessPacket),
-        DEPTH_HARDNESS(GlobalHardness::handleDepthHardnessPacket),
+        DIMENSION_HARDNESS(BlockHardness::handleDimensionHardnessPacket),
+        DEPTH_HARDNESS(BlockHardness::handleDepthHardnessPacket),
         HARDER_CROPS(HarderCrops::handleSyncPacket),
         PARTIAL_REPAIR_ITEMS(Anvils::handleSyncPacket);
 

@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin.client;
 
-import insane96mcp.survivalreimagined.module.experience.feature.Anvils;
+import insane96mcp.survivalreimagined.module.experience.Anvils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;

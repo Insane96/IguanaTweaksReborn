@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
-import insane96mcp.survivalreimagined.module.world.feature.Spawners;
+import insane96mcp.survivalreimagined.module.world.spawners.Spawners;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;

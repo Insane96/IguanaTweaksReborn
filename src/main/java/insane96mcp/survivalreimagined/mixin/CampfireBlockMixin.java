@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
+import insane96mcp.survivalreimagined.module.world.coalfire.CoalFire;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;

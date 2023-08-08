@@ -1,8 +1,8 @@
 package insane96mcp.survivalreimagined.setup;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.module.world.levelgen.feature.BeegOreVeinFeature;
-import insane96mcp.survivalreimagined.module.world.levelgen.feature.configuration.OreWithRandomPatchConfiguration;
+import insane96mcp.survivalreimagined.module.world.oregeneration.BeegOreVeinFeature;
+import insane96mcp.survivalreimagined.module.world.oregeneration.OreWithRandomPatchConfiguration;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.registries.DeferredRegister;

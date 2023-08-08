@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.hungerhealth.feature.FoodDrinks;
+import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.PumpkinBlock;

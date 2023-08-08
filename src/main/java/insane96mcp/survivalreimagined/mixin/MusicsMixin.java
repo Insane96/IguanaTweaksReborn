@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.client.feature.Sound;
+import insane96mcp.survivalreimagined.module.client.Sound;
 import net.minecraft.sounds.Musics;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;

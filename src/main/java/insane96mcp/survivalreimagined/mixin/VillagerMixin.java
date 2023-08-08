@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.mobs.feature.Villagers;
+import insane96mcp.survivalreimagined.module.mobs.Villagers;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerData;
 import org.spongepowered.asm.mixin.Mixin;

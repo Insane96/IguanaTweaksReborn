@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.event;
 
-import insane96mcp.survivalreimagined.module.misc.level.SRExplosion;
+import insane96mcp.survivalreimagined.module.misc.explosionoverhaul.SRExplosion;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
 

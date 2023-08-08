@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.survivalreimagined.event.SREventFactory;
-import insane96mcp.survivalreimagined.module.world.feature.CoalFire;
+import insane96mcp.survivalreimagined.module.world.coalfire.CoalFire;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;

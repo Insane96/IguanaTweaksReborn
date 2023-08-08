@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.experience.enchantment.MagicProtection;
-import insane96mcp.survivalreimagined.module.experience.feature.EnchantmentsFeature;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
+import insane96mcp.survivalreimagined.module.experience.enchantments.enchantment.MagicProtection;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.ArrowInfiniteEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
