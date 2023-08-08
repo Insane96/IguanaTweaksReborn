@@ -58,6 +58,9 @@ public class Spawning extends SRFeature {
     @Config
     @Label(name = "Phantoms in the End", description = "Prevents phantoms from spawning with the player's insomnia and makes them spawn in the End")
     public static Boolean phantomsInTheEnd = true;
+    @Config
+    @Label(name = "Allow world spawn spawn", description = "Allows mobs to spawn in the world spawn (in vanilla mobs can't spawn in a 24 blocks radius from world spawn)")
+    public static Boolean allowWorldSpawnSpawn = true;
 
     public Spawning(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -66,13 +69,11 @@ public class Spawning extends SRFeature {
     @SubscribeEvent
     public void onPhantomsSpawn(PlayerSpawnPhantomsEvent event) {
         if (!this.isEnabled()
-                || !phantomsInTheEnd)
+                || !phantomsInTheEnd
+                || event.getEntity().level().dimension() != Level.OVERWORLD)
             return;
 
-        if (event.getEntity().level().dimension() == Level.OVERWORLD)
-            event.setResult(Event.Result.DENY);
-        else if (event.getEntity().level().dimension() == Level.END)
-            event.setResult(Event.Result.ALLOW);
+        event.setResult(Event.Result.DENY);
     }
 
     @SubscribeEvent
