@@ -53,11 +53,11 @@ public class BoneMeal extends Feature {
 	public static Boolean farmlandToRich = true;
 	@Config(min = 1)
 	@Label(name = "Rich Farmland Extra Ticks", description = "How many extra random ticks does Rich Farmland give to the crop sitting on top?")
-	public static Integer richFarmlandExtraTicks = 3;
+	public static Integer richFarmlandExtraTicks = 2;
 
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Rich Farmland Chance to Decay", description = "Chance for a Rich farmland to decay back to farmland")
-	public static Double richFarmlandChanceToDecay = 0.5d;
+	public static Double richFarmlandChanceToDecay = 0.4d;
 
 	@Config
 	@Label(name = "Bone meal dirt to grass", description = "If true, you can bone meal dirt that's near a grass block to get grass block.")
