@@ -90,6 +90,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
 			boolean isPartialRepairItem = Anvils.isPartialRepairItem(left, right);
 			boolean isBetterRepairItem = Anvils.isBetterRepairItem(left);
+			//If it's repairing with materials
 			if (resultStack.isDamageableItem() && (resultStack.getItem().isValidRepairItem(left, right) || isPartialRepairItem)) {
 				int repairItemCountCost;
 				//If it's a partial repair item, repair up to 50% of max durability
@@ -141,6 +142,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 
 				this.repairItemCountCost = repairItemCountCost;
 			}
+			//Else it's merging items
 			else {
 				if (!isEnchantedBook && (!resultStack.is(right.getItem()) || !resultStack.isDamageableItem())) {
 					this.resultSlots.setItem(0, ItemStack.EMPTY);
@@ -151,16 +153,16 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 				if (resultStack.isDamageableItem() && !isEnchantedBook) {
 					int leftDurabilityLeft = left.getMaxDamage() - left.getDamageValue();
 					int rightDurabilityLeft = right.getMaxDamage() - right.getDamageValue();
-					int j1 = rightDurabilityLeft + resultStack.getMaxDamage() * 12 / 100;
-					int k1 = leftDurabilityLeft + j1;
-					int l1 = resultStack.getMaxDamage() - k1;
-					if (l1 < 0) {
-						l1 = 0;
-					}
+					int rightDurabilityLeftPlusBonus = rightDurabilityLeft + resultStack.getMaxDamage() * Anvils.getMergingRepairBonus() / 100;
+					int leftDurabilityLeftPlusRight = leftDurabilityLeft + rightDurabilityLeftPlusBonus;
+					int damageValue = resultStack.getMaxDamage() - leftDurabilityLeftPlusRight;
+					if (damageValue < 0)
+						damageValue = 0;
 
-					if (l1 < resultStack.getDamageValue()) {
-						resultStack.setDamageValue(l1);
-						mergeCost += 2;
+					if (damageValue < resultStack.getDamageValue()) {
+						resultStack.setDamageValue(damageValue);
+						if (!Anvils.mergingCostBasedOffResult)
+							mergeCost += 2;
 					}
 				}
 
@@ -169,40 +171,52 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 				boolean cannotEnchant = false;
 
 				for (Enchantment rightEnchantment : rightEnchantments.keySet()) {
-					if (rightEnchantment != null) {
-						int leftLvl = leftEnchantments.getOrDefault(rightEnchantment, 0);
-						int rightLvl = rightEnchantments.get(rightEnchantment);
-						rightLvl = leftLvl == rightLvl ? rightLvl + 1 : Math.max(rightLvl, leftLvl);
-						boolean canEnchant2 = rightEnchantment.canEnchant(left);
-						if (this.player.getAbilities().instabuild || left.is(Items.ENCHANTED_BOOK))
-							canEnchant2 = true;
+                    if (rightEnchantment == null)
+						continue;
 
-						for (Enchantment enchantment : leftEnchantments.keySet()) {
-							if (enchantment != rightEnchantment && !rightEnchantment.isCompatibleWith(enchantment)) {
-								canEnchant2 = false;
+					int leftLvl = leftEnchantments.getOrDefault(rightEnchantment, 0);
+					int rightLvl = rightEnchantments.get(rightEnchantment);
+					rightLvl = leftLvl == rightLvl ? rightLvl + 1 : Math.max(rightLvl, leftLvl);
+					boolean canEnchant2 = rightEnchantment.canEnchant(left);
+					if (this.player.getAbilities().instabuild || left.is(Items.ENCHANTED_BOOK))
+						canEnchant2 = true;
+
+					for (Enchantment enchantment : leftEnchantments.keySet()) {
+						if (enchantment != rightEnchantment && !rightEnchantment.isCompatibleWith(enchantment)) {
+							canEnchant2 = false;
+							if (!Anvils.mergingCostBasedOffResult)
 								++mergeCost;
-							}
 						}
+					}
 
-						if (!canEnchant2) {
-							cannotEnchant = true;
-						}
-						else {
-							canEnchant = true;
-							if (rightLvl > rightEnchantment.getMaxLevel()
-									&& leftLvl == rightLvl /*Added to allow over max level enchantment books to be applied to items*/)
-								rightLvl = rightEnchantment.getMaxLevel();
+					if (!canEnchant2) {
+						cannotEnchant = true;
+					}
+					else {
+						canEnchant = true;
+						if (rightLvl > rightEnchantment.getMaxLevel()
+								&& leftLvl == rightLvl /*Added to allow over max level enchantment books to be applied to items*/)
+							rightLvl = rightEnchantment.getMaxLevel();
 
-							leftEnchantments.put(rightEnchantment, rightLvl);
-							int enchantmentRarityCost = Anvils.getRarityCost(rightEnchantment);
+						leftEnchantments.put(rightEnchantment, rightLvl);
+						int enchantmentRarityCost = Anvils.getRarityCost(rightEnchantment);
 
-							if (isEnchantedBook)
-								enchantmentRarityCost = Math.max(1, enchantmentRarityCost / 2);
+						if (isEnchantedBook)
+							enchantmentRarityCost = Math.max(1, enchantmentRarityCost / 2);
 
+						if (!Anvils.mergingCostBasedOffResult)
 							mergeCost += enchantmentRarityCost * rightLvl;
-							/*if (left.getCount() > 1)
-								mergeCost = 40;*/
-						}
+					}
+                }
+
+				//If "Merging cost is based off result" is enabled, I loop all the enchantments to calculate the cost based off the result
+				if (Anvils.mergingCostBasedOffResult) {
+					for (Map.Entry<Enchantment, Integer> enchantment : leftEnchantments.entrySet()) {
+						int enchantmentRarityCost = Anvils.getRarityCost(enchantment.getKey());
+
+						if (isEnchantedBook)
+							enchantmentRarityCost = Math.max(1, enchantmentRarityCost / 2);
+						mergeCost += enchantmentRarityCost * enchantment.getValue();
 					}
 				}
 
@@ -227,7 +241,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		if (isEnchantedBook && !resultStack.isBookEnchantable(right))
 			resultStack = ItemStack.EMPTY;
 
-		this.cost.set((int) ((baseCost + mergeCost) * Anvils.repairCostMultiplier));
+		this.cost.set((int) Math.round((baseCost + mergeCost) * Anvils.repairCostMultiplier));
 		if (isRenaming && !Anvils.freeRenaming)
 			this.cost.set(this.cost.get() + COST_RENAME);
 		/*if (mergeCost <= 0 && !isRenaming)

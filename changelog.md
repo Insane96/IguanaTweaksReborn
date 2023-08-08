@@ -1,6 +1,6 @@
 # Changelog
 
-* Merging enchanted tools should cost the result, and not the merge
+* 
 
 ## 0.13.0
 * Update to MC 1.20.1
@@ -18,6 +18,10 @@
   * Added "Remove Falling Block Dupe across dimensions"
   * Added "Remove Piston exploits" (removes TNT duping)
   * When you fish, there's a small chance to fish a Guardian
+* Anvils
+  * Merging enchanted tools cost is now calculated from the result, and not the base items
+  * Merging items in an anvil now gives 20% bonus durability (instead of 12% vanilla)
+  * Fixed fixing anvils opening the interface
 * Rare Huge Coal veins can now generate in the world
 * Added "Phantoms in the End"
   * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest Forge)
@@ -45,7 +49,6 @@
 * Fixed Soul Steel being recyclable for more nuggets than used
 * Fixed glass panes not begin breakable faster by pickaxe
 * Fixed multi-block furnaces not ejecting items to hoppers below
-* Fixed fixing anvils opening the interface
 * Fixed durium lodestone recipe
 * Fixed night vision not fading out properly
 * Fixed animals not dropping cooked food

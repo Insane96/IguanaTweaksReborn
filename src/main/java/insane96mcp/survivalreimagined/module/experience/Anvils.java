@@ -51,6 +51,12 @@ public class Anvils extends SRFeature {
     @Label(name = "Remove rename cost", description = "Removes cost of renaming items in Anvil")
     public static Boolean freeRenaming = true;
     @Config
+    @Label(name = "Merging cost is based off result")
+    public static Boolean mergingCostBasedOffResult = true;
+    @Config(min = 0, max = 100)
+    @Label(name = "Merging Repair bonus", description = "Vanilla is 12")
+    public static Integer mergingRepairBonus = 20;
+    @Config
     @Label(name = "No repair cost increase and repair cost based off Enchantments")
     public static Boolean noRepairCostIncreaseAndEnchCost = true;
     @Config(min = 0)
@@ -115,6 +121,13 @@ public class Anvils extends SRFeature {
                 return true;
         }
         return false;
+    }
+
+    public static int getMergingRepairBonus() {
+        if (!Feature.isEnabled(Anvils.class))
+            return 12;
+
+        return mergingRepairBonus;
     }
 
     public static boolean isBetterRepairItem(ItemStack left) {
