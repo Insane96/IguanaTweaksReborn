@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Label(name = "Anvils", description = "Make anvils usable to create blocks. Use the anvil_transformations.json file in the feature's folder to change or add block transformations.")
+@Label(name = "Anvils", description = "Better repair, free rename and merge.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class Anvils extends SRFeature {
 

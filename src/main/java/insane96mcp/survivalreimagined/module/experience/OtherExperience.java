@@ -15,7 +15,7 @@ import net.minecraft.world.entity.projectile.ThrownExperienceBottle;
 public class OtherExperience extends Feature {
 	@Config(min = 0, max = 512)
 	@Label(name = "Bottle o' Enchanting Bonus XP", description = "Bottle o' enchanting will drop this more XP. Experience is still affected by 'Global Experience Multiplier'\nCan be set to 0 to make Bottle o' enchanting drop no bonus experience")
-	public static Integer xpBottleBonus = 18;
+	public static Integer xpBottleBonus = 20;
 
 	public OtherExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
