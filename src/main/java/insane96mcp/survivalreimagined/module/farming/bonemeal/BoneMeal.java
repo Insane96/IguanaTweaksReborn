@@ -112,7 +112,7 @@ public class BoneMeal extends Feature {
 				event.setCanceled(true);
 		}
 
-		if (event.getResult() != Event.Result.ALLOW) {
+		if (event.getResult() != Event.Result.ALLOW && boneMealDirtToGrass) {
 			tryBoneMealDirt(event, event.getLevel(), event.getBlock(), event.getPos());
 		}
 	}
