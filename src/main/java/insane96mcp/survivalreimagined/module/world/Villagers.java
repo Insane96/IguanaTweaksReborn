@@ -4,12 +4,14 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.LogHelper;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -34,7 +36,8 @@ public class Villagers extends SRFeature {
             return;
 
         if (event.getEntity().getType() == EntityType.VILLAGER) {
-            event.getEntity().setPos(new Vec3(0, -64, 0));
+            LogHelper.info("Killing villager at %s", event.getEntity().position());
+            event.getEntity().move(MoverType.SELF, new Vec3(0, -(128 + event.getEntity().getY()), 0));
             event.getEntity().kill();
         }
         else if (event.getEntity().getType() == EntityType.ZOMBIE_VILLAGER) {
