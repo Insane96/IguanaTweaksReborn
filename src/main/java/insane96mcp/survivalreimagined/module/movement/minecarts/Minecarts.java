@@ -9,6 +9,7 @@ import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceLootModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.DataPacks;
+import insane96mcp.survivalreimagined.module.movement.minecarts.integration.Copperative;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 
 @Label(name = "Minecarts")
 @LoadFeature(module = Modules.Ids.MOVEMENT, canBeDisabled = false)
@@ -30,12 +32,21 @@ public class Minecarts extends Feature {
 	public static final SimpleBlockWithItem COPPER_POWERED_RAIL = SimpleBlockWithItem.register("copper_powered_rail", () -> new SRPoweredRail(BlockBehaviour.Properties.copy(Blocks.POWERED_RAIL).sound(SoundType.COPPER), 0.3f));
 
 	@Config
-	@Label(name = "Data Pack", description = "If true, enables a data pack that makes rails cheaper and adds recipes for new rails")
+	@Label(name = "Data Pack", description = "If true, enables a data pack that makes rails cheaper and adds recipes for new rails. Also if Copperative is installed, disables copper rails.")
 	public static Boolean dataPack = true;
 
 	public Minecarts(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "better_rails", Component.literal("Survival Reimagined Better Rails"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
+	}
+
+	@Override
+	public void loadConfigOptions() {
+		super.loadConfigOptions();
+
+		if (ModList.get().isLoaded("copperative") && dataPack) {
+			Copperative.changeConfigOptions();
+		}
 	}
 
 	@SubscribeEvent

@@ -175,11 +175,13 @@ dependencies {
     //Hardcoded MC version as there is no 1.20.1 version
     runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-1.20:1.8.0")
 
-    runtimeOnly fg.deobf("curse.maven:corail-woodcutter-331983:4685515")
+    //runtimeOnly fg.deobf("curse.maven:corail-woodcutter-331983:4685515")
 
     implementation fg.deobf("curse.maven:puzzles-lib-495476:4660882")
     implementation fg.deobf("curse.maven:enchanting-infuser-forge-551151:4652863")
     runtimeOnly fg.deobf("curse.maven:easy-magic-456239:4658750")
+
+    implementation fg.deobf("curse.maven:copperative-867868:4685249")
 
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
