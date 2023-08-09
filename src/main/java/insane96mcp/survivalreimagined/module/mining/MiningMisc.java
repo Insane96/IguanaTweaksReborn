@@ -61,7 +61,7 @@ public class MiningMisc extends Feature {
 				|| !fastSlabs)
 			return;
 
-		if (event.getState().getBlock() instanceof SlabBlock && event.getState().getValue(SlabBlock.TYPE) == SlabType.TOP || event.getState().getValue(SlabBlock.TYPE) == SlabType.BOTTOM)
+		if (event.getState().getBlock() instanceof SlabBlock && (event.getState().getValue(SlabBlock.TYPE) == SlabType.TOP || event.getState().getValue(SlabBlock.TYPE) == SlabType.BOTTOM))
 			event.setNewSpeed(event.getOriginalSpeed() * 2f);
 		if (event.getState().getBlock() instanceof StairBlock)
 			event.setNewSpeed(event.getOriginalSpeed() * 1.3333333f);
