@@ -38,7 +38,6 @@ public class Villagers extends SRFeature {
         if (event.getEntity().getType() == EntityType.VILLAGER) {
             LogHelper.info("Killing villager at %s", event.getEntity().position());
             event.getEntity().move(MoverType.SELF, new Vec3(0, -(128 + event.getEntity().getY()), 0));
-            event.getEntity().kill();
         }
         else if (event.getEntity().getType() == EntityType.ZOMBIE_VILLAGER) {
             if (event.getLevel() instanceof ServerLevel serverLevel) {
@@ -48,7 +47,6 @@ public class Villagers extends SRFeature {
                 event.getLevel().addFreshEntity(zombie);
             }
             event.getEntity().setPos(new Vec3(0, -64, 0));
-            event.getEntity().kill();
         }
     }
 }
