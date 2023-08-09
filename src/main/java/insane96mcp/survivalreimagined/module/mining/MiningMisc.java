@@ -9,10 +9,7 @@ import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.AbstractSkullBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.InfestedBlock;
-import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -41,7 +38,7 @@ public class MiningMisc extends Feature {
 	public static Double miningRangeReduction = -1d;
 
 	@Config
-	@Label(name = "Fast slabs", description = "Makes slabs (not double slabs) take half the time to break")
+	@Label(name = "Fast slabs and stairs", description = "Makes slabs (not double slabs) and stair take half the time and 3/4 of time to break")
 	public static Boolean fastSlabs = true;
 
 	public MiningMisc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -61,29 +58,14 @@ public class MiningMisc extends Feature {
 	@SubscribeEvent
 	public void onBreak(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled()
-				|| !fastSlabs
-				|| !(event.getState().getBlock() instanceof SlabBlock))
+				|| !fastSlabs)
 			return;
 
-		if (event.getState().getValue(SlabBlock.TYPE) == SlabType.TOP || event.getState().getValue(SlabBlock.TYPE) == SlabType.BOTTOM)
+		if (event.getState().getBlock() instanceof SlabBlock && event.getState().getValue(SlabBlock.TYPE) == SlabType.TOP || event.getState().getValue(SlabBlock.TYPE) == SlabType.BOTTOM)
 			event.setNewSpeed(event.getOriginalSpeed() * 2f);
+		if (event.getState().getBlock() instanceof StairBlock)
+			event.setNewSpeed(event.getOriginalSpeed() * 1.3333333f);
 	}
-
-	/*public void silverfishBreakSpeed(PlayerEvent.BreakSpeed event) {
-		if (!instaMineSilverfish)
-			return;
-
-		if (event.getState().getBlock() instanceof InfestedBlock)
-			event.setNewSpeed(Float.MAX_VALUE);
-	}*/
-
-	/*public void skullBreakSpeed(PlayerEvent.BreakSpeed event) {
-		if (!instaMineHeads)
-			return;
-
-		if (event.getState().getBlock() instanceof AbstractSkullBlock)
-			event.setNewSpeed(Float.MAX_VALUE);
-	}*/
 
 	@SubscribeEvent
 	public void onPlayerJoinLevel(EntityJoinLevelEvent event) {
