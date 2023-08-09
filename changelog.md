@@ -1,6 +1,7 @@
 # Changelog
 
-* 
+* Change torch advancement to trigger on stick placing on campfire
+* Add a spawn blacklist
 
 ## 0.13.0
 * Update to MC 1.20.1
@@ -30,19 +31,20 @@
 * Unbreaking formula lowered again
   * A few adjustments to tool durability have been made
 * Reduced armor slowdown
+* Wandering Trader
+  * 2 buying trades are now guaranteed
+  * Now buys the same stuff as snapshot 23w31a
+  * No longer sells an enchanted book with unbreaking (replaced with a low level enchanted book)
+  * Now sells cleansed/ancient lapis as rare trade
+  * Trades have been rebalanced as snapshot 23w31a
 * Block stack reduction can no longer be reduced by material
 * Hunger Depleted on Wake Up now properly consumes Saturation first and then hunger 
 * Powder Snow is now harder to break 
 * Solium moss now generates more per patch
 * Tool belts are now added to graves instead of dropping
 * Renamed `Misc.Misc` feature to `Misc.Tweaks`
+* Stairs are now mined faster
 * Villagers and Zombie Villagers are now despawned on spawn
-* Wandering Trader 
-  * 2 buying trades are now guaranteed
-  * Now buys the same stuff as snapshot 23w31a
-  * No longer sells an enchanted book with unbreaking (replaced with a low level enchanted book)
-  * Now sells cleansed/ancient lapis as rare trade
-  * Trades have been rebalanced as snapshot 23w31a
 * Miner zombies now spawn more frequently in caves
 * You can no longer wood cut pressure plates and buttons
 * Fixed crash when placing Iron Blocks

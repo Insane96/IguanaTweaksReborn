@@ -181,7 +181,7 @@ dependencies {
     implementation fg.deobf("curse.maven:enchanting-infuser-forge-551151:4652863")
     runtimeOnly fg.deobf("curse.maven:easy-magic-456239:4658750")
 
-    implementation fg.deobf("curse.maven:copperative-867868:4685249")
+    //implementation fg.deobf("curse.maven:copperative-867868:4685249")
 
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"

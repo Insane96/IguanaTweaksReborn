@@ -1,4 +1,4 @@
-// 1.20.1	2023-08-07T15:13:15.0993444	Recipes
+// 1.20.1	2023-08-09T21:04:24.8594665	Recipes
 dfc51f50706769ded48481605ac0f276a1dc57fc data/survivalreimagined/advancements/recipes/building_blocks/durium_block.json
 8f93bf2435e83bd7daf400057864b04e9fc3beab data/survivalreimagined/advancements/recipes/building_blocks/flint_block.json
 8e153290c8f892809e1d2ec3f4fe8be69545ca69 data/survivalreimagined/advancements/recipes/building_blocks/polished_flint_block.json
@@ -323,7 +323,7 @@ ad93a06004597bba6eb039b8cd1121b28d6dcaf1 data/survivalreimagined/advancements/re
 6d75de29f5ae8a39ee4baca8b100b68adb9de26e data/survivalreimagined/advancements/recipes/tools/soul_steel_hoe.json
 cf3063e1fe1867bfa051a2d83758ccb468978386 data/survivalreimagined/advancements/recipes/tools/soul_steel_pickaxe.json
 711ca18c7829bb5fa7983060bb386d82cb47ae89 data/survivalreimagined/advancements/recipes/tools/soul_steel_shovel.json
-486b96cd59312f06cfa5a881f993261b7958321c data/survivalreimagined/advancements/recipes/tools/stone_hammer.json
+9331fd1f32fd44f5b2b94f5803fc2bc3e13f95f1 data/survivalreimagined/advancements/recipes/tools/stone_hammer.json
 722c8b3b01f25c21b9499eec222a731d37e74565 data/survivalreimagined/advancements/recipes/transportation/crate.json
 ef2e16bd43dc8bacf288b0854d73a69371db8b0b data/survivalreimagined/recipes/altimeter.json
 75cc14b6b954c4ad8f93c7e6263f70666a14af17 data/survivalreimagined/recipes/ancient_lapis.json
@@ -651,4 +651,4 @@ be2443c878ec19af3f7eb9d5b314426b74197fa7 data/survivalreimagined/recipes/soul_st
 6f279496710b3d0abdb03a31ce8bce1a10ac896d data/survivalreimagined/recipes/soul_steel_shovel.json
 4d238b4d8b4642d95b6f6ce09e6702e715ef2595 data/survivalreimagined/recipes/soul_steel_sword.json
 0ff17d063cfaa1454cba5848b0a620a41c18e0c7 data/survivalreimagined/recipes/stonecutter_polished_flint_block.json
-476927ca3a28b2ea6cbd49f653f4a16406b88f53 data/survivalreimagined/recipes/stone_hammer.json
+86d984ee4952f6293060e8cd85447ce217b70466 data/survivalreimagined/recipes/stone_hammer.json
