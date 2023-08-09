@@ -17,13 +17,28 @@
 	"parent": "survivalreimagined:story/campfire",
 	"criteria": {
 		"torch": {
-			"trigger": "minecraft:inventory_changed",
+			"trigger": "minecraft:item_used_on_block",
 			"conditions": {
-				"items": [
+				"player": [
 					{
-						"items": [
-							"minecraft:torch"
-						]
+						"condition": "minecraft:entity_properties",
+						"entity": "this",
+						"predicate": {
+							"equipment": {
+								"mainhand": {
+									"items": [
+										"minecraft:stick"
+									]
+								}
+							}
+						}
+					}
+				],
+				"location": [
+					{
+						"condition": "minecraft:block_state_property",
+						"block": "minecraft:campfire",
+						"properties": {}
 					}
 				]
 			}
