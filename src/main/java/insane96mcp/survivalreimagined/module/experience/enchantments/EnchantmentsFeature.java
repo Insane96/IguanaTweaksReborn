@@ -109,6 +109,36 @@ public class EnchantmentsFeature extends SRFeature {
 		return Feature.isEnabled(EnchantmentsFeature.class) && unbreakingOverhaul;
 	}
 
+	//Shamelessly stolen from TinkersConstruct/src/main/java/slimeknights/tconstruct/tools/modifiers/upgrades/general/ReinforcedModifier.java
+	public static float unbreakingBonus(int lvl) {
+		if (isUnbreakingOverhaul()) {
+			float chance = 0.625f;
+			if (lvl < 5) {
+				// formula gives 22.5%, 40%, 52.5%, 60%, 62.5% for first 5 levels
+				// In terms of durability, the tool lasts for x1.29, x1.67, x2.11, x2.5, x2.67 times more
+				chance = 0.025f * lvl * (10 - lvl);
+			}
+			return chance;
+		}
+		else {
+			return 1f / (lvl + 1);
+		}
+	}
+
+	public static boolean isBetterEfficiencyFormula() {
+		return Feature.isEnabled(EnchantmentsFeature.class) && changeEfficiencyFormula;
+	}
+
+	public static float getEfficiencyBonus(float toolEfficiency, int lvl) {
+		if (isBetterEfficiencyFormula()) {
+			float baseEfficiency = 0.15f;
+			return toolEfficiency * (baseEfficiency * (lvl * lvl + 1));
+		}
+		else {
+			return toolEfficiency + (lvl * lvl + 1);
+		}
+	}
+
 	public static boolean isThornsOverhaul() {
 		return Feature.isEnabled(EnchantmentsFeature.class) && thornsOverhaul;
 	}
