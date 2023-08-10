@@ -1,7 +1,6 @@
 # Changelog
 
-* Change torch advancement to trigger on stick placing on campfire
-* Add a spawn blacklist
+* Make mobs drop only 1/3 of drops if not killed by player
 
 ## 0.13.0
 * Update to MC 1.20.1
