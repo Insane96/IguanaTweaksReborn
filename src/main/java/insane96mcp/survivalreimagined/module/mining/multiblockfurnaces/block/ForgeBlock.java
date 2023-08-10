@@ -58,7 +58,7 @@ public class ForgeBlock extends BaseEntityBlock {
         if (pHand == InteractionHand.OFF_HAND)
             return InteractionResult.PASS;
         ItemStack stack = pPlayer.getItemInHand(pHand);
-        if (stack.getItem() instanceof ForgeHammerItem forgeHammerItem && pLevel.getBlockEntity(pPos) instanceof ForgeBlockEntity forgeBlockEntity) {
+        if (stack.getItem() instanceof ForgeHammerItem forgeHammerItem && pLevel.getBlockEntity(pPos) instanceof ForgeBlockEntity forgeBlockEntity && pHit.getDirection() == Direction.UP) {
             if (!pPlayer.getCooldowns().isOnCooldown(forgeHammerItem) && ForgeBlockEntity.onUse(pLevel, pPos, pState, forgeBlockEntity, forgeHammerItem.getSmashesOnHit(stack, pPlayer.getRandom()))) {
                 pPlayer.getCooldowns().addCooldown(forgeHammerItem, forgeHammerItem.getUseCooldown(stack));
                 if (pPlayer instanceof ServerPlayer serverPlayer)
