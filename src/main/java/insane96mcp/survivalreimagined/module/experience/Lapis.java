@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.InjectLootTableModifier;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.experience.anvils.Anvils;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;

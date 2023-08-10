@@ -5,7 +5,7 @@ import snownee.passablefoliage.PassableFoliageCommonConfig;
 
 public class PassableFoliage {
     public static void changeConfigOptions() {
-        PassableFoliageCommonConfig.fallDamageReduction = 0.2f;
+        PassableFoliageCommonConfig.fallDamageReduction = 0.8f;
         PassableFoliageCommonConfig.fallDamageThreshold = 6;
         KiwiConfigManager.getHandler(PassableFoliageCommonConfig.class).save();
     }

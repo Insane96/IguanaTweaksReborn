@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.network.message;
 
 import insane96mcp.survivalreimagined.module.combat.stats.Stats;
-import insane96mcp.survivalreimagined.module.experience.Anvils;
+import insane96mcp.survivalreimagined.module.experience.anvils.Anvils;
 import insane96mcp.survivalreimagined.module.farming.HarderCrops;
 import insane96mcp.survivalreimagined.module.farming.plantsgrowth.PlantsGrowth;
 import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;

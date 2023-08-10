@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.experience;
+package insane96mcp.survivalreimagined.module.experience.anvils;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -72,12 +72,13 @@ public class Anvils extends SRFeature {
     @Label(name = "Enchantments cost by rarity.Very Rare", description = "Vanilla default: 8")
     public static Integer enchantmentCostVeryRare = 5;
     @Config(min = 0)
-    @Label(name = "Repair cost multiplier", description = "Multiplier for the levels required to repair an item.")
+    @Label(name = "Repair cost multiplier", description = "Multiplier for the levels required to repair or merge an item.")
     public static Double repairCostMultiplier = 0.70d;
 
     //TODO add custom repair items and amounts
+    //TODO think about a recipe instead
     @Config
-    @Label(name = "Better Smithed Items Repair", description = "With this enabled, Netherite tools can be repaired up to 50% of max durability with Diamonds, and also a Netherite ingot would repair 50% durability instead of 25%. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
+    @Label(name = "Better Smithed Items Repair", description = "With this enabled, Netherite tools can be repaired up to 50% of max durability with Diamonds, and also a Netherite ingot will repair 50% durability instead of 25%. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
     public static Boolean betterSmithedItemsRepair = true;
     public static final ArrayList<TwinIdTagMatcher> PARTIAL_REPAIR_ITEMS = new ArrayList<>(List.of(
             new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", IdTagMatcher.Type.ID,"minecraft:diamond"),
@@ -98,6 +99,14 @@ public class Anvils extends SRFeature {
     ));
     public static final ArrayList<TwinIdTagMatcher> partialRepairItems = new ArrayList<>();
 
+    public static final ArrayList<CustomAnvilRepair> CUSTOM_REPAIR_DEFAULT = new ArrayList<>(List.of(
+            new CustomAnvilRepair(new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:netherite_pickaxe"),
+                    new CustomAnvilRepair.RepairData(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:diamond"), 3, 0.5f)),
+            new CustomAnvilRepair(new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:netherite_pickaxe"),
+                    new CustomAnvilRepair.RepairData(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:netherite_ingot"), 2, 1f))
+    ));
+    public static final ArrayList<CustomAnvilRepair> customRepair = new ArrayList<>();
+
     @Config
     @Label(name = "Fix anvils with Iron Blocks")
     public static Boolean allowFixingAnvils = true;
@@ -105,6 +114,7 @@ public class Anvils extends SRFeature {
     public Anvils(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
         JSON_CONFIGS.add(new JsonConfig<>("anvil_partial_repair_items.json", partialRepairItems, PARTIAL_REPAIR_ITEMS, TwinIdTagMatcher.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.PARTIAL_REPAIR_ITEMS));
+        JSON_CONFIGS.add(new JsonConfig<>("anvil_custom_repair.json", customRepair, CUSTOM_REPAIR_DEFAULT, CustomAnvilRepair.LIST_TYPE));
     }
 
     public static void handleSyncPacket(String json) {
@@ -140,6 +150,17 @@ public class Anvils extends SRFeature {
                 return true;
         }
         return false;
+    }
+
+    public static Optional<CustomAnvilRepair> getCustomAnvilRepair(ItemStack left) {
+        if (!Feature.isEnabled(Anvils.class))
+            return Optional.empty();
+
+        for (CustomAnvilRepair customAnvilRepair : customRepair) {
+            if (customAnvilRepair.isItemToRepair(left))
+                return Optional.of(customAnvilRepair);
+        }
+        return Optional.empty();
     }
 
     @SubscribeEvent

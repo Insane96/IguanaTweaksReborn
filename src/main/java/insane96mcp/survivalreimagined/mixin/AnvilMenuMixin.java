@@ -1,7 +1,8 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
-import insane96mcp.survivalreimagined.module.experience.Anvils;
+import insane96mcp.survivalreimagined.module.experience.anvils.Anvils;
+import insane96mcp.survivalreimagined.module.experience.anvils.CustomAnvilRepair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Mixin(value = AnvilMenu.class, priority = 1001)
 public class AnvilMenuMixin extends ItemCombinerMenu {
@@ -90,6 +92,11 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
 			boolean isPartialRepairItem = Anvils.isPartialRepairItem(left, right);
 			boolean isBetterRepairItem = Anvils.isBetterRepairItem(left);
+			Optional<CustomAnvilRepair> oCustomAnvilRepair = Anvils.getCustomAnvilRepair(left);
+			if (oCustomAnvilRepair.isPresent()) {
+				CustomAnvilRepair customAnvilRepair = oCustomAnvilRepair.get();
+
+			}
 			//If it's repairing with materials
 			if (resultStack.isDamageableItem() && (resultStack.getItem().isValidRepairItem(left, right) || isPartialRepairItem)) {
 				int repairItemCountCost;
