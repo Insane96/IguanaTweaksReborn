@@ -117,7 +117,7 @@ public class CopperToolsExpansion extends Feature {
 			if (target == null)
 				break;
 			listOfHitEntities.add(target);
-			MCUtils.attackEntityIgnoreInvFrames(damageSource, secondaryDamage, target, attacker, true);
+			MCUtils.attackEntityIgnoreInvFrames(damageSource, secondaryDamage, target, target, true);
 			listIdsOfHitEntities.add(target.getId());
 			target.playSound(SRSoundEvents.ELECTROCUTION.get(), 0.4f, 1.0f);
 			lastEntityHit = target;

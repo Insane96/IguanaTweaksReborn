@@ -79,7 +79,7 @@ public class PiercingPickaxes extends Feature {
 		if (attacker instanceof Player)
 			piercingDamageSource = attacker.damageSources().source(PIERCING_PLAYER_ATTACK, attacker);
 
-		MCUtils.attackEntityIgnoreInvFrames(piercingDamageSource, (float) piercingInstance.getValue(), event.getEntity(), attacker, true);
+		MCUtils.attackEntityIgnoreInvFrames(piercingDamageSource, (float) piercingInstance.getValue(), event.getEntity(), event.getEntity(), true);
 	}
 
 	@SubscribeEvent
