@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
+import insane96mcp.insanelib.util.MathHelper;
 import insane96mcp.survivalreimagined.setup.client.SRBookCategory;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.NonNullList;
@@ -33,8 +34,7 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
     protected final String group;
     final NonNullList<Ingredient> ingredients;
     final float experience;
-    //TODO Change to multiplier
-    final float doubleOutputChance;
+    final float outputIncrease;
     private final ItemStack result;
     protected final int cookingTime;
     @Nullable
@@ -42,7 +42,7 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
 
     private static final RandomSource RANDOM = RandomSource.create();
 
-    public AbstractMultiItemSmeltingRecipe(RecipeType<?> type, ResourceLocation pId, String pGroup, SRBookCategory pCategory, int maxIngredients, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputChance, float pExperience, int pCookingTime, @Nullable Recycle recycle) {
+    public AbstractMultiItemSmeltingRecipe(RecipeType<?> type, ResourceLocation pId, String pGroup, SRBookCategory pCategory, int maxIngredients, NonNullList<Ingredient> ingredients, ItemStack pResult, float outputIncrease, float pExperience, int pCookingTime, @Nullable Recycle recycle) {
         this.type = type;
         this.category = pCategory;
         this.id = pId;
@@ -52,7 +52,7 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
             this.ingredients.set(i, ingredients.get(i));
         }
         this.result = pResult;
-        this.doubleOutputChance = doubleOutputChance;
+        this.outputIncrease = outputIncrease;
         this.experience = pExperience;
         this.cookingTime = pCookingTime;
         this.recycle = recycle;
@@ -99,8 +99,9 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
                 }
             }
         }
-        else if (RANDOM.nextFloat() < doubleOutputChance) {
-            stack.setCount(stack.getCount() + 1);
+        else if (this.outputIncrease > 0f) {
+            int bonusAmount = MathHelper.getAmountWithDecimalChance(RANDOM, this.outputIncrease);
+            stack.setCount(stack.getCount() + bonusAmount);
         }
         return stack;
     }
@@ -127,8 +128,8 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
         return null;
     }
 
-    public float getDoubleOutputChance() {
-        return this.doubleOutputChance;
+    public float getOutputIncrease() {
+        return this.outputIncrease;
     }
     /**
      * Gets the experience of this recipe

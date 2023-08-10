@@ -10,8 +10,8 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Blocks;
 
 public class MultiItemBlastingRecipe extends AbstractMultiItemSmeltingRecipe {
-    public MultiItemBlastingRecipe(ResourceLocation pId, String pGroup, SRBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputChance, float pExperience, int pCookingTime, Recycle recycle) {
-        super(MultiBlockFurnaces.BLASTING_RECIPE_TYPE.get(), pId, pGroup, pCategory, 4, ingredients, pResult, doubleOutputChance, pExperience, pCookingTime, recycle);
+    public MultiItemBlastingRecipe(ResourceLocation pId, String pGroup, SRBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float outputIncrease, float pExperience, int pCookingTime, Recycle recycle) {
+        super(MultiBlockFurnaces.BLASTING_RECIPE_TYPE.get(), pId, pGroup, pCategory, 4, ingredients, pResult, outputIncrease, pExperience, pCookingTime, recycle);
     }
 
     public ItemStack getToastSymbol() {

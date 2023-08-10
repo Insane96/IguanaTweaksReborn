@@ -42,7 +42,7 @@ public abstract class AbstractMultiItemSmeltingSerializer implements RecipeSeria
             ResourceLocation resourcelocation = new ResourceLocation(s1);
             result = new ItemStack(ForgeRegistries.ITEMS.getValue(resourcelocation));
         }
-        float doubleOutputChance = GsonHelper.getAsFloat(pJson, "double_output_chance", 0f);
+        float outputIncrease = GsonHelper.getAsFloat(pJson, "output_increase", 0f);
         float experience = GsonHelper.getAsFloat(pJson, "experience", 0.0F);
         int cookingTime = GsonHelper.getAsInt(pJson, "cookingtime");
         AbstractMultiItemSmeltingRecipe.Recycle recycle = null;
@@ -51,7 +51,7 @@ public abstract class AbstractMultiItemSmeltingSerializer implements RecipeSeria
                 throw new JsonParseException("Too many ingredients for multi item smelting recipe. The maximum is 1 when recycling is present");
             recycle = AbstractMultiItemSmeltingRecipe.Recycle.fromJson(pJson.getAsJsonObject("recycle"));
         }
-        return this.factory.create(pRecipeId, group, category, ingredients, result, doubleOutputChance, experience, cookingTime, recycle);
+        return this.factory.create(pRecipeId, group, category, ingredients, result, outputIncrease, experience, cookingTime, recycle);
     }
 
     protected abstract SRBookCategory getDefaultBookCategory();
@@ -75,11 +75,11 @@ public abstract class AbstractMultiItemSmeltingSerializer implements RecipeSeria
 
         ingredients.replaceAll(ignored -> Ingredient.fromNetwork(pBuffer));
         ItemStack itemstack = pBuffer.readItem();
-        float doubleOutputChance = pBuffer.readFloat();
+        float outputIncrease = pBuffer.readFloat();
         float experience = pBuffer.readFloat();
         int cookingTime = pBuffer.readVarInt();
         AbstractMultiItemSmeltingRecipe.Recycle recycle = AbstractMultiItemSmeltingRecipe.Recycle.fromNetwork(pBuffer);
-        return this.factory.create(pRecipeId, group, category, ingredients, itemstack, doubleOutputChance, experience, cookingTime, recycle);
+        return this.factory.create(pRecipeId, group, category, ingredients, itemstack, outputIncrease, experience, cookingTime, recycle);
     }
 
     public void toNetwork(FriendlyByteBuf pBuffer, AbstractMultiItemSmeltingRecipe pRecipe) {
@@ -92,7 +92,7 @@ public abstract class AbstractMultiItemSmeltingSerializer implements RecipeSeria
         }
 
         pBuffer.writeItem(pRecipe.getResultItem(RegistryAccess.EMPTY));
-        pBuffer.writeFloat(pRecipe.getDoubleOutputChance());
+        pBuffer.writeFloat(pRecipe.getOutputIncrease());
         pBuffer.writeFloat(pRecipe.getExperience());
         pBuffer.writeVarInt(pRecipe.getCookingTime());
         if (pRecipe.getRecycle() != null) {
@@ -105,7 +105,7 @@ public abstract class AbstractMultiItemSmeltingSerializer implements RecipeSeria
     }
 
     public interface CookieBaker<T extends AbstractMultiItemSmeltingRecipe> {
-        T create(ResourceLocation pId, String pGroup, SRBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputchance, float pExperience, int pCookingTime, AbstractMultiItemSmeltingRecipe.Recycle recycle);
+        T create(ResourceLocation pId, String pGroup, SRBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float outputIncrease, float pExperience, int pCookingTime, AbstractMultiItemSmeltingRecipe.Recycle recycle);
     }
 
     abstract int getIngredientSlotsCount();

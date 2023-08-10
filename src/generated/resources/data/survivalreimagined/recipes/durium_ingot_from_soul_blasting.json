@@ -2,7 +2,6 @@
   "type": "survivalreimagined:multi_item_soul_blasting",
   "category": "soul_blast_furnace_misc",
   "cookingtime": 400,
-  "double_output_chance": 0.2,
   "experience": 1.0,
   "ingredients": [
     {
@@ -15,5 +14,6 @@
       "item": "minecraft:clay_ball"
     }
   ],
+  "output_increase": 0.2,
   "result": "survivalreimagined:durium_ingot"
 }

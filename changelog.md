@@ -28,6 +28,7 @@
   * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest Forge)
 * Shields can now be recycled in blast and soul furnaces
 * Ground flint is now actual ground flint
+* Fixed some missing blasting recipes and doubled (and halved) the output of rich and poor ores
 * Unbreaking formula lowered again
   * A few adjustments to tool durability have been made
 * Reduced armor slowdown

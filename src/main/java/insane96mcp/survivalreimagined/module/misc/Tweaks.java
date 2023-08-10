@@ -38,7 +38,7 @@ public class Tweaks extends Feature {
     @Config
     @Label(name = "Slower poison", description = "If true, poison will damage the player every 80 ticks at level I instead of 25.")
     public static Boolean slowerPoison = true;
-    //TODO Remove when quark 1.20.1
+    //TODO Remove when quark 1.20.x
     @Config
     @Label(name = "Maximum Sponge Soak Blocks", description = "The maximum amount of blocks a sponge can soak. (Vanilla is 64)")
     public static Integer maxSpongeSoakBlocks = 256;

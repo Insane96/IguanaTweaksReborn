@@ -3,7 +3,7 @@
   "category": "misc",
   "cookingtime": 100,
   "experience": 0.7,
-  "double_output_chance": 0.2,
+  "output_increase": 0.2,
   "group": "copper_ingot",
   "ingredients": [
     {

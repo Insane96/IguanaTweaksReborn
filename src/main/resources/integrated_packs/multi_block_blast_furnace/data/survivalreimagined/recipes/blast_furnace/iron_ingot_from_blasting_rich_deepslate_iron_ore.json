@@ -3,11 +3,11 @@
   "category": "misc",
   "cookingtime": 200,
   "experience": 1,
-  "output_increase": 0.4,
+  "output_increase": 0.8,
   "group": "iron_ingot",
   "ingredients": [
     {
-      "item": "minecraft:deepslate_iron_ore"
+      "item": "survivalreimagined:rich_deepslate_iron_ore"
     }
   ],
   "result": "minecraft:iron_ingot"

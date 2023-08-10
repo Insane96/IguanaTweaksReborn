@@ -11,8 +11,8 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class MultiItemSoulBlastingRecipe extends AbstractMultiItemSmeltingRecipe {
-    public MultiItemSoulBlastingRecipe(ResourceLocation pId, String pGroup, SRBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float doubleOutputChance, float pExperience, int pCookingTime, Recycle recycle) {
-        super(MultiBlockFurnaces.SOUL_BLASTING_RECIPE_TYPE.get(), pId, pGroup, pCategory, 6, ingredients, pResult, doubleOutputChance, pExperience, pCookingTime, recycle);
+    public MultiItemSoulBlastingRecipe(ResourceLocation pId, String pGroup, SRBookCategory pCategory, NonNullList<Ingredient> ingredients, ItemStack pResult, float outputIncrease, float pExperience, int pCookingTime, Recycle recycle) {
+        super(MultiBlockFurnaces.SOUL_BLASTING_RECIPE_TYPE.get(), pId, pGroup, pCategory, 6, ingredients, pResult, outputIncrease, pExperience, pCookingTime, recycle);
     }
 
     public ItemStack getToastSymbol() {

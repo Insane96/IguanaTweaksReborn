@@ -4,7 +4,6 @@
   "cookingtime": 100,
   "experience": 0.7,
   "group": "iron_ingot",
-  "double_output_chance": 0.4,
   "ingredients": [
     {
       "item": "minecraft:raw_iron"
