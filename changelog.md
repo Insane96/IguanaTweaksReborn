@@ -29,6 +29,8 @@
 * Shields can now be recycled in blast and soul furnaces
 * Ground flint is now actual ground flint
 * Fixed some missing blasting recipes and doubled (and halved) the output of rich and poor ores
+* Blocks no longer take 50% more time to break, but are still harder to break the deeper you mine
+  * Nether multiplier reduced to 2 from 4
 * Unbreaking formula lowered again
   * A few adjustments to tool durability have been made
 * Reduced armor slowdown

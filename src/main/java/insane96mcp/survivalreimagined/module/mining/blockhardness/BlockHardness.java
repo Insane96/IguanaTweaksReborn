@@ -33,12 +33,12 @@ public class BlockHardness extends SRFeature {
 	public static final ResourceLocation DEPTH_MULTIPLIER_BLACKLIST = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "depth_multiplier_blacklist");
 
 	public static final ArrayList<DimensionHardnessMultiplier> DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT = new ArrayList<>(List.of(
-			new DimensionHardnessMultiplier("minecraft:the_nether", 4.0d)
+			new DimensionHardnessMultiplier("minecraft:the_nether", 2.0d)
 	));
 	public static final ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier = new ArrayList<>();
 
 	public static final ArrayList<DepthHardnessDimension> DEPTH_MULTIPLIER_DIMENSION_DEFAULT = new ArrayList<>(List.of(
-			new DepthHardnessDimension("minecraft:overworld", 0.01d, 63, 0)
+			new DepthHardnessDimension("minecraft:overworld", 0.01d, 100, 0)
 	));
 	public static final ArrayList<DepthHardnessDimension> depthMultiplierDimension = new ArrayList<>();
 
@@ -84,7 +84,7 @@ public class BlockHardness extends SRFeature {
 
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Hardness Multiplier", description = "Multiplier applied to the hardness of blocks. E.g. with this set to 2.0 blocks will take 2 times longer to break.")
-	public static Double hardnessMultiplier = 1.5d;
+	public static Double hardnessMultiplier = 1d;
 
 	public BlockHardness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
