@@ -31,6 +31,7 @@
 * Fixed some missing blasting recipes and doubled (and halved) the output of rich and poor ores
 * Blocks no longer take 50% more time to break, but are still harder to break the deeper you mine
   * Nether multiplier reduced to 2 from 4
+* Players' swing animation is now slower when tired
 * Unbreaking formula lowered again
   * A few adjustments to tool durability have been made
 * Reduced armor slowdown
