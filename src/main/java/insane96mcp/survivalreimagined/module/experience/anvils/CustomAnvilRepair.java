@@ -47,7 +47,7 @@ public class CustomAnvilRepair {
         public CustomAnvilRepair deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             IdTagMatcher itemToRepair = context.deserialize(json.getAsJsonObject().get("item_to_repair"), IdTagMatcher.class);
             List<RepairData> repairData = new ArrayList<>();
-            JsonArray array = json.getAsJsonObject().getAsJsonArray("repair");
+            JsonArray array = GsonHelper.getAsJsonArray(json.getAsJsonObject(), "repair");
             for (JsonElement element : array) {
                 IdTagMatcher repairMaterial = context.deserialize(element.getAsJsonObject().get("repair_material"), IdTagMatcher.class);
                 int amount = GsonHelper.getAsInt(element.getAsJsonObject(), "amount");
@@ -66,6 +66,7 @@ public class CustomAnvilRepair {
         public JsonElement serialize(CustomAnvilRepair src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
             JsonElement itemToRepair = context.serialize(src.itemToRepair, IdTagMatcher.class);
+            jsonObject.add("item_to_repair", itemToRepair);
             JsonArray repair = new JsonArray();
             for (RepairData repairData : src.repairData) {
                 JsonObject r = new JsonObject();
@@ -76,6 +77,7 @@ public class CustomAnvilRepair {
                 r.add("repair_material", context.serialize(repairData.repairMaterial, IdTagMatcher.class));
                 repair.add(r);
             }
+            jsonObject.add("repair", repair);
 
             return jsonObject;
         }

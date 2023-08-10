@@ -8,7 +8,6 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
-import insane96mcp.survivalreimagined.data.TwinIdTagMatcher;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.ChatFormatting;
@@ -37,12 +36,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Label(name = "Anvils", description = "Better repair, free rename and merge.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class Anvils extends SRFeature {
 
-    public static final String PARTIALLY_REPAIRED_LANG = SurvivalReimagined.MOD_ID + ".can_be_partially_repaired";
+    public static final String CAN_BE_REPAIRED_WITH_LANG = SurvivalReimagined.MOD_ID + ".can_be_repaired_with";
 
     @Config(min = 0)
     @Label(name = "Anvil Repair Cap", description = "Set the cap for repairing items in the anvil (vanilla is 40)")
@@ -75,35 +75,13 @@ public class Anvils extends SRFeature {
     @Label(name = "Repair cost multiplier", description = "Multiplier for the levels required to repair or merge an item.")
     public static Double repairCostMultiplier = 0.70d;
 
-    //TODO add custom repair items and amounts
-    //TODO think about a recipe instead
-    @Config
-    @Label(name = "Better Smithed Items Repair", description = "With this enabled, Netherite tools can be repaired up to 50% of max durability with Diamonds, and also a Netherite ingot will repair 50% durability instead of 25%. More items/repair item combination can be added in the anvil_partial_repair_items.json file")
-    public static Boolean betterSmithedItemsRepair = true;
-    public static final ArrayList<TwinIdTagMatcher> PARTIAL_REPAIR_ITEMS = new ArrayList<>(List.of(
-            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", IdTagMatcher.Type.ID,"minecraft:diamond"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/netherite", IdTagMatcher.Type.ID,"minecraft:diamond"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "shieldsplus:netherite_shield", IdTagMatcher.Type.ID,"minecraft:diamond"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/soul_steel", IdTagMatcher.Type.ID,"minecraft:diamond"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/soul_steel", IdTagMatcher.Type.ID,"minecraft:diamond"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_shield", IdTagMatcher.Type.ID,"minecraft:diamond"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/keego", IdTagMatcher.Type.ID,"minecraft:diamond"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/keego", IdTagMatcher.Type.ID,"minecraft:diamond"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "survivalreimagined:keego_shield", IdTagMatcher.Type.ID,"minecraft:diamond"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/durium", IdTagMatcher.Type.ID,"minecraft:iron_ingot"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/durium", IdTagMatcher.Type.ID,"minecraft:iron_ingot"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "survivalreimagined:durium_shield", IdTagMatcher.Type.ID,"minecraft:iron_ingot"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/solarium", IdTagMatcher.Type.ID,"minecraft:iron_ingot"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/solarium", IdTagMatcher.Type.ID,"minecraft:iron_ingot"),
-            new TwinIdTagMatcher(IdTagMatcher.Type.ID, "survivalreimagined:solarium_shield", IdTagMatcher.Type.ID,"minecraft:iron_ingot")
-    ));
-    public static final ArrayList<TwinIdTagMatcher> partialRepairItems = new ArrayList<>();
-
     public static final ArrayList<CustomAnvilRepair> CUSTOM_REPAIR_DEFAULT = new ArrayList<>(List.of(
-            new CustomAnvilRepair(new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:netherite_pickaxe"),
-                    new CustomAnvilRepair.RepairData(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:diamond"), 3, 0.5f)),
-            new CustomAnvilRepair(new IdTagMatcher(IdTagMatcher.Type.TAG, "minecraft:netherite_pickaxe"),
-                    new CustomAnvilRepair.RepairData(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:netherite_ingot"), 2, 1f))
+            new CustomAnvilRepair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:netherite_pickaxe"),
+                    new CustomAnvilRepair.RepairData(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:diamond"), 3, 0.5f),
+                    new CustomAnvilRepair.RepairData(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:netherite_ingot"), 2, 1f)),
+            new CustomAnvilRepair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:iron_pickaxe"),
+                    new CustomAnvilRepair.RepairData(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:iron_ingot"), 3, 1f),
+                    new CustomAnvilRepair.RepairData(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:iron_nugget"), 27, 1f))
     ));
     public static final ArrayList<CustomAnvilRepair> customRepair = new ArrayList<>();
 
@@ -113,24 +91,11 @@ public class Anvils extends SRFeature {
 
     public Anvils(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        JSON_CONFIGS.add(new JsonConfig<>("anvil_partial_repair_items.json", partialRepairItems, PARTIAL_REPAIR_ITEMS, TwinIdTagMatcher.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.PARTIAL_REPAIR_ITEMS));
-        JSON_CONFIGS.add(new JsonConfig<>("anvil_custom_repair.json", customRepair, CUSTOM_REPAIR_DEFAULT, CustomAnvilRepair.LIST_TYPE));
+        JSON_CONFIGS.add(new JsonConfig<>("anvil_custom_repair.json", customRepair, CUSTOM_REPAIR_DEFAULT, CustomAnvilRepair.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.CUSTOM_ANVIL_REPAIR));
     }
 
     public static void handleSyncPacket(String json) {
-        loadAndReadJson(json, partialRepairItems, PARTIAL_REPAIR_ITEMS, TwinIdTagMatcher.LIST_TYPE);
-    }
-
-    public static boolean isPartialRepairItem(ItemStack left, ItemStack right) {
-        if (!Feature.isEnabled(Anvils.class)
-                || !betterSmithedItemsRepair)
-            return false;
-
-        for (TwinIdTagMatcher anvilRepairItem : partialRepairItems) {
-            if (anvilRepairItem.matchesItems(left.getItem(), right.getItem()))
-                return true;
-        }
-        return false;
+        loadAndReadJson(json, customRepair, CUSTOM_REPAIR_DEFAULT, CustomAnvilRepair.LIST_TYPE);
     }
 
     public static int getMergingRepairBonus() {
@@ -138,18 +103,6 @@ public class Anvils extends SRFeature {
             return 12;
 
         return mergingRepairBonus;
-    }
-
-    public static boolean isBetterRepairItem(ItemStack left) {
-        if (!Feature.isEnabled(Anvils.class)
-                || !betterSmithedItemsRepair)
-            return false;
-
-        for (TwinIdTagMatcher anvilRepairItem : partialRepairItems) {
-            if (anvilRepairItem.idTagMatcherA.matchesItem(left.getItem()))
-                return true;
-        }
-        return false;
     }
 
     public static Optional<CustomAnvilRepair> getCustomAnvilRepair(ItemStack left) {
@@ -192,24 +145,26 @@ public class Anvils extends SRFeature {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onTooltip(ItemTooltipEvent event) {
-        if (!this.isEnabled()
-                || !betterSmithedItemsRepair)
+        if (!this.isEnabled())
             return;
 
         Minecraft mc = Minecraft.getInstance();
         if (!(mc.screen instanceof AnvilScreen))
             return;
 
-        for (TwinIdTagMatcher partiallyRepairItem : partialRepairItems) {
-            if (partiallyRepairItem.idTagMatcherA.matchesItem(event.getItemStack().getItem())) {
-                Optional<Item> oItem = partiallyRepairItem.idTagMatcherB.getAllItems().stream().findAny();
-                oItem.ifPresent(item -> {
-                    event.getToolTip().add(Component.empty());
-                    event.getToolTip().add(Component.translatable(PARTIALLY_REPAIRED_LANG, item.getDescription()).withStyle(ChatFormatting.GREEN));
-                });
-                if (oItem.isPresent())
-                    break;
+        List<Component> itemsDescriptions = new ArrayList<>();
+        Optional<CustomAnvilRepair> oCustomAnvilRepair = getCustomAnvilRepair(event.getItemStack());
+        oCustomAnvilRepair.ifPresent(customAnvilRepair -> {
+            for (CustomAnvilRepair.RepairData repairData : customAnvilRepair.repairData) {
+                Optional<Item> oItem = repairData.repairMaterial().getAllItems().stream().findAny();
+                oItem.ifPresent(item -> itemsDescriptions.add(item.getDescription()));
             }
+        });
+
+        if (!itemsDescriptions.isEmpty()) {
+            String joined = itemsDescriptions.stream().map(Component::getString).collect(Collectors.joining(", "));
+            event.getToolTip().add(Component.empty());
+            event.getToolTip().add(Component.translatable(CAN_BE_REPAIRED_WITH_LANG, joined).withStyle(ChatFormatting.GREEN));
         }
     }
 

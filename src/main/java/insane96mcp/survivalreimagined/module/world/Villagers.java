@@ -28,7 +28,7 @@ public class Villagers extends SRFeature {
                 || !disableVillagers)
             return;
 
-        if (event.getEntity().getType() == EntityType.VILLAGER || event.getEntity().getType() == EntityType.ZOMBIE_VILLAGER)
+        if (event.getEntity().getType() == EntityType.VILLAGER/* || event.getEntity().getType() == EntityType.ZOMBIE_VILLAGER*/) //Crashes when a zombie villager tries to spawn from a dead villager
             event.setSpawnCancelled(true);
     }
 }

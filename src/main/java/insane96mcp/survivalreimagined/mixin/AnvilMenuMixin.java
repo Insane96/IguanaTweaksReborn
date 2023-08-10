@@ -4,6 +4,7 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.survivalreimagined.module.experience.anvils.Anvils;
 import insane96mcp.survivalreimagined.module.experience.anvils.CustomAnvilRepair;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -90,40 +91,37 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		if (!right.isEmpty()) {
 			if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player)) return;
 			isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
-			boolean isPartialRepairItem = Anvils.isPartialRepairItem(left, right);
-			boolean isBetterRepairItem = Anvils.isBetterRepairItem(left);
-			Optional<CustomAnvilRepair> oCustomAnvilRepair = Anvils.getCustomAnvilRepair(left);
-			if (oCustomAnvilRepair.isPresent()) {
-				CustomAnvilRepair customAnvilRepair = oCustomAnvilRepair.get();
+			//If it's a damageable item check if trying to repair it
+			if (resultStack.isDamageableItem()) {
+				int repairItemCountCost = 0;
 
-			}
-			//If it's repairing with materials
-			if (resultStack.isDamageableItem() && (resultStack.getItem().isValidRepairItem(left, right) || isPartialRepairItem)) {
-				int repairItemCountCost;
-				//If it's a partial repair item, repair up to 50% of max durability
-				if (isPartialRepairItem) {
-					int maxPartialRepairDurLeft = (int) (resultStack.getMaxDamage() * 0.5f);
-					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
+				Optional<CustomAnvilRepair> oCustomAnvilRepair = Anvils.getCustomAnvilRepair(left);
+				Optional<CustomAnvilRepair.RepairData> oRepairData = Optional.empty();
+				if (oCustomAnvilRepair.isPresent())
+					oRepairData = oCustomAnvilRepair.get().getRepairDataFromMaterial(right);
+
+				//If a custom anvil repair is present, use that
+				if (oRepairData.isPresent()) {
+					CustomAnvilRepair.RepairData repairData = oRepairData.get();
+					int maxPartialRepairDmg = Mth.ceil(resultStack.getMaxDamage() * (1f - repairData.maxRepair()));
+					int repairSteps = Math.min(resultStack.getDamageValue(), Mth.ceil(resultStack.getMaxDamage() / (float) repairData.amountRequired()));
 					if (repairSteps <= 0) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
 						this.cost.set(0);
 						return;
 					}
 
-					for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount() && resultStack.getDamageValue() > maxPartialRepairDurLeft; ++repairItemCountCost) {
+					for (repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount() && resultStack.getDamageValue() > maxPartialRepairDmg; ++repairItemCountCost) {
 						int dmgAfterRepair = resultStack.getDamageValue() - repairSteps;
-						resultStack.setDamageValue(Math.max(maxPartialRepairDurLeft, dmgAfterRepair));
+						resultStack.setDamageValue(Math.max(maxPartialRepairDmg, dmgAfterRepair));
 						if (!Anvils.noRepairCostIncreaseAndEnchCost)
 							++mergeCost;
-						repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
+						repairSteps = Math.min(resultStack.getDamageValue(), Mth.ceil(resultStack.getMaxDamage() / (float) repairData.amountRequired()));
 					}
 				}
 				//Otherwise, vanilla behaviour
-				else {
-					int repairStepsAmount = 4;
-					if (isBetterRepairItem)
-						repairStepsAmount = 2;
-					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / repairStepsAmount);
+				else if (resultStack.getItem().isValidRepairItem(left, right)) {
+					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
 					if (repairSteps <= 0) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
 						this.cost.set(0);
@@ -135,7 +133,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 						resultStack.setDamageValue(dmgAfterRepair);
 						if (!Anvils.noRepairCostIncreaseAndEnchCost)
 							++mergeCost;
-						repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / repairStepsAmount);
+						repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
 					}
 				}
 
@@ -146,11 +144,10 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 					}
 				}
 
-
 				this.repairItemCountCost = repairItemCountCost;
 			}
 			//Else it's merging items
-			else {
+			if (this.repairItemCountCost == 0) {
 				if (!isEnchantedBook && (!resultStack.is(right.getItem()) || !resultStack.isDamageableItem())) {
 					this.resultSlots.setItem(0, ItemStack.EMPTY);
 					this.cost.set(0);

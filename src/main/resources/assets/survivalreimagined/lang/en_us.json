@@ -1,6 +1,6 @@
 {
 	"survivalreimagined:experience_module": "Experience",
-	"survivalreimagined.can_be_partially_repaired": "Can be partially repaired with %s",
+	"survivalreimagined.can_be_repaired_with": "Can be repaired with %s",
 	"container.repair.free": "No Cost",
 	"item.survivalreimagined.ancient_lapis": "Ancient Lapis",
 	"item.survivalreimagined.cleansed_lapis": "Cleansed Lapis",

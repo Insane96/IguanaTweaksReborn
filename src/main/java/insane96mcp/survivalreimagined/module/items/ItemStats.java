@@ -2,7 +2,6 @@ package insane96mcp.survivalreimagined.module.items;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -21,6 +20,7 @@ import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
@@ -267,23 +267,23 @@ public class ItemStats extends SRFeature {
 		else if (event.getItemStack().getItem() instanceof DiggerItem diggerItem){
 			int lvl = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
 			float toolEfficiency = diggerItem.speed;
-			float bonusToolEfficiency = getEfficiencyBonus(toolEfficiency, lvl);
+			float bonusToolEfficiency = EnchantmentsFeature.getEfficiencyBonus(toolEfficiency, lvl);
 			if (lvl > 0)
 				toolEfficiency += bonusToolEfficiency;
 			event.getToolTip().add(CommonComponents.space().append(Component.translatable(TOOL_EFFICIENCY_LANG, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(toolEfficiency))).withStyle(ChatFormatting.DARK_GREEN));
 		}
 
-		if (event.getItemStack().isDamageableItem())
-			event.getToolTip().add(Component.translatable(TOOL_DURABILITY_LANG, event.getItemStack().getMaxDamage() - event.getItemStack().getDamageValue(), event.getItemStack().getMaxDamage()).withStyle(ChatFormatting.GRAY));
+		if (event.getItemStack().isDamageableItem()) {
+			MutableComponent component = Component.translatable(TOOL_DURABILITY_LANG, event.getItemStack().getMaxDamage() - event.getItemStack().getDamageValue(), event.getItemStack().getMaxDamage()).withStyle(ChatFormatting.GRAY);
+			if (event.getItemStack().getAllEnchantments().containsKey(Enchantments.UNBREAKING)) {
+				int lvl = event.getItemStack().getAllEnchantments().get(Enchantments.UNBREAKING);
+				component.append(Component.literal(" (+%.0f%%)".formatted(getUnbreakingPercentageBonus(lvl) * 100f)).withStyle(ChatFormatting.LIGHT_PURPLE));
+			}
+			event.getToolTip().add(component);
+		}
 	}
 
-	public static float getEfficiencyBonus(float toolEfficiency, int lvl) {
-		if (Feature.isEnabled(EnchantmentsFeature.class) && EnchantmentsFeature.changeEfficiencyFormula) {
-			float baseEfficiency = 0.15f;
-			return toolEfficiency * (baseEfficiency * (lvl * lvl + 1));
-		}
-		else {
-			return toolEfficiency + (lvl * lvl + 1);
-		}
+	private static float getUnbreakingPercentageBonus(int lvl) {
+		return 1f / (1f - EnchantmentsFeature.unbreakingBonus(lvl)) - 1f;
 	}
 }

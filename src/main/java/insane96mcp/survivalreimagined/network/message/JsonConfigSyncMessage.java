@@ -66,7 +66,7 @@ public class JsonConfigSyncMessage {
         DIMENSION_HARDNESS(BlockHardness::handleDimensionHardnessPacket),
         DEPTH_HARDNESS(BlockHardness::handleDepthHardnessPacket),
         HARDER_CROPS(HarderCrops::handleSyncPacket),
-        PARTIAL_REPAIR_ITEMS(Anvils::handleSyncPacket);
+        CUSTOM_ANVIL_REPAIR(Anvils::handleSyncPacket);
 
         final Consumer<String> consumer;
 
