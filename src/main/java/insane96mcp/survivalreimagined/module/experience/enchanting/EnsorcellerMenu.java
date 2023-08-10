@@ -99,7 +99,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
                 this.incrementSteps(this.level.random.nextInt(4) + 1);
                 this.incrementLevelsUsed();
                 if (!player.getAbilities().instabuild)
-                    ((ServerPlayer)player).setExperienceLevels(player.experienceLevel - 1);
+                    ((ServerPlayer)player).setExperienceLevels(player.experienceLevel - this.rollCost.get());
                 if (this.getSteps() > MAX_STEPS) {
                     level.playSound(null, blockPos, SoundEvents.RESPAWN_ANCHOR_DEPLETE.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.8F);
                     this.setSteps(0);
