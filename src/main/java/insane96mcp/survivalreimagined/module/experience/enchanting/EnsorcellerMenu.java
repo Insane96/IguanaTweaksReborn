@@ -89,7 +89,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
 
         //Roll
         if (pId == 0) {
-            if (player.experienceLevel <= 0 && !player.getAbilities().instabuild)
+            if (player.experienceLevel < this.rollCost.get() && !player.getAbilities().instabuild)
                 return false;
             if (this.getSteps() == MAX_STEPS)
                 return false;
