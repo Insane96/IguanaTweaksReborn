@@ -4,17 +4,11 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.LogHelper;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Villagers", description = "Change villagers")
@@ -22,7 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class Villagers extends SRFeature {
 
     @Config
-    @Label(name = "Villagers are despawned and zombie villagers are replaced with normal zombies")
+    @Label(name = "Villagers and zombie villagers no longer spawn")
     public static Boolean disableVillagers = true;
 
     public Villagers(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -30,23 +24,12 @@ public class Villagers extends SRFeature {
     }
 
     @SubscribeEvent
-    public void onWanderingTradersEvent(EntityJoinLevelEvent event) {
+    public void onVillagerTryToSpawn(MobSpawnEvent.SpawnPlacementCheck event) {
         if (!this.isEnabled()
                 || !disableVillagers)
             return;
 
-        if (event.getEntity().getType() == EntityType.VILLAGER) {
-            LogHelper.info("Killing villager at %s", event.getEntity().position());
-            event.getEntity().move(MoverType.SELF, new Vec3(0, -(128 + event.getEntity().getY()), 0));
-        }
-        else if (event.getEntity().getType() == EntityType.ZOMBIE_VILLAGER) {
-            if (event.getLevel() instanceof ServerLevel serverLevel) {
-                CompoundTag tag = new CompoundTag();
-                event.getEntity().saveWithoutId(tag);
-                Zombie zombie = EntityType.ZOMBIE.create(serverLevel, tag, null, event.getEntity().blockPosition(), MobSpawnType.NATURAL, false, false);
-                event.getLevel().addFreshEntity(zombie);
-            }
-            event.getEntity().setPos(new Vec3(0, -64, 0));
-        }
+        if (event.getEntityType() == EntityType.VILLAGER || event.getEntityType() == EntityType.ZOMBIE_VILLAGER)
+            event.setResult(Event.Result.DENY);
     }
 }
