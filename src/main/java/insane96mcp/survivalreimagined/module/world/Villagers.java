@@ -8,7 +8,6 @@ import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Villagers", description = "Change villagers")
@@ -24,12 +23,12 @@ public class Villagers extends SRFeature {
     }
 
     @SubscribeEvent
-    public void onVillagerTryToSpawn(MobSpawnEvent.SpawnPlacementCheck event) {
+    public void onVillagerTryToSpawn(MobSpawnEvent.FinalizeSpawn event) {
         if (!this.isEnabled()
                 || !disableVillagers)
             return;
 
-        if (event.getEntityType() == EntityType.VILLAGER || event.getEntityType() == EntityType.ZOMBIE_VILLAGER)
-            event.setResult(Event.Result.DENY);
+        if (event.getEntity().getType() == EntityType.VILLAGER || event.getEntity().getType() == EntityType.ZOMBIE_VILLAGER)
+            event.setSpawnCancelled(true);
     }
 }
