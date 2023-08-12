@@ -19,6 +19,8 @@
   * Added "Remove Piston exploits" (removes TNT duping)
   * When you fish, there's a small chance to fish a Guardian
 * Anvils
+  * Items repair now take the same amount of materials used to craft them (e.g. an Iron pickaxe only costs 3 iron ingots to be repaired)
+    * This is done via data packs within a new Data Pack folder "anvil_repairs"
   * Merging enchanted tools cost is now calculated from the result, and not the base items
   * Merging items in an anvil now gives 20% bonus durability (instead of 12% vanilla)
   * Fixed fixing anvils opening the interface

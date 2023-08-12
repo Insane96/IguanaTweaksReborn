@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "minecraft:crossbow"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:string"
+			},
+			"amount": 3
+		}
+	]
+}

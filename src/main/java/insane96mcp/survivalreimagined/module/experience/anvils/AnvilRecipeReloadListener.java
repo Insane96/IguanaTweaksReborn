@@ -19,7 +19,7 @@ public class AnvilRecipeReloadListener extends SimpleJsonResourceReloadListener 
 	public static final AnvilRecipeReloadListener INSTANCE;
 	private static final Gson GSON = new GsonBuilder().create();
 	public AnvilRecipeReloadListener() {
-		super(GSON, "anvil_recipes");
+		super(GSON, "anvil_repairs");
 	}
 
 	static {

@@ -89,8 +89,6 @@ public class Anvils extends SRFeature {
         return mergingRepairBonus;
     }
 
-    //TODO Change to get a list of RepairData as multiple jsons with the same item can exist
-    //TODO Check if more items to repair exist (they do) for the anvil_recipe
     public static Optional<AnvilRecipe> getCustomAnvilRepair(ItemStack left) {
         if (!Feature.isEnabled(Anvils.class))
             return Optional.empty();
@@ -98,6 +96,20 @@ public class Anvils extends SRFeature {
         for (AnvilRecipe anvilRecipe : AnvilRecipeReloadListener.RECIPES) {
             if (anvilRecipe.isItemToRepair(left))
                 return Optional.of(anvilRecipe);
+        }
+        return Optional.empty();
+    }
+
+    public static Optional<AnvilRecipe.RepairData> getCustomAnvilRepair(ItemStack left, ItemStack right) {
+        if (!Feature.isEnabled(Anvils.class))
+            return Optional.empty();
+
+        for (AnvilRecipe anvilRecipe : AnvilRecipeReloadListener.RECIPES) {
+            if (anvilRecipe.isItemToRepair(left)) {
+                Optional<AnvilRecipe.RepairData> repairData = anvilRecipe.getRepairDataFromMaterial(right);
+                if (repairData.isPresent())
+                    return repairData;
+            }
         }
         return Optional.empty();
     }

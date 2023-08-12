@@ -91,14 +91,10 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		if (!right.isEmpty()) {
 			if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player)) return;
 			isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
+			Optional<AnvilRecipe.RepairData> oRepairData = Anvils.getCustomAnvilRepair(left, right);
 			//If it's a damageable item check if trying to repair it
-			if (resultStack.isDamageableItem()) {
-				int repairItemCountCost = 0;
-
-				Optional<AnvilRecipe> oCustomAnvilRepair = Anvils.getCustomAnvilRepair(left);
-				Optional<AnvilRecipe.RepairData> oRepairData = Optional.empty();
-				if (oCustomAnvilRepair.isPresent())
-					oRepairData = oCustomAnvilRepair.get().getRepairDataFromMaterial(right);
+			if (resultStack.isDamageableItem() && (resultStack.getItem().isValidRepairItem(left, right) || oRepairData.isPresent())) {
+				int repairItemCountCost;
 
 				//If a custom anvil repair is present, use that
 				if (oRepairData.isPresent()) {
@@ -120,7 +116,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 					}
 				}
 				//Otherwise, vanilla behaviour
-				else if (resultStack.getItem().isValidRepairItem(left, right)) {
+				else {
 					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
 					if (repairSteps <= 0) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
@@ -147,7 +143,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 				this.repairItemCountCost = repairItemCountCost;
 			}
 			//Else it's merging items
-			if (this.repairItemCountCost == 0) {
+			else {
 				if (!isEnchantedBook && (!resultStack.is(right.getItem()) || !resultStack.isDamageableItem())) {
 					this.resultSlots.setItem(0, ItemStack.EMPTY);
 					this.cost.set(0);

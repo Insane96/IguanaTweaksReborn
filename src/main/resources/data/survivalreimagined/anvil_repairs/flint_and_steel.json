@@ -1,0 +1,19 @@
+{
+	"item_to_repair": {
+		"id": "minecraft:flint_and_steel"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "survivalreimagined:soul_steel_ingot"
+			},
+			"amount": 1
+		},
+		{
+			"repair_material": {
+				"id": "survivalreimagined:soul_steel_nugget"
+			},
+			"amount": 9
+		}
+	]
+}
