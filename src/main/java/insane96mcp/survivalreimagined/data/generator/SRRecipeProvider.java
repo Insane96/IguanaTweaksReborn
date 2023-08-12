@@ -19,7 +19,7 @@ import insane96mcp.survivalreimagined.module.mining.keego.Keego;
 import insane96mcp.survivalreimagined.module.mining.miningcharge.MiningCharge;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.data.MultiItemSmeltingRecipeBuilder;
-import insane96mcp.survivalreimagined.module.mining.solium.Solarium;
+import insane96mcp.survivalreimagined.module.mining.solarium.Solarium;
 import insane96mcp.survivalreimagined.module.sleeprespawn.Cloth;
 import insane96mcp.survivalreimagined.module.world.CyanFlower;
 import insane96mcp.survivalreimagined.module.world.coalfire.CoalFire;

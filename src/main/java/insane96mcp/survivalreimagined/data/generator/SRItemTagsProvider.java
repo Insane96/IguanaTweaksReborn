@@ -13,7 +13,7 @@ import insane96mcp.survivalreimagined.module.items.flintexpansion.FlintExpansion
 import insane96mcp.survivalreimagined.module.mining.Durium;
 import insane96mcp.survivalreimagined.module.mining.SoulSteel;
 import insane96mcp.survivalreimagined.module.mining.keego.Keego;
-import insane96mcp.survivalreimagined.module.mining.solium.Solarium;
+import insane96mcp.survivalreimagined.module.mining.solarium.Solarium;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.survivalreimagined.module.world.spawners.Spawners;
 import net.minecraft.core.HolderLookup;

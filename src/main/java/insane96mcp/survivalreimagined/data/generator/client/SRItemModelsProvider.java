@@ -13,7 +13,7 @@ import insane96mcp.survivalreimagined.module.mining.Durium;
 import insane96mcp.survivalreimagined.module.mining.SoulSteel;
 import insane96mcp.survivalreimagined.module.mining.forging.Forging;
 import insane96mcp.survivalreimagined.module.mining.keego.Keego;
-import insane96mcp.survivalreimagined.module.mining.solium.Solarium;
+import insane96mcp.survivalreimagined.module.mining.solarium.Solarium;
 import insane96mcp.survivalreimagined.module.movement.minecarts.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.Cloth;
 import insane96mcp.survivalreimagined.module.world.CyanFlower;

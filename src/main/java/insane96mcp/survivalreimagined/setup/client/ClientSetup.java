@@ -30,7 +30,7 @@ import insane96mcp.survivalreimagined.module.mining.miningcharge.MiningChargeRen
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.client.MultiBlockBlastFurnaceScreen;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.client.MultiBlockSoulBlastFurnaceScreen;
-import insane96mcp.survivalreimagined.module.mining.solium.Solarium;
+import insane96mcp.survivalreimagined.module.mining.solarium.Solarium;
 import insane96mcp.survivalreimagined.module.movement.minecarts.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.Cloth;
 import insane96mcp.survivalreimagined.module.sleeprespawn.death.Death;

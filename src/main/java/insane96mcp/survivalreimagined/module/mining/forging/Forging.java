@@ -14,7 +14,7 @@ import insane96mcp.survivalreimagined.module.mining.SoulSteel;
 import insane96mcp.survivalreimagined.module.mining.keego.Keego;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.block.ForgeBlock;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.block.ForgeBlockEntity;
-import insane96mcp.survivalreimagined.module.mining.solium.Solarium;
+import insane96mcp.survivalreimagined.module.mining.solarium.Solarium;
 import insane96mcp.survivalreimagined.module.misc.DataPacks;
 import insane96mcp.survivalreimagined.setup.*;
 import net.minecraft.network.chat.Component;
