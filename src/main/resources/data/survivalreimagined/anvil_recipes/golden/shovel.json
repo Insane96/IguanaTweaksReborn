@@ -1,0 +1,19 @@
+{
+	"item_to_repair": {
+		"id": "minecraft:golden_shovel"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:golden_ingot"
+			},
+			"amount": 1
+		},
+		{
+			"repair_material": {
+				"id": "minecraft:golden_nugget"
+			},
+			"amount": 9
+		}
+	]
+}

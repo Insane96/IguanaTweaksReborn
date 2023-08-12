@@ -1,8 +1,8 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
+import insane96mcp.survivalreimagined.module.experience.anvils.AnvilRecipe;
 import insane96mcp.survivalreimagined.module.experience.anvils.Anvils;
-import insane96mcp.survivalreimagined.module.experience.anvils.CustomAnvilRepair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -95,14 +95,14 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			if (resultStack.isDamageableItem()) {
 				int repairItemCountCost = 0;
 
-				Optional<CustomAnvilRepair> oCustomAnvilRepair = Anvils.getCustomAnvilRepair(left);
-				Optional<CustomAnvilRepair.RepairData> oRepairData = Optional.empty();
+				Optional<AnvilRecipe> oCustomAnvilRepair = Anvils.getCustomAnvilRepair(left);
+				Optional<AnvilRecipe.RepairData> oRepairData = Optional.empty();
 				if (oCustomAnvilRepair.isPresent())
 					oRepairData = oCustomAnvilRepair.get().getRepairDataFromMaterial(right);
 
 				//If a custom anvil repair is present, use that
 				if (oRepairData.isPresent()) {
-					CustomAnvilRepair.RepairData repairData = oRepairData.get();
+					AnvilRecipe.RepairData repairData = oRepairData.get();
 					int maxPartialRepairDmg = Mth.ceil(resultStack.getMaxDamage() * (1f - repairData.maxRepair()));
 					int repairSteps = Math.min(resultStack.getDamageValue(), Mth.ceil(resultStack.getMaxDamage() / (float) repairData.amountRequired()));
 					if (repairSteps <= 0) {

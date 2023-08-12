@@ -12,17 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@JsonAdapter(CustomAnvilRepair.Serializer.class)
-public class CustomAnvilRepair {
+@JsonAdapter(AnvilRecipe.Serializer.class)
+public class AnvilRecipe {
     final IdTagMatcher itemToRepair;
     final List<RepairData> repairData;
 
-    public CustomAnvilRepair(IdTagMatcher itemToRepair, List<RepairData> repairData) {
+    public AnvilRecipe(IdTagMatcher itemToRepair, List<RepairData> repairData) {
         this.itemToRepair = itemToRepair;
         this.repairData = repairData;
     }
 
-    public CustomAnvilRepair(IdTagMatcher itemToRepair, RepairData... repairData) {
+    public AnvilRecipe(IdTagMatcher itemToRepair, RepairData... repairData) {
         this.itemToRepair = itemToRepair;
         this.repairData = List.of(repairData);
     }
@@ -41,10 +41,10 @@ public class CustomAnvilRepair {
 
     public record RepairData(@SerializedName("repair_material") IdTagMatcher repairMaterial, @SerializedName("amount") int amountRequired, @SerializedName("max_repair") float maxRepair) { }
 
-    public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<CustomAnvilRepair>>(){}.getType();
-    public static class Serializer implements JsonDeserializer<CustomAnvilRepair>, JsonSerializer<CustomAnvilRepair> {
+    public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<AnvilRecipe>>(){}.getType();
+    public static class Serializer implements JsonDeserializer<AnvilRecipe>, JsonSerializer<AnvilRecipe> {
         @Override
-        public CustomAnvilRepair deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        public AnvilRecipe deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             IdTagMatcher itemToRepair = context.deserialize(json.getAsJsonObject().get("item_to_repair"), IdTagMatcher.class);
             List<RepairData> repairData = new ArrayList<>();
             JsonArray array = GsonHelper.getAsJsonArray(json.getAsJsonObject(), "repair");
@@ -59,11 +59,11 @@ public class CustomAnvilRepair {
                 repairData.add(new RepairData(repairMaterial, amount, maxRepair));
             }
 
-            return new CustomAnvilRepair(itemToRepair, repairData);
+            return new AnvilRecipe(itemToRepair, repairData);
         }
 
         @Override
-        public JsonElement serialize(CustomAnvilRepair src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
+        public JsonElement serialize(AnvilRecipe src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
             JsonElement itemToRepair = context.serialize(src.itemToRepair, IdTagMatcher.class);
             jsonObject.add("item_to_repair", itemToRepair);

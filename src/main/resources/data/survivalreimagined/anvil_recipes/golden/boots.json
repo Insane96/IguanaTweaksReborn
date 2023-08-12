@@ -1,0 +1,19 @@
+{
+	"item_to_repair": {
+		"id": "minecraft:golden_boots"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:golden_ingot"
+			},
+			"amount": 4
+		},
+		{
+			"repair_material": {
+				"id": "minecraft:golden_nugget"
+			},
+			"amount": 36
+		}
+	]
+}

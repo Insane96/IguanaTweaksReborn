@@ -164,6 +164,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         withExistingParent("soul_sand_hellish_coal_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_sand_hellish_coal_ore"));
         withExistingParent("soul_soil_hellish_coal_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_soil_hellish_coal_ore"));
 
+        handHeld(Forging.WOODEN_HAMMER.get());
         handHeld(Forging.STONE_HAMMER.get());
         handHeld(Forging.FLINT_HAMMER.get());
         handHeld(Forging.COPPER_HAMMER.get());

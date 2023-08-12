@@ -14,4 +14,8 @@ public class LogHelper {
 	public static void info(String format, Object... args) {
 		SurvivalReimagined.LOGGER.info(String.format(format, args));
 	}
+
+	public static void debug(String format, Object... args) {
+		SurvivalReimagined.LOGGER.debug(String.format(format, args));
+	}
 }

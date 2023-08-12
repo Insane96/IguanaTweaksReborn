@@ -11,6 +11,7 @@ import insane96mcp.survivalreimagined.data.generator.client.SRItemModelsProvider
 import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.combat.fletching.Fletching;
 import insane96mcp.survivalreimagined.module.combat.fletching.dispenser.SRArrowDispenseBehaviour;
+import insane96mcp.survivalreimagined.module.experience.anvils.AnvilRecipeReloadListener;
 import insane96mcp.survivalreimagined.module.items.copper.ElectrocutionSparkParticle;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.survivalreimagined.module.world.spawners.capability.SpawnerData;
@@ -108,6 +109,7 @@ public class SurvivalReimagined
     public void onAddReloadListener(AddReloadListenerEvent event) {
         SRDataReloadListener.reloadContext = event.getConditionContext();
         event.addListener(SRDataReloadListener.INSTANCE);
+        event.addListener(AnvilRecipeReloadListener.INSTANCE);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

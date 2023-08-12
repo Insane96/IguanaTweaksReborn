@@ -44,6 +44,7 @@ public class Forging extends Feature {
 	public static final RegistryObject<ForgeRecipeSerializer> FORGE_RECIPE_SERIALIZER = SRRecipeSerializers.REGISTRY.register("forging", ForgeRecipeSerializer::new);
 	public static final RegistryObject<MenuType<ForgeMenu>> FORGE_MENU_TYPE = SRMenuType.REGISTRY.register("forge", () -> new MenuType<>(ForgeMenu::new, FeatureFlags.VANILLA_SET));
 
+	public static final RegistryObject<ForgeHammerItem> WOODEN_HAMMER = SRItems.REGISTRY.register("wooden_hammer", () -> new ForgeHammerItem(12f, 0.5f, Tiers.WOOD, 40, 4, new Item.Properties()));
 	public static final RegistryObject<ForgeHammerItem> STONE_HAMMER = SRItems.REGISTRY.register("stone_hammer", () -> new ForgeHammerItem(12f, 0.5f, Tiers.STONE, 30, 4, new Item.Properties()));
 	public static final RegistryObject<ForgeHammerItem> FLINT_HAMMER = SRItems.REGISTRY.register("flint_hammer", () -> new ForgeHammerItem(12f, 0.5f, FlintExpansion.ITEM_TIER, 22, 4, new Item.Properties()));
 	public static final RegistryObject<ForgeHammerItem> GOLDEN_HAMMER = SRItems.REGISTRY.register("golden_hammer", () -> new ForgeHammerItem(12f, 0.5f, Tiers.GOLD, 6, 4, new Item.Properties()));

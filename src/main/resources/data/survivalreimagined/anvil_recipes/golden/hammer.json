@@ -1,0 +1,19 @@
+{
+	"item_to_repair": {
+		"id": "survivalreimagined:golden_hammer"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:golden_ingot"
+			},
+			"amount": 5
+		},
+		{
+			"repair_material": {
+				"id": "minecraft:golden_nugget"
+			},
+			"amount": 45
+		}
+	]
+}

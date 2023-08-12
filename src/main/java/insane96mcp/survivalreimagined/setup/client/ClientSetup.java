@@ -92,6 +92,7 @@ public class ClientSetup {
             event.accept(Keego.HOE.get());
             event.accept(CoalFire.FIRESTARTER.get());
 
+            event.accept(Forging.WOODEN_HAMMER.get());
             event.accept(Forging.STONE_HAMMER.get());
             event.accept(Forging.FLINT_HAMMER.get());
             event.accept(Forging.COPPER_HAMMER.get());

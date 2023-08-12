@@ -9,7 +9,6 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
@@ -54,7 +53,7 @@ public class Anvils extends SRFeature {
     @Label(name = "Merging cost is based off result")
     public static Boolean mergingCostBasedOffResult = true;
     @Config(min = 0, max = 100)
-    @Label(name = "Merging Repair bonus", description = "Vanilla is 12")
+    @Label(name = "Merging Repair bonus", description = "Vanilla is 12%")
     public static Integer mergingRepairBonus = 20;
     @Config
     @Label(name = "No repair cost increase and repair cost based off Enchantments")
@@ -75,27 +74,12 @@ public class Anvils extends SRFeature {
     @Label(name = "Repair cost multiplier", description = "Multiplier for the levels required to repair or merge an item.")
     public static Double repairCostMultiplier = 0.70d;
 
-    public static final ArrayList<CustomAnvilRepair> CUSTOM_REPAIR_DEFAULT = new ArrayList<>(List.of(
-            new CustomAnvilRepair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:netherite_pickaxe"),
-                    new CustomAnvilRepair.RepairData(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:diamond"), 3, 0.5f),
-                    new CustomAnvilRepair.RepairData(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:netherite_ingot"), 2, 1f)),
-            new CustomAnvilRepair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:iron_pickaxe"),
-                    new CustomAnvilRepair.RepairData(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:iron_ingot"), 3, 1f),
-                    new CustomAnvilRepair.RepairData(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:iron_nugget"), 27, 1f))
-    ));
-    public static final ArrayList<CustomAnvilRepair> customRepair = new ArrayList<>();
-
     @Config
     @Label(name = "Fix anvils with Iron Blocks")
     public static Boolean allowFixingAnvils = true;
 
     public Anvils(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        JSON_CONFIGS.add(new JsonConfig<>("anvil_custom_repair.json", customRepair, CUSTOM_REPAIR_DEFAULT, CustomAnvilRepair.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.CUSTOM_ANVIL_REPAIR));
-    }
-
-    public static void handleSyncPacket(String json) {
-        loadAndReadJson(json, customRepair, CUSTOM_REPAIR_DEFAULT, CustomAnvilRepair.LIST_TYPE);
     }
 
     public static int getMergingRepairBonus() {
@@ -105,13 +89,13 @@ public class Anvils extends SRFeature {
         return mergingRepairBonus;
     }
 
-    public static Optional<CustomAnvilRepair> getCustomAnvilRepair(ItemStack left) {
+    public static Optional<AnvilRecipe> getCustomAnvilRepair(ItemStack left) {
         if (!Feature.isEnabled(Anvils.class))
             return Optional.empty();
 
-        for (CustomAnvilRepair customAnvilRepair : customRepair) {
-            if (customAnvilRepair.isItemToRepair(left))
-                return Optional.of(customAnvilRepair);
+        for (AnvilRecipe anvilRecipe : AnvilRecipeReloadListener.RECIPES) {
+            if (anvilRecipe.isItemToRepair(left))
+                return Optional.of(anvilRecipe);
         }
         return Optional.empty();
     }
@@ -153,11 +137,16 @@ public class Anvils extends SRFeature {
             return;
 
         List<Component> itemsDescriptions = new ArrayList<>();
-        Optional<CustomAnvilRepair> oCustomAnvilRepair = getCustomAnvilRepair(event.getItemStack());
-        oCustomAnvilRepair.ifPresent(customAnvilRepair -> {
-            for (CustomAnvilRepair.RepairData repairData : customAnvilRepair.repairData) {
-                Optional<Item> oItem = repairData.repairMaterial().getAllItems().stream().findAny();
-                oItem.ifPresent(item -> itemsDescriptions.add(item.getDescription()));
+        Optional<AnvilRecipe> oCustomAnvilRepair = getCustomAnvilRepair(event.getItemStack());
+        oCustomAnvilRepair.ifPresent(anvilRecipe -> {
+            for (AnvilRecipe.RepairData repairData : anvilRecipe.repairData) {
+                if (repairData.repairMaterial().type == IdTagMatcher.Type.TAG) {
+                    itemsDescriptions.add(Component.literal("#").append(repairData.repairMaterial().location.toString()));
+                }
+                else {
+                    Optional<Item> oItem = repairData.repairMaterial().getAllItems().stream().findAny();
+                    oItem.ifPresent(item -> itemsDescriptions.add(item.getDescription()));
+                }
             }
         });
 
