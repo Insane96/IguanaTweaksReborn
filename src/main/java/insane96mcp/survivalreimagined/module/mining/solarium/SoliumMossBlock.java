@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.mining.solium;
+package insane96mcp.survivalreimagined.module.mining.solarium;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

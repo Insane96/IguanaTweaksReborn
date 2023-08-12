@@ -108,7 +108,7 @@
 
 	"survivalreimagined:mining_module": "Mining",
 
-	"survivalreimagined:innate_solarium": "Tools take reduced damage when used in sky light",
+	"survivalreimagined:innate_solarium": "Tools take reduced damage when used in sky light and repair themselves",
 	"item.survivalreimagined.solarium_axe": "Solarium Axe",
 	"item.survivalreimagined.solarium_pickaxe": "Solarium Pickaxe",
 	"item.survivalreimagined.solarium_sword": "Solarium Sword",

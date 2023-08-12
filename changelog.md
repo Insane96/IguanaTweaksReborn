@@ -28,6 +28,7 @@
 * Shields can now be recycled in blast and soul furnaces
 * Ground flint is now actual ground flint
 * Fixed some missing blasting recipes and doubled (and halved) the output of rich and poor ores
+* Solarium now slowly repairs overtime when exposed to skylight
 * You can no longer forge if you r-click on the sides of forge
 * Blocks no longer take 50% more time to break, but are still harder to break the deeper you mine
   * Nether multiplier reduced to 2 from 4
