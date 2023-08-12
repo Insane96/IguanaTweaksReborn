@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "survivalreimagined:chained_copper_chestplate"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:copper_ingot"
+			},
+			"amount": 5
+		}
+	]
+}

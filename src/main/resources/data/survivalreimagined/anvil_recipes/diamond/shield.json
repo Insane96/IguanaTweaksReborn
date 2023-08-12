@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "shieldsplus:diamond_shield"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:diamond"
+			},
+			"amount": 4
+		}
+	]
+}

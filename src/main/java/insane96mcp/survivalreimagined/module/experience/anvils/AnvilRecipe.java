@@ -51,8 +51,8 @@ public class AnvilRecipe {
             for (JsonElement element : array) {
                 IdTagMatcher repairMaterial = context.deserialize(element.getAsJsonObject().get("repair_material"), IdTagMatcher.class);
                 int amount = GsonHelper.getAsInt(element.getAsJsonObject(), "amount");
-                if (amount < 1 || amount > 64)
-                    throw new JsonParseException("amount must be between 1 and 64");
+                if (amount < 1)
+                    throw new JsonParseException("amount must be greater than 0");
                 float maxRepair = GsonHelper.getAsFloat(element.getAsJsonObject(), "max_repair", 1f);
                 if (maxRepair > 1f || maxRepair < 0f)
                     throw new JsonParseException("max_repair must be between 0 and 1");

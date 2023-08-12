@@ -1,0 +1,20 @@
+{
+	"item_to_repair": {
+		"id": "survivalreimagined:solarium_sword"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:iron_ingot"
+			},
+			"amount": 2,
+			"max_repair": 0.5
+		},
+		{
+			"repair_material": {
+				"id": "survivalreimagined:solarium_ball"
+			},
+			"amount": 2
+		}
+	]
+}

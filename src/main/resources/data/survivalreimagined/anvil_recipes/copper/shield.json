@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "shieldsplus:copper_shield"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:copper_ingot"
+			},
+			"amount": 4
+		}
+	]
+}

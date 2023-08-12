@@ -1,0 +1,20 @@
+{
+	"item_to_repair": {
+		"id": "survivalreimagined:coated_copper_hammer"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:copper_ingot"
+			},
+			"amount": 5,
+			"max_repair": 0.5
+		},
+		{
+			"repair_material": {
+				"id": "minecraft:obsidian"
+			},
+			"amount": 2
+		}
+	]
+}

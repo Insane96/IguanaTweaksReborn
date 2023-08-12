@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "survivalreimagined:flint_pickaxe"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:flint"
+			},
+			"amount": 3
+		}
+	]
+}
