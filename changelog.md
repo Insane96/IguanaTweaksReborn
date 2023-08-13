@@ -11,7 +11,8 @@
     * A low level enchanting table for early game, made with stone, solarium and iron
   * Enchanting Table now requires Nether access to be made
   * Added compatibility with Enchanting Infuser
-* Sponges now soak more blocks
+* Renamed `Misc.Misc` feature to `Misc.Tweaks`
+  * Sponges now soak more blocks
 * Client > Sounds renamed to Sounds & Music
   * Music now plays thrice as often
 * Nerfs
@@ -27,6 +28,7 @@
 * Rare Huge Coal veins can now generate in the world
 * Added "Phantoms in the End"
   * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest Forge)
+* Cloth: Zombies no longer drop rotten flesh and reduced cloth drop
 * Shields can now be recycled in blast and soul furnaces
 * Ground flint is now actual ground flint
 * Fixed some missing blasting recipes and doubled (and halved) the output of rich and poor ores
@@ -44,12 +46,11 @@
   * No longer sells an enchanted book with unbreaking (replaced with a low level enchanted book)
   * Now sells cleansed/ancient lapis as rare trade
   * Trades have been rebalanced as snapshot 23w31a
-* Block stack reduction can no longer be reduced by material
+* Block stack reduction can no longer be reduced by material (as materials no longer exist)
 * Hunger Depleted on Wake Up now properly consumes Saturation first and then hunger 
 * Powder Snow is now harder to break 
 * Solium moss now generates more per patch
 * Tool belts are now added to graves instead of dropping
-* Renamed `Misc.Misc` feature to `Misc.Tweaks`
 * Stairs are now mined faster
 * Villagers and Zombie Villagers are now despawned on spawn
 * Miner zombies now spawn more frequently in caves

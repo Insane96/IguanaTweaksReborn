@@ -14,14 +14,14 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 
-@Label(name = "Cloth", description = "Zombies can drop cloth. Cloth is used to make beds.")
+@Label(name = "Cloth", description = "Zombies can drop cloth instead of Rotten Flesh. Cloth is used to make beds.")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class Cloth extends Feature {
 
 	public static final RegistryObject<Item> CLOTH = SRItems.REGISTRY.register("cloth", () -> new Item(new Item.Properties()));
 
 	@Config
-	@Label(name = "Data Pack", description = "Enables a Data Pack that makes beds require Cloth to be crafted and makes zombies drop cloth.")
+	@Label(name = "Data Pack", description = "Enables a Data Pack that makes zombies drop cloth instead of rotten flesh and beds require Cloth to be crafted.")
 	public static Boolean dataPack = true;
 
 	public Cloth(Module module, boolean enabledByDefault, boolean canBeDisabled) {
