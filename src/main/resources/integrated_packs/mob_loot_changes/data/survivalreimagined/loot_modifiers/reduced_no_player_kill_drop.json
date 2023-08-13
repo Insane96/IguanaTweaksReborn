@@ -2,31 +2,7 @@
     "type": "survivalreimagined:loot_purger",
     "conditions": [
         {
-            "condition": "minecraft:inverted",
-            "term": {
-                "condition": "minecraft:killed_by_player"
-            }
-        },
-        {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-                "type_specific": {
-                    "type": "any"
-                }
-            }
-        },
-        {
-            "condition": "minecraft:inverted",
-            "term": {
-                "condition": "minecraft:entity_properties",
-                "entity": "this",
-                "predicate": {
-                    "type_specific": {
-                        "type": "player"
-                    }
-                }
-            }
+            "condition": "survivalreimagined:non_player_arised_drop"
         }
     ],
     "start_range": 29999999,
