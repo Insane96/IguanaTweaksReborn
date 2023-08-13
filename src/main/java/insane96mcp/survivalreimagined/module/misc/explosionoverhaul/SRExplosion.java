@@ -131,7 +131,7 @@ public class SRExplosion extends Explosion {
 	}
 
 	public void fallingBlocks() {
-		if (this.blockInteraction == BlockInteraction.KEEP)
+		if (!this.interactsWithBlocks())
 			return;
 		for(BlockPos blockpos : this.getToBlow()) {
 			BlockState blockstate = this.level.getBlockState(blockpos);
@@ -219,7 +219,7 @@ public class SRExplosion extends Explosion {
 
 	public void destroyBlocks() {
 		this.level.gameEvent(this.source, GameEvent.EXPLODE, new Vec3(this.getPosition().x, this.getPosition().y, this.getPosition().z));
-		if (this.blockInteraction == BlockInteraction.KEEP)
+		if (!this.interactsWithBlocks())
 			return;
 		Util.shuffle(this.toBlow, this.level.getRandom());
 		for(BlockPos blockpos : this.getToBlow()) {

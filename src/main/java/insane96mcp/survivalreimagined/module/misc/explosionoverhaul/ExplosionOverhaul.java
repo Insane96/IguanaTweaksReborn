@@ -31,6 +31,9 @@ public class ExplosionOverhaul extends Feature {
 	@Label(name = "Enable Poof Particles", description = "Somewhere around 1.15 Mojang (for performance issues) removed the poof particles from Explosions. Keep them disabled if you have a low end PC.\n" +
 			"These particles aren't shown when explosion power is <= 1")
 	public static Boolean enablePoofParticles = true;
+	@Config
+	@Label(name = "Disable Emitter Particles", description = "Removes the particles spawned by the explosion.")
+	public static Boolean disableEmitterParticles = true;
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Blocking Damage Scaling", description = "How much damage will the player take when blocking an explosion with a shield. Putting 0 shields will block all the damage like Vanilla, while putting 1 shields will block no damage.")
 	public static Double blockingDamageScaling = 1d;
@@ -71,7 +74,8 @@ public class ExplosionOverhaul extends Feature {
 			if (e instanceof SRExplosion srExplosion && !srExplosion.poofParticles)
 				return;
 			int particleCount = (int)(e.radius * 125);
-			level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.33D);
+			level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 3f, e.radius / 3f, e.radius / 3f, 0.22D);
+			level.sendParticles(ParticleTypes.SMOKE, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount / 5, e.radius / 3f, e.radius / 3f, e.radius / 3f, 0.22D);
 		}
 	}
 
