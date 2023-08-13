@@ -32,7 +32,7 @@ public class BlockTagCondition implements LootItemCondition {
     }
 
     public LootItemConditionType getType() {
-        return SRLootItemConditions.CURRENT_SEASON.get();
+        return SRLootItemConditions.BLOCK_TAG_MATCH.get();
     }
 
     public Set<LootContextParam<?>> getReferencedContextParams() {
