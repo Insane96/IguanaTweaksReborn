@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -73,6 +74,9 @@ public class Anvils extends SRFeature {
     @Config(min = 0)
     @Label(name = "Repair cost multiplier", description = "Multiplier for the levels required to repair or merge an item.")
     public static Double repairCostMultiplier = 0.70d;
+    @Config(min = 0)
+    @Label(name = "Break chance", description = "Chance for an anvil to become chipped/damaged/break. Vanilla is 12%")
+    public static Double breakChance = 0.075d;
 
     @Config
     @Label(name = "Fix anvils with Iron Blocks")
@@ -138,6 +142,15 @@ public class Anvils extends SRFeature {
         }
         event.getLevel().setBlockAndUpdate(event.getPos(), isChipped ? Blocks.ANVIL.defaultBlockState().setValue(AnvilBlock.FACING, direction) : Blocks.CHIPPED_ANVIL.defaultBlockState().setValue(AnvilBlock.FACING, direction));
         event.getLevel().playSound(event.getEntity(), event.getPos(), SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1f, 1.5f);
+    }
+
+    @SubscribeEvent
+    public void onAnvilRepair(AnvilRepairEvent event) {
+        if (!this.isEnabled()
+                || breakChance == 0.12f)
+            return;
+
+        event.setBreakChance(breakChance.floatValue());
     }
 
     @OnlyIn(Dist.CLIENT)

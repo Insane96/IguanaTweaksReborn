@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Anvils now have only 7.5% chance to wear down when used
+
 ## 0.13.0
 * Update to MC 1.20.1
 * Added Coated Copper Tools
