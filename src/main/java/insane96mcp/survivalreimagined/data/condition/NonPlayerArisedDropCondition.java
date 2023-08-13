@@ -31,7 +31,8 @@ public class NonPlayerArisedDropCondition implements LootItemCondition {
     }
 
     public boolean test(LootContext context) {
-        if (!(context.getParam(LootContextParams.THIS_ENTITY) instanceof LivingEntity)
+        if (!(context.hasParam(LootContextParams.THIS_ENTITY))
+                || !(context.getParam(LootContextParams.THIS_ENTITY) instanceof LivingEntity)
                 || context.getParam(LootContextParams.THIS_ENTITY) instanceof Player)
             return false;
 
