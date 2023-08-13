@@ -64,7 +64,7 @@ public abstract class PlayerMixin extends LivingEntity {
 		int lvl = EnchantmentHelper.getBlockEfficiency((Player) (Object) this);
 		//Remove vanilla efficiency
 		efficiency -= (float)(lvl * lvl + 1);
-		return EnchantmentsFeature.getEfficiencyBonus(efficiency, lvl);
+		return efficiency + EnchantmentsFeature.getEfficiencyBonus(efficiency, lvl);
 	}
 
 	@Inject(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setHealth(F)V", shift = At.Shift.AFTER))
