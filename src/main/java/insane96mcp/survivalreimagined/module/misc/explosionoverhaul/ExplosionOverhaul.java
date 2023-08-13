@@ -73,9 +73,28 @@ public class ExplosionOverhaul extends Feature {
 		if (e.level instanceof ServerLevel level && !e.getToBlow().isEmpty() && e.blockInteraction != Explosion.BlockInteraction.KEEP && e.radius >= 2) {
 			if (e instanceof SRExplosion srExplosion && !srExplosion.poofParticles)
 				return;
-			int particleCount = (int)(e.radius * 125);
-			level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 3f, e.radius / 3f, e.radius / 3f, 0.22D);
-			level.sendParticles(ParticleTypes.SMOKE, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount / 5, e.radius / 3f, e.radius / 3f, e.radius / 3f, 0.22D);
+			int particleCount = (int)(e.radius * 100);
+			level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.25D);
+			level.sendParticles(ParticleTypes.SMOKE, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.25D);
+
+			//Pre 1.15 particle spawn, but it was done for each block broken
+			/*double d0 = e.getPosition().x + level.getRandom().nextFloat();
+			double d1 = e.getPosition().y + level.getRandom().nextFloat();
+			double d2 = e.getPosition().z + level.getRandom().nextFloat();
+			double d3 = d0 - e.getPosition().x;
+			double d4 = d1 - e.getPosition().y;
+			double d5 = d2 - e.getPosition().z;
+			double d6 = Math.sqrt(d3 * d3 + d4 * d4 + d5 * d5);
+			d3 = d3 / d6;
+			d4 = d4 / d6;
+			d5 = d5 / d6;
+			double d7 = 0.5D / (d6 / (double)e.radius + 0.1D);
+			d7 = d7 * (double)(level.getRandom().nextFloat() * level.getRandom().nextFloat() + 0.3F);
+			d3 = d3 * d7;
+			d4 = d4 * d7;
+			d5 = d5 * d7;
+			level.sendParticles(ParticleTypes.POOF, (d0 + e.getPosition().x) / 2.0D, (d1 + e.getPosition().y) / 2.0D, (d2 + e.getPosition().z) / 2.0D, particleCount, d3, d4, d5, 0.22D);
+			level.sendParticles(ParticleTypes.SMOKE, d0, d1, d2, particleCount, d3, d4, d5, 0.22D);*/
 		}
 	}
 
