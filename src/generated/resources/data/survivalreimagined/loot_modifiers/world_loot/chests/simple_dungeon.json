@@ -1,8 +1,12 @@
 {
   "type": "survivalreimagined:loot_purger",
   "apply_to_damageable": true,
-  "conditions": [],
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/simple_dungeon"
+    }
+  ],
   "end_range": 2000,
-  "loot_table": "minecraft:chests/simple_dungeon",
   "multiplier_at_start": 0.6
 }

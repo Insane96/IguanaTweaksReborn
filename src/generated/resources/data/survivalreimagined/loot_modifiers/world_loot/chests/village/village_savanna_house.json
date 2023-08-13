@@ -1,8 +1,12 @@
 {
   "type": "survivalreimagined:loot_purger",
   "apply_to_damageable": true,
-  "conditions": [],
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/village/village_savanna_house"
+    }
+  ],
   "end_range": 2000,
-  "loot_table": "minecraft:chests/village/village_savanna_house",
   "multiplier_at_start": 0.1
 }

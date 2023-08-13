@@ -29,6 +29,7 @@
 * Added "Phantoms in the End"
   * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest Forge)
 * Cloth: Zombies no longer drop rotten flesh and reduced cloth drop
+* Mobs not killed by players will now drop nothing 75% of the time
 * Shields can now be recycled in blast and soul furnaces
 * Ground flint is now actual ground flint
 * Fixed some missing blasting recipes and doubled (and halved) the output of rich and poor ores

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "M": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "MMM",
+    "MSM",
+    " S "
+  ],
+  "result": {
+    "item": "survivalreimagined:wooden_hammer"
+  },
+  "show_notification": true
+}

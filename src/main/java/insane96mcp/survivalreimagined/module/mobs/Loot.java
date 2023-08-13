@@ -10,7 +10,7 @@ import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 
-@Label(name = "Loot", description = "Changes mobs loot.")
+@Label(name = "Loot", description = "Changes mobs loot and makes mobs drop reduced loot if not killed by a player.")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class Loot extends Feature {
 
