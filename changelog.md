@@ -13,7 +13,7 @@
   * Added compatibility with Enchanting Infuser
 * Sponges now soak more blocks
 * Client > Sounds renamed to Sounds & Music
-  * Music now plays twice as often
+  * Music now plays thrice as often
 * Nerfs
   * Added "Remove Falling Block Dupe across dimensions"
   * Added "Remove Piston exploits" (removes TNT duping)
