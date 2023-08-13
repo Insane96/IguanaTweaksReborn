@@ -52,7 +52,6 @@
 * Solium moss now generates more per patch
 * Tool belts are now added to graves instead of dropping
 * Stairs are now mined faster
-* Villagers and Zombie Villagers are now despawned on spawn
 * Miner zombies now spawn more frequently in caves
 * You can no longer wood cut pressure plates and buttons
 * Fixed crash when placing Iron Blocks
