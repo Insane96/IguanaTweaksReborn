@@ -97,6 +97,18 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
         return RenderShape.MODEL;
     }
 
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean p_60519_) {
+        if (!state.is(newState.getBlock())) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof GraveBlockEntity graveBlockEntity)
+                graveBlockEntity.getItems().forEach(itemStack -> dropGraveItems(level, itemStack, pos));
+
+            super.onRemove(state, level, pos, newState, p_60519_);
+        }
+    }
+
     public void dropGraveItems(Level level, ItemStack stack, BlockPos pos) {
         if (stack.isEmpty())
             return;
