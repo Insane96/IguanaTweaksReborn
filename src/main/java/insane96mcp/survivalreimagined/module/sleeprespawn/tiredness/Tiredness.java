@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.tiredness;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -31,6 +32,8 @@ import net.minecraft.world.level.GameRules;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -76,11 +79,8 @@ public class Tiredness extends SRFeature {
 	@Label(name = "Prevent Spawn Point", description = "If true the player will not set the spawn point if he/she can't sleep.")
 	public static Boolean shouldPreventSpawnPoint = false;
 	@Config(min = 0d)
-	@Label(name = "Tiredness to sleep", description = "Tiredness required to be able to sleep.")
-	public static Double tirednessToSleep = 500d;
-	@Config(min = 0d)
-	@Label(name = "Tiredness for effect", description = "Tiredness required to get the Tired effect.")
-	public static Double tirednessToEffect = 575d;
+	@Label(name = "Tiredness for effect", description = "Tiredness required to get the Tired effect and be able to sleep.")
+	public static Double tirednessToEffect = 500d;
 	@Config(min = 0d)
 	@Label(name = "Tiredness per level", description = "Every this Tiredness above 'Tiredness for effect' will add a new level of Tired.")
 	public static Double tirednessPerLevel = 75d;
@@ -92,8 +92,7 @@ public class Tiredness extends SRFeature {
 			What to do with tiredness when the player dies.
 			RESET resets the tiredness to 0
 			KEEP keeps the current tiredness
-			SET_AT_EFFECT keeps the current tiredness but if higher than 'Tiredness for effect' it's set to that
-			SET_AT_TIRED keeps current tiredness but if higher than 'Tiredness to sleep' it's set to that""")
+			SET_AT_EFFECT keeps the current tiredness but if higher than 'Tiredness for effect' it's set to that""")
 	public static OnDeath onDeathBehaviour = OnDeath.SET_AT_EFFECT;
 	//Vigour
 	@Config(min = 0)
@@ -114,8 +113,7 @@ public class Tiredness extends SRFeature {
 	enum OnDeath {
 		RESET,
 		KEEP,
-		SET_AT_EFFECT,
-		SET_AT_TIRED
+		SET_AT_EFFECT
 	}
 
 	@SubscribeEvent
@@ -126,8 +124,6 @@ public class Tiredness extends SRFeature {
 			return;
 
 		ServerPlayer serverPlayer = (ServerPlayer) event.player;
-		float tiredness = TirednessHandler.get(serverPlayer);
-		applyTired(tiredness, serverPlayer);
 		tickEnergyBoostEffect(serverPlayer);
 	}
 
@@ -145,11 +141,17 @@ public class Tiredness extends SRFeature {
 		}
 	}
 
-	private void applyTired(float tiredness, ServerPlayer player) {
-		if (tiredness >= tirednessToEffect && player.tickCount % 20 == 0) {
-			if (!player.hasEffect(TIRED.get()))
-				player.displayClientMessage(Component.translatable(TOO_TIRED), false);
-			player.addEffect(new MobEffectInstance(TIRED.get(), 25, Math.min((int) ((tiredness - tirednessToEffect) / tirednessPerLevel), 4), true, false, true));
+	private static void applyTired(float tiredness, ServerPlayer player) {
+		if (tiredness < tirednessToEffect)
+			return;
+		int amplifier = Math.min((int) ((tiredness - tirednessToEffect) / tirednessPerLevel), 4);
+		if (amplifier >= 0) {
+			int oAmplifier = -1;
+			if (player.hasEffect(TIRED.get())) {
+				oAmplifier = player.getEffect(TIRED.get()).getAmplifier();
+			}
+			if (amplifier != oAmplifier)
+				player.addEffect(new MobEffectInstance(TIRED.get(), -1, amplifier, true, false, true));
 		}
 	}
 
@@ -172,10 +174,10 @@ public class Tiredness extends SRFeature {
 
 		float tiredness = TirednessHandler.get(serverPlayer);
 		float newTiredness = TirednessHandler.addAndGet(serverPlayer, amount * tirednessGainMultiplier.floatValue());
-		if (tiredness < tirednessToSleep && newTiredness >= tirednessToSleep) {
-			//TODO Add effect
+		if (tiredness < tirednessToEffect && newTiredness >= tirednessToEffect) {
 			serverPlayer.displayClientMessage(Component.translatable(TIRED_ENOUGH), false);
 		}
+		applyTired(tiredness, serverPlayer);
 
 		Object msg = new MessageTirednessSync(newTiredness);
 		NetworkHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
@@ -201,13 +203,13 @@ public class Tiredness extends SRFeature {
 
 		ServerPlayer player = (ServerPlayer) event.getEntity();
 
-		if (TirednessHandler.get(player) < tirednessToSleep) {
+		if (!player.hasEffect(TIRED.get())) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.displayClientMessage(Component.translatable(NOT_TIRED), true);
 			if (!shouldPreventSpawnPoint)
 				player.setRespawnPosition(player.level().dimension(), event.getPos(), player.getYRot(), false, true);
 		}
-		else if (TirednessHandler.get(player) > tirednessToEffect) {
+		else {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.startSleeping(event.getPos());
 			((ServerLevel)player.level()).updateSleepingPlayerList();
@@ -222,12 +224,18 @@ public class Tiredness extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach(player -> {
-			float tirednessOnWakeUp = Mth.clamp(TirednessHandler.get(player) - tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
+			float tirednessOnWakeUp = Mth.clamp(TirednessHandler.get(player) - tirednessToEffect.floatValue(), 0, tirednessToEffect.floatValue() / 2f);
 			int duration = (int) (vigourDuration - (tirednessOnWakeUp * vigourPenalty));
 			if (duration > 0)
 				player.addEffect(new MobEffectInstance(SRMobEffects.VIGOUR.get(), duration * 20, vigourAmplifier, false, false, true));
 			TirednessHandler.set(player, tirednessOnWakeUp);
+			player.removeEffect(TIRED.get());
 		});
+
+		int toSub = 11458;
+		if (event.getLevel().getLevelData().isRaining())
+			toSub = 11990;
+		event.setTimeAddition(event.getNewTime() - toSub);
 	}
 
 	@SubscribeEvent
@@ -240,7 +248,7 @@ public class Tiredness extends SRFeature {
 	@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 	public static boolean canSleepDuringDay(Player player) {
 		return isEnabled(Tiredness.class)
-				&& TirednessHandler.get(player) > tirednessToEffect;
+				&& player.hasEffect(TIRED.get());
 	}
 
 	@SubscribeEvent
@@ -266,10 +274,6 @@ public class Tiredness extends SRFeature {
 			case SET_AT_EFFECT -> {
 				if (tiredness > tirednessToEffect)
 					tiredness = tirednessToEffect.floatValue();
-			}
-			case SET_AT_TIRED -> {
-				if (tiredness > tirednessToSleep)
-					tiredness = tirednessToSleep.floatValue();
 			}
 		}
 
