@@ -30,26 +30,4 @@ public class SoliumMossBlock extends GlowLichenBlock {
         }
         return false;
     }
-
-    @Override
-    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        int light = level.getBrightness(LightLayer.SKY, pos);
-        if (light == 0)
-            return;
-
-        int dayTime = (int) (level.dayTime() % 24000);
-        boolean isDayTime = dayTime < 12786 || dayTime >= 23216;
-        boolean isRain = level.isRaining();
-        boolean isThunder = level.isThundering();
-
-        int oneInChanceToGrow = 10;
-        if (!isDayTime) oneInChanceToGrow *= 2;
-        if (!isRain) oneInChanceToGrow *= 2;
-        if (!isThunder) oneInChanceToGrow *= 2;
-        oneInChanceToGrow *= light / 15f;
-        if (net.minecraftforge.common.ForgeHooks.onCropsGrowPre(level, pos, state, random.nextInt(oneInChanceToGrow) == 0)) {
-            super.performBonemeal(level, random, pos, state);
-            net.minecraftforge.common.ForgeHooks.onCropsGrowPost(level, pos, state);
-        }
-    }
 }

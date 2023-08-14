@@ -9,9 +9,14 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
+import net.minecraft.world.level.material.Fluids;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SolariumBoudlerFeature extends Feature<BlockStateConfiguration> {
 
@@ -21,48 +26,52 @@ public class SolariumBoudlerFeature extends Feature<BlockStateConfiguration> {
 
 	@Override
 	public boolean place(FeaturePlaceContext<BlockStateConfiguration> context) {
-		BlockPos blockpos = context.origin();
+		BlockPos blockPos = context.origin();
 		WorldGenLevel worldgenlevel = context.level();
 		RandomSource randomsource = context.random();
+		List<BlockPos> bouldersPos = new ArrayList<>();
+		for (int boulders = 0; boulders < 4; boulders++) {
+			blockPos = blockPos.offset(randomsource.nextInt(6) - 1, 3, randomsource.nextInt(6) - 1);
+			for(; blockPos.getY() > worldgenlevel.getMinBuildHeight() + 3; blockPos = blockPos.below()) {
+				if (!worldgenlevel.isEmptyBlock(blockPos.below())) {
+					BlockState blockstate = worldgenlevel.getBlockState(blockPos.below());
+					if (isDirt(blockstate) || isStone(blockstate) || blockstate.is(BlockTags.SAND))
+						break;
+				}
+			}
+			blockPos = blockPos.below(2);
+			bouldersPos.add(new BlockPos(blockPos));
+			if (boulders >= 2 && randomsource.nextBoolean())
+				break;
+		}
 
-		BlockStateConfiguration blockstateconfiguration = context.config();
-		for(; blockpos.getY() > worldgenlevel.getMinBuildHeight() + 3; blockpos = blockpos.below()) {
-			if (!worldgenlevel.isEmptyBlock(blockpos.below())) {
-				BlockState blockstate = worldgenlevel.getBlockState(blockpos.below());
-				if (isDirt(blockstate) || blockstate.is(BlockTags.SAND)) {
-					break;
+		for (BlockPos pos : bouldersPos) {
+			if (blockPos.getY() <= worldgenlevel.getMinBuildHeight() + 3)
+				continue;
+
+			int r = 3;
+			float f = 2.5f + randomsource.nextFloat();
+			for (BlockPos betweenClosedPos : BlockPos.betweenClosed(pos.offset(-r, -r, -r), pos.offset(r, r, r))) {
+				if (betweenClosedPos.distSqr(pos) <= (double) (f * f)) {
+					int b = randomsource.nextInt(100);
+					if (b < 30)
+						worldgenlevel.setBlock(betweenClosedPos, Blocks.STONE.defaultBlockState, 3);
+					else if (b < 60)
+						worldgenlevel.setBlock(betweenClosedPos, Blocks.COBBLESTONE.defaultBlockState, 3);
+					else if (b < 80)
+						worldgenlevel.setBlock(betweenClosedPos, Blocks.DIRT.defaultBlockState, 3);
+					else
+						worldgenlevel.setBlock(betweenClosedPos, Blocks.COARSE_DIRT.defaultBlockState, 3);
+					if (randomsource.nextFloat() < 0.4f)
+						tryPlaceSolium(worldgenlevel, betweenClosedPos);
 				}
 			}
 		}
 
-		if (blockpos.getY() <= worldgenlevel.getMinBuildHeight() + 3) {
-			return false;
-		} else {
-			for(int l = 0; l < 3; ++l) {
-				int i = randomsource.nextInt(3);
-				int j = randomsource.nextInt(2) + 1;
-				int k = randomsource.nextInt(3);
-				float f = (float)(i + j + k) * 0.333F + 0.5F;
-
-				for(BlockPos blockpos1 : BlockPos.betweenClosed(blockpos.offset(-i, -j, -k), blockpos.offset(i, j, k))) {
-					if (blockpos1.distSqr(blockpos) <= (double)(f * f)) {
-						if (randomsource.nextBoolean())
-							worldgenlevel.setBlock(blockpos1, Blocks.STONE.defaultBlockState, 3);
-						else
-							worldgenlevel.setBlock(blockpos1, Blocks.COBBLESTONE.defaultBlockState, 3);
-						if (randomsource.nextFloat() < 0.4f)
-							placeGrowthIfPossible(worldgenlevel, blockpos1);
-					}
-				}
-
-				blockpos = blockpos.offset(-1 + randomsource.nextInt(2), -randomsource.nextInt(2), -1 + randomsource.nextInt(2));
-			}
-
-			return true;
-		}
+		return true;
 	}
 
-	public static boolean placeGrowthIfPossible(WorldGenLevel pLevel, BlockPos pPos) {
+	public static void tryPlaceSolium(WorldGenLevel pLevel, BlockPos pPos) {
 		BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos().set(pPos);
 		for (Direction direction : Direction.values()) {
 			mutableBlockPos.set(pPos.relative(direction));
@@ -77,10 +86,11 @@ public class SolariumBoudlerFeature extends Feature<BlockStateConfiguration> {
 				}
 				blockStateToPlace = blockStateToPlace.setValue(MultifaceBlock.getFaceProperty(mossDirection), true);
 			}
+			if (curBlockState.getFluidState().isSourceOfType(Fluids.WATER))
+				blockStateToPlace = blockStateToPlace.setValue(BlockStateProperties.WATERLOGGED, Boolean.TRUE);
 			pLevel.setBlock(mutableBlockPos, blockStateToPlace, 3);
 			pLevel.getChunk(mutableBlockPos).markPosForPostprocessing(mutableBlockPos);
 		}
 
-		return true;
 	}
 }

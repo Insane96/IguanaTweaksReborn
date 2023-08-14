@@ -291,8 +291,10 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer);
 
         //Solarium
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Solarium.SOLARIUM_BALL.get())
-                .requires(Solarium.SOLIUM_MOSS.item().get(), 9)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Solarium.SOLARIUM_BALL.get())
+                .pattern("ss")
+                .pattern("ss")
+                .define('s', Solarium.SOLIUM_MOSS.item().get())
                 .unlockedBy("has_solium_moss", has(Solarium.SOLIUM_MOSS.item().get()))
                 .save(writer);
         SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.IRON_AXE), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Solarium.AXE.get())

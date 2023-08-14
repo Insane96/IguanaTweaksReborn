@@ -6,6 +6,9 @@
   * Shield parrying now can electrocute enemies
   * Texture
 * Solarium
+  * Solium moss now generates on boulders around the world instead of on the ground
+  * Solium moss no longer grows naturally, only with bone meal
+  * Solarium ball can now be crafted with moss instead of 9
   * Fixed solium moss not dropping as many items as the sides covered
 * Slight rework to Tiredness
   * As long as you're tired, the effect is applied, there's no longer a period between "You're tired and can sleep" and the effect

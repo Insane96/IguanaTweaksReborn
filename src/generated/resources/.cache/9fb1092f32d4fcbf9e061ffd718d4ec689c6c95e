@@ -1,4 +1,4 @@
-// 1.20.1	2023-08-14T10:30:33.5072184	Recipes
+// 1.20.1	2023-08-14T16:08:47.3608967	Recipes
 dfc51f50706769ded48481605ac0f276a1dc57fc data/survivalreimagined/advancements/recipes/building_blocks/durium_block.json
 8f93bf2435e83bd7daf400057864b04e9fc3beab data/survivalreimagined/advancements/recipes/building_blocks/flint_block.json
 8e153290c8f892809e1d2ec3f4fe8be69545ca69 data/survivalreimagined/advancements/recipes/building_blocks/polished_flint_block.json
@@ -532,7 +532,7 @@ cfcedb28b10c948433da47bfb388841e84974837 data/survivalreimagined/recipes/smeltin
 ab58c646cf7638aee25f75efbc07b412990b1991 data/survivalreimagined/recipes/smelting_chained_copper_helmet.json
 677a10e78d1e47879367c216442f5de6554be0d3 data/survivalreimagined/recipes/smelting_chained_copper_leggings.json
 1d8c5737b3149c2d573f980fcc529957b2b41d05 data/survivalreimagined/recipes/solarium_axe.json
-093d91f2789bf93cbaba03eaa6240105fc551a76 data/survivalreimagined/recipes/solarium_ball.json
+9d35d0310914f721059a330b5086b31ae60b6c23 data/survivalreimagined/recipes/solarium_ball.json
 4fdf585428ae920b022add290b0ac02c46d3451f data/survivalreimagined/recipes/solarium_boots.json
 bf82ba8d2a8236170f5153e151e9d7dabea8cb98 data/survivalreimagined/recipes/solarium_chestplate.json
 bc50a5eb48cde17de5435235ace89c277fb164fc data/survivalreimagined/recipes/solarium_hammer.json
