@@ -2,7 +2,6 @@ package insane96mcp.survivalreimagined.module.movement;
 
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.insanelib.util.MCUtils;
@@ -25,15 +24,17 @@ import java.util.UUID;
 @Label(name = "Terrain Slowdown", description = "Slowdown based off the terrain you're walking on. Custom Terrain Slowdown are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class TerrainSlowdown extends SRFeature {
-	private static final UUID MATERIAL_SLOWDOWN_UUID = UUID.fromString("a849043f-b280-4789-bafd-5da8e8e1078e");
+	private static final UUID TERRAIN_SLOWDOWN = UUID.fromString("a849043f-b280-4789-bafd-5da8e8e1078e");
 
 	public static final ArrayList<IdTagValue> CUSTOM_TERRAIN_SLOWDOWN_DEFAULT = new ArrayList<>(List.of(
-		new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:ice", 0.55d)
+			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:ice", 0.55d)
 	));
 	public static final ArrayList<IdTagValue> customTerrainSlowdown = new ArrayList<>();
-	@Config
-	@Label(name = "Prevent Snow slowdown with Leather Boots")
-	public static Boolean preventSnowSlowdownWithLeatherBoots = true;
+	public static final ArrayList<IdTagValue> CUSTOM_IN_TERRAIN_SLOWDOWN_DEFAULT = new ArrayList<>(List.of(
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:snow", 0.075d),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:powder_snow", 0.5d)
+	));
+	public static final ArrayList<IdTagValue> customInTerrainSlowdown = new ArrayList<>();
 
 	public TerrainSlowdown(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -44,6 +45,7 @@ public class TerrainSlowdown extends SRFeature {
 		super.loadConfigOptions();
 		//TODO Sync
 		JSON_CONFIGS.add(new JsonConfig<>("custom_terrain_slowdown.json", customTerrainSlowdown, CUSTOM_TERRAIN_SLOWDOWN_DEFAULT, IdTagValue.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("custom_in_terrain_slowdown.json", customInTerrainSlowdown, CUSTOM_IN_TERRAIN_SLOWDOWN_DEFAULT, IdTagValue.LIST_TYPE));
 	}
 
 	@Override
@@ -83,43 +85,44 @@ public class TerrainSlowdown extends SRFeature {
 		if (blocks != 0)
 			onTerrainSlowdown /= blocks;
 
-		//TODO Custom in terrain slowdown
 		double inTerrainSlowdown = 0d;
-		/*for (int x2 = mX; x2 < bb.maxX; x2++) {
+		blocks = 0;
+		for (int x2 = mX; x2 < bb.maxX; x2++) {
 			for (int y2 = mY; y2 < bb.maxY; y2++) {
 				for (int z2 = mZ; z2 < bb.maxZ; z2++) {
-					BlockState state = event.player.level.getBlockState(new BlockPos(x2, y2, z2));
+					BlockState state = event.player.level().getBlockState(new BlockPos(x2, y2, z2));
 					if (state.isAir())
 						continue;
-					if ((state.getMaterial() == Material.SNOW || state.getMaterial() == Material.TOP_SNOW)
-							&& event.player.getItemBySlot(EquipmentSlot.FEET).is(Items.LEATHER_BOOTS)
-							&& preventSnowSlowdownWithLeatherBoots)
-						continue;
 					double blockSlowdown = 0d;
-					if ((state.getMaterial() == Material.SNOW || state.getMaterial() == Material.TOP_SNOW)
-							&& event.player.getItemBySlot(EquipmentSlot.FEET).is(Items.LEATHER_BOOTS)
-							&& preventSnowSlowdownWithLeatherBoots)
-						continue;
+					for (IdTagValue idTagValue : customInTerrainSlowdown) {
+						if (idTagValue.matchesBlock(state.getBlock())) {
+							blockSlowdown = idTagValue.value;
+							blocks++;
+							break;
+						}
+					}
 					inTerrainSlowdown += blockSlowdown;
 				}
 			}
-		}*/
+		}
+		if (blocks != 0)
+			inTerrainSlowdown /= blocks;
 
 		double slowdown = onTerrainSlowdown + inTerrainSlowdown;
 
-		AttributeModifier modifier = event.player.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(MATERIAL_SLOWDOWN_UUID);
+		AttributeModifier modifier = event.player.getAttribute(Attributes.MOVEMENT_SPEED).getModifier(TERRAIN_SLOWDOWN);
 		if (slowdown != 0d) {
 			if (modifier == null) {
-				MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, MATERIAL_SLOWDOWN_UUID, "material slowdown", -slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
+				MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, TERRAIN_SLOWDOWN, "terrain slowdown", -slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
 			}
 			else if (modifier.getAmount() != -slowdown) {
-				event.player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(MATERIAL_SLOWDOWN_UUID);
-				MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, MATERIAL_SLOWDOWN_UUID, "material slowdown", -slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
+				event.player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(TERRAIN_SLOWDOWN);
+				MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, TERRAIN_SLOWDOWN, "terrain slowdown", -slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
 			}
 		}
 		else {
 			if (modifier != null) {
-				event.player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(MATERIAL_SLOWDOWN_UUID);
+				event.player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(TERRAIN_SLOWDOWN);
 			}
 		}
 	}

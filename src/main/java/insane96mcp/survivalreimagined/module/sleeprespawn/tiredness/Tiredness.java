@@ -268,9 +268,7 @@ public class Tiredness extends SRFeature {
 		float tiredness = TirednessHandler.get(event.getOriginal());
 		switch (onDeathBehaviour) {
 			case RESET -> tiredness = 0;
-			case KEEP -> {
-
-			}
+			case KEEP -> { }
 			case SET_AT_EFFECT -> {
 				if (tiredness > tirednessToEffect)
 					tiredness = tirednessToEffect.floatValue();

@@ -22,7 +22,6 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.WORLD)
 public class Loot extends Feature {
 
-	//TODO Hourglass when and if will be updated
 	@Config
 	@Label(name = "Better Structure Loot", description = "If true a datapack will be enabled that overhauls structure loot")
 	public static Boolean betterStructureLoot = true;
