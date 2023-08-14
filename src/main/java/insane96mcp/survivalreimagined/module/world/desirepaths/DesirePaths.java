@@ -67,7 +67,7 @@ public class DesirePaths extends Feature {
 				|| !event.player.onGround())
 			return;
 
-		AABB bb = event.player.getBoundingBox().deflate(0.01d, 0d, 0.01d);
+		AABB bb = event.player.getBoundingBox().deflate(0.02d, 0.02d, 0.02d);
 		int mX = Mth.floor(bb.minX);
 		int mZ = Mth.floor(bb.minZ);
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
