@@ -2,6 +2,10 @@
 
 ## Upcoming
 * Anvils now have only 7.5% chance to wear down when used
+* Slight rework to Tiredness
+  * As long as you're tired, the effect is applied, there's no longer a period between "You're tired and can sleep" and the effect
+  * Effect is now applied indefinitely, and removed on wake up
+  * Re-added Tiredness overlay (no longer shows up at Tired I)
 
 ## 0.13.0
 * Update to MC 1.20.1

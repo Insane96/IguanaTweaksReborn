@@ -278,6 +278,36 @@ public class Tiredness extends SRFeature {
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
+	public static void registerGui(RegisterGuiOverlaysEvent event) {
+		event.registerAbove(VanillaGuiOverlay.SLEEP_FADE.id(), "tired_overlay", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
+			assert Minecraft.getInstance().player != null : "Minecraft.getInstance().player is null";
+			if (isEnabled(Tiredness.class) && gui.shouldDrawSurvivalElements())
+			{
+				LocalPlayer player = Minecraft.getInstance().player;
+				if (!player.hasEffect(TIRED.get()))
+					return;
+				//noinspection DataFlowIssue
+				int amplifier = player.getEffect(TIRED.get()).getAmplifier() + 1;
+				//No overlay at Tired I
+				if (amplifier < 2)
+					return;
+				Minecraft.getInstance().getProfiler().push("tired_overlay");
+				RenderSystem.disableDepthTest();
+				float opacity = (amplifier * 20f) / 100.0F;
+				if (opacity > 1.0F)
+					opacity = 1.0F - (amplifier * 20f - 100) / 10.0F;
+
+				int color = (int) (220.0F * opacity) << 24 | 1052704;
+				guiGraphics.fill(0, 0, screenWidth, screenHeight, color);
+				RenderSystem.enableDepthTest();
+				Minecraft.getInstance().getProfiler().pop();
+			}
+		});
+	}
+
+
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
 	public void debugScreen(CustomizeGuiOverlayEvent.DebugText event) {
 		if (!this.isEnabled())
 			return;

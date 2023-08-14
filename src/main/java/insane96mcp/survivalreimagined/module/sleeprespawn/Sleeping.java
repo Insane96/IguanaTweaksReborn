@@ -29,7 +29,7 @@ public class Sleeping extends Feature {
 	@Label(name = "Disable Spawn Point", description = "If set to true the player spawn point cannot be changed with beds.")
 	public static Boolean disableSpawnPoint = false;
 	@Config
-	@Label(name = "Allow Sleeping During Day", description = "If set to true the player will be able to sleep during day time. On wake up it will be night time. Note that with 'Tiredness' feature enabled you are still not able to sleep during day unless you're ")
+	@Label(name = "Allow Sleeping During Day", description = "If set to true the player will be able to sleep during day time. On wake up it will be night time. Note that with 'Tiredness' feature enabled you are still not able to sleep during day unless you're tired enough.")
 	public static Boolean allowDaySleep = false;
 
 	public Sleeping(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -82,8 +82,7 @@ public class Sleeping extends Feature {
 	@SubscribeEvent
 	public void onWakeUp(SleepFinishedTimeEvent event) {
 		if (!this.isEnabled()
-				|| !allowDaySleep
-				/*|| !Modules.sleepRespawn.tiredness.canSleepDuringDay(event.get())*/)
+				|| !allowDaySleep)
 			return;
 		int toSub = 11458;
 		if (event.getLevel().getLevelData().isRaining())
