@@ -8,7 +8,6 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.sleeprespawn.death.Death;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
@@ -56,8 +55,7 @@ public class Equipment extends SRFeature {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onMobSpawn(EntityJoinLevelEvent event) {
         if (!this.isEnabled()
-                || !(event.getEntity() instanceof Mob entity)
-                || entity.getPersistentData().contains(Death.PLAYER_GHOST))
+                || !(event.getEntity() instanceof Mob entity))
             return;
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
