@@ -19,15 +19,17 @@
 		"iron_pickaxe": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
-				"output": {
-					"items": [
-						"minecraft:iron_pickaxe",
-						"minecraft:iron_axe",
-						"minecraft:iron_shovel",
-						"minecraft:iron_sword",
-						"minecraft:iron_hoe"
-					]
-				}
+				"items": [
+					{
+						"items": [
+							"minecraft:iron_pickaxe",
+							"minecraft:iron_axe",
+							"minecraft:iron_shovel",
+							"minecraft:iron_sword",
+							"minecraft:iron_hoe"
+						]
+					}
+				]
 			}
 		}
 	},
