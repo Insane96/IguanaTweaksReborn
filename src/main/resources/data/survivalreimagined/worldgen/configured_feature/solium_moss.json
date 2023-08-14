@@ -1,38 +1,8 @@
 {
-    "type": "minecraft:flower",
+    "type": "survivalreimagined:solarium_boulder_feature",
     "config": {
-        "tries": 512,
-        "xz_spread": 9,
-        "y_spread": 9,
-        "feature": {
-            "feature": {
-                "type": "minecraft:simple_block",
-                "config": {
-                    "to_place": {
-                        "type": "minecraft:weighted_state_provider",
-                        "entries": [
-                            {
-                                "weight": 1,
-                                "data": {
-                                    "Name": "survivalreimagined:solium_moss",
-                                    "Properties": {
-                                        "down": "true"
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            "placement": [
-                {
-                    "type": "minecraft:block_predicate_filter",
-                    "predicate": {
-                        "type": "minecraft:matching_blocks",
-                        "blocks": "minecraft:air"
-                    }
-                }
-            ]
+        "state": {
+            "Name": "minecraft:stone"
         }
     }
 }

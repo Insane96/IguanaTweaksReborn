@@ -5,6 +5,8 @@
 * Coated Copper Tools finished
   * Shield parrying now can electrocute enemies
   * Texture
+* Solarium
+  * Fixed solium moss not dropping as many items as the sides covered
 * Slight rework to Tiredness
   * As long as you're tired, the effect is applied, there's no longer a period between "You're tired and can sleep" and the effect
   * Effect is now applied indefinitely, and removed on wake up

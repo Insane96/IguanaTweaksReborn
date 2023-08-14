@@ -34,6 +34,8 @@ public class SoliumMossBlock extends GlowLichenBlock {
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int light = level.getBrightness(LightLayer.SKY, pos);
+        if (light == 0)
+            return;
 
         int dayTime = (int) (level.dayTime() % 24000);
         boolean isDayTime = dayTime < 12786 || dayTime >= 23216;
