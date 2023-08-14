@@ -34,6 +34,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -99,20 +100,43 @@ public class CopperToolsExpansion extends Feature {
 		tag.putInt(COATED_TIMES_HIT, hits);
 	}
 
-	private void electrocute(Player attacker, LivingEntity attacked) {
-		DamageSource damageSource = attacker.damageSources().source(ELECTROCUTION_ATTACK, attacker);
+	@SubscribeEvent
+	public void onParry(ShieldBlockEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof Player player)
+				|| player.getAttackStrengthScale(1f) < 0.9f
+				|| !(event.getDamageSource().getDirectEntity() instanceof LivingEntity attacker)
+				|| !player.getUseItem().is(COATED_SHIELD.get()))
+			return;
+
+		CompoundTag tag = player.getUseItem().getOrCreateTag();
+		if (!tag.contains(COATED_TIMES_HIT))
+			tag.putInt(COATED_TIMES_HIT, 0);
+
+		int hits = tag.getInt(COATED_TIMES_HIT);
+		if (++hits >= 4) {
+			hits = 0;
+			electrocute(player, attacker);
+		}
+		tag.putInt(COATED_TIMES_HIT, hits);
+	}
+
+	private void electrocute(Player electrocuter, LivingEntity attacked) {
+		DamageSource damageSource = electrocuter.damageSources().source(ELECTROCUTION_ATTACK, electrocuter);
 		double range = 4.5d;
-		float secondaryDamage = (float) (1.0f * attacker.getAttributeValue(Attributes.ATTACK_DAMAGE));
+		float secondaryDamage = (float) (1.0f * electrocuter.getAttributeValue(Attributes.ATTACK_DAMAGE));
+		if (electrocuter.getUseItem().is(COATED_SHIELD.get()))
+			secondaryDamage = (float) ((SPShieldItem)electrocuter.getUseItem().getItem()).getBlockedDamage();
 		int hitEntities = 0;
 		IntList listIdsOfHitEntities = new IntArrayList();
 		List<LivingEntity> listOfHitEntities = new ArrayList<>();
 		//Add the player to the list, so it doesn't get targeted
-		listOfHitEntities.add(attacker);
+		listOfHitEntities.add(electrocuter);
 		Entity lastEntityHit = attacked;
 		do {
-			List<LivingEntity> entitiesOfClass = attacker.level().getEntitiesOfClass(LivingEntity.class, lastEntityHit.getBoundingBox().inflate(range),
-					livingEntity -> (attacker.canAttack(livingEntity)
-									|| (livingEntity instanceof Player && attacker.canHarmPlayer((Player) livingEntity))) && !livingEntity.isDeadOrDying());
+			List<LivingEntity> entitiesOfClass = electrocuter.level().getEntitiesOfClass(LivingEntity.class, lastEntityHit.getBoundingBox().inflate(range),
+					livingEntity -> (electrocuter.canAttack(livingEntity)
+									|| (livingEntity instanceof Player && electrocuter.canHarmPlayer((Player) livingEntity))) && !livingEntity.isDeadOrDying());
 			LivingEntity target = MCUtils.getNearestEntity(entitiesOfClass, listOfHitEntities, attacked.position());
 			if (target == null)
 				break;
@@ -125,7 +149,7 @@ public class CopperToolsExpansion extends Feature {
 		} while (hitEntities < 4);
 
 		Object msg = new ElectrocutionParticleMessage(listIdsOfHitEntities);
-		for (Player levelPlayer : attacker.level().players()) {
+		for (Player levelPlayer : electrocuter.level().players()) {
 			NetworkHandler.CHANNEL.sendTo(msg, ((ServerPlayer) levelPlayer).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}

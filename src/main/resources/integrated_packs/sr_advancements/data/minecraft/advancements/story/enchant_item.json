@@ -17,8 +17,16 @@
     "parent": "minecraft:story/enter_the_nether",
     "criteria": {
         "enchanted_item": {
-            "trigger": "minecraft:enchanted_item",
-            "conditions": {}
+            "trigger": "minecraft:item_used_on_block",
+            "conditions": {
+                "location": [
+                    {
+                        "condition": "minecraft:block_state_property",
+                        "block": "minecraft:enchanting_table",
+                        "properties": {}
+                    }
+                ]
+            }
         }
     },
     "requirements": [

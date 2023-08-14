@@ -76,7 +76,7 @@
 
 	"survivalreimagined.electrocution.damage": " %.1f Electrocution Damage",
 	"survivalreimagined.electrocution.charge": "  (%f%% Charged)",
-	"survivalreimagined.subtitle.electrocution": "Entity Electrocuted",
+	"survivalreimagined.subtitle.electrocution": "Entity electrocuted",
 	"item.survivalreimagined.copper_axe": "Copper Axe",
 	"item.survivalreimagined.copper_pickaxe": "Copper Pickaxe",
 	"item.survivalreimagined.copper_sword": "Copper Sword",
@@ -165,6 +165,7 @@
 	"survivalreimagined.hammer_durability": "%f Durability Used",
 	"block.survivalreimagined.forge": "Forge",
 	"survivalreimagined.container.forge": "Forge",
+	"item.survivalreimagined.wooden_hammer": "Wooden Forge Hammer",
 	"item.survivalreimagined.stone_hammer": "Stone Forge Hammer",
 	"item.survivalreimagined.flint_hammer": "Flint Forge Hammer",
 	"item.survivalreimagined.copper_hammer": "Copper Forge Hammer",

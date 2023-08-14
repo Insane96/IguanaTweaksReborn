@@ -110,6 +110,7 @@ public class ClientSetup {
         }
         else if (event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.accept(FlintExpansion.SWORD.get());
+            event.accept(FlintExpansion.AXE.get());
             event.accept(FlintExpansion.SHIELD.get());
             event.accept(CopperToolsExpansion.COPPER_SWORD.get());
             event.accept(CopperToolsExpansion.COPPER_AXE.get());

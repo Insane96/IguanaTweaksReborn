@@ -2,6 +2,9 @@
 
 ## Upcoming
 * Anvils now have only 7.5% chance to wear down when used
+* Coated Copper Tools finished
+  * Shield parrying now can electrocute enemies
+  * Texture
 * Slight rework to Tiredness
   * As long as you're tired, the effect is applied, there's no longer a period between "You're tired and can sleep" and the effect
   * Effect is now applied indefinitely, and removed on wake up
