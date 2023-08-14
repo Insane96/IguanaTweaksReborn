@@ -36,7 +36,6 @@
   * Merging enchanted tools cost is now calculated from the result, and not the base items
   * Merging items in an anvil now gives 20% bonus durability (instead of 12% vanilla)
   * Fixed fixing anvils opening the interface
-* Rare Huge Coal veins can now generate in the world
 * Added "Phantoms in the End"
   * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest Forge)
 * Cloth: Zombies no longer drop rotten flesh and reduced cloth drop
