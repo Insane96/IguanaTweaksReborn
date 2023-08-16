@@ -85,6 +85,6 @@ public class Fletching extends Feature {
 
 	public Fletching(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "fletching", Component.literal("Survival Reimagined Forging Equipment"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "fletching", Component.literal("Survival Reimagined Fletching"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
 	}
 }

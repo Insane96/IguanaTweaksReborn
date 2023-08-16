@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined;
 
+import com.google.common.collect.Lists;
 import insane96mcp.survivalreimagined.data.SRDataReloadListener;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.data.generator.SRGlobalLootModifierProvider;
@@ -27,6 +28,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackRepository;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -36,6 +38,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -51,7 +54,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Path;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 @Mod("survivalreimagined")
 public class SurvivalReimagined
@@ -127,7 +132,6 @@ public class SurvivalReimagined
         ClientSetup.init(event);
     }
 
-    @SubscribeEvent
     public void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
@@ -153,6 +157,24 @@ public class SurvivalReimagined
                     (path) -> new PathPackResources(path, resourcePath, false), PackType.SERVER_DATA, Pack.Position.TOP, dataPack.shouldBeEnabled() ? PackSource.DEFAULT : SRPackSource.DISABLED);
             event.addRepositorySource((packConsumer) -> packConsumer.accept(pack));
         }
+    }
+
+    @SubscribeEvent
+    public void onServerStartedEvent(ServerStartedEvent event)
+    {
+        boolean hasDisabledPack = false;
+        PackRepository packRepository = event.getServer().getPackRepository();
+        List<Pack> list = Lists.newArrayList(packRepository.getSelectedPacks());
+        for (IntegratedDataPack dataPack : IntegratedDataPack.INTEGRATED_DATA_PACKS) {
+            String dataPackId = SurvivalReimagined.RESOURCE_PREFIX + dataPack.getPath();
+            Pack pack = packRepository.getPack(dataPackId);
+            if (pack != null && !dataPack.shouldBeEnabled()) {
+                list.remove(pack);
+                hasDisabledPack = true;
+            }
+        }
+        if (hasDisabledPack)
+            event.getServer().reloadResources(list.stream().map(Pack::getId).collect(Collectors.toList()));
     }
 
     public void registerParticleFactories(RegisterParticleProvidersEvent event) {
