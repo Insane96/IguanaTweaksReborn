@@ -8,13 +8,13 @@
 * Solarium
   * Solium moss now generates on boulders around the world instead of on the ground
   * Solium moss no longer grows naturally, only with bone meal
-  * Solarium ball can now be crafted with moss instead of 9
+  * Solarium ball can now be crafted with 4 moss instead of 9
   * Fixed solium moss not dropping as many items as the sides covered
 * Slight rework to Tiredness
   * As long as you're tired, the effect is applied, there's no longer a period between "You're tired and can sleep" and the effect
   * Effect is now applied indefinitely, and removed on wake up
   * Re-added Tiredness overlay (no longer shows up at Tired I)
-* Added back In terrain slowdown
+* Added back "In terrain slowdown"
   * Snow and powder snow slow down
 * Phantoms now actually spawn in The End
 
