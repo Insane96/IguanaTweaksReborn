@@ -16,7 +16,9 @@
   * Re-added Tiredness overlay (no longer shows up at Tired I)
 * Added back "In terrain slowdown"
   * Snow and powder snow slow down
+* Pillagers now drop emeralds and arrows
 * Phantoms now actually spawn in The End
+* Fixed datapacks not disabling if they were already enabled in a world
 
 ## 0.13.0
 * Update to MC 1.20.1
