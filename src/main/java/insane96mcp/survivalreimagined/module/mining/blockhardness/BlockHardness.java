@@ -90,7 +90,7 @@ public class BlockHardness extends SRFeature {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("dimension_hardness.json", dimensionHardnessMultiplier, DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT, DimensionHardnessMultiplier.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.DIMENSION_HARDNESS));
 		JSON_CONFIGS.add(new JsonConfig<>("depth_multipliers.json", depthMultiplierDimension, DEPTH_MULTIPLIER_DIMENSION_DEFAULT, DepthHardnessDimension.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.DEPTH_HARDNESS));
-		JSON_CONFIGS.add(new JsonConfig<>("custom_hardnesses.json", customHardnesses, CUSTOM_HARDNESSES_DEFAULT, IdTagValue.LIST_TYPE, BlockHardness::processBlockHardness, true, JsonConfigSyncMessage.ConfigType.DURABILITIES));
+		JSON_CONFIGS.add(new JsonConfig<>("custom_hardnesses.json", customHardnesses, CUSTOM_HARDNESSES_DEFAULT, IdTagValue.LIST_TYPE, BlockHardness::processBlockHardness, true, JsonConfigSyncMessage.ConfigType.CUSTOM_BLOCK_HARDNESS));
 	}
 
 	public static void handleCustomBlockHardnessPacket(String json) {
