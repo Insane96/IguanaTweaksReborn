@@ -18,6 +18,7 @@
   * With this, Iron, Coal and Gold ores now drop XP
 * Added back "In terrain slowdown"
   * Snow and powder snow slow down
+* Added Melee Protection enchantment
 * Arrows can now be made from cloth in a fletching table
 * Slight increase to Unbreaking formula (x1.29, x1.67, x2.11, x2.5 -> x1.33, x1.82, x2.5, x3.33 durability at levels I to IV)
 * Slightly decreased Durium Ore XP drop

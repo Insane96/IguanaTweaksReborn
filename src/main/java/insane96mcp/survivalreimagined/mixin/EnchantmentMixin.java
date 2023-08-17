@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.experience.enchantments.enchantment.MagicProtection;
+import insane96mcp.survivalreimagined.module.experience.enchantments.enchantment.MeleeProtection;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.ArrowInfiniteEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -58,7 +59,8 @@ public class EnchantmentMixin {
 		//noinspection ConstantValue
 		if (((Enchantment)(Object) this) instanceof ThornsEnchantment) {
 			if ((other instanceof ProtectionEnchantment protectionEnchantment && protectionEnchantment.type != ProtectionEnchantment.Type.FALL)
-					|| other instanceof MagicProtection)
+					|| other instanceof MagicProtection
+					|| other instanceof MeleeProtection)
 				cir.setReturnValue(false);
 		}
 	}
