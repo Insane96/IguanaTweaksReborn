@@ -17,6 +17,7 @@ public abstract class SpiderAttackGoalMixin extends MeleeAttackGoal {
         super(pMob, pSpeedModifier, pFollowingTargetEvenIfNotSeen);
     }
 
+    //TODO Remove in 1.20.2
     @Inject(at = @At(value = "RETURN"), method = "getAttackReachSqr", cancellable = true)
     private void onGetAttackReachSqr(LivingEntity pAttackTarget, CallbackInfoReturnable<Double> cir) {
         if (StatsBuffs.enableDataPack)

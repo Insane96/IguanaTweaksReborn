@@ -58,6 +58,7 @@
 	"client": [
 		"client.AnvilScreenMixin",
 		"client.GameRendererMixin",
+		"client.LevelRendererMixin",
 		"client.LocalPlayerMixin",
 		"client.MinecraftMixin"
 	]
