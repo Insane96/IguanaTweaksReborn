@@ -14,7 +14,7 @@ public class Blasting extends Enchantment {
     static final EnchantmentCategory PICKAXES = EnchantmentCategory.create("pickaxes", item -> item instanceof PickaxeItem);
 
     public Blasting() {
-        super(Rarity.UNCOMMON, PICKAXES, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(Rarity.COMMON, PICKAXES, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     @Override
