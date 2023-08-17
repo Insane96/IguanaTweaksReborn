@@ -1,5 +1,8 @@
 # Changelog
 
+## Alpha 2.12.12
+* Hopefully fixed "Item Modifiers" having the same UUID overwriting each other
+
 ## 2.12.11
 * Partially backported the Vigour effect
   * Is applied together with the Regeneration effect of the Beacon

@@ -152,7 +152,7 @@ public class Stats extends Feature {
 			if (event.getSlotType() != itemAttributeModifier.slot)
 				continue;
 
-			AttributeModifier modifier = new AttributeModifier(Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER_UUID, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
+			AttributeModifier modifier = new AttributeModifier(itemAttributeModifier.uuid, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
 			event.addModifier(itemAttributeModifier.attribute, modifier);
 		}
 	}

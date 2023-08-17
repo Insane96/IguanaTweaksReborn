@@ -16,10 +16,12 @@ import org.apache.commons.lang3.math.NumberUtils;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ItemAttributeModifier {
 	public ResourceLocation itemId;
 	public ResourceLocation itemTag;
+	public UUID uuid;
 	public Class<? extends Item> itemClass;
 	public EquipmentSlot slot;
 	public Attribute attribute;
@@ -33,6 +35,7 @@ public class ItemAttributeModifier {
 		this.attribute = attribute;
 		this.amount = amount;
 		this.operation = operation;
+		this.uuid = UUID.randomUUID();
 	}
 
 	public ItemAttributeModifier(Class<? extends Item> itemClass, EquipmentSlot slot, Attribute attribute, double amount, AttributeModifier.Operation operation) {
@@ -41,6 +44,7 @@ public class ItemAttributeModifier {
 		this.attribute = attribute;
 		this.amount = amount;
 		this.operation = operation;
+		this.uuid = UUID.randomUUID();
 	}
 
 	@Nullable
