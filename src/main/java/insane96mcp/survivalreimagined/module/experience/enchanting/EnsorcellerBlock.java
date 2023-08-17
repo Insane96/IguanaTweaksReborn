@@ -63,12 +63,13 @@ public class EnsorcellerBlock extends BaseEntityBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (!pState.is(pNewState.getBlock())) {
             BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-            if (blockentity instanceof EnsorcellerBlockEntity) {
+            if (blockentity instanceof EnsorcellerBlockEntity ensorcellerBlockEntity) {
                 if (pLevel instanceof ServerLevel) {
                     Containers.dropContents(pLevel, pPos, (EnsorcellerBlockEntity)blockentity);
                 }
 
                 pLevel.updateNeighbourForOutputSignal(pPos, this);
+                ensorcellerBlockEntity.dropExperience(pLevel);
             }
 
             super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);

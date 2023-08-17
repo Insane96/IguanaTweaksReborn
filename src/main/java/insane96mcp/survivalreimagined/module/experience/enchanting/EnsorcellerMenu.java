@@ -96,13 +96,14 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
 
             //This is executed only server side
             this.access.execute((level, blockPos) -> {
-                this.incrementSteps(this.level.random.nextInt(4) + 1);
+                this.incrementSteps((int) (this.level.random.triangle(2, 2) + 1));
                 this.incrementLevelsUsed();
                 if (!player.getAbilities().instabuild)
                     ((ServerPlayer)player).setExperienceLevels(player.experienceLevel - this.rollCost.get());
                 if (this.getSteps() > MAX_STEPS) {
                     level.playSound(null, blockPos, SoundEvents.RESPAWN_ANCHOR_DEPLETE.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.8F);
                     this.setSteps(0);
+
                 }
                 else if (this.getSteps() == MAX_STEPS) {
                     level.playSound(null, blockPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0F, 0.6F);
@@ -211,7 +212,11 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
     }
 
     public void incrementLevelsUsed() {
-        this.data.set(EnsorcellerBlockEntity.DATA_ROLLS_PERFORMED, this.data.get(EnsorcellerBlockEntity.DATA_ROLLS_PERFORMED) + 1);
+        this.data.set(EnsorcellerBlockEntity.DATA_ROLLS_PERFORMED, this.data.get(EnsorcellerBlockEntity.DATA_ROLLS_PERFORMED) + this.rollCost.get());
+    }
+
+    public void resetLevelsUsed() {
+        this.data.set(EnsorcellerBlockEntity.DATA_ROLLS_PERFORMED, 0);
     }
 
     public boolean canEnchant() {
