@@ -40,6 +40,9 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
     public static final TagKey<Block> TALL_GRASS = create("tall_grass");
     public static final TagKey<Block> NO_BLOCK_XP_MULTIPLIER = create("no_block_xp_multiplier");
     public static final TagKey<Block> GRASS_BLOCKS = create("grass_blocks");
+    public static final TagKey<Block> COPPER_ORES = create("copper_ores");
+    public static final TagKey<Block> GOLD_ORES = create("gold_ores");
+    public static final TagKey<Block> IRON_ORES = create("iron_ores");
 
     public SRBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, modId, existingFileHelper);
@@ -134,6 +137,10 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(Blocks.RED_NETHER_BRICKS);
         tag(MultiBlockSoulBlastFurnaceBlock.TOP_BLOCKS_TAG)
                 .add(Blocks.RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICK_STAIRS);
+
+        tag(COPPER_ORES).add(Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE, OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get());
+        tag(IRON_ORES).add(Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE, OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get());
+        tag(GOLD_ORES).add(Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE, OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get());
     }
 
     public static TagKey<Block> create(String tagName) {

@@ -5,17 +5,17 @@ import insane96mcp.enhancedai.modules.creeper.feature.CreeperSwell;
 import insane96mcp.enhancedai.modules.skeleton.feature.SkeletonFleeTarget;
 import insane96mcp.enhancedai.modules.skeleton.feature.SkeletonShoot;
 import insane96mcp.enhancedai.modules.zombie.feature.DiggerZombie;
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 @Label(name = "EnhancedAI", description = "Changes to EnhancedAI config")
 @LoadFeature(module = Modules.Ids.MOBS)
-public class EnhancedAI extends SRFeature {
+public class EnhancedAI extends Feature {
 
     public EnhancedAI(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);

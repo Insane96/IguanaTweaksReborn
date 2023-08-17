@@ -1,10 +1,10 @@
 package insane96mcp.survivalreimagined.module.experience.enchanting;
 
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchanting.integration.EnchantingInfuser;
@@ -26,7 +26,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Enchanting", description = "Change some enchanting related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
-public class EnchantingFeature extends SRFeature {
+public class EnchantingFeature extends Feature {
 	@Config
 	@Label(name = "Nether Enchanting Table", description = "Enables a data pack that makes the enchanting table require nether access to be made")
 	public static Boolean netherEnchantingTable = true;

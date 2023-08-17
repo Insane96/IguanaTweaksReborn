@@ -14,6 +14,8 @@
   * As long as you're tired, the effect is applied, there's no longer a period between "You're tired and can sleep" and the effect
   * Effect is now applied indefinitely, and removed on wake up
   * Re-added Tiredness overlay (no longer shows up at Tired I)
+* Added a json config to allow changing block xp drops
+  * With this, Iron, Coal and Gold ores now drop XP
 * Added back "In terrain slowdown"
   * Snow and powder snow slow down
 * Arrows can now be made from cloth in a fletching table

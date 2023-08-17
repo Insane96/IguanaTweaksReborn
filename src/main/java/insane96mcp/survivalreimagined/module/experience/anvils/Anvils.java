@@ -7,7 +7,6 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -42,7 +41,7 @@ import java.util.stream.Collectors;
 
 @Label(name = "Anvils", description = "Better repair, free rename and merge.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
-public class Anvils extends SRFeature {
+public class Anvils extends Feature {
 
     public static final String CAN_BE_REPAIRED_WITH_LANG = SurvivalReimagined.MOD_ID + ".can_be_repaired_with";
 
