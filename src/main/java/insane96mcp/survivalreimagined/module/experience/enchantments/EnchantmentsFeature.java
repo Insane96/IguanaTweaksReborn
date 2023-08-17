@@ -112,11 +112,11 @@ public class EnchantmentsFeature extends SRFeature {
 	//Shamelessly stolen from TinkersConstruct/src/main/java/slimeknights/tconstruct/tools/modifiers/upgrades/general/ReinforcedModifier.java
 	public static float unbreakingBonus(int lvl) {
 		if (isUnbreakingOverhaul()) {
-			float chance = 0.625f;
+			float chance = 0.70f;
 			if (lvl < 5) {
-				// formula gives 22.5%, 40%, 52.5%, 60%, 62.5% for first 5 levels
-				// In terms of durability, the tool lasts for x1.29, x1.67, x2.11, x2.5, x2.67 times more
-				chance = 0.025f * lvl * (10 - lvl);
+				// formula gives 25%, 45%, 60%, 70%, 75% for first 5 levels
+				// In terms of durability, the tool lasts for x1.33, x1.82, x2.5, x3.33, x4 times more
+				chance = 0.025f * lvl * (11 - lvl);
 			}
 			return chance;
 		}
