@@ -1,7 +1,6 @@
 # Changelog
 
 * No more huge mushrooms other than on mycelium
-* Faster copper every block below Water level
 
 ## Upcoming
 * Anvils now have only 7.5% chance to wear down when used

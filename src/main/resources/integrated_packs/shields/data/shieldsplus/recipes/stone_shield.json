@@ -7,7 +7,7 @@
     ],
     "key": {
         "S": {
-            "item": "minecraft:cobblestone"
+            "tag": "minecraft:stone_tool_materials"
         },
         "L": {
             "tag": "minecraft:logs"
