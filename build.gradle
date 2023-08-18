@@ -138,6 +138,10 @@ repositories {
     }
     maven {
         url = "https://jitpack.io"
+        content {
+            // Needed otherwise gradle goes crazy by downloading all the dependencies from here (failing)
+            includeGroup "com.github.Virtuoel"
+        }
     }
     // AppleCore
     maven { url "https://maven.ryanliptak.com/" }
@@ -178,7 +182,6 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:corail-woodcutter-331983:4685515")
 
     implementation fg.deobf("curse.maven:puzzles-lib-495476:4660882")
-    implementation fg.deobf("curse.maven:enchanting-infuser-forge-551151:4652863")
     runtimeOnly fg.deobf("curse.maven:easy-magic-456239:4658750")
 
     //implementation fg.deobf("curse.maven:copperative-867868:4685249")

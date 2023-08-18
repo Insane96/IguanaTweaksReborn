@@ -13,7 +13,7 @@ public class Misc extends Feature {
 
     @Config(min = 0d, max = 1d)
     @Label(name = "World Border Transparency", description = "Multiplies the world border transparency by this value")
-    public static Double worldBorderTransparency = 0.5d;
+    public static Double worldBorderTransparency = 0.4d;
 
     public Misc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
