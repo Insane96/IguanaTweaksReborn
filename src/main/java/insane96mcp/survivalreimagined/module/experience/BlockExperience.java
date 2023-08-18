@@ -29,7 +29,17 @@ public class BlockExperience extends SRFeature {
 	public static final ArrayList<IdTagRange> CUSTOM_BLOCKS_EXPERIENCE_DEFAULT = new ArrayList<>(List.of(
 			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:copper_ores", 0, 1),
 			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:iron_ores", 0, 2),
-			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:gold_ores", 1, 3)
+			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:gold_ores", 1, 3),
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:lapis_ore", 4, 7),
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_lapis_ore", 4, 7),
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:diamond_ore", 5, 10),
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_diamond_ore", 5, 10),
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:redstone_ore", 2, 6),
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_redstone_ore", 2, 6),
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:emerald_ore", 8, 14),
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_emerald_ore", 8, 14),
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:emerald_ore", 8, 14),
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_emerald_ore", 8, 14)
 	));
 
 	public static final ArrayList<IdTagRange> customBlocksExperience = new ArrayList<>();

@@ -16,6 +16,7 @@
   * Re-added Tiredness overlay (no longer shows up at Tired I)
 * Added a json config to allow changing block xp drops
   * With this, Iron, Coal and Gold ores now drop XP
+  * Other ores drop more xp
 * Added back "In terrain slowdown"
   * Snow and powder snow slow down
 * World border
