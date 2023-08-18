@@ -27,9 +27,11 @@ public class BlockExperience extends SRFeature {
 	public static Double blockMultiplier = 1d;
 
 	public static final ArrayList<IdTagRange> CUSTOM_BLOCKS_EXPERIENCE_DEFAULT = new ArrayList<>(List.of(
-			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:copper_ores", 0, 1),
-			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:iron_ores", 0, 2),
-			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:gold_ores", 1, 3),
+			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:copper_ores", 0, 2),
+			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:iron_ores", 1, 3),
+			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:gold_ores", 2, 4),
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:coal_ore", 1, 2),
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_coal_ore", 1, 2),
 			new IdTagRange(IdTagRange.Type.ID, "minecraft:lapis_ore", 4, 7),
 			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_lapis_ore", 4, 7),
 			new IdTagRange(IdTagRange.Type.ID, "minecraft:diamond_ore", 5, 10),
