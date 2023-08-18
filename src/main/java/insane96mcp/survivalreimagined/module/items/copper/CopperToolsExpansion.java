@@ -10,6 +10,7 @@ import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.network.ElectrocutionParticleMessage;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.setup.SRItems;
@@ -36,6 +37,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
@@ -47,6 +49,7 @@ import java.util.List;
 @Label(name = "Copper Tools Expansion", description = "Two new set of tools")
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class CopperToolsExpansion extends Feature {
+	public static final TagKey<Item> COPPER_TOOLS_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/hand/tools/copper"));
 	public static final TagKey<Item> COATED_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/coated_copper"));
 
 	public static final ILItemTier COPPER_ITEM_TIER = new ILItemTier(1, 65, 8f, 1.0f, 9, () -> Ingredient.of(Items.COPPER_INGOT));
@@ -57,7 +60,7 @@ public class CopperToolsExpansion extends Feature {
 	public static final RegistryObject<Item> COPPER_AXE = SRItems.REGISTRY.register("copper_axe", () -> new AxeItem(COPPER_ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
 	public static final RegistryObject<Item> COPPER_HOE = SRItems.REGISTRY.register("copper_hoe", () -> new HoeItem(COPPER_ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
-	public static final ILItemTier COATED_ITEM_TIER = new ILItemTier(3, 321, 9f, 1.5f, 5, () -> Ingredient.of(Items.OBSIDIAN));
+	public static final ILItemTier COATED_ITEM_TIER = new ILItemTier(3, 321, 7f, 1.5f, 5, () -> Ingredient.of(Items.OBSIDIAN));
 	public static final RegistryObject<Item> COATED_SWORD = SRItems.REGISTRY.register("coated_copper_sword", () -> new SwordItem(COATED_ITEM_TIER, 3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> COATED_SHOVEL = SRItems.REGISTRY.register("coated_copper_shovel", () -> new ShovelItem(COATED_ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
 	public static final RegistryObject<Item> COATED_PICKAXE = SRItems.REGISTRY.register("coated_copper_pickaxe", () -> new PickaxeItem(COATED_ITEM_TIER, 1, -2.8F, new Item.Properties()));
@@ -74,6 +77,19 @@ public class CopperToolsExpansion extends Feature {
 
 	public static final String COATED_TIMES_HIT = SurvivalReimagined.RESOURCE_PREFIX + "coated_times_hit";
 	public static ResourceKey<DamageType> ELECTROCUTION_ATTACK = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(SurvivalReimagined.MOD_ID, "electrocution_attack"));
+
+	@SubscribeEvent
+	public void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+		if (!this.isEnabled()
+				|| !event.getEntity().getMainHandItem().is(COPPER_TOOLS_EQUIPMENT)
+				|| !event.getEntity().getMainHandItem().isCorrectToolForDrops(event.getState()))
+			return;
+
+		int y = event.getEntity().getBlockY();
+		if (y > 64)
+			return;
+		event.setNewSpeed(event.getNewSpeed() + EnchantmentsFeature.applyMiningSpeedModifiers((64 - y) * 0.05f, false, event.getEntity()));
+	}
 
 	@SubscribeEvent
 	public void onAttack(LivingDamageEvent event) {

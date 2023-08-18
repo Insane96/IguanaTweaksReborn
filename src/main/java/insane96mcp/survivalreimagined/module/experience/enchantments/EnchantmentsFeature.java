@@ -19,10 +19,13 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -32,6 +35,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.*;
@@ -315,5 +319,39 @@ public class EnchantmentsFeature extends SRFeature {
 
 	public static boolean isBaneOfSSSSSEnabled() {
 		return Feature.isEnabled(EnchantmentsFeature.class) && enableBaneOfSSSSS;
+	}
+
+	public static float applyMiningSpeedModifiers(float miningSpeed, boolean applyEfficiency, LivingEntity entity) {
+		if (applyEfficiency) {
+			int i = EnchantmentHelper.getBlockEfficiency(entity);
+			ItemStack itemstack = entity.getMainHandItem();
+			if (i > 0 && !itemstack.isEmpty()) {
+				miningSpeed = getEfficiencyBonus(miningSpeed, i);
+			}
+		}
+
+		if (MobEffectUtil.hasDigSpeed(entity)) {
+			miningSpeed *= 1.0F + (float)(MobEffectUtil.getDigSpeedAmplification(entity) + 1) * 0.2F;
+		}
+
+		if (entity.hasEffect(MobEffects.DIG_SLOWDOWN)) {
+			float miningFatigueMultiplier = switch (entity.getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) {
+				case 0 -> 0.3F;
+				case 1 -> 0.09F;
+				case 2 -> 0.0027F;
+				default -> 8.1E-4F;
+			};
+			miningSpeed *= miningFatigueMultiplier;
+		}
+
+		if (entity.isEyeInFluidType(ForgeMod.WATER_TYPE.get()) && !EnchantmentHelper.hasAquaAffinity(entity)) {
+			miningSpeed /= 5.0F;
+		}
+
+		if (!entity.onGround()) {
+			miningSpeed /= 5.0F;
+		}
+
+		return miningSpeed;
 	}
 }

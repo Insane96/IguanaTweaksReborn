@@ -1,10 +1,15 @@
 # Changelog
 
+* No more huge mushrooms other than on mycelium
+* Faster copper every block below Water level
+
 ## Upcoming
 * Anvils now have only 7.5% chance to wear down when used
 * Coated Copper Tools finished
   * Shield parrying now can electrocute enemies
   * Texture
+* Copper tools
+  * Are now slightly slower BUT mine faster the deeper you mine
 * Solarium
   * Solium moss now generates on boulders around the world instead of on the ground
   * Solium moss no longer grows naturally, only with bone meal
@@ -30,7 +35,7 @@
 * Breaking an ensorceller now gives back some experience used to roll
 * Pillagers now drop emeralds and arrows
 * Phantoms now actually spawn in The End
-* Fixed datapacks not disabling if they were already enabled in a world
+* Fixed data packs not disabling if they were already enabled in a world
 
 ## 0.13.0
 * Update to MC 1.20.1
