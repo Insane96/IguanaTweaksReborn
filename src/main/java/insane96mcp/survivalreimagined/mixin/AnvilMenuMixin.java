@@ -101,7 +101,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 					AnvilRecipe.RepairData repairData = oRepairData.get();
 					int maxPartialRepairDmg = Mth.ceil(resultStack.getMaxDamage() * (1f - repairData.maxRepair()));
 					int repairSteps = Math.min(resultStack.getDamageValue(), Mth.ceil(resultStack.getMaxDamage() / (float) repairData.amountRequired()));
-					if (repairSteps <= 0) {
+					if (repairSteps <= 0 || resultStack.getDamageValue() <= maxPartialRepairDmg) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
 						this.cost.set(0);
 						return;
@@ -138,6 +138,10 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 						int lvl = leftEnchantments.get(leftEnchantment);
 						mergeCost += lvl * Anvils.getRarityCost(leftEnchantment);
 					}
+				}
+
+				if (oRepairData.isPresent()) {
+					mergeCost = Mth.floor(mergeCost * oRepairData.get().costMultiplier());
 				}
 
 				this.repairItemCountCost = repairItemCountCost;

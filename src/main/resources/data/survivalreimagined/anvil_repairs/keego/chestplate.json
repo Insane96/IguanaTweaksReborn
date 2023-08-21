@@ -8,7 +8,8 @@
 				"id": "minecraft:diamond"
 			},
 			"amount": 8,
-			"max_repair": 0.5
+			"max_repair": 0.5,
+			"cost_multiplier": 0.5
 		},
 		{
 			"repair_material": {

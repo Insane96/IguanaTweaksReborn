@@ -39,7 +39,7 @@ public class AnvilRecipe {
         return Optional.empty();
     }
 
-    public record RepairData(@SerializedName("repair_material") IdTagMatcher repairMaterial, @SerializedName("amount") int amountRequired, @SerializedName("max_repair") float maxRepair) { }
+    public record RepairData(@SerializedName("repair_material") IdTagMatcher repairMaterial, @SerializedName("amount") int amountRequired, @SerializedName("max_repair") float maxRepair, @SerializedName("cost_multiplier") float costMultiplier) { }
 
     public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<AnvilRecipe>>(){}.getType();
     public static class Serializer implements JsonDeserializer<AnvilRecipe>, JsonSerializer<AnvilRecipe> {
@@ -56,7 +56,10 @@ public class AnvilRecipe {
                 float maxRepair = GsonHelper.getAsFloat(element.getAsJsonObject(), "max_repair", 1f);
                 if (maxRepair > 1f || maxRepair < 0f)
                     throw new JsonParseException("max_repair must be between 0 and 1");
-                repairData.add(new RepairData(repairMaterial, amount, maxRepair));
+                float costMultiplier = GsonHelper.getAsFloat(element.getAsJsonObject(), "cost_multiplier", 1f);
+                if (costMultiplier < 0f)
+                    throw new JsonParseException("cost_multiplier must be greater than or equal to 0");
+                repairData.add(new RepairData(repairMaterial, amount, maxRepair, costMultiplier));
             }
 
             return new AnvilRecipe(itemToRepair, repairData);
@@ -74,6 +77,8 @@ public class AnvilRecipe {
                 r.addProperty("amount", repairData.amountRequired);
                 if (repairData.maxRepair < 1f)
                     r.addProperty("max_repair", repairData.maxRepair);
+                if (repairData.costMultiplier != 1f)
+                    r.addProperty("cost_multiplier", repairData.costMultiplier);
                 r.add("repair_material", context.serialize(repairData.repairMaterial, IdTagMatcher.class));
                 repair.add(r);
             }
