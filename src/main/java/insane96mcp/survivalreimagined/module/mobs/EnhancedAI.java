@@ -4,6 +4,7 @@ import insane96mcp.enhancedai.modules.base.feature.Movement;
 import insane96mcp.enhancedai.modules.creeper.feature.CreeperSwell;
 import insane96mcp.enhancedai.modules.skeleton.feature.SkeletonFleeTarget;
 import insane96mcp.enhancedai.modules.skeleton.feature.SkeletonShoot;
+import insane96mcp.enhancedai.modules.witch.feature.ThirstyWitches;
 import insane96mcp.enhancedai.modules.zombie.feature.DiggerZombie;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -50,5 +51,10 @@ public class EnhancedAI extends Feature {
 
         Module.getFeature(DiggerZombie.class).setConfigOption("Digger Speed Multiplier", 1.5d);
         Module.getFeature(DiggerZombie.class).readConfig(event);
+
+        Module.getFeature(ThirstyWitches.class).setConfigOption("Strong healing Threshold", 0.25d);
+        Module.getFeature(ThirstyWitches.class).setConfigOption("Water Breathing Chance", 0.15d);
+        Module.getFeature(ThirstyWitches.class).setConfigOption("Fire Resistance Chance", 0.15d);
+        Module.getFeature(ThirstyWitches.class).readConfig(event);
     }
 }

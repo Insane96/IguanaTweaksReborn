@@ -64,6 +64,7 @@ public class Death extends Feature {
 		BlockState grave = GRAVE.block().get().defaultBlockState();
 		if (player.level().getFluidState(player.blockPosition()).getType() == Fluids.WATER)
 			grave = grave.setValue(GraveBlock.WATERLOGGED, true);
+		player.level().destroyBlock(player.blockPosition(), true, player);
 		player.level().setBlock(player.blockPosition(), grave, 3);
 		GraveBlockEntity graveBlockEntity = (GraveBlockEntity) player.level().getBlockEntity(player.blockPosition());
 		List<ItemStack> items = new ArrayList<>();
