@@ -66,14 +66,14 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(pTag, this.items);
         this.steps = pTag.getInt("Steps");
-        this.levelsUsed = pTag.getInt("RollsPerformed");
+        this.levelsUsed = pTag.getInt("LevelsUsed");
         this.canEnchant = pTag.getBoolean("CanEnchant");
     }
 
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
         pTag.putInt("Steps", this.steps);
-        pTag.putInt("RollsPerformed", this.levelsUsed);
+        pTag.putInt("LevelsUsed", this.levelsUsed);
         pTag.putBoolean("CanEnchant", this.canEnchant);
         ContainerHelper.saveAllItems(pTag, this.items);
     }
@@ -95,7 +95,7 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
 
     @Override
     protected Component getDefaultName() {
-        return Component.translatable("container.enchant");
+        return Component.translatable("container.ensorceller");
     }
 
     @Override

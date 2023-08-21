@@ -82,8 +82,8 @@ public class CrateBlock extends BaseEntityBlock {
     @Override
     public void tick(BlockState p_220758_, ServerLevel p_220759_, BlockPos p_220760_, RandomSource p_220761_) {
         BlockEntity blockentity = p_220759_.getBlockEntity(p_220760_);
-        if (blockentity instanceof CrateBlockEntity) {
-            ((CrateBlockEntity)blockentity).recheckOpen();
+        if (blockentity instanceof CrateBlockEntity crateBlockEntity) {
+            crateBlockEntity.recheckOpen();
         }
     }
 
