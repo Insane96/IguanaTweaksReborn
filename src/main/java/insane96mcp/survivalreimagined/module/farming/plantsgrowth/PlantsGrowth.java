@@ -2,20 +2,25 @@ package insane96mcp.survivalreimagined.module.farming.plantsgrowth;
 
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.ChatFormatting;
+import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.event.level.SaplingGrowTreeEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import sereneseasons.api.season.Season;
@@ -138,6 +143,10 @@ public class PlantsGrowth extends SRFeature {
 	));
 	public static final ArrayList<PlantGrowthModifier> plantsList = new ArrayList<>();
 
+	@Config
+	@Label(name = "Huge mushrooms on Mycelium only")
+	public static Boolean hugeMushroomsOnMyceliumOnly = true;
+
 	public PlantsGrowth(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("plants_growth_modifiers.json", plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.PLANTS_GROWTH));
@@ -174,6 +183,30 @@ public class PlantsGrowth extends SRFeature {
 		double chance = 1d / multiplier;
 		if (event.getLevel().getRandom().nextDouble() > chance)
 			event.setResult(Event.Result.DENY);
+	}
+
+	@SubscribeEvent
+	public void onMushroomGrow(SaplingGrowTreeEvent event) {
+		if (!this.isEnabled()
+				|| !hugeMushroomsOnMyceliumOnly
+				|| event.getFeature() == null)
+			return;
+
+		if ((event.getFeature().is(TreeFeatures.HUGE_BROWN_MUSHROOM) || event.getFeature().is(TreeFeatures.HUGE_RED_MUSHROOM)) && !event.getLevel().getBlockState(event.getPos().below()).is(Blocks.MYCELIUM)) {
+			event.setResult(Event.Result.DENY);
+		}
+	}
+
+	@SubscribeEvent
+	public void onMushroomGrow(BonemealEvent event) {
+		if (!this.isEnabled()
+				|| !hugeMushroomsOnMyceliumOnly
+				|| (!event.getBlock().is(Blocks.BROWN_MUSHROOM) && !event.getBlock().is(Blocks.RED_MUSHROOM)))
+			return;
+
+		if (!event.getLevel().getBlockState(event.getPos().below()).is(Blocks.MYCELIUM)) {
+			event.setCanceled(true);
+		}
 	}
 
 	@OnlyIn(Dist.CLIENT)
