@@ -103,7 +103,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
                 if (this.getSteps() > MAX_STEPS) {
                     level.playSound(null, blockPos, SoundEvents.RESPAWN_ANCHOR_DEPLETE.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.8F);
                     this.setSteps(0);
-
+                    this.resetLevelsUsed();
                 }
                 else if (this.getSteps() == MAX_STEPS) {
                     level.playSound(null, blockPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 1.0F, 0.6F);
@@ -148,6 +148,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
 
                     this.container.setChanged();
                     this.setSteps(0);
+                    this.resetLevelsUsed();
                     this.slotsChanged(this.container);
                     level.playSound(null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, 1.25F);
                 }
@@ -208,15 +209,15 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
     }
 
     public int getLevelsUsed() {
-        return this.data.get(EnsorcellerBlockEntity.DATA_ROLLS_PERFORMED);
+        return this.data.get(EnsorcellerBlockEntity.DATA_LEVELS_USED);
     }
 
     public void incrementLevelsUsed() {
-        this.data.set(EnsorcellerBlockEntity.DATA_ROLLS_PERFORMED, this.data.get(EnsorcellerBlockEntity.DATA_ROLLS_PERFORMED) + this.rollCost.get());
+        this.data.set(EnsorcellerBlockEntity.DATA_LEVELS_USED, this.data.get(EnsorcellerBlockEntity.DATA_LEVELS_USED) + this.rollCost.get());
     }
 
     public void resetLevelsUsed() {
-        this.data.set(EnsorcellerBlockEntity.DATA_ROLLS_PERFORMED, 0);
+        this.data.set(EnsorcellerBlockEntity.DATA_LEVELS_USED, 0);
     }
 
     public boolean canEnchant() {

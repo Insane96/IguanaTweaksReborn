@@ -26,18 +26,18 @@ import org.jetbrains.annotations.Nullable;
 public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
     public static final int DATA_COUNT = 3;
     public static final int DATA_STEPS = 0;
-    public static final int DATA_ROLLS_PERFORMED = 1;
+    public static final int DATA_LEVELS_USED = 1;
     public static final int DATA_CAN_ENCHANT = 2;
     protected NonNullList<ItemStack> items = NonNullList.withSize(EnsorcellerMenu.SLOT_COUNT, ItemStack.EMPTY);
     public int steps;
-    public int rollsPerformed;
+    public int levelsUsed;
     public boolean canEnchant;
 
     protected final ContainerData dataAccess = new ContainerData() {
         public int get(int dataId) {
             return switch (dataId) {
                 case DATA_STEPS -> EnsorcellerBlockEntity.this.steps;
-                case DATA_ROLLS_PERFORMED -> EnsorcellerBlockEntity.this.rollsPerformed;
+                case DATA_LEVELS_USED -> EnsorcellerBlockEntity.this.levelsUsed;
                 case DATA_CAN_ENCHANT -> EnsorcellerBlockEntity.this.canEnchant ? 1 : 0;
                 default -> 0;
             };
@@ -46,7 +46,7 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
         public void set(int dataId, int data) {
             switch (dataId) {
                 case DATA_STEPS -> EnsorcellerBlockEntity.this.steps = data;
-                case DATA_ROLLS_PERFORMED -> EnsorcellerBlockEntity.this.rollsPerformed = data;
+                case DATA_LEVELS_USED -> EnsorcellerBlockEntity.this.levelsUsed = data;
                 case DATA_CAN_ENCHANT -> EnsorcellerBlockEntity.this.canEnchant = data == 1;
             }
 
@@ -66,14 +66,14 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(pTag, this.items);
         this.steps = pTag.getInt("Steps");
-        this.rollsPerformed = pTag.getInt("RollsPerformed");
+        this.levelsUsed = pTag.getInt("RollsPerformed");
         this.canEnchant = pTag.getBoolean("CanEnchant");
     }
 
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
         pTag.putInt("Steps", this.steps);
-        pTag.putInt("RollsPerformed", this.rollsPerformed);
+        pTag.putInt("RollsPerformed", this.levelsUsed);
         pTag.putBoolean("CanEnchant", this.canEnchant);
         ContainerHelper.saveAllItems(pTag, this.items);
     }
@@ -153,11 +153,13 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
     }
 
     public void dropExperience(Level level) {
-        ExperienceOrb experienceOrb = EntityType.EXPERIENCE_ORB.create(level);
-        experienceOrb.setPos(this.getBlockPos().getX() + 0.5d, this.getBlockPos().getY() + 0.5d, this.getBlockPos().getZ() + 0.5d);
-        experienceOrb.getPersistentData().putBoolean(GlobalExperience.XP_PROCESSED, true);
-        experienceOrb.value = this.rollsPerformed * 5;
-        level.addFreshEntity(experienceOrb);
+        if (this.levelsUsed > 0) {
+            ExperienceOrb experienceOrb = EntityType.EXPERIENCE_ORB.create(level);
+            experienceOrb.setPos(this.getBlockPos().getX() + 0.5d, this.getBlockPos().getY() + 0.5d, this.getBlockPos().getZ() + 0.5d);
+            experienceOrb.getPersistentData().putBoolean(GlobalExperience.XP_PROCESSED, true);
+            experienceOrb.value = this.levelsUsed * 5;
+            level.addFreshEntity(experienceOrb);
+        }
     }
 
     public @Nullable ClientboundBlockEntityDataPacket getUpdatePacket() {
