@@ -72,7 +72,7 @@ public class HealthRegen extends Feature {
 	//Effects
 	@Config
 	@Label(name = "Effects.Well Fed.Enable", description = "Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats from less than 4 drumsticks to more than 9 drumstick in less than 15 seconds.")
-	public static Boolean enableWellFed = true;
+	public static Boolean enableWellFed = false;
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Effects.Well Fed.Duration Multiplier", description = "Multiplies the base duration of Well Fed by this value. Base duration is 1 second per food effectiveness (hunger + saturation).")
 	public static Double wellFedDurationMultiplier = 1.0d;
@@ -84,7 +84,7 @@ public class HealthRegen extends Feature {
 	public static Integer wellFedMaxAmplifier = 9;
 	@Config
 	@Label(name = "Effects.Injured.Enable Injured", description = "Set to true to enable Injured, a new effect that slows down health regen. It's applied when the player takes 3 hits (at least half a heart) in the last 9 seconds (by default). The effect slows down health regen by 20% per level.")
-	public static Boolean enableInjured = true;
+	public static Boolean enableInjured = false;
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Effects.Injured.Duration Multiplier", description = "Multiplies the base duration of Injured by this value. Base duration is 1 second per point of damage.")
 	public static Double injuredDurationMultiplier = 1.0d;
