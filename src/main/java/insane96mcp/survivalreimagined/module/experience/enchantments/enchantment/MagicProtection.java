@@ -41,7 +41,7 @@ public class MagicProtection extends Enchantment {
         if (other instanceof ProtectionEnchantment otherProtection) {
             return otherProtection.type == ProtectionEnchantment.Type.FALL;
         } else {
-            return other instanceof MeleeProtection && super.checkCompatibility(other);
+            return !(other instanceof MeleeProtection) && super.checkCompatibility(other);
         }
     }
 
