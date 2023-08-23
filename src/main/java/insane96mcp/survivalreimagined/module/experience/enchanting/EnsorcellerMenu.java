@@ -114,13 +114,10 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
             });
         }
         //Enchant
-        else if (this.getSteps() > 0) {
-            ItemStack enchantableItem = this.container.getItem(ITEM_SLOT);
-            if (enchantableItem.isEmpty())
-                return false;
-
+        else if (this.canEnchant()) {
             //This is executed only server side
             this.access.execute((level, blockPos) -> {
+                ItemStack enchantableItem = this.container.getItem(ITEM_SLOT);
                 ItemStack result = enchantableItem;
                 List<EnchantmentInstance> enchantments = this.getEnchantmentList(enchantableItem, this.getSteps() == MAX_STEPS ? LVL_ON_JACKPOT : this.getSteps());
                 if (!enchantments.isEmpty()) {
@@ -161,7 +158,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
     }
 
     private List<EnchantmentInstance> getEnchantmentList(ItemStack pStack, int pLevel) {
-        List<EnchantmentInstance> list = EnchantmentHelper.selectEnchantment(this.level.random, pStack, pLevel, false);
+        List<EnchantmentInstance> list = EnchantmentHelper.selectEnchantment(this.level.random, pStack, pLevel,false );
         if (pStack.is(Items.BOOK) && list.size() > 1) {
             list.remove(this.level.random.nextInt(list.size()));
         }
@@ -193,7 +190,8 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
 
     private void updateCanEnchant() {
         ItemStack stack = this.container.getItem(ITEM_SLOT);
-        this.setCanEnchant(!stack.isEmpty() && stack.isEnchantable() && this.getSteps() > 0);
+        List<EnchantmentInstance> enchantments = this.getEnchantmentList(stack, this.getSteps() == MAX_STEPS ? LVL_ON_JACKPOT : this.getSteps());
+        this.setCanEnchant(!stack.isEmpty() && stack.isEnchantable() && this.getSteps() > 0 && !enchantments.isEmpty());
     }
 
     public int getSteps() {

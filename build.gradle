@@ -115,10 +115,6 @@ mixin {
 }
 
 repositories {
-    maven { // SlimeKnights and JEI
-        name 'DVS1 Maven FS'
-        url 'https://dvs1.progwml6.com/files/maven'
-    }
     flatDir {
         dir 'libs'
     }
@@ -143,8 +139,6 @@ repositories {
             includeGroup "com.github.Virtuoel"
         }
     }
-    // AppleCore
-    maven { url "https://maven.ryanliptak.com/" }
 }
 
 configurations {
