@@ -85,6 +85,7 @@
 * Block stack reduction can no longer be reduced by material (as materials no longer exist)
 * Hunger Depleted on Wake Up now properly consumes Saturation first and then hunger 
 * Powder Snow is now harder to break 
+* Removed bonus health from mobs when not in hard mode
 * Solium moss now generates more per patch
 * Tool belts are now added to graves instead of dropping
 * Stairs are now mined faster
