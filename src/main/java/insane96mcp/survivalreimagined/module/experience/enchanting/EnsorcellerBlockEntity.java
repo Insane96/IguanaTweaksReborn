@@ -1,6 +1,5 @@
 package insane96mcp.survivalreimagined.module.experience.enchanting;
 
-import insane96mcp.survivalreimagined.module.experience.GlobalExperience;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -10,28 +9,27 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
-    public static final int DATA_COUNT = 3;
+    public static final int DATA_COUNT = 4;
     public static final int DATA_STEPS = 0;
     public static final int DATA_LEVELS_USED = 1;
     public static final int DATA_CAN_ENCHANT = 2;
+    public static final int DATA_ENCHANTING_SEED = 3;
     protected NonNullList<ItemStack> items = NonNullList.withSize(EnsorcellerMenu.SLOT_COUNT, ItemStack.EMPTY);
     public int steps;
     public int levelsUsed;
     public boolean canEnchant;
+    public int enchantingSeed;
 
     protected final ContainerData dataAccess = new ContainerData() {
         public int get(int dataId) {
@@ -39,6 +37,7 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
                 case DATA_STEPS -> EnsorcellerBlockEntity.this.steps;
                 case DATA_LEVELS_USED -> EnsorcellerBlockEntity.this.levelsUsed;
                 case DATA_CAN_ENCHANT -> EnsorcellerBlockEntity.this.canEnchant ? 1 : 0;
+                case DATA_ENCHANTING_SEED -> EnsorcellerBlockEntity.this.enchantingSeed;
                 default -> 0;
             };
         }
@@ -48,6 +47,7 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
                 case DATA_STEPS -> EnsorcellerBlockEntity.this.steps = data;
                 case DATA_LEVELS_USED -> EnsorcellerBlockEntity.this.levelsUsed = data;
                 case DATA_CAN_ENCHANT -> EnsorcellerBlockEntity.this.canEnchant = data == 1;
+                case DATA_ENCHANTING_SEED -> EnsorcellerBlockEntity.this.enchantingSeed = data;
             }
 
         }
@@ -68,6 +68,7 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
         this.steps = pTag.getInt("Steps");
         this.levelsUsed = pTag.getInt("LevelsUsed");
         this.canEnchant = pTag.getBoolean("CanEnchant");
+        this.enchantingSeed = pTag.getInt("EnchantingSeed");
     }
 
     protected void saveAdditional(CompoundTag pTag) {
@@ -75,6 +76,7 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
         pTag.putInt("Steps", this.steps);
         pTag.putInt("LevelsUsed", this.levelsUsed);
         pTag.putBoolean("CanEnchant", this.canEnchant);
+        pTag.putInt("EnchantingSeed", this.enchantingSeed);
         ContainerHelper.saveAllItems(pTag, this.items);
     }
 
@@ -150,16 +152,6 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
     @Override
     public void clearContent() {
         this.items.clear();
-    }
-
-    public void dropExperience(Level level) {
-        if (this.levelsUsed > 0) {
-            ExperienceOrb experienceOrb = EntityType.EXPERIENCE_ORB.create(level);
-            experienceOrb.setPos(this.getBlockPos().getX() + 0.5d, this.getBlockPos().getY() + 0.5d, this.getBlockPos().getZ() + 0.5d);
-            experienceOrb.getPersistentData().putBoolean(GlobalExperience.XP_PROCESSED, true);
-            experienceOrb.value = this.levelsUsed * 5;
-            level.addFreshEntity(experienceOrb);
-        }
     }
 
     public @Nullable ClientboundBlockEntityDataPacket getUpdatePacket() {

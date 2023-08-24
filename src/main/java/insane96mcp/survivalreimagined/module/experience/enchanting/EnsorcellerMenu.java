@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -37,6 +38,8 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
     public static final int MAX_STEPS = 12;
     public static final int LVL_ON_JACKPOT = 16;
     public DataSlot rollCost = DataSlot.standalone();
+    public DataSlot enchantmentSeed = DataSlot.standalone();
+    private final RandomSource random = RandomSource.create();
 
     public EnsorcellerMenu(int pContainerId, Inventory pPlayerInventory) {
         this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(EnsorcellerBlockEntity.DATA_COUNT), ContainerLevelAccess.NULL);
@@ -57,6 +60,12 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
             public int getMaxStackSize() {
                 return 1;
             }
+
+            @Override
+            public void setChanged() {
+                super.setChanged();
+                EnsorcellerMenu.this.slotsChanged(this.container);
+            }
         });
 
         for (int i = 0; i < 3; ++i) {
@@ -69,6 +78,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
             this.addSlot(new Slot(pPlayerInventory, k, 8 + k * 18, 142));
         }
         this.addDataSlots(pData);
+        this.addDataSlot(this.enchantmentSeed).set(pPlayerInventory.player.getEnchantmentSeed());
         this.addDataSlot(this.rollCost);
         this.updateRollCost();
     }
@@ -76,6 +86,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
     @Override
     public void slotsChanged(Container pContainer) {
         this.updateRollCost();
+        this.updateCanEnchant();
         super.slotsChanged(pContainer);
     }
 
@@ -148,6 +159,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
                     this.resetLevelsUsed();
                     this.slotsChanged(this.container);
                     level.playSound(null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, 1.25F);
+                    this.rerollEnchantingSeed();
                 }
             });
         }
@@ -158,7 +170,8 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
     }
 
     private List<EnchantmentInstance> getEnchantmentList(ItemStack pStack, int pLevel) {
-        List<EnchantmentInstance> list = EnchantmentHelper.selectEnchantment(this.level.random, pStack, pLevel,false );
+        this.random.setSeed(this.getEnchantingSeed());
+        List<EnchantmentInstance> list = EnchantmentHelper.selectEnchantment(this.level.random, pStack, pLevel,false);
         if (pStack.is(Items.BOOK) && list.size() > 1) {
             list.remove(this.level.random.nextInt(list.size()));
         }
@@ -224,6 +237,11 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
 
     public void setCanEnchant(boolean canEnchant) {
         this.data.set(EnsorcellerBlockEntity.DATA_CAN_ENCHANT, canEnchant ? 1 : 0);
+    }
+
+    public void rerollEnchantingSeed() { this.data.set(EnsorcellerBlockEntity.DATA_ENCHANTING_SEED, this.level.random.nextInt()); }
+    public int getEnchantingSeed() {
+        return this.data.get(EnsorcellerBlockEntity.DATA_ENCHANTING_SEED);
     }
 
     @Override
