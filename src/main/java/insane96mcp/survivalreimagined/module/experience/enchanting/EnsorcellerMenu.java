@@ -90,6 +90,8 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
         super.slotsChanged(pContainer);
     }
 
+    final int[] DICES_SIDES = new int[]{4, 4, 6, 8, 10, 12};
+
     @Override
     public boolean clickMenuButton(Player player, int pId) {
         //Roll and enchant buttons
@@ -107,7 +109,12 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
 
             //This is executed only server side
             this.access.execute((level, blockPos) -> {
-                this.incrementSteps((int) (this.level.random.triangle(2, 2) + 1));
+                int diceSides;
+                if (this.rollCost.get() > DICES_SIDES.length - 1)
+                    diceSides = DICES_SIDES[5];
+                else
+                    diceSides = DICES_SIDES[this.rollCost.get()];
+                this.incrementSteps((int) (this.level.random.triangle(diceSides / 2, diceSides / 2) + 1));
                 this.incrementLevelsUsed();
                 if (!player.getAbilities().instabuild)
                     ((ServerPlayer)player).setExperienceLevels(player.experienceLevel - this.rollCost.get());
@@ -189,13 +196,10 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
                 }
             }
 
-            int cost;
-            if (enchantPower < 3)
-                cost = 3;
-            else if (enchantPower < 6)
-                cost = 2;
-            else
-                cost = 1;
+            int cost = EnchantingFeature.ensorcellerBaseRollCost;
+            for (float i = enchantPower; i >= EnchantingFeature.ensorcellerBookshelfToLowerLevel && cost > 1; i -= EnchantingFeature.ensorcellerBookshelfToLowerLevel) {
+                cost--;
+            }
 
             this.rollCost.set(cost);
         });
