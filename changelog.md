@@ -27,7 +27,7 @@
 * Increased flint base damage by 0.5
 * Ensorceller 
   * Cost to roll is now 3 base and decreases by one every 4 bookshelves around
-  * Rolling at higher costs rolls higher die (D8 at 3 cost, D6 at 2 cost and D4 at 1 cost)
+  * Rolling at higher costs rolls higher die
   * Cost to roll can now be configured
   * Now keeps levels rolled when broken
 * Mushrooms are now bone meal-able only when on mycelium
