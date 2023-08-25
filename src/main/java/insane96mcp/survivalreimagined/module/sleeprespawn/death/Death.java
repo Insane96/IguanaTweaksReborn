@@ -9,6 +9,7 @@ import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.sleeprespawn.death.integration.ToolBelt;
 import insane96mcp.survivalreimagined.setup.SRBlockEntityTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.item.ItemStack;
@@ -59,14 +60,17 @@ public class Death extends Feature {
 				|| (player.getInventory().isEmpty() && player.experienceLevel == 0))
 			return;
 
-		if (player.level().getBlockState(player.blockPosition().below()).canBeReplaced())
-			player.level().setBlock(player.blockPosition().below(), Blocks.COARSE_DIRT.defaultBlockState(), 3);
+		BlockPos pos = player.blockPosition();
+		if (pos.getY() < player.level().getMinBuildHeight())
+			pos = pos.atY(player.level().getMinBuildHeight() + 1);
+		if (player.level().getBlockState(pos.below()).canBeReplaced())
+			player.level().setBlock(pos.below(), Blocks.COARSE_DIRT.defaultBlockState(), 3);
 		BlockState grave = GRAVE.block().get().defaultBlockState();
-		if (player.level().getFluidState(player.blockPosition()).getType() == Fluids.WATER)
+		if (player.level().getFluidState(pos).getType() == Fluids.WATER)
 			grave = grave.setValue(GraveBlock.WATERLOGGED, true);
-		player.level().destroyBlock(player.blockPosition(), true, player);
-		player.level().setBlock(player.blockPosition(), grave, 3);
-		GraveBlockEntity graveBlockEntity = (GraveBlockEntity) player.level().getBlockEntity(player.blockPosition());
+		player.level().destroyBlock(pos, true, player);
+		player.level().setBlock(pos, grave, 3);
+		GraveBlockEntity graveBlockEntity = (GraveBlockEntity) player.level().getBlockEntity(pos);
 		List<ItemStack> items = new ArrayList<>();
 		player.getInventory().items.forEach(itemStack -> {
 			if (!itemStack.isEmpty())
@@ -83,12 +87,12 @@ public class Death extends Feature {
 		if (ModList.get().isLoaded("toolbelt"))
 			ToolBelt.onDeath(items, player);
 		graveBlockEntity.setItems(items);
-		//int xpDropped = PlayerExperience.getExperienceOnDeath(player, true);
-		//graveBlockEntity.setXpStored(xpDropped);
+		/*int xpDropped = PlayerExperience.getExperienceOnDeath(player, true);
+		graveBlockEntity.setXpStored(xpDropped);
+		player.setExperienceLevels(0);
+		player.setExperiencePoints(0);*/
 		graveBlockEntity.setOwner(player.getUUID());
 		graveBlockEntity.setDeathNumber(player.getStats().getValue(Stats.CUSTOM.get(Stats.DEATHS)) + 1);
-		/*player.setExperienceLevels(0);
-		player.setExperiencePoints(0);*/
 		player.getInventory().clearContent();
 	}
 }

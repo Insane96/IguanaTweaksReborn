@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.14.1
+* Fixed Grave not spawning when dying in the void
+
 ## 0.14.0
 * Anvils now have only 7.5% chance to wear down when used
 * Coated Copper Tools finished
