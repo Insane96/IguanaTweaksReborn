@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 0.14.0
 * Anvils now have only 7.5% chance to wear down when used
 * Coated Copper Tools finished
   * Shield parrying now can electrocute enemies
@@ -21,17 +21,17 @@
   * Other ores drop more xp
 * Added back "In terrain slowdown"
   * Snow and powder snow slow down
+* Added Melee Protection enchantment
 * World border
   * Is no longer rendered way up in the air and down to the bottom of the world 
   * Is now 60% transparent
 * Increased flint base damage by 0.5
 * Ensorceller 
-  * Cost to roll is now 3 base and decreases by one every 4 bookshelves around
+  * Cost to roll is now 3 base (unchanged) and decreases by one every ~~3~~ -> 4 bookshelves around
   * Rolling at higher costs rolls higher die
   * Cost to roll can now be configured
   * Now keeps levels rolled when broken
 * Mushrooms are now bone meal-able only when on mycelium
-* Added Melee Protection enchantment
 * Arrows can now be made from cloth in a fletching table
 * Disabled Well Fed and Injured
 * Slight increase to Unbreaking formula (x1.29, x1.67, x2.11, x2.5 -> x1.33, x1.82, x2.5, x3.33 durability at levels I to IV)
