@@ -4,9 +4,14 @@ import com.google.common.collect.ImmutableList;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.data.criterion.ActivateRespawnObeliskTrigger;
+import insane96mcp.survivalreimagined.utils.LogHelper;
+import insane96mcp.survivalreimagined.utils.MCUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -74,11 +79,22 @@ public class RespawnObeliskBlock extends Block {
             }
         }
         else if (state.getValue(ENABLED) && !level.isClientSide) {
-            ServerPlayer serverplayer = (ServerPlayer)player;
-            if (serverplayer.getRespawnDimension() != level.dimension() || !pos.equals(serverplayer.getRespawnPosition())) {
-                serverplayer.setRespawnPosition(level.dimension(), pos, 0.0F, false, true);
+            ServerPlayer serverPlayer = (ServerPlayer)player;
+            if (serverPlayer.getRespawnDimension() != level.dimension() || !pos.equals(serverPlayer.getRespawnPosition())) {
+                if (serverPlayer.getRespawnPosition() != null) {
+                    CompoundTag tag = MCUtils.getOrCreatePersistedData(player);
+                    tag.putInt("OldSpawnX", serverPlayer.getRespawnPosition().getX());
+                    tag.putInt("OldSpawnY", serverPlayer.getRespawnPosition().getY());
+                    tag.putInt("OldSpawnZ", serverPlayer.getRespawnPosition().getZ());
+                    tag.putBoolean("OldSpawnForced", serverPlayer.isRespawnForced());
+                    tag.putFloat("OldSpawnAngle", serverPlayer.getRespawnAngle());
+                    ResourceLocation.CODEC.encodeStart(NbtOps.INSTANCE, serverPlayer.getRespawnDimension().location())
+                            .resultOrPartial(LogHelper::error)
+                            .ifPresent((t) -> tag.put("OldSpawnDimension", t));
+                }
+                serverPlayer.setRespawnPosition(level.dimension(), pos, 0.0F, false, true);
                 level.playSound(null, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.RESPAWN_ANCHOR_SET_SPAWN, SoundSource.BLOCKS, 1.0F, 1.0F);
-                ActivateRespawnObeliskTrigger.TRIGGER.trigger(serverplayer);
+                ActivateRespawnObeliskTrigger.TRIGGER.trigger(serverPlayer);
                 return InteractionResult.SUCCESS;
             }
         }
@@ -142,9 +158,25 @@ public class RespawnObeliskBlock extends Block {
             level.playSound(null, respawnPos.getX(), respawnPos.getY(), respawnPos.getZ(), SoundEvents.RESPAWN_ANCHOR_DEPLETE.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             player.displayClientMessage(Component.translatable(OBELISK_DISABLED), false);
             if (player instanceof ServerPlayer serverPlayer) {
-                serverPlayer.setRespawnPosition(player.level().dimension(), null, 0f, false, false);
+                if (!trySetOldSpawn(serverPlayer)) {
+                    serverPlayer.setRespawnPosition(player.level().dimension(), null, 0f, false, false);
+                }
             }
         }
+    }
+
+    public static boolean trySetOldSpawn(ServerPlayer player) {
+        CompoundTag tag = MCUtils.getOrCreatePersistedData(player);
+        if (!tag.contains("OldSpawnX"))
+            return false;
+        player.setRespawnPosition(Level.RESOURCE_KEY_CODEC.parse(NbtOps.INSTANCE, tag.get("OldSpawnDimension")).resultOrPartial(LogHelper::error).orElse(Level.OVERWORLD), new BlockPos(tag.getInt("OldSpawnX"), tag.getInt("OldSpawnY"), tag.getInt("OldSpawnZ")), tag.getFloat("OldSpawnAngle"), tag.getBoolean("OldSpawnForced"), false);
+        tag.remove("OldSpawnX");
+        tag.remove("OldSpawnY");
+        tag.remove("OldSpawnZ");
+        tag.remove("OldSpawnAngle");
+        tag.remove("OldSpawnForced");
+        tag.remove("OldSpawnDimension");
+        return true;
     }
 
     public static int lightLevel(BlockState state) {

@@ -1,7 +1,10 @@
 # Changelog
 
 ## 0.14.1
+* Setting your spawn point on a respawn Obelisk now saves the previous one
+  * So if you set the respawn on a bed and the obelisk discharges, you'll respawn at the bed
 * Reduced depth hardness
+* Leather armor durability has been increased back to vanilla one
 * Fixed Grave not spawning when dying in the void
 * Fixed crash when an animal died on fire
 

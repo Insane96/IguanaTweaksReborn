@@ -157,14 +157,15 @@ public class Respawn extends SRFeature {
 		ServerPlayer player = (ServerPlayer) event.getEntity();
 		BlockPos pos = player.getRespawnPosition();
 		if (pos == null
-				|| !event.getEntity().level().getBlockState(pos).is(RESPAWN_OBELISK.block().get()))
+				|| !player.level().getBlockState(pos).is(RESPAWN_OBELISK.block().get()))
 			return;
 
-		if (!event.getEntity().level().getBlockState(pos).getValue(RespawnObeliskBlock.ENABLED)) {
+		if (!player.level().getBlockState(pos).getValue(RespawnObeliskBlock.ENABLED)) {
 			player.sendSystemMessage(Component.translatable(FAIL_RESPAWN_OBELISK_LANG));
+			RespawnObeliskBlock.trySetOldSpawn(player);
 			return;
 		}
-		RespawnObeliskBlock.onObeliskRespawn(event.getEntity(), event.getEntity().level(), pos);
+		RespawnObeliskBlock.onObeliskRespawn(player, player.level(), pos);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOW)

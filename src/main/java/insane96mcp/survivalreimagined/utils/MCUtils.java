@@ -1,12 +1,14 @@
 package insane96mcp.survivalreimagined.utils;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
@@ -77,5 +79,17 @@ public class MCUtils {
     /** Disables the anti knockback modifier */
     private static void enableKnockback(AttributeInstance instance) {
         instance.removeModifier(ANTI_KNOCKBACK_MODIFIER);
+    }
+
+    public static CompoundTag getOrCreatePersistedData(Player player) {
+        CompoundTag tag;
+        if (!player.getPersistentData().contains(Player.PERSISTED_NBT_TAG)) {
+            tag = new CompoundTag();
+            player.getPersistentData().put(Player.PERSISTED_NBT_TAG, tag);
+        }
+        else {
+            tag = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG);
+        }
+        return tag;
     }
 }
