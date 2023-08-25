@@ -13,7 +13,6 @@ import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.combat.fletching.Fletching;
 import insane96mcp.survivalreimagined.module.combat.fletching.dispenser.SRArrowDispenseBehaviour;
 import insane96mcp.survivalreimagined.module.experience.anvils.AnvilRecipeReloadListener;
-import insane96mcp.survivalreimagined.module.items.copper.ElectrocutionSparkParticle;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.survivalreimagined.module.world.spawners.capability.SpawnerData;
 import insane96mcp.survivalreimagined.module.world.spawners.capability.SpawnerDataAttacher;
@@ -21,7 +20,6 @@ import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.setup.*;
 import insane96mcp.survivalreimagined.setup.client.ClientSetup;
 import insane96mcp.survivalreimagined.setup.client.SRClientConfig;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -32,7 +30,6 @@ import net.minecraft.server.packs.repository.PackRepository;
 import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -49,6 +46,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -81,14 +79,16 @@ public class SurvivalReimagined
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(SpawnerDataAttacher.class);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addListener(ClientSetup::entityRenderEvent);
-        modEventBus.addListener(ClientSetup::onRegisterRecipeBookCategories);
+        if (FMLLoader.getDist().isClient()) {
+            modEventBus.addListener(ClientSetup::onBuildCreativeModeTabContents);
+            modEventBus.addListener(ClientSetup::registerEntityRenderers);
+            modEventBus.addListener(ClientSetup::registerRecipeBookCategories);
+            modEventBus.addListener(ClientSetup::registerParticleFactories);
+        }
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::gatherData);
-        modEventBus.addListener(ClientSetup::onBuildCreativeModeTabContents);
         modEventBus.addListener(this::addPackFinders);
-        modEventBus.addListener(this::registerParticleFactories);
         modEventBus.addListener(PiercingPickaxes::piercingDamageAttribute);
         modEventBus.register(Tiredness.class);
         modEventBus.register(SpawnerData.class);
@@ -175,10 +175,6 @@ public class SurvivalReimagined
         }
         if (hasDisabledPack)
             event.getServer().reloadResources(list.stream().map(Pack::getId).collect(Collectors.toList()));
-    }
-
-    public void registerParticleFactories(RegisterParticleProvidersEvent event) {
-        Minecraft.getInstance().particleEngine.register(SRParticles.ELECTROCUTION_SPARKS.get(), ElectrocutionSparkParticle.Provider::new);
     }
 
 }

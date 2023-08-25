@@ -15,6 +15,7 @@ import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.altimeter.Altimeter;
 import insane96mcp.survivalreimagined.module.items.copper.CopperToolsExpansion;
+import insane96mcp.survivalreimagined.module.items.copper.ElectrocutionSparkParticle;
 import insane96mcp.survivalreimagined.module.items.crate.Crate;
 import insane96mcp.survivalreimagined.module.items.explosivebarrel.ExplosiveBarrel;
 import insane96mcp.survivalreimagined.module.items.flintexpansion.FlintExpansion;
@@ -39,6 +40,7 @@ import insane96mcp.survivalreimagined.module.world.CyanFlower;
 import insane96mcp.survivalreimagined.module.world.coalfire.CoalFire;
 import insane96mcp.survivalreimagined.module.world.oregeneration.OreGeneration;
 import insane96mcp.survivalreimagined.setup.SREntityTypes;
+import insane96mcp.survivalreimagined.setup.SRParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -49,6 +51,7 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.event.RegisterRecipeBookCategoriesEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -247,7 +250,7 @@ public class ClientSetup {
         MenuScreens.register(Fletching.FLETCHING_MENU_TYPE.get(), FletchingScreen::new);
     }
 
-    public static void entityRenderEvent(EntityRenderersEvent.RegisterRenderers event) {
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(SREntityTypes.PILABLE_FALLING_LAYER.get(), FallingBlockRenderer::new);
         event.registerEntityRenderer(Fletching.QUARTZ_ARROW.get(), SRArrowRenderer::new);
         event.registerEntityRenderer(Fletching.DIAMOND_ARROW.get(), SRArrowRenderer::new);
@@ -272,7 +275,7 @@ public class ClientSetup {
     static RecipeBookCategories FLETCHING_MISC = RecipeBookCategories.create("fletching_misc", new ItemStack(Items.FLETCHING_TABLE));
     public static final List<RecipeBookCategories> FLETCHING_CATEGORIES = ImmutableList.of(FLETCHING_SEARCH, FLETCHING_MISC);
 
-    public static void onRegisterRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
+    public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
         event.registerBookCategories(SurvivalReimagined.MULTI_ITEM_BLASTING_RECIPE_BOOK_TYPE, BLAST_FURNACE_CATEGORIES);
         event.registerAggregateCategory(BLAST_FURNACE_SEARCH, ImmutableList.of(BLAST_FURNACE_MISC));
         event.registerRecipeCategoryFinder(MultiBlockFurnaces.BLASTING_RECIPE_TYPE.get(), r -> BLAST_FURNACE_MISC);
@@ -288,5 +291,9 @@ public class ClientSetup {
         event.registerBookCategories(SurvivalReimagined.FLETCHING_RECIPE_BOOK_TYPE, FLETCHING_CATEGORIES);
         event.registerAggregateCategory(FLETCHING_SEARCH, ImmutableList.of(FLETCHING_MISC));
         event.registerRecipeCategoryFinder(Fletching.FLETCHING_RECIPE_TYPE.get(), r -> FLETCHING_MISC);
+    }
+
+    public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(SRParticles.ELECTROCUTION_SPARKS.get(), ElectrocutionSparkParticle.Provider::new);
     }
 }
