@@ -17,7 +17,7 @@ public abstract class ExplosionMixin {
     @Shadow public abstract Vec3 getPosition();
 
     @Redirect(method = "finalizeExplosion", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;addParticle(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V", ordinal = 0))
-    private void onWaterHydrationRadius(Level level, ParticleOptions pParticleData, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
+    private void onExplosionEmitterParticle(Level level, ParticleOptions pParticleData, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
 		if (!Feature.isEnabled(ExplosionOverhaul.class) || !ExplosionOverhaul.disableEmitterParticles) {
             level.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.getPosition().x, this.getPosition().y, this.getPosition().z, 1.0D, 0.0D, 0.0D);
 		}
