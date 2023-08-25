@@ -1,6 +1,7 @@
 # Changelog
 
 ## 0.14.1
+* Reduced depth hardness
 * Fixed Grave not spawning when dying in the void
 
 ## 0.14.0

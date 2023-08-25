@@ -38,7 +38,7 @@ public class BlockHardness extends SRFeature {
 	public static final ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier = new ArrayList<>();
 
 	public static final ArrayList<DepthHardnessDimension> DEPTH_MULTIPLIER_DIMENSION_DEFAULT = new ArrayList<>(List.of(
-			new DepthHardnessDimension("minecraft:overworld", 0.01d, 100, 0)
+			new DepthHardnessDimension("minecraft:overworld", 0.01d, 64, 0)
 	));
 	public static final ArrayList<DepthHardnessDimension> depthMultiplierDimension = new ArrayList<>();
 
