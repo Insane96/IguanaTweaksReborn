@@ -25,7 +25,7 @@ public class SoliumMossBlock extends GlowLichenBlock {
         if (!(level instanceof Level serverLevel))
             return false;
         int dayTime = (int) (serverLevel.dayTime() % 24000);
-        if ((dayTime < 12786 || dayTime >= 23216) && serverLevel.canSeeSky(pos) && serverLevel.getBrightness(LightLayer.SKY, pos) >= 10) {
+        if ((dayTime < 12786 || dayTime >= 23216) && serverLevel.getBrightness(LightLayer.SKY, pos) >= 10) {
             return super.isValidBonemealTarget(serverLevel, pos, state, isClient);
         }
         return false;

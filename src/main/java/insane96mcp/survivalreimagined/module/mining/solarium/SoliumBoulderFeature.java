@@ -18,9 +18,9 @@ import net.minecraft.world.level.material.Fluids;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolariumBoudlerFeature extends Feature<BlockStateConfiguration> {
+public class SoliumBoulderFeature extends Feature<BlockStateConfiguration> {
 
-	public SolariumBoudlerFeature(Codec<BlockStateConfiguration> pCodec) {
+	public SoliumBoulderFeature(Codec<BlockStateConfiguration> pCodec) {
 		super(pCodec);
 	}
 
@@ -56,13 +56,13 @@ public class SolariumBoudlerFeature extends Feature<BlockStateConfiguration> {
 					int b = randomsource.nextInt(100);
 					if (b < 30)
 						worldgenlevel.setBlock(betweenClosedPos, Blocks.STONE.defaultBlockState, 3);
-					else if (b < 60)
+					else if (b < 50)
 						worldgenlevel.setBlock(betweenClosedPos, Blocks.COBBLESTONE.defaultBlockState, 3);
-					else if (b < 80)
+					else if (b < 70)
 						worldgenlevel.setBlock(betweenClosedPos, Blocks.DIRT.defaultBlockState, 3);
-					else
+					else if (b < 90)
 						worldgenlevel.setBlock(betweenClosedPos, Blocks.COARSE_DIRT.defaultBlockState, 3);
-					if (randomsource.nextFloat() < 0.4f)
+					if (b < 90 && randomsource.nextFloat() < 0.4f)
 						tryPlaceSolium(worldgenlevel, betweenClosedPos);
 				}
 			}
