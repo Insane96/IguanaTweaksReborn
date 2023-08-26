@@ -15,6 +15,7 @@
 * Mobs now drop 100% more experience instead of 75% in hard mode
 * Block hardness multiplier in the nether increased (2x -> 3x)
 * Removed "Actual redstone component". Use Copperative.
+* Fixed creeper explosions dropping almost no blocks
 
 ## 0.14.1
 * Setting your spawn point on a respawn Obelisk now saves the previous one

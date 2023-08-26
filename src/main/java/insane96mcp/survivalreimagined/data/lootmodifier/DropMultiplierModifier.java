@@ -46,7 +46,7 @@ public class DropMultiplierModifier extends LootModifier {
     //The multiplier applied to the amount of items
     private float multiplier;
     //This amount is subtracted from the total amount before applying the multiplier
-    private int amountToKeep = 0;
+    private int amountToKeep;
 
     public DropMultiplierModifier(LootItemCondition[] conditionsIn, Optional<Item> item, Optional<TagKey<Item>> tag, float multiplier, int amountToKeep) {
         super(conditionsIn);
