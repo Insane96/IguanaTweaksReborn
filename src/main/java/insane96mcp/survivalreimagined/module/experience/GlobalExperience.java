@@ -14,7 +14,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Global Experience", description = "Decrease / Increase every experience point dropped in the world")
-@LoadFeature(module = Modules.Ids.EXPERIENCE)
+@LoadFeature(module = Modules.Ids.EXPERIENCE, enabledByDefault = false)
 public class GlobalExperience extends Feature {
 
 	public static final String XP_PROCESSED = SurvivalReimagined.RESOURCE_PREFIX + "xp_processed";

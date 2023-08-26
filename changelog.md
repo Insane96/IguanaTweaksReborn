@@ -8,6 +8,7 @@
   * Items enchanted in an ensorceller can no longer be merged
   * Increased max pool from 12 to 15 (16 to 20 for full pool)
   * Books can no longer be enchanted in an ensorceller
+* Leveling up now always requires 35 xp instead of the previous formula `(2 * current_level) + 5`
 
 ## 0.14.1
 * Setting your spawn point on a respawn Obelisk now saves the previous one
