@@ -46,7 +46,7 @@ public class Nerfs extends Feature {
 	public static Boolean removePistonPhysicsExploit = true;
 
 	@Config(min = 0d, max = 1d)
-	@Label(name = "Fishing has a chance to fish a sea creature")
+	@Label(name = "Fishing has a chance to fish a guardian")
 	public static Double fishingCreatureChance = 0.05d;
 
     public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {

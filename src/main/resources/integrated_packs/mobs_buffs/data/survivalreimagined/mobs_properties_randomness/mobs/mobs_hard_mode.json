@@ -1,5 +1,5 @@
 {
-    "target": "#survivalreimagined:mobs_no_bosses_no_zombies",
+    "target": "#survivalreimagined:mobs_no_bosses",
     "attributes": [
         {
             "id": "minecraft:generic.attack_damage",
@@ -35,7 +35,7 @@
             "operation": "multiply_base"
         }
     ],
-    "experience_multiplier": 1.75,
+    "experience_multiplier": 2,
     "conditions": {
         "advancements_unlocked": [
             {

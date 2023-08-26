@@ -7,11 +7,11 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfig;
-import net.minecraftforge.event.entity.player.PlayerSpawnPhantomsEvent;
 import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import sereneseasons.api.season.Season;
 import sereneseasons.api.season.SeasonChangedEvent;
@@ -56,7 +56,7 @@ public class Spawning extends SRFeature {
     public static Boolean disableBabyZombies = true;
 
     @Config
-    @Label(name = "Phantoms in the End", description = "Prevents phantoms from spawning with the player's insomnia and makes them spawn in the End")
+    @Label(name = "Phantoms in the End", description = "Disables insomnia and makes Phantoms spawn naturally in the End")
     public static Boolean phantomsInTheEnd = true;
     @Config
     @Label(name = "Allow world spawn spawn", description = "Allows mobs to spawn in the world spawn (in vanilla mobs can't spawn in a 24 blocks radius from world spawn)")
@@ -67,13 +67,12 @@ public class Spawning extends SRFeature {
     }
 
     @SubscribeEvent
-    public void onPhantomsSpawn(PlayerSpawnPhantomsEvent event) {
+    public void onServerStarted(ServerStartedEvent event) {
         if (!this.isEnabled()
-                || !phantomsInTheEnd
-                || event.getEntity().level().dimension() != Level.OVERWORLD)
+                || !phantomsInTheEnd)
             return;
 
-        event.setResult(Event.Result.DENY);
+        event.getServer().getGameRules().getRule(GameRules.RULE_DOINSOMNIA).set(false, event.getServer());
     }
 
     @SubscribeEvent

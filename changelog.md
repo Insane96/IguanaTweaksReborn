@@ -1,5 +1,7 @@
 # Changelog
 
+* Increase drop rates in hard mode
+
 ## Upcoming
 * Cost for repairing a tool now scales with the percentage durability repaired
   * E.g. repairing a tool for half it's durability will cost only half levels
@@ -10,6 +12,7 @@
   * Books can no longer be enchanted in an ensorceller
 * Leveling up now always requires 35 xp instead of the previous formula `(2 * current_level) + 5`
 * Poison damaging speed has been increased (and made configurable) (1 damage every ~~4~~ -> 3 seconds)
+* Mobs now drop 100% more experience instead of 75% in hard mode
 
 ## 0.14.1
 * Setting your spawn point on a respawn Obelisk now saves the previous one
@@ -86,7 +89,7 @@
   * Merging items in an anvil now gives 20% bonus durability (instead of 12% vanilla)
   * Fixed fixing anvils opening the interface
 * Added "Phantoms in the End"
-  * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest Forge)
+  * Makes Phantoms spawn in The End instead of the Overworld (doesn't work as latest Forge, use NeoForge if possible)
 * Cloth: Zombies no longer drop rotten flesh and reduced cloth drop
 * Mobs not killed by players will now drop nothing 75% of the time
 * Shields can now be recycled in blast and soul furnaces
