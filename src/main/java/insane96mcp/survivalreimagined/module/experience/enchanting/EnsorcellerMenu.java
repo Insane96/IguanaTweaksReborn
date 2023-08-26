@@ -3,7 +3,6 @@ package insane96mcp.survivalreimagined.module.experience.enchanting;
 import net.minecraft.Util;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -14,7 +13,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -35,8 +33,8 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
     private final ContainerData data;
     private final ContainerLevelAccess access;
     protected final Level level;
-    public static final int MAX_STEPS = 12;
-    public static final int LVL_ON_JACKPOT = 16;
+    public static final int MAX_STEPS = 15;
+    public static final int LVL_ON_JACKPOT = 20;
     public DataSlot rollCost = DataSlot.standalone();
     public DataSlot enchantmentSeed = DataSlot.standalone();
     private final RandomSource random = RandomSource.create();
@@ -136,6 +134,8 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
                     for (EnchantmentInstance enchantmentInstance : enchantments) {
                         enchantableItem.enchant(enchantmentInstance.enchantment, enchantmentInstance.level);
                     }
+                    if (EnchantingFeature.ensorcellerNoMerge)
+                        enchantableItem.getOrCreateTag().putBoolean(EnsorcellerBlock.CANNOT_MERGE_TAG, true);
 
                     player.awardStat(Stats.ENCHANT_ITEM);
                     if (player instanceof ServerPlayer)

@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.mixin;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.survivalreimagined.module.experience.anvils.AnvilRecipe;
 import insane96mcp.survivalreimagined.module.experience.anvils.Anvils;
+import insane96mcp.survivalreimagined.module.experience.enchanting.EnsorcellerBlock;
 import insane96mcp.survivalreimagined.utils.MCUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -67,6 +68,8 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 	public void createResult(CallbackInfo ci) {
 		if (!Feature.isEnabled(Anvils.class))
 			return;
+
+		ci.cancel();
 
 		ItemStack left = this.inputSlots.getItem(0);
 		this.cost.set(1);
@@ -153,7 +156,10 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			}
 			//Else it's merging items
 			else {
-				if (!isEnchantedBook && (!resultStack.is(right.getItem()) || !resultStack.isDamageableItem())) {
+				if ((!isEnchantedBook && (!resultStack.is(right.getItem()) || !resultStack.isDamageableItem()))
+						//(no merge if one of the two tools has the "cannot merge" tag
+						|| (left.hasTag() && left.getTag().contains(EnsorcellerBlock.CANNOT_MERGE_TAG))
+						|| (right.hasTag() && right.getTag().contains(EnsorcellerBlock.CANNOT_MERGE_TAG))) {
 					this.resultSlots.setItem(0, ItemStack.EMPTY);
 					this.cost.set(0);
 					return;
@@ -277,8 +283,6 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 
 		this.resultSlots.setItem(0, resultStack);
 		this.broadcastChanges();
-
-		ci.cancel();
 	}
 
 	@Shadow

@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.experience.enchanting;
 
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -31,6 +32,8 @@ import java.util.List;
 
 public class EnsorcellerBlock extends BaseEntityBlock {
 
+    public static final String CANNOT_MERGE_TAG = SurvivalReimagined.RESOURCE_PREFIX + "cannot_merge";
+    public static final String CANNOT_BE_MERGED_LANG = SurvivalReimagined.MOD_ID + ".cannot_be_merged";
     protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
     protected EnsorcellerBlock(Properties pProperties) {
         super(pProperties);

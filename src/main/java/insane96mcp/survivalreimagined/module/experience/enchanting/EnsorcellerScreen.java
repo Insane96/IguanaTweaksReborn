@@ -57,9 +57,9 @@ public class EnsorcellerScreen extends AbstractContainerScreen<EnsorcellerMenu> 
         pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX, topLeftCornerY, 0, 0, this.imageWidth, this.imageHeight);
         for (int step = 0; step < EnsorcellerMenu.MAX_STEPS; step++) {
             if (step + 1 <= stepAnim)
-                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 92, topLeftCornerY + 65 - 4 * step, 0, 220, 42, 4);
+                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 102, topLeftCornerY + 68 - 4 * step, 0, 220, 42, 4);
             else
-                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 92, topLeftCornerY + 65 - 4 * step, 0, 224, 42, 4);
+                pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 102, topLeftCornerY + 68 - 4 * step, 0, 224, 42, 4);
         }
         int x = pMouseX - (topLeftCornerX + 11);
         int y = pMouseY - (topLeftCornerY + 35);
