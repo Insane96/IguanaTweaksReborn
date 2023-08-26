@@ -33,7 +33,7 @@ public class BlockHardness extends SRFeature {
 	public static final ResourceLocation DEPTH_MULTIPLIER_BLACKLIST = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "depth_multiplier_blacklist");
 
 	public static final ArrayList<DimensionHardnessMultiplier> DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT = new ArrayList<>(List.of(
-			new DimensionHardnessMultiplier("minecraft:the_nether", 2.0d)
+			new DimensionHardnessMultiplier("minecraft:the_nether", 3d)
 	));
 	public static final ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier = new ArrayList<>();
 

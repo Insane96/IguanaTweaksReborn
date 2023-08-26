@@ -13,6 +13,7 @@
 * Leveling up now always requires 35 xp instead of the previous formula `(2 * current_level) + 5`
 * Poison damaging speed has been increased (and made configurable) (1 damage every ~~4~~ -> 3 seconds)
 * Mobs now drop 100% more experience instead of 75% in hard mode
+* Block hardness multiplier in the nether increased (2x -> 3x)
 
 ## 0.14.1
 * Setting your spawn point on a respawn Obelisk now saves the previous one

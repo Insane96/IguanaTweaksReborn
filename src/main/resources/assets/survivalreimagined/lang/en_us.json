@@ -105,8 +105,8 @@
 	"item.survivalreimagined.flint_shovel": "Flint Shovel",
 	"item.survivalreimagined.flint_hoe": "Flint Hoe",
 	"item.survivalreimagined.flint_shield": "Flint Shield",
-	"block.survivalreimagined.flint_block": "Flint Block",
-	"block.survivalreimagined.polished_flint_block": "Polished Flint Block",
+	"block.survivalreimagined.flint_block": "Block of Flint",
+	"block.survivalreimagined.polished_flint_block": "Polished Block of Flint",
 	"block.survivalreimagined.flint_rock": "Flint Rock",
 
 	"survivalreimagined:mining_module": "Mining",
@@ -158,8 +158,8 @@
 	"item.survivalreimagined.durium_scrap_piece": "Durium Scrap Piece",
 	"item.survivalreimagined.durium_nugget": "Durium Nugget",
 	"item.survivalreimagined.durium_ingot": "Durium Ingot",
-	"block.survivalreimagined.durium_scrap_block": "Durium Scrap Block",
-	"block.survivalreimagined.durium_block": "Durium Block",
+	"block.survivalreimagined.durium_scrap_block": "Block of Durium Scrap",
+	"block.survivalreimagined.durium_block": "Block of Durium",
 	"block.survivalreimagined.durium_ore": "Durium Ore",
 	"block.survivalreimagined.deepslate_durium_ore": "Deepslate Durium Ore",
 
@@ -205,7 +205,7 @@
 	"item.survivalreimagined.soul_steel_boots": "Soul Steel Boots",
 	"item.survivalreimagined.soul_steel_nugget": "Soul Steel Nugget",
 	"item.survivalreimagined.soul_steel_ingot": "Soul Steel Ingot",
-	"block.survivalreimagined.soul_steel_block": "Soul Steel Block",
+	"block.survivalreimagined.soul_steel_block": "Block of Soul Steel",
 
 
 	"survivalreimagined:misc_module": "Misc",
