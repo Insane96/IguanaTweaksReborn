@@ -129,30 +129,17 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
             //This is executed only server side
             this.access.execute((level, blockPos) -> {
                 ItemStack enchantableItem = this.container.getItem(ITEM_SLOT);
-                ItemStack result = enchantableItem;
                 List<EnchantmentInstance> enchantments = this.getEnchantmentList(enchantableItem, this.getSteps() == MAX_STEPS ? LVL_ON_JACKPOT : this.getSteps());
                 if (!enchantments.isEmpty()) {
                     player.onEnchantmentPerformed(enchantableItem, 0);
-                    boolean isBook = enchantableItem.is(Items.BOOK);
-                    if (isBook) {
-                        result = new ItemStack(Items.ENCHANTED_BOOK);
-                        CompoundTag itemTag = enchantableItem.getTag();
-                        if (itemTag != null)
-                            result.setTag(itemTag);
-
-                        this.container.setItem(ITEM_SLOT, result);
-                    }
 
                     for (EnchantmentInstance enchantmentInstance : enchantments) {
-                        if (isBook)
-                            EnchantedBookItem.addEnchantment(result, enchantmentInstance);
-                        else
-                            result.enchant(enchantmentInstance.enchantment, enchantmentInstance.level);
+                        enchantableItem.enchant(enchantmentInstance.enchantment, enchantmentInstance.level);
                     }
 
                     player.awardStat(Stats.ENCHANT_ITEM);
                     if (player instanceof ServerPlayer)
-                        CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer) player, result, this.getLevelsUsed());
+                        CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer) player, enchantableItem, this.getLevelsUsed());
 
                     this.container.setChanged();
                     this.setSteps(0);
@@ -171,12 +158,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
 
     private List<EnchantmentInstance> getEnchantmentList(ItemStack pStack, int pLevel) {
         this.random.setSeed(this.getEnchantingSeed());
-        List<EnchantmentInstance> list = EnchantmentHelper.selectEnchantment(this.level.random, pStack, pLevel,false);
-        if (pStack.is(Items.BOOK) && list.size() > 1) {
-            list.remove(this.level.random.nextInt(list.size()));
-        }
-
-        return list;
+        return EnchantmentHelper.selectEnchantment(this.level.random, pStack, pLevel,false);
     }
 
     private void updateRollCost() {
@@ -201,7 +183,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
     private void updateCanEnchant() {
         ItemStack stack = this.container.getItem(ITEM_SLOT);
         List<EnchantmentInstance> enchantments = this.getEnchantmentList(stack, this.getSteps() == MAX_STEPS ? LVL_ON_JACKPOT : this.getSteps());
-        this.setCanEnchant(!stack.isEmpty() && stack.isEnchantable() && this.getSteps() > 0 && !enchantments.isEmpty());
+        this.setCanEnchant(!stack.isEmpty() && stack.isEnchantable() && !stack.is(Items.BOOK) && this.getSteps() > 0 && !enchantments.isEmpty());
     }
 
     public int getSteps() {
