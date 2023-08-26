@@ -65,7 +65,7 @@ public class DropMultiplierModifier extends LootModifier {
             else if (tag.isPresent()) {
                 return stack.is(tag.get());
             }
-            return false;
+            return true;
         };
         List<ItemStack> stream = generatedLoot.stream().filter(MATCHES_ITEM_OR_TAG).toList();
         if (stream.isEmpty())
