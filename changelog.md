@@ -3,12 +3,13 @@
 ## Upcoming
 * Cost for repairing a tool now scales with the percentage durability repaired
   * E.g. repairing a tool for half it's durability will cost only half levels
-* Fixed the anvil running vanilla behaviour when leaving the mixin
+  * Fixed the anvil running vanilla behaviour when leaving the mixin
 * Ensorceller
   * Items enchanted in an ensorceller can no longer be merged
   * Increased max pool from 12 to 15 (16 to 20 for full pool)
   * Books can no longer be enchanted in an ensorceller
 * Leveling up now always requires 35 xp instead of the previous formula `(2 * current_level) + 5`
+* Poison damaging speed has been increased (and made configurable) (1 damage every ~~4~~ -> 3 seconds)
 
 ## 0.14.1
 * Setting your spawn point on a respawn Obelisk now saves the previous one

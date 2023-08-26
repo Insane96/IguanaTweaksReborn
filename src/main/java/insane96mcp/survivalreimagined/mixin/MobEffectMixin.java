@@ -11,7 +11,6 @@ public class MobEffectMixin {
 
 	@ModifyConstant(method = "isDurationEffectTick", constant = @Constant(intValue = 25, ordinal = 0))
 	public int onPoisonTickDamage(int constant) {
-		if (Tweaks.isSlowerPoison()) return 80;
-		return constant;
+		return Tweaks.getPoisonDamageSpeed();
 	}
 }

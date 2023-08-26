@@ -35,9 +35,9 @@ public class Tweaks extends Feature {
     @Config
     @Label(name = "Falling breaking glass", description = "Falling on glass has a chance of breaking it. The higher the fall, the higher the chance")
     public static Boolean fallingBreakingGlass = true;
-    @Config
-    @Label(name = "Slower poison", description = "If true, poison will damage the player every 80 ticks at level I instead of 25.")
-    public static Boolean slowerPoison = true;
+    @Config(min = 1)
+    @Label(name = "Poison damage speed", description = "Poison will damage the player every this ticks at level I. Vanilla is 25.")
+    public static Integer poisonDamageSpeed = 60;
     //TODO Remove when quark 1.20.x
     @Config
     @Label(name = "Maximum Sponge Soak Blocks", description = "The maximum amount of blocks a sponge can soak. (Vanilla is 64)")
@@ -71,12 +71,12 @@ public class Tweaks extends Feature {
         if (!isEnabled(Tweaks.class))
             return range;
 
-        //Vanilla uses 65 and not 64
+        //Vanilla uses < instead of <=
         return maxSpongeSoakRange + 1;
     }
 
-    public static boolean isSlowerPoison() {
-        return isEnabled(Tweaks.class) && slowerPoison;
+    public static int getPoisonDamageSpeed() {
+        return isEnabled(Tweaks.class) ? poisonDamageSpeed : 25;
     }
 
     @SubscribeEvent
