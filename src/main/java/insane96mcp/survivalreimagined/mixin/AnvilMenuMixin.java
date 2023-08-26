@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.mixin;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.survivalreimagined.module.experience.anvils.AnvilRecipe;
 import insane96mcp.survivalreimagined.module.experience.anvils.Anvils;
+import insane96mcp.survivalreimagined.utils.MCUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -138,6 +139,10 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 						int lvl = leftEnchantments.get(leftEnchantment);
 						mergeCost += lvl * Anvils.getRarityCost(leftEnchantment);
 					}
+
+					int durabilityRepaired = MCUtils.getDurabilityLeft(resultStack) - MCUtils.getDurabilityLeft(left);
+					float durabilityRepairedRatio = (float) durabilityRepaired / resultStack.getMaxDamage();
+					mergeCost = Mth.ceil(mergeCost * durabilityRepairedRatio);
 				}
 
 				if (oRepairData.isPresent()) {
@@ -248,8 +253,6 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		this.cost.set((int) Math.round((baseCost + mergeCost) * Anvils.repairCostMultiplier));
 		if (isRenaming && !Anvils.freeRenaming)
 			this.cost.set(this.cost.get() + COST_RENAME);
-		/*if (mergeCost <= 0 && !isRenaming)
-			resultStack = ItemStack.EMPTY;*/
 
 		if (isRenaming && Anvils.freeRenaming && mergeCost <= 0)
 			this.cost.set(0);

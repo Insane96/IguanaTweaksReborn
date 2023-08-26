@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Cost for repairing a tool now scales with the percentage durability repaired
+  * E.g. repairing a tool for half it's durability will cost only half levels
+
 ## 0.14.1
 * Setting your spawn point on a respawn Obelisk now saves the previous one
   * So if you set the respawn on a bed and the obelisk discharges, you'll respawn at the bed

@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
@@ -91,5 +92,9 @@ public class MCUtils {
             tag = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG);
         }
         return tag;
+    }
+
+    public static int getDurabilityLeft(ItemStack stack) {
+        return stack.getMaxDamage() - stack.getDamageValue();
     }
 }
