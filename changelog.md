@@ -1,8 +1,6 @@
 # Changelog
 
-* Increase drop rates in hard mode
-
-## Upcoming
+## 0.14.2
 * Cost for repairing a tool now scales with the percentage durability repaired
   * E.g. repairing a tool for half it's durability will cost only half levels
   * Fixed the anvil running vanilla behaviour when leaving the mixin
