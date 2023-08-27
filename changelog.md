@@ -16,6 +16,7 @@
 * Block hardness multiplier in the nether increased (2x -> 3x)
 * Removed "Actual redstone component". Copperative recommended.
 * Fixed creeper explosions dropping almost no blocks
+* Some new durium textures, thanks to e___kho
 
 ## 0.14.1
 * Setting your spawn point on a respawn Obelisk now saves the previous one
