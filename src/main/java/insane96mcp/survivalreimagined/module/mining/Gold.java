@@ -62,10 +62,10 @@ public class Gold extends Feature {
 				|| !luckyGold
 				|| !(itemStack.getItem() instanceof TieredItem tieredItem)
 				|| tieredItem.getTier() != Tiers.GOLD
-				|| prev >= 1)
+				|| prev >= 2)
 			return prev;
 
-		return 1;
+		return 2;
 	}
 
 	public static Tier getEffectiveTier(Tier originalTier) {
