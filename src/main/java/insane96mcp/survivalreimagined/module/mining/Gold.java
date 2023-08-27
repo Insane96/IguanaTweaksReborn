@@ -28,7 +28,7 @@ public class Gold extends Feature {
 	public static final String LUCKY_GOLD_TOOLTIP = SurvivalReimagined.MOD_ID + ".innate_luck";
 
 	@Config
-	@Label(name = "Lucky Gold", description = "Changes Gold tools to have an innate Fortune/Looting level and changes the harvest level to be like stone tools.")
+	@Label(name = "Lucky Gold", description = "Changes Gold tools to have an innate Fortune/Looting II and changes the harvest level to be like stone tools.")
 	public static Boolean luckyGold = true;
 
 	@Config
@@ -52,8 +52,8 @@ public class Gold extends Feature {
 
 		ItemStack stack = livingEntity.getMainHandItem();
 		if (stack.getItem() instanceof SwordItem swordItem && swordItem.getTier() == Tiers.GOLD) {
-			if (event.getLootingLevel() < 1)
-				event.setLootingLevel(1);
+			if (event.getLootingLevel() < 2)
+				event.setLootingLevel(2);
 		}
 	}
 

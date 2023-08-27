@@ -14,9 +14,10 @@
   * Mobs now drop double loot
   * Mobs now drop 100% more experience instead of 75% in hard mode
 * Block hardness multiplier in the nether increased (2x -> 3x)
+* Golden tools/weapons now have Fortune/Looting II instead of I
+* Some new durium textures, thanks to e___kho
 * Removed "Actual redstone component". Copperative recommended.
 * Fixed creeper explosions dropping almost no blocks
-* Some new durium textures, thanks to e___kho
 
 ## 0.14.1
 * Setting your spawn point on a respawn Obelisk now saves the previous one
