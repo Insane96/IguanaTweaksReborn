@@ -14,6 +14,7 @@
   * Mobs now drop double loot
   * Mobs now drop 100% more experience instead of 75% in hard mode
 * Players now starve at 3 hunger (instead of 0) every 16 seconds, the speed is doubled every hunger lower than 3
+* Forging now consumes hunger
 * Block hardness multiplier in the nether increased (2x -> 3x)
 * Golden tools/weapons now have Fortune/Looting II instead of I
 * Some new durium textures, thanks to e___kho
