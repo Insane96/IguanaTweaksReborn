@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.5
+* Fixed crash when placing Iron Blocks
+
 ## 0.12.4
 * Small Thorns overhaul
   * Incompatible with Protections, it now triggers each time instead of a random chance and deals damage based off 
