@@ -31,41 +31,48 @@ import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.text.DecimalFormat;
 
-@Label(name = "Hunger Health Regen", description = "Makes Health regen work differently, like in Combat Test snapshots. Can be customized. Also adds Well Fed and Injured effects. Hunger related stuff doesn't work (for obvious reasons) if No Hunger feature is enabled")
+@Label(name = "Hunger Health Regen", description = "Makes Health regen work differently, similar to Combat Test snapshots. Can be customized. Also adds Well Fed and Injured effects. Hunger related stuff doesn't work (for obvious reasons) if No Hunger feature is enabled")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class HealthRegen extends Feature {
-	@Config
-	@Label(name = "Load Combat Test Config Options", description = "If true, restart the game and the following config options will be changed to the ones of the combat test snapshot and then set this back to false.")
-	public static Boolean loadCombatTestConfigOptions = true;
 	@Config(min = 0)
-	@Label(name = "Health Regen Speed", description = "Sets how many ticks between the health regeneration happens (vanilla is 80; Combat Test is 40).")
-	public static Integer healthRegenSpeed = 80;
+	@Label(name = "Health Regen Speed", description = "Sets how many ticks between the health regeneration happens (vanilla is 80).")
+	public static Integer healthRegenSpeed = 40;
 	@Config(min = 0)
-	@Label(name = "Regen when Hunger Above", description = "Sets how much hunger the player must have to regen health (vanilla is >17; Combat Test is >3).")
-	public static Integer regenWhenFoodAbove = 17;
+	@Label(name = "Regen when Hunger Above", description = "Sets how much hunger the player must have to regen health (vanilla is >17).")
+	public static Integer regenWhenFoodAbove = 6;
 	@Config(min = 0)
-	@Label(name = "Starve Speed", description = "Sets how many ticks between starve damage happens (vanilla and Combat Test are 80).")
-	public static Integer starveSpeed = 80;
+	@Label(name = "Starve Speed", description = "Sets how many ticks between starve damage happens (vanilla is 80).")
+	public static Integer starveSpeed = 320;
 	@Config(min = 0)
-	@Label(name = "Starve Damage", description = "Set how much damage is dealt when starving (vanilla and Combat Test are 1).")
+	@Label(name = "Starve Damage", description = "Set how much damage is dealt when starving (vanilla is 1).")
 	public static Integer starveDamage = 1;
+	@Config(min = 0, max = 20)
+	@Label(name = "Starve at Hunger", description = "The player will start starving at this hunger (Vanilla is 0)")
+	public static Integer starveAtHunger = 3;
 	@Config
-	@Label(name = "Disable Saturation Regen Boost", description = "Set to true to disable the health regen boost given when max hunger and saturation (false in Vanilla; true for Combat Test).")
-	public static Boolean disableSaturationRegenBoost = false;
+	@Label(name = "Faster Starving when really hungry", description = "If below 'Starve at Hunger' player will starve faster.")
+	public static Boolean fasterStarvingWhenReallyHungry = true;
 	@Config
-	@Label(name = "Consume Hunger Only", description = "Set to true to consume Hunger only (and not saturation) when regenerating health (false for Vanilla; true for Combat Test).")
-	public static Boolean consumeHungerOnly = false;
+	@Label(name = "Disable Saturation Regen Boost", description = "Set to true to disable the health regen boost given when max hunger and saturation (false in Vanilla).")
+	public static Boolean disableSaturationRegenBoost = true;
+	@Config
+	@Label(name = "Consume Hunger Only", description = "Set to true to consume Hunger only (and not saturation) when regenerating health (false for Vanilla).")
+	public static Boolean consumeHungerOnly = true;
 	@Config(min = 0d, max = 40d)
 	@Label(name = "Max Exhaustion", description = "Vanilla consumes 1 saturation or hunger whenever Exhaustion reaches 4.0. You can change that value with this config option. NOTE that Minecraft caps this value to 40.")
 	public static Double maxExhaustion = 4.0d;
-
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Hunger Consumption Chance", description = "If 'Consume Hunger Only' is true then this is the chance to consume an hunger whenever the player is healed (vanilla ignores this; Combat Test has this set to 0.5).")
-	public static Double hungerConsumptionChance = 0d;
+	public static Double hungerConsumptionChance = 0.5d;
+	//TODO
+	/*@Config
+	@Label(name = "Peaceful Hunger", description = "If enabled, peaceful difficulty no longer heals the player")
+	public static Boolean hungerConsumptionChance = true;*/
+
+
 	@Config(min = 0d, max = 1f)
 	@Label(name = "Food Heal Multiplier", description = "When eating you'll get healed by this percentage of (hunger + saturation) restored.")
 	public static Double foodHealMultiplier = 0d;
@@ -103,25 +110,6 @@ public class HealthRegen extends Feature {
 
 	public HealthRegen(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-	}
-
-	@Override
-	public void readConfig(final ModConfigEvent event) {
-		super.readConfig(event);
-		if (loadCombatTestConfigOptions) {
-			this.setConfigOption("Health Regen Speed", 40);
-			this.setConfigOption("Regen when Hunger Above", 6);
-			this.setConfigOption("Starve Speed", 80);
-			this.setConfigOption("Starve Damage", 1);
-			this.setConfigOption("Disable Saturation Regen Boost", true);
-			this.setConfigOption("Consume Hunger Only", true);
-			this.setConfigOption("Max Exhaustion", 4d);
-			this.setConfigOption("Hunger Consumption Chance", 0.5d);
-
-			this.setConfigOption("Load Combat Test Config Options", false);
-
-			this.readConfig(event);
-		}
 	}
 
 	@SubscribeEvent
@@ -263,6 +251,7 @@ public class HealthRegen extends Feature {
 			if (foodStats.saturationLevel > 0.0F) {
 				foodStats.saturationLevel = Math.max(foodStats.saturationLevel - 1.0F, 0.0F);
 			}
+			//TODO remove with 'Peaceful Hunger'
 			else if (difficulty != Difficulty.PEACEFUL) {
 				foodStats.foodLevel = Math.max(foodStats.foodLevel - 1, 0);
 			}
@@ -303,11 +292,13 @@ public class HealthRegen extends Feature {
 				foodStats.tickTimer = 0;
 			}
 		}
-		else if (foodStats.foodLevel <= 0) {
+		else if (foodStats.foodLevel <= starveAtHunger) {
 			++foodStats.tickTimer;
 			int actualStarveSpeed = starveSpeed;
-			if (foodStats.foodLevel < 0)
-				actualStarveSpeed += foodStats.foodLevel * 5;
+			if (fasterStarvingWhenReallyHungry && foodStats.foodLevel < starveAtHunger) {
+				int pow = Mth.abs(foodStats.foodLevel - starveAtHunger);
+				actualStarveSpeed = actualStarveSpeed >> pow;
+			}
 			if (foodStats.tickTimer >= actualStarveSpeed) {
 				if (player.getHealth() > 10.0F || difficulty == Difficulty.HARD || player.getHealth() > 1.0F && difficulty == Difficulty.NORMAL) {
 					player.hurt(player.damageSources().starve(), starveDamage);
