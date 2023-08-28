@@ -5,13 +5,13 @@
 	"repair": [
 		{
 			"repair_material": {
-				"id": "minecraft:golden_ingot"
+				"id": "minecraft:gold_ingot"
 			},
 			"amount": 8
 		},
 		{
 			"repair_material": {
-				"id": "minecraft:golden_nugget"
+				"id": "minecraft:gold_nugget"
 			},
 			"amount": 72
 		}
