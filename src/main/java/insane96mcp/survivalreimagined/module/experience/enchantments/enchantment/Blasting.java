@@ -25,12 +25,12 @@ public class Blasting extends Enchantment {
 
     @Override
     public int getMinCost(int level) {
-        return 1 + 10 * (level - 1);
+        return 5 + 10 * (level - 1);
     }
 
     @Override
     public int getMaxCost(int level) {
-        return this.getMinCost(level) + 50;
+        return this.getMinCost(level) + 40;
     }
 
     public boolean checkCompatibility(Enchantment other) {
