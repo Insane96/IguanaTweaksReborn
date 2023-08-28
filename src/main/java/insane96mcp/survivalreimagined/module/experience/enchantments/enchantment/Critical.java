@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.module.experience.enchantments.enchantment;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -40,7 +41,10 @@ public class Critical extends Enchantment {
 
     @Override
     public void doPostAttack(LivingEntity attacker, Entity entity, int lvl) {
-        if (lvl > 0 && attacker instanceof ServerPlayer player)
-            player.magicCrit(entity);
+        if (lvl > 0 && attacker instanceof ServerPlayer player) {
+            boolean itCrit = player.getAttackStrengthScale(0.5F) > 0.9f && player.fallDistance > 0.0F && !player.onGround() && !player.onClimbable() && !player.isInWater() && !player.hasEffect(MobEffects.BLINDNESS) && !player.isPassenger() && entity instanceof LivingEntity;
+            if (itCrit)
+                player.magicCrit(entity);
+        }
     }
 }
