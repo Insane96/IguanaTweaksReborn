@@ -84,9 +84,9 @@ public class Gold extends Feature {
 				|| !luckyGold
 				|| !(event.getItemStack().getItem() instanceof TieredItem tieredItem)
 				|| tieredItem.getTier() != Tiers.GOLD
-				|| event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_FORTUNE) > 0
+				|| event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_FORTUNE) > 1
 				|| event.getItemStack().getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0
-				|| event.getItemStack().getEnchantmentLevel(Enchantments.MOB_LOOTING) > 0)
+				|| event.getItemStack().getEnchantmentLevel(Enchantments.MOB_LOOTING) > 1)
 			return;
 
 		event.getToolTip().add(Component.empty());
