@@ -25,8 +25,8 @@ public class SmeltItemFunctionMixin {
     @Shadow
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    @Inject(method = "run", at = @At("HEAD"))
-    private void onRecipeType(ItemStack pStack, LootContext pContext, CallbackInfoReturnable<ItemStack> cir) {
+    @Inject(method = "run", at = @At("HEAD"), cancellable = true)
+    private void onRecipeRun(ItemStack pStack, LootContext pContext, CallbackInfoReturnable<ItemStack> cir) {
         if (FoodDrinks.noFurnaceFoodAndSmokerRecipe) {
             if (pStack.isEmpty()) {
                 cir.setReturnValue(pStack);
