@@ -9,6 +9,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
+import net.minecraftforge.fml.ModList;
 
 @Label(name = "Data Packs", description = "Various data packs that can be enabled/disabled")
 @LoadFeature(module = Modules.Ids.MISC)
@@ -43,6 +44,10 @@ public class DataPacks extends Feature {
     public static Boolean miscTweaks = true;
 
     @Config
+    @Label(name = "Actual Redstone Components", description = "Makes redstone components require redstone in their recipe (e.g. Levers, pressure plates, etc). If Copperative is enabled this gets disabled.")
+    public static Boolean actualRedstoneComponents = true;
+
+    @Config
     @Label(name = "Copper Furnace", description = "If true a datapack will be enabled that makes furnaces require copper. Copper ingots can be obtained from raw copper on campfires.")
     public static Boolean copperFurnace = true;
 
@@ -63,6 +68,7 @@ public class DataPacks extends Feature {
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "hardcore_torches", Component.literal("Survival Reimagined Hardcore Torches"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && hardcoreTorches));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "cheaper_chains", Component.literal("Survival Reimagined Cheaper Chains"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cheaperChains));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "misc_tweaks", Component.literal("Survival Reimagined Misc Tweaks"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && miscTweaks));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "actual_redstone_components", Component.literal("Survival Reimagined Actual Redstone components"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && actualRedstoneComponents && !ModList.get().isLoaded("copperative")));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_furnace", Component.literal("Survival Reimagined Copper Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperFurnace));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "disable_villages", Component.literal("Survival Reimagined Disable Villages"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableVillages));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "fishing_loot_changes", Component.literal("Survival Reimagined Fishing Loot Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && fishingLootChanges));

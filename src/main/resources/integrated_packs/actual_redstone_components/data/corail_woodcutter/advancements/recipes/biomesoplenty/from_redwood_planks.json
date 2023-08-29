@@ -1,0 +1,22 @@
+{
+	"conditions": [{
+		"type": "forge:item_exists",
+		"item": "biomesoplenty:redwood_planks"
+	}],
+	"parent": "corail_woodcutter:recipes/root",
+	"rewards": {
+		"recipes": [
+			"corail_woodcutter:bop_redwood_woodcutter"
+		]
+	},
+	"criteria": {
+		"has_ingredient": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [{
+					"item": "biomesoplenty:redwood_planks"
+				}]
+			}
+		}
+	}
+}
