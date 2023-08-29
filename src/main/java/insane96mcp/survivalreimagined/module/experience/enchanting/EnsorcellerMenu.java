@@ -186,7 +186,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
     private void updateCanEnchant() {
         ItemStack stack = this.container.getItem(ITEM_SLOT);
         List<EnchantmentInstance> enchantments = this.getEnchantmentList(stack, this.getSteps() == MAX_STEPS ? LVL_ON_JACKPOT : this.getSteps());
-        this.setCanEnchant(this.rollCost.get() > 0 && !stack.isEmpty() && stack.isEnchantable() && !stack.is(Items.BOOK) && this.getSteps() > 0 && !enchantments.isEmpty());
+        this.setCanEnchant(!stack.isEmpty() && stack.isEnchantable() && !stack.is(Items.BOOK) && this.getSteps() > 0 && !enchantments.isEmpty());
     }
 
     public int getSteps() {

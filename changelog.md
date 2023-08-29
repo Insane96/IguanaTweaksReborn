@@ -4,7 +4,8 @@
 * Ensorceller
   * No longer requires bookshelves, instead requires sunlight
   * Item now renders on the ensorceller
-* Fixed Forge having a weird renderer of the items on top
+* Fixed Forge's items on top being rotated wrongly
+* Fixed Forge and Ensorceller not syncing items on world load
 * Fixed client-side crash when interacting with Wandering Trader on a server
 
 ## 0.14.2

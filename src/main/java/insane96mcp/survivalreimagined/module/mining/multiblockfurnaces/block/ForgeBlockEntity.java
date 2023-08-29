@@ -109,6 +109,13 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
         pTag.put("RecipesUsed", compoundtag);
     }
 
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        saveAdditional(tag);
+        return tag;
+    }
+
     public static boolean onUse(Level pLevel, BlockPos pPos, BlockState pState, ForgeBlockEntity pBlockEntity, int smashes) {
         ItemStack resultStack = pBlockEntity.items.get(ForgeMenu.RESULT_SLOT);
         if (!resultStack.isEmpty())

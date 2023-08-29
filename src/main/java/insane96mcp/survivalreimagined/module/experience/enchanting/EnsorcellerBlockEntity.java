@@ -83,6 +83,13 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
     }
 
     @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        saveAdditional(tag);
+        return tag;
+    }
+
+    @Override
     public int[] getSlotsForFace(Direction pSide) {
         return new int[0];
     }
@@ -142,6 +149,7 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
     public void setItem(int slot, ItemStack stack) {
         this.items.set(slot, stack);
         ItemStack itemInSlot = this.items.get(slot);
+        //TODO Fix
         this.canEnchant = !itemInSlot.isEmpty() && itemInSlot.isEnchantable() && this.steps > 0;
         if (this.level instanceof ServerLevel serverLevel)
             SyncEnsorcellerStatus.sync(serverLevel, this.getBlockPos(), this);
