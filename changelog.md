@@ -9,7 +9,7 @@
 * Re-added "Actual redstone component"
 * Fixed Forge's items on top being rotated wrongly
 * Fixed Forge and Ensorceller not syncing items on world load
-* Fixed client-side crash when interacting with Wandering Trader on a server
+* Hopefully fixed client-side crash when interacting with Wandering Trader on a server
 
 ## 0.14.2
 * Cost for repairing a tool now scales with the percentage durability repaired

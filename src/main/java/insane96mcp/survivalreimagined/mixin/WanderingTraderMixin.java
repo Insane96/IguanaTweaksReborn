@@ -20,9 +20,11 @@ public abstract class WanderingTraderMixin extends AbstractVillager {
 
 	@Inject(at = @At("HEAD"), method = "updateTrades", cancellable = true)
 	private void overrideUpdateTrades(CallbackInfo ci) {
+		if (this.level().isClientSide)
+			return;
 		VillagerTrades.ItemListing[] ordinaryTrades = VillagerTrades.WANDERING_TRADER_TRADES.get(1);
 		VillagerTrades.ItemListing[] rareTrades = VillagerTrades.WANDERING_TRADER_TRADES.get(2);
-		VillagerTrades.ItemListing[] buyingTrades = new VillagerTrades.ItemListing[] {};
+		VillagerTrades.ItemListing[] buyingTrades = VillagerTrades.WANDERING_TRADER_TRADES.get(2);
 		if (ordinaryTrades != null && rareTrades != null) {
 			MerchantOffers merchantoffers = this.getOffers();
 			this.addOffersFromItemListings(merchantoffers, buyingTrades, insane96mcp.survivalreimagined.module.world.wanderingtrader.WanderingTrader.buyingTrades);

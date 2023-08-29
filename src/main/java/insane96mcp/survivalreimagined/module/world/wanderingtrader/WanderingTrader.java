@@ -105,7 +105,7 @@ public class WanderingTrader extends SRFeature {
     }
 
     @SubscribeEvent
-    public void onWanderingTradersEvent(WandererTradesEvent event) {
+    public void onWanderingTradesEvent(WandererTradesEvent event) {
         event.getGenericTrades().clear();
         for (SerializableTrade serializableTrade : wanderingTraderGenericTrades) {
             event.getGenericTrades().add(serializableTrade);
