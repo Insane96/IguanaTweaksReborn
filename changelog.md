@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed client-side crash when interacting with Wandering Trader on a server
+
 ## 0.14.2
 * Cost for repairing a tool now scales with the percentage durability repaired
   * E.g. repairing a tool for half it's durability will cost only half levels
