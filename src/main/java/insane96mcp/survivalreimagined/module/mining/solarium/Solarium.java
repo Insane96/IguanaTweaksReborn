@@ -104,14 +104,14 @@ public class Solarium extends Feature {
 		if (!(level instanceof ServerLevel)
 				|| entity.tickCount % 200 != 22)
 			return;
-		int skyLight = level.getBrightness(LightLayer.SKY, entity.blockPosition());
+		float skyLight = level.getBrightness(LightLayer.SKY, entity.blockPosition());
 		if (level.getDayTime() % 24000 > 12542)
-			skyLight /= 2;
+			skyLight /= 3f;
 		if (level.isRaining())
-			skyLight /= 2;
+			skyLight /= 2f;
 		if (level.isThundering())
-			skyLight /= 2;
-		float chance = skyLight * 0.05f;
+			skyLight /= 2f;
+		float chance = skyLight * 0.10f;
 		if (level.random.nextFloat() >= chance)
 			return;
 		stack.setDamageValue(stack.getDamageValue() - 1);
