@@ -18,7 +18,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.EnchantmentTableBlock;
+import net.minecraft.world.level.LightLayer;
 
 import java.util.List;
 
@@ -98,9 +98,9 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
 
         //Roll
         if (pId == 0) {
-            if (player.experienceLevel < this.rollCost.get() && !player.getAbilities().instabuild)
-                return false;
-            if (this.getSteps() == MAX_STEPS)
+            if (player.experienceLevel < this.rollCost.get() && !player.getAbilities().instabuild
+                    || this.getSteps() == MAX_STEPS
+                    || this.rollCost.get() <= 0)
                 return false;
 
             //This is executed only server side
@@ -163,27 +163,30 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
 
     private void updateRollCost() {
         this.access.execute((level, blockPos) -> {
-            float enchantPower = 0;
-
-            for (BlockPos offSetBlockPos : EnchantmentTableBlock.BOOKSHELF_OFFSETS) {
-                if (EnchantmentTableBlock.isValidBookShelf(level, blockPos, offSetBlockPos)) {
-                    enchantPower += level.getBlockState(blockPos.offset(offSetBlockPos)).getEnchantPowerBonus(level, blockPos.offset(offSetBlockPos));
-                }
-            }
-
-            int cost = EnchantingFeature.ensorcellerBaseRollCost;
-            for (float i = enchantPower; i >= EnchantingFeature.ensorcellerBookshelfToLowerLevel && cost > 1; i -= EnchantingFeature.ensorcellerBookshelfToLowerLevel) {
-                cost--;
-            }
-
-            this.rollCost.set(cost);
+            this.rollCost.set(calculateRollCost(level, blockPos));
         });
+    }
+
+    public static int calculateRollCost(Level level, BlockPos pos) {
+        int dayTime = (int) (level.getDayTime() % 24000L);
+        if (level.getBrightness(LightLayer.SKY, pos) <= 10 || (dayTime >= 12786 && dayTime <= 23216) || level.isThundering())
+            return 0;
+
+        int cost = 3;
+        if (dayTime >= 4800 && dayTime < 7200)
+            cost = 1;
+        else if (dayTime >= 1200 && dayTime < 10800)
+            cost = 2;
+
+        if (level.isRaining())
+            cost = Math.min(cost + 1, 3);
+        return cost;
     }
 
     private void updateCanEnchant() {
         ItemStack stack = this.container.getItem(ITEM_SLOT);
         List<EnchantmentInstance> enchantments = this.getEnchantmentList(stack, this.getSteps() == MAX_STEPS ? LVL_ON_JACKPOT : this.getSteps());
-        this.setCanEnchant(!stack.isEmpty() && stack.isEnchantable() && !stack.is(Items.BOOK) && this.getSteps() > 0 && !enchantments.isEmpty());
+        this.setCanEnchant(this.rollCost.get() > 0 && !stack.isEmpty() && stack.isEnchantable() && !stack.is(Items.BOOK) && this.getSteps() > 0 && !enchantments.isEmpty());
     }
 
     public int getSteps() {

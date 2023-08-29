@@ -1,7 +1,10 @@
 # Changelog
 
 ## Upcoming
-* Item now renders on the ensorceller and has particles from bookshelves
+* Ensorceller
+  * No longer requires bookshelves, instead requires sunlight
+  * Item now renders on the ensorceller
+* Fixed Forge having a weird renderer of the items on top
 * Fixed client-side crash when interacting with Wandering Trader on a server
 
 ## 0.14.2

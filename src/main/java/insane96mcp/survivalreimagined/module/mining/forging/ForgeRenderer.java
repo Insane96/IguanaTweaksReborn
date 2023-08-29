@@ -34,26 +34,18 @@ public class ForgeRenderer implements BlockEntityRenderer<ForgeBlockEntity> {
     private void renderFlatItem(int index, float forgePercentage, ItemStack stack, Direction direction, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, int posData, Level level) {
         if (stack.isEmpty()) return;
         poseStack.pushPose();
-        poseStack.translate(0.0,1.02, 0.0);
-        poseStack.mulPose(Axis.XN.rotationDegrees(90.0F));
-        double x = index == 2 ? -0.25d : -0.6;
+        poseStack.translate(0.5, 1.02, 0.5);
+        poseStack.mulPose(Axis.XN.rotationDegrees(-90.0F));
+        double x = index == 2 ? -0.25d : 0.2d;
         double y = switch (index) {
-            case 0 -> 0.6d;
-            case 1 -> 0.5d;
-            default -> 0.5;
+            case 0 -> 0.075d;
+            case 1 -> -0.075d;
+            default -> 0;
         };
-        double z = index == 0 ? 0.03d - (forgePercentage * 0.03d) : 0;
-        switch (direction.getAxis()) {
-            case X -> {
-                poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
-                poseStack.translate(x, y, z);
-            }
-            case Z -> {
-                poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
-                poseStack.translate(x, -y, z);
-            }
-        }
-        poseStack.scale(0.375F, 0.375F, 0.375F);
+        double z = index == 0 ? -0.035d + (forgePercentage * 0.04d) : 0;
+        poseStack.mulPose(Axis.ZP.rotationDegrees((direction.get2DDataValue() - 1) * 90f));
+        poseStack.translate(x, y, z);
+        poseStack.scale(0.4F, 0.4F, index == 0 ? 0.55f : 0.4F);
         this.itemRenderer.renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, bufferSource, level, posData + index);
         poseStack.popPose();
     }

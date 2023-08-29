@@ -35,12 +35,12 @@ public class EnchantingFeature extends Feature {
 	@Label(name = "Nether Enchanting Table", description = "Enables a data pack that makes the enchanting table require nether access to be made")
 	public static Boolean netherEnchantingTable = true;
 
-	@Config(min = 1, max = 3)
+	/*@Config(min = 1, max = 3)
 	@Label(name = "Ensorceller.Base Roll Cost")
 	public static Integer ensorcellerBaseRollCost = 3;
 	@Config(min = 1)
 	@Label(name = "Ensorceller.Bookshelf amount to lower level")
-	public static Integer ensorcellerBookshelfToLowerLevel = 4;
+	public static Integer ensorcellerBookshelfToLowerLevel = 4;*/
 	@Config
 	@Label(name = "Ensorceller.No Merge", description = "Items enchanted in an ensorceller cannot be merged")
 	public static Boolean ensorcellerNoMerge = true;

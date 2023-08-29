@@ -65,10 +65,13 @@ public class EnsorcellerScreen extends AbstractContainerScreen<EnsorcellerMenu> 
         int y = pMouseY - (topLeftCornerY + 35);
         int levelCost = this.menu.rollCost.get();
         //Render Roll button
-        if ((this.minecraft.player.experienceLevel < levelCost && !this.minecraft.player.getAbilities().instabuild) || this.menu.getSteps() == EnsorcellerMenu.MAX_STEPS) {
+        if ((this.minecraft.player.experienceLevel < levelCost && !this.minecraft.player.getAbilities().instabuild) || this.menu.getSteps() == EnsorcellerMenu.MAX_STEPS || levelCost <= 0) {
             pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 35, 0, 184, 65, 18);
             pGuiGraphics.drawString(this.font, "Roll", topLeftCornerX + 14, topLeftCornerY + 39, 0x8B8B8B, true);
             pGuiGraphics.blit(ENCHANTING_TABLE_LOCATION, topLeftCornerX + 11 + 65 - 17, topLeftCornerY + 36, 16 * (levelCost - 1), 239, 16, 16);
+            if (x >= 0 && y >= 0 && x < 65 && y < 18 && levelCost <= 0) {
+                pGuiGraphics.renderTooltip(minecraft.font, Component.translatable(SurvivalReimagined.MOD_ID + ".missing_sunlight"), pMouseX, pMouseY);
+            }
         }
         else if (x >= 0 && y >= 0 && x < 65 && y < 18) {
             pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + 11, topLeftCornerY + 35, 0, 202, 65, 18);

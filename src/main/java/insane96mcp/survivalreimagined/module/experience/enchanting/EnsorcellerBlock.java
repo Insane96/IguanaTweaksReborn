@@ -2,7 +2,7 @@ package insane96mcp.survivalreimagined.module.experience.enchanting;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -21,7 +21,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EnchantmentTableBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,6 +29,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.List;
 
@@ -131,12 +131,12 @@ public class EnsorcellerBlock extends BaseEntityBlock {
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         super.animateTick(pState, pLevel, pPos, pRandom);
 
-        for(BlockPos blockpos : EnchantmentTableBlock.BOOKSHELF_OFFSETS) {
-            if (pRandom.nextInt(16) == 0 && EnchantmentTableBlock.isValidBookShelf(pLevel, pPos, blockpos)) {
-                pLevel.addParticle(ParticleTypes.ENCHANTED_HIT, (double)pPos.getX() + 0.5D, (double)pPos.getY() + 2.0D, (double)pPos.getZ() + 0.5D, (double)((float)blockpos.getX() + pRandom.nextFloat()) - 0.5D, ((float)blockpos.getY() - pRandom.nextFloat() - 1.0F), (double)((float)blockpos.getZ() + pRandom.nextFloat()) - 0.5D);
-            }
-        }
-
+        int rollCost = EnsorcellerMenu.calculateRollCost(pLevel, pPos);
+        if (rollCost <= 0)
+            return;
+        int invRollCost = 4 - rollCost;
+        for (int i = 0; i < invRollCost; i++)
+            pLevel.addParticle(new DustParticleOptions(new Vector3f(0.9882352941f, 0.8980392157f, 0.4392156863f), 5f), pPos.getX() + 0.5f + pRandom.nextFloat() * (2.5f + invRollCost) - ((2.5f + invRollCost) / 2f), pPos.getY() + pRandom.nextFloat() * (3.5f + invRollCost) + 1f, pPos.getZ() + 0.5f + pRandom.nextFloat() * (2.5f + invRollCost) - ((2.5f + invRollCost) / 2f), 0, 0, 0);
     }
 
     @Override
