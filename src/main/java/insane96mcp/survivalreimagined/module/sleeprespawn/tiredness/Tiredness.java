@@ -11,7 +11,7 @@ import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
-import insane96mcp.survivalreimagined.network.message.MessageTirednessSync;
+import insane96mcp.survivalreimagined.network.message.TirednessSyncMessage;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -136,7 +136,7 @@ public class Tiredness extends SRFeature {
 		float newTiredness = TirednessHandler.subtractAndGet(player, 0.01f * effectLevel);
 
 		if (player.tickCount % 20 == 0) {
-			Object msg = new MessageTirednessSync(newTiredness);
+			Object msg = new TirednessSyncMessage(newTiredness);
 			NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}
@@ -179,7 +179,7 @@ public class Tiredness extends SRFeature {
 		}
 		applyTired(tiredness, serverPlayer);
 
-		Object msg = new MessageTirednessSync(newTiredness);
+		Object msg = new TirednessSyncMessage(newTiredness);
 		NetworkHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 	}
 

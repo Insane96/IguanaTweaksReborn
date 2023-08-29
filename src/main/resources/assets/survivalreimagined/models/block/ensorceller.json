@@ -20,19 +20,6 @@
                 "up": {"uv": [0, 0, 16, 16], "texture": "#top"},
                 "down": {"uv": [0, 0, 16, 16], "texture": "#bottom", "cullface": "down"}
             }
-        },
-        {
-            "name": "die",
-            "from": [4, 12, 4],
-            "to": [5, 13, 5],
-            "faces": {
-                "north": {"uv": [0, 1, 1, 2], "texture": "#side"},
-                "east": {"uv": [0, 1, 1, 2], "texture": "#side"},
-                "south": {"uv": [0, 1, 1, 2], "texture": "#side"},
-                "west": {"uv": [0, 1, 1, 2], "texture": "#side"},
-                "up": {"uv": [0, 1, 1, 2], "texture": "#side"},
-                "down": {"uv": [0, 1, 1, 2], "texture": "#side"}
-            }
         }
     ]
 }

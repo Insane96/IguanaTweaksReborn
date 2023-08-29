@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Item now renders on the ensorceller and has particles from bookshelves
 * Fixed client-side crash when interacting with Wandering Trader on a server
 
 ## 0.14.2

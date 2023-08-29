@@ -9,25 +9,25 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class MessageSpawnerStatusSync {
+public class SpawnerStatusSyncMessage {
 	BlockPos pos;
 	boolean status;
 
-	public MessageSpawnerStatusSync(BlockPos pos, boolean status) {
+	public SpawnerStatusSyncMessage(BlockPos pos, boolean status) {
 		this.pos = pos;
 		this.status = status;
 	}
 
-	public static void encode(MessageSpawnerStatusSync pkt, FriendlyByteBuf buf) {
+	public static void encode(SpawnerStatusSyncMessage pkt, FriendlyByteBuf buf) {
 		buf.writeBlockPos(pkt.pos);
 		buf.writeBoolean(pkt.status);
 	}
 
-	public static MessageSpawnerStatusSync decode(FriendlyByteBuf buf) {
-		return new MessageSpawnerStatusSync(buf.readBlockPos(), buf.readBoolean());
+	public static SpawnerStatusSyncMessage decode(FriendlyByteBuf buf) {
+		return new SpawnerStatusSyncMessage(buf.readBlockPos(), buf.readBoolean());
 	}
 
-	public static void handle(final MessageSpawnerStatusSync message, Supplier<NetworkEvent.Context> ctx) {
+	public static void handle(final SpawnerStatusSyncMessage message, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			if (NetworkHelper.getSidedPlayer(ctx.get()).level().getBlockEntity(message.pos) instanceof SpawnerBlockEntity spawnerBlockEntity) {
 				spawnerBlockEntity.getCapability(SpawnerData.INSTANCE).ifPresent(iSpawner -> iSpawner.setDisabled(message.status));

@@ -8,8 +8,8 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.event.PlayerExhaustionEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
-import insane96mcp.survivalreimagined.network.message.MessageExhaustionSync;
-import insane96mcp.survivalreimagined.network.message.MessageSaturationSync;
+import insane96mcp.survivalreimagined.network.message.ExhaustionSyncMessage;
+import insane96mcp.survivalreimagined.network.message.SaturationSyncMessage;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffects;
@@ -102,14 +102,14 @@ public class ExhaustionIncrease extends Feature {
 			return;
 		Float lastSaturationLevel = lastSaturationLevels.get(player.getUUID());
 		if (lastSaturationLevel == null || lastSaturationLevel != player.getFoodData().getSaturationLevel()) {
-			Object msg = new MessageSaturationSync(player.getFoodData().getSaturationLevel());
+			Object msg = new SaturationSyncMessage(player.getFoodData().getSaturationLevel());
 			NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 			lastSaturationLevels.put(player.getUUID(), player.getFoodData().getSaturationLevel());
 		}
 		Float lastExhaustionLevel = lastExhaustionLevels.get(player.getUUID());
 		float exhaustionLevel = player.getFoodData().exhaustionLevel;
 		if (lastExhaustionLevel == null || Math.abs(lastExhaustionLevel - exhaustionLevel) >= 0.01f) {
-			Object msg = new MessageExhaustionSync(exhaustionLevel);
+			Object msg = new ExhaustionSyncMessage(exhaustionLevel);
 			NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 			lastExhaustionLevels.put(player.getUUID(), exhaustionLevel);
 		}

@@ -7,23 +7,23 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class MessageFoodRegenSync {
+public class FoodRegenSyncMessage {
 
     float regenStrength;
 
-    public MessageFoodRegenSync(float regenStrength) {
+    public FoodRegenSyncMessage(float regenStrength) {
         this.regenStrength = regenStrength;
     }
 
-    public static void encode(MessageFoodRegenSync pkt, FriendlyByteBuf buf) {
+    public static void encode(FoodRegenSyncMessage pkt, FriendlyByteBuf buf) {
         buf.writeFloat(pkt.regenStrength);
     }
 
-    public static MessageFoodRegenSync decode(FriendlyByteBuf buf) {
-        return new MessageFoodRegenSync(buf.readFloat());
+    public static FoodRegenSyncMessage decode(FriendlyByteBuf buf) {
+        return new FoodRegenSyncMessage(buf.readFloat());
     }
 
-    public static void handle(final MessageFoodRegenSync message, Supplier<NetworkEvent.Context> ctx) {
+    public static void handle(final FoodRegenSyncMessage message, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             NoHunger.setFoodRegenStrength(NetworkHelper.getSidedPlayer(ctx.get()), message.regenStrength);
         });

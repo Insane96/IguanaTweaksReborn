@@ -15,7 +15,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.survivalreimagined.module.movement.stamina.Stamina;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
-import insane96mcp.survivalreimagined.network.message.MessageFoodRegenSync;
+import insane96mcp.survivalreimagined.network.message.FoodRegenSyncMessage;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
 import insane96mcp.survivalreimagined.utils.ClientUtils;
 import insane96mcp.survivalreimagined.utils.LogHelper;
@@ -266,7 +266,7 @@ public class NoHunger extends Feature {
     public static void setFoodRegenStrength(Player player, float amount) {
         player.getPersistentData().putFloat(FOOD_REGEN_STRENGTH, amount);
         if (player instanceof ServerPlayer serverPlayer) {
-            Object msg = new MessageFoodRegenSync(amount);
+            Object msg = new FoodRegenSyncMessage(amount);
             NetworkHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }

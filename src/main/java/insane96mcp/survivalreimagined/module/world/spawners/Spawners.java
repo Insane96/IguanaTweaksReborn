@@ -11,7 +11,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.world.spawners.capability.ISpawnerData;
 import insane96mcp.survivalreimagined.module.world.spawners.capability.SpawnerData;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
-import insane96mcp.survivalreimagined.network.message.MessageSpawnerStatusSync;
+import insane96mcp.survivalreimagined.network.message.SpawnerStatusSyncMessage;
 import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -167,7 +167,7 @@ public class Spawners extends Feature {
 		spawner.setChanged();
 		//noinspection ConstantConditions
 		if (spawner.hasLevel() && !spawner.getLevel().isClientSide) {
-			Object msg = new MessageSpawnerStatusSync(spawner.getBlockPos(), disabled);
+			Object msg = new SpawnerStatusSyncMessage(spawner.getBlockPos(), disabled);
 			for (Player player : spawner.getLevel().players()) {
 				NetworkHandler.CHANNEL.sendTo(msg, ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 			}

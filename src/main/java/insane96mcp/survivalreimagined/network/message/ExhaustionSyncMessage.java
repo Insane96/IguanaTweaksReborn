@@ -6,22 +6,22 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class MessageExhaustionSync {
+public class ExhaustionSyncMessage {
 	float exhaustionLevel;
 
-	public MessageExhaustionSync(float exhaustionLevel) {
+	public ExhaustionSyncMessage(float exhaustionLevel) {
 		this.exhaustionLevel = exhaustionLevel;
 	}
 
-	public static void encode(MessageExhaustionSync pkt, FriendlyByteBuf buf) {
+	public static void encode(ExhaustionSyncMessage pkt, FriendlyByteBuf buf) {
 		buf.writeFloat(pkt.exhaustionLevel);
 	}
 
-	public static MessageExhaustionSync decode(FriendlyByteBuf buf) {
-		return new MessageExhaustionSync(buf.readFloat());
+	public static ExhaustionSyncMessage decode(FriendlyByteBuf buf) {
+		return new ExhaustionSyncMessage(buf.readFloat());
 	}
 
-	public static void handle(final MessageExhaustionSync message, Supplier<NetworkEvent.Context> ctx) {
+	public static void handle(final ExhaustionSyncMessage message, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> NetworkHelper.getSidedPlayer(ctx.get()).getFoodData().exhaustionLevel = message.exhaustionLevel);
 		ctx.get().setPacketHandled(true);
 	}

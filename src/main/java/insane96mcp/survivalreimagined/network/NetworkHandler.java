@@ -16,12 +16,12 @@ public class NetworkHandler {
 			.simpleChannel();
 
 	public static void init() {
-		CHANNEL.registerMessage(1, MessageExhaustionSync.class, MessageExhaustionSync::encode, MessageExhaustionSync::decode, MessageExhaustionSync::handle);
-		CHANNEL.registerMessage(2, MessageSaturationSync.class, MessageSaturationSync::encode, MessageSaturationSync::decode, MessageSaturationSync::handle);
-		CHANNEL.registerMessage(3, MessageTirednessSync.class, MessageTirednessSync::encode, MessageTirednessSync::decode, MessageTirednessSync::handle);
+		CHANNEL.registerMessage(1, ExhaustionSyncMessage.class, ExhaustionSyncMessage::encode, ExhaustionSyncMessage::decode, ExhaustionSyncMessage::handle);
+		CHANNEL.registerMessage(2, SaturationSyncMessage.class, SaturationSyncMessage::encode, SaturationSyncMessage::decode, SaturationSyncMessage::handle);
+		CHANNEL.registerMessage(3, TirednessSyncMessage.class, TirednessSyncMessage::encode, TirednessSyncMessage::decode, TirednessSyncMessage::handle);
 		CHANNEL.registerMessage(4, StaminaSyncMessage.class, StaminaSyncMessage::encode, StaminaSyncMessage::decode, StaminaSyncMessage::handle);
-		CHANNEL.registerMessage(5, MessageFoodRegenSync.class, MessageFoodRegenSync::encode, MessageFoodRegenSync::decode, MessageFoodRegenSync::handle);
-		CHANNEL.registerMessage(6, MessageSpawnerStatusSync.class, MessageSpawnerStatusSync::encode, MessageSpawnerStatusSync::decode, MessageSpawnerStatusSync::handle);
+		CHANNEL.registerMessage(5, FoodRegenSyncMessage.class, FoodRegenSyncMessage::encode, FoodRegenSyncMessage::decode, FoodRegenSyncMessage::handle);
+		CHANNEL.registerMessage(6, SpawnerStatusSyncMessage.class, SpawnerStatusSyncMessage::encode, SpawnerStatusSyncMessage::decode, SpawnerStatusSyncMessage::handle);
 		CHANNEL.registerMessage(7, JsonConfigSyncMessage.class, JsonConfigSyncMessage::encode, JsonConfigSyncMessage::decode, JsonConfigSyncMessage::handle);
 		CHANNEL.registerMessage(8, SyncInvulnerableTimeMessage.class, SyncInvulnerableTimeMessage::encode, SyncInvulnerableTimeMessage::decode, SyncInvulnerableTimeMessage::handle);
 		CHANNEL.registerMessage(9, GlobalHardnessSyncMessage.class, GlobalHardnessSyncMessage::encode, GlobalHardnessSyncMessage::decode, GlobalHardnessSyncMessage::handle);
@@ -29,5 +29,6 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(11, SyncMovementDirection.class, SyncMovementDirection::encode, SyncMovementDirection::decode, SyncMovementDirection::handle);
 		CHANNEL.registerMessage(12, SyncForgeStatus.class, SyncForgeStatus::encode, SyncForgeStatus::decode, SyncForgeStatus::handle);
 		CHANNEL.registerMessage(13, ElectrocutionParticleMessage.class, ElectrocutionParticleMessage::encode, ElectrocutionParticleMessage::decode, ElectrocutionParticleMessage::handle);
+		CHANNEL.registerMessage(14, SyncEnsorcellerStatus.class, SyncEnsorcellerStatus::encode, SyncEnsorcellerStatus::decode, SyncEnsorcellerStatus::handle);
 	}
 }

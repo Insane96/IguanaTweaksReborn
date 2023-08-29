@@ -1,11 +1,13 @@
 package insane96mcp.survivalreimagined.module.experience.enchanting;
 
+import insane96mcp.survivalreimagined.network.message.SyncEnsorcellerStatus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
@@ -141,6 +143,8 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
         this.items.set(slot, stack);
         ItemStack itemInSlot = this.items.get(slot);
         this.canEnchant = !itemInSlot.isEmpty() && itemInSlot.isEnchantable() && this.steps > 0;
+        if (this.level instanceof ServerLevel serverLevel)
+            SyncEnsorcellerStatus.sync(serverLevel, this.getBlockPos(), this);
         this.setChanged();
     }
 

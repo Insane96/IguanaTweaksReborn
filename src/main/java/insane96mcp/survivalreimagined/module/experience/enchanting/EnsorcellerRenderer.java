@@ -7,10 +7,12 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
 public class EnsorcellerRenderer implements BlockEntityRenderer<EnsorcellerBlockEntity> {
     private final ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
@@ -20,19 +22,19 @@ public class EnsorcellerRenderer implements BlockEntityRenderer<EnsorcellerBlock
     }
 
     @Override
-    public void render(EnsorcellerBlockEntity blockEntity, float pPartialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        int posData = (int) blockEntity.getBlockPos().asLong();
-        this.renderFlatItem(EnsorcellerMenu.ITEM_SLOT, ((Container) blockEntity).getItem(EnsorcellerMenu.ITEM_SLOT), poseStack, bufferSource, packedLight, packedOverlay, posData, blockEntity.getLevel());
+    public void render(EnsorcellerBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+        this.renderHoveringItem(blockEntity, ((Container) blockEntity).getItem(EnsorcellerMenu.ITEM_SLOT), partialTicks, poseStack, bufferSource, packedLight);
     }
 
-    private void renderFlatItem(int index, ItemStack stack, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, int posData, Level level) {
-        if (stack.isEmpty())
-            return;
-
+    private void renderHoveringItem(EnsorcellerBlockEntity blockEntity, ItemStack itemToEnchant, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn) {
         poseStack.pushPose();
-        poseStack.translate(0.0,0, 0.0);
-        poseStack.mulPose(Axis.XN.rotationDegrees(90.0F));
-        this.itemRenderer.renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, bufferSource, level, posData + index);
+        poseStack.translate(0.5F, 1.0F, 0.5F);
+        BakedModel model = Minecraft.getInstance().getItemRenderer().getModel(itemToEnchant, blockEntity.getLevel(), null, 0);
+        float hoverOffset = Mth.sin(((float)blockEntity.getLevel().dayTime() + partialTicks) / 10.0F) * 0.1F + 0.1F;
+        float modelYScale = model.getTransforms().getTransform(ItemDisplayContext.GROUND).scale.y();
+        poseStack.translate(0.0, hoverOffset + 0.2F * modelYScale, 0.0);
+        poseStack.mulPose(Axis.YP.rotation(((float)blockEntity.getLevel().dayTime() + partialTicks) / 20.0F));
+        Minecraft.getInstance().getItemRenderer().render(itemToEnchant, ItemDisplayContext.GROUND, false, poseStack, bufferIn, combinedLightIn, OverlayTexture.NO_OVERLAY, model);
         poseStack.popPose();
     }
 }
