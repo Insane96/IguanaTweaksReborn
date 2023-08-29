@@ -2,7 +2,7 @@
   "type": "survivalreimagined:multi_item_blasting",
   "category": "blast_furnace_misc",
   "cookingtime": 800,
-  "experience": 1.0,
+  "experience": 2.0,
   "ingredients": [
     {
       "item": "survivalreimagined:durium_scrap_block"
