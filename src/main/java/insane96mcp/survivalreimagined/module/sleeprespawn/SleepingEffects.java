@@ -72,10 +72,13 @@ public class SleepingEffects extends SRFeature {
 			int hungerToDeplete = hungerDepletedOnWakeUp;
 			if (foodData.getSaturationLevel() > 0) {
 				float saturation = foodData.saturationLevel;
-				foodData.setSaturation(saturation - Math.min(hungerToDeplete, saturation));
-				if (saturation < hungerToDeplete)
-					foodData.setFoodLevel((int) (foodData.foodLevel - Math.min(hungerToDeplete - saturation, foodData.foodLevel)));
+				float saturationToDeplete = Math.min(hungerToDeplete, saturation);
+				foodData.setSaturation(saturation - saturationToDeplete);
+				hungerToDeplete -= saturationToDeplete;
 			}
+			if (hungerToDeplete > 0)
+				foodData.setFoodLevel((int) (foodData.foodLevel - Math.min(hungerToDeplete, foodData.foodLevel)));
+
 			for (MobEffectInstance mobEffectInstance : effectsOnWakeUp) {
 				if (mobEffectInstance.getEffect().isBeneficial() && player.getFoodData().getFoodLevel() <= 0)
 					continue;

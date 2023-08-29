@@ -12,6 +12,7 @@
 * Increased repair chance of Solarium equipment
 * Fixed Forge and Ensorceller not syncing items on world load
 * Hopefully fixed client-side crash when interacting with Wandering Trader on a server
+* Fixed hunger depletion not working properly
 
 ## 0.14.2
 * Cost for repairing a tool now scales with the percentage durability repaired
