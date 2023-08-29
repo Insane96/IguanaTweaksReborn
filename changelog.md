@@ -5,7 +5,8 @@
   * No longer requires bookshelves, instead requires sunlight
   * Item now renders on the ensorceller
 * Increased experience from creating Durium and Soul Steel
-* Altimeter now shows a tooltip with the rough height 
+* Altimeter now shows a tooltip with the rough height
+* Re-added "Actual redstone component"
 * Fixed Forge's items on top being rotated wrongly
 * Fixed Forge and Ensorceller not syncing items on world load
 * Fixed client-side crash when interacting with Wandering Trader on a server
@@ -28,7 +29,7 @@
 * Block hardness multiplier in the nether increased (2x -> 3x)
 * Golden tools/weapons now have Fortune/Looting II instead of I
 * Some new durium textures, thanks to e___kho
-* Removed "Actual redstone component". Copperative recommended.
+* Removed "Actual redstone component".
 * Fixed creeper explosions dropping almost no blocks
 
 ## 0.14.1
