@@ -392,7 +392,7 @@
 	"advancements.sr_story.unfair_oneshot.title": "Critical success on constitution",
 	"advancements.sr_story.unfair_oneshot.description": "If you get hit for enough damage that would kill you when your health is above 7.5 hearts, that's an unfair one-shot and you're left with half a heart",
 	"advancements.sr_story.ensorceller.title": "Rolling to enchant",
-	"advancements.sr_story.ensorceller.description": "Obtain an Ensorceller, by using experience it rolls a D4 that increases the pool. The higher the pool the higher enchant level. If you bust you lose all your progress. Bookshelves lower the roll cost.",
+	"advancements.sr_story.ensorceller.description": "Obtain an Ensorceller, by rolling and using experience you can fill the pool. The higher the pool the higher enchant level. If you bust you lose all your progress. Works best under sunlight.",
 	"advancements.sr_story.anvil_fix.title": "Fix the fixer",
 	"advancements.sr_story.anvil_fix.description": "Repair an anvil with Iron Blocks.",
 	"advancements.sr_story.coated_copper.title": "Careful with electronics",

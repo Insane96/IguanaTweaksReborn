@@ -4,6 +4,8 @@
 * Ensorceller
   * No longer requires bookshelves, instead requires sunlight
   * Item now renders on the ensorceller
+* Increased experience from creating Durium and Soul Steel
+* Altimeter now shows a tooltip with the rough height 
 * Fixed Forge's items on top being rotated wrongly
 * Fixed Forge and Ensorceller not syncing items on world load
 * Fixed client-side crash when interacting with Wandering Trader on a server
