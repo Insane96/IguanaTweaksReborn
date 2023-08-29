@@ -8,6 +8,7 @@
 * Altimeter now shows a tooltip with the rough height
 * Re-added "Actual redstone component"
 * Fixed Forge's items on top being rotated wrongly
+* Decreased entity reach of hammers by 0.25
 * Fixed Forge and Ensorceller not syncing items on world load
 * Hopefully fixed client-side crash when interacting with Wandering Trader on a server
 
