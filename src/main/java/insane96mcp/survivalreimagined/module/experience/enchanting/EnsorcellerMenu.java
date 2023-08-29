@@ -179,8 +179,8 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
             cost = 2;
 
         if (level.isRaining())
-            cost = Math.min(cost + 1, 3);
-        return cost;
+            cost++;
+        return cost > 3 ? 0 : cost;
     }
 
     private void updateCanEnchant() {
