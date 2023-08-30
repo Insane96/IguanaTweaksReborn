@@ -16,6 +16,7 @@
   * Solarium now repairs even if in a Tool Belt
 * Ensorceller
   * No longer requires bookshelves, instead requires sunlight
+  * Higher cost now multiplies the roll (so if you spent 3 levels to rolls, instead of getting 2 to 5, you'll get 6 to 15)
   * Item now renders on the ensorceller
 * Increased experience from smelting Durium and Soul Steel
 * Golden tools/weapons now have innate Fortune/Looting I instead of II but tools can now mine stuff like an Iron Pickaxe

@@ -105,7 +105,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
 
             //This is executed only server side
             this.access.execute((level, blockPos) -> {
-                this.incrementSteps((int) (this.level.random.triangle(this.rollCost.get() + 2, this.rollCost.get() + 1) + 1));
+                this.incrementSteps((int) (this.level.random.triangle(3, 2) + 1) * this.rollCost.get());
                 this.incrementLevelsUsed();
                 if (!player.getAbilities().instabuild)
                     ((ServerPlayer)player).setExperienceLevels(player.experienceLevel - this.rollCost.get());
