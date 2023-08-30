@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 0.14.3
 * Added Healthy enchantment
   * Increases max health by half a heart per level
   * _Max Health Fix_ is a new dependency that fixes MC-17876
@@ -8,7 +8,7 @@
 * Ensorceller
   * No longer requires bookshelves, instead requires sunlight
   * Item now renders on the ensorceller
-* Increased experience from creating Durium and Soul Steel
+* Increased experience from smelting Durium and Soul Steel
 * Increased bonus speed from Golden Armor
 * Altimeter now shows a tooltip with the rough height
 * Re-added "Actual redstone component"
