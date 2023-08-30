@@ -21,6 +21,7 @@
 * Increased bonus speed from Golden Armor
 * Crops are now 50% harder to break
 * Altimeter now shows a tooltip with the rough height
+* Increased experience from smelting/blasting iron (0.7 -> 1), gold (1 -> 2), ancient debris (2 -> 4), durium (2 -> 5), soul steel (5 -> 10)
 * Re-added "Actual redstone component"
 * Fixed Forge's items on top being rotated wrongly
 * Sculk Catalyst now give MUCH more experience when broken

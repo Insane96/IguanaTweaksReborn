@@ -2,7 +2,7 @@
   "type": "survivalreimagined:multi_item_blasting",
   "category": "blast_furnace_misc",
   "cookingtime": 800,
-  "experience": 4.0,
+  "experience": 10.0,
   "ingredients": [
     {
       "item": "survivalreimagined:durium_ingot"

@@ -2,7 +2,7 @@
   "type": "survivalreimagined:multi_item_blasting",
   "category": "misc",
   "cookingtime": 200,
-  "experience": 0.7,
+  "experience": 1,
   "group": "iron_ingot",
   "ingredients": [
     {
