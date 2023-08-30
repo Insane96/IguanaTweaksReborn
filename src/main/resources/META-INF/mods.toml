@@ -77,6 +77,13 @@ license="All rights reserved"
     side="BOTH"
 
 [[dependencies.survivalreimagined]]
+    modId="maxhealthfix"
+    mandatory=true
+    versionRange="[12.0.2,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.survivalreimagined]]
     modId="passablefoliage"
     mandatory=false
     versionRange="[7.0.0,)"

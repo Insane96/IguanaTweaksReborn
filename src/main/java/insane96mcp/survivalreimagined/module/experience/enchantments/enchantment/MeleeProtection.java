@@ -8,7 +8,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 
-public class MeleeProtection extends Enchantment {
+public class MeleeProtection extends Enchantment implements IProtectionEnchantment {
     private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
     public MeleeProtection() {
         super(Rarity.RARE, EnchantmentCategory.ARMOR, ARMOR_SLOTS);
@@ -38,7 +38,7 @@ public class MeleeProtection extends Enchantment {
         if (other instanceof ProtectionEnchantment otherProtection) {
             return otherProtection.type == ProtectionEnchantment.Type.FALL;
         } else {
-            return !(other instanceof MagicProtection) && super.checkCompatibility(other);
+            return !(other instanceof IProtectionEnchantment) && super.checkCompatibility(other);
         }
     }
 }

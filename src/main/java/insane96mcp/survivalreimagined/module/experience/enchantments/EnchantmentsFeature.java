@@ -154,6 +154,7 @@ public class EnchantmentsFeature extends SRFeature {
 
 		StepUp.applyAttributeModifier(event);
 		GravityDefying.applyAttributeModifier(event);
+		Healthy.applyAttributeModifier(event);
 	}
 
 	@SubscribeEvent

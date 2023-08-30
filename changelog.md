@@ -1,6 +1,10 @@
 # Changelog
 
 ## Upcoming
+* Added Healthy enchantment
+  * Increases max health by half a heart per level
+  * _Max Health Fix_ is a new dependency that fixes MC-17876
+  * Incompatible with Protections and thorns
 * Ensorceller
   * No longer requires bookshelves, instead requires sunlight
   * Item now renders on the ensorceller

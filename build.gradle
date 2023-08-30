@@ -139,6 +139,7 @@ repositories {
             includeGroup "com.github.Virtuoel"
         }
     }
+    maven { url 'https://maven.blamejared.com' }
 }
 
 configurations {
@@ -172,6 +173,7 @@ dependencies {
     //Needed for data gen
     //Hardcoded MC version as there is no 1.20.1 version
     runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-1.20:1.8.0")
+    runtimeOnly fg.deobf("net.darkhax.maxhealthfix:MaxHealthFix-Forge-${mc_version}:${max_health_fix_version}")
 
     //runtimeOnly fg.deobf("curse.maven:corail-woodcutter-331983:4685515")
 
