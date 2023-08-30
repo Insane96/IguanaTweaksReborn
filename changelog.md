@@ -13,12 +13,13 @@
   * Nighttime and thunder weather now disable the solarium boosts
   * Reduced tools durability
   * Solarium ball requires 9 moss again
+  * Solarium now repairs even if in a Tool Belt
 * Ensorceller
   * No longer requires bookshelves, instead requires sunlight
   * Item now renders on the ensorceller
 * Increased experience from smelting Durium and Soul Steel
 * Golden tools/weapons now have innate Fortune/Looting I instead of II but tools can now mine stuff like an Iron Pickaxe
-* Increased bonus speed from Golden Armor
+* Increased bonus speed from Golden Armor (+5% -> +6%)
 * Crops are now 50% harder to break
 * Altimeter now shows a tooltip with the rough height
 * Increased experience from smelting/blasting iron (0.7 -> 1), gold (1 -> 2), ancient debris (2 -> 4), durium (2 -> 5), soul steel (5 -> 10)

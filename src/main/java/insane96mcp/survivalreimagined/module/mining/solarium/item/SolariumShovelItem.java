@@ -16,4 +16,8 @@ public class SolariumShovelItem extends ShovelItem {
 		super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
 		Solarium.healGear(pStack, pEntity, pLevel);
 	}
+
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+		return !ItemStack.isSameItem(oldStack, newStack);
+	}
 }

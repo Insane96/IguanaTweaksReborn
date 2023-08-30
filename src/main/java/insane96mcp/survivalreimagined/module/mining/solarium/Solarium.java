@@ -12,6 +12,7 @@ import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.mining.solarium.item.*;
+import insane96mcp.survivalreimagined.module.sleeprespawn.death.integration.ToolBelt;
 import insane96mcp.survivalreimagined.setup.SRItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
@@ -41,6 +42,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.UUID;
@@ -123,7 +125,15 @@ public class Solarium extends Feature {
 	}
 
 	@SubscribeEvent
-	public void boostSpeed(LivingEvent.LivingTickEvent event) {
+	public void onLivingTick(LivingEvent.LivingTickEvent event) {
+		boostSpeed(event);
+
+		//TODO Move if any other item needs toolbelt ticking
+		if (ModList.get().isLoaded("toolbelt"))
+			ToolBelt.tryTickItemsIn(event.getEntity());
+	}
+
+	public static void boostSpeed(LivingEvent.LivingTickEvent event) {
 		if (event.getEntity().tickCount % 2 != 1)
 			return;
 

@@ -16,4 +16,8 @@ public class SolariumPickaxeItem extends PickaxeItem {
 		super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
 		Solarium.healGear(pStack, pEntity, pLevel);
 	}
+
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+		return !ItemStack.isSameItem(oldStack, newStack);
+	}
 }

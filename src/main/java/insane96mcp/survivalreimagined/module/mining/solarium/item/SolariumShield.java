@@ -24,6 +24,10 @@ public class SolariumShield extends SPShieldItem {
 		Solarium.healGear(pStack, pEntity, pLevel);
 	}
 
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+		return !ItemStack.isSameItem(oldStack, newStack);
+	}
+
 	public static RegistryObject<SPShieldItem> registerShield(String id) {
 		Item.Properties properties = new Item.Properties().durability(SHIELD_MATERIAL.durability).rarity(SHIELD_MATERIAL.rarity);
 		RegistryObject<SPShieldItem> shield = SRItems.REGISTRY.register(id, () -> new SolariumShield(properties));
