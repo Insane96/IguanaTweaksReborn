@@ -10,6 +10,7 @@
   * Item now renders on the ensorceller
 * Increased experience from smelting Durium and Soul Steel
 * Increased bonus speed from Golden Armor
+* Crops are now 50% harder to break
 * Altimeter now shows a tooltip with the rough height
 * Re-added "Actual redstone component"
 * Fixed Forge's items on top being rotated wrongly

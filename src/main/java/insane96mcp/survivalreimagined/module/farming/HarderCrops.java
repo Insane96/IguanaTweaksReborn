@@ -30,7 +30,7 @@ import java.util.List;
 public class HarderCrops extends SRFeature {
 	public static final TagKey<Block> HARDER_CROPS_TAG = SRBlockTagsProvider.create("harder_crops");
 	public static final ArrayList<IdTagValue> CROPS_HARDNESS_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.TAG, HARDER_CROPS_TAG.location().toString(), 1d)
+			new IdTagValue(IdTagMatcher.Type.TAG, HARDER_CROPS_TAG.location().toString(), 1.5d)
 	));
 	public static final ArrayList<IdTagValue> cropsHardness = new ArrayList<>();
 	@Config
