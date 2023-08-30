@@ -9,6 +9,7 @@
   * No longer requires bookshelves, instead requires sunlight
   * Item now renders on the ensorceller
 * Increased experience from creating Durium and Soul Steel
+* Increased bonus speed from Golden Armor
 * Altimeter now shows a tooltip with the rough height
 * Re-added "Actual redstone component"
 * Fixed Forge's items on top being rotated wrongly
