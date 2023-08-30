@@ -28,7 +28,7 @@ public class Gold extends Feature {
 	public static final String LUCKY_GOLD_TOOLTIP = SurvivalReimagined.MOD_ID + ".innate_luck";
 
 	@Config
-	@Label(name = "Lucky Gold", description = "Changes Gold tools to have an innate Fortune/Looting II and changes the harvest level to be like stone tools.")
+	@Label(name = "Lucky Gold", description = "Changes Gold tools to have an innate Fortune/Looting I and changes the harvest level to be like iron tools.")
 	public static Boolean luckyGold = true;
 
 	@Config
@@ -52,8 +52,8 @@ public class Gold extends Feature {
 
 		ItemStack stack = livingEntity.getMainHandItem();
 		if (stack.getItem() instanceof SwordItem swordItem && swordItem.getTier() == Tiers.GOLD) {
-			if (event.getLootingLevel() < 2)
-				event.setLootingLevel(2);
+			if (event.getLootingLevel() < 1)
+				event.setLootingLevel(1);
 		}
 	}
 
@@ -62,10 +62,10 @@ public class Gold extends Feature {
 				|| !luckyGold
 				|| !(itemStack.getItem() instanceof TieredItem tieredItem)
 				|| tieredItem.getTier() != Tiers.GOLD
-				|| prev >= 2)
+				|| prev >= 1)
 			return prev;
 
-		return 2;
+		return 1;
 	}
 
 	public static Tier getEffectiveTier(Tier originalTier) {
@@ -74,7 +74,7 @@ public class Gold extends Feature {
 				|| originalTier != Tiers.GOLD)
 			return originalTier;
 
-		return Tiers.STONE;
+		return Tiers.IRON;
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -84,9 +84,9 @@ public class Gold extends Feature {
 				|| !luckyGold
 				|| !(event.getItemStack().getItem() instanceof TieredItem tieredItem)
 				|| tieredItem.getTier() != Tiers.GOLD
-				|| event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_FORTUNE) > 1
+				|| event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_FORTUNE) > 0
 				|| event.getItemStack().getEnchantmentLevel(Enchantments.SILK_TOUCH) > 0
-				|| event.getItemStack().getEnchantmentLevel(Enchantments.MOB_LOOTING) > 1)
+				|| event.getItemStack().getEnchantmentLevel(Enchantments.MOB_LOOTING) > 0)
 			return;
 
 		event.getToolTip().add(Component.empty());

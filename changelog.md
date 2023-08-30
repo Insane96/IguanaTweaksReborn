@@ -5,7 +5,7 @@
   * Increases max health by half a heart per level
   * _Max Health Fix_ is a new dependency that fixes MC-17876
   * Incompatible with Protections and thorns
-* Solarium
+* Solarium mega buff
   * Armor now gives up to 10% movement speed when walking in sunlight
   * Tools now mine up to 75% faster when used in sunlight
   * Weapons damage is increased up to 25% when used in sunlight
@@ -17,6 +17,7 @@
   * No longer requires bookshelves, instead requires sunlight
   * Item now renders on the ensorceller
 * Increased experience from smelting Durium and Soul Steel
+* Golden tools/weapons now have innate Fortune/Looting I instead of II but tools can now mine stuff like an Iron Pickaxe
 * Increased bonus speed from Golden Armor
 * Crops are now 50% harder to break
 * Altimeter now shows a tooltip with the rough height
