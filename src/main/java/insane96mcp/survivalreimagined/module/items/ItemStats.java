@@ -56,7 +56,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/golden", 72),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/copper", 42),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/iron", 375),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/solarium", 384),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/solarium", 259),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/durium", 855),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/coated_copper", 482),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/diamond", 2341),
@@ -85,10 +85,10 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_leggings", 90),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_boots", 78),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:solarium_helmet", 96),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:solarium_chestplate", 128),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:solarium_leggings", 120),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:solarium_boots", 104),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:solarium_helmet", 72),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:solarium_chestplate", 96),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:solarium_leggings", 90),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:solarium_boots", 78),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_helmet", 120),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_chestplate", 160),

@@ -14,7 +14,7 @@ import java.util.EnumMap;
 
 public class SolariumArmorItem extends ArmorItem {
 
-	private static final SRArmorMaterial ARMOR_MATERIAL = new SRArmorMaterial("survivalreimagined:solarium", 16, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
+	private static final SRArmorMaterial ARMOR_MATERIAL = new SRArmorMaterial("survivalreimagined:solarium", 12, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
 		p_266652_.put(ArmorItem.Type.BOOTS, 2);
 		p_266652_.put(ArmorItem.Type.LEGGINGS, 5);
 		p_266652_.put(ArmorItem.Type.CHESTPLATE, 6);

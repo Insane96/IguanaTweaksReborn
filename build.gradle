@@ -160,8 +160,8 @@ dependencies {
     implementation fg.deobf("blank:Shields+:${shields_plus_version}-mc${mc_version}")
     implementation fg.deobf("blank:EnhancedAI:${enhancedai_version}-mc${mc_version}")
 
-    //runtimeOnly fg.deobf("curse.maven:selene-499980:4656567")
-    //runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4602101")
+    runtimeOnly fg.deobf("curse.maven:selene-499980:4728637")
+    runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4724732")
     runtimeOnly fg.deobf("curse.maven:better-advancements-272515:4631253")
 
     implementation fg.deobf("com.github.glitchfiend:SereneSeasons:${mc_version}-${sereneseasons_version}")

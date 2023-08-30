@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_solium_moss_ball": {
+    "has_solarium_moss_ball": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_solium_moss_ball",
+      "has_solarium_moss_ball",
       "has_the_recipe"
     ]
   ],

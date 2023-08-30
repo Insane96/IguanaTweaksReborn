@@ -42,8 +42,8 @@ public class Critical extends Enchantment {
     @Override
     public void doPostAttack(LivingEntity attacker, Entity entity, int lvl) {
         if (lvl > 0 && attacker instanceof ServerPlayer player) {
-            boolean itCrit = player.getAttackStrengthScale(0.5F) > 0.9f && player.fallDistance > 0.0F && !player.onGround() && !player.onClimbable() && !player.isInWater() && !player.hasEffect(MobEffects.BLINDNESS) && !player.isPassenger() && entity instanceof LivingEntity;
-            if (itCrit)
+            boolean isCrit = player.getAttackStrengthScale(0.5F) > 0.9f && player.fallDistance > 0.0F && !player.onGround() && !player.onClimbable() && !player.isInWater() && !player.hasEffect(MobEffects.BLINDNESS) && !player.isPassenger() && entity instanceof LivingEntity;
+            if (isCrit)
                 player.magicCrit(entity);
         }
     }

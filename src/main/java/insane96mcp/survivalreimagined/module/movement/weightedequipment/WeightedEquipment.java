@@ -30,22 +30,19 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 
 @Label(name = "Weighted Equipment", description = "Armor and Shield slows down the player. Material Weights and Enchantment Weights are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class WeightedEquipment extends SRFeature {
 	public static final String ARMOR_SLOWDOWN = SurvivalReimagined.MOD_ID + ".armor_slowdown";
 
-	public static final ArrayList<ArmorMaterialWeight> MATERIAL_WEIGHTS_DEFAULTS = new ArrayList<>(Arrays.asList(
+	public static final ArrayList<ArmorMaterialWeight> MATERIAL_WEIGHTS_DEFAULTS = new ArrayList<>(List.of(
 			new ArmorMaterialWeight("leather", 0d),
 			new ArmorMaterialWeight("survivalreimagined:chained_copper", 0d),
 			new ArmorMaterialWeight("chainmail", 0d),
 			new ArmorMaterialWeight("iron", 0.01d),
-			new ArmorMaterialWeight("survivalreimagined:solarium", 0.01d),
+			new ArmorMaterialWeight("survivalreimagined:solarium", 0.025d),
 			new ArmorMaterialWeight("survivalreimagined:durium", 0.025d),
 			new ArmorMaterialWeight("gold", 0d),
 			new ArmorMaterialWeight("diamond", 0.05d),

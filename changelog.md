@@ -5,6 +5,14 @@
   * Increases max health by half a heart per level
   * _Max Health Fix_ is a new dependency that fixes MC-17876
   * Incompatible with Protections and thorns
+* Solarium
+  * Armor now gives up to 10% movement speed when walking in sunlight
+  * Tools now mine up to 75% faster when used in sunlight
+  * Weapons damage is increased up to 25% when used in sunlight
+  * Increased repair chance (~~75%~~ -> 150% at full sunlight (so 100% at 10 sunlight))
+  * Nighttime and thunder weather now disable the solarium boosts
+  * Reduced tools durability
+  * Solarium ball requires 9 moss again
 * Ensorceller
   * No longer requires bookshelves, instead requires sunlight
   * Item now renders on the ensorceller
@@ -15,7 +23,6 @@
 * Re-added "Actual redstone component"
 * Fixed Forge's items on top being rotated wrongly
 * Decreased entity reach of hammers by 0.25
-* Increased repair chance of Solarium equipment
 * Fixed Forge and Ensorceller not syncing items on world load
 * Hopefully fixed client-side crash when interacting with Wandering Trader on a server
 * Fixed hunger depletion not working properly
