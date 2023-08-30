@@ -173,7 +173,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
             return 0;
 
         int cost = 3;
-        if (dayTime >= 4800 && dayTime < 7200)
+        if (dayTime >= 4200 && dayTime < 7800)
             cost = 1;
         else if (dayTime >= 1200 && dayTime < 10800)
             cost = 2;

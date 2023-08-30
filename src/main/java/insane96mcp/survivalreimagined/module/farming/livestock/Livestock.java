@@ -93,7 +93,7 @@ public class Livestock extends SRFeature {
 	public static final ArrayList<LivestockData> cowMilkCooldown = new ArrayList<>();
 
 	public static final ArrayList<LivestockData> SHEEP_WOOL_REGROWTH_CHANCE = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.Type.ID, "minecraft:sheep", 0.6d)
+			new LivestockData(IdTagMatcher.Type.ID, "minecraft:sheep", 0.75d)
 	));
 
 	public static final ArrayList<LivestockData> sheepWoolRegrowthChance = new ArrayList<>();
