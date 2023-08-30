@@ -41,7 +41,9 @@ public class BlockExperience extends SRFeature {
 			new IdTagRange(IdTagRange.Type.ID, "minecraft:emerald_ore", 8, 14),
 			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_emerald_ore", 8, 14),
 			new IdTagRange(IdTagRange.Type.ID, "minecraft:emerald_ore", 8, 14),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_emerald_ore", 8, 14)
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_emerald_ore", 8, 14),
+
+			new IdTagRange(IdTagRange.Type.ID, "minecraft:sculk_catalyst", 35, 35)
 	));
 
 	public static final ArrayList<IdTagRange> customBlocksExperience = new ArrayList<>();
