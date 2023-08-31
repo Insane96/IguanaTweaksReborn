@@ -30,6 +30,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -50,13 +51,13 @@ public class Spawners extends Feature {
 	public static final TagKey<Item> SPAWNER_REACTIVATOR = SRItemTagsProvider.create("spawner_reactivator");
 	@Config(min = 0)
 	@Label(name = "Minimum Spawnable Mobs", description = "The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn. The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
-	public static Integer minSpawnableMobs = 25;
+	public static Integer minSpawnableMobs = 20;
 	@Config(min = 0d)
 	@Label(name = "Spawnable mobs multiplier", description = "This multiplier increases the max mobs spawned.")
 	public static Double spawnableMobsMultiplier = 1.0d;
 	@Config
-	@Label(name = "Bonus experience the farther from spawn", description = "If true, the spawner will drop more experience when broken based of distance from spawn. +100% every 1024 blocks from spawn. The multiplier from 'Experience From Blocks' Feature still applies.")
-	public static Boolean bonusExperienceWhenFarFromSpawn = true;
+	@Label(name = "Bonus experience if not disabled", description = "If true, the spawner will drop more experience when broken, if not disabled, based of distance from spawn. +100% every 1024 blocks from spawn. The multiplier from 'Experience From Blocks' Feature still applies.")
+	public static Boolean bonusExperienceIfNotDisabled = true;
 
 	@Config
 	@Label(name = "Ignore Light", description = "If true, monsters from spawners will spawn no matter the light level.")
@@ -120,12 +121,16 @@ public class Spawners extends Feature {
 	@SubscribeEvent
 	public void onBlockXPDrop(BlockEvent.BreakEvent event) {
 		if (!isEnabled()
-				|| !bonusExperienceWhenFarFromSpawn
+				|| !bonusExperienceIfNotDisabled
 				|| !event.getState().getBlock().equals(Blocks.SPAWNER))
+			return;
+		BlockEntity blockEntity = event.getLevel().getBlockEntity(event.getPos());
+		if (!(blockEntity instanceof SpawnerBlockEntity spawnerBlockEntity))
 			return;
 		ServerLevel level = (ServerLevel) event.getLevel();
 		double distance = Math.sqrt(event.getPos().distSqr(level.getSharedSpawnPos()));
-		event.setExpToDrop((int) (event.getExpToDrop() * (1 + distance / 1024d)));
+		float distanceRatio = isDisabled(spawnerBlockEntity) ? 1024f : 256f;
+		event.setExpToDrop((int) (event.getExpToDrop() * (1 + distance / distanceRatio)));
 	}
 
 	/**
