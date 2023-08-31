@@ -6,10 +6,12 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeConfig;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -58,6 +60,10 @@ public class Spawning extends SRFeature {
     @Config
     @Label(name = "Phantoms in the End", description = "Disables insomnia and makes Phantoms spawn naturally in the End")
     public static Boolean phantomsInTheEnd = true;
+
+    @Config
+    @Label(name = "No Zombie Villagers", description = "Disables Zombie Villagers")
+    public static Boolean noZombieVillagers = true;
     @Config
     @Label(name = "Allow world spawn spawn", description = "Allows mobs to spawn in the world spawn (in vanilla mobs can't spawn in a 24 blocks radius from world spawn)")
     public static Boolean allowWorldSpawnSpawn = true;
@@ -73,6 +79,18 @@ public class Spawning extends SRFeature {
             return;
 
         event.getServer().getGameRules().getRule(GameRules.RULE_DOINSOMNIA).set(false, event.getServer());
+    }
+
+    @SubscribeEvent
+    public void onZombieVillagerSpawn(MobSpawnEvent.FinalizeSpawn event) {
+        if (!this.isEnabled()
+                || !noZombieVillagers
+                || event.getEntity().getType() != EntityType.ZOMBIE_VILLAGER
+                || event.getEntity().isAddedToWorld())
+            return;
+
+        event.setSpawnCancelled(true);
+        event.setCanceled(true);
     }
 
     @SubscribeEvent
