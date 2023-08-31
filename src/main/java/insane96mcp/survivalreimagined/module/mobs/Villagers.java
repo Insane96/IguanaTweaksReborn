@@ -11,6 +11,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -21,6 +22,8 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.Map;
@@ -47,9 +50,22 @@ public class Villagers extends Feature {
 	@Config
 	@Label(name = "Clamp Negative Demand", description = "When villagers restock, they update the 'demand'. Demand is a trade modifier that increases the price whenever a trade is done many times, BUT when a trade is not performed, at each restock the 'demand' goes negative, making possible for a trade to never increase it's price due to high negative demand. With this to true, negative demand will be capped at -max_uses of the trade (e.g. Carrot trade from a farmer will have it's minimum demand set to -16).")
 	public static Boolean clampNegativeDemand = true;
+	@Config
+	@Label(name = "Remove Bad Omen")
+	public static Boolean removeBadOmen = true;
 
 	public Villagers(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	@SubscribeEvent
+	public void onEffectAdded(MobEffectEvent.Applicable event) {
+		if (!this.isEnabled()
+				|| !removeBadOmen
+				|| event.getEffectInstance().getEffect() != MobEffects.BAD_OMEN)
+			return;
+
+		event.setResult(Event.Result.DENY);
 	}
 
 	@SubscribeEvent
