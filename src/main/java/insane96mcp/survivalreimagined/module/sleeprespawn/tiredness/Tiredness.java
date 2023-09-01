@@ -10,6 +10,7 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.hungerhealth.HealthRegen;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.TirednessSyncMessage;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
@@ -76,7 +77,7 @@ public class Tiredness extends SRFeature {
 	@Label(name = "Tiredness gained multiplier", description = "Multiply the tiredness gained by this value. Normally you gain tiredness equal to the exhaustion gained. 'Effective Hunger' doesn't affect the exhaustion gained.")
 	public static Double tirednessGainMultiplier = 1d;
 	@Config
-	@Label(name = "Prevent Spawn Point", description = "If true the player will not set the spawn point if he/she can't sleep.")
+	@Label(name = "Prevent Spawn Point", description = "If true the player will not set the spawn point if can't sleep.")
 	public static Boolean shouldPreventSpawnPoint = false;
 	@Config(min = 0d)
 	@Label(name = "Tiredness for effect", description = "Tiredness required to get the Tired effect and be able to sleep.")
@@ -227,7 +228,7 @@ public class Tiredness extends SRFeature {
 			float tirednessOnWakeUp = Mth.clamp(TirednessHandler.get(player) - tirednessToEffect.floatValue(), 0, tirednessToEffect.floatValue() / 2f);
 			int duration = (int) (vigourDuration - (tirednessOnWakeUp * vigourPenalty));
 			if (duration > 0)
-				player.addEffect(new MobEffectInstance(SRMobEffects.VIGOUR.get(), duration * 20, vigourAmplifier, false, false, true));
+				player.addEffect(new MobEffectInstance(HealthRegen.VIGOUR.get(), duration * 20, vigourAmplifier, false, false, true));
 			TirednessHandler.set(player, tirednessOnWakeUp);
 			player.removeEffect(TIRED.get());
 		});
@@ -293,11 +294,12 @@ public class Tiredness extends SRFeature {
 				//No overlay at Tired I
 				if (amplifier < 2)
 					return;
+				amplifier--;
 				Minecraft.getInstance().getProfiler().push("tired_overlay");
 				RenderSystem.disableDepthTest();
-				float opacity = (amplifier * 20f) / 100.0F;
+				float opacity = (amplifier * 25f) / 100.0F;
 				if (opacity > 1.0F)
-					opacity = 1.0F - (amplifier * 20f - 100) / 10.0F;
+					opacity = 1.0F - (amplifier * 25f - 100) / 10.0F;
 
 				int color = (int) (220.0F * opacity) << 24 | 1052704;
 				guiGraphics.fill(0, 0, screenWidth, screenHeight, color);
