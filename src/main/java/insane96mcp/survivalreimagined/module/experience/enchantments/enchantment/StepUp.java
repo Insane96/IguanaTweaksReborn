@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.module.experience.enchantments.enchantment;
 
-import insane96mcp.survivalreimagined.setup.SREnchantments;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -31,7 +31,7 @@ public class StepUp extends Enchantment {
     public static void applyAttributeModifier(ItemAttributeModifierEvent event) {
         if (event.getSlotType() != EquipmentSlot.LEGS)
             return;
-        int lvl = event.getItemStack().getEnchantmentLevel(SREnchantments.STEP_UP.get());
+        int lvl = event.getItemStack().getEnchantmentLevel(EnchantmentsFeature.STEP_UP.get());
         if (lvl == 0)
             return;
 

@@ -6,7 +6,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
-import insane96mcp.survivalreimagined.setup.SRLootItemConditions;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -32,7 +32,7 @@ public class BlockTagCondition implements LootItemCondition {
     }
 
     public LootItemConditionType getType() {
-        return SRLootItemConditions.BLOCK_TAG_MATCH.get();
+        return SRRegistries.BLOCK_TAG_MATCH.get();
     }
 
     public Set<LootContextParam<?>> getReferencedContextParams() {

@@ -1,7 +1,7 @@
 {
-    "injured": {
-        "subtitle": "survivalreimagined.subtitle.injured",
-        "sounds": [ "survivalreimagined:injured" ]
+    "unfair_one_shot": {
+        "subtitle": "survivalreimagined.subtitle.unfair_one_shot",
+        "sounds": [ "survivalreimagined:unfair_one_shot" ]
     },
     "primed_mining_charge": {
         "subtitle": "survivalreimagined.subtitle.primed_mining_charge",

@@ -8,9 +8,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.data.criterion.OverweightCrateCarryTrigger;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.setup.SRBlockEntityTypes;
-import insane96mcp.survivalreimagined.setup.SRBlocks;
-import insane96mcp.survivalreimagined.setup.SRItems;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -32,10 +30,10 @@ public class Crate extends Feature {
 
 	public static final UUID CRATE_WEIGHT_UUID = UUID.fromString("4ce89c45-a011-43fa-b9a8-7f2bd0ea2fc3");
 
-	public static final RegistryObject<CrateBlock> BLOCK = SRBlocks.REGISTRY.register("crate", () -> new CrateBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2f)));
-	public static final RegistryObject<CrateItem> ITEM = SRItems.REGISTRY.register("crate", () -> new CrateItem(BLOCK.get(), new Item.Properties().stacksTo(1)));
+	public static final RegistryObject<CrateBlock> BLOCK = SRRegistries.BLOCKS.register("crate", () -> new CrateBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2f)));
+	public static final RegistryObject<CrateItem> ITEM = SRRegistries.ITEMS.register("crate", () -> new CrateItem(BLOCK.get(), new Item.Properties().stacksTo(1)));
 
-	public static final RegistryObject<BlockEntityType<?>> BLOCK_ENTITY_TYPE = SRBlockEntityTypes.REGISTRY.register("crate", () -> BlockEntityType.Builder.of(CrateBlockEntity::new, BLOCK.get()).build(null));
+	public static final RegistryObject<BlockEntityType<?>> BLOCK_ENTITY_TYPE = SRRegistries.BLOCK_ENTITY_TYPES.register("crate", () -> BlockEntityType.Builder.of(CrateBlockEntity::new, BLOCK.get()).build(null));
 
 	@Config(min = 0)
 	@Label(name = "Slowness with this or more crates")

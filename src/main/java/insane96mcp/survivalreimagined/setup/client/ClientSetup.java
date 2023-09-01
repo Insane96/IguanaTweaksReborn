@@ -39,8 +39,7 @@ import insane96mcp.survivalreimagined.module.sleeprespawn.respawn.Respawn;
 import insane96mcp.survivalreimagined.module.world.CyanFlower;
 import insane96mcp.survivalreimagined.module.world.coalfire.CoalFire;
 import insane96mcp.survivalreimagined.module.world.oregeneration.OreGeneration;
-import insane96mcp.survivalreimagined.setup.SREntityTypes;
-import insane96mcp.survivalreimagined.setup.SRParticles;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.RecipeBookCategories;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -109,6 +108,7 @@ public class ClientSetup {
             event.accept(Forging.NETHERITE_HAMMER.get());
             event.accept(Forging.KEEGO_HAMMER.get());
 
+            event.accept(Altimeter.ITEM.get());
             event.accept(RecallIdol.ITEM.get());
         }
         else if (event.getTabKey() == CreativeModeTabs.COMBAT) {
@@ -251,7 +251,7 @@ public class ClientSetup {
     }
 
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(SREntityTypes.PILABLE_FALLING_LAYER.get(), FallingBlockRenderer::new);
+        event.registerEntityRenderer(SRRegistries.PILABLE_FALLING_LAYER.get(), FallingBlockRenderer::new);
         event.registerEntityRenderer(Fletching.QUARTZ_ARROW.get(), SRArrowRenderer::new);
         event.registerEntityRenderer(Fletching.DIAMOND_ARROW.get(), SRArrowRenderer::new);
         event.registerEntityRenderer(Fletching.EXPLOSIVE_ARROW.get(), SRArrowRenderer::new);
@@ -294,6 +294,6 @@ public class ClientSetup {
     }
 
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
-        event.registerSpriteSet(SRParticles.ELECTROCUTION_SPARKS.get(), ElectrocutionSparkParticle.Provider::new);
+        event.registerSpriteSet(CopperToolsExpansion.ELECTROCUTION_SPARKS.get(), ElectrocutionSparkParticle.Provider::new);
     }
 }

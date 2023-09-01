@@ -5,13 +5,16 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.ILMobEffect;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.setup.SRMobEffects;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
@@ -22,12 +25,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.text.DecimalFormat;
 
-@Label(name = "Hunger Health Regen", description = "Makes Health regen work differently, similar to Combat Test snapshots. Can be customized. Also adds Well Fed and Injured effects. Hunger related stuff doesn't work (for obvious reasons) if No Hunger feature is enabled")
+@Label(name = "Hunger Health Regen", description = "Makes Health regen work differently, similar to Combat Test snapshots. Can be customized. Also adds Vigour effect. Hunger related stuff doesn't work (for obvious reasons) if No Hunger feature is enabled")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class HealthRegen extends Feature {
+	public static final RegistryObject<MobEffect> VIGOUR = SRRegistries.MOB_EFFECTS.register("vigour", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false));
 	@Config(min = 0)
 	@Label(name = "Health Regen Speed", description = "Sets how many ticks between the health regeneration happens (vanilla is 80).")
 	public static Integer healthRegenSpeed = 40;
@@ -69,19 +74,19 @@ public class HealthRegen extends Feature {
 	//Effects
 	@Config
 	@Label(name = "Effects.Vigour.Enable", description = "Set to true to enable Vigour, a new effect that lowers hunger consumption and increases health regen speed. Applied when good foods are eaten.")
-	public static Boolean enableWellFed = true;
+	public static Boolean enableVigour = true;
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Effects.Vigour.Duration Multiplier", description = "Multiplies the base duration of Vigour by this value. Base duration is 1 second per food saturation.")
-	public static Double wellFedDurationMultiplier = 20d;
+	public static Double vigourDurationMultiplier = 20d;
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Effects.Vigour.Effectiveness", description = "How much does health regen Vigour increases.")
-	public static Double wellFedEffectiveness = 0.20d;
+	public static Double vigourEffectiveness = 0.20d;
 	@Config(min = 0d, max = 20d)
 	@Label(name = "Effects.Vigour.Minimum Saturation", description = "Minimum saturation given by the food to apply Vigour.")
-	public static Double wellFedMinimumSaturation = 7d;
+	public static Double vigourMinimumSaturation = 7d;
 	@Config
 	@Label(name = "Effects.Vigour.Stacks", description = "If true, eating when already under Vigour increases the duration.")
-	public static Boolean wellFedStacks = true;
+	public static Boolean vigourStacks = true;
 
 	public HealthRegen(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -95,29 +100,29 @@ public class HealthRegen extends Feature {
 				|| event.getEntity().level().isClientSide)
 			return;
 
-		processWellFed(event);
+		processVigour(event);
 		healOnEat(event);
 	}
 
-	private void processWellFed(LivingEntityUseItemEvent.Finish event) {
-		if (!enableWellFed)
+	private void processVigour(LivingEntityUseItemEvent.Finish event) {
+		if (!enableVigour)
 			return;
 		Player player = (Player) event.getEntity();
-		boolean hasEffect = player.hasEffect(SRMobEffects.VIGOUR.get());
-		if (hasEffect && !wellFedStacks)
+		boolean hasEffect = player.hasEffect(VIGOUR.get());
+		if (hasEffect && !vigourStacks)
 			return;
 
 		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), player);
 		float saturationRestored = Utils.getFoodSaturationRestored(food);
-		if (saturationRestored < wellFedMinimumSaturation)
+		if (saturationRestored < vigourMinimumSaturation)
 			return;
-		int duration = (int) (saturationRestored * wellFedDurationMultiplier) * 20;
+		int duration = (int) (saturationRestored * vigourDurationMultiplier) * 20;
 		if (hasEffect) {
-			MobEffectInstance effectInstance = player.getEffect(SRMobEffects.VIGOUR.get());
+			MobEffectInstance effectInstance = player.getEffect(VIGOUR.get());
 			//noinspection DataFlowIssue
 			duration += effectInstance.duration;
 		}
-		player.addEffect(new MobEffectInstance(SRMobEffects.VIGOUR.get(), duration, 0, false, false, true));
+		player.addEffect(new MobEffectInstance(VIGOUR.get(), duration, 0, false, false, true));
 	}
 
 	public void healOnEat(LivingEntityUseItemEvent.Finish event) {
@@ -208,9 +213,9 @@ public class HealthRegen extends Feature {
 
 	private static int getRegenSpeed(Player player) {
 		int ticksToRegen = healthRegenSpeed;
-		MobEffectInstance wellFed = player.getEffect(SRMobEffects.VIGOUR.get());
-		if (wellFed != null)
-			ticksToRegen *= 1 - (((wellFed.getAmplifier() + 1) * wellFedEffectiveness));
+		MobEffectInstance vigour = player.getEffect(VIGOUR.get());
+		if (vigour != null)
+			ticksToRegen *= 1 - (((vigour.getAmplifier() + 1) * vigourEffectiveness));
 		return ticksToRegen;
 	}
 

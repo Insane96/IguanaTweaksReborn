@@ -1,7 +1,6 @@
 package insane96mcp.survivalreimagined.module.experience.enchantments.enchantment;
 
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
-import insane96mcp.survivalreimagined.setup.SREnchantments;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -41,7 +40,7 @@ public class Blasting extends Enchantment {
         ItemStack heldStack = entity.getMainHandItem();
         if (!heldStack.isCorrectToolForDrops(state))
             return 0f;
-        int level = heldStack.getEnchantmentLevel(SREnchantments.BLASTING.get());
+        int level = heldStack.getEnchantmentLevel(EnchantmentsFeature.BLASTING.get());
         if (level == 0)
             return 0f;
 

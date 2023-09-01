@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.module.experience.enchantments.enchantment;
 
-import insane96mcp.survivalreimagined.setup.SREnchantments;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -50,7 +50,7 @@ public class MagicProtection extends Enchantment implements IProtectionEnchantme
                 || effectInstance.getEffect().isInstantenous())
             return;
 
-        int level = EnchantmentHelper.getEnchantmentLevel(SREnchantments.MAGIC_PROTECTION.get(), entity);
+        int level = EnchantmentHelper.getEnchantmentLevel(EnchantmentsFeature.MAGIC_PROTECTION.get(), entity);
         if (level == 0)
             return;
 

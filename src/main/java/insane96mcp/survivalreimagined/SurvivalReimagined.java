@@ -17,7 +17,10 @@ import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.survivalreimagined.module.world.spawners.capability.SpawnerData;
 import insane96mcp.survivalreimagined.module.world.spawners.capability.SpawnerDataAttacher;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
-import insane96mcp.survivalreimagined.setup.*;
+import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
+import insane96mcp.survivalreimagined.setup.SRCommonConfig;
+import insane96mcp.survivalreimagined.setup.SRPackSource;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.setup.client.ClientSetup;
 import insane96mcp.survivalreimagined.setup.client.SRClientConfig;
 import net.minecraft.core.HolderLookup;
@@ -92,22 +95,7 @@ public class SurvivalReimagined
         modEventBus.addListener(PiercingPickaxes::piercingDamageAttribute);
         modEventBus.register(Tiredness.class);
         modEventBus.register(SpawnerData.class);
-        SRSoundEvents.REGISTRY.register(modEventBus);
-        SRParticles.REGISTRY.register(modEventBus);
-        SRMobEffects.REGISTRY.register(modEventBus);
-        SRAttributes.REGISTRY.register(modEventBus);
-        SRBlocks.REGISTRY.register(modEventBus);
-        SRBlockEntityTypes.REGISTRY.register(modEventBus);
-        SRItems.REGISTRY.register(modEventBus);
-        SRFeatureType.REGISTRY.register(modEventBus);
-        SRRuleTestType.REGISTRY.register(modEventBus);
-        SRRecipeTypes.REGISTRY.register(modEventBus);
-        SRRecipeSerializers.REGISTRY.register(modEventBus);
-        SRMenuType.REGISTRY.register(modEventBus);
-        SREnchantments.REGISTRY.register(modEventBus);
-        SREntityTypes.REGISTRY.register(modEventBus);
-        SRGlobalLootModifiers.REGISTRY.register(modEventBus);
-        SRLootItemConditions.REGISTRY.register(modEventBus);
+        SRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)

@@ -1,6 +1,5 @@
 package insane96mcp.survivalreimagined.setup;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.repository.PackSource;
 
@@ -20,10 +19,5 @@ public interface SRPackSource {
                 return shouldAddAutomatically;
             }
         };
-    }
-
-    private static UnaryOperator<Component> decorateWithSource(String translatable) {
-        Component component = Component.translatable(translatable);
-        return (comp) -> Component.translatable("pack.nameAndSource", comp, component).withStyle(ChatFormatting.GRAY);
     }
 }

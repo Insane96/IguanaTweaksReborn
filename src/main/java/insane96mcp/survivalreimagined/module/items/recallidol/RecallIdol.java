@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.data.generator.SRGlobalLootModifierProvider;
 import insane96mcp.survivalreimagined.data.lootmodifier.InjectLootTableModifier;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.setup.SRItems;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 @Label(name = "Altimeter", description = "Check your altitude")
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class RecallIdol extends Feature {
-	public static final RegistryObject<Item> ITEM = SRItems.REGISTRY.register("recall_idol", () -> new RecallIdolItem(new Item.Properties().stacksTo(1)));
+	public static final RegistryObject<Item> ITEM = SRRegistries.ITEMS.register("recall_idol", () -> new RecallIdolItem(new Item.Properties().stacksTo(1)));
 
 	public RecallIdol(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

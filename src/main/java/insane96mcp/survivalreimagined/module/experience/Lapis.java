@@ -7,7 +7,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.InjectLootTableModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.anvils.Anvils;
-import insane96mcp.survivalreimagined.setup.SRItems;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -30,8 +30,8 @@ import java.util.Map;
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class Lapis extends Feature {
 
-	public static final RegistryObject<Item> CLEANSED_LAPIS = SRItems.REGISTRY.register("cleansed_lapis", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> ANCIENT_LAPIS = SRItems.REGISTRY.register("ancient_lapis", () -> new Item(new Item.Properties().fireResistant()));
+	public static final RegistryObject<Item> CLEANSED_LAPIS = SRRegistries.ITEMS.register("cleansed_lapis", () -> new Item(new Item.Properties()));
+	public static final RegistryObject<Item> ANCIENT_LAPIS = SRRegistries.ITEMS.register("ancient_lapis", () -> new Item(new Item.Properties().fireResistant()));
 
 	public Lapis(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

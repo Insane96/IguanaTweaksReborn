@@ -4,7 +4,7 @@ import insane96mcp.shieldsplus.setup.SPItems;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.module.mining.solarium.Solarium;
-import insane96mcp.survivalreimagined.setup.SRItems;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +30,7 @@ public class SolariumShield extends SPShieldItem {
 
 	public static RegistryObject<SPShieldItem> registerShield(String id) {
 		Item.Properties properties = new Item.Properties().durability(SHIELD_MATERIAL.durability).rarity(SHIELD_MATERIAL.rarity);
-		RegistryObject<SPShieldItem> shield = SRItems.REGISTRY.register(id, () -> new SolariumShield(properties));
+		RegistryObject<SPShieldItem> shield = SRRegistries.ITEMS.register(id, () -> new SolariumShield(properties));
 		SPItems.SHIELDS.add(shield);
 		return shield;
 	}

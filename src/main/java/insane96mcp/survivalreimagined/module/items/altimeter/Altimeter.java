@@ -6,7 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.setup.SRItems;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -18,7 +18,7 @@ import net.minecraftforge.registries.RegistryObject;
 @Label(name = "Altimeter", description = "Check your altitude")
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class Altimeter extends Feature {
-	public static final RegistryObject<Item> ITEM = SRItems.REGISTRY.register("altimeter", () -> new AltimeterItem(new Item.Properties()));
+	public static final RegistryObject<Item> ITEM = SRRegistries.ITEMS.register("altimeter", () -> new AltimeterItem(new Item.Properties()));
 
 	@Config
 	@Label(name = "Show approx altitude in tooltip")

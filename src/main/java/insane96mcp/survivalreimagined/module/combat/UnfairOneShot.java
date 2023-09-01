@@ -6,7 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.data.criterion.UnfairOneShotTrigger;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.setup.SRSoundEvents;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,7 +29,7 @@ public class UnfairOneShot extends Feature {
 
 		if (player.getHealth() >= 15 && player.getHealth() - event.getAmount() <= 0) {
 			event.setAmount(player.getHealth() - 1f);
-			player.level().playSound(null, player.blockPosition(), SRSoundEvents.INJURED.get(), SoundSource.PLAYERS, 1.5f, 0.8f);
+			player.level().playSound(null, player.blockPosition(), SRRegistries.UNFAIR_ONE_SHOT.get(), SoundSource.PLAYERS, 1.5f, 0.8f);
 			UnfairOneShotTrigger.TRIGGER.trigger(player);
 		}
 	}

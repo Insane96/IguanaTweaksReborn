@@ -13,7 +13,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.hungerhealth.HealthRegen;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.TirednessSyncMessage;
-import insane96mcp.survivalreimagined.setup.SRMobEffects;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
@@ -57,10 +57,10 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class Tiredness extends SRFeature {
 
-	public static final RegistryObject<MobEffect> TIRED = SRMobEffects.REGISTRY.register("tired", () -> new ILMobEffect(MobEffectCategory.HARMFUL, 0x818894, false)
+	public static final RegistryObject<MobEffect> TIRED = SRRegistries.MOB_EFFECTS.register("tired", () -> new ILMobEffect(MobEffectCategory.HARMFUL, 0x818894, false)
 			.addAttributeModifier(Attributes.MOVEMENT_SPEED, "697c48dd-6bbd-4082-8501-040bb9812c09", -0.06F, AttributeModifier.Operation.MULTIPLY_TOTAL)
 			.addAttributeModifier(Attributes.ATTACK_SPEED, "40c789ef-d30d-4a27-8f46-13fe0edbb259", -0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL));
-	public static final RegistryObject<MobEffect> ENERGY_BOOST = SRMobEffects.REGISTRY.register("energy_boost", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x857965, true));
+	public static final RegistryObject<MobEffect> ENERGY_BOOST = SRRegistries.MOB_EFFECTS.register("energy_boost", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x857965, true));
 
 	public static final String NOT_TIRED = "survivalreimagined.not_tired";
 	public static final String TIRED_ENOUGH = "survivalreimagined.tired_enough";

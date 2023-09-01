@@ -190,10 +190,10 @@ public class NoHunger extends Feature {
         secs = (int) ((passiveRegenerationTime.max - passiveRegenerationTime.min) * healthPerc + passiveRegenerationTime.min);
         if (player.level().getDifficulty().equals(Difficulty.HARD))
             secs *= 1.5d;
-        if (player.hasEffect(HealthRegen.WELL_FED.get())) {
-            MobEffectInstance wellFed = player.getEffect(HealthRegen.WELL_FED.get());
+        if (player.hasEffect(HealthRegen.VIGOUR.get())) {
+            MobEffectInstance vigour = player.getEffect(HealthRegen.VIGOUR.get());
             //noinspection ConstantConditions
-            secs *= 1 - (((wellFed.getAmplifier() + 1) * 0.4d));
+            secs *= 1 - (((vigour.getAmplifier() + 1) * 0.4d));
         }
         return secs * 20;
     }

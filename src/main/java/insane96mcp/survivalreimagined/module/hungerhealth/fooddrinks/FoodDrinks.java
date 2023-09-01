@@ -13,7 +13,7 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.DataPacks;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
-import insane96mcp.survivalreimagined.setup.SRItems;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.network.chat.Component;
@@ -43,18 +43,18 @@ public class FoodDrinks extends SRFeature {
 
 	public static final TagKey<Item> RAW_FOOD = SRItemTagsProvider.create("raw_food");
 
-	public static final RegistryObject<Item> BROWN_MUSHROOM_STEW = SRItems.REGISTRY.register("brown_mushroom_stew", () -> new BowlFoodItem(new Item.Properties()
+	public static final RegistryObject<Item> BROWN_MUSHROOM_STEW = SRRegistries.ITEMS.register("brown_mushroom_stew", () -> new BowlFoodItem(new Item.Properties()
 			.food(new FoodProperties.Builder().nutrition(3).saturationMod(0.6F).build())
 	));
-	public static final RegistryObject<Item> RED_MUSHROOM_STEW = SRItems.REGISTRY.register("red_mushroom_stew", () -> new BowlFoodItem(new Item.Properties()
+	public static final RegistryObject<Item> RED_MUSHROOM_STEW = SRRegistries.ITEMS.register("red_mushroom_stew", () -> new BowlFoodItem(new Item.Properties()
 			.food(new FoodProperties.Builder().nutrition(3).saturationMod(0.6F).build())
 	));
 
-	public static final RegistryObject<Item> OVER_EASY_EGG = SRItems.REGISTRY.register("over_easy_egg", () -> new Item(new Item.Properties()
+	public static final RegistryObject<Item> OVER_EASY_EGG = SRRegistries.ITEMS.register("over_easy_egg", () -> new Item(new Item.Properties()
 			.food(new FoodProperties.Builder().nutrition(4).saturationMod(0.6F).build())
 	));
 
-	public static final RegistryObject<Item> PUMPKIN_PULP = SRItems.REGISTRY.register("pumpkin_pulp", () -> new Item(new Item.Properties()
+	public static final RegistryObject<Item> PUMPKIN_PULP = SRRegistries.ITEMS.register("pumpkin_pulp", () -> new Item(new Item.Properties()
 			.food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3F).build())
 	));
 

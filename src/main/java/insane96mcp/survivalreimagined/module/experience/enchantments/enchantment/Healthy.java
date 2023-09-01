@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.module.experience.enchantments.enchantment;
 
-import insane96mcp.survivalreimagined.setup.SREnchantments;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -52,7 +52,7 @@ public class Healthy extends Enchantment implements IProtectionEnchantment {
             return;
         if (event.getSlotType() != armorItem.getEquipmentSlot())
             return;
-        int lvl = event.getItemStack().getEnchantmentLevel(SREnchantments.HEALTHY.get());
+        int lvl = event.getItemStack().getEnchantmentLevel(EnchantmentsFeature.HEALTHY.get());
         if (lvl == 0)
             return;
 

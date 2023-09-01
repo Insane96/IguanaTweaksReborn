@@ -8,7 +8,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
-import insane96mcp.survivalreimagined.setup.SRItems;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.Item;
@@ -18,7 +18,7 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class Cloth extends Feature {
 
-	public static final RegistryObject<Item> CLOTH = SRItems.REGISTRY.register("cloth", () -> new Item(new Item.Properties()));
+	public static final RegistryObject<Item> CLOTH = SRRegistries.ITEMS.register("cloth", () -> new Item(new Item.Properties()));
 
 	@Config
 	@Label(name = "Data Pack", description = "Enables a Data Pack that makes zombies drop cloth instead of rotten flesh and beds require Cloth to be crafted.")

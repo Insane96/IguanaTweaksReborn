@@ -9,10 +9,10 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.event.PlayerSprintEvent;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.hungerhealth.HealthRegen;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.StaminaSyncMessage;
-import insane96mcp.survivalreimagined.setup.SRMobEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
@@ -73,8 +73,8 @@ public class Stamina extends Feature {
         if (player.isSprinting() && player.getVehicle() == null && !player.getAbilities().instabuild) {
             int amountConsumed = 1;
             //If the vigour effect is active give the player 20% chance per level to not consume stamina when running.
-            if (player.hasEffect(SRMobEffects.VIGOUR.get())) {
-                MobEffectInstance vigourInstance = player.getEffect(SRMobEffects.VIGOUR.get());
+            if (player.hasEffect(HealthRegen.VIGOUR.get())) {
+                MobEffectInstance vigourInstance = player.getEffect(HealthRegen.VIGOUR.get());
                 //noinspection DataFlowIssue
                 if (player.getRandom().nextDouble() < 0.2d * (vigourInstance.getAmplifier() + 1))
                     return;
@@ -133,8 +133,8 @@ public class Stamina extends Feature {
             return;
 
         int consumed = staminaConsumedOnJump;
-        if (player.hasEffect(SRMobEffects.VIGOUR.get()))
-            consumed *= 1f - (player.getEffect(SRMobEffects.VIGOUR.get()).getAmplifier() + 1) * 0.2f;
+        if (player.hasEffect(HealthRegen.VIGOUR.get()))
+            consumed *= 1f - (player.getEffect(HealthRegen.VIGOUR.get()).getAmplifier() + 1) * 0.2f;
         StaminaHandler.consumeStamina(player, consumed);
     }
 

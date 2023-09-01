@@ -8,7 +8,7 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.setup.SRMobEffects;
+import insane96mcp.survivalreimagined.module.hungerhealth.HealthRegen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.BeaconScreen;
@@ -108,7 +108,7 @@ public class BeaconConduit extends SRFeature {
             for(Player player : list) {
                 player.addEffect(new MobEffectInstance(effectSecondary, j, 0, true, true));
                 if (vigourWithRegen && effectSecondary.equals(MobEffects.REGENERATION))
-                    player.addEffect(new MobEffectInstance(SRMobEffects.VIGOUR.get(), j, 0, true, true));
+                    player.addEffect(new MobEffectInstance(HealthRegen.VIGOUR.get(), j, 0, true, true));
             }
         }
 
@@ -177,7 +177,7 @@ public class BeaconConduit extends SRFeature {
                         beaconPowerButton.setTooltip(Tooltip.create(
                                 Component.translatable(beaconPowerButton.effect.getDescriptionId())
                                         .append(Component.literal(" & ")
-                                        .append(Component.translatable(SRMobEffects.VIGOUR.get().getDescriptionId()))),
+                                        .append(Component.translatable(HealthRegen.VIGOUR.get().getDescriptionId()))),
                         null));
                     replacedTooltip = true;
                 }

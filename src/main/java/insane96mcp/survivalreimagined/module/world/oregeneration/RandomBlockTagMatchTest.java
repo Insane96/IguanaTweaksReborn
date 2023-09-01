@@ -2,7 +2,7 @@ package insane96mcp.survivalreimagined.module.world.oregeneration;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import insane96mcp.survivalreimagined.setup.SRRuleTestType;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
@@ -29,7 +29,7 @@ public class RandomBlockTagMatchTest extends RuleTest {
     }
 
     protected RuleTestType<?> getType() {
-        return SRRuleTestType.RANDOM_BLOCK_TAG_MATCH.get();
+        return SRRegistries.RANDOM_BLOCK_TAG_MATCH.get();
     }
 
     public static class Type implements RuleTestType<RandomBlockTagMatchTest> {

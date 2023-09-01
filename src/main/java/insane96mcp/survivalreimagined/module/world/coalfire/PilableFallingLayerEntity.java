@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.module.world.coalfire;
 
-import insane96mcp.survivalreimagined.setup.SREntityTypes;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
@@ -30,7 +30,7 @@ public class PilableFallingLayerEntity extends FallingBlockEntity {
     }
 
     public PilableFallingLayerEntity(Level level, double x, double y, double z, BlockState blockState) {
-        this(SREntityTypes.PILABLE_FALLING_LAYER.get(), level);
+        this(SRRegistries.PILABLE_FALLING_LAYER.get(), level);
         this.blockState = blockState;
         this.blocksBuilding = true;
         this.setPos(x, y, z);

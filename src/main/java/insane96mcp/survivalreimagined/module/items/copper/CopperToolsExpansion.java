@@ -13,18 +13,19 @@ import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.network.ElectrocutionParticleMessage;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
-import insane96mcp.survivalreimagined.setup.SRItems;
-import insane96mcp.survivalreimagined.setup.SRSoundEvents;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.MCUtils;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
@@ -54,22 +55,24 @@ public class CopperToolsExpansion extends Feature {
 
 	public static final ILItemTier COPPER_ITEM_TIER = new ILItemTier(1, 65, 8f, 1.0f, 9, () -> Ingredient.of(Items.COPPER_INGOT));
 
-	public static final RegistryObject<Item> COPPER_SWORD = SRItems.REGISTRY.register("copper_sword", () -> new SwordItem(COPPER_ITEM_TIER, 3, -2.4F, new Item.Properties()));
-	public static final RegistryObject<Item> COPPER_SHOVEL = SRItems.REGISTRY.register("copper_shovel", () -> new ShovelItem(COPPER_ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
-	public static final RegistryObject<Item> COPPER_PICKAXE = SRItems.REGISTRY.register("copper_pickaxe", () -> new PickaxeItem(COPPER_ITEM_TIER, 1, -2.8F, new Item.Properties()));
-	public static final RegistryObject<Item> COPPER_AXE = SRItems.REGISTRY.register("copper_axe", () -> new AxeItem(COPPER_ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
-	public static final RegistryObject<Item> COPPER_HOE = SRItems.REGISTRY.register("copper_hoe", () -> new HoeItem(COPPER_ITEM_TIER, -1, -2.0F, new Item.Properties()));
+	public static final RegistryObject<Item> COPPER_SWORD = SRRegistries.ITEMS.register("copper_sword", () -> new SwordItem(COPPER_ITEM_TIER, 3, -2.4F, new Item.Properties()));
+	public static final RegistryObject<Item> COPPER_SHOVEL = SRRegistries.ITEMS.register("copper_shovel", () -> new ShovelItem(COPPER_ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
+	public static final RegistryObject<Item> COPPER_PICKAXE = SRRegistries.ITEMS.register("copper_pickaxe", () -> new PickaxeItem(COPPER_ITEM_TIER, 1, -2.8F, new Item.Properties()));
+	public static final RegistryObject<Item> COPPER_AXE = SRRegistries.ITEMS.register("copper_axe", () -> new AxeItem(COPPER_ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
+	public static final RegistryObject<Item> COPPER_HOE = SRRegistries.ITEMS.register("copper_hoe", () -> new HoeItem(COPPER_ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
 	public static final ILItemTier COATED_ITEM_TIER = new ILItemTier(3, 321, 7f, 1.5f, 5, () -> Ingredient.of(Items.OBSIDIAN));
-	public static final RegistryObject<Item> COATED_SWORD = SRItems.REGISTRY.register("coated_copper_sword", () -> new SwordItem(COATED_ITEM_TIER, 3, -2.4F, new Item.Properties()));
-	public static final RegistryObject<Item> COATED_SHOVEL = SRItems.REGISTRY.register("coated_copper_shovel", () -> new ShovelItem(COATED_ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
-	public static final RegistryObject<Item> COATED_PICKAXE = SRItems.REGISTRY.register("coated_copper_pickaxe", () -> new PickaxeItem(COATED_ITEM_TIER, 1, -2.8F, new Item.Properties()));
-	public static final RegistryObject<Item> COATED_AXE = SRItems.REGISTRY.register("coated_copper_axe", () -> new AxeItem(COATED_ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
-	public static final RegistryObject<Item> COATED_HOE = SRItems.REGISTRY.register("coated_copper_hoe", () -> new HoeItem(COATED_ITEM_TIER, -1, -2.0F, new Item.Properties()));
+	public static final RegistryObject<Item> COATED_SWORD = SRRegistries.ITEMS.register("coated_copper_sword", () -> new SwordItem(COATED_ITEM_TIER, 3, -2.4F, new Item.Properties()));
+	public static final RegistryObject<Item> COATED_SHOVEL = SRRegistries.ITEMS.register("coated_copper_shovel", () -> new ShovelItem(COATED_ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
+	public static final RegistryObject<Item> COATED_PICKAXE = SRRegistries.ITEMS.register("coated_copper_pickaxe", () -> new PickaxeItem(COATED_ITEM_TIER, 1, -2.8F, new Item.Properties()));
+	public static final RegistryObject<Item> COATED_AXE = SRRegistries.ITEMS.register("coated_copper_axe", () -> new AxeItem(COATED_ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
+	public static final RegistryObject<Item> COATED_HOE = SRRegistries.ITEMS.register("coated_copper_hoe", () -> new HoeItem(COATED_ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
 	public static final SPShieldMaterial COATED_SHIELD_MATERIAL = new SPShieldMaterial("coated_copper", 5.5d, 184, () -> Items.OBSIDIAN, 5, Rarity.COMMON);
 
-	public static final RegistryObject<SPShieldItem> COATED_SHIELD = SRItems.registerShield("coated_copper_shield", COATED_SHIELD_MATERIAL);
+	public static final RegistryObject<SPShieldItem> COATED_SHIELD = SRRegistries.registerShield("coated_copper_shield", COATED_SHIELD_MATERIAL);
+    public static final RegistryObject<SimpleParticleType> ELECTROCUTION_SPARKS = SRRegistries.PARTICLE_TYPES.register("electrocution_sparks", () -> new SimpleParticleType(true));
+	public static final RegistryObject<SoundEvent> ELECTROCUTION = SRRegistries.SOUND_EVENTS.register("electrocution", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(SurvivalReimagined.MOD_ID, "electrocution")));
 
 	public CopperToolsExpansion(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -159,7 +162,7 @@ public class CopperToolsExpansion extends Feature {
 			listOfHitEntities.add(target);
 			MCUtils.attackEntityIgnoreInvFrames(damageSource, secondaryDamage, target, target, true);
 			listIdsOfHitEntities.add(target.getId());
-			target.playSound(SRSoundEvents.ELECTROCUTION.get(), 0.4f, 1.0f);
+			target.playSound(ELECTROCUTION.get(), 0.4f, 1.0f);
 			lastEntityHit = target;
 			hitEntities++;
 		} while (hitEntities < 4);

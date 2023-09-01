@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import insane96mcp.survivalreimagined.setup.SRLootItemConditions;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -23,7 +23,7 @@ public class NonPlayerArisedDropCondition implements LootItemCondition {
     }
 
     public LootItemConditionType getType() {
-        return SRLootItemConditions.NON_PLAYER_ARISED_DROP.get();
+        return SRRegistries.NON_PLAYER_ARISED_DROP.get();
     }
 
     public Set<LootContextParam<?>> getReferencedContextParams() {

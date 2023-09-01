@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import insane96mcp.survivalreimagined.setup.SRLootItemConditions;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
@@ -25,7 +25,7 @@ public class LootItemCurrentSeasonCondition implements LootItemCondition {
     }
 
     public LootItemConditionType getType() {
-        return SRLootItemConditions.CURRENT_SEASON.get();
+        return SRRegistries.CURRENT_SEASON.get();
     }
 
     public Set<LootContextParam<?>> getReferencedContextParams() {

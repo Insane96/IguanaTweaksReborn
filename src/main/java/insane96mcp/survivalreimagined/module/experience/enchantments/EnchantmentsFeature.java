@@ -12,7 +12,7 @@ import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantments.enchantment.*;
 import insane96mcp.survivalreimagined.network.message.JumpMidAirMessage;
-import insane96mcp.survivalreimagined.setup.SREnchantments;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -44,6 +44,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,19 @@ import java.util.List;
 public class EnchantmentsFeature extends SRFeature {
 
 	public static final TagKey<EntityType<?>> WATER_COOLANT_AFFECTED = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(SurvivalReimagined.MOD_ID, "water_coolant_affected"));
+	public static final RegistryObject<Enchantment> MAGNETIC = SRRegistries.ENCHANTMENTS.register("magnetic", Magnetic::new);
+	public static final RegistryObject<Enchantment> MAGIC_PROTECTION = SRRegistries.ENCHANTMENTS.register("magic_protection", MagicProtection::new);
+	public static final RegistryObject<Enchantment> MELEE_PROTECTION = SRRegistries.ENCHANTMENTS.register("melee_protection", MeleeProtection::new);
+	public static final RegistryObject<Enchantment> BLASTING = SRRegistries.ENCHANTMENTS.register("blasting", Blasting::new);
+	public static final RegistryObject<Enchantment> EXPANDED = SRRegistries.ENCHANTMENTS.register("expanded", Expanded::new);
+	public static final RegistryObject<Enchantment> STEP_UP = SRRegistries.ENCHANTMENTS.register("step_up", StepUp::new);
+	public static final RegistryObject<Enchantment> BANE_OF_SSSSS = SRRegistries.ENCHANTMENTS.register("bane_of_sssss", BaneOfSSSS::new);
+	public static final RegistryObject<Enchantment> WATER_COOLANT = SRRegistries.ENCHANTMENTS.register("water_coolant", WaterCoolant::new);
+	public static final RegistryObject<Enchantment> SMARTNESS = SRRegistries.ENCHANTMENTS.register("smartness", Smartness::new);
+	public static final RegistryObject<Enchantment> MA_JUMP = SRRegistries.ENCHANTMENTS.register("ma_jump", DoubleJump::new);
+	public static final RegistryObject<Enchantment> GRAVITY_DEFYING = SRRegistries.ENCHANTMENTS.register("gravity_defying", GravityDefying::new);
+	public static final RegistryObject<Enchantment> CRITICAL = SRRegistries.ENCHANTMENTS.register("critical", Critical::new);
+	public static final RegistryObject<Enchantment> HEALTHY = SRRegistries.ENCHANTMENTS.register("healthy", Healthy::new);
 
 	@Config
 	@Label(name = "Infinity overhaul", description = "Infinity can go up to level 4. Each level makes an arrow have 1 in level+1 chance to not consume.")
@@ -186,7 +200,7 @@ public class EnchantmentsFeature extends SRFeature {
 		if (!this.isEnabled()
 				|| event.getAttackingPlayer() == null)
 			return;
-		int lvl = EnchantmentHelper.getEnchantmentLevel(SREnchantments.SMARTNESS.get(), event.getAttackingPlayer());
+		int lvl = EnchantmentHelper.getEnchantmentLevel(SMARTNESS.get(), event.getAttackingPlayer());
 		if (lvl > 0)
 			event.setDroppedExperience(Smartness.getIncreasedExperience(lvl, event.getDroppedExperience()));
 	}
@@ -226,7 +240,7 @@ public class EnchantmentsFeature extends SRFeature {
 		if (!this.isEnabled())
 			return;
 
-		int lvl = event.getEntity().getMainHandItem().getEnchantmentLevel(SREnchantments.CRITICAL.get());
+		int lvl = event.getEntity().getMainHandItem().getEnchantmentLevel(CRITICAL.get());
 		if (lvl <= 0)
 			return;
 		event.setDamageModifier(Critical.getCritAmount(lvl, event.getDamageModifier()));
@@ -261,7 +275,7 @@ public class EnchantmentsFeature extends SRFeature {
 	public void baneOfSssssOnAttack(LivingEntity attacker, LivingEntity entity, LivingHurtEvent event) {
 		if (!(entity instanceof Creeper))
 			return;
-		int lvl = attacker.getMainHandItem().getEnchantmentLevel(SREnchantments.BANE_OF_SSSSS.get());
+		int lvl = attacker.getMainHandItem().getEnchantmentLevel(BANE_OF_SSSSS.get());
 		if (lvl == 0)
 			return;
 
@@ -272,7 +286,7 @@ public class EnchantmentsFeature extends SRFeature {
 		if (!Utils.isEntityInTag(entity, WATER_COOLANT_AFFECTED))
 			return;
 
-		int lvl = attacker.getMainHandItem().getEnchantmentLevel(SREnchantments.WATER_COOLANT.get());
+		int lvl = attacker.getMainHandItem().getEnchantmentLevel(WATER_COOLANT.get());
 		if (lvl == 0)
 			return;
 

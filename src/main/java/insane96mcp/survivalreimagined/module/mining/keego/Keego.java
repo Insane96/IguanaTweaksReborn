@@ -13,8 +13,7 @@ import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.item.SRArmorMaterial;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.mining.blockhardness.BlockHardness;
-import insane96mcp.survivalreimagined.setup.SRItems;
-import insane96mcp.survivalreimagined.setup.SRMobEffects;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -53,24 +52,24 @@ public class Keego extends Feature {
 	public static final TagKey<Item> KEEGO_HAND_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/hand/keego"));
 	public static final TagKey<Item> KEEGO_ARMOR_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/armor/keego"));
 
-	public static final RegistryObject<MobEffect> MOVEMENT_MOMENTUM = SRMobEffects.REGISTRY.register("movement_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false).addAttributeModifier(Attributes.MOVEMENT_SPEED, "544cf3ee-676f-4685-aec7-a6b3d64875b0", 0.05d, AttributeModifier.Operation.MULTIPLY_BASE));
-	public static final RegistryObject<MobEffect> ATTACK_MOMENTUM = SRMobEffects.REGISTRY.register("attack_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false).addAttributeModifier(Attributes.ATTACK_SPEED, "f6fe8408-b88c-4e51-8892-8b20574cfc49", 0.05d, AttributeModifier.Operation.ADDITION));
-	public static final RegistryObject<MobEffect> MINING_MOMENTUM = SRMobEffects.REGISTRY.register("mining_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false));
+	public static final RegistryObject<MobEffect> MOVEMENT_MOMENTUM = SRRegistries.MOB_EFFECTS.register("movement_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false).addAttributeModifier(Attributes.MOVEMENT_SPEED, "544cf3ee-676f-4685-aec7-a6b3d64875b0", 0.05d, AttributeModifier.Operation.MULTIPLY_BASE));
+	public static final RegistryObject<MobEffect> ATTACK_MOMENTUM = SRRegistries.MOB_EFFECTS.register("attack_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false).addAttributeModifier(Attributes.ATTACK_SPEED, "f6fe8408-b88c-4e51-8892-8b20574cfc49", 0.05d, AttributeModifier.Operation.ADDITION));
+	public static final RegistryObject<MobEffect> MINING_MOMENTUM = SRRegistries.MOB_EFFECTS.register("mining_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false));
 
 	public static final SimpleBlockWithItem ORE = SimpleBlockWithItem.register("keego_ore", () -> new KeegoOreBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).strength(-1f, 9f), UniformInt.of(10, 15)));
-	public static final RegistryObject<Item> SHARD = SRItems.REGISTRY.register("keego_shard", () -> new Item(new Item.Properties()));
+	public static final RegistryObject<Item> SHARD = SRRegistries.ITEMS.register("keego_shard", () -> new Item(new Item.Properties()));
 
 	public static final SimpleBlockWithItem BLOCK = SimpleBlockWithItem.register("keego_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
 
-	public static final RegistryObject<Item> GEM = SRItems.REGISTRY.register("keego", () -> new Item(new Item.Properties()));
+	public static final RegistryObject<Item> GEM = SRRegistries.ITEMS.register("keego", () -> new Item(new Item.Properties()));
 
 	public static final ILItemTier ITEM_TIER = new ILItemTier(4, 1338, 6.5f, 2.5f, 8, () -> Ingredient.of(GEM.get()));
 
-	public static final RegistryObject<Item> SWORD = SRItems.REGISTRY.register("keego_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties()));
-	public static final RegistryObject<Item> SHOVEL = SRItems.REGISTRY.register("keego_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
-	public static final RegistryObject<Item> PICKAXE = SRItems.REGISTRY.register("keego_pickaxe", () -> new PickaxeItem(ITEM_TIER, 1, -2.8F, new Item.Properties()));
-	public static final RegistryObject<Item> AXE = SRItems.REGISTRY.register("keego_axe", () -> new AxeItem(ITEM_TIER, 6.0F, -3.2F, new Item.Properties()));
-	public static final RegistryObject<Item> HOE = SRItems.REGISTRY.register("keego_hoe", () -> new HoeItem(ITEM_TIER, -2, -1.1F, new Item.Properties()));
+	public static final RegistryObject<Item> SWORD = SRRegistries.ITEMS.register("keego_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties()));
+	public static final RegistryObject<Item> SHOVEL = SRRegistries.ITEMS.register("keego_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
+	public static final RegistryObject<Item> PICKAXE = SRRegistries.ITEMS.register("keego_pickaxe", () -> new PickaxeItem(ITEM_TIER, 1, -2.8F, new Item.Properties()));
+	public static final RegistryObject<Item> AXE = SRRegistries.ITEMS.register("keego_axe", () -> new AxeItem(ITEM_TIER, 6.0F, -3.2F, new Item.Properties()));
+	public static final RegistryObject<Item> HOE = SRRegistries.ITEMS.register("keego_hoe", () -> new HoeItem(ITEM_TIER, -2, -1.1F, new Item.Properties()));
 
 	private static final SRArmorMaterial ARMOR_MATERIAL = new SRArmorMaterial("survivalreimagined:keego", 22, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
 		p_266652_.put(ArmorItem.Type.BOOTS, 4);
@@ -79,14 +78,14 @@ public class Keego extends Feature {
 		p_266652_.put(ArmorItem.Type.HELMET, 3);
 	}), 6, SoundEvents.ARMOR_EQUIP_IRON, 1f, 0.03f, () -> Ingredient.of(GEM.get()));
 
-	public static final RegistryObject<Item> HELMET = SRItems.REGISTRY.register("keego_helmet", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties()));
-	public static final RegistryObject<Item> CHESTPLATE = SRItems.REGISTRY.register("keego_chestplate", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-	public static final RegistryObject<Item> LEGGINGS = SRItems.REGISTRY.register("keego_leggings", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-	public static final RegistryObject<Item> BOOTS = SRItems.REGISTRY.register("keego_boots", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.BOOTS, new Item.Properties()));
+	public static final RegistryObject<Item> HELMET = SRRegistries.ITEMS.register("keego_helmet", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties()));
+	public static final RegistryObject<Item> CHESTPLATE = SRRegistries.ITEMS.register("keego_chestplate", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+	public static final RegistryObject<Item> LEGGINGS = SRRegistries.ITEMS.register("keego_leggings", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+	public static final RegistryObject<Item> BOOTS = SRRegistries.ITEMS.register("keego_boots", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.BOOTS, new Item.Properties()));
 
 	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("keego", 6.5d, 452, GEM, 9, Rarity.COMMON);
 
-	public static final RegistryObject<SPShieldItem> SHIELD = SRItems.registerShield("keego_shield", SHIELD_MATERIAL);
+	public static final RegistryObject<SPShieldItem> SHIELD = SRRegistries.registerShield("keego_shield", SHIELD_MATERIAL);
 
 	//TODO Keego shield should increase the damaged blocked
 	//TODO Keego hammer decreases cooldown

@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.module.experience.enchantments.enchantment;
 
-import insane96mcp.survivalreimagined.setup.SREnchantments;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -37,7 +37,7 @@ public class GravityDefying extends Enchantment {
     public static void applyAttributeModifier(ItemAttributeModifierEvent event) {
         if (event.getSlotType() != EquipmentSlot.FEET)
             return;
-        int lvl = event.getItemStack().getEnchantmentLevel(SREnchantments.GRAVITY_DEFYING.get());
+        int lvl = event.getItemStack().getEnchantmentLevel(EnchantmentsFeature.GRAVITY_DEFYING.get());
         if (lvl <= 0)
             return;
         if (lvl >= GRAVITY_MODIFIERS.length)
@@ -47,7 +47,7 @@ public class GravityDefying extends Enchantment {
     }
 
     public static void applyFallDamageReduction(LivingFallEvent event) {
-        int lvl = event.getEntity().getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(SREnchantments.GRAVITY_DEFYING.get());
+        int lvl = event.getEntity().getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(EnchantmentsFeature.GRAVITY_DEFYING.get());
         if (lvl <= 0)
             return;
 

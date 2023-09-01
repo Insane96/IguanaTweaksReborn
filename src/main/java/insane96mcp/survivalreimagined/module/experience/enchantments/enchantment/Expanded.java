@@ -3,7 +3,7 @@ package insane96mcp.survivalreimagined.module.experience.enchantments.enchantmen
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.SheetedDecalTextureGenerator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import insane96mcp.survivalreimagined.setup.SREnchantments;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -71,7 +71,7 @@ public class Expanded extends Enchantment {
         ItemStack heldStack = entity.getMainHandItem();
         if (!heldStack.isCorrectToolForDrops(state))
             return;
-        int enchLevel = heldStack.getEnchantmentLevel(SREnchantments.EXPANDED.get());
+        int enchLevel = heldStack.getEnchantmentLevel(EnchantmentsFeature.EXPANDED.get());
         if (enchLevel == 0)
             return;
         List<BlockPos> minedBlocks = getMinedBlocks(enchLevel, heldStack.getItem() instanceof PickaxeItem || heldStack.getItem() instanceof ShovelItem, level, entity, pos, face);
@@ -110,7 +110,7 @@ public class Expanded extends Enchantment {
             return;
         }
         // must have the enchantment
-        int enchLevel = player.getMainHandItem().getEnchantmentLevel(SREnchantments.EXPANDED.get());
+        int enchLevel = player.getMainHandItem().getEnchantmentLevel(EnchantmentsFeature.EXPANDED.get());
         if (enchLevel == 0)
             return;
         // must be targeting a block

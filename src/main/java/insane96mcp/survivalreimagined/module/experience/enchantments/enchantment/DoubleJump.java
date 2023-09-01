@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.module.experience.enchantments.enchantment;
 
-import insane96mcp.survivalreimagined.setup.SREnchantments;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -43,7 +43,7 @@ public class DoubleJump extends Enchantment {
                 || entity.isInWaterOrBubble())
             return false;
 
-        int lvl = EnchantmentHelper.getEnchantmentLevel(SREnchantments.MA_JUMP.get(), entity);
+        int lvl = EnchantmentHelper.getEnchantmentLevel(EnchantmentsFeature.MA_JUMP.get(), entity);
         if (getRemainingJumps(entity, lvl) <= 0)
             return false;
 

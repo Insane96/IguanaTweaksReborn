@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import insane96mcp.survivalreimagined.setup.SRLootItemConditions;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
@@ -22,7 +22,7 @@ public class LivingEntityCondition implements LootItemCondition {
     }
 
     public LootItemConditionType getType() {
-        return SRLootItemConditions.LIVING_ENTITY.get();
+        return SRRegistries.LIVING_ENTITY.get();
     }
 
     public Set<LootContextParam<?>> getReferencedContextParams() {

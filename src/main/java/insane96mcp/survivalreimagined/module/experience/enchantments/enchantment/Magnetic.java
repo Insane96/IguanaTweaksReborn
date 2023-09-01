@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.module.experience.enchantments.enchantment;
 
-import insane96mcp.survivalreimagined.setup.SREnchantments;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -31,7 +31,7 @@ public class Magnetic extends Enchantment {
     }
 
     public static void tryPullItems(LivingEntity entity) {
-        int level = entity.getItemBySlot(EquipmentSlot.LEGS).getEnchantmentLevel(SREnchantments.MAGNETIC.get());
+        int level = entity.getItemBySlot(EquipmentSlot.LEGS).getEnchantmentLevel(EnchantmentsFeature.MAGNETIC.get());
         if (level == 0)
             return;
 
