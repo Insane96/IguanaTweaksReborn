@@ -30,5 +30,6 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(12, SyncForgeStatus.class, SyncForgeStatus::encode, SyncForgeStatus::decode, SyncForgeStatus::handle);
 		CHANNEL.registerMessage(13, ElectrocutionParticleMessage.class, ElectrocutionParticleMessage::encode, ElectrocutionParticleMessage::decode, ElectrocutionParticleMessage::handle);
 		CHANNEL.registerMessage(14, SyncEnsorcellerStatus.class, SyncEnsorcellerStatus::encode, SyncEnsorcellerStatus::decode, SyncEnsorcellerStatus::handle);
+		CHANNEL.registerMessage(14, SyncAnvilRepair.class, SyncAnvilRepair::encode, SyncAnvilRepair::decode, SyncAnvilRepair::handle);
 	}
 }

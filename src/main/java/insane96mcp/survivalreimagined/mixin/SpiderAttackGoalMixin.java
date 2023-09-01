@@ -17,7 +17,7 @@ public abstract class SpiderAttackGoalMixin extends MeleeAttackGoal {
         super(pMob, pSpeedModifier, pFollowingTargetEvenIfNotSeen);
     }
 
-    //TODO Remove or rework in 1.20.2
+    //TODO Remove or rework in 1.20.2 since mojang changed how the attack is calculated
     @Inject(at = @At(value = "RETURN"), method = "getAttackReachSqr", cancellable = true)
     private void onGetAttackReachSqr(LivingEntity pAttackTarget, CallbackInfoReturnable<Double> cir) {
         if (StatsBuffs.enableDataPack)

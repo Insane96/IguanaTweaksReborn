@@ -1,7 +1,7 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
-import insane96mcp.survivalreimagined.module.experience.anvils.AnvilRecipe;
+import insane96mcp.survivalreimagined.module.experience.anvils.AnvilRepair;
 import insane96mcp.survivalreimagined.module.experience.anvils.Anvils;
 import insane96mcp.survivalreimagined.module.experience.enchanting.EnsorcellerBlock;
 import insane96mcp.survivalreimagined.utils.MCUtils;
@@ -95,14 +95,14 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		if (!right.isEmpty()) {
 			if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player)) return;
 			isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
-			Optional<AnvilRecipe.RepairData> oRepairData = Anvils.getCustomAnvilRepair(left, right);
+			Optional<AnvilRepair.RepairData> oRepairData = Anvils.getCustomAnvilRepair(left, right);
 			//If it's a damageable item check if trying to repair it
 			if (resultStack.isDamageableItem() && (resultStack.getItem().isValidRepairItem(left, right) || oRepairData.isPresent())) {
 				int repairItemCountCost;
 
 				//If a custom anvil repair is present, use that
 				if (oRepairData.isPresent()) {
-					AnvilRecipe.RepairData repairData = oRepairData.get();
+					AnvilRepair.RepairData repairData = oRepairData.get();
 					int maxPartialRepairDmg = Mth.ceil(resultStack.getMaxDamage() * (1f - repairData.maxRepair()));
 					int repairSteps = Math.min(resultStack.getDamageValue(), Mth.ceil(resultStack.getMaxDamage() / (float) repairData.amountRequired()));
 					if (repairSteps <= 0 || resultStack.getDamageValue() <= maxPartialRepairDmg) {

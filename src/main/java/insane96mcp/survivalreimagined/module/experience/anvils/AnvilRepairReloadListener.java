@@ -4,42 +4,46 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.network.message.SyncAnvilRepair;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraftforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class AnvilRecipeReloadListener extends SimpleJsonResourceReloadListener {
-	public static List<AnvilRecipe> RECIPES = new ArrayList<>();
-	public static final AnvilRecipeReloadListener INSTANCE;
+@Mod.EventBusSubscriber(modid = SurvivalReimagined.MOD_ID)
+public class AnvilRepairReloadListener extends SimpleJsonResourceReloadListener {
+	public static List<AnvilRepair> REPAIRS = new ArrayList<>();
+	public static final AnvilRepairReloadListener INSTANCE;
 	private static final Gson GSON = new GsonBuilder().create();
-	public AnvilRecipeReloadListener() {
+	public AnvilRepairReloadListener() {
 		super(GSON, "anvil_repairs");
 	}
 
 	static {
-		INSTANCE = new AnvilRecipeReloadListener();
+		INSTANCE = new AnvilRepairReloadListener();
 	}
 
 	@Override
 	protected void apply(Map<ResourceLocation, JsonElement> map, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
-		RECIPES.clear();
+		REPAIRS.clear();
 		for (var entry : map.entrySet()) {
 			try {
 				ResourceLocation name = entry.getKey();
-				LogHelper.debug("Loading Anvil Recipe %s", entry.getKey());
 				String[] split = name.getPath().split("/");
 				if (split[split.length - 1].startsWith("_"))
 					continue;
 
-				AnvilRecipe mob = GSON.fromJson(entry.getValue(), AnvilRecipe.class);
-				RECIPES.add(mob);
-				LogHelper.debug("Loaded Anvil Recipe %s", entry.getKey());
+				AnvilRepair mob = GSON.fromJson(entry.getValue(), AnvilRepair.class);
+				REPAIRS.add(mob);
 			}
 			catch (JsonSyntaxException e) {
 				LogHelper.error("Parsing error loading Anvil Recipe %s: %s", entry.getKey(), e.getMessage());
@@ -49,7 +53,17 @@ public class AnvilRecipeReloadListener extends SimpleJsonResourceReloadListener 
 			}
 		}
 
-		LogHelper.debug("Loaded %s Anvil Recipe(s)", RECIPES.size());
+		LogHelper.debug("Loaded %s Anvil Recipe(s)", REPAIRS.size());
+	}
+
+	@SubscribeEvent
+	public static void onDataPackSync(OnDatapackSyncEvent event) {
+		if (event.getPlayer() == null) {
+			event.getPlayerList().getPlayers().forEach(player -> SyncAnvilRepair.sync(REPAIRS, player));
+		}
+		else {
+			SyncAnvilRepair.sync(REPAIRS, event.getPlayer());
+		}
 	}
 
 	@Override

@@ -94,24 +94,24 @@ public class Anvils extends Feature {
         return mergingRepairBonus;
     }
 
-    public static Optional<AnvilRecipe> getCustomAnvilRepair(ItemStack left) {
+    public static Optional<AnvilRepair> getCustomAnvilRepair(ItemStack left) {
         if (!Feature.isEnabled(Anvils.class))
             return Optional.empty();
 
-        for (AnvilRecipe anvilRecipe : AnvilRecipeReloadListener.RECIPES) {
-            if (anvilRecipe.isItemToRepair(left))
-                return Optional.of(anvilRecipe);
+        for (AnvilRepair anvilRepair : AnvilRepairReloadListener.REPAIRS) {
+            if (anvilRepair.isItemToRepair(left))
+                return Optional.of(anvilRepair);
         }
         return Optional.empty();
     }
 
-    public static Optional<AnvilRecipe.RepairData> getCustomAnvilRepair(ItemStack left, ItemStack right) {
+    public static Optional<AnvilRepair.RepairData> getCustomAnvilRepair(ItemStack left, ItemStack right) {
         if (!Feature.isEnabled(Anvils.class))
             return Optional.empty();
 
-        for (AnvilRecipe anvilRecipe : AnvilRecipeReloadListener.RECIPES) {
-            if (anvilRecipe.isItemToRepair(left)) {
-                Optional<AnvilRecipe.RepairData> repairData = anvilRecipe.getRepairDataFromMaterial(right);
+        for (AnvilRepair anvilRepair : AnvilRepairReloadListener.REPAIRS) {
+            if (anvilRepair.isItemToRepair(left)) {
+                Optional<AnvilRepair.RepairData> repairData = anvilRepair.getRepairDataFromMaterial(right);
                 if (repairData.isPresent())
                     return repairData;
             }
@@ -168,9 +168,9 @@ public class Anvils extends Feature {
             return;
 
         List<Component> itemsDescriptions = new ArrayList<>();
-        Optional<AnvilRecipe> oCustomAnvilRepair = getCustomAnvilRepair(event.getItemStack());
-        oCustomAnvilRepair.ifPresent(anvilRecipe -> {
-            for (AnvilRecipe.RepairData repairData : anvilRecipe.repairData) {
+        Optional<AnvilRepair> oCustomAnvilRepair = getCustomAnvilRepair(event.getItemStack());
+        oCustomAnvilRepair.ifPresent(anvilRepair -> {
+            for (AnvilRepair.RepairData repairData : anvilRepair.repairData) {
                 if (repairData.repairMaterial().type == IdTagMatcher.Type.TAG) {
                     itemsDescriptions.add(Component.literal("#").append(repairData.repairMaterial().location.toString()));
                 }
