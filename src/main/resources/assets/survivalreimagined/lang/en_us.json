@@ -184,7 +184,7 @@
 	"item.survivalreimagined.netherite_hammer": "Netherite Forge Hammer",
 	"item.survivalreimagined.keego_hammer": "Keego Forge Hammer",
 
-	"survivalreimagined.innate_luck": "Innate Luck II",
+	"survivalreimagined.innate_luck": "Innate Luck I",
 
 	"block.survivalreimagined.mining_charge": "Mining Charge",
 
@@ -396,8 +396,8 @@
 	"advancements.sr_story.ensorceller.description": "Obtain an Ensorceller, by rolling and using experience you can fill the pool. The higher the pool the higher enchant level. If you bust you lose all your progress. Works best under sunlight.",
 	"advancements.sr_story.anvil_fix.title": "Fix the fixer",
 	"advancements.sr_story.anvil_fix.description": "Repair an anvil with Iron Blocks.",
-	"advancements.sr_story.coated_copper.title": "Careful with electronics",
-	"advancements.sr_story.coated_copper.description": "Obtain a Coated Copper tool and electrocute your enemies.",
+	"advancements.sr_story.coated_copper_tools.title": "Careful, might zap",
+	"advancements.sr_story.coated_copper_tools.description": "Obtain a Coated Copper tool and electrocute your enemies.",
 
 	"advancements.sr_nether.soul_blast_furnace.title": "Is this a duplication glitch?",
 	"advancements.sr_nether.soul_blast_furnace.description": "Obtain a Soul Blast Furnace, then build a 3x3x3 structure to use it. The structure must have worked Blackstone at the bottom + Soul Blast furnace in any of the sides, Red Nether Bricks in the middle and top layer (stairs also work for the top layer). The middle and middle top block can be empty.",

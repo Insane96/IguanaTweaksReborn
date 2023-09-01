@@ -16,23 +16,25 @@
 	},
 	"parent": "survivalreimagined:story/forge",
 	"criteria": {
-		"iron_chestplate": {
-			"trigger": "survivalreimagined:anvil_repair",
+		"iron_armor": {
+			"trigger": "minecraft:inventory_changed",
 			"conditions": {
-				"output": {
-					"items": [
-						"minecraft:iron_helmet",
-						"minecraft:iron_chestplate",
-						"minecraft:iron_leggings",
-						"minecraft:iron_boots"
-					]
-				}
+				"items": [
+					{
+						"items": [
+							"minecraft:iron_helmet",
+							"minecraft:iron_chestplate",
+							"minecraft:iron_leggings",
+							"minecraft:iron_boots"
+						]
+					}
+				]
 			}
 		}
 	},
 	"requirements": [
 		[
-			"iron_chestplate"
+			"iron_armor"
 		]
 	]
 }
