@@ -12,7 +12,6 @@ import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.TirednessHandler;
 import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,17 +23,17 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 @Label(name = "Sleeping Effects", description = "Prevents the player from sleeping if has not enough Hunger and gives him effects on wake up. Effects on wake up are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class SleepingEffects extends SRFeature {
 
-	public static final ArrayList<SRMobEffectInstance> EFFECTS_ON_WAKE_UP_DEFAULT = new ArrayList<>(Arrays.asList(
+	public static final ArrayList<SRMobEffectInstance> EFFECTS_ON_WAKE_UP_DEFAULT = new ArrayList<>(List.of(
 			new SRMobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 400, 0),
 			new SRMobEffectInstance(MobEffects.WEAKNESS, 300, 1),
 			new SRMobEffectInstance(MobEffects.DIG_SLOWDOWN, 300, 1),
-			new SRMobEffectInstance(MobEffects.REGENERATION, 300, 0)
+			new SRMobEffectInstance(MobEffects.REGENERATION, 900, 0)
 	));
 	public static final ArrayList<SRMobEffectInstance> effectsOnWakeUp = new ArrayList<>();
 
@@ -44,7 +43,9 @@ public class SleepingEffects extends SRFeature {
 	@Config
 	@Label(name = "No Sleep If Hungry", description = "If the player's hunger bar is below 'Hunger Depleted on Wake Up' he can't sleep.")
 	public static Boolean noSleepIfHungry = false;
-
+	@Config
+	@Label(name = "No beneficial effect when hungry", description = "If the player has no hunger on wake up, beneficial effects are not applied.")
+	public static Boolean noBeneficialEffectWhenHungry = true;
 	@Config
 	@Label(name = "Dizzy when tired", description = "Apply the bad effects only when too tired")
 	public static Boolean dizzyWhenToTired = true;
@@ -66,7 +67,7 @@ public class SleepingEffects extends SRFeature {
 			return;
 
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach(player -> {
-			float tirednessOnWakeUp = Mth.clamp(TirednessHandler.get(player) - Tiredness.tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
+			float tirednessOnWakeUp = TirednessHandler.getOnWakeUp(player);
 
 			FoodData foodData = player.getFoodData();
 			int hungerToDeplete = hungerDepletedOnWakeUp;
@@ -77,10 +78,10 @@ public class SleepingEffects extends SRFeature {
 				hungerToDeplete -= saturationToDeplete;
 			}
 			if (hungerToDeplete > 0)
-				foodData.setFoodLevel((int) (foodData.foodLevel - Math.min(hungerToDeplete, foodData.foodLevel)));
+				foodData.setFoodLevel(foodData.foodLevel - Math.min(hungerToDeplete, foodData.foodLevel));
 
 			for (MobEffectInstance mobEffectInstance : effectsOnWakeUp) {
-				if (mobEffectInstance.getEffect().isBeneficial() && player.getFoodData().getFoodLevel() <= 0)
+				if (noBeneficialEffectWhenHungry && mobEffectInstance.getEffect().isBeneficial() && player.getFoodData().getFoodLevel() <= 0)
 					continue;
 				if (dizzyWhenToTired && Feature.isEnabled(Tiredness.class) && tirednessOnWakeUp == 0f && !mobEffectInstance.getEffect().isBeneficial())
 					continue;

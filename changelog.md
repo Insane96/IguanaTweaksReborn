@@ -1,8 +1,12 @@
 # Changelog
 
 ## 0.14.4
-* Eating food that restores at least 7 saturation now gives Vigour (from Well fed)
+* Vigour
+  * Eating food that restores at least 7 saturation now gives Vigour
+  * Vigour now increases health regen
+  * Vigour is no longer given on wake up
 * Bone meal now has only 25% chance to grow glow berries and 80% chance to grow saplings
+* Increased Regeneration duration on wake up (15 -> 45 seconds) 
 * Reduced Tiredness overlay being too strong at level II
 * Removed Injured
 

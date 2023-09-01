@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.tiredness;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 
 public class TirednessHandler {
@@ -37,5 +38,9 @@ public class TirednessHandler {
 
     public static void reset(LivingEntity entity) {
         entity.getPersistentData().remove(TIREDNESS_TAG);
+    }
+
+    public static float getOnWakeUp(LivingEntity entity) {
+        return Mth.clamp(get(entity) - Tiredness.tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
     }
 }

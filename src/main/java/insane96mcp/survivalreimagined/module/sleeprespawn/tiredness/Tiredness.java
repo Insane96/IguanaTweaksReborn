@@ -10,7 +10,6 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.hungerhealth.HealthRegen;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.TirednessSyncMessage;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
@@ -20,7 +19,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -95,16 +93,6 @@ public class Tiredness extends SRFeature {
 			KEEP keeps the current tiredness
 			SET_AT_EFFECT keeps the current tiredness but if higher than 'Tiredness for effect' it's set to that""")
 	public static OnDeath onDeathBehaviour = OnDeath.SET_AT_EFFECT;
-	//Vigour
-	@Config(min = 0)
-	@Label(name = "Vigour.Duration", description = "Duration (in seconds) of the Vigour effect on wake up")
-	public static Integer vigourDuration = 1200;
-	@Config(min = 0)
-	@Label(name = "Vigour.Penalty", description = "How many seconds per tiredness above 'Tiredness for effect' will be removed from the effect duration on apply?")
-	public static Integer vigourPenalty = 20;
-	@Config(min = 0)
-	@Label(name = "Vigour.Amplifier", description = "Amplifier (effect level) of Vigour effect on wake up. (Note 0 = Level I, 1 = II, ...)")
-	public static Integer vigourAmplifier = 0;
 
 	public Tiredness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -225,10 +213,7 @@ public class Tiredness extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach(player -> {
-			float tirednessOnWakeUp = Mth.clamp(TirednessHandler.get(player) - tirednessToEffect.floatValue(), 0, tirednessToEffect.floatValue() / 2f);
-			int duration = (int) (vigourDuration - (tirednessOnWakeUp * vigourPenalty));
-			if (duration > 0)
-				player.addEffect(new MobEffectInstance(HealthRegen.VIGOUR.get(), duration * 20, vigourAmplifier, false, false, true));
+			float tirednessOnWakeUp = TirednessHandler.getOnWakeUp(player);
 			TirednessHandler.set(player, tirednessOnWakeUp);
 			player.removeEffect(TIRED.get());
 		});
