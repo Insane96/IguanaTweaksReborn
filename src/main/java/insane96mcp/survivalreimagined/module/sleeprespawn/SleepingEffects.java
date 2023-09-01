@@ -55,11 +55,6 @@ public class SleepingEffects extends SRFeature {
 		JSON_CONFIGS.add(new JsonConfig<>("effects_on_wake_up.json", effectsOnWakeUp, EFFECTS_ON_WAKE_UP_DEFAULT, SRMobEffectInstance.LIST_TYPE));
 	}
 
-	@Override
-	public void loadJsonConfigs() {
-		super.loadJsonConfigs();
-	}
-
 	@SubscribeEvent
 	public void wakeUpHungerAndEffects(SleepFinishedTimeEvent event) {
 		if (!this.isEnabled()

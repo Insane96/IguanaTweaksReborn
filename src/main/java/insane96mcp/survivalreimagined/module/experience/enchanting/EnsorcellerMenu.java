@@ -127,7 +127,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
             //This is executed only server side
             this.access.execute((level, blockPos) -> {
                 ItemStack enchantableItem = this.container.getItem(ITEM_SLOT);
-                List<EnchantmentInstance> enchantments = this.getEnchantmentList(enchantableItem, this.getSteps() == MAX_STEPS ? LVL_ON_JACKPOT : this.getSteps());
+                List<EnchantmentInstance> enchantments = getEnchantmentList(this.random, this.getEnchantingSeed(), enchantableItem, this.getSteps() == MAX_STEPS ? LVL_ON_JACKPOT : this.getSteps());
                 if (!enchantments.isEmpty()) {
                     player.onEnchantmentPerformed(enchantableItem, 0);
 
@@ -156,9 +156,9 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
         return true;
     }
 
-    private List<EnchantmentInstance> getEnchantmentList(ItemStack pStack, int pLevel) {
-        this.random.setSeed(this.getEnchantingSeed());
-        return EnchantmentHelper.selectEnchantment(this.level.random, pStack, pLevel,false);
+    public static List<EnchantmentInstance> getEnchantmentList(RandomSource source, long seed, ItemStack pStack, int xpLvl) {
+        source.setSeed(seed);
+        return EnchantmentHelper.selectEnchantment(source, pStack, xpLvl,false);
     }
 
     private void updateRollCost() {
@@ -185,7 +185,7 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
 
     private void updateCanEnchant() {
         ItemStack stack = this.container.getItem(ITEM_SLOT);
-        List<EnchantmentInstance> enchantments = this.getEnchantmentList(stack, this.getSteps() == MAX_STEPS ? LVL_ON_JACKPOT : this.getSteps());
+        List<EnchantmentInstance> enchantments = getEnchantmentList(this.random, this.getEnchantingSeed(), stack, this.getSteps() == MAX_STEPS ? LVL_ON_JACKPOT : this.getSteps());
         this.setCanEnchant(!stack.isEmpty() && stack.isEnchantable() && !stack.is(Items.BOOK) && this.getSteps() > 0 && !enchantments.isEmpty());
     }
 

@@ -17,9 +17,13 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
     public static final int DATA_COUNT = 4;
@@ -149,8 +153,8 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
     public void setItem(int slot, ItemStack stack) {
         this.items.set(slot, stack);
         ItemStack itemInSlot = this.items.get(slot);
-        //TODO Fix
-        this.canEnchant = !itemInSlot.isEmpty() && itemInSlot.isEnchantable() && this.steps > 0;
+        List<EnchantmentInstance> enchantments = EnsorcellerMenu.getEnchantmentList(this.level.random, this.enchantingSeed, itemInSlot, this.steps == EnsorcellerMenu.MAX_STEPS ? EnsorcellerMenu.LVL_ON_JACKPOT : this.steps);
+        this.canEnchant = !itemInSlot.isEmpty() && itemInSlot.isEnchantable() && !itemInSlot.is(Items.BOOK) && this.steps > 0 && !enchantments.isEmpty();
         if (this.level instanceof ServerLevel serverLevel)
             SyncEnsorcellerStatus.sync(serverLevel, this.getBlockPos(), this);
         this.setChanged();
