@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.14.4
+* Bone meal now has only 25% chance to grow glow berries and 80% chance to grow saplings
+
 ## 0.14.3
 * Added Healthy enchantment
   * Increases max health by half a heart per level

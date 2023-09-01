@@ -1,11 +1,13 @@
 package insane96mcp.survivalreimagined.module.farming.bonemeal;
 
-import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
+import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.data.criterion.MakeRichFarmlandTrigger;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
@@ -17,6 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -31,11 +34,13 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Label(name = "Bone meal", description = "Bone meal is no longer so OP and also Rich Farmland")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class BoneMeal extends Feature {
+public class BoneMeal extends SRFeature {
 
 	public static final SimpleBlockWithItem RICH_FARMLAND = SimpleBlockWithItem.register("rich_farmland", () -> new RichFarmlandBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking((state, blockGetter, pos) -> true).isSuffocating((state, blockGetter, pos) -> true)));
 
@@ -44,10 +49,6 @@ public class BoneMeal extends Feature {
 	@Config
 	@Label(name = "Nerfed Bone Meal", description = "Makes more Bone Meal required for Crops. Valid Values are\nNO: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
 	public static BoneMealNerf nerfedBoneMeal = BoneMealNerf.NERFED;
-	@Config(min = 0d, max = 1d)
-	@Label(name = "Bone Meal Fail Chance", description = "Makes Bone Meal have a chance to fail to grow crops. 0 to disable, 1 to disable Bone Meal.")
-	public static Double boneMealFailChance = 0d;
-
 	@Config
 	@Label(name = "Transform Farmland in Rich Farmland", description = "Bone meal used on Farmland transforms it into Rich Farmland.")
 	public static Boolean farmlandToRich = true;
@@ -67,8 +68,16 @@ public class BoneMeal extends Feature {
 	@Label(name = "Compostable Rotten Flesh")
 	public static Boolean compostableRottenFlesh = true;
 
+
+	public static final List<IdTagValue> BONE_MEAL_FAIL_CHANCE_DEFAULT = new ArrayList<>(List.of(
+			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:cave_vines", 0.75f),
+			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:saplings", 0.2f)
+	));
+	public static final ArrayList<IdTagValue> boneMealFailChances = new ArrayList<>();
+
 	public BoneMeal(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		JSON_CONFIGS.add(new JsonConfig<>("fail_chances.json", boneMealFailChances, BONE_MEAL_FAIL_CHANCE_DEFAULT, IdTagValue.LIST_TYPE));
 	}
 
 	@Override
@@ -137,11 +146,19 @@ public class BoneMeal extends Feature {
 
 	public enum BoneMealResult {
 		NONE,
+		//Prevent using bone meal
 		CANCEL,
+		//Waste Bone meal
 		ALLOW
 	}
 
-
+	public boolean shouldFail(BlockState state, RandomSource random) {
+		for (IdTagValue boneMealFail : boneMealFailChances) {
+			if (boneMealFail.matchesBlock(state.getBlock()) && random.nextFloat() < boneMealFail.value)
+				return true;
+		}
+		return false;
+	}
 
 	public BoneMealResult applyBoneMeal(Level level, ItemStack stack, BlockState state, BlockPos pos) {
 		if (Utils.isItemInTag(stack.getItem(), ITEM_BLACKLIST) || Utils.isBlockInTag(state.getBlock(), BLOCK_BLACKLIST))
@@ -151,6 +168,8 @@ public class BoneMeal extends Feature {
 		if (Crops.requiresWetFarmland(level, pos) && !Crops.hasWetFarmland(level, pos)) {
 			return BoneMealResult.CANCEL;
 		}
+		if (shouldFail(state, level.random))
+			return BoneMealResult.ALLOW;
 
 		if (nerfedBoneMeal.equals(BoneMealNerf.NO))
 			return BoneMealResult.NONE;
@@ -161,32 +180,28 @@ public class BoneMeal extends Feature {
 				return BoneMealResult.NONE;
 			}
 
-			if (level.getRandom().nextDouble() < boneMealFailChance) {
-				return BoneMealResult.ALLOW;
-			} else if (nerfedBoneMeal.equals(BoneMealNerf.SLIGHT)) {
+			if (nerfedBoneMeal.equals(BoneMealNerf.SLIGHT))
 				age += Mth.nextInt(level.getRandom(), 1, 2);
-			} else if (nerfedBoneMeal.equals(BoneMealNerf.NERFED)) {
+			else if (nerfedBoneMeal.equals(BoneMealNerf.NERFED))
 				age++;
-			}
 			age = Mth.clamp(age, 0, maxAge);
 			state = state.setValue(cropBlock.getAgeProperty(), age);
-		} else if (state.getBlock() instanceof StemBlock) {
+		}
+		else if (state.getBlock() instanceof StemBlock stemBlock) {
 			int age = state.getValue(StemBlock.AGE);
 			int maxAge = Collections.max(StemBlock.AGE.getPossibleValues());
 			if (age == maxAge) {
 				return BoneMealResult.NONE;
 			}
 
-			if (level.getRandom().nextDouble() < boneMealFailChance) {
-				return BoneMealResult.ALLOW;
-			} else if (nerfedBoneMeal.equals(BoneMealNerf.SLIGHT)) {
+			if (nerfedBoneMeal.equals(BoneMealNerf.SLIGHT))
 				age += Mth.nextInt(level.getRandom(), 1, 2);
-			} else if (nerfedBoneMeal.equals(BoneMealNerf.NERFED)) {
+			else if (nerfedBoneMeal.equals(BoneMealNerf.NERFED))
 				age++;
-			}
 			age = Mth.clamp(age, 0, maxAge);
 			state = state.setValue(StemBlock.AGE, age);
-		} else
+		}
+		else
 			return BoneMealResult.NONE;
 		level.setBlockAndUpdate(pos, state);
 		return BoneMealResult.ALLOW;
