@@ -5,22 +5,14 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.setup.SRMobEffects;
-import insane96mcp.survivalreimagined.setup.SRSoundEvents;
-import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.food.FoodProperties;
@@ -28,7 +20,6 @@ import net.minecraft.world.level.GameRules;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -72,101 +63,28 @@ public class HealthRegen extends Feature {
 	@Label(name = "Peaceful Hunger", description = "If enabled, peaceful difficulty no longer heals the player")
 	public static Boolean hungerConsumptionChance = true;*/
 
-
 	@Config(min = 0d, max = 1f)
 	@Label(name = "Food Heal Multiplier", description = "When eating you'll get healed by this percentage of (hunger + saturation) restored.")
 	public static Double foodHealMultiplier = 0d;
 	//Effects
 	@Config
-	@Label(name = "Effects.Well Fed.Enable", description = "Set to true to enable Well Fed, a new effect that speeds up health regen and is applied whenever the player eats from less than 4 drumsticks to more than 9 drumstick in less than 15 seconds.")
-	public static Boolean enableWellFed = false;
+	@Label(name = "Effects.Vigour.Enable", description = "Set to true to enable Vigour, a new effect that lowers hunger consumption and increases health regen speed. Applied when good foods are eaten.")
+	public static Boolean enableWellFed = true;
 	@Config(min = 0d, max = 128d)
-	@Label(name = "Effects.Well Fed.Duration Multiplier", description = "Multiplies the base duration of Well Fed by this value. Base duration is 1 second per food effectiveness (hunger + saturation).")
-	public static Double wellFedDurationMultiplier = 1.0d;
+	@Label(name = "Effects.Vigour.Duration Multiplier", description = "Multiplies the base duration of Vigour by this value. Base duration is 1 second per food saturation.")
+	public static Double wellFedDurationMultiplier = 20d;
 	@Config(min = 0d, max = 1d)
-	@Label(name = "Effects.Well Fed.Effectiveness", description = "How much does health regen Well Fed increases per level.")
-	public static Double wellFedEffectiveness = 0.05d;
-	@Config(min = 0, max = 255)
-	@Label(name = "Effects.Well Fed.Max Amplifier", description = "Max amplifier of the Well Fed effect (amplifier 0 = I, amplifier 1 = II, ...).")
-	public static Integer wellFedMaxAmplifier = 9;
+	@Label(name = "Effects.Vigour.Effectiveness", description = "How much does health regen Vigour increases.")
+	public static Double wellFedEffectiveness = 0.20d;
+	@Config(min = 0d, max = 20d)
+	@Label(name = "Effects.Vigour.Minimum Saturation", description = "Minimum saturation given by the food to apply Vigour.")
+	public static Double wellFedMinimumSaturation = 7d;
 	@Config
-	@Label(name = "Effects.Injured.Enable Injured", description = "Set to true to enable Injured, a new effect that slows down health regen. It's applied when the player takes 3 hits (at least half a heart) in the last 9 seconds (by default). The effect slows down health regen by 20% per level.")
-	public static Boolean enableInjured = false;
-	@Config(min = 0d, max = 128d)
-	@Label(name = "Effects.Injured.Duration Multiplier", description = "Multiplies the base duration of Injured by this value. Base duration is 1 second per point of damage.")
-	public static Double injuredDurationMultiplier = 1.0d;
-	@Config(min = 0d, max = 10d)
-	@Label(name = "Effects.Injured.Effectiveness", description = "How much does health regen Injured decreases per level.")
-	public static Double injuredEffectiveness = 0.2d;
-	@Config(min = 0)
-	@Label(name = "Effects.Injured.Times hit", description = "How many times the player must be hit in a span of \"Injured time to get damaged\" second to apply the effect")
-	public static Integer injuredTimesHit = 3;
-	@Config(min = 0)
-	@Label(name = "Effects.Injured.Time to get damaged", description = "Time to get hit \"Injured Times hit\" times and get the effect")
-	public static Integer injuredTimeToGetDamaged = 9;
-	@Config(min = 0d, max = 1024d)
-	@Label(name = "Effects.Injured.Min Damage", description = "How much damage will make the damage account for \"Injured Times hit\"")
-	public static Double injuredMinDamage = 1d;
+	@Label(name = "Effects.Vigour.Stacks", description = "If true, eating when already under Vigour increases the duration.")
+	public static Boolean wellFedStacks = true;
 
 	public HealthRegen(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-	}
-
-	@SubscribeEvent
-	public void onPlayerDamaged(LivingDamageEvent event) {
-		if (!this.isEnabled()
-				|| !enableInjured
-				|| !(event.getEntity() instanceof Player playerEntity)
-				|| (!(event.getSource().getEntity() instanceof LivingEntity) && !event.getSource().is(DamageTypeTags.IS_FALL) && !event.getSource().is(DamageTypeTags.IS_EXPLOSION) && !event.getSource().is(DamageTypeTags.IS_FIRE))
-				|| event.getAmount() < injuredMinDamage)
-			return;
-
-		ListTag listTag;
-		if (!playerEntity.getPersistentData().contains(Strings.Tags.DAMAGE_HISTORY)) {
-			listTag = new ListTag();
-		}
-		else {
-			listTag = playerEntity.getPersistentData().getList(Strings.Tags.DAMAGE_HISTORY, 10);
-			if (listTag.size() > 0 && listTag.getCompound(0).getInt("tick") > playerEntity.tickCount)
-				listTag.clear();
-		}
-		//Save the current hit
-		CompoundTag tag = new CompoundTag();
-		tag.putInt("tick", playerEntity.tickCount);
-		tag.putFloat("damage", event.getAmount());
-		listTag.add(tag);
-
-		//Remove the older hits to be left with injuredTimesHit
-		if (listTag.size() > injuredTimesHit) {
-			int toRemove = listTag.size() - injuredTimesHit;
-			if (toRemove > 0) {
-				listTag.subList(0, toRemove).clear();
-			}
-		}
-
-		int firstHit = listTag.getCompound(0).getInt("tick");
-
-		if (listTag.size() == injuredTimesHit && playerEntity.tickCount - firstHit < injuredTimeToGetDamaged * 20) {
-			int duration;
-			if (playerEntity.hasEffect(SRMobEffects.INJURED.get())) {
-				duration = (int) ((event.getAmount() * 20) * injuredDurationMultiplier);
-				//noinspection ConstantConditions
-				duration += playerEntity.getEffect(SRMobEffects.INJURED.get()).getDuration();
-			}
-			else {
-				float totalDamage = 0f;
-				for (int i = 0; i < listTag.size(); i++) {
-					totalDamage += listTag.getCompound(i).getFloat("damage");
-				}
-				duration = (int) ((totalDamage * 20) * injuredDurationMultiplier);
-			}
-			if (duration == 0)
-				return;
-			playerEntity.addEffect(MCUtils.createEffectInstance(SRMobEffects.INJURED.get(), duration, 0, true, false, true, false));
-			playerEntity.level().playSound(null, playerEntity, SRSoundEvents.INJURED.get(), SoundSource.PLAYERS, 1f, 0.9f);
-			listTag.remove(0);
-		}
-		playerEntity.getPersistentData().put(Strings.Tags.DAMAGE_HISTORY, listTag);
 	}
 
 	@SubscribeEvent
@@ -184,49 +102,22 @@ public class HealthRegen extends Feature {
 	private void processWellFed(LivingEntityUseItemEvent.Finish event) {
 		if (!enableWellFed)
 			return;
-		Player playerEntity = (Player) event.getEntity();
-		//Do not try to apply well-fed if already has it
-		if (playerEntity.hasEffect(SRMobEffects.WELL_FED.get()))
+		Player player = (Player) event.getEntity();
+		boolean hasEffect = player.hasEffect(SRMobEffects.VIGOUR.get());
+		if (hasEffect && !wellFedStacks)
 			return;
-		ListTag listTag;
-		if (!playerEntity.getPersistentData().contains(Strings.Tags.EAT_HISTORY)) {
-			listTag = new ListTag();
-		}
-		else {
-			listTag = playerEntity.getPersistentData().getList(Strings.Tags.EAT_HISTORY, 10);
-			if (listTag.size() > 0 && listTag.getCompound(0).getInt("tick") > playerEntity.tickCount)
-				listTag.clear();
-		}
-		//Clear the "combo" if the first food eaten is 15 seconds later
-		if (listTag.size() > 0 && playerEntity.tickCount - listTag.getCompound(0).getInt("tick") > 15 * 20) {
-			listTag.clear();
-		}
 
-		//Don't proceed if hunger higher than 8 and no eat history
-		if (playerEntity.getFoodData().getLastFoodLevel() > 8 && listTag.isEmpty())
+		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), player);
+		float saturationRestored = Utils.getFoodSaturationRestored(food);
+		if (saturationRestored < wellFedMinimumSaturation)
 			return;
-		//Save the current eat
-		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), playerEntity);
-		//noinspection ConstantConditions
-		float effectiveness = Utils.getFoodEffectiveness(food);
-		CompoundTag tag = new CompoundTag();
-		tag.putInt("tick", playerEntity.tickCount);
-		tag.putFloat("effectiveness", effectiveness);
-		listTag.add(tag);
-		int firstEat = listTag.getCompound(0).getInt("tick");
-
-		//Apply well-fed if more than 9 drumsticks and if less than 15 seconds passed from the first eating
-		if (playerEntity.getFoodData().getFoodLevel() >= 19 && playerEntity.tickCount - firstEat < 15 * 20) {
-			float totalEffectiveness = 0f;
-			for (int i = 0; i < listTag.size(); i++) {
-				totalEffectiveness += listTag.getCompound(i).getFloat("effectiveness");
-			}
-			int duration = (int) ((totalEffectiveness * 20) * wellFedDurationMultiplier);
-			int amplifier = Math.min(listTag.size() - 1, wellFedMaxAmplifier);
-			playerEntity.addEffect(MCUtils.createEffectInstance(SRMobEffects.WELL_FED.get(), duration, amplifier, true, false, true, false));
-			listTag.clear();
+		int duration = (int) (saturationRestored * wellFedDurationMultiplier) * 20;
+		if (hasEffect) {
+			MobEffectInstance effectInstance = player.getEffect(SRMobEffects.VIGOUR.get());
+			//noinspection DataFlowIssue
+			duration += effectInstance.duration;
 		}
-		playerEntity.getPersistentData().put(Strings.Tags.EAT_HISTORY, listTag);
+		player.addEffect(new MobEffectInstance(SRMobEffects.VIGOUR.get(), duration, 0, false, false, true));
 	}
 
 	public void healOnEat(LivingEntityUseItemEvent.Finish event) {
@@ -317,10 +208,7 @@ public class HealthRegen extends Feature {
 
 	private static int getRegenSpeed(Player player) {
 		int ticksToRegen = healthRegenSpeed;
-		MobEffectInstance injured = player.getEffect(SRMobEffects.INJURED.get());
-		if (injured != null)
-			ticksToRegen *= 1 + ((injured.getAmplifier() + 1) * injuredEffectiveness);
-		MobEffectInstance wellFed = player.getEffect(SRMobEffects.WELL_FED.get());
+		MobEffectInstance wellFed = player.getEffect(SRMobEffects.VIGOUR.get());
 		if (wellFed != null)
 			ticksToRegen *= 1 - (((wellFed.getAmplifier() + 1) * wellFedEffectiveness));
 		return ticksToRegen;

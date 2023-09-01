@@ -1,7 +1,9 @@
 # Changelog
 
 ## 0.14.4
+* Eating food that restores at least 7 saturation now gives Vigour (from Well fed)
 * Bone meal now has only 25% chance to grow glow berries and 80% chance to grow saplings
+* Removed Injured
 
 ## 0.14.3
 * Added Healthy enchantment

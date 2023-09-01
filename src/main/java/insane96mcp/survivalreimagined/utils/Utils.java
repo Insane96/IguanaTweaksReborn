@@ -63,7 +63,11 @@ public class Utils {
     }
 
     public static float getFoodEffectiveness(FoodProperties foodProperties) {
-        return foodProperties.getNutrition() + foodProperties.getNutrition() * foodProperties.getSaturationModifier() * 2;
+        return foodProperties.getNutrition() + getFoodSaturationRestored(foodProperties);
+    }
+
+    public static float getFoodSaturationRestored(FoodProperties foodProperties) {
+        return foodProperties.getNutrition() * foodProperties.getSaturationModifier() * 2;
     }
 
     /**

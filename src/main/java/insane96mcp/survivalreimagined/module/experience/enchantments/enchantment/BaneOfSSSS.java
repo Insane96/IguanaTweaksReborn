@@ -32,12 +32,12 @@ public class BaneOfSSSS extends DamageEnchantment {
     }
 
     @Override
-    public void doPostAttack(LivingEntity livingEntity, Entity entity, int lvl) {
-        if (!(entity instanceof LivingEntity livingentity))
+    public void doPostAttack(LivingEntity attacker, Entity target, int lvl) {
+        if (!(target instanceof LivingEntity livingentity))
             return;
 
         if (lvl > 0 && (livingentity.getMobType() == MobType.ARTHROPOD || livingentity instanceof Creeper)) {
-            int i = 20 + livingEntity.getRandom().nextInt(10 * lvl);
+            int i = 20 + attacker.getRandom().nextInt(10 * lvl);
             livingentity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, i, 3));
         }
     }
