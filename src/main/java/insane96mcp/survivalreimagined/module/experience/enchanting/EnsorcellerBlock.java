@@ -138,7 +138,7 @@ public class EnsorcellerBlock extends BaseEntityBlock {
             return;
         int invRollCost = 4 - rollCost;
         for (int i = 0; i < invRollCost; i++)
-            pLevel.addParticle(new DustParticleOptions(new Vector3f(0.9882352941f, 0.8980392157f, 0.4392156863f), 5f), pPos.getX() + 0.5f + pRandom.nextFloat() * (2.5f + invRollCost) - ((2.5f + invRollCost) / 2f), pPos.getY() + pRandom.nextFloat() * (3.5f + invRollCost) + 1f, pPos.getZ() + 0.5f + pRandom.nextFloat() * (2.5f + invRollCost) - ((2.5f + invRollCost) / 2f), 0, 0, 0);
+            pLevel.addParticle(new DustParticleOptions(new Vector3f(0.9882352941f, 0.8980392157f, 0.4392156863f), 5f), pPos.getX() + 0.5f + pRandom.nextFloat() * (2.5f + invRollCost) - ((2.5f + invRollCost) / 2f), pPos.getY() + pRandom.nextFloat() * (4f + invRollCost), pPos.getZ() + 0.5f + pRandom.nextFloat() * (2.5f + invRollCost) - ((2.5f + invRollCost) / 2f), 0, 0, 0);
     }
 
     @Override

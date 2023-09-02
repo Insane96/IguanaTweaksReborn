@@ -1,10 +1,10 @@
 # Changelog
 
-* Ensorceller Sunflower
 * Increase bell range when finding riders
 
 ## Upcoming
 * Food can now take 1.2 seconds to eat if low saturation and hunger enough (was 1.6) (fast food like kelp still doesn't go below 0.8 secs)
+* Ensorceller now gets power from nearby sunflowers, making lower level rolls available earlier and later in the day
 * Fixed MC-152728
 * Fixed ensorceller
 

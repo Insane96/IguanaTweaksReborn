@@ -19,6 +19,10 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 
 import java.util.List;
 
@@ -162,20 +166,35 @@ public class EnsorcellerMenu extends AbstractContainerMenu {
     }
 
     private void updateRollCost() {
-        this.access.execute((level, blockPos) -> {
-            this.rollCost.set(calculateRollCost(level, blockPos));
-        });
+        this.access.execute((level, blockPos) -> this.rollCost.set(calculateRollCost(level, blockPos)));
     }
+
+    static final int COST_1_MIN_TIME_BASE = 6000 - 1200; // 1 minute before noon
+    static final int COST_1_MAX_TIME_BASE = 6000 + 1200; // 1 minute after noon
+    static final int COST_2_MIN_TIME_BASE = 6000 - 4200; // 3.5 minutes before noon
+    static final int COST_2_MAX_TIME_BASE = 6000 + 4200; // 3.5 minutes after noon
+    public static final List<BlockPos> SUNFLOWERS_OFFSETS = BlockPos.betweenClosedStream(-2, 0, -2, 2, 1, 2).map(BlockPos::immutable).toList();
 
     public static int calculateRollCost(Level level, BlockPos pos) {
         int dayTime = (int) (level.getDayTime() % 24000L);
         if (level.getBrightness(LightLayer.SKY, pos) <= 10 || (dayTime >= 12786 && dayTime <= 23216) || level.isThundering())
             return 0;
 
+        int sunflowers = 0;
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+        for (BlockPos sunflowerOffset : SUNFLOWERS_OFFSETS) {
+            mutableBlockPos.set(pos.offset(sunflowerOffset));
+            BlockState state = level.getBlockState(mutableBlockPos);
+            if (state.is(Blocks.SUNFLOWER) && state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER)
+                sunflowers++;
+
+            if (sunflowers >= 6)
+                break;
+        }
         int cost = 3;
-        if (dayTime >= 4200 && dayTime < 7800)
+        if (dayTime >= COST_1_MIN_TIME_BASE - sunflowers * 200 && dayTime < COST_1_MAX_TIME_BASE + sunflowers * 200)
             cost = 1;
-        else if (dayTime >= 1200 && dayTime < 10800)
+        else if (dayTime >= COST_2_MIN_TIME_BASE - sunflowers * 200 && dayTime < COST_2_MAX_TIME_BASE + sunflowers * 200)
             cost = 2;
 
         if (level.isRaining())
