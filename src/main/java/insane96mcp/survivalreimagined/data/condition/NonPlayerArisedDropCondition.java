@@ -27,14 +27,15 @@ public class NonPlayerArisedDropCondition implements LootItemCondition {
     }
 
     public Set<LootContextParam<?>> getReferencedContextParams() {
-        return ImmutableSet.of(LootContextParams.THIS_ENTITY, LootContextParams.LAST_DAMAGE_PLAYER, LootContextParams.EXPLOSION_RADIUS);
+        return ImmutableSet.of(LootContextParams.THIS_ENTITY, LootContextParams.LAST_DAMAGE_PLAYER, LootContextParams.EXPLOSION_RADIUS, LootContextParams.TOOL);
     }
 
     public boolean test(LootContext context) {
         if (!(context.hasParam(LootContextParams.THIS_ENTITY))
                 || !(context.getParam(LootContextParams.THIS_ENTITY) instanceof LivingEntity)
                 || context.getParam(LootContextParams.THIS_ENTITY) instanceof Player
-                || context.hasParam(LootContextParams.EXPLOSION_RADIUS))
+                || context.hasParam(LootContextParams.EXPLOSION_RADIUS)
+                || context.hasParam(LootContextParams.TOOL))
             return false;
 
         return !context.hasParam(LootContextParams.LAST_DAMAGE_PLAYER);

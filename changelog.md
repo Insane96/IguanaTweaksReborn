@@ -1,6 +1,5 @@
 # Changelog
 
-* Fix a bug where you run even if you're using an item
 * Ensorceller Sunflower
 * Increase bell range when finding riders
 
