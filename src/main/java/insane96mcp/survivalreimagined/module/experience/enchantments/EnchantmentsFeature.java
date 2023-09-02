@@ -86,6 +86,9 @@ public class EnchantmentsFeature extends SRFeature {
 	public static Boolean changeEfficiencyFormula = true;
 
 	@Config(min = 0d, max = 10d)
+	@Label(name = "Bow's Arrows Base Damage", description = "Set arrow's base damage if shot from bow.")
+	public static Double bowsArrowsBaseDamage = 1.5d;
+	@Config(min = 0d, max = 10d)
 	@Label(name = "Power Enchantment Damage", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
 	public static Double powerEnchantmentDamage = 0.4d;
 
@@ -315,6 +318,9 @@ public class EnchantmentsFeature extends SRFeature {
 	}
 
 	private void processBow(AbstractArrow arrow) {
+		if (bowsArrowsBaseDamage != 2d) {
+			arrow.setBaseDamage(arrow.getBaseDamage() - (2d - bowsArrowsBaseDamage));
+		}
 		if (powerEnchantmentDamage != 0.5d && arrow.getOwner() instanceof LivingEntity) {
 			int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
 			if (powerLevel == 0)
