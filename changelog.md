@@ -1,5 +1,11 @@
 # Changelog
 
+* Reduce min time to eat
+* Fix a bug where you run even if you're using an item
+* Adding items to ensorceller kicks players from server
+* Items in ensorceller are kept when broken
+* Ensorceller Sunflower
+
 ## 0.14.4
 * Vigour
   * Eating food that restores at least 7 saturation now gives Vigour
