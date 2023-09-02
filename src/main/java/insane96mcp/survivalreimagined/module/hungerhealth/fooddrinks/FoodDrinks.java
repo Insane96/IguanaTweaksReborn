@@ -82,7 +82,7 @@ public class FoodDrinks extends SRFeature {
 	public static Boolean eatingSpeedBasedOffFood = true;
 	@Config
 	@Label(name = "Eating Speed Formula", description = "The formula to calculate the ticks required to eat a food. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. The default formula increases the time to eat exponentially when higher effectiveness.")
-	public static String eatingSpeedFormula = "MAX((32 * effectiveness^1.35) / IF(fast_food, 2, 1) * 0.04, 32 / IF(fast_food, 2, 1))"; //max((32 * x^1.35) * 0.04, 32) or, if the food is fast eat max((32 * x^1.35) / 2 * 0.04, 32 / 2)
+	public static String eatingSpeedFormula = "MAX((24 * effectiveness^1.35) / IF(fast_food, 2, 1) * 0.04, IF(fast_food, 24, 16))"; //max((32 * x^1.35) * 0.04, 32) or, if the food is fast eat max((32 * x^1.35) / 2 * 0.04, 32 / 2)
 	@Config
 	@Label(name = "Stop consuming on hit", description = "If true, eating/drinking stops when the player's hit.")
 	public static Boolean stopConsumingOnHit = true;

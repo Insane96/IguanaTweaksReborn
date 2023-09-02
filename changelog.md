@@ -1,10 +1,12 @@
 # Changelog
 
-* Reduce min time to eat
 * Fix a bug where you run even if you're using an item
 * Adding items to ensorceller kicks players from server
 * Items in ensorceller are kept when broken
 * Ensorceller Sunflower
+
+## Upcoming
+* Food can now take 1.2 seconds to eat if low saturation and hunger enough (was 1.6) (fast food like kelp still doesn't go below 0.8 secs)
 
 ## 0.14.4
 * Vigour
