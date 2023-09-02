@@ -6,6 +6,7 @@
 
 ## Upcoming
 * Food can now take 1.2 seconds to eat if low saturation and hunger enough (was 1.6) (fast food like kelp still doesn't go below 0.8 secs)
+* Fixed MC-152728
 * Fixed ensorceller
 
 ## 0.14.4
