@@ -78,7 +78,7 @@ public class EnsorcellerBlock extends BaseEntityBlock {
             BlockEntity blockentity = pLevel.getBlockEntity(pPos);
             if (blockentity instanceof EnsorcellerBlockEntity ensorcellerBlockEntity) {
                 if (pLevel instanceof ServerLevel) {
-                    Containers.dropContents(pLevel, pPos, (EnsorcellerBlockEntity)blockentity);
+                    Containers.dropContents(pLevel, pPos, ensorcellerBlockEntity);
                 }
 
                 pLevel.updateNeighbourForOutputSignal(pPos, this);
@@ -95,7 +95,9 @@ public class EnsorcellerBlock extends BaseEntityBlock {
         if (blockentity instanceof EnsorcellerBlockEntity ensorcellerBlockEntity) {
             if (!level.isClientSide) {
                 ItemStack itemstack = new ItemStack(this.asItem());
-                blockentity.saveToItem(itemstack);
+                //Clear items before dropping otherwise the item will stay in the dropped ensorceller
+                ensorcellerBlockEntity.items.clear();
+                ensorcellerBlockEntity.saveToItem(itemstack);
                 if (ensorcellerBlockEntity.hasCustomName()) {
                     itemstack.setHoverName(ensorcellerBlockEntity.getCustomName());
                 }
