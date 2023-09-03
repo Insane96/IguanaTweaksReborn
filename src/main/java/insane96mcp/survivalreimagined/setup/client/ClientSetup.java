@@ -20,6 +20,7 @@ import insane96mcp.survivalreimagined.module.items.crate.Crate;
 import insane96mcp.survivalreimagined.module.items.explosivebarrel.ExplosiveBarrel;
 import insane96mcp.survivalreimagined.module.items.flintexpansion.FlintExpansion;
 import insane96mcp.survivalreimagined.module.items.recallidol.RecallIdol;
+import insane96mcp.survivalreimagined.module.items.solarium.Solarium;
 import insane96mcp.survivalreimagined.module.mining.Durium;
 import insane96mcp.survivalreimagined.module.mining.SoulSteel;
 import insane96mcp.survivalreimagined.module.mining.forging.ForgeRenderer;
@@ -31,7 +32,6 @@ import insane96mcp.survivalreimagined.module.mining.miningcharge.MiningChargeRen
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.client.MultiBlockBlastFurnaceScreen;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.client.MultiBlockSoulBlastFurnaceScreen;
-import insane96mcp.survivalreimagined.module.mining.solarium.Solarium;
 import insane96mcp.survivalreimagined.module.movement.minecarts.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.Cloth;
 import insane96mcp.survivalreimagined.module.sleeprespawn.death.Death;

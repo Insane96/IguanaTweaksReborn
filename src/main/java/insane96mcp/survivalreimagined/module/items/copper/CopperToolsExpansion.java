@@ -144,8 +144,9 @@ public class CopperToolsExpansion extends Feature {
 		DamageSource damageSource = electrocuter.damageSources().source(ELECTROCUTION_ATTACK, electrocuter);
 		double range = 4.5d;
 		float secondaryDamage = (float) (1.0f * electrocuter.getAttributeValue(Attributes.ATTACK_DAMAGE));
-		if (electrocuter.getUseItem().is(COATED_SHIELD.get()))
-			secondaryDamage = (float) ((SPShieldItem)electrocuter.getUseItem().getItem()).getBlockedDamage();
+		ItemStack useItem = electrocuter.getUseItem();
+		if (useItem.is(COATED_SHIELD.get()))
+			secondaryDamage = (float) ((SPShieldItem)useItem.getItem()).getBlockedDamage(useItem, electrocuter, electrocuter.level());
 		int hitEntities = 0;
 		IntList listIdsOfHitEntities = new IntArrayList();
 		List<LivingEntity> listOfHitEntities = new ArrayList<>();

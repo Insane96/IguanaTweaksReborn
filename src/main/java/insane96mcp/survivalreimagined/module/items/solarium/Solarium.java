@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.mining.solarium;
+package insane96mcp.survivalreimagined.module.items.solarium;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -11,7 +11,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.mining.solarium.item.*;
+import insane96mcp.survivalreimagined.module.items.solarium.item.*;
 import insane96mcp.survivalreimagined.module.sleeprespawn.death.integration.ToolBelt;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.ChatFormatting;
@@ -48,7 +48,7 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.UUID;
 
 @Label(name = "Solarium", description = "Add Solarium, a new metal made by alloying Overgrown solium moss ball (found in hot biomes) and can be used to upgrade Iron Equipment")
-@LoadFeature(module = Modules.Ids.MINING)
+@LoadFeature(module = Modules.Ids.ITEMS)
 public class Solarium extends Feature {
 	public static final UUID[] MOVEMENT_SPEED_MODIFIER_UUIDS = new UUID[] {
 			UUID.fromString("c9c18638-6505-4544-9871-6397916fd0b7"),
@@ -137,7 +137,7 @@ public class Solarium extends Feature {
 		if (event.getEntity().tickCount % 2 != 1)
 			return;
 
-		float calculatedSkyLight = getCalculatedSkyLight(event.getEntity());
+		float calculatedSkyLight = getCalculatedSkyLightRatio(event.getEntity());
 		if (calculatedSkyLight <= 0f)
 			return;
 		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
@@ -146,7 +146,7 @@ public class Solarium extends Feature {
 			ItemStack stack = event.getEntity().getItemBySlot(equipmentSlot);
 			AttributeInstance movSpeed = event.getEntity().getAttribute(Attributes.MOVEMENT_SPEED);
 			if (stack.is(SOLARIUM_EQUIPMENT))
-				MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUIDS[equipmentSlot.getIndex()], "Solarium movement speed boost", 0.1f / 15f * calculatedSkyLight, AttributeModifier.Operation.MULTIPLY_BASE, false);
+				MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUIDS[equipmentSlot.getIndex()], "Solarium movement speed boost", 0.1f * calculatedSkyLight, AttributeModifier.Operation.MULTIPLY_BASE, false);
 			else if (movSpeed != null && movSpeed.getModifier(MOVEMENT_SPEED_MODIFIER_UUIDS[equipmentSlot.getIndex()]) != null)
 				movSpeed.removeModifier(MOVEMENT_SPEED_MODIFIER_UUIDS[equipmentSlot.getIndex()]);
 		}
@@ -157,10 +157,10 @@ public class Solarium extends Feature {
 		if (!(event.getSource().getEntity() instanceof LivingEntity entity)
 				|| !entity.getMainHandItem().is(SOLARIUM_EQUIPMENT))
 			return;
-		float calculatedSkyLight = getCalculatedSkyLight(event.getEntity());
+		float calculatedSkyLight = getCalculatedSkyLightRatio(event.getEntity());
 		if (calculatedSkyLight <= 0f)
 			return;
-		event.setAmount(event.getAmount() * (1 + 0.25f / 15f * calculatedSkyLight));
+		event.setAmount(event.getAmount() * (1 + 0.25f * calculatedSkyLight));
 	}
 
 	@SubscribeEvent
@@ -168,10 +168,10 @@ public class Solarium extends Feature {
 		if (!event.getEntity().getMainHandItem().is(SOLARIUM_EQUIPMENT)
 				|| !event.getEntity().getMainHandItem().isCorrectToolForDrops(event.getState()))
 			return;
-		float calculatedSkyLight = getCalculatedSkyLight(event.getEntity());
+		float calculatedSkyLight = getCalculatedSkyLightRatio(event.getEntity());
 		if (calculatedSkyLight <= 0f)
 			return;
-		event.setNewSpeed(event.getOriginalSpeed() * (1 + 0.75f / 15f * calculatedSkyLight));
+		event.setNewSpeed(event.getOriginalSpeed() * (1 + 0.75f * calculatedSkyLight));
 	}
 
 	public static float getCalculatedSkyLight(Entity entity) {
@@ -183,6 +183,10 @@ public class Solarium extends Feature {
 		if (level.isRaining())
 			skyLight /= 3f;
 		return skyLight;
+	}
+
+	public static float getCalculatedSkyLightRatio(Entity entity) {
+		return getCalculatedSkyLight(entity) / 15f;
 	}
 
 	@SubscribeEvent

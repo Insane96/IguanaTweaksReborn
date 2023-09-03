@@ -1,11 +1,15 @@
 # Changelog
 
+* Make absorption absorb only entity dmg
+
 ## 0.14.5
 * Food can now take 1.2 seconds to eat if low saturation and hunger enough (was 1.6) (fast food like kelp still doesn't go below 0.8 secs)
+* Solarium shield now blocks +2 more damage when in sunlight
 * Ensorceller now gets power from nearby sunflowers, making lower level rolls available earlier and later in the day
 * Doubled the bell range to glow raiders
 * Reduced arrows from bows base damage
 * Lowered hidden Durium generation but increased xp drop from 1~4 to 2~4
+* Reduced bonus durability when merging two items in an Anvil (20% -> 15%)
 * Fixed MC-152728
 * Fixed ensorceller crash
 

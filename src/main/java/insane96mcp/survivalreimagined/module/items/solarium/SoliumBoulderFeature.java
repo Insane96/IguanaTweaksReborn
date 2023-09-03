@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.mining.solarium;
+package insane96mcp.survivalreimagined.module.items.solarium;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;

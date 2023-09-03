@@ -1,7 +1,7 @@
-package insane96mcp.survivalreimagined.module.mining.solarium.item;
+package insane96mcp.survivalreimagined.module.items.solarium.item;
 
 import insane96mcp.survivalreimagined.item.SRArmorMaterial;
-import insane96mcp.survivalreimagined.module.mining.solarium.Solarium;
+import insane96mcp.survivalreimagined.module.items.solarium.Solarium;
 import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;

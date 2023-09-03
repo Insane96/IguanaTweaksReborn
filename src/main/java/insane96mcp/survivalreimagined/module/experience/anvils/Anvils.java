@@ -56,7 +56,7 @@ public class Anvils extends Feature {
     public static Boolean mergingCostBasedOffResult = true;
     @Config(min = 0, max = 100)
     @Label(name = "Merging Repair bonus", description = "Vanilla is 12%")
-    public static Integer mergingRepairBonus = 20;
+    public static Integer mergingRepairBonus = 15;
     @Config
     @Label(name = "No repair cost increase and repair cost based off Enchantments")
     public static Boolean noRepairCostIncreaseAndEnchCost = true;

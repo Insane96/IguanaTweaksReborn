@@ -10,7 +10,7 @@ import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.survivalreimagined.data.lootmodifier.InjectLootTableModifier;
 import insane96mcp.survivalreimagined.data.lootmodifier.LootPurgerModifier;
 import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceLootModifier;
-import insane96mcp.survivalreimagined.module.mining.solarium.SoliumBoulderFeature;
+import insane96mcp.survivalreimagined.module.items.solarium.SoliumBoulderFeature;
 import insane96mcp.survivalreimagined.module.world.coalfire.PilableFallingLayerEntity;
 import insane96mcp.survivalreimagined.module.world.oregeneration.BeegOreVeinFeature;
 import insane96mcp.survivalreimagined.module.world.oregeneration.OreWithRandomPatchConfiguration;

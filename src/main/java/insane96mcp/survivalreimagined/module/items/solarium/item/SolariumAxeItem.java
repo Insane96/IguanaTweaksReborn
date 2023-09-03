@@ -1,13 +1,13 @@
-package insane96mcp.survivalreimagined.module.mining.solarium.item;
+package insane96mcp.survivalreimagined.module.items.solarium.item;
 
-import insane96mcp.survivalreimagined.module.mining.solarium.Solarium;
+import insane96mcp.survivalreimagined.module.items.solarium.Solarium;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class SolariumHoeItem extends HoeItem {
-	public SolariumHoeItem(int pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
+public class SolariumAxeItem extends AxeItem {
+	public SolariumAxeItem(float pAttackDamageModifier, float pAttackSpeedModifier, Properties pProperties) {
 		super(Solarium.ITEM_TIER, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
 	}
 
