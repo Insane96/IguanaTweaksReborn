@@ -5,6 +5,7 @@
 * Ensorceller now gets power from nearby sunflowers, making lower level rolls available earlier and later in the day
 * Doubled the bell range to glow raiders
 * Reduced arrows from bows base damage
+* Lowered hidden Durium generation but increased xp drop from 1~4 to 2~4
 * Fixed MC-152728
 * Fixed ensorceller crash
 
