@@ -1,14 +1,12 @@
 # Changelog
 
-* Reduce arrows base damage?
-
-## Upcoming
+## 0.14.5
 * Food can now take 1.2 seconds to eat if low saturation and hunger enough (was 1.6) (fast food like kelp still doesn't go below 0.8 secs)
 * Ensorceller now gets power from nearby sunflowers, making lower level rolls available earlier and later in the day
 * Doubled the bell range to glow raiders
 * Reduced arrows from bows base damage
 * Fixed MC-152728
-* Fixed ensorceller
+* Fixed ensorceller crash
 
 ## 0.14.4
 * Vigour
