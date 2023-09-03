@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.survivalreimagined.event.SREventFactory;
+import insane96mcp.survivalreimagined.module.combat.GoldenAbsorption;
 import insane96mcp.survivalreimagined.module.experience.PlayerExperience;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
@@ -70,5 +71,13 @@ public abstract class PlayerMixin extends LivingEntity {
 	@Inject(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;setHealth(F)V", shift = At.Shift.AFTER))
 	private void onPostDamage(DamageSource damageSource, float amount, CallbackInfo ci) {
 		SREventFactory.onPostHurtEntity(this, damageSource, amount);
+	}
+
+	@ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
+	private float onCalculateAbsorption(float f1, DamageSource damageSource, float amount) {
+		if (GoldenAbsorption.entityAbsorption() && !(damageSource.getEntity() instanceof LivingEntity)) {
+			return amount;
+		}
+		return Math.max(amount - this.getAbsorptionAmount(), 0.0F);
 	}
 }

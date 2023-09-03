@@ -121,7 +121,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 241),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_shield", 82),
-			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", 82),
+			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", 95),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:copper_coated_shield", 230),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_shield", 672),
 			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:diamond_shield", 602),
@@ -167,7 +167,6 @@ public class ItemStats extends SRFeature {
 		if (overrideShieldBlockDamage) {
 			SPItems.COPPER_SHIELD.get().blockingDamageOverride = 4d;
 			SPItems.DIAMOND_SHIELD.get().blockingDamageOverride = 6.5d;
-			SPItems.GOLDEN_SHIELD.get().blockingDamageOverride = 100d;
 		}
 	}
 

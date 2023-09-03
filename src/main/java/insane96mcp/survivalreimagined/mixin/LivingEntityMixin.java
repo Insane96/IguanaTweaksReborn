@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.mixin;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.event.SREventFactory;
+import insane96mcp.survivalreimagined.module.combat.GoldenAbsorption;
 import insane96mcp.survivalreimagined.module.movement.TerrainSlowdown;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import net.minecraft.util.Mth;
@@ -18,21 +19,21 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements Attackable, net.minecraftforge.common.extensions.IForgeLivingEntity {
 
-    @Shadow public abstract Collection<MobEffectInstance> getActiveEffects();
-
     @Shadow public abstract boolean hasEffect(MobEffect pEffect);
 
     @Shadow @Nullable public abstract MobEffectInstance getEffect(MobEffect pEffect);
+
+    @Shadow public abstract float getAbsorptionAmount();
 
     public LivingEntityMixin(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -68,5 +69,13 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         if (instance.fallDistance > 0f)
             instance.causeFallDamage(instance.fallDistance, 1f, instance.damageSources().fall());
         instance.resetFallDistance();
+    }
+
+    @ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
+    private float onCalculateAbsorption(float f1, DamageSource damageSource, float amount) {
+        if (GoldenAbsorption.entityAbsorption() && !(damageSource.getEntity() instanceof LivingEntity)) {
+            return amount;
+        }
+        return Math.max(amount - this.getAbsorptionAmount(), 0.0F);
     }
 }
