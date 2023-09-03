@@ -1,0 +1,33 @@
+package insane96mcp.survivalreimagined.module.combat;
+
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.module.Modules;
+import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+@Label(name = "Snowballs")
+@LoadFeature(module = Modules.Ids.COMBAT)
+public class Snowballs extends Feature {
+	@Config(min = 0d, max = 100d)
+	@Label(name = "Snowball damage", description = "Snowballs deal this amount of damage.")
+	public static Double damage = 0.5d;
+
+	public Snowballs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	@SubscribeEvent
+	public void onLivingHurt(LivingHurtEvent event) {
+		if (!this.isEnabled()
+				|| damage == 0d
+				|| !(event.getSource().getDirectEntity() instanceof Snowball))
+			return;
+
+		event.setAmount(damage.floatValue());
+	}
+}

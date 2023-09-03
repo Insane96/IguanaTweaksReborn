@@ -1,12 +1,12 @@
 # Changelog
 
-* Make absorption absorb only entity dmg
-
 ## 0.14.5
-* Food can now take 1.2 seconds to eat if low saturation and hunger enough (was 1.6) (fast food like kelp still doesn't go below 0.8 secs)
+* Added Snowballs
+  * Snowballs now deal 0.5 damage
 * Re-added Golden absorption
   * Gold armor and shield now give +2 regenerating absorption hearts
   * Golden armor no longer gives +6% movement speed and golden shields no longer blocks 100 damage.
+* Food can now take 1.2 seconds to eat if low saturation and hunger enough (was 1.6) (fast food like kelp still doesn't go below 0.8 secs)
 * Solarium shield now blocks +2 more damage when in sunlight
 * Ensorceller now gets power from nearby sunflowers, making lower level rolls available earlier and later in the day
 * Doubled the bell range to glow raiders

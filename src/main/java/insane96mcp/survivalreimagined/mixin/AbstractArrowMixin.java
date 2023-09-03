@@ -1,14 +1,12 @@
 package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
-import insane96mcp.survivalreimagined.module.combat.AttackInvincibility;
 import insane96mcp.survivalreimagined.module.combat.stats.Stats;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,13 +24,6 @@ public abstract class AbstractArrowMixin extends Projectile {
     @Shadow public abstract boolean isCritArrow();
 
     @Shadow public abstract void setBaseDamage(double pBaseDamage);
-
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z", shift = At.Shift.AFTER), method = "onHitEntity")
-    private void onHitEntity(EntityHitResult entityHitResult, CallbackInfo ci) {
-        if (AttackInvincibility.disableArrowInvFrames()/* && this.getOwner() instanceof Player*/) {
-            entityHitResult.getEntity().invulnerableTime = 0;
-        }
-    }
 
     @SuppressWarnings("InvalidInjectorMethodSignature")
     @ModifyVariable(at = @At(value = "STORE"), method = "onHitEntity", ordinal = 0)
