@@ -1,10 +1,14 @@
 # Changelog
 
+* Add regenerating absorption attribute
+
 ## 0.14.5
 * Added Snowballs
   * Snowballs now deal 0.5 damage
-* Re-added Golden absorption
-  * Gold armor and shield now give +2 regenerating absorption hearts
+* Added Regenerating absorption
+  * A new attribute that gives some regenerating absorption hearts
+  * Absorption now only absorbs entity damage (e.g. no longer fall or poison)
+  * Gold armor and shield now give +2 regenerating absorption hearts. This now also works on mobs.
   * Golden armor no longer gives +6% movement speed and golden shields no longer blocks 100 damage.
 * Food can now take 1.2 seconds to eat if low saturation and hunger enough (was 1.6) (fast food like kelp still doesn't go below 0.8 secs)
 * Solarium shield now blocks +2 more damage when in sunlight

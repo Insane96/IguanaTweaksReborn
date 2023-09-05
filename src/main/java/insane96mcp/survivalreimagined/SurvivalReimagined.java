@@ -10,6 +10,7 @@ import insane96mcp.survivalreimagined.data.generator.client.SRBlockModelsProvide
 import insane96mcp.survivalreimagined.data.generator.client.SRBlockStatesProvider;
 import insane96mcp.survivalreimagined.data.generator.client.SRItemModelsProvider;
 import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
+import insane96mcp.survivalreimagined.module.combat.RegeneratingAbsorption;
 import insane96mcp.survivalreimagined.module.combat.fletching.Fletching;
 import insane96mcp.survivalreimagined.module.combat.fletching.dispenser.SRArrowDispenseBehaviour;
 import insane96mcp.survivalreimagined.module.experience.anvils.AnvilRepairReloadListener;
@@ -93,6 +94,7 @@ public class SurvivalReimagined
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(this::addPackFinders);
         modEventBus.addListener(PiercingPickaxes::piercingDamageAttribute);
+        modEventBus.addListener(RegeneratingAbsorption::regeneratingAbsorptionAttribute);
         modEventBus.register(Tiredness.class);
         modEventBus.register(SpawnerData.class);
         SRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));

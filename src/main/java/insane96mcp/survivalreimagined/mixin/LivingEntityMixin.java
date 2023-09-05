@@ -3,7 +3,7 @@ package insane96mcp.survivalreimagined.mixin;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.event.SREventFactory;
-import insane96mcp.survivalreimagined.module.combat.GoldenAbsorption;
+import insane96mcp.survivalreimagined.module.combat.RegeneratingAbsorption;
 import insane96mcp.survivalreimagined.module.movement.TerrainSlowdown;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import net.minecraft.util.Mth;
@@ -73,7 +73,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
 
     @ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
     private float onCalculateAbsorption(float f1, DamageSource damageSource, float amount) {
-        if (GoldenAbsorption.entityAbsorption() && !(damageSource.getEntity() instanceof LivingEntity)) {
+        if (RegeneratingAbsorption.entityAbsorption() && !(damageSource.getEntity() instanceof LivingEntity)) {
             return amount;
         }
         return Math.max(amount - this.getAbsorptionAmount(), 0.0F);

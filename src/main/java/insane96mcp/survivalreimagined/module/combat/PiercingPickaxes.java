@@ -56,7 +56,7 @@ public class PiercingPickaxes extends Feature {
 			if (event.has(entityType, PIERCING_DAMAGE.get()))
 				continue;
 
-			event.add(entityType, PIERCING_DAMAGE.get(), 0d);
+			event.add(entityType, PIERCING_DAMAGE.get());
 		}
 	}
 
