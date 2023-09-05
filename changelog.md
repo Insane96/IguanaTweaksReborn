@@ -1,10 +1,9 @@
 # Changelog
 
-* Add regenerating absorption attribute
-
 ## 0.14.5
 * Added Snowballs
   * Snowballs now deal 0.5 damage
+  * Also freeze entities for 1 second (stacking)
 * Added Regenerating absorption
   * A new attribute that gives some regenerating absorption hearts
   * Absorption now only absorbs entity damage (e.g. no longer fall or poison)

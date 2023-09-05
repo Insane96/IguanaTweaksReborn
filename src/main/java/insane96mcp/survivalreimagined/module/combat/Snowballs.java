@@ -5,6 +5,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.event.PostEntityHurtEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -14,8 +15,14 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class Snowballs extends Feature {
 	@Config(min = 0d, max = 100d)
-	@Label(name = "Snowball damage", description = "Snowballs deal this amount of damage.")
+	@Label(name = "Damage", description = "Snowballs deal this amount of damage.")
 	public static Double damage = 0.5d;
+	@Config(min = 0)
+	@Label(name = "Freezing Ticks", description = "Snowballs fill freeze entities for this amount of ticks.")
+	public static Integer freezingTicks = 20;
+	@Config
+	@Label(name = "Freezing Stacks", description = "If true, freezing stacks each hit.")
+	public static Boolean freezingStacks = true;
 
 	public Snowballs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -29,5 +36,18 @@ public class Snowballs extends Feature {
 			return;
 
 		event.setAmount(damage.floatValue());
+	}
+
+	@SubscribeEvent
+	public void onLivingHurt(PostEntityHurtEvent event) {
+		if (!this.isEnabled()
+				|| freezingTicks == 0
+				|| !(event.getDamageSource().getDirectEntity() instanceof Snowball))
+			return;
+
+		if (freezingStacks)
+			event.getEntity().setTicksFrozen(event.getEntity().getTicksFrozen() + freezingTicks);
+		else if (event.getEntity().getTicksFrozen() < freezingTicks)
+			event.getEntity().setTicksFrozen(freezingTicks);
 	}
 }
