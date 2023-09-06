@@ -72,4 +72,11 @@ public class SREventFactory {
         MinecraftForge.EVENT_BUS.post(event);
         return event.getAmount();
     }
+
+    public static boolean onAddEatEffect(ItemStack stack, Level level, LivingEntity livingEntity)
+    {
+        AddEatEffectEvent event = new AddEatEffectEvent(livingEntity, stack, level);
+        MinecraftForge.EVENT_BUS.post(event);
+        return event.isCanceled();
+    }
 }

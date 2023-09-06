@@ -9,6 +9,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
+import insane96mcp.survivalreimagined.event.AddEatEffectEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.DataPacks;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
@@ -61,7 +62,7 @@ public class FoodDrinks extends SRFeature {
 	public static final TagKey<Item> FOOD_BLACKLIST = SRItemTagsProvider.create("food_drinks_no_hunger_changes");
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(
-			new CustomFoodProperties.Builder(IdTagMatcher.Type.ID, "minecraft:rotten_flesh").setNutrition(2).setEatingTime(50).build()
+			new CustomFoodProperties.Builder(IdTagMatcher.Type.ID, "minecraft:rotten_flesh").setNutrition(2).setEatingTime(50).addEffect(new MobEffectInstance(MobEffects.CONFUSION, 30 * 20, 0), 0.8f).build()
 	));
 	public static final ArrayList<CustomFoodProperties> customFoodProperties = new ArrayList<>();
 
@@ -132,6 +133,7 @@ public class FoodDrinks extends SRFeature {
 	private static FoodProperties lastFoodEatenCache;
 	private static int lastFoodEatenTime;
 	public static int getFoodConsumingTime(ItemStack stack) {
+		//If in cache, get it
 		if (customFoodPropertiesCache != null && customFoodPropertiesCache.matchesItem(stack.getItem())) {
 			return customFoodPropertiesCache.eatingTime;
 		}
@@ -179,6 +181,22 @@ public class FoodDrinks extends SRFeature {
 		player.stopUsingItem();
 	}
 
+	@SubscribeEvent
+	public void onEffectApply(AddEatEffectEvent event) {
+		for (CustomFoodProperties foodValue : customFoodProperties) {
+			if (foodValue.effects == null || !foodValue.matchesItem(event.getStack().getItem()))
+				continue;
+
+			foodValue.getEffects().forEach(pair -> {
+				if (!event.getLevel().isClientSide && pair.getFirst() != null && event.getLevel().random.nextFloat() < pair.getSecond()) {
+					event.getEntity().addEffect(new MobEffectInstance(pair.getFirst()));
+				}
+			});
+			event.setCanceled(true);
+			break;
+		}
+	}
+
 	private static boolean processedFoodMultipliers = false;
 
 	@SuppressWarnings("ConstantConditions")
@@ -217,8 +235,10 @@ public class FoodDrinks extends SRFeature {
 					food.nutrition = foodValue.nutrition;
 				if (foodValue.saturationModifier >= 0f)
 					food.saturationModifier = foodValue.saturationModifier;
-				if (foodValue.fastEating != null)
+				if (foodValue.fastEating)
 					food.fastFood = foodValue.fastEating;
+				//if (foodValue.effects != null)
+					//food.effects = foodValue.effects.stream().map(pair -> Pair.of(pair.getFirst(), pair.getSecond())).collect(java.util.stream.Collectors.toList());
 			}
 		}
 

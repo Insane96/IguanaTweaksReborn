@@ -14,6 +14,7 @@ import net.minecraft.world.entity.Attackable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -77,5 +78,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
             return amount;
         }
         return Math.max(amount - this.getAbsorptionAmount(), 0.0F);
+    }
+
+    @Inject(method = "addEatEffect", at = @At("HEAD"), cancellable = true)
+    private void onAddEatEffect(ItemStack pFood, Level pLevel, LivingEntity pLivingEntity, CallbackInfo ci) {
+        if (SREventFactory.onAddEatEffect(pFood, pLevel, pLivingEntity))
+            ci.cancel();
     }
 }

@@ -1,8 +1,7 @@
 # Changelog
 
-* Add a way to override food effects
-
 ## 0.14.6
+* Added a new `effect` object in `food_properties.json` to override the vanilla effects given by food
 * Timber trees will no longer work if too many sideways logs are found
 
 ## 0.14.5

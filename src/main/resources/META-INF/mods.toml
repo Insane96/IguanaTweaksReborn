@@ -65,7 +65,7 @@ license="All rights reserved"
 [[dependencies.survivalreimagined]]
     modId="enhancedai"
     mandatory=true
-    versionRange="[1.13.0,)"
+    versionRange="[1.15.0,)"
     ordering="NONE"
     side="BOTH"
 
