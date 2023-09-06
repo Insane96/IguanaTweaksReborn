@@ -1,5 +1,10 @@
 # Changelog
 
+* Add a way to override food effects
+
+## 0.14.6
+* Timber trees will no longer work if too many sideways logs are found
+
 ## 0.14.5
 * Added Snowballs
   * Snowballs now deal 0.5 damage

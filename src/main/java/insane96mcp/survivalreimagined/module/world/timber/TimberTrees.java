@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -98,6 +99,7 @@ public class TimberTrees extends SRFeature {
         boolean foundLeaves = false;
         int checks = 0;
         int logs = 0;
+        int sidewaysLogs = 0;
         List<BlockPos> posToCheck = new ArrayList<>();
         posToCheck.add(pos.above());
         BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos().set(pos);
@@ -134,13 +136,17 @@ public class TimberTrees extends SRFeature {
                     if (!blocks.contains(posImmutable) && (isSameLog || isValidLeaves) && isInDistance && (!isValidLeaves || !isCurrLeaves || isCorrectLeavesDistance)) {
                         blocks.add(posImmutable);
                         posToCheck.add(posImmutable);
-                        if (isSameLog)
-                            logs++;
+                        if (isSameLog) {
+                            if (state.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y)
+                                logs++;
+                            else
+                                sidewaysLogs++;
+                        }
                     }
                 }
                 checks++;
             }
-            if (posToCheck.isEmpty() && (!foundLeaves || logs < 3)) {
+            if (posToCheck.isEmpty() && (!foundLeaves || logs + sidewaysLogs < 3 || sidewaysLogs > logs)) {
                 blocks.clear();
                 break;
             }
