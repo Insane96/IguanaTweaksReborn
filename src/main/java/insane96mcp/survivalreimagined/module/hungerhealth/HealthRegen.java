@@ -41,13 +41,13 @@ public class HealthRegen extends Feature {
 	public static Integer regenWhenFoodAbove = 6;
 	@Config(min = 0)
 	@Label(name = "Starve Speed", description = "Sets how many ticks between starve damage happens (vanilla is 80).")
-	public static Integer starveSpeed = 320;
+	public static Integer starveSpeed = 640;
 	@Config(min = 0)
 	@Label(name = "Starve Damage", description = "Set how much damage is dealt when starving (vanilla is 1).")
 	public static Integer starveDamage = 1;
 	@Config(min = 0, max = 20)
 	@Label(name = "Starve at Hunger", description = "The player will start starving at this hunger (Vanilla is 0)")
-	public static Integer starveAtHunger = 3;
+	public static Integer starveAtHunger = 4;
 	@Config
 	@Label(name = "Faster Starving when really hungry", description = "If below 'Starve at Hunger' player will starve faster.")
 	public static Boolean fasterStarvingWhenReallyHungry = true;
