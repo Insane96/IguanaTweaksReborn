@@ -8,6 +8,7 @@ import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
@@ -36,13 +37,20 @@ public class EnergyBoostItem extends IdTagMatcher {
             return;
 
         int duration;
+        MobEffectInstance mobEffectInstance = player.getEffect(Tiredness.ENERGY_BOOST.get());
+        if (mobEffectInstance == null)
+            duration = 0;
+        else if (mobEffectInstance.isInfiniteDuration())
+            return;
+        else
+            duration = mobEffectInstance.duration;
         if (this.duration == 0) {
             FoodProperties food = stack.getFoodProperties(player);
             //noinspection ConstantConditions .isEdible() is checked
-            duration = (int) (Utils.getFoodEffectiveness(food) * 20 * Tiredness.defaultEnergyBoostDurationMultiplier);
+            duration += (int) (Utils.getFoodEffectiveness(food) * 20 * Tiredness.defaultEnergyBoostDurationMultiplier);
         }
         else {
-            duration = this.duration;
+            duration += this.duration;
         }
 
         player.addEffect(MCUtils.createEffectInstance(Tiredness.ENERGY_BOOST.get(), duration, this.amplifier, true, false, true, false));
