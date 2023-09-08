@@ -1,7 +1,5 @@
 # Changelog
 
-* Add a way to remove original modifiers from items
-
 ## 0.14.6
 * EXPERIMENTAL Absorption armor
   * Armor no longer gives protection, instead gives regenerating absorption hearts
@@ -10,7 +8,10 @@
   * Any item in this tag will have it's original modifiers removed before applying custom ones
 * Energy Boost items effect duration now stacks
 * Added a new `effect` object in `food_properties.json` to override the vanilla effects given by food
-* Timber trees will no longer work if too many sideways logs are found
+* You now start starving at 4 hunger instead of 3 (halved speed at 4)
+* Timber trees 
+  * Falling trees now try to stack on the sides instead of breaking
+  * Will no longer work if too many sideways logs are found
 
 ## 0.14.5
 * Added Snowballs

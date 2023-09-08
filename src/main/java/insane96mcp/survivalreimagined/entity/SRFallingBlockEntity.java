@@ -29,13 +29,16 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 
 public class SRFallingBlockEntity extends FallingBlockEntity {
 	public Entity source;
+	public Direction directionFalling;
 
-	public SRFallingBlockEntity(Level level, BlockPos pos, BlockState fallingBlockState) {
+	public SRFallingBlockEntity(Level level, BlockPos pos, BlockState fallingBlockState, Direction directionFalling) {
 		this(level, pos.getCenter().x, pos.getCenter().y, pos.getCenter().z, fallingBlockState);
+		this.directionFalling = directionFalling;
 	}
 
 	public SRFallingBlockEntity(Level level, double x, double y, double z, BlockState fallingBlockState) {
@@ -117,30 +120,31 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 
 	public void tryStackAboveOrMove(BlockPos pos) {
 		BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ());
-		//boolean maxStackReached = false;
+		boolean maxStackReached = false;
 		while (true) {
 			blockPos.set(blockPos.above());
-			if (blockPos.getY() - pos.getY() > 4) {
-				//maxStackReached = true;
-				if (this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+			if (blockPos.getY() - pos.getY() > 3) {
+				maxStackReached = true;
+				/*if (this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 					this.discard();
 					this.callOnBrokenAfterFall(this.blockState.getBlock(), pos);
 					this.spawnAtLocation(this.blockState.getBlock());
-				}
+				}*/
 				break;
 			}
 			if (this.tryPlace(blockPos))
 				break;
 		}
-		/*if (maxStackReached) {
-			//List<Direction> directions = Util.shuffledCopy(Arrays.stream(Direction.values()).filter((direction) -> direction.getAxis().isHorizontal()).toArray(Direction[]::new), this.random);
-			Direction[] directions = Arrays.stream(Direction.values()).filter((direction) -> direction.getAxis().isHorizontal()).toArray(Direction[]::new);
-			for (Direction direction : directions) {
-				blockPos.set(pos.relative(direction));
-				this.setPos(this.position().relative(direction, 1d));
-				break;
-			}
-		}*/
+		if (maxStackReached) {
+			Direction dir;
+			if (this.directionFalling != null)
+				dir = this.random.nextBoolean() ? this.directionFalling.getClockWise() : this.directionFalling.getCounterClockWise();
+			else
+				dir = Arrays.stream(Direction.values()).filter((direction) -> direction.getAxis().isHorizontal()).skip(this.random.nextInt(4)).findFirst().get();
+			//blockPos.set(pos.relative(dir));
+			this.directionFalling = dir;
+			this.setPos(this.position().relative(dir, 1d).relative(Direction.UP, 2));
+		}
 	}
 
 	public boolean tryPlace(BlockPos blockPos) {

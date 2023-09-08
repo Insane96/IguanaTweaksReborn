@@ -86,7 +86,7 @@ public class TimberTrees extends SRFeature {
             if (state.getBlock() instanceof RotatedPillarBlock) {
                 state = rotatePillar(state, direction.getAxis());
             }
-            SRFallingBlockEntity fallingBlock = new SRFallingBlockEntity((Level) event.getLevel(), fallingBlockPos, state);
+            SRFallingBlockEntity fallingBlock = new SRFallingBlockEntity((Level) event.getLevel(), fallingBlockPos, state, direction);
             fallingBlock.move(MoverType.SELF, new Vec3(0, 0.1d * horizontalDistance, 0));
             //fallingBlock.setHurtsEntities(2f, 1024);
             event.getLevel().addFreshEntity(fallingBlock);
