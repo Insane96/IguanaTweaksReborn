@@ -9,7 +9,6 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.combat.RegeneratingAbsorption;
 import insane96mcp.survivalreimagined.module.combat.stats.data.ItemAttributeModifier;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.Strings;
@@ -50,11 +49,11 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_shovel", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .25d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:golden_hammer", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .125d, AttributeModifier.Operation.ADDITION),
 
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_helmet", UUID.fromString("3f22e9a3-0916-43ab-a93f-ba52e5ae28e5"), EquipmentSlot.HEAD, RegeneratingAbsorption.ATTRIBUTE, 2d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", UUID.fromString("f700b45a-0c51-40f8-9f59-836c519d64d5"), EquipmentSlot.CHEST, RegeneratingAbsorption.ATTRIBUTE, 2d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_leggings", UUID.fromString("4f1caa92-2558-4416-829c-9faf922d7137"), EquipmentSlot.LEGS, RegeneratingAbsorption.ATTRIBUTE, 2d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_boots", UUID.fromString("dc49f564-489f-4f70-ab50-ce85cc4bfa85"), EquipmentSlot.FEET, RegeneratingAbsorption.ATTRIBUTE, 2d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", UUID.fromString("b12fe849-17b9-4905-b160-6685eb8b854c"), EquipmentSlot.OFFHAND, RegeneratingAbsorption.ATTRIBUTE, 2d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_helmet", UUID.fromString("3f22e9a3-0916-43ab-a93f-ba52e5ae28e5"), EquipmentSlot.HEAD, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", UUID.fromString("f700b45a-0c51-40f8-9f59-836c519d64d5"), EquipmentSlot.CHEST, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_leggings", UUID.fromString("4f1caa92-2558-4416-829c-9faf922d7137"), EquipmentSlot.LEGS, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_boots", UUID.fromString("dc49f564-489f-4f70-ab50-ce85cc4bfa85"), EquipmentSlot.FEET, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", UUID.fromString("b12fe849-17b9-4905-b160-6685eb8b854c"), EquipmentSlot.OFFHAND, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
 
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", UUID.fromString("ad33dadf-bf7b-4f40-83ed-f93f4721d28e"), EquipmentSlot.HEAD, Attributes.ARMOR, 0, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", UUID.fromString("f690ba04-4d3f-47d0-ad5d-809238b48f45"), EquipmentSlot.CHEST, Attributes.ARMOR, -2, AttributeModifier.Operation.ADDITION),
@@ -146,7 +145,8 @@ public class Stats extends SRFeature {
 		loadAndReadJson(json, itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE);
 	}
 
-	@SubscribeEvent
+	//Run before Absorption armor
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onAttributeEvent(ItemAttributeModifierEvent event) {
 		if (!this.isEnabled())
 			return;
@@ -229,7 +229,7 @@ public class Stats extends SRFeature {
 						switch (operation) {
 							case ADDITION -> {
 								if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE))
-									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount * 10)), Component.translatable(attribute.getDescriptionId()));
+									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount * 100)) + "%", Component.translatable(attribute.getDescriptionId()));
 								else
 									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount)), Component.translatable(attribute.getDescriptionId()));
 							}

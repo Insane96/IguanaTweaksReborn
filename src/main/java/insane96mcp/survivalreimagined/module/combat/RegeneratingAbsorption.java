@@ -23,12 +23,14 @@ public class RegeneratingAbsorption extends Feature {
 
     public static final RegistryObject<Attribute> ATTRIBUTE = SRRegistries.ATTRIBUTES.register("regenerating_absorption", () -> new RangedAttribute("attribute.name.regenerating_absorption", 0d, 0d, 1024d));
 
+    public static final RegistryObject<Attribute> REGEN_ATTRIBUTE = SRRegistries.ATTRIBUTES.register("regenerating_absorption_speed", () -> new RangedAttribute("attribute.name.regenerating_absorption_speed", 0.125d, 0d, 20d));
+
     @Config(min = 0)
-    @Label(name = "Regen Speed", description = "Speed (in seconds) at which Absorption hearts regenerate")
-    public static Integer regenSpeed = 10;
+    @Label(name = "Absorption decay", description = "Speed (in ticks) at which Absorption hearts decay")
+    public static Integer absorptionDecay = 10;
     @Config(min = 0)
-    @Label(name = "Absorption decay", description = "Speed (in seconds) at which Absorption hearts decay")
-    public static Integer absorptionDecay = 1;
+    @Label(name = "Un-damaged time to regen", description = "Ticks that must pass from the last hit to regen absorption hearts")
+    public static Integer unDamagedTimeToRegen = 60;
     @Config
     @Label(name = "Cap to health", description = "The amount of regenerating absorption hearts cannot go over the entity's current health.")
     public static Boolean capToHealth = true;
@@ -42,10 +44,10 @@ public class RegeneratingAbsorption extends Feature {
 
     public static void regeneratingAbsorptionAttribute(EntityAttributeModificationEvent event) {
         for (EntityType<? extends LivingEntity> entityType : event.getTypes()) {
-            if (event.has(entityType, ATTRIBUTE.get()))
-                continue;
-
-            event.add(entityType, ATTRIBUTE.get());
+            if (!event.has(entityType, ATTRIBUTE.get()))
+                event.add(entityType, ATTRIBUTE.get());
+            if (!event.has(entityType, REGEN_ATTRIBUTE.get()))
+                event.add(entityType, REGEN_ATTRIBUTE.get());
         }
     }
 
@@ -53,12 +55,15 @@ public class RegeneratingAbsorption extends Feature {
     public void onPlayerTick(LivingEvent.LivingTickEvent event) {
         if (!this.isEnabled()
                 || event.getEntity().level().isClientSide
-                || event.getEntity().tickCount % 20 != 0)
+                || event.getEntity().tickCount % 5 != 0)
             return;
 
         LivingEntity entity = event.getEntity();
 
-        double goldenAbsorption = entity.getAttributeValue(ATTRIBUTE.get());
+        double regeneratingAbsorption = entity.getAttributeValue(ATTRIBUTE.get());
+        int absorptionSpeed = 5 * (int) Math.round(20 * (1f / entity.getAttributeValue(REGEN_ATTRIBUTE.get()) / 5f));
+        if (absorptionSpeed == 0)
+            return;
         //Take into account absorption effect
         int absorptionAmplifier = 0;
         if (entity.hasEffect(MobEffects.ABSORPTION)) {
@@ -67,11 +72,11 @@ public class RegeneratingAbsorption extends Feature {
 
         float actualGoldenAbsorption = entity.getAbsorptionAmount() - (absorptionAmplifier * 4);
 
-        if (actualGoldenAbsorption >= 0f && actualGoldenAbsorption != goldenAbsorption) {
-            if (actualGoldenAbsorption > goldenAbsorption && entity.tickCount % (absorptionDecay * 20) == 0) {
+        if (actualGoldenAbsorption >= 0f && actualGoldenAbsorption != regeneratingAbsorption) {
+            if (actualGoldenAbsorption > regeneratingAbsorption && entity.tickCount % absorptionDecay == 0) {
                 entity.setAbsorptionAmount(entity.getAbsorptionAmount() - 1);
             }
-            else if (entity.tickCount % (regenSpeed * 20) == 0) {
+            else if (entity.tickCount % absorptionSpeed == 0 && (entity.tickCount < entity.getLastHurtByMobTimestamp() || entity.tickCount - entity.getLastHurtByMobTimestamp() > unDamagedTimeToRegen)) {
                 double newAbsorption = Math.min(entity.getAbsorptionAmount() + 1, entity.getAttributeValue(ATTRIBUTE.get()) + (absorptionAmplifier * 4));
                 if (capToHealth)
                     newAbsorption = Math.min(newAbsorption, entity.getHealth() + (absorptionAmplifier * 4));

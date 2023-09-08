@@ -1,6 +1,12 @@
 # Changelog
 
+* Add a way to remove original modifiers from items
+
 ## 0.14.6
+* EXPERIMENTAL Absorption armor
+  * Armor no longer gives protection, instead gives regenerating absorption hearts
+  * Toughness, instead, increases the regen speed of the absorption hearts
+* Energy Boost items effect duration now stacks
 * Added a new `effect` object in `food_properties.json` to override the vanilla effects given by food
 * Timber trees will no longer work if too many sideways logs are found
 

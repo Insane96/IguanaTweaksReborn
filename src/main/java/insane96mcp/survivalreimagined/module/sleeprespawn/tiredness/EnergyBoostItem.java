@@ -53,7 +53,7 @@ public class EnergyBoostItem extends IdTagMatcher {
             duration += this.duration;
         }
 
-        player.addEffect(MCUtils.createEffectInstance(Tiredness.ENERGY_BOOST.get(), duration, this.amplifier, true, false, true, false));
+        player.addEffect(MCUtils.createEffectInstance(Tiredness.ENERGY_BOOST.get(), duration, this.amplifier, false, false, true, false));
     }
 
     public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<EnergyBoostItem>>(){}.getType();
