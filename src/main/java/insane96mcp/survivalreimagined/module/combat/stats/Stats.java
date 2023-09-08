@@ -8,6 +8,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.combat.stats.data.ItemAttributeModifier;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
@@ -17,6 +18,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.AttackDamageMobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -25,6 +27,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -42,6 +45,9 @@ import java.util.stream.Collectors;
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction. Item modifiers are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class Stats extends SRFeature {
+
+	public static TagKey<Item> REMOVE_ORIGINAL_MODIFIERS_TAG = SRItemTagsProvider.create("remove_original_modifiers");
+
 	public static final ArrayList<ItemAttributeModifier> ITEM_MODIFIERS_DEFAULT = new ArrayList<>(Arrays.asList(
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_sword", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .4d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_axe", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .25d, AttributeModifier.Operation.ADDITION),
@@ -151,6 +157,12 @@ public class Stats extends SRFeature {
 		if (!this.isEnabled())
 			return;
 
+		//Try to remove original modifiers first
+		if (event.getItemStack().is(REMOVE_ORIGINAL_MODIFIERS_TAG)) {
+			Multimap<Attribute, AttributeModifier> modifiers = event.getOriginalModifiers();
+			modifiers.forEach(event::removeModifier);
+		}
+
 		for (ItemAttributeModifier itemAttributeModifier : itemModifiers) {
 			if (!itemAttributeModifier.matchesItem(event.getItemStack().getItem()))
 				continue;
@@ -229,12 +241,12 @@ public class Stats extends SRFeature {
 						switch (operation) {
 							case ADDITION -> {
 								if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE))
-									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount * 100)) + "%", Component.translatable(attribute.getDescriptionId()));
+									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amount * 100) + "%", Component.translatable(attribute.getDescriptionId()));
 								else
-									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount)), Component.translatable(attribute.getDescriptionId()));
+									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amount < 0 ? 0 : amount), Component.translatable(attribute.getDescriptionId()));
 							}
 							case MULTIPLY_BASE -> {
-								component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount * 100)), Component.translatable(attribute.getDescriptionId()));
+								component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amount * 100), Component.translatable(attribute.getDescriptionId()));
 							}
 							case MULTIPLY_TOTAL -> {
 								component = Component.literal("x").append(Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount) + 1), Component.translatable(attribute.getDescriptionId())));
