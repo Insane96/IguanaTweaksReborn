@@ -166,6 +166,7 @@ public class ItemStats extends SRFeature {
 		super.readConfig(event);
 		if (overrideShieldBlockDamage) {
 			SPItems.COPPER_SHIELD.get().blockingDamageOverride = 4d;
+			SPItems.GOLDEN_SHIELD.get().blockingDamageOverride = 3d;
 			SPItems.DIAMOND_SHIELD.get().blockingDamageOverride = 6.5d;
 		}
 	}

@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Increased meat drop from animals
+* Golden shield now blocks more damage (1 -> 3)
 
 ## 0.14.6
 * EXPERIMENTAL Absorption armor
