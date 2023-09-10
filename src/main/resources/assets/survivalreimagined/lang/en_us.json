@@ -256,6 +256,9 @@
 
 	"survivalreimagined:world_module": "World",
 
+	"filled_map.desert_pyramid": "Desert Explorer Map",
+	"filled_map.igloo": "Cold Plains Explorer Map",
+
 	"item.survivalreimagined.firestarter": "Firestarter",
 	"block.survivalreimagined.charcoal_layer": "Charcoal Layer",
 	"block.survivalreimagined.soul_sand_hellish_coal_ore": "Soul Sand Hellish Coal Ore",

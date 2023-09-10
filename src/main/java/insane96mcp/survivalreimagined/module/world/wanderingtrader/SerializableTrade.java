@@ -4,9 +4,14 @@ import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import insane96mcp.survivalreimagined.utils.LogHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -14,16 +19,23 @@ import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.MapItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.saveddata.maps.MapDecoration;
+import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
+import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @JsonAdapter(SerializableTrade.SerializableTradeSerializer.class)
 public class SerializableTrade implements VillagerTrades.ItemListing {
@@ -36,8 +48,10 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 
 	@Nullable
 	private EnchantRandomly enchantRandomly;
-
 	private final List<EnchantmentInstance> enchantments = new ArrayList<>();
+
+	@Nullable
+	private ExplorationMap explorationMap;
 
 	public SerializableTrade() {
 
@@ -65,10 +79,17 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 		return this;
 	}
 
+	public SerializableTrade explorationMap(TagKey<Structure> destination, MapDecoration.Type mapDecoration, byte zoom, int searchRadius, boolean skipKnownStructures) {
+		this.explorationMap = new ExplorationMap(destination, mapDecoration, zoom, searchRadius, skipKnownStructures);
+		return this;
+	}
+
 	@Nullable
 	@Override
 	public MerchantOffer getOffer(Entity entity, RandomSource random) {
 		ItemStack result = this.result.copy();
+		if (entity.level().isClientSide)
+			return null;
 		if (this.enchantRandomly != null)
 			result = EnchantmentHelper.enchantItem(random, result, random.nextInt(this.enchantRandomly.minLevel, this.enchantRandomly.maxLevel + 1), this.enchantRandomly.treasure);
 		for (EnchantmentInstance enchantmentInstance : this.enchantments) {
@@ -83,6 +104,17 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 			else
 				result.enchant(enchantmentInstance.enchantment, enchantmentInstance.level);
 		}
+		if (this.explorationMap != null && result.is(Items.MAP)) {
+			Vec3 vec3 = entity.position();
+            ServerLevel serverlevel = (ServerLevel) entity.level();
+            BlockPos blockpos = serverlevel.findNearestMapStructure(this.explorationMap.destination, BlockPos.containing(vec3), this.explorationMap.searchRadius, this.explorationMap.skipKnownStructures);
+            if (blockpos != null) {
+                result = MapItem.create(serverlevel, blockpos.getX(), blockpos.getZ(), this.explorationMap.zoom, true, true);
+                MapItem.renderBiomePreviewMap(serverlevel, result);
+                MapItemSavedData.addTargetDecoration(result, blockpos, "+", this.explorationMap.mapDecoration);
+				result.setTag(this.result.getTag());
+            }
+        }
 		return new MerchantOffer(this.itemA, this.itemB == null ? ItemStack.EMPTY : this.itemB, result, this.maxUses, this.xp, 1f);
 	}
 
@@ -114,7 +146,8 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 			} catch (CommandSyntaxException e) {
 				tag = null;
 			}
-			serializableTrade.result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemResult), itemResultCount, tag);
+			serializableTrade.result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemResult), itemResultCount);
+			serializableTrade.result.setTag(tag);
 			JsonObject enchantRandomly = GsonHelper.getAsJsonObject(json.getAsJsonObject(), "enchant_randomly", null);
 			if (enchantRandomly != null) {
 				serializableTrade.enchantRandomly = new EnchantRandomly(GsonHelper.getAsInt(enchantRandomly, "min_levels"), GsonHelper.getAsInt(enchantRandomly, "max_levels"), GsonHelper.getAsBoolean(enchantRandomly, "treasure"));
@@ -127,6 +160,8 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 					serializableTrade.enchantments.add(new EnchantmentInstance(ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryParse(id)), level));
 				});
 			}
+			if (json.getAsJsonObject().has("exploration_map"))
+					serializableTrade.explorationMap = context.deserialize(json.getAsJsonObject().get("exploration_map"), ExplorationMap.class);
 
 			serializableTrade.maxUses = GsonHelper.getAsInt(json.getAsJsonObject(), "max_uses");
 			serializableTrade.xp = GsonHelper.getAsInt(json.getAsJsonObject(), "xp", 0);
@@ -165,6 +200,9 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 				});
 				jsonObject.add("enchantments", jsonArray);
 			}
+			if (src.explorationMap != null) {
+				jsonObject.add("exploration_map", context.serialize(src.explorationMap));
+			}
 			jsonObject.addProperty("max_uses", src.maxUses);
 			jsonObject.addProperty("xp", src.xp);
 			return jsonObject;
@@ -172,5 +210,63 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 	}
 
 	private record EnchantRandomly(int minLevel, int maxLevel, boolean treasure) {
+	}
+
+	@JsonAdapter(ExplorationMap.ExplorationMapSerializer.class)
+	private static class ExplorationMap {
+		final TagKey<Structure> destination;
+		final MapDecoration.Type mapDecoration;
+		final byte zoom;
+		final int searchRadius;
+		final boolean skipKnownStructures;
+
+		private ExplorationMap(TagKey<Structure> destination, MapDecoration.Type mapDecoration, byte zoom, int searchRadius, boolean skipKnownStructures) {
+			this.destination = destination;
+			this.mapDecoration = mapDecoration;
+			this.zoom = zoom;
+			this.searchRadius = searchRadius;
+			this.skipKnownStructures = skipKnownStructures;
+		}
+
+		public static class ExplorationMapSerializer implements JsonDeserializer<ExplorationMap>, JsonSerializer<ExplorationMap> {
+			@Override
+			public ExplorationMap deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+				TagKey<Structure> tagkey = readStructure(json.getAsJsonObject());
+				String s = json.getAsJsonObject().has("decoration") ? GsonHelper.getAsString(json.getAsJsonObject(), "decoration") : "mansion";
+				MapDecoration.Type mapdecoration$type = ExplorationMapFunction.DEFAULT_DECORATION;
+
+				try {
+					mapdecoration$type = MapDecoration.Type.valueOf(s.toUpperCase(Locale.ROOT));
+				}
+				catch (IllegalArgumentException illegalargumentexception) {
+					LogHelper.error("Error while parsing loot table decoration entry. Found {}. Defaulting to {}", s, ExplorationMapFunction.DEFAULT_DECORATION);
+				}
+
+				byte b0 = GsonHelper.getAsByte(json.getAsJsonObject(), "zoom", ExplorationMapFunction.DEFAULT_ZOOM);
+				int i = GsonHelper.getAsInt(json.getAsJsonObject(), "search_radius", ExplorationMapFunction.DEFAULT_SEARCH_RADIUS);
+				boolean flag = GsonHelper.getAsBoolean(json.getAsJsonObject(), "skip_existing_chunks", ExplorationMapFunction.DEFAULT_SKIP_EXISTING);
+				return new ExplorationMap(tagkey, mapdecoration$type, b0, i, flag);
+			}
+
+			@Override
+			public JsonElement serialize(ExplorationMap src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
+				JsonObject jsonObject = new JsonObject();
+				jsonObject.addProperty("destination", src.destination.location().toString());
+				if (src.mapDecoration != ExplorationMapFunction.DEFAULT_DECORATION)
+					jsonObject.add("decoration", context.serialize(src.mapDecoration.toString().toLowerCase(Locale.ROOT)));
+				if (src.zoom != 2)
+					jsonObject.addProperty("zoom", src.zoom);
+				if (src.searchRadius != 50)
+					jsonObject.addProperty("search_radius", src.searchRadius);
+				if (!src.skipKnownStructures)
+					jsonObject.addProperty("skip_existing_chunks", src.skipKnownStructures);
+				return jsonObject;
+			}
+		}
+
+		private static TagKey<Structure> readStructure(JsonObject pJson) {
+			String s = GsonHelper.getAsString(pJson, "destination");
+			return TagKey.create(Registries.STRUCTURE, new ResourceLocation(s));
+		}
 	}
 }

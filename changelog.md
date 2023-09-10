@@ -1,10 +1,12 @@
 # Changelog
 
 ## Upcoming
+* Wandering Traders now sell explorer maps (ocean, woodland, desert and cold plains)
 * Rebalanced Blasting. The bonus mining speed is now based off tool's mining speed
 * Increased meat drop from animals
 * Golden shield now blocks more damage (1 -> 3)
 * Copper tools now last 3% more per block below sea level (+~200% at y=0 and +~350% at y=-56)
+* Desert Wells are now 10x more common
 
 ## 0.14.6
 * EXPERIMENTAL Absorption armor

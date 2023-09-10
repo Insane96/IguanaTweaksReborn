@@ -4,15 +4,25 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.Lapis;
 import insane96mcp.survivalreimagined.module.farming.crops.Crops;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.StructureTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.saveddata.maps.MapDecoration;
+import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -23,6 +33,9 @@ import java.util.function.Supplier;
 @Label(name = "Wandering Trader", description = "Change wandering trader offers")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class WanderingTrader extends SRFeature {
+    public static final TagKey<Structure> DESERT_TEMPLE_TAG = TagKey.create(Registries.STRUCTURE, new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "desert_pyramid"));
+    public static final TagKey<Structure> IGLOO_TAG = TagKey.create(Registries.STRUCTURE, new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "igloo"));
+
     public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_GENERIC_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
             new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Items.WHEAT_SEEDS), 4),
             new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Crops.CARROT_SEEDS.get()), 4),
@@ -53,14 +66,24 @@ public class WanderingTrader extends SRFeature {
     public static final ArrayList<SerializableTrade> wanderingTraderGenericTrades = new ArrayList<>();
 
     public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_RARE_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
-            new SerializableTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(Items.BOOK), 1).enchantResult(10, 18, false),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.BOOK), 1).enchantResult(4, 8, false),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(Items.BOOK), 1)
+                    .enchantResult(10, 18, false),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.BOOK), 1)
+                    .enchantResult(4, 8, false),
             new SerializableTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(Lapis.ANCIENT_LAPIS.get()), 1),
             new SerializableTrade(new ItemStack(Items.EMERALD, 4), new ItemStack(Lapis.CLEANSED_LAPIS.get()), 2),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.GUNPOWDER, 4), 3),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.LILY_PAD, 5), 2),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.PACKED_ICE, 1), 6),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.EXPERIENCE_BOTTLE), 8)
+            new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.EXPERIENCE_BOTTLE), 8),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 8), new ItemStack(Items.MAP, 1), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.desert_pyramid")), 1, 0)
+                    .explorationMap(DESERT_TEMPLE_TAG, MapDecoration.Type.MANSION, ExplorationMapFunction.DEFAULT_ZOOM, 50, false),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 8), new ItemStack(Items.MAP, 1), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.igloo")), 1, 0)
+                    .explorationMap(IGLOO_TAG, MapDecoration.Type.MANSION, ExplorationMapFunction.DEFAULT_ZOOM, 50, false),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 8), new ItemStack(Items.MAP, 1), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.mansion")), 1, 0)
+                    .explorationMap(StructureTags.ON_WOODLAND_EXPLORER_MAPS, MapDecoration.Type.MANSION, ExplorationMapFunction.DEFAULT_ZOOM, 100, false),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 8), new ItemStack(Items.MAP, 1), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.monument")), 1, 0)
+                    .explorationMap(StructureTags.ON_OCEAN_EXPLORER_MAPS, MapDecoration.Type.MONUMENT, ExplorationMapFunction.DEFAULT_ZOOM, 50, false)
     ));
 
     public static final ArrayList<SerializableTrade> wanderingTraderRareTrades = new ArrayList<>();
@@ -96,6 +119,7 @@ public class WanderingTrader extends SRFeature {
     public void loadJsonConfigs() {
         if (!this.isEnabled())
             return;
+        //Load this here so no need for a Supplier for items
         if (JSON_CONFIGS.isEmpty()) {
             JSON_CONFIGS.add(new JsonConfig<>("generic_trades.json", wanderingTraderGenericTrades, WANDERING_TRADER_GENERIC_TRADES_DEFAULT.get(), SerializableTrade.SERIALIZABLE_TRADE_LIST_TYPE));
             JSON_CONFIGS.add(new JsonConfig<>("rare_trades.json", wanderingTraderRareTrades, WANDERING_TRADER_RARE_TRADES_DEFAULT.get(), SerializableTrade.SERIALIZABLE_TRADE_LIST_TYPE));
@@ -115,5 +139,11 @@ public class WanderingTrader extends SRFeature {
             event.getRareTrades().add(serializableTrade);
         }
         VillagerTrades.WANDERING_TRADER_TRADES.put(3, wanderingTraderBuyingTrades.toArray(new VillagerTrades.ItemListing[0]));
+    }
+
+    public static ItemStack createStackWithName(Item item, int count, Component name) {
+        ItemStack stack = new ItemStack(item, count);
+        stack.setHoverName(name);
+        return stack;
     }
 }
