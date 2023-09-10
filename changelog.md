@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Increased meat drop from animals
+
 ## 0.14.6
 * EXPERIMENTAL Absorption armor
   * Armor no longer gives protection, instead gives regenerating absorption hearts
