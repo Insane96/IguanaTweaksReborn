@@ -36,6 +36,7 @@
         "MilkBucketItemMixin",
         "MobEffectMixin",
         "MonsterMixin",
+        "MultiplayerGameModeMixin",
         "MusicsMixin",
         "NaturalSpawnerMixin",
         "PistonBaseBlockMixin",

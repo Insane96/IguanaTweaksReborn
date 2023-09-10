@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.module.experience.enchantments.enchantmen
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.enchantment.DiggingEnchantment;
@@ -43,8 +44,10 @@ public class Blasting extends Enchantment {
         int level = heldStack.getEnchantmentLevel(EnchantmentsFeature.BLASTING.get());
         if (level == 0)
             return 0f;
+        if (!(heldStack.getItem() instanceof DiggerItem diggerItem))
+            return 0f;
 
-        float miningSpeedBoost = (float) (level * Math.pow(2.5d, 6.5f - state.getBlock().getExplosionResistance()));
+        float miningSpeedBoost = (float) (level * Math.min(10f, Math.pow(3d, (6f - state.getBlock().getExplosionResistance()) / 1.5f))) / 6f * diggerItem.speed;
         return EnchantmentsFeature.applyMiningSpeedModifiers(miningSpeedBoost, false, entity);
     }
 }
