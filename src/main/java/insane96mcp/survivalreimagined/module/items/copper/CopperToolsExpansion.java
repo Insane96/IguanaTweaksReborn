@@ -8,6 +8,7 @@ import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
@@ -92,6 +93,26 @@ public class CopperToolsExpansion extends Feature {
 		if (y > 64)
 			return;
 		event.setNewSpeed(event.getNewSpeed() + EnchantmentsFeature.applyMiningSpeedModifiers((64 - y) * 0.05f, false, event.getEntity()));
+	}
+
+	@SubscribeEvent
+	public void onHurtItemStack(HurtItemStackEvent event) {
+		if (!this.isEnabled()
+				|| !event.getStack().is(COPPER_TOOLS_EQUIPMENT)
+				|| event.getPlayer() == null)
+			return;
+
+		int amount = event.getAmount();
+		int newAmount = 0;
+		int y = event.getEntity().getBlockY();
+		if (y > 64)
+			return;
+		for (int i = 0; i < amount; i++) {
+			//3% "more durability" per block below sea level (+~200% at y=0 and +~350% at y=-56)
+			if (event.getRandom().nextFloat() >= 1 - 1 / (1 + (64 - y) * 0.03))
+				++newAmount;
+		}
+		event.setAmount(newAmount);
 	}
 
 	@SubscribeEvent

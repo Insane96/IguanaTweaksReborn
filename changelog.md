@@ -3,6 +3,7 @@
 ## Upcoming
 * Increased meat drop from animals
 * Golden shield now blocks more damage (1 -> 3)
+* Copper tools now last 3% more per block below sea level (+~200% at y=0 and +~350% at y=-56)
 
 ## 0.14.6
 * EXPERIMENTAL Absorption armor
