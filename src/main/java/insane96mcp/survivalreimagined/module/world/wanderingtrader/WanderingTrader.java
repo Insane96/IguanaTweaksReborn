@@ -76,13 +76,13 @@ public class WanderingTrader extends SRFeature {
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.LILY_PAD, 5), 2),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.PACKED_ICE, 1), 6),
             new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.EXPERIENCE_BOTTLE), 8),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 8), new ItemStack(Items.MAP, 1), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.desert_pyramid")), 1, 0)
+            new SerializableTrade(new ItemStack(Items.EMERALD, 8), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.desert_pyramid")), 1)
                     .explorationMap(DESERT_TEMPLE_TAG, MapDecoration.Type.MANSION, ExplorationMapFunction.DEFAULT_ZOOM, 50, false),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 8), new ItemStack(Items.MAP, 1), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.igloo")), 1, 0)
+            new SerializableTrade(new ItemStack(Items.EMERALD, 8), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.igloo")), 1)
                     .explorationMap(IGLOO_TAG, MapDecoration.Type.MANSION, ExplorationMapFunction.DEFAULT_ZOOM, 50, false),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 8), new ItemStack(Items.MAP, 1), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.mansion")), 1, 0)
+            new SerializableTrade(new ItemStack(Items.EMERALD, 8), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.mansion")), 1)
                     .explorationMap(StructureTags.ON_WOODLAND_EXPLORER_MAPS, MapDecoration.Type.MANSION, ExplorationMapFunction.DEFAULT_ZOOM, 100, false),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 8), new ItemStack(Items.MAP, 1), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.monument")), 1, 0)
+            new SerializableTrade(new ItemStack(Items.EMERALD, 8), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.monument")), 1)
                     .explorationMap(StructureTags.ON_OCEAN_EXPLORER_MAPS, MapDecoration.Type.MONUMENT, ExplorationMapFunction.DEFAULT_ZOOM, 50, false)
     ));
 
