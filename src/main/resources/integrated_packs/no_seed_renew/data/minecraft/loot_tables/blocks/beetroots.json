@@ -9,13 +9,6 @@
                     "type": "minecraft:item",
                     "name": "minecraft:beetroot_seeds"
                 }
-            ],
-            "conditions": [
-                {
-                    "condition": "minecraft:entity_properties",
-                    "entity": "this",
-                    "predicate": {}
-                }
             ]
         },
         {
