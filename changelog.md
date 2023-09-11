@@ -7,6 +7,7 @@
 * Golden shield now blocks more damage (1 -> 3)
 * Copper tools now last 3% more per block below sea level (+~200% at y=0 and +~350% at y=-56)
 * Desert Wells are now 10x more common
+* Backported 1.20.2 diamond generation
 
 ## 0.14.6
 * EXPERIMENTAL Absorption armor

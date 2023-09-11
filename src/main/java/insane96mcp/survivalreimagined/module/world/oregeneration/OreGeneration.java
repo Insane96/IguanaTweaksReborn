@@ -40,12 +40,16 @@ public class OreGeneration extends Feature {
     @Config
     @Label(name = "Poor and Rich Copper Generation", description = "Enables a Data Pack that changes Copper generation, including Poor and Rich Ores.")
     public static Boolean copperGenerationDataPack = true;
+    @Config
+    @Label(name = "Backport 1.20.2 Diamond ore generation", description = "Enables a Data Pack.")
+    public static Boolean backportDiamondGen = true;
 
     public OreGeneration(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "iron_generation", Component.literal("Survival Reimagined Iron Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && ironGenerationDataPack));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "gold_generation", Component.literal("Survival Reimagined Gold Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && goldGenerationDataPack));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_generation", Component.literal("Survival Reimagined Copper Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperGenerationDataPack));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "diamond_generation", Component.literal("Survival Reimagined Diamond Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && backportDiamondGen));
     }
 
     public record PoorRichOre(SimpleBlockWithItem poorOre, SimpleBlockWithItem poorDeepslateOre, SimpleBlockWithItem richOre, SimpleBlockWithItem richDeepslateOre) {
