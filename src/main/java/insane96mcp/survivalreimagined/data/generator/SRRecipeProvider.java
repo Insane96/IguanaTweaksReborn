@@ -279,7 +279,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('f', Durium.INGOT.get())
                 .define('i', Items.IRON_INGOT)
                 .define('r', Items.REDSTONE)
-                .unlockedBy("has_durium_nugget", has(Durium.NUGGET.get()))
+                .unlockedBy("has_durium_ingot", has(Durium.INGOT.get()))
                 .save(writer);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Lapis.ANCIENT_LAPIS.get(), 1)

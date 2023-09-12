@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_durium_nugget": {
+    "has_durium_ingot": {
       "conditions": {
         "items": [
           {
             "items": [
-              "survivalreimagined:durium_nugget"
+              "survivalreimagined:durium_ingot"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_durium_nugget",
+      "has_durium_ingot",
       "has_the_recipe"
     ]
   ],

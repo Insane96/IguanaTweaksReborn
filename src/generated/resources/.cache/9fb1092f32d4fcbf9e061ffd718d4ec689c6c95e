@@ -1,4 +1,4 @@
-// 1.20.1	2023-08-30T16:43:13.7847563	Recipes
+// 1.20.1	2023-09-12T12:16:41.6341756	Recipes
 dfc51f50706769ded48481605ac0f276a1dc57fc data/survivalreimagined/advancements/recipes/building_blocks/durium_block.json
 8f93bf2435e83bd7daf400057864b04e9fc3beab data/survivalreimagined/advancements/recipes/building_blocks/flint_block.json
 8e153290c8f892809e1d2ec3f4fe8be69545ca69 data/survivalreimagined/advancements/recipes/building_blocks/polished_flint_block.json
@@ -284,7 +284,7 @@ d4d85a9ca88950395370004f0042a43bca2a2db9 data/survivalreimagined/advancements/re
 e94a72afadacecf22eb2e113d2ed8ab6bf771e3c data/survivalreimagined/advancements/recipes/misc/soul_steel_nugget.json
 f743062f51bd0b6bfc49339be3a355ba9d92129e data/survivalreimagined/advancements/recipes/redstone/explosive_barrel.json
 89fa196ca39fcfbdd81c9bcfe83a844d443c3c86 data/survivalreimagined/advancements/recipes/redstone/mining_charge.json
-06abc957233d27f2d716e2225a16fff212651174 data/survivalreimagined/advancements/recipes/tools/altimeter.json
+73a186b759de223da5e7a4ad97a6956dc465b69f data/survivalreimagined/advancements/recipes/tools/altimeter.json
 eef175272556e29ae7ed7cfd589adedb70c138f4 data/survivalreimagined/advancements/recipes/tools/coated_copper_axe.json
 9ef7544a43073f8d14a6225745f0b57573954705 data/survivalreimagined/advancements/recipes/tools/coated_copper_hammer.json
 81624b6f8ca450340cec7959c70acc6658e412aa data/survivalreimagined/advancements/recipes/tools/coated_copper_hoe.json

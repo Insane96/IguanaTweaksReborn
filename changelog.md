@@ -1,10 +1,9 @@
 # Changelog
 
-* Torch arrow doesn't replace skulk thing
-* Cleansed lapis drop with silk touch
-
 ## 0.14.8
+* Heavily increased cleansed lapis drop and fixed dropping with silk touch
 * Fixed items stack desync client side
+* Fixed Expanded mining non-stone blocks
 
 ## 0.14.7
 * Wandering Traders now sell explorer maps (ocean, woodland, desert and cold plains)

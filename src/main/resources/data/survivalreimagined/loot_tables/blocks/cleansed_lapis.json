@@ -12,11 +12,11 @@
                             "condition": "minecraft:table_bonus",
                             "enchantment": "minecraft:fortune",
                             "chances": [
-                                0.11,
-                                0.14,
-                                0.18,
-                                0.23,
-                                0.29
+                                0.30,
+                                0.35,
+                                0.40,
+                                0.45,
+                                0.50
                             ]
                         },
                         {
@@ -26,7 +26,8 @@
                                     {
                                         "enchantment": "minecraft:silk_touch",
                                         "levels": {
-                                            "min": 0
+                                            "min": 0,
+                                            "max": 0
                                         }
                                     }
                                 ]
