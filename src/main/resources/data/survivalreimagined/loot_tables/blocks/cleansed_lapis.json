@@ -3,35 +3,45 @@
     "pools": [
         {
             "rolls": 1,
+            "bonus_rolls": 0,
             "entries": [
                 {
-                    "type": "minecraft:item",
-                    "name": "survivalreimagined:cleansed_lapis",
-                    "conditions": [
+                    "type": "minecraft:alternatives",
+                    "children": [
                         {
-                            "condition": "minecraft:table_bonus",
-                            "enchantment": "minecraft:fortune",
-                            "chances": [
-                                0.30,
-                                0.35,
-                                0.40,
-                                0.45,
-                                0.50
+                            "type": "minecraft:empty",
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:match_tool",
+                                    "predicate": {
+                                        "enchantments": [
+                                            {
+                                                "enchantment": "minecraft:silk_touch",
+                                                "levels": {
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
                             ]
                         },
                         {
-                            "condition": "minecraft:match_tool",
-                            "predicate": {
-                                "enchantments": [
-                                    {
-                                        "enchantment": "minecraft:silk_touch",
-                                        "levels": {
-                                            "min": 0,
-                                            "max": 0
-                                        }
-                                    }
-                                ]
-                            }
+                            "type": "minecraft:item",
+                            "name": "survivalreimagined:cleansed_lapis",
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:table_bonus",
+                                    "enchantment": "minecraft:fortune",
+                                    "chances": [
+                                        0.3,
+                                        0.35,
+                                        0.4,
+                                        0.45,
+                                        0.5
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 }
