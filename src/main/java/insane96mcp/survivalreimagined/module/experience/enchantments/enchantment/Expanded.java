@@ -74,7 +74,7 @@ public class Expanded extends Enchantment {
         int enchLevel = heldStack.getEnchantmentLevel(EnchantmentsFeature.EXPANDED.get());
         if (enchLevel == 0)
             return;
-        List<BlockPos> minedBlocks = getMinedBlocks(enchLevel, heldStack.getItem() instanceof PickaxeItem || heldStack.getItem() instanceof ShovelItem, level, entity, pos, face);
+        List<BlockPos> minedBlocks = getMinedBlocks(heldStack, enchLevel, heldStack.getItem() instanceof PickaxeItem || heldStack.getItem() instanceof ShovelItem, level, entity, pos, face);
         for (BlockPos minedBlock : minedBlocks) {
             if (level instanceof ServerLevel && (entity instanceof Player player && !player.getAbilities().flying)) {
                 BlockState minedBlockState = level.getBlockState(minedBlock);
@@ -136,7 +136,7 @@ public class Expanded extends Enchantment {
             return;
         }
         // determine extra blocks to highlight
-        List<BlockPos> minedBlocks = getMinedBlocks(enchLevel, heldStack.getItem() instanceof PickaxeItem || heldStack.getItem() instanceof ShovelItem, level, player, targetPos, blockTrace.getDirection());
+        List<BlockPos> minedBlocks = getMinedBlocks(heldStack, enchLevel, heldStack.getItem() instanceof PickaxeItem || heldStack.getItem() instanceof ShovelItem, level, player, targetPos, blockTrace.getDirection());
         if (minedBlocks.isEmpty()) {
             return;
         }
@@ -187,7 +187,7 @@ public class Expanded extends Enchantment {
 
     public static final int[] MAX_BLOCKS_MINED = new int[] { 0, 3, 9, 16 };
 
-    public static List<BlockPos> getMinedBlocks(int lvl, boolean square, Level level, LivingEntity entity, BlockPos targetPos, Direction face) {
+    public static List<BlockPos> getMinedBlocks(ItemStack heldStack, int lvl, boolean square, Level level, LivingEntity entity, BlockPos targetPos, Direction face) {
         List<BlockPos> minedBlocks = new ArrayList<>();
         boolean playerRelative = false;
         if (face == Direction.UP || face == Direction.DOWN) {
@@ -201,17 +201,17 @@ public class Expanded extends Enchantment {
 
         if (square) {
             if (lvl >= 1) {
-                addIfCanBeMined(minedBlocks, level, targetPos, getRelative(targetPos, playerRelative, true, face));
-                addIfCanBeMined(minedBlocks, level, targetPos, getRelative(targetPos, playerRelative, false, face));
+                addIfCanBeMined(heldStack, minedBlocks, level, targetPos, getRelative(targetPos, playerRelative, true, face));
+                addIfCanBeMined(heldStack, minedBlocks, level, targetPos, getRelative(targetPos, playerRelative, false, face));
             }
             if (lvl >= 2) {
                 for (int i = lvl - 1; i > 0; i--) {
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getClockWise(), i));
-                    addIfCanBeMined(minedBlocks, level, targetPos, targetPos.relative(face.getCounterClockWise(), i));
-                    addIfCanBeMined(minedBlocks, level, targetPos, getRelative(targetPos.relative(face.getClockWise(), i), playerRelative, true, face));
-                    addIfCanBeMined(minedBlocks, level, targetPos, getRelative(targetPos.relative(face.getCounterClockWise(), i), playerRelative, true, face));
-                    addIfCanBeMined(minedBlocks, level, targetPos, getRelative(targetPos.relative(face.getClockWise(), i), playerRelative, false, face));
-                    addIfCanBeMined(minedBlocks, level, targetPos, getRelative(targetPos.relative(face.getCounterClockWise(), i), playerRelative, false, face));
+                    addIfCanBeMined(heldStack, minedBlocks, level, targetPos, targetPos.relative(face.getClockWise(), i));
+                    addIfCanBeMined(heldStack, minedBlocks, level, targetPos, targetPos.relative(face.getCounterClockWise(), i));
+                    addIfCanBeMined(heldStack, minedBlocks, level, targetPos, getRelative(targetPos.relative(face.getClockWise(), i), playerRelative, true, face));
+                    addIfCanBeMined(heldStack, minedBlocks, level, targetPos, getRelative(targetPos.relative(face.getCounterClockWise(), i), playerRelative, true, face));
+                    addIfCanBeMined(heldStack, minedBlocks, level, targetPos, getRelative(targetPos.relative(face.getClockWise(), i), playerRelative, false, face));
+                    addIfCanBeMined(heldStack, minedBlocks, level, targetPos, getRelative(targetPos.relative(face.getCounterClockWise(), i), playerRelative, false, face));
                 }
             }
         }
@@ -227,7 +227,7 @@ public class Expanded extends Enchantment {
                         BlockPos relativePos = pos.relative(direction);
                         if (explored.contains(relativePos))
                             return;
-                        if (addIfCanBeMined(minedBlocks, level, targetPos, relativePos)) {
+                        if (addIfCanBeMined(heldStack, minedBlocks, level, targetPos, relativePos)) {
                             toMine.incrementAndGet();
                             posToCheckTmp.add(relativePos);
                         }
@@ -246,10 +246,10 @@ public class Expanded extends Enchantment {
         return minedBlocks;
     }
 
-    private static boolean addIfCanBeMined(List<BlockPos> blockPos, Level level, BlockPos targetPos, BlockPos minedPos) {
+    private static boolean addIfCanBeMined(ItemStack stack, List<BlockPos> blockPos, Level level, BlockPos targetPos, BlockPos minedPos) {
         BlockState targetState = level.getBlockState(targetPos);
         BlockState minedState = level.getBlockState(minedPos);
-        if (targetState.getDestroySpeed(level, targetPos) >= minedState.getDestroySpeed(level, minedPos) - 0.5d) {
+        if (stack.isCorrectToolForDrops(minedState) && targetState.getDestroySpeed(level, targetPos) >= minedState.getDestroySpeed(level, minedPos) - 0.5d) {
             blockPos.add(minedPos);
             return true;
         }
