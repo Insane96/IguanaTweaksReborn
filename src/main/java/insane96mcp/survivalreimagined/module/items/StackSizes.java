@@ -12,6 +12,7 @@ import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
+import insane96mcp.survivalreimagined.network.message.StackSizesSync;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.tags.TagKey;
@@ -19,7 +20,9 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -72,30 +75,28 @@ public class StackSizes extends SRFeature {
     public void loadJsonConfigs() {
         if (!this.isEnabled())
             return;
-        synchronized (mutex) {
-            //resetStackSizes();
-            if (originalStackSizes.isEmpty()) {
-                for (Item item : ForgeRegistries.ITEMS.getValues()) {
-                    originalStackSizes.put(item, item.maxStackSize);
-                }
-            }
-            processItemStackSizes();
-            processBlockStackSizes();
-            processStewStackSizes();
-            processFoodStackSizes();
-        }
+        processStackSizes(false);
         super.loadJsonConfigs();
+    }
+
+    public static void processStackSizes(boolean isClientSide) {
+        synchronized (mutex) {
+            resetStackSizes();
+            processItemStackSizes(isClientSide);
+            processBlockStackSizes(isClientSide);
+            processStewStackSizes(isClientSide);
+            processFoodStackSizes(isClientSide);
+        }
     }
 
     public static void handleCustomStackSizesPacket(String json) {
         loadAndReadJson(json, customStackList, CUSTOM_STACK_LIST_DEFAULT, IdTagValue.LIST_TYPE);
-        //processCustomStackSizes(customStackList, true);
     }
 
-    private final Object mutex = new Object();
+    private static final Object mutex = new Object();
 
-    HashMap<Item, Integer> originalStackSizes = new HashMap<>();
-    public void resetStackSizes() {
+    static HashMap<Item, Integer> originalStackSizes = new HashMap<>();
+    public static void resetStackSizes() {
         if (originalStackSizes.isEmpty()) {
             for (Item item : ForgeRegistries.ITEMS.getValues()) {
                 originalStackSizes.put(item, item.maxStackSize);
@@ -109,16 +110,15 @@ public class StackSizes extends SRFeature {
     }
 
     //Items
-    public void processItemStackSizes() {
-        if (!this.isEnabled()
-                || itemStackMultiplier == 1d)
+    public static void processItemStackSizes(boolean isClientSide) {
+        if (itemStackMultiplier == 1d)
             return;
 
         for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
             Item item = entry.getKey();
             if (item instanceof BlockItem
                     || item.maxStackSize == 1
-                    || isItemInTag(item, NO_STACK_SIZE_CHANGES))
+                    || isItemInTag(item, NO_STACK_SIZE_CHANGES, isClientSide))
                 continue;
 
             double stackSize = entry.getValue() * itemStackMultiplier;
@@ -128,7 +128,7 @@ public class StackSizes extends SRFeature {
     }
 
     //Blocks
-    public void processBlockStackSizes() {
+    public static void processBlockStackSizes(boolean isClientSide) {
         if (blockStackMultiplier == 1d)
             return;
 
@@ -136,7 +136,7 @@ public class StackSizes extends SRFeature {
             Item item = entry.getKey();
             if (!(item instanceof BlockItem)
                     || item.maxStackSize == 1
-                    || isItemInTag(item, NO_STACK_SIZE_CHANGES))
+                    || isItemInTag(item, NO_STACK_SIZE_CHANGES, isClientSide))
                 continue;
 
             double stackSize = entry.getValue() * blockStackMultiplier;
@@ -147,14 +147,14 @@ public class StackSizes extends SRFeature {
     }
 
     //Stews
-    public void processStewStackSizes() {
+    public static void processStewStackSizes(boolean isClientSide) {
         if (stackableSoups == 1)
             return;
 
         for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
             Item item = entry.getKey();
             if (!(item instanceof BowlFoodItem) && !(item instanceof SuspiciousStewItem)
-                    || isItemInTag(item, NO_STACK_SIZE_CHANGES))
+                    || isItemInTag(item, NO_STACK_SIZE_CHANGES, isClientSide))
                 continue;
 
             item.maxStackSize = stackableSoups;
@@ -164,14 +164,14 @@ public class StackSizes extends SRFeature {
 
     //Food
     @SuppressWarnings("deprecation")
-    public void processFoodStackSizes() {
+    public static void processFoodStackSizes(boolean isClientSide) {
         if (!foodStackReduction)
             return;
 
         for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
             Item item = entry.getKey();
             if (!item.isEdible()
-                    || isItemInTag(item, NO_STACK_SIZE_CHANGES))
+                    || isItemInTag(item, NO_STACK_SIZE_CHANGES, isClientSide))
                 continue;
 
             FoodProperties food = item.getFoodProperties();
@@ -183,8 +183,7 @@ public class StackSizes extends SRFeature {
                         .and("saturation_modifier", food.getSaturationModifier())
                         .and("effectiveness", Utils.getFoodEffectiveness(food))
                         .evaluate();
-                int stackSize = Mth.clamp(result.getNumberValue().intValue(), 1, 64);
-                item.maxStackSize = Math.round(stackSize);
+                item.maxStackSize = Mth.clamp(result.getNumberValue().intValue(), 1, 64);
             }
             catch (Exception ex) {
                 LogHelper.error("Failed to parse or evaluate food stack size formula: %s", expression);
@@ -201,6 +200,19 @@ public class StackSizes extends SRFeature {
         }
     }
 
+    //Sync before json
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public void syncFeatureConfig(OnDatapackSyncEvent event) {
+        if (!this.isEnabled())
+            return;
+
+        if (event.getPlayer() == null) {
+            event.getPlayerList().getPlayers().forEach(player -> StackSizesSync.sync(foodStackReduction, foodStackReductionFormula, stackableSoups, itemStackMultiplier, blockStackMultiplier, player));
+        }
+        else {
+            StackSizesSync.sync(foodStackReduction, foodStackReductionFormula, stackableSoups, itemStackMultiplier, blockStackMultiplier, event.getPlayer());
+        }
+    }
 
     /**
      * Fixes soups, potions, etc. consuming that don't work properly when stacked

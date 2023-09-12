@@ -1,5 +1,11 @@
 # Changelog
 
+* Torch arrow doesn't replace skulk thing
+* Cleansed lapis drop with silk touch
+
+## 0.14.8
+* Fixed items stack desync client side
+
 ## 0.14.7
 * Wandering Traders now sell explorer maps (ocean, woodland, desert and cold plains)
 * Rebalanced Blasting. The bonus mining speed is now based off tool's mining speed

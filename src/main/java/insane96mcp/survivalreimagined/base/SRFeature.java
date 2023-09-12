@@ -10,6 +10,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.SRDataReloadListener;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.utils.LogHelper;
+import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -75,7 +76,9 @@ public class SRFeature extends Feature {
     /**
      * Use this instead of Utils.isItemInTag when reloading data due to tags not existing yet at reload
      */
-    public static boolean isItemInTag(Item item, ResourceLocation tag) {
+    public static boolean isItemInTag(Item item, ResourceLocation tag, boolean isClientSide) {
+        if (isClientSide)
+            return Utils.isItemInTag(item, tag);
         TagKey<Item> tagKey = TagKey.create(Registries.ITEM, tag);
         Collection<Holder<Item>> tags = SRDataReloadListener.reloadContext.getTag(tagKey);
         for (Holder<Item> holder : tags) {
@@ -88,7 +91,9 @@ public class SRFeature extends Feature {
     /**
      * Use this instead of Utils.isItemInTag when reloading data due to tags not existing yet at reload
      */
-    public static boolean isItemInTag(Item item, TagKey<Item> tag) {
+    public static boolean isItemInTag(Item item, TagKey<Item> tag, boolean isClientSide) {
+        if (isClientSide)
+            return Utils.isItemInTag(item, tag);
         Collection<Holder<Item>> tags = SRDataReloadListener.reloadContext.getTag(tag);
         for (Holder<Item> holder : tags) {
             if (holder.value().equals(item))
@@ -116,7 +121,9 @@ public class SRFeature extends Feature {
     /**
      * Use this instead of Utils.isBlockInTag when reloading data due to tags not existing yet at reload
      */
-    public static boolean isBlockInTag(Block block, ResourceLocation tag) {
+    public static boolean isBlockInTag(Block block, ResourceLocation tag, boolean isClientSide) {
+        if (isClientSide)
+            return Utils.isBlockInTag(block, tag);
         TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, tag);
         Collection<Holder<Block>> tags = SRDataReloadListener.reloadContext.getTag(tagKey);
         for (Holder<Block> holder : tags) {
@@ -129,7 +136,9 @@ public class SRFeature extends Feature {
     /**
      * Use this instead of Utils.isBlockInTag when reloading data due to tags not existing yet at reload
      */
-    public static boolean isBlockInTag(Block block, TagKey<Block> tag) {
+    public static boolean isBlockInTag(Block block, TagKey<Block> tag, boolean isClientSide) {
+        if (isClientSide)
+            return Utils.isBlockInTag(block, tag);
         Collection<Holder<Block>> tags = SRDataReloadListener.reloadContext.getTag(tag);
         for (Holder<Block> holder : tags) {
             if (holder.value().equals(block))
@@ -157,7 +166,9 @@ public class SRFeature extends Feature {
     /**
      * Use this instead of Utils.isEntityInTag when reloading data due to tags not existing yet at reload
      */
-    public static boolean isEntityInTag(Entity entity, ResourceLocation tag) {
+    public static boolean isEntityInTag(Entity entity, ResourceLocation tag, boolean isClientSide) {
+        if (isClientSide)
+            return Utils.isEntityInTag(entity, tag);
         TagKey<EntityType<?>> tagKey = TagKey.create(Registries.ENTITY_TYPE, tag);
         Collection<Holder<EntityType<?>>> tags = SRDataReloadListener.reloadContext.getTag(tagKey);
         for (Holder<EntityType<?>> holder : tags) {
@@ -170,7 +181,9 @@ public class SRFeature extends Feature {
     /**
      * Use this instead of Utils.isEntityInTag when reloading data due to tags not existing yet at reload
      */
-    public static boolean isEntityInTag(Entity entity, TagKey<EntityType<?>> tag) {
+    public static boolean isEntityInTag(Entity entity, TagKey<EntityType<?>> tag, boolean isClientSide) {
+        if (isClientSide)
+            return Utils.isEntityInTag(entity, tag);
         Collection<Holder<EntityType<?>>> tags = SRDataReloadListener.reloadContext.getTag(tag);
         for (Holder<EntityType<?>> holder : tags) {
             if (holder.value().equals(entity.getType()))

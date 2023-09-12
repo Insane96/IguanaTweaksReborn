@@ -107,7 +107,8 @@ public class FoodDrinks extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-		processFoodMultipliers();
+		//TODO Sync to client
+		processFoodMultipliers(false);
 	}
 
 	public static void handleCustomFoodPropertiesPacket(String json) {
@@ -200,14 +201,14 @@ public class FoodDrinks extends SRFeature {
 	private static boolean processedFoodMultipliers = false;
 
 	@SuppressWarnings("ConstantConditions")
-	public static void processFoodMultipliers() {
+	public static void processFoodMultipliers(boolean isClientSide) {
 		if (processedFoodMultipliers)
 			return;
 		processedFoodMultipliers = true;
 
 		for (Item item : ForgeRegistries.ITEMS.getValues()) {
 			if (!item.isEdible()
-					|| isItemInTag(item, FOOD_BLACKLIST))
+					|| isItemInTag(item, FOOD_BLACKLIST, isClientSide))
 				continue;
 
 			FoodProperties food = item.getFoodProperties();
