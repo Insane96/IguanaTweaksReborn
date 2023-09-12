@@ -43,7 +43,7 @@ public class TorchArrow extends Arrow {
             else
                 stateToPlace = Blocks.WALL_TORCH.defaultBlockState().setValue(WallTorchBlock.FACING, direction);
             if (stateToPlace.canSurvive(this.level(), pos)) {
-                this.level().setBlock(pos, stateToPlace, 2);
+                this.level().setBlock(pos, stateToPlace, 3);
                 this.playSound(stateToPlace.getSoundType().getPlaceSound());
                 this.discard();
                 return;
