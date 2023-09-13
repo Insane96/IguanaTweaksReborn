@@ -62,7 +62,7 @@ public class CopperToolsExpansion extends Feature {
 	public static final RegistryObject<Item> COPPER_AXE = SRRegistries.ITEMS.register("copper_axe", () -> new AxeItem(COPPER_ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
 	public static final RegistryObject<Item> COPPER_HOE = SRRegistries.ITEMS.register("copper_hoe", () -> new HoeItem(COPPER_ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
-	public static final ILItemTier COATED_ITEM_TIER = new ILItemTier(3, 321, 7f, 1.5f, 5, () -> Ingredient.of(Items.OBSIDIAN));
+	public static final ILItemTier COATED_ITEM_TIER = new ILItemTier(3, 160, 7f, 1.5f, 5, () -> Ingredient.of(Items.OBSIDIAN));
 	public static final RegistryObject<Item> COATED_SWORD = SRRegistries.ITEMS.register("coated_copper_sword", () -> new SwordItem(COATED_ITEM_TIER, 3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> COATED_SHOVEL = SRRegistries.ITEMS.register("coated_copper_shovel", () -> new ShovelItem(COATED_ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
 	public static final RegistryObject<Item> COATED_PICKAXE = SRRegistries.ITEMS.register("coated_copper_pickaxe", () -> new PickaxeItem(COATED_ITEM_TIER, 1, -2.8F, new Item.Properties()));

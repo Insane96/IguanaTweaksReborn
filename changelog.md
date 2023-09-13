@@ -1,5 +1,7 @@
 # Changelog
 
+* Increase forging xp 
+
 ## 0.14.8
 * Heavily increased cleansed lapis drop and fixed dropping with silk touch
 * Fixed items stack desync client side
