@@ -72,7 +72,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         instance.resetFallDistance();
     }
 
-    //TODO breaks hurt sound
     @ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
     private float onCalculateAbsorption(float f1, DamageSource damageSource, float amount) {
         if (RegeneratingAbsorption.entityAbsorption() && !(damageSource.getEntity() instanceof LivingEntity)) {

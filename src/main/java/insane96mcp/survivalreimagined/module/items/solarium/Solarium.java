@@ -128,7 +128,7 @@ public class Solarium extends Feature {
 	public void onLivingTick(LivingEvent.LivingTickEvent event) {
 		boostSpeed(event);
 
-		//TODO Move if any other item needs toolbelt ticking
+		//Move if any other item needs toolbelt ticking
 		if (ModList.get().isLoaded("toolbelt"))
 			ToolBelt.tryTickItemsIn(event.getEntity());
 	}

@@ -5,6 +5,7 @@
 * Toughness to regeneration speed changed (+0.05 -> +20% regen speed per toughness)
 * Increased forging xp 
 * Added `/sr` command 
+* Synced terrain and armor slowdown to clients
 
 ## 0.14.8
 * Heavily increased cleansed lapis drop and fixed dropping with silk touch
