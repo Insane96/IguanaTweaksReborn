@@ -5,11 +5,14 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.insanelib.util.Utils;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -29,7 +32,10 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 @Label(name = "Weighted Equipment", description = "Armor and Shield slows down the player. Material Weights and Enchantment Weights are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
@@ -37,23 +43,22 @@ public class WeightedEquipment extends SRFeature {
 	public static final String ARMOR_SLOWDOWN = SurvivalReimagined.MOD_ID + ".armor_slowdown";
 	public static final UUID ARMOR_SLOWDOWN_UUID = UUID.fromString("8588420e-ce50-4e4e-a3e4-974dfc8a98ec");
 
-	//TODO Change to IdTagValue
-	public static final ArrayList<ArmorMaterialWeight> MATERIAL_WEIGHTS_DEFAULTS = new ArrayList<>(List.of(
-			new ArmorMaterialWeight("leather", 0d),
-			new ArmorMaterialWeight("survivalreimagined:chained_copper", 0d),
-			new ArmorMaterialWeight("chainmail", 0d),
-			new ArmorMaterialWeight("iron", 0.01d),
-			new ArmorMaterialWeight("survivalreimagined:solarium", 0.025d),
-			new ArmorMaterialWeight("survivalreimagined:durium", 0.025d),
-			new ArmorMaterialWeight("gold", 0d),
-			new ArmorMaterialWeight("diamond", 0.05d),
-			new ArmorMaterialWeight("survivalreimagined:soul_steel", 0.075d),
-			new ArmorMaterialWeight("survivalreimagined:keego", 0.06d),
-			new ArmorMaterialWeight("netherite", 0.10d)
+	public static final ArrayList<IdTagValue> ARMOR_WEIGHTS_DEFAULT = new ArrayList<>(List.of(
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/leather", 0d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/chained_copper", 0d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/chainmail", 0d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/iron", 0.01d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/solarium", 0.025d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/durium", 0.025d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/golden", 0.01d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/diamond", 0.05d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/soul_steel", 0.075d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/keego", 0.06d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/netherite", 0.10d)
 	));
-	public static final ArrayList<ArmorMaterialWeight> materialWeight = new ArrayList<>();
+	public static final ArrayList<IdTagValue> armorWeights = new ArrayList<>();
 
-	public static final ArrayList<ArmorEnchantmentWeight> ENCHANTMENTS_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
+	public static final ArrayList<ArmorEnchantmentWeight> ENCHANTMENTS_LIST_DEFAULT = new ArrayList<>(List.of(
 			new ArmorEnchantmentWeight("minecraft:feather_falling", -0.005d),
 			new ArmorEnchantmentWeight("elenaidodge2:lightweight", -0.0025d)
 	));
@@ -70,18 +75,18 @@ public class WeightedEquipment extends SRFeature {
 	public static Double percentagePerToughness = 0.025d;
 
 	// 11 - 16 - 15 - 13
-	public static final HashMap<EquipmentSlot, Double> armorDurabilityRatio = new HashMap<>();
+	public static final HashMap<EquipmentSlot, Double> materialRequiredAmountRatio = new HashMap<>();
 
 	public WeightedEquipment(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		//TODO Sync to client
-		JSON_CONFIGS.add(new JsonConfig<>("enchantments_weights.json", enchantmentsList, ENCHANTMENTS_LIST_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE));
-		JSON_CONFIGS.add(new JsonConfig<>("materials_weights.json", materialWeight, MATERIAL_WEIGHTS_DEFAULTS, ArmorMaterialWeight.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("enchantments_weights.json", enchantmentsList, ENCHANTMENTS_LIST_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.ENCHANTMENTS_WEIGHTS));
+		JSON_CONFIGS.add(new JsonConfig<>("armor_weights.json", armorWeights, ARMOR_WEIGHTS_DEFAULT, IdTagValue.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.ARMOR_WEIGHT));
 
-		armorDurabilityRatio.put(EquipmentSlot.HEAD, 0.2d);
-		armorDurabilityRatio.put(EquipmentSlot.CHEST, 0.290909091d);
-		armorDurabilityRatio.put(EquipmentSlot.LEGS, 0.272727273d);
-		armorDurabilityRatio.put(EquipmentSlot.FEET, 0.236363636d);
+		materialRequiredAmountRatio.put(EquipmentSlot.HEAD, 0.2083333333d);
+		materialRequiredAmountRatio.put(EquipmentSlot.CHEST, 0.3333333333d);
+		materialRequiredAmountRatio.put(EquipmentSlot.LEGS, 0.2916666667d);
+		materialRequiredAmountRatio.put(EquipmentSlot.FEET, 0.1666666667d);
 	}
 
 	@Override
@@ -89,6 +94,14 @@ public class WeightedEquipment extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
+	}
+
+	public static void handleEnchantmentWeightsSync(String json) {
+		loadAndReadJson(json, enchantmentsList, ENCHANTMENTS_LIST_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE);
+	}
+
+	public static void handleArmorWeightSync(String json) {
+		loadAndReadJson(json, armorWeights, ARMOR_WEIGHTS_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE);
 	}
 
 	//Can't use ItemAttributeModifierEvent as I need all the modifiers of the item (ItemStack#getAttributeModifiers) and that causes a loop
@@ -124,18 +137,20 @@ public class WeightedEquipment extends SRFeature {
 		}
 	}
 
+	//TODO invert and return a positive value
 	private double getArmorSlowdown(ItemStack itemStack) {
 		if (!(itemStack.getItem() instanceof ArmorItem))
 			return 0d;
 		double slowdown = 0d;
 		boolean hasMaterialSlowdown = false;
-		for (ArmorMaterialWeight armorMaterialWeight : materialWeight) {
-			Optional<Double> armorMaterialSlowdown = armorMaterialWeight.getStackWeight(itemStack);
-			if (armorMaterialSlowdown.isPresent()){
-				slowdown = armorMaterialSlowdown.get();
-				hasMaterialSlowdown = true;
-				break;
-			}
+		for (IdTagValue idTagValue : armorWeights) {
+			if (!idTagValue.matchesItem(itemStack.getItem())
+					|| !(itemStack.getItem() instanceof ArmorItem armorItem))
+				continue;
+			EquipmentSlot slot = armorItem.getEquipmentSlot();
+            slowdown = -idTagValue.value * materialRequiredAmountRatio.get(slot);
+			hasMaterialSlowdown = true;
+			break;
 		}
 		//If no slowdown was found in the material weight
 		if (!hasMaterialSlowdown) {

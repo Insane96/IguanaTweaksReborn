@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "values": [
+        "survivalreimagined:chained_copper_helmet",
+        "survivalreimagined:chained_copper_chestplate",
+        "survivalreimagined:chained_copper_leggings",
+        "survivalreimagined:chained_copper_boots"
+    ]
+}

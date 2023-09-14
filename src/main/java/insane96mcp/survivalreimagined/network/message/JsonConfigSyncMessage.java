@@ -7,6 +7,7 @@ import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.ItemStats;
 import insane96mcp.survivalreimagined.module.items.StackSizes;
 import insane96mcp.survivalreimagined.module.mining.blockhardness.BlockHardness;
+import insane96mcp.survivalreimagined.module.movement.weightedequipment.WeightedEquipment;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -54,17 +55,17 @@ public class JsonConfigSyncMessage {
         CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
-    public enum ConfigType  {
+    public enum ConfigType {
+        ARMOR_WEIGHT(WeightedEquipment::handleArmorWeightSync),
+        CUSTOM_BLOCK_HARDNESS(BlockHardness::handleCustomBlockHardnessPacket),
+        CUSTOM_FOOD_PROPERTIES(FoodDrinks::handleCustomFoodPropertiesPacket),
+        CUSTOM_FOOD_STACK_SIZES(StackSizes::handleCustomStackSizesPacket),
+        DEPTH_HARDNESS(BlockHardness::handleDepthHardnessPacket),
+        DIMENSION_HARDNESS(BlockHardness::handleDimensionHardnessPacket),
         DURABILITIES(ItemStats::handleDurabilityPacket),
         EFFICIENCIES(ItemStats::handleEfficienciesPacket),
-        ITEM_ATTRIBUTE_MODIFIERS(Stats::handleItemAttributeModifiersPacket),
-        CUSTOM_FOOD_STACK_SIZES(StackSizes::handleCustomStackSizesPacket),
-        CUSTOM_FOOD_PROPERTIES(FoodDrinks::handleCustomFoodPropertiesPacket),
-        CUSTOM_BLOCK_HARDNESS(BlockHardness::handleCustomBlockHardnessPacket),
-        PLANTS_GROWTH(PlantsGrowth::handlePlantsGrowthPacket),
-        DIMENSION_HARDNESS(BlockHardness::handleDimensionHardnessPacket),
-        DEPTH_HARDNESS(BlockHardness::handleDepthHardnessPacket),
-        HARDER_CROPS(HarderCrops::handleSyncPacket);
+        ENCHANTMENTS_WEIGHTS(WeightedEquipment::handleEnchantmentWeightsSync),
+        HARDER_CROPS(HarderCrops::handleSyncPacket), ITEM_ATTRIBUTE_MODIFIERS(Stats::handleItemAttributeModifiersPacket), PLANTS_GROWTH(PlantsGrowth::handlePlantsGrowthPacket);
 
         final Consumer<String> consumer;
 
