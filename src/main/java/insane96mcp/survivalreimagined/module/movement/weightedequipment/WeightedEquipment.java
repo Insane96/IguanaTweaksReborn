@@ -10,7 +10,6 @@ import insane96mcp.insanelib.util.Utils;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -36,7 +35,9 @@ import java.util.*;
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class WeightedEquipment extends SRFeature {
 	public static final String ARMOR_SLOWDOWN = SurvivalReimagined.MOD_ID + ".armor_slowdown";
+	public static final UUID ARMOR_SLOWDOWN_UUID = UUID.fromString("8588420e-ce50-4e4e-a3e4-974dfc8a98ec");
 
+	//TODO Change to IdTagValue
 	public static final ArrayList<ArmorMaterialWeight> MATERIAL_WEIGHTS_DEFAULTS = new ArrayList<>(List.of(
 			new ArmorMaterialWeight("leather", 0d),
 			new ArmorMaterialWeight("survivalreimagined:chained_copper", 0d),
@@ -99,7 +100,7 @@ public class WeightedEquipment extends SRFeature {
 		AttributeInstance movementSpeed = player.getAttribute(Attributes.MOVEMENT_SPEED);
 		if (movementSpeed == null)
 			return;
-		AttributeModifier modifier = movementSpeed.getModifier(Strings.AttributeModifiers.ARMOR_SLOWDOWN_UUID);
+		AttributeModifier modifier = movementSpeed.getModifier(ARMOR_SLOWDOWN_UUID);
 		if (!this.isEnabled()) {
 			//If the feature has been disabled remove the slowdown from the player
 			if (modifier != null)
@@ -117,8 +118,8 @@ public class WeightedEquipment extends SRFeature {
 			return;
 		}
 		if (modifier == null || modifier.getAmount() != slowdown) {
-			modifier = new AttributeModifier(Strings.AttributeModifiers.ARMOR_SLOWDOWN_UUID, Strings.AttributeModifiers.ARMOR_SLOWDOWN, slowdown, AttributeModifier.Operation.MULTIPLY_BASE);
-			movementSpeed.removeModifier(Strings.AttributeModifiers.ARMOR_SLOWDOWN_UUID);
+			modifier = new AttributeModifier(ARMOR_SLOWDOWN_UUID, ARMOR_SLOWDOWN, slowdown, AttributeModifier.Operation.MULTIPLY_BASE);
+			movementSpeed.removeModifier(ARMOR_SLOWDOWN_UUID);
 			movementSpeed.addTransientModifier(modifier);
 		}
 	}
@@ -193,7 +194,7 @@ public class WeightedEquipment extends SRFeature {
 		AttributeInstance movementSpeed = playerEntity.getAttribute(Attributes.MOVEMENT_SPEED);
 		if (movementSpeed == null)
 			return;
-		AttributeModifier modifier = movementSpeed.getModifier(Strings.AttributeModifiers.ARMOR_SLOWDOWN_UUID);
+		AttributeModifier modifier = movementSpeed.getModifier(ARMOR_SLOWDOWN_UUID);
 		if (mc.options.renderDebug && !mc.showOnlyReducedInfo() && modifier != null) {
 			event.getLeft().add(String.format("Armor Slowdown: %s%%", Utils.formatDecimal(Math.abs(modifier.getAmount()) * 100f, "#.#")));
 		}

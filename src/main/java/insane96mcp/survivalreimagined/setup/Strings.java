@@ -2,8 +2,6 @@ package insane96mcp.survivalreimagined.setup;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 
-import java.util.UUID;
-
 //TODO Remove
 public class Strings {
 	public static class Tags {
@@ -15,8 +13,6 @@ public class Strings {
     }
 
 	public static class AttributeModifiers {
-		public static final UUID ARMOR_SLOWDOWN_UUID = UUID.fromString("8588420e-ce50-4e4e-a3e4-974dfc8a98ec");
-		public static final String ARMOR_SLOWDOWN = SurvivalReimagined.RESOURCE_PREFIX + "armor_slowdown";
 		public static final String GENERIC_ITEM_MODIFIER = SurvivalReimagined.RESOURCE_PREFIX + "item_modifier";
 	}
 

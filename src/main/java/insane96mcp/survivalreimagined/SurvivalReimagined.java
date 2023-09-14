@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined;
 
 import com.google.common.collect.Lists;
+import insane96mcp.survivalreimagined.command.SRCommand;
 import insane96mcp.survivalreimagined.data.SRDataReloadListener;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.data.generator.SRGlobalLootModifierProvider;
@@ -39,6 +40,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -105,6 +107,11 @@ public class SurvivalReimagined
         SRDataReloadListener.reloadContext = event.getConditionContext();
         event.addListener(SRDataReloadListener.INSTANCE);
         event.addListener(AnvilRepairReloadListener.INSTANCE);
+    }
+
+    @SubscribeEvent
+    public void registerCommands(RegisterCommandsEvent event) {
+        SRCommand.register(event.getDispatcher());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

@@ -10,8 +10,6 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.network.NetworkHandler;
-import insane96mcp.survivalreimagined.network.message.TirednessSyncMessage;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -43,7 +41,6 @@ import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.text.DecimalFormat;
@@ -122,11 +119,10 @@ public class Tiredness extends SRFeature {
 
 		//noinspection ConstantConditions
 		int effectLevel = player.getEffect(ENERGY_BOOST.get()).getAmplifier() + 1;
-		float newTiredness = TirednessHandler.subtractAndGet(player, 0.01f * effectLevel);
+		TirednessHandler.subtract(player, 0.01f * effectLevel);
 
 		if (player.tickCount % 20 == 0) {
-			Object msg = new TirednessSyncMessage(newTiredness);
-			NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+			TirednessHandler.syncToClient(player);
 		}
 	}
 
@@ -168,8 +164,7 @@ public class Tiredness extends SRFeature {
 		}
 		applyTired(tiredness, serverPlayer);
 
-		Object msg = new TirednessSyncMessage(newTiredness);
-		NetworkHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+		TirednessHandler.syncToClient(serverPlayer);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)

@@ -3,6 +3,7 @@
 ## 0.14.9
 * Weather fog no longer shows up if the player is 16 below the surface (was fixed below Y 32)
 * Increased forging xp 
+* Added `/sr` command 
 
 ## 0.14.8
 * Heavily increased cleansed lapis drop and fixed dropping with silk touch

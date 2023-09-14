@@ -1,8 +1,15 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.tiredness;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.network.NetworkHandler;
+import insane96mcp.survivalreimagined.network.message.TirednessSyncMessage;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraftforge.network.NetworkDirection;
+
+import java.util.Collection;
 
 public class TirednessHandler {
     public static final String TIREDNESS_TAG = SurvivalReimagined.RESOURCE_PREFIX + "tiredness";
@@ -42,5 +49,20 @@ public class TirednessHandler {
 
     public static float getOnWakeUp(LivingEntity entity) {
         return Mth.clamp(get(entity) - Tiredness.tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
+    }
+
+    public static void syncToClient(ServerPlayer player) {
+        Object msg = new TirednessSyncMessage(get(player));
+        NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+    }
+
+    public static int setFromCommand(CommandSourceStack source, Collection<ServerPlayer> players, float amount) {
+        int set = 0;
+        for (ServerPlayer player : players) {
+            set(player, amount);
+            set++;
+            syncToClient(player);
+        }
+        return set;
     }
 }

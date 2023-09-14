@@ -71,7 +71,7 @@ public class Fog extends Feature {
 
         float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
         float rainLevel = entity.level().getRainLevel(1f);
-        //Lower than 1 means a percentage of current render distance, higher means a flat render distance
+        //Lower than 1 means a percentage of current render distance, higher means a fixed render distance
         float near = switch (SeasonHelper.getSeasonState(entity.level()).getSeason()) {
             case SPRING -> 0.7F;
             case SUMMER -> 0.85F;
