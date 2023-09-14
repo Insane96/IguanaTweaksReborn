@@ -79,7 +79,6 @@ public class WeightedEquipment extends SRFeature {
 
 	public WeightedEquipment(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		//TODO Sync to client
 		JSON_CONFIGS.add(new JsonConfig<>("enchantments_weights.json", enchantmentsList, ENCHANTMENTS_LIST_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.ENCHANTMENTS_WEIGHTS));
 		JSON_CONFIGS.add(new JsonConfig<>("armor_weights.json", armorWeights, ARMOR_WEIGHTS_DEFAULT, IdTagValue.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.ARMOR_WEIGHT));
 

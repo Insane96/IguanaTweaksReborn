@@ -158,7 +158,7 @@ public class ItemStats extends SRFeature {
 
 	public ItemStats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		JSON_CONFIGS.add(new JsonConfig<>("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadDurabilities, true, JsonConfigSyncMessage.ConfigType.DURABILITIES));
+		JSON_CONFIGS.add(new JsonConfig<>("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadDurabilities, true, JsonConfigSyncMessage.ConfigType.DURABILITY));
 		JSON_CONFIGS.add(new JsonConfig<>("tool_efficiencies.json", toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadToolEfficiencies, true, JsonConfigSyncMessage.ConfigType.EFFICIENCIES));
 	}
 
@@ -214,12 +214,12 @@ public class ItemStats extends SRFeature {
 		Gson gson = new GsonBuilder().create();
 		if (event.getPlayer() == null) {
 			event.getPlayerList().getPlayers().forEach(player -> {
-				JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.DURABILITIES, gson.toJson(itemDurabilities, IdTagValue.LIST_TYPE), player);
+				JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.DURABILITY, gson.toJson(itemDurabilities, IdTagValue.LIST_TYPE), player);
 				JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.EFFICIENCIES, gson.toJson(toolEfficiencies, IdTagValue.LIST_TYPE), player);
 			});
 		}
 		else {
-			JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.DURABILITIES, gson.toJson(itemDurabilities, IdTagValue.LIST_TYPE), event.getPlayer());
+			JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.DURABILITY, gson.toJson(itemDurabilities, IdTagValue.LIST_TYPE), event.getPlayer());
 			JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.EFFICIENCIES, gson.toJson(toolEfficiencies, IdTagValue.LIST_TYPE), event.getPlayer());
 		}
 	}

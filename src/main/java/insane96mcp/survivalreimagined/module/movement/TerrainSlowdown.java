@@ -8,6 +8,7 @@ import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -43,14 +44,16 @@ public class TerrainSlowdown extends SRFeature {
 	@Override
 	public void loadConfigOptions() {
 		super.loadConfigOptions();
-		//TODO Sync
-		JSON_CONFIGS.add(new JsonConfig<>("custom_terrain_slowdown.json", customTerrainSlowdown, CUSTOM_TERRAIN_SLOWDOWN_DEFAULT, IdTagValue.LIST_TYPE));
-		JSON_CONFIGS.add(new JsonConfig<>("custom_in_terrain_slowdown.json", customInTerrainSlowdown, CUSTOM_IN_TERRAIN_SLOWDOWN_DEFAULT, IdTagValue.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("custom_terrain_slowdown.json", customTerrainSlowdown, CUSTOM_TERRAIN_SLOWDOWN_DEFAULT, IdTagValue.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.CUSTOM_TERRAIN_SLOWDOWN));
+		JSON_CONFIGS.add(new JsonConfig<>("custom_in_terrain_slowdown.json", customInTerrainSlowdown, CUSTOM_IN_TERRAIN_SLOWDOWN_DEFAULT, IdTagValue.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.CUSTOM_IN_TERRAIN_SLOWDOWN));
 	}
 
-	@Override
-	public void loadJsonConfigs() {
-		super.loadJsonConfigs();
+	public static void handleCustomTerrainSlowdownSync(String json) {
+		loadAndReadJson(json, customTerrainSlowdown, CUSTOM_TERRAIN_SLOWDOWN_DEFAULT, IdTagValue.LIST_TYPE);
+	}
+
+	public static void handleCustomInTerrainSlowdownSync(String json) {
+		loadAndReadJson(json, customInTerrainSlowdown, CUSTOM_IN_TERRAIN_SLOWDOWN_DEFAULT, IdTagValue.LIST_TYPE);
 	}
 
 	@SubscribeEvent

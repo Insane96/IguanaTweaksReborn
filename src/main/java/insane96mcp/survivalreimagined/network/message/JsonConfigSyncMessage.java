@@ -7,6 +7,7 @@ import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.ItemStats;
 import insane96mcp.survivalreimagined.module.items.StackSizes;
 import insane96mcp.survivalreimagined.module.mining.blockhardness.BlockHardness;
+import insane96mcp.survivalreimagined.module.movement.TerrainSlowdown;
 import insane96mcp.survivalreimagined.module.movement.weightedequipment.WeightedEquipment;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -60,12 +61,16 @@ public class JsonConfigSyncMessage {
         CUSTOM_BLOCK_HARDNESS(BlockHardness::handleCustomBlockHardnessPacket),
         CUSTOM_FOOD_PROPERTIES(FoodDrinks::handleCustomFoodPropertiesPacket),
         CUSTOM_FOOD_STACK_SIZES(StackSizes::handleCustomStackSizesPacket),
+        CUSTOM_IN_TERRAIN_SLOWDOWN(TerrainSlowdown::handleCustomInTerrainSlowdownSync),
+        CUSTOM_TERRAIN_SLOWDOWN(TerrainSlowdown::handleCustomTerrainSlowdownSync),
         DEPTH_HARDNESS(BlockHardness::handleDepthHardnessPacket),
         DIMENSION_HARDNESS(BlockHardness::handleDimensionHardnessPacket),
-        DURABILITIES(ItemStats::handleDurabilityPacket),
+        DURABILITY(ItemStats::handleDurabilityPacket),
         EFFICIENCIES(ItemStats::handleEfficienciesPacket),
         ENCHANTMENTS_WEIGHTS(WeightedEquipment::handleEnchantmentWeightsSync),
-        HARDER_CROPS(HarderCrops::handleSyncPacket), ITEM_ATTRIBUTE_MODIFIERS(Stats::handleItemAttributeModifiersPacket), PLANTS_GROWTH(PlantsGrowth::handlePlantsGrowthPacket);
+        HARDER_CROPS(HarderCrops::handleSyncPacket),
+        ITEM_ATTRIBUTE_MODIFIERS(Stats::handleItemAttributeModifiersPacket),
+        PLANTS_GROWTH(PlantsGrowth::handlePlantsGrowthPacket);
 
         final Consumer<String> consumer;
 
