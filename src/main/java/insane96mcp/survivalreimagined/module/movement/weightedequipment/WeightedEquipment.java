@@ -129,14 +129,13 @@ public class WeightedEquipment extends SRFeature {
 				movementSpeed.removeModifier(modifier);
 			return;
 		}
-		if (modifier == null || modifier.getAmount() != slowdown) {
-			modifier = new AttributeModifier(ARMOR_SLOWDOWN_UUID, ARMOR_SLOWDOWN, slowdown, AttributeModifier.Operation.MULTIPLY_BASE);
+		if (modifier == null || modifier.getAmount() != -slowdown) {
+			modifier = new AttributeModifier(ARMOR_SLOWDOWN_UUID, ARMOR_SLOWDOWN, -slowdown, AttributeModifier.Operation.MULTIPLY_BASE);
 			movementSpeed.removeModifier(ARMOR_SLOWDOWN_UUID);
 			movementSpeed.addTransientModifier(modifier);
 		}
 	}
 
-	//TODO invert and return a positive value
 	private double getArmorSlowdown(ItemStack itemStack) {
 		if (!(itemStack.getItem() instanceof ArmorItem))
 			return 0d;
@@ -147,7 +146,7 @@ public class WeightedEquipment extends SRFeature {
 					|| !(itemStack.getItem() instanceof ArmorItem armorItem))
 				continue;
 			EquipmentSlot slot = armorItem.getEquipmentSlot();
-            slowdown = -idTagValue.value * materialRequiredAmountRatio.get(slot);
+            slowdown = idTagValue.value * materialRequiredAmountRatio.get(slot);
 			hasMaterialSlowdown = true;
 			break;
 		}
@@ -169,7 +168,7 @@ public class WeightedEquipment extends SRFeature {
 			}
 			double armorSlowdown = armor * slownessPerArmor;
 			double toughnessSlowdown = armorToughness * percentagePerToughness;
-			slowdown = -(armorSlowdown * (1 + toughnessSlowdown));
+			slowdown = armorSlowdown * (1 + toughnessSlowdown);
 		}
 		double flatEnchantmentSlowdown = 0d, percentageEnchantmentSlowdown = 0d;
 		for (ArmorEnchantmentWeight enchantmentWeight : enchantmentsList) {
@@ -179,7 +178,7 @@ public class WeightedEquipment extends SRFeature {
 			flatEnchantmentSlowdown += (enchantmentWeight.flatSlowness + (enchantmentWeight.flatSlownessPerLevel * enchantmentLevel));
 			percentageEnchantmentSlowdown += (enchantmentWeight.percentageSlowness + (enchantmentWeight.percentageSlownessPerLevel * enchantmentLevel));
 		}
-		slowdown -= flatEnchantmentSlowdown;
+		slowdown += flatEnchantmentSlowdown;
 		slowdown *= 1 + percentageEnchantmentSlowdown;
 		return slowdown;
 	}
@@ -190,7 +189,7 @@ public class WeightedEquipment extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		ItemStack stack = event.getItemStack();
-		double slowdown = -getArmorSlowdown(stack) * 100d;
+		double slowdown = getArmorSlowdown(stack) * 100d;
 		if (slowdown <= 0d)
 			return;
 		event.getToolTip().add(Component.translatable(ARMOR_SLOWDOWN, Utils.formatDecimal(slowdown, "#.#")).withStyle(ChatFormatting.RED));
