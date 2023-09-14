@@ -12,10 +12,10 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.data.lootmodifier.ReplaceLootModifier;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.items.ItemStats;
 import insane96mcp.survivalreimagined.module.misc.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
-import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -70,6 +70,7 @@ public class FlintExpansion extends Feature {
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "disable_wooden_tools", Component.literal("Survival Reimagined Disable Wooden Tools"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableWoodenToolsRecipe));
 	}
 
+	//TODO Wtf is this, use a datapack
 	@SubscribeEvent
 	public void disableWoodenTools(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled()
@@ -79,7 +80,7 @@ public class FlintExpansion extends Feature {
 		Player player = event.getEntity();
 		if (isWoodenTool(player.getMainHandItem().getItem())) {
 			event.setCanceled(true);
-			event.getEntity().displayClientMessage(Component.translatable(Strings.Translatable.NO_EFFICIENCY_ITEM), true);
+			event.getEntity().displayClientMessage(Component.translatable(ItemStats.NO_EFFICIENCY_ITEM), true);
 		}
 	}
 
@@ -92,7 +93,7 @@ public class FlintExpansion extends Feature {
 		if (isWoodenTool(event.getEntity().getMainHandItem().getItem())) {
 			event.setAmount(1f);
 			if (event.getEntity() instanceof Player player)
-				player.displayClientMessage(Component.translatable(Strings.Translatable.NO_DAMAGE_ITEM), true);
+				player.displayClientMessage(Component.translatable(ItemStats.NO_DAMAGE_ITEM), true);
 		}
 	}
 
@@ -134,11 +135,11 @@ public class FlintExpansion extends Feature {
 			return;
 
 		if (isWoodenTool(event.getItemStack().getItem())) {
-			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_DAMAGE_ITEM).withStyle(ChatFormatting.RED));
-			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_EFFICIENCY_ITEM).withStyle(ChatFormatting.RED));
+			event.getToolTip().add(Component.translatable(ItemStats.NO_DAMAGE_ITEM).withStyle(ChatFormatting.RED));
+			event.getToolTip().add(Component.translatable(ItemStats.NO_EFFICIENCY_ITEM).withStyle(ChatFormatting.RED));
 		}
 		else if (event.getItemStack().getItem().equals(Items.WOODEN_SWORD)) {
-			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_DAMAGE_ITEM).withStyle(ChatFormatting.RED));
+			event.getToolTip().add(Component.translatable(ItemStats.NO_DAMAGE_ITEM).withStyle(ChatFormatting.RED));
 		}
 	}
 

@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.module.world.spawners.capability;
 
-import insane96mcp.survivalreimagined.setup.Strings;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -16,9 +16,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class SpawnerDataAttacher {
+    public static final String SPAWNER_DATA = SurvivalReimagined.RESOURCE_PREFIX + "spawner_data";
+
     public static class SpawnerDataProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-        public static final ResourceLocation IDENTIFIER = new ResourceLocation(Strings.Tags.SPAWNER_DATA);
+        public static final ResourceLocation IDENTIFIER = new ResourceLocation(SPAWNER_DATA);
 
         private final ISpawnerData backend = new SpawnerDataImpl();
         private final LazyOptional<ISpawnerData> optionalData = LazyOptional.of(() -> backend);

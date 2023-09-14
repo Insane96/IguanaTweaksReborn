@@ -10,7 +10,6 @@ import insane96mcp.survivalreimagined.data.SRMobEffectInstance;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.TirednessHandler;
-import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -36,6 +35,7 @@ public class SleepingEffects extends SRFeature {
 			new SRMobEffectInstance(MobEffects.REGENERATION, 900, 0)
 	));
 	public static final ArrayList<SRMobEffectInstance> effectsOnWakeUp = new ArrayList<>();
+	public static final String NO_FOOD_FOR_SLEEP = "survivalreimagined.no_food_for_sleep";
 
 	@Config(min = 0, max = 20)
 	@Label(name = "Hunger Depleted on Wake Up", description = "How much the hunger bar is depleted when you wake up in the morning. Saturation is depleted before depleting hunger bar. Setting to 0 will disable this feature.")
@@ -94,6 +94,6 @@ public class SleepingEffects extends SRFeature {
 				|| event.getEntity().getFoodData().getFoodLevel() >= hungerDepletedOnWakeUp)
 			return;
 		event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
-		event.getEntity().displayClientMessage(Component.translatable(Strings.Translatable.NO_FOOD_FOR_SLEEP), true);
+		event.getEntity().displayClientMessage(Component.translatable(NO_FOOD_FOR_SLEEP), true);
 	}
 }

@@ -58,7 +58,7 @@ public class SRItemTagsProvider extends ItemTagsProvider {
         tag(ItemStats.NO_EFFICIENCY);
         tag(Knockback.REDUCED_KNOCKBACK);
 
-        tag(Spawners.SPAWNER_REACTIVATOR)
+        tag(Spawners.SPAWNER_REACTIVATOR_TAG)
                 .add(Items.ECHO_SHARD);
 
         tag(FoodDrinks.RAW_FOOD)

@@ -7,12 +7,12 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.insanelib.util.MCUtils;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.combat.stats.data.ItemAttributeModifier;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
-import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -46,6 +46,7 @@ import java.util.stream.Collectors;
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class Stats extends SRFeature {
 
+	public static final String GENERIC_ITEM_MODIFIER = SurvivalReimagined.RESOURCE_PREFIX + "item_modifier";
 	public static TagKey<Item> REMOVE_ORIGINAL_MODIFIERS_TAG = SRItemTagsProvider.create("remove_original_modifiers");
 
 	public static final ArrayList<ItemAttributeModifier> ITEM_MODIFIERS_DEFAULT = new ArrayList<>(Arrays.asList(
@@ -169,7 +170,7 @@ public class Stats extends SRFeature {
 			if (event.getSlotType() != itemAttributeModifier.slot)
 				continue;
 
-			AttributeModifier modifier = new AttributeModifier(itemAttributeModifier.uuid, Strings.AttributeModifiers.GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
+			AttributeModifier modifier = new AttributeModifier(itemAttributeModifier.uuid, GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
 			event.addModifier(itemAttributeModifier.attribute.get(), modifier);
 		}
 	}

@@ -12,7 +12,6 @@ import insane96mcp.survivalreimagined.module.world.spawners.capability.ISpawnerD
 import insane96mcp.survivalreimagined.module.world.spawners.capability.SpawnerData;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.SpawnerStatusSyncMessage;
-import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
@@ -48,7 +47,8 @@ import net.minecraftforge.network.NetworkDirection;
 public class Spawners extends Feature {
 
 	public static final ResourceLocation BLACKLISTED_SPAWNERS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "blacklisted_spawners");
-	public static final TagKey<Item> SPAWNER_REACTIVATOR = SRItemTagsProvider.create("spawner_reactivator");
+	public static final TagKey<Item> SPAWNER_REACTIVATOR_TAG = SRItemTagsProvider.create("spawner_reactivator");
+	public static final String SPAWNER_REACTIVATOR = SurvivalReimagined.MOD_ID + ".spawner_reactivator";
 	@Config(min = 0)
 	@Label(name = "Minimum Spawnable Mobs", description = "The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn. The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
 	public static Integer minSpawnableMobs = 20;
@@ -102,7 +102,7 @@ public class Spawners extends Feature {
 
 	@SubscribeEvent
 	public void onItemUse(PlayerInteractEvent.RightClickBlock event) {
-		if (!Utils.isItemInTag(event.getItemStack().getItem(), SPAWNER_REACTIVATOR)
+		if (!Utils.isItemInTag(event.getItemStack().getItem(), SPAWNER_REACTIVATOR_TAG)
 				|| event.getLevel().getBlockState(event.getHitVec().getBlockPos()).getBlock() != Blocks.SPAWNER)
 			return;
 
@@ -194,9 +194,9 @@ public class Spawners extends Feature {
 	@OnlyIn(Dist.CLIENT)
 	public void onTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled()
-				|| !Utils.isItemInTag(event.getItemStack().getItem(), SPAWNER_REACTIVATOR))
+				|| !Utils.isItemInTag(event.getItemStack().getItem(), SPAWNER_REACTIVATOR_TAG))
 			return;
 
-		event.getToolTip().add(Component.translatable(Strings.Translatable.SPAWNER_REACTIVATOR).withStyle(ChatFormatting.LIGHT_PURPLE));
+		event.getToolTip().add(Component.translatable(SPAWNER_REACTIVATOR).withStyle(ChatFormatting.LIGHT_PURPLE));
 	}
 }

@@ -15,7 +15,6 @@ import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
-import insane96mcp.survivalreimagined.setup.Strings;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
@@ -146,8 +145,10 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/netherite", 6.5d)
 	));
 	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();
+    public static final String NO_EFFICIENCY_ITEM = "survivalreimagined.no_efficiency_item";
+    public static final String NO_DAMAGE_ITEM = "survivalreimagined.no_damage_item";
 
-	@Config
+    @Config
 	@Label(name = "Override shield blocking damage", description = "If true copper shield will block 4 damage and Golden shields will block 100 damage. Requires a restart.")
 	public static Boolean overrideShieldBlockDamage = true;
 
@@ -231,7 +232,7 @@ public class ItemStats extends SRFeature {
 		Player player = event.getEntity();
 		if (Utils.isItemInTag(player.getMainHandItem().getItem(), NO_EFFICIENCY)) {
 			event.setCanceled(true);
-			event.getEntity().displayClientMessage(Component.translatable(Strings.Translatable.NO_EFFICIENCY_ITEM), true);
+			event.getEntity().displayClientMessage(Component.translatable(NO_EFFICIENCY_ITEM), true);
 		}
 	}
 
@@ -243,7 +244,7 @@ public class ItemStats extends SRFeature {
 
 		if (Utils.isItemInTag(player.getMainHandItem().getItem(), NO_DAMAGE)) {
 			event.setAmount(1f);
-			player.displayClientMessage(Component.translatable(Strings.Translatable.NO_DAMAGE_ITEM), true);
+			player.displayClientMessage(Component.translatable(NO_DAMAGE_ITEM), true);
 		}
 	}
 
@@ -255,10 +256,10 @@ public class ItemStats extends SRFeature {
 			return;
 
 		if (Utils.isItemInTag(event.getItemStack().getItem(), NO_DAMAGE)) {
-			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_DAMAGE_ITEM).withStyle(ChatFormatting.RED));
+			event.getToolTip().add(Component.translatable(NO_DAMAGE_ITEM).withStyle(ChatFormatting.RED));
 		}
 		if (Utils.isItemInTag(event.getItemStack().getItem(), NO_EFFICIENCY)) {
-			event.getToolTip().add(Component.translatable(Strings.Translatable.NO_EFFICIENCY_ITEM).withStyle(ChatFormatting.RED));
+			event.getToolTip().add(Component.translatable(NO_EFFICIENCY_ITEM).withStyle(ChatFormatting.RED));
 		}
 		else if (event.getItemStack().getItem() instanceof DiggerItem diggerItem){
 			int lvl = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);

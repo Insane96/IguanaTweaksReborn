@@ -1,11 +1,13 @@
 package insane96mcp.survivalreimagined.module.world.spawners.capability;
 
-import insane96mcp.survivalreimagined.setup.Strings;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import net.minecraft.nbt.CompoundTag;
 
 public class SpawnerDataImpl implements ISpawnerData {
 
-	private int spawnedMobs;
+    public static final String SPAWNED_MOBS = SurvivalReimagined.RESOURCE_PREFIX + "spawned_mobs";
+    public static final String SPAWNER_DISABLED = SurvivalReimagined.RESOURCE_PREFIX + "spawner_disabled";
+    private int spawnedMobs;
 	private boolean disabled;
 
 	@Override
@@ -36,14 +38,14 @@ public class SpawnerDataImpl implements ISpawnerData {
 	@Override
 	public CompoundTag serializeNBT() {
 		CompoundTag nbt = new CompoundTag();
-		nbt.putInt(Strings.Tags.SPAWNED_MOBS, this.getSpawnedMobs());
-		nbt.putBoolean(Strings.Tags.SPAWNER_DISABLED, this.isDisabled());
+		nbt.putInt(SPAWNED_MOBS, this.getSpawnedMobs());
+		nbt.putBoolean(SPAWNER_DISABLED, this.isDisabled());
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(CompoundTag nbt) {
-		this.setSpawnedMobs(nbt.getInt(Strings.Tags.SPAWNED_MOBS));
-		this.setDisabled(nbt.getBoolean(Strings.Tags.SPAWNER_DISABLED));
+		this.setSpawnedMobs(nbt.getInt(SPAWNED_MOBS));
+		this.setDisabled(nbt.getBoolean(SPAWNER_DISABLED));
 	}
 }

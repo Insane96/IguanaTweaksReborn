@@ -7,7 +7,6 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
-import insane96mcp.survivalreimagined.setup.Strings;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,6 +21,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN, enabledByDefault = false)
 public class Sleeping extends Feature {
 
+	public static final String DECORATIVE_BEDS = "survivalreimagined.decorative_beds";
+	public static final String ENJOY_THE_NIGHT = "survivalreimagined.enjoy_the_night";
 	@Config
 	@Label(name = "Disable Sleeping", description = "If set to true the player will not be able to sleep.")
 	public static Boolean disableSleeping = false;
@@ -47,10 +48,10 @@ public class Sleeping extends Feature {
 			ServerPlayer player = (ServerPlayer) event.getEntity();
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			if (disableSpawnPoint) {
-				player.displayClientMessage(Component.translatable(Strings.Translatable.DECORATIVE_BEDS), false);
+				player.displayClientMessage(Component.translatable(DECORATIVE_BEDS), false);
 			} else {
 				player.setRespawnPosition(player.level().dimension(), event.getPos(), player.getYRot(), false, true);
-				player.displayClientMessage(Component.translatable(Strings.Translatable.ENJOY_THE_NIGHT), false);
+				player.displayClientMessage(Component.translatable(ENJOY_THE_NIGHT), false);
 			}
 		}
 	}
