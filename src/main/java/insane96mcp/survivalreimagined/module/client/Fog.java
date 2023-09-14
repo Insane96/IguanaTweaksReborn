@@ -66,7 +66,8 @@ public class Fog extends Feature {
         if (entity.getEyeInFluidType() != ForgeMod.EMPTY_TYPE.get()
                 || entity.level().dimension() != Level.OVERWORLD
                 || !entity.level().isRaining()
-                || entity.getY() < entity.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, entity.blockPosition()).getY() - 16d)
+                //TODO Smooth out
+                || entity.getY() < entity.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, entity.blockPosition()).getY() - 16d)
             return;
 
         float renderDistance = Minecraft.getInstance().gameRenderer.getRenderDistance();
