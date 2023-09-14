@@ -2,7 +2,7 @@
   "type": "survivalreimagined:forging",
   "amount": 5,
   "category": "forge_misc",
-  "experience": 2.0,
+  "experience": 9.0,
   "gear": {
     "item": "survivalreimagined:flint_hammer"
   },

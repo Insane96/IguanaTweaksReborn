@@ -31,5 +31,5 @@
       "survivalreimagined:soul_steel_hammer"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

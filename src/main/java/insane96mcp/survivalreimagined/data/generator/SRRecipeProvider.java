@@ -172,12 +172,12 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer);
 
         //Coated Copper
-        forgeRecipe(writer, Items.OBSIDIAN, 3, CopperToolsExpansion.COPPER_PICKAXE.get(), CopperToolsExpansion.COATED_PICKAXE.get(), 12, 6);
-        forgeRecipe(writer, Items.OBSIDIAN, 3, CopperToolsExpansion.COPPER_AXE.get(), CopperToolsExpansion.COATED_AXE.get(), 12, 6);
-        forgeRecipe(writer, Items.OBSIDIAN, 2, CopperToolsExpansion.COPPER_SWORD.get(), CopperToolsExpansion.COATED_SWORD.get(), 12, 6);
-        forgeRecipe(writer, Items.OBSIDIAN, 2, CopperToolsExpansion.COPPER_HOE.get(), CopperToolsExpansion.COATED_HOE.get(), 12, 6);
-        forgeRecipe(writer, Items.OBSIDIAN, 1, CopperToolsExpansion.COPPER_SHOVEL.get(), CopperToolsExpansion.COATED_SHOVEL.get(), 12, 6);
-        forgeRecipe(writer, Items.OBSIDIAN, 4, SPItems.COPPER_SHIELD.get(), CopperToolsExpansion.COATED_SHIELD.get(), 12, 6);
+        forgeRecipe(writer, Items.OBSIDIAN, 3, CopperToolsExpansion.COPPER_PICKAXE.get(), CopperToolsExpansion.COATED_PICKAXE.get(), 12, 9);
+        forgeRecipe(writer, Items.OBSIDIAN, 3, CopperToolsExpansion.COPPER_AXE.get(), CopperToolsExpansion.COATED_AXE.get(), 12, 9);
+        forgeRecipe(writer, Items.OBSIDIAN, 2, CopperToolsExpansion.COPPER_SWORD.get(), CopperToolsExpansion.COATED_SWORD.get(), 12, 9);
+        forgeRecipe(writer, Items.OBSIDIAN, 2, CopperToolsExpansion.COPPER_HOE.get(), CopperToolsExpansion.COATED_HOE.get(), 12, 9);
+        forgeRecipe(writer, Items.OBSIDIAN, 1, CopperToolsExpansion.COPPER_SHOVEL.get(), CopperToolsExpansion.COATED_SHOVEL.get(), 12, 9);
+        forgeRecipe(writer, Items.OBSIDIAN, 4, SPItems.COPPER_SHIELD.get(), CopperToolsExpansion.COATED_SHIELD.get(), 12, 9);
 
         ConditionalRecipe.builder()
                 .addCondition(not(modLoaded("tconstruct")))
@@ -859,18 +859,20 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         hammerCraftingRecipe(writer, Forging.STONE_HAMMER.get(), ItemTags.STONE_TOOL_MATERIALS);
         hammerCraftingRecipe(writer, Forging.FLINT_HAMMER.get(), Items.FLINT);
         hammerCraftingRecipe(writer, Forging.COPPER_HAMMER.get(), Items.COPPER_INGOT);
-        forgeRecipe(writer, Items.IRON_INGOT, 5, Forging.STONE_HAMMER.get(), Forging.IRON_HAMMER.get(), 10, 5f);
+        forgeRecipe(writer, Items.IRON_INGOT, 5, Forging.STONE_HAMMER.get(), Forging.IRON_HAMMER.get(), 10, 8f);
         SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(Solarium.SOLARIUM_BALL.get()), RecipeCategory.TOOLS, Forging.SOLARIUM_HAMMER.get())
                 .unlocks("has_material", has(Solarium.SOLARIUM_BALL.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "solarium_hammer");
         SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(Durium.INGOT.get()), RecipeCategory.TOOLS, Forging.DURIUM_HAMMER.get())
                 .unlocks("has_material", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_hammer");
-        forgeRecipe(writer, Items.GOLD_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.GOLDEN_HAMMER.get(), 4, 2f);
-        forgeRecipe(writer, Items.OBSIDIAN, 5, Forging.COPPER_HAMMER.get(), Forging.COATED_COPPER_HAMMER.get(), 12, 6f);
-        forgeRecipe(writer, Items.DIAMOND, 5, Forging.GOLDEN_HAMMER.get(), Forging.DIAMOND_HAMMER.get(), 16, 8f);
-        forgeRecipe(writer, SoulSteel.INGOT.get(), 5, Forging.IRON_HAMMER.get(), Forging.SOUL_STEEL_HAMMER.get(), 20, 10f);
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Forging.SOUL_STEEL_HAMMER.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.TOOLS, Forging.NETHERITE_HAMMER.get())
+        forgeRecipe(writer, Items.GOLD_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.GOLDEN_HAMMER.get(), 4, 9f);
+        forgeRecipe(writer, Items.OBSIDIAN, 5, Forging.COPPER_HAMMER.get(), Forging.COATED_COPPER_HAMMER.get(), 12, 9f);
+        forgeRecipe(writer, Items.DIAMOND, 5, Forging.GOLDEN_HAMMER.get(), Forging.DIAMOND_HAMMER.get(), 16, 15f);
+        SmithingTransformRecipeBuilder.smithing(/*TODO Smithing template from Fortresses*/Ingredient.EMPTY, Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, Forging.SOUL_STEEL_HAMMER.get())
+                .unlocks("has_material", has(SoulSteel.INGOT.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_hammer");
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(Forging.DIAMOND_HAMMER.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.TOOLS, Forging.NETHERITE_HAMMER.get())
                 .unlocks("has_material", has(Items.NETHERITE_INGOT))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "netherite_hammer");
 

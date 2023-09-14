@@ -4,10 +4,12 @@
     "item": "minecraft:netherite_ingot"
   },
   "base": {
-    "item": "survivalreimagined:soul_steel_hammer"
+    "item": "survivalreimagined:diamond_hammer"
   },
   "result": {
     "item": "survivalreimagined:netherite_hammer"
   },
-  "template": []
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
 }

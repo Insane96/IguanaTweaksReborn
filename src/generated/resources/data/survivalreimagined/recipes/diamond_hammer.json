@@ -2,7 +2,7 @@
   "type": "survivalreimagined:forging",
   "amount": 5,
   "category": "forge_misc",
-  "experience": 8.0,
+  "experience": 15.0,
   "gear": {
     "item": "survivalreimagined:golden_hammer"
   },

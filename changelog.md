@@ -1,6 +1,7 @@
 # Changelog
 
-* Increase forging xp 
+## 0.14.9
+* Increased forging xp 
 
 ## 0.14.8
 * Heavily increased cleansed lapis drop and fixed dropping with silk touch

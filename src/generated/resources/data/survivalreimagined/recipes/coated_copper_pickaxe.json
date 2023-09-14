@@ -2,7 +2,7 @@
   "type": "survivalreimagined:forging",
   "amount": 3,
   "category": "forge_misc",
-  "experience": 6.0,
+  "experience": 9.0,
   "gear": {
     "item": "survivalreimagined:copper_pickaxe"
   },
