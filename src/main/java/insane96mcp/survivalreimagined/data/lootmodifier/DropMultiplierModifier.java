@@ -22,6 +22,7 @@ import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -70,22 +71,34 @@ public class DropMultiplierModifier extends LootModifier {
         List<ItemStack> stream = generatedLoot.stream().filter(MATCHES_ITEM_OR_TAG).toList();
         if (stream.isEmpty())
             return generatedLoot;
-        ItemStack newStack = null;
 
+        List<ItemStack> newStacks = new ArrayList<>();
         for (ItemStack stack : stream) {
-            if (newStack == null)
-                newStack = stack.copy();
-            else
-                newStack.setCount(newStack.getCount() + stack.getCount());
+            ItemStack existingStack = null;
+            for (ItemStack newStack : newStacks) {
+                if (ItemStack.isSameItemSameTags(stack, newStack)) {
+                    existingStack = newStack;
+                }
+            }
+            if (existingStack == null) {
+                existingStack = stack.copy();
+                newStacks.add(existingStack);
+            }
+            else {
+                existingStack.setCount(existingStack.getCount() + stack.getCount());
+            }
         }
         generatedLoot.removeIf(MATCHES_ITEM_OR_TAG);
-        //Remove the amount to keep and multiply the remainder with the multiplier
-        //If the result has a decimal part, treat that decimal part as a chance to have +1 count
-        int count = MathHelper.getAmountWithDecimalChance(context.getRandom(), (newStack.getCount() - amountToKeep) * multiplier) + amountToKeep;
-        if (count > 0) {
-            newStack.setCount(count);
-            generatedLoot.add(newStack);
+        for (ItemStack newStack : newStacks) {
+            //Remove the amount to keep and multiply the remainder with the multiplier
+            //If the result has a decimal part, treat that decimal part as a chance to have +1 count
+            int count = MathHelper.getAmountWithDecimalChance(context.getRandom(), (newStack.getCount() - amountToKeep) * multiplier) + amountToKeep;
+            if (count > 0) {
+                newStack.setCount(count);
+                generatedLoot.add(newStack);
+            }
         }
+        //TODO Fix unstacking stuff
 
         return generatedLoot;
     }
