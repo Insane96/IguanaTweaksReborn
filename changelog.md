@@ -3,6 +3,7 @@
 ## 0.14.9
 * Weather fog no longer shows up if the player is 16 below the surface (was fixed below Y 32)
 * Toughness to regeneration speed changed (+0.05 -> +20% regen speed per toughness)
+* Witches now drop potions
 * Increased forging xp 
 * Added `/sr` command 
 * Synced terrain and armor slowdown to clients
