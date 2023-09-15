@@ -7,6 +7,7 @@
 * Increased forging xp 
 * Added `/sr` command 
 * Synced terrain and armor slowdown to clients
+* Timber trees no longer get multiple types of leaves
 
 ## 0.14.8
 * Heavily increased cleansed lapis drop and fixed dropping with silk touch

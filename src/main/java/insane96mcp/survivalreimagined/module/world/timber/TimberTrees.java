@@ -15,6 +15,7 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -96,7 +97,7 @@ public class TimberTrees extends SRFeature {
 
     private static List<BlockPos> getTreeBlocks(BlockPos pos, BlockState state, LevelAccessor level) {
         List<BlockPos> blocks = new ArrayList<>();
-        boolean foundLeaves = false;
+        Block foundLeaves = null;
         int checks = 0;
         int logs = 0;
         int sidewaysLogs = 0;
@@ -126,13 +127,14 @@ public class TimberTrees extends SRFeature {
                     if (stateToCheck.isAir())
                         continue;
                     BlockPos posImmutable = blockPos.immutable();
-                    boolean isValidLeaves = stateToCheck.is(BlockTags.LEAVES) && !stateToCheck.getValue(LeavesBlock.PERSISTENT);
+                    boolean isValidLeaves = stateToCheck.is(BlockTags.LEAVES) && !stateToCheck.getValue(LeavesBlock.PERSISTENT) && (foundLeaves == null || stateToCheck.is(foundLeaves));
                     boolean isSameLog = stateToCheck.is(state.getBlock());
                     boolean isInDistance = xzDistance(posImmutable, pos) <= 8;
                     boolean isCurrLeaves = currState.is(BlockTags.LEAVES) && !currState.getValue(LeavesBlock.PERSISTENT);
                     boolean isCorrectLeavesDistance = isValidLeaves && isCurrLeaves && (stateToCheck.getValue(LeavesBlock.DISTANCE) > currState.getValue(LeavesBlock.DISTANCE) || stateToCheck.getValue(LeavesBlock.DISTANCE) == 7 /*|| (stateToCheck.getValue(LeavesBlock.DISTANCE).equals(currState.getValue(LeavesBlock.DISTANCE)) && level.getRandom().nextBoolean())*/);
-                    if (isValidLeaves)
-                        foundLeaves = true;
+                    if (isValidLeaves) {
+                        foundLeaves = stateToCheck.getBlock();
+                    }
                     if (!blocks.contains(posImmutable) && (isSameLog || isValidLeaves) && isInDistance && (!isValidLeaves || !isCurrLeaves || isCorrectLeavesDistance)) {
                         blocks.add(posImmutable);
                         posToCheck.add(posImmutable);
@@ -146,7 +148,7 @@ public class TimberTrees extends SRFeature {
                 }
                 checks++;
             }
-            if (posToCheck.isEmpty() && (!foundLeaves || logs + sidewaysLogs < 3 || sidewaysLogs > logs)) {
+            if (posToCheck.isEmpty() && (foundLeaves == null || logs + sidewaysLogs < 3 || sidewaysLogs > logs)) {
                 blocks.clear();
                 break;
             }
