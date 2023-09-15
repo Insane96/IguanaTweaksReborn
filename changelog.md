@@ -1,5 +1,7 @@
 # Changelog
 
+* Eating too fast
+
 ## 0.14.9
 * Weather fog no longer shows up if the player is 16 below the surface (was fixed below Y 32)
 * Toughness to regeneration speed changed (+0.05 -> +20% regen speed per toughness)
