@@ -1,6 +1,7 @@
 # Changelog
 
-* Eating too fast
+## Upcoming
+* If you have a tool in your hand while in creative you now break blocks faster
 
 ## 0.14.9
 * Weather fog no longer shows up if the player is 16 below the surface (was fixed below Y 32)
