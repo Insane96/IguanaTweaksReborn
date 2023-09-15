@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Seasons 
+  * Tall grass now decays in winter and grows back in spring. Saplings also become dead bushes in Winter
 * If you have a tool in your hand while in creative you now break blocks faster
 
 ## 0.14.9
