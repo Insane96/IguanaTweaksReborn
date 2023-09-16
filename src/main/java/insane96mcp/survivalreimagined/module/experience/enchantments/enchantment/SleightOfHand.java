@@ -1,18 +1,21 @@
 package insane96mcp.survivalreimagined.module.experience.enchantments.enchantment;
 
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
+import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 
-public class Critical extends Enchantment implements IDamagingEnchantment {
-    public Critical() {
+import java.util.UUID;
+
+public class SleightOfHand extends Enchantment implements IDamagingEnchantment {
+    public static final UUID BONUS_ATTACK_SPEED_UUID = UUID.fromString("7b0cb3a4-7a7c-4908-be8d-aadd523690d7");
+    public SleightOfHand() {
         super(Rarity.UNCOMMON, EnchantmentCategory.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
@@ -45,16 +48,13 @@ public class Critical extends Enchantment implements IDamagingEnchantment {
         return pStack.getItem() instanceof AxeItem ? true : super.canEnchant(pStack);
     }
 
-    public static float getCritAmount(int lvl, float baseCrit) {
-        return lvl * (baseCrit - 1) + 1 + (baseCrit - 1);
-    }
+    public static void applyAttributeModifier(ItemAttributeModifierEvent event) {
+        if (event.getSlotType() != EquipmentSlot.MAINHAND)
+            return;
+        int lvl = event.getItemStack().getEnchantmentLevel(EnchantmentsFeature.RHYTHMIC_SWING.get());
+        if (lvl == 0)
+            return;
 
-    @Override
-    public void doPostAttack(LivingEntity attacker, Entity entity, int lvl) {
-        if (lvl > 0 && attacker instanceof ServerPlayer player) {
-            boolean isCrit = player.getAttackStrengthScale(0.5F) > 0.9f && player.fallDistance > 0.0F && !player.onGround() && !player.onClimbable() && !player.isInWater() && !player.hasEffect(MobEffects.BLINDNESS) && !player.isPassenger() && entity instanceof LivingEntity;
-            if (isCrit)
-                player.magicCrit(entity);
-        }
+        event.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(BONUS_ATTACK_SPEED_UUID, "Rhythmic Swing enchantment", 0.15 * lvl, AttributeModifier.Operation.MULTIPLY_BASE));
     }
 }

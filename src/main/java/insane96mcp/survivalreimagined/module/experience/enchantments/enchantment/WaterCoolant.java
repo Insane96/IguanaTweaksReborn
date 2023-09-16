@@ -34,7 +34,7 @@ public class WaterCoolant extends Enchantment {
 
     @Override
     public boolean checkCompatibility(Enchantment enchantment) {
-        return !(enchantment instanceof DamageEnchantment);
+        return !(enchantment instanceof DamageEnchantment) && !(enchantment instanceof IDamagingEnchantment) && super.checkCompatibility(enchantment);
     }
 
     @Override

@@ -66,6 +66,7 @@ public class EnchantmentsFeature extends SRFeature {
 	public static final RegistryObject<Enchantment> MA_JUMP = SRRegistries.ENCHANTMENTS.register("ma_jump", DoubleJump::new);
 	public static final RegistryObject<Enchantment> GRAVITY_DEFYING = SRRegistries.ENCHANTMENTS.register("gravity_defying", GravityDefying::new);
 	public static final RegistryObject<Enchantment> CRITICAL = SRRegistries.ENCHANTMENTS.register("critical", Critical::new);
+	public static final RegistryObject<Enchantment> RHYTHMIC_SWING = SRRegistries.ENCHANTMENTS.register("rhythmic_swing", SleightOfHand::new);
 	public static final RegistryObject<Enchantment> HEALTHY = SRRegistries.ENCHANTMENTS.register("healthy", Healthy::new);
 
 	@Config
@@ -172,6 +173,7 @@ public class EnchantmentsFeature extends SRFeature {
 		StepUp.applyAttributeModifier(event);
 		GravityDefying.applyAttributeModifier(event);
 		Healthy.applyAttributeModifier(event);
+		SleightOfHand.applyAttributeModifier(event);
 	}
 
 	@SubscribeEvent
