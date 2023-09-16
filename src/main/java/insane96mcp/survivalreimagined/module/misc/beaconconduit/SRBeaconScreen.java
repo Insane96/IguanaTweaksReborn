@@ -15,6 +15,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -112,9 +113,10 @@ public class SRBeaconScreen extends AbstractContainerScreen<SRBeaconMenu> {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         int topLeftCornerX = (this.width - this.imageWidth) / 2;
         int topLeftCornerY = (this.height - this.imageHeight) / 2;
-        if (this.menu.getTimeLeft() > 0) {
+        pGuiGraphics.drawCenteredString(minecraft.font, Component.literal(StringUtil.formatTickDuration(this.menu.getTimeLeft() / (this.menu.getAmplifier() + 1))), topLeftCornerX + 130, topLeftCornerY + 114, 16777215);
+        /*if (this.menu.getTimeLeft() > 0) {
             pGuiGraphics.blit(BEACON_LOCATION, topLeftCornerX + 59, topLeftCornerY + 112, 89, 220, (int) (142 * ((float) this.menu.getTimeLeft() / SRBeaconBlockEntity.MAX_TIME_LEFT)), 11);
-        }
+        }*/
         this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }
 

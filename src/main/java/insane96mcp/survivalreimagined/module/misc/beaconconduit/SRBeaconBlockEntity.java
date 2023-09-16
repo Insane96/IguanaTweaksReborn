@@ -29,7 +29,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -48,7 +47,7 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
             new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 240, 2),
             new MobEffectInstance(MobEffects.DIG_SPEED, 240, 2),
             new MobEffectInstance(MobEffects.DAMAGE_BOOST, 240, 1),
-            new MobEffectInstance(MobEffects.JUMP, 240, 1),
+            new MobEffectInstance(MobEffects.JUMP, 240, 2),
             new MobEffectInstance(MobEffects.REGENERATION, 240, 0),
             new MobEffectInstance(HealthRegen.VIGOUR.get(), 240, 0),
             new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 240, 2),
@@ -195,9 +194,9 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
             ++blockEntity.lastCheckY;
         }
         int lvls = blockEntity.levels;
-        if (blockEntity.effect != null) {
+        if (blockEntity.effect != null && blockEntity.timeLeft > 0) {
             blockEntity.timeLeft -= blockEntity.amplifier + 1;
-            if (blockEntity.timeLeft > 0 && pLevel.getGameTime() % 80 == 0) {
+            if (pLevel.getGameTime() % 80 == 0) {
                 if (!blockEntity.beamSections.isEmpty()) {
                     blockEntity.levels = updateBase(pLevel, x, y, z);
                 }
@@ -208,11 +207,11 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
                 }
             }
         }
-        if (!blockEntity.items.get(0).isEmpty()) {
+        if (pLevel.getGameTime() % 10 == 0 && !blockEntity.items.get(0).isEmpty()) {
             int timeLeftAmount = 6000;
             if (blockEntity.timeLeft + timeLeftAmount <= MAX_TIME_LEFT) {
                 blockEntity.timeLeft += timeLeftAmount;
-                blockEntity.items.clear();
+                blockEntity.removeItem(0, 1);
             }
         }
         if (blockEntity.lastCheckY >= ySurface) {
@@ -368,7 +367,7 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
 
     @Override
     protected AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory) {
-        return new SRBeaconMenu(pContainerId, pInventory, this, this.dataAccess, ContainerLevelAccess.create(this.level, this.worldPosition));
+        return new SRBeaconMenu(pContainerId, pInventory, this, this.dataAccess);
     }
 
     public Component getDisplayName() {

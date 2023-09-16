@@ -8,7 +8,10 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
@@ -23,20 +26,18 @@ public class SRBeaconMenu extends AbstractContainerMenu {
     private static final int USE_ROW_SLOT_END = 37;
     private final PaymentSlot paymentSlot;
     private final Container container;
-    private final ContainerLevelAccess access;
     private final ContainerData beaconData;
 
     public SRBeaconMenu(int pContainerId, Inventory pPlayerInventory) {
-        this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(EnsorcellerBlockEntity.DATA_COUNT), ContainerLevelAccess.NULL);
+        this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(EnsorcellerBlockEntity.DATA_COUNT));
     }
 
-    public SRBeaconMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData containerData, ContainerLevelAccess access) {
+    public SRBeaconMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData containerData) {
         super(BeaconConduit.BEACON_MENU_TYPE.get(), pContainerId);
         checkContainerDataCount(containerData, SRBeaconBlockEntity.DATA_COUNT);
         checkContainerSize(pContainer, SRBeaconBlockEntity.SLOT_COUNT);
         this.container = pContainer;
         this.beaconData = containerData;
-        this.access = access;
         this.addDataSlots(containerData);
         this.paymentSlot = new PaymentSlot(pContainer, 0, 21, 110);
         this.addSlot(this.paymentSlot);
@@ -165,11 +166,6 @@ public class SRBeaconMenu extends AbstractContainerMenu {
 
         public boolean mayPlace(ItemStack pStack) {
             return pStack.is(ItemTags.BEACON_PAYMENT_ITEMS);
-        }
-
-        @Override
-        public int getMaxStackSize() {
-            return 1;
         }
 
         @Override

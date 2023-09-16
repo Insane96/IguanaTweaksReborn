@@ -74,4 +74,9 @@ public class SRBeaconBlock extends BaseEntityBlock implements BeaconBeamBlock {
             srBeaconBlockEntity.setCustomName(pStack.getHoverName());
         }
     }
+
+    @Override
+    public String getDescriptionId() {
+        return "block.minecraft.beacon";
+    }
 }

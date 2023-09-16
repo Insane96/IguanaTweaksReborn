@@ -27,6 +27,7 @@
 
 	"attribute.name.piercing_damage": "Piercing Damage",
 
+	"effect.survivalreimagined.regenerating_absorption": "Regen. Absorption",
 	"attribute.name.regenerating_absorption": "Regenerating Absorption",
 	"attribute.name.regenerating_absorption_speed": "Absorption Regen Speed",
 
@@ -252,6 +253,9 @@
 	"survivalreimagined.too_tired": "You should really get some sleep",
 
 	"item.survivalreimagined.cloth": "Cloth",
+
+	"effect.survivalreimagined.block_reach": "Block Reach",
+	"effect.survivalreimagined.entity_reach": "Entity Reach",
 
 
 	"survivalreimagined:world_module": "World",
