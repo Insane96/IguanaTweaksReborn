@@ -32,6 +32,8 @@ import insane96mcp.survivalreimagined.module.mining.miningcharge.MiningChargeRen
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.client.MultiBlockBlastFurnaceScreen;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.client.MultiBlockSoulBlastFurnaceScreen;
+import insane96mcp.survivalreimagined.module.misc.beaconconduit.BeaconConduit;
+import insane96mcp.survivalreimagined.module.misc.beaconconduit.SRBeaconRenderer;
 import insane96mcp.survivalreimagined.module.movement.minecarts.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.Cloth;
 import insane96mcp.survivalreimagined.module.sleeprespawn.death.Death;
@@ -260,6 +262,8 @@ public class ClientSetup {
 
         event.registerBlockEntityRenderer(Forging.FORGE_BLOCK_ENTITY_TYPE.get(), ForgeRenderer::new);
         event.registerBlockEntityRenderer(EnchantingFeature.ENSORCELLER_BLOCK_ENTITY_TYPE.get(), EnsorcellerRenderer::new);
+
+        event.registerBlockEntityRenderer(BeaconConduit.BEACON_BLOCK_ENTITY_TYPE.get(), SRBeaconRenderer::new);
     }
 
     static RecipeBookCategories BLAST_FURNACE_SEARCH = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "blast_furnace_search", new ItemStack(Items.COMPASS));

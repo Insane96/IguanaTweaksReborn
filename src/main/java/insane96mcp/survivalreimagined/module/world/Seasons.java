@@ -121,7 +121,7 @@ public class Seasons extends Feature {
 			Map.entry(Season.SubSeason.EARLY_WINTER, -0.10f),
 			Map.entry(Season.SubSeason.MID_WINTER, -0.125f),
 			Map.entry(Season.SubSeason.LATE_WINTER, -0.075f),
-			Map.entry(Season.SubSeason.EARLY_SPRING, 0f),
+			Map.entry(Season.SubSeason.EARLY_SPRING, 0.05f),
 			Map.entry(Season.SubSeason.MID_SPRING, 0.10f),
 			Map.entry(Season.SubSeason.LATE_SPRING, 0.125f)
 	);
@@ -186,7 +186,7 @@ public class Seasons extends Feature {
 							else if (stateUp.is(BlockTags.SAPLINGS))
 								level.setBlock(abovePos, Blocks.DEAD_BUSH.defaultBlockState(), 3);
 						}
-						else if (level.getRandom().nextFloat() < chance && stateUp.isAir()) {
+						else if (state.is(Blocks.GRASS_BLOCK) && level.getRandom().nextFloat() < chance && stateUp.isAir()) {
 							Optional<Holder.Reference<PlacedFeature>> oPlacedFeature = level.registryAccess().registryOrThrow(Registries.PLACED_FEATURE).getHolder(VegetationPlacements.GRASS_BONEMEAL);
 							oPlacedFeature.ifPresent(placedFeatureReference ->
 									placedFeatureReference.value().place(level, level.getChunkSource().getGenerator(), level.random, abovePos));

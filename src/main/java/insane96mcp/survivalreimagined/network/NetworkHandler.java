@@ -32,5 +32,6 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(14, SyncEnsorcellerStatus.class, SyncEnsorcellerStatus::encode, SyncEnsorcellerStatus::decode, SyncEnsorcellerStatus::handle);
 		CHANNEL.registerMessage(15, SyncAnvilRepair.class, SyncAnvilRepair::encode, SyncAnvilRepair::decode, SyncAnvilRepair::handle);
 		CHANNEL.registerMessage(16, StackSizesSync.class, StackSizesSync::encode, StackSizesSync::decode, StackSizesSync::handle);
+		CHANNEL.registerMessage(17, ServerboundSetSRBeacon.class, ServerboundSetSRBeacon::encode, ServerboundSetSRBeacon::decode, ServerboundSetSRBeacon::handle);
 	}
 }

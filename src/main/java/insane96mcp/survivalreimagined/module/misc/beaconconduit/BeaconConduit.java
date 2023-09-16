@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.misc;
+package insane96mcp.survivalreimagined.module.misc.beaconconduit;
 
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -6,9 +6,11 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.hungerhealth.HealthRegen;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.BeaconScreen;
@@ -26,18 +28,26 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.*;
 
 @Label(name = "Beacon & Conduit", description = "Beacon Range varying based of blocks of the pyramid and better conduit killing mobs. Blocks list and ranges are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MISC)
 public class BeaconConduit extends SRFeature {
+
+    public static final SimpleBlockWithItem BEACON = SimpleBlockWithItem.register("beacon", () -> new SRBeaconBlock(BlockBehaviour.Properties.copy(Blocks.BEACON)));
+    public static final RegistryObject<BlockEntityType<SRBeaconBlockEntity>> BEACON_BLOCK_ENTITY_TYPE = SRRegistries.BLOCK_ENTITY_TYPES.register("beacon", () -> BlockEntityType.Builder.of(SRBeaconBlockEntity::new, BEACON.block().get()).build(null));
+
     public static final ArrayList<IdTagValue> BLOCKS_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_block", 1d),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:emerald_block", 1.2d),

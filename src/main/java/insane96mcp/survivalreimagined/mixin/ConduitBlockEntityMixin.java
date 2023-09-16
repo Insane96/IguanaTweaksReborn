@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.misc.BeaconConduit;
+import insane96mcp.survivalreimagined.module.misc.beaconconduit.BeaconConduit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.ConduitBlockEntity;
