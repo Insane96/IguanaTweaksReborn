@@ -68,13 +68,10 @@ public class SRBeaconScreen extends AbstractContainerScreen<SRBeaconMenu> {
             BeaconAmplifierButton amplifierButton = new BeaconAmplifierButton(topLeftCornerX + 17 + i * 25, topLeftCornerY + 77, i);
             amplifierButton.active = true;
             amplifierButton.visible = false;
-            /*if (i == this.amplifier) {
-                amplifierButton.setSelected(true);
-            }*/
             this.addBeaconButton(amplifierButton);
         }
-        for (int i = 0; i < SRBeaconBlockEntity.MOB_EFFECTS.size(); i++) {
-            MobEffect mobeffect = SRBeaconBlockEntity.MOB_EFFECTS.get(i).getEffect();
+        for (int i = 0; i < BeaconConduit.effects.size(); i++) {
+            MobEffect mobeffect = BeaconConduit.effects.get(i).getEffect();
             BeaconPowerButton beaconEffectButton = new BeaconPowerButton(topLeftCornerX + 17 + (i % 8 * 25), topLeftCornerY + 15 + (i / 8 * 25), mobeffect);
             beaconEffectButton.active = true;
             if (Objects.equals(this.effect, mobeffect)) {
@@ -113,7 +110,7 @@ public class SRBeaconScreen extends AbstractContainerScreen<SRBeaconMenu> {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         int topLeftCornerX = (this.width - this.imageWidth) / 2;
         int topLeftCornerY = (this.height - this.imageHeight) / 2;
-        pGuiGraphics.drawCenteredString(minecraft.font, Component.literal(StringUtil.formatTickDuration(this.menu.getTimeLeft() / (this.menu.getAmplifier() + 1))), topLeftCornerX + 130, topLeftCornerY + 114, 16777215);
+        pGuiGraphics.drawCenteredString(minecraft.font, Component.literal(StringUtil.formatTickDuration((int) (this.menu.getTimeLeft() / BeaconConduit.getEffectTimeScale(this.effect, this.amplifier)))), topLeftCornerX + 130, topLeftCornerY + 114, 16777215);
         /*if (this.menu.getTimeLeft() > 0) {
             pGuiGraphics.blit(BEACON_LOCATION, topLeftCornerX + 59, topLeftCornerY + 112, 89, 220, (int) (142 * ((float) this.menu.getTimeLeft() / SRBeaconBlockEntity.MAX_TIME_LEFT)), 11);
         }*/
@@ -180,7 +177,7 @@ public class SRBeaconScreen extends AbstractContainerScreen<SRBeaconMenu> {
 
         protected MutableComponent createEffectDescription(MobEffect effect) {
             MutableComponent component = Component.translatable(effect.getDescriptionId()).append(" ");
-            return component.append(getEffectAmplifier());
+            return component.append(getEffectAmplifier()).append(Component.literal(" (Time cost: %s)".formatted(BeaconConduit.getEffectTimeScale(SRBeaconScreen.this.effect, this.amplifier))));
         }
 
         private Component getEffectAmplifier() {

@@ -5,7 +5,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -152,9 +151,9 @@ public class SRBeaconMenu extends AbstractContainerMenu {
     }
 
     public int getMaxAmplifier(MobEffect effect) {
-        for (MobEffectInstance instance : SRBeaconBlockEntity.MOB_EFFECTS) {
+        for (BeaconConduit.BeaconEffect instance : BeaconConduit.effects) {
             if (instance.getEffect().equals(effect))
-                return instance.getAmplifier();
+                return instance.getMaxAmplifier();
         }
         return -1;
     }

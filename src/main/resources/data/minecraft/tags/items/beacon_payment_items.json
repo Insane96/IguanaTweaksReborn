@@ -1,0 +1,8 @@
+{
+    "replace": false,
+    "values": [
+        "minecraft:nether_star",
+        "survivalreimagined:durium_ingot",
+        "survivalreimagined:soul_steel_ingot"
+    ]
+}

@@ -7,6 +7,7 @@ import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.ItemStats;
 import insane96mcp.survivalreimagined.module.items.StackSizes;
 import insane96mcp.survivalreimagined.module.mining.blockhardness.BlockHardness;
+import insane96mcp.survivalreimagined.module.misc.beaconconduit.BeaconConduit;
 import insane96mcp.survivalreimagined.module.movement.TerrainSlowdown;
 import insane96mcp.survivalreimagined.module.movement.weightedequipment.WeightedEquipment;
 import net.minecraft.network.FriendlyByteBuf;
@@ -70,7 +71,8 @@ public class JsonConfigSyncMessage {
         ENCHANTMENTS_WEIGHTS(WeightedEquipment::handleEnchantmentWeightsSync),
         HARDER_CROPS(HarderCrops::handleSyncPacket),
         ITEM_ATTRIBUTE_MODIFIERS(Stats::handleItemAttributeModifiersPacket),
-        PLANTS_GROWTH(PlantsGrowth::handlePlantsGrowthPacket);
+        PLANTS_GROWTH(PlantsGrowth::handlePlantsGrowthPacket),
+        BEACON_EFFECTS(BeaconConduit::handleEffectsPacket);
 
         final Consumer<String> consumer;
 
