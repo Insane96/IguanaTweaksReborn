@@ -49,6 +49,8 @@ public class SRFeature extends Feature {
     }
 
     public void loadJsonConfigs() {
+        if (!this.isEnabled())
+            return;
         jsonConfigFolder = new File(SurvivalReimagined.CONFIG_FOLDER + "/" + this.getModule().getName() + "/" + this.getName());
         if (!jsonConfigFolder.exists()) {
             if (!jsonConfigFolder.mkdirs()) {

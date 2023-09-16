@@ -54,7 +54,10 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_axe", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .25d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_pickaxe", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .3d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_shovel", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .25d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.Type.ID, "survivalreimagined:golden_hammer", UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, Attributes.ATTACK_SPEED, .125d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_sword", UUID.fromString("a6ad1c09-61e9-4722-b7a1-6813b075e144"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, 2, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_axe", UUID.fromString("a6ad1c09-61e9-4722-b7a1-6813b075e144"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, 2, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_pickaxe", UUID.fromString("a6ad1c09-61e9-4722-b7a1-6813b075e144"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, 2, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_shovel", UUID.fromString("a6ad1c09-61e9-4722-b7a1-6813b075e144"), EquipmentSlot.MAINHAND, Attributes.ATTACK_DAMAGE, 2, AttributeModifier.Operation.ADDITION),
 
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_helmet", UUID.fromString("3f22e9a3-0916-43ab-a93f-ba52e5ae28e5"), EquipmentSlot.HEAD, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", UUID.fromString("f700b45a-0c51-40f8-9f59-836c519d64d5"), EquipmentSlot.CHEST, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
@@ -141,13 +144,6 @@ public class Stats extends SRFeature {
 			MCUtils.applyModifier(player, Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_REDUCTION_UUID, "Movement Speed reduction", -playersMovementSpeedReduction, AttributeModifier.Operation.MULTIPLY_BASE, false);
 	}
 
-	@Override
-	public void loadJsonConfigs() {
-		if (!this.isEnabled())
-			return;
-		super.loadJsonConfigs();
-	}
-
 	public static void handleItemAttributeModifiersPacket(String json) {
 		loadAndReadJson(json, itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE);
 	}
@@ -217,7 +213,7 @@ public class Stats extends SRFeature {
 							return;
 
 						boolean isEqualTooltip = false;
-						if (event.getEntity() != null) {
+						if (event.getEntity() != null && operation == AttributeModifier.Operation.ADDITION) {
 							if (attribute.equals(Attributes.ATTACK_DAMAGE)) {
 								amount += event.getEntity().getAttributeBaseValue(Attributes.ATTACK_DAMAGE);
 								amount += EnchantmentHelper.getDamageBonus(event.getItemStack(), MobType.UNDEFINED);
