@@ -34,6 +34,7 @@ import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.client.Mu
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.client.MultiBlockSoulBlastFurnaceScreen;
 import insane96mcp.survivalreimagined.module.misc.beaconconduit.BeaconConduit;
 import insane96mcp.survivalreimagined.module.misc.beaconconduit.SRBeaconRenderer;
+import insane96mcp.survivalreimagined.module.misc.beaconconduit.SRBeaconScreen;
 import insane96mcp.survivalreimagined.module.movement.minecarts.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.Cloth;
 import insane96mcp.survivalreimagined.module.sleeprespawn.death.Death;
@@ -250,6 +251,7 @@ public class ClientSetup {
         MenuScreens.register(Forging.FORGE_MENU_TYPE.get(), ForgeScreen::new);
         MenuScreens.register(EnchantingFeature.ENSORCELLER_MENU_TYPE.get(), EnsorcellerScreen::new);
         MenuScreens.register(Fletching.FLETCHING_MENU_TYPE.get(), FletchingScreen::new);
+        MenuScreens.register(BeaconConduit.BEACON_MENU_TYPE.get(), SRBeaconScreen::new);
     }
 
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {

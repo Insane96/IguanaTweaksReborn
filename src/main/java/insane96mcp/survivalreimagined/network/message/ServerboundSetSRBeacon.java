@@ -2,15 +2,19 @@ package insane96mcp.survivalreimagined.network.message;
 
 import insane96mcp.survivalreimagined.module.misc.beaconconduit.SRBeaconMenu;
 import insane96mcp.survivalreimagined.utils.LogHelper;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import static insane96mcp.survivalreimagined.network.NetworkHandler.CHANNEL;
 
 public class ServerboundSetSRBeacon {
     final Optional<MobEffect> mobEffect;
@@ -49,7 +53,8 @@ public class ServerboundSetSRBeacon {
         ctx.get().setPacketHandled(true);
     }
 
-    public static void updateServer(ServerPlayer player, MobEffect mobEffect, int amplifier) {
-
+    public static void updateServer(LocalPlayer player, MobEffect mobEffect, int amplifier) {
+        Object msg = new ServerboundSetSRBeacon(Optional.of(mobEffect), amplifier);
+        CHANNEL.sendTo(msg, player.connection.getConnection(), NetworkDirection.PLAY_TO_SERVER);
     }
 }

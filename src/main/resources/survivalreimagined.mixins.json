@@ -10,7 +10,6 @@
         "ArrowInfiniteEnchantmentMixin",
         "ArrowItemMixin",
         "BaseSpawnerMixin",
-        "BeaconBlockEntityMixin",
         "BellBlockEntityMixin",
         "BoatMixin",
         "CakeBlockMixin",

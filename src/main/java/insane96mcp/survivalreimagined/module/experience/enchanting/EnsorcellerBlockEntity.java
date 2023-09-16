@@ -88,9 +88,7 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
 
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag);
-        return tag;
+        return this.saveWithoutMetadata();
     }
 
     @Override

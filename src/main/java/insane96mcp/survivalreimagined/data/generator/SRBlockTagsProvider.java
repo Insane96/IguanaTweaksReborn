@@ -14,6 +14,7 @@ import insane96mcp.survivalreimagined.module.mining.forging.Forging;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.block.MultiBlockBlastFurnaceBlock;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.block.MultiBlockSoulBlastFurnaceBlock;
+import insane96mcp.survivalreimagined.module.misc.beaconconduit.BeaconConduit;
 import insane96mcp.survivalreimagined.module.movement.minecarts.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.death.Death;
 import insane96mcp.survivalreimagined.module.world.coalfire.CoalFire;
@@ -72,7 +73,8 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(Death.GRAVE.block().get())
                 .add(MultiBlockFurnaces.BLAST_FURNACE.block().get(), MultiBlockFurnaces.SOUL_BLAST_FURNACE.block().get())
                 .add(Forging.FORGE.block().get())
-                .add(EnchantingFeature.ENSORCELLER.block().get());
+                .add(EnchantingFeature.ENSORCELLER.block().get())
+                .add(BeaconConduit.BEACON.block().get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(Crate.BLOCK.get())

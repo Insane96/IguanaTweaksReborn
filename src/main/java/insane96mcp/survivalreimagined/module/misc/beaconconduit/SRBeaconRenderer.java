@@ -98,7 +98,7 @@ public class SRBeaconRenderer implements BlockEntityRenderer<SRBeaconBlockEntity
         pConsumer.vertex(pPose, pX, (float)pY, pZ).color(pRed, pGreen, pBlue, pAlpha).uv(pU, pV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(pNormal, 0.0F, 1.0F, 0.0F).endVertex();
     }
 
-    public boolean shouldRenderOffScreen(BeaconBlockEntity pBlockEntity) {
+    public boolean shouldRenderOffScreen(SRBeaconBlockEntity pBlockEntity) {
         return true;
     }
 

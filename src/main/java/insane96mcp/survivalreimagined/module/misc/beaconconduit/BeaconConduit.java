@@ -4,42 +4,34 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.ILMobEffect;
 import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.hungerhealth.HealthRegen;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.screens.inventory.BeaconScreen;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Label(name = "Beacon & Conduit", description = "Beacon Range varying based of blocks of the pyramid and better conduit killing mobs. Blocks list and ranges are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MISC)
@@ -47,6 +39,13 @@ public class BeaconConduit extends SRFeature {
 
     public static final SimpleBlockWithItem BEACON = SimpleBlockWithItem.register("beacon", () -> new SRBeaconBlock(BlockBehaviour.Properties.copy(Blocks.BEACON)));
     public static final RegistryObject<BlockEntityType<SRBeaconBlockEntity>> BEACON_BLOCK_ENTITY_TYPE = SRRegistries.BLOCK_ENTITY_TYPES.register("beacon", () -> BlockEntityType.Builder.of(SRBeaconBlockEntity::new, BEACON.block().get()).build(null));
+    public static final RegistryObject<MenuType<SRBeaconMenu>> BEACON_MENU_TYPE = SRRegistries.MENU_TYPES.register("beacon", () -> new MenuType<>(SRBeaconMenu::new, FeatureFlags.VANILLA_SET));
+
+
+    public static final RegistryObject<MobEffect> BLOCK_REACH = SRRegistries.MOB_EFFECTS.register("block_reach", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x818894)
+            .addAttributeModifier(ForgeMod.BLOCK_REACH.get(), "bd0c6709-4b67-43d5-ae51-c6180d848978", 0.5f, AttributeModifier.Operation.ADDITION));
+    public static final RegistryObject<MobEffect> ENTITY_REACH = SRRegistries.MOB_EFFECTS.register("entity_reach", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x818894)
+            .addAttributeModifier(ForgeMod.ENTITY_REACH.get(), "fb23063a-c676-4da0-8d75-574ab8f3ee30", 0.05f, AttributeModifier.Operation.MULTIPLY_BASE));
 
     public static final ArrayList<IdTagValue> BLOCKS_LIST_DEFAULT = new ArrayList<>(List.of(
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_block", 1d),
@@ -59,15 +58,6 @@ public class BeaconConduit extends SRFeature {
     ));
     public static final ArrayList<IdTagValue> blocksList = new ArrayList<>();
 
-    @Config
-    @Label(name = "Beacon.Affect Pets", description = "If true, pets will also get the beacon effects")
-    public static Boolean affectPets = true;
-    @Config
-    @Label(name = "Beacon.Vigour with Regeneration", description = "If true, with the regeneration effect, the Vigour effect is also applied (reduces hunger and stamina consumption by 20%).")
-    public static Boolean vigourWithRegen = true;
-    @Config(min = 0d, max = 256d)
-    @Label(name = "Beacon.Base Range", description = "Base range of the beacon")
-    public static Double baseRange = 10d;
     @Config
     @Label(name = "Conduit.Better Protection", description = "Greatly increases the range and damage of the conduit")
     public static Boolean betterConduitProtection = true;
@@ -82,118 +72,6 @@ public class BeaconConduit extends SRFeature {
         super(module, enabledByDefault, canBeDisabled);
 
         JSON_CONFIGS.add(new JsonConfig<>("beacon_blocks_ranges.json", blocksList, BLOCKS_LIST_DEFAULT, IdTagValue.LIST_TYPE));
-    }
-
-    @Override
-    public void loadJsonConfigs() {
-        if (!this.isEnabled())
-            return;
-        super.loadJsonConfigs();
-    }
-
-    public static boolean beaconApplyEffects(Level level, BlockPos blockPos, int layers, MobEffect effectPrimary, MobEffect effectSecondary) {
-        if (!isEnabled(BeaconConduit.class)
-                || blocksList.isEmpty()
-                || level.isClientSide
-                || effectPrimary == null)
-            return false;
-
-        double blocksRange = getBeaconRange(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), layers);
-
-        double range = blocksRange + baseRange;
-        int amplifier = 0;
-        if (layers >= 4 && effectPrimary == effectSecondary) {
-            amplifier = 1;
-        }
-
-        int j = (9 + layers * 2) * 20;
-        AABB aabb = (new AABB(blockPos)).inflate(range).expandTowards(0.0D, level.getHeight(), 0.0D);
-        List<Player> list = level.getEntitiesOfClass(Player.class, aabb);
-
-        for (Player player : list) {
-            player.addEffect(new MobEffectInstance(effectPrimary, j, amplifier, true, true));
-        }
-
-        if (layers >= 4 && effectPrimary != effectSecondary && effectSecondary != null) {
-            for(Player player : list) {
-                player.addEffect(new MobEffectInstance(effectSecondary, j, 0, true, true));
-                if (vigourWithRegen && effectSecondary.equals(MobEffects.REGENERATION))
-                    player.addEffect(new MobEffectInstance(HealthRegen.VIGOUR.get(), j, 0, true, true));
-            }
-        }
-
-        if (affectPets) {
-            List<TamableAnimal> list2 = level.getEntitiesOfClass(TamableAnimal.class, aabb, TamableAnimal::isTame);
-
-            for (TamableAnimal animal : list2) {
-                animal.addEffect(new MobEffectInstance(effectPrimary, j, amplifier, true, true));
-            }
-
-            if (layers >= 4 && effectPrimary != effectSecondary && effectSecondary != null) {
-                for (TamableAnimal animal : list2) {
-                    animal.addEffect(new MobEffectInstance(effectSecondary, j, 0, true, true));
-                }
-            }
-        }
-
-        return true;
-    }
-
-    private static double getBeaconRange(Level level, int x, int y, int z, int layers) {
-        Map<Block, Integer> blocksCount = new HashMap<>();
-
-        for (int layer = 1; layer <= layers; layer++) {
-            int relativeY = y - layer;
-
-            for (int relativeX = x - layer; relativeX <= x + layer; ++relativeX) {
-                for (int relativeZ = z - layer; relativeZ <= z + layer; ++relativeZ) {
-                    if (level.getBlockState(new BlockPos(relativeX, relativeY, relativeZ)).is(BlockTags.BEACON_BASE_BLOCKS)) {
-                        Block block = level.getBlockState(new BlockPos(relativeX, relativeY, relativeZ)).getBlock();
-                        blocksCount.merge(block, 1, Integer::sum);
-                    }
-                }
-            }
-        }
-
-        double range = 1d;
-        for (Map.Entry<Block, Integer> entry : blocksCount.entrySet()) {
-            Optional<IdTagValue> optional = blocksList
-                    .stream()
-                    .filter(idTagValue -> idTagValue.matchesBlock(entry.getKey()))
-                    .findFirst();
-            if (optional.isPresent())
-                range += optional.get().value * entry.getValue() / layers;
-        }
-
-        return range;
-    }
-
-    boolean replacedTooltip = false;
-
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public void onRenderTooltip(RenderTooltipEvent.Pre event) {
-        if (!this.isEnabled()
-                || !vigourWithRegen
-                || replacedTooltip)
-            return;
-
-        if (Minecraft.getInstance().screen instanceof BeaconScreen beaconScreen) {
-            for (BeaconScreen.BeaconButton beaconButton : beaconScreen.beaconButtons) {
-                if (!(beaconButton instanceof BeaconScreen.BeaconPowerButton beaconPowerButton))
-                    continue;
-                if (beaconPowerButton.effect.equals(MobEffects.REGENERATION)) {
-                    if (vigourWithRegen)
-                        beaconPowerButton.setTooltip(Tooltip.create(
-                                Component.translatable(beaconPowerButton.effect.getDescriptionId())
-                                        .append(Component.literal(" & ")
-                                        .append(Component.translatable(HealthRegen.VIGOUR.get().getDescriptionId()))),
-                        null));
-                    replacedTooltip = true;
-                }
-            }
-        }
-
     }
 
     /*

@@ -1,14 +1,15 @@
 package insane96mcp.survivalreimagined.module.misc.beaconconduit;
 
+import insane96mcp.survivalreimagined.module.experience.enchanting.EnsorcellerBlockEntity;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -20,42 +21,36 @@ public class SRBeaconMenu extends AbstractContainerMenu {
     private static final int INV_SLOT_END = 28;
     private static final int USE_ROW_SLOT_START = 28;
     private static final int USE_ROW_SLOT_END = 37;
-    private final Container beacon = new SimpleContainer(1) {
-        /**
-         * Returns {@code true} if automation is allowed to insert the given stack (ignoring stack size) into the given
-         * slot. For guis use Slot.isItemValid
-         */
-        public boolean canPlaceItem(int p_39066_, ItemStack p_39067_) {
-            return p_39067_.is(ItemTags.BEACON_PAYMENT_ITEMS);
-        }
-    };
     private final PaymentSlot paymentSlot;
+    private final Container container;
     private final ContainerLevelAccess access;
     private final ContainerData beaconData;
 
-    public SRBeaconMenu(int pContainerId, Container pContainer) {
-        this(pContainerId, pContainer, new SimpleContainerData(3), ContainerLevelAccess.NULL);
+    public SRBeaconMenu(int pContainerId, Inventory pPlayerInventory) {
+        this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(EnsorcellerBlockEntity.DATA_COUNT), ContainerLevelAccess.NULL);
     }
 
-    public SRBeaconMenu(int pContainerId, Container pContainer, ContainerData pBeaconData, ContainerLevelAccess pAccess) {
-        super(MenuType.BEACON, pContainerId);
-        checkContainerDataCount(pBeaconData, SRBeaconBlockEntity.DATA_COUNT);
-        this.beaconData = pBeaconData;
-        this.access = pAccess;
-        this.paymentSlot = new PaymentSlot(this.beacon, 0, 136, 110);
+    public SRBeaconMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData containerData, ContainerLevelAccess access) {
+        super(BeaconConduit.BEACON_MENU_TYPE.get(), pContainerId);
+        checkContainerDataCount(containerData, SRBeaconBlockEntity.DATA_COUNT);
+        checkContainerSize(pContainer, SRBeaconBlockEntity.SLOT_COUNT);
+        this.container = pContainer;
+        this.beaconData = containerData;
+        this.access = access;
+        this.addDataSlots(containerData);
+        this.paymentSlot = new PaymentSlot(pContainer, 0, 21, 110);
         this.addSlot(this.paymentSlot);
-        this.addDataSlots(pBeaconData);
         int i = 36;
         int j = 137;
 
-        for(int k = 0; k < 3; ++k) {
-            for(int l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(pContainer, l + k * 9 + 9, 36 + l * 18, 137 + k * 18));
+        for (int k = 0; k < 3; ++k) {
+            for (int l = 0; l < 9; ++l) {
+                this.addSlot(new Slot(pPlayerInventory, l + k * 9 + 9, 36 + l * 18, 137 + k * 18));
             }
         }
 
-        for(int i1 = 0; i1 < 9; ++i1) {
-            this.addSlot(new Slot(pContainer, i1, 36 + i1 * 18, 195));
+        for (int i1 = 0; i1 < 9; ++i1) {
+            this.addSlot(new Slot(pPlayerInventory, i1, 36 + i1 * 18, 195));
         }
 
     }
@@ -78,7 +73,7 @@ public class SRBeaconMenu extends AbstractContainerMenu {
      * Determines whether supplied player can use this container
      */
     public boolean stillValid(Player pPlayer) {
-        return stillValid(this.access, pPlayer, Blocks.BEACON);
+        return this.container.stillValid(pPlayer);
     }
 
     public void setData(int pId, int pData) {
@@ -102,23 +97,28 @@ public class SRBeaconMenu extends AbstractContainerMenu {
                 }
 
                 slot.onQuickCraft(itemstack1, itemstack);
-            } else if (this.moveItemStackTo(itemstack1, 0, 1, false)) { //Forge Fix Shift Clicking in beacons with stacks larger then 1.
+            }
+            else if (this.moveItemStackTo(itemstack1, 0, 1, false)) { //Forge Fix Shift Clicking in beacons with stacks larger then 1.
                 return ItemStack.EMPTY;
-            } else if (pIndex >= 1 && pIndex < 28) {
+            }
+            else if (pIndex >= 1 && pIndex < 28) {
                 if (!this.moveItemStackTo(itemstack1, 28, 37, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (pIndex >= 28 && pIndex < 37) {
+            }
+            else if (pIndex >= 28 && pIndex < 37) {
                 if (!this.moveItemStackTo(itemstack1, 1, 28, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 1, 37, false)) {
+            }
+            else if (!this.moveItemStackTo(itemstack1, 1, 37, false)) {
                 return ItemStack.EMPTY;
             }
 
             if (itemstack1.isEmpty()) {
                 slot.setByPlayer(ItemStack.EMPTY);
-            } else {
+            }
+            else {
                 slot.setChanged();
             }
 
@@ -132,10 +132,6 @@ public class SRBeaconMenu extends AbstractContainerMenu {
         return itemstack;
     }
 
-    public int getLevels() {
-        return this.beaconData.get(0);
-    }
-
     @Nullable
     public MobEffect getEffect() {
         return MobEffect.byId(this.beaconData.get(SRBeaconBlockEntity.DATA_EFFECT));
@@ -145,18 +141,21 @@ public class SRBeaconMenu extends AbstractContainerMenu {
         return this.beaconData.get(SRBeaconBlockEntity.DATA_AMPLIFIER);
     }
 
-    public void updateEffect(Optional<MobEffect> mobEffect, int amplifier) {
-        if (this.paymentSlot.hasItem()) {
-            this.beaconData.set(SRBeaconBlockEntity.DATA_EFFECT, mobEffect.map(MobEffect::getId).orElse(-1));
-            this.beaconData.set(SRBeaconBlockEntity.DATA_AMPLIFIER, amplifier);
-            this.paymentSlot.remove(1);
-            this.access.execute(Level::blockEntityChanged);
-        }
-
+    public int getTimeLeft() {
+        return this.beaconData.get(SRBeaconBlockEntity.DATA_TIME_LEFT);
     }
 
-    public boolean hasPayment() {
-        return !this.beacon.getItem(0).isEmpty();
+    public void updateEffect(Optional<MobEffect> mobEffect, int amplifier) {
+        this.beaconData.set(SRBeaconBlockEntity.DATA_EFFECT, mobEffect.map(MobEffect::getId).orElse(-1));
+        this.beaconData.set(SRBeaconBlockEntity.DATA_AMPLIFIER, amplifier);
+    }
+
+    public int getMaxAmplifier(MobEffect effect) {
+        for (MobEffectInstance instance : SRBeaconBlockEntity.MOB_EFFECTS) {
+            if (instance.getEffect().equals(effect))
+                return instance.getAmplifier();
+        }
+        return -1;
     }
 
     class PaymentSlot extends Slot {
@@ -164,19 +163,19 @@ public class SRBeaconMenu extends AbstractContainerMenu {
             super(pContainer, pContainerIndex, pXPosition, pYPosition);
         }
 
-        /**
-         * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
-         */
         public boolean mayPlace(ItemStack pStack) {
             return pStack.is(ItemTags.BEACON_PAYMENT_ITEMS);
         }
 
-        /**
-         * Returns the maximum stack size for a given slot (usually the same as getInventoryStackLimit(), but 1 in the
-         * case of armor slots)
-         */
+        @Override
         public int getMaxStackSize() {
             return 1;
+        }
+
+        @Override
+        public void setChanged() {
+            super.setChanged();
+            SRBeaconMenu.this.slotsChanged(this.container);
         }
     }
 }
