@@ -112,9 +112,9 @@ public class Seasons extends Feature {
 	}
 
 	static final Map<Season.SubSeason, Float> CHANCE_TO_GROW_OR_DECAY = Map.ofEntries(
-			Map.entry(Season.SubSeason.EARLY_SUMMER, 0f),
-			Map.entry(Season.SubSeason.MID_SUMMER, 0f),
-			Map.entry(Season.SubSeason.LATE_SUMMER, 0f),
+			Map.entry(Season.SubSeason.EARLY_SUMMER, 0.05f),
+			Map.entry(Season.SubSeason.MID_SUMMER, 0.025f),
+			Map.entry(Season.SubSeason.LATE_SUMMER, 0.01f),
 			Map.entry(Season.SubSeason.EARLY_AUTUMN, 0f),
 			Map.entry(Season.SubSeason.MID_AUTUMN, 0f),
 			Map.entry(Season.SubSeason.LATE_AUTUMN, -0.05f),

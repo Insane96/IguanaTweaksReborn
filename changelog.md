@@ -5,6 +5,7 @@
   * Retrieve name tags from name tagged entities, from changing their name to their demise
 * Seasons 
   * Tall grass now decays in winter and grows back in spring. Saplings also become dead bushes in Winter
+* Forge Hammers can no longer be used as weapons
 * If you have a tool in your hand while in creative you now break blocks faster
 
 ## 0.14.9

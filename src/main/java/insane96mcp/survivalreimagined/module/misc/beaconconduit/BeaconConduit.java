@@ -48,9 +48,9 @@ public class BeaconConduit extends SRFeature {
     public static final SimpleBlockWithItem BEACON = SimpleBlockWithItem.register("beacon", () -> new SRBeaconBlock(BlockBehaviour.Properties.copy(Blocks.BEACON)));
     public static final RegistryObject<BlockEntityType<SRBeaconBlockEntity>> BEACON_BLOCK_ENTITY_TYPE = SRRegistries.BLOCK_ENTITY_TYPES.register("beacon", () -> BlockEntityType.Builder.of(SRBeaconBlockEntity::new, BEACON.block().get()).build(null));
 
-    public static final ArrayList<IdTagValue> BLOCKS_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
+    public static final ArrayList<IdTagValue> BLOCKS_LIST_DEFAULT = new ArrayList<>(List.of(
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_block", 1d),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:emerald_block", 1.2d),
+            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:emerald_block", 3.0d),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:gold_block", 1.8d),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_block", 2.5d),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_block", 4d),

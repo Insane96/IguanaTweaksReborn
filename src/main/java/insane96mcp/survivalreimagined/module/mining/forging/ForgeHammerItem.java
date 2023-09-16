@@ -1,27 +1,15 @@
 package insane96mcp.survivalreimagined.module.mining.forging;
 
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-import insane96mcp.insanelib.util.MathHelper;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -35,39 +23,24 @@ public class ForgeHammerItem extends TieredItem implements Vanishable {
 
     final int useCooldown;
     final int useDamageTaken;
-    private final Multimap<Attribute, AttributeModifier> defaultModifiers;
 
-    public ForgeHammerItem(float baseAttackDamageMultiplier, float attackSpeed, Tier pTier, int useCooldown, int useDamageTaken, Properties pProperties) {
-        super(pTier, pProperties);
+    public ForgeHammerItem(Tier tier, int useCooldown, int useDamageTaken, Properties pProperties) {
+        super(tier, pProperties);
         this.useCooldown = useCooldown;
         this.useDamageTaken = useDamageTaken;
-        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", baseAttackDamageMultiplier * getTier().getAttackDamageBonus(), AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", -(4d - attackSpeed), AttributeModifier.Operation.ADDITION));
-        builder.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier(ENTITY_REACH_UUID, "Tool modifier", -0.75d, AttributeModifier.Operation.ADDITION));
-        this.defaultModifiers = builder.build();
-    }
-
-    /**
-     * Gets a map of item attribute modifiers, used by ItemSword to increase hit damage.
-     */
-    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot pEquipmentSlot) {
-        return pEquipmentSlot == EquipmentSlot.MAINHAND ? this.defaultModifiers : super.getDefaultAttributeModifiers(pEquipmentSlot);
     }
 
     public int getUseCooldown(ItemStack stack) {
-        return this.useCooldown;
+        int cooldown = this.useCooldown;
+        int efficiency = stack.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
+        if (efficiency <= 0)
+            return cooldown;
+        //Each efficiency removed 2 ticks from cooldown
+        return cooldown - (efficiency * 2);
     }
 
     public int getSmashesOnHit(ItemStack stack, RandomSource random) {
-        int smashes = 1;
-        //Each efficiency level adds 50% chance to +1 smash
-        int efficiency = stack.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
-        if (efficiency <= 0)
-            return smashes;
-        //E.g. with Efficiency 3 you'll get 2 smashes, 50% chance to be 3
-        int bonusSmashes = MathHelper.getAmountWithDecimalChance(random, 0.5f * efficiency);
-        return Mth.nextInt(random, smashes, bonusSmashes + smashes);
+        return 1;
     }
 
     @Override
@@ -77,31 +50,6 @@ public class ForgeHammerItem extends TieredItem implements Vanishable {
 
     public int getUseDamageTaken() {
         return this.useDamageTaken;
-    }
-
-    /**
-     * Current implementations of this method in child classes do not use the entry argument beside ev. They just raise
-     * the damage on the stack.
-     */
-    public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
-        pStack.hurtAndBreak(this.useDamageTaken, pAttacker, (p_43296_) -> {
-            p_43296_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-        });
-        return true;
-    }
-
-    /**
-     * Called when a {@link net.minecraft.world.level.block.Block} is destroyed using this Item. Return {@code true} to
-     * criterion the "Use Item" statistic.
-     */
-    public boolean mineBlock(ItemStack pStack, Level pLevel, BlockState pState, BlockPos pPos, LivingEntity pEntityLiving) {
-        if (pState.getDestroySpeed(pLevel, pPos) != 0.0F) {
-            pStack.hurtAndBreak(this.useDamageTaken, pEntityLiving, (p_43276_) -> {
-                p_43276_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-            });
-        }
-
-        return true;
     }
 
     @Override
