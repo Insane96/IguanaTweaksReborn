@@ -354,7 +354,7 @@
 				{
 					"type": "minecraft:item",
 					"weight": 4,
-					"name": "survivalreimagined:keego_shard",
+					"name": "survivalreimagined:keego",
 					"functions": [
 						{
 							"function": "minecraft:set_count",

@@ -182,10 +182,10 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         ConditionalRecipe.builder()
                 .addCondition(not(modLoaded("tconstruct")))
                 .addRecipe(
-                    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.FLINT)
-                            .requires(Items.GRAVEL, 3)
-                            .unlockedBy("has_gravel", has(Items.GRAVEL))
-                            ::save
+                        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.FLINT)
+                                .requires(Items.GRAVEL, 3)
+                                .unlockedBy("has_gravel", has(Items.GRAVEL))
+                                ::save
                 )
                 .build(writer, SurvivalReimagined.MOD_ID, "flint_from_gravel");
 
@@ -402,6 +402,26 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlocks("has_durium", has(Durium.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "durium_boots");
 
+        //Keego
+        forgeRecipe(writer, Keego.GEM.get(), 3, Items.GOLDEN_PICKAXE, Keego.PICKAXE.get(), 16, 15);
+        forgeRecipe(writer, Keego.GEM.get(), 3, Items.GOLDEN_AXE, Keego.AXE.get(), 16, 15);
+        forgeRecipe(writer, Keego.GEM.get(), 2, Items.GOLDEN_SWORD, Keego.SWORD.get(), 16, 15);
+        forgeRecipe(writer, Keego.GEM.get(), 2, Items.GOLDEN_HOE, Keego.HOE.get(), 16, 15);
+        forgeRecipe(writer, Keego.GEM.get(), 1, Items.GOLDEN_SHOVEL, Keego.SHOVEL.get(), 16, 15);
+        forgeRecipe(writer, Keego.GEM.get(), 4, SPItems.GOLDEN_SHIELD.get(), Keego.SHIELD.get(), 17, 18);
+        forgeRecipe(writer, Keego.GEM.get(), 5, Items.GOLDEN_HELMET, Keego.HELMET.get(), 18, 17);
+        forgeRecipe(writer, Keego.GEM.get(), 8, Items.GOLDEN_CHESTPLATE, Keego.CHESTPLATE.get(), 25, 23);
+        forgeRecipe(writer, Keego.GEM.get(), 7, Items.GOLDEN_LEGGINGS, Keego.LEGGINGS.get(), 22, 21);
+        forgeRecipe(writer, Keego.GEM.get(), 4, Items.GOLDEN_BOOTS, Keego.BOOTS.get(), 16, 15);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Keego.BLOCK.block().get(), 1)
+                .requires(Keego.GEM.get(), 9)
+                .unlockedBy("has_keego", has(Keego.GEM.get()))
+                .save(writer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Keego.GEM.get(), 9)
+                .requires(Keego.BLOCK.block().get(), 1)
+                .unlockedBy("has_keego", has(Keego.GEM.get()))
+                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "keego_from_block");
+
         //Soul Steel
         SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_AXE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.AXE.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
@@ -449,6 +469,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(SoulSteel.INGOT.get(), 1)
                 .unlockedBy("has_ingot", has(SoulSteel.INGOT.get()))
                 .save(writer);
+        //TODO vanilla recipe in crafting grid and set the alloy recipe via datapack
         MultiItemSmeltingRecipeBuilder.blasting(
                         NonNullList.of(Ingredient.EMPTY, Ingredient.of(Durium.INGOT.get()), Ingredient.of(Durium.INGOT.get()), Ingredient.of(CoalFire.HELLISH_COAL.get()), Ingredient.of(Items.SOUL_SAND, Items.SOUL_SOIL)),
                         RecipeCategory.MISC,
@@ -949,6 +970,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .unlockedBy("has_material", has(materialTag))
                 .save(writer);
     }
+
     private void forgeRecipe(Consumer<FinishedRecipe> writer, Item material, int amount, Item gear, Item result, int smashesRequired, float experience) {
         ForgeRecipeBuilder.forging(RecipeCategory.TOOLS, Ingredient.of(material), amount, Ingredient.of(gear), result, smashesRequired)
                 .awardExperience(experience)

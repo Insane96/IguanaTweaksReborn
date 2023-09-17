@@ -150,8 +150,8 @@
 	"item.survivalreimagined.keego_leggings": "Keego Leggings",
 	"item.survivalreimagined.keego_boots": "Keego Boots",
 	"block.survivalreimagined.keego_ore": "Keego Ore",
-	"item.survivalreimagined.keego_shard": "Keego Shard",
-	"item.survivalreimagined.keego_gem": "Keego Gem",
+	"block.survivalreimagined.keego_block": "Keego Block",
+	"item.survivalreimagined.keego": "Keego",
 
 	"item.survivalreimagined.durium_axe": "Durium Axe",
 	"item.survivalreimagined.durium_pickaxe": "Durium Pickaxe",

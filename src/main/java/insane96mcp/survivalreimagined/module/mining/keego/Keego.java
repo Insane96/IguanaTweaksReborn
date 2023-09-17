@@ -52,12 +52,11 @@ public class Keego extends Feature {
 	public static final TagKey<Item> KEEGO_HAND_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/hand/keego"));
 	public static final TagKey<Item> KEEGO_ARMOR_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/armor/keego"));
 
-	public static final RegistryObject<MobEffect> MOVEMENT_MOMENTUM = SRRegistries.MOB_EFFECTS.register("movement_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false).addAttributeModifier(Attributes.MOVEMENT_SPEED, "544cf3ee-676f-4685-aec7-a6b3d64875b0", 0.05d, AttributeModifier.Operation.MULTIPLY_BASE));
+	public static final RegistryObject<MobEffect> MOVEMENT_MOMENTUM = SRRegistries.MOB_EFFECTS.register("movement_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false).addAttributeModifier(Attributes.MOVEMENT_SPEED, "544cf3ee-676f-4685-aec7-a6b3d64875b0", 0.10d, AttributeModifier.Operation.MULTIPLY_BASE));
 	public static final RegistryObject<MobEffect> ATTACK_MOMENTUM = SRRegistries.MOB_EFFECTS.register("attack_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false).addAttributeModifier(Attributes.ATTACK_SPEED, "f6fe8408-b88c-4e51-8892-8b20574cfc49", 0.05d, AttributeModifier.Operation.ADDITION));
 	public static final RegistryObject<MobEffect> MINING_MOMENTUM = SRRegistries.MOB_EFFECTS.register("mining_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false));
 
 	public static final SimpleBlockWithItem ORE = SimpleBlockWithItem.register("keego_ore", () -> new KeegoOreBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).strength(-1f, 9f), UniformInt.of(10, 15)));
-	public static final RegistryObject<Item> SHARD = SRRegistries.ITEMS.register("keego_shard", () -> new Item(new Item.Properties()));
 
 	public static final SimpleBlockWithItem BLOCK = SimpleBlockWithItem.register("keego_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
 
@@ -125,8 +124,7 @@ public class Keego extends Feature {
 		if (!this.isEnabled()
 				|| event.player.level().isClientSide
 				|| event.player.isCrouching()
-				|| event.phase == TickEvent.Phase.START
-				|| event.player.getAbilities().instabuild)
+				|| event.phase == TickEvent.Phase.END)
 			return;
 
 		AtomicInteger maxAmplifier = new AtomicInteger(0);
@@ -136,7 +134,7 @@ public class Keego extends Feature {
 		});
 		if (maxAmplifier.get() == 0)
 			return;
-		if (event.player.walkDist % 5 < event.player.walkDistO % 5) {
+		if (event.player.walkDist % 7.5 < event.player.walkDistO % 7.5) {
 			int amplifier = 0;
 			if (event.player.hasEffect(MOVEMENT_MOMENTUM.get()))
 				//noinspection DataFlowIssue

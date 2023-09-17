@@ -5,6 +5,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -30,7 +31,7 @@ public class ForgeHammerItem extends TieredItem implements Vanishable {
         this.useDamageTaken = useDamageTaken;
     }
 
-    public int getUseCooldown(ItemStack stack) {
+    public int getUseCooldown(@Nullable LivingEntity entity, ItemStack stack) {
         int cooldown = this.useCooldown;
         int efficiency = stack.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
         if (efficiency <= 0)
@@ -54,7 +55,7 @@ public class ForgeHammerItem extends TieredItem implements Vanishable {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(CommonComponents.space().append(Component.translatable(FORGE_COOLDOWN_LANG, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(this.getUseCooldown(pStack) / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
+        pTooltipComponents.add(CommonComponents.space().append(Component.translatable(FORGE_COOLDOWN_LANG, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(this.getUseCooldown(null, pStack) / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
         pTooltipComponents.add(CommonComponents.space().append(Component.translatable(FORGE_DURABILITY_LANG, this.useDamageTaken).withStyle(ChatFormatting.DARK_GREEN)));
     }
 }

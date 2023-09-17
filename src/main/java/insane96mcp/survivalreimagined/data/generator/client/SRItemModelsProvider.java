@@ -120,7 +120,6 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(Keego.LEGGINGS.get());
         basicItem(Keego.CHESTPLATE.get());
         basicItem(Keego.HELMET.get());
-        basicItem(Keego.SHARD.get());
         basicItem(Keego.GEM.get());
         shield(Keego.SHIELD.get());
         withExistingParent("keego_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/keego_ore"));

@@ -1,4 +1,4 @@
-// 1.20.1	2023-08-14T10:30:33.4992464	Item Models: survivalreimagined
+// 1.20.1	2023-09-17T21:56:10.2972209	Item Models: survivalreimagined
 0e14a5fda7239c8fc0a79813151a4eba3c430f5f assets/survivalreimagined/models/item/ancient_lapis.json
 9db8ff6b8f62a90066f9ec6f113f30579ef147b4 assets/survivalreimagined/models/item/blast_furnace.json
 fe69cbb0039b59fd572532480721ff573ee4aa76 assets/survivalreimagined/models/item/brown_mushroom_stew.json
@@ -72,7 +72,6 @@ c37ebe91a36df018c3de71de008ee4573019140b assets/survivalreimagined/models/item/k
 674a4898a57c02d76e2679fffee9724180591d33 assets/survivalreimagined/models/item/keego_leggings.json
 c1c1b2f3737b2e8e65e87ad9a3e8c7737785e7d4 assets/survivalreimagined/models/item/keego_ore.json
 4ecb484cd633847050518fa1f2ebecd23aaa6ee8 assets/survivalreimagined/models/item/keego_pickaxe.json
-4840f0c77d29a7753bdd2180e825950083adc0a4 assets/survivalreimagined/models/item/keego_shard.json
 313300a16ea7cc01a54c0ec8099ea9bf05edd0ac assets/survivalreimagined/models/item/keego_shield.json
 ff6a19736e33d1aa18a535d929259f2020a56c4a assets/survivalreimagined/models/item/keego_shovel.json
 2a5579ec1ae9a9fbafba1b67914375e09e0cc025 assets/survivalreimagined/models/item/keego_sword.json

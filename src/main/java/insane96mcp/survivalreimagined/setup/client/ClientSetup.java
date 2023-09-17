@@ -134,6 +134,7 @@ public class ClientSetup {
             event.accept(Durium.LEGGINGS.get());
             event.accept(Durium.BOOTS.get());
             event.accept(Durium.SWORD.get());
+            event.accept(Durium.AXE.get());
             event.accept(Durium.SHIELD.get());
 
             event.accept(Solarium.HELMET.get());
@@ -141,6 +142,7 @@ public class ClientSetup {
             event.accept(Solarium.LEGGINGS.get());
             event.accept(Solarium.BOOTS.get());
             event.accept(Solarium.SWORD.get());
+            event.accept(Solarium.AXE.get());
             event.accept(Solarium.SHIELD.get());
 
             event.accept(Keego.HELMET.get());
@@ -148,6 +150,7 @@ public class ClientSetup {
             event.accept(Keego.LEGGINGS.get());
             event.accept(Keego.BOOTS.get());
             event.accept(Keego.SWORD.get());
+            event.accept(Keego.AXE.get());
             event.accept(Keego.SHIELD.get());
 
             event.accept(SoulSteel.HELMET.get());
@@ -155,6 +158,7 @@ public class ClientSetup {
             event.accept(SoulSteel.LEGGINGS.get());
             event.accept(SoulSteel.BOOTS.get());
             event.accept(SoulSteel.SWORD.get());
+            event.accept(SoulSteel.AXE.get());
             event.accept(SoulSteel.SHIELD.get());
 
             event.accept(Fletching.QUARTZ_ARROW_ITEM.get());
@@ -179,6 +183,7 @@ public class ClientSetup {
             event.accept(MultiBlockFurnaces.SOUL_BLAST_FURNACE.item().get());
             event.accept(Forging.FORGE.item().get());
             event.accept(Fletching.FLETCHING_TABLE.item().get());
+            event.accept(BeaconConduit.BEACON.item().get());
         }
         else if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.accept(Minecarts.COPPER_POWERED_RAIL.item().get());
@@ -222,7 +227,6 @@ public class ClientSetup {
             event.accept(Solarium.SOLARIUM_BALL.get());
             event.accept(SoulSteel.INGOT.get());
             event.accept(SoulSteel.NUGGET.get());
-            event.accept(Keego.SHARD.get());
             event.accept(Keego.GEM.get());
             event.accept(Lapis.CLEANSED_LAPIS.get());
             event.accept(Lapis.ANCIENT_LAPIS.get());

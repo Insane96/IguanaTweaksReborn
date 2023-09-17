@@ -66,6 +66,7 @@ public class PiercingPickaxes extends Feature {
 		if (!this.isEnabled()
 				|| !(event.getDamageSource().getDirectEntity() instanceof LivingEntity attacker)
 				|| event.getEntity().isDeadOrDying()
+				//TODO Add a tag
 				|| event.getDamageSource().is(PIERCING_MOB_ATTACK)
 				|| event.getDamageSource().is(PIERCING_PLAYER_ATTACK)
 				|| event.getDamageSource().is(CopperToolsExpansion.ELECTROCUTION_ATTACK)
@@ -79,6 +80,7 @@ public class PiercingPickaxes extends Feature {
 		if (attacker instanceof Player)
 			piercingDamageSource = attacker.damageSources().source(PIERCING_PLAYER_ATTACK, attacker);
 
+		//TODO Knockback applies anyway
 		MCUtils.attackEntityIgnoreInvFrames(piercingDamageSource, (float) piercingInstance.getValue(), event.getEntity(), event.getEntity(), true);
 	}
 

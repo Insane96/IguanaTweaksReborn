@@ -42,7 +42,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Item Stats", description = "Less durable items and efficient tools. Items Durability and Efficiency are controlled via json in this feature's folder. Note that removing entries from the json requires a Minecraft Restart")
@@ -67,7 +66,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/coated_copper", 240),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/diamond", 2341),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/soul_steel", 3534),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/keego", 2007),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/keego", 1707),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", 3047),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 86),
@@ -137,7 +136,7 @@ public class ItemStats extends SRFeature {
 	));
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 
-	public static final ArrayList<IdTagValue> TOOL_EFFICIENCIES_DEFAULT = new ArrayList<>(Arrays.asList(
+	public static final ArrayList<IdTagValue> TOOL_EFFICIENCIES_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/wooden", 1.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/stone", 2.25d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/flint", 3d),
@@ -145,7 +144,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iron", 3.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/solarium", 3d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/durium", 4d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/coated_copper", 7.5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/coated_copper", 6.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/diamond", 6d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/soul_steel", 6d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/keego", 8d),

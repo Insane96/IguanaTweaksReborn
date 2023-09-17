@@ -9,6 +9,6 @@
         "item": "shieldsplus:stone_shield"
     },
     "result": "minecraft:shield",
-    "smashes_required": 12,
-    "experience": 6
+    "smashes_required": 10,
+    "experience": 8
 }

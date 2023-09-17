@@ -1,0 +1,14 @@
+{
+  "type": "survivalreimagined:forging",
+  "amount": 3,
+  "category": "forge_misc",
+  "experience": 15.0,
+  "gear": {
+    "item": "minecraft:golden_pickaxe"
+  },
+  "ingredient": {
+    "item": "survivalreimagined:keego"
+  },
+  "result": "survivalreimagined:keego_pickaxe",
+  "smashes_required": 16
+}

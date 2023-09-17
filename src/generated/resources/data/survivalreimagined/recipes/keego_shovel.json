@@ -1,0 +1,14 @@
+{
+  "type": "survivalreimagined:forging",
+  "amount": 1,
+  "category": "forge_misc",
+  "experience": 15.0,
+  "gear": {
+    "item": "minecraft:golden_shovel"
+  },
+  "ingredient": {
+    "item": "survivalreimagined:keego"
+  },
+  "result": "survivalreimagined:keego_shovel",
+  "smashes_required": 16
+}

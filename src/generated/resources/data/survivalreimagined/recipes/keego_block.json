@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "survivalreimagined:keego"
+    },
+    {
+      "item": "survivalreimagined:keego"
+    },
+    {
+      "item": "survivalreimagined:keego"
+    },
+    {
+      "item": "survivalreimagined:keego"
+    },
+    {
+      "item": "survivalreimagined:keego"
+    },
+    {
+      "item": "survivalreimagined:keego"
+    },
+    {
+      "item": "survivalreimagined:keego"
+    },
+    {
+      "item": "survivalreimagined:keego"
+    },
+    {
+      "item": "survivalreimagined:keego"
+    }
+  ],
+  "result": {
+    "item": "survivalreimagined:keego_block"
+  }
+}
