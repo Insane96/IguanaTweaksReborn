@@ -173,6 +173,7 @@ public class EnchantmentsFeature extends SRFeature {
 		GravityDefying.applyAttributeModifier(event);
 		Healthy.applyAttributeModifier(event);
 		SwiftStrike.applyAttributeModifier(event);
+		MeleeProtection.applyAttributeModifier(event);
 	}
 
 	@SubscribeEvent
