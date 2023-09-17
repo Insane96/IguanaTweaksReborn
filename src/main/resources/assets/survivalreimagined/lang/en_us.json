@@ -70,8 +70,10 @@
 
 	"survivalreimagined.no_damage_item": "This item blade is not sharp, hits like a fist",
 	"survivalreimagined.no_efficiency_item": "This item is old and rusty, can't mine anything",
+	"survivalreimagined.broken_item": "This item is broken, must be repaired",
 	"survivalreimagined.tool_efficiency": "%.1f Tool Efficiency",
 	"survivalreimagined.tool_durability": "Durability: %d/%d",
+	"survivalreimagined.broken_durability": "Broken",
 
 	"item.survivalreimagined.altimeter": "Altimeter",
 

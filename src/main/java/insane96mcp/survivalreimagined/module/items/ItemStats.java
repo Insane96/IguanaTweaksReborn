@@ -12,6 +12,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
+import insane96mcp.survivalreimagined.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
@@ -21,16 +22,21 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -45,6 +51,7 @@ public class ItemStats extends SRFeature {
 
 	public static final String TOOL_EFFICIENCY_LANG = "survivalreimagined.tool_efficiency";
 	public static final String TOOL_DURABILITY_LANG = "survivalreimagined.tool_durability";
+	public static final String BROKEN_DURABILITY_LANG = "survivalreimagined.broken_durability";
 	public static final TagKey<Item> NO_DAMAGE = SRItemTagsProvider.create("no_damage");
 	public static final TagKey<Item> NO_EFFICIENCY = SRItemTagsProvider.create("no_efficiency");
 
@@ -145,8 +152,9 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/netherite", 6.5d)
 	));
 	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();
-    public static final String NO_EFFICIENCY_ITEM = "survivalreimagined.no_efficiency_item";
-    public static final String NO_DAMAGE_ITEM = "survivalreimagined.no_damage_item";
+	public static final String NO_EFFICIENCY_ITEM_LANG = "survivalreimagined.no_efficiency_item";
+	public static final String BROKEN_ITEM_LANG = "survivalreimagined.broken_item";
+    public static final String NO_DAMAGE_ITEM_LANG = "survivalreimagined.no_damage_item";
 
     @Config
 	@Label(name = "Override shield blocking damage", description = "If true copper shield will block 4 damage and Golden shields will block 100 damage. Requires a restart.")
@@ -155,6 +163,9 @@ public class ItemStats extends SRFeature {
 	@Config
 	@Label(name = "More Items Tooltips", description = "If set to true items in the 'no_damage_items' and 'no_efficiency_items' will get a tooltip. Items with durability get a durability tooltip. Tools get an efficiency tooltip.")
 	public static Boolean moreItemsTooltips = true;
+	@Config
+	@Label(name = "Unbreakable Items", description = "If set to true items will no longer break, will be left with 1 durability")
+	public static Boolean unbreakableItems = true;
 
 	public ItemStats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -230,22 +241,96 @@ public class ItemStats extends SRFeature {
 			return;
 
 		Player player = event.getEntity();
-		if (Utils.isItemInTag(player.getMainHandItem().getItem(), NO_EFFICIENCY)) {
+		ItemStack stack = player.getMainHandItem();
+		if (stack.getMaxDamage() == 0)
+			return;
+		if (Utils.isItemInTag(stack.getItem(), NO_EFFICIENCY)) {
 			event.setCanceled(true);
-			event.getEntity().displayClientMessage(Component.translatable(NO_EFFICIENCY_ITEM), true);
+			event.getEntity().displayClientMessage(Component.translatable(NO_EFFICIENCY_ITEM_LANG), true);
+		}
+		else if (event.getState().destroySpeed > 0f){
+			if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
+				event.setCanceled(true);
+				event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void processEfficiencyMultipliers(PlayerInteractEvent.RightClickBlock event) {
+		if (!this.isEnabled())
+			return;
+
+		ItemStack stack = event.getItemStack();
+		if (stack.getMaxDamage() == 0)
+			return;
+		if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
+			event.setCanceled(true);
+			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
 		}
 	}
 
 	@SubscribeEvent
 	public void processAttackDamage(LivingHurtEvent event) {
 		if (!this.isEnabled()
-				|| !(event.getSource().getEntity() instanceof Player player))
+				|| !(event.getSource().getDirectEntity() instanceof Player player))
 			return;
 
-		if (Utils.isItemInTag(player.getMainHandItem().getItem(), NO_DAMAGE)) {
+		ItemStack stack = player.getMainHandItem();
+		if (Utils.isItemInTag(stack.getItem(), NO_DAMAGE)) {
 			event.setAmount(1f);
-			player.displayClientMessage(Component.translatable(NO_DAMAGE_ITEM), true);
+			player.displayClientMessage(Component.translatable(NO_DAMAGE_ITEM_LANG), true);
 		}
+	}
+
+	@SubscribeEvent
+	public void processBrokenToolsOnAttack(LivingAttackEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getSource().getDirectEntity() instanceof Player player))
+			return;
+
+		ItemStack stack = player.getMainHandItem();
+		if (stack.getMaxDamage() == 0)
+			return;
+		if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
+			event.setCanceled(true);
+			player.displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
+		}
+	}
+
+	@SubscribeEvent
+	public void processArmorDamaging(HurtItemStackEvent event) {
+		if (!this.isEnabled()
+				|| event.getPlayer() == null)
+			return;
+
+		ItemStack stack = event.getStack();
+        if (event.getAmount() >= stack.getMaxDamage() - stack.getDamageValue() && stack.getItem() instanceof Equipable) {
+            event.setAmount(stack.getMaxDamage() - stack.getDamageValue() - 1);
+            event.getPlayer().getArmorSlots().forEach(itemStack -> {
+                if (itemStack == stack) {
+                    EquipmentSlot equipmentSlot = Player.getEquipmentSlotForItem(stack);
+                    event.getPlayer().setItemSlot(equipmentSlot, ItemStack.EMPTY);
+                    if (!event.getPlayer().addItem(itemStack))
+                        event.getPlayer().drop(itemStack, true);
+                    event.getPlayer().broadcastBreakEvent(equipmentSlot);
+                }
+            });
+        }
+		else if (stack.getDamageValue() + event.getAmount() >= stack.getMaxDamage() - 1) {
+			event.setAmount(stack.getMaxDamage() - stack.getDamageValue() - 1);
+			EquipmentSlot equipmentSlot = Player.getEquipmentSlotForItem(stack);
+			event.getPlayer().broadcastBreakEvent(equipmentSlot);
+		}
+		/*if (stack.getMaxDamage() == 0)
+			return;
+		int damageTaken = 1;
+		if (!(stack.getItem() instanceof SwordItem))
+			damageTaken++;
+		if (stack.getDamageValue() >= stack.getMaxDamage() - damageTaken) {
+			event.setCanceled(true);
+			player.displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
+		}*/
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -256,10 +341,10 @@ public class ItemStats extends SRFeature {
 			return;
 
 		if (Utils.isItemInTag(event.getItemStack().getItem(), NO_DAMAGE)) {
-			event.getToolTip().add(Component.translatable(NO_DAMAGE_ITEM).withStyle(ChatFormatting.RED));
+			event.getToolTip().add(Component.translatable(NO_DAMAGE_ITEM_LANG).withStyle(ChatFormatting.RED));
 		}
 		if (Utils.isItemInTag(event.getItemStack().getItem(), NO_EFFICIENCY)) {
-			event.getToolTip().add(Component.translatable(NO_EFFICIENCY_ITEM).withStyle(ChatFormatting.RED));
+			event.getToolTip().add(Component.translatable(NO_EFFICIENCY_ITEM_LANG).withStyle(ChatFormatting.RED));
 		}
 		else if (event.getItemStack().getItem() instanceof DiggerItem diggerItem){
 			int lvl = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
@@ -271,8 +356,13 @@ public class ItemStats extends SRFeature {
 		}
 
 		if (event.getItemStack().isDamageableItem()) {
-			MutableComponent component = Component.translatable(TOOL_DURABILITY_LANG, event.getItemStack().getMaxDamage() - event.getItemStack().getDamageValue(), event.getItemStack().getMaxDamage()).withStyle(ChatFormatting.GRAY);
-			if (event.getItemStack().getAllEnchantments().containsKey(Enchantments.UNBREAKING)) {
+			int durabilityLeft = event.getItemStack().getMaxDamage() - event.getItemStack().getDamageValue();
+			MutableComponent component;
+			if (durabilityLeft > 1)
+				component = Component.translatable(TOOL_DURABILITY_LANG, durabilityLeft, event.getItemStack().getMaxDamage()).withStyle(ChatFormatting.GRAY);
+			else
+				component = Component.translatable(BROKEN_DURABILITY_LANG).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD);
+			if (durabilityLeft > 1 && event.getItemStack().getAllEnchantments().containsKey(Enchantments.UNBREAKING)) {
 				int lvl = event.getItemStack().getAllEnchantments().get(Enchantments.UNBREAKING);
 				component.append(Component.literal(" (+%.0f%%)".formatted(getUnbreakingPercentageBonus(lvl) * 100f)).withStyle(ChatFormatting.LIGHT_PURPLE));
 			}

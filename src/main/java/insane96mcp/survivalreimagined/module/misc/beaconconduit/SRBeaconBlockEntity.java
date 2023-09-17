@@ -20,7 +20,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -264,7 +264,7 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
         double d0 = 10 + getBeaconRange(pLevel, pPos.getX(), pPos.getY(), pPos.getZ(), layers);
         AABB aabb = (new AABB(pPos)).inflate(d0).expandTowards(0.0D, pLevel.getHeight(), 0.0D);
         List<LivingEntity> list = pLevel.getEntitiesOfClass(LivingEntity.class, aabb,
-                livingEntity -> livingEntity instanceof Player || (livingEntity instanceof TamableAnimal tamableAnimal && tamableAnimal.isTame()));
+                livingEntity -> livingEntity instanceof Player || (livingEntity instanceof OwnableEntity ownableEntity && ownableEntity.getOwner() != null));
         for (LivingEntity livingEntity : list) {
             livingEntity.addEffect(new MobEffectInstance(effect, 240, amplifier, true, true));
         }

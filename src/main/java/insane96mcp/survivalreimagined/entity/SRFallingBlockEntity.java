@@ -123,7 +123,7 @@ public class SRFallingBlockEntity extends FallingBlockEntity {
 		boolean maxStackReached = false;
 		while (true) {
 			blockPos.set(blockPos.above());
-			if (blockPos.getY() - pos.getY() > 3) {
+			if (blockPos.getY() - pos.getY() > 4) {
 				maxStackReached = true;
 				/*if (this.dropItem && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 					this.discard();
