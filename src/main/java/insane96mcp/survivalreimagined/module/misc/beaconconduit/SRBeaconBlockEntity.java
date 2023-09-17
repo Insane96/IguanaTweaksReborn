@@ -198,7 +198,7 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
         }
         if (beacon.effect != null && pLevel.getGameTime() % 10 == 0 && !beacon.items.get(0).isEmpty()) {
             int timeLeftAmount = BeaconConduit.getPaymentTime(beacon.items.get(0));
-            if (beacon.timeLeft + timeLeftAmount <= MAX_TIME_LEFT) {
+            if (beacon.timeLeft <= MAX_TIME_LEFT) {
                 beacon.timeLeft += timeLeftAmount;
                 beacon.removeItem(0, 1);
             }

@@ -11,6 +11,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.combat.stats.data.ItemAttributeModifier;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.ChatFormatting;
@@ -218,10 +219,14 @@ public class Stats extends SRFeature {
 							return;
 
 						boolean isEqualTooltip = false;
-						if (event.getEntity() != null && operation == AttributeModifier.Operation.ADDITION) {
+						if (event.getEntity() != null && operation == AttributeModifier.Operation.ADDITION && equipmentslot == EquipmentSlot.MAINHAND) {
 							if (attribute.equals(Attributes.ATTACK_DAMAGE)) {
 								amount += event.getEntity().getAttributeBaseValue(Attributes.ATTACK_DAMAGE);
 								amount += EnchantmentHelper.getDamageBonus(event.getItemStack(), MobType.UNDEFINED);
+								isEqualTooltip = true;
+							}
+							if (attribute.equals(PiercingPickaxes.PIERCING_DAMAGE.get())) {
+								amount += event.getEntity().getAttributeBaseValue(PiercingPickaxes.PIERCING_DAMAGE.get());
 								isEqualTooltip = true;
 							}
 							else if (attribute.equals(Attributes.ATTACK_SPEED)) {

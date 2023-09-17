@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Added Better Beacon
+  * A new beacon with more effects, more amplifiers but with a time cost
 * Added Name Tags feature
   * Retrieve name tags from name tagged entities, from changing their name to their demise
 * Seasons 

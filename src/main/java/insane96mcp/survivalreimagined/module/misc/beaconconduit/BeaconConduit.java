@@ -46,6 +46,7 @@ import net.minecraftforge.registries.RegistryObject;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Label(name = "Beacon & Conduit", description = "Beacon Range varying based of blocks of the pyramid and better conduit killing mobs. Blocks list and ranges are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MISC)
@@ -131,8 +132,8 @@ public class BeaconConduit extends SRFeature {
     @Nullable
     static BeaconEffect cachedBeaconEffect;
 
-    public static int getEffectTimeScale(MobEffect mobEffect, int amplifier) {
-        if (cachedBeaconEffect != null && mobEffect.equals(cachedBeaconEffect.getEffect()))
+    public static int getEffectTimeScale(@Nullable MobEffect mobEffect, int amplifier) {
+        if (cachedBeaconEffect != null && Objects.equals(mobEffect, cachedBeaconEffect.getEffect()))
             return cachedBeaconEffect.getTimeCostForAmplifier(amplifier);
         for (BeaconEffect beaconEffect : effects) {
             if (beaconEffect.location.equals(ForgeRegistries.MOB_EFFECTS.getKey(mobEffect))) {
