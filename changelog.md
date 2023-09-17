@@ -12,7 +12,7 @@
 * Gold Tools and Sword now have +1.5 damage (similar to flint tools)
 * Chainmail armor now gives toughness
 * Mobs now drop 25% more experience
-* Melee protection now increases attack speed by 2.5% per level
+* Melee protection now increases attack speed by 2% per level
 * Removed sharpness
 * Forge Hammers can no longer be used as weapons
 * If you have a tool in your hand while in creative you now break blocks faster
