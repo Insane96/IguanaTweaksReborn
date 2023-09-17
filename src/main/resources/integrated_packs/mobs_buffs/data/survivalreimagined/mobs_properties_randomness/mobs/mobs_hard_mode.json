@@ -35,7 +35,7 @@
             "operation": "multiply_base"
         }
     ],
-    "experience_multiplier": 2,
+    "experience_multiplier": 2.25,
     "conditions": {
         "advancements_unlocked": [
             {
