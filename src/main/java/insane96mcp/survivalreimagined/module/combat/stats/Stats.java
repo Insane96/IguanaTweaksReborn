@@ -225,16 +225,10 @@ public class Stats extends SRFeature {
 								amount += EnchantmentHelper.getDamageBonus(event.getItemStack(), MobType.UNDEFINED);
 								isEqualTooltip = true;
 							}
-							if (attribute.equals(PiercingPickaxes.PIERCING_DAMAGE.get())) {
-								amount += event.getEntity().getAttributeBaseValue(PiercingPickaxes.PIERCING_DAMAGE.get());
-								isEqualTooltip = true;
-							}
-							else if (attribute.equals(Attributes.ATTACK_SPEED)) {
-								amount += event.getEntity().getAttributeBaseValue(Attributes.ATTACK_SPEED);
-								isEqualTooltip = true;
-							}
-							else if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE)) {
-								amount += event.getEntity().getAttributeBaseValue(Attributes.KNOCKBACK_RESISTANCE);
+							if (attribute.equals(PiercingPickaxes.PIERCING_DAMAGE.get())
+									|| attribute.equals(Attributes.ATTACK_SPEED)
+									|| attribute.equals(Attributes.KNOCKBACK_RESISTANCE)) {
+								amount += event.getEntity().getAttributeBaseValue(attribute);
 								isEqualTooltip = true;
 							}
 						}
