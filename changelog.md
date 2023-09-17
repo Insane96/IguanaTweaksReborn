@@ -5,7 +5,7 @@
   * Retrieve name tags from name tagged entities, from changing their name to their demise
 * Seasons 
   * Tall grass now decays in winter and grows back in spring. Saplings also become dead bushes in Winter
-* Added Rhythmic Swing
+* Added Swift Strike
   * A new "damaging" enchantment that increases attack speed
 * Gold Tools and Sword now have +2 damage (similar to iron tools)
 * Forge Hammers can no longer be used as weapons

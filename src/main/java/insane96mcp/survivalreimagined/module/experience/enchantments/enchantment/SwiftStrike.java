@@ -13,9 +13,9 @@ import net.minecraftforge.event.ItemAttributeModifierEvent;
 
 import java.util.UUID;
 
-public class SleightOfHand extends Enchantment implements IDamagingEnchantment {
+public class SwiftStrike extends Enchantment implements IDamagingEnchantment {
     public static final UUID BONUS_ATTACK_SPEED_UUID = UUID.fromString("7b0cb3a4-7a7c-4908-be8d-aadd523690d7");
-    public SleightOfHand() {
+    public SwiftStrike() {
         super(Rarity.UNCOMMON, EnchantmentCategory.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
@@ -51,7 +51,7 @@ public class SleightOfHand extends Enchantment implements IDamagingEnchantment {
     public static void applyAttributeModifier(ItemAttributeModifierEvent event) {
         if (event.getSlotType() != EquipmentSlot.MAINHAND)
             return;
-        int lvl = event.getItemStack().getEnchantmentLevel(EnchantmentsFeature.RHYTHMIC_SWING.get());
+        int lvl = event.getItemStack().getEnchantmentLevel(EnchantmentsFeature.SWIFT_STRIKE.get());
         if (lvl == 0)
             return;
 
