@@ -8,6 +8,7 @@
 * Added Swift Strike
   * A new "damaging" enchantment that increases attack speed
 * Gold Tools and Sword now have +2 damage (similar to iron tools)
+* Chainmail armor now gives toughness
 * Forge Hammers can no longer be used as weapons
 * If you have a tool in your hand while in creative you now break blocks faster
 

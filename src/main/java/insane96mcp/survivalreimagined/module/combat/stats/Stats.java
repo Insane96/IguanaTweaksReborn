@@ -65,6 +65,11 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:golden_boots", UUID.fromString("dc49f564-489f-4f70-ab50-ce85cc4bfa85"), EquipmentSlot.FEET, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", UUID.fromString("b12fe849-17b9-4905-b160-6685eb8b854c"), EquipmentSlot.OFFHAND, Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
 
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:chainmail_helmet", UUID.fromString("8b68e416-bf07-4c21-ab8e-d58ac3574d31"), EquipmentSlot.HEAD, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:chainmail_chestplate", UUID.fromString("74d42a8e-d4a3-4c52-ac66-33ab2128e146"), EquipmentSlot.CHEST, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:chainmail_leggings", UUID.fromString("de6a0547-fc18-4e84-b87a-d0333aa06854"), EquipmentSlot.LEGS, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:chainmail_boots", UUID.fromString("30db05c5-7c2f-4fa8-86d8-e8661e42f197"), EquipmentSlot.FEET, Attributes.ARMOR_TOUGHNESS, 1, AttributeModifier.Operation.ADDITION),
+
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", UUID.fromString("ad33dadf-bf7b-4f40-83ed-f93f4721d28e"), EquipmentSlot.HEAD, Attributes.ARMOR, 0, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", UUID.fromString("f690ba04-4d3f-47d0-ad5d-809238b48f45"), EquipmentSlot.CHEST, Attributes.ARMOR, -2, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", UUID.fromString("0145a1f9-24c4-458f-b217-8bb1440e99b7"), EquipmentSlot.LEGS, Attributes.ARMOR, -1, AttributeModifier.Operation.ADDITION),

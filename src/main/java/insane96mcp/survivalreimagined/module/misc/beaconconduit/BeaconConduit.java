@@ -58,7 +58,7 @@ public class BeaconConduit extends SRFeature {
     public static final RegistryObject<MobEffect> BLOCK_REACH = SRRegistries.MOB_EFFECTS.register("block_reach", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x818894)
             .addAttributeModifier(ForgeMod.BLOCK_REACH.get(), "bd0c6709-4b67-43d5-ae51-c6180d848978", 0.5f, AttributeModifier.Operation.ADDITION));
     public static final RegistryObject<MobEffect> ENTITY_REACH = SRRegistries.MOB_EFFECTS.register("entity_reach", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x818894)
-            .addAttributeModifier(ForgeMod.ENTITY_REACH.get(), "fb23063a-c676-4da0-8d75-574ab8f3ee30", 0.05f, AttributeModifier.Operation.MULTIPLY_BASE));
+            .addAttributeModifier(ForgeMod.ENTITY_REACH.get(), "fb23063a-c676-4da0-8d75-574ab8f3ee30", 0.075f, AttributeModifier.Operation.MULTIPLY_BASE));
 
     public static final ArrayList<IdTagValue> BLOCKS_LIST_DEFAULT = new ArrayList<>(List.of(
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_block", 1d),
@@ -87,15 +87,16 @@ public class BeaconConduit extends SRFeature {
             new BeaconEffect(MobEffects.DAMAGE_BOOST, new int[] {1, 3, 9}),
             new BeaconEffect(MobEffects.JUMP, new int[] {1, 2, 3}),
             new BeaconEffect(MobEffects.REGENERATION, new int[] {3}),
-            new BeaconEffect("survivalreimagined:vigour", new int[] {1, 5}),
-            new BeaconEffect("survivalreimagined:regenerating_absorption", new int[] {1, 2, 4, 8, 16}),
+            new BeaconEffect("survivalreimagined:vigour", new int[] {2, 5}),
+            new BeaconEffect("survivalreimagined:regenerating_absorption", new int[] {2, 4}),
             new BeaconEffect(MobEffects.DAMAGE_RESISTANCE, new int[] {1, 3, 9}),
             new BeaconEffect(MobEffects.FIRE_RESISTANCE, new int[] {3}),
             new BeaconEffect(MobEffects.INVISIBILITY, new int[] {2}),
             new BeaconEffect(MobEffects.NIGHT_VISION, new int[] {3}),
             new BeaconEffect(MobEffects.SLOW_FALLING, new int[] {2}),
-            new BeaconEffect("survivalreimagined:block_reach", new int[] {1, 3}),
-            new BeaconEffect("survivalreimagined:entity_reach", new int[] {1, 3})
+            new BeaconEffect(MobEffects.LEVITATION, new int[] {1, 2, 4}),
+            new BeaconEffect("survivalreimagined:block_reach", new int[] {1, 3, 9}),
+            new BeaconEffect("survivalreimagined:entity_reach", new int[] {1, 3, 9})
     ));
     public static final ArrayList<BeaconEffect> effects = new ArrayList<>();
 
@@ -226,6 +227,8 @@ public class BeaconConduit extends SRFeature {
             public BeaconEffect deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                 JsonObject jObject = json.getAsJsonObject();
                 JsonArray jArray = jObject.getAsJsonArray("time_cost");
+                if (jArray.size() > 8)
+                    throw new JsonParseException("time_cost size cannot be greater than 8");
                 List<Integer> timeCost = new ArrayList<>();
                 jArray.forEach(jsonElement -> timeCost.add(jsonElement.getAsInt()));
                 return new BeaconEffect(GsonHelper.getAsString(jObject, "id"), timeCost.stream().mapToInt(i->i).toArray());

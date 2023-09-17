@@ -145,6 +145,10 @@ public class SRBeaconMenu extends AbstractContainerMenu {
         return this.beaconData.get(SRBeaconBlockEntity.DATA_TIME_LEFT);
     }
 
+    public int getLayers() {
+        return this.beaconData.get(SRBeaconBlockEntity.DATA_LAYERS);
+    }
+
     public void updateEffect(Optional<MobEffect> mobEffect, int amplifier) {
         this.beaconData.set(SRBeaconBlockEntity.DATA_EFFECT, mobEffect.map(MobEffect::getId).orElse(-1));
         this.beaconData.set(SRBeaconBlockEntity.DATA_AMPLIFIER, amplifier);

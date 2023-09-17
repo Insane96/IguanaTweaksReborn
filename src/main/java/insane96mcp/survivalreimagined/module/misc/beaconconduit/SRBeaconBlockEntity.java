@@ -40,11 +40,12 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, MenuProvider, Nameable, StackedContentsCompatible {
-    private static final int MAX_LEVELS = 4;
+    private static final int MAX_LEVELS = 8;
     public static final int DATA_EFFECT = 0;
     public static final int DATA_AMPLIFIER = 1;
     public static final int DATA_TIME_LEFT = 2;
-    public static final int DATA_COUNT = 3;
+    public static final int DATA_LAYERS = 3;
+    public static final int DATA_COUNT = 4;
     public static final int SLOT_COUNT = 1;
     private static final int BLOCKS_CHECK_PER_TICK = 10;
     private static final Component DEFAULT_NAME = Component.translatable("container.beacon");
@@ -56,7 +57,7 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
     /**
      * The number of levels of this beacon's pyramid.
      */
-    int levels;
+    int layers;
     private int lastCheckY;
     /**
      * The effect given by this beacon.
@@ -91,6 +92,9 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
                 case DATA_TIME_LEFT -> {
                     return SRBeaconBlockEntity.this.timeLeft;
                 }
+                case DATA_LAYERS -> {
+                    return SRBeaconBlockEntity.this.layers;
+                }
             }
 
             return 0;
@@ -110,6 +114,9 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
                     break;
                 case DATA_TIME_LEFT:
                     SRBeaconBlockEntity.this.timeLeft = value;
+                    break;
+                case DATA_LAYERS:
+                    SRBeaconBlockEntity.this.layers = value;
                     break;
             }
 
@@ -173,19 +180,20 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
             blockpos = blockpos.above();
             ++beacon.lastCheckY;
         }
-        int lvl = beacon.levels;
+        int lvl = beacon.layers;
         if (!BeaconConduit.isValidEffect(beacon.effect))
             beacon.effect = null;
         if (lvl > 0 && beacon.effect != null && beacon.timeLeft > 0) {
+            //TODO Cache
             beacon.timeLeft -= BeaconConduit.getEffectTimeScale(beacon.effect, beacon.amplifier);
         }
         if (pLevel.getGameTime() % 80 == 0) {
             if (!beacon.beamSections.isEmpty()) {
-                beacon.levels = updateBase(pLevel, x, y, z);
+                beacon.layers = updateBase(pLevel, x, y, z);
             }
 
-            if (beacon.levels > 0 && !beacon.beamSections.isEmpty()) {
-                applyEffects(pLevel, pPos, beacon.levels, beacon.effect, beacon.amplifier);
+            if (beacon.layers > 0 && !beacon.beamSections.isEmpty()) {
+                applyEffects(pLevel, pPos, beacon.layers, beacon.effect, beacon.amplifier);
                 playSound(pLevel, pPos, SoundEvents.BEACON_AMBIENT);
             }
         }
@@ -201,12 +209,12 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
             boolean hasLevels = lvl > 0;
             beacon.beamSections = beacon.checkingBeamSections;
             if (!pLevel.isClientSide) {
-                boolean flag1 = beacon.levels > 0;
+                boolean flag1 = beacon.layers > 0;
                 if (!hasLevels && flag1) {
                     playSound(pLevel, pPos, SoundEvents.BEACON_ACTIVATE);
 
                     pLevel.getEntitiesOfClass(ServerPlayer.class, new AABB(x, y, z, x, y - 4, z).inflate(10.0D, 5.0D, 10.0D))
-                            .forEach(serverplayer -> CriteriaTriggers.CONSTRUCT_BEACON.trigger(serverplayer, beacon.levels));
+                            .forEach(serverplayer -> CriteriaTriggers.CONSTRUCT_BEACON.trigger(serverplayer, beacon.layers));
                 }
                 else if (hasLevels && !flag1) {
                     playSound(pLevel, pPos, SoundEvents.BEACON_DEACTIVATE);
@@ -298,7 +306,7 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
     }
 
     public List<BeaconBeamSection> getBeamSections() {
-        return this.levels == 0 ? ImmutableList.of() : this.beamSections;
+        return this.layers == 0 ? ImmutableList.of() : this.beamSections;
     }
 
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
@@ -324,7 +332,7 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
         pTag.putInt("Effect", MobEffect.getIdFromNullable(this.effect));
         pTag.putInt("Amplifier", this.amplifier);
         pTag.putInt("TimeLeft", this.timeLeft);
-        pTag.putInt("Levels", this.levels);
+        pTag.putInt("Levels", this.layers);
         if (this.name != null) {
             pTag.putString("CustomName", Component.Serializer.toJson(this.name));
         }

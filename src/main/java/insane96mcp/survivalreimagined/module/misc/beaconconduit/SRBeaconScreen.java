@@ -65,7 +65,7 @@ public class SRBeaconScreen extends AbstractContainerScreen<SRBeaconMenu> {
         int topLeftCornerX = (this.width - this.imageWidth) / 2;
         int topLeftCornerY = (this.height - this.imageHeight) / 2;
         for (int i = 0; i < 8; i++) {
-            BeaconAmplifierButton amplifierButton = new BeaconAmplifierButton(topLeftCornerX + 17 + i * 25, topLeftCornerY + 77, i);
+            BeaconAmplifierButton amplifierButton = new BeaconAmplifierButton(topLeftCornerX + 17 + i * 25, topLeftCornerY + 78, i);
             amplifierButton.active = true;
             amplifierButton.visible = false;
             this.addBeaconButton(amplifierButton);
@@ -167,7 +167,7 @@ public class SRBeaconScreen extends AbstractContainerScreen<SRBeaconMenu> {
         public int amplifier;
 
         public BeaconAmplifierButton(int pX, int pY, int amplifier) {
-            super(pX, pY, 13, 13);
+            super(pX, pY, 13, 13, 88);
             this.setAmplifier(amplifier);
         }
 
@@ -196,6 +196,7 @@ public class SRBeaconScreen extends AbstractContainerScreen<SRBeaconMenu> {
 
         public void updateStatus() {
             this.visible = this.amplifier <= SRBeaconScreen.this.maxAmplifier && SRBeaconScreen.this.effect != null;
+            this.active = this.amplifier + 1 <= SRBeaconScreen.this.menu.getLayers();
             this.setSelected(this.amplifier == SRBeaconScreen.this.amplifier);
             if (SRBeaconScreen.this.effect != null)
                 this.setTooltip(Tooltip.create(this.createEffectDescription(SRBeaconScreen.this.effect), null));
@@ -209,13 +210,15 @@ public class SRBeaconScreen extends AbstractContainerScreen<SRBeaconMenu> {
 
     abstract static class BeaconScreenButton extends AbstractButton implements BeaconButton {
         private boolean selected;
+        int u, v;
 
         protected BeaconScreenButton(int pX, int pY) {
-            this(pX, pY, 22, 22);
+            this(pX, pY, 22, 22, 0);
         }
 
-        protected BeaconScreenButton(int pX, int pY, int width, int height) {
+        protected BeaconScreenButton(int pX, int pY, int width, int height, int u) {
             super(pX, pY, width, height, CommonComponents.EMPTY);
+            this.u = u;
         }
 
         public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
@@ -229,7 +232,7 @@ public class SRBeaconScreen extends AbstractContainerScreen<SRBeaconMenu> {
                 j += this.width * 3;
             }
 
-            pGuiGraphics.blit(BEACON_LOCATION, this.getX(), this.getY(), j, 219, this.width, this.height);
+            pGuiGraphics.blit(BEACON_LOCATION, this.getX(), this.getY(), j + u, 219, this.width, this.height);
             this.renderIcon(pGuiGraphics);
         }
 
