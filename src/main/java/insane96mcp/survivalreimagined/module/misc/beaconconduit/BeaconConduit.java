@@ -96,7 +96,7 @@ public class BeaconConduit extends SRFeature {
             new BeaconEffect(MobEffects.INVISIBILITY, new int[] {2}),
             new BeaconEffect(MobEffects.NIGHT_VISION, new int[] {3}),
             new BeaconEffect(MobEffects.SLOW_FALLING, new int[] {2}),
-            new BeaconEffect(MobEffects.LEVITATION, new int[] {1, 2, 4}),
+            new BeaconEffect(MobEffects.LEVITATION, new int[] {1, 2, 3}),
             new BeaconEffect("survivalreimagined:block_reach", new int[] {1, 3, 9}),
             new BeaconEffect("survivalreimagined:entity_reach", new int[] {1, 3, 9})
     ));
