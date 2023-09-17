@@ -43,6 +43,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,10 +128,17 @@ public class BeaconConduit extends SRFeature {
         return 0;
     }
 
+    @Nullable
+    static BeaconEffect cachedBeaconEffect;
+
     public static int getEffectTimeScale(MobEffect mobEffect, int amplifier) {
+        if (cachedBeaconEffect != null && mobEffect.equals(cachedBeaconEffect.getEffect()))
+            return cachedBeaconEffect.getTimeCostForAmplifier(amplifier);
         for (BeaconEffect beaconEffect : effects) {
-            if (beaconEffect.location.equals(ForgeRegistries.MOB_EFFECTS.getKey(mobEffect)))
+            if (beaconEffect.location.equals(ForgeRegistries.MOB_EFFECTS.getKey(mobEffect))) {
+                cachedBeaconEffect = beaconEffect;
                 return beaconEffect.getTimeCostForAmplifier(amplifier);
+            }
         }
         return 1;
     }

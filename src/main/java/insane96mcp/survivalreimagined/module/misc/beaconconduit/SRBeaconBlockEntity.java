@@ -184,7 +184,6 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
         if (!BeaconConduit.isValidEffect(beacon.effect))
             beacon.effect = null;
         if (lvl > 0 && beacon.effect != null && beacon.timeLeft > 0) {
-            //TODO Cache
             beacon.timeLeft -= BeaconConduit.getEffectTimeScale(beacon.effect, beacon.amplifier);
         }
         if (pLevel.getGameTime() % 80 == 0) {
