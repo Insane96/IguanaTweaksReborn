@@ -61,16 +61,16 @@ public class Anvils extends Feature {
     @Label(name = "No repair cost increase and repair cost based off Enchantments")
     public static Boolean noRepairCostIncreaseAndEnchCost = true;
     @Config(min = 0)
-    @Label(name = "Enchantments cost by rarity.Common", description = "Vanilla default: 1")
+    @Label(name = "Enchantments cost by rarity.Common", description = "Vanilla: 1")
     public static Integer enchantmentCostCommon = 1;
     @Config(min = 0)
-    @Label(name = "Enchantments cost by rarity.Uncommon", description = "Vanilla default: 2")
+    @Label(name = "Enchantments cost by rarity.Uncommon", description = "Vanilla: 2")
     public static Integer enchantmentCostUncommon = 2;
     @Config(min = 0)
-    @Label(name = "Enchantments cost by rarity.Rare", description = "Vanilla default: 4")
+    @Label(name = "Enchantments cost by rarity.Rare", description = "Vanilla: 4")
     public static Integer enchantmentCostRare = 3;
     @Config(min = 0)
-    @Label(name = "Enchantments cost by rarity.Very Rare", description = "Vanilla default: 8")
+    @Label(name = "Enchantments cost by rarity.Very Rare", description = "Vanilla: 8")
     public static Integer enchantmentCostVeryRare = 5;
     @Config(min = 0)
     @Label(name = "Repair cost multiplier", description = "Multiplier for the levels required to repair or merge an item.")
@@ -78,7 +78,6 @@ public class Anvils extends Feature {
     @Config(min = 0)
     @Label(name = "Break chance", description = "Chance for an anvil to become chipped/damaged/break. Vanilla is 12%")
     public static Double breakChance = 0.075d;
-
     @Config
     @Label(name = "Fix anvils with Iron Blocks")
     public static Boolean allowFixingAnvils = true;

@@ -10,6 +10,7 @@ import insane96mcp.insanelib.util.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.combat.stats.Stats;
 import insane96mcp.survivalreimagined.module.experience.enchantments.enchantment.*;
 import insane96mcp.survivalreimagined.network.message.JumpMidAirMessage;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
@@ -87,9 +88,6 @@ public class EnchantmentsFeature extends SRFeature {
 	public static Boolean changeEfficiencyFormula = true;
 
 	@Config(min = 0d, max = 10d)
-	@Label(name = "Bow's Arrows Base Damage", description = "Set arrow's base damage if shot from bow.")
-	public static Double bowsArrowsBaseDamage = 1.5d;
-	@Config(min = 0d, max = 10d)
 	@Label(name = "Power Enchantment Damage", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
 	public static Double powerEnchantmentDamage = 0.4d;
 
@@ -102,6 +100,7 @@ public class EnchantmentsFeature extends SRFeature {
 
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
 			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:protection"),
+			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:sharpness"),
 			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:mending"),
 			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:bane_of_arthropods"),
 			new IdTagMatcher(IdTagMatcher.Type.ID, "allurement:reforming"),
@@ -300,15 +299,6 @@ public class EnchantmentsFeature extends SRFeature {
 	}
 
 	@SubscribeEvent
-	public void onArrowSpawn(EntityJoinLevelEvent event) {
-		if (!this.isEnabled()
-				|| !(event.getEntity() instanceof AbstractArrow arrow))
-			return;
-		if (!arrow.shotFromCrossbow())
-			processBow(arrow);
-	}
-
-	@SubscribeEvent
 	public void onFarmlandTrample(BlockEvent.FarmlandTrampleEvent event) {
 		if (!this.isEnabled()
 				|| !preventFarmlandTramplingWithFeatherFalling
@@ -319,9 +309,18 @@ public class EnchantmentsFeature extends SRFeature {
 		event.setCanceled(true);
 	}
 
-	private void processBow(AbstractArrow arrow) {
-		if (bowsArrowsBaseDamage != 2d) {
-			arrow.setBaseDamage(arrow.getBaseDamage() - (2d - bowsArrowsBaseDamage));
+	@SubscribeEvent
+	public void onArrowSpawn(EntityJoinLevelEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof AbstractArrow arrow))
+			return;
+		if (!arrow.shotFromCrossbow())
+			processBow(arrow);
+	}
+
+	private static void processBow(AbstractArrow arrow) {
+		if (isEnabled(Stats.class) && Stats.bowsArrowsBaseDamage != 2d) {
+			arrow.setBaseDamage(arrow.getBaseDamage() - (2d - Stats.bowsArrowsBaseDamage));
 		}
 		if (powerEnchantmentDamage != 0.5d && arrow.getOwner() instanceof LivingEntity) {
 			int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());

@@ -122,6 +122,9 @@ public class Stats extends SRFeature {
 	@Config
 	@Label(name = "Combat Test Strength", description = "Changes Strength effect from +3 damage per level to +20% damage per level. (Requires a Minecraft restart)")
 	public static Boolean combatTestStrength = true;
+	@Config(min = 0d, max = 10d)
+	@Label(name = "Bow's Arrows Base Damage", description = "Set arrow's base damage if shot from bow.")
+	public static Double bowsArrowsBaseDamage = 1.5d;
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
