@@ -64,6 +64,6 @@ public class MeleeProtection extends Enchantment implements IProtectionEnchantme
         if (lvl == 0)
             return;
 
-        event.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER_UUIDS[event.getSlotType().getIndex()], "Melee protection enchantment", 0.025d * lvl, AttributeModifier.Operation.MULTIPLY_BASE));
+        event.addModifier(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER_UUIDS[event.getSlotType().getIndex()], "Melee protection enchantment", 0.02d * lvl, AttributeModifier.Operation.MULTIPLY_BASE));
     }
 }

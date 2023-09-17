@@ -160,6 +160,7 @@ public class Keego extends Feature {
 			//noinspection DataFlowIssue
 			amplifier = serverPlayer.getEffect(ATTACK_MOMENTUM.get()).getAmplifier() + 1;
 
-		serverPlayer.addEffect(new MobEffectInstance(ATTACK_MOMENTUM.get(), (int) ((4 - serverPlayer.getAttribute(Attributes.ATTACK_SPEED).getValue()) * 20), Math.min(amplifier, 7), false, false, true));
+		double duration = ((4 - serverPlayer.getAttribute(Attributes.ATTACK_SPEED).getValue()) * 20d);
+		serverPlayer.addEffect(new MobEffectInstance(ATTACK_MOMENTUM.get(), (int) Math.max(duration, 10), Math.min(amplifier, 7), false, false, true));
 	}
 }
