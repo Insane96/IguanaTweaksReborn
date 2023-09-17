@@ -2,12 +2,10 @@ package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.context.UseOnContext;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,13 +30,6 @@ public class ItemMixin {
 
 		if (stack.getItem() instanceof BowlFoodItem) {
 			callbackInfo.setReturnValue(UseAnim.DRINK);
-		}
-	}
-
-	@Inject(at = @At("RETURN"), method = "useOn", cancellable = true)
-	public void onUseOn(UseOnContext pContext, CallbackInfoReturnable<InteractionResult> cir) {
-		if (cir.getReturnValue().consumesAction()) {
-			cir.setReturnValue(InteractionResult.PASS);
 		}
 	}
 }

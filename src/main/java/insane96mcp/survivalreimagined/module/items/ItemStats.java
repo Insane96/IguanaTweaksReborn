@@ -248,7 +248,7 @@ public class ItemStats extends SRFeature {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(NO_EFFICIENCY_ITEM_LANG), true);
 		}
-		else if (event.getState().destroySpeed > 0f){
+		else if (unbreakableItems && event.getState().destroySpeed > 0f){
 			if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
 				event.setCanceled(true);
 				event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
@@ -257,8 +257,39 @@ public class ItemStats extends SRFeature {
 	}
 
 	@SubscribeEvent
-	public void processEfficiencyMultipliers(PlayerInteractEvent.RightClickBlock event) {
-		if (!this.isEnabled())
+	public void onBlockRightClick(PlayerInteractEvent.RightClickBlock event) {
+		if (!this.isEnabled()
+				|| !unbreakableItems)
+			return;
+
+		ItemStack stack = event.getItemStack();
+		if (stack.getMaxDamage() == 0)
+			return;
+		if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
+			event.setCanceled(true);
+			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
+		}
+	}
+
+	@SubscribeEvent
+	public void onItemUse(PlayerInteractEvent.RightClickItem event) {
+		if (!this.isEnabled()
+				|| !unbreakableItems)
+			return;
+
+		ItemStack stack = event.getItemStack();
+		if (stack.getMaxDamage() == 0)
+			return;
+		if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
+			event.setCanceled(true);
+			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
+		}
+	}
+
+	@SubscribeEvent
+	public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+		if (!this.isEnabled()
+				|| !unbreakableItems)
 			return;
 
 		ItemStack stack = event.getItemStack();
@@ -273,6 +304,7 @@ public class ItemStats extends SRFeature {
 	@SubscribeEvent
 	public void processAttackDamage(LivingHurtEvent event) {
 		if (!this.isEnabled()
+				|| !unbreakableItems
 				|| !(event.getSource().getDirectEntity() instanceof Player player))
 			return;
 
@@ -286,6 +318,7 @@ public class ItemStats extends SRFeature {
 	@SubscribeEvent
 	public void processBrokenToolsOnAttack(LivingAttackEvent event) {
 		if (!this.isEnabled()
+				|| !unbreakableItems
 				|| !(event.getSource().getDirectEntity() instanceof Player player))
 			return;
 
@@ -301,6 +334,7 @@ public class ItemStats extends SRFeature {
 	@SubscribeEvent
 	public void processArmorDamaging(HurtItemStackEvent event) {
 		if (!this.isEnabled()
+				|| !unbreakableItems
 				|| event.getPlayer() == null)
 			return;
 
@@ -322,15 +356,6 @@ public class ItemStats extends SRFeature {
 			EquipmentSlot equipmentSlot = Player.getEquipmentSlotForItem(stack);
 			event.getPlayer().broadcastBreakEvent(equipmentSlot);
 		}
-		/*if (stack.getMaxDamage() == 0)
-			return;
-		int damageTaken = 1;
-		if (!(stack.getItem() instanceof SwordItem))
-			damageTaken++;
-		if (stack.getDamageValue() >= stack.getMaxDamage() - damageTaken) {
-			event.setCanceled(true);
-			player.displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
-		}*/
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -358,11 +383,11 @@ public class ItemStats extends SRFeature {
 		if (event.getItemStack().isDamageableItem()) {
 			int durabilityLeft = event.getItemStack().getMaxDamage() - event.getItemStack().getDamageValue();
 			MutableComponent component;
-			if (durabilityLeft > 1)
-				component = Component.translatable(TOOL_DURABILITY_LANG, durabilityLeft, event.getItemStack().getMaxDamage()).withStyle(ChatFormatting.GRAY);
-			else
-				component = Component.translatable(BROKEN_DURABILITY_LANG).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD);
-			if (durabilityLeft > 1 && event.getItemStack().getAllEnchantments().containsKey(Enchantments.UNBREAKING)) {
+            if (durabilityLeft <= 1 && unbreakableItems)
+                component = Component.translatable(BROKEN_DURABILITY_LANG).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD);
+            else
+                component = Component.translatable(TOOL_DURABILITY_LANG, durabilityLeft, event.getItemStack().getMaxDamage()).withStyle(ChatFormatting.GRAY);
+            if (durabilityLeft > 1 && event.getItemStack().getAllEnchantments().containsKey(Enchantments.UNBREAKING)) {
 				int lvl = event.getItemStack().getAllEnchantments().get(Enchantments.UNBREAKING);
 				component.append(Component.literal(" (+%.0f%%)".formatted(getUnbreakingPercentageBonus(lvl) * 100f)).withStyle(ChatFormatting.LIGHT_PURPLE));
 			}
