@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.mixin;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.event.SREventFactory;
+import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.combat.RegeneratingAbsorption;
 import insane96mcp.survivalreimagined.module.movement.TerrainSlowdown;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,6 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
 
+@Debug(export = true)
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements Attackable, net.minecraftforge.common.extensions.IForgeLivingEntity {
 
@@ -52,11 +55,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         return instance.isSprinting();
     }
 
-    @Inject(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;gameEvent(Lnet/minecraft/world/level/gameevent/GameEvent;)V"))
-    private void onPostDamage(DamageSource damageSource, float amount, CallbackInfo ci) {
-        SREventFactory.onPostHurtEntity((LivingEntity)(Object)this, damageSource, amount);
-    }
-
     @Inject(method = "getCurrentSwingDuration", at = @At("HEAD"), cancellable = true)
     private void onPostDamage(CallbackInfoReturnable<Integer> cir) {
         if (this.hasEffect(Tiredness.TIRED.get())) {
@@ -74,10 +72,15 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
 
     @ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
     private float onCalculateAbsorption(float f1, DamageSource damageSource, float amount) {
-        if (RegeneratingAbsorption.entityAbsorption() && !(damageSource.getEntity() instanceof LivingEntity)) {
+        if (RegeneratingAbsorption.entityAbsorption() && (!(damageSource.getEntity() instanceof LivingEntity) || damageSource.is(PiercingPickaxes.PIERCING_DAMAGE_TYPE))) {
             return amount;
         }
         return Math.max(amount - this.getAbsorptionAmount(), 0.0F);
+    }
+
+    @Redirect(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setAbsorptionAmount(F)V", ordinal = 1))
+    private void onSetAbsorptionSecondtime(LivingEntity instance, float absorption) {
+        //Cancel Mojang damaging absorption twice for some reasons
     }
 
     @Inject(method = "addEatEffect", at = @At("HEAD"), cancellable = true)

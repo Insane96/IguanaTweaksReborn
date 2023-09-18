@@ -12,8 +12,9 @@
 * Added Swift Strike
   * A new "damaging" enchantment that increases attack speed
 * Removed Ensorceller and added back normal enchanting table recipe
+* Piercing damage now bypasses absorption too
 * Gold Tools and Sword now have +1.5 damage (similar to flint tools)
-* Chainmail armor now gives toughness
+* Chainmail armor now gives toughness (or regenerating absorption speed)
 * Mobs now drop 25% more experience
 * Melee protection now increases attack speed by 2% per level
 * Removed sharpness

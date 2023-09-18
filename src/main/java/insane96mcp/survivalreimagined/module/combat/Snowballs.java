@@ -5,9 +5,9 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.event.PostEntityHurtEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -39,10 +39,10 @@ public class Snowballs extends Feature {
 	}
 
 	@SubscribeEvent
-	public void onLivingHurt(PostEntityHurtEvent event) {
+	public void onLivingHurt(LivingDamageEvent event) {
 		if (!this.isEnabled()
 				|| freezingTicks == 0
-				|| !(event.getDamageSource().getDirectEntity() instanceof Snowball))
+				|| !(event.getSource().getDirectEntity() instanceof Snowball))
 			return;
 
 		if (freezingStacks)

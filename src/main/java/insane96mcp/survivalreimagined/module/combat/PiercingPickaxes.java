@@ -6,14 +6,14 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.event.PostEntityHurtEvent;
+import insane96mcp.survivalreimagined.data.generator.SRDamageTypeTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.items.copper.CopperToolsExpansion;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.MCUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
@@ -27,6 +27,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -42,6 +43,8 @@ public class PiercingPickaxes extends Feature {
 
 	public static final RegistryObject<Attribute> PIERCING_DAMAGE = SRRegistries.ATTRIBUTES.register("piercing_damage", () -> new RangedAttribute("attribute.name.piercing_damage", 0d, 0d, 1024d));
 
+	public static final TagKey<DamageType> PIERCING_DAMAGE_TYPE = SRDamageTypeTagsProvider.create("piercing_damage_type");
+	public static final TagKey<DamageType> DOESNT_TRIGGER_PIERCING = SRDamageTypeTagsProvider.create("doesnt_trigger_piercing");
 
 	@Config(min = 0d)
 	@Label(name = "Pickaxe damage to piercing ratio")
@@ -62,14 +65,11 @@ public class PiercingPickaxes extends Feature {
 
 	@SuppressWarnings("DataFlowIssue")
 	@SubscribeEvent
-	public void onPostEntityDamaged(PostEntityHurtEvent event) {
+	public void onPostEntityDamaged(LivingDamageEvent event) {
 		if (!this.isEnabled()
-				|| !(event.getDamageSource().getDirectEntity() instanceof LivingEntity attacker)
+				|| !(event.getSource().getDirectEntity() instanceof LivingEntity attacker)
 				|| event.getEntity().isDeadOrDying()
-				//TODO Add a tag
-				|| event.getDamageSource().is(PIERCING_MOB_ATTACK)
-				|| event.getDamageSource().is(PIERCING_PLAYER_ATTACK)
-				|| event.getDamageSource().is(CopperToolsExpansion.ELECTROCUTION_ATTACK)
+				|| event.getSource().is(DOESNT_TRIGGER_PIERCING)
 				|| attacker.getAttribute(PIERCING_DAMAGE.get()) == null)
 			return;
 

@@ -8,9 +8,9 @@ import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.data.generator.SRDamageTypeTagsProvider;
 import insane96mcp.survivalreimagined.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.network.ElectrocutionParticleMessage;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
@@ -74,6 +74,7 @@ public class CopperToolsExpansion extends Feature {
 	public static final RegistryObject<SPShieldItem> COATED_SHIELD = SRRegistries.registerShield("coated_copper_shield", COATED_SHIELD_MATERIAL);
     public static final RegistryObject<SimpleParticleType> ELECTROCUTION_SPARKS = SRRegistries.PARTICLE_TYPES.register("electrocution_sparks", () -> new SimpleParticleType(true));
 	public static final RegistryObject<SoundEvent> ELECTROCUTION = SRRegistries.SOUND_EVENTS.register("electrocution", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(SurvivalReimagined.MOD_ID, "electrocution")));
+	public static final TagKey<DamageType> DOESNT_TRIGGER_ELECTROCUTION = SRDamageTypeTagsProvider.create("doesnt_trigger_electrocution");
 
 	public CopperToolsExpansion(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -118,9 +119,7 @@ public class CopperToolsExpansion extends Feature {
 	@SubscribeEvent
 	public void onAttack(LivingDamageEvent event) {
 		if (!this.isEnabled()
-				|| event.getSource().is(ELECTROCUTION_ATTACK)
-				|| event.getSource().is(PiercingPickaxes.PIERCING_MOB_ATTACK)
-				|| event.getSource().is(PiercingPickaxes.PIERCING_PLAYER_ATTACK)
+				|| event.getSource().is(DOESNT_TRIGGER_ELECTROCUTION)
 				|| !(event.getSource().getEntity() instanceof Player player)
 				|| !(event.getSource().getDirectEntity() instanceof Player)
 				|| player.getAttackStrengthScale(1f) < 0.9f

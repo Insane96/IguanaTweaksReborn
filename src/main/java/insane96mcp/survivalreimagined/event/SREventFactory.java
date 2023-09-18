@@ -5,7 +5,6 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
@@ -38,12 +37,6 @@ public class SREventFactory {
     public static void onBlockBurnt(Level level, BlockPos pos, BlockState state)
     {
         BlockBurntEvent event = new BlockBurntEvent(level, pos, state);
-        MinecraftForge.EVENT_BUS.post(event);
-    }
-
-    public static void onPostHurtEntity(LivingEntity livingEntity, DamageSource damageSource, float amount)
-    {
-        PostEntityHurtEvent event = new PostEntityHurtEvent(livingEntity, damageSource, amount);
         MinecraftForge.EVENT_BUS.post(event);
     }
 

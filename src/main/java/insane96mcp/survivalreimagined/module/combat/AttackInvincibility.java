@@ -5,7 +5,6 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.event.PostEntityHurtEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.DataPacks;
 import insane96mcp.survivalreimagined.network.message.SyncInvulnerableTimeMessage;
@@ -16,6 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Attack invincibility", description = "Less invincibility frames and none with arrows.")
@@ -35,10 +35,10 @@ public class AttackInvincibility extends Feature {
 	}
 
 	@SubscribeEvent
-	public void onAttack(PostEntityHurtEvent event) {
+	public void onAttack(LivingDamageEvent event) {
 		if (!this.isEnabled()
 				|| !invincibilityFramesAttackSpeed
-				|| !(event.getDamageSource().getEntity() instanceof ServerPlayer serverPlayer)
+				|| !(event.getSource().getEntity() instanceof ServerPlayer serverPlayer)
 				|| serverPlayer.getAttribute(Attributes.ATTACK_SPEED).getValue() < 2f
 				|| !serverPlayer.getMainHandItem().getAttributeModifiers(EquipmentSlot.MAINHAND).containsKey(Attributes.ATTACK_SPEED))
 			return;
