@@ -48,7 +48,7 @@ public class PlantsGrowth extends SRFeature {
 					.addSeasonMultiplier(Season.SPRING, 0f)
 					.addSeasonMultiplier(Season.AUTUMN, 0f).build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:cocoa")
-					.setGrowthMultiplier(2f)
+					.setGrowthMultiplier(3f)
 					.setNoSunglightMultipler(2.5f, 10)
 					.setNightTimeMultiplier(1.5f)
 					.setGrowthBiomes(new ArrayList<>(List.of(
