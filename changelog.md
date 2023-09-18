@@ -17,6 +17,7 @@
   * The upgrade template can be found in fortresses
 * Removed Ensorceller and added back normal enchanting table recipe
 * Piercing damage now bypasses absorption too
+* Stamina is now unlocked at 75% max stamina instead of full
 * Gold Tools and Sword now have +1.5 damage (similar to flint tools)
 * Copper tools now last ~~3%~~ -> 4% more per block below sea level (~~+200%~~ -> +350% at y=0 and ~~+350%~~ -> +600% at y=-56)
 * Chainmail armor now gives toughness (or regenerating absorption speed)

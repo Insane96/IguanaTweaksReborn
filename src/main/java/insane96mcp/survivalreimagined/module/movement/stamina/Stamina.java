@@ -50,6 +50,10 @@ public class Stamina extends Feature {
     @Label(name = "Stamina consumed on jump", description = "How much stamina the player consumes on each jump")
     public static Integer staminaConsumedOnJump = 5;
 
+    @Config(min = 0, max = 1d)
+    @Label(name = "Unlock Stamina at health ratio", description = "At which health percentage will stamina be unlocked")
+    public static Double unlockStaminaAtHealthRatio = 0.75d;
+
     @Config
     @Label(name = "Disable Sprinting", description = "Disable sprinting altogether")
     public static Boolean disableSprinting = false;
@@ -97,7 +101,7 @@ public class Stamina extends Feature {
             if (StaminaHandler.isStaminaLocked(player) && player.tickCount % 3 == 0)
                 return;
             StaminaHandler.regenStamina(player);
-            if (StaminaHandler.getStamina(player) >= StaminaHandler.getMaxStamina(player) - 10)
+            if (StaminaHandler.getStamina(player) >= StaminaHandler.getMaxStamina(player) * unlockStaminaAtHealthRatio)
                 StaminaHandler.unlockSprinting(player);
             shouldSync = true;
         }
