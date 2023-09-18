@@ -11,6 +11,7 @@
   * Tall grass now decays in winter and grows back in spring. Saplings also become dead bushes in Winter
 * Added Swift Strike
   * A new "damaging" enchantment that increases attack speed
+* Removed Ensorceller and added back normal enchanting table recipe
 * Gold Tools and Sword now have +1.5 damage (similar to flint tools)
 * Chainmail armor now gives toughness
 * Mobs now drop 25% more experience

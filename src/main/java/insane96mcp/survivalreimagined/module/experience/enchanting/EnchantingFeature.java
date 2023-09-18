@@ -7,14 +7,11 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.misc.DataPacks;
-import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.Blocks;
@@ -31,9 +28,6 @@ import net.minecraftforge.registries.RegistryObject;
 public class EnchantingFeature extends Feature {
 
 	@Config
-	@Label(name = "Nether Enchanting Table", description = "Enables a data pack that makes the enchanting table require nether access to be made")
-	public static Boolean netherEnchantingTable = true;
-	@Config
 	@Label(name = "Ensorceller.No Merge", description = "Items enchanted in an ensorceller cannot be merged")
 	public static Boolean ensorcellerNoMerge = true;
 
@@ -43,7 +37,6 @@ public class EnchantingFeature extends Feature {
 
 	public EnchantingFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "nether_enchanting_table", Component.literal("Survival Reimagined Nether Enchanting Table"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && netherEnchantingTable));
 	}
 
 	@OnlyIn(Dist.CLIENT)
