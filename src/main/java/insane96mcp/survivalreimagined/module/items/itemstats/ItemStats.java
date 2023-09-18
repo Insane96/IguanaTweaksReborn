@@ -1,4 +1,4 @@
-package insane96mcp.survivalreimagined.module.items;
+package insane96mcp.survivalreimagined.module.items.itemstats;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,6 +16,7 @@ import insane96mcp.survivalreimagined.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
+import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
@@ -28,6 +29,7 @@ import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -40,6 +42,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +56,14 @@ public class ItemStats extends SRFeature {
 	public static final String BROKEN_DURABILITY_LANG = "survivalreimagined.broken_durability";
 	public static final TagKey<Item> NO_DAMAGE = SRItemTagsProvider.create("no_damage");
 	public static final TagKey<Item> NO_EFFICIENCY = SRItemTagsProvider.create("no_efficiency");
+
+	public static final RegistryObject<RecipeType<RepairItemRecipe>> REPAIR_ITEM_RECIPE_TYPE = SRRegistries.RECIPE_TYPES.register("repair_item", () -> new RecipeType<>() {
+		@Override
+		public String toString() {
+			return "repair_item";
+		}
+	});
+	public static final RegistryObject<RepairItemRecipeSerializer> REPAIR_ITEM_RECIPE_SERIALIZER = SRRegistries.RECIPE_SERIALIZERS.register("repair_item", RepairItemRecipeSerializer::new);
 
 	public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/wooden", 33),

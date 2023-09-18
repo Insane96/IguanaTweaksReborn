@@ -1,5 +1,8 @@
 # Changelog
 
+* Fix missing recipe for bundle with rabbit hide
+* Fix trident with less prismarine crystals
+
 ## 0.15.0
 * Added Better Beacon
   * A new beacon with more effects, more amplifiers but with a time cost
