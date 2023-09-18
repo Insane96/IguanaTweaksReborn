@@ -53,6 +53,7 @@
         "ThrownExperienceBottleMixin",
         "VillagerMixin",
         "WanderingTraderMixin",
+        "WolfMixin",
         "ZombieMixin"
     ],
     "minVersion": "0.8",
