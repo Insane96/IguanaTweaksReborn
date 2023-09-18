@@ -11,6 +11,8 @@
   * Tall grass now decays in winter and grows back in spring. Saplings also become dead bushes in Winter
 * Added Swift Strike
   * A new "damaging" enchantment that increases attack speed
+* Added keego
+  * A new gem found stuck in bedrock. A blast might extract it
 * Removed Ensorceller and added back normal enchanting table recipe
 * Piercing damage now bypasses absorption too
 * Gold Tools and Sword now have +1.5 damage (similar to flint tools)

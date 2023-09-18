@@ -115,10 +115,10 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_leggings", 315),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_boots", 273),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_helmet", 158),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_chestplate", 211),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_leggings", 198),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_boots", 172),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_helmet", 132),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_chestplate", 176),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_leggings", 165),
+			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_boots", 143),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 222),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", 296),

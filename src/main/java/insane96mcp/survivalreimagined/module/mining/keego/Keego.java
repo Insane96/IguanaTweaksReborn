@@ -12,7 +12,6 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.item.SRArmorMaterial;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.mining.blockhardness.BlockHardness;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
@@ -28,7 +27,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -56,7 +54,7 @@ public class Keego extends Feature {
 	public static final RegistryObject<MobEffect> ATTACK_MOMENTUM = SRRegistries.MOB_EFFECTS.register("attack_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false).addAttributeModifier(Attributes.ATTACK_SPEED, "f6fe8408-b88c-4e51-8892-8b20574cfc49", 0.05d, AttributeModifier.Operation.ADDITION));
 	public static final RegistryObject<MobEffect> MINING_MOMENTUM = SRRegistries.MOB_EFFECTS.register("mining_momentum", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false));
 
-	public static final SimpleBlockWithItem ORE = SimpleBlockWithItem.register("keego_ore", () -> new KeegoOreBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).strength(-1f, 9f), UniformInt.of(10, 15)));
+	public static final SimpleBlockWithItem ORE = SimpleBlockWithItem.register("keego_ore", () -> new KeegoOreBlock(BlockBehaviour.Properties.copy(Blocks.BEDROCK).strength(-1f, 10f), UniformInt.of(10, 15)));
 
 	public static final SimpleBlockWithItem BLOCK = SimpleBlockWithItem.register("keego_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 7.0F).sound(SoundType.METAL)));
 
@@ -75,7 +73,7 @@ public class Keego extends Feature {
 		p_266652_.put(ArmorItem.Type.LEGGINGS, 5);
 		p_266652_.put(ArmorItem.Type.CHESTPLATE, 6);
 		p_266652_.put(ArmorItem.Type.HELMET, 3);
-	}), 6, SoundEvents.ARMOR_EQUIP_IRON, 1f, 0.03f, () -> Ingredient.of(GEM.get()));
+	}), 6, SoundEvents.ARMOR_EQUIP_IRON, 0f, 0f, () -> Ingredient.of(GEM.get()));
 
 	public static final RegistryObject<Item> HELMET = SRRegistries.ITEMS.register("keego_helmet", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties()));
 	public static final RegistryObject<Item> CHESTPLATE = SRRegistries.ITEMS.register("keego_chestplate", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
@@ -96,7 +94,8 @@ public class Keego extends Feature {
 	@SubscribeEvent
 	public void onBreakSpeed(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled()
-				|| !event.getEntity().hasEffect(MINING_MOMENTUM.get()))
+				|| !event.getEntity().hasEffect(MINING_MOMENTUM.get())
+				|| !event.getEntity().getMainHandItem().isCorrectToolForDrops(event.getState()))
 			return;
 
 		//noinspection DataFlowIssue
@@ -115,8 +114,8 @@ public class Keego extends Feature {
 			//noinspection DataFlowIssue
 			amplifier = event.getPlayer().getEffect(MINING_MOMENTUM.get()).getAmplifier() + 1;
 
-		int duration = (int) (event.getState().getDestroySpeed(event.getLevel(), event.getPos()) * 20 * BlockHardness.getBlockHardnessMultiplier(event.getState().getBlock(), ((Level)event.getLevel()).dimension().location(), event.getPos())) * 2;
-		event.getPlayer().addEffect(new MobEffectInstance(MINING_MOMENTUM.get(), duration, Math.min(amplifier, 31), false, false, true));
+		int duration = (int) (1f / event.getState().getDestroyProgress(event.getPlayer(), event.getLevel(), event.getPos()) + 5) * 3;
+		event.getPlayer().addEffect(new MobEffectInstance(MINING_MOMENTUM.get(), Math.max(duration, 15), Math.min(amplifier, 31), false, false, true));
 	}
 
 	@SubscribeEvent
