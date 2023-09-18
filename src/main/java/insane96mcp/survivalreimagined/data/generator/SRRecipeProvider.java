@@ -409,34 +409,35 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "keego_from_block");
 
         //Soul Steel
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_AXE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.AXE.get())
+        copySmithingTemplate(writer, SoulSteel.UPGRADE_SMITHING_TEMPLATE.get(), Items.NETHERRACK);
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(Items.DIAMOND_AXE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.AXE.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_axe");
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_PICKAXE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.PICKAXE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(Items.DIAMOND_PICKAXE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.PICKAXE.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_pickaxe");
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_SHOVEL), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.SHOVEL.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(Items.DIAMOND_SHOVEL), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.SHOVEL.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_shovel");
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_HOE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.HOE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(Items.DIAMOND_HOE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, SoulSteel.HOE.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_hoe");
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_SWORD), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.SWORD.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(Items.DIAMOND_SWORD), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.SWORD.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_sword");
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.SHIELD), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.SHIELD.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(Items.SHIELD), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.SHIELD.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_shield");
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_HELMET), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.HELMET.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(Items.DIAMOND_HELMET), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.HELMET.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_helmet");
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_CHESTPLATE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.CHESTPLATE.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(Items.DIAMOND_CHESTPLATE), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.CHESTPLATE.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_chestplate");
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_LEGGINGS), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.LEGGINGS.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(Items.DIAMOND_LEGGINGS), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.LEGGINGS.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_leggings");
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(Items.DIAMOND_BOOTS), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.BOOTS.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(Items.DIAMOND_BOOTS), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.COMBAT, SoulSteel.BOOTS.get())
                 .unlocks("has_soul_steel", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_boots");
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, SoulSteel.BLOCK.block().get(), 1)
@@ -455,7 +456,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .requires(SoulSteel.INGOT.get(), 1)
                 .unlockedBy("has_ingot", has(SoulSteel.INGOT.get()))
                 .save(writer);
-        //TODO vanilla recipe in crafting grid and set the alloy recipe via datapack
+
         MultiItemSmeltingRecipeBuilder.blasting(
                         NonNullList.of(Ingredient.EMPTY, Ingredient.of(Durium.INGOT.get()), Ingredient.of(Durium.INGOT.get()), Ingredient.of(CoalFire.HELLISH_COAL.get()), Ingredient.of(Items.SOUL_SAND, Items.SOUL_SOIL)),
                         RecipeCategory.MISC,

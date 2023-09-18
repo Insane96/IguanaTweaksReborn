@@ -106,7 +106,7 @@ public class Lapis extends Feature {
 			stack.enchant(enchantment, level);
 	}
 
-	private static final String path = "mining/lapis";
+	private static final String path = "experience/lapis";
 
 	public static void addGlobalLoot(GlobalLootModifierProvider provider) {
 		provider.add(path + "blocks/lapis_ore", new InjectLootTableModifier(new ResourceLocation("minecraft:blocks/lapis_ore"), new ResourceLocation("survivalreimagined:blocks/cleansed_lapis")));

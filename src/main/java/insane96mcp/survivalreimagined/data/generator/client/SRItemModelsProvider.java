@@ -57,6 +57,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(SoulSteel.HELMET.get());
         basicItem(SoulSteel.INGOT.get());
         basicItem(SoulSteel.NUGGET.get());
+        basicItem(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get());
         shield(SoulSteel.SHIELD.get());
         withExistingParent("soul_steel_block", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/soul_steel_block"));
         withExistingParent("blast_furnace", new ResourceLocation("block/blast_furnace"));

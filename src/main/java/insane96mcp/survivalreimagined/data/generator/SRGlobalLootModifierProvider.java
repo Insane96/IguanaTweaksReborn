@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.data.generator;
 import insane96mcp.survivalreimagined.module.experience.Lapis;
 import insane96mcp.survivalreimagined.module.farming.crops.Crops;
 import insane96mcp.survivalreimagined.module.items.recallidol.RecallIdol;
+import insane96mcp.survivalreimagined.module.mining.SoulSteel;
 import insane96mcp.survivalreimagined.module.mobs.equipment.Equipment;
 import insane96mcp.survivalreimagined.module.movement.minecarts.Minecarts;
 import insane96mcp.survivalreimagined.module.world.Loot;
@@ -25,5 +26,6 @@ public class SRGlobalLootModifierProvider extends GlobalLootModifierProvider {
         CoalFire.addGlobalLoot(this);
         Lapis.addGlobalLoot(this);
         RecallIdol.addGlobalLoot(this);
+        SoulSteel.addGlobalLoot(this);
     }
 }

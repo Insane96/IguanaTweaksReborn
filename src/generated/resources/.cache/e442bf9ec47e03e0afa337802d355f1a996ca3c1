@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-17T21:56:10.2972209	Item Models: survivalreimagined
+// 1.20.1	2023-09-18T13:57:06.0480887	Item Models: survivalreimagined
 0e14a5fda7239c8fc0a79813151a4eba3c430f5f assets/survivalreimagined/models/item/ancient_lapis.json
 9db8ff6b8f62a90066f9ec6f113f30579ef147b4 assets/survivalreimagined/models/item/blast_furnace.json
 fe69cbb0039b59fd572532480721ff573ee4aa76 assets/survivalreimagined/models/item/brown_mushroom_stew.json
@@ -127,6 +127,7 @@ ea6e08e75b304e363f0fbaeee8cdb5e7c456d13f assets/survivalreimagined/models/item/s
 313300a16ea7cc01a54c0ec8099ea9bf05edd0ac assets/survivalreimagined/models/item/soul_steel_shield.json
 8fdf4a7d912f780b15eadd0fb01d038141f0d460 assets/survivalreimagined/models/item/soul_steel_shovel.json
 2da86defd72cc6e78e09c11da38cc1cff0cf64e4 assets/survivalreimagined/models/item/soul_steel_sword.json
+2ae0abc0fd17bcdff96c8ddc761acb02ea1337b2 assets/survivalreimagined/models/item/soul_steel_upgrade_smithing_template.json
 cc01a09560e1474983da0155d1418d1f31b7363d assets/survivalreimagined/models/item/stone_hammer.json
 86d5bb272490a603a7810616ce14ab22397cd6db assets/survivalreimagined/models/item/torch_arrow.json
 0fb2d0fc1b4ffd2656f9e4340812396faffd22aa assets/survivalreimagined/models/item/wooden_hammer.json

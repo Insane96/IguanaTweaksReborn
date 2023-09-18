@@ -9,5 +9,7 @@
   "result": {
     "item": "survivalreimagined:soul_steel_pickaxe"
   },
-  "template": []
+  "template": {
+    "item": "survivalreimagined:soul_steel_upgrade_smithing_template"
+  }
 }

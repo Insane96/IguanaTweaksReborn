@@ -227,6 +227,7 @@ public class ClientSetup {
             event.accept(Solarium.SOLARIUM_BALL.get());
             event.accept(SoulSteel.INGOT.get());
             event.accept(SoulSteel.NUGGET.get());
+            event.accept(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get());
             event.accept(Keego.GEM.get());
             event.accept(Lapis.CLEANSED_LAPIS.get());
             event.accept(Lapis.ANCIENT_LAPIS.get());

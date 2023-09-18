@@ -214,6 +214,11 @@
 	"item.survivalreimagined.soul_steel_nugget": "Soul Steel Nugget",
 	"item.survivalreimagined.soul_steel_ingot": "Soul Steel Ingot",
 	"block.survivalreimagined.soul_steel_block": "Block of Soul Steel",
+	"item.survivalreimagined.smithing_template.soul_steel_upgrade.additions_slot_description": "Add Soul Steel Ingot",
+	"item.survivalreimagined.smithing_template.soul_steel_upgrade.applies_to": "Diamond Equipment",
+	"item.survivalreimagined.smithing_template.soul_steel_upgrade.base_slot_description": "Add diamond armor, weapon, or tool",
+	"item.survivalreimagined.smithing_template.soul_steel_upgrade.ingredients": "Soul Steel Ingot",
+	"upgrade.survivalreimagined.soul_steel_upgrade": "Soul Steel Upgrade",
 
 
 	"survivalreimagined:misc_module": "Misc",
