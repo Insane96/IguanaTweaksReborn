@@ -21,6 +21,7 @@
 * Gold Tools and Sword now have +1.5 damage (similar to flint tools)
 * Copper tools now last ~~3%~~ -> 4% more per block below sea level (~~+200%~~ -> +350% at y=0 and ~~+350%~~ -> +600% at y=-56)
 * Chainmail armor now gives toughness (or regenerating absorption speed)
+* Changed one stone layer from the altimeter to water
 * Mobs now drop 25% more experience
 * Melee protection now increases attack speed by 2% per level
 * Removed sharpness
