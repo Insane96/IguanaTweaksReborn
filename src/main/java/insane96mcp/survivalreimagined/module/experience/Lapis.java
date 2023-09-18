@@ -93,7 +93,7 @@ public class Lapis extends Feature {
 				enchantStack(result, ench.getKey(), ench.getValue());
 		}
 
-		event.setCost(Anvils.getRarityCost(enchantmentChosen) * enchantmentLvlChosen + 1);
+		event.setCost(Anvils.getRarityCost(enchantmentChosen) * (enchantmentLvlChosen + 1));
 		event.setMaterialCost(1);
 		event.setOutput(result);
 	}
