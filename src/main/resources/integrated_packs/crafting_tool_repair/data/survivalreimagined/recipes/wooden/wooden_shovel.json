@@ -1,0 +1,10 @@
+{
+    "type": "survivalreimagined:repair_item",
+    "item_to_repair": {
+        "item": "minecraft:wooden_axe"
+    },
+    "material": {
+        "tag": "minecraft:planks"
+    },
+    "amount": 1
+}

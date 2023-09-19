@@ -15,13 +15,16 @@ import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
+import insane96mcp.survivalreimagined.module.misc.DataPacks;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
+import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -86,10 +89,15 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shears", 119),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:trident", 375),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_helmet", 108),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_chestplate", 144),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_leggings", 135),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_boots", 117),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_helmet", 76),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_chestplate", 101),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_leggings", 95),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_boots", 82),
+
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_helmet", 90),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_chestplate", 120),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_leggings", 113),
+			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_boots", 98),
 
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_helmet", 36),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_chestplate", 48),
@@ -176,11 +184,15 @@ public class ItemStats extends SRFeature {
 	@Config
 	@Label(name = "Unbreakable Items", description = "If set to true items will no longer break, will be left with 1 durability")
 	public static Boolean unbreakableItems = true;
+	@Config
+	@Label(name = "Crafting Repairable Items", description = "A data pack is enabled that makes non-metal tools repairable in the crafting table")
+	public static Boolean craftingRepairableItems = true;
 
 	public ItemStats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadDurabilities, true, JsonConfigSyncMessage.ConfigType.DURABILITY));
 		JSON_CONFIGS.add(new JsonConfig<>("tool_efficiencies.json", toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadToolEfficiencies, true, JsonConfigSyncMessage.ConfigType.EFFICIENCIES));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "crafting_tool_repair", Component.literal("Survival Reimagined Crafting Tool Repair"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && craftingRepairableItems));
 	}
 
 	@Override

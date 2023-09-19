@@ -19,13 +19,14 @@ public class RepairItemRecipeSerializer implements RecipeSerializer<RepairItemRe
 
     @Override
     public RepairItemRecipe fromJson(ResourceLocation pRecipeId, JsonObject serializedRecipe) {
-        CraftingBookCategory craftingBookCategory = CraftingBookCategory.CODEC.byName(GsonHelper.getAsString(serializedRecipe, "category", (String)null), CraftingBookCategory.MISC);
+        CraftingBookCategory craftingBookCategory = CraftingBookCategory.CODEC.byName(GsonHelper.getAsString(serializedRecipe, "category", null), CraftingBookCategory.MISC);
         JsonElement jsonelement = GsonHelper.getAsJsonObject(serializedRecipe, "item_to_repair");
         Ingredient itemToRepair = Ingredient.fromJson(jsonelement, false);
         jsonelement = (GsonHelper.isArrayNode(serializedRecipe, "material") ? GsonHelper.getAsJsonArray(serializedRecipe, "material") : GsonHelper.getAsJsonObject(serializedRecipe, "material"));
         Ingredient material = Ingredient.fromJson(jsonelement, false);
         int i = GsonHelper.getAsInt(serializedRecipe, "amount");
-        return this.factory.create(pRecipeId, craftingBookCategory, itemToRepair, material, i);
+        float maxRepair = GsonHelper.getAsFloat(serializedRecipe, "max_repair", 1f);
+        return this.factory.create(pRecipeId, craftingBookCategory, itemToRepair, material, i, maxRepair);
     }
 
     @Override
@@ -34,7 +35,8 @@ public class RepairItemRecipeSerializer implements RecipeSerializer<RepairItemRe
         Ingredient itemToRepair = Ingredient.fromNetwork(pBuffer);
         Ingredient material = Ingredient.fromNetwork(pBuffer);
         int i = pBuffer.readVarInt();
-        return this.factory.create(pRecipeId, craftingBookCategory, itemToRepair, material, i);
+        float maxRepair = pBuffer.readFloat();
+        return this.factory.create(pRecipeId, craftingBookCategory, itemToRepair, material, i, maxRepair);
     }
 
     @Override
@@ -43,9 +45,10 @@ public class RepairItemRecipeSerializer implements RecipeSerializer<RepairItemRe
         pRecipe.itemToRepair.toNetwork(pBuffer);
         pRecipe.material.toNetwork(pBuffer);
         pBuffer.writeVarInt(pRecipe.amount);
+        pBuffer.writeFloat(pRecipe.maxRepair);
     }
 
     public interface CookieBaker<T extends RepairItemRecipe> {
-        T create(ResourceLocation pId, CraftingBookCategory pCategory, Ingredient itemToRepair, Ingredient material, int amount);
+        T create(ResourceLocation pId, CraftingBookCategory pCategory, Ingredient itemToRepair, Ingredient material, int amount, float maxRepair);
     }
 }

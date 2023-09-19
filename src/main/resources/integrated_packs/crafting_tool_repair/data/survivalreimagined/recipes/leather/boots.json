@@ -1,0 +1,10 @@
+{
+    "type": "survivalreimagined:repair_item",
+    "item_to_repair": {
+        "item": "minecraft:leather_boots"
+    },
+    "material": {
+        "item": "minecraft:leather"
+    },
+    "amount": 3
+}

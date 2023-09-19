@@ -14,11 +14,13 @@ public class RepairItemRecipe extends CustomRecipe {
     protected final Ingredient itemToRepair;
     protected final Ingredient material;
     protected final int amount;
-    public RepairItemRecipe(ResourceLocation pId, CraftingBookCategory pCategory, Ingredient itemToRepair, Ingredient material, int amount) {
+    protected final float maxRepair;
+    public RepairItemRecipe(ResourceLocation pId, CraftingBookCategory pCategory, Ingredient itemToRepair, Ingredient material, int amount, float maxRepair) {
         super(pId, pCategory);
         this.itemToRepair = itemToRepair;
         this.material = material;
         this.amount = amount;
+        this.maxRepair = maxRepair;
     }
 
     @Override
@@ -64,6 +66,8 @@ public class RepairItemRecipe extends CustomRecipe {
             }
         }
         result = new ItemStack(stackToRepair.getItem());
+        result.setHoverName(stackToRepair.getHoverName());
+        int maxRepair = (int) (stackToRepair.getMaxDamage() * this.maxRepair);
         result.setDamageValue((int) (stackToRepair.getDamageValue() - ((float) stackToRepair.getMaxDamage() / this.amount * amount)));
         return result;
     }

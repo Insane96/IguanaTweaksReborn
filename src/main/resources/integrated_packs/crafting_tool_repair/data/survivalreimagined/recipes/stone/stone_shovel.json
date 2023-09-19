@@ -1,0 +1,10 @@
+{
+    "type": "survivalreimagined:repair_item",
+    "item_to_repair": {
+        "item": "minecraft:stone_shovel"
+    },
+    "material": {
+        "tag": "minecraft:stone_tool_materials"
+    },
+    "amount": 1
+}

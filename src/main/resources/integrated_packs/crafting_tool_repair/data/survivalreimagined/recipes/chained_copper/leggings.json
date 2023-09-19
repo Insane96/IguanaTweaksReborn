@@ -1,0 +1,10 @@
+{
+    "type": "survivalreimagined:repair_item",
+    "item_to_repair": {
+        "item": "survivalreimagined:chained_copper_leggings"
+    },
+    "material": {
+        "item": "minecraft:copper_ingot"
+    },
+    "amount": 5
+}

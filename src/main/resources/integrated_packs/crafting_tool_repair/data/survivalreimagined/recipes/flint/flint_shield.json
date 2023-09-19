@@ -1,0 +1,10 @@
+{
+    "type": "survivalreimagined:repair_item",
+    "item_to_repair": {
+        "item": "survivalreimagined:flint_shield"
+    },
+    "material": {
+        "item": "minecraft:flint"
+    },
+    "amount": 4
+}

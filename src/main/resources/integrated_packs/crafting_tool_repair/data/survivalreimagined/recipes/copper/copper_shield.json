@@ -1,0 +1,10 @@
+{
+    "type": "survivalreimagined:repair_item",
+    "item_to_repair": {
+        "item": "shieldsplus:copper_shield"
+    },
+    "material": {
+        "item": "minecraft:copper_ingot"
+    },
+    "amount": 4
+}

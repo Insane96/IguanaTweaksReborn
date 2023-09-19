@@ -1,0 +1,10 @@
+{
+    "type": "survivalreimagined:repair_item",
+    "item_to_repair": {
+        "item": "minecraft:chainmail_leggings"
+    },
+    "material": {
+        "item": "minecraft:chain"
+    },
+    "amount": 5
+}

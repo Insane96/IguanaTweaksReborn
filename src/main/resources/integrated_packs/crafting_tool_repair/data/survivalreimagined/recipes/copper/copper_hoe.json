@@ -1,0 +1,10 @@
+{
+    "type": "survivalreimagined:repair_item",
+    "item_to_repair": {
+        "item": "survivalreimagined:copper_hoe"
+    },
+    "material": {
+        "item": "minecraft:copper_ingot"
+    },
+    "amount": 2
+}
