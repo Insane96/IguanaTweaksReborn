@@ -15,16 +15,19 @@ import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
-import insane96mcp.survivalreimagined.module.misc.DataPacks;
+import insane96mcp.survivalreimagined.module.items.copper.CopperToolsExpansion;
+import insane96mcp.survivalreimagined.module.items.flintexpansion.FlintExpansion;
+import insane96mcp.survivalreimagined.module.items.solarium.Solarium;
+import insane96mcp.survivalreimagined.module.mining.Durium;
+import insane96mcp.survivalreimagined.module.mining.SoulSteel;
+import insane96mcp.survivalreimagined.module.mining.keego.Keego;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
-import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -59,6 +62,7 @@ public class ItemStats extends SRFeature {
 	public static final String BROKEN_DURABILITY_LANG = "survivalreimagined.broken_durability";
 	public static final TagKey<Item> NO_DAMAGE = SRItemTagsProvider.create("no_damage");
 	public static final TagKey<Item> NO_EFFICIENCY = SRItemTagsProvider.create("no_efficiency");
+	public static final TagKey<Item> NOT_UNBREAKABLE = SRItemTagsProvider.create("not_unbreakable");
 
 	public static final RegistryObject<RecipeType<RepairItemRecipe>> REPAIR_ITEM_RECIPE_TYPE = SRRegistries.RECIPE_TYPES.register("repair_item", () -> new RecipeType<>() {
 		@Override
@@ -144,6 +148,7 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 278),
 			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 241),
 
+			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:wooden_shield", 32),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_shield", 82),
 			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", 95),
 			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:copper_coated_shield", 230),
@@ -175,24 +180,20 @@ public class ItemStats extends SRFeature {
     public static final String NO_DAMAGE_ITEM_LANG = "survivalreimagined.no_damage_item";
 
     @Config
-	@Label(name = "Override shield blocking damage", description = "If true copper shield will block 4 damage and Golden shields will block 100 damage. Requires a restart.")
+	@Label(name = "Override shield blocking damage", description = "If true, shield blocked damage is changed (mostly lowered).")
 	public static Boolean overrideShieldBlockDamage = true;
 
 	@Config
 	@Label(name = "More Items Tooltips", description = "If set to true items in the 'no_damage_items' and 'no_efficiency_items' will get a tooltip. Items with durability get a durability tooltip. Tools get an efficiency tooltip.")
 	public static Boolean moreItemsTooltips = true;
 	@Config
-	@Label(name = "Unbreakable Items", description = "If set to true items will no longer break, will be left with 1 durability")
+	@Label(name = "Unbreakable Items", description = "If set to true items will no longer break, will be left with 1 durability. Items in the survivalreimagined:not_unbreakable tag will break instead.")
 	public static Boolean unbreakableItems = true;
-	@Config
-	@Label(name = "Crafting Repairable Items", description = "A data pack is enabled that makes non-metal tools repairable in the crafting table")
-	public static Boolean craftingRepairableItems = true;
 
 	public ItemStats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadDurabilities, true, JsonConfigSyncMessage.ConfigType.DURABILITY));
 		JSON_CONFIGS.add(new JsonConfig<>("tool_efficiencies.json", toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadToolEfficiencies, true, JsonConfigSyncMessage.ConfigType.EFFICIENCIES));
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "crafting_tool_repair", Component.literal("Survival Reimagined Crafting Tool Repair"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && craftingRepairableItems));
 	}
 
 	@Override
@@ -268,6 +269,20 @@ public class ItemStats extends SRFeature {
 	}
 
 	@SubscribeEvent
+	public void processAttackDamage(LivingHurtEvent event) {
+		if (!this.isEnabled()
+				|| !unbreakableItems
+				|| !(event.getSource().getDirectEntity() instanceof Player player))
+			return;
+
+		ItemStack stack = player.getMainHandItem();
+		if (Utils.isItemInTag(stack.getItem(), NO_DAMAGE)) {
+			event.setAmount(1f);
+			player.displayClientMessage(Component.translatable(NO_DAMAGE_ITEM_LANG), true);
+		}
+	}
+
+	@SubscribeEvent
 	public void processEfficiencyMultipliers(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled())
 			return;
@@ -280,7 +295,7 @@ public class ItemStats extends SRFeature {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(NO_EFFICIENCY_ITEM_LANG), true);
 		}
-		else if (unbreakableItems && event.getState().destroySpeed > 0f){
+		else if (unbreakableItems && event.getState().destroySpeed > 0f && !Utils.isItemInTag(stack.getItem(), NOT_UNBREAKABLE)){
 			if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
 				event.setCanceled(true);
 				event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
@@ -297,7 +312,7 @@ public class ItemStats extends SRFeature {
 		ItemStack stack = event.getItemStack();
 		if (stack.getMaxDamage() == 0)
 			return;
-		if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
+		if (stack.getDamageValue() >= stack.getMaxDamage() - 1 && !Utils.isItemInTag(stack.getItem(), NOT_UNBREAKABLE)) {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
 		}
@@ -312,7 +327,7 @@ public class ItemStats extends SRFeature {
 		ItemStack stack = event.getItemStack();
 		if (stack.getMaxDamage() == 0)
 			return;
-		if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
+		if (stack.getDamageValue() >= stack.getMaxDamage() - 1 && !Utils.isItemInTag(stack.getItem(), NOT_UNBREAKABLE)) {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
 		}
@@ -327,23 +342,9 @@ public class ItemStats extends SRFeature {
 		ItemStack stack = event.getItemStack();
 		if (stack.getMaxDamage() == 0)
 			return;
-		if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
+		if (stack.getDamageValue() >= stack.getMaxDamage() - 1 && !Utils.isItemInTag(stack.getItem(), NOT_UNBREAKABLE)) {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
-		}
-	}
-
-	@SubscribeEvent
-	public void processAttackDamage(LivingHurtEvent event) {
-		if (!this.isEnabled()
-				|| !unbreakableItems
-				|| !(event.getSource().getDirectEntity() instanceof Player player))
-			return;
-
-		ItemStack stack = player.getMainHandItem();
-		if (Utils.isItemInTag(stack.getItem(), NO_DAMAGE)) {
-			event.setAmount(1f);
-			player.displayClientMessage(Component.translatable(NO_DAMAGE_ITEM_LANG), true);
 		}
 	}
 
@@ -357,14 +358,14 @@ public class ItemStats extends SRFeature {
 		ItemStack stack = player.getMainHandItem();
 		if (stack.getMaxDamage() == 0)
 			return;
-		if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
+		if (stack.getDamageValue() >= stack.getMaxDamage() - 1 && !Utils.isItemInTag(stack.getItem(), NOT_UNBREAKABLE)) {
 			event.setCanceled(true);
 			player.displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
 		}
 	}
 
 	@SubscribeEvent
-	public void processArmorDamaging(HurtItemStackEvent event) {
+	public void processItemDamaging(HurtItemStackEvent event) {
 		if (!this.isEnabled()
 				|| !unbreakableItems
 				|| event.getPlayer() == null)
@@ -372,7 +373,8 @@ public class ItemStats extends SRFeature {
 
 		ItemStack stack = event.getStack();
         if (event.getAmount() >= stack.getMaxDamage() - stack.getDamageValue() && stack.getItem() instanceof Equipable) {
-            event.setAmount(stack.getMaxDamage() - stack.getDamageValue() - 1);
+			event.getStack().setDamageValue(event.getStack().getMaxDamage() - 1);
+            event.setAmount(0);
             event.getPlayer().getArmorSlots().forEach(itemStack -> {
                 if (itemStack == stack) {
                     EquipmentSlot equipmentSlot = Player.getEquipmentSlotForItem(stack);
@@ -383,7 +385,7 @@ public class ItemStats extends SRFeature {
                 }
             });
         }
-		else if (stack.getDamageValue() + event.getAmount() >= stack.getMaxDamage() - 1) {
+		else if (stack.getDamageValue() + event.getAmount() >= stack.getMaxDamage() - 1 && !Utils.isItemInTag(stack.getItem(), NOT_UNBREAKABLE)) {
 			event.setAmount(stack.getMaxDamage() - stack.getDamageValue() - 1);
 			EquipmentSlot equipmentSlot = Player.getEquipmentSlotForItem(stack);
 			event.getPlayer().broadcastBreakEvent(equipmentSlot);
@@ -415,7 +417,7 @@ public class ItemStats extends SRFeature {
 		if (event.getItemStack().isDamageableItem()) {
 			int durabilityLeft = event.getItemStack().getMaxDamage() - event.getItemStack().getDamageValue();
 			MutableComponent component;
-            if (durabilityLeft <= 1 && unbreakableItems)
+            if (durabilityLeft <= 1 && unbreakableItems && !Utils.isItemInTag(event.getItemStack().getItem(), NOT_UNBREAKABLE))
                 component = Component.translatable(BROKEN_DURABILITY_LANG).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD);
             else
                 component = Component.translatable(TOOL_DURABILITY_LANG, durabilityLeft, event.getItemStack().getMaxDamage()).withStyle(ChatFormatting.GRAY);

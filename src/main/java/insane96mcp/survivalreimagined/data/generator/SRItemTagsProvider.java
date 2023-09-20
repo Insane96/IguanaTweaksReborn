@@ -32,6 +32,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 
 public class SRItemTagsProvider extends ItemTagsProvider {
+
+    public static final TagKey<Item> WOODEN_HAND_EQUIPMENT = SRItemTagsProvider.create("equipment/hand/wooden");
+    public static final TagKey<Item> STONE_HAND_EQUIPMENT = SRItemTagsProvider.create("equipment/hand/stone");
+    public static final TagKey<Item> FLINT_HAND_EQUIPMENT = SRItemTagsProvider.create("equipment/hand/flint");
+    public static final TagKey<Item> COPPER_HAND_EQUIPMENT = SRItemTagsProvider.create("equipment/hand/copper");
+    public static final TagKey<Item> CHAINED_COPPER_ARMOR = SRItemTagsProvider.create("equipment/armor/chained_copper");
+
     public SRItemTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture, CompletableFuture<TagLookup<Block>> tagLookupCompletableFuture, String modId, @Nullable ExistingFileHelper existingFileHelper) {
         super(packOutput, completableFuture, tagLookupCompletableFuture, modId, existingFileHelper);
     }
@@ -56,6 +63,8 @@ public class SRItemTagsProvider extends ItemTagsProvider {
 
         tag(ItemStats.NO_DAMAGE);
         tag(ItemStats.NO_EFFICIENCY);
+        //noinspection unchecked
+        tag(ItemStats.NOT_UNBREAKABLE).addTags(WOODEN_HAND_EQUIPMENT, STONE_HAND_EQUIPMENT, FLINT_HAND_EQUIPMENT, COPPER_HAND_EQUIPMENT, CHAINED_COPPER_ARMOR);
         tag(Knockback.REDUCED_KNOCKBACK);
 
         tag(Spawners.SPAWNER_REACTIVATOR_TAG)
