@@ -199,9 +199,19 @@ public class ItemStats extends SRFeature {
 	public void readConfig(ModConfigEvent event) {
 		super.readConfig(event);
 		if (overrideShieldBlockDamage) {
-			SPItems.COPPER_SHIELD.get().blockingDamageOverride = 4d;
+			SPItems.WOODEN_SHIELD.get().blockingDamageOverride = 1d;
+			SPItems.STONE_SHIELD.get().blockingDamageOverride = 1.5d;
+			FlintExpansion.SHIELD.get().blockingDamageOverride = 2d;
+			SPItems.COPPER_SHIELD.get().blockingDamageOverride = 2.5d;
 			SPItems.GOLDEN_SHIELD.get().blockingDamageOverride = 3d;
-			SPItems.DIAMOND_SHIELD.get().blockingDamageOverride = 6.5d;
+			//TODO can't override iron shield blocking dmg
+			Solarium.SHIELD.get().blockingDamageOverride = 3.5d;
+			Durium.SHIELD.get().blockingDamageOverride = 3.5d;
+			CopperToolsExpansion.COATED_SHIELD.get().blockingDamageOverride = 3.5d;
+			Keego.SHIELD.get().blockingDamageOverride = 5d;
+			SPItems.DIAMOND_SHIELD.get().blockingDamageOverride = 5d;
+			SoulSteel.SHIELD.get().blockingDamageOverride = 5.5d;
+			SPItems.NETHERITE_SHIELD.get().blockingDamageOverride = 6.5d;
 		}
 	}
 
