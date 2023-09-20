@@ -66,8 +66,9 @@ public class RepairItemRecipe extends CustomRecipe {
             }
         }
         result = new ItemStack(stackToRepair.getItem());
-        result.setHoverName(stackToRepair.getHoverName());
-        int maxRepair = (int) (stackToRepair.getMaxDamage() * this.maxRepair);
+        if (stackToRepair.hasCustomHoverName())
+            result.setHoverName(stackToRepair.getHoverName());
+        //int maxRepair = (int) (stackToRepair.getMaxDamage() * this.maxRepair);
         result.setDamageValue((int) (stackToRepair.getDamageValue() - ((float) stackToRepair.getMaxDamage() / this.amount * amount)));
         return result;
     }
