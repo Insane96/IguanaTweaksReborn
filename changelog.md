@@ -1,5 +1,7 @@
 # Changelog
 
+* Nerf shields parrying damage
+
 ## 0.15.0
 * Added Better Beacon
   * A new beacon with more effects, more amplifiers but with a time cost
@@ -23,7 +25,9 @@
 * Gold Tools and Sword now have +1.5 damage (similar to flint tools)
 * Copper tools now last ~~3%~~ -> 4% more per block below sea level (~~+200%~~ -> +350% at y=0 and ~~+350%~~ -> +600% at y=-56)
 * Chainmail armor now gives toughness (or regenerating absorption speed) but has reduced durability
+* Smartness can now be applied to tools too
 * Leather armor has increased durability
+* Slightly adjusted food eating speed
 * Changed one stone layer from the altimeter to water
 * Fix missing recipe for bundle with rabbit hide
 * Mobs now drop 25% more experience
