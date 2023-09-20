@@ -1,8 +1,5 @@
 # Changelog
 
-* Fix missing recipe for bundle with rabbit hide
-* Fix trident with less prismarine crystals
-
 ## 0.15.0
 * Added Better Beacon
   * A new beacon with more effects, more amplifiers but with a time cost
@@ -28,8 +25,10 @@
 * Chainmail armor now gives toughness (or regenerating absorption speed) but has reduced durability
 * Leather armor has increased durability
 * Changed one stone layer from the altimeter to water
+* Fix missing recipe for bundle with rabbit hide
 * Mobs now drop 25% more experience
 * Melee protection now increases attack speed by 2% per level
+* Tridents can now be repaired with Prismarine Crystals
 * Removed sharpness
 * Forge Hammers can no longer be used as weapons
 * If you have a tool in your hand while in creative you now break blocks faster

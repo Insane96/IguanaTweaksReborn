@@ -7,6 +7,12 @@
 			"repair_material": {
 				"id": "minecraft:prismarine_shard"
 			},
+			"amount": 18
+		},
+		{
+			"repair_material": {
+				"id": "minecraft:prismarine_crystal"
+			},
 			"amount": 9
 		}
 	]
