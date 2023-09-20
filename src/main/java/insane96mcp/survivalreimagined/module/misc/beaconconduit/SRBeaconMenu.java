@@ -1,6 +1,5 @@
 package insane96mcp.survivalreimagined.module.misc.beaconconduit;
 
-import insane96mcp.survivalreimagined.module.experience.enchanting.EnsorcellerBlockEntity;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -28,7 +27,7 @@ public class SRBeaconMenu extends AbstractContainerMenu {
     private final ContainerData beaconData;
 
     public SRBeaconMenu(int pContainerId, Inventory pPlayerInventory) {
-        this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(EnsorcellerBlockEntity.DATA_COUNT));
+        this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(SRBeaconBlockEntity.DATA_COUNT));
     }
 
     public SRBeaconMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData containerData) {
