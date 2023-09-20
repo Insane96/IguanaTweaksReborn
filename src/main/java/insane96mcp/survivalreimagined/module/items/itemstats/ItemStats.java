@@ -212,7 +212,7 @@ public class ItemStats extends SRFeature {
 			Keego.SHIELD.get().blockingDamageOverride = 5d;
 			SPItems.DIAMOND_SHIELD.get().blockingDamageOverride = 5d;
 			SoulSteel.SHIELD.get().blockingDamageOverride = 5.5d;
-			SPItems.NETHERITE_SHIELD.get().blockingDamageOverride = 6.5d;
+			SPItems.NETHERITE_SHIELD.get().blockingDamageOverride = 6d;
 		}
 	}
 
