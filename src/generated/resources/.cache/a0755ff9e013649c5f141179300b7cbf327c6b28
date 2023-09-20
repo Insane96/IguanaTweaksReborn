@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-20T17:41:59.1638335	Tags for minecraft:item mod id survivalreimagined
+// 1.20.1	2023-09-20T17:59:57.6993177	Tags for minecraft:item mod id survivalreimagined
 7d38d2cbef15f48156091dd486940520fa137586 data/minecraft/tags/items/arrows.json
 81f4ea11d3f0f343ccdd47750254e74e30cf718a data/minecraft/tags/items/axes.json
 76b4edfcd67f0c49b43e1af406c69a2412c47322 data/minecraft/tags/items/hoes.json
@@ -9,7 +9,7 @@ d8ea3a4f7d2694bc7a72a568219edddebb0add5f data/minecraft/tags/items/shovels.json
 b1eaa8c6251363a43fec48d3a61979cccb61a40a data/survivalreimagined/tags/items/energy_boost.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/food_drinks_no_hunger_changes.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/nerfed_bone_meal_blacklist.json
-d0529f8362afdf3fae5a21cced27e6c58d766651 data/survivalreimagined/tags/items/not_unbreakable.json
+f0f4d3e5acc293eb22acceeb8b019514978ef0d4 data/survivalreimagined/tags/items/not_unbreakable.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/no_damage.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/no_efficiency.json
 7ed3116413a687ab0b86d1c195045bc055148639 data/survivalreimagined/tags/items/no_stack_size_changes.json

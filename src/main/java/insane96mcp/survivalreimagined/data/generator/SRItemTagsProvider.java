@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.data.generator;
 
+import insane96mcp.shieldsplus.setup.SPItems;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.combat.Knockback;
 import insane96mcp.survivalreimagined.module.combat.fletching.Fletching;
@@ -64,7 +65,9 @@ public class SRItemTagsProvider extends ItemTagsProvider {
         tag(ItemStats.NO_DAMAGE);
         tag(ItemStats.NO_EFFICIENCY);
         //noinspection unchecked
-        tag(ItemStats.NOT_UNBREAKABLE).addTags(WOODEN_HAND_EQUIPMENT, STONE_HAND_EQUIPMENT, FLINT_HAND_EQUIPMENT, COPPER_HAND_EQUIPMENT, CHAINED_COPPER_ARMOR);
+        tag(ItemStats.NOT_UNBREAKABLE)
+                .addTags(WOODEN_HAND_EQUIPMENT, STONE_HAND_EQUIPMENT, FLINT_HAND_EQUIPMENT, COPPER_HAND_EQUIPMENT, CHAINED_COPPER_ARMOR)
+                .add(SPItems.COPPER_SHIELD.get(), SPItems.WOODEN_SHIELD.get(), SPItems.STONE_SHIELD.get(), FlintExpansion.SHIELD.get());
         tag(Knockback.REDUCED_KNOCKBACK);
 
         tag(Spawners.SPAWNER_REACTIVATOR_TAG)
