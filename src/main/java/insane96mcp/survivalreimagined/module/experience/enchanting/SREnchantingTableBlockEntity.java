@@ -14,56 +14,16 @@ import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+public class SREnchantingTableBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
+    protected NonNullList<ItemStack> items = NonNullList.withSize(SREnchantingTableMenu.SLOT_COUNT, ItemStack.EMPTY);
 
-public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
-    public static final int DATA_COUNT = 4;
-    public static final int DATA_STEPS = 0;
-    public static final int DATA_LEVELS_USED = 1;
-    public static final int DATA_CAN_ENCHANT = 2;
-    public static final int DATA_ENCHANTING_SEED = 3;
-    protected NonNullList<ItemStack> items = NonNullList.withSize(EnsorcellerMenu.SLOT_COUNT, ItemStack.EMPTY);
-    public int steps;
-    public int levelsUsed;
-    public boolean canEnchant;
-    public int enchantingSeed;
-
-    protected final ContainerData dataAccess = new ContainerData() {
-        public int get(int dataId) {
-            return switch (dataId) {
-                case DATA_STEPS -> EnsorcellerBlockEntity.this.steps;
-                case DATA_LEVELS_USED -> EnsorcellerBlockEntity.this.levelsUsed;
-                case DATA_CAN_ENCHANT -> EnsorcellerBlockEntity.this.canEnchant ? 1 : 0;
-                case DATA_ENCHANTING_SEED -> EnsorcellerBlockEntity.this.enchantingSeed;
-                default -> 0;
-            };
-        }
-
-        public void set(int dataId, int data) {
-            switch (dataId) {
-                case DATA_STEPS -> EnsorcellerBlockEntity.this.steps = data;
-                case DATA_LEVELS_USED -> EnsorcellerBlockEntity.this.levelsUsed = data;
-                case DATA_CAN_ENCHANT -> EnsorcellerBlockEntity.this.canEnchant = data == 1;
-                case DATA_ENCHANTING_SEED -> EnsorcellerBlockEntity.this.enchantingSeed = data;
-            }
-
-        }
-
-        public int getCount() {
-            return DATA_COUNT;
-        }
-    };
-
-    protected EnsorcellerBlockEntity(BlockPos pPos, BlockState pBlockState) {
+    protected SREnchantingTableBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(EnchantingFeature.ENSORCELLER_BLOCK_ENTITY_TYPE.get(), pPos, pBlockState);
     }
 
@@ -71,18 +31,10 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
         super.load(pTag);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(pTag, this.items);
-        this.steps = pTag.getInt("Steps");
-        this.levelsUsed = pTag.getInt("LevelsUsed");
-        this.canEnchant = pTag.getBoolean("CanEnchant");
-        this.enchantingSeed = pTag.getInt("EnchantingSeed");
     }
 
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
-        pTag.putInt("Steps", this.steps);
-        pTag.putInt("LevelsUsed", this.levelsUsed);
-        pTag.putBoolean("CanEnchant", this.canEnchant);
-        pTag.putInt("EnchantingSeed", this.enchantingSeed);
         ContainerHelper.saveAllItems(pTag, this.items);
     }
 
@@ -113,7 +65,7 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
 
     @Override
     protected AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory) {
-        return new EnsorcellerMenu(pContainerId, pInventory, this, this.dataAccess, ContainerLevelAccess.create(this.level, this.worldPosition));
+        return new SREnchantingTableMenu(pContainerId, pInventory, this, ContainerLevelAccess.create(this.level, this.worldPosition));
     }
 
     @Override
@@ -150,9 +102,6 @@ public class EnsorcellerBlockEntity extends BaseContainerBlockEntity implements 
     @Override
     public void setItem(int slot, ItemStack stack) {
         this.items.set(slot, stack);
-        ItemStack itemInSlot = this.items.get(slot);
-        List<EnchantmentInstance> enchantments = EnsorcellerMenu.getEnchantmentList(this.level.random, this.enchantingSeed, itemInSlot, this.steps == EnsorcellerMenu.MAX_STEPS ? EnsorcellerMenu.LVL_ON_JACKPOT : this.steps);
-        this.canEnchant = !itemInSlot.isEmpty() && itemInSlot.isEnchantable() && !itemInSlot.is(Items.BOOK) && this.steps > 0 && !enchantments.isEmpty();
         if (this.level instanceof ServerLevel serverLevel)
             SyncEnsorcellerStatus.sync(serverLevel, this.getBlockPos(), this);
         this.setChanged();

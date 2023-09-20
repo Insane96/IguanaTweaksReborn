@@ -7,8 +7,8 @@ import insane96mcp.survivalreimagined.module.combat.fletching.client.FletchingSc
 import insane96mcp.survivalreimagined.module.combat.fletching.client.SRArrowRenderer;
 import insane96mcp.survivalreimagined.module.experience.Lapis;
 import insane96mcp.survivalreimagined.module.experience.enchanting.EnchantingFeature;
-import insane96mcp.survivalreimagined.module.experience.enchanting.EnsorcellerRenderer;
-import insane96mcp.survivalreimagined.module.experience.enchanting.EnsorcellerScreen;
+import insane96mcp.survivalreimagined.module.experience.enchanting.SREnchantingTableRenderer;
+import insane96mcp.survivalreimagined.module.experience.enchanting.SREnchantingTableScreen;
 import insane96mcp.survivalreimagined.module.farming.bonemeal.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.crops.Crops;
 import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
@@ -254,7 +254,7 @@ public class ClientSetup {
         MenuScreens.register(MultiBlockFurnaces.BLAST_FURNACE_MENU_TYPE.get(), MultiBlockBlastFurnaceScreen::new);
         MenuScreens.register(MultiBlockFurnaces.SOUL_BLAST_FURNACE_MENU_TYPE.get(), MultiBlockSoulBlastFurnaceScreen::new);
         MenuScreens.register(Forging.FORGE_MENU_TYPE.get(), ForgeScreen::new);
-        MenuScreens.register(EnchantingFeature.ENSORCELLER_MENU_TYPE.get(), EnsorcellerScreen::new);
+        MenuScreens.register(EnchantingFeature.ENCHANTING_TABLE_MENU_TYPE.get(), SREnchantingTableScreen::new);
         MenuScreens.register(Fletching.FLETCHING_MENU_TYPE.get(), FletchingScreen::new);
         MenuScreens.register(BeaconConduit.BEACON_MENU_TYPE.get(), SRBeaconScreen::new);
     }
@@ -268,7 +268,7 @@ public class ClientSetup {
         event.registerEntityRenderer(MiningCharge.PRIMED_MINING_CHARGE.get(), MiningChargeRenderer::new);
 
         event.registerBlockEntityRenderer(Forging.FORGE_BLOCK_ENTITY_TYPE.get(), ForgeRenderer::new);
-        event.registerBlockEntityRenderer(EnchantingFeature.ENSORCELLER_BLOCK_ENTITY_TYPE.get(), EnsorcellerRenderer::new);
+        event.registerBlockEntityRenderer(EnchantingFeature.ENSORCELLER_BLOCK_ENTITY_TYPE.get(), SREnchantingTableRenderer::new);
 
         event.registerBlockEntityRenderer(BeaconConduit.BEACON_BLOCK_ENTITY_TYPE.get(), SRBeaconRenderer::new);
     }

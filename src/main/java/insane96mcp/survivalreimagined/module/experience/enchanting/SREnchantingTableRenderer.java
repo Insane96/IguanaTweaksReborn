@@ -14,19 +14,19 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
-public class EnsorcellerRenderer implements BlockEntityRenderer<EnsorcellerBlockEntity> {
+public class SREnchantingTableRenderer implements BlockEntityRenderer<SREnchantingTableBlockEntity> {
     private final ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
-    public EnsorcellerRenderer(BlockEntityRendererProvider.Context pContext) {
+    public SREnchantingTableRenderer(BlockEntityRendererProvider.Context pContext) {
 
     }
 
     @Override
-    public void render(EnsorcellerBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        this.renderHoveringItem(blockEntity, ((Container) blockEntity).getItem(EnsorcellerMenu.ITEM_SLOT), partialTicks, poseStack, bufferSource, packedLight);
+    public void render(SREnchantingTableBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+        this.renderHoveringItem(blockEntity, ((Container) blockEntity).getItem(SREnchantingTableMenu.ITEM_SLOT), partialTicks, poseStack, bufferSource, packedLight);
     }
 
-    private void renderHoveringItem(EnsorcellerBlockEntity blockEntity, ItemStack itemToEnchant, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn) {
+    private void renderHoveringItem(SREnchantingTableBlockEntity blockEntity, ItemStack itemToEnchant, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn) {
         poseStack.pushPose();
         poseStack.translate(0.5F, 1.0F, 0.5F);
         BakedModel model = Minecraft.getInstance().getItemRenderer().getModel(itemToEnchant, blockEntity.getLevel(), null, 0);

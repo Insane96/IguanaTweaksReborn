@@ -12,6 +12,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
@@ -53,7 +54,8 @@ public class BlockExperience extends SRFeature {
 		JSON_CONFIGS.add(new JsonConfig<>("blocks_experience.json", customBlocksExperience, CUSTOM_BLOCKS_EXPERIENCE_DEFAULT, IdTagRange.LIST_TYPE));
 	}
 
-	@SubscribeEvent
+	//Run before smartness
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onBlockXPDrop(BlockEvent.BreakEvent event) {
 		if (!this.isEnabled()
 				|| event.getState().is(NO_BLOCK_XP_MULTIPLIER))

@@ -2,11 +2,9 @@ package insane96mcp.survivalreimagined.module.experience.enchanting;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,23 +24,22 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 
 import java.util.List;
 
-public class EnsorcellerBlock extends BaseEntityBlock {
+public class SREnchantingTable extends BaseEntityBlock {
 
     public static final String CANNOT_MERGE_TAG = SurvivalReimagined.RESOURCE_PREFIX + "cannot_merge";
     public static final String CANNOT_BE_MERGED_LANG = SurvivalReimagined.MOD_ID + ".cannot_be_merged";
     protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
-    protected EnsorcellerBlock(Properties pProperties) {
+    protected SREnchantingTable(Properties pProperties) {
         super(pProperties);
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new EnsorcellerBlockEntity(pPos, pState);
+        return new SREnchantingTableBlockEntity(pPos, pState);
     }
 
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
@@ -55,7 +52,7 @@ public class EnsorcellerBlock extends BaseEntityBlock {
 
     protected void openContainer(Level pLevel, BlockPos pPos, Player pPlayer) {
         BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-        if (blockentity instanceof EnsorcellerBlockEntity) {
+        if (blockentity instanceof SREnchantingTableBlockEntity) {
             pPlayer.openMenu((MenuProvider)blockentity);
         }
     }
@@ -63,9 +60,9 @@ public class EnsorcellerBlock extends BaseEntityBlock {
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (!pState.is(pNewState.getBlock())) {
             BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-            if (blockentity instanceof EnsorcellerBlockEntity ensorcellerBlockEntity) {
+            if (blockentity instanceof SREnchantingTableBlockEntity SREnchantingTableBlockEntity) {
                 if (pLevel instanceof ServerLevel) {
-                    Containers.dropContents(pLevel, pPos, ensorcellerBlockEntity);
+                    Containers.dropContents(pLevel, pPos, SREnchantingTableBlockEntity);
                 }
 
                 pLevel.updateNeighbourForOutputSignal(pPos, this);
@@ -79,14 +76,14 @@ public class EnsorcellerBlock extends BaseEntityBlock {
     @Override
     public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         BlockEntity blockentity = level.getBlockEntity(pos);
-        if (blockentity instanceof EnsorcellerBlockEntity ensorcellerBlockEntity) {
+        if (blockentity instanceof SREnchantingTableBlockEntity SREnchantingTableBlockEntity) {
             if (!level.isClientSide) {
                 ItemStack itemstack = new ItemStack(this.asItem());
                 //Clear items before dropping otherwise the item will stay in the dropped ensorceller
-                ensorcellerBlockEntity.items.clear();
-                ensorcellerBlockEntity.saveToItem(itemstack);
-                if (ensorcellerBlockEntity.hasCustomName()) {
-                    itemstack.setHoverName(ensorcellerBlockEntity.getCustomName());
+                SREnchantingTableBlockEntity.items.clear();
+                SREnchantingTableBlockEntity.saveToItem(itemstack);
+                if (SREnchantingTableBlockEntity.hasCustomName()) {
+                    itemstack.setHoverName(SREnchantingTableBlockEntity.getCustomName());
                 }
 
                 ItemEntity itementity = new ItemEntity(level, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, itemstack);
@@ -103,8 +100,8 @@ public class EnsorcellerBlock extends BaseEntityBlock {
     public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, LivingEntity pPlacer, ItemStack pStack) {
         if (pStack.hasCustomHoverName()) {
             BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-            if (blockentity instanceof EnsorcellerBlockEntity) {
-                ((EnsorcellerBlockEntity)blockentity).setCustomName(pStack.getHoverName());
+            if (blockentity instanceof SREnchantingTableBlockEntity) {
+                ((SREnchantingTableBlockEntity)blockentity).setCustomName(pStack.getHoverName());
             }
         }
 
@@ -112,20 +109,6 @@ public class EnsorcellerBlock extends BaseEntityBlock {
 
     public boolean isPathfindable(BlockState pState, BlockGetter pLevel, BlockPos pPos, PathComputationType pType) {
         return false;
-    }
-
-    /**
-     * Called periodically clientside on blocks near the player to show effects (like furnace fire particles).
-     */
-    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
-        super.animateTick(pState, pLevel, pPos, pRandom);
-
-        int rollCost = EnsorcellerMenu.calculateRollCost(pLevel, pPos);
-        if (rollCost <= 0)
-            return;
-        int invRollCost = 4 - rollCost;
-        for (int i = 0; i < invRollCost; i++)
-            pLevel.addParticle(new DustParticleOptions(new Vector3f(0.9882352941f, 0.8980392157f, 0.4392156863f), 5f), pPos.getX() + 0.5f + pRandom.nextFloat() * (2.5f + invRollCost) - ((2.5f + invRollCost) / 2f), pPos.getY() + pRandom.nextFloat() * (4f + invRollCost), pPos.getZ() + 0.5f + pRandom.nextFloat() * (2.5f + invRollCost) - ((2.5f + invRollCost) / 2f), 0, 0, 0);
     }
 
     @Override

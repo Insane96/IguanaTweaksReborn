@@ -73,14 +73,14 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(Death.GRAVE.block().get())
                 .add(MultiBlockFurnaces.BLAST_FURNACE.block().get(), MultiBlockFurnaces.SOUL_BLAST_FURNACE.block().get())
                 .add(Forging.FORGE.block().get())
-                .add(EnchantingFeature.ENSORCELLER.block().get())
+                .add(EnchantingFeature.ENCHANTING_TABLE.block().get())
                 .add(BeaconConduit.BEACON.block().get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(Crate.BLOCK.get())
                 .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get())
                 .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get())
-                .add(EnchantingFeature.ENSORCELLER.block().get());
+                .add(EnchantingFeature.ENCHANTING_TABLE.block().get());
 
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(Blocks.COAL_ORE, Blocks.DEEPSLATE_COAL_ORE)

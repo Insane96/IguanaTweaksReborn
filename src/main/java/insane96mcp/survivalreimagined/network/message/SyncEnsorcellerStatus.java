@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.network.message;
 
-import insane96mcp.survivalreimagined.module.experience.enchanting.EnsorcellerBlockEntity;
+import insane96mcp.survivalreimagined.module.experience.enchanting.SREnchantingTableBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -33,7 +33,7 @@ public class SyncEnsorcellerStatus {
 
 	public static void handle(final SyncEnsorcellerStatus message, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-			if (!(Minecraft.getInstance().level.getBlockEntity(message.pos) instanceof EnsorcellerBlockEntity blockEntity))
+			if (!(Minecraft.getInstance().level.getBlockEntity(message.pos) instanceof SREnchantingTableBlockEntity blockEntity))
 				return;
 
 			blockEntity.setItem(0, message.item);
@@ -41,7 +41,7 @@ public class SyncEnsorcellerStatus {
 		ctx.get().setPacketHandled(true);
 	}
 
-	public static void sync(ServerLevel level, BlockPos pos, EnsorcellerBlockEntity blockEntity) {
+	public static void sync(ServerLevel level, BlockPos pos, SREnchantingTableBlockEntity blockEntity) {
 		Object msg = new SyncEnsorcellerStatus(pos, blockEntity.getItem(0));
 		level.players().forEach(player -> CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT));
 	}

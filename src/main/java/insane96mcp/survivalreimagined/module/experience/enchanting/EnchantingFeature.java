@@ -31,9 +31,9 @@ public class EnchantingFeature extends Feature {
 	@Label(name = "Ensorceller.No Merge", description = "Items enchanted in an ensorceller cannot be merged")
 	public static Boolean ensorcellerNoMerge = true;
 
-	public static final SimpleBlockWithItem ENSORCELLER = SimpleBlockWithItem.register("ensorceller", () -> new EnsorcellerBlock(BlockBehaviour.Properties.copy(Blocks.ENCHANTING_TABLE).strength(3.5f)));
-	public static final RegistryObject<BlockEntityType<EnsorcellerBlockEntity>> ENSORCELLER_BLOCK_ENTITY_TYPE = SRRegistries.BLOCK_ENTITY_TYPES.register("ensorceller", () -> BlockEntityType.Builder.of(EnsorcellerBlockEntity::new, ENSORCELLER.block().get()).build(null));
-	public static final RegistryObject<MenuType<EnsorcellerMenu>> ENSORCELLER_MENU_TYPE = SRRegistries.MENU_TYPES.register("ensorceller", () -> new MenuType<>(EnsorcellerMenu::new, FeatureFlags.VANILLA_SET));
+	public static final SimpleBlockWithItem ENCHANTING_TABLE = SimpleBlockWithItem.register("enchanting_table", () -> new SREnchantingTable(BlockBehaviour.Properties.copy(Blocks.ENCHANTING_TABLE).strength(3.5f)));
+	public static final RegistryObject<BlockEntityType<SREnchantingTableBlockEntity>> ENSORCELLER_BLOCK_ENTITY_TYPE = SRRegistries.BLOCK_ENTITY_TYPES.register("enchanting_table", () -> BlockEntityType.Builder.of(SREnchantingTableBlockEntity::new, ENCHANTING_TABLE.block().get()).build(null));
+	public static final RegistryObject<MenuType<SREnchantingTableMenu>> ENCHANTING_TABLE_MENU_TYPE = SRRegistries.MENU_TYPES.register("enchanting_table", () -> new MenuType<>(SREnchantingTableMenu::new, FeatureFlags.VANILLA_SET));
 
 	public EnchantingFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -46,12 +46,12 @@ public class EnchantingFeature extends Feature {
 			return;
 
 		Minecraft mc = Minecraft.getInstance();
-		if (!(mc.screen instanceof AnvilScreen) && !(mc.screen instanceof EnsorcellerScreen))
+		if (!(mc.screen instanceof AnvilScreen) && !(mc.screen instanceof SREnchantingTableScreen))
 			return;
 
 		//noinspection DataFlowIssue
-		if (event.getItemStack().hasTag() && event.getItemStack().getTag().contains(EnsorcellerBlock.CANNOT_MERGE_TAG)) {
-			event.getToolTip().add(Component.translatable(EnsorcellerBlock.CANNOT_BE_MERGED_LANG).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD));
+		if (event.getItemStack().hasTag() && event.getItemStack().getTag().contains(SREnchantingTable.CANNOT_MERGE_TAG)) {
+			event.getToolTip().add(Component.translatable(SREnchantingTable.CANNOT_BE_MERGED_LANG).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD));
 		}
 	}
 }
