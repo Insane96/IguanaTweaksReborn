@@ -1,13 +1,17 @@
 package insane96mcp.survivalreimagined.module.experience.enchantments.enchantment;
 
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.LootBonusEnchantment;
 
 public class Smartness extends Enchantment {
+    static EnchantmentCategory WEAPON_AND_DIGGER = EnchantmentCategory.create("weapon_and_digger", item -> item instanceof SwordItem || item instanceof DiggerItem);
+
     public Smartness() {
-        super(Rarity.RARE, EnchantmentCategory.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(Rarity.RARE, WEAPON_AND_DIGGER, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
     public int getMinCost(int lvl) {
@@ -23,7 +27,7 @@ public class Smartness extends Enchantment {
     }
 
     public boolean checkCompatibility(Enchantment enchantment) {
-        return super.checkCompatibility(enchantment) && enchantment != Enchantments.MOB_LOOTING;
+        return super.checkCompatibility(enchantment) && !(enchantment instanceof LootBonusEnchantment);
     }
 
     public static int getIncreasedExperience(int lvl, int experience) {

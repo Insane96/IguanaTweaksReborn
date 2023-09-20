@@ -210,6 +210,15 @@ public class EnchantmentsFeature extends SRFeature {
 			event.setDroppedExperience(Smartness.getIncreasedExperience(lvl, event.getDroppedExperience()));
 	}
 
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onBlockExperienceDropped(BlockEvent.BreakEvent event) {
+		if (!this.isEnabled())
+			return;
+		int lvl = EnchantmentHelper.getEnchantmentLevel(SMARTNESS.get(), event.getPlayer());
+		if (lvl > 0)
+			event.setExpToDrop(Smartness.getIncreasedExperience(lvl, event.getExpToDrop()));
+	}
+
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onRenderLevel(RenderLevelStageEvent event) {
