@@ -6,9 +6,8 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.survivalreimagined.base.SRFeature;
-import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
@@ -34,19 +33,19 @@ public class StackSizes extends SRFeature {
     public static final TagKey<Item> NO_STACK_SIZE_CHANGES = SRItemTagsProvider.create("no_stack_size_changes");
 
     public static final List<IdTagValue> CUSTOM_STACK_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:potion", 16),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:minecart", 16),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chest_minecart", 8),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:hopper_minecart", 8),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:furnace_minecart", 8),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:tnt_minecart", 8),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:snowball", 64),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:egg", 64),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:saddle", 8),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_horse_armor", 8),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_horse_armor", 8),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_horse_armor", 8),
-            new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_horse_armor", 8)
+            IdTagValue.newId("minecraft:potion", 16),
+            IdTagValue.newId("minecraft:minecart", 16),
+            IdTagValue.newId("minecraft:chest_minecart", 8),
+            IdTagValue.newId("minecraft:hopper_minecart", 8),
+            IdTagValue.newId("minecraft:furnace_minecart", 8),
+            IdTagValue.newId("minecraft:tnt_minecart", 8),
+            IdTagValue.newId("minecraft:snowball", 64),
+            IdTagValue.newId("minecraft:egg", 64),
+            IdTagValue.newId("minecraft:saddle", 8),
+            IdTagValue.newId("minecraft:leather_horse_armor", 8),
+            IdTagValue.newId("minecraft:iron_horse_armor", 8),
+            IdTagValue.newId("minecraft:golden_horse_armor", 8),
+            IdTagValue.newId("minecraft:diamond_horse_armor", 8)
     ));
     public static final List<IdTagValue> customStackList = new ArrayList<>();
 
@@ -196,7 +195,7 @@ public class StackSizes extends SRFeature {
             return;
 
         for (IdTagValue customStackSize : list) {
-            getAllItems(customStackSize, isClientSide).forEach(item -> item.maxStackSize = (int) Mth.clamp(customStackSize.value, 1, 64));
+            getAllItems(customStackSize.id, isClientSide).forEach(item -> item.maxStackSize = (int) Mth.clamp(customStackSize.value, 1, 64));
         }
     }
 

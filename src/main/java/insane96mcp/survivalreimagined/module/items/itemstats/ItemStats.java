@@ -6,21 +6,14 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
-import insane96mcp.shieldsplus.setup.SPItems;
+import insane96mcp.insanelib.data.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagValue;
+import insane96mcp.insanelib.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
-import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
-import insane96mcp.survivalreimagined.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
-import insane96mcp.survivalreimagined.module.items.copper.CopperToolsExpansion;
-import insane96mcp.survivalreimagined.module.items.flintexpansion.FlintExpansion;
-import insane96mcp.survivalreimagined.module.items.solarium.Solarium;
-import insane96mcp.survivalreimagined.module.mining.Durium;
-import insane96mcp.survivalreimagined.module.mining.SoulSteel;
-import insane96mcp.survivalreimagined.module.mining.keego.Keego;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -73,90 +66,90 @@ public class ItemStats extends SRFeature {
 	public static final RegistryObject<RepairItemRecipeSerializer> REPAIR_ITEM_RECIPE_SERIALIZER = SRRegistries.RECIPE_SERIALIZERS.register("repair_item", RepairItemRecipeSerializer::new);
 
 	public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/wooden", 33),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/stone", 71),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/flint", 55),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/golden", 72),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/copper", 42),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/iron", 375),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/solarium", 259),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/durium", 855),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/coated_copper", 240),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/diamond", 2341),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/soul_steel", 3534),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/keego", 1707),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/netherite", 3047),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/wooden", 33),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/stone", 71),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/flint", 55),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/golden", 72),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/copper", 42),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/iron", 375),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/solarium", 259),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/durium", 855),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/coated_copper", 240),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/diamond", 2341),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/soul_steel", 3534),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/keego", 1707),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/netherite", 3047),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:elytra", 86),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:carrot_on_a_stick", 63),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:fishing_rod", 33),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:shears", 119),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:trident", 375),
+			IdTagValue.newId("minecraft:elytra", 86),
+			IdTagValue.newId("minecraft:carrot_on_a_stick", 63),
+			IdTagValue.newId("minecraft:fishing_rod", 33),
+			IdTagValue.newId("minecraft:shears", 119),
+			IdTagValue.newId("minecraft:trident", 375),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_helmet", 76),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_chestplate", 101),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_leggings", 95),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:leather_boots", 82),
+			IdTagValue.newId("minecraft:leather_helmet", 76),
+			IdTagValue.newId("minecraft:leather_chestplate", 101),
+			IdTagValue.newId("minecraft:leather_leggings", 95),
+			IdTagValue.newId("minecraft:leather_boots", 82),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_helmet", 90),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_chestplate", 120),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_leggings", 113),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:chainmail_boots", 98),
+			IdTagValue.newId("minecraft:chainmail_helmet", 90),
+			IdTagValue.newId("minecraft:chainmail_chestplate", 120),
+			IdTagValue.newId("minecraft:chainmail_leggings", 113),
+			IdTagValue.newId("minecraft:chainmail_boots", 98),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_helmet", 36),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_chestplate", 48),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_leggings", 45),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:chained_copper_boots", 39),
+			IdTagValue.newId("survivalreimagined:chained_copper_helmet", 36),
+			IdTagValue.newId("survivalreimagined:chained_copper_chestplate", 48),
+			IdTagValue.newId("survivalreimagined:chained_copper_leggings", 45),
+			IdTagValue.newId("survivalreimagined:chained_copper_boots", 39),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_helmet", 72),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_chestplate", 96),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_leggings", 90),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_boots", 78),
+			IdTagValue.newId("minecraft:iron_helmet", 72),
+			IdTagValue.newId("minecraft:iron_chestplate", 96),
+			IdTagValue.newId("minecraft:iron_leggings", 90),
+			IdTagValue.newId("minecraft:iron_boots", 78),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:solarium_helmet", 72),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:solarium_chestplate", 96),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:solarium_leggings", 90),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:solarium_boots", 78),
+			IdTagValue.newId("survivalreimagined:solarium_helmet", 72),
+			IdTagValue.newId("survivalreimagined:solarium_chestplate", 96),
+			IdTagValue.newId("survivalreimagined:solarium_leggings", 90),
+			IdTagValue.newId("survivalreimagined:solarium_boots", 78),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_helmet", 120),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_chestplate", 160),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_leggings", 150),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_boots", 130),
+			IdTagValue.newId("survivalreimagined:durium_helmet", 120),
+			IdTagValue.newId("survivalreimagined:durium_chestplate", 160),
+			IdTagValue.newId("survivalreimagined:durium_leggings", 150),
+			IdTagValue.newId("survivalreimagined:durium_boots", 130),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_helmet", 72),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_chestplate", 96),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_leggings", 90),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:golden_boots", 78),
+			IdTagValue.newId("minecraft:golden_helmet", 72),
+			IdTagValue.newId("minecraft:golden_chestplate", 96),
+			IdTagValue.newId("minecraft:golden_leggings", 90),
+			IdTagValue.newId("minecraft:golden_boots", 78),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_helmet", 238),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_chestplate", 317),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_leggings", 297),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_boots", 257),
+			IdTagValue.newId("minecraft:diamond_helmet", 238),
+			IdTagValue.newId("minecraft:diamond_chestplate", 317),
+			IdTagValue.newId("minecraft:diamond_leggings", 297),
+			IdTagValue.newId("minecraft:diamond_boots", 257),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_helmet", 252),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_chestplate", 336),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_leggings", 315),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_boots", 273),
+			IdTagValue.newId("survivalreimagined:soul_steel_helmet", 252),
+			IdTagValue.newId("survivalreimagined:soul_steel_chestplate", 336),
+			IdTagValue.newId("survivalreimagined:soul_steel_leggings", 315),
+			IdTagValue.newId("survivalreimagined:soul_steel_boots", 273),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_helmet", 132),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_chestplate", 176),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_leggings", 165),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_boots", 143),
+			IdTagValue.newId("survivalreimagined:keego_helmet", 132),
+			IdTagValue.newId("survivalreimagined:keego_chestplate", 176),
+			IdTagValue.newId("survivalreimagined:keego_leggings", 165),
+			IdTagValue.newId("survivalreimagined:keego_boots", 143),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_helmet", 222),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_chestplate", 296),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_leggings", 278),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_boots", 241),
+			IdTagValue.newId("minecraft:netherite_helmet", 222),
+			IdTagValue.newId("minecraft:netherite_chestplate", 296),
+			IdTagValue.newId("minecraft:netherite_leggings", 278),
+			IdTagValue.newId("minecraft:netherite_boots", 241),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:wooden_shield", 32),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:flint_shield", 82),
-			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:golden_shield", 95),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:copper_coated_shield", 230),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_shield", 672),
-			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:diamond_shield", 602),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_shield", 865),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:keego_shield", 552),
-			new IdTagValue(IdTagMatcher.Type.ID, "shieldsplus:netherite_shield", 1044)
+			IdTagValue.newId("shieldsplus:wooden_shield", 32),
+			IdTagValue.newId("survivalreimagined:flint_shield", 82),
+			IdTagValue.newId("shieldsplus:golden_shield", 95),
+			IdTagValue.newId("survivalreimagined:copper_coated_shield", 230),
+			IdTagValue.newId("survivalreimagined:durium_shield", 672),
+			IdTagValue.newId("shieldsplus:diamond_shield", 602),
+			IdTagValue.newId("survivalreimagined:soul_steel_shield", 865),
+			IdTagValue.newId("survivalreimagined:keego_shield", 552),
+			IdTagValue.newId("shieldsplus:netherite_shield", 1044)
 	));
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 
@@ -179,10 +172,6 @@ public class ItemStats extends SRFeature {
 	public static final String BROKEN_ITEM_LANG = "survivalreimagined.broken_item";
     public static final String NO_DAMAGE_ITEM_LANG = "survivalreimagined.no_damage_item";
 
-    @Config
-	@Label(name = "Override shield blocking damage", description = "If true, shield blocked damage is changed (mostly lowered).")
-	public static Boolean overrideShieldBlockDamage = true;
-
 	@Config
 	@Label(name = "More Items Tooltips", description = "If set to true items in the 'no_damage_items' and 'no_efficiency_items' will get a tooltip. Items with durability get a durability tooltip. Tools get an efficiency tooltip.")
 	public static Boolean moreItemsTooltips = true;
@@ -199,21 +188,6 @@ public class ItemStats extends SRFeature {
 	@Override
 	public void readConfig(ModConfigEvent event) {
 		super.readConfig(event);
-		if (overrideShieldBlockDamage) {
-			SPItems.WOODEN_SHIELD.get().blockingDamageOverride = 1d;
-			SPItems.STONE_SHIELD.get().blockingDamageOverride = 1.5d;
-			FlintExpansion.SHIELD.get().blockingDamageOverride = 2d;
-			SPItems.COPPER_SHIELD.get().blockingDamageOverride = 2.5d;
-			SPItems.GOLDEN_SHIELD.get().blockingDamageOverride = 3d;
-			//TODO can't override iron shield blocking dmg
-			Solarium.SHIELD.get().blockingDamageOverride = 3.5d;
-			Durium.SHIELD.get().blockingDamageOverride = 3.5d;
-			CopperToolsExpansion.COATED_SHIELD.get().blockingDamageOverride = 3.5d;
-			Keego.SHIELD.get().blockingDamageOverride = 5d;
-			SPItems.DIAMOND_SHIELD.get().blockingDamageOverride = 5d;
-			SoulSteel.SHIELD.get().blockingDamageOverride = 5.5d;
-			SPItems.NETHERITE_SHIELD.get().blockingDamageOverride = 6d;
-		}
 	}
 
 	@Override
@@ -225,7 +199,7 @@ public class ItemStats extends SRFeature {
 
 	public static void loadDurabilities(List<IdTagValue> list, boolean isclientSide) {
 		for (IdTagValue durability : list) {
-			List<Item> items = getAllItems(durability, isclientSide);
+			List<Item> items = getAllItems(durability.id, isclientSide);
 			for (Item item : items) {
 				item.maxDamage = (int) durability.value;
 			}
@@ -239,7 +213,7 @@ public class ItemStats extends SRFeature {
 
 	public static void loadToolEfficiencies(List<IdTagValue> list, boolean isclientSide) {
 		for (IdTagValue efficiency : list) {
-			List<Item> items = getAllItems(efficiency, isclientSide);
+			List<Item> items = getAllItems(efficiency.id, isclientSide);
 			for (Item item : items) {
 				if (!(item instanceof DiggerItem diggerItem))
 					continue;

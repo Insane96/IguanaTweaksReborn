@@ -4,7 +4,7 @@ import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagMatcher;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
@@ -50,7 +50,7 @@ public class AnvilRepair {
         }
 
         public void toNetwork(FriendlyByteBuf byteBuf) {
-            byteBuf.writeUtf(this.repairMaterial.asString());
+            byteBuf.writeUtf(this.repairMaterial.getSerializedName());
             byteBuf.writeInt(this.amountRequired);
             byteBuf.writeFloat(this.maxRepair);
             byteBuf.writeFloat(this.costMultiplier);
@@ -115,7 +115,7 @@ public class AnvilRepair {
     }
 
     public void toNetwork(FriendlyByteBuf byteBuf) {
-        byteBuf.writeUtf(this.itemToRepair.asString());
+        byteBuf.writeUtf(this.itemToRepair.getSerializedName());
         byteBuf.writeInt(this.repairData.size());
         for (RepairData repairData : this.repairData) {
             repairData.toNetwork(byteBuf);

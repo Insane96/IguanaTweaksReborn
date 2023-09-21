@@ -2,8 +2,8 @@ package insane96mcp.survivalreimagined.module.misc.beaconconduit;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.data.IdTagValue;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -291,7 +291,7 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
         for (Map.Entry<Block, Integer> entry : blocksCount.entrySet()) {
             Optional<IdTagValue> optional = BeaconConduit.blocksList
                     .stream()
-                    .filter(idTagValue -> idTagValue.matchesBlock(entry.getKey()))
+                    .filter(idTagValue -> idTagValue.id.matchesBlock(entry.getKey()))
                     .findFirst();
             if (optional.isPresent())
                 range += optional.get().value * entry.getValue() / layers;

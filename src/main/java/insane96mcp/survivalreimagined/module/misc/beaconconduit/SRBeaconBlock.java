@@ -58,6 +58,7 @@ public class SRBeaconBlock extends BaseEntityBlock implements BeaconBeamBlock {
      * @deprecated call via {@link net.minecraft.world.level.block.state.BlockBehaviour.BlockStateBase#getRenderShape}
      * whenever possible. Implementing/overriding is fine.
      */
+    @SuppressWarnings("deprecation")
     public RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
     }

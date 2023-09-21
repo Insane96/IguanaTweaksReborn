@@ -3,10 +3,9 @@ package insane96mcp.survivalreimagined.module.movement;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.base.SRFeature;
-import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.core.BlockPos;
@@ -28,12 +27,12 @@ public class TerrainSlowdown extends SRFeature {
 	private static final UUID TERRAIN_SLOWDOWN = UUID.fromString("a849043f-b280-4789-bafd-5da8e8e1078e");
 
 	public static final ArrayList<IdTagValue> CUSTOM_TERRAIN_SLOWDOWN_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:ice", 0.55d)
+			IdTagValue.newTag("minecraft:ice", 0.55d)
 	));
 	public static final ArrayList<IdTagValue> customTerrainSlowdown = new ArrayList<>();
 	public static final ArrayList<IdTagValue> CUSTOM_IN_TERRAIN_SLOWDOWN_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:snow", 0.075d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:powder_snow", 0.5d)
+			IdTagValue.newId("minecraft:snow", 0.075d),
+			IdTagValue.newId("minecraft:powder_snow", 0.5d)
 	));
 	public static final ArrayList<IdTagValue> customInTerrainSlowdown = new ArrayList<>();
 
@@ -76,7 +75,7 @@ public class TerrainSlowdown extends SRFeature {
 					continue;
 				double blockSlowdown = 0d;
 				for (IdTagValue idTagValue : customTerrainSlowdown) {
-					if (idTagValue.matchesBlock(state.getBlock())) {
+					if (idTagValue.id.matchesBlock(state.getBlock())) {
 						blockSlowdown = idTagValue.value;
 						blocks++;
 						break;
@@ -98,7 +97,7 @@ public class TerrainSlowdown extends SRFeature {
 						continue;
 					double blockSlowdown = 0d;
 					for (IdTagValue idTagValue : customInTerrainSlowdown) {
-						if (idTagValue.matchesBlock(state.getBlock())) {
+						if (idTagValue.id.matchesBlock(state.getBlock())) {
 							blockSlowdown = idTagValue.value;
 							blocks++;
 							break;

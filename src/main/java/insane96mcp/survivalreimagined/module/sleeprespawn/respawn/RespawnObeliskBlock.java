@@ -1,8 +1,8 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.respawn;
 
 import com.google.common.collect.ImmutableList;
+import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.data.criterion.ActivateRespawnObeliskTrigger;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.MCUtils;
@@ -184,11 +184,11 @@ public class RespawnObeliskBlock extends Block {
     }
 
     public static boolean isBlockCatalyst(Block block) {
-        return Respawn.respawnObeliskCatalysts.stream().anyMatch(idTagValue -> idTagValue.matchesBlock(block));
+        return Respawn.respawnObeliskCatalysts.stream().anyMatch(idTagValue -> idTagValue.id.matchesBlock(block));
     }
 
     public static double getCatalystBlockChanceToBreak(Block block) {
-        Optional<IdTagValue> catalyst = Respawn.respawnObeliskCatalysts.stream().filter(idTagValue -> idTagValue.matchesBlock(block)).findFirst();
+        Optional<IdTagValue> catalyst = Respawn.respawnObeliskCatalysts.stream().filter(idTagValue -> idTagValue.id.matchesBlock(block)).findFirst();
         return catalyst.map(idTagValue -> idTagValue.value).orElse(0d);
     }
 }

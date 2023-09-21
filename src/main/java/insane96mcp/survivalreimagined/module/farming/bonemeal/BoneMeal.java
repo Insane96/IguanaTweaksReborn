@@ -4,10 +4,9 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
-import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.data.criterion.MakeRichFarmlandTrigger;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
@@ -70,8 +69,8 @@ public class BoneMeal extends SRFeature {
 
 
 	public static final List<IdTagValue> BONE_MEAL_FAIL_CHANCE_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:cave_vines", 0.75f),
-			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:saplings", 0.2f)
+			IdTagValue.newTag("minecraft:cave_vines", 0.75f),
+			IdTagValue.newTag("minecraft:saplings", 0.2f)
 	));
 	public static final ArrayList<IdTagValue> boneMealFailChances = new ArrayList<>();
 
@@ -154,7 +153,7 @@ public class BoneMeal extends SRFeature {
 
 	public boolean shouldFail(BlockState state, RandomSource random) {
 		for (IdTagValue boneMealFail : boneMealFailChances) {
-			if (boneMealFail.matchesBlock(state.getBlock()) && random.nextFloat() < boneMealFail.value)
+			if (boneMealFail.id.matchesBlock(state.getBlock()) && random.nextFloat() < boneMealFail.value)
 				return true;
 		}
 		return false;

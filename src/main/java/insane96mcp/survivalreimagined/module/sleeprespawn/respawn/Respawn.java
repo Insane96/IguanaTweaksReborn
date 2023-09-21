@@ -5,12 +5,11 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.insanelib.util.LogHelper;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
-import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -50,12 +49,13 @@ public class Respawn extends SRFeature {
 	public static final SimpleBlockWithItem RESPAWN_OBELISK = SimpleBlockWithItem.register("respawn_obelisk", () -> new RespawnObeliskBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(50.0F, 1200.0F).lightLevel(RespawnObeliskBlock::lightLevel)));
 
 	public static final ArrayList<IdTagValue> RESPAWN_OBELISK_CATALYSTS_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_block", 0.75d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:gold_block", 0.3d),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:durium_block", 0.075d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_block", 0.05d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:emerald_block", 0.35d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_block", 0d)
+			IdTagValue.newId("minecraft:iron_block", 0.75d),
+			IdTagValue.newId("minecraft:gold_block", 0.3d),
+			IdTagValue.newId("survivalreimagined:durium_block", 0.075d),
+			IdTagValue.newId("minecraft:diamond_block", 0.05d),
+			IdTagValue.newId("survivalreimagined:keego_block", 0.05d),
+			IdTagValue.newId("minecraft:emerald_block", 0.35d),
+			IdTagValue.newId("minecraft:netherite_block", 0d)
 	));
 
 	public static final ArrayList<IdTagValue> respawnObeliskCatalysts = new ArrayList<>();

@@ -4,7 +4,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.survivalreimagined.module.Modules;
@@ -25,15 +25,15 @@ import java.util.List;
 public class Equipment extends SRFeature {
 
     public static final ArrayList<EquipmentDropChance> EQUIPMENT_DROP_CHANCES_DEFAULT = new ArrayList<>(List.of(
-            new EquipmentDropChance(IdTagMatcher.Type.TAG, "minecraft:skeletons", EquipmentSlot.MAINHAND),
-            new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:zombie", EquipmentSlot.OFFHAND),
-            new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:zombified_piglin", EquipmentSlot.MAINHAND),
-            new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:piglin", EquipmentSlot.MAINHAND),
-            new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:piglin_brute", EquipmentSlot.MAINHAND),
-            new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:drowned", EquipmentSlot.OFFHAND),
-            new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:zombie_villager", EquipmentSlot.OFFHAND),
-            new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:vex", EquipmentSlot.MAINHAND),
-            new EquipmentDropChance(IdTagMatcher.Type.ID, "minecraft:pillager", EquipmentSlot.MAINHAND)
+            new EquipmentDropChance(IdTagMatcher.newTag("minecraft:skeletons"), EquipmentSlot.MAINHAND),
+            new EquipmentDropChance(IdTagMatcher.newId("minecraft:zombie"), EquipmentSlot.OFFHAND),
+            new EquipmentDropChance(IdTagMatcher.newId("minecraft:zombified_piglin"), EquipmentSlot.MAINHAND),
+            new EquipmentDropChance(IdTagMatcher.newId("minecraft:piglin"), EquipmentSlot.MAINHAND),
+            new EquipmentDropChance(IdTagMatcher.newId("minecraft:piglin_brute"), EquipmentSlot.MAINHAND),
+            new EquipmentDropChance(IdTagMatcher.newId("minecraft:drowned"), EquipmentSlot.OFFHAND),
+            new EquipmentDropChance(IdTagMatcher.newId("minecraft:zombie_villager"), EquipmentSlot.OFFHAND),
+            new EquipmentDropChance(IdTagMatcher.newId("minecraft:vex"), EquipmentSlot.MAINHAND),
+            new EquipmentDropChance(IdTagMatcher.newId("minecraft:pillager"), EquipmentSlot.MAINHAND)
     ));
     public static final ArrayList<EquipmentDropChance> equipmentDropChances = new ArrayList<>();
     @Config
@@ -61,7 +61,7 @@ public class Equipment extends SRFeature {
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             boolean customDropChance = false;
             for (EquipmentDropChance edc : equipmentDropChances) {
-                if (edc.matchesEntity(entity) && edc.slot.equals(slot)) {
+                if (edc.entity.matchesEntity(entity) && edc.slot.equals(slot)) {
                     edc.apply(entity);
                     customDropChance = true;
                 }

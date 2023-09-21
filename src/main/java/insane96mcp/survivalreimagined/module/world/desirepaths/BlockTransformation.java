@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.module.world.desirepaths;
 
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.util.LogHelper;
 import net.minecraft.resources.ResourceLocation;
 
@@ -8,11 +8,12 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockTransformation extends IdTagMatcher {
+public class BlockTransformation {
+    IdTagMatcher blockToTransform;
     public ResourceLocation transformTo;
 
-    public BlockTransformation(Type type, ResourceLocation location) {
-        super(type, location);
+    public BlockTransformation(IdTagMatcher blockToTransform) {
+        this.blockToTransform = blockToTransform;
     }
 
     public static ArrayList<BlockTransformation> parseStringList(List<? extends String> list) {
@@ -42,7 +43,7 @@ public class BlockTransformation extends IdTagMatcher {
                 LogHelper.warn("Tag is not valid. '%s'", line);
                 return null;
             }
-            blockTransformation = new BlockTransformation(IdTagMatcher.Type.TAG, tag);
+            blockTransformation = new BlockTransformation(IdTagMatcher.newTag(split[0].substring(1)));
         }
         else {
             ResourceLocation id = ResourceLocation.tryParse(split[0]);
@@ -50,7 +51,7 @@ public class BlockTransformation extends IdTagMatcher {
                 LogHelper.warn("Id is not valid. '%s'", line);
                 return null;
             }
-            blockTransformation = new BlockTransformation(IdTagMatcher.Type.ID, id);
+            blockTransformation = new BlockTransformation(IdTagMatcher.newId(split[0]));
         }
 
         ResourceLocation id = ResourceLocation.tryParse(split[1]);

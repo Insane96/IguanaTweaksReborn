@@ -4,9 +4,8 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.survivalreimagined.base.SRFeature;
-import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
@@ -30,7 +29,7 @@ import java.util.List;
 public class HarderCrops extends SRFeature {
 	public static final TagKey<Block> HARDER_CROPS_TAG = SRBlockTagsProvider.create("harder_crops");
 	public static final ArrayList<IdTagValue> CROPS_HARDNESS_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.TAG, HARDER_CROPS_TAG.location().toString(), 1.5d)
+			IdTagValue.newTag(HARDER_CROPS_TAG.location().toString(), 1.5d)
 	));
 	public static final ArrayList<IdTagValue> cropsHardness = new ArrayList<>();
 	@Config
@@ -44,7 +43,7 @@ public class HarderCrops extends SRFeature {
 
 	public static void applyHardness(List<IdTagValue> list, boolean isClientSide) {
 		for (IdTagValue hardnesses : list) {
-			getAllBlocks(hardnesses, isClientSide).forEach(block -> {
+			getAllBlocks(hardnesses.id, isClientSide).forEach(block -> {
 				if (onlyFullyGrown) {
 					//I have doubts that this always takes the fully grown modded crops
 					BlockState state = block.getStateDefinition().getPossibleStates().get(block.getStateDefinition().getPossibleStates().size() - 1);

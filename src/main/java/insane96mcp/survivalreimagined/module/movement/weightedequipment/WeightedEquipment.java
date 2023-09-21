@@ -5,12 +5,12 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.insanelib.util.Utils;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
-import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.ChatFormatting;
@@ -44,23 +44,22 @@ public class WeightedEquipment extends SRFeature {
 	public static final UUID ARMOR_SLOWDOWN_UUID = UUID.fromString("8588420e-ce50-4e4e-a3e4-974dfc8a98ec");
 
 	public static final ArrayList<IdTagValue> ARMOR_WEIGHTS_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/leather", 0d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/chained_copper", 0d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/chainmail", 0d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/iron", 0.01d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/solarium", 0.025d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/durium", 0.025d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/golden", 0.01d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/diamond", 0.05d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/soul_steel", 0.075d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/keego", 0.06d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/armor/netherite", 0.10d)
+			IdTagValue.newTag("survivalreimagined:equipment/armor/leather", 0d),
+			IdTagValue.newTag("survivalreimagined:equipment/armor/chained_copper", 0d),
+			IdTagValue.newTag("survivalreimagined:equipment/armor/chainmail", 0d),
+			IdTagValue.newTag("survivalreimagined:equipment/armor/iron", 0.01d),
+			IdTagValue.newTag("survivalreimagined:equipment/armor/solarium", 0.025d),
+			IdTagValue.newTag("survivalreimagined:equipment/armor/durium", 0.025d),
+			IdTagValue.newTag("survivalreimagined:equipment/armor/golden", 0.01d),
+			IdTagValue.newTag("survivalreimagined:equipment/armor/diamond", 0.05d),
+			IdTagValue.newTag("survivalreimagined:equipment/armor/soul_steel", 0.075d),
+			IdTagValue.newTag("survivalreimagined:equipment/armor/keego", 0.06d),
+			IdTagValue.newTag("survivalreimagined:equipment/armor/netherite", 0.10d)
 	));
 	public static final ArrayList<IdTagValue> armorWeights = new ArrayList<>();
 
 	public static final ArrayList<ArmorEnchantmentWeight> ENCHANTMENTS_LIST_DEFAULT = new ArrayList<>(List.of(
-			new ArmorEnchantmentWeight("minecraft:feather_falling", -0.005d),
-			new ArmorEnchantmentWeight("elenaidodge2:lightweight", -0.0025d)
+			new ArmorEnchantmentWeight.Builder(IdTagMatcher.newId("minecraft:feather_falling")).setPercentageSlownessPerLevel(-0.005f).build()
 	));
 	public static final ArrayList<ArmorEnchantmentWeight> enchantmentsList = new ArrayList<>();
 
@@ -142,7 +141,7 @@ public class WeightedEquipment extends SRFeature {
 		double slowdown = 0d;
 		boolean hasMaterialSlowdown = false;
 		for (IdTagValue idTagValue : armorWeights) {
-			if (!idTagValue.matchesItem(itemStack.getItem())
+			if (!idTagValue.id.matchesItem(itemStack.getItem())
 					|| !(itemStack.getItem() instanceof ArmorItem armorItem))
 				continue;
 			EquipmentSlot slot = armorItem.getEquipmentSlot();
@@ -172,7 +171,7 @@ public class WeightedEquipment extends SRFeature {
 		}
 		double flatEnchantmentSlowdown = 0d, percentageEnchantmentSlowdown = 0d;
 		for (ArmorEnchantmentWeight enchantmentWeight : enchantmentsList) {
-			int enchantmentLevel = MCUtils.getEnchantmentLevel(enchantmentWeight.location, itemStack);
+			int enchantmentLevel = MCUtils.getEnchantmentLevel(enchantmentWeight.enchantment.location, itemStack);
 			if (enchantmentLevel == 0)
 				continue;
 			flatEnchantmentSlowdown += (enchantmentWeight.flatSlowness + (enchantmentWeight.flatSlownessPerLevel * enchantmentLevel));

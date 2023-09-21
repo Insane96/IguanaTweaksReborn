@@ -5,10 +5,9 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
-import insane96mcp.survivalreimagined.data.IdTagValue;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.GlobalHardnessSyncMessage;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
@@ -43,42 +42,42 @@ public class BlockHardness extends SRFeature {
 	public static final ArrayList<DepthHardnessDimension> depthMultiplierDimension = new ArrayList<>();
 
 	public static final ArrayList<IdTagValue> CUSTOM_HARDNESSES_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:coal_ore", 2.5d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:copper_ore", 2.5d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:iron_ore", 3d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:gold_ore", 3.5d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:diamond_ore", 4d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:redstone_ore", 3d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:lapis_ore", 3d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:emerald_ore", 4d),
+			IdTagValue.newId("minecraft:coal_ore", 2.5d),
+			IdTagValue.newId("minecraft:copper_ore", 2.5d),
+			IdTagValue.newId("minecraft:iron_ore", 3d),
+			IdTagValue.newId("minecraft:gold_ore", 3.5d),
+			IdTagValue.newId("minecraft:diamond_ore", 4d),
+			IdTagValue.newId("minecraft:redstone_ore", 3d),
+			IdTagValue.newId("minecraft:lapis_ore", 3d),
+			IdTagValue.newId("minecraft:emerald_ore", 4d),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:poor_copper_ore", 1.667d),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:poor_iron_ore", 2d),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:poor_gold_ore", 2.333d),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_copper_ore", 3.333d),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_iron_ore", 4d),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_gold_ore", 4.6666d),
+			IdTagValue.newId("survivalreimagined:poor_copper_ore", 1.667d),
+			IdTagValue.newId("survivalreimagined:poor_iron_ore", 2d),
+			IdTagValue.newId("survivalreimagined:poor_gold_ore", 2.333d),
+			IdTagValue.newId("survivalreimagined:rich_copper_ore", 3.333d),
+			IdTagValue.newId("survivalreimagined:rich_iron_ore", 4d),
+			IdTagValue.newId("survivalreimagined:rich_gold_ore", 4.6666d),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_coal_ore", 4d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_copper_ore", 4d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_iron_ore", 4.5d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_gold_ore", 5d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_diamond_ore", 6d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_redstone_ore", 4.5d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_lapis_ore", 4.5d),
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:deepslate_emerald_ore", 6d),
+			IdTagValue.newId("minecraft:deepslate_coal_ore", 4d),
+			IdTagValue.newId("minecraft:deepslate_copper_ore", 4d),
+			IdTagValue.newId("minecraft:deepslate_iron_ore", 4.5d),
+			IdTagValue.newId("minecraft:deepslate_gold_ore", 5d),
+			IdTagValue.newId("minecraft:deepslate_diamond_ore", 6d),
+			IdTagValue.newId("minecraft:deepslate_redstone_ore", 4.5d),
+			IdTagValue.newId("minecraft:deepslate_lapis_ore", 4.5d),
+			IdTagValue.newId("minecraft:deepslate_emerald_ore", 6d),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:poor_deepslate_copper_ore", 2.667d),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:poor_deepslate_iron_ore", 3d),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:poor_deepslate_gold_ore", 3.333d),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_deepslate_copper_ore", 5.333d),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_deepslate_iron_ore", 6d),
-			new IdTagValue(IdTagMatcher.Type.ID, "survivalreimagined:rich_deepslate_gold_ore", 6.666d),
+			IdTagValue.newId("survivalreimagined:poor_deepslate_copper_ore", 2.667d),
+			IdTagValue.newId("survivalreimagined:poor_deepslate_iron_ore", 3d),
+			IdTagValue.newId("survivalreimagined:poor_deepslate_gold_ore", 3.333d),
+			IdTagValue.newId("survivalreimagined:rich_deepslate_copper_ore", 5.333d),
+			IdTagValue.newId("survivalreimagined:rich_deepslate_iron_ore", 6d),
+			IdTagValue.newId("survivalreimagined:rich_deepslate_gold_ore", 6.666d),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:ancient_debris", 12d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:obsidians", 33d),
+			IdTagValue.newId("minecraft:ancient_debris", 12d),
+			IdTagValue.newTag("survivalreimagined:obsidians", 33d),
 
-			new IdTagValue(IdTagMatcher.Type.ID, "minecraft:powder_snow", 2.5d)
+			IdTagValue.newId("minecraft:powder_snow", 2.5d)
 	));
 	public static final ArrayList<IdTagValue> customHardnesses = new ArrayList<>();
 
@@ -113,7 +112,7 @@ public class BlockHardness extends SRFeature {
 		synchronized (mutex) {
 			for (IdTagValue blockHardness : list) {
 				//If the block's hardness is 0 I replace the hardness
-				List<Block> blocksToProcess = blockHardness.getAllBlocks();
+				List<Block> blocksToProcess = blockHardness.id.getAllBlocks();
 				for (Block block : blocksToProcess) {
 					block.getStateDefinition().getPossibleStates().forEach(blockState -> blockState.destroySpeed = (float) blockHardness.value);
 				}
@@ -186,7 +185,7 @@ public class BlockHardness extends SRFeature {
 
 		if (!processCustomHardness)
 			for (IdTagValue blockHardness : customHardnesses)
-				if (blockHardness.matchesBlock(block, dimensionId))
+				if (blockHardness.id.matchesBlock(block, dimensionId))
 					return 0d;
 
 		if (Utils.isBlockInTag(block, DEPTH_MULTIPLIER_BLACKLIST))

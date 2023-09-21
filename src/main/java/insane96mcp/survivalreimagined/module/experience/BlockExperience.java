@@ -4,8 +4,8 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.data.IdTagRange;
 import insane96mcp.survivalreimagined.base.SRFeature;
-import insane96mcp.survivalreimagined.data.IdTagRange;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.tags.TagKey;
@@ -28,23 +28,23 @@ public class BlockExperience extends SRFeature {
 	public static Double blockMultiplier = 1d;
 
 	public static final ArrayList<IdTagRange> CUSTOM_BLOCKS_EXPERIENCE_DEFAULT = new ArrayList<>(List.of(
-			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:copper_ores", 0, 2),
-			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:iron_ores", 1, 3),
-			new IdTagRange(IdTagRange.Type.TAG, "survivalreimagined:gold_ores", 2, 4),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:coal_ore", 1, 2),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_coal_ore", 1, 2),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:lapis_ore", 4, 7),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_lapis_ore", 4, 7),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:diamond_ore", 5, 10),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_diamond_ore", 5, 10),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:redstone_ore", 2, 6),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_redstone_ore", 2, 6),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:emerald_ore", 8, 14),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_emerald_ore", 8, 14),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:emerald_ore", 8, 14),
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:deepslate_emerald_ore", 8, 14),
+			IdTagRange.newTag("survivalreimagined:copper_ores", 0, 2),
+			IdTagRange.newTag("survivalreimagined:iron_ores", 1, 3),
+			IdTagRange.newTag("survivalreimagined:gold_ores", 2, 4),
+			IdTagRange.newId("minecraft:coal_ore", 1, 2),
+			IdTagRange.newId("minecraft:deepslate_coal_ore", 1, 2),
+			IdTagRange.newId("minecraft:lapis_ore", 4, 7),
+			IdTagRange.newId("minecraft:deepslate_lapis_ore", 4, 7),
+			IdTagRange.newId("minecraft:diamond_ore", 5, 10),
+			IdTagRange.newId("minecraft:deepslate_diamond_ore", 5, 10),
+			IdTagRange.newId("minecraft:redstone_ore", 2, 6),
+			IdTagRange.newId("minecraft:deepslate_redstone_ore", 2, 6),
+			IdTagRange.newId("minecraft:emerald_ore", 8, 14),
+			IdTagRange.newId("minecraft:deepslate_emerald_ore", 8, 14),
+			IdTagRange.newId("minecraft:emerald_ore", 8, 14),
+			IdTagRange.newId("minecraft:deepslate_emerald_ore", 8, 14),
 
-			new IdTagRange(IdTagRange.Type.ID, "minecraft:sculk_catalyst", 35, 35)
+			IdTagRange.newId("minecraft:sculk_catalyst", 35, 35)
 	));
 
 	public static final ArrayList<IdTagRange> customBlocksExperience = new ArrayList<>();
@@ -70,7 +70,7 @@ public class BlockExperience extends SRFeature {
 		if (silkTouchLevel > 0)
 			return;
 		for (IdTagRange idTagRange : customBlocksExperience) {
-			if (idTagRange.matchesBlock(event.getState().getBlock()))
+			if (idTagRange.id.matchesBlock(event.getState().getBlock()))
 				event.setExpToDrop(idTagRange.getRandomIntBetween(event.getLevel().getRandom()));
 		}
 	}

@@ -6,7 +6,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
@@ -99,12 +99,12 @@ public class EnchantmentsFeature extends SRFeature {
 	public static Boolean buffFeatherFalling = true;
 
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
-			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:protection"),
-			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:sharpness"),
-			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:mending"),
-			new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:bane_of_arthropods"),
-			new IdTagMatcher(IdTagMatcher.Type.ID, "allurement:reforming"),
-			new IdTagMatcher(IdTagMatcher.Type.ID, "allurement:alleviating")
+			IdTagMatcher.newId("minecraft:protection"),
+			IdTagMatcher.newId("minecraft:sharpness"),
+			IdTagMatcher.newId("minecraft:mending"),
+			IdTagMatcher.newId("minecraft:bane_of_arthropods"),
+			IdTagMatcher.newId("allurement:reforming"),
+			IdTagMatcher.newId("allurement:alleviating")
 
 	));
 	public static final ArrayList<IdTagMatcher> disabledEnchantments = new ArrayList<>();
@@ -112,7 +112,7 @@ public class EnchantmentsFeature extends SRFeature {
 	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 
-		JSON_CONFIGS.add(new SRFeature.JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, Utils.ID_TAG_MATCHER_LIST_TYPE));
+		JSON_CONFIGS.add(new SRFeature.JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, IdTagMatcher.LIST_TYPE));
 	}
 
 	public static boolean isEnchantmentDisabled(Enchantment enchantment) {

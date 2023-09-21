@@ -67,7 +67,7 @@ public class SRItemTagsProvider extends ItemTagsProvider {
         //noinspection unchecked
         tag(ItemStats.NOT_UNBREAKABLE)
                 .addTags(WOODEN_HAND_EQUIPMENT, STONE_HAND_EQUIPMENT, FLINT_HAND_EQUIPMENT, COPPER_HAND_EQUIPMENT, CHAINED_COPPER_ARMOR)
-                .add(SPItems.COPPER_SHIELD.get(), SPItems.WOODEN_SHIELD.get(), SPItems.STONE_SHIELD.get(), FlintExpansion.SHIELD.get());
+                .add(CopperToolsExpansion.COPPER_SHIELD.get(), SPItems.WOODEN_SHIELD.get(), SPItems.STONE_SHIELD.get(), FlintExpansion.SHIELD.get());
         tag(Knockback.REDUCED_KNOCKBACK);
 
         tag(Spawners.SPAWNER_REACTIVATOR_TAG)

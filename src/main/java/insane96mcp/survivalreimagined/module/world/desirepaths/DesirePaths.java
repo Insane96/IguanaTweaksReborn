@@ -76,7 +76,7 @@ public class DesirePaths extends Feature {
 				pos.set(x2, event.player.position().y - 1.0E-5F, z2);
 				BlockState state = event.player.level().getBlockState(pos);
 				for (BlockTransformation blockTransformation : transformationList) {
-					if (!blockTransformation.matchesBlock(state.getBlock()))
+					if (!blockTransformation.blockToTransform.matchesBlock(state.getBlock()))
 						continue;
 
 					if (event.player.getRandom().nextFloat() < chanceToTransform.floatValue()) {

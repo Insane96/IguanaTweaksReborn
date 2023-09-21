@@ -3,7 +3,7 @@ package insane96mcp.survivalreimagined.module.mining.blockhardness;
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
-import insane96mcp.survivalreimagined.data.IdTagValue;
+import insane96mcp.insanelib.data.IdTagValue;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 

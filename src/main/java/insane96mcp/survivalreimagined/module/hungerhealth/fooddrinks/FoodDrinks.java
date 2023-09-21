@@ -6,10 +6,10 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagMatcher;
+import insane96mcp.insanelib.event.AddEatEffectEvent;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
-import insane96mcp.survivalreimagined.event.AddEatEffectEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.DataPacks;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
@@ -62,7 +62,7 @@ public class FoodDrinks extends SRFeature {
 	public static final TagKey<Item> FOOD_BLACKLIST = SRItemTagsProvider.create("food_drinks_no_hunger_changes");
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(
-			new CustomFoodProperties.Builder(IdTagMatcher.Type.ID, "minecraft:rotten_flesh").setNutrition(2).setEatingTime(50).addEffect(new MobEffectInstance(MobEffects.CONFUSION, 30 * 20, 0), 0.8f).build()
+			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:rotten_flesh")).setNutrition(2).setEatingTime(50).build()
 	));
 	public static final ArrayList<CustomFoodProperties> customFoodProperties = new ArrayList<>();
 
@@ -135,12 +135,12 @@ public class FoodDrinks extends SRFeature {
 	private static int lastFoodEatenTime;
 	public static int getFoodConsumingTime(ItemStack stack) {
 		//If in cache, get it
-		if (customFoodPropertiesCache != null && customFoodPropertiesCache.matchesItem(stack.getItem())) {
+		if (customFoodPropertiesCache != null && customFoodPropertiesCache.food.matchesItem(stack.getItem())) {
 			return customFoodPropertiesCache.eatingTime;
 		}
 		else {
 			for (CustomFoodProperties cfp : customFoodProperties) {
-				if (cfp.matchesItem(stack.getItem())) {
+				if (cfp.food.matchesItem(stack.getItem())) {
 					customFoodPropertiesCache = cfp;
 					return cfp.eatingTime;
 				}
@@ -185,7 +185,7 @@ public class FoodDrinks extends SRFeature {
 	@SubscribeEvent
 	public void onEffectApply(AddEatEffectEvent event) {
 		for (CustomFoodProperties foodValue : customFoodProperties) {
-			if (foodValue.effects == null || !foodValue.matchesItem(event.getStack().getItem()))
+			if (foodValue.effects == null || !foodValue.food.matchesItem(event.getStack().getItem()))
 				continue;
 
 			foodValue.getEffects().forEach(pair -> {
@@ -225,7 +225,7 @@ public class FoodDrinks extends SRFeature {
 			return;
 
 		for (CustomFoodProperties foodValue : list) {
-			List<Item> items = getAllItems(foodValue, false);
+			List<Item> items = getAllItems(foodValue.food, false);
 			for (Item item : items) {
 				if (!item.isEdible()) {
 					LogHelper.warn("In Custom Food Value %s is not a food", item);

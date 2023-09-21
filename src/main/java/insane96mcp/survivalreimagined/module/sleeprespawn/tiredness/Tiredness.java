@@ -5,8 +5,8 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.ILMobEffect;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagMatcher;
+import insane96mcp.insanelib.world.effect.ILMobEffect;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
@@ -63,8 +63,8 @@ public class Tiredness extends SRFeature {
 	public static final TagKey<Item> ENERGY_BOOST_ITEM_TAG = SRItemTagsProvider.create("energy_boost");
 
 	public static final List<EnergyBoostItem> ENERGY_BOOST_ITEMS_DEFAULT = new ArrayList<>(Arrays.asList(
-			new EnergyBoostItem(IdTagMatcher.Type.TAG, "survivalreimagined:energy_boost"),
-			new EnergyBoostItem(IdTagMatcher.Type.ID, "farmersdelight:hot_cocoa", 80, 0)
+			new EnergyBoostItem(IdTagMatcher.newTag("survivalreimagined:energy_boost"), 0, 0),
+			new EnergyBoostItem(IdTagMatcher.newId("farmersdelight:hot_cocoa"), 80, 0)
 	));
 	public static final List<EnergyBoostItem> energyBoostItems = new ArrayList<>();
 

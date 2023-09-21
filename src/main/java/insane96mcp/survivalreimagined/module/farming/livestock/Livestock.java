@@ -4,7 +4,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
@@ -47,67 +47,67 @@ public class Livestock extends SRFeature {
 	public static final String MILK_COOLDOWN = SurvivalReimagined.RESOURCE_PREFIX + "milk_cooldown";
 
 	public static final ArrayList<LivestockData> GROWTH_SLOWNDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 2.5d, Season.SPRING),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 2.0d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 3.0d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 4.0d, Season.WINTER),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 2.5d, Season.SPRING),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 2.0d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 3.0d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 4.0d, Season.WINTER),
 
-			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 2.5d, Season.SPRING),
-			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 2.0d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 3.0d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 4.0d, Season.WINTER)
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 2.5d, Season.SPRING),
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 2.0d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 3.0d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 4.0d, Season.WINTER)
 	));
 
 	public static final ArrayList<LivestockData> growthSlowdown = new ArrayList<>();
 
 	public static final ArrayList<LivestockData> BREEDING_COOLDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 2.5d, Season.SPRING),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 2.0d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 3.0d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 4.0d, Season.WINTER),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 2.5d, Season.SPRING),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 2.0d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 3.0d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 4.0d, Season.WINTER),
 
-			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 5d, Season.SPRING),
-			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 4.0d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 6.0d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 8.0d, Season.WINTER)
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 5d, Season.SPRING),
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 4.0d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 6.0d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 8.0d, Season.WINTER)
 	));
 
 	public static final ArrayList<LivestockData> breedingCooldown = new ArrayList<>();
 
 	public static final ArrayList<LivestockData> EGG_LAY_SLOWDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 2.5d, Season.SPRING),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 2.0d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 3.0d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "chickens", 4.0d, Season.WINTER)
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "chickens"), 2.5d, Season.SPRING),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "chickens"), 2.0d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "chickens"), 3.0d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "chickens"), 4.0d, Season.WINTER)
 	));
 
 	public static final ArrayList<LivestockData> eggLaySlowdown = new ArrayList<>();
 
 	public static final ArrayList<LivestockData> COW_MILK_COOLDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "cows", 1500, Season.SPRING),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "cows", 1200, Season.SUMMER),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "cows", 1800, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "cows", 3000, Season.WINTER)
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "cows"), 1500, Season.SPRING),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "cows"), 1200, Season.SUMMER),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "cows"), 1800, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "cows"), 3000, Season.WINTER)
 	));
 
 	public static final ArrayList<LivestockData> cowMilkCooldown = new ArrayList<>();
 
 	public static final ArrayList<LivestockData> SHEEP_WOOL_REGROWTH_CHANCE = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.Type.ID, "minecraft:sheep", 0.75d)
+			new LivestockData(IdTagMatcher.newId("minecraft:sheep"), 0.75d)
 	));
 
 	public static final ArrayList<LivestockData> sheepWoolRegrowthChance = new ArrayList<>();
 
 	public static final ArrayList<LivestockData> BREEDING_FAIL_CHANCE_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 0.6d, Season.SPRING),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 0.5d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 0.7d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.Type.TAG, SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals", 0.9d, Season.WINTER),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 0.6d, Season.SPRING),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 0.5d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 0.7d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 0.9d, Season.WINTER),
 
-			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 0.6d, Season.SPRING),
-			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 0.5d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 0.7d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.Type.TAG, "minecraft:villager", 0.9d, Season.WINTER)
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 0.6d, Season.SPRING),
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 0.5d, Season.SUMMER),
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 0.7d, Season.AUTUMN),
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 0.9d, Season.WINTER)
 	));
 
 	public static final ArrayList<LivestockData> breedingFailChance = new ArrayList<>();

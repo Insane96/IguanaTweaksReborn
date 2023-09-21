@@ -3,7 +3,7 @@ package insane96mcp.survivalreimagined.module.combat.stats.data;
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.survivalreimagined.utils.AttributeModifierOperation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;

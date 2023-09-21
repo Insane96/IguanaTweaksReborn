@@ -4,16 +4,16 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.event.HurtItemStackEvent;
 import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.generator.SRDamageTypeTagsProvider;
-import insane96mcp.survivalreimagined.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
-import insane96mcp.survivalreimagined.network.ElectrocutionParticleMessage;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
+import insane96mcp.survivalreimagined.network.message.ElectrocutionParticleMessage;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.MCUtils;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
@@ -61,6 +61,8 @@ public class CopperToolsExpansion extends Feature {
 	public static final RegistryObject<Item> COPPER_PICKAXE = SRRegistries.ITEMS.register("copper_pickaxe", () -> new PickaxeItem(COPPER_ITEM_TIER, 1, -2.8F, new Item.Properties()));
 	public static final RegistryObject<Item> COPPER_AXE = SRRegistries.ITEMS.register("copper_axe", () -> new AxeItem(COPPER_ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
 	public static final RegistryObject<Item> COPPER_HOE = SRRegistries.ITEMS.register("copper_hoe", () -> new HoeItem(COPPER_ITEM_TIER, -1, -2.0F, new Item.Properties()));
+	public static final SPShieldMaterial COPPER_SHIELD_MATERIAL = new SPShieldMaterial("copper", 2.5, 134, () -> Items.COPPER_INGOT, 10, Rarity.COMMON);
+	public static final RegistryObject<SPShieldItem> COPPER_SHIELD = SRRegistries.registerShield("copper_shield", COPPER_SHIELD_MATERIAL);
 
 	public static final ILItemTier COATED_ITEM_TIER = new ILItemTier(3, 160, 7f, 1.5f, 5, () -> Ingredient.of(Items.OBSIDIAN));
 	public static final RegistryObject<Item> COATED_SWORD = SRRegistries.ITEMS.register("coated_copper_sword", () -> new SwordItem(COATED_ITEM_TIER, 3, -2.4F, new Item.Properties()));
@@ -69,7 +71,7 @@ public class CopperToolsExpansion extends Feature {
 	public static final RegistryObject<Item> COATED_AXE = SRRegistries.ITEMS.register("coated_copper_axe", () -> new AxeItem(COATED_ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
 	public static final RegistryObject<Item> COATED_HOE = SRRegistries.ITEMS.register("coated_copper_hoe", () -> new HoeItem(COATED_ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
-	public static final SPShieldMaterial COATED_SHIELD_MATERIAL = new SPShieldMaterial("coated_copper", 5.5d, 184, () -> Items.OBSIDIAN, 5, Rarity.COMMON);
+	public static final SPShieldMaterial COATED_SHIELD_MATERIAL = new SPShieldMaterial("coated_copper", 3.5d, 184, () -> Items.OBSIDIAN, 5, Rarity.COMMON);
 
 	public static final RegistryObject<SPShieldItem> COATED_SHIELD = SRRegistries.registerShield("coated_copper_shield", COATED_SHIELD_MATERIAL);
     public static final RegistryObject<SimpleParticleType> ELECTROCUTION_SPARKS = SRRegistries.PARTICLE_TYPES.register("electrocution_sparks", () -> new SimpleParticleType(true));

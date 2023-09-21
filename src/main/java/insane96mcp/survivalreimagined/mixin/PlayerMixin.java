@@ -1,6 +1,5 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.event.SREventFactory;
 import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.combat.RegeneratingAbsorption;
 import insane96mcp.survivalreimagined.module.experience.PlayerExperience;
@@ -51,11 +50,6 @@ public abstract class PlayerMixin extends LivingEntity {
 	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/food/FoodData;addExhaustion(F)V", shift = At.Shift.AFTER), method = "causeFoodExhaustion")
 	private void onCauseFoodExhaustion(float amount, CallbackInfo ci) {
 		Tiredness.onFoodExhaustion((Player) (Object) this, amount);
-	}
-
-	@ModifyVariable(method = "causeFoodExhaustion", argsOnly = true, at = @At("HEAD"))
-	private float changeExhaustionAmount(float amount) {
-		return SREventFactory.onPlayerExhaustionEvent((Player) (Object) this, amount);
 	}
 
 	//Changes efficiency formula

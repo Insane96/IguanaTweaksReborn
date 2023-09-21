@@ -163,7 +163,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         forgeRecipe(writer, Items.OBSIDIAN, 2, CopperToolsExpansion.COPPER_SWORD.get(), CopperToolsExpansion.COATED_SWORD.get(), 12, 9);
         forgeRecipe(writer, Items.OBSIDIAN, 2, CopperToolsExpansion.COPPER_HOE.get(), CopperToolsExpansion.COATED_HOE.get(), 12, 9);
         forgeRecipe(writer, Items.OBSIDIAN, 1, CopperToolsExpansion.COPPER_SHOVEL.get(), CopperToolsExpansion.COATED_SHOVEL.get(), 12, 9);
-        forgeRecipe(writer, Items.OBSIDIAN, 4, SPItems.COPPER_SHIELD.get(), CopperToolsExpansion.COATED_SHIELD.get(), 12, 9);
+        forgeRecipe(writer, Items.OBSIDIAN, 4, CopperToolsExpansion.COPPER_SHIELD.get(), CopperToolsExpansion.COATED_SHIELD.get(), 12, 9);
 
         ConditionalRecipe.builder()
                 .addCondition(not(modLoaded("tconstruct")))
@@ -841,7 +841,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         recycleGearBlasting(writer, Keego.SWORD.get(), Keego.GEM.get(), 200, 1);
 
         //Recycle Shields
-        recycleGearBlasting(writer, SPItems.COPPER_SHIELD.get(), Items.COPPER_INGOT, 200, 4);
+        recycleGearBlasting(writer, CopperToolsExpansion.COPPER_SHIELD.get(), Items.COPPER_INGOT, 200, 4);
         recycleGearBlasting(writer, Items.SHIELD, Items.IRON_NUGGET, 200, 36);
         recycleGearBlasting(writer, Durium.SHIELD.get(), Durium.NUGGET.get(), 200, 9);
         recycleGearBlasting(writer, SPItems.GOLDEN_SHIELD.get(), Items.GOLD_NUGGET, 200, 36);
@@ -877,7 +877,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
         forgeRecipe(writer, Items.GOLD_INGOT, 5, Forging.FLINT_HAMMER.get(), Forging.GOLDEN_HAMMER.get(), 4, 9f);
         forgeRecipe(writer, Items.OBSIDIAN, 5, Forging.COPPER_HAMMER.get(), Forging.COATED_COPPER_HAMMER.get(), 12, 9f);
         forgeRecipe(writer, Items.DIAMOND, 5, Forging.GOLDEN_HAMMER.get(), Forging.DIAMOND_HAMMER.get(), 16, 15f);
-        SmithingTransformRecipeBuilder.smithing(/*TODO Smithing template from Fortresses*/Ingredient.EMPTY, Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, Forging.SOUL_STEEL_HAMMER.get())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get()), Ingredient.of(Forging.IRON_HAMMER.get()), Ingredient.of(SoulSteel.INGOT.get()), RecipeCategory.TOOLS, Forging.SOUL_STEEL_HAMMER.get())
                 .unlocks("has_material", has(SoulSteel.INGOT.get()))
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "soul_steel_hammer");
         SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(Forging.DIAMOND_HAMMER.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.TOOLS, Forging.NETHERITE_HAMMER.get())

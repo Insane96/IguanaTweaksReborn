@@ -1,8 +1,8 @@
 package insane96mcp.survivalreimagined.effect;
 
-import insane96mcp.insanelib.util.ILMobEffect;
+import insane96mcp.insanelib.event.PlayerExhaustionEvent;
+import insane96mcp.insanelib.world.effect.ILMobEffect;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.event.PlayerExhaustionEvent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;

@@ -4,7 +4,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.util.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
@@ -41,19 +41,19 @@ public class Hoes extends SRFeature {
 	public static final TagKey<Item> DISABLED_HOES = SRItemTagsProvider.create("disabled_hoes");
 
 	public static final ArrayList<HoeStat> HOES_STATS_DEFAULT = new ArrayList<>(Arrays.asList(
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:wooden_hoe", 40, 4, 0),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:stone_hoe", 30, 4, 1),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:flint_hoe", 22, 4, 1),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:copper_hoe", 10, 3, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:iron_hoe", 20, 3, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:solarium_hoe", 22, 3, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:durium_hoe", 18, 3, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:golden_hoe", 5, 1, 0),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:coated_copper_hoe", 10, 2, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:diamond_hoe", 15, 3, 3),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:soul_steel_hoe", 15, 2, 2),
-			new HoeStat(IdTagMatcher.Type.ID, "survivalreimagined:keego_hoe", 8, 2, 3),
-			new HoeStat(IdTagMatcher.Type.ID, "minecraft:netherite_hoe", 10, 2, 3)
+			new HoeStat(IdTagMatcher.newId("minecraft:wooden_hoe"), 40, 4, 0),
+			new HoeStat(IdTagMatcher.newId("minecraft:stone_hoe"), 30, 4, 1),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:flint_hoe"), 22, 4, 1),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:copper_hoe"), 10, 3, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:iron_hoe"), 20, 3, 2),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:solarium_hoe"), 22, 3, 2),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:durium_hoe"), 18, 3, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:golden_hoe"), 5, 1, 0),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:coated_copper_hoe"), 10, 2, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:diamond_hoe"), 15, 3, 3),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:soul_steel_hoe"), 15, 2, 2),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:keego_hoe"), 8, 2, 3),
+			new HoeStat(IdTagMatcher.newId("minecraft:netherite_hoe"), 10, 2, 3)
 	));
 
 	public static final ArrayList<HoeStat> hoesStats = new ArrayList<>();
@@ -112,7 +112,7 @@ public class Hoes extends SRFeature {
 		if (event.getPlayer().getCooldowns().isOnCooldown(hoe.getItem()))
 			return;
 		for (HoeStat hoeStat : hoesStats) {
-			if (hoeStat.matchesItem(hoe.getItem(), null)) {
+			if (hoeStat.hoe.matchesItem(hoe.getItem(), null)) {
 				if (hoeStat.cooldown > 0) {
 					int efficiency = hoe.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
 					int cooldown = hoeStat.cooldown - (efficiency * efficiencyCooldownReduction);
@@ -133,7 +133,7 @@ public class Hoes extends SRFeature {
 				|| !event.getState().canBeReplaced())
 			return;
 		for (HoeStat hoeStat : hoesStats) {
-			if (hoeStat.matchesItem(event.getPlayer().getMainHandItem().getItem(), null) && hoeStat.scytheRadius > 0) {
+			if (hoeStat.hoe.matchesItem(event.getPlayer().getMainHandItem().getItem(), null) && hoeStat.scytheRadius > 0) {
 				BlockPos.betweenClosedStream(event.getPos().offset(-hoeStat.scytheRadius, -(hoeStat.scytheRadius - 1), -hoeStat.scytheRadius), event.getPos().offset(hoeStat.scytheRadius, hoeStat.scytheRadius - 1, hoeStat.scytheRadius))
 						.forEach(pos -> {
 							BlockState state = event.getPlayer().level().getBlockState(pos);
@@ -163,7 +163,7 @@ public class Hoes extends SRFeature {
 		}
 		else {
 			for (HoeStat hoeStat : hoesStats) {
-				if (!hoeStat.matchesItem(event.getItemStack().getItem(), null)
+				if (!hoeStat.hoe.matchesItem(event.getItemStack().getItem(), null)
 						|| hoeStat.cooldown <= 0)
 					continue;
 

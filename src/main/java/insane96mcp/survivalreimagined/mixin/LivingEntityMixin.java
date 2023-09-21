@@ -2,7 +2,6 @@ package insane96mcp.survivalreimagined.mixin;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.util.MCUtils;
-import insane96mcp.survivalreimagined.event.SREventFactory;
 import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.combat.RegeneratingAbsorption;
 import insane96mcp.survivalreimagined.module.movement.TerrainSlowdown;
@@ -15,7 +14,6 @@ import net.minecraft.world.entity.Attackable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,7 +21,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
@@ -79,11 +76,5 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
     @Redirect(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setAbsorptionAmount(F)V", ordinal = 1))
     private void onSetAbsorptionSecondtime(LivingEntity instance, float absorption) {
         //Cancel Mojang damaging absorption twice for some reasons
-    }
-
-    @Inject(method = "addEatEffect", at = @At("HEAD"), cancellable = true)
-    private void onAddEatEffect(ItemStack pFood, Level pLevel, LivingEntity pLivingEntity, CallbackInfo ci) {
-        if (SREventFactory.onAddEatEffect(pFood, pLevel, pLivingEntity))
-            ci.cancel();
     }
 }
