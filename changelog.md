@@ -14,7 +14,8 @@
 * Added Swift Strike
   * A new "damaging" enchantment that increases attack speed
 * Added keego
-  * A new gem found stuck in Nether's bedrock. A blast might extract it
+  * A new gem found stuck in Nether's bedrock. A blast might extract it.
+  * Gear helps with momentum
 * Soul Steel gear now require an upgrade template like Netherite
   * The upgrade template can be found in fortresses
 * Removed Ensorceller and added back normal enchanting table recipe

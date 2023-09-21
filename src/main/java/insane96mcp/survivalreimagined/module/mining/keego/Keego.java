@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -84,8 +85,7 @@ public class Keego extends Feature {
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRRegistries.registerShield("keego_shield", SHIELD_MATERIAL);
 
-	//TODO Keego shield should increase the damaged blocked
-	//TODO Keego hammer decreases cooldown
+	//TODO Keego shield adds movement speed to the wearer
 
 	public Keego(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -133,7 +133,7 @@ public class Keego extends Feature {
 		});
 		if (maxAmplifier.get() == 0)
 			return;
-		if (event.player.walkDist % 7.5 < event.player.walkDistO % 7.5) {
+		if (event.player.walkDist % 8 < event.player.walkDistO % 8) {
 			int amplifier = 0;
 			if (event.player.hasEffect(MOVEMENT_MOMENTUM.get()))
 				//noinspection DataFlowIssue
@@ -142,6 +142,21 @@ public class Keego extends Feature {
 			event.player.addEffect(new MobEffectInstance(MOVEMENT_MOMENTUM.get(), 100, Math.min(amplifier, maxAmplifier.get() - 1), false, false, true));
 		}
 
+	}
+
+	@SubscribeEvent
+	public void shieldParryEvent(ShieldBlockEvent event) {
+		if (!this.isEnabled()
+				|| event.getEntity().level().isClientSide
+				|| !event.getEntity().getUseItem().is(SHIELD.get()))
+			return;
+
+		int amplifier = 0;
+		if (event.getEntity().hasEffect(MOVEMENT_MOMENTUM.get()))
+			//noinspection DataFlowIssue
+			amplifier = event.getEntity().getEffect(MOVEMENT_MOMENTUM.get()).getAmplifier() + 1;
+
+		event.getEntity().addEffect(new MobEffectInstance(MOVEMENT_MOMENTUM.get(), 100, Math.min(amplifier, 7), false, false, true));
 	}
 
 	@SubscribeEvent
