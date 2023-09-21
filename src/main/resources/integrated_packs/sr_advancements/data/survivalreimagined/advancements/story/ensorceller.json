@@ -1,7 +1,7 @@
 {
 	"display": {
 		"icon": {
-			"item": "survivalreimagined:ensorceller"
+			"item": "survivalreimagined:enchanting_table"
 		},
 		"title": {
 			"translate": "advancements.sr_story.ensorceller.title"
@@ -22,7 +22,7 @@
 				"items": [
 					{
 						"items": [
-							"survivalreimagined:ensorceller"
+							"survivalreimagined:enchanting_table"
 						]
 					}
 				]

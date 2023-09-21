@@ -5,6 +5,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 import javax.annotation.Nullable;
 
+//Serializable wrapper for AttributeModifier.Operation
 public enum AttributeModifierOperation {
     @SerializedName("addition")
     ADDITION(AttributeModifier.Operation.ADDITION, "addition"),

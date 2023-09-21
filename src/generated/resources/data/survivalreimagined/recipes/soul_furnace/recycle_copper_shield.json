@@ -5,7 +5,7 @@
   "group": "recycle_copper_ingot",
   "ingredients": [
     {
-      "item": "shieldsplus:copper_shield"
+      "item": "survivalreimagined:copper_shield"
     }
   ],
   "recycle": {

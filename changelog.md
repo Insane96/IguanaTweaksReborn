@@ -1,7 +1,5 @@
 # Changelog
 
-* Nerf shields parrying damage
-
 ## 0.15.0
 * Added Better Beacon
   * A new beacon with more effects, more amplifiers but with a time cost

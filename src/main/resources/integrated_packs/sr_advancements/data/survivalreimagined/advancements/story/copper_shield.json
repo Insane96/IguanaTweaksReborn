@@ -1,7 +1,7 @@
 {
 	"display": {
 		"icon": {
-			"item": "shieldsplus:copper_shield"
+			"item": "survivalreimagined:copper_shield"
 		},
 		"title": {
 			"translate": "advancements.sr_story.copper_shield.title"
@@ -22,7 +22,7 @@
 				"items": [
 					{
 						"items": [
-							"shieldsplus:copper_shield"
+							"survivalreimagined:copper_shield"
 						]
 					}
 				]

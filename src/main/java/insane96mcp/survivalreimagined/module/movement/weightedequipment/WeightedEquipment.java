@@ -99,7 +99,7 @@ public class WeightedEquipment extends SRFeature {
 	}
 
 	public static void handleArmorWeightSync(String json) {
-		loadAndReadJson(json, armorWeights, ARMOR_WEIGHTS_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE);
+		loadAndReadJson(json, armorWeights, ARMOR_WEIGHTS_DEFAULT, IdTagValue.LIST_TYPE);
 	}
 
 	//Can't use ItemAttributeModifierEvent as I need all the modifiers of the item (ItemStack#getAttributeModifiers) and that causes a loop
