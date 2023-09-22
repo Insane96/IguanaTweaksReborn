@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
 public class SolariumShield extends SPShieldItem {
-	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("solarium", 4.5d, 401, Solarium.SOLARIUM_BALL, 8, Rarity.COMMON);
+	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("solarium", 3.5d, 401, Solarium.SOLARIUM_BALL, 8, Rarity.COMMON);
 	public SolariumShield(Properties p_43089_) {
 		super(SHIELD_MATERIAL, p_43089_);
 	}
