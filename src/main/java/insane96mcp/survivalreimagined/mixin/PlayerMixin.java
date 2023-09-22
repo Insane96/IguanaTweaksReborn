@@ -65,7 +65,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
 	private float onCalculateAbsorption(float f1, DamageSource damageSource, float amount) {
-		if (RegeneratingAbsorption.entityAbsorption() && (!(damageSource.getEntity() instanceof LivingEntity) || damageSource.is(PiercingPickaxes.PIERCING_DAMAGE_TYPE))) {
+		if (RegeneratingAbsorption.entityAbsorption() && (damageSource.getEntity() == null || damageSource.is(PiercingPickaxes.PIERCING_DAMAGE_TYPE))) {
 			return amount;
 		}
 		return Math.max(amount - this.getAbsorptionAmount(), 0.0F);
