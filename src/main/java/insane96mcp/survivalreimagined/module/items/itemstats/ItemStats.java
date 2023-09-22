@@ -346,22 +346,17 @@ public class ItemStats extends SRFeature {
 			return;
 
 		ItemStack stack = event.getStack();
-        if (event.getAmount() >= stack.getMaxDamage() - stack.getDamageValue() && stack.getItem() instanceof Equipable) {
+		if (Utils.isItemInTag(stack.getItem(), NOT_UNBREAKABLE))
+			return;
+		if (event.getAmount() >= stack.getMaxDamage() - stack.getDamageValue() - 1) {
 			event.getStack().setDamageValue(event.getStack().getMaxDamage() - 1);
-            event.setAmount(0);
-            event.getPlayer().getArmorSlots().forEach(itemStack -> {
-                if (itemStack == stack) {
-                    EquipmentSlot equipmentSlot = Player.getEquipmentSlotForItem(stack);
-                    event.getPlayer().setItemSlot(equipmentSlot, ItemStack.EMPTY);
-                    if (!event.getPlayer().addItem(itemStack))
-                        event.getPlayer().drop(itemStack, true);
-                    event.getPlayer().broadcastBreakEvent(equipmentSlot);
-                }
-            });
-        }
-		else if (stack.getDamageValue() + event.getAmount() >= stack.getMaxDamage() - 1 && !Utils.isItemInTag(stack.getItem(), NOT_UNBREAKABLE)) {
-			event.setAmount(stack.getMaxDamage() - stack.getDamageValue() - 1);
+			event.setAmount(0);
 			EquipmentSlot equipmentSlot = Player.getEquipmentSlotForItem(stack);
+			if (stack.getItem() instanceof Equipable) {
+				event.getPlayer().setItemSlot(equipmentSlot, ItemStack.EMPTY);
+				if (!event.getPlayer().addItem(stack))
+					event.getPlayer().drop(stack, true);
+			}
 			event.getPlayer().broadcastBreakEvent(equipmentSlot);
 		}
 	}
