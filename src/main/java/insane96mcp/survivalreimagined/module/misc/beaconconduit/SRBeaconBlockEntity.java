@@ -26,6 +26,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -356,7 +357,7 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
 
     @Override
     protected AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory) {
-        return new SRBeaconMenu(pContainerId, pInventory, this, this.dataAccess);
+        return new SRBeaconMenu(pContainerId, pInventory, this, this.dataAccess, ContainerLevelAccess.create(this.level, this.getBlockPos()));
     }
 
     public Component getDisplayName() {

@@ -74,7 +74,7 @@ public class ExplosionOverhaul extends Feature {
 			if (e instanceof SRExplosion srExplosion && !srExplosion.poofParticles)
 				return;
 			if (e.blockInteraction != Explosion.BlockInteraction.KEEP) {
-				int particleCount = (int) (e.radius * 100);
+				int particleCount = (int) (e.radius * 80);
 				level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.25D);
 				level.sendParticles(ParticleTypes.SMOKE, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.25D);
 			}

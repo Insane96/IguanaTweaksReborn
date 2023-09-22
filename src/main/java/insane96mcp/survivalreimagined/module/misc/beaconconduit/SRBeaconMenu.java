@@ -6,11 +6,9 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.SimpleContainerData;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -25,17 +23,19 @@ public class SRBeaconMenu extends AbstractContainerMenu {
     private final PaymentSlot paymentSlot;
     private final Container container;
     private final ContainerData beaconData;
+    private final ContainerLevelAccess access;
 
     public SRBeaconMenu(int pContainerId, Inventory pPlayerInventory) {
-        this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(SRBeaconBlockEntity.DATA_COUNT));
+        this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), new SimpleContainerData(SRBeaconBlockEntity.DATA_COUNT), ContainerLevelAccess.NULL);
     }
 
-    public SRBeaconMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData containerData) {
+    public SRBeaconMenu(int pContainerId, Inventory pPlayerInventory, Container pContainer, ContainerData containerData, ContainerLevelAccess pAccess) {
         super(BeaconConduit.BEACON_MENU_TYPE.get(), pContainerId);
         checkContainerDataCount(containerData, SRBeaconBlockEntity.DATA_COUNT);
         checkContainerSize(pContainer, SRBeaconBlockEntity.SLOT_COUNT);
         this.container = pContainer;
         this.beaconData = containerData;
+        this.access = pAccess;
         this.addDataSlots(containerData);
         this.paymentSlot = new PaymentSlot(pContainer, 0, 21, 110);
         this.addSlot(this.paymentSlot);
@@ -151,6 +151,7 @@ public class SRBeaconMenu extends AbstractContainerMenu {
     public void updateEffect(Optional<MobEffect> mobEffect, int amplifier) {
         this.beaconData.set(SRBeaconBlockEntity.DATA_EFFECT, mobEffect.map(MobEffect::getId).orElse(-1));
         this.beaconData.set(SRBeaconBlockEntity.DATA_AMPLIFIER, amplifier);
+        this.access.execute(Level::blockEntityChanged);
     }
 
     public int getMaxAmplifier(MobEffect effect) {
