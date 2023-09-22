@@ -16,8 +16,8 @@ public class SolariumArmorItem extends ArmorItem {
 
 	private static final SRArmorMaterial ARMOR_MATERIAL = new SRArmorMaterial("survivalreimagined:solarium", 12, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
 		p_266652_.put(ArmorItem.Type.BOOTS, 2);
-		p_266652_.put(ArmorItem.Type.LEGGINGS, 5);
-		p_266652_.put(ArmorItem.Type.CHESTPLATE, 6);
+		p_266652_.put(ArmorItem.Type.LEGGINGS, 4);
+		p_266652_.put(ArmorItem.Type.CHESTPLATE, 5);
 		p_266652_.put(ArmorItem.Type.HELMET, 2);
 	}), 12, SoundEvents.ARMOR_EQUIP_IRON, 0f, 0f, () -> Ingredient.of(Solarium.SOLARIUM_BALL.get()));
 	public SolariumArmorItem(Type pType, Properties pProperties) {

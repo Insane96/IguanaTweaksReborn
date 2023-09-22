@@ -25,6 +25,7 @@
 * Chainmail armor now gives toughness (or regenerating absorption speed) but has reduced durability
 * Smartness can now be applied to tools too
 * Leather armor has increased durability
+* Solarium armor now gives less armor/regenerating absorption
 * Slightly adjusted food eating speed
 * Changed one stone layer from the altimeter to water
 * Fix missing recipe for bundle with rabbit hide
