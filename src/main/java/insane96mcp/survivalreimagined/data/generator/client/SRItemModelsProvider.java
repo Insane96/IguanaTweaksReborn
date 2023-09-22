@@ -147,6 +147,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItemWithTexture(Minecarts.COPPER_POWERED_RAIL.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/copper_powered_rail"));
         withExistingParent("golden_powered_rail", new ResourceLocation("item/powered_rail"));
         basicItemWithTexture(Minecarts.NETHER_INFUSED_POWERED_RAIL.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/nether_infused_powered_rail"));
+        basicItemWithTexture(Minecarts.DURIUM_RAIL.item().get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "block/durium_rail"));
 
         basicItem(FoodDrinks.OVER_EASY_EGG.get());
         basicItem(FoodDrinks.BROWN_MUSHROOM_STEW.get());
