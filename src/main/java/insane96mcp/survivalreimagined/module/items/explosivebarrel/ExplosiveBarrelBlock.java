@@ -1,7 +1,6 @@
 package insane96mcp.survivalreimagined.module.items.explosivebarrel;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.module.misc.explosionoverhaul.SRExplosion;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -39,8 +38,10 @@ public class ExplosiveBarrelBlock extends Block {
     }
 
     public void onCaughtFire(BlockState state, Level level, BlockPos pos, @Nullable net.minecraft.core.Direction face, @Nullable LivingEntity igniter) {
-        float f = 4.5F;
-        SRExplosion.explode(level, null, null, null, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, f, false, Level.ExplosionInteraction.BLOCK, false);
+        if (level.isClientSide)
+            return;
+        float radius = 4.5F;
+        level.explode(igniter, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, radius, Level.ExplosionInteraction.BLOCK);
     }
 
     public void onProjectileHit(Level p_57429_, BlockState p_57430_, BlockHitResult p_57431_, Projectile p_57432_) {
