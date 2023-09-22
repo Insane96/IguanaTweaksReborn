@@ -95,7 +95,7 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:trident"), UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 1d, AttributeModifier.Operation.ADDITION),
 
 			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:axes"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:axes"), UUID.fromString("1567076a-abb0-4c66-9056-201da11eff8a"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.1d, AttributeModifier.Operation.MULTIPLY_BASE),
+			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:axes"), UUID.fromString("1567076a-abb0-4c66-9056-201da11eff8a"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.15d, AttributeModifier.Operation.MULTIPLY_BASE),
 			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:swords"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -2d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:pickaxes"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:trident"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION)
