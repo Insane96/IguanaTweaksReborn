@@ -18,7 +18,9 @@
   * The upgrade template can be found in fortresses
 * Removed Ensorceller and added back normal enchanting table recipe
 * Piercing damage now bypasses absorption too
-* Powered rails now have different accelerations
+* Rails and Minecarts
+  * Rails and powered rails are now slightly cheaper (about 33% cheaper)
+  * Powered rails now have different accelerations
   * Also fixed normals rails being too slow for powered rails
 * Stamina is now unlocked at 75% max stamina instead of full
 * Axes have reduced attack speed

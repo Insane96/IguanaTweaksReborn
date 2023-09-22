@@ -5,6 +5,9 @@
             "item": "survivalreimagined:golden_powered_rail"
         },
         {
+            "item": "survivalreimagined:golden_powered_rail"
+        },
+        {
             "item": "minecraft:blaze_powder"
         },
         {
@@ -13,6 +16,6 @@
     ],
     "result": {
         "item": "survivalreimagined:nether_infused_powered_rail",
-        "count": 1
+        "count": 2
     }
 }
