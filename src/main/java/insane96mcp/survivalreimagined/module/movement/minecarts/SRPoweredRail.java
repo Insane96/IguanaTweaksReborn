@@ -9,9 +9,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class SRPoweredRail extends PoweredRailBlock {
     final float baseSpeed;
-    public SRPoweredRail(Properties properties, float baseSpeed) {
+    final float acceleration;
+    public SRPoweredRail(Properties properties, float baseSpeed, float acceleration) {
         super(properties, true);
         this.baseSpeed = baseSpeed;
+        this.acceleration = acceleration;
     }
 
     @Override
@@ -19,4 +21,9 @@ public class SRPoweredRail extends PoweredRailBlock {
         if (cart instanceof MinecartFurnace) return cart.isInWater() ? this.baseSpeed * 0.375f : this.baseSpeed * 0.5f;
         else return cart.isInWater() ? this.baseSpeed * 0.5f : this.baseSpeed;
     }
+
+    public float getRailAcceleration(BlockState state, Level level, BlockPos pos, AbstractMinecart cart) {
+        return this.acceleration;
+    }
+
 }

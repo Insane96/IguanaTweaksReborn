@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-22T12:52:06.8636063	Item Models: survivalreimagined
+// 1.20.1	2023-09-22T16:36:55.0312736	Item Models: survivalreimagined
 0e14a5fda7239c8fc0a79813151a4eba3c430f5f assets/survivalreimagined/models/item/ancient_lapis.json
 9db8ff6b8f62a90066f9ec6f113f30579ef147b4 assets/survivalreimagined/models/item/blast_furnace.json
 fe69cbb0039b59fd572532480721ff573ee4aa76 assets/survivalreimagined/models/item/brown_mushroom_stew.json
@@ -41,7 +41,6 @@ a3616734bdafaf6c8a6bc84eaef9b6182a7fe8e8 assets/survivalreimagined/models/item/d
 bcfc6a696d7fd7e977a1c5df500b79a3204758a6 assets/survivalreimagined/models/item/durium_nugget.json
 ee7260d98231b7e4c6902458b7e58305a2f15380 assets/survivalreimagined/models/item/durium_ore.json
 0b67acc97d8bb712a0f9bd0f8ee6273163a473f3 assets/survivalreimagined/models/item/durium_pickaxe.json
-29bac3e0aef5f140cbe2f908771726ed38610e54 assets/survivalreimagined/models/item/durium_rail.json
 9e1d535d987fa1cc61a439e11baa5bef3691d9ac assets/survivalreimagined/models/item/durium_scrap_block.json
 4bb2361d7339752cd9df346e752fb97b46dc5e53 assets/survivalreimagined/models/item/durium_scrap_piece.json
 313300a16ea7cc01a54c0ec8099ea9bf05edd0ac assets/survivalreimagined/models/item/durium_shield.json
