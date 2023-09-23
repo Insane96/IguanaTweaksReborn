@@ -15,6 +15,7 @@ import insane96mcp.survivalreimagined.module.items.solarium.item.*;
 import insane96mcp.survivalreimagined.module.sleeprespawn.death.integration.ToolBelt;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -133,8 +134,6 @@ public class Solarium extends Feature {
 			return;
 
 		float calculatedSkyLight = getCalculatedSkyLightRatio(event.getEntity());
-		if (calculatedSkyLight <= 0f)
-			return;
 		float movementSpeed = 0f;
 		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
 			ItemStack stack = event.getEntity().getItemBySlot(equipmentSlot);
@@ -144,12 +143,13 @@ public class Solarium extends Feature {
 		}
 		AttributeInstance movSpeed = event.getEntity().getAttribute(Attributes.MOVEMENT_SPEED);
 		AttributeModifier modifier = movSpeed.getModifier(MOVEMENT_SPEED_MODIFIER_UUID);
-		if (modifier == null) {
+		if (modifier == null && movementSpeed > 0f) {
 			MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", movementSpeed, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
 		else if (modifier.getAmount() != movementSpeed) {
 			movSpeed.removeModifier(MOVEMENT_SPEED_MODIFIER_UUID);
-			MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", movementSpeed, AttributeModifier.Operation.MULTIPLY_BASE, false);
+			if (movementSpeed > 0f)
+				MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", movementSpeed, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
 	}
 
@@ -169,18 +169,21 @@ public class Solarium extends Feature {
 		if (!event.getEntity().getMainHandItem().is(SOLARIUM_EQUIPMENT)
 				|| !event.getEntity().getMainHandItem().isCorrectToolForDrops(event.getState()))
 			return;
-		float calculatedSkyLight = getCalculatedSkyLightRatio(event.getEntity());
+		float calculatedSkyLight = getCalculatedSkyLightRatio(event.getEntity().level(), event.getEntity().blockPosition());
 		if (calculatedSkyLight <= 0f)
 			return;
 		event.setNewSpeed(event.getOriginalSpeed() * (1 + 0.75f * calculatedSkyLight));
 	}
 
 	public static float getCalculatedSkyLight(Entity entity) {
-		Level level = entity.level();
+		return getCalculatedSkyLight(entity.level(), entity.blockPosition());
+	}
+
+	public static float getCalculatedSkyLight(Level level, BlockPos pos) {
 		if (level.getDayTime() % 24000 > 12542
 				|| level.isThundering())
 			return 0f;
-		float skyLight = level.getBrightness(LightLayer.SKY, entity.blockPosition());
+		float skyLight = level.getBrightness(LightLayer.SKY, pos);
 		if (level.isRaining())
 			skyLight /= 3f;
 		return skyLight;
@@ -188,6 +191,10 @@ public class Solarium extends Feature {
 
 	public static float getCalculatedSkyLightRatio(Entity entity) {
 		return getCalculatedSkyLight(entity) / 15f;
+	}
+
+	public static float getCalculatedSkyLightRatio(Level level, BlockPos pos) {
+		return getCalculatedSkyLight(level, pos) / 15f;
 	}
 
 	@SubscribeEvent

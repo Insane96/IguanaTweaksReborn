@@ -2,7 +2,7 @@
 
 ## 0.15.0
 * Added Better Beacon
-  * A new beacon with more effects, more amplifiers but with a rechargable time cost
+  * A new beacon with more effects, more amplifiers but with a rechargeable time cost
 * Added unbreakable items
   * Metal gear will no longer break, instead they stay at one durability.  
 * Added Name Tags feature
@@ -35,6 +35,7 @@
 * Fix missing recipe for bundle with rabbit hide
 * Fixed solarium items resetting breaking blocks when healed
 * Lowered solium moss found on boulders
+* Coated copper can no longer be repaired with copper
 * Mobs now drop 25% more experience
 * Increased experience required to level up (~~35~~ -> 40)
 * Fixed music not playing more often
