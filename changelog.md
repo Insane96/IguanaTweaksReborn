@@ -2,7 +2,7 @@
 
 ## 0.15.0
 * Added Better Beacon
-  * A new beacon with more effects, more amplifiers but with a time cost
+  * A new beacon with more effects, more amplifiers but with a rechargable time cost
 * Added unbreakable items
   * Metal gear will no longer break, instead they stay at one durability.  
 * Added Name Tags feature
