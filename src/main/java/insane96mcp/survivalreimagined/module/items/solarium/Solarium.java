@@ -58,7 +58,7 @@ public class Solarium extends Feature {
 	public static final SimpleBlockWithItem SOLIUM_MOSS = SimpleBlockWithItem.register("solium_moss", () -> new SoliumMossBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_YELLOW).pushReaction(PushReaction.DESTROY).noCollission().strength(0.4F).sound(SoundType.GLOW_LICHEN).lightLevel(GlowLichenBlock.emission(9)).randomTicks()));
 	public static final RegistryObject<Item> SOLARIUM_BALL = SRRegistries.ITEMS.register("solarium_ball", () -> new Item(new Item.Properties()));
 
-	public static final ILItemTier ITEM_TIER = new ILItemTier(2, 207, 5.5f, 1.5f, 12, () -> Ingredient.of(SOLARIUM_BALL.get()));
+	public static final ILItemTier ITEM_TIER = new ILItemTier(2, 207, 5f, 1f, 11, () -> Ingredient.of(SOLARIUM_BALL.get()));
 
 	public static final RegistryObject<Item> SWORD = SRRegistries.ITEMS.register("solarium_sword", () -> new SolariumSwordItem(3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> SHOVEL = SRRegistries.ITEMS.register("solarium_shovel", () -> new SolariumShovelItem(1.5F, -3.0F, new Item.Properties()));
@@ -161,7 +161,7 @@ public class Solarium extends Feature {
 		float calculatedSkyLight = getCalculatedSkyLightRatio(event.getEntity());
 		if (calculatedSkyLight <= 0f)
 			return;
-		event.setAmount(event.getAmount() * (1 + 0.25f * calculatedSkyLight));
+		event.setAmount(event.getAmount() * (1 + 0.5f * calculatedSkyLight));
 	}
 
 	@SubscribeEvent
@@ -172,7 +172,7 @@ public class Solarium extends Feature {
 		float calculatedSkyLight = getCalculatedSkyLightRatio(event.getEntity().level(), event.getEntity().blockPosition());
 		if (calculatedSkyLight <= 0f)
 			return;
-		event.setNewSpeed(event.getOriginalSpeed() * (1 + 0.75f * calculatedSkyLight));
+		event.setNewSpeed(event.getOriginalSpeed() * (1 + 1.5f * calculatedSkyLight));
 	}
 
 	public static float getCalculatedSkyLight(Entity entity) {

@@ -29,11 +29,13 @@
 * Chainmail armor now gives toughness (or regenerating absorption speed) but has reduced durability
 * Smartness can now be applied to tools too
 * Leather armor has increased durability
-* Solarium armor now gives less armor/regenerating absorption
+* Solarium
+  * Solarium efficiency, damage and blocked damage have been reduced but the effect has been doubled (so it's better under the sun but not without it)
+  * Solarium armor now gives less armor/regenerating absorption
+  * Fixed solarium items resetting breaking blocks when healed
 * Slightly adjusted food eating speed
 * Changed one stone layer from the altimeter to water
 * Fix missing recipe for bundle with rabbit hide
-* Fixed solarium items resetting breaking blocks when healed
 * Lowered solium moss found on boulders
 * Coated copper can no longer be repaired with copper
 * Mobs now drop 25% more experience
