@@ -133,20 +133,20 @@ public class Solarium extends Feature {
 		if (event.getEntity().tickCount % 2 != 1)
 			return;
 
-		float calculatedSkyLight = getCalculatedSkyLightRatio(event.getEntity());
+		float calculatedSkyLightRatio = getCalculatedSkyLightRatio(event.getEntity());
 		float movementSpeed = 0f;
 		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
 			ItemStack stack = event.getEntity().getItemBySlot(equipmentSlot);
 			if (!equipmentSlot.isArmor() || !stack.is(SOLARIUM_EQUIPMENT))
 				continue;
-			movementSpeed += 0.1f * calculatedSkyLight;
+			movementSpeed += 0.1f * calculatedSkyLightRatio;
 		}
 		AttributeInstance movSpeed = event.getEntity().getAttribute(Attributes.MOVEMENT_SPEED);
 		AttributeModifier modifier = movSpeed.getModifier(MOVEMENT_SPEED_MODIFIER_UUID);
 		if (modifier == null && movementSpeed > 0f) {
 			MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", movementSpeed, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
-		else if (modifier.getAmount() != movementSpeed) {
+		else if (modifier != null && modifier.getAmount() != movementSpeed) {
 			movSpeed.removeModifier(MOVEMENT_SPEED_MODIFIER_UUID);
 			if (movementSpeed > 0f)
 				MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", movementSpeed, AttributeModifier.Operation.MULTIPLY_BASE, false);
@@ -158,10 +158,10 @@ public class Solarium extends Feature {
 		if (!(event.getSource().getEntity() instanceof LivingEntity entity)
 				|| !entity.getMainHandItem().is(SOLARIUM_EQUIPMENT))
 			return;
-		float calculatedSkyLight = getCalculatedSkyLightRatio(event.getEntity());
-		if (calculatedSkyLight <= 0f)
+		float calculatedSkyLightRatio = getCalculatedSkyLightRatio(event.getEntity());
+		if (calculatedSkyLightRatio <= 0f)
 			return;
-		event.setAmount(event.getAmount() * (1 + 0.5f * calculatedSkyLight));
+		event.setAmount(event.getAmount() * (1 + 0.5f * calculatedSkyLightRatio));
 	}
 
 	@SubscribeEvent
@@ -169,10 +169,10 @@ public class Solarium extends Feature {
 		if (!event.getEntity().getMainHandItem().is(SOLARIUM_EQUIPMENT)
 				|| !event.getEntity().getMainHandItem().isCorrectToolForDrops(event.getState()))
 			return;
-		float calculatedSkyLight = getCalculatedSkyLightRatio(event.getEntity().level(), event.getEntity().blockPosition());
-		if (calculatedSkyLight <= 0f)
+		float calculatedSkyLightRatio = getCalculatedSkyLightRatio(event.getEntity().level(), event.getEntity().blockPosition());
+		if (calculatedSkyLightRatio <= 0f)
 			return;
-		event.setNewSpeed(event.getOriginalSpeed() * (1 + 1.5f * calculatedSkyLight));
+		event.setNewSpeed(event.getOriginalSpeed() * (1 + 1.5f * calculatedSkyLightRatio));
 	}
 
 	public static float getCalculatedSkyLight(Entity entity) {
@@ -180,21 +180,20 @@ public class Solarium extends Feature {
 	}
 
 	public static float getCalculatedSkyLight(Level level, BlockPos pos) {
-		if (level.getDayTime() % 24000 > 12542
-				|| level.isThundering())
+		if (!level.isDay())
 			return 0f;
-		float skyLight = level.getBrightness(LightLayer.SKY, pos);
+		float skyLight = level.getBrightness(LightLayer.SKY, pos) - level.getSkyDarken();
 		if (level.isRaining())
 			skyLight /= 3f;
 		return skyLight;
 	}
 
 	public static float getCalculatedSkyLightRatio(Entity entity) {
-		return getCalculatedSkyLight(entity) / 15f;
+		return getCalculatedSkyLightRatio(entity.level(), entity.blockPosition());
 	}
 
 	public static float getCalculatedSkyLightRatio(Level level, BlockPos pos) {
-		return getCalculatedSkyLight(level, pos) / 15f;
+		return Math.min(getCalculatedSkyLight(level, pos), 12f) / 12f;
 	}
 
 	@SubscribeEvent

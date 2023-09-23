@@ -30,8 +30,9 @@
 * Smartness can now be applied to tools too
 * Leather armor has increased durability
 * Solarium
-  * Solarium efficiency, damage and blocked damage have been reduced but the effect has been doubled (so it's better under the sun but not without it)
-  * Solarium armor now gives less armor/regenerating absorption
+  * Efficiency, damage and blocked damage have been reduced but the effect has been doubled (so it's better under the sun but not without it)
+  * Bonus now counts 12+ light level as max bonus speed
+  * Armor now gives less armor/regenerating absorption
   * Fixed solarium items resetting breaking blocks when healed
 * Slightly adjusted food eating speed
 * Changed one stone layer from the altimeter to water

@@ -58,9 +58,10 @@
     "minVersion": "0.8",
     "client": [
         "client.AnvilScreenMixin",
+        "client.ClientLevelMixin",
         "client.GameRendererMixin",
         "client.LevelRendererMixin",
         "client.LocalPlayerMixin",
         "client.MinecraftMixin"
-	]
+    ]
 }
