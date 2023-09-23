@@ -23,22 +23,24 @@
   * Powered rails now have different accelerations
   * Also fixed normals rails being too slow for powered rails
 * Stamina is now unlocked at 75% max stamina instead of full
-* Axes have reduced attack speed
-* Gold Tools and Sword now have +1.5 damage (similar to flint tools)
-* Copper tools now last ~~3%~~ -> 4% more per block below sea level (~~+200%~~ -> +350% at y=0 and ~~+350%~~ -> +600% at y=-56)
-* Chainmail armor now gives toughness (or regenerating absorption speed) but has reduced durability
-* Smartness can now be applied to tools too
-* Leather armor has increased durability
 * Solarium
   * Efficiency, damage and blocked damage have been reduced but the effect has been doubled (so it's better under the sun but not without it)
   * Bonus now counts 12+ light level as max bonus speed
   * Armor now gives less armor/regenerating absorption
   * Fixed solarium items resetting breaking blocks when healed
+  * Lowered solium moss boulders generation and moss generated on boulders
+* Stats
+  * Axes have reduced attack speed
+  * Gold Tools and Sword now have +1.5 damage (similar to flint tools)
+  * Chainmail armor now gives toughness (or regenerating absorption speed) but has reduced durability
+  * Leather armor has increased durability
+* Copper tools now last ~~3%~~ -> 4% more per block below sea level (~~+200%~~ -> +350% at y=0 and ~~+350%~~ -> +600% at y=-56)
+* Smartness can now be applied to tools too
 * Slightly adjusted food eating speed
 * Changed one stone layer from the altimeter to water
 * Fix missing recipe for bundle with rabbit hide
-* Lowered solium moss found on boulders
 * Coated copper can no longer be repaired with copper
+* Further reduced durium generation
 * Increased experience required to level up (~~35~~ -> 40)
 * Removed increased experience from ores
 * Fixed music not playing more often
