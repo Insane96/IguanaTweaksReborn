@@ -23,6 +23,5 @@
             "operation": "multiply_base"
         }
     ],
-    "priority": 1,
-    "experience_multiplier": 1.25
+    "priority": 1
 }

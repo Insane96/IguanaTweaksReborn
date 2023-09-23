@@ -38,8 +38,8 @@
 * Fix missing recipe for bundle with rabbit hide
 * Lowered solium moss found on boulders
 * Coated copper can no longer be repaired with copper
-* Mobs now drop 25% more experience
 * Increased experience required to level up (~~35~~ -> 40)
+* Removed increased experience from ores
 * Fixed music not playing more often
 * Melee protection now increases attack speed by 2% per level
 * Tridents can now be repaired with Prismarine Crystals

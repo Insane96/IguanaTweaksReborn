@@ -29,22 +29,10 @@ public class BlockExperience extends SRFeature {
 
 	public static final ArrayList<IdTagRange> CUSTOM_BLOCKS_EXPERIENCE_DEFAULT = new ArrayList<>(List.of(
 			IdTagRange.newTag("survivalreimagined:copper_ores", 0, 2),
-			IdTagRange.newTag("survivalreimagined:iron_ores", 1, 3),
-			IdTagRange.newTag("survivalreimagined:gold_ores", 2, 4),
-			IdTagRange.newId("minecraft:coal_ore", 1, 2),
-			IdTagRange.newId("minecraft:deepslate_coal_ore", 1, 2),
-			IdTagRange.newId("minecraft:lapis_ore", 4, 7),
-			IdTagRange.newId("minecraft:deepslate_lapis_ore", 4, 7),
-			IdTagRange.newId("minecraft:diamond_ore", 5, 10),
-			IdTagRange.newId("minecraft:deepslate_diamond_ore", 5, 10),
-			IdTagRange.newId("minecraft:redstone_ore", 2, 6),
-			IdTagRange.newId("minecraft:deepslate_redstone_ore", 2, 6),
-			IdTagRange.newId("minecraft:emerald_ore", 8, 14),
-			IdTagRange.newId("minecraft:deepslate_emerald_ore", 8, 14),
-			IdTagRange.newId("minecraft:emerald_ore", 8, 14),
-			IdTagRange.newId("minecraft:deepslate_emerald_ore", 8, 14),
+			IdTagRange.newTag("survivalreimagined:iron_ores", 1, 2),
+			IdTagRange.newTag("survivalreimagined:gold_ores", 2, 3),
 
-			IdTagRange.newId("minecraft:sculk_catalyst", 35, 35)
+			IdTagRange.newId("minecraft:sculk_catalyst", 40, 40)
 	));
 
 	public static final ArrayList<IdTagRange> customBlocksExperience = new ArrayList<>();

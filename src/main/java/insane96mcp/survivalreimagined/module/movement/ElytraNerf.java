@@ -20,7 +20,7 @@ public class ElytraNerf extends Feature {
 
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Strength", description = "How much the player is pulled down when flying with elytra in non-end dimensions.")
-	public static Double pullStrength = 0.35d;
+	public static Double pullStrength = 0.45d;
 
 	public ElytraNerf(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
