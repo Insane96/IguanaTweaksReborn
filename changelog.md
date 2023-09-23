@@ -37,6 +37,7 @@
 * Lowered solium moss found on boulders
 * Mobs now drop 25% more experience
 * Increased experience required to level up (~~35~~ -> 40)
+* Fixed music not playing more often
 * Melee protection now increases attack speed by 2% per level
 * Tridents can now be repaired with Prismarine Crystals
 * Removed sharpness

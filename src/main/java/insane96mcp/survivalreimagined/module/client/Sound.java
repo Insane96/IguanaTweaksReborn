@@ -12,12 +12,12 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 @Label(name = "Sounds & Music", description = "Changes to sounds and music")
-@LoadFeature(module = ClientModules.Ids.CLIENT, enabledByDefault = false)
+@LoadFeature(module = ClientModules.Ids.CLIENT)
 public class Sound extends Feature {
 
     @Config
     @Label(name = "Music delay multiplier", description = "Multiplies the time it takes for music to play by this value (in vanilla, normal music plays each 10 to 20 minutes).")
-    public static Double musicDelayMultiplier = 0.333d;
+    public static Double musicDelayMultiplier = 0.4d;
 
     public Sound(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
