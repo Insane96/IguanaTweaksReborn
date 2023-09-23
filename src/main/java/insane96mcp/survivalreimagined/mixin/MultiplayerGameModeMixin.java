@@ -5,6 +5,7 @@ import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,9 +23,19 @@ public abstract class MultiplayerGameModeMixin {
 
     @Shadow @Final private Minecraft minecraft;
 
+    @Shadow private BlockPos destroyBlockPos;
+
+    @Shadow private ItemStack destroyingItem;
+
     @Inject(method = "continueDestroyBlock", at = @At("HEAD"))
-    private void test(BlockPos pPosBlock, Direction pDirectionFacing, CallbackInfoReturnable<Boolean> cir) {
+    private void fasterCrativeBlockBreaking(BlockPos pPosBlock, Direction pDirectionFacing, CallbackInfoReturnable<Boolean> cir) {
         if (this.localPlayerMode.isCreative() && this.minecraft.level.getWorldBorder().isWithinBounds(pPosBlock) && this.minecraft.player.getMainHandItem().getItem() instanceof DiggerItem)
             this.destroyDelay--;
+    }
+
+    @Inject(method = "sameDestroyTarget", at = @At("HEAD"), cancellable = true)
+    private void fixHealingItemsResettingBreaking(BlockPos pPos, CallbackInfoReturnable<Boolean> cir) {
+        ItemStack itemstack = this.minecraft.player.getMainHandItem();
+        cir.setReturnValue(pPos.equals(this.destroyBlockPos) && !destroyingItem.shouldCauseBlockBreakReset(itemstack));
     }
 }

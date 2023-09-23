@@ -33,6 +33,8 @@
 * Slightly adjusted food eating speed
 * Changed one stone layer from the altimeter to water
 * Fix missing recipe for bundle with rabbit hide
+* Fixed solarium items resetting breaking blocks when healed
+* Lowered solium moss found on boulders
 * Mobs now drop 25% more experience
 * Melee protection now increases attack speed by 2% per level
 * Tridents can now be repaired with Prismarine Crystals
