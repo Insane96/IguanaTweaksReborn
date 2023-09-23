@@ -50,12 +50,7 @@ import java.util.UUID;
 @Label(name = "Solarium", description = "Add Solarium, a new metal made by alloying Overgrown solium moss ball (found in hot biomes) and can be used to upgrade Iron Equipment")
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class Solarium extends Feature {
-	public static final UUID[] MOVEMENT_SPEED_MODIFIER_UUIDS = new UUID[] {
-			UUID.fromString("c9c18638-6505-4544-9871-6397916fd0b7"),
-			UUID.fromString("64ccd03d-2fd8-4cd7-b395-e334bd1c9f5d"),
-			UUID.fromString("6ae004b1-404e-495b-bfae-85d7a3aefea6"),
-			UUID.fromString("7f5e7b07-e1b4-452d-82b9-105ada7d3238")
-	};
+	public static final UUID MOVEMENT_SPEED_MODIFIER_UUID = UUID.fromString("c9c18638-6505-4544-9871-6397916fd0b7");
 
 	public static final TagKey<Item> SOLARIUM_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/solarium"));
 
@@ -140,15 +135,21 @@ public class Solarium extends Feature {
 		float calculatedSkyLight = getCalculatedSkyLightRatio(event.getEntity());
 		if (calculatedSkyLight <= 0f)
 			return;
+		float movementSpeed = 0f;
 		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
-			if (!equipmentSlot.isArmor())
-				continue;
 			ItemStack stack = event.getEntity().getItemBySlot(equipmentSlot);
-			AttributeInstance movSpeed = event.getEntity().getAttribute(Attributes.MOVEMENT_SPEED);
-			if (stack.is(SOLARIUM_EQUIPMENT))
-				MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUIDS[equipmentSlot.getIndex()], "Solarium movement speed boost", 0.1f * calculatedSkyLight, AttributeModifier.Operation.MULTIPLY_BASE, false);
-			else if (movSpeed != null && movSpeed.getModifier(MOVEMENT_SPEED_MODIFIER_UUIDS[equipmentSlot.getIndex()]) != null)
-				movSpeed.removeModifier(MOVEMENT_SPEED_MODIFIER_UUIDS[equipmentSlot.getIndex()]);
+			if (!equipmentSlot.isArmor() || !stack.is(SOLARIUM_EQUIPMENT))
+				continue;
+			movementSpeed += 0.1f * calculatedSkyLight;
+		}
+		AttributeInstance movSpeed = event.getEntity().getAttribute(Attributes.MOVEMENT_SPEED);
+		AttributeModifier modifier = movSpeed.getModifier(MOVEMENT_SPEED_MODIFIER_UUID);
+		if (modifier == null) {
+			MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", 0.1f * calculatedSkyLight, AttributeModifier.Operation.MULTIPLY_BASE, false);
+		}
+		else if (modifier.getAmount() != movementSpeed) {
+			movSpeed.removeModifier(MOVEMENT_SPEED_MODIFIER_UUID);
+			MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", 0.1f * calculatedSkyLight, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
 	}
 
