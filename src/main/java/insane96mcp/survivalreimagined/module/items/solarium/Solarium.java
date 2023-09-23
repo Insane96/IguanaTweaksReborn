@@ -145,11 +145,11 @@ public class Solarium extends Feature {
 		AttributeInstance movSpeed = event.getEntity().getAttribute(Attributes.MOVEMENT_SPEED);
 		AttributeModifier modifier = movSpeed.getModifier(MOVEMENT_SPEED_MODIFIER_UUID);
 		if (modifier == null) {
-			MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", 0.1f * calculatedSkyLight, AttributeModifier.Operation.MULTIPLY_BASE, false);
+			MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", movementSpeed, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
 		else if (modifier.getAmount() != movementSpeed) {
 			movSpeed.removeModifier(MOVEMENT_SPEED_MODIFIER_UUID);
-			MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", 0.1f * calculatedSkyLight, AttributeModifier.Operation.MULTIPLY_BASE, false);
+			MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", movementSpeed, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
 	}
 
