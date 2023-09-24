@@ -52,7 +52,7 @@ Durium extends Feature {
 	public static final RegistryObject<Item> SWORD = SRRegistries.ITEMS.register("durium_sword", () -> new SwordItem(ITEM_TIER, 3, -2.4F, new Item.Properties()));
 	public static final RegistryObject<Item> SHOVEL = SRRegistries.ITEMS.register("durium_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
 	public static final RegistryObject<Item> PICKAXE = SRRegistries.ITEMS.register("durium_pickaxe", () -> new PickaxeItem(ITEM_TIER, 1, -2.8F, new Item.Properties()));
-	public static final RegistryObject<Item> AXE = SRRegistries.ITEMS.register("durium_axe", () -> new AxeItem(ITEM_TIER, 6.0F, -3.2F, new Item.Properties()));
+	public static final RegistryObject<Item> AXE = SRRegistries.ITEMS.register("durium_axe", () -> new AxeItem(ITEM_TIER, 6.0F, -3.1F, new Item.Properties()));
 	public static final RegistryObject<Item> HOE = SRRegistries.ITEMS.register("durium_hoe", () -> new HoeItem(ITEM_TIER, -2, -1.0F, new Item.Properties()));
 
 	private static final SRArmorMaterial ARMOR_MATERIAL = new SRArmorMaterial("survivalreimagined:durium", 20, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {

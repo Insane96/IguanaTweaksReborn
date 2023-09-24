@@ -47,7 +47,7 @@ public class Hoes extends SRFeature {
 			new HoeStat(IdTagMatcher.newId("survivalreimagined:copper_hoe"), 10, 3, 2),
 			new HoeStat(IdTagMatcher.newId("minecraft:iron_hoe"), 20, 3, 2),
 			new HoeStat(IdTagMatcher.newId("survivalreimagined:solarium_hoe"), 22, 3, 2),
-			new HoeStat(IdTagMatcher.newId("survivalreimagined:durium_hoe"), 18, 3, 2),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:durium_hoe"), 20, 3, 2),
 			new HoeStat(IdTagMatcher.newId("minecraft:golden_hoe"), 5, 1, 0),
 			new HoeStat(IdTagMatcher.newId("survivalreimagined:coated_copper_hoe"), 10, 2, 2),
 			new HoeStat(IdTagMatcher.newId("minecraft:diamond_hoe"), 15, 3, 3),
