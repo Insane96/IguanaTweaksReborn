@@ -121,10 +121,10 @@ public class ItemStats extends SRFeature {
 			IdTagValue.newId("minecraft:golden_leggings", 90),
 			IdTagValue.newId("minecraft:golden_boots", 78),
 
-			IdTagValue.newId("minecraft:diamond_helmet", 238),
-			IdTagValue.newId("minecraft:diamond_chestplate", 317),
-			IdTagValue.newId("minecraft:diamond_leggings", 297),
-			IdTagValue.newId("minecraft:diamond_boots", 257),
+			IdTagValue.newId("minecraft:diamond_helmet", 158),
+			IdTagValue.newId("minecraft:diamond_chestplate", 211),
+			IdTagValue.newId("minecraft:diamond_leggings", 198),
+			IdTagValue.newId("minecraft:diamond_boots", 172),
 
 			IdTagValue.newId("survivalreimagined:soul_steel_helmet", 252),
 			IdTagValue.newId("survivalreimagined:soul_steel_chestplate", 336),
@@ -136,10 +136,10 @@ public class ItemStats extends SRFeature {
 			IdTagValue.newId("survivalreimagined:keego_leggings", 165),
 			IdTagValue.newId("survivalreimagined:keego_boots", 143),
 
-			IdTagValue.newId("minecraft:netherite_helmet", 222),
-			IdTagValue.newId("minecraft:netherite_chestplate", 296),
-			IdTagValue.newId("minecraft:netherite_leggings", 278),
-			IdTagValue.newId("minecraft:netherite_boots", 241),
+			IdTagValue.newId("minecraft:netherite_helmet", 178),
+			IdTagValue.newId("minecraft:netherite_chestplate", 237),
+			IdTagValue.newId("minecraft:netherite_leggings", 222),
+			IdTagValue.newId("minecraft:netherite_boots", 192),
 
 			IdTagValue.newId("shieldsplus:wooden_shield", 32),
 			IdTagValue.newId("survivalreimagined:flint_shield", 82),
