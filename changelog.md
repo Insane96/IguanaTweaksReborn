@@ -4,7 +4,8 @@
 * Added Better Beacon
   * A new beacon with more effects, more amplifiers but with a rechargeable time cost
 * Added unbreakable items
-  * Metal gear will no longer break, instead they stay at one durability.  
+  * Metal gear (made in a Forge) will no longer break, instead they stay at one durability.  
+  * This also applies to any enchanted item
 * Added Name Tags feature
   * Retrieve name tags from name tagged entities, from changing their name to their demise
 * Seasons 
@@ -36,6 +37,7 @@
   * Leather armor has increased durability
 * Copper tools now last ~~3%~~ -> 4% more per block below sea level (~~+200%~~ -> +350% at y=0 and ~~+350%~~ -> +600% at y=-56)
 * Smartness can now be applied to tools too
+* Vigour is now the exact opposite of Tired and increases attack speed, movement speed and mining speed
 * Slightly adjusted food eating speed
 * Changed one stone layer from the altimeter to water
 * Fix missing recipe for bundle with rabbit hide
