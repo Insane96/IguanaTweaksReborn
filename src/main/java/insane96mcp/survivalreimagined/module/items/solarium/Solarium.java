@@ -139,7 +139,7 @@ public class Solarium extends Feature {
 			ItemStack stack = event.getEntity().getItemBySlot(equipmentSlot);
 			if (!equipmentSlot.isArmor() || !stack.is(SOLARIUM_EQUIPMENT))
 				continue;
-			movementSpeed += 0.1f * calculatedSkyLightRatio;
+			movementSpeed += 0.075f * calculatedSkyLightRatio;
 		}
 		AttributeInstance movSpeed = event.getEntity().getAttribute(Attributes.MOVEMENT_SPEED);
 		AttributeModifier modifier = movSpeed.getModifier(MOVEMENT_SPEED_MODIFIER_UUID);
