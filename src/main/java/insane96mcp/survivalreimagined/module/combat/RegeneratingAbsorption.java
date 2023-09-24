@@ -9,7 +9,6 @@ import insane96mcp.insanelib.world.effect.ILMobEffect;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffects;
@@ -18,7 +17,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -98,8 +96,8 @@ public class RegeneratingAbsorption extends Feature {
         tickRegenAbsorption++;
         //int undamagedTicksToRegen = unDamagedTimeToRegen;
         //undamagedTicksToRegen = (int) (undamagedTicksToRegen - (entity.getAttributeValue(REGEN_ATTRIBUTE.get()) * 20f));
-        if (entity instanceof Player player)
-            player.displayClientMessage(Component.literal("regeneratingAbsorption: %s, absorptionSpeed: %s, tickRegenAbsorption: %s, hurtCooldown: %s".formatted(regeneratingAbsorption, absorptionSpeed, tickRegenAbsorption, hurtCooldown)), true);
+        //if (entity instanceof Player player)
+            //player.displayClientMessage(Component.literal("regeneratingAbsorption: %s, absorptionSpeed: %s, tickRegenAbsorption: %s, hurtCooldown: %s".formatted(regeneratingAbsorption, absorptionSpeed, tickRegenAbsorption, hurtCooldown)), true);
         if (actualGoldenAbsorption > regeneratingAbsorption && entity.tickCount % absorptionDecay == 0) {
             entity.setAbsorptionAmount(entity.getAbsorptionAmount() - 1);
         }

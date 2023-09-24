@@ -29,7 +29,7 @@
 * Solarium
   * Efficiency, damage and blocked damage have been reduced but the effect has been doubled (so it's better under the sun but not without it)
   * Bonus now counts 12+ light level as max bonus speed
-  * Armor now gives less armor/regenerating absorption
+  * Armor now gives less armor/regenerating absorption and less movement speed
   * Fixed solarium items resetting breaking blocks when healed
   * Lowered solium moss boulders generation and moss generated on boulders
 * Stats
@@ -46,6 +46,7 @@
 * Coated copper can no longer be repaired with copper
 * Further reduced durium generation
 * Increased experience required to level up (~~35~~ -> 40)
+* Coal veins are now much rarer but much bigger
 * Removed increased experience from ores
 * Fixed music not playing more often
 * Melee protection now increases attack speed by 2% per level

@@ -66,6 +66,8 @@ public class CoalFire extends Feature {
     @Label(name = "No charcoal smelting and iron coal", description = "If enabled, a data pack will be enabled that removes the Charcoal recipe from smelting and makes Coal Ore require an Iron Pickaxe or better to mine.")
     public static Boolean noCharcoalSmeltingAndIronCoal = true;
     @Config
+    @Label(name = "Different Coal generation", description = "If enabled, a data pack will be enabled that changes coal generation to be rarer but with bigger veins")
+    public static Boolean differentCoalGeneration = true;
 
     @Config
     @Label(name = "Two flint fire starter.Enabled", description = "If true, two flints (on per hand) can start a fire")
@@ -82,7 +84,8 @@ public class CoalFire extends Feature {
 
     public CoalFire(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_charcoal_smelting", Component.literal("Survival Reimagined No Charcoal Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableCharcoalSmelting));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "charcoal_smelting_iron_coal", Component.literal("Survival Reimagined No Charcoal Smelting and Iron Coal"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && noCharcoalSmeltingAndIronCoal));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "coal_generation", Component.literal("Survival Reimagined Coal Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && differentCoalGeneration));
         Blocks.CAMPFIRE.defaultBlockState = Blocks.CAMPFIRE.defaultBlockState().setValue(CampfireBlock.LIT, Boolean.FALSE);
         Blocks.SOUL_CAMPFIRE.defaultBlockState = Blocks.SOUL_CAMPFIRE.defaultBlockState().setValue(CampfireBlock.LIT, Boolean.FALSE);
     }
