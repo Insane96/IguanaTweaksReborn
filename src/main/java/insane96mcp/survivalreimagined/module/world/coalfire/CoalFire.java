@@ -63,11 +63,9 @@ public class CoalFire extends Feature {
     public static Double charcoalFromBurntLogsChance = 0.8d;
 
     @Config
-    @Label(name = "Disable Charcoal Smelting", description = "If enabled, a data pack will be enabled that removes the Charcoal recipe from smelting")
-    public static Boolean disableCharcoalSmelting = true;
+    @Label(name = "No charcoal smelting and iron coal", description = "If enabled, a data pack will be enabled that removes the Charcoal recipe from smelting and makes Coal Ore require an Iron Pickaxe or better to mine.")
+    public static Boolean noCharcoalSmeltingAndIronCoal = true;
     @Config
-    @Label(name = "\"Iron\" Coal", description = "If enabled coal cannot be mined without an Iron Pickaxe or higher.")
-    public static Boolean ironCoal = true;
 
     @Config
     @Label(name = "Two flint fire starter.Enabled", description = "If true, two flints (on per hand) can start a fire")

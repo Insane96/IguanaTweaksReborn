@@ -83,7 +83,6 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(EnchantingFeature.ENCHANTING_TABLE.block().get());
 
         tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(Blocks.COAL_ORE, Blocks.DEEPSLATE_COAL_ORE)
                 .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get())
                 .add(Durium.BLOCK.block().get(), Durium.ORE.block().get(), Durium.DEEPSLATE_ORE.block().get(), Durium.SCRAP_BLOCK.block().get())
                 .add(SoulSteel.BLOCK.block().get())
