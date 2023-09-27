@@ -80,7 +80,7 @@ public class ItemStats extends SRFeature {
 			IdTagValue.newTag("survivalreimagined:equipment/hand/keego", 1707),
 			IdTagValue.newTag("survivalreimagined:equipment/hand/netherite", 3047),
 
-			IdTagValue.newId("minecraft:elytra", 86),
+			IdTagValue.newId("minecraft:elytra", 144),
 			IdTagValue.newId("minecraft:carrot_on_a_stick", 63),
 			IdTagValue.newId("minecraft:fishing_rod", 33),
 			IdTagValue.newId("minecraft:shears", 119),
