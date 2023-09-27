@@ -1,6 +1,6 @@
 {
     "pack": {
         "description": "Disables Gold smelting in a furnace",
-        "pack_format": 12
+        "pack_format": 15
     }
 }

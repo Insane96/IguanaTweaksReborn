@@ -1,6 +1,6 @@
 {
     "pack": {
         "description": "Makes Netherite blast-able in a Soul Blast Furnace with less materials than crafting",
-        "pack_format": 12
+        "pack_format": 15
     }
 }

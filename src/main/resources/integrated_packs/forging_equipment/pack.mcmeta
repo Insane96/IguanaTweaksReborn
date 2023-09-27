@@ -1,6 +1,6 @@
 {
     "pack": {
         "description": "Makes metal gear craftable in a forge instead of crafting table",
-        "pack_format": 12
+        "pack_format": 15
     }
 }

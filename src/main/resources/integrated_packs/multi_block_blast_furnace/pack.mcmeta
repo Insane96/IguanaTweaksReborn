@@ -1,6 +1,6 @@
 {
     "pack": {
         "description": "Changes Blast Furnace recipe to give the Multi Block Blast furnace recipe and adds Multi Block blast furnace recipes",
-        "pack_format": 12
+        "pack_format": 15
     }
 }
