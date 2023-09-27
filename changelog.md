@@ -1,7 +1,5 @@
 # Changelog
 
-* Rebalance tier 4 armors ... Netherite seems the best 
-
 ## 0.15.0
 * Added Better Beacon
   * A new beacon with more effects, more amplifiers but with a rechargeable time cost
@@ -44,6 +42,7 @@
 * Changed one stone layer from the altimeter to water
 * Fix missing recipe for bundle with rabbit hide
 * Coated copper can no longer be repaired with copper
+* Spawners now always drop 40 xp
 * Further reduced durium generation
 * Increased experience required to level up (~~35~~ -> 40)
 * Coal veins are now much rarer but much bigger
