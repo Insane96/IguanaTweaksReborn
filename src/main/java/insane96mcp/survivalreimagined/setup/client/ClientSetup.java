@@ -136,8 +136,8 @@ public class ClientSetup {
 
             addAfter(event, SPItems.STONE_SHIELD.get(), FlintExpansion.SHIELD.get());
             addAfter(event, FlintExpansion.SHIELD.get(), CopperToolsExpansion.COPPER_SHIELD.get());
-            addAfter(event, Items.SHIELD, Solarium.SHIELD.get());
-            addAfter(event, Items.SHIELD, Durium.SHIELD.get());
+            addAfter(event, SPItems.IRON_SHIELD.get(), Solarium.SHIELD.get());
+            addAfter(event, SPItems.IRON_SHIELD.get(), Durium.SHIELD.get());
             addAfter(event, SPItems.DIAMOND_SHIELD.get(), Keego.SHIELD.get());
             addAfter(event, SPItems.DIAMOND_SHIELD.get(), CopperToolsExpansion.COATED_SHIELD.get());
             addAfter(event, SPItems.NETHERITE_SHIELD.get(), SoulSteel.SHIELD.get());
@@ -231,14 +231,14 @@ public class ClientSetup {
             event.accept(SoulSteel.NUGGET.get());
             event.accept(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get());
             event.accept(Keego.GEM.get());
-            event.accept(Lapis.CLEANSED_LAPIS.get());
-            event.accept(Lapis.ANCIENT_LAPIS.get());
-            event.accept(CoalFire.HELLISH_COAL.get());
+            addAfter(event, Items.LAPIS_LAZULI, Lapis.ANCIENT_LAPIS.get());
+            addAfter(event, Items.LAPIS_LAZULI, Lapis.CLEANSED_LAPIS.get());
+            addAfter(event, Items.CHARCOAL, CoalFire.HELLISH_COAL.get());
             event.accept(Cloth.CLOTH.get());
         }
         else if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
-            event.accept(FoodDrinks.BROWN_MUSHROOM_STEW.get());
-            event.accept(FoodDrinks.RED_MUSHROOM_STEW.get());
+            addAfter(event, Items.MUSHROOM_STEW, FoodDrinks.BROWN_MUSHROOM_STEW.get());
+            addAfter(event, Items.MUSHROOM_STEW, FoodDrinks.RED_MUSHROOM_STEW.get());
         }
     }
 
