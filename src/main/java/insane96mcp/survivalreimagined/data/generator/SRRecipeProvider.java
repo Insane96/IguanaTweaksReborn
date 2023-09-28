@@ -98,23 +98,6 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .define('W', SPItems.WOODEN_SHIELD.get())
                 .unlockedBy("has_flint", has(Items.FLINT))
                 .save(writer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.FLINT_BLOCK.item().get())
-                .requires(Items.FLINT, 9)
-                .unlockedBy("has_flint", has(Items.FLINT))
-                .save(writer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.FLINT, 9)
-                .requires(FlintExpansion.FLINT_BLOCK.item().get(), 1)
-                .unlockedBy("has_flint_block_item", has(FlintExpansion.FLINT_BLOCK.item().get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "flint_from_block");
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, FlintExpansion.POLISHED_FLINT_BLOCK.item().get(), 4)
-                .pattern("ff")
-                .pattern("ff")
-                .define('f', FlintExpansion.FLINT_BLOCK.item().get())
-                .unlockedBy("has_flint_block", has(FlintExpansion.FLINT_BLOCK.item().get()))
-                .save(writer);
-        SingleItemRecipeBuilder.stonecutting(Ingredient.of(FlintExpansion.FLINT_BLOCK.item().get()), RecipeCategory.BUILDING_BLOCKS, FlintExpansion.POLISHED_FLINT_BLOCK.item().get())
-                .unlockedBy("has_flint_block", has(FlintExpansion.FLINT_BLOCK.item().get()))
-                .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "stonecutter_polished_flint_block");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, CopperToolsExpansion.COPPER_AXE.get())
                 .pattern("ff")

@@ -7,7 +7,6 @@ import insane96mcp.survivalreimagined.module.farming.HarderCrops;
 import insane96mcp.survivalreimagined.module.farming.bonemeal.BoneMeal;
 import insane96mcp.survivalreimagined.module.items.crate.Crate;
 import insane96mcp.survivalreimagined.module.items.explosivebarrel.ExplosiveBarrel;
-import insane96mcp.survivalreimagined.module.items.flintexpansion.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mining.Durium;
 import insane96mcp.survivalreimagined.module.mining.SoulSteel;
 import insane96mcp.survivalreimagined.module.mining.forging.Forging;
@@ -69,7 +68,6 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get())
                 .add(OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get())
                 .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get())
-                .add(FlintExpansion.FLINT_BLOCK.block().get(), FlintExpansion.POLISHED_FLINT_BLOCK.block().get(), FlintExpansion.FLINT_ROCK.block().get())
                 .add(Death.GRAVE.block().get())
                 .add(MultiBlockFurnaces.BLAST_FURNACE.block().get(), MultiBlockFurnaces.SOUL_BLAST_FURNACE.block().get())
                 .add(Forging.FORGE.block().get())

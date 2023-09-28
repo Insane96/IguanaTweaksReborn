@@ -173,8 +173,6 @@ public class ClientSetup {
             event.accept(Durium.BLOCK.item().get());
             event.accept(SoulSteel.BLOCK.item().get());
             event.accept(Keego.BLOCK.item().get());
-            event.accept(FlintExpansion.FLINT_BLOCK.item().get());
-            event.accept(FlintExpansion.POLISHED_FLINT_BLOCK.item().get());
             event.accept(CoalFire.CHARCOAL_LAYER.item().get());
             event.accept(Death.GRAVE.item().get());
         }

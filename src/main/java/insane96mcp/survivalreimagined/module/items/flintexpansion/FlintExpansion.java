@@ -17,7 +17,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
@@ -40,8 +39,6 @@ public class FlintExpansion extends Feature {
 	public static final RegistryObject<Item> HOE = SRRegistries.ITEMS.register("flint_hoe", () -> new HoeItem(ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRRegistries.registerShield("flint_shield", SHIELD_MATERIAL);
-	public static final SimpleBlockWithItem FLINT_BLOCK = SimpleBlockWithItem.register("flint_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 5.0F)));
-	public static final SimpleBlockWithItem POLISHED_FLINT_BLOCK = SimpleBlockWithItem.register("polished_flint_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 5.0F)));
 
 	@Config
 	@Label(name = "Disable Wooden Tools + Recipes", description = "Makes wooden items deal no damage and not able to break blocks and disables the recipe.")
