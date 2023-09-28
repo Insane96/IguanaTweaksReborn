@@ -67,7 +67,7 @@ public class Keego extends Feature {
 	public static final RegistryObject<Item> SHOVEL = SRRegistries.ITEMS.register("keego_shovel", () -> new ShovelItem(ITEM_TIER, 1.5F, -3.0F, new Item.Properties()));
 	public static final RegistryObject<Item> PICKAXE = SRRegistries.ITEMS.register("keego_pickaxe", () -> new PickaxeItem(ITEM_TIER, 1, -2.8F, new Item.Properties()));
 	public static final RegistryObject<Item> AXE = SRRegistries.ITEMS.register("keego_axe", () -> new AxeItem(ITEM_TIER, 6.0F, -3.2F, new Item.Properties()));
-	public static final RegistryObject<Item> HOE = SRRegistries.ITEMS.register("keego_hoe", () -> new HoeItem(ITEM_TIER, -2, -1.1F, new Item.Properties()));
+	public static final RegistryObject<Item> HOE = SRRegistries.ITEMS.register("keego_hoe", () -> new KeegoHoeItem(ITEM_TIER, -2, -1.1F, new Item.Properties()));
 
 	private static final SRArmorMaterial ARMOR_MATERIAL = new SRArmorMaterial("survivalreimagined:keego", 22, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
 		p_266652_.put(ArmorItem.Type.BOOTS, 4);
@@ -84,8 +84,6 @@ public class Keego extends Feature {
 	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("keego", 5d, 452, GEM, 9, Rarity.COMMON);
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRRegistries.registerShield("keego_shield", SHIELD_MATERIAL);
-
-	//TODO Keego shield adds movement speed to the wearer
 
 	public Keego(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

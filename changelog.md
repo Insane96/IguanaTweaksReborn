@@ -1,6 +1,8 @@
 # Changelog
 
-* Solarium hoe faster in sunlight and 0 ad and missing cooldown
+## 0.15.1
+* Solarium and Keego hoe now have cooldown reduction based off their base ability
+* Fixed mod's armors not being trimmable
 
 ## 0.15.0
 * Added Better Beacon

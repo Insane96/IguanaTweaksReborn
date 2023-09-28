@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.network.message;
 
 import insane96mcp.survivalreimagined.module.combat.stats.Stats;
 import insane96mcp.survivalreimagined.module.farming.HarderCrops;
+import insane96mcp.survivalreimagined.module.farming.hoes.Hoes;
 import insane96mcp.survivalreimagined.module.farming.plantsgrowth.PlantsGrowth;
 import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.StackSizes;
@@ -72,7 +73,8 @@ public class JsonConfigSyncMessage {
         HARDER_CROPS(HarderCrops::handleSyncPacket),
         ITEM_ATTRIBUTE_MODIFIERS(Stats::handleItemAttributeModifiersPacket),
         PLANTS_GROWTH(PlantsGrowth::handlePlantsGrowthPacket),
-        BEACON_EFFECTS(BeaconConduit::handleEffectsPacket);
+        BEACON_EFFECTS(BeaconConduit::handleEffectsPacket),
+        HOE_STATS(Hoes::handleSyncPacket);
 
         final Consumer<String> consumer;
 

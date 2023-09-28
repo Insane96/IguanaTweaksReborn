@@ -114,7 +114,7 @@ public class Livestock extends SRFeature {
 
 	//TODO
 	/*@Config
-	@Label(name = "Chicken from egg chance", description = "Changes the chance for a chicken to come out from an egg. Vanilla is 8")
+	@Label(name = "Chicken from egg chance", description = "Changes the chance for a chicken to come out from an egg (1 in this value). Vanilla is 8")
 	public static Integer chickenFromEggChance = 4;*/
 
 	@Config

@@ -80,7 +80,6 @@ public class PiercingPickaxes extends Feature {
 		if (attacker instanceof Player)
 			piercingDamageSource = attacker.damageSources().source(PIERCING_PLAYER_ATTACK, attacker);
 
-		//TODO Knockback applies anyway
 		MCUtils.attackEntityIgnoreInvFrames(piercingDamageSource, (float) piercingInstance.getValue(), event.getEntity(), event.getEntity(), true);
 	}
 
