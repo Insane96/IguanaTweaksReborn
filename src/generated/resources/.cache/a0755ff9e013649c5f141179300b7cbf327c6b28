@@ -1,10 +1,11 @@
-// 1.20.1	2023-09-24T11:44:03.2149858	Tags for minecraft:item mod id survivalreimagined
+// 1.20.1	2023-09-28T08:15:32.2870294	Tags for minecraft:item mod id survivalreimagined
 7d38d2cbef15f48156091dd486940520fa137586 data/minecraft/tags/items/arrows.json
 81f4ea11d3f0f343ccdd47750254e74e30cf718a data/minecraft/tags/items/axes.json
 76b4edfcd67f0c49b43e1af406c69a2412c47322 data/minecraft/tags/items/hoes.json
 15ca2c08735a33f21b5982703c5ec3557a7cb3c5 data/minecraft/tags/items/pickaxes.json
 d8ea3a4f7d2694bc7a72a568219edddebb0add5f data/minecraft/tags/items/shovels.json
 4a382b5c16c58036124e590448f1fdadd987315d data/minecraft/tags/items/swords.json
+e3efb7b29dcbd6383f05a5bafabe51f08e3a66cb data/minecraft/tags/items/trimmable_armor.json
 66522314243d5119f3610b4a75a66c92faddf431 data/survivalreimagined/tags/items/disabled_hoes.json
 b1eaa8c6251363a43fec48d3a61979cccb61a40a data/survivalreimagined/tags/items/energy_boost.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/survivalreimagined/tags/items/food_drinks_no_hunger_changes.json

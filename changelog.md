@@ -1,5 +1,7 @@
 # Changelog
 
+* Solarium hoe faster in sunlight and 0 ad and missing cooldown
+
 ## 0.15.0
 * Added Better Beacon
   * A new beacon with more effects, more amplifiers but with a rechargeable time cost
@@ -9,7 +11,7 @@
 * Added Name Tags feature
   * Retrieve name tags from name tagged entities, from changing their name to their demise
 * Seasons 
-  * Tall grass now decays in winter and grows back in spring. Saplings also become dead bushes in Winter
+  * Tall grass now decays in winter and grows back in spring. Saplings also can become dead bushes in Winter
 * Added Swift Strike
   * A new "damaging" enchantment that increases attack speed
 * Added keego

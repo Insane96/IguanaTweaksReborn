@@ -7,6 +7,7 @@ import insane96mcp.survivalreimagined.module.combat.fletching.Fletching;
 import insane96mcp.survivalreimagined.module.farming.bonemeal.BoneMeal;
 import insane96mcp.survivalreimagined.module.farming.hoes.Hoes;
 import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
+import insane96mcp.survivalreimagined.module.items.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.StackSizes;
 import insane96mcp.survivalreimagined.module.items.copper.CopperToolsExpansion;
 import insane96mcp.survivalreimagined.module.items.flintexpansion.FlintExpansion;
@@ -53,6 +54,13 @@ public class SRItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.SHOVELS).add(FlintExpansion.SHOVEL.get(), Solarium.SHOVEL.get(), Durium.SHOVEL.get(), CopperToolsExpansion.COPPER_SHOVEL.get(), CopperToolsExpansion.COATED_SHOVEL.get(), SoulSteel.SHOVEL.get(), Keego.SHOVEL.get());
         tag(ItemTags.SWORDS).add(FlintExpansion.SWORD.get(), Solarium.SWORD.get(), Durium.SWORD.get(), CopperToolsExpansion.COPPER_SWORD.get(), CopperToolsExpansion.COATED_SWORD.get(), SoulSteel.SWORD.get(), Keego.SWORD.get());
         tag(ItemTags.HOES).add(FlintExpansion.HOE.get(), Solarium.HOE.get(), Durium.HOE.get(), CopperToolsExpansion.COPPER_HOE.get(), CopperToolsExpansion.COATED_HOE.get(), SoulSteel.HOE.get(), Keego.HOE.get());
+
+        tag(ItemTags.TRIMMABLE_ARMOR)
+                .add(Solarium.HELMET.get(), Solarium.CHESTPLATE.get(), Solarium.LEGGINGS.get(), Solarium.BOOTS.get())
+                .add(Durium.HELMET.get(), Durium.CHESTPLATE.get(), Durium.LEGGINGS.get(), Durium.BOOTS.get())
+                .add(ChainedCopperArmor.HELMET.get(), ChainedCopperArmor.CHESTPLATE.get(), ChainedCopperArmor.LEGGINGS.get(), ChainedCopperArmor.BOOTS.get())
+                .add(SoulSteel.HELMET.get(), SoulSteel.CHESTPLATE.get(), SoulSteel.LEGGINGS.get(), SoulSteel.BOOTS.get())
+                .add(Keego.HELMET.get(), Keego.CHESTPLATE.get(), Keego.LEGGINGS.get(), Keego.BOOTS.get());
 
         tag(ItemTags.ARROWS).add(Fletching.QUARTZ_ARROW_ITEM.get(), Fletching.DIAMOND_ARROW_ITEM.get(), Fletching.EXPLOSIVE_ARROW_ITEM.get(), Fletching.TORCH_ARROW_ITEM.get());
         //Mod's

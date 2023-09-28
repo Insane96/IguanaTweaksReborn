@@ -192,7 +192,7 @@ public class SRBeaconBlockEntity extends BaseContainerBlockEntity implements Wor
                 beacon.layers = updateBase(pLevel, x, y, z);
             }
 
-            if (beacon.layers > 0 && !beacon.beamSections.isEmpty()) {
+            if (beacon.timeLeft > 0 && beacon.layers > 0 && !beacon.beamSections.isEmpty()) {
                 applyEffects(pLevel, pPos, beacon.layers, beacon.effect, beacon.amplifier);
                 playSound(pLevel, pPos, SoundEvents.BEACON_AMBIENT);
             }
