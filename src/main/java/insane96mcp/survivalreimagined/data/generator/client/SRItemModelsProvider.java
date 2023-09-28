@@ -19,18 +19,39 @@ import insane96mcp.survivalreimagined.module.sleeprespawn.Cloth;
 import insane96mcp.survivalreimagined.module.world.CyanFlower;
 import insane96mcp.survivalreimagined.module.world.coalfire.CoalFire;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.armortrim.TrimMaterial;
+import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 
 public class SRItemModelsProvider extends ItemModelProvider {
+    private static LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();
+    static {
+        trimMaterials.put(TrimMaterials.QUARTZ, 0.1F);
+        trimMaterials.put(TrimMaterials.IRON, 0.2F);
+        trimMaterials.put(TrimMaterials.NETHERITE, 0.3F);
+        trimMaterials.put(TrimMaterials.REDSTONE, 0.4F);
+        trimMaterials.put(TrimMaterials.COPPER, 0.5F);
+        trimMaterials.put(TrimMaterials.GOLD, 0.6F);
+        trimMaterials.put(TrimMaterials.EMERALD, 0.7F);
+        trimMaterials.put(TrimMaterials.DIAMOND, 0.8F);
+        trimMaterials.put(TrimMaterials.LAPIS, 0.9F);
+        trimMaterials.put(TrimMaterials.AMETHYST, 1.0F);
+    }
+
     public SRItemModelsProvider(PackOutput output, String modid, ExistingFileHelper existingFileHelper) {
         super(output, modid, existingFileHelper);
     }
@@ -51,10 +72,10 @@ public class SRItemModelsProvider extends ItemModelProvider {
         handHeld(SoulSteel.SHOVEL.get());
         handHeld(SoulSteel.HOE.get());
         handHeld(SoulSteel.SWORD.get());
-        basicItem(SoulSteel.BOOTS.get());
-        basicItem(SoulSteel.LEGGINGS.get());
-        basicItem(SoulSteel.CHESTPLATE.get());
-        basicItem(SoulSteel.HELMET.get());
+        trimmedArmorItem(SoulSteel.BOOTS);
+        trimmedArmorItem(SoulSteel.LEGGINGS);
+        trimmedArmorItem(SoulSteel.CHESTPLATE);
+        trimmedArmorItem(SoulSteel.HELMET);
         basicItem(SoulSteel.INGOT.get());
         basicItem(SoulSteel.NUGGET.get());
         basicItem(SoulSteel.UPGRADE_SMITHING_TEMPLATE.get());
@@ -78,10 +99,10 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(Crops.CARROT_SEEDS.get());
         basicItem(Crops.POTATO_SEEDS.get());
 
-        basicItem(ChainedCopperArmor.BOOTS.get());
-        basicItem(ChainedCopperArmor.LEGGINGS.get());
-        basicItem(ChainedCopperArmor.CHESTPLATE.get());
-        basicItem(ChainedCopperArmor.HELMET.get());
+        trimmedArmorItem(ChainedCopperArmor.BOOTS);
+        trimmedArmorItem(ChainedCopperArmor.LEGGINGS);
+        trimmedArmorItem(ChainedCopperArmor.CHESTPLATE);
+        trimmedArmorItem(ChainedCopperArmor.HELMET);
 
         handHeld(CopperToolsExpansion.COPPER_AXE.get());
         handHeld(CopperToolsExpansion.COPPER_PICKAXE.get());
@@ -105,10 +126,10 @@ public class SRItemModelsProvider extends ItemModelProvider {
         handHeld(Solarium.SHOVEL.get());
         handHeld(Solarium.HOE.get());
         handHeld(Solarium.SWORD.get());
-        basicItem(Solarium.BOOTS.get());
-        basicItem(Solarium.LEGGINGS.get());
-        basicItem(Solarium.CHESTPLATE.get());
-        basicItem(Solarium.HELMET.get());
+        trimmedArmorItem(Solarium.BOOTS);
+        trimmedArmorItem(Solarium.LEGGINGS);
+        trimmedArmorItem(Solarium.CHESTPLATE);
+        trimmedArmorItem(Solarium.HELMET);
         basicItem(Solarium.SOLARIUM_BALL.get());
         shield(Solarium.SHIELD.get());
 
@@ -117,10 +138,10 @@ public class SRItemModelsProvider extends ItemModelProvider {
         handHeld(Keego.SHOVEL.get());
         handHeld(Keego.HOE.get());
         handHeld(Keego.SWORD.get());
-        basicItem(Keego.BOOTS.get());
-        basicItem(Keego.LEGGINGS.get());
-        basicItem(Keego.CHESTPLATE.get());
-        basicItem(Keego.HELMET.get());
+        trimmedArmorItem(Keego.BOOTS);
+        trimmedArmorItem(Keego.LEGGINGS);
+        trimmedArmorItem(Keego.CHESTPLATE);
+        trimmedArmorItem(Keego.HELMET);
         basicItem(Keego.GEM.get());
         shield(Keego.SHIELD.get());
         withExistingParent("keego_ore", new ResourceLocation(SurvivalReimagined.MOD_ID, "block/keego_ore"));
@@ -131,10 +152,10 @@ public class SRItemModelsProvider extends ItemModelProvider {
         handHeld(Durium.SHOVEL.get());
         handHeld(Durium.HOE.get());
         handHeld(Durium.SWORD.get());
-        basicItem(Durium.BOOTS.get());
-        basicItem(Durium.LEGGINGS.get());
-        basicItem(Durium.CHESTPLATE.get());
-        basicItem(Durium.HELMET.get());
+        trimmedArmorItem(Durium.BOOTS);
+        trimmedArmorItem(Durium.LEGGINGS);
+        trimmedArmorItem(Durium.CHESTPLATE);
+        trimmedArmorItem(Durium.HELMET);
         basicItem(Durium.INGOT.get());
         basicItem(Durium.NUGGET.get());
         basicItem(Durium.SCRAP_PIECE.get());
@@ -222,5 +243,53 @@ public class SRItemModelsProvider extends ItemModelProvider {
         return getBuilder(item.toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", texture);
+    }
+
+    // Shoutout to El_Redstoniano for making this
+    private void trimmedArmorItem(RegistryObject<Item> itemRegistryObject) {
+        final String MOD_ID = SurvivalReimagined.MOD_ID; // Change this to your mod id
+
+        if (itemRegistryObject.get() instanceof ArmorItem armorItem) {
+            trimMaterials.entrySet().forEach(entry -> {
+
+                ResourceKey<TrimMaterial> trimMaterial = entry.getKey();
+                float trimValue = entry.getValue();
+
+                String armorType = switch (armorItem.getEquipmentSlot()) {
+                    case HEAD -> "helmet";
+                    case CHEST -> "chestplate";
+                    case LEGS -> "leggings";
+                    case FEET -> "boots";
+                    default -> "";
+                };
+
+                String armorItemPath = "item/" + armorItem;
+                String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
+                String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
+                ResourceLocation armorItemResLoc = new ResourceLocation(MOD_ID, armorItemPath);
+                ResourceLocation trimResLoc = new ResourceLocation(trimPath); // minecraft namespace
+                ResourceLocation trimNameResLoc = new ResourceLocation(MOD_ID, currentTrimName);
+
+                // This is used for making the ExistingFileHelper acknowledge that this texture exist, so this will
+                // avoid an IllegalArgumentException
+                existingFileHelper.trackGenerated(trimResLoc, PackType.CLIENT_RESOURCES, ".png", "textures");
+
+                // Trimmed armorItem files
+                getBuilder(currentTrimName)
+                        .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                        .texture("layer0", armorItemResLoc)
+                        .texture("layer1", trimResLoc);
+
+                // Non-trimmed armorItem file (normal variant)
+                this.withExistingParent(itemRegistryObject.getId().getPath(),
+                                mcLoc("item/generated"))
+                        .override()
+                        .model(new ModelFile.UncheckedModelFile(trimNameResLoc))
+                        .predicate(mcLoc("trim_type"), trimValue).end()
+                        .texture("layer0",
+                                new ResourceLocation(MOD_ID,
+                                        "item/" + itemRegistryObject.getId().getPath()));
+            });
+        }
     }
 }
