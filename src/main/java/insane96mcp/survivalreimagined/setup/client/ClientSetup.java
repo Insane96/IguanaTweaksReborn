@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.setup.client;
 
 import com.google.common.collect.ImmutableList;
+import insane96mcp.shieldsplus.setup.SPItems;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.combat.fletching.Fletching;
 import insane96mcp.survivalreimagined.module.combat.fletching.client.FletchingScreen;
@@ -49,9 +50,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.FallingBlockRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.event.RegisterRecipeBookCategoriesEvent;
@@ -67,104 +66,107 @@ public class ClientSetup {
     {
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES)
         {
-            event.accept(FlintExpansion.AXE.get());
-            event.accept(FlintExpansion.PICKAXE.get());
-            event.accept(FlintExpansion.SHOVEL.get());
-            event.accept(FlintExpansion.HOE.get());
-            event.accept(CopperToolsExpansion.COPPER_AXE.get());
-            event.accept(CopperToolsExpansion.COPPER_PICKAXE.get());
-            event.accept(CopperToolsExpansion.COPPER_SHOVEL.get());
-            event.accept(CopperToolsExpansion.COPPER_HOE.get());
-            event.accept(CopperToolsExpansion.COATED_AXE.get());
-            event.accept(CopperToolsExpansion.COATED_PICKAXE.get());
-            event.accept(CopperToolsExpansion.COATED_SHOVEL.get());
-            event.accept(CopperToolsExpansion.COATED_HOE.get());
-            event.accept(Durium.AXE.get());
-            event.accept(Durium.PICKAXE.get());
-            event.accept(Durium.SHOVEL.get());
-            event.accept(Durium.HOE.get());
-            event.accept(Solarium.AXE.get());
-            event.accept(Solarium.PICKAXE.get());
-            event.accept(Solarium.SHOVEL.get());
-            event.accept(Solarium.HOE.get());
-            event.accept(SoulSteel.AXE.get());
-            event.accept(SoulSteel.PICKAXE.get());
-            event.accept(SoulSteel.SHOVEL.get());
-            event.accept(SoulSteel.HOE.get());
-            event.accept(Keego.AXE.get());
-            event.accept(Keego.PICKAXE.get());
-            event.accept(Keego.SHOVEL.get());
-            event.accept(Keego.HOE.get());
-            event.accept(CoalFire.FIRESTARTER.get());
+            addAfter(event, Items.STONE_HOE, FlintExpansion.HOE.get());
+            addAfter(event, Items.STONE_HOE, FlintExpansion.AXE.get());
+            addAfter(event, Items.STONE_HOE, FlintExpansion.PICKAXE.get());
+            addAfter(event, Items.STONE_HOE, FlintExpansion.SHOVEL.get());
+            addAfter(event, FlintExpansion.HOE.get(), CopperToolsExpansion.COPPER_HOE.get());
+            addAfter(event, FlintExpansion.HOE.get(), CopperToolsExpansion.COPPER_AXE.get());
+            addAfter(event, FlintExpansion.HOE.get(), CopperToolsExpansion.COPPER_PICKAXE.get());
+            addAfter(event, FlintExpansion.HOE.get(), CopperToolsExpansion.COPPER_SHOVEL.get());
+            addAfter(event, Items.IRON_HOE, Solarium.HOE.get());
+            addAfter(event, Items.IRON_HOE, Solarium.AXE.get());
+            addAfter(event, Items.IRON_HOE, Solarium.PICKAXE.get());
+            addAfter(event, Items.IRON_HOE, Solarium.SHOVEL.get());
+            addAfter(event, Items.IRON_HOE, Durium.HOE.get());
+            addAfter(event, Items.IRON_HOE, Durium.AXE.get());
+            addAfter(event, Items.IRON_HOE, Durium.PICKAXE.get());
+            addAfter(event, Items.IRON_HOE, Durium.SHOVEL.get());
+            addAfter(event, Items.DIAMOND_HOE, Keego.HOE.get());
+            addAfter(event, Items.DIAMOND_HOE, Keego.AXE.get());
+            addAfter(event, Items.DIAMOND_HOE, Keego.PICKAXE.get());
+            addAfter(event, Items.DIAMOND_HOE, Keego.SHOVEL.get());
+            addAfter(event, Items.DIAMOND_HOE, CopperToolsExpansion.COATED_HOE.get());
+            addAfter(event, Items.DIAMOND_HOE, CopperToolsExpansion.COATED_AXE.get());
+            addAfter(event, Items.DIAMOND_HOE, CopperToolsExpansion.COATED_PICKAXE.get());
+            addAfter(event, Items.DIAMOND_HOE, CopperToolsExpansion.COATED_SHOVEL.get());
+            addAfter(event, Items.NETHERITE_HOE, SoulSteel.HOE.get());
+            addAfter(event, Items.NETHERITE_HOE, SoulSteel.AXE.get());
+            addAfter(event, Items.NETHERITE_HOE, SoulSteel.PICKAXE.get());
+            addAfter(event, Items.NETHERITE_HOE, SoulSteel.SHOVEL.get());
+            addBefore(event, Items.FLINT_AND_STEEL, CoalFire.FIRESTARTER.get());
 
-            event.accept(Forging.WOODEN_HAMMER.get());
-            event.accept(Forging.STONE_HAMMER.get());
-            event.accept(Forging.FLINT_HAMMER.get());
-            event.accept(Forging.COPPER_HAMMER.get());
-            event.accept(Forging.GOLDEN_HAMMER.get());
-            event.accept(Forging.IRON_HAMMER.get());
-            event.accept(Forging.SOLARIUM_HAMMER.get());
-            event.accept(Forging.DURIUM_HAMMER.get());
-            event.accept(Forging.COATED_COPPER_HAMMER.get());
-            event.accept(Forging.DIAMOND_HAMMER.get());
-            event.accept(Forging.SOUL_STEEL_HAMMER.get());
-            event.accept(Forging.NETHERITE_HAMMER.get());
-            event.accept(Forging.KEEGO_HAMMER.get());
+            addAfter(event, Items.WOODEN_HOE, Forging.WOODEN_HAMMER.get());
+            addAfter(event, Items.STONE_HOE, Forging.STONE_HAMMER.get());
+            addAfter(event, FlintExpansion.HOE.get(), Forging.FLINT_HAMMER.get());
+            addAfter(event, CopperToolsExpansion.COPPER_HOE.get(), Forging.COPPER_HAMMER.get());
+            addAfter(event, CopperToolsExpansion.COATED_HOE.get(), Forging.COATED_COPPER_HAMMER.get());
+            addAfter(event, Items.GOLDEN_HOE, Forging.GOLDEN_HAMMER.get());
+            addAfter(event, Items.IRON_HOE, Forging.IRON_HAMMER.get());
+            addAfter(event, Solarium.HOE.get(), Forging.SOLARIUM_HAMMER.get());
+            addAfter(event, Durium.HOE.get(), Forging.DURIUM_HAMMER.get());
+            addAfter(event, Items.DIAMOND_HOE, Forging.DIAMOND_HAMMER.get());
+            addAfter(event, SoulSteel.HOE.get(), Forging.SOUL_STEEL_HAMMER.get());
+            addAfter(event, Items.NETHERITE_HOE, Forging.NETHERITE_HAMMER.get());
+            addAfter(event, Keego.HOE.get(), Forging.KEEGO_HAMMER.get());
 
-            event.accept(Altimeter.ITEM.get());
-            event.accept(RecallIdol.ITEM.get());
+            addAfter(event, Items.RECOVERY_COMPASS, Altimeter.ITEM.get());
+            addAfter(event, Items.ENDER_EYE, RecallIdol.ITEM.get());
+
+            addAfter(event, Items.RAIL, Minecarts.NETHER_INFUSED_POWERED_RAIL.item().get());
+            addAfter(event, Items.RAIL, Minecarts.GOLDEN_POWERED_RAIL.item().get());
+            addAfter(event, Items.RAIL, Minecarts.COPPER_POWERED_RAIL.item().get());
         }
         else if (event.getTabKey() == CreativeModeTabs.COMBAT) {
-            event.accept(FlintExpansion.SWORD.get());
-            event.accept(FlintExpansion.AXE.get());
-            event.accept(FlintExpansion.SHIELD.get());
-            event.accept(CopperToolsExpansion.COPPER_SWORD.get());
-            event.accept(CopperToolsExpansion.COPPER_AXE.get());
-            event.accept(CopperToolsExpansion.COATED_SWORD.get());
-            event.accept(CopperToolsExpansion.COATED_AXE.get());
-            event.accept(CopperToolsExpansion.COATED_SHIELD.get());
+            addAfter(event, Items.STONE_SWORD, FlintExpansion.SWORD.get());
+            addAfter(event, FlintExpansion.SWORD.get(), CopperToolsExpansion.COPPER_SWORD.get());
+            addAfter(event, Items.IRON_SWORD, Solarium.SWORD.get());
+            addAfter(event, Items.IRON_SWORD, Durium.SWORD.get());
+            addAfter(event, Items.DIAMOND_SWORD, Keego.SWORD.get());
+            addAfter(event, Items.DIAMOND_SWORD, CopperToolsExpansion.COATED_SWORD.get());
+            addAfter(event, Items.NETHERITE_SWORD, SoulSteel.SWORD.get());
 
-            event.accept(ChainedCopperArmor.HELMET.get());
-            event.accept(ChainedCopperArmor.CHESTPLATE.get());
-            event.accept(ChainedCopperArmor.LEGGINGS.get());
-            event.accept(ChainedCopperArmor.BOOTS.get());
+            addAfter(event, Items.STONE_AXE, FlintExpansion.AXE.get());
+            addAfter(event, FlintExpansion.AXE.get(), CopperToolsExpansion.COPPER_AXE.get());
+            addAfter(event, Items.IRON_AXE, Solarium.AXE.get());
+            addAfter(event, Items.IRON_AXE, Durium.AXE.get());
+            addAfter(event, Items.DIAMOND_AXE, Keego.AXE.get());
+            addAfter(event, Items.DIAMOND_AXE, CopperToolsExpansion.COATED_AXE.get());
+            addAfter(event, Items.NETHERITE_AXE, SoulSteel.AXE.get());
 
-            event.accept(Durium.HELMET.get());
-            event.accept(Durium.CHESTPLATE.get());
-            event.accept(Durium.LEGGINGS.get());
-            event.accept(Durium.BOOTS.get());
-            event.accept(Durium.SWORD.get());
-            event.accept(Durium.AXE.get());
-            event.accept(Durium.SHIELD.get());
+            addAfter(event, SPItems.STONE_SHIELD.get(), FlintExpansion.SHIELD.get());
+            addAfter(event, FlintExpansion.SHIELD.get(), CopperToolsExpansion.COPPER_SHIELD.get());
+            addAfter(event, Items.SHIELD, Solarium.SHIELD.get());
+            addAfter(event, Items.SHIELD, Durium.SHIELD.get());
+            addAfter(event, SPItems.DIAMOND_SHIELD.get(), Keego.SHIELD.get());
+            addAfter(event, SPItems.DIAMOND_SHIELD.get(), CopperToolsExpansion.COATED_SHIELD.get());
+            addAfter(event, SPItems.NETHERITE_SHIELD.get(), SoulSteel.SHIELD.get());
 
-            event.accept(Solarium.HELMET.get());
-            event.accept(Solarium.CHESTPLATE.get());
-            event.accept(Solarium.LEGGINGS.get());
-            event.accept(Solarium.BOOTS.get());
-            event.accept(Solarium.SWORD.get());
-            event.accept(Solarium.AXE.get());
-            event.accept(Solarium.SHIELD.get());
+            addAfter(event, Items.LEATHER_BOOTS, ChainedCopperArmor.BOOTS.get());
+            addAfter(event, Items.LEATHER_BOOTS, ChainedCopperArmor.LEGGINGS.get());
+            addAfter(event, Items.LEATHER_BOOTS, ChainedCopperArmor.CHESTPLATE.get());
+            addAfter(event, Items.LEATHER_BOOTS, ChainedCopperArmor.HELMET.get());
+            addAfter(event, Items.IRON_BOOTS, Solarium.BOOTS.get());
+            addAfter(event, Items.IRON_BOOTS, Solarium.LEGGINGS.get());
+            addAfter(event, Items.IRON_BOOTS, Solarium.CHESTPLATE.get());
+            addAfter(event, Items.IRON_BOOTS, Solarium.HELMET.get());
+            addAfter(event, Items.IRON_BOOTS, Durium.BOOTS.get());
+            addAfter(event, Items.IRON_BOOTS, Durium.LEGGINGS.get());
+            addAfter(event, Items.IRON_BOOTS, Durium.CHESTPLATE.get());
+            addAfter(event, Items.IRON_BOOTS, Durium.HELMET.get());
+            addAfter(event, Items.DIAMOND_BOOTS, Keego.BOOTS.get());
+            addAfter(event, Items.DIAMOND_BOOTS, Keego.LEGGINGS.get());
+            addAfter(event, Items.DIAMOND_BOOTS, Keego.CHESTPLATE.get());
+            addAfter(event, Items.DIAMOND_BOOTS, Keego.HELMET.get());
+            addAfter(event, Items.NETHERITE_BOOTS, SoulSteel.BOOTS.get());
+            addAfter(event, Items.NETHERITE_BOOTS, SoulSteel.LEGGINGS.get());
+            addAfter(event, Items.NETHERITE_BOOTS, SoulSteel.CHESTPLATE.get());
+            addAfter(event, Items.NETHERITE_BOOTS, SoulSteel.HELMET.get());
 
-            event.accept(Keego.HELMET.get());
-            event.accept(Keego.CHESTPLATE.get());
-            event.accept(Keego.LEGGINGS.get());
-            event.accept(Keego.BOOTS.get());
-            event.accept(Keego.SWORD.get());
-            event.accept(Keego.AXE.get());
-            event.accept(Keego.SHIELD.get());
-
-            event.accept(SoulSteel.HELMET.get());
-            event.accept(SoulSteel.CHESTPLATE.get());
-            event.accept(SoulSteel.LEGGINGS.get());
-            event.accept(SoulSteel.BOOTS.get());
-            event.accept(SoulSteel.SWORD.get());
-            event.accept(SoulSteel.AXE.get());
-            event.accept(SoulSteel.SHIELD.get());
-
-            event.accept(Fletching.QUARTZ_ARROW_ITEM.get());
-            event.accept(Fletching.DIAMOND_ARROW_ITEM.get());
-            event.accept(Fletching.EXPLOSIVE_ARROW_ITEM.get());
-            event.accept(Fletching.TORCH_ARROW_ITEM.get());
+            addAfter(event, Items.ARROW, Fletching.TORCH_ARROW_ITEM.get());
+            addAfter(event, Items.ARROW, Fletching.EXPLOSIVE_ARROW_ITEM.get());
+            addAfter(event, Items.ARROW, Fletching.DIAMOND_ARROW_ITEM.get());
+            addAfter(event, Items.ARROW, Fletching.QUARTZ_ARROW_ITEM.get());
         }
         else if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(Durium.SCRAP_BLOCK.item().get());
@@ -186,9 +188,9 @@ public class ClientSetup {
             event.accept(BeaconConduit.BEACON.item().get());
         }
         else if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
-            event.accept(Minecarts.COPPER_POWERED_RAIL.item().get());
-            event.accept(Minecarts.GOLDEN_POWERED_RAIL.item().get());
-            event.accept(Minecarts.NETHER_INFUSED_POWERED_RAIL.item().get());
+            addAfter(event, Items.RAIL, Minecarts.NETHER_INFUSED_POWERED_RAIL.item().get());
+            addAfter(event, Items.RAIL, Minecarts.GOLDEN_POWERED_RAIL.item().get());
+            addAfter(event, Items.RAIL, Minecarts.COPPER_POWERED_RAIL.item().get());
             event.accept(ExplosiveBarrel.BLOCK.item().get());
             event.accept(MiningCharge.MINING_CHARGE.item().get());
         }
@@ -238,6 +240,14 @@ public class ClientSetup {
             event.accept(FoodDrinks.BROWN_MUSHROOM_STEW.get());
             event.accept(FoodDrinks.RED_MUSHROOM_STEW.get());
         }
+    }
+
+    private static void addBefore(BuildCreativeModeTabContentsEvent event, Item before, Item itemToAdd) {
+        event.getEntries().putBefore(new ItemStack(before), new ItemStack(itemToAdd), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+    }
+
+    private static void addAfter(BuildCreativeModeTabContentsEvent event, Item after, Item itemToAdd) {
+        event.getEntries().putAfter(new ItemStack(after), new ItemStack(itemToAdd), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
     }
 
     public static void init(FMLClientSetupEvent event) {
