@@ -1,8 +1,7 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.level.Level;
@@ -12,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Wolf.class)
-public abstract class WolfMixin extends TamableAnimal {
+public abstract class WolfMixin extends TamableAnimal implements NeutralMob {
 
 	protected WolfMixin(EntityType<? extends TamableAnimal> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
@@ -24,6 +23,4 @@ public abstract class WolfMixin extends TamableAnimal {
 			return;
 		cir.setReturnValue((0.55F - (20f - (this.getHealth() / this.getMaxHealth() * 20f)) * 0.02F) * (float)Math.PI);
 	}
-
-	public abstract AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent);
 }
