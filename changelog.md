@@ -6,6 +6,7 @@
 * Sorted some stuff in the creative tabs
 * Adjusted stamina visibility
 * Removed Flint blocks
+* Coated copper damage is now 75% of damage dealt
 * Advancements cleanup
 
 ## 0.15.0

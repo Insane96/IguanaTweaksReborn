@@ -32,11 +32,10 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -119,7 +118,7 @@ public class CopperToolsExpansion extends Feature {
 	}
 
 	@SubscribeEvent
-	public void onAttack(LivingDamageEvent event) {
+	public void onAttack(LivingHurtEvent event) {
 		if (!this.isEnabled()
 				|| event.getSource().is(DOESNT_TRIGGER_ELECTROCUTION)
 				|| !(event.getSource().getEntity() instanceof Player player)
@@ -136,7 +135,7 @@ public class CopperToolsExpansion extends Feature {
 		int hits = tag.getInt(COATED_TIMES_HIT);
 		if (++hits >= 4) {
 			hits = 0;
-			electrocute(player, event.getEntity());
+			electrocute(event.getAmount(), player, event.getEntity());
 		}
 		tag.putInt(COATED_TIMES_HIT, hits);
 	}
@@ -157,15 +156,15 @@ public class CopperToolsExpansion extends Feature {
 		int hits = tag.getInt(COATED_TIMES_HIT);
 		if (++hits >= 4) {
 			hits = 0;
-			electrocute(player, attacker);
+			electrocute(3.5f, player, attacker);
 		}
 		tag.putInt(COATED_TIMES_HIT, hits);
 	}
 
-	private void electrocute(Player electrocuter, LivingEntity attacked) {
+	private void electrocute(float triggeringDamageAmount, Player electrocuter, LivingEntity attacked) {
 		DamageSource damageSource = electrocuter.damageSources().source(ELECTROCUTION_ATTACK, electrocuter);
 		double range = 4.5d;
-		float secondaryDamage = (float) (1.0f * electrocuter.getAttributeValue(Attributes.ATTACK_DAMAGE));
+		float secondaryDamage = triggeringDamageAmount * 0.75f;
 		ItemStack useItem = electrocuter.getUseItem();
 		if (useItem.is(COATED_SHIELD.get()))
 			secondaryDamage = (float) ((SPShieldItem)useItem.getItem()).getBlockedDamage(useItem, electrocuter, electrocuter.level());
