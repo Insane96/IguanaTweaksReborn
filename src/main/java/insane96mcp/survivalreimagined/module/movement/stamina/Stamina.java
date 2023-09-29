@@ -177,9 +177,9 @@ public class Stamina extends Feature {
         int halfHeartsStamina = Mth.ceil((float) StaminaHandler.getStamina(player) / staminaPerHalfHeart);
         int height = 9;
         if (StaminaHandler.isStaminaLocked(player))
-            setColor(0.7f, 0.7f, 0.7f, .7f);
+            setColor(0.8f, 0.8f, 0.8f, .8f);
         else
-            setColor(1f, 1f, 1f, 0.43f);
+            setColor(1f, 1f, 1f, 0.5f);
         for (int hp = halfHeartsMaxStamina - 1; hp >= 0; hp--) {
             if (hp < halfHeartsStamina)
                 continue;

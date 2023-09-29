@@ -4,6 +4,7 @@
 * Solarium and Keego hoe now have cooldown reduction based off their base ability
 * Fixed mod's armors not being trimmable
 * Sorted some stuff in the creative tabs
+* Adjusted stamina visibility
 
 ## 0.15.0
 * Added Better Beacon

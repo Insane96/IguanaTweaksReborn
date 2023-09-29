@@ -7,7 +7,7 @@ license="All rights reserved"
     displayName="Survival Reimagined"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/iguanatweaks-reborn"
     #logoFile="examplemod.png"
-    credits = "Thanks to Iguana for the original Mod. Effect Icons made by hamzaa#1200. Injured sound by thecheeseman from freesound.org. Stamina overlay code from AppleSkin exhaustion code. Carboniglio for Alpha testing and many ideas. kioraSperlusenta for bearing with me in livestream. e___kho for some durium textures."
+    credits = "Thanks to Iguana for the original Mod. Effect Icons made by hamzaa#1200. Unfair one shot sound by thecheeseman from freesound.org. Stamina overlay code from AppleSkin exhaustion code. Carboniglio for Alpha testing and many ideas. kioraSperlusenta for bearing with me in livestream. e___kho for some durium textures."
     authors = "Insane96MCP"
     description = '''
     Multiple changes to bring back Survival in Minecraft.
