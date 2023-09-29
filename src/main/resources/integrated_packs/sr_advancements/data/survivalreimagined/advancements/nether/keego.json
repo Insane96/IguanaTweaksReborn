@@ -1,7 +1,7 @@
 {
 	"display": {
 		"icon": {
-			"item": "survivalreimagined:keego_pickaxe"
+			"item": "survivalreimagined:keego"
 		},
 		"title": {
 			"translate": "advancements.sr_nether.keego.title"
@@ -14,7 +14,7 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "minecraft:nether/root",
+	"parent": "minecraft:story/enter_the_nether",
 	"criteria": {
 		"keego": {
 			"trigger": "minecraft:inventory_changed",
@@ -22,15 +22,7 @@
 				"items": [
 					{
 						"items": [
-							"survivalreimagined:keego_pickaxe",
-							"survivalreimagined:keego_axe",
-							"survivalreimagined:keego_shovel",
-							"survivalreimagined:keego_sword",
-							"survivalreimagined:keego_hoe",
-							"survivalreimagined:keego_helmet",
-							"survivalreimagined:keego_chestplate",
-							"survivalreimagined:keego_leggings",
-							"survivalreimagined:keego_boots"
+							"survivalreimagined:keego"
 						]
 					}
 				]

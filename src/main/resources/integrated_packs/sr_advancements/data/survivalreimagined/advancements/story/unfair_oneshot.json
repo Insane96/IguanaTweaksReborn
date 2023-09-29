@@ -14,7 +14,7 @@
 		"announce_to_chat": true,
 		"hidden": true
 	},
-	"parent": "survivalreimagined:story/forge",
+	"parent": "survivalreimagined:story/flint_pickaxe",
 	"criteria": {
 		"unfair_oneshot": {
 			"trigger": "survivalreimagined:unfair_oneshot"

@@ -16,13 +16,15 @@
 	},
 	"parent": "survivalreimagined:story/root",
 	"criteria": {
-		"flint_pickaxe": {
+		"flint_tools": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
 						"items": [
-							"survivalreimagined:flint_pickaxe"
+							"survivalreimagined:flint_pickaxe",
+							"survivalreimagined:flint_axe",
+							"survivalreimagined:flint_shovel"
 						]
 					}
 				]
@@ -31,7 +33,7 @@
 	},
 	"requirements": [
 		[
-			"flint_pickaxe"
+			"flint_tools"
 		]
 	]
 }

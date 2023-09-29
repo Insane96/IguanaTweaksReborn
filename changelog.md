@@ -5,6 +5,8 @@
 * Fixed mod's armors not being trimmable
 * Sorted some stuff in the creative tabs
 * Adjusted stamina visibility
+* Removed Flint blocks
+* Advancements cleanup
 
 ## 0.15.0
 * Added Better Beacon

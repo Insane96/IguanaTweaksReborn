@@ -14,7 +14,7 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/ensorceller",
+	"parent": "minecraft:story/enchant_item",
 	"criteria": {
 		"cleansed_lapis": {
 			"trigger": "survivalreimagined:anvil_repair",
