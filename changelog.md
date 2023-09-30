@@ -12,6 +12,7 @@
 * Removed Flint blocks
 * Advancements cleanup
 * Decreased back experience to level up (40 -> 35)
+* Fixed armored mobs not dropping the correct experience
 * Better smartness calculation
 
 ## 0.15.0

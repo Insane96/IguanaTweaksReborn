@@ -34,6 +34,7 @@
         "MerchantOfferMixin",
         "MilkBucketItemMixin",
         "MobEffectMixin",
+        "MobMixin",
         "MonsterMixin",
         "MultiplayerGameModeMixin",
         "MusicsMixin",
