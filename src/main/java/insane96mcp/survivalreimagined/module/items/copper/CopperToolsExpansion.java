@@ -3,7 +3,6 @@ package insane96mcp.survivalreimagined.module.items.copper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.event.HurtItemStackEvent;
 import insane96mcp.insanelib.item.ILItemTier;
@@ -33,6 +32,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -77,10 +77,6 @@ public class CopperToolsExpansion extends Feature {
     public static final RegistryObject<SimpleParticleType> ELECTROCUTION_SPARKS = SRRegistries.PARTICLE_TYPES.register("electrocution_sparks", () -> new SimpleParticleType(true));
 	public static final RegistryObject<SoundEvent> ELECTROCUTION = SRRegistries.SOUND_EVENTS.register("electrocution", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(SurvivalReimagined.MOD_ID, "electrocution")));
 	public static final TagKey<DamageType> DOESNT_TRIGGER_ELECTROCUTION = SRDamageTypeTagsProvider.create("doesnt_trigger_electrocution");
-
-	@Config(min = 0d)
-	@Label(name = "Electrocution Damage")
-	public static Double electrocutionDamage = 4d;
 
 	public CopperToolsExpansion(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -140,7 +136,7 @@ public class CopperToolsExpansion extends Feature {
 		int hits = tag.getInt(COATED_TIMES_HIT);
 		if (++hits >= 4) {
 			hits = 0;
-			electrocute(event.getAmount(), player, event.getEntity());
+			electrocute(player, event.getEntity());
 		}
 		tag.putInt(COATED_TIMES_HIT, hits);
 	}
@@ -161,15 +157,16 @@ public class CopperToolsExpansion extends Feature {
 		int hits = tag.getInt(COATED_TIMES_HIT);
 		if (++hits >= 4) {
 			hits = 0;
-			electrocute(3.5f, player, attacker);
+			electrocute(player, attacker);
 		}
 		tag.putInt(COATED_TIMES_HIT, hits);
 	}
 
-	private void electrocute(float triggeringDamageAmount, Player electrocuter, LivingEntity attacked) {
+	private void electrocute(Player electrocuter, LivingEntity attacked) {
 		DamageSource damageSource = electrocuter.damageSources().source(ELECTROCUTION_ATTACK, electrocuter);
 		double range = 4.5d;
 		ItemStack useItem = electrocuter.getUseItem();
+		float electrocutionDamage = (float) (1.0f * electrocuter.getAttributeValue(Attributes.ATTACK_DAMAGE));
 		int hitEntities = 0;
 		IntList listIdsOfHitEntities = new IntArrayList();
 		List<LivingEntity> listOfHitEntities = new ArrayList<>();
@@ -184,7 +181,7 @@ public class CopperToolsExpansion extends Feature {
 			if (target == null)
 				break;
 			listOfHitEntities.add(target);
-			MCUtils.attackEntityIgnoreInvFrames(damageSource, electrocutionDamage.floatValue(), target, target, true);
+			MCUtils.attackEntityIgnoreInvFrames(damageSource, electrocutionDamage, target, target, true);
 			listIdsOfHitEntities.add(target.getId());
 			target.playSound(ELECTROCUTION.get(), 0.4f, 1.0f);
 			lastEntityHit = target;

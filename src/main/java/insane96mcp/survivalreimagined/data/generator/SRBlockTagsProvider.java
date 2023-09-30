@@ -73,6 +73,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(Death.GRAVE.block().get())
                 .add(MultiBlockFurnaces.BLAST_FURNACE.block().get(), MultiBlockFurnaces.SOUL_BLAST_FURNACE.block().get())
                 .add(Forging.FORGE.block().get())
+                .add(FlintExpansion.FLINT_ROCK.block().get())
                 .add(EnchantingFeature.ENCHANTING_TABLE.block().get())
                 .add(BeaconConduit.BEACON.block().get());
 

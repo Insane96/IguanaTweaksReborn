@@ -5,11 +5,11 @@
 * Regenerating absorption
   * Base regeneration increased (8 secs -> 5 secs per half heart)
   * Reduced damaged regen pause (3 -> 1.5 secs)
+  * Reduced toughness to absorption regen speed (+20% -> +10% per toughness)
 * Fixed mod's armors not being trimmable
 * Sorted some stuff in the creative tabs
 * Adjusted stamina visibility
 * Removed Flint blocks
-* Electrocution damage is now fixed to 4
 * Advancements cleanup
 * Decreased back experience to level up (40 -> 35)
 * Better smartness calculation

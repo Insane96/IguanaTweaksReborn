@@ -35,7 +35,7 @@ public class AbsorptionArmor extends Feature {
             }
             if (attribute.equals(Attributes.ARMOR_TOUGHNESS)) {
                 if (modifier.getOperation() == AttributeModifier.Operation.ADDITION)
-                    toAdd.put(RegeneratingAbsorption.REGEN_ATTRIBUTE.get(), new AttributeModifier(modifier.getId(), modifier.getName(), modifier.getAmount() * 0.2d, AttributeModifier.Operation.MULTIPLY_BASE));
+                    toAdd.put(RegeneratingAbsorption.REGEN_ATTRIBUTE.get(), new AttributeModifier(modifier.getId(), modifier.getName(), modifier.getAmount() * 0.1d, AttributeModifier.Operation.MULTIPLY_BASE));
                 else
                     toAdd.put(RegeneratingAbsorption.REGEN_ATTRIBUTE.get(), new AttributeModifier(modifier.getId(), modifier.getName(), modifier.getAmount(), modifier.getOperation()));
                 toRemove.put(attribute, modifier);

@@ -15,6 +15,7 @@
         "BoatMixin",
         "CampfireBlockMixin",
         "ConduitBlockEntityMixin",
+        "DamageEnchantmentMixin",
         "DigDurabilityEnchantmentMixin",
         "DiggerItemMixin",
         "DrownedSwimUpGoalMixin",
