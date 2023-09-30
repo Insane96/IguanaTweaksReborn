@@ -2,13 +2,16 @@
 
 ## 0.15.1
 * Solarium and Keego hoe now have cooldown reduction based off their base ability
+* Regenerating absorption
+  * Base regeneration increased (8 secs -> 5 secs per half heart)
+  * Reduced damaged regen pause (3 -> 1.5 secs)
 * Fixed mod's armors not being trimmable
 * Sorted some stuff in the creative tabs
 * Adjusted stamina visibility
 * Removed Flint blocks
 * Electrocution damage is now fixed to 4
 * Advancements cleanup
-* Decreased back experience to level up
+* Decreased back experience to level up (40 -> 35)
 * Better smartness calculation
 
 ## 0.15.0

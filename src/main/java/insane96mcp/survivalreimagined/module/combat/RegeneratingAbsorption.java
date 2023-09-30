@@ -32,7 +32,7 @@ public class RegeneratingAbsorption extends Feature {
 
     public static final RegistryObject<Attribute> ATTRIBUTE = SRRegistries.ATTRIBUTES.register("regenerating_absorption", () -> new RangedAttribute("attribute.name.regenerating_absorption", 0d, 0d, 1024d));
 
-    public static final RegistryObject<Attribute> REGEN_ATTRIBUTE = SRRegistries.ATTRIBUTES.register("regenerating_absorption_speed", () -> new RangedAttribute("attribute.name.regenerating_absorption_speed", 0.125d, 0d, 20d));
+    public static final RegistryObject<Attribute> REGEN_ATTRIBUTE = SRRegistries.ATTRIBUTES.register("regenerating_absorption_speed", () -> new RangedAttribute("attribute.name.regenerating_absorption_speed", 0.200d, 0d, 20d));
 
     public static final RegistryObject<MobEffect> EFFECT = SRRegistries.MOB_EFFECTS.register("regenerating_absorption", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x818894)
             .addAttributeModifier(ATTRIBUTE.get(), "704d7291-63ba-4346-8aa8-a08e90a13fdf", 4, AttributeModifier.Operation.ADDITION));
@@ -42,7 +42,7 @@ public class RegeneratingAbsorption extends Feature {
     public static Integer absorptionDecay = 10;
     @Config(min = 0)
     @Label(name = "Un-damaged time to regen", description = "Ticks that must pass from the last hit to regen absorption hearts. This is affected by regenerating absorption speed")
-    public static Integer unDamagedTimeToRegen = 0;
+    public static Integer unDamagedTimeToRegen = 30;
     @Config
     @Label(name = "Cap to health", description = "The amount of regenerating absorption hearts cannot go over the entity's current health.")
     public static Boolean capToHealth = true;
