@@ -1,11 +1,11 @@
 package insane96mcp.survivalreimagined.mixin;
 
-import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.combat.RegeneratingAbsorption;
 import insane96mcp.survivalreimagined.module.experience.PlayerExperience;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -65,7 +65,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
 	private float onCalculateAbsorption(float f1, DamageSource damageSource, float amount) {
-		if (RegeneratingAbsorption.entityAbsorption() && (damageSource.getEntity() == null || damageSource.is(PiercingPickaxes.PIERCING_DAMAGE_TYPE))) {
+		if (RegeneratingAbsorption.entityAbsorption() && (damageSource.getEntity() == null || damageSource.is(DamageTypeTags.BYPASSES_ARMOR))) {
 			return amount;
 		}
 		return Math.max(amount - this.getAbsorptionAmount(), 0.0F);

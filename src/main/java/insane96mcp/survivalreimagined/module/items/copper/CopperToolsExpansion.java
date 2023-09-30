@@ -80,7 +80,7 @@ public class CopperToolsExpansion extends Feature {
 
 	@Config(min = 0d)
 	@Label(name = "Electrocution Damage")
-	public Double electrocutionDamage = 4d;
+	public static Double electrocutionDamage = 4d;
 
 	public CopperToolsExpansion(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

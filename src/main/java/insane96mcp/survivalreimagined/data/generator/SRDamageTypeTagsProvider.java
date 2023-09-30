@@ -8,6 +8,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -23,6 +24,8 @@ public class SRDamageTypeTagsProvider extends DamageTypeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
+        tag(DamageTypeTags.BYPASSES_ARMOR).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE);
+
         tag(PiercingPickaxes.PIERCING_DAMAGE_TYPE).add(PiercingPickaxes.PIERCING_MOB_ATTACK, PiercingPickaxes.PIERCING_PLAYER_ATTACK);
         tag(PiercingPickaxes.DOESNT_TRIGGER_PIERCING).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE).add(CopperToolsExpansion.ELECTROCUTION_ATTACK);
 
