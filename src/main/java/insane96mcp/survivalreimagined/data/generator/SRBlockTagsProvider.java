@@ -7,9 +7,11 @@ import insane96mcp.survivalreimagined.module.farming.HarderCrops;
 import insane96mcp.survivalreimagined.module.farming.bonemeal.BoneMeal;
 import insane96mcp.survivalreimagined.module.items.crate.Crate;
 import insane96mcp.survivalreimagined.module.items.explosivebarrel.ExplosiveBarrel;
+import insane96mcp.survivalreimagined.module.items.flintexpansion.FlintExpansion;
 import insane96mcp.survivalreimagined.module.mining.Durium;
 import insane96mcp.survivalreimagined.module.mining.SoulSteel;
 import insane96mcp.survivalreimagined.module.mining.forging.Forging;
+import insane96mcp.survivalreimagined.module.mining.keego.Keego;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.block.MultiBlockBlastFurnaceBlock;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.block.MultiBlockSoulBlastFurnaceBlock;
@@ -97,7 +99,14 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
                 .add(OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get());
 
         tag(BlockTags.BEACON_BASE_BLOCKS)
-                .add(Durium.BLOCK.block().get(), SoulSteel.BLOCK.block().get());
+                .add(Durium.BLOCK.block().get(), SoulSteel.BLOCK.block().get(), Keego.BLOCK.block().get());
+
+        tag(BlockTags.FALL_DAMAGE_RESETTING)
+                .add(Blocks.COBWEB);
+
+        tag(BlockTags.REPLACEABLE_BY_TREES)
+                .add(OreGeneration.COPPER_ORE_ROCK.block().get(), OreGeneration.IRON_ORE_ROCK.block().get(), OreGeneration.GOLD_ORE_ROCK.block().get())
+                .add(FlintExpansion.FLINT_ROCK.block().get());
 
         //Mod's tags
         tag(RESPAWN_OBELISK_BLOCKS_TO_ROT)

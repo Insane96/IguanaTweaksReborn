@@ -207,7 +207,7 @@ public class EnchantmentsFeature extends SRFeature {
 			return;
 		int lvl = EnchantmentHelper.getEnchantmentLevel(SMARTNESS.get(), event.getAttackingPlayer());
 		if (lvl > 0)
-			event.setDroppedExperience(Smartness.getIncreasedExperience(lvl, event.getDroppedExperience()));
+			event.setDroppedExperience(Smartness.getIncreasedExperience(event.getEntity().getRandom(), lvl, event.getDroppedExperience()));
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -216,7 +216,7 @@ public class EnchantmentsFeature extends SRFeature {
 			return;
 		int lvl = EnchantmentHelper.getEnchantmentLevel(SMARTNESS.get(), event.getPlayer());
 		if (lvl > 0)
-			event.setExpToDrop(Smartness.getIncreasedExperience(lvl, event.getExpToDrop()));
+			event.setExpToDrop(Smartness.getIncreasedExperience(event.getLevel().getRandom(), lvl, event.getExpToDrop()));
 	}
 
 	@SubscribeEvent

@@ -1,6 +1,7 @@
-// 1.20.1	2023-09-28T08:15:32.2870294	Tags for minecraft:item mod id survivalreimagined
+// 1.20.1	2023-09-30T15:18:00.2134225	Tags for minecraft:item mod id survivalreimagined
 7d38d2cbef15f48156091dd486940520fa137586 data/minecraft/tags/items/arrows.json
 81f4ea11d3f0f343ccdd47750254e74e30cf718a data/minecraft/tags/items/axes.json
+abd116c0655ec5b14a0ff43f976691dd1f4bf470 data/minecraft/tags/items/beacon_payment_items.json
 76b4edfcd67f0c49b43e1af406c69a2412c47322 data/minecraft/tags/items/hoes.json
 15ca2c08735a33f21b5982703c5ec3557a7cb3c5 data/minecraft/tags/items/pickaxes.json
 d8ea3a4f7d2694bc7a72a568219edddebb0add5f data/minecraft/tags/items/shovels.json

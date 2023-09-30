@@ -1,5 +1,7 @@
 package insane96mcp.survivalreimagined.module.experience.enchantments.enchantment;
 
+import insane96mcp.insanelib.util.MathHelper;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.SwordItem;
@@ -30,7 +32,7 @@ public class Smartness extends Enchantment {
         return super.checkCompatibility(enchantment) && !(enchantment instanceof LootBonusEnchantment);
     }
 
-    public static int getIncreasedExperience(int lvl, int experience) {
-        return (int) (experience * (1 + lvl * .5f));
+    public static int getIncreasedExperience(RandomSource random, int lvl, int experience) {
+        return MathHelper.getAmountWithDecimalChance(random, experience * (1 + lvl * .5f));
     }
 }

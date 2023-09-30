@@ -100,7 +100,7 @@ public class Hoes extends SRFeature {
 		if (finalState == null || (!finalState.is(Blocks.FARMLAND) && triggerOnlyForFarmland))
 			return;
 		if (!isHoeDisabled)
-			harderTilling(event);
+			hoesCooldown(event);
 	}
 
 	public boolean disabledHoes(BlockEvent.BlockToolModificationEvent event) {
@@ -113,7 +113,7 @@ public class Hoes extends SRFeature {
 		return true;
 	}
 
-	public void harderTilling(BlockEvent.BlockToolModificationEvent event) {
+	public void hoesCooldown(BlockEvent.BlockToolModificationEvent event) {
 		ItemStack hoeStack = event.getHeldItemStack();
 		//noinspection ConstantConditions getPlayer can't be null as it's called from onHoeUse that checks if player's null
 		Player player = event.getPlayer();

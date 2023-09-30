@@ -25,6 +25,9 @@ public class SRDamageTypeTagsProvider extends DamageTypeTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         tag(DamageTypeTags.BYPASSES_ARMOR).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE);
+        tag(DamageTypeTags.BYPASSES_COOLDOWN).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE);
+        tag(DamageTypeTags.BYPASSES_SHIELD).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE);
+        tag(DamageTypeTags.NO_IMPACT).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE);
 
         tag(PiercingPickaxes.PIERCING_DAMAGE_TYPE).add(PiercingPickaxes.PIERCING_MOB_ATTACK, PiercingPickaxes.PIERCING_PLAYER_ATTACK);
         tag(PiercingPickaxes.DOESNT_TRIGGER_PIERCING).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE).add(CopperToolsExpansion.ELECTROCUTION_ATTACK);

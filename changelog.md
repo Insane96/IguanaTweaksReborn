@@ -9,6 +9,7 @@
 * Electrocution damage is now fixed to 4
 * Advancements cleanup
 * Decreased back experience to level up
+* Better smartness calculation
 
 ## 0.15.0
 * Added Better Beacon

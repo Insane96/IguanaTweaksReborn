@@ -1,5 +1,8 @@
-// 1.20.1	2023-09-30T15:06:26.1724641	Tags for minecraft:damage_type mod id survivalreimagined
+// 1.20.1	2023-09-30T15:18:00.2164237	Tags for minecraft:damage_type mod id survivalreimagined
 5777e80da0b13b55fe344f29f9b270ca5141fc5d data/minecraft/tags/damage_type/bypasses_armor.json
+5777e80da0b13b55fe344f29f9b270ca5141fc5d data/minecraft/tags/damage_type/bypasses_cooldown.json
+5777e80da0b13b55fe344f29f9b270ca5141fc5d data/minecraft/tags/damage_type/bypasses_shield.json
+5777e80da0b13b55fe344f29f9b270ca5141fc5d data/minecraft/tags/damage_type/no_impact.json
 b5b3c6e23816b4cf2603bd4f0bb5b757392ea899 data/survivalreimagined/tags/damage_type/doesnt_trigger_electrocution.json
 b5b3c6e23816b4cf2603bd4f0bb5b757392ea899 data/survivalreimagined/tags/damage_type/doesnt_trigger_piercing.json
 f54b4adf1be7cfe1b90b68b46f803c7f62fb6193 data/survivalreimagined/tags/damage_type/piercing_damage_type.json
