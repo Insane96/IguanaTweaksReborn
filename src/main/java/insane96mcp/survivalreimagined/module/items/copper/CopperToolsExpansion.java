@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.module.items.copper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.event.HurtItemStackEvent;
 import insane96mcp.insanelib.item.ILItemTier;
@@ -76,6 +77,10 @@ public class CopperToolsExpansion extends Feature {
     public static final RegistryObject<SimpleParticleType> ELECTROCUTION_SPARKS = SRRegistries.PARTICLE_TYPES.register("electrocution_sparks", () -> new SimpleParticleType(true));
 	public static final RegistryObject<SoundEvent> ELECTROCUTION = SRRegistries.SOUND_EVENTS.register("electrocution", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(SurvivalReimagined.MOD_ID, "electrocution")));
 	public static final TagKey<DamageType> DOESNT_TRIGGER_ELECTROCUTION = SRDamageTypeTagsProvider.create("doesnt_trigger_electrocution");
+
+	@Config(min = 0d)
+	@Label(name = "Electrocution Damage")
+	public Double electrocutionDamage = 4d;
 
 	public CopperToolsExpansion(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -164,10 +169,7 @@ public class CopperToolsExpansion extends Feature {
 	private void electrocute(float triggeringDamageAmount, Player electrocuter, LivingEntity attacked) {
 		DamageSource damageSource = electrocuter.damageSources().source(ELECTROCUTION_ATTACK, electrocuter);
 		double range = 4.5d;
-		float secondaryDamage = triggeringDamageAmount * 0.75f;
 		ItemStack useItem = electrocuter.getUseItem();
-		if (useItem.is(COATED_SHIELD.get()))
-			secondaryDamage = (float) ((SPShieldItem)useItem.getItem()).getBlockedDamage(useItem, electrocuter, electrocuter.level());
 		int hitEntities = 0;
 		IntList listIdsOfHitEntities = new IntArrayList();
 		List<LivingEntity> listOfHitEntities = new ArrayList<>();
@@ -182,7 +184,7 @@ public class CopperToolsExpansion extends Feature {
 			if (target == null)
 				break;
 			listOfHitEntities.add(target);
-			MCUtils.attackEntityIgnoreInvFrames(damageSource, secondaryDamage, target, target, true);
+			MCUtils.attackEntityIgnoreInvFrames(damageSource, electrocutionDamage.floatValue(), target, target, true);
 			listIdsOfHitEntities.add(target.getId());
 			target.playSound(ELECTROCUTION.get(), 0.4f, 1.0f);
 			lastEntityHit = target;
