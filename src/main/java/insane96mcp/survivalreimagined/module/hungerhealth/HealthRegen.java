@@ -6,8 +6,10 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
+import insane96mcp.survivalreimagined.utils.MCUtils;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -25,6 +27,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -39,6 +42,10 @@ public class HealthRegen extends Feature {
 	public static final RegistryObject<MobEffect> VIGOUR = SRRegistries.MOB_EFFECTS.register("vigour", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false)
 			.addAttributeModifier(Attributes.MOVEMENT_SPEED, "34ab9190-98b9-48e7-9048-a201fc116dff", 0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL)
 			.addAttributeModifier(Attributes.ATTACK_SPEED, "18c15105-382a-4a95-8aa9-185350ebf602", 0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+
+	public static final String HUNGER_ON_DEATH_TAG = SurvivalReimagined.RESOURCE_PREFIX + "hunger_on_death";
+	public static final String SATURATION_ON_DEATH_TAG = SurvivalReimagined.RESOURCE_PREFIX + "saturation_on_death";
+
 	@Config(min = 0)
 	@Label(name = "Health Regen Speed", description = "Sets how many ticks between the health regeneration happens (vanilla is 80).")
 	public static Integer healthRegenSpeed = 40;
@@ -77,6 +84,15 @@ public class HealthRegen extends Feature {
 	@Config(min = 0d, max = 1f)
 	@Label(name = "Food Heal Multiplier", description = "When eating you'll get healed by this percentage of (hunger + saturation) restored.")
 	public static Double foodHealMultiplier = 0d;
+	@Config
+	@Label(name = "Respawn.Only if below", description = "If hunger or saturation were above the values on respawn, they will not be reduced.")
+	public static Boolean respawnFoodOnlyIfBelow = true;
+	@Config(min = 0, max = 20)
+	@Label(name = "Respawn.Hunger", description = "Hunger of respawning players")
+	public static insane96mcp.insanelib.base.config.Difficulty hungerOnRespawn = new insane96mcp.insanelib.base.config.Difficulty(14, 10, 10);
+	@Config(min = 0, max = 20)
+	@Label(name = "Respawn.Saturation", description = "Saturation of respawning players")
+	public static insane96mcp.insanelib.base.config.Difficulty saturationOnRespawn = new insane96mcp.insanelib.base.config.Difficulty(10, 10, 6);
 	//Effects
 	@Config
 	@Label(name = "Effects.Vigour.Enable", description = "Set to true to enable Vigour, a new effect that lowers hunger consumption and increases health regen speed. Applied when good foods are eaten.")
@@ -234,6 +250,37 @@ public class HealthRegen extends Feature {
 		//noinspection ConstantConditions
 		int level = event.getEntity().getEffect(VIGOUR.get()).getAmplifier() + 1;
 		event.setNewSpeed(event.getNewSpeed() * (1 + (level * 0.05f)));
+	}
+
+	@SubscribeEvent
+	public void onPlayerRespawn(LivingDeathEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof Player player))
+			return;
+
+		MCUtils.getOrCreatePersistedData(player).putInt(HUNGER_ON_DEATH_TAG, player.getFoodData().foodLevel);
+		MCUtils.getOrCreatePersistedData(player).putFloat(SATURATION_ON_DEATH_TAG, player.getFoodData().saturationLevel);
+	}
+
+	@SubscribeEvent
+	public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+		if (!this.isEnabled()
+				|| event.isEndConquered())
+			return;
+
+		Player player = event.getEntity();
+		int hunger = MCUtils.getOrCreatePersistedData(player).getInt(HUNGER_ON_DEATH_TAG);
+		int hOnRespawn = (int) hungerOnRespawn.getByDifficulty(player.level());
+		if (!respawnFoodOnlyIfBelow || hunger < hOnRespawn)
+			player.getFoodData().foodLevel = hOnRespawn;
+		else
+			player.getFoodData().foodLevel = hunger;
+		float saturation = MCUtils.getOrCreatePersistedData(player).getFloat(SATURATION_ON_DEATH_TAG);
+		float sOnRespawn = (float) saturationOnRespawn.getByDifficulty(player.level());
+		if (!respawnFoodOnlyIfBelow || saturation < sOnRespawn)
+			player.getFoodData().saturationLevel = sOnRespawn;
+		else
+			player.getFoodData().saturationLevel = saturation;
 	}
 
 	@OnlyIn(Dist.CLIENT)

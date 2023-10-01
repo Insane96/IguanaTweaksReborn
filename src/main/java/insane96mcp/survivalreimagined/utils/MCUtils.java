@@ -14,6 +14,7 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class MCUtils {
@@ -82,6 +83,9 @@ public class MCUtils {
         instance.removeModifier(ANTI_KNOCKBACK_MODIFIER);
     }
 
+    /**
+     * Returns the Tag in the player persistent data that is kept on death / dimension change
+     */
     public static CompoundTag getOrCreatePersistedData(Player player) {
         CompoundTag tag;
         if (!player.getPersistentData().contains(Player.PERSISTED_NBT_TAG)) {
@@ -96,5 +100,13 @@ public class MCUtils {
 
     public static int getDurabilityLeft(ItemStack stack) {
         return stack.getMaxDamage() - stack.getDamageValue();
+    }
+
+    public static float getPercentageDurabilityLeft(ItemStack itemStack) {
+        Objects.requireNonNull(itemStack, "itemStack can't be null");
+        if (!itemStack.isDamageableItem())
+            return 0f;
+
+        return ((float) getDurabilityLeft(itemStack)) / itemStack.getMaxDamage();
     }
 }

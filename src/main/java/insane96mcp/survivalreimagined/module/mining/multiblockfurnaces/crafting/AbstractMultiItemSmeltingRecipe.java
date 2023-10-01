@@ -6,7 +6,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
 import insane96mcp.insanelib.util.MathHelper;
 import insane96mcp.survivalreimagined.setup.client.SRBookCategory;
-import insane96mcp.survivalreimagined.utils.Utils;
+import insane96mcp.survivalreimagined.utils.MCUtils;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
@@ -94,7 +94,7 @@ public abstract class AbstractMultiItemSmeltingRecipe implements Recipe<Containe
             for (int slot : getIngredientSlots()) {
                 containerStack = container.getItem(slot);
                 if (containerStack != ItemStack.EMPTY) {
-                    stack.setCount((int) (Utils.getPercentageDurabilityLeft(containerStack) * this.recycle.amountAtFullDurability * this.recycle.ratio));
+                    stack.setCount((int) (MCUtils.getPercentageDurabilityLeft(containerStack) * this.recycle.amountAtFullDurability * this.recycle.ratio));
                     break;
                 }
             }

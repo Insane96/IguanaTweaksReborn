@@ -1,6 +1,8 @@
 # Changelog
 
 ## 0.15.1
+* Hunger and Saturation are now kept on respawn
+  * Unless they are below a certain amount
 * Solarium and Keego hoe now have cooldown reduction based off their base ability
 * Regenerating absorption
   * Base regeneration increased (8 secs -> 5 secs per half heart)
