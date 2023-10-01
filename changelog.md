@@ -13,6 +13,7 @@
 * Advancements cleanup
 * Decreased back experience to level up (40 -> 35)
 * Fixed armored mobs not dropping the correct experience
+* Increased chance for grass to decay/grow
 * Better smartness calculation
 
 ## 0.15.0
