@@ -45,6 +45,8 @@ public class Minecarts extends Feature {
 			return;
 
 		minecart.setDragAir(1d);
+		minecart.setMaxSpeedAirLateral(1.2f);
+		minecart.setMaxSpeedAirVertical(1.2f);
 	}
 
 	private static final String path = "minecarts/";

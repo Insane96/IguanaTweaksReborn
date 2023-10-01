@@ -27,8 +27,8 @@ public abstract class AbstractMinecartMixin extends Entity implements IForgeAbst
     private double preventAcceleration(double acceleration, BlockPos pos, BlockState state) {
         BaseRailBlock baserailblock = (BaseRailBlock) state.getBlock();
         float railMaxSpeed = baserailblock.getRailMaxSpeed(state, this.level(), pos, (AbstractMinecart) (Object) this);
-        if (this.getDeltaMovement().horizontalDistance() > railMaxSpeed)
-            return -(this.getDeltaMovement().horizontalDistance() - railMaxSpeed);
+        if (this.getDeltaMovement().horizontalDistance() >= railMaxSpeed)
+            return 0f;
         else if (baserailblock instanceof SRPoweredRail srPoweredRail)
             return srPoweredRail.getRailAcceleration(state, this.level(), pos, (AbstractMinecart) (Object) this);
         return acceleration;
