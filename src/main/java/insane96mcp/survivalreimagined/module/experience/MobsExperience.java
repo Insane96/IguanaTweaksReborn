@@ -23,7 +23,7 @@ public class MobsExperience extends Feature {
 						Experience dropped from mobs that come from spawners will be multiplied by this multiplier.
 						Experience dropped by mobs from spawners are still affected by 'Global Experience Multiplier'
 						Can be set to 0 to disable experience drop from mob that come from spawners.""")
-	public static Double mobsFromSpawnersMultiplier = 1d;
+	public static Double mobsFromSpawnersMultiplier = 0.6d;
 
 	@Config(min = 0, max = 128d)
 	@Label(name = "Natural Mobs Multiplier", description = """
