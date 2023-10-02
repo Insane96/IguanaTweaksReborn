@@ -62,7 +62,7 @@ public class SoliumBoulderFeature extends Feature<BlockStateConfiguration> {
 						worldgenlevel.setBlock(betweenClosedPos, Blocks.DIRT.defaultBlockState, 3);
 					else if (b < 90)
 						worldgenlevel.setBlock(betweenClosedPos, Blocks.COARSE_DIRT.defaultBlockState, 3);
-					if (b < 90 && randomsource.nextFloat() < 0.3f)
+					if (b < 90 && randomsource.nextFloat() < 0.25f)
 						tryPlaceSolium(worldgenlevel, betweenClosedPos);
 				}
 			}

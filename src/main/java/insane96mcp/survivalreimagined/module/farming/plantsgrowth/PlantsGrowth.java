@@ -139,6 +139,15 @@ public class PlantsGrowth extends SRFeature {
 					.setGrowthBiomes(List.of(
 									new IdTagMatcher(IdTagMatcher.Type.TAG, "forge:is_cold")),
 							1.5f)
+					.inverseCorrectBiomes().build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:torchflower_crop")
+					.setNoSunglightMultipler(2f, 10)
+					.addSeasonMultiplier(Season.WINTER, 0f)
+					.addSeasonMultiplier(Season.AUTUMN, 0f)
+					.inverseCorrectBiomes().build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:pitcher_crop")
+					.setNoSunglightMultipler(2f, 10)
+					.addSeasonMultiplier(Season.WINTER, 0f)
 					.inverseCorrectBiomes().build()
 	));
 	public static final ArrayList<PlantGrowthModifier> plantsList = new ArrayList<>();

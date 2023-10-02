@@ -64,7 +64,7 @@ public class Solarium extends Feature {
 	public static final RegistryObject<Item> SHOVEL = SRRegistries.ITEMS.register("solarium_shovel", () -> new SolariumShovelItem(1.5F, -3.0F, new Item.Properties()));
 	public static final RegistryObject<Item> PICKAXE = SRRegistries.ITEMS.register("solarium_pickaxe", () -> new SolariumPickaxeItem(1, -2.8F, new Item.Properties()));
 	public static final RegistryObject<Item> AXE = SRRegistries.ITEMS.register("solarium_axe", () -> new SolariumAxeItem(5.5F, -3.2F, new Item.Properties()));
-	public static final RegistryObject<Item> HOE = SRRegistries.ITEMS.register("solarium_hoe", () -> new SolariumHoeItem(-2, -1.0F, new Item.Properties()));
+	public static final RegistryObject<Item> HOE = SRRegistries.ITEMS.register("solarium_hoe", () -> new SolariumHoeItem(0, -1.0F, new Item.Properties()));
 
 	public static final RegistryObject<Item> HELMET = SRRegistries.ITEMS.register("solarium_helmet", () -> new SolariumArmorItem(ArmorItem.Type.HELMET, new Item.Properties()));
 	public static final RegistryObject<Item> CHESTPLATE = SRRegistries.ITEMS.register("solarium_chestplate", () -> new SolariumArmorItem(ArmorItem.Type.CHESTPLATE, new Item.Properties()));

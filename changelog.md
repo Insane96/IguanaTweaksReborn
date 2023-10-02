@@ -17,6 +17,7 @@
 * Fixed armored mobs not dropping the correct experience
 * Increased chance for grass to decay/grow
 * Minecarts no longer decelerate on powered rails
+* Pitcher plant torch flowers now grow only in certain seasons
 * Better smartness calculation
 
 ## 0.15.0
