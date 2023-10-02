@@ -148,6 +148,10 @@ public class PlantsGrowth extends SRFeature {
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:pitcher_crop")
 					.setNoSunglightMultipler(2f, 10)
 					.addSeasonMultiplier(Season.WINTER, 0f)
+					.inverseCorrectBiomes().build(),
+			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "supplementaries:flax")
+					.setNoSunglightMultipler(2f, 10)
+					.addSeasonMultiplier(Season.WINTER, 0f)
 					.inverseCorrectBiomes().build()
 	));
 	public static final ArrayList<PlantGrowthModifier> plantsList = new ArrayList<>();
