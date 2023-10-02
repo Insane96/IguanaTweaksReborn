@@ -11,7 +11,9 @@ import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Mobs Experience", description = "Decrease / Increase experience dropped by mobs")
@@ -48,5 +50,23 @@ public class MobsExperience extends Feature {
 			mob.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, mobsFromSpawnersMultiplier);
 		else
 			mob.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, naturalMobsMultiplier);
+	}
+
+	// In vanilla, mobs drop loot before checking if they should drop more experience due to gear, this makes them never drop more experience
+	// This sets the xp reward before the loot drops (also changes the xp reward from 1~4 per equipment to 2)
+	@SubscribeEvent
+	public void fixEquipmentExperience(LivingDeathEvent event) {
+		if (!(event.getEntity() instanceof Mob mob)
+				|| mob.xpReward <= 0)
+			return;
+
+		for (ItemStack stack : mob.getArmorSlots()) {
+			if (!stack.isEmpty())
+				mob.xpReward += 2;
+		}
+		for (ItemStack stack : mob.getHandSlots()) {
+			if (!stack.isEmpty())
+				mob.xpReward += 2;
+		}
 	}
 }

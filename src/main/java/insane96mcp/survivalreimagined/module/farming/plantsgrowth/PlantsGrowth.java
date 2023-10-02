@@ -151,6 +151,7 @@ public class PlantsGrowth extends SRFeature {
 					.inverseCorrectBiomes().build(),
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "supplementaries:flax")
 					.setNoSunglightMultipler(2f, 10)
+					.addSeasonMultiplier(Season.SUMMER, 0f)
 					.addSeasonMultiplier(Season.WINTER, 0f)
 					.inverseCorrectBiomes().build()
 	));

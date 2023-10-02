@@ -18,6 +18,7 @@
 * Increased chance for grass to decay/grow
 * Minecarts no longer decelerate on powered rails
 * Mobs from spawners now drop 40% less experience
+* Fixed a vanilla bug where mobs don't drop bonus experience if the equipment they wear drops
 * Gravity defying now reduces fall damage based off gravity reduced (instead of 0.75 blocks per level)
 * Grass no longer grows in night time 
 * Pitcher plant torch flowers now grow only in certain seasons
