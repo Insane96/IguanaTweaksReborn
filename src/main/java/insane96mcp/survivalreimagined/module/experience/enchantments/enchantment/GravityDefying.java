@@ -51,6 +51,6 @@ public class GravityDefying extends Enchantment {
         if (lvl <= 0)
             return;
 
-        event.setDistance((float) (event.getDistance() - ((1f - GRAVITY_MODIFIERS[lvl]) * event.getDistance())));
+        event.setDistance((float) (event.getDistance() * GRAVITY_MODIFIERS[lvl]));
     }
 }
