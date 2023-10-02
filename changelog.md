@@ -17,6 +17,7 @@
 * Fixed armored mobs not dropping the correct experience
 * Increased chance for grass to decay/grow
 * Minecarts no longer decelerate on powered rails
+* Gravity defying now reduces fall damage based off gravity reduced (instead of 0.75 blocks per level)
 * Pitcher plant torch flowers now grow only in certain seasons
 * Better smartness calculation
 
