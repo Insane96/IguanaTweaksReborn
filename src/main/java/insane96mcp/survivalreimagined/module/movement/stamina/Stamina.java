@@ -71,8 +71,9 @@ public class Stamina extends Feature {
 
         boolean shouldSync = false;
 
+        int maxStamina = StaminaHandler.getMaxStamina(player);
         if (!player.getPersistentData().contains(STAMINA))
-            StaminaHandler.setStamina(player, StaminaHandler.getMaxStamina(player));
+            StaminaHandler.setStamina(player, maxStamina);
 
         if (player.isSprinting() && player.getVehicle() == null && !player.getAbilities().instabuild) {
             int amountConsumed = 1;
@@ -94,18 +95,25 @@ public class Stamina extends Feature {
             StaminaHandler.consumeStamina(player, amountConsumed);
             shouldSync = true;
         }
-        else if ((StaminaHandler.getStamina(player) != StaminaHandler.getMaxStamina(player) && StaminaHandler.getMaxStamina(player) >= 40)
+        else if ((StaminaHandler.getStamina(player) != maxStamina && maxStamina >= staminaPerHalfHeart * 4)
                 //Trigger the sync for clients
                 || player.tickCount == 1) {
             //Slower regeneration if stamina is locked
             if (StaminaHandler.isStaminaLocked(player) && player.tickCount % 3 == 0)
                 return;
-            StaminaHandler.regenStamina(player);
-            if (StaminaHandler.getStamina(player) >= StaminaHandler.getMaxStamina(player) * unlockStaminaAtHealthRatio)
+            int amount = 1;
+            if (maxStamina > staminaPerHalfHeart * 20) {
+                amount += (maxStamina - staminaPerHalfHeart * 20) / (staminaPerHalfHeart * 20);
+                int remainder = (maxStamina - staminaPerHalfHeart * 20) % 20;
+                if (player.tickCount % 20 < remainder)
+                     amount++;
+            }
+            StaminaHandler.regenStamina(player, amount);
+            if (StaminaHandler.getStamina(player) >= maxStamina * unlockStaminaAtHealthRatio)
                 StaminaHandler.unlockSprinting(player);
             shouldSync = true;
         }
-        else if (!StaminaHandler.isStaminaLocked(player) && StaminaHandler.getMaxStamina(player) < 40) {
+        else if (!StaminaHandler.isStaminaLocked(player) && maxStamina < 40) {
             StaminaHandler.setStamina(player, 0);
             StaminaHandler.lockSprinting(player);
             shouldSync = true;
@@ -175,12 +183,20 @@ public class Stamina extends Feature {
         int top = mc.getWindow().getGuiScaledHeight() - healthIconsOffset + 9;
         int halfHeartsMaxStamina = Mth.ceil((float) StaminaHandler.getMaxStamina(player) / staminaPerHalfHeart);
         int halfHeartsStamina = Mth.ceil((float) StaminaHandler.getStamina(player) / staminaPerHalfHeart);
+        float healthMax = player.getMaxHealth();
+        float absorb = player.getAbsorptionAmount();
+        int healthRows = Mth.ceil((healthMax + absorb) / 2.0F / 10.0F);
+        int rowHeight = Math.max(10 - (healthRows - 2), 3);
         int height = 9;
         if (StaminaHandler.isStaminaLocked(player))
             setColor(0.8f, 0.8f, 0.8f, .8f);
         else
             setColor(1f, 1f, 1f, 0.5f);
+        //int jiggle = 0;
         for (int hp = halfHeartsMaxStamina - 1; hp >= 0; hp--) {
+            /*if (player.getHealth() + player.getAbsorptionAmount() <= 4 && ((hp + 1) % 2 == 0 || hp == halfHeartsMaxStamina - 1)) {
+                jiggle = random.nextInt(2);
+            }*/
             if (hp < halfHeartsStamina)
                 continue;
             int v = (int) UV_STAMINA.y;
@@ -196,11 +212,10 @@ public class Stamina extends Feature {
                 u = (int) UV_STAMINA.x + 5;
                 r = 5;
             }
-            /*if (player.getHealth() <= 4) {
-                top += random.nextInt(2);
-            }*/
 
-            guiGraphics.blit(SurvivalReimagined.GUI_ICONS, right + (hp / 2 * 8) + r - (hp / 20 * 80), top - (hp / 20 * 10), u, v, width, height);
+            //top += jiggle;
+
+            guiGraphics.blit(SurvivalReimagined.GUI_ICONS, right + (hp / 2 * 8) + r - (hp / 20 * 80), top - (hp / 20 * rowHeight), u, v, width, height);
         }
         resetColor();
     }

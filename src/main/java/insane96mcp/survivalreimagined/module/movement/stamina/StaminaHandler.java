@@ -34,8 +34,8 @@ public class StaminaHandler {
             lockSprinting(player);
     }
 
-    public static void regenStamina(Player player) {
-        setStamina(player, getStamina(player) + 1);
+    public static void regenStamina(Player player, int amount) {
+        setStamina(player, getStamina(player) + amount);
     }
 
     public static void lockSprinting(Player player) {
