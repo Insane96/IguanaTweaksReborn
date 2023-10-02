@@ -191,7 +191,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 
 					int leftLvl = leftEnchantments.getOrDefault(rightEnchantment, 0);
 					int rightLvl = rightEnchantments.get(rightEnchantment);
-					rightLvl = leftLvl == rightLvl ? rightLvl + 1 : Math.max(rightLvl, leftLvl);
+					rightLvl = leftLvl == rightLvl && rightLvl < rightEnchantment.getMaxLevel() ? rightLvl + 1 : Math.max(rightLvl, leftLvl);
 					boolean canEnchant2 = rightEnchantment.canEnchant(left);
 					if (this.player.getAbilities().instabuild || left.is(Items.ENCHANTED_BOOK))
 						canEnchant2 = true;
