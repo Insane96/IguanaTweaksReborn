@@ -20,6 +20,8 @@
 * Mobs from spawners now drop 40% less experience
 * Fixed a vanilla bug where mobs don't drop bonus experience if the equipment they wear is dropped
 * Stamina above 10 hearts now always regenerates at the same speed
+* Fixed expanded not dropping experience from blocks
+  * Expanded now uses many vanilla methods so every block should trigger the correct destroy methods
 * Gravity defying now reduces fall damage based off gravity reduced (instead of 0.75 blocks per level)
 * Grass no longer grows at night 
 * Pitcher plant torch flowers now grow only in certain seasons

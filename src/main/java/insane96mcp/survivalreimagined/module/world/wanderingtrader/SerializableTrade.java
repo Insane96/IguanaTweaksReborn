@@ -112,7 +112,7 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
                 result = MapItem.create(serverlevel, blockpos.getX(), blockpos.getZ(), this.explorationMap.zoom, true, true);
                 MapItem.renderBiomePreviewMap(serverlevel, result);
                 MapItemSavedData.addTargetDecoration(result, blockpos, "+", this.explorationMap.mapDecoration);
-				result.setHoverName(this.result.getDisplayName());
+				result.setHoverName(this.result.getHoverName());
             }
         }
 		return new MerchantOffer(this.itemA, this.itemB == null ? ItemStack.EMPTY : this.itemB, result, this.maxUses, this.xp, 1f);

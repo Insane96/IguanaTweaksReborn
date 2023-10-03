@@ -263,6 +263,10 @@ public class ItemStats extends SRFeature {
 		return !Utils.isItemInTag(stack.getItem(), NOT_UNBREAKABLE) || (unbreakableEnchantedItems && stack.isEnchanted());
 	}
 
+	public static boolean isBroken(ItemStack stack) {
+		return shouldNotBreak(stack) && stack.getDamageValue() >= stack.getMaxDamage() - 1;
+	}
+
 	@SubscribeEvent
 	public void processEfficiencyMultipliers(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled())
@@ -276,7 +280,7 @@ public class ItemStats extends SRFeature {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(NO_EFFICIENCY_ITEM_LANG), true);
 		}
-		else if (unbreakableItems && shouldNotBreak(stack)){
+		else if (isBroken(stack)){
 			if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
 				event.setCanceled(true);
 				event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
@@ -293,7 +297,7 @@ public class ItemStats extends SRFeature {
 		ItemStack stack = event.getItemStack();
 		if (stack.getMaxDamage() == 0)
 			return;
-		if (stack.getDamageValue() >= stack.getMaxDamage() - 1 && shouldNotBreak(stack)) {
+		if (isBroken(stack)) {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
 		}
@@ -308,7 +312,7 @@ public class ItemStats extends SRFeature {
 		ItemStack stack = event.getItemStack();
 		if (stack.getMaxDamage() == 0)
 			return;
-		if (stack.getDamageValue() >= stack.getMaxDamage() - 1 && shouldNotBreak(stack)) {
+		if (isBroken(stack)) {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
 		}
@@ -323,7 +327,7 @@ public class ItemStats extends SRFeature {
 		ItemStack stack = event.getItemStack();
 		if (stack.getMaxDamage() == 0)
 			return;
-		if (stack.getDamageValue() >= stack.getMaxDamage() - 1 && shouldNotBreak(stack)) {
+		if (isBroken(stack)) {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
 		}
@@ -339,7 +343,7 @@ public class ItemStats extends SRFeature {
 		ItemStack stack = player.getMainHandItem();
 		if (stack.getMaxDamage() == 0)
 			return;
-		if (stack.getDamageValue() >= stack.getMaxDamage() - 1 && shouldNotBreak(stack)) {
+		if (isBroken(stack)) {
 			event.setCanceled(true);
 			player.displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
 		}
@@ -353,9 +357,7 @@ public class ItemStats extends SRFeature {
 			return;
 
 		ItemStack stack = event.getStack();
-		if (!shouldNotBreak(stack))
-			return;
-		if (event.getAmount() >= stack.getMaxDamage() - stack.getDamageValue() - 1) {
+		if (isBroken(stack)) {
 			event.getStack().setDamageValue(event.getStack().getMaxDamage() - 1);
 			event.setAmount(0);
 			EquipmentSlot equipmentSlot = Player.getEquipmentSlotForItem(stack);
@@ -394,7 +396,7 @@ public class ItemStats extends SRFeature {
 		if (stack.isDamageableItem()) {
 			int durabilityLeft = stack.getMaxDamage() - stack.getDamageValue();
 			MutableComponent component;
-            if (durabilityLeft <= 1 && unbreakableItems && shouldNotBreak(stack))
+            if (isBroken(stack))
                 component = Component.translatable(BROKEN_DURABILITY_LANG).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD);
             else
                 component = Component.translatable(TOOL_DURABILITY_LANG, durabilityLeft, stack.getMaxDamage()).withStyle(ChatFormatting.GRAY);

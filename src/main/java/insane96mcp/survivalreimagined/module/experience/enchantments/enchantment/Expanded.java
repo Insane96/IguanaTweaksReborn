@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.SheetedDecalTextureGenerator;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
+import insane96mcp.survivalreimagined.module.items.itemstats.ItemStats;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -15,10 +16,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.BlockDestructionProgress;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
@@ -26,18 +27,19 @@ import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.enchantment.DiggingEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.common.ForgeHooks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,23 +78,37 @@ public class Expanded extends Enchantment {
             return;
         List<BlockPos> minedBlocks = getMinedBlocks(heldStack, enchLevel, heldStack.getItem() instanceof PickaxeItem || heldStack.getItem() instanceof ShovelItem, level, entity, pos, face);
         for (BlockPos minedBlock : minedBlocks) {
-            if (level instanceof ServerLevel && (entity instanceof Player player && !player.getAbilities().flying)) {
+            if (level instanceof ServerLevel serverLevel && (entity instanceof ServerPlayer player && !player.getAbilities().flying)) {
                 BlockState minedBlockState = level.getBlockState(minedBlock);
                 BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(minedBlock) : null;
-                LootParams.Builder lootParams$Builder = (new LootParams.Builder((ServerLevel) level)).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(minedBlock)).withParameter(LootContextParams.TOOL, entity.getMainHandItem()).withOptionalParameter(LootContextParams.BLOCK_ENTITY, blockEntity).withOptionalParameter(LootContextParams.THIS_ENTITY, entity);
-                minedBlockState.getDrops(lootParams$Builder).forEach((stack) -> {
-                    ItemEntity drop = new ItemEntity(level, minedBlock.getX() + 0.5d, minedBlock.getY() + 0.5d, minedBlock.getZ() + 0.5d, stack);
-                    drop.setDefaultPickUpDelay();
-                    level.addFreshEntity(drop);
-                });
-                heldStack.hurtAndBreak(1, entity, l -> {
-                    l.broadcastBreakEvent(InteractionHand.MAIN_HAND);
-                });
+                boolean blockRemoved = removeBlock(serverLevel, minedBlock, player, true);
+                if (blockRemoved) {
+                    serverLevel.destroyBlock(minedBlock, false, entity);
+                    minedBlockState.getBlock().playerDestroy(serverLevel, player, minedBlock, minedBlockState, blockEntity, heldStack);
+                    int exp;
+                    if (!ForgeHooks.isCorrectToolForDrops(state, player)) // Handle empty block or player unable to break block scenario
+                        exp = 0;
+                    else {
+                        int fortuneLevel = player.getMainHandItem().getEnchantmentLevel(Enchantments.BLOCK_FORTUNE);
+                        int silkTouchLevel = player.getMainHandItem().getEnchantmentLevel(Enchantments.SILK_TOUCH);
+                        exp = state.getExpDrop(level, level.random, pos, fortuneLevel, silkTouchLevel);
+                    }
+                    minedBlockState.getBlock().popExperience(serverLevel, minedBlock, exp);
+                    level.levelEvent(LevelEvent.PARTICLES_DESTROY_BLOCK, minedBlock, Block.getId(minedBlockState));
+                }
+                heldStack.hurtAndBreak(1, entity, livingEntity -> livingEntity.broadcastBreakEvent(InteractionHand.MAIN_HAND));
             }
-            level.destroyBlock(minedBlock, false, entity);
-            if (heldStack.isEmpty())
+            if (ItemStats.isBroken(heldStack) || heldStack.isEmpty())
                 break;
         }
+    }
+
+    private static boolean removeBlock(Level level, BlockPos pos, ServerPlayer player, boolean canHarvest) {
+        BlockState state = level.getBlockState(pos);
+        boolean removed = state.onDestroyedByPlayer(level, pos, player, canHarvest, level.getFluidState(pos));
+        if (removed)
+            state.getBlock().destroy(level, pos, state);
+        return removed;
     }
 
     @OnlyIn(Dist.CLIENT)
