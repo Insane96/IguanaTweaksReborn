@@ -62,10 +62,12 @@ public class Fog extends Feature {
                 || event.getMode() != FogRenderer.FogMode.FOG_TERRAIN)
             return;
 
-        Entity entity = event.getCamera().getEntity();
+        if (!(event.getCamera().getEntity() instanceof LivingEntity entity))
+            return;
         if (entity.getEyeInFluidType() != ForgeMod.EMPTY_TYPE.get()
                 || entity.level().dimension() != Level.OVERWORLD
                 || !entity.level().isRaining()
+                || entity.hasEffect(MobEffects.BLINDNESS)
                 //TODO Smooth out
                 || entity.getY() < entity.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, entity.blockPosition()).getY() - 16d)
             return;

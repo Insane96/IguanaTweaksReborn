@@ -172,7 +172,7 @@ public class Solarium extends Feature {
 		float calculatedSkyLightRatio = getCalculatedSkyLightRatio(event.getEntity().level(), event.getEntity().blockPosition());
 		if (calculatedSkyLightRatio <= 0f)
 			return;
-		event.setNewSpeed(event.getOriginalSpeed() * (1 + 1.5f * calculatedSkyLightRatio));
+		event.setNewSpeed(event.getOriginalSpeed() * (1 + calculatedSkyLightRatio));
 	}
 
 	public static float getCalculatedSkyLight(Entity entity) {
