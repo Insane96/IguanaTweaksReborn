@@ -193,6 +193,7 @@ public class Stamina extends Feature {
         else
             setColor(1f, 1f, 1f, 0.5f);
         //int jiggle = 0;
+        //TODO Change to the same way vanilla renders hearts
         for (int hp = halfHeartsMaxStamina - 1; hp >= 0; hp--) {
             /*if (player.getHealth() + player.getAbsorptionAmount() <= 4 && ((hp + 1) % 2 == 0 || hp == halfHeartsMaxStamina - 1)) {
                 jiggle = random.nextInt(2);
