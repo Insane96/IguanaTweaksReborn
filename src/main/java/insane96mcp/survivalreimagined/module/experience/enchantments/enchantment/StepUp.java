@@ -15,7 +15,7 @@ public class StepUp extends Enchantment {
     public static final UUID STEP_UP_MODIFIER_UUID = UUID.fromString("74e97c20-6a62-482f-b909-e709087b066a");
 
     public StepUp() {
-        super(Rarity.UNCOMMON, EnchantmentCategory.ARMOR_LEGS, new EquipmentSlot[]{EquipmentSlot.LEGS});
+        super(Rarity.RARE, EnchantmentCategory.ARMOR_LEGS, new EquipmentSlot[]{EquipmentSlot.LEGS});
     }
 
     @Override

@@ -112,7 +112,7 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
                 result = MapItem.create(serverlevel, blockpos.getX(), blockpos.getZ(), this.explorationMap.zoom, true, true);
                 MapItem.renderBiomePreviewMap(serverlevel, result);
                 MapItemSavedData.addTargetDecoration(result, blockpos, "+", this.explorationMap.mapDecoration);
-				result.setTag(this.result.getTag());
+				result.setHoverName(this.result.getDisplayName());
             }
         }
 		return new MerchantOffer(this.itemA, this.itemB == null ? ItemStack.EMPTY : this.itemB, result, this.maxUses, this.xp, 1f);
@@ -147,7 +147,8 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 				tag = null;
 			}
 			serializableTrade.result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemResult), itemResultCount);
-			serializableTrade.result.setTag(tag);
+			if (tag != null)
+				serializableTrade.result.setTag(tag);
 			JsonObject enchantRandomly = GsonHelper.getAsJsonObject(json.getAsJsonObject(), "enchant_randomly", null);
 			if (enchantRandomly != null) {
 				serializableTrade.enchantRandomly = new EnchantRandomly(GsonHelper.getAsInt(enchantRandomly, "min_levels"), GsonHelper.getAsInt(enchantRandomly, "max_levels"), GsonHelper.getAsBoolean(enchantRandomly, "treasure"));
