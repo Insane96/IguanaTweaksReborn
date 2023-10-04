@@ -83,7 +83,7 @@ public class ItemStats extends SRFeature {
 			IdTagValue.newId("minecraft:elytra", 144),
 			IdTagValue.newId("minecraft:carrot_on_a_stick", 63),
 			IdTagValue.newId("minecraft:fishing_rod", 33),
-			IdTagValue.newId("minecraft:shears", 119),
+			IdTagValue.newId("minecraft:shears", 87),
 			IdTagValue.newId("minecraft:trident", 375),
 
 			IdTagValue.newId("minecraft:leather_helmet", 76),
