@@ -56,11 +56,11 @@ Durium extends Feature {
 	public static final RegistryObject<Item> HOE = SRRegistries.ITEMS.register("durium_hoe", () -> new HoeItem(ITEM_TIER, -2, -1.0F, new Item.Properties()));
 
 	private static final SRArmorMaterial ARMOR_MATERIAL = new SRArmorMaterial("survivalreimagined:durium", 20, Util.make(new EnumMap<>(ArmorItem.Type.class), (p_266652_) -> {
-		p_266652_.put(ArmorItem.Type.BOOTS, 3);
+		p_266652_.put(ArmorItem.Type.BOOTS, 2);
 		p_266652_.put(ArmorItem.Type.LEGGINGS, 5);
 		p_266652_.put(ArmorItem.Type.CHESTPLATE, 6);
 		p_266652_.put(ArmorItem.Type.HELMET, 2);
-	}), 6, SoundEvents.ARMOR_EQUIP_IRON, 1f, 0.03f, () -> Ingredient.of(INGOT.get()));
+	}), 6, SoundEvents.ARMOR_EQUIP_IRON, 0f, 0f, () -> Ingredient.of(INGOT.get()));
 
 	public static final RegistryObject<Item> HELMET = SRRegistries.ITEMS.register("durium_helmet", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties()));
 	public static final RegistryObject<Item> CHESTPLATE = SRRegistries.ITEMS.register("durium_chestplate", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()));

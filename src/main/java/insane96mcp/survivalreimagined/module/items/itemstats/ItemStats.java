@@ -111,10 +111,10 @@ public class ItemStats extends SRFeature {
 			IdTagValue.newId("survivalreimagined:solarium_leggings", 90),
 			IdTagValue.newId("survivalreimagined:solarium_boots", 78),
 
-			IdTagValue.newId("survivalreimagined:durium_helmet", 120),
-			IdTagValue.newId("survivalreimagined:durium_chestplate", 160),
-			IdTagValue.newId("survivalreimagined:durium_leggings", 150),
-			IdTagValue.newId("survivalreimagined:durium_boots", 130),
+			IdTagValue.newId("survivalreimagined:durium_helmet", 144),
+			IdTagValue.newId("survivalreimagined:durium_chestplate", 192),
+			IdTagValue.newId("survivalreimagined:durium_leggings", 180),
+			IdTagValue.newId("survivalreimagined:durium_boots", 156),
 
 			IdTagValue.newId("minecraft:golden_helmet", 72),
 			IdTagValue.newId("minecraft:golden_chestplate", 96),

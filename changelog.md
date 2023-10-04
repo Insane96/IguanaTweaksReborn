@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.15.2
+* Durium armor now has same stats as iron (but higher durability)
+
 ## 0.15.1
 * Hunger and Saturation are now kept on respawn
   * Unless they are below a certain amount
