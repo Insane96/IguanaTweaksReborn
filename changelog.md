@@ -2,6 +2,7 @@
 
 ## 0.15.2
 * Durium armor now has same stats as iron (but higher durability)
+* Fixed torch arrow not placing if hit the ceiling
 
 ## 0.15.1
 * Hunger and Saturation are now kept on respawn
