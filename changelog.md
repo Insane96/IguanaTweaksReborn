@@ -6,6 +6,7 @@
 * Lowered shears durability
 * Cactus are now mined faster with hoes 
 * Increased copper bonus efficiency (~~+0.05~~ -> +1% per block below sea level)
+* Unbreaking formula changed (better at lower levels) (Tools last ~~33/85/150/233% more from levels I to IV~~ -> 50% per level)
 * Increased experience dropped by mobs with enchanted gear
 * Fixed no item breaking sound
 * Fixed torch arrow not placing if hit the ceiling
