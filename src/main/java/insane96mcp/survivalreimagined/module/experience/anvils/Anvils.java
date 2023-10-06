@@ -71,7 +71,7 @@ public class Anvils extends Feature {
     public static Integer enchantmentCostRare = 3;
     @Config(min = 0)
     @Label(name = "Enchantments cost by rarity.Very Rare", description = "Vanilla: 8")
-    public static Integer enchantmentCostVeryRare = 5;
+    public static Integer enchantmentCostVeryRare = 6;
     @Config(min = 0)
     @Label(name = "Repair cost multiplier", description = "Multiplier for the levels required to repair or merge an item.")
     public static Double repairCostMultiplier = 0.70d;

@@ -357,7 +357,9 @@ public class ItemStats extends SRFeature {
 			return;
 
 		ItemStack stack = event.getStack();
-		if (isBroken(stack)) {
+		if (!shouldNotBreak(stack))
+			return;
+		if (event.getAmount() >= stack.getMaxDamage() - stack.getDamageValue() - 1) {
 			event.getStack().setDamageValue(event.getStack().getMaxDamage() - 1);
 			event.setAmount(0);
 			EquipmentSlot equipmentSlot = Player.getEquipmentSlotForItem(stack);

@@ -123,6 +123,11 @@ public class EnchantmentsFeature extends SRFeature {
 			Enchantments.INFINITY_ARROWS.rarity = Enchantment.Rarity.RARE;
 		else
 			Enchantments.INFINITY_ARROWS.rarity = Enchantment.Rarity.VERY_RARE;
+
+		if (thornsOverhaul)
+			Enchantments.THORNS.rarity = Enchantment.Rarity.RARE;
+		else
+			Enchantments.THORNS.rarity = Enchantment.Rarity.VERY_RARE;
 	}
 
 	public static boolean isEnchantmentDisabled(Enchantment enchantment) {

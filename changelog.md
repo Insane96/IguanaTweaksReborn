@@ -2,10 +2,11 @@
 
 ## 0.15.2
 * Durium armor now has same stats as iron (but higher durability)
-* Reduced infinity rarity (cost to merge/repair)
+* Reduced infinity and thorns rarity (cost to merge/repair)
 * Lowered shears durability
 * Cactus are now mined faster with hoes 
 * Increased experience dropped by mobs with enchanted gear
+* Fixed no item breaking sound
 * Fixed torch arrow not placing if hit the ceiling
 
 ## 0.15.1
