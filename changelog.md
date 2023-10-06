@@ -2,6 +2,7 @@
 
 ## 0.15.2
 * Durium armor now has same stats as iron (but higher durability)
+* Reduced infinity rarity (cost to merge/repair)
 * Lowered shears durability
 * Fixed torch arrow not placing if hit the ceiling
 

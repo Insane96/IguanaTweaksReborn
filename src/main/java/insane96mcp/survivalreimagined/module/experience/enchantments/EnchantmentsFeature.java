@@ -45,6 +45,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
@@ -113,6 +114,15 @@ public class EnchantmentsFeature extends SRFeature {
 		super(module, enabledByDefault, canBeDisabled);
 
 		JSON_CONFIGS.add(new SRFeature.JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, IdTagMatcher.LIST_TYPE));
+	}
+
+	@Override
+	public void readConfig(ModConfigEvent event) {
+		super.readConfig(event);
+		if (infinityOverhaul)
+			Enchantments.INFINITY_ARROWS.rarity = Enchantment.Rarity.RARE;
+		else
+			Enchantments.INFINITY_ARROWS.rarity = Enchantment.Rarity.VERY_RARE;
 	}
 
 	public static boolean isEnchantmentDisabled(Enchantment enchantment) {
