@@ -24,7 +24,7 @@ public class SREnchantingTableBlockEntity extends BaseContainerBlockEntity imple
     protected NonNullList<ItemStack> items = NonNullList.withSize(SREnchantingTableMenu.SLOT_COUNT, ItemStack.EMPTY);
 
     protected SREnchantingTableBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(EnchantingFeature.ENSORCELLER_BLOCK_ENTITY_TYPE.get(), pPos, pBlockState);
+        super(EnchantingFeature.ENCHANTING_TABLE_BLOCK_ENTITY.get(), pPos, pBlockState);
     }
 
     public void load(CompoundTag pTag) {
@@ -60,7 +60,7 @@ public class SREnchantingTableBlockEntity extends BaseContainerBlockEntity imple
 
     @Override
     protected Component getDefaultName() {
-        return Component.translatable("container.ensorceller");
+        return Component.translatable("container.enchant");
     }
 
     @Override

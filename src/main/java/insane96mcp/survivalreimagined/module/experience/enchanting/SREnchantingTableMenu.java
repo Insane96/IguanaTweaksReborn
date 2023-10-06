@@ -13,6 +13,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class SREnchantingTableMenu extends AbstractContainerMenu {
+    private final Container enchantSlots = new SimpleContainer(2) {
+        /**
+         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think
+         * it hasn't changed and skip it.
+         */
+        public void setChanged() {
+            super.setChanged();
+            SREnchantingTableMenu.this.slotsChanged(this);
+        }
+    };
     public static final int ITEM_SLOT = 0;
     public static final int SLOT_COUNT = 1;
     private static final int INV_SLOT_START = ITEM_SLOT + 1;
@@ -24,7 +34,7 @@ public class SREnchantingTableMenu extends AbstractContainerMenu {
     protected final Level level;
     //Given by tool's enchanting power and bookshelves
     public DataSlot maxCost = DataSlot.standalone();
-    public DataSlot maxBookshelves = DataSlot.standalone();
+    public DataSlot enchantCost = DataSlot.standalone();
 
     public SREnchantingTableMenu(int pContainerId, Inventory pPlayerInventory) {
         this(pContainerId, pPlayerInventory, new SimpleContainer(SLOT_COUNT), ContainerLevelAccess.NULL);
@@ -36,18 +46,14 @@ public class SREnchantingTableMenu extends AbstractContainerMenu {
         this.container = pContainer;
         this.access = access;
         this.level = pPlayerInventory.player.level();
-        this.addSlot(new Slot(pContainer, ITEM_SLOT, 36, 16) {
-            public boolean mayPlace(ItemStack stack) {
-                return true;
-            }
+        this.addSlot(new Slot(this.enchantSlots, 0, 11, 18) {
             public int getMaxStackSize() {
                 return 1;
             }
-
-            @Override
-            public void setChanged() {
-                super.setChanged();
-                SREnchantingTableMenu.this.slotsChanged(this.container);
+        });
+        this.addSlot(new Slot(this.enchantSlots, 1, 28, 18) {
+            public boolean mayPlace(ItemStack stack) {
+                return stack.is(net.minecraftforge.common.Tags.Items.ENCHANTING_FUELS);
             }
         });
 
@@ -61,6 +67,7 @@ public class SREnchantingTableMenu extends AbstractContainerMenu {
             this.addSlot(new Slot(pPlayerInventory, k, 8 + k * 18, 142));
         }
         this.addDataSlot(this.maxCost);
+        this.addDataSlot(this.enchantCost);
     }
 
     @Override

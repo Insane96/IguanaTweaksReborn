@@ -8,8 +8,27 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class SREnchantingTableScreen extends AbstractContainerScreen<SREnchantingTableMenu> {
-    private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(SurvivalReimagined.MOD_ID, "textures/gui/container/ensorceller.png");
+    private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(SurvivalReimagined.MOD_ID, "textures/gui/container/enchanting_table.png");
     private static final ResourceLocation ENCHANTING_TABLE_LOCATION = new ResourceLocation("textures/gui/container/enchanting_table.png");
+
+    static final int BUTTON_X = 13;
+    static final int BUTTON_Y = 38;
+    static final int BUTTON_U = 0;
+    static final int BUTTON_V = 166;
+    static final int BUTTON_W = 26;
+    static final int BUTTON_H = 18;
+
+    static final int LIST_X = 55;
+    static final int LIST_Y = 15;
+    static final int ENCH_LIST_ITEM_H = 14;
+    static final int LVL_BTN_W = 9;
+    static final int LOWER_LVL_BTN_U = 0;
+    static final int LOWER_LVL_BTN_V = 184;
+    static final int ENCH_DISPLAY_U = LVL_BTN_W;
+    static final int ENCH_DISPLAY_V = 184;
+    static final int ENCH_DISPLAY_W = 91;
+    static final int RISE_LVL_BTN_U = LVL_BTN_W + ENCH_DISPLAY_W;
+    static final int RISE_LVL_BTN_V = 184;
 
     public SREnchantingTableScreen(SREnchantingTableMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -25,13 +44,11 @@ public class SREnchantingTableScreen extends AbstractContainerScreen<SREnchantin
         int topLeftCornerX = (this.width - this.imageWidth) / 2;
         int topLeftCornerY = (this.height - this.imageHeight) / 2;
 
-        for (int buttonId = 0; buttonId < 2; ++buttonId) {
-            double d0 = pMouseX - (double)(topLeftCornerX + 11);
-            double d1 = pMouseY - (double)(topLeftCornerY + 35 + 18 * buttonId);
-            if (d0 >= 0.0D && d1 >= 0.0D && d0 < 65 && d1 < 18 && this.menu.clickMenuButton(this.minecraft.player, buttonId)) {
-                this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, buttonId);
-                return true;
-            }
+        double d0 = pMouseX - (double)(topLeftCornerX + BUTTON_X);
+        double d1 = pMouseY - (double)(topLeftCornerY + BUTTON_Y);
+        if (d0 >= 0.0D && d1 >= 0.0D && d0 < BUTTON_W && d1 < BUTTON_H && this.menu.clickMenuButton(this.minecraft.player, 0)) {
+            this.minecraft.gameMode.handleInventoryButtonClick((this.menu).containerId, 0);
+            return true;
         }
         return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
@@ -40,8 +57,27 @@ public class SREnchantingTableScreen extends AbstractContainerScreen<SREnchantin
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         int topLeftCornerX = (this.width - this.imageWidth) / 2;
         int topLeftCornerY = (this.height - this.imageHeight) / 2;
+        int x = pMouseX - (topLeftCornerX + BUTTON_X);
+        int y = pMouseY - (topLeftCornerY + BUTTON_Y);
         pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX, topLeftCornerY, 0, 0, this.imageWidth, this.imageHeight);
+        int levelCost = this.menu.enchantCost.get();
+        if ((this.minecraft.player.experienceLevel < levelCost && !this.minecraft.player.getAbilities().instabuild) || levelCost <= 0)
+            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + BUTTON_X, topLeftCornerY + BUTTON_Y, BUTTON_U + BUTTON_W, BUTTON_V, BUTTON_W, BUTTON_H);
+        else if (x >= 0 && y >= 0 && x < BUTTON_W && y < BUTTON_H)
+            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + BUTTON_X, topLeftCornerY + BUTTON_Y, BUTTON_U + BUTTON_W * 2, BUTTON_V, BUTTON_W, BUTTON_H);
+        else
+            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + BUTTON_X, topLeftCornerY + BUTTON_Y, BUTTON_U, BUTTON_V, BUTTON_W, BUTTON_H);
 
+        for (int i = 0; i < 4; i++) {
+            x = pMouseX - (topLeftCornerX + LIST_X);
+            y = pMouseY - (topLeftCornerY + LIST_Y + (ENCH_LIST_ITEM_H * i));
+            int offset = 0;
+            if (x >= 0 && y >= 0 && x < LVL_BTN_W + ENCH_DISPLAY_W + LVL_BTN_W && y < ENCH_LIST_ITEM_H)
+                offset = ENCH_LIST_ITEM_H;
+            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + LIST_X, topLeftCornerY + LIST_Y + (ENCH_LIST_ITEM_H * i), LOWER_LVL_BTN_U, LOWER_LVL_BTN_V + offset, LVL_BTN_W, ENCH_LIST_ITEM_H);
+            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + LIST_X + LVL_BTN_W, topLeftCornerY + LIST_Y + (ENCH_LIST_ITEM_H * i), ENCH_DISPLAY_U, ENCH_DISPLAY_V + offset, ENCH_DISPLAY_W, ENCH_LIST_ITEM_H);
+            pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + LIST_X + LVL_BTN_W + ENCH_DISPLAY_W, topLeftCornerY + LIST_Y + (ENCH_LIST_ITEM_H * i), RISE_LVL_BTN_U, RISE_LVL_BTN_V + offset, LVL_BTN_W, ENCH_LIST_ITEM_H);
+        }
     }
 
     @Override

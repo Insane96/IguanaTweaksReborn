@@ -276,7 +276,7 @@ public class ClientSetup {
         event.registerEntityRenderer(MiningCharge.PRIMED_MINING_CHARGE.get(), MiningChargeRenderer::new);
 
         event.registerBlockEntityRenderer(Forging.FORGE_BLOCK_ENTITY_TYPE.get(), ForgeRenderer::new);
-        event.registerBlockEntityRenderer(EnchantingFeature.ENSORCELLER_BLOCK_ENTITY_TYPE.get(), SREnchantingTableRenderer::new);
+        event.registerBlockEntityRenderer(EnchantingFeature.ENCHANTING_TABLE_BLOCK_ENTITY.get(), SREnchantingTableRenderer::new);
 
         event.registerBlockEntityRenderer(BeaconConduit.BEACON_BLOCK_ENTITY_TYPE.get(), SRBeaconRenderer::new);
     }
