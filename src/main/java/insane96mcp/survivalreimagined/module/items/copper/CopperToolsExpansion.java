@@ -95,7 +95,7 @@ public class CopperToolsExpansion extends Feature {
 		int y = event.getEntity().getBlockY();
 		if (y > 64)
 			return;
-		event.setNewSpeed(event.getNewSpeed() * EnchantmentsFeature.applyMiningSpeedModifiers((64 - y) * 0.08f, false, event.getEntity()));
+		event.setNewSpeed(event.getNewSpeed() + EnchantmentsFeature.applyMiningSpeedModifiers((64 - y) * 0.08f, false, event.getEntity()));
 	}
 
 	@SubscribeEvent
