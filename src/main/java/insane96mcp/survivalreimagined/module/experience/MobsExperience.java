@@ -61,12 +61,18 @@ public class MobsExperience extends Feature {
 			return;
 
 		for (ItemStack stack : mob.getArmorSlots()) {
-			if (!stack.isEmpty())
+			if (!stack.isEmpty()) {
 				mob.xpReward += 2;
+				if (stack.isEnchanted())
+					mob.xpReward += 2;
+			}
 		}
 		for (ItemStack stack : mob.getHandSlots()) {
-			if (!stack.isEmpty())
+			if (!stack.isEmpty()) {
 				mob.xpReward += 2;
+				if (stack.isEnchanted())
+					mob.xpReward += 2;
+			}
 		}
 	}
 }

@@ -4,6 +4,7 @@
 * Durium armor now has same stats as iron (but higher durability)
 * Reduced infinity rarity (cost to merge/repair)
 * Lowered shears durability
+* Increased experience dropped by mobs with enchanted gear
 * Fixed torch arrow not placing if hit the ceiling
 
 ## 0.15.1
