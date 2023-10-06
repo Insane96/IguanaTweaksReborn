@@ -11,7 +11,6 @@ import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.generator.SRDamageTypeTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.ElectrocutionParticleMessage;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
@@ -95,7 +94,8 @@ public class CopperToolsExpansion extends Feature {
 		int y = event.getEntity().getBlockY();
 		if (y > 64)
 			return;
-		event.setNewSpeed(event.getNewSpeed() + EnchantmentsFeature.applyMiningSpeedModifiers((64 - y) * 0.08f, false, event.getEntity()));
+		//event.setNewSpeed(event.getNewSpeed() + EnchantmentsFeature.applyMiningSpeedModifiers((64 - y) * 0.1f, false, event.getEntity()));
+		event.setNewSpeed(event.getNewSpeed() * (1f + (64 - y) * 0.01f));
 	}
 
 	@SubscribeEvent

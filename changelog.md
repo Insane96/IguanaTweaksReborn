@@ -5,7 +5,7 @@
 * Reduced infinity and thorns rarity (cost to merge/repair)
 * Lowered shears durability
 * Cactus are now mined faster with hoes 
-* Increased copper bonus efficiency (~~+0.05~~ -> +0.08 per block below sea level)
+* Increased copper bonus efficiency (~~+0.05~~ -> +1% per block below sea level)
 * Increased experience dropped by mobs with enchanted gear
 * Fixed no item breaking sound
 * Fixed torch arrow not placing if hit the ceiling
