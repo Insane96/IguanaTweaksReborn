@@ -88,9 +88,9 @@ public class EnchantmentsFeature extends SRFeature {
 	@Label(name = "Better Efficiency Formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to tool_efficiency * (0.15 * (lvl * lvl + 1))")
 	public static Boolean changeEfficiencyFormula = true;
 
-	@Config(min = 0d, max = 10d)
+	@Config(min = 0d, max = 2d)
 	@Label(name = "Power Enchantment Damage", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
-	public static Double powerEnchantmentDamage = 0.4d;
+	public static Double powerEnchantmentDamage = 0.35d;
 
 	@Config
 	@Label(name = "Prevent farmland trampling with Feather Falling")
