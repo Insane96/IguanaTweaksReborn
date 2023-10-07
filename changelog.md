@@ -8,6 +8,8 @@
 * Increased copper bonus efficiency (~~+0.05~~ -> +1% per block below sea level)
 * Unbreaking formula changed (better at lower levels) (Tools last ~~33/85/150/233% more from levels I to IV~~ -> 50% more per level)
 * Increased experience dropped by mobs with enchanted gear
+* Stamina handling now uses floating point values
+  * Modifiers now are applied by percentage and Vigour and Tiredness now slightly increase and decrease stamina regen
 * Fixed no item breaking sound
 * Fixed torch arrow not placing if hit the ceiling
 

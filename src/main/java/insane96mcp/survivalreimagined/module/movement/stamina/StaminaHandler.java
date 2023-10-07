@@ -4,12 +4,12 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
 public class StaminaHandler {
-    public static int getMaxStamina(Player player) {
+    public static float getMaxStamina(Player player) {
         return Mth.ceil(player.getHealth() * Stamina.staminaPerHalfHeart);
     }
 
-    public static int getStamina(Player player) {
-        return player.getPersistentData().getInt(Stamina.STAMINA);
+    public static float getStamina(Player player) {
+        return player.getPersistentData().getFloat(Stamina.STAMINA);
     }
 
     public static boolean isStaminaLocked(Player player) {
@@ -20,22 +20,20 @@ public class StaminaHandler {
         return !isStaminaLocked(player) && getStamina(player) > 0 && !player.getAbilities().instabuild;
     }
 
-    public static void setStamina(Player player, int stamina) {
-        player.getPersistentData().putInt(Stamina.STAMINA, Mth.clamp(stamina, 0, getMaxStamina(player)));
+    public static float setStamina(Player player, float stamina) {
+        stamina = Mth.clamp(stamina, 0, getMaxStamina(player));
+        player.getPersistentData().putFloat(Stamina.STAMINA, stamina);
+        return stamina;
     }
 
-    public static void consumeStamina(Player player) {
-        consumeStamina(player, 1);
-    }
-
-    public static void consumeStamina(Player player, int amount) {
+    public static void consumeStamina(Player player, float amount) {
         setStamina(player, getStamina(player) - amount);
         if (getStamina(player) <= 0)
             lockSprinting(player);
     }
 
-    public static void regenStamina(Player player, int amount) {
-        setStamina(player, getStamina(player) + amount);
+    public static float regenStamina(Player player, float amount) {
+        return setStamina(player, getStamina(player) + amount);
     }
 
     public static void lockSprinting(Player player) {

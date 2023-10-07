@@ -1,13 +1,13 @@
-package insane96mcp.survivalreimagined.module.hungerhealth;
+package insane96mcp.survivalreimagined.module.hungerhealth.healthregen;
 
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.world.effect.ILMobEffect;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.hungerhealth.NoHunger;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.MCUtils;
 import insane96mcp.survivalreimagined.utils.Utils;
@@ -39,7 +39,7 @@ import java.text.DecimalFormat;
 @Label(name = "Hunger Health Regen", description = "Makes Health regen work differently, similar to Combat Test snapshots. Can be customized. Also adds Vigour effect. Hunger related stuff doesn't work (for obvious reasons) if No Hunger feature is enabled")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class HealthRegen extends Feature {
-	public static final RegistryObject<MobEffect> VIGOUR = SRRegistries.MOB_EFFECTS.register("vigour", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0xFCD373, false)
+	public static final RegistryObject<MobEffect> VIGOUR = SRRegistries.MOB_EFFECTS.register("vigour", () -> new VigourEffect(MobEffectCategory.BENEFICIAL, 0xFCD373)
 			.addAttributeModifier(Attributes.MOVEMENT_SPEED, "34ab9190-98b9-48e7-9048-a201fc116dff", 0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL)
 			.addAttributeModifier(Attributes.ATTACK_SPEED, "18c15105-382a-4a95-8aa9-185350ebf602", 0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL));
 

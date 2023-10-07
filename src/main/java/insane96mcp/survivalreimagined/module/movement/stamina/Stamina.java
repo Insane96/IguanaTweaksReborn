@@ -9,8 +9,6 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.event.PlayerSprintEvent;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.module.hungerhealth.HealthRegen;
-import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.StaminaSyncMessage;
 import net.minecraft.client.Minecraft;
@@ -71,49 +69,50 @@ public class Stamina extends Feature {
 
         boolean shouldSync = false;
 
-        int maxStamina = StaminaHandler.getMaxStamina(player);
-        if (!player.getPersistentData().contains(STAMINA))
-            StaminaHandler.setStamina(player, maxStamina);
+        float maxStamina = StaminaHandler.getMaxStamina(player);
+        float stamina = StaminaHandler.getStamina(player);
+        boolean isStaminaLocked = StaminaHandler.isStaminaLocked(player);
 
+        //Trigger sync for just spawned players
+        if (player.tickCount == 1)
+            shouldSync = true;
         if (player.isSprinting() && player.getVehicle() == null && !player.getAbilities().instabuild) {
-            int amountConsumed = 1;
-            //If the vigour effect is active give the player 20% chance per level to not consume stamina when running.
-            if (player.hasEffect(HealthRegen.VIGOUR.get())) {
-                MobEffectInstance vigourInstance = player.getEffect(HealthRegen.VIGOUR.get());
-                //noinspection DataFlowIssue
-                if (player.getRandom().nextDouble() < 0.2d * (vigourInstance.getAmplifier() + 1))
-                    return;
+            float staminaToConsume = 1f;
+            float percIncrease = 0f;
+            for (MobEffectInstance instance : player.getActiveEffects()) {
+                if (instance.getEffect() instanceof IStaminaModifier staminaModifier)
+                    percIncrease += staminaModifier.consumedStaminaModifier(instance.getAmplifier());
             }
-            //If the tired effect is active, consume one more stamina per level above I
-            if (player.hasEffect(Tiredness.TIRED.get())) {
-                MobEffectInstance tiredInstance = player.getEffect(Tiredness.TIRED.get());
-                //noinspection DataFlowIssue
-                amountConsumed += tiredInstance.getAmplifier();
-            }
-            if (player.getPose() == Pose.SWIMMING && player.tickCount % 3 == 1)
-                return;
-            StaminaHandler.consumeStamina(player, amountConsumed);
+            //Consume 33% less stamina if swimming
+            if (player.getPose() == Pose.SWIMMING)
+                percIncrease -= 0.333f;
+
+            staminaToConsume += (staminaToConsume * percIncrease);
+            StaminaHandler.consumeStamina(player, staminaToConsume);
             shouldSync = true;
         }
-        else if ((StaminaHandler.getStamina(player) != maxStamina && maxStamina >= staminaPerHalfHeart * 4)
-                //Trigger the sync for clients
-                || player.tickCount == 1) {
+        else if ((stamina != maxStamina && maxStamina >= staminaPerHalfHeart * 4)) {
+            float staminaToRecover = 1f;
+            float percIncrease = 0f;
             //Slower regeneration if stamina is locked
-            if (StaminaHandler.isStaminaLocked(player) && player.tickCount % 3 == 0)
-                return;
-            int amount = 1;
-            if (maxStamina > staminaPerHalfHeart * 20) {
-                amount += (maxStamina - staminaPerHalfHeart * 20) / (staminaPerHalfHeart * 20);
-                int remainder = (maxStamina - staminaPerHalfHeart * 20) % 20;
-                if (player.tickCount % 20 < remainder)
-                     amount++;
+            if (isStaminaLocked)
+                percIncrease -= 0.4f;
+
+            for (MobEffectInstance instance : player.getActiveEffects()) {
+                if (instance.getEffect() instanceof IStaminaModifier staminaModifier)
+                    percIncrease += staminaModifier.regenStaminaModifier(instance.getAmplifier());
             }
-            StaminaHandler.regenStamina(player, amount);
-            if (StaminaHandler.getStamina(player) >= maxStamina * unlockStaminaAtHealthRatio)
+            //If max health is higher than 20 then increase stamina regen
+            if (maxStamina > staminaPerHalfHeart * 20) {
+                percIncrease += (maxStamina - staminaPerHalfHeart * 20) / (staminaPerHalfHeart * 20);
+            }
+            staminaToRecover += (staminaToRecover * percIncrease);
+            stamina = StaminaHandler.regenStamina(player, staminaToRecover);
+            if (stamina >= maxStamina * unlockStaminaAtHealthRatio)
                 StaminaHandler.unlockSprinting(player);
             shouldSync = true;
         }
-        else if (!StaminaHandler.isStaminaLocked(player) && maxStamina < 40) {
+        else if (!isStaminaLocked && maxStamina < 40) {
             StaminaHandler.setStamina(player, 0);
             StaminaHandler.lockSprinting(player);
             shouldSync = true;
@@ -121,7 +120,7 @@ public class Stamina extends Feature {
 
         if (shouldSync) {
             //Sync stamina to client
-            Object msg = new StaminaSyncMessage(StaminaHandler.getStamina(player), StaminaHandler.isStaminaLocked(player));
+            Object msg = new StaminaSyncMessage((int) StaminaHandler.getStamina(player), StaminaHandler.isStaminaLocked(player));
             NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
@@ -144,9 +143,13 @@ public class Stamina extends Feature {
                 || !(event.getEntity() instanceof ServerPlayer player))
             return;
 
-        int consumed = staminaConsumedOnJump;
-        if (player.hasEffect(HealthRegen.VIGOUR.get()))
-            consumed *= 1f - (player.getEffect(HealthRegen.VIGOUR.get()).getAmplifier() + 1) * 0.2f;
+        float consumed = staminaConsumedOnJump;
+        float percIncrease = 0f;
+        for (MobEffectInstance instance : player.getActiveEffects()) {
+            if (instance.getEffect() instanceof IStaminaModifier staminaModifier)
+                percIncrease += staminaModifier.consumedStaminaModifier(instance.getAmplifier());
+        }
+        consumed += (consumed * percIncrease);
         StaminaHandler.consumeStamina(player, consumed);
     }
 
@@ -242,7 +245,7 @@ public class Stamina extends Feature {
         if (playerEntity == null)
             return;
         if (mc.options.renderDebug && !mc.showOnlyReducedInfo()) {
-            event.getLeft().add(String.format("Stamina: %d/%d; Locked: %s", StaminaHandler.getStamina(playerEntity), StaminaHandler.getMaxStamina(playerEntity), StaminaHandler.isStaminaLocked(playerEntity)));
+            event.getLeft().add(String.format("Stamina: %.1f/%.1f; Locked: %s", StaminaHandler.getStamina(playerEntity), StaminaHandler.getMaxStamina(playerEntity), StaminaHandler.isStaminaLocked(playerEntity)));
         }
     }
 }

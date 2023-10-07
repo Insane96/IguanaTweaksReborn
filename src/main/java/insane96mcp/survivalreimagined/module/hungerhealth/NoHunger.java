@@ -13,6 +13,7 @@ import insane96mcp.insanelib.event.CakeEatEvent;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
+import insane96mcp.survivalreimagined.module.hungerhealth.healthregen.HealthRegen;
 import insane96mcp.survivalreimagined.module.movement.stamina.Stamina;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.FoodRegenSyncMessage;

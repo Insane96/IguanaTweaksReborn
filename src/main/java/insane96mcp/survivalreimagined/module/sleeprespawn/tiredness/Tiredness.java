@@ -53,7 +53,7 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class Tiredness extends SRFeature {
 
-	public static final RegistryObject<MobEffect> TIRED = SRRegistries.MOB_EFFECTS.register("tired", () -> new ILMobEffect(MobEffectCategory.HARMFUL, 0x818894, false)
+	public static final RegistryObject<MobEffect> TIRED = SRRegistries.MOB_EFFECTS.register("tired", () -> new TirednessEffect(MobEffectCategory.HARMFUL, 0x818894)
 			.addAttributeModifier(Attributes.MOVEMENT_SPEED, "697c48dd-6bbd-4082-8501-040bb9812c09", -0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL)
 			.addAttributeModifier(Attributes.ATTACK_SPEED, "40c789ef-d30d-4a27-8f46-13fe0edbb259", -0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL));
 	public static final RegistryObject<MobEffect> ENERGY_BOOST = SRRegistries.MOB_EFFECTS.register("energy_boost", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x857965, true));
@@ -156,6 +156,11 @@ public class Tiredness extends SRFeature {
 			}
 			if (amplifier != oAmplifier)
 				player.addEffect(new MobEffectInstance(TIRED.get(), -1, amplifier, true, false, true));
+		}
+		else {
+			if (player.hasEffect(TIRED.get())) {
+				player.removeEffect(TIRED.get());
+			}
 		}
 	}
 
