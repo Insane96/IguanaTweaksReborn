@@ -94,9 +94,6 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
         for(String s : compoundtag.getAllKeys()) {
             this.recipesUsed.put(new ResourceLocation(s), compoundtag.getInt(s));
         }
-
-        if (this.level instanceof ServerLevel serverLevel)
-            SyncForgeStatus.sync(serverLevel, this.getBlockPos(), this);
     }
 
     protected void saveAdditional(CompoundTag pTag) {
@@ -111,9 +108,7 @@ public class ForgeBlockEntity extends BaseContainerBlockEntity implements Worldl
 
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag);
-        return tag;
+        return saveWithoutMetadata();
     }
 
     public static boolean onUse(Level pLevel, BlockPos pPos, BlockState pState, ForgeBlockEntity pBlockEntity, int smashes) {

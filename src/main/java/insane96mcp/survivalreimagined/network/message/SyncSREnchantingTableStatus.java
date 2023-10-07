@@ -13,25 +13,25 @@ import java.util.function.Supplier;
 
 import static insane96mcp.survivalreimagined.network.NetworkHandler.CHANNEL;
 
-public class SyncEnsorcellerStatus {
+public class SyncSREnchantingTableStatus {
 	BlockPos pos;
 	ItemStack item;
 
-	public SyncEnsorcellerStatus(BlockPos pos, ItemStack ingredient) {
+	public SyncSREnchantingTableStatus(BlockPos pos, ItemStack ingredient) {
 		this.pos = pos;
 		this.item = ingredient;
 	}
 
-	public static void encode(SyncEnsorcellerStatus pkt, FriendlyByteBuf buf) {
+	public static void encode(SyncSREnchantingTableStatus pkt, FriendlyByteBuf buf) {
 		buf.writeBlockPos(pkt.pos);
 		buf.writeItem(pkt.item);
 	}
 
-	public static SyncEnsorcellerStatus decode(FriendlyByteBuf buf) {
-		return new SyncEnsorcellerStatus(buf.readBlockPos(), buf.readItem());
+	public static SyncSREnchantingTableStatus decode(FriendlyByteBuf buf) {
+		return new SyncSREnchantingTableStatus(buf.readBlockPos(), buf.readItem());
 	}
 
-	public static void handle(final SyncEnsorcellerStatus message, Supplier<NetworkEvent.Context> ctx) {
+	public static void handle(final SyncSREnchantingTableStatus message, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			if (!(Minecraft.getInstance().level.getBlockEntity(message.pos) instanceof SREnchantingTableBlockEntity blockEntity))
 				return;
@@ -42,7 +42,7 @@ public class SyncEnsorcellerStatus {
 	}
 
 	public static void sync(ServerLevel level, BlockPos pos, SREnchantingTableBlockEntity blockEntity) {
-		Object msg = new SyncEnsorcellerStatus(pos, blockEntity.getItem(0));
+		Object msg = new SyncSREnchantingTableStatus(pos, blockEntity.getItem(0));
 		level.players().forEach(player -> CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT));
 	}
 }

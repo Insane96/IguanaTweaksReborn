@@ -13,19 +13,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 public class SREnchantingTableMenu extends AbstractContainerMenu {
-    private final Container enchantSlots = new SimpleContainer(2) {
-        /**
-         * For block entities, ensures the chunk containing the block entity is saved to disk later - the game won't think
-         * it hasn't changed and skip it.
-         */
-        public void setChanged() {
-            super.setChanged();
-            SREnchantingTableMenu.this.slotsChanged(this);
-        }
-    };
     public static final int ITEM_SLOT = 0;
-    public static final int SLOT_COUNT = 1;
-    private static final int INV_SLOT_START = ITEM_SLOT + 1;
+    public static final int CATALYST_SLOT = 1;
+    public static final int SLOT_COUNT = 2;
+    private static final int INV_SLOT_START = CATALYST_SLOT + 1;
     private static final int INV_SLOT_END = INV_SLOT_START + 27;
     private static final int USE_ROW_SLOT_START = INV_SLOT_END;
     private static final int USE_ROW_SLOT_END = USE_ROW_SLOT_START + 9;
@@ -46,12 +37,12 @@ public class SREnchantingTableMenu extends AbstractContainerMenu {
         this.container = pContainer;
         this.access = access;
         this.level = pPlayerInventory.player.level();
-        this.addSlot(new Slot(this.enchantSlots, 0, 11, 18) {
+        this.addSlot(new Slot(pContainer, ITEM_SLOT, 10, 18) {
             public int getMaxStackSize() {
                 return 1;
             }
         });
-        this.addSlot(new Slot(this.enchantSlots, 1, 28, 18) {
+        this.addSlot(new Slot(pContainer, CATALYST_SLOT, 28, 18) {
             public boolean mayPlace(ItemStack stack) {
                 return stack.is(net.minecraftforge.common.Tags.Items.ENCHANTING_FUELS);
             }

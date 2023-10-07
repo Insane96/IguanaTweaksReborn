@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.module.experience.enchanting;
 
-import insane96mcp.survivalreimagined.network.message.SyncEnsorcellerStatus;
+import insane96mcp.survivalreimagined.network.message.SyncSREnchantingTableStatus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -103,7 +103,7 @@ public class SREnchantingTableBlockEntity extends BaseContainerBlockEntity imple
     public void setItem(int slot, ItemStack stack) {
         this.items.set(slot, stack);
         if (this.level instanceof ServerLevel serverLevel)
-            SyncEnsorcellerStatus.sync(serverLevel, this.getBlockPos(), this);
+            SyncSREnchantingTableStatus.sync(serverLevel, this.getBlockPos(), this);
         this.setChanged();
     }
 
@@ -119,5 +119,34 @@ public class SREnchantingTableBlockEntity extends BaseContainerBlockEntity imple
 
     public @Nullable ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    net.minecraftforge.common.util.LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
+            net.minecraftforge.items.wrapper.SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
+
+    @Override
+    public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable Direction facing) {
+        if (!this.remove && facing != null && capability == net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER) {
+            if (facing == Direction.UP)
+                return handlers[0].cast();
+            else if (facing == Direction.DOWN)
+                return handlers[1].cast();
+            else
+                return handlers[2].cast();
+        }
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        for (net.minecraftforge.common.util.LazyOptional<? extends net.minecraftforge.items.IItemHandler> handler : handlers)
+            handler.invalidate();
+    }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        this.handlers = net.minecraftforge.items.wrapper.SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
     }
 }

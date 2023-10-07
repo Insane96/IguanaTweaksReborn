@@ -14,7 +14,7 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "minecraft:nether/keego",
+	"parent": "survivalreimagined:nether/keego",
 	"criteria": {
 		"keego": {
 			"trigger": "minecraft:inventory_changed",
