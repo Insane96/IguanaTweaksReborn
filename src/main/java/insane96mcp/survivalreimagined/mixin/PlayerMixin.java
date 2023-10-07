@@ -3,7 +3,6 @@ package insane96mcp.survivalreimagined.mixin;
 import insane96mcp.survivalreimagined.module.combat.RegeneratingAbsorption;
 import insane96mcp.survivalreimagined.module.experience.PlayerExperience;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
-import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
@@ -18,7 +17,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
@@ -45,11 +43,6 @@ public abstract class PlayerMixin extends LivingEntity {
 		int exp = PlayerExperience.getExperienceOnDeath((Player) (Object) this, false);
 		if (exp != -1)
 			callback.setReturnValue(exp);
-	}
-
-	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/food/FoodData;addExhaustion(F)V", shift = At.Shift.AFTER), method = "causeFoodExhaustion")
-	private void onCauseFoodExhaustion(float amount, CallbackInfo ci) {
-		Tiredness.onFoodExhaustion((Player) (Object) this, amount);
 	}
 
 	//Changes efficiency formula

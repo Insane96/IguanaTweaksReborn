@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
+import insane96mcp.insanelib.event.PlayerExhaustionEvent;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
 import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
@@ -126,6 +127,24 @@ public class Tiredness extends SRFeature {
 		}
 	}
 
+	@SubscribeEvent
+	public void onFoodExhaustion(PlayerExhaustionEvent event) {
+		if (!isEnabled(Tiredness.class)
+				|| event.getEntity().level().isClientSide)
+			return;
+
+		ServerPlayer serverPlayer = (ServerPlayer) event.getEntity();
+
+		float tiredness = TirednessHandler.get(serverPlayer);
+		float newTiredness = TirednessHandler.addAndGet(serverPlayer, event.getAmount() * tirednessGainMultiplier.floatValue());
+		if (tiredness < tirednessToEffect && newTiredness >= tirednessToEffect) {
+			serverPlayer.displayClientMessage(Component.translatable(TIRED_ENOUGH), false);
+		}
+		applyTired(tiredness, serverPlayer);
+
+		TirednessHandler.syncToClient(serverPlayer);
+	}
+
 	private static void applyTired(float tiredness, ServerPlayer player) {
 		if (tiredness < tirednessToEffect)
 			return;
@@ -148,23 +167,6 @@ public class Tiredness extends SRFeature {
 		for (EnergyBoostItem energyBoostItem : energyBoostItems) {
 			energyBoostItem.tryApply((Player) event.getEntity(), event.getItem());
 		}
-	}
-
-	public static void onFoodExhaustion(Player player, float amount) {
-		if (!isEnabled(Tiredness.class)
-				|| player.level().isClientSide)
-			return;
-
-		ServerPlayer serverPlayer = (ServerPlayer) player;
-
-		float tiredness = TirednessHandler.get(serverPlayer);
-		float newTiredness = TirednessHandler.addAndGet(serverPlayer, amount * tirednessGainMultiplier.floatValue());
-		if (tiredness < tirednessToEffect && newTiredness >= tirednessToEffect) {
-			serverPlayer.displayClientMessage(Component.translatable(TIRED_ENOUGH), false);
-		}
-		applyTired(tiredness, serverPlayer);
-
-		TirednessHandler.syncToClient(serverPlayer);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
