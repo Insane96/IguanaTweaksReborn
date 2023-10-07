@@ -50,6 +50,7 @@ public class SREnchantingTableScreen extends AbstractContainerScreen<SREnchantin
     private List<EnchantmentInstance> enchantments = new ArrayList<>();
     private List<EnchantmentEntry> enchantmentEntries = new ArrayList<>();
     private ItemStack lastStack;
+    private int maxCost = 0;
 
     public SREnchantingTableScreen(SREnchantingTableMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -70,8 +71,11 @@ public class SREnchantingTableScreen extends AbstractContainerScreen<SREnchantin
         this.lastStack = stack.copy();
         this.enchantments.clear();
         this.enchantmentEntries.clear();
-        if (stack.isEmpty() || stack.isEnchanted())
+        if (stack.isEmpty() || stack.isEnchanted()) {
+            this.maxCost = 0;
             return;
+        }
+        this.maxCost = stack.getEnchantmentValue();
         boolean isBook = stack.is(Items.BOOK);
         List<Enchantment> availableEnchantments = new ArrayList<>();
         for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
@@ -86,6 +90,14 @@ public class SREnchantingTableScreen extends AbstractContainerScreen<SREnchantin
             EnchantmentInstance instance = this.enchantments.get(i);
             this.enchantmentEntries.add(new EnchantmentEntry(topLeftCornerX + LIST_X, topLeftCornerY + LIST_Y + (i * ENCH_ENTRY_H), instance.enchantment, instance.level));
         }
+    }
+
+    private int getCurrentCost() {
+        int cost = 0;
+        for (EnchantmentEntry enchantmentEntry : this.enchantmentEntries) {
+            cost += Anvils.getRarityCost(enchantmentEntry.enchantmentDisplay.enchantment) * enchantmentEntry.enchantmentDisplay.lvl;
+        }
+        return cost;
     }
 
     @Override
@@ -114,8 +126,8 @@ public class SREnchantingTableScreen extends AbstractContainerScreen<SREnchantin
         int x = pMouseX - (topLeftCornerX + BUTTON_X);
         int y = pMouseY - (topLeftCornerY + BUTTON_Y);
         pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX, topLeftCornerY, 0, 0, this.imageWidth, this.imageHeight);
-        int levelCost = this.menu.enchantCost.get();
-        if ((this.minecraft.player.experienceLevel < levelCost && !this.minecraft.player.getAbilities().instabuild) || levelCost <= 0)
+        int cost = this.getCurrentCost();
+        if ((this.minecraft.player.experienceLevel < cost && !this.minecraft.player.getAbilities().instabuild) || cost <= 0 || cost > this.maxCost)
             pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + BUTTON_X, topLeftCornerY + BUTTON_Y, BUTTON_U + BUTTON_W, BUTTON_V, BUTTON_W, BUTTON_H);
         else if (x >= 0 && y >= 0 && x < BUTTON_W && y < BUTTON_H)
             pGuiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + BUTTON_X, topLeftCornerY + BUTTON_Y, BUTTON_U + BUTTON_W * 2, BUTTON_V, BUTTON_W, BUTTON_H);
@@ -128,24 +140,16 @@ public class SREnchantingTableScreen extends AbstractContainerScreen<SREnchantin
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         int topLeftCornerX = (this.width - this.imageWidth) / 2;
         int topLeftCornerY = (this.height - this.imageHeight) / 2;
-
+        updatePossibleEnchantments();
         for (EnchantmentEntry entry : this.enchantmentEntries) {
             entry.render(guiGraphics, mouseX, mouseY, partialTick);
         }
-        updatePossibleEnchantments();
-        /*for (int i = 0; i < 4; i++) {
-            if (this.enchantments.size() <= i)
-                break;
-            EnchantmentInstance instance = this.enchantments.get(i);
-            int x = mouseX - (topLeftCornerX + LIST_X);
-            int y = mouseY - (topLeftCornerY + LIST_Y + (ENCH_ENTRY_H * i));
-            int offset = 0;
-            if (x >= 0 && y >= 0 && x < LVL_BTN_W + ENCH_DISPLAY_W + LVL_BTN_W && y < ENCH_ENTRY_H)
-                offset = ENCH_ENTRY_H;
-            guiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + LIST_X, topLeftCornerY + LIST_Y + (ENCH_ENTRY_H * i), LOWER_LVL_BTN_U, LOWER_LVL_BTN_V + offset, LVL_BTN_W, ENCH_ENTRY_H);
-            guiGraphics.blit(TEXTURE_LOCATION, topLeftCornerX + LIST_X + LVL_BTN_W + ENCH_DISPLAY_W, topLeftCornerY + LIST_Y + (ENCH_ENTRY_H * i), RISE_LVL_BTN_U, RISE_LVL_BTN_V + offset, LVL_BTN_W, ENCH_ENTRY_H);
-        }*/
-
+        if (this.maxCost > 0) {
+            guiGraphics.drawCenteredString(this.font, "Max: %d".formatted(this.maxCost), topLeftCornerX + BUTTON_X + BUTTON_W / 2, topLeftCornerY + BUTTON_Y + BUTTON_H, 0x11FF11);
+            int cost = this.getCurrentCost();
+            int color = cost > this.maxCost ? 0xFF0000 : 0x11FF11;
+            guiGraphics.drawCenteredString(this.font, "Cost: %d".formatted(this.getCurrentCost()), topLeftCornerX + BUTTON_X + BUTTON_W / 2, topLeftCornerY + BUTTON_Y + BUTTON_H + 10, color);
+        }
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 

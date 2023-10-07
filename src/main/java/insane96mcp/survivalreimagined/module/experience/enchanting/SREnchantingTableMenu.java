@@ -67,6 +67,9 @@ public class SREnchantingTableMenu extends AbstractContainerMenu {
             Util.logAndPauseIfInIde(player.getName() + " pressed invalid button id: " + pId);
             return false;
         }
+        this.access.execute((level, blockPos) -> {
+
+        });
         this.broadcastChanges();
         return true;
     }
