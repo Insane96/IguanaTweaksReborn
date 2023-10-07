@@ -127,7 +127,7 @@ public class Tiredness extends SRFeature {
 		}
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onFoodExhaustion(PlayerExhaustionEvent event) {
 		if (!isEnabled(Tiredness.class)
 				|| event.getEntity().level().isClientSide)
