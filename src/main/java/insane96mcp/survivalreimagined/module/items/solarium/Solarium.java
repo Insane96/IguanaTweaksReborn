@@ -52,8 +52,10 @@ import java.util.UUID;
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class Solarium extends Feature {
 	public static final UUID MOVEMENT_SPEED_MODIFIER_UUID = UUID.fromString("c9c18638-6505-4544-9871-6397916fd0b7");
+	public static final UUID ATTACK_SPEED_MODIFIER_UUID = UUID.fromString("435317e9-0146-4f1b-bc21-67f466ee5f9c");
 
 	public static final TagKey<Item> SOLARIUM_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/solarium"));
+	public static final TagKey<Item> SOLARIUM_HAND_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/hand/solarium"));
 
 	public static final SimpleBlockWithItem SOLIUM_MOSS = SimpleBlockWithItem.register("solium_moss", () -> new SoliumMossBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_YELLOW).pushReaction(PushReaction.DESTROY).noCollission().strength(0.4F).sound(SoundType.GLOW_LICHEN).lightLevel(GlowLichenBlock.emission(9)).randomTicks()));
 	public static final RegistryObject<Item> SOLARIUM_BALL = SRRegistries.ITEMS.register("solarium_ball", () -> new Item(new Item.Properties()));
@@ -123,6 +125,7 @@ public class Solarium extends Feature {
 	@SubscribeEvent
 	public void onLivingTick(LivingEvent.LivingTickEvent event) {
 		boostSpeed(event);
+		boostAttackSpeed(event);
 
 		//Move if any other item needs toolbelt ticking
 		if (ModList.get().isLoaded("toolbelt"))
@@ -153,6 +156,22 @@ public class Solarium extends Feature {
 		}
 	}
 
+	public static void boostAttackSpeed(LivingEvent.LivingTickEvent event) {
+		if (event.getEntity().tickCount % 2 != 1)
+			return;
+
+		float calculatedSkyLightRatio = getCalculatedSkyLightRatio(event.getEntity());
+		AttributeInstance attackSpeed = event.getEntity().getAttribute(Attributes.ATTACK_SPEED);
+		AttributeModifier modifier = attackSpeed.getModifier(ATTACK_SPEED_MODIFIER_UUID);
+		if (!event.getEntity().getMainHandItem().is(SOLARIUM_HAND_EQUIPMENT) || calculatedSkyLightRatio == 0f) {
+			if (modifier != null)
+				attackSpeed.removeModifier(modifier);
+		}
+		else if (modifier == null) {
+			MCUtils.applyModifier(event.getEntity(), Attributes.ATTACK_SPEED, ATTACK_SPEED_MODIFIER_UUID, "Solarium attack speed boost", 0.1f * calculatedSkyLightRatio, AttributeModifier.Operation.MULTIPLY_BASE, false);
+		}
+	}
+
 	@SubscribeEvent
 	public void boostAD(LivingHurtEvent event) {
 		if (!(event.getSource().getEntity() instanceof LivingEntity entity)
@@ -161,18 +180,20 @@ public class Solarium extends Feature {
 		float calculatedSkyLightRatio = getCalculatedSkyLightRatio(event.getEntity());
 		if (calculatedSkyLightRatio <= 0f)
 			return;
-		event.setAmount(event.getAmount() * (1 + 0.5f * calculatedSkyLightRatio));
+		event.setAmount(event.getAmount() * (1 + 0.25f * calculatedSkyLightRatio));
 	}
 
 	@SubscribeEvent
 	public void boostMiningSpeed(PlayerEvent.BreakSpeed event) {
+		/*if (!event.getState().requiresCorrectToolForDrops())
+			event.setNewSpeed(event.getNewSpeed() + EnchantmentsFeature.applyMiningSpeedModifiers(0.5f, true, event.getEntity()));*/
 		if (!event.getEntity().getMainHandItem().is(SOLARIUM_EQUIPMENT)
 				|| !event.getEntity().getMainHandItem().isCorrectToolForDrops(event.getState()))
 			return;
 		float calculatedSkyLightRatio = getCalculatedSkyLightRatio(event.getEntity().level(), event.getEntity().blockPosition());
 		if (calculatedSkyLightRatio <= 0f)
 			return;
-		event.setNewSpeed(event.getOriginalSpeed() * (1 + calculatedSkyLightRatio));
+		event.setNewSpeed(event.getNewSpeed() * (1 + calculatedSkyLightRatio));
 	}
 
 	public static float getCalculatedSkyLight(Entity entity) {

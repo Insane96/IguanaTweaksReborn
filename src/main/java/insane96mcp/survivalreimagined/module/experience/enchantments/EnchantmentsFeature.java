@@ -101,7 +101,6 @@ public class EnchantmentsFeature extends SRFeature {
 
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
 			IdTagMatcher.newId("minecraft:protection"),
-			IdTagMatcher.newId("minecraft:sharpness"),
 			IdTagMatcher.newId("minecraft:mending"),
 			IdTagMatcher.newId("minecraft:bane_of_arthropods"),
 			IdTagMatcher.newId("allurement:reforming"),
@@ -367,7 +366,7 @@ public class EnchantmentsFeature extends SRFeature {
 			int i = EnchantmentHelper.getBlockEfficiency(entity);
 			ItemStack itemstack = entity.getMainHandItem();
 			if (i > 0 && !itemstack.isEmpty()) {
-				miningSpeed = getEfficiencyBonus(miningSpeed, i);
+				miningSpeed += getEfficiencyBonus(miningSpeed, i);
 			}
 		}
 

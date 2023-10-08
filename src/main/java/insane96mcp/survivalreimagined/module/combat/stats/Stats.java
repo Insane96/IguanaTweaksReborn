@@ -40,7 +40,10 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction. Item modifiers are controlled via json in this feature's folder")
@@ -50,29 +53,34 @@ public class Stats extends SRFeature {
 	public static final String GENERIC_ITEM_MODIFIER = SurvivalReimagined.RESOURCE_PREFIX + "item_modifier";
 	public static TagKey<Item> REMOVE_ORIGINAL_MODIFIERS_TAG = SRItemTagsProvider.create("remove_original_modifiers");
 
-	public static final ArrayList<ItemAttributeModifier> ITEM_MODIFIERS_DEFAULT = new ArrayList<>(Arrays.asList(
-			/*new ItemAttributeModifier(IdTagMatcher.newId("minecraft:golden_sword"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.25d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:golden_axe"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.25d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:golden_pickaxe"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.25d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:golden_shovel"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.25d, AttributeModifier.Operation.MULTIPLY_BASE),*/
-			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:golden_sword"), UUID.fromString("a6ad1c09-61e9-4722-b7a1-6813b075e144"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 1.5d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:golden_axe"), UUID.fromString("a6ad1c09-61e9-4722-b7a1-6813b075e144"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 1.5d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:golden_pickaxe"), UUID.fromString("a6ad1c09-61e9-4722-b7a1-6813b075e144"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 1.5d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:golden_shovel"), UUID.fromString("a6ad1c09-61e9-4722-b7a1-6813b075e144"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 1.5d, AttributeModifier.Operation.ADDITION),
-
-			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/wooden"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.25d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/stone"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/flint"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.10d, AttributeModifier.Operation.MULTIPLY_BASE),
+	public static final ArrayList<ItemAttributeModifier> ITEM_MODIFIERS_DEFAULT = new ArrayList<>(List.of(
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/wooden"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.15d, AttributeModifier.Operation.MULTIPLY_BASE),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/stone"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0d, AttributeModifier.Operation.MULTIPLY_BASE),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/flint"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.15d, AttributeModifier.Operation.MULTIPLY_BASE),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/copper"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.15d, AttributeModifier.Operation.MULTIPLY_BASE),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/golden"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.20d, AttributeModifier.Operation.MULTIPLY_BASE),
-			//new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/iron"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0d, AttributeModifier.Operation.MULTIPLY_BASE),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/iron"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0d, AttributeModifier.Operation.MULTIPLY_BASE),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/solarium"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/durium"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.10d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/coated_copper"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/keego"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.10d, AttributeModifier.Operation.MULTIPLY_BASE),
-			//new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/diamond"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/soul_steel"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/netherite"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.10d, AttributeModifier.Operation.MULTIPLY_BASE),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/coated_copper"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.15d, AttributeModifier.Operation.MULTIPLY_BASE),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/keego"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/diamond"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/soul_steel"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/netherite"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0d, AttributeModifier.Operation.MULTIPLY_BASE),
+
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/wooden"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 0.5d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/stone"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/flint"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/copper"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -0.5d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/golden"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 1.5d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/iron"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -0.5d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/solarium"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 0d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/durium"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/coated_copper"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 1.5d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/keego"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/diamond"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1.5d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/soul_steel"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/netherite"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1.5d, AttributeModifier.Operation.ADDITION),
 
 			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:swords"), UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 0.5d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:hoes"), UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 0.5d, AttributeModifier.Operation.ADDITION),
@@ -81,6 +89,7 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:axes"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:axes"), UUID.fromString("1567076a-abb0-4c66-9056-201da11eff8a"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.1d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:shovels"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 3d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:shovels"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.1d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:swords"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -2d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:pickaxes"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:trident"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),

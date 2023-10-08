@@ -75,7 +75,8 @@ public class SREnchantingTableScreen extends AbstractContainerScreen<SREnchantin
             this.maxCost = 0;
             return;
         }
-        this.maxCost = stack.getEnchantmentValue();
+        //TODO Max cost should be a base value + libraries around / enchantment value
+        this.maxCost = 4 + stack.getEnchantmentValue();
         boolean isBook = stack.is(Items.BOOK);
         List<Enchantment> availableEnchantments = new ArrayList<>();
         for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS) {
@@ -93,11 +94,16 @@ public class SREnchantingTableScreen extends AbstractContainerScreen<SREnchantin
     }
 
     private int getCurrentCost() {
-        int cost = 0;
+        float cost = 0;
         for (EnchantmentEntry enchantmentEntry : this.enchantmentEntries) {
-            cost += Anvils.getRarityCost(enchantmentEntry.enchantmentDisplay.enchantment) * enchantmentEntry.enchantmentDisplay.lvl;
+            int lvl = enchantmentEntry.enchantmentDisplay.lvl;
+            if (lvl <= 0)
+                continue;/*
+            Enchantment enchantment = enchantmentEntry.enchantmentDisplay.enchantment;
+            cost += (enchantment.getMinCost(lvl) + enchantment.getMaxCost(lvl)) / 10f;*/
+            cost += Anvils.getRarityCost(enchantmentEntry.enchantmentDisplay.enchantment) * lvl;
         }
-        return cost;
+        return (int) cost;
     }
 
     @Override
@@ -163,10 +169,6 @@ public class SREnchantingTableScreen extends AbstractContainerScreen<SREnchantin
             this.levelDownBtn = new LevelBtn(pX, pY, LevelBtn.Type.LOWER, this);
             this.enchantmentDisplay = new EnchantmentDisplay(pX + LVL_BTN_W, pY, enchantment, lvl);
             this.levelUpBtn = new LevelBtn(pX + RISE_LVL_BTN_U, pY, LevelBtn.Type.RISE, this);
-        }
-
-        protected void render(int yOffset) {
-
         }
 
         @Override

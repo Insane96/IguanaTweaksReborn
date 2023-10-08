@@ -42,7 +42,7 @@ public class FlintExpansion extends Feature {
 
 	@Config
 	@Label(name = "Disable Wooden Tools + Recipes", description = "Makes wooden items deal no damage and not able to break blocks and disables the recipe.")
-	public static Boolean disableWoodenToolsRecipe = true;
+	public static Boolean disableWoodenToolsRecipe = false;
 
 	public FlintExpansion(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

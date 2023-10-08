@@ -66,25 +66,25 @@ public class ItemStats extends SRFeature {
 	public static final RegistryObject<RepairItemRecipeSerializer> REPAIR_ITEM_RECIPE_SERIALIZER = SRRegistries.RECIPE_SERIALIZERS.register("repair_item", RepairItemRecipeSerializer::new);
 
 	public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
-			IdTagValue.newTag("survivalreimagined:equipment/hand/wooden", 33),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/wooden", 108),
 			IdTagValue.newTag("survivalreimagined:equipment/hand/stone", 71),
 			IdTagValue.newTag("survivalreimagined:equipment/hand/flint", 55),
-			IdTagValue.newTag("survivalreimagined:equipment/hand/golden", 72),
 			IdTagValue.newTag("survivalreimagined:equipment/hand/copper", 42),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/golden", 72),
 			IdTagValue.newTag("survivalreimagined:equipment/hand/iron", 375),
 			IdTagValue.newTag("survivalreimagined:equipment/hand/solarium", 259),
 			IdTagValue.newTag("survivalreimagined:equipment/hand/durium", 855),
-			IdTagValue.newTag("survivalreimagined:equipment/hand/coated_copper", 240),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/coated_copper", 260),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/keego", 1400),
 			IdTagValue.newTag("survivalreimagined:equipment/hand/diamond", 2341),
 			IdTagValue.newTag("survivalreimagined:equipment/hand/soul_steel", 3534),
-			IdTagValue.newTag("survivalreimagined:equipment/hand/keego", 1707),
-			IdTagValue.newTag("survivalreimagined:equipment/hand/netherite", 3047),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/netherite", 2131),
 
 			IdTagValue.newId("minecraft:elytra", 144),
 			IdTagValue.newId("minecraft:carrot_on_a_stick", 63),
 			IdTagValue.newId("minecraft:fishing_rod", 33),
 			IdTagValue.newId("minecraft:shears", 87),
-			IdTagValue.newId("minecraft:trident", 375),
+			IdTagValue.newId("minecraft:trident", 475),
 
 			IdTagValue.newId("minecraft:leather_helmet", 76),
 			IdTagValue.newId("minecraft:leather_chestplate", 101),
@@ -157,15 +157,17 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/wooden", 1.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/stone", 2.25d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/flint", 3d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/copper", 4.5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/copper", 4d),
+			//new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/golden", 12d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iron", 3.5d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/solarium", 2.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/durium", 3.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/coated_copper", 6.5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/durium", 3d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/coated_copper", 4.5d),
+			//new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iron+amethyst allow", 5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/keego", 7d),
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/diamond", 6d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/soul_steel", 6d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/keego", 8d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/netherite", 6.5d)
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/soul_steel", 5.5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/netherite", 6d)
 	));
 	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();
 	public static final String NO_EFFICIENCY_ITEM_LANG = "survivalreimagined.no_efficiency_item";

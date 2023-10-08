@@ -5,7 +5,6 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.combat.Knockback;
 import insane96mcp.survivalreimagined.module.combat.fletching.Fletching;
 import insane96mcp.survivalreimagined.module.farming.bonemeal.BoneMeal;
-import insane96mcp.survivalreimagined.module.farming.hoes.Hoes;
 import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.StackSizes;
@@ -66,8 +65,7 @@ public class SRItemTagsProvider extends ItemTagsProvider {
 
         tag(ItemTags.BEACON_PAYMENT_ITEMS).add(Items.NETHER_STAR).add(Durium.INGOT.get(), SoulSteel.INGOT.get(), Keego.GEM.get());
         //Mod's
-        tag(Hoes.DISABLED_HOES)
-                .add(Items.WOODEN_HOE);
+        //tag(Hoes.DISABLED_HOES);
 
         tag(Tiredness.ENERGY_BOOST_ITEM_TAG)
                 .add(Items.COOKIE)
