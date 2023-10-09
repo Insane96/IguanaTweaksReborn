@@ -5,10 +5,10 @@
   * Each material now covers one or more statistics. E.g. Iron is an all-around material, but durium has much higher durability but worse damage and attack speed
   * Wooden tools have been re-enabled: high durability and attack speed but worst efficiency and damage
   * Solarium now increases attack speed by up to 10% (and reduced bonus attack damage from +50% to +25%)
-* Durium armor now has same stats as iron (but higher durability)
 * Reduced infinity and thorns rarity (cost to merge/repair)
 * Lowered shears durability
 * Cactus are now mined faster with hoes 
+* Increased copper tools Unbreaking
 * Increased copper bonus efficiency (~~+0.05~~ -> +1% per block below sea level)
 * Unbreaking formula changed (better at lower levels) (Tools last ~~33/85/150/233% more from levels I to IV~~ -> 50% more per level)
 * Increased experience dropped by mobs with enchanted gear

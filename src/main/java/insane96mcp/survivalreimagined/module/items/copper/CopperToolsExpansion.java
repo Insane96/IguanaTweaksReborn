@@ -111,8 +111,8 @@ public class CopperToolsExpansion extends Feature {
 		if (y > 64)
 			return;
 		for (int i = 0; i < amount; i++) {
-			//3% "more durability" per block below sea level (+~350% at y=0 and +~600% at y=-56)
-			if (event.getRandom().nextFloat() >= 1 - 1 / (1 + (64 - y) * 0.04))
+			//5% "more durability" per block below sea level (+420% at y=0 and +~700% at y=-54)
+			if (event.getRandom().nextFloat() >= 1 - 1 / (1 + (64 - y) * 0.05))
 				++newAmount;
 		}
 		event.setAmount(newAmount);
