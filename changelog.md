@@ -13,6 +13,8 @@
 * Unbreaking formula changed (better at lower levels) (Tools last ~~33/85/150/233% more from levels I to IV~~ -> 50% more per level)
 * Increased experience dropped by mobs with enchanted gear
 * Efficiency formula changed to +50% per level
+* Increased wither skeleton skulls drop rate
+* Reduced drops from creepers and skeletons
 * Stamina handling now uses floating point values
   * Modifiers now are applied by percentage and Vigour and Tiredness now slightly increase and decrease stamina regen
 * Fixed no item breaking sound
