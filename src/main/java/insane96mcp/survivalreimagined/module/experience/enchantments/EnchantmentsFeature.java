@@ -160,11 +160,12 @@ public class EnchantmentsFeature extends SRFeature {
 
 	public static float getEfficiencyBonus(float toolEfficiency, int lvl) {
 		if (isBetterEfficiencyFormula()) {
-			float baseEfficiency = 0.15f;
-			return toolEfficiency * (baseEfficiency * (lvl * lvl + 1));
+			/*float baseEfficiency = 0.15f;
+			return toolEfficiency * (baseEfficiency * (lvl * lvl + 1));*/
+			return toolEfficiency * (lvl * 0.5f);
 		}
 		else {
-			return toolEfficiency + (lvl * lvl + 1);
+			return lvl * lvl + 1;
 		}
 	}
 
