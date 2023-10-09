@@ -102,8 +102,8 @@ public class Solarium extends Feature {
 		if (calculatedSkyLight <= 0f)
 			return;
 		for (int i = 0; i < amount; i++) {
-			//5% per light level (75% at 15)
-			if (event.getRandom().nextFloat() >= calculatedSkyLight * 0.05f)
+			//4% per light level (60% at 15)
+			if (event.getRandom().nextFloat() >= calculatedSkyLight * 0.04f)
 				++newAmount;
 		}
 		event.setAmount(newAmount);

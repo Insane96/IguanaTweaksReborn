@@ -33,6 +33,7 @@ public abstract class MultiplayerGameModeMixin {
             this.destroyDelay--;
     }
 
+    //Fixes https://github.com/neoforged/NeoForge/issues/143
     @Inject(method = "sameDestroyTarget", at = @At("HEAD"), cancellable = true)
     private void fixHealingItemsResettingBreaking(BlockPos pPos, CallbackInfoReturnable<Boolean> cir) {
         ItemStack itemstack = this.minecraft.player.getMainHandItem();
