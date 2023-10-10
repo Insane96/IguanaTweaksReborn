@@ -25,9 +25,9 @@ public class SolariumArmorItem extends ArmorItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-		super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
-		Solarium.healGear(pStack, pEntity, pLevel);
+	public void inventoryTick(ItemStack pStack, Level pLevel, Entity entity, int pSlotId, boolean pIsSelected) {
+		super.inventoryTick(pStack, pLevel, entity, pSlotId, pIsSelected);
+		Solarium.healGear(pStack, entity, pLevel);
 	}
 
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {

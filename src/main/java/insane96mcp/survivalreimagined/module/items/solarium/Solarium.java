@@ -11,6 +11,8 @@ import insane96mcp.shieldsplus.world.item.SPShieldItem;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
+import insane96mcp.survivalreimagined.module.combat.AbsorptionArmor;
+import insane96mcp.survivalreimagined.module.combat.RegeneratingAbsorption;
 import insane96mcp.survivalreimagined.module.items.solarium.item.*;
 import insane96mcp.survivalreimagined.module.sleeprespawn.death.integration.ToolBelt;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
@@ -23,6 +25,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -51,7 +54,7 @@ import java.util.UUID;
 @Label(name = "Solarium", description = "Add Solarium, a new metal made by alloying Overgrown solium moss ball (found in hot biomes) and can be used to upgrade Iron Equipment")
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class Solarium extends Feature {
-	public static final UUID MOVEMENT_SPEED_MODIFIER_UUID = UUID.fromString("c9c18638-6505-4544-9871-6397916fd0b7");
+	public static final UUID TOUGHNESS_MODIFIER_UUID = UUID.fromString("c9c18638-6505-4544-9871-6397916fd0b7");
 	public static final UUID ATTACK_SPEED_MODIFIER_UUID = UUID.fromString("435317e9-0146-4f1b-bc21-67f466ee5f9c");
 
 	public static final TagKey<Item> SOLARIUM_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(SurvivalReimagined.MOD_ID, "equipment/solarium"));
@@ -124,7 +127,7 @@ public class Solarium extends Feature {
 
 	@SubscribeEvent
 	public void onLivingTick(LivingEvent.LivingTickEvent event) {
-		boostSpeed(event);
+		boostToughness(event);
 		boostAttackSpeed(event);
 
 		//Move if any other item needs toolbelt ticking
@@ -132,27 +135,34 @@ public class Solarium extends Feature {
 			ToolBelt.tryTickItemsIn(event.getEntity());
 	}
 
-	public static void boostSpeed(LivingEvent.LivingTickEvent event) {
+	public static void boostToughness(LivingEvent.LivingTickEvent event) {
 		if (event.getEntity().tickCount % 2 != 1)
 			return;
 
+		Attribute attr = Attributes.ARMOR_TOUGHNESS;
+		boolean isRegenAbsorption = isEnabled(AbsorptionArmor.class);
+		if (isRegenAbsorption)
+			attr = RegeneratingAbsorption.REGEN_ATTRIBUTE.get();
+		AttributeInstance toughnessAttr = event.getEntity().getAttribute(attr);
+		if (toughnessAttr == null)
+			return;
+
 		float calculatedSkyLightRatio = getCalculatedSkyLightRatio(event.getEntity());
-		float movementSpeed = 0f;
+		float toughness = 0f;
 		for (EquipmentSlot equipmentSlot : EquipmentSlot.values()) {
 			ItemStack stack = event.getEntity().getItemBySlot(equipmentSlot);
 			if (!equipmentSlot.isArmor() || !stack.is(SOLARIUM_EQUIPMENT))
 				continue;
-			movementSpeed += 0.075f * calculatedSkyLightRatio;
+			toughness += (isRegenAbsorption ? 0.2f : 2f) * calculatedSkyLightRatio;
 		}
-		AttributeInstance movSpeed = event.getEntity().getAttribute(Attributes.MOVEMENT_SPEED);
-		AttributeModifier modifier = movSpeed.getModifier(MOVEMENT_SPEED_MODIFIER_UUID);
-		if (modifier == null && movementSpeed > 0f) {
-			MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", movementSpeed, AttributeModifier.Operation.MULTIPLY_BASE, false);
+		AttributeModifier modifier = toughnessAttr.getModifier(TOUGHNESS_MODIFIER_UUID);
+		if (modifier == null && toughness > 0f) {
+			MCUtils.applyModifier(event.getEntity(), attr, TOUGHNESS_MODIFIER_UUID, "Solarium toughness boost", toughness, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
-		else if (modifier != null && modifier.getAmount() != movementSpeed) {
-			movSpeed.removeModifier(MOVEMENT_SPEED_MODIFIER_UUID);
-			if (movementSpeed > 0f)
-				MCUtils.applyModifier(event.getEntity(), Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_MODIFIER_UUID, "Solarium movement speed boost", movementSpeed, AttributeModifier.Operation.MULTIPLY_BASE, false);
+		else if (modifier != null && modifier.getAmount() != toughness) {
+			toughnessAttr.removeModifier(TOUGHNESS_MODIFIER_UUID);
+			if (toughness > 0f)
+				MCUtils.applyModifier(event.getEntity(), attr, TOUGHNESS_MODIFIER_UUID, "Solarium toughness boost", toughness, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
 	}
 
@@ -160,15 +170,17 @@ public class Solarium extends Feature {
 		if (event.getEntity().tickCount % 2 != 1)
 			return;
 
-		float calculatedSkyLightRatio = getCalculatedSkyLightRatio(event.getEntity());
 		AttributeInstance attackSpeed = event.getEntity().getAttribute(Attributes.ATTACK_SPEED);
+		if (attackSpeed == null)
+			return;
+		float calculatedSkyLightRatio = getCalculatedSkyLightRatio(event.getEntity());
 		AttributeModifier modifier = attackSpeed.getModifier(ATTACK_SPEED_MODIFIER_UUID);
 		if (!event.getEntity().getMainHandItem().is(SOLARIUM_HAND_EQUIPMENT) || calculatedSkyLightRatio == 0f) {
 			if (modifier != null)
 				attackSpeed.removeModifier(modifier);
 		}
 		else if (modifier == null) {
-			MCUtils.applyModifier(event.getEntity(), Attributes.ATTACK_SPEED, ATTACK_SPEED_MODIFIER_UUID, "Solarium attack speed boost", 0.1f * calculatedSkyLightRatio, AttributeModifier.Operation.MULTIPLY_BASE, false);
+			MCUtils.applyModifier(event.getEntity(), Attributes.ARMOR_TOUGHNESS, ATTACK_SPEED_MODIFIER_UUID, "Solarium attack speed boost", 0.1f * calculatedSkyLightRatio, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
 	}
 
