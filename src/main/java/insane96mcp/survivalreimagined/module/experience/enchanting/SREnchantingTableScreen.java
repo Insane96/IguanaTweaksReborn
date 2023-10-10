@@ -101,7 +101,8 @@ public class SREnchantingTableScreen extends AbstractContainerScreen<SREnchantin
                 continue;/*
             Enchantment enchantment = enchantmentEntry.enchantmentDisplay.enchantment;
             cost += (enchantment.getMinCost(lvl) + enchantment.getMaxCost(lvl)) / 10f;*/
-            cost += Anvils.getRarityCost(enchantmentEntry.enchantmentDisplay.enchantment) * lvl;
+            int rarityCost = Anvils.getRarityCost(enchantmentEntry.enchantmentDisplay.enchantment);
+            cost += rarityCost * lvl + (rarityCost * lvl / 2f);
         }
         return (int) cost;
     }

@@ -10,7 +10,7 @@
             "item": "minecraft:flint"
         },
         "L": {
-            "tag": "minecraft:logs"
+            "item": "shieldsplus:wooden_shield"
         }
     },
     "result": {

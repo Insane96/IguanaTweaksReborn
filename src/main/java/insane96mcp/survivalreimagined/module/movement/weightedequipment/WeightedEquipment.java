@@ -46,10 +46,10 @@ public class WeightedEquipment extends SRFeature {
 	public static final ArrayList<IdTagValue> ARMOR_WEIGHTS_DEFAULT = new ArrayList<>(List.of(
 			IdTagValue.newTag("survivalreimagined:equipment/armor/leather", 0d),
 			IdTagValue.newTag("survivalreimagined:equipment/armor/chained_copper", 0d),
-			IdTagValue.newTag("survivalreimagined:equipment/armor/chainmail", 0d),
+			IdTagValue.newTag("survivalreimagined:equipment/armor/chainmail", 0.03d),
 			IdTagValue.newTag("survivalreimagined:equipment/armor/iron", 0.02d),
 			IdTagValue.newTag("survivalreimagined:equipment/armor/solarium", 0.025d),
-			IdTagValue.newTag("survivalreimagined:equipment/armor/durium", 0.02d),
+			IdTagValue.newTag("survivalreimagined:equipment/armor/durium", 0.025d),
 			IdTagValue.newTag("survivalreimagined:equipment/armor/golden", 0.01d),
 			IdTagValue.newTag("survivalreimagined:equipment/armor/diamond", 0.05d),
 			IdTagValue.newTag("survivalreimagined:equipment/armor/soul_steel", 0.075d),
