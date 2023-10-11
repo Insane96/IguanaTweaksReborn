@@ -44,8 +44,13 @@ public class FlintExpansion extends Feature {
 	@Label(name = "Disable Wooden Tools + Recipes", description = "Makes wooden items deal no damage and not able to break blocks and disables the recipe.")
 	public static Boolean disableWoodenToolsRecipe = false;
 
+	@Config
+	@Label(name = "Actual Stone Tools", description = "Makes stone tools require actual stone (or deepslate) to craft.")
+	public static Boolean actualStoneTools = true;
+
 	public FlintExpansion(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "disable_wooden_tools", Component.literal("Survival Reimagined Disable Wooden Tools"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableWoodenToolsRecipe));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "actual_stone_tools", Component.literal("Survival Reimagined Actual Stone Tools"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && actualStoneTools));
 	}
 }

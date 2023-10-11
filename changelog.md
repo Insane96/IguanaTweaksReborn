@@ -1,9 +1,10 @@
 # Changelog
 
-## 1.0.0
+## 0.16.0
 * Gear stats re-balance
-  * Each material now covers one or more statistics. E.g. Iron is an all-around material, but durium has much higher durability but worse damage, attack speed and armor
+  * Most stats have been changed
   * Wooden tools have been re-enabled: high durability and attack speed but worst efficiency and damage
+  * Stone tools now require stone to be crafted
   * Solarium now increases attack speed by up to 10% (and reduced bonus attack damage from +50% to +20%). Chance to not consume durability also reduced (up to 75% -> 60%). Armor no longer gives movement speed but toughness (or regen. absorption speed)
 * Reduced infinity and thorns rarity (cost to merge/repair)
 * Lowered shears durability

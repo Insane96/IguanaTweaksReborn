@@ -1,6 +1,6 @@
 {
     "pack": {
-        "description": "Survival Reimagined Disable Wooden Tools",
+        "description": "Disable Wooden Tools recipes and adds them to the no_damage and no_efficiency item tags",
         "pack_format": 15
     }
 }

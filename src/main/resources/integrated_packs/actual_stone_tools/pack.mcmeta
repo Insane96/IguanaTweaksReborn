@@ -1,0 +1,6 @@
+{
+    "pack": {
+        "description": "Makes stone tools require actual stone or deepslate",
+        "pack_format": 15
+    }
+}

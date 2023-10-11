@@ -70,7 +70,7 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/netherite"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0d, AttributeModifier.Operation.MULTIPLY_BASE),
 
 			// Material Attack damage changes
-			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/wooden"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 0.5d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/wooden"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 0d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/stone"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 0d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/flint"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 0d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/copper"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -0.5d, AttributeModifier.Operation.ADDITION),
