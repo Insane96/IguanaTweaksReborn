@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.12.6
+* Version bump so CF can accept the file for the new SR page
+
 ## 0.12.5
 * Fixed crash when placing Iron Blocks
 
