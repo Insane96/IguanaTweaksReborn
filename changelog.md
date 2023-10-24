@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.17.0
+* Removed the hunger bar ... again
+  * Eating restores health directly over time
+  * Eating also restores some health instantly
+* Lowered the minimum time to eat from 1.2 seconds to 1 second (0.8 to 0.6 for fast foods)
+
 ## 0.16.0
 * Gear stats re-balance
   * Most stats have been changed

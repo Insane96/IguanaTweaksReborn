@@ -1,7 +1,5 @@
 package insane96mcp.survivalreimagined.module.hungerhealth;
 
-import com.ezylang.evalex.Expression;
-import com.ezylang.evalex.data.EvaluationValue;
 import com.mojang.blaze3d.systems.RenderSystem;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -18,13 +16,13 @@ import insane96mcp.survivalreimagined.module.movement.stamina.Stamina;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.FoodRegenSyncMessage;
 import insane96mcp.survivalreimagined.utils.ClientUtils;
-import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
@@ -33,7 +31,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
@@ -47,34 +44,36 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
 @Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days.")
-@LoadFeature(module = Modules.Ids.HUNGER_HEALTH, enabledByDefault = false)
+@LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class NoHunger extends Feature {
 
     private static final String PASSIVE_REGEN_TICK = SurvivalReimagined.RESOURCE_PREFIX + "passive_regen_ticks";
     private static final String FOOD_REGEN_LEFT = SurvivalReimagined.RESOURCE_PREFIX + "food_regen_left";
     private static final String FOOD_REGEN_STRENGTH = SurvivalReimagined.RESOURCE_PREFIX + "food_regen_strength";
 
-    private static final String FOOD_STATS_LANG = SurvivalReimagined.MOD_ID + ".food_stats";
-    private static final String FOOD_STATS_PERCENTAGE_LANG = SurvivalReimagined.MOD_ID + ".food_stats_percentage";
+    private static final String HEALTH_LANG = SurvivalReimagined.MOD_ID + ".tooltip.health";
+    private static final String MISSING_HEALTH_LANG = SurvivalReimagined.MOD_ID + ".tooltip.missing_health";
+    private static final String SEC_LANG = SurvivalReimagined.MOD_ID + ".tooltip.sec";
 
     @Config
-    @Label(name = "Passive Health Regen.Enable Passive Health Regen", description = "If true, Passive Regeneration is enabled")
+    @Label(name = "Passive Health Regen.Enable", description = "If true, Passive Regeneration is enabled")
     public static Boolean enablePassiveRegen = false;
     @Config
     @Label(name = "Passive Health Regen.Regen Speed", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%")
     public static MinMax passiveRegenerationTime = new MinMax(120, 3600);
     @Config(min = 0d)
-    @Label(name = "Food Heal.Health Multiplier", description = "When eating you'll get healed by hunger restored multiplied by this percentage. (Set to 1 to have the same effect as pre-beta 1.8 food")
-    public static Double foodHealHealthMultiplier = 0.3d;
+    @Label(name = "Food Heal.Over Time", description = "The formula to calculate the health regenerated when eating a food. Leave empty to disable. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
+    public static String healOverTime = "(hunger^1.5)*0.2";
     @Config
-    @Label(name = "Food Heal.Heal Strength", description = "How much HP does food regen each second? If 'Instant Heal' is enabled, this has no effect. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
-    public static String foodHealStrength = "MAX(0.1, 0.75 * saturation_modifier)";
-    @Config
-    @Label(name = "Food Heal.Instant Heal", description = "If true, health is regenerated instantly instead of over time")
-    public static Boolean foodHealInstantly = false;
+    @Label(name = "Food Heal.Over time Strength", description = "How much HP does food regen each second? Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. Default is 75% of the saturation modifier, down to a minimum of 0.2/s")
+    public static String healOverTimeStrength = "MAX(0.2, 0.75 * saturation_modifier)";
+    @Config(min = 0d)
+    @Label(name = "Food Heal.Instant Heal", description = "The formula to calculate the health restored instantly when eating. Leave empty to disable. To have the same effect as pre-Beta 1.8 food just use \"hunger\". Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
+    public static String instantHeal = "(hunger^1.25)*0.15";
     @Config
     @Label(name = "Raw food.Heal Multiplier", description = "If true, raw food will heal by this percentage (this is applied after 'Food Heal.Health Multiplier'). Raw food is defined in the survivalreimagined:raw_food tag")
     public static Double rawFoodHealPercentage = 1d;
@@ -152,7 +151,7 @@ public class NoHunger extends Feature {
         healOnEat(player, item, item.getFoodProperties(event.getItem(), player));
     }
 
-    private static final FoodProperties CAKE_FOOD_PROPERTIES = new FoodProperties.Builder().nutrition(2).saturationMod(0.1f).build();
+    private static final FoodProperties CAKE_FOOD_PROPERTIES = new FoodProperties.Builder().nutrition(2).saturationMod(0.8f).build();
 
     @SubscribeEvent
     public void onCakeEat(CakeEatEvent event) {
@@ -163,40 +162,57 @@ public class NoHunger extends Feature {
         healOnEat(event.getEntity(), null, CAKE_FOOD_PROPERTIES);
     }
 
+    /**
+     * item is null when eating cakes
+     */
     @SuppressWarnings("ConstantConditions")
     public void healOnEat(Player player, @Nullable Item item, FoodProperties foodProperties) {
-        if (foodHealHealthMultiplier == 0d)
-            return;
         boolean isRawFood = item != null && FoodDrinks.isRawFood(item);
+        onEatInstantHeal(player, item, foodProperties, isRawFood);
+        onEatHealOverTime(player, item, foodProperties, isRawFood);
+    }
 
-        float heal = getFoodHealing(foodProperties);
-        if (buffCakes && item == null)
-            heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.4f, 1f);
-        if (isRawFood && rawFoodHealPercentage != 1d)
-            heal *= rawFoodHealPercentage;
+    public void onEatHealOverTime(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
+        if (!StringUtils.isBlank(healOverTime) && !StringUtils.isBlank(healOverTimeStrength)) {
+            float heal = Utils.computeFoodFormula(foodProperties, healOverTime);
+            if (heal <= 0f)
+                return;
+            if (buffCakes && item == null)
+                heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.4f, 1f);
+            if (isRawFood && rawFoodHealPercentage != 1d)
+                heal *= rawFoodHealPercentage;
 
-        if (foodHealInstantly) {
-            player.heal(heal);
-        }
-        else {
-            float strength = getFoodHealingStrength(foodProperties) / 20f;
+            float strength = Utils.computeFoodFormula(foodProperties, healOverTimeStrength) / 20f;
             setFoodRegenLeft(player, heal);
             setFoodRegenStrength(player, strength);
         }
     }
 
+    private void onEatInstantHeal(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
+        if (!StringUtils.isBlank(instantHeal)) {
+            float heal = Utils.computeFoodFormula(foodProperties, instantHeal);
+            if (heal <= 0f)
+                return;
+            if (buffCakes && item == null)
+                heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.2f, 1f);
+            if (isRawFood && rawFoodHealPercentage != 1d)
+                heal *= rawFoodHealPercentage;
+            player.heal(heal);
+        }
+    }
+
     private static int getPassiveRegenSpeed(Player player) {
-        float healthPerc = 1 - (player.getHealth() / player.getMaxHealth());
-        int secs;
-        secs = (int) ((passiveRegenerationTime.max - passiveRegenerationTime.min) * healthPerc + passiveRegenerationTime.min);
+        float healthPerc = 1f - (player.getHealth() / player.getMaxHealth());
+        float secs;
+        secs = (float) ((passiveRegenerationTime.max - passiveRegenerationTime.min) * healthPerc + passiveRegenerationTime.min);
         if (player.level().getDifficulty().equals(Difficulty.HARD))
-            secs *= 1.5d;
+            secs *= 1.5f;
         if (player.hasEffect(HealthRegen.VIGOUR.get())) {
             MobEffectInstance vigour = player.getEffect(HealthRegen.VIGOUR.get());
             //noinspection ConstantConditions
-            secs *= 1 - (((vigour.getAmplifier() + 1) * 0.4d));
+            secs *= 1 - (((vigour.getAmplifier() + 1) * 0.4f));
         }
-        return secs * 20;
+        return (int) (secs * 20);
     }
 
     private static int getPassiveRegenTick(Player player) {
@@ -217,32 +233,6 @@ public class NoHunger extends Feature {
 
     private static void setFoodRegenLeft(Player player, float amount) {
         player.getPersistentData().putFloat(FOOD_REGEN_LEFT, amount);
-    }
-
-    public static float getFoodHealing(FoodProperties food) {
-        return (float) (Math.pow(food.getNutrition(), 1.5f) * foodHealHealthMultiplier.floatValue());
-    }
-
-    /**
-     * Returns the hp regenerated each second
-     */
-    public static float getFoodHealingStrength(FoodProperties food) {
-
-        Expression expression = new Expression(foodHealStrength);
-        try {
-            //noinspection ConstantConditions
-            EvaluationValue result = expression
-                    .with("hunger", food.getNutrition())
-                    .and("saturation_modifier", food.getSaturationModifier())
-                    .and("effectiveness", Utils.getFoodEffectiveness(food))
-                    .and("fast_food", food.isFastFood())
-                    .evaluate();
-            return result.getNumberValue().floatValue();
-        }
-        catch (Exception ex) {
-            LogHelper.error("Failed to evaluate or parse eating speed formula: %s", expression);
-            return 0.5f;
-        }
     }
 
     private static void consumeAndHealFromFoodRegen(Player player) {
@@ -357,31 +347,46 @@ public class NoHunger extends Feature {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onTooltip(ItemTooltipEvent event) {
-        boolean isCake = event.getItemStack().is(Items.CAKE);
-
         if (!this.isEnabled()
-                || (!event.getItemStack().getItem().isEdible() && !isCake))
+                || (!event.getItemStack().getItem().isEdible()))
             return;
 
         Minecraft mc = Minecraft.getInstance();
-        LocalPlayer playerEntity = mc.player;
-        if (playerEntity == null)
+        LocalPlayer player = mc.player;
+        if (player == null)
             return;
 
         if (!mc.options.reducedDebugInfo().get() && mc.options.advancedItemTooltips) {
-            FoodProperties food;
-            if (isCake)
-                food = CAKE_FOOD_PROPERTIES;
-            else
-                food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
-            //noinspection ConstantConditions
-            float heal = getFoodHealing(food);
-            //Half heart per second by default
-            float strength = getFoodHealingStrength(food);
-            if (buffCakes && isCake)
-                event.getToolTip().add(Component.translatable(FOOD_STATS_PERCENTAGE_LANG, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(40f)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
-            else
-                event.getToolTip().add(Component.translatable(FOOD_STATS_LANG, SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal), SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
+            FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
+
+
+            if (!StringUtils.isBlank(instantHeal)) {
+                //noinspection ConstantConditions
+                float heal = Utils.computeFoodFormula(food, instantHeal);
+                MutableComponent component = Component.literal(SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal))
+                        .append(" ")
+                        .append(Component.translatable(HEALTH_LANG))
+                        .withStyle(ChatFormatting.GRAY)
+                        .withStyle(ChatFormatting.ITALIC);
+                event.getToolTip().add(component);
+            }
+
+            if (!StringUtils.isBlank(healOverTime) && !StringUtils.isBlank(healOverTimeStrength)) {
+                //noinspection ConstantConditions
+                float heal = Utils.computeFoodFormula(food, healOverTime);
+                //Half heart per second by default
+                float strength = Utils.computeFoodFormula(food, healOverTimeStrength);
+                MutableComponent component = Component.literal(SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal))
+                        .append(" ")
+                        .append(Component.translatable(HEALTH_LANG))
+                        .append(" / ")
+                        .append(SurvivalReimagined.ONE_DECIMAL_FORMATTER.format(heal / strength))
+                        .append(" ")
+                        .append(Component.translatable(SEC_LANG))
+                        .withStyle(ChatFormatting.GRAY)
+                        .withStyle(ChatFormatting.ITALIC);
+                event.getToolTip().add(component);
+            }
         }
     }
 

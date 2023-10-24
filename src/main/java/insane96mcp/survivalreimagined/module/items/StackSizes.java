@@ -1,7 +1,5 @@
 package insane96mcp.survivalreimagined.module.items;
 
-import com.ezylang.evalex.Expression;
-import com.ezylang.evalex.data.EvaluationValue;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -12,7 +10,6 @@ import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.network.message.StackSizesSync;
-import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
@@ -174,19 +171,9 @@ public class StackSizes extends SRFeature {
                 continue;
 
             FoodProperties food = item.getFoodProperties();
-            Expression expression = new Expression(foodStackReductionFormula);
-            try {
-                //noinspection ConstantConditions Can't be null as I check for Item#isEdible
-                EvaluationValue result = expression
-                        .with("hunger", food.getNutrition())
-                        .and("saturation_modifier", food.getSaturationModifier())
-                        .and("effectiveness", Utils.getFoodEffectiveness(food))
-                        .evaluate();
-                item.maxStackSize = Mth.clamp(result.getNumberValue().intValue(), 1, 64);
-            }
-            catch (Exception ex) {
-                LogHelper.error("Failed to parse or evaluate food stack size formula: %s", expression);
-            }
+            int stackSize = (int) Utils.computeFoodFormula(food, foodStackReductionFormula);
+            if (stackSize > 0)
+                item.maxStackSize = Mth.clamp(stackSize, 1, 64);
         }
     }
 

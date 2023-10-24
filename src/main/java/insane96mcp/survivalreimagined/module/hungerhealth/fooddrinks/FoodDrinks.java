@@ -1,7 +1,5 @@
 package insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks;
 
-import com.ezylang.evalex.Expression;
-import com.ezylang.evalex.data.EvaluationValue;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -83,7 +81,7 @@ public class FoodDrinks extends SRFeature {
 	public static Boolean eatingSpeedBasedOffFood = true;
 	@Config
 	@Label(name = "Eating Speed Formula", description = "The formula to calculate the ticks required to eat a food. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. The default formula increases the time to eat exponentially when higher effectiveness.")
-	public static String eatingSpeedFormula = "MAX((IF(fast_food, 16, 32) * effectiveness) * 0.08, IF(fast_food, 16, 24))"; //max((32 * x^1.35) * 0.04, 32) or, if the food is fast eat max((32 * x^1.35) / 2 * 0.04, 32 / 2)
+	public static String eatingSpeedFormula = "MAX((IF(fast_food, 16, 32) * effectiveness) * 0.08, IF(fast_food, 12, 20))"; //max((32 * x) * 0.08, 24) or, if the food is fast eat max((16 * x) * 0.08, 16)
 	@Config
 	@Label(name = "Stop consuming on hit", description = "If true, eating/drinking stops when the player's hit.")
 	public static Boolean stopConsumingOnHit = true;
@@ -151,23 +149,9 @@ public class FoodDrinks extends SRFeature {
 		if (food == lastFoodEatenCache)
 			return lastFoodEatenTime;
 
-		Expression expression = new Expression(eatingSpeedFormula);
-		try {
-			//noinspection ConstantConditions
-			EvaluationValue result = expression
-					.with("hunger", food.getNutrition())
-					.and("saturation_modifier", food.getSaturationModifier())
-					.and("effectiveness", Utils.getFoodEffectiveness(food))
-					.and("fast_food", food.isFastFood())
-					.evaluate();
-			lastFoodEatenCache = food;
-			lastFoodEatenTime = result.getNumberValue().intValue();
-			return lastFoodEatenTime;
-		}
-		catch (Exception ex) {
-			LogHelper.error("Failed to evaluate or parse eating speed formula: %s", expression);
-			return food.isFastFood() ? 16 : 32;
-		}
+		int ticks = (int) Utils.computeFoodFormula(food, eatingSpeedFormula);
+		//noinspection DataFlowIssue
+		return ticks >= 0 ? ticks : (food.isFastFood() ? 16 : 32);
 	}
 
 	@SubscribeEvent
@@ -248,6 +232,6 @@ public class FoodDrinks extends SRFeature {
 	}
 
 	public static boolean isRawFood(Item item) {
-		return Utils.isItemInTag(item, RAW_FOOD);
+		return item.builtInRegistryHolder().is(RAW_FOOD);
 	}
 }

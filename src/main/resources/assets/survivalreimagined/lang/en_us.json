@@ -53,10 +53,10 @@
 	"block.minecraft.carrots.seeds": "Carrot Seeds",
 	"block.minecraft.potatoes.seeds": "Potato Seeds",
 
-
 	"survivalreimagined:hunger_health_module": "Hunger & Health",
-	"survivalreimagined.food_stats": "%.1f Health / %.1f sec",
-	"survivalreimagined.food_stats_percentage": "%.0f%% Missing Health",
+	"survivalreimagined.tooltip.health": "Health",
+	"survivalreimagined.tooltip.missing_health": "Missing Health",
+	"survivalreimagined.tooltip.sec": "sec",
 	"effect.survivalreimagined.vigour": "Vigour",
 	"effect.survivalreimagined.vigour.description": "Decreases hunger/stamina consumption by 20% per level.",
 	"item.survivalreimagined.brown_mushroom_stew": "Brown Mushroom Stew",
@@ -64,7 +64,6 @@
 	"item.survivalreimagined.over_easy_egg": "Over Easy Egg",
 	"item.survivalreimagined.pumpkin_pulp": "Pumpkin Pulp",
 	"survivalreimagined.subtitle.unfair_one_shot": "Player rolls a nat 20",
-
 
 	"survivalreimagined:items_module": "Items",
 
