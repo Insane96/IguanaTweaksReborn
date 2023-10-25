@@ -10,11 +10,11 @@ public class BellBlockEntityMixin {
 
 	@ModifyConstant(method = "updateEntities", constant = @Constant(doubleValue = 48))
 	private static double nearbyEntitiesRange(double range) {
-		return 96d;
+		return 128d;
 	}
 
 	@ModifyConstant(method = "isRaiderWithinRange", constant = @Constant(doubleValue = 48))
 	private static double nearbyRiderRange(double range) {
-		return 96d;
+		return 128d;
 	}
 }

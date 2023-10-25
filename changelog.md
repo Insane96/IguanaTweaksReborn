@@ -1,7 +1,5 @@
 # Changelog
 
-* Remove `SRFeature`
-
 ## 0.17.0
 * Removed the hunger bar ... again
   * Eating restores health directly over time
