@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.world.wanderingtrader;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -31,7 +32,7 @@ import java.util.function.Supplier;
 
 @Label(name = "Wandering Trader", description = "Change wandering trader offers")
 @LoadFeature(module = Modules.Ids.WORLD)
-public class WanderingTrader extends SRFeature {
+public class WanderingTrader extends JsonFeature {
     public static final TagKey<Structure> DESERT_TEMPLE_TAG = TagKey.create(Registries.STRUCTURE, new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "desert_pyramid"));
     public static final TagKey<Structure> IGLOO_TAG = TagKey.create(Registries.STRUCTURE, new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "igloo"));
 
@@ -99,7 +100,7 @@ public class WanderingTrader extends SRFeature {
     public static final ArrayList<SerializableTrade> wanderingTraderBuyingTrades = new ArrayList<>();
 
     @Config
-    @Label(name = "Amount of Buying trades", description = "Vanilla is 0 pre 23w31a")
+    @Label(name = "Amount of Buying trades", description = "Vanilla is 0 pre 23w31a, 2 otherwise")
     public static Integer buyingTrades = 2;
 
     @Config
@@ -112,6 +113,11 @@ public class WanderingTrader extends SRFeature {
 
     public WanderingTrader(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
+    }
+
+    @Override
+    public String getModConfigFolder() {
+        return SurvivalReimagined.CONFIG_FOLDER;
     }
 
     @Override

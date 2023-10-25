@@ -1,5 +1,6 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn.respawn;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -32,7 +33,7 @@ import java.util.List;
 
 @Label(name = "Respawn", description = "Changes to respawning")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
-public class Respawn extends SRFeature {
+public class Respawn extends JsonFeature {
 
 	public static final String LOOSE_RESPAWN_POINT_SET = SurvivalReimagined.MOD_ID + ".loose_bed_respawn_point_set";
 	public static final String FAIL_RESPAWN_OBELISK_LANG = SurvivalReimagined.MOD_ID + ".fail_respawn_obelisk";
@@ -62,6 +63,11 @@ public class Respawn extends SRFeature {
 	public Respawn(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("respawn_obelisk_catalysts.json", respawnObeliskCatalysts, RESPAWN_OBELISK_CATALYSTS_DEFAULT, IdTagValue.LIST_TYPE));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@Override

@@ -1,10 +1,12 @@
 package insane96mcp.survivalreimagined.module.sleeprespawn;
 
 import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.SRMobEffectInstance;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.sleeprespawn.tiredness.Tiredness;
@@ -25,7 +27,7 @@ import java.util.List;
 
 @Label(name = "Sleeping Effects", description = "Prevents the player from sleeping if has not enough Hunger and gives him effects on wake up. Effects on wake up are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
-public class SleepingEffects extends SRFeature {
+public class SleepingEffects extends JsonFeature {
 
 	public static final ArrayList<SRMobEffectInstance> EFFECTS_ON_WAKE_UP_DEFAULT = new ArrayList<>(List.of(
 			new SRMobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 400, 0),
@@ -52,6 +54,11 @@ public class SleepingEffects extends SRFeature {
 	public SleepingEffects(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("effects_on_wake_up.json", effectsOnWakeUp, EFFECTS_ON_WAKE_UP_DEFAULT, SRMobEffectInstance.LIST_TYPE));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@SubscribeEvent

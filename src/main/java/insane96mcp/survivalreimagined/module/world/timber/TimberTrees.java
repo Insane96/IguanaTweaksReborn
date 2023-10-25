@@ -1,9 +1,11 @@
 package insane96mcp.survivalreimagined.module.world.timber;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.entity.SRFallingBlockEntity;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.core.BlockPos;
@@ -29,7 +31,7 @@ import java.util.List;
 
 @Label(name = "Timber Trees", description = "Trees fall when cut.")
 @LoadFeature(module = Modules.Ids.WORLD)
-public class TimberTrees extends SRFeature {
+public class TimberTrees extends JsonFeature {
 
     /*public static final ArrayList<LogsLeavesPair> LOGS_LEAVES_PAIRS_DEFAULT = new ArrayList<>(List.of(
             new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:oak_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:oak_leaves")),
@@ -49,6 +51,11 @@ public class TimberTrees extends SRFeature {
     public TimberTrees(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
         //JSON_CONFIGS.add(new SRFeature.JsonConfig<>("logs_leaves_pairs.json", logsLeavesPairs, LOGS_LEAVES_PAIRS_DEFAULT, LogsLeavesPair.LIST_TYPE));
+    }
+
+    @Override
+    public String getModConfigFolder() {
+        return SurvivalReimagined.CONFIG_FOLDER;
     }
 
     @SubscribeEvent

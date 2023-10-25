@@ -100,8 +100,6 @@ public class SurvivalReimagined
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onAddReloadListener(AddReloadListenerEvent event) {
-        SRDataReloadListener.reloadContext = event.getConditionContext();
-        event.addListener(SRDataReloadListener.INSTANCE);
         event.addListener(AnvilRepairReloadListener.INSTANCE);
     }
 
