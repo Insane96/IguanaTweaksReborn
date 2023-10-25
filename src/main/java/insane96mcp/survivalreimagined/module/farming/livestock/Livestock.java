@@ -1,12 +1,12 @@
 package insane96mcp.survivalreimagined.module.farming.livestock;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
@@ -41,7 +41,7 @@ import java.util.List;
 
 @Label(name = "Livestock", description = "Slower breeding, Growing, Egging and Milking. Lower yield.")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class Livestock extends SRFeature {
+public class Livestock extends JsonFeature {
 
 	public static final String MILK_COOLDOWN_LANG = SurvivalReimagined.MOD_ID + ".milk_cooldown";
 	public static final String MILK_COOLDOWN = SurvivalReimagined.RESOURCE_PREFIX + "milk_cooldown";
@@ -131,6 +131,11 @@ public class Livestock extends SRFeature {
 		JSON_CONFIGS.add(new JsonConfig<>("breeding_fail_chance.json", breedingFailChance, BREEDING_FAIL_CHANCE_DEFAULT, LivestockData.LIST_TYPE));
 
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "livestock_loot_changes", Component.literal("Survival Reimagined Livestock Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lootDataPack));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@Override

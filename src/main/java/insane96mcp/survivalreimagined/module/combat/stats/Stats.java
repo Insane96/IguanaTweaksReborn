@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.module.combat.stats;
 
 import com.google.common.collect.Multimap;
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -8,17 +9,16 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.combat.PiercingPickaxes;
 import insane96mcp.survivalreimagined.module.combat.stats.data.ItemAttributeModifier;
-import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.AttackDamageMobEffect;
@@ -50,7 +50,7 @@ import java.util.stream.Collectors;
 
 @Label(name = "Stats", description = "Various changes from weapons damage to armor reduction. Item modifiers are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.COMBAT)
-public class Stats extends SRFeature {
+public class Stats extends JsonFeature {
 
 	public static final String GENERIC_ITEM_MODIFIER = SurvivalReimagined.RESOURCE_PREFIX + "item_modifier";
 	public static TagKey<Item> REMOVE_ORIGINAL_MODIFIERS_TAG = SRItemTagsProvider.create("remove_original_modifiers");
@@ -207,7 +207,13 @@ public class Stats extends SRFeature {
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		JSON_CONFIGS.add(new JsonConfig<>("item_modifiers.json", itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.ITEM_ATTRIBUTE_MODIFIERS));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "item_durabilities"), new SyncType(json -> loadAndReadJson(json, itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("item_modifiers.json", itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "item_modifiers")));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@Override
@@ -230,10 +236,6 @@ public class Stats extends SRFeature {
 			MCUtils.applyModifier(player, ForgeMod.ENTITY_REACH.get(), ATTACK_RANGE_REDUCTION_UUID, "Entity Reach reduction", -0.5d, AttributeModifier.Operation.ADDITION, false);
 		if (playersMovementSpeedReduction != 0d)
 			MCUtils.applyModifier(player, Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_REDUCTION_UUID, "Movement Speed reduction", -playersMovementSpeedReduction, AttributeModifier.Operation.MULTIPLY_BASE, false);
-	}
-
-	public static void handleItemAttributeModifiersPacket(String json) {
-		loadAndReadJson(json, itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE);
 	}
 
 	//Run before Absorption armor

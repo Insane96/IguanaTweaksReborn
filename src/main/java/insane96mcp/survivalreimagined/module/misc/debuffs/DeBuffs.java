@@ -1,10 +1,11 @@
 package insane96mcp.survivalreimagined.module.misc.debuffs;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.MCUtils;
-import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Label(name = "DeBuffs", description = "Apply potion effects on certain hunger / health / experience level. Debuffs are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MISC, enabledByDefault = false)
-public class DeBuffs extends SRFeature {
+public class DeBuffs extends JsonFeature {
 	public static final ArrayList<DeBuff> DEBUFFS_DEFAULT = new ArrayList<>(List.of(
 			new DeBuff(DeBuff.Stat.HEALTH, Double.MIN_VALUE, 2d, MobEffects.DIG_SLOWDOWN, 0),
 			new DeBuff(DeBuff.Stat.HUNGER, Double.MIN_VALUE, 6d, MobEffects.DIG_SLOWDOWN, 0)
@@ -27,6 +28,11 @@ public class DeBuffs extends SRFeature {
 	public DeBuffs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("debuffs.json", deBuffs, DEBUFFS_DEFAULT, DeBuff.LIST_TYPE));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@Override

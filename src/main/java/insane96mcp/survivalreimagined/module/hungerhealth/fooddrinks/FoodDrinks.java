@@ -1,21 +1,22 @@
 package insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.event.AddEatEffectEvent;
-import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.DataPacks;
-import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.LogHelper;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -38,7 +39,7 @@ import java.util.List;
 
 @Label(name = "Foods & Drinks", description = "Changes to food nourishment and the speed on how food is eaten or how items are consumed. Custom Food Properties are controlled via json in this feature's folder. Removing entries from the json requires a minecraft restart.")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
-public class FoodDrinks extends SRFeature {
+public class FoodDrinks extends JsonFeature {
 
 	public static final TagKey<Item> RAW_FOOD = SRItemTagsProvider.create("raw_food");
 
@@ -97,7 +98,13 @@ public class FoodDrinks extends SRFeature {
 	public FoodDrinks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_food_in_furnace", Component.literal("Survival Reimagined No Food in Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && noFurnaceFoodAndSmokerRecipe));
-		JSON_CONFIGS.add(new JsonConfig<>("food_properties.json", customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, CustomFoodProperties.LIST_TYPE, FoodDrinks::processCustomFoodValues, true, JsonConfigSyncMessage.ConfigType.CUSTOM_FOOD_PROPERTIES));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "food_properties"), new SyncType(json -> loadAndReadJson(json, customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, CustomFoodProperties.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("food_properties.json", customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, CustomFoodProperties.LIST_TYPE, FoodDrinks::processCustomFoodValues, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "food_properties")));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@Override
@@ -107,10 +114,6 @@ public class FoodDrinks extends SRFeature {
 		super.loadJsonConfigs();
 		//TODO Sync to client
 		processFoodMultipliers(false);
-	}
-
-	public static void handleCustomFoodPropertiesPacket(String json) {
-		loadAndReadJson(json, customFoodProperties, CUSTOM_FOOD_PROPERTIES_DEFAULT, CustomFoodProperties.LIST_TYPE);
 	}
 
 	@SubscribeEvent

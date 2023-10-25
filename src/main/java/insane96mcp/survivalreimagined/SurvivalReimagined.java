@@ -2,7 +2,6 @@ package insane96mcp.survivalreimagined;
 
 import com.google.common.collect.Lists;
 import insane96mcp.survivalreimagined.command.SRCommand;
-import insane96mcp.survivalreimagined.data.SRDataReloadListener;
 import insane96mcp.survivalreimagined.data.generator.*;
 import insane96mcp.survivalreimagined.data.generator.client.SRBlockModelsProvider;
 import insane96mcp.survivalreimagined.data.generator.client.SRBlockStatesProvider;

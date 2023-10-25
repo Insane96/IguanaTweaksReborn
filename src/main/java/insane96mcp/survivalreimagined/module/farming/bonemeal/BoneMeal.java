@@ -1,11 +1,12 @@
 package insane96mcp.survivalreimagined.module.farming.bonemeal;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagValue;
-import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.data.criterion.MakeRichFarmlandTrigger;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
@@ -39,7 +40,7 @@ import java.util.List;
 
 @Label(name = "Bone meal", description = "Bone meal is no longer so OP and also Rich Farmland")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class BoneMeal extends SRFeature {
+public class BoneMeal extends JsonFeature {
 
 	public static final SimpleBlockWithItem RICH_FARMLAND = SimpleBlockWithItem.register("rich_farmland", () -> new RichFarmlandBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking((state, blockGetter, pos) -> true).isSuffocating((state, blockGetter, pos) -> true)));
 
@@ -77,6 +78,11 @@ public class BoneMeal extends SRFeature {
 	public BoneMeal(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("fail_chances.json", boneMealFailChances, BONE_MEAL_FAIL_CHANCE_DEFAULT, IdTagValue.LIST_TYPE));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@Override

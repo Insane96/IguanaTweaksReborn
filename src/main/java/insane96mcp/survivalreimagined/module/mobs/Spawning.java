@@ -1,10 +1,10 @@
 package insane96mcp.survivalreimagined.module.mobs;
 
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -21,7 +21,7 @@ import sereneseasons.api.season.SeasonHelper;
 
 @Label(name = "Spawning", description = "Changes to mob spawn")
 @LoadFeature(module = Modules.Ids.MOBS)
-public class Spawning extends SRFeature {
+public class Spawning extends Feature {
 
     @Config
     @Label(name = "Despawning.Winter", description = "Despawn Distance on winter, note that lower values increase the mobs around the player.")

@@ -1,11 +1,12 @@
 package insane96mcp.survivalreimagined.module.experience;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagRange;
-import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.tags.TagKey;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @Label(name = "Experience from Blocks", description = "Decrease / Increase experience dropped by blocks broken. Custom xp for blocks can be added in Experience/Experience from Blocks/blocks_experience.json")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
-public class BlockExperience extends SRFeature {
+public class BlockExperience extends JsonFeature {
 	public static final TagKey<Block> NO_BLOCK_XP_MULTIPLIER = SRBlockTagsProvider.create("no_block_xp_multiplier");
 
 	@Config(min = 0d, max = 128d)
@@ -41,6 +42,11 @@ public class BlockExperience extends SRFeature {
 	public BlockExperience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("blocks_experience.json", customBlocksExperience, CUSTOM_BLOCKS_EXPERIENCE_DEFAULT, IdTagRange.LIST_TYPE));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	//Run before smartness

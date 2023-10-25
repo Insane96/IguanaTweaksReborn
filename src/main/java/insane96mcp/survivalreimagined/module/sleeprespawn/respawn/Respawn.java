@@ -8,7 +8,6 @@ import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.insanelib.util.LogHelper;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.core.BlockPos;

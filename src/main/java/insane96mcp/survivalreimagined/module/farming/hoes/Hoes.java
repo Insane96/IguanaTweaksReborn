@@ -1,20 +1,20 @@
 package insane96mcp.survivalreimagined.module.farming.hoes;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -35,7 +35,7 @@ import java.util.List;
 
 @Label(name = "Hoes", description = "Slower Hoes and more fragile. Hoes Properties are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class Hoes extends SRFeature {
+public class Hoes extends JsonFeature {
 
 	public static final String TOO_WEAK = "survivalreimagined.weak_hoe";
 	public static final String TILL_COOLDOWN = "survivalreimagined.till_cooldown";
@@ -70,7 +70,13 @@ public class Hoes extends SRFeature {
 
 	public Hoes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		JSON_CONFIGS.add(new JsonConfig<>("hoes_stats.json", hoesStats, HOES_STATS_DEFAULT, HoeStat.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.HOE_STATS));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "item_durabilities"), new SyncType(json -> loadAndReadJson(json, hoesStats, HOES_STATS_DEFAULT, HoeStat.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("hoes_stats.json", hoesStats, HOES_STATS_DEFAULT, HoeStat.LIST_TYPE, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "hoes_stats")));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@Override
@@ -78,11 +84,6 @@ public class Hoes extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-	}
-
-	public static void handleSyncPacket(String json) {
-		loadAndReadJson(json, hoesStats, HOES_STATS_DEFAULT, HoeStat.LIST_TYPE);
-		//loadDurabilities(itemDurabilities, true);
 	}
 
 	@SubscribeEvent

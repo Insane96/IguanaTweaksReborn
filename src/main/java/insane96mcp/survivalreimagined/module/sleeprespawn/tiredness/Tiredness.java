@@ -8,7 +8,6 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.event.PlayerExhaustionEvent;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.setup.SRRegistries;

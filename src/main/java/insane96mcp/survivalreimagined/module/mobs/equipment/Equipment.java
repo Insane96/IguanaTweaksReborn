@@ -1,11 +1,12 @@
 package insane96mcp.survivalreimagined.module.mobs.equipment;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
-import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.world.entity.EntityType;
@@ -22,7 +23,7 @@ import java.util.List;
 
 @Label(name = "Equipment", description = "Changes to mobs equipment")
 @LoadFeature(module = Modules.Ids.MOBS)
-public class Equipment extends SRFeature {
+public class Equipment extends JsonFeature {
 
     public static final ArrayList<EquipmentDropChance> EQUIPMENT_DROP_CHANCES_DEFAULT = new ArrayList<>(List.of(
             new EquipmentDropChance(IdTagMatcher.newTag("minecraft:skeletons"), EquipmentSlot.MAINHAND),
@@ -43,6 +44,11 @@ public class Equipment extends SRFeature {
     public Equipment(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
         JSON_CONFIGS.add(new JsonConfig<>("custom_drop_chances.json", equipmentDropChances, EQUIPMENT_DROP_CHANCES_DEFAULT, EquipmentDropChance.LIST_TYPE));
+    }
+
+    @Override
+    public String getModConfigFolder() {
+        return SurvivalReimagined.CONFIG_FOLDER;
     }
 
     @Override

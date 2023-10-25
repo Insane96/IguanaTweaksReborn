@@ -1,16 +1,17 @@
 package insane96mcp.survivalreimagined.module.items;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagValue;
-import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.network.message.StackSizesSync;
 import insane96mcp.survivalreimagined.utils.Utils;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -26,7 +27,7 @@ import java.util.*;
 
 @Label(name = "Stack Sizes", description = "Make food, items and blocks less stackable, or change stack sizes as you wish. Items and Blocks are disabled by default. Changing stuff might require a Minecraft restart.")
 @LoadFeature(module = Modules.Ids.ITEMS)
-public class StackSizes extends SRFeature {
+public class StackSizes extends JsonFeature {
     public static final TagKey<Item> NO_STACK_SIZE_CHANGES = SRItemTagsProvider.create("no_stack_size_changes");
 
     public static final List<IdTagValue> CUSTOM_STACK_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
@@ -64,7 +65,13 @@ public class StackSizes extends SRFeature {
 
 	public StackSizes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        JSON_CONFIGS.add(new JsonConfig<>("custom_stack_sizes.json", customStackList, CUSTOM_STACK_LIST_DEFAULT, IdTagValue.LIST_TYPE, StackSizes::processCustomStackSizes, true, JsonConfigSyncMessage.ConfigType.CUSTOM_FOOD_STACK_SIZES));
+        addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "custom_stack_sizes"), new SyncType(json -> loadAndReadJson(json, customStackList, CUSTOM_STACK_LIST_DEFAULT, IdTagValue.LIST_TYPE)));
+        JSON_CONFIGS.add(new JsonConfig<>("custom_stack_sizes.json", customStackList, CUSTOM_STACK_LIST_DEFAULT, IdTagValue.LIST_TYPE, StackSizes::processCustomStackSizes, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "custom_stack_sizes")));
+    }
+
+    @Override
+    public String getModConfigFolder() {
+        return SurvivalReimagined.CONFIG_FOLDER;
     }
 
     @Override
@@ -83,10 +90,6 @@ public class StackSizes extends SRFeature {
             processStewStackSizes(isClientSide);
             processFoodStackSizes(isClientSide);
         }
-    }
-
-    public static void handleCustomStackSizesPacket(String json) {
-        loadAndReadJson(json, customStackList, CUSTOM_STACK_LIST_DEFAULT, IdTagValue.LIST_TYPE);
     }
 
     private static final Object mutex = new Object();

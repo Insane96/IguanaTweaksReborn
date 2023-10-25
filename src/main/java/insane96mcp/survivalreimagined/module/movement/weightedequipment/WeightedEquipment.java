@@ -1,6 +1,7 @@
 package insane96mcp.survivalreimagined.module.movement.weightedequipment;
 
 import com.google.common.collect.Multimap;
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -10,13 +11,12 @@ import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.insanelib.util.Utils;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -39,7 +39,7 @@ import java.util.UUID;
 
 @Label(name = "Weighted Equipment", description = "Armor and Shield slows down the player. Material Weights and Enchantment Weights are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
-public class WeightedEquipment extends SRFeature {
+public class WeightedEquipment extends JsonFeature {
 	public static final String ARMOR_SLOWDOWN = SurvivalReimagined.MOD_ID + ".armor_slowdown";
 	public static final UUID ARMOR_SLOWDOWN_UUID = UUID.fromString("8588420e-ce50-4e4e-a3e4-974dfc8a98ec");
 
@@ -78,8 +78,10 @@ public class WeightedEquipment extends SRFeature {
 
 	public WeightedEquipment(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		JSON_CONFIGS.add(new JsonConfig<>("enchantments_weights.json", enchantmentsList, ENCHANTMENTS_LIST_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.ENCHANTMENTS_WEIGHTS));
-		JSON_CONFIGS.add(new JsonConfig<>("armor_weights.json", armorWeights, ARMOR_WEIGHTS_DEFAULT, IdTagValue.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.ARMOR_WEIGHT));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "enchantments_weights"), new SyncType(json -> loadAndReadJson(json, enchantmentsList, ENCHANTMENTS_LIST_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("enchantments_weights.json", enchantmentsList, ENCHANTMENTS_LIST_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "enchantments_weights")));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "armor_weights"), new SyncType(json -> loadAndReadJson(json, armorWeights, ARMOR_WEIGHTS_DEFAULT, IdTagValue.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("armor_weights.json", armorWeights, ARMOR_WEIGHTS_DEFAULT, IdTagValue.LIST_TYPE, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "armor_weights")));
 
 		materialRequiredAmountRatio.put(EquipmentSlot.HEAD, 0.2083333333d);
 		materialRequiredAmountRatio.put(EquipmentSlot.CHEST, 0.3333333333d);
@@ -88,18 +90,15 @@ public class WeightedEquipment extends SRFeature {
 	}
 
 	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
+	}
+
+	@Override
 	public void loadJsonConfigs() {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-	}
-
-	public static void handleEnchantmentWeightsSync(String json) {
-		loadAndReadJson(json, enchantmentsList, ENCHANTMENTS_LIST_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE);
-	}
-
-	public static void handleArmorWeightSync(String json) {
-		loadAndReadJson(json, armorWeights, ARMOR_WEIGHTS_DEFAULT, IdTagValue.LIST_TYPE);
 	}
 
 	//Can't use ItemAttributeModifierEvent as I need all the modifiers of the item (ItemStack#getAttributeModifiers) and that causes a loop

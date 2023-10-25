@@ -3,6 +3,7 @@ package insane96mcp.survivalreimagined.module.misc.beaconconduit;
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -10,11 +11,10 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
-import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.misc.DataPacks;
-import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import net.minecraft.core.BlockPos;
@@ -50,7 +50,7 @@ import java.util.Objects;
 
 @Label(name = "Beacon & Conduit", description = "Beacon Range varying based of blocks of the pyramid and better conduit killing mobs. Blocks list and ranges are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MISC)
-public class BeaconConduit extends SRFeature {
+public class BeaconConduit extends JsonFeature {
 
     public static final SimpleBlockWithItem BEACON = SimpleBlockWithItem.register("beacon", () -> new SRBeaconBlock(BlockBehaviour.Properties.copy(Blocks.BEACON)));
     public static final RegistryObject<BlockEntityType<SRBeaconBlockEntity>> BEACON_BLOCK_ENTITY_TYPE = SRRegistries.BLOCK_ENTITY_TYPES.register("beacon", () -> BlockEntityType.Builder.of(SRBeaconBlockEntity::new, BEACON.block().get()).build(null));
@@ -119,8 +119,14 @@ public class BeaconConduit extends SRFeature {
 
         JSON_CONFIGS.add(new JsonConfig<>("beacon_blocks_ranges.json", blocksList, BLOCKS_LIST_DEFAULT, IdTagValue.LIST_TYPE));
         JSON_CONFIGS.add(new JsonConfig<>("beacon_payment_times.json", paymentTimes, PAYMENT_TIMES_DEFAULT, IdTagValue.LIST_TYPE));
-        JSON_CONFIGS.add(new JsonConfig<>("beacon_effects.json", effects, EFFECTS_DEFAULT, BeaconEffect.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.BEACON_EFFECTS));
+        addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "beacon_effects"), new SyncType(json -> loadAndReadJson(json, effects, EFFECTS_DEFAULT, BeaconEffect.LIST_TYPE)));
+        JSON_CONFIGS.add(new JsonConfig<>("beacon_effects.json", effects, EFFECTS_DEFAULT, BeaconEffect.LIST_TYPE, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "beacon_effects")));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "better_beacon", Component.literal("Survival Reimagined Better Beacon"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks));
+    }
+
+    @Override
+    public String getModConfigFolder() {
+        return SurvivalReimagined.CONFIG_FOLDER;
     }
 
     public static int getPaymentTime(ItemStack stack) {
@@ -196,10 +202,6 @@ public class BeaconConduit extends SRFeature {
 
     private static double maxRangeRadius() {
         return Math.sqrt(maxRange() * maxRange() + maxRange() * maxRange());
-    }
-
-    public static void handleEffectsPacket(String json) {
-        loadAndReadJson(json, effects, EFFECTS_DEFAULT, BeaconEffect.LIST_TYPE);
     }
 
     @JsonAdapter(BeaconEffect.Serializer.class)

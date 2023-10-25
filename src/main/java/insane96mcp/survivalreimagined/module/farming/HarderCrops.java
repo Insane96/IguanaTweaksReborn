@@ -1,15 +1,16 @@
 package insane96mcp.survivalreimagined.module.farming;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagValue;
-import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.utils.Utils;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
@@ -26,7 +27,7 @@ import java.util.List;
 
 @Label(name = "Harder Crops", description = "Crops are no longer insta-minable. Break speed is still affected by the Hardness module. Requires a minecraft restart.")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class HarderCrops extends SRFeature {
+public class HarderCrops extends JsonFeature {
 	public static final TagKey<Block> HARDER_CROPS_TAG = SRBlockTagsProvider.create("harder_crops");
 	public static final ArrayList<IdTagValue> CROPS_HARDNESS_DEFAULT = new ArrayList<>(List.of(
 			IdTagValue.newTag(HARDER_CROPS_TAG.location().toString(), 1.5d)
@@ -38,7 +39,13 @@ public class HarderCrops extends SRFeature {
 
 	public HarderCrops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		JSON_CONFIGS.add(new JsonConfig<>("crops_hardness.json", cropsHardness, CROPS_HARDNESS_DEFAULT, IdTagValue.LIST_TYPE, HarderCrops::applyHardness, true, JsonConfigSyncMessage.ConfigType.HARDER_CROPS));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "crops_hardness"), new SyncType(json -> loadAndReadJson(json, cropsHardness, CROPS_HARDNESS_DEFAULT, IdTagValue.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("crops_hardness.json", cropsHardness, CROPS_HARDNESS_DEFAULT, IdTagValue.LIST_TYPE, HarderCrops::applyHardness, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "crops_hardness")));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	public static void applyHardness(List<IdTagValue> list, boolean isClientSide) {
@@ -58,10 +65,6 @@ public class HarderCrops extends SRFeature {
 				}
 			});
 		}
-	}
-
-	public static void handleSyncPacket(String json) {
-		loadAndReadJson(json, cropsHardness, CROPS_HARDNESS_DEFAULT, IdTagValue.LIST_TYPE);
 	}
 
 	@SubscribeEvent

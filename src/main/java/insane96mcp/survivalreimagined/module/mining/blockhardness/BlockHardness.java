@@ -1,16 +1,15 @@
 package insane96mcp.survivalreimagined.module.mining.blockhardness;
 
 import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.message.GlobalHardnessSyncMessage;
-import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +26,7 @@ import java.util.List;
 
 @Label(name = "Block Hardness", description = "Change blocks hardness. Dimension Hardness, Depth Hardness and Custom Hardness are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MINING)
-public class BlockHardness extends SRFeature {
+public class BlockHardness extends JsonFeature {
 	public static final ResourceLocation HARDNESS_BLACKLIST = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "hardness_blacklist");
 	public static final ResourceLocation DEPTH_MULTIPLIER_BLACKLIST = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "depth_multiplier_blacklist");
 
@@ -87,13 +86,17 @@ public class BlockHardness extends SRFeature {
 
 	public BlockHardness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		JSON_CONFIGS.add(new JsonConfig<>("dimension_hardness.json", dimensionHardnessMultiplier, DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT, DimensionHardnessMultiplier.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.DIMENSION_HARDNESS));
-		JSON_CONFIGS.add(new JsonConfig<>("depth_multipliers.json", depthMultiplierDimension, DEPTH_MULTIPLIER_DIMENSION_DEFAULT, DepthHardnessDimension.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.DEPTH_HARDNESS));
-		JSON_CONFIGS.add(new JsonConfig<>("custom_hardnesses.json", customHardnesses, CUSTOM_HARDNESSES_DEFAULT, IdTagValue.LIST_TYPE, BlockHardness::processBlockHardness, true, JsonConfigSyncMessage.ConfigType.CUSTOM_BLOCK_HARDNESS));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "dimension_hardness"), new SyncType(json -> loadAndReadJson(json, dimensionHardnessMultiplier, DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT, DimensionHardnessMultiplier.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("dimension_hardness.json", dimensionHardnessMultiplier, DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT, DimensionHardnessMultiplier.LIST_TYPE, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "dimension_hardness")));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "depth_multipliers"), new SyncType(json -> loadAndReadJson(json, depthMultiplierDimension, DEPTH_MULTIPLIER_DIMENSION_DEFAULT, DepthHardnessDimension.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("depth_multipliers.json", depthMultiplierDimension, DEPTH_MULTIPLIER_DIMENSION_DEFAULT, DepthHardnessDimension.LIST_TYPE, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "depth_multipliers")));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "custom_hardnesses"), new SyncType(json -> loadAndReadJson(json, customHardnesses, CUSTOM_HARDNESSES_DEFAULT, IdTagValue.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("custom_hardnesses.json", customHardnesses, CUSTOM_HARDNESSES_DEFAULT, IdTagValue.LIST_TYPE, BlockHardness::processBlockHardness, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "custom_hardnesses")));
 	}
 
-	public static void handleCustomBlockHardnessPacket(String json) {
-		loadAndReadJson(json, customHardnesses, CUSTOM_HARDNESSES_DEFAULT, IdTagValue.LIST_TYPE);
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@Override
@@ -126,14 +129,6 @@ public class BlockHardness extends SRFeature {
 			event.getPlayerList().getPlayers().forEach(player -> GlobalHardnessSyncMessage.sync(player, hardnessMultiplier.floatValue()));
 		else
 			GlobalHardnessSyncMessage.sync(event.getPlayer(), hardnessMultiplier.floatValue());
-	}
-
-	public static void handleDimensionHardnessPacket(String json) {
-		loadAndReadJson(json, dimensionHardnessMultiplier, DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT, DimensionHardnessMultiplier.LIST_TYPE);
-	}
-
-	public static void handleDepthHardnessPacket(String json) {
-		loadAndReadJson(json, depthMultiplierDimension, DEPTH_MULTIPLIER_DIMENSION_DEFAULT, DepthHardnessDimension.LIST_TYPE);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)

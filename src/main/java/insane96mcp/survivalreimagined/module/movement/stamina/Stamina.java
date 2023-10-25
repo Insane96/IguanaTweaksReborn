@@ -91,7 +91,7 @@ public class Stamina extends Feature {
             StaminaHandler.consumeStamina(player, staminaToConsume);
             shouldSync = true;
         }
-        else if ((stamina != maxStamina && maxStamina >= staminaPerHalfHeart * 4)) {
+        else if ((stamina != maxStamina && maxStamina >= staminaPerHalfHeart * 5)) {
             float staminaToRecover = 1f;
             float percIncrease = 0f;
             //Slower regeneration if stamina is locked

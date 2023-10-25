@@ -2,13 +2,13 @@ package insane96mcp.survivalreimagined.module.experience.enchantments;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.combat.stats.Stats;
 import insane96mcp.survivalreimagined.module.experience.enchantments.enchantment.*;
@@ -53,7 +53,7 @@ import java.util.List;
 
 @Label(name = "Enchantments", description = "Change some enchantments related stuff and adds new enchantments.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
-public class EnchantmentsFeature extends SRFeature {
+public class EnchantmentsFeature extends JsonFeature {
 
 	public static final TagKey<EntityType<?>> WATER_COOLANT_AFFECTED = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(SurvivalReimagined.MOD_ID, "water_coolant_affected"));
 	public static final RegistryObject<Enchantment> MAGNETIC = SRRegistries.ENCHANTMENTS.register("magnetic", Magnetic::new);
@@ -112,7 +112,12 @@ public class EnchantmentsFeature extends SRFeature {
 	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 
-		JSON_CONFIGS.add(new SRFeature.JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, IdTagMatcher.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, IdTagMatcher.LIST_TYPE));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@Override

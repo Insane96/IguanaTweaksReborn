@@ -1,17 +1,18 @@
 package insane96mcp.survivalreimagined.module.farming.plantsgrowth;
 
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
-import insane96mcp.survivalreimagined.base.SRFeature;
+import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.Modules;
-import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -31,7 +32,7 @@ import java.util.List;
 
 @Label(name = "Plants Growth", description = "Slower Plants (non-crops) growing. Plants properties are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class PlantsGrowth extends SRFeature {
+public class PlantsGrowth extends JsonFeature {
 
 	public static final ArrayList<PlantGrowthModifier> PLANTS_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:sugar_cane")
@@ -163,7 +164,13 @@ public class PlantsGrowth extends SRFeature {
 
 	public PlantsGrowth(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		JSON_CONFIGS.add(new JsonConfig<>("plants_growth_modifiers.json", plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE, true, JsonConfigSyncMessage.ConfigType.PLANTS_GROWTH));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "item_durabilities"), new SyncType(json -> loadAndReadJson(json, plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("plants_growth_modifiers.json", plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "plants_growth_modifiers")));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@Override
@@ -171,10 +178,6 @@ public class PlantsGrowth extends SRFeature {
 		if (!this.isEnabled())
 			return;
 		super.loadJsonConfigs();
-	}
-
-	public static void handlePlantsGrowthPacket(String json) {
-		loadAndReadJson(json, plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE);
 	}
 
 	@SubscribeEvent
