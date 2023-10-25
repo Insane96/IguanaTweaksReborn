@@ -112,7 +112,7 @@ public class Stamina extends Feature {
                 StaminaHandler.unlockSprinting(player);
             shouldSync = true;
         }
-        else if (!isStaminaLocked && maxStamina < 40) {
+        else if (!isStaminaLocked && maxStamina < staminaPerHalfHeart * 5) {
             StaminaHandler.setStamina(player, 0);
             StaminaHandler.lockSprinting(player);
             shouldSync = true;
