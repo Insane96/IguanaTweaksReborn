@@ -19,6 +19,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.AttackDamageMobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -35,6 +36,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -63,7 +65,7 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/iron"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0d, AttributeModifier.Operation.MULTIPLY_BASE),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/solarium"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/durium"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.10d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/coated_copper"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.15d, AttributeModifier.Operation.MULTIPLY_BASE),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/coated_copper"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.20d, AttributeModifier.Operation.MULTIPLY_BASE),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/keego"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/diamond"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/soul_steel"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
@@ -78,7 +80,7 @@ public class Stats extends SRFeature {
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/iron"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -0.5d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/solarium"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 0d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/durium"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/coated_copper"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 1.5d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/coated_copper"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 1d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/keego"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/diamond"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1.5d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newTag("survivalreimagined:equipment/hand/soul_steel"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
@@ -86,16 +88,9 @@ public class Stats extends SRFeature {
 
 			//Reach changes
 			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:swords"), UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 0.5d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:hoes"), UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 0.5d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:trident"), UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 1d, AttributeModifier.Operation.ADDITION),
 
 			//Various type specific weapons changes
-			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:axes"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:axes"), UUID.fromString("1567076a-abb0-4c66-9056-201da11eff8a"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.1d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:shovels"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 3d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:shovels"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.1d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:swords"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -2d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:pickaxes"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 1d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:trident"), UUID.fromString("50850a15-845a-4923-972b-f6cd1c16a7d3"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1d, AttributeModifier.Operation.ADDITION),
 
 			//Golden max health
@@ -195,6 +190,9 @@ public class Stats extends SRFeature {
 	@Config
 	@Label(name = "Disable Crit Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
 	public static Boolean disableCritArrowsBonusDamage = true;
+	@Config(min = 0, max = 1)
+	@Label(name = "Hoes Knockback multiplier")
+	public static Double hoesKnockbackMultiplier = 0.35d;
 
 	@Config
 	@Label(name = "Fix tooltips", description = "Vanilla tooltips on gear don't sum up multiple modifiers (e.g. a sword would have \"4 Attack Damage\" and \"-2 Attack Damage\" instead of \"2 Attack Damage\". This might break other mods messing with these Tooltips (e.g. Quark's improved tooltips)")
@@ -348,6 +346,17 @@ public class Stats extends SRFeature {
 				}
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public void onKnockback(LivingKnockBackEvent event) {
+		if (!this.isEnabled()
+				|| hoesKnockbackMultiplier == 1d
+				|| !(event.getEntity().getLastHurtByMob() instanceof Player player)
+				|| !player.getMainHandItem().is(ItemTags.HOES))
+			return;
+
+		event.setStrength(event.getStrength() * hoesKnockbackMultiplier.floatValue());
 	}
 
 }

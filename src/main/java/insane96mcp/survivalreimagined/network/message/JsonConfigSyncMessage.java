@@ -6,7 +6,6 @@ import insane96mcp.survivalreimagined.module.farming.hoes.Hoes;
 import insane96mcp.survivalreimagined.module.farming.plantsgrowth.PlantsGrowth;
 import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.StackSizes;
-import insane96mcp.survivalreimagined.module.items.itemstats.ItemStats;
 import insane96mcp.survivalreimagined.module.mining.blockhardness.BlockHardness;
 import insane96mcp.survivalreimagined.module.misc.beaconconduit.BeaconConduit;
 import insane96mcp.survivalreimagined.module.movement.TerrainSlowdown;
@@ -67,8 +66,6 @@ public class JsonConfigSyncMessage {
         CUSTOM_TERRAIN_SLOWDOWN(TerrainSlowdown::handleCustomTerrainSlowdownSync),
         DEPTH_HARDNESS(BlockHardness::handleDepthHardnessPacket),
         DIMENSION_HARDNESS(BlockHardness::handleDimensionHardnessPacket),
-        DURABILITY(ItemStats::handleDurabilityPacket),
-        EFFICIENCIES(ItemStats::handleEfficienciesPacket),
         ENCHANTMENTS_WEIGHTS(WeightedEquipment::handleEnchantmentWeightsSync),
         HARDER_CROPS(HarderCrops::handleSyncPacket),
         ITEM_ATTRIBUTE_MODIFIERS(Stats::handleItemAttributeModifiersPacket),

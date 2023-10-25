@@ -4,6 +4,14 @@
 * Removed the hunger bar ... again
   * Eating restores health directly over time
   * Eating also restores some health instantly
+* Item Stats and Tools/Weapons changes
+  * Swords now all have 2 base attack damage
+  * Axes now all have 5 base attack damage and 1 base attack speed
+  * Pickaxes now all have 3 base attack damage
+  * Shovels now all have 4.5 base attack damage
+  * Base Attack Damage and Attack Speeds can now be set from Item stats
+* Hoes can now be used as weapon
+  * With a really high attack speed and low knockback and damage, it's like a dagger
 * Lowered the minimum time to eat from 1.2 seconds to 1 second (0.8 to 0.6 for fast foods)
 
 ## 0.16.0

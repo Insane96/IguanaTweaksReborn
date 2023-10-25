@@ -1,7 +1,8 @@
 package insane96mcp.survivalreimagined.module.items.itemstats;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -10,29 +11,28 @@ import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.insanelib.event.HurtItemStackEvent;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
-import insane96mcp.survivalreimagined.base.SRFeature;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.module.experience.enchantments.EnchantmentsFeature;
-import insane96mcp.survivalreimagined.network.message.JsonConfigSyncMessage;
 import insane96mcp.survivalreimagined.setup.SRRegistries;
 import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.Equipable;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -40,15 +40,15 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Label(name = "Item Stats", description = "Less durable items and efficient tools. Items Durability and Efficiency are controlled via json in this feature's folder. Note that removing entries from the json requires a Minecraft Restart")
 @LoadFeature(module = Modules.Ids.ITEMS)
-public class ItemStats extends SRFeature {
+public class ItemStats extends JsonFeature {
 
 	public static final String TOOL_EFFICIENCY_LANG = "survivalreimagined.tool_efficiency";
 	public static final String TOOL_DURABILITY_LANG = "survivalreimagined.tool_durability";
@@ -170,6 +170,21 @@ public class ItemStats extends SRFeature {
 			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/netherite", 6d)
 	));
 	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();
+
+	public static final ArrayList<IdTagValue> ITEM_ATTACK_DAMAGES_DEFAULT = new ArrayList<>(List.of(
+			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:axes", 6d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:swords", 1d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:pickaxes", 2d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:shovels", 3.5d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:hoes", 0d)
+	));
+	public static final ArrayList<IdTagValue> itemAttackDamages = new ArrayList<>();
+
+	public static final ArrayList<IdTagValue> ITEM_ATTACK_SPEEDS_DEFAULT = new ArrayList<>(List.of(
+			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:axes", 0.8d),
+			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:hoes", 2.5d)
+	));
+	public static final ArrayList<IdTagValue> itemAttackSpeeds = new ArrayList<>();
 	public static final String NO_EFFICIENCY_ITEM_LANG = "survivalreimagined.no_efficiency_item";
 	public static final String BROKEN_ITEM_LANG = "survivalreimagined.broken_item";
     public static final String NO_DAMAGE_ITEM_LANG = "survivalreimagined.no_damage_item";
@@ -186,13 +201,19 @@ public class ItemStats extends SRFeature {
 
 	public ItemStats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		JSON_CONFIGS.add(new JsonConfig<>("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadDurabilities, true, JsonConfigSyncMessage.ConfigType.DURABILITY));
-		JSON_CONFIGS.add(new JsonConfig<>("tool_efficiencies.json", toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadToolEfficiencies, true, JsonConfigSyncMessage.ConfigType.EFFICIENCIES));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "item_durabilities"), new SyncType(json -> loadAndReadJson(json, itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadDurabilities, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "item_durabilities")));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "tool_efficiencies"), new SyncType(json -> loadAndReadJson(json, toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("tool_efficiencies.json", toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadToolEfficiencies, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "tool_efficiencies")));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "item_attack_damages"), new SyncType(json -> loadAndReadJson(json, itemAttackDamages, ITEM_ATTACK_DAMAGES_DEFAULT, IdTagValue.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("item_attack_damages.json", itemAttackDamages, ITEM_ATTACK_DAMAGES_DEFAULT, IdTagValue.LIST_TYPE, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "item_attack_damages")));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "item_attack_speeds"), new SyncType(json -> loadAndReadJson(json, itemAttackSpeeds, ITEM_ATTACK_SPEEDS_DEFAULT, IdTagValue.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("item_attack_speeds.json", itemAttackSpeeds, ITEM_ATTACK_SPEEDS_DEFAULT, IdTagValue.LIST_TYPE, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "item_attack_speeds")));
 	}
 
 	@Override
-	public void readConfig(ModConfigEvent event) {
-		super.readConfig(event);
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@Override
@@ -211,11 +232,6 @@ public class ItemStats extends SRFeature {
 		}
 	}
 
-	public static void handleDurabilityPacket(String json) {
-		loadAndReadJson(json, itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE);
-		//loadDurabilities(itemDurabilities, true);
-	}
-
 	public static void loadToolEfficiencies(List<IdTagValue> list, boolean isclientSide) {
 		for (IdTagValue efficiency : list) {
 			List<Item> items = getAllItems(efficiency.id, isclientSide);
@@ -227,24 +243,54 @@ public class ItemStats extends SRFeature {
 		}
 	}
 
-	public static void handleEfficienciesPacket(String json) {
-		loadAndReadJson(json, toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE);
-		//loadToolEfficiencies(toolEfficiencies, true);
-	}
+	protected static final UUID BASE_ATTACK_DAMAGE_UUID = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF");
+	protected static final UUID BASE_ATTACK_SPEED_UUID = UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3");
 
-	@SubscribeEvent
-	public void onDataPackSync(OnDatapackSyncEvent event) {
-		Gson gson = new GsonBuilder().create();
-		if (event.getPlayer() == null) {
-			event.getPlayerList().getPlayers().forEach(player -> {
-				JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.DURABILITY, gson.toJson(itemDurabilities, IdTagValue.LIST_TYPE), player);
-				JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.EFFICIENCIES, gson.toJson(toolEfficiencies, IdTagValue.LIST_TYPE), player);
-			});
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void onAttributeEvent(ItemAttributeModifierEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		boolean foundAttackDamage = false;
+		double ad = 0d;
+		for (IdTagValue itemAttackDamage : itemAttackDamages) {
+			if (itemAttackDamage.id.matchesItem(event.getItemStack())) {
+				foundAttackDamage = true;
+				ad = itemAttackDamage.value;
+				break;
+			}
 		}
-		else {
-			JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.DURABILITY, gson.toJson(itemDurabilities, IdTagValue.LIST_TYPE), event.getPlayer());
-			JsonConfigSyncMessage.sync(JsonConfigSyncMessage.ConfigType.EFFICIENCIES, gson.toJson(toolEfficiencies, IdTagValue.LIST_TYPE), event.getPlayer());
+
+		boolean foundAttackSpeed = false;
+		double as = 0d;
+		for (IdTagValue itemAttackDamage : itemAttackSpeeds) {
+			if (itemAttackDamage.id.matchesItem(event.getItemStack())) {
+				foundAttackSpeed = true;
+				as = itemAttackDamage.value;
+				break;
+			}
 		}
+		if (!foundAttackDamage && !foundAttackSpeed)
+			return;
+
+		double baseAd = 0d;
+		if (foundAttackDamage && event.getItemStack().getItem() instanceof TieredItem tieredItem)
+			baseAd = tieredItem.getTier().getAttackDamageBonus();
+
+		Multimap<Attribute, AttributeModifier> toAdd = HashMultimap.create();
+		Multimap<Attribute, AttributeModifier> toRemove = HashMultimap.create();
+		for (var entry : event.getModifiers().entries()) {
+			if (foundAttackDamage && entry.getValue().getId().equals(BASE_ATTACK_DAMAGE_UUID) && entry.getKey().equals(Attributes.ATTACK_DAMAGE)) {
+				toAdd.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", ad + baseAd, AttributeModifier.Operation.ADDITION));
+				toRemove.put(entry.getKey(), entry.getValue());
+			}
+			if (foundAttackSpeed && entry.getValue().getId().equals(BASE_ATTACK_SPEED_UUID) && entry.getKey().equals(Attributes.ATTACK_SPEED)) {
+				toAdd.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", -(4d - as), AttributeModifier.Operation.ADDITION));
+				toRemove.put(entry.getKey(), entry.getValue());
+			}
+		}
+		toRemove.forEach(event::removeModifier);
+		toAdd.forEach(event::addModifier);
 	}
 
 	@SubscribeEvent
