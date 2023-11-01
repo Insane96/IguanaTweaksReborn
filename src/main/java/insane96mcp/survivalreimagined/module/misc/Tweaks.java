@@ -8,12 +8,17 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -21,7 +26,10 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Tweaks", description = "Various stuff that doesn't fit in any other Feature.")
@@ -46,6 +54,10 @@ public class Tweaks extends Feature {
     @Label(name = "Maximum Sponge Soak Range", description = "The maximum range at which sponges will check for soakable blocks. (Vanilla is 5)")
     public static Integer maxSpongeSoakRange = 10;
 
+    @Config
+    @Label(name = "Better hardcore death", description = "When you die in hardcore, your spawn point is set to where you died and a lightning strike is summoned")
+    public static Boolean betterHardcoreDeath = true;
+
     public Tweaks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -65,6 +77,33 @@ public class Tweaks extends Feature {
 
         //Vanilla uses 65 and not 64
         return maxSpongeSoakBlocks + 1;
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onPlayerDeath(LivingDeathEvent event) {
+        if (!this.isEnabled()
+                || !betterHardcoreDeath
+                || event.getEntity().level().isClientSide
+                || !(event.getEntity() instanceof ServerPlayer player)
+                || event.getEntity() instanceof FakePlayer
+                || !event.getEntity().level().getLevelData().isHardcore()
+                || player.gameMode.getGameModeForPlayer() == GameType.CREATIVE
+                || player.gameMode.getGameModeForPlayer() == GameType.SPECTATOR)
+            return;
+
+        //player.serverLevel().getGameRules().getRule(GameRules.RULE_DO_IMMEDIATE_RESPAWN).set(true, player.server);
+        player.setRespawnPosition(player.level().dimension(), player.blockPosition(), player.getXRot(), true, false);
+        LightningBolt lightningBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, player.level());
+        lightningBolt.setVisualOnly(true);
+        lightningBolt.setPos(player.position());
+        player.level().addFreshEntity(lightningBolt);
+        player.level().setBlock(player.blockPosition(), Blocks.AIR.defaultBlockState(), 2);
+        /*if (player.serverLevel().getGameRules().getRule(GameRules.RULE_DO_IMMEDIATE_RESPAWN).get()) {
+            event.setCanceled(true);
+            player.setHealth(player.getMaxHealth());
+            Component component = player.getCombatTracker().getDeathMessage();
+            player.server.getPlayerList().broadcastSystemMessage(component, false);
+        }*/
     }
 
     public static int changeSpongeMaxRange(int range) {

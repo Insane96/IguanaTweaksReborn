@@ -16,6 +16,7 @@
 * Repairing items no longer costs experience
 * Lowered the minimum time to eat from 1.2 seconds to 1 second (0.8 to 0.6 for fast foods)
 * Blaze Spawners will now always disable after 64 spawns, regardless of distance from spawn
+* Dying in Hardcore now sets your spawn point where you died and summons a lightning bolt
 * Mob loot changes
   * Ghast, Blazes and Endermen now always drop tear, rod and pearl
   * Guardians no longer drop fishes (which increases the drop chance of prismarine crystals), and also drop 1-2 prismarine instead of 0-2
