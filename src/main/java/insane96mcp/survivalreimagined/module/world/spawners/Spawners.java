@@ -1,10 +1,13 @@
 package insane96mcp.survivalreimagined.module.world.spawners;
 
 import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.data.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
@@ -17,12 +20,14 @@ import insane96mcp.survivalreimagined.utils.Utils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -42,11 +47,14 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Label(name = "Spawners", description = "Spawners will no longer spawn mobs infinitely. Echo shards can reactivate a spawner. Monsters spawning from spawners ignore light and spawning is much faster")
 @LoadFeature(module = Modules.Ids.WORLD)
-public class Spawners extends Feature {
+public class Spawners extends JsonFeature {
 
-	public static final ResourceLocation BLACKLISTED_SPAWNERS = new ResourceLocation(SurvivalReimagined.RESOURCE_PREFIX + "blacklisted_spawners");
+	public static final TagKey<EntityType<?>> BLACKLISTED_SPAWNERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(SurvivalReimagined.MOD_ID, "blacklisted_spawners"));
 	public static final TagKey<Item> SPAWNER_REACTIVATOR_TAG = SRItemTagsProvider.create("spawner_reactivator");
 	public static final String SPAWNER_REACTIVATOR = SurvivalReimagined.MOD_ID + ".spawner_reactivator";
 	@Config(min = 0)
@@ -67,8 +75,19 @@ public class Spawners extends Feature {
 	@Label(name = "Spawning speed boost", description = "How much faster spawners tick down the spawning delay.")
 	public static Integer spawningSpeedBoost = 3;
 
+	public static final ArrayList<IdTagValue> FIXED_SPAWNER_SPAWNABLE_DEFAULT = new ArrayList<>(List.of(
+			new IdTagValue(IdTagMatcher.newId("minecraft:blaze", "minecraft:the_nether"), 64)
+	));
+	public static final ArrayList<IdTagValue> fixedSpawnerSpawnable = new ArrayList<>();
+
 	public Spawners(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		JSON_CONFIGS.add(new JsonConfig<>("spawners.json", fixedSpawnerSpawnable, FIXED_SPAWNER_SPAWNABLE_DEFAULT, IdTagValue.LIST_TYPE));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
 	@SubscribeEvent
@@ -88,10 +107,19 @@ public class Spawners extends Feature {
 		}
 		mobSpawner.getCapability(SpawnerData.INSTANCE).ifPresent(spawnerCap -> {
 			spawnerCap.addSpawnedMobs(1);
-			if (Utils.isEntityInTag(event.getEntity(), BLACKLISTED_SPAWNERS))
+			if (event.getEntity().getType().is(BLACKLISTED_SPAWNERS))
 				return;
-			double distance = Math.sqrt(spawnerPos.distSqr(level.getSharedSpawnPos()));
-			int maxSpawned = (int) ((minSpawnableMobs + (distance / 8d)) * spawnableMobsMultiplier);
+			int maxSpawned = 0;
+			for (IdTagValue idTagValue : fixedSpawnerSpawnable) {
+				if (idTagValue.id.matchesEntity(event.getEntity(), event.getEntity().level().dimension().location())) {
+					maxSpawned = (int) idTagValue.value;
+					break;
+				}
+			}
+			if (maxSpawned <= 0) {
+				double distance = Math.sqrt(spawnerPos.distSqr(level.getSharedSpawnPos()));
+				maxSpawned = (int) ((minSpawnableMobs + (distance / 8d)) * spawnableMobsMultiplier);
+			}
 
 			if (spawnerCap.getSpawnedMobs() >= maxSpawned) {
 				setSpawnerStatus(mobSpawner, true);
