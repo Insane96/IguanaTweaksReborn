@@ -58,8 +58,8 @@ public class Anvils extends Feature {
     @Label(name = "Merging Repair bonus", description = "Vanilla is 12%")
     public static Integer mergingRepairBonus = 15;
     @Config
-    @Label(name = "No repair cost increase and repair cost based off Enchantments")
-    public static Boolean noRepairCostIncreaseAndEnchCost = true;
+    @Label(name = "No xp repair cost", description = "Repairing items in an anvil doesn't cost xp")
+    public static Boolean noXpRepairCost = true;
     @Config(min = 0)
     @Label(name = "Enchantments cost by rarity.Common", description = "Vanilla: 1")
     public static Integer enchantmentCostCommon = 1;

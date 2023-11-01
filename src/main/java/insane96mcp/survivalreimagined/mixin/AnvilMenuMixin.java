@@ -3,7 +3,6 @@ package insane96mcp.survivalreimagined.mixin;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.survivalreimagined.module.experience.anvils.AnvilRepair;
 import insane96mcp.survivalreimagined.module.experience.anvils.Anvils;
-import insane96mcp.survivalreimagined.utils.MCUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -86,7 +85,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 		ItemStack right = this.inputSlots.getItem(1);
 		Map<Enchantment, Integer> leftEnchantments = EnchantmentHelper.getEnchantments(resultStack);
 		//Don't add the repair cost of the items if remove repair cost increase
-		if (!Anvils.noRepairCostIncreaseAndEnchCost)
+		if (!Anvils.noXpRepairCost)
 			baseCost += left.getBaseRepairCost() + (right.isEmpty() ? 0 : right.getBaseRepairCost());
 		this.repairItemCountCost = 0;
 		boolean isEnchantedBook = false;
@@ -113,7 +112,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 					for (repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount() && resultStack.getDamageValue() > maxPartialRepairDmg; ++repairItemCountCost) {
 						int dmgAfterRepair = resultStack.getDamageValue() - repairSteps;
 						resultStack.setDamageValue(Math.max(maxPartialRepairDmg, dmgAfterRepair));
-						if (!Anvils.noRepairCostIncreaseAndEnchCost)
+						if (!Anvils.noXpRepairCost)
 							++mergeCost;
 						repairSteps = Math.min(resultStack.getDamageValue(), Mth.ceil(resultStack.getMaxDamage() / (float) repairData.amountRequired()));
 					}
@@ -130,21 +129,10 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 					for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount(); ++repairItemCountCost) {
 						int dmgAfterRepair = resultStack.getDamageValue() - repairSteps;
 						resultStack.setDamageValue(dmgAfterRepair);
-						if (!Anvils.noRepairCostIncreaseAndEnchCost)
+						if (!Anvils.noXpRepairCost)
 							++mergeCost;
 						repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
 					}
-				}
-
-				if (Anvils.noRepairCostIncreaseAndEnchCost) {
-					for (Enchantment leftEnchantment : leftEnchantments.keySet()) {
-						int lvl = leftEnchantments.get(leftEnchantment);
-						mergeCost += lvl * Anvils.getRarityCost(leftEnchantment);
-					}
-
-					int durabilityRepaired = MCUtils.getDurabilityLeft(resultStack) - MCUtils.getDurabilityLeft(left);
-					float durabilityRepairedRatio = (float) durabilityRepaired / resultStack.getMaxDamage();
-					mergeCost = Mth.ceil(mergeCost * durabilityRepairedRatio);
 				}
 
 				if (oRepairData.isPresent()) {
@@ -266,7 +254,7 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 			resultStack = ItemStack.EMPTY;
 
 		if (!resultStack.isEmpty()) {
-			if (!Anvils.noRepairCostIncreaseAndEnchCost) {
+			if (!Anvils.noXpRepairCost) {
 				int toolRepairCost = resultStack.getBaseRepairCost();
 				if (!right.isEmpty() && toolRepairCost < right.getBaseRepairCost())
 					toolRepairCost = right.getBaseRepairCost();
