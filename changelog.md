@@ -4,6 +4,7 @@
 * Removed the hunger bar ... again
   * Eating restores health directly over time
   * Eating also restores some health instantly
+  * Small changes to food drop
 * Item Stats and Tools/Weapons changes
   * Swords now all have 2 base attack damage
   * Axes now all have 7 base attack damage and 0.8 base attack speed
@@ -14,6 +15,10 @@
   * With a really high attack speed and low knockback and damage, it's like a dagger
 * Lowered the minimum time to eat from 1.2 seconds to 1 second (0.8 to 0.6 for fast foods)
 * Blaze Spawners will now always disable after 64 spawns, regardless of distance from spawn
+* Mob loot changes
+  * Ghast, Blazes and Endermen now always drop tear, rod and pearl
+  * Guardians no longer drop fishes (which increases the drop chance of prismarine crystals), and also drop 1-2 prismarine instead of 0-2
+    * Same for elder guardians, but they drop much more prismarine
 * Increased health below where you're not able to sprint (4 -> 5 health)
 
 ## 0.16.0
