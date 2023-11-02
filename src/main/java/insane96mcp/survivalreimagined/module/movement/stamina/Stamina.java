@@ -42,7 +42,7 @@ public class Stamina extends Feature {
 
     @Config(min = 0)
     @Label(name = "Stamina per half heart", description = "How much stamina the player has per half heart. Each 1 stamina is 1 tick of running")
-    public static Integer staminaPerHalfHeart = 10;
+    public static Integer staminaPerHalfHeart = 5;
 
     @Config(min = 0)
     @Label(name = "Stamina consumed on jump", description = "How much stamina the player consumes on each jump")
@@ -64,7 +64,8 @@ public class Stamina extends Feature {
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (!this.isEnabled()
                 || !(event.player instanceof ServerPlayer player)
-                || event.phase.equals(TickEvent.Phase.START))
+                || event.phase.equals(TickEvent.Phase.START)
+                || disableSprinting)
             return;
 
         boolean shouldSync = false;

@@ -13,6 +13,7 @@
   * Base Attack Damage and Attack Speeds can now be set from Item stats
 * Hoes can now be used as weapon
   * With a really high attack speed and low knockback and damage, it's like a dagger
+* Halved max stamina
 * Repairing items no longer costs experience
 * Lowered the minimum time to eat from 1.2 seconds to 1 second (0.8 to 0.6 for fast foods)
 * Blaze Spawners will now always disable after 64 spawns, regardless of distance from spawn
