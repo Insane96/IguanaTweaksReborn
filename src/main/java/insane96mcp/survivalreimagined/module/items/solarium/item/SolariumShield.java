@@ -35,7 +35,7 @@ public class SolariumShield extends SPShieldItem {
 		if (entity == null)
 			return super.getBlockedDamage(stack, null, level);
 		float calculatedLight = Solarium.getCalculatedSkyLightRatio(entity);
-		return super.getBlockedDamage(stack, entity, level) + (3f * calculatedLight);
+		return super.getBlockedDamage(stack, entity, level) + (2f * calculatedLight);
 	}
 
 	public static RegistryObject<SPShieldItem> registerShield(String id) {

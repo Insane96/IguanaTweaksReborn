@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " S ",
+        "SLS",
+        " S "
+    ],
+    "key": {
+        "S": {
+            "item": "minecraft:copper_ingot"
+        },
+        "L": {
+            "item": "shieldsplus:wooden_shield"
+        }
+    },
+    "result": {
+        "item": "survivalreimagined:copper_shield"
+    }
+}

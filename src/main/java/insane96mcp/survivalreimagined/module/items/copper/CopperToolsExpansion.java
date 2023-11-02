@@ -136,7 +136,7 @@ public class CopperToolsExpansion extends Feature {
 		int hits = tag.getInt(COATED_TIMES_HIT);
 		if (++hits >= 4) {
 			hits = 0;
-			electrocute(player, event.getEntity());
+			electrocute(player, event.getEntity(), (float) player.getAttributeValue(Attributes.ATTACK_DAMAGE));
 		}
 		tag.putInt(COATED_TIMES_HIT, hits);
 	}
@@ -145,8 +145,8 @@ public class CopperToolsExpansion extends Feature {
 	public void onParry(ShieldBlockEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getEntity() instanceof Player player)
-				|| player.getAttackStrengthScale(1f) < 0.9f
 				|| !(event.getDamageSource().getDirectEntity() instanceof LivingEntity attacker)
+				|| !(player.getUseItem().getItem() instanceof SPShieldItem spShieldItem)
 				|| !player.getUseItem().is(COATED_SHIELD.get()))
 			return;
 
@@ -157,16 +157,15 @@ public class CopperToolsExpansion extends Feature {
 		int hits = tag.getInt(COATED_TIMES_HIT);
 		if (++hits >= 4) {
 			hits = 0;
-			electrocute(player, attacker);
+			electrocute(player, attacker, (float) spShieldItem.getBlockedDamage(player.getUseItem(), attacker, player.level()));
 		}
 		tag.putInt(COATED_TIMES_HIT, hits);
 	}
 
-	private void electrocute(Player electrocuter, LivingEntity attacked) {
+	private void electrocute(Player electrocuter, LivingEntity attacked, float damage) {
 		DamageSource damageSource = electrocuter.damageSources().source(ELECTROCUTION_ATTACK, electrocuter);
 		double range = 4.5d;
 		ItemStack useItem = electrocuter.getUseItem();
-		float electrocutionDamage = (float) (1.0f * electrocuter.getAttributeValue(Attributes.ATTACK_DAMAGE));
 		int hitEntities = 0;
 		IntList listIdsOfHitEntities = new IntArrayList();
 		List<LivingEntity> listOfHitEntities = new ArrayList<>();
@@ -181,7 +180,7 @@ public class CopperToolsExpansion extends Feature {
 			if (target == null)
 				break;
 			listOfHitEntities.add(target);
-			MCUtils.attackEntityIgnoreInvFrames(damageSource, electrocutionDamage, target, target, true);
+			MCUtils.attackEntityIgnoreInvFrames(damageSource, damage, target, target, true);
 			listIdsOfHitEntities.add(target.getId());
 			target.playSound(ELECTROCUTION.get(), 0.4f, 1.0f);
 			lastEntityHit = target;

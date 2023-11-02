@@ -11,6 +11,7 @@
   * Pickaxes now all have 3 base attack damage
   * Shovels now all have 4.5 base attack damage
   * Base Attack Damage and Attack Speeds can now be set from Item stats
+* Rebalanced shield durabilities and blocked damages
 * Hoes can now be used as weapon
   * With a really high attack speed and low knockback and damage, it's like a dagger
 * Halved max stamina

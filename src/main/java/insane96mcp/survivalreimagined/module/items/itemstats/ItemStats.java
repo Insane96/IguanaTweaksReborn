@@ -141,15 +141,19 @@ public class ItemStats extends JsonFeature {
 			IdTagValue.newId("minecraft:netherite_leggings", 222),
 			IdTagValue.newId("minecraft:netherite_boots", 192),
 
-			IdTagValue.newId("shieldsplus:wooden_shield", 32),
-			IdTagValue.newId("survivalreimagined:flint_shield", 82),
-			IdTagValue.newId("shieldsplus:golden_shield", 95),
-			IdTagValue.newId("survivalreimagined:copper_coated_shield", 230),
-			IdTagValue.newId("survivalreimagined:durium_shield", 672),
-			IdTagValue.newId("shieldsplus:diamond_shield", 602),
-			IdTagValue.newId("survivalreimagined:soul_steel_shield", 865),
-			IdTagValue.newId("survivalreimagined:keego_shield", 552),
-			IdTagValue.newId("shieldsplus:netherite_shield", 1044)
+			IdTagValue.newId("shieldsplus:wooden_shield", 101),
+			IdTagValue.newId("shieldsplus:stone_shield", 84),
+			IdTagValue.newId("survivalreimagined:flint_shield", 58),
+			IdTagValue.newId("survivalreimagined:copper_shield", 42),
+			IdTagValue.newId("shieldsplus:golden_shield", 72),
+			IdTagValue.newId("shieldsplus:iron_shield", 187),
+			IdTagValue.newId("survivalreimagined:solarium_shield", 129),
+			IdTagValue.newId("survivalreimagined:durium_shield", 427),
+			IdTagValue.newId("survivalreimagined:copper_coated_shield", 85),
+			IdTagValue.newId("survivalreimagined:keego_shield", 285),
+			IdTagValue.newId("shieldsplus:diamond_shield", 585),
+			IdTagValue.newId("survivalreimagined:soul_steel_shield", 441),
+			IdTagValue.newId("shieldsplus:netherite_shield", 266)
 	));
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 
