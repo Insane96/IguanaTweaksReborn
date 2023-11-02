@@ -15,6 +15,7 @@
 * Hoes can now be used as weapon
   * With a really high attack speed and low knockback and damage, it's like a dagger
 * Halved max stamina
+  * Decreased stamina regen speed
 * Repairing items no longer costs experience
 * Lowered the minimum time to eat from 1.2 seconds to 1 second (0.8 to 0.6 for fast foods)
 * Blaze Spawners will now always disable after 64 spawns, regardless of distance from spawn

@@ -17,7 +17,7 @@ public class StaminaHandler {
     }
 
     public static boolean canSprint(Player player) {
-        return !isStaminaLocked(player) && getStamina(player) > 0 && !player.getAbilities().instabuild;
+        return !isStaminaLocked(player);
     }
 
     public static float setStamina(Player player, float stamina) {
@@ -27,8 +27,8 @@ public class StaminaHandler {
     }
 
     public static void consumeStamina(Player player, float amount) {
-        setStamina(player, getStamina(player) - amount);
-        if (getStamina(player) <= 0)
+        float staminaSetTo = setStamina(player, getStamina(player) - amount);
+        if (staminaSetTo <= 0)
             lockSprinting(player);
     }
 

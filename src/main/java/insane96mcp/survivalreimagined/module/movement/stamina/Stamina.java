@@ -52,6 +52,10 @@ public class Stamina extends Feature {
     @Label(name = "Unlock Stamina at health ratio", description = "At which health percentage will stamina be unlocked")
     public static Double unlockStaminaAtHealthRatio = 0.75d;
 
+    @Config(min = 0d)
+    @Label(name = "Stamina regen per tick")
+    public static Double staminaRegenPerTick = 0.6d;
+
     @Config
     @Label(name = "Disable Sprinting", description = "Disable sprinting altogether")
     public static Boolean disableSprinting = false;
@@ -93,7 +97,7 @@ public class Stamina extends Feature {
             shouldSync = true;
         }
         else if ((stamina != maxStamina && maxStamina >= staminaPerHalfHeart * 5)) {
-            float staminaToRecover = 1f;
+            float staminaToRecover = staminaRegenPerTick.floatValue();
             float percIncrease = 0f;
             //Slower regeneration if stamina is locked
             if (isStaminaLocked)
@@ -109,7 +113,7 @@ public class Stamina extends Feature {
             }
             staminaToRecover += (staminaToRecover * percIncrease);
             stamina = StaminaHandler.regenStamina(player, staminaToRecover);
-            if (stamina >= maxStamina * unlockStaminaAtHealthRatio)
+            if (isStaminaLocked && stamina >= maxStamina * unlockStaminaAtHealthRatio)
                 StaminaHandler.unlockSprinting(player);
             shouldSync = true;
         }
