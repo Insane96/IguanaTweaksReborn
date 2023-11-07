@@ -38,8 +38,8 @@ public class MiningMisc extends Feature {
 	public static Double miningRangeReduction = -1d;
 
 	@Config
-	@Label(name = "Fast slabs and stairs", description = "Makes slabs (not double slabs) and stair take half the time and 3/4 of time to break")
-	public static Boolean fastSlabs = true;
+	@Label(name = "Faster slabs, stairs and walls", description = "Makes slabs, stairs and walls take less time to break")
+	public static Boolean fastSlabsStairsWalls = true;
 
 	public MiningMisc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -58,13 +58,15 @@ public class MiningMisc extends Feature {
 	@SubscribeEvent
 	public void onBreak(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled()
-				|| !fastSlabs)
+				|| !fastSlabsStairsWalls)
 			return;
 
 		if (event.getState().getBlock() instanceof SlabBlock && (event.getState().getValue(SlabBlock.TYPE) == SlabType.TOP || event.getState().getValue(SlabBlock.TYPE) == SlabType.BOTTOM))
 			event.setNewSpeed(event.getOriginalSpeed() * 2f);
 		if (event.getState().getBlock() instanceof StairBlock)
 			event.setNewSpeed(event.getOriginalSpeed() * 1.3333333f);
+		if (event.getState().getBlock() instanceof WallBlock)
+			event.setNewSpeed(event.getOriginalSpeed() * 1.5f);
 	}
 
 	@SubscribeEvent

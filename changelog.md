@@ -25,6 +25,7 @@
   * Guardians no longer drop fishes (which increases the drop chance of prismarine crystals), and also drop 1-2 prismarine instead of 0-2
     * Same for elder guardians, but they drop much more prismarine
 * Increased health below where you're not able to sprint (4 -> 5 health)
+* Breaking walls is now faster
 
 ## 0.16.0
 * Gear stats re-balance
