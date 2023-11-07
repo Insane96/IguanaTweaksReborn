@@ -2,7 +2,7 @@
 
 ## 0.17.0
 * Removed the hunger bar ... again
-  * Eating restores health directly over time
+  * Eating restores health over time
   * Eating also restores some health instantly
   * Small changes to food drop
 * Item Stats and Tools/Weapons changes
