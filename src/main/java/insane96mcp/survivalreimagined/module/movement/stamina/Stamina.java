@@ -89,6 +89,7 @@ public class Stamina extends Feature {
                     percIncrease += staminaModifier.consumedStaminaModifier(instance.getAmplifier());
             }
             //Consume 33% less stamina if swimming
+            //TODO Configurable stamina consumption for swimming
             if (player.getPose() == Pose.SWIMMING)
                 percIncrease -= 0.333f;
 

@@ -66,7 +66,7 @@ public class ItemStats extends JsonFeature {
 	public static final RegistryObject<RepairItemRecipeSerializer> REPAIR_ITEM_RECIPE_SERIALIZER = SRRegistries.RECIPE_SERIALIZERS.register("repair_item", RepairItemRecipeSerializer::new);
 
 	public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
-			IdTagValue.newTag("survivalreimagined:equipment/hand/wooden", 101),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/wooden", 127),
 			IdTagValue.newTag("survivalreimagined:equipment/hand/stone", 84),
 			IdTagValue.newTag("survivalreimagined:equipment/hand/flint", 58),
 			IdTagValue.newTag("survivalreimagined:equipment/hand/copper", 42),
