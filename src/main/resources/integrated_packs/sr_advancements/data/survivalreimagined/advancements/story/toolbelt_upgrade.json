@@ -24,7 +24,7 @@
                     "announce_to_chat": true,
                     "hidden": false
                 },
-                "parent": "survivalreimagined:story/furnace",
+                "parent": "survivalreimagined:story/toolbelt",
                 "criteria": {
                     "pouch": {
                         "trigger": "minecraft:inventory_changed",

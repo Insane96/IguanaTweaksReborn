@@ -15,7 +15,7 @@
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/pickaxe",
+	"parent": "survivalreimagined:story/stone_pickaxe",
 	"criteria": {
 		"minecraft:blaze": {
 			"trigger": "minecraft:player_killed_entity",

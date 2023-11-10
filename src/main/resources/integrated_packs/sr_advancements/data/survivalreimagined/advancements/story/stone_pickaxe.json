@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "minecraft:stone_pickaxe"
+		},
+		"title": {
+			"translate": "advancements.sr_story.stone_pickaxe.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.stone_pickaxe.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "survivalreimagined:story/flint_pickaxe",
+	"criteria": {
+		"stone_pickaxe": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"minecraft:stone_pickaxe"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"stone_pickaxe"
+		]
+	]
+}

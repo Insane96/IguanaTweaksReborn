@@ -1,29 +1,30 @@
 {
 	"display": {
 		"icon": {
-			"item": "minecraft:stone_pickaxe"
+			"item": "minecraft:wooden_pickaxe"
 		},
 		"title": {
-			"translate": "advancements.sr_story.pickaxe.title"
+			"translate": "advancements.sr_story.wooden_pickaxe.title"
 		},
 		"description": {
-			"translate": "advancements.sr_story.pickaxe.description"
+			"translate": "advancements.sr_story.wooden_pickaxe.description"
 		},
 		"frame": "task",
 		"show_toast": true,
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/flint_pickaxe",
+	"parent": "survivalreimagined:story/root",
 	"criteria": {
-		"pickaxe": {
+		"wooden_tools": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
 						"items": [
-							"minecraft:stone_pickaxe",
-							"survivalreimagined:copper_pickaxe"
+							"minecraft:wooden_pickaxe",
+							"minecraft:wooden_axe",
+							"minecraft:wooden_shovel"
 						]
 					}
 				]
@@ -32,7 +33,7 @@
 	},
 	"requirements": [
 		[
-			"pickaxe"
+			"wooden_tools"
 		]
 	]
 }

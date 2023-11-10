@@ -1,27 +1,29 @@
 {
 	"display": {
 		"icon": {
-			"item": "survivalreimagined:copper_shield"
+			"item": "survivalreimagined:flint_shield"
 		},
 		"title": {
-			"translate": "advancements.sr_story.copper_shield.title"
+			"translate": "advancements.sr_story.upgrade_wooden_shield.title"
 		},
 		"description": {
-			"translate": "advancements.sr_story.copper_shield.description"
+			"translate": "advancements.sr_story.upgrade_wooden_shield.description"
 		},
 		"frame": "task",
 		"show_toast": true,
 		"announce_to_chat": true,
 		"hidden": false
 	},
-	"parent": "survivalreimagined:story/furnace",
+	"parent": "survivalreimagined:story/wooden_shield",
 	"criteria": {
-		"copper_shield": {
+		"shield": {
 			"trigger": "minecraft:inventory_changed",
 			"conditions": {
 				"items": [
 					{
 						"items": [
+							"shieldsplus:stone_shield",
+							"survivalreimagined:flint_shield",
 							"survivalreimagined:copper_shield"
 						]
 					}
@@ -31,7 +33,7 @@
 	},
 	"requirements": [
 		[
-			"copper_shield"
+			"shield"
 		]
 	]
 }
