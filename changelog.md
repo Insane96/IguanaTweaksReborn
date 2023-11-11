@@ -3,6 +3,7 @@
 ## 0.17.1
 * Increased Wooden tools durability
 * Slightly increased wild crops amount
+* Reduced stamina consumed when swimming (and made it configurable)
 
 ## 0.17.0
 * Removed the hunger bar ... again

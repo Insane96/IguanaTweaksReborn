@@ -48,6 +48,10 @@ public class Stamina extends Feature {
     @Label(name = "Stamina consumed on jump", description = "How much stamina the player consumes on each jump")
     public static Integer staminaConsumedOnJump = 5;
 
+    @Config(min = 0)
+    @Label(name = "Stamina consumed on swimming", description = "How much stamina the player consumes each tick when swimming")
+    public static Double staminaConsumedOnSwimming = 0.6d;
+
     @Config(min = 0, max = 1d)
     @Label(name = "Unlock Stamina at health ratio", description = "At which health percentage will stamina be unlocked")
     public static Double unlockStaminaAtHealthRatio = 0.75d;
@@ -78,20 +82,18 @@ public class Stamina extends Feature {
         float stamina = StaminaHandler.getStamina(player);
         boolean isStaminaLocked = StaminaHandler.isStaminaLocked(player);
 
-        //Trigger sync for just spawned players
+        //Trigger sync for newly spawned players
         if (player.tickCount == 1)
             shouldSync = true;
         if (player.isSprinting() && player.getVehicle() == null && !player.getAbilities().instabuild) {
             float staminaToConsume = 1f;
+            if (player.getPose() == Pose.SWIMMING)
+                staminaToConsume = staminaConsumedOnSwimming.floatValue();
             float percIncrease = 0f;
             for (MobEffectInstance instance : player.getActiveEffects()) {
                 if (instance.getEffect() instanceof IStaminaModifier staminaModifier)
                     percIncrease += staminaModifier.consumedStaminaModifier(instance.getAmplifier());
             }
-            //Consume 33% less stamina if swimming
-            //TODO Configurable stamina consumption for swimming
-            if (player.getPose() == Pose.SWIMMING)
-                percIncrease -= 0.333f;
 
             staminaToConsume += (staminaToConsume * percIncrease);
             StaminaHandler.consumeStamina(player, staminaToConsume);
