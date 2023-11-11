@@ -2,6 +2,7 @@
 
 ## 0.17.1
 * Increased Wooden tools durability
+* Slightly increased wild crops amount
 
 ## 0.17.0
 * Removed the hunger bar ... again
