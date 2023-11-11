@@ -4,6 +4,7 @@
 * Increased Wooden tools durability
 * Slightly increased wild crops amount
 * Reduced stamina consumed when swimming (and made it configurable)
+* Removed spider attack range change, since has been fixed by Enhanced AI
 
 ## 0.17.0
 * Removed the hunger bar ... again
