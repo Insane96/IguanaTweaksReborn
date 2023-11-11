@@ -60,6 +60,10 @@ public class Stamina extends Feature {
     @Label(name = "Stamina regen per tick")
     public static Double staminaRegenPerTick = 0.6d;
 
+    @Config(min = 0d)
+    @Label(name = "Stamina regen per tick if locked")
+    public static Double staminaRegenPerTickIfLocked = 0.35d;
+
     @Config
     @Label(name = "Disable Sprinting", description = "Disable sprinting altogether")
     public static Boolean disableSprinting = false;
@@ -101,10 +105,10 @@ public class Stamina extends Feature {
         }
         else if ((stamina != maxStamina && maxStamina >= staminaPerHalfHeart * 5)) {
             float staminaToRecover = staminaRegenPerTick.floatValue();
-            float percIncrease = 0f;
             //Slower regeneration if stamina is locked
             if (isStaminaLocked)
-                percIncrease -= 0.4f;
+                staminaToRecover = staminaRegenPerTickIfLocked.floatValue();
+            float percIncrease = 0f;
 
             for (MobEffectInstance instance : player.getActiveEffects()) {
                 if (instance.getEffect() instanceof IStaminaModifier staminaModifier)
