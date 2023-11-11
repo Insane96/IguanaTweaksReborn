@@ -5,6 +5,9 @@
 * Slightly increased wild crops amount
 * Reduced stamina consumed when swimming (and made it configurable)
 * Removed spider attack range change, since has been fixed by Enhanced AI
+* Loot changes
+  * Small slimes now always drop 1 slimeball
+  * Magma cubes now drop more creams (~~0.25~~ -> 0.5)
 
 ## 0.17.0
 * Removed the hunger bar ... again
