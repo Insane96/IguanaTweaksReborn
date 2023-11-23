@@ -81,7 +81,7 @@ public class ITExplosion extends Explosion {
 						double d6 = this.getPosition().y();
 						double d8 = this.getPosition().z();
 						for(float f1 = 0.3F; rayStrength > 0.0F; rayStrength -= 0.22500001F) {
-							BlockPos blockpos = new BlockPos(d4, d6, d8);
+							BlockPos blockpos = BlockPos.containing(d4, d6, d8);
 							BlockState blockstate = this.level.getBlockState(blockpos);
 							FluidState fluidstate = this.level.getFluidState(blockpos);
 							Optional<Float> optional = this.damageCalculator.getBlockExplosionResistance(this, this.level, blockpos, blockstate, fluidstate);
@@ -120,7 +120,7 @@ public class ITExplosion extends Explosion {
 				blockstate = tileEntity.getMovedState();
 				block = blockstate.getBlock();
 			}
-			block.wasExploded(this.level, new BlockPos(this.getPosition()), this);
+			block.wasExploded(this.level, BlockPos.containing(this.getPosition()), this);
 			BlockPos blockpos1 = blockpos.immutable();
 			this.level.setBlockAndUpdate(blockpos1, Blocks.AIR.defaultBlockState());
 			ExplosionFallingBlockEntity fallingBlockEntity = new ExplosionFallingBlockEntity(this.level, blockpos1.getX() + 0.5f, blockpos1.getY() + 2.0625f, blockpos1.getZ() + 0.5f, blockstate);

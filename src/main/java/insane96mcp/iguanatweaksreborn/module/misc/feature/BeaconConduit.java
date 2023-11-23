@@ -17,7 +17,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -211,7 +210,7 @@ public class BeaconConduit extends ITFeature {
                 damage = MAX_DAMAGE;
             else
                 damage = (float)(1 - (distance - conduitProtectionMaxDamageDistance) / (maxRangeRadius() - conduitProtectionMaxDamageDistance)) * (MAX_DAMAGE - MIN_DAMAGE) + MIN_DAMAGE;
-            entity.hurt(DamageSource.MAGIC, damage);
+            entity.hurt(entity.damageSources().magic(), damage);
         }
         return true;
     }

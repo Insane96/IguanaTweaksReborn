@@ -27,7 +27,7 @@ import java.util.Map;
 //Shamelessly stolen from Charm
 
 @Mixin(AnvilMenu.class)
-public class AnvilMenuMixin extends ItemCombinerMenu {
+public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
 	@Shadow
 	@Final

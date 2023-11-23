@@ -16,9 +16,9 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -110,16 +110,16 @@ public class HealthRegen extends Feature {
 	public void readConfig(final ModConfigEvent event) {
 		super.readConfig(event);
 		if (loadCombatTestConfigOptions) {
-			this.setConfig("Health Regen Speed", 40);
-			this.setConfig("Regen when Hunger Above", 6);
-			this.setConfig("Starve Speed", 80);
-			this.setConfig("Starve Damage", 1);
-			this.setConfig("Disable Saturation Regen Boost", true);
-			this.setConfig("Consume Hunger Only", true);
-			this.setConfig("Max Exhaustion", 4d);
-			this.setConfig("Hunger Consumption Chance", 0.5d);
+			this.setConfigOption("Health Regen Speed", 40);
+			this.setConfigOption("Regen when Hunger Above", 6);
+			this.setConfigOption("Starve Speed", 80);
+			this.setConfigOption("Starve Damage", 1);
+			this.setConfigOption("Disable Saturation Regen Boost", true);
+			this.setConfigOption("Consume Hunger Only", true);
+			this.setConfigOption("Max Exhaustion", 4d);
+			this.setConfigOption("Hunger Consumption Chance", 0.5d);
 
-			this.setConfig("Load Combat Test Config Options", false);
+			this.setConfigOption("Load Combat Test Config Options", false);
 		}
 	}
 
@@ -128,7 +128,7 @@ public class HealthRegen extends Feature {
 		if (!this.isEnabled()
 				|| !enableInjured
 				|| !(event.getEntity() instanceof Player playerEntity)
-				|| (!(event.getSource().getEntity() instanceof LivingEntity) && !event.getSource().isFall() && !event.getSource().isExplosion() && !event.getSource().isFire())
+				|| (!(event.getSource().getEntity() instanceof LivingEntity) && !event.getSource().is(DamageTypeTags.IS_FALL) && !event.getSource().is(DamageTypeTags.IS_EXPLOSION) && !event.getSource().is(DamageTypeTags.IS_FIRE))
 				|| event.getAmount() < injuredMinDamage)
 			return;
 
@@ -302,7 +302,7 @@ public class HealthRegen extends Feature {
 				actualStarveSpeed += foodStats.foodLevel * 5;
 			if (foodStats.tickTimer >= actualStarveSpeed) {
 				if (player.getHealth() > 10.0F || difficulty == Difficulty.HARD || player.getHealth() > 1.0F && difficulty == Difficulty.NORMAL) {
-					player.hurt(DamageSource.STARVE, starveDamage);
+					player.hurt(player.damageSources().starve(), starveDamage);
 				}
 				foodStats.tickTimer = 0;
 			}

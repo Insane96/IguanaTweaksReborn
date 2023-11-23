@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.15.0
+* MC 1.19.4
+
 ## 2.14.1
 * `Faster Potion Consuming` and `Fast Milk consuming` have been merged to `Fast Drink Consuming`  
   Honey is also now drunk faster

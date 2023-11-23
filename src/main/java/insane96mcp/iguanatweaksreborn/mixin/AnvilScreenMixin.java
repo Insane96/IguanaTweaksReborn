@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 //Shamelessly stolen from Charm
 
 @Mixin(AnvilScreen.class)
-public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
+public abstract class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu> {
 
 	@Final
 	@Shadow

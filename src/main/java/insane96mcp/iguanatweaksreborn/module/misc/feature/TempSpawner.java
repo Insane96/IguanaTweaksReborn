@@ -20,7 +20,7 @@ import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -46,9 +46,9 @@ public class TempSpawner extends Feature {
 	}
 
 	@SubscribeEvent
-	public void onSpawnerSpawn(LivingSpawnEvent.SpecialSpawn event) {
+	public void onSpawnerSpawn(MobSpawnEvent.FinalizeSpawn event) {
 		if (!this.isEnabled()
-				|| !event.getSpawnReason().equals(MobSpawnType.SPAWNER)
+				|| !event.getSpawnType().equals(MobSpawnType.SPAWNER)
 				|| event.getSpawner() == null
 				|| event.getSpawner().getSpawnerBlockEntity() == null)
 			return;
