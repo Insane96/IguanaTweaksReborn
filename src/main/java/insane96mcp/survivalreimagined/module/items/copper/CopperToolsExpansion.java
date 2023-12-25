@@ -60,7 +60,7 @@ public class CopperToolsExpansion extends Feature {
 	public static final RegistryObject<Item> COPPER_PICKAXE = SRRegistries.ITEMS.register("copper_pickaxe", () -> new PickaxeItem(COPPER_ITEM_TIER, 1, -2.8F, new Item.Properties()));
 	public static final RegistryObject<Item> COPPER_AXE = SRRegistries.ITEMS.register("copper_axe", () -> new AxeItem(COPPER_ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
 	public static final RegistryObject<Item> COPPER_HOE = SRRegistries.ITEMS.register("copper_hoe", () -> new HoeItem(COPPER_ITEM_TIER, -1, -2.0F, new Item.Properties()));
-	public static final SPShieldMaterial COPPER_SHIELD_MATERIAL = new SPShieldMaterial("copper", 2.5, 134, () -> Items.COPPER_INGOT, 10, Rarity.COMMON);
+	public static final SPShieldMaterial COPPER_SHIELD_MATERIAL = new SPShieldMaterial("copper", 134, () -> Items.COPPER_INGOT, 10, Rarity.COMMON);
 	public static final RegistryObject<SPShieldItem> COPPER_SHIELD = SRRegistries.registerShield("copper_shield", COPPER_SHIELD_MATERIAL);
 
 	public static final ILItemTier COATED_ITEM_TIER = new ILItemTier(3, 170, 7f, 1.5f, 5, () -> Ingredient.of(Items.OBSIDIAN));
@@ -70,7 +70,7 @@ public class CopperToolsExpansion extends Feature {
 	public static final RegistryObject<Item> COATED_AXE = SRRegistries.ITEMS.register("coated_copper_axe", () -> new AxeItem(COATED_ITEM_TIER, 7.0F, -3.1F, new Item.Properties()));
 	public static final RegistryObject<Item> COATED_HOE = SRRegistries.ITEMS.register("coated_copper_hoe", () -> new HoeItem(COATED_ITEM_TIER, -1, -2.0F, new Item.Properties()));
 
-	public static final SPShieldMaterial COATED_SHIELD_MATERIAL = new SPShieldMaterial("coated_copper", 3.5d, 184, () -> Items.OBSIDIAN, 5, Rarity.COMMON);
+	public static final SPShieldMaterial COATED_SHIELD_MATERIAL = new SPShieldMaterial("coated_copper", 184, () -> Items.OBSIDIAN, 5, Rarity.COMMON);
 
 	public static final RegistryObject<SPShieldItem> COATED_SHIELD = SRRegistries.registerShield("coated_copper_shield", COATED_SHIELD_MATERIAL);
     public static final RegistryObject<SimpleParticleType> ELECTROCUTION_SPARKS = SRRegistries.PARTICLE_TYPES.register("electrocution_sparks", () -> new SimpleParticleType(true));

@@ -37,25 +37,25 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.FARMING)
 public class Hoes extends JsonFeature {
 
-	public static final String TOO_WEAK = "survivalreimagined.weak_hoe";
-	public static final String TILL_COOLDOWN = "survivalreimagined.till_cooldown";
-	public static final String SCYTHE_RADIUS = "survivalreimagined.scythe_radius";
+	public static final String TOO_WEAK = SurvivalReimagined.MOD_ID + ".weak_hoe";
+	public static final String TILL_COOLDOWN = SurvivalReimagined.MOD_ID + ".till_cooldown";
+	public static final String SCYTHE_RADIUS = SurvivalReimagined.MOD_ID + ".scythe_radius";
 	public static final TagKey<Item> DISABLED_HOES = SRItemTagsProvider.create("disabled_hoes");
 
 	public static final ArrayList<HoeStat> HOES_STATS_DEFAULT = new ArrayList<>(List.of(
-			new HoeStat(IdTagMatcher.newId("minecraft:wooden_hoe"), 40, 4, 0),
-			new HoeStat(IdTagMatcher.newId("minecraft:stone_hoe"), 30, 4, 1),
-			new HoeStat(IdTagMatcher.newId("survivalreimagined:flint_hoe"), 22, 4, 1),
-			new HoeStat(IdTagMatcher.newId("survivalreimagined:copper_hoe"), 10, 3, 2),
-			new HoeStat(IdTagMatcher.newId("minecraft:iron_hoe"), 20, 3, 2),
-			new HoeStat(IdTagMatcher.newId("survivalreimagined:solarium_hoe"), 22, 3, 2),
-			new HoeStat(IdTagMatcher.newId("survivalreimagined:durium_hoe"), 20, 3, 2),
-			new HoeStat(IdTagMatcher.newId("minecraft:golden_hoe"), 5, 1, 0),
-			new HoeStat(IdTagMatcher.newId("survivalreimagined:coated_copper_hoe"), 10, 2, 2),
-			new HoeStat(IdTagMatcher.newId("minecraft:diamond_hoe"), 15, 3, 3),
-			new HoeStat(IdTagMatcher.newId("survivalreimagined:soul_steel_hoe"), 15, 2, 2),
-			new HoeStat(IdTagMatcher.newId("survivalreimagined:keego_hoe"), 12, 2, 3),
-			new HoeStat(IdTagMatcher.newId("minecraft:netherite_hoe"), 10, 2, 3)
+			new HoeStat(IdTagMatcher.newId("minecraft:wooden_hoe"), 40, 4, 1),
+			new HoeStat(IdTagMatcher.newId("minecraft:stone_hoe"), 30, 4, 0),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:flint_hoe"), 25, 4, 0),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:copper_hoe"), 20, 4, 1),
+			new HoeStat(IdTagMatcher.newId("minecraft:golden_hoe"), 6, 3, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:iron_hoe"), 22, 3, 1),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:solarium_hoe"), 28, 3, 1),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:durium_hoe"), 25, 3, 0),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:coated_copper_hoe"), 18, 2, 1),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:keego_hoe"), 10, 2, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:diamond_hoe"), 12, 2, 2),
+			new HoeStat(IdTagMatcher.newId("survivalreimagined:soul_steel_hoe"), 14, 2, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:netherite_hoe"), 12, 2, 2)
 	));
 
 	public static final ArrayList<HoeStat> hoesStats = new ArrayList<>();

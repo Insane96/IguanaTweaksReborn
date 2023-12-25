@@ -198,7 +198,7 @@ public class ClientSetup {
             event.accept(Keego.ORE.item().get());
             event.accept(Solarium.SOLIUM_MOSS.item().get());
             event.accept(Crops.CARROT_SEEDS.get());
-            event.accept(Crops.POTATO_SEEDS.get());
+            event.accept(Crops.ROOTED_POTATO.get());
             event.accept(OreGeneration.COPPER_ORE_ROCK.item().get());
             event.accept(OreGeneration.IRON_ORE_ROCK.item().get());
             event.accept(OreGeneration.GOLD_ORE_ROCK.item().get());

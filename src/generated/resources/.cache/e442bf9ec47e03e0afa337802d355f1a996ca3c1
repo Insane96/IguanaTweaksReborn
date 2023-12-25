@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-28T18:39:09.2994751	Item Models: survivalreimagined
+// 1.20.1	2023-12-01T19:43:45.5757946	Item Models: survivalreimagined
 0e14a5fda7239c8fc0a79813151a4eba3c430f5f assets/survivalreimagined/models/item/ancient_lapis.json
 9db8ff6b8f62a90066f9ec6f113f30579ef147b4 assets/survivalreimagined/models/item/blast_furnace.json
 fe69cbb0039b59fd572532480721ff573ee4aa76 assets/survivalreimagined/models/item/brown_mushroom_stew.json
@@ -205,7 +205,6 @@ fcab84ad1481180dc231aa22e80fe5a611577147 assets/survivalreimagined/models/item/p
 c95b12048414c1fa9c7c7ccab108a3c6f35847d8 assets/survivalreimagined/models/item/poor_deepslate_iron_ore.json
 7baa2981a451f8e086846bfb71512f2675c47804 assets/survivalreimagined/models/item/poor_gold_ore.json
 1c294a328bb816d3ead545fbba2b7f1b5d1a8437 assets/survivalreimagined/models/item/poor_iron_ore.json
-1d36c36543bbc97dab7755919248cf052e11454e assets/survivalreimagined/models/item/potato_seeds.json
 91960a8845fbf54f57feea19246ccfbabb205132 assets/survivalreimagined/models/item/pumpkin_pulp.json
 3fae77c8186db20eef9896d8b9b9050fc515488b assets/survivalreimagined/models/item/quartz_arrow.json
 3e7680957efcfc53de3aaafb147ff9d760f80b37 assets/survivalreimagined/models/item/recall_idol.json
@@ -218,6 +217,7 @@ c0f37fc88440b49460a192e779d26ebe6813605c assets/survivalreimagined/models/item/r
 ecd09094c3f28f698c48bd65307f7e9da5141b5f assets/survivalreimagined/models/item/rich_farmland.json
 47480519041adb7b3288f4860b74a55a2496c930 assets/survivalreimagined/models/item/rich_gold_ore.json
 eee169fd70a6ceefb55b444a5b5de58e6f97bc74 assets/survivalreimagined/models/item/rich_iron_ore.json
+3c8872f644e52a08051fb24779ac44e771632d6d assets/survivalreimagined/models/item/rooted_potato.json
 8aad33ff51e3fb00ee34f9da1e1fdd5e9d7124bf assets/survivalreimagined/models/item/solarium_axe.json
 4157819e6313b282f43365824b038586ae612c9d assets/survivalreimagined/models/item/solarium_ball.json
 03fdbb3a3f2b955a43188d6529a023c66114d15d assets/survivalreimagined/models/item/solarium_boots.json

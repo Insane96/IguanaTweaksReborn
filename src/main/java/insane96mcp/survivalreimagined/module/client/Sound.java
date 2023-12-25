@@ -17,7 +17,7 @@ public class Sound extends Feature {
 
     @Config
     @Label(name = "Music delay multiplier", description = "Multiplies the time it takes for music to play by this value (in vanilla, normal music plays each 10 to 20 minutes).")
-    public static Double musicDelayMultiplier = 0.25d;
+    public static Double musicDelayMultiplier = 0.1d;
 
     public Sound(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);

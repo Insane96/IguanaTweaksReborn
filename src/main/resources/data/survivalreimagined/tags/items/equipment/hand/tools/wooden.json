@@ -4,6 +4,7 @@
         "minecraft:wooden_pickaxe",
         "minecraft:wooden_axe",
         "minecraft:wooden_shovel",
-        "minecraft:wooden_hoe"
+        "minecraft:wooden_hoe",
+        "survivalreimagined:wooden_hammer"
     ]
 }

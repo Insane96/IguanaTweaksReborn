@@ -6,12 +6,14 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.data.generator.SRBlockTagsProvider;
 import insane96mcp.survivalreimagined.entity.SRFallingBlockEntity;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.Level;
@@ -32,6 +34,8 @@ import java.util.List;
 @Label(name = "Timber Trees", description = "Trees fall when cut.")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class TimberTrees extends JsonFeature {
+
+    public static final TagKey<Block> TIMBER_TRUNKS = SRBlockTagsProvider.create("timber_trunks");
 
     /*public static final ArrayList<LogsLeavesPair> LOGS_LEAVES_PAIRS_DEFAULT = new ArrayList<>(List.of(
             new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:oak_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:oak_leaves")),
@@ -59,9 +63,9 @@ public class TimberTrees extends JsonFeature {
     }
 
     @SubscribeEvent
-    public void onBushesDamage(BlockEvent.BreakEvent event) {
+    public void onLogBreak(BlockEvent.BreakEvent event) {
         if (!this.isEnabled()
-            || !event.getState().is(BlockTags.OVERWORLD_NATURAL_LOGS)
+            || !event.getState().is(TIMBER_TRUNKS)
             || !(event.getState().getBlock() instanceof RotatedPillarBlock)
             || event.getState().getValue(RotatedPillarBlock.AXIS) != Direction.Axis.Y
             || (requiresAxe && !(event.getPlayer().getMainHandItem().getItem() instanceof AxeItem)))
@@ -95,7 +99,10 @@ public class TimberTrees extends JsonFeature {
             }
             SRFallingBlockEntity fallingBlock = new SRFallingBlockEntity((Level) event.getLevel(), fallingBlockPos, state, direction);
             fallingBlock.move(MoverType.SELF, new Vec3(0, 0.1d * horizontalDistance, 0));
-            //fallingBlock.setHurtsEntities(2f, 1024);
+            if (state.is(TIMBER_TRUNKS))
+                fallingBlock.setHurtsEntities(1f, 1024);
+            else
+                fallingBlock.setHurtsEntities(0.1f, 1024);
             event.getLevel().addFreshEntity(fallingBlock);
             event.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         }
@@ -111,14 +118,25 @@ public class TimberTrees extends JsonFeature {
         posToCheck.add(pos.above());
         BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos().set(pos);
         BlockState stateToCheck = level.getBlockState(pos.above());
-        if (stateToCheck.isAir() || stateToCheck.is(BlockTags.LEAVES))
-            return blocks;
-        if (stateToCheck.is(state.getBlock())) {
-            blocks.add(blockPos.immutable());
-            posToCheck.add(blockPos.immutable());
-            if (stateToCheck.is(state.getBlock()))
-                logs++;
+        if (!stateToCheck.is(state.getBlock())) {
+            for (Direction dir : XZ_DIRECTIONS) {
+                stateToCheck = level.getBlockState(pos.above().relative(dir));
+                if (stateToCheck.is(state.getBlock())) {
+                    blocks.add(blockPos.immutable());
+                    posToCheck.add(blockPos.immutable());
+                    if (stateToCheck.is(state.getBlock()))
+                        logs++;
+                    break;
+                }
+            }
         }
+        if (!stateToCheck.is(state.getBlock()))
+            return blocks;
+
+        blocks.add(blockPos.immutable());
+        posToCheck.add(blockPos.immutable());
+        if (stateToCheck.is(state.getBlock()))
+            logs++;
         //AtomicReference<Block> leaves = new AtomicReference<>();
         //logsLeavesPairs.stream().filter(logsLeavesPair -> logsLeavesPair.log.matchesBlock(state.getBlock())).findFirst().ifPresent(pair -> leaves.set(ForgeRegistries.BLOCKS.getValue(pair.leaves.location)));
         do {
@@ -162,17 +180,18 @@ public class TimberTrees extends JsonFeature {
         return blocks;
     }
 
+    public static final List<Direction> XZ_DIRECTIONS = List.of(Direction.EAST, Direction.NORTH, Direction.SOUTH, Direction.WEST);
     public static final List<Direction> DIRECTIONS = List.of(Direction.UP, Direction.EAST, Direction.NORTH, Direction.SOUTH, Direction.WEST);
     public static Iterable<BlockPos> getPositionsToCheck(BlockPos pos, BlockState state) {
         if (state.is(BlockTags.LOGS))
             return BlockPos.betweenClosed(pos.offset(-1, 0, -1), pos.offset(1, 1, 1));
         else
         {
-            List<BlockPos> posses = new ArrayList<>();
+            List<BlockPos> positions = new ArrayList<>();
             for (Direction d : DIRECTIONS) {
-                posses.add(pos.relative(d));
+                positions.add(pos.relative(d));
             }
-            return posses;
+            return positions;
         }
     }
 

@@ -39,7 +39,7 @@ public class WanderingTrader extends JsonFeature {
     public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_GENERIC_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
             new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Items.WHEAT_SEEDS), 4),
             new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Crops.CARROT_SEEDS.get()), 4),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Crops.POTATO_SEEDS.get()), 4),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Crops.ROOTED_POTATO.get()), 4),
             new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Items.BEETROOT_SEEDS), 4),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.BROWN_MUSHROOM), 4),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.RED_MUSHROOM), 4),

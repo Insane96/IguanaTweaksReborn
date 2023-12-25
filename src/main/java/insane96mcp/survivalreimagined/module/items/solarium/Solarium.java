@@ -221,6 +221,9 @@ public class Solarium extends Feature {
 		return skyLight;
 	}
 
+	/**
+	 * Returns a value between 0 and 1 where 0 is total darkness and 1 is 15 light level
+	 */
 	public static float getCalculatedSkyLightRatio(Entity entity) {
 		return getCalculatedSkyLightRatio(entity.level(), entity.blockPosition());
 	}

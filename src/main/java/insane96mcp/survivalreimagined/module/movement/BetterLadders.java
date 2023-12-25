@@ -21,6 +21,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class BetterLadders extends Feature {
 
+	//TODO speed config option
+
 	public BetterLadders(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}

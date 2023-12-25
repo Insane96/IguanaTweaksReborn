@@ -53,8 +53,8 @@ import java.util.Optional;
 public class Seasons extends Feature {
 
 	@Config
-	@Label(name = "Serene Seasons changes", description = "Normal glass no longer counts as greenhouse glass, saplings no longer grow in Winter and starting season is mid summer.")
-	public static Boolean sereneSeasonsChanges = true;
+	@Label(name = "No greenhouse glass", description = "Removes greenhouse glass.")
+	public static Boolean noGreenHouseGlass = true;
 
 	@Config
 	@Label(name = "No Saplings in Winter", description = "Saplings no longer drop in Winter.")
@@ -79,7 +79,7 @@ public class Seasons extends Feature {
 
 	public Seasons(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "serene_seasons_changes", Component.literal("Survival Reimagined Serene Seasons Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && sereneSeasonsChanges));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "serene_seasons_changes", Component.literal("Survival Reimagined Serene Seasons Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && noGreenHouseGlass));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "no_saplings_in_winter", Component.literal("Survival Reimagined No Saplings in Winter"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && noSaplingsInWinter));
 	}
 

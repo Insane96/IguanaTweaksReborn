@@ -506,7 +506,7 @@ public class SRRecipeProvider extends RecipeProvider implements IConditionBuilde
                 .save(writer, SurvivalReimagined.RESOURCE_PREFIX + "cyan_dye_from_cyan_flower");
 
         //Mining Charge
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, MiningCharge.MINING_CHARGE.item().get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, MiningCharge.MINING_CHARGE.item().get(), 2)
                 .pattern("GTG")
                 .pattern("CsC")
                 .pattern("CCC")

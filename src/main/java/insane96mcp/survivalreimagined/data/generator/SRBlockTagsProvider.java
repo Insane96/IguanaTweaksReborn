@@ -3,7 +3,7 @@ package insane96mcp.survivalreimagined.data.generator;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.combat.fletching.Fletching;
 import insane96mcp.survivalreimagined.module.experience.enchanting.EnchantingFeature;
-import insane96mcp.survivalreimagined.module.farming.HarderCrops;
+import insane96mcp.survivalreimagined.module.farming.HardCrops;
 import insane96mcp.survivalreimagined.module.farming.bonemeal.BoneMeal;
 import insane96mcp.survivalreimagined.module.items.crate.Crate;
 import insane96mcp.survivalreimagined.module.items.explosivebarrel.ExplosiveBarrel;
@@ -15,11 +15,13 @@ import insane96mcp.survivalreimagined.module.mining.keego.Keego;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.MultiBlockFurnaces;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.block.MultiBlockBlastFurnaceBlock;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.block.MultiBlockSoulBlastFurnaceBlock;
+import insane96mcp.survivalreimagined.module.misc.Tweaks;
 import insane96mcp.survivalreimagined.module.misc.beaconconduit.BeaconConduit;
 import insane96mcp.survivalreimagined.module.movement.minecarts.Minecarts;
 import insane96mcp.survivalreimagined.module.sleeprespawn.death.Death;
 import insane96mcp.survivalreimagined.module.world.coalfire.CoalFire;
 import insane96mcp.survivalreimagined.module.world.oregeneration.OreGeneration;
+import insane96mcp.survivalreimagined.module.world.timber.TimberTrees;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -28,6 +30,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -116,7 +119,7 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
         tag(OBSIDIANS)
                 .add(Blocks.OBSIDIAN).add(Blocks.CRYING_OBSIDIAN);
 
-        tag(HarderCrops.HARDER_CROPS_TAG)
+        tag(HardCrops.HARDER_CROPS_TAG)
                 .add(Blocks.WHEAT, Blocks.CARROTS, Blocks.POTATOES, Blocks.BEETROOTS);
 
         tag(HARDNESS_BLACKLIST)
@@ -150,6 +153,13 @@ public class SRBlockTagsProvider extends BlockTagsProvider {
         tag(COPPER_ORES).add(Blocks.COPPER_ORE, Blocks.DEEPSLATE_COPPER_ORE, OreGeneration.POOR_RICH_COPPER_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_COPPER_ORE.richDeepslateOre().block().get());
         tag(IRON_ORES).add(Blocks.IRON_ORE, Blocks.DEEPSLATE_IRON_ORE, OreGeneration.POOR_RICH_IRON_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_IRON_ORE.richDeepslateOre().block().get());
         tag(GOLD_ORES).add(Blocks.GOLD_ORE, Blocks.DEEPSLATE_GOLD_ORE, OreGeneration.POOR_RICH_GOLD_ORE.poorOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.poorDeepslateOre().block().get(), OreGeneration.POOR_RICH_GOLD_ORE.richDeepslateOre().block().get());
+
+        //noinspection unchecked
+        tag(Tweaks.FALL_ON_BREAK)
+                .addTags(Tags.Blocks.GLASS, BlockTags.LEAVES);
+
+        tag(TimberTrees.TIMBER_TRUNKS)
+                .addTag(BlockTags.OVERWORLD_NATURAL_LOGS);
     }
 
     public static TagKey<Block> create(String tagName) {

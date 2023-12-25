@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-30T16:12:50.2299687	Tags for minecraft:block mod id survivalreimagined
+// 1.20.1	2023-11-26T17:46:15.9524044	Tags for minecraft:block mod id survivalreimagined
 0760631a0645776704f0b31034230d14ad6dc1ef data/minecraft/tags/blocks/beacon_base_blocks.json
 d5819582440cadb8c17b7aff856539c50bc69af4 data/minecraft/tags/blocks/copper_ores.json
 e7a8c631b3ba3bd9a98d2bb83f927b25fe348d37 data/minecraft/tags/blocks/fall_damage_resetting.json
@@ -16,6 +16,7 @@ d20cbcba1b9a518f1b28dd297f562311df22e00d data/minecraft/tags/blocks/replaceable_
 a8607b824def8e491631b4ca5d6969fe654262ad data/survivalreimagined/tags/blocks/blast_furnace/top_blocks.json
 7d23542fa21b48a3c8fa8cc7d2cb52137e2f3476 data/survivalreimagined/tags/blocks/copper_ores.json
 27d8f8140167f00ac523f12020236dc5cd2419c2 data/survivalreimagined/tags/blocks/depth_multiplier_blacklist.json
+a60fb24dab6707c402d6f42a50d493c071ee8724 data/survivalreimagined/tags/blocks/fall_on_break.json
 c695524e4c18e39da36f1660d3ad569d6f15bcd1 data/survivalreimagined/tags/blocks/gold_ores.json
 9c8472a64a3dcde9ed2c0ad0bb67999d78d40431 data/survivalreimagined/tags/blocks/grass_blocks.json
 8ea87c74c07fbf1238a50b7e77176e0bf90d9b4e data/survivalreimagined/tags/blocks/harder_crops.json
@@ -29,3 +30,4 @@ c695524e4c18e39da36f1660d3ad569d6f15bcd1 data/survivalreimagined/tags/blocks/gol
 e04549e09a4a1b25ae9b458c2e0cf20d80fb246c data/survivalreimagined/tags/blocks/soul_blast_furnace/top_blocks.json
 ac37cd654850943fcc007084876459bf0f24c761 data/survivalreimagined/tags/blocks/structures/respawn_obelisk/blocks_to_rot.json
 c9886fc6bfa99b22909fe8b51a89b534144880e8 data/survivalreimagined/tags/blocks/tall_grass.json
+17101232f637078d895d0c5b5f9e6d9fc5a88944 data/survivalreimagined/tags/blocks/timber_trunks.json

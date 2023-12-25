@@ -8,7 +8,7 @@
     "gear": {
         "item": "shieldsplus:stone_shield"
     },
-    "result": "minecraft:shield",
+    "result": "shieldsplus:iron_shield",
     "smashes_required": 10,
     "experience": 8
 }

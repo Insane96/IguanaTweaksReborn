@@ -12,14 +12,11 @@ import insane96mcp.survivalreimagined.module.misc.DataPacks;
 import insane96mcp.survivalreimagined.setup.IntegratedDataPack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Minecarts")
 @LoadFeature(module = Modules.Ids.MOVEMENT, canBeDisabled = false)
@@ -30,7 +27,7 @@ public class Minecarts extends Feature {
 	public static final SimpleBlockWithItem COPPER_POWERED_RAIL = SimpleBlockWithItem.register("copper_powered_rail", () -> new SRPoweredRail(BlockBehaviour.Properties.copy(Blocks.POWERED_RAIL).sound(SoundType.COPPER), 0.35f, 0.05f));
 
 	@Config
-	@Label(name = "Data Pack", description = "If true, enables a data pack that makes rails cheaper and adds recipes for new rails. Also if Copperative is installed, disables copper rails.")
+	@Label(name = "Data Pack", description = "If true, enables a data pack that makes rails cheaper and adds recipes for new rails.")
 	public static Boolean dataPack = true;
 
 	public Minecarts(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -38,7 +35,7 @@ public class Minecarts extends Feature {
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "better_rails", Component.literal("Survival Reimagined Better Rails"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
 	}
 
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void onMinecartJoinLevel(EntityJoinLevelEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getEntity() instanceof AbstractMinecart minecart))
@@ -47,7 +44,7 @@ public class Minecarts extends Feature {
 		minecart.setDragAir(1d);
 		minecart.setMaxSpeedAirLateral(1.2f);
 		minecart.setMaxSpeedAirVertical(1.2f);
-	}
+	}*/
 
 	private static final String path = "minecarts/";
 

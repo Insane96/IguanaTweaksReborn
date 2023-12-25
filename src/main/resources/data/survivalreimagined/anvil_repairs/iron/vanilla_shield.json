@@ -1,6 +1,6 @@
 {
 	"item_to_repair": {
-		"id": "shieldsplus:iron_shield"
+		"id": "minecraft:shield"
 	},
 	"repair": [
 		{

@@ -25,9 +25,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-@Label(name = "Harder Crops", description = "Crops are no longer insta-minable. Break speed is still affected by the Hardness module. Requires a minecraft restart.")
+@Label(name = "Hard Crops", description = "Crops are no longer insta-minable. Break speed is still affected by the Hardness module. Requires a minecraft restart.")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class HarderCrops extends JsonFeature {
+public class HardCrops extends JsonFeature {
 	public static final TagKey<Block> HARDER_CROPS_TAG = SRBlockTagsProvider.create("harder_crops");
 	public static final ArrayList<IdTagValue> CROPS_HARDNESS_DEFAULT = new ArrayList<>(List.of(
 			IdTagValue.newTag(HARDER_CROPS_TAG.location().toString(), 1.5d)
@@ -37,10 +37,10 @@ public class HarderCrops extends JsonFeature {
 	@Label(name = "Only fully grown", description = "If the hardness should be applied to mature crops only.")
 	public static Boolean onlyFullyGrown = true;
 
-	public HarderCrops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public HardCrops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "crops_hardness"), new SyncType(json -> loadAndReadJson(json, cropsHardness, CROPS_HARDNESS_DEFAULT, IdTagValue.LIST_TYPE)));
-		JSON_CONFIGS.add(new JsonConfig<>("crops_hardness.json", cropsHardness, CROPS_HARDNESS_DEFAULT, IdTagValue.LIST_TYPE, HarderCrops::applyHardness, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "crops_hardness")));
+		JSON_CONFIGS.add(new JsonConfig<>("crops_hardness.json", cropsHardness, CROPS_HARDNESS_DEFAULT, IdTagValue.LIST_TYPE, HardCrops::applyHardness, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "crops_hardness")));
 	}
 
 	@Override

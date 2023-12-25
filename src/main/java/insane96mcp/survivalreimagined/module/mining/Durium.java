@@ -67,7 +67,7 @@ Durium extends Feature {
 	public static final RegistryObject<Item> LEGGINGS = SRRegistries.ITEMS.register("durium_leggings", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties()));
 	public static final RegistryObject<Item> BOOTS = SRRegistries.ITEMS.register("durium_boots", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.BOOTS, new Item.Properties()));
 
-	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("durium", 3.5d, 452, INGOT, 9, Rarity.COMMON);
+	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("durium", 452, INGOT, 9, Rarity.COMMON);
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRRegistries.registerShield("durium_shield", SHIELD_MATERIAL);
 

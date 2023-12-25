@@ -39,10 +39,10 @@ public class Nerfs extends Feature {
 	public static Boolean lessBurnTimeForKelpBlock = true;
 
 	@Config
-	@Label(name = "Remove Falling Block Dupe across dimensions", description = "Prevents duping falling blocks when they travel across dimensions")
+	@Label(name = "Remove Falling Block Dupe across dimensions", description = "Prevents duping falling blocks when they travel across dimensions. (Yes, I stole this from Quark)")
 	public static Boolean removeFallingBlockDupe = true;
 	@Config
-	@Label(name = "Remove piston physics exploit", description = "Fixes several piston physics exploits like TNT duping")
+	@Label(name = "Remove piston physics exploit", description = "Fixes several piston physics exploits like TNT duping. (Yes, I stole this from Quark)")
 	public static Boolean removePistonPhysicsExploit = true;
 
 	@Config(min = 0d, max = 1d)

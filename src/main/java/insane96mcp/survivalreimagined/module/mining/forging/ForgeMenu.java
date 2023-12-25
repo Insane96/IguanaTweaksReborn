@@ -2,6 +2,7 @@ package insane96mcp.survivalreimagined.module.mining.forging;
 
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.mining.multiblockfurnaces.block.ForgeBlockEntity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -77,6 +78,11 @@ public class ForgeMenu extends RecipeBookMenu<Container> {
     @Override
     public boolean recipeMatches(Recipe<? super Container> pRecipe) {
         return pRecipe.matches(this.container, this.level);
+    }
+
+    @Override
+    public void handlePlacement(boolean pPlaceAll, Recipe<?> pRecipe, ServerPlayer pPlayer) {
+        new ForgePlaceRecipe(this).recipeClicked(pPlayer, (Recipe<Container>) pRecipe, pPlaceAll);
     }
 
     @Override

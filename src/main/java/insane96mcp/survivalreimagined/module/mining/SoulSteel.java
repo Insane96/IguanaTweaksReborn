@@ -77,7 +77,7 @@ public class SoulSteel extends Feature {
 	public static final RegistryObject<Item> LEGGINGS = SRRegistries.ITEMS.register("soul_steel_leggings", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant()));
 	public static final RegistryObject<Item> BOOTS = SRRegistries.ITEMS.register("soul_steel_boots", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.BOOTS, new Item.Properties().fireResistant()));
 
-	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("soul_steel", 5.5d, 756, INGOT, 3, Rarity.COMMON);
+	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("soul_steel", 756, INGOT, 3, Rarity.COMMON);
 
 	public static final RegistryObject<SPShieldItem> SHIELD = SRRegistries.registerShield("soul_steel_shield", SHIELD_MATERIAL, true);
 

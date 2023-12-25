@@ -63,16 +63,20 @@ public class MultiBlockFurnaces extends Feature {
 	public static final RegistryObject<MenuType<MultiBlockSoulBlastFurnaceMenu>> SOUL_BLAST_FURNACE_MENU_TYPE = SRRegistries.MENU_TYPES.register("soul_blast_furnace", () -> new MenuType<>(MultiBlockSoulBlastFurnaceMenu::new, FeatureFlags.VANILLA_SET));
 
 	@Config
-	@Label(name = "Blast Furnace Datapack", description = "Enables a data pack that changes the Blast Furnace recipe to give the multi block blast furnace recipe and adds Multi Block blast furnace recipes.")
+	@Label(name = "Blast Furnace Data pack", description = "Enables a data pack that changes the Blast Furnace recipe to give the multi block blast furnace recipe and adds Multi Block blast furnace recipes.")
 	public static Boolean blastFurnaceDataPack = true;
 	@Config
-	@Label(name = "Soul Blast Furnace Datapack", description = "Enables a data pack that adds Multi Block soul blast furnace recipes.")
+	@Label(name = "Soul Blast Furnace Data pack", description = "Enables a data pack that adds Multi Block soul blast furnace recipes.")
 	public static Boolean soulBlastFurnaceDataPack = true;
+	@Config
+	@Label(name = "Alloying Netherite Data Pack", description = "Enables a data pack that adds a recipe to alloy netherite in a Blast or Soul furnace, requiring less materials")
+	public static Boolean alloyingNetheriteDataPack = true;
 
 	public MultiBlockFurnaces(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "multi_block_blast_furnace", Component.literal("Survival Reimagined Multi Block Blast Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && blastFurnaceDataPack));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "multi_block_soul_blast_furnace", Component.literal("Survival Reimagined Multi Block Soul Blast Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && soulBlastFurnaceDataPack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "alloying_netherite", Component.literal("Survival Reimagined Netherite Alloy"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && alloyingNetheriteDataPack));
 	}
 
 	@SubscribeEvent

@@ -5,6 +5,7 @@ import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.module.combat.Knockback;
 import insane96mcp.survivalreimagined.module.combat.fletching.Fletching;
 import insane96mcp.survivalreimagined.module.farming.bonemeal.BoneMeal;
+import insane96mcp.survivalreimagined.module.farming.plantsgrowth.PlantsGrowth;
 import insane96mcp.survivalreimagined.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.survivalreimagined.module.items.ChainedCopperArmor;
 import insane96mcp.survivalreimagined.module.items.StackSizes;
@@ -91,6 +92,9 @@ public class SRItemTagsProvider extends ItemTagsProvider {
 
         tag(FoodDrinks.FOOD_BLACKLIST);
         tag(BoneMeal.ITEM_BLACKLIST);
+
+        tag(PlantsGrowth.NO_FERTILITY_TOOLTIP)
+                .add(Items.CARROT, Items.POTATO);
     }
 
     public static TagKey<Item> create(String tagName) {

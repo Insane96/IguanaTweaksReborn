@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-29T11:16:47.9692861	Recipes
+// 1.20.1	2023-12-01T19:43:45.5837963	Recipes
 dfc51f50706769ded48481605ac0f276a1dc57fc data/survivalreimagined/advancements/recipes/building_blocks/durium_block.json
 4032b45b4d9ddc46fdcceea0e6cf3176075435d8 data/survivalreimagined/advancements/recipes/building_blocks/keego_block.json
 74e3141deaa4d0cdf006c02c10b25c774b40de5e data/survivalreimagined/advancements/recipes/building_blocks/soul_blast_furnace.json
@@ -537,7 +537,7 @@ fad7b220e00f1912c7488acfa67f01d573bfa9d0 data/survivalreimagined/recipes/keego_p
 67b28fdbe850d9877edb239301fdcee0d3bfa8dd data/survivalreimagined/recipes/keego_shield.json
 2d3744a2adecaa26655a132ba8636154c49304d3 data/survivalreimagined/recipes/keego_shovel.json
 8f53753a14a363210f4343368f8c57f88280694e data/survivalreimagined/recipes/keego_sword.json
-59318e79f3127d0aeadb6d4a3e19dc5e7c5fe6d0 data/survivalreimagined/recipes/mining_charge.json
+2519861546f4c2418086740a37ec2b1df42b955c data/survivalreimagined/recipes/mining_charge.json
 e1ddb0837fd4d7f3f476c7efee238c05c2cf1ff6 data/survivalreimagined/recipes/netherite_hammer.json
 85597007ce3b3f7c2033b5aeccbb9701c0ebf322 data/survivalreimagined/recipes/over_easy_egg_from_campfire.json
 2cc5dd53ebc5510d5a1a80e109d7b48e269f8fd6 data/survivalreimagined/recipes/over_easy_egg_from_smelting.json

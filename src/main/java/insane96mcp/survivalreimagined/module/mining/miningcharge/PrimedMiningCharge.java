@@ -98,8 +98,8 @@ public class PrimedMiningCharge extends Entity implements TraceableEntity {
             relativeY = 1;
             relativeZ = 0;
         }
-        Iterable<BlockPos> positions = BlockPos.betweenClosed(this.blockPosition().relative(this.direction, 1).offset(-relativeX, -relativeY, -relativeZ), this.blockPosition().relative(this.direction, 5).offset(relativeX, relativeY, relativeZ));
-        //Fake explosion
+        Iterable<BlockPos> positions = BlockPos.betweenClosed(this.blockPosition().relative(this.direction, 1).offset(-relativeX, -relativeY, -relativeZ), this.blockPosition().relative(this.direction, 3).offset(relativeX, relativeY, relativeZ));
+        //Fake explosion needed for various explosion related methods
         Explosion explosion = new Explosion(this.level(), this.owner, this.getX(), this.getY(), this.getZ(), 3, false, Explosion.BlockInteraction.KEEP);
         for (BlockPos pos : positions) {
             BlockState blockState = this.level().getBlockState(pos);

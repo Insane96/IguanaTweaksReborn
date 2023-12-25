@@ -7,13 +7,16 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.data.generator.SRItemTagsProvider;
 import insane96mcp.survivalreimagined.module.Modules;
 import net.minecraft.ChatFormatting;
 import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
@@ -33,6 +36,8 @@ import java.util.List;
 @Label(name = "Plants Growth", description = "Slower Plants (non-crops) growing. Plants properties are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.FARMING)
 public class PlantsGrowth extends JsonFeature {
+
+	public static final TagKey<Item> NO_FERTILITY_TOOLTIP = SRItemTagsProvider.create("no_fertility_tooltip");
 
 	public static final ArrayList<PlantGrowthModifier> PLANTS_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:sugar_cane")
@@ -229,7 +234,8 @@ public class PlantsGrowth extends JsonFeature {
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onItemTooltip(ItemTooltipEvent event) {
-		if (!(event.getItemStack().getItem() instanceof BlockItem blockItem))
+		if (!(event.getItemStack().getItem() instanceof BlockItem blockItem)
+				|| event.getItemStack().is(NO_FERTILITY_TOOLTIP))
 			return;
 		for (PlantGrowthModifier plantGrowthModifier : plantsList) {
 			if (plantGrowthModifier.matchesBlock(blockItem.getBlock())) {

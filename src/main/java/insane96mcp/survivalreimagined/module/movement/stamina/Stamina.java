@@ -8,6 +8,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.event.PlayerSprintEvent;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
+import insane96mcp.survivalreimagined.mixin.client.GuiMixin;
 import insane96mcp.survivalreimagined.module.Modules;
 import insane96mcp.survivalreimagined.network.NetworkHandler;
 import insane96mcp.survivalreimagined.network.message.StaminaSyncMessage;
@@ -19,14 +20,16 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -50,7 +53,7 @@ public class Stamina extends Feature {
 
     @Config(min = 0)
     @Label(name = "Stamina consumed on swimming", description = "How much stamina the player consumes each tick when swimming")
-    public static Double staminaConsumedOnSwimming = 0.6d;
+    public static Double staminaConsumedOnSwimming = 0.5d;
 
     @Config(min = 0, max = 1d)
     @Label(name = "Unlock Stamina at health ratio", description = "At which health percentage will stamina be unlocked")
@@ -169,39 +172,42 @@ public class Stamina extends Feature {
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    public void onRenderGuiOverlayPre(RenderGuiOverlayEvent.Post event) {
-        if (!this.isEnabled())
-            return;
-        if (event.getOverlay() == GuiOverlayManager.findOverlay(PLAYER_HEALTH_ELEMENT)) {
-            Minecraft mc = Minecraft.getInstance();
-            ForgeGui gui = (ForgeGui) mc.gui;
-            if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                renderStamina(gui, event.getGuiGraphics(), event.getPartialTick(), event.getWindow().getScreenWidth(), event.getWindow().getScreenHeight());
-            }
-        }
+    public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
+        event.registerAbove(VanillaGuiOverlay.PLAYER_HEALTH.id(), "stamina_overlay", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
+            if (isEnabled(Stamina.class) && gui.shouldDrawSurvivalElements() && gui.shouldDrawSurvivalElements())
+                renderStamina(gui, guiGraphics);
+        });
     }
 
     private static final Vec2 UV_STAMINA = new Vec2(0, 9);
     //protected static final RandomSource random = RandomSource.create();
 
     @OnlyIn(Dist.CLIENT)
-    public static void renderStamina(ForgeGui gui, GuiGraphics guiGraphics, float partialTicks, int screenWidth, int screenHeight) {
-        int healthIconsOffset = 49;
-
+    public static void renderStamina(ForgeGui gui, GuiGraphics guiGraphics) {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
         assert player != null;
 
         //random.setSeed(gui.getGuiTicks() * 312871L);
 
-        int right = mc.getWindow().getGuiScaledWidth() / 2 - 91;
-        int top = mc.getWindow().getGuiScaledHeight() - healthIconsOffset + 9;
-        int halfHeartsMaxStamina = Mth.ceil((float) StaminaHandler.getMaxStamina(player) / staminaPerHalfHeart);
-        int halfHeartsStamina = Mth.ceil((float) StaminaHandler.getStamina(player) / staminaPerHalfHeart);
-        float healthMax = player.getMaxHealth();
-        float absorb = player.getAbsorptionAmount();
+        int health = Mth.ceil(player.getHealth());
+        int healthLast = ((GuiMixin)gui).getDisplayHealth();
+
+        AttributeInstance attrMaxHealth = player.getAttribute(Attributes.MAX_HEALTH);
+        float healthMax = Math.max((float) attrMaxHealth.getValue(), Math.max(healthLast, health));
+        int absorb = Mth.ceil(player.getAbsorptionAmount());
+
         int healthRows = Mth.ceil((healthMax + absorb) / 2.0F / 10.0F);
         int rowHeight = Math.max(10 - (healthRows - 2), 3);
+        int leftHeight = gui.leftHeight;
+        leftHeight -= (healthRows * rowHeight);
+        if (rowHeight != 10)
+            leftHeight -= 10 - rowHeight;
+
+        int right = mc.getWindow().getGuiScaledWidth() / 2 - 91;
+        int top = mc.getWindow().getGuiScaledHeight() - leftHeight - 1;
+        int halfHeartsMaxStamina = Mth.ceil(StaminaHandler.getMaxStamina(player) / staminaPerHalfHeart);
+        int halfHeartsStamina = Mth.ceil(StaminaHandler.getStamina(player) / staminaPerHalfHeart);
         int height = 9;
         if (StaminaHandler.isStaminaLocked(player))
             setColor(0.8f, 0.8f, 0.8f, .8f);

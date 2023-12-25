@@ -35,11 +35,6 @@ public class DeBuffs extends JsonFeature {
 		return SurvivalReimagined.CONFIG_FOLDER;
 	}
 
-	@Override
-	public void loadJsonConfigs() {
-		super.loadJsonConfigs();
-	}
-
 	@SubscribeEvent
 	public void deBuffsOnLowStats(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
@@ -74,7 +69,7 @@ public class DeBuffs extends JsonFeature {
 					break;
 			}
 			if (pass) {
-				MobEffectInstance effectInstance = MCUtils.createEffectInstance(deBuff.effect, 30, deBuff.amplifier, true, true, false, false);
+				MobEffectInstance effectInstance = MCUtils.createEffectInstance(deBuff.effect, 30, deBuff.amplifier, true, false, true, false);
 				player.addEffect(effectInstance);
 			}
 		}

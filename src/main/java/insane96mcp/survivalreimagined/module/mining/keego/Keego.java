@@ -7,7 +7,6 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.item.ILItemTier;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
 import insane96mcp.shieldsplus.world.item.SPShieldItem;
-import insane96mcp.shieldsplus.world.item.SPShieldMaterial;
 import insane96mcp.survivalreimagined.SurvivalReimagined;
 import insane96mcp.survivalreimagined.base.SimpleBlockWithItem;
 import insane96mcp.survivalreimagined.item.SRArmorMaterial;
@@ -81,9 +80,8 @@ public class Keego extends Feature {
 	public static final RegistryObject<Item> LEGGINGS = SRRegistries.ITEMS.register("keego_leggings", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties()));
 	public static final RegistryObject<Item> BOOTS = SRRegistries.ITEMS.register("keego_boots", () -> new ArmorItem(ARMOR_MATERIAL, ArmorItem.Type.BOOTS, new Item.Properties()));
 
-	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("keego", 5d, 452, GEM, 9, Rarity.COMMON);
 
-	public static final RegistryObject<SPShieldItem> SHIELD = SRRegistries.registerShield("keego_shield", SHIELD_MATERIAL);
+	public static final RegistryObject<SPShieldItem> SHIELD = KeegoShield.registerShield("keego_shield");
 
 	public Keego(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -150,11 +148,11 @@ public class Keego extends Feature {
 			return;
 
 		int amplifier = 0;
-		if (event.getEntity().hasEffect(MOVEMENT_MOMENTUM.get()))
+		if (event.getEntity().hasEffect(ATTACK_MOMENTUM.get()))
 			//noinspection DataFlowIssue
-			amplifier = event.getEntity().getEffect(MOVEMENT_MOMENTUM.get()).getAmplifier() + 1;
+			amplifier = event.getEntity().getEffect(ATTACK_MOMENTUM.get()).getAmplifier() + 1;
 
-		event.getEntity().addEffect(new MobEffectInstance(MOVEMENT_MOMENTUM.get(), 100, Math.min(amplifier, 7), false, false, true));
+		event.getEntity().addEffect(new MobEffectInstance(ATTACK_MOMENTUM.get(), 100, Math.min(amplifier, 7), false, false, true));
 	}
 
 	@SubscribeEvent

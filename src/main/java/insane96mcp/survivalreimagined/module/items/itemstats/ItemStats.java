@@ -21,6 +21,8 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -33,6 +35,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -141,7 +144,7 @@ public class ItemStats extends JsonFeature {
 			IdTagValue.newId("minecraft:netherite_leggings", 222),
 			IdTagValue.newId("minecraft:netherite_boots", 192),
 
-			IdTagValue.newId("shieldsplus:wooden_shield", 101),
+			IdTagValue.newId("shieldsplus:wooden_shield", 127),
 			IdTagValue.newId("shieldsplus:stone_shield", 84),
 			IdTagValue.newId("survivalreimagined:flint_shield", 58),
 			IdTagValue.newId("survivalreimagined:copper_shield", 42),
@@ -158,29 +161,29 @@ public class ItemStats extends JsonFeature {
 	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
 
 	public static final ArrayList<IdTagValue> TOOL_EFFICIENCIES_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/wooden", 1.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/stone", 2d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/flint", 3d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/copper", 4d),
-			//new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/golden", 12d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iron", 3.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/solarium", 2.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/durium", 3d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/coated_copper", 4.5d),
-			//new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/iron+amethyst alloy", 5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/keego", 7d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/diamond", 6d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/soul_steel", 5.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "survivalreimagined:equipment/hand/tools/netherite", 6d)
+			IdTagValue.newTag("survivalreimagined:equipment/hand/tools/wooden", 1.5d),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/tools/stone", 2d),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/tools/flint", 3d),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/tools/copper", 4d),
+		  	//IdTagValue.newTag("survivalreimagined:equipment/hand/tools/golden", 12d),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/tools/iron", 3.5d),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/tools/solarium", 2.5d),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/tools/durium", 3d),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/tools/coated_copper", 4.5d),
+		  	//IdTagValue.newTag("survivalreimagined:equipment/hand/tools/iron+amethyst alloy", 5d),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/tools/keego", 7d),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/tools/diamond", 6d),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/tools/soul_steel", 5.5d),
+			IdTagValue.newTag("survivalreimagined:equipment/hand/tools/netherite", 6d)
 	));
 	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();
 
 	public static final ArrayList<IdTagValue> ITEM_ATTACK_DAMAGES_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:axes", 6d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:swords", 1d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:pickaxes", 2d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:shovels", 3.5d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:hoes", 0d)
+			IdTagValue.newTag("minecraft:axes", 6d),
+			IdTagValue.newTag("minecraft:swords", 1d),
+			IdTagValue.newTag("minecraft:pickaxes", 2d),
+			IdTagValue.newTag("minecraft:shovels", 3.5d),
+			IdTagValue.newTag("minecraft:hoes", 0d)
 	));
 	public static final ArrayList<IdTagValue> itemAttackDamages = new ArrayList<>();
 
@@ -316,7 +319,29 @@ public class ItemStats extends JsonFeature {
 	}
 
 	public static boolean isBroken(ItemStack stack) {
-		return shouldNotBreak(stack) && stack.getDamageValue() >= stack.getMaxDamage() - 1;
+		return stack.isDamageableItem() && shouldNotBreak(stack) && stack.getDamageValue() >= stack.getMaxDamage() - 1;
+	}
+
+	@SubscribeEvent
+	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+		if (!this.isEnabled()
+				|| !unbreakableItems
+				|| event.player.level().isClientSide
+				|| event.phase == TickEvent.Phase.START
+				|| event.player.tickCount % 20 != event.player.getId() % 20)
+			return;
+
+		for (ItemStack stack : event.player.getArmorSlots()) {
+			if (stack.isEmpty() || !isBroken(stack))
+				continue;
+			event.player.level().playSound(null, event.player, SoundEvents.ALLAY_HURT, SoundSource.PLAYERS, 0.7f, 2f);
+			EquipmentSlot equipmentSlot = Player.getEquipmentSlotForItem(stack);
+			if (stack.getItem() instanceof Equipable) {
+				event.player.setItemSlot(equipmentSlot, ItemStack.EMPTY);
+				if (!event.player.addItem(stack))
+					event.player.drop(stack, true);
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -342,21 +367,6 @@ public class ItemStats extends JsonFeature {
 
 	@SubscribeEvent
 	public void onBlockRightClick(PlayerInteractEvent.RightClickBlock event) {
-		if (!this.isEnabled()
-				|| !unbreakableItems)
-			return;
-
-		ItemStack stack = event.getItemStack();
-		if (stack.getMaxDamage() == 0)
-			return;
-		if (isBroken(stack)) {
-			event.setCanceled(true);
-			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
-		}
-	}
-
-	@SubscribeEvent
-	public void onItemUse(PlayerInteractEvent.RightClickItem event) {
 		if (!this.isEnabled()
 				|| !unbreakableItems)
 			return;

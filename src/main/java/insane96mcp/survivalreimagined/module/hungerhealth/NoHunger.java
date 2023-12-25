@@ -108,7 +108,10 @@ public class NoHunger extends Feature {
                 || event.phase.equals(TickEvent.Phase.START))
             return;
 
-        event.player.getFoodData().foodLevel = 15;
+        if (HealthRegen.isPlayerHurt(event.player))
+            event.player.getFoodData().foodLevel = 15;
+        else
+            event.player.getFoodData().foodLevel = 20;
 
         if (event.player.tickCount % PASSIVE_REGEN_TICK_RATE == 1 && enablePassiveRegen && event.player.isHurt()) {
             incrementPassiveRegenTick(event.player);

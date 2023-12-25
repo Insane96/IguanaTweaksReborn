@@ -97,7 +97,7 @@ public class SRItemModelsProvider extends ItemModelProvider {
         basicItem(Lapis.ANCIENT_LAPIS.get());
 
         basicItem(Crops.CARROT_SEEDS.get());
-        basicItem(Crops.POTATO_SEEDS.get());
+        basicItem(Crops.ROOTED_POTATO.get());
 
         trimmedArmorItem(ChainedCopperArmor.BOOTS);
         trimmedArmorItem(ChainedCopperArmor.LEGGINGS);

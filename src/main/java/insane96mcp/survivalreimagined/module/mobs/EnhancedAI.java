@@ -1,10 +1,10 @@
 package insane96mcp.survivalreimagined.module.mobs;
 
-import insane96mcp.enhancedai.modules.base.feature.Movement;
-import insane96mcp.enhancedai.modules.creeper.feature.CreeperSwell;
-import insane96mcp.enhancedai.modules.skeleton.feature.SkeletonFleeTarget;
-import insane96mcp.enhancedai.modules.skeleton.feature.SkeletonShoot;
-import insane96mcp.enhancedai.modules.witch.feature.ThirstyWitches;
+import insane96mcp.enhancedai.modules.creeper.CreeperSwell;
+import insane96mcp.enhancedai.modules.mobs.movement.Movement;
+import insane96mcp.enhancedai.modules.skeleton.SkeletonFleeTarget;
+import insane96mcp.enhancedai.modules.skeleton.shoot.SkeletonShoot;
+import insane96mcp.enhancedai.modules.witch.ThirstyWitches;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -27,9 +27,8 @@ public class EnhancedAI extends Feature {
 
         Module.getFeature(CreeperSwell.class).setConfigOption("Walking Fuse Chance", 0.75d);
         Module.getFeature(CreeperSwell.class).setConfigOption("Breach Chance", 0.4d);
-        Module.getFeature(CreeperSwell.class).setConfigOption("Cena.Particles", false);
-        Module.getFeature(CreeperSwell.class).setConfigOption("Cena.Explosion power", 3.0d);
-        Module.getFeature(CreeperSwell.class).setConfigOption("Cena.Forced Explosion", false);
+        Module.getFeature(CreeperSwell.class).setConfigOption("Angry Creeper.Explosion power", 3.0d);
+        Module.getFeature(CreeperSwell.class).setConfigOption("Angry Creeper.Forced Explosion", false);
         Module.getFeature(CreeperSwell.class).readConfig(event);
 
         Module.getFeature(SkeletonFleeTarget.class).setConfigOption("Flee speed Multiplier Near", 1.1d);
@@ -39,13 +38,14 @@ public class EnhancedAI extends Feature {
         Module.getFeature(SkeletonFleeTarget.class).setConfigOption("Avoid Player chance", 0.25d);
         Module.getFeature(SkeletonFleeTarget.class).readConfig(event);
 
-        //Controlled via MPR
         Module.getFeature(SkeletonShoot.class).setConfigOption("Spammer chance", 0d);
+        //Base 24, 40 in Hard Mode via MPR
         Module.getFeature(SkeletonShoot.class).setConfigOption("Shooting Range", new MinMax(24));
         Module.getFeature(SkeletonShoot.class).readConfig(event);
 
         //Controlled via MPR
-        Module.getFeature(Movement.class).setConfigOption("Swim Speed Multiplier", 0d);
+        Module.getFeature(Movement.class).setConfigOption("Bonus movement speed", 0d);
+        Module.getFeature(Movement.class).setConfigOption("Swim Speed Addition Multiplier", 0d);
         Module.getFeature(Movement.class).readConfig(event);
 
         Module.getFeature(ThirstyWitches.class).setConfigOption("Strong healing Threshold", 0.25d);

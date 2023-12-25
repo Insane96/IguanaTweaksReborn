@@ -182,7 +182,7 @@ public class HealthRegen extends Feature {
 	/**
 	 * Different from Player#isHurt as doesn't return true if missing less than half a heart
 	 */
-	private static boolean isPlayerHurt(Player player) {
+	public static boolean isPlayerHurt(Player player) {
 		return player.getHealth() > 0 && player.getHealth() <= player.getMaxHealth() - 1;
 	}
 

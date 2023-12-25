@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
 public class SolariumShield extends SPShieldItem {
-	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("solarium", 3d, 401, Solarium.SOLARIUM_BALL, 8, Rarity.COMMON);
+	public static final SPShieldMaterial SHIELD_MATERIAL = new SPShieldMaterial("solarium", 401, Solarium.SOLARIUM_BALL, 8, Rarity.COMMON);
 	public SolariumShield(Properties p_43089_) {
 		super(SHIELD_MATERIAL, p_43089_);
 	}
@@ -34,8 +34,8 @@ public class SolariumShield extends SPShieldItem {
 	public double getBlockedDamage(ItemStack stack, @Nullable LivingEntity entity, Level level) {
 		if (entity == null)
 			return super.getBlockedDamage(stack, null, level);
-		float calculatedLight = Solarium.getCalculatedSkyLightRatio(entity);
-		return super.getBlockedDamage(stack, entity, level) + (2f * calculatedLight);
+		float calculatedLightRatio = Solarium.getCalculatedSkyLightRatio(entity);
+		return super.getBlockedDamage(stack, entity, level) + (2f * calculatedLightRatio);
 	}
 
 	public static RegistryObject<SPShieldItem> registerShield(String id) {

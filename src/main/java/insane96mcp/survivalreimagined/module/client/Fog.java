@@ -7,12 +7,10 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.survivalreimagined.module.ClientModules;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.material.FogType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -20,7 +18,6 @@ import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import sereneseasons.api.season.SeasonHelper;
 
 @Label(name = "Fog", description = "Makes fog less invasive in some contexts")
 @LoadFeature(module = ClientModules.Ids.CLIENT)
@@ -36,9 +33,9 @@ public class Fog extends Feature {
     @Label(name = "Nether Fog Ratio", description = "Render distance is multiplied by this value in the Nether. Vanilla is 0.5.")
     public static Double netherFogRatio = 0.75d;
 
-    @Config
+    /*@Config
     @Label(name = "Fog change when rains", description = "Fog changes when it's raining based off seasons.")
-    public static Boolean fogChangeOnRain = true;
+    public static Boolean fogChangeOnRain = true;*/
 
     public Fog(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -52,10 +49,10 @@ public class Fog extends Feature {
 
         lavaFog(event);
         netherFog(event);
-        seasonFog(event);
+        //seasonFog(event);
     }
 
-    private void seasonFog(ViewportEvent.RenderFog event) {
+    /*private void seasonFog(ViewportEvent.RenderFog event) {
         if (!fogChangeOnRain
                 || event.isCanceled()
                 || event.getCamera().getFluidInCamera() != FogType.NONE
@@ -92,7 +89,7 @@ public class Fog extends Feature {
         if (far <= 1f) event.setFarPlaneDistance(renderDistance * far);
         else event.setFarPlaneDistance(far);
         event.setCanceled(true);
-    }
+    }*/
 
     public void lavaFog(ViewportEvent.RenderFog event) {
         if (!betterFireResistanceLavaFog

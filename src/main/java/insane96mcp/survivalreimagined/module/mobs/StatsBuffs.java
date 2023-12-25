@@ -1,6 +1,6 @@
 package insane96mcp.survivalreimagined.module.mobs;
 
-import insane96mcp.enhancedai.modules.base.feature.Targeting;
+import insane96mcp.enhancedai.modules.mobs.targeting.Targeting;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -18,7 +18,7 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 @LoadFeature(module = Modules.Ids.MOBS)
 public class StatsBuffs extends Feature {
     @Config
-    @Label(name = "Enable DataPack", description = "Enables the DataPack that buffs mobs.")
+    @Label(name = "Enable DataPack", description = "Enables a Data Pack that buffs mobs.")
     public static Boolean enableDataPack = true;
 
     public StatsBuffs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -29,9 +29,11 @@ public class StatsBuffs extends Feature {
     @Override
     public void readConfig(ModConfigEvent event) {
         super.readConfig(event);
-        Module.getFeature(Targeting.class).setConfigOption("Follow Range Override", new MinMax(0d));
-        Module.getFeature(Targeting.class).setConfigOption("XRay Range Override", new MinMax(0d));
-        //Read the config values
-        Module.getFeature(Targeting.class).readConfig(event);
+        if (enableDataPack) {
+            Module.getFeature(Targeting.class).setConfigOption("Follow Range Override", new MinMax(0d));
+            Module.getFeature(Targeting.class).setConfigOption("XRay Range Override", new MinMax(0d));
+            //Read the config values
+            Module.getFeature(Targeting.class).readConfig(event);
+        }
     }
 }

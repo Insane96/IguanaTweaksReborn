@@ -88,6 +88,7 @@ public class Stats extends JsonFeature {
 
 			//Reach changes
 			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:swords"), UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 0.5d, AttributeModifier.Operation.ADDITION),
+			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:hoes"), UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 0.5d, AttributeModifier.Operation.ADDITION),
 			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:trident"), UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 1d, AttributeModifier.Operation.ADDITION),
 
 			//Various type specific weapons changes
@@ -181,9 +182,9 @@ public class Stats extends JsonFeature {
 
 	public static final UUID ATTACK_RANGE_REDUCTION_UUID = UUID.fromString("0dd017a7-274c-4101-85b4-78af20a24c54");
 	public static final UUID MOVEMENT_SPEED_REDUCTION_UUID = UUID.fromString("a88ac0d1-e2b3-4cf1-bb0e-9577486c874a");
-	@Config
-	@Label(name = "Reduce player attack range", description = "If true, player attack range is reduced by 0.5.")
-	public static Boolean reducePlayerAttackRange = true;
+	@Config(min = -4d, max = 4d)
+	@Label(name = "Player attack range modifier", description = "Adds this to players' attack range")
+	public static Double playerAttackRangeModifier = -0.5d;
 	@Config
 	@Label(name = "Players movement speed reduction", description = "Reduces movement speed for players by this percentage.")
 	public static Double playersMovementSpeedReduction = 0.05d;
@@ -201,13 +202,16 @@ public class Stats extends JsonFeature {
 	@Config
 	@Label(name = "Combat Test Strength", description = "Changes Strength effect from +3 damage per level to +20% damage per level. (Requires a Minecraft restart)")
 	public static Boolean combatTestStrength = true;
+	@Config
+	@Label(name = "Better weakness", description = "Changes Weakness like Strength effect from -3 damage per level to -20% damage per level. (Requires a Minecraft restart)")
+	public static Boolean betterWeakness = true;
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Bow's Arrows Base Damage", description = "Set arrow's base damage if shot from bow.")
 	public static Double bowsArrowsBaseDamage = 1.5d;
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "item_durabilities"), new SyncType(json -> loadAndReadJson(json, itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE)));
+		addSyncType(new ResourceLocation(SurvivalReimagined.MOD_ID, "item_modifiers"), new SyncType(json -> loadAndReadJson(json, itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE)));
 		JSON_CONFIGS.add(new JsonConfig<>("item_modifiers.json", itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE, true, new ResourceLocation(SurvivalReimagined.MOD_ID, "item_modifiers")));
 	}
 
@@ -224,6 +228,11 @@ public class Stats extends JsonFeature {
 			MobEffects.DAMAGE_BOOST.addAttributeModifier(Attributes.ATTACK_DAMAGE, "648D7064-6A60-4F59-8ABE-C2C23A6DD7A9", 0.0D, AttributeModifier.Operation.MULTIPLY_BASE);
 			((AttackDamageMobEffect)MobEffects.DAMAGE_BOOST).multiplier = 0.2d;
 		}
+		if (betterWeakness) {
+			MobEffects.WEAKNESS.attributeModifiers.remove(Attributes.ATTACK_DAMAGE);
+			MobEffects.WEAKNESS.addAttributeModifier(Attributes.ATTACK_DAMAGE, "22653B89-116E-49DC-9B6B-9971489B5BE5", 0.0D, AttributeModifier.Operation.MULTIPLY_BASE);
+			((AttackDamageMobEffect)MobEffects.WEAKNESS).multiplier = -0.2d;
+		}
 	}
 
 	@SubscribeEvent
@@ -232,8 +241,8 @@ public class Stats extends JsonFeature {
 				|| !(event.getEntity() instanceof Player player))
 			return;
 
-		if (reducePlayerAttackRange)
-			MCUtils.applyModifier(player, ForgeMod.ENTITY_REACH.get(), ATTACK_RANGE_REDUCTION_UUID, "Entity Reach reduction", -0.5d, AttributeModifier.Operation.ADDITION, false);
+		if (playerAttackRangeModifier != 0f)
+			MCUtils.applyModifier(player, ForgeMod.ENTITY_REACH.get(), ATTACK_RANGE_REDUCTION_UUID, "Entity Reach reduction", playerAttackRangeModifier, AttributeModifier.Operation.ADDITION, false);
 		if (playersMovementSpeedReduction != 0d)
 			MCUtils.applyModifier(player, Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_REDUCTION_UUID, "Movement Speed reduction", -playersMovementSpeedReduction, AttributeModifier.Operation.MULTIPLY_BASE, false);
 	}
@@ -328,7 +337,7 @@ public class Stats extends JsonFeature {
 								if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE))
 									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amount * 100) + "%", Component.translatable(attribute.getDescriptionId()));
 								else
-									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amount < 0 ? 0 : amount), Component.translatable(attribute.getDescriptionId()));
+									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount)), Component.translatable(attribute.getDescriptionId()));
 							}
 							case MULTIPLY_BASE -> {
 								component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount) * 100), Component.translatable(attribute.getDescriptionId()));
