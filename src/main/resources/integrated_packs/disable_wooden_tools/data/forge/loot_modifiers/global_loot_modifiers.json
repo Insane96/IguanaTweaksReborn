@@ -1,10 +1,10 @@
 {
     "entries": [
-        "survivalreimagined:flint_expansion/replace_wooden_axe",
-        "survivalreimagined:flint_expansion/replace_wooden_shovel",
-        "survivalreimagined:flint_expansion/replace_wooden_hoe",
-        "survivalreimagined:flint_expansion/replace_wooden_sword",
-        "survivalreimagined:flint_expansion/replace_wooden_pickaxe"
+        "iguanatweaksreborn:flint_expansion/replace_wooden_axe",
+        "iguanatweaksreborn:flint_expansion/replace_wooden_shovel",
+        "iguanatweaksreborn:flint_expansion/replace_wooden_hoe",
+        "iguanatweaksreborn:flint_expansion/replace_wooden_sword",
+        "iguanatweaksreborn:flint_expansion/replace_wooden_pickaxe"
     ],
     "replace": false
 }

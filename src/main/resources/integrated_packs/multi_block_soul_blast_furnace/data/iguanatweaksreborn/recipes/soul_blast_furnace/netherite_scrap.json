@@ -1,0 +1,13 @@
+{
+  "type": "iguanatweaksreborn:multi_item_soul_blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 4,
+  "double_output_chance": 0.4,
+  "ingredients": [
+    {
+      "item": "minecraft:ancient_debris"
+    }
+  ],
+  "result": "minecraft:netherite_scrap"
+}

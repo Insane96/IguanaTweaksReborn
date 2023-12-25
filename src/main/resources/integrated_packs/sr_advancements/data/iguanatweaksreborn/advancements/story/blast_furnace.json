@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "minecraft:blast_furnace"
+		},
+		"title": {
+			"translate": "advancements.sr_story.blast_furnace.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.blast_furnace.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "iguanatweaksreborn:story/furnace",
+	"criteria": {
+		"blast_furnace": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"iguanatweaksreborn:blast_furnace"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"blast_furnace"
+		]
+	]
+}

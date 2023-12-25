@@ -1,0 +1,40 @@
+{
+	"display": {
+		"icon": {
+			"item": "minecraft:iron_chestplate"
+		},
+		"title": {
+			"translate": "advancements.sr_story.iron_armor.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.iron_armor.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "iguanatweaksreborn:story/forge",
+	"criteria": {
+		"iron_armor": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"minecraft:iron_helmet",
+							"minecraft:iron_chestplate",
+							"minecraft:iron_leggings",
+							"minecraft:iron_boots"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"iron_armor"
+		]
+	]
+}

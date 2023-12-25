@@ -1,0 +1,7 @@
+{
+    "parent": "iguanatweaksreborn:block/ore_rock",
+    "textures": {
+        "particle": "block/copper_ore",
+        "texture": "block/copper_ore"
+    }
+}

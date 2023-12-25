@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "values": [
+        "iguanatweaksreborn:chained_copper_helmet",
+        "iguanatweaksreborn:chained_copper_chestplate",
+        "iguanatweaksreborn:chained_copper_leggings",
+        "iguanatweaksreborn:chained_copper_boots"
+    ]
+}

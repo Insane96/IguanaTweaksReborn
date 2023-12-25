@@ -1,0 +1,40 @@
+{
+	"display": {
+		"icon": {
+			"item": "minecraft:golden_chestplate"
+		},
+		"title": {
+			"translate": "advancements.sr_story.golden_armor.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.golden_armor.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "iguanatweaksreborn:story/furnace",
+	"criteria": {
+		"golden_armor": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"minecraft:golden_helmet",
+							"minecraft:golden_chestplate",
+							"minecraft:golden_leggings",
+							"minecraft:golden_boots"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"golden_armor"
+		]
+	]
+}

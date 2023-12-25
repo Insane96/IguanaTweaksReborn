@@ -1,0 +1,13 @@
+{
+  "type": "iguanatweaksreborn:multi_item_blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1,
+  "group": "iron_ingot",
+  "ingredients": [
+    {
+      "item": "minecraft:raw_iron"
+    }
+  ],
+  "result": "minecraft:iron_ingot"
+}

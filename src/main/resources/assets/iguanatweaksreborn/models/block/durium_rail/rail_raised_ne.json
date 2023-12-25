@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_rail_raised_ne",
+  "textures": {
+    "rail": "iguanatweaksreborn:block/durium_rail"
+  }
+}

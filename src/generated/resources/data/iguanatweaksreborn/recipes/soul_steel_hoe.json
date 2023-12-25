@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "iguanatweaksreborn:soul_steel_ingot"
+  },
+  "base": {
+    "item": "minecraft:diamond_hoe"
+  },
+  "result": {
+    "item": "iguanatweaksreborn:soul_steel_hoe"
+  },
+  "template": {
+    "item": "iguanatweaksreborn:soul_steel_upgrade_smithing_template"
+  }
+}

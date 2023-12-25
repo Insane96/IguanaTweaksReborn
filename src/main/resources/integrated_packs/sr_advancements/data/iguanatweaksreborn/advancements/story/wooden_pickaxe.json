@@ -1,0 +1,39 @@
+{
+	"display": {
+		"icon": {
+			"item": "minecraft:wooden_pickaxe"
+		},
+		"title": {
+			"translate": "advancements.sr_story.wooden_pickaxe.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.wooden_pickaxe.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "iguanatweaksreborn:story/root",
+	"criteria": {
+		"wooden_tools": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"minecraft:wooden_pickaxe",
+							"minecraft:wooden_axe",
+							"minecraft:wooden_shovel"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"wooden_tools"
+		]
+	]
+}

@@ -1,0 +1,14 @@
+{
+  "type": "iguanatweaksreborn:multi_item_soul_blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1,
+  "output_increase": 1,
+  "group": "iron_ingot",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ore"
+    }
+  ],
+  "result": "minecraft:iron_ingot"
+}

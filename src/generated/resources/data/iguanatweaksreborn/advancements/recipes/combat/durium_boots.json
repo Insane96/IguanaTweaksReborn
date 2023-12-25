@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_durium": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "iguanatweaksreborn:durium_ingot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "iguanatweaksreborn:durium_boots"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_durium",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "iguanatweaksreborn:durium_boots"
+    ]
+  },
+  "sends_telemetry_event": false
+}

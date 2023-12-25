@@ -289,7 +289,7 @@
                 {
                     "type": "minecraft:item",
                     "weight": 10,
-                    "name": "survivalreimagined:copper_powered_rail",
+                    "name": "iguanatweaksreborn:copper_powered_rail",
                     "functions": [
                         {
                             "function": "minecraft:set_count",
@@ -303,7 +303,7 @@
                 {
                     "type": "minecraft:item",
                     "weight": 5,
-                    "name": "survivalreimagined:golden_powered_rail",
+                    "name": "iguanatweaksreborn:golden_powered_rail",
                     "functions": [
                         {
                             "function": "minecraft:set_count",

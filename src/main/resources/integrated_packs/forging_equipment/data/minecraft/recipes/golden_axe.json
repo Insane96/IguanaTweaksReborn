@@ -1,12 +1,12 @@
 {
-  "type": "survivalreimagined:forging",
+  "type": "iguanatweaksreborn:forging",
   "category": "forge_misc",
   "ingredient": {
     "item": "minecraft:gold_ingot"
   },
   "amount": 3,
   "gear": {
-    "item": "survivalreimagined:flint_axe"
+    "item": "iguanatweaksreborn:flint_axe"
   },
   "result": "minecraft:golden_axe",
   "smashes_required": 6,

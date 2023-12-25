@@ -1,0 +1,10 @@
+{
+  "type": "iguanatweaksreborn:inject_loot_table",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/nether_bridge"
+    }
+  ],
+  "loot_table": "iguanatweaksreborn:chests/soul_steel_upgrade_template"
+}

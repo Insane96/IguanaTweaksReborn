@@ -1,0 +1,28 @@
+{
+	"display": {
+		"icon": {
+			"item": "iguanatweaksreborn:crate"
+		},
+		"title": {
+			"translate": "advancements.sr_story.crate.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.crate.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "iguanatweaksreborn:story/durium_ingot",
+	"criteria": {
+		"overweight": {
+			"trigger": "iguanatweaksreborn:overweight_crate_carry"
+		}
+	},
+	"requirements": [
+		[
+			"overweight"
+		]
+	]
+}

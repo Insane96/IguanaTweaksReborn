@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "iguanatweaksreborn:soul_steel_ingot"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "iguanatweaksreborn:soul_steel_nugget"
+  }
+}

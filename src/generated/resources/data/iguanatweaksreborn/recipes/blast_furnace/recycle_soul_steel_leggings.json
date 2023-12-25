@@ -1,0 +1,16 @@
+{
+  "type": "iguanatweaksreborn:multi_item_blasting",
+  "category": "blast_furnace_misc",
+  "cookingtime": 200,
+  "group": "recycle_soul_steel_nugget",
+  "ingredients": [
+    {
+      "item": "iguanatweaksreborn:soul_steel_leggings"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 9,
+    "ratio": 0.75
+  },
+  "result": "iguanatweaksreborn:soul_steel_nugget"
+}

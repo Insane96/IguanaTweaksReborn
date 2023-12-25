@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "iguanatweaksreborn:soul_steel_ingot"
+  },
+  "base": {
+    "item": "minecraft:diamond_pickaxe"
+  },
+  "result": {
+    "item": "iguanatweaksreborn:soul_steel_pickaxe"
+  },
+  "template": {
+    "item": "iguanatweaksreborn:soul_steel_upgrade_smithing_template"
+  }
+}

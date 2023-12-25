@@ -1,0 +1,10 @@
+{
+    "replace": false,
+    "values": [
+        "iguanatweaksreborn:coated_copper_pickaxe",
+        "iguanatweaksreborn:coated_copper_axe",
+        "iguanatweaksreborn:coated_copper_shovel",
+        "iguanatweaksreborn:coated_copper_hoe",
+        "iguanatweaksreborn:coated_copper_hammer"
+    ]
+}

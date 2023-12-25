@@ -1,11 +1,11 @@
 {
     "replace": false,
     "entries": [
-        "survivalreimagined:cloth_from_zombie",
-        "survivalreimagined:cloth_from_husk",
-        "survivalreimagined:cloth_from_drowned",
-        "survivalreimagined:cloth_from_zombie_villager",
-        "survivalreimagined:cloth_from_zombified_piglin",
-        "survivalreimagined:no_rotten_flesh"
+        "iguanatweaksreborn:cloth_from_zombie",
+        "iguanatweaksreborn:cloth_from_husk",
+        "iguanatweaksreborn:cloth_from_drowned",
+        "iguanatweaksreborn:cloth_from_zombie_villager",
+        "iguanatweaksreborn:cloth_from_zombified_piglin",
+        "iguanatweaksreborn:no_rotten_flesh"
     ]
 }

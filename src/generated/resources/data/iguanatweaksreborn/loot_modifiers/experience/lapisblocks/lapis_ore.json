@@ -1,0 +1,10 @@
+{
+  "type": "iguanatweaksreborn:inject_loot_table",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:blocks/lapis_ore"
+    }
+  ],
+  "loot_table": "iguanatweaksreborn:blocks/cleansed_lapis"
+}

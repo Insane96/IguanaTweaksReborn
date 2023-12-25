@@ -2,7 +2,7 @@
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
         {
-            "item": "survivalreimagined:copper_powered_rail"
+            "item": "iguanatweaksreborn:copper_powered_rail"
         },
         {
             "item": "minecraft:gold_nugget"
@@ -12,7 +12,7 @@
         }
     ],
     "result": {
-        "item": "survivalreimagined:golden_powered_rail",
+        "item": "iguanatweaksreborn:golden_powered_rail",
         "count": 1
     }
 }

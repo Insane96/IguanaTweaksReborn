@@ -1,0 +1,15 @@
+{
+  "type": "iguanatweaksreborn:multi_item_soul_blasting",
+  "category": "soul_blast_furnace_misc",
+  "cookingtime": 100,
+  "group": "recycle_gold_nugget",
+  "ingredients": [
+    {
+      "item": "shieldsplus:golden_shield"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 36
+  },
+  "result": "minecraft:gold_nugget"
+}

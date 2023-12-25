@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "iguanatweaksreborn:copper_pickaxe"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:copper_ingot"
+			},
+			"amount": 3
+		}
+	]
+}

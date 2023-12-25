@@ -1,8 +1,0 @@
-{
-    "replace": false,
-    "values": [
-        "#survivalreimagined:equipment/hand/solarium",
-        "#survivalreimagined:equipment/armor/solarium",
-        "survivalreimagined:solarium_shield"
-    ]
-}

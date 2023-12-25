@@ -1,0 +1,15 @@
+{
+  "type": "iguanatweaksreborn:multi_item_soul_blasting",
+  "category": "soul_blast_furnace_misc",
+  "cookingtime": 100,
+  "group": "recycle_iron_nugget",
+  "ingredients": [
+    {
+      "item": "iguanatweaksreborn:chained_copper_chestplate"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 9
+  },
+  "result": "minecraft:iron_nugget"
+}

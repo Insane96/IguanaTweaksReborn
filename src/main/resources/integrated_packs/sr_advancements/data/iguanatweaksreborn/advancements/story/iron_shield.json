@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "minecraft:shield"
+		},
+		"title": {
+			"translate": "advancements.sr_story.iron_shield.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.iron_shield.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "iguanatweaksreborn:story/forge",
+	"criteria": {
+		"iron_shield": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"minecraft:shield"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"iron_shield"
+		]
+	]
+}

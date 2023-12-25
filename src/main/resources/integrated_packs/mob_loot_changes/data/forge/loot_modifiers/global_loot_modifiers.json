@@ -1,7 +1,7 @@
 {
     "replace": false,
     "entries": [
-        "survivalreimagined:reduced_no_player_kill_drop",
-        "survivalreimagined:hard_mode_drop_multiplier"
+        "iguanatweaksreborn:reduced_no_player_kill_drop",
+        "iguanatweaksreborn:hard_mode_drop_multiplier"
     ]
 }

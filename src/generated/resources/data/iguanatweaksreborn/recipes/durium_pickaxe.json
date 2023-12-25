@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "iguanatweaksreborn:durium_ingot"
+  },
+  "base": {
+    "item": "minecraft:iron_pickaxe"
+  },
+  "result": {
+    "item": "iguanatweaksreborn:durium_pickaxe"
+  },
+  "template": []
+}

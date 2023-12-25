@@ -2,7 +2,7 @@ modLoader="javafml"
 loaderVersion="[47,)"
 license="All rights reserved"
 [[mods]]
-    modId="survivalreimagined"
+    modId="iguanatweaksreborn"
     version="${file.jarVersion}"
     displayName="Survival Reimagined"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/iguanatweaks-reborn"
@@ -12,99 +12,97 @@ license="All rights reserved"
     description = '''
     Multiple changes to bring back Survival in Minecraft.
     Movement Restrictions, Farming, Mining, Explosions and much more.
-
-    Formerly known as Iguana Tweaks Reborn
     '''
     # Catalogue icon
-    # itemIcon = "survivalreimagined:flint_pickaxe"
+    # itemIcon = "iguanatweaksreborn:golden_pickaxe"
     # Configured background
-    configBackground = "survivalreimagined:textures/block/rich_farmland_moist.png"
+    configBackground = "iguanatweaksreborn:textures/block/rich_farmland_moist.png"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="forge"
     mandatory=true
     versionRange="[47,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.20.1,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="insanelib"
     mandatory=true
     versionRange="[1.12.1,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="shieldsplus"
     mandatory=true
     versionRange="[1.8.0,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="enhancedai"
     mandatory=true
     versionRange="[2.0.0,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="sereneseasons"
     mandatory=true
     versionRange="[9.0.0.43,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="maxhealthfix"
     mandatory=true
     versionRange="[12.0.2,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="mobspropertiesrandomness"
     mandatory=false
     versionRange="[4.7.2,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="pehkui"
     mandatory=false
     versionRange="[3.7.7,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="passablefoliage"
     mandatory=false
     versionRange="[7.0.0,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="toolbelt"
     mandatory=false
     versionRange="[1.20.0,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="easymagic"
     mandatory=false
     versionRange="[6.0.0,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.survivalreimagined]]
+[[dependencies.iguanatweaksreborn]]
     modId="corail_woodcutter"
     mandatory=false
     versionRange="[2.7.0,)"

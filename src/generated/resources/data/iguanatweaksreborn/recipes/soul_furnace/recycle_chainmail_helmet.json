@@ -1,0 +1,15 @@
+{
+  "type": "iguanatweaksreborn:multi_item_soul_blasting",
+  "category": "soul_blast_furnace_misc",
+  "cookingtime": 100,
+  "group": "recycle_iron_nugget",
+  "ingredients": [
+    {
+      "item": "minecraft:chainmail_helmet"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 15
+  },
+  "result": "minecraft:iron_nugget"
+}

@@ -1,0 +1,16 @@
+{
+  "type": "iguanatweaksreborn:multi_item_blasting",
+  "category": "blast_furnace_misc",
+  "cookingtime": 200,
+  "group": "recycle_diamond",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond_leggings"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 7,
+    "ratio": 0.75
+  },
+  "result": "minecraft:diamond"
+}

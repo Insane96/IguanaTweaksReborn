@@ -1,8 +1,0 @@
-{
-    "type": "survivalreimagined:solium_boulder_feature",
-    "config": {
-        "state": {
-            "Name": "minecraft:stone"
-        }
-    }
-}

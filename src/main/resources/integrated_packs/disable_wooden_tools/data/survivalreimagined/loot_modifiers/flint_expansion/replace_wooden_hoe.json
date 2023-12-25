@@ -1,8 +1,0 @@
-{
-  "type": "survivalreimagined:replace_drop",
-  "chests_only": true,
-  "conditions": [],
-  "item_to_replace": "minecraft:wooden_hoe",
-  "keep_durability": true,
-  "new_item": "survivalreimagined:flint_hoe"
-}

@@ -1,8 +1,8 @@
 {
-  "type": "survivalreimagined:forging",
+  "type": "iguanatweaksreborn:forging",
   "category": "forge_misc",
   "ingredient": {
-    "item": "survivalreimagined:soul_steel_ingot"
+    "item": "iguanatweaksreborn:soul_steel_ingot"
   },
   "amount": 1,
   "gear": {

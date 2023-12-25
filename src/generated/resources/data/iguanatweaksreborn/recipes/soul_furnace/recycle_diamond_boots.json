@@ -1,0 +1,15 @@
+{
+  "type": "iguanatweaksreborn:multi_item_soul_blasting",
+  "category": "soul_blast_furnace_misc",
+  "cookingtime": 100,
+  "group": "recycle_diamond",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond_boots"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 4
+  },
+  "result": "minecraft:diamond"
+}

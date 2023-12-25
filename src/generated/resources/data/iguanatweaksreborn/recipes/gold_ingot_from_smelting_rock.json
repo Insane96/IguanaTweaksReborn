@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 800,
+  "experience": 1.0,
+  "ingredient": {
+    "item": "iguanatweaksreborn:gold_ore_rock"
+  },
+  "result": "minecraft:gold_ingot"
+}

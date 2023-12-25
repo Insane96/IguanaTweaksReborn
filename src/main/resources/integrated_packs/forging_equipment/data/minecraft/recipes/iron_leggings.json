@@ -1,12 +1,12 @@
 {
-  "type": "survivalreimagined:forging",
+  "type": "iguanatweaksreborn:forging",
   "category": "forge_misc",
   "ingredient": {
     "item": "minecraft:iron_ingot"
   },
   "amount": 7,
   "gear": {
-    "item": "survivalreimagined:chained_copper_leggings"
+    "item": "iguanatweaksreborn:chained_copper_leggings"
   },
   "result": "minecraft:iron_leggings",
   "smashes_required": 14,

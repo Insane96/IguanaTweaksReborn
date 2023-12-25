@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "iguanatweaksreborn:durium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "iguanatweaksreborn:durium_ingot"
+  }
+}

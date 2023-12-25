@@ -1,0 +1,21 @@
+{
+    "variants": {
+        "": [
+            {
+                "model": "iguanatweaksreborn:block/gold_ore_rock"
+            },
+            {
+                "model": "iguanatweaksreborn:block/gold_ore_rock",
+                "y": 90
+            },
+            {
+                "model": "iguanatweaksreborn:block/gold_ore_rock",
+                "y": 180
+            },
+            {
+                "model": "iguanatweaksreborn:block/gold_ore_rock",
+                "y": 270
+            }
+        ]
+    }
+}

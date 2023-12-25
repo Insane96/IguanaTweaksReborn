@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "iguanatweaksreborn:chained_copper_helmet"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:copper_ingot"
+			},
+			"amount": 4
+		}
+	]
+}

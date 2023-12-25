@@ -1,5 +1,5 @@
 {
-  "parent": "survivalreimagined:story/iron_pickaxe",
+  "parent": "iguanatweaksreborn:story/iron_pickaxe",
   "display": {
     "icon": {
       "item": "minecraft:diamond"

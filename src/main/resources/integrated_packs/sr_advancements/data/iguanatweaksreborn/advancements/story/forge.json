@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "iguanatweaksreborn:forge"
+		},
+		"title": {
+			"translate": "advancements.sr_story.forge.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.forge.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "iguanatweaksreborn:story/blast_furnace",
+	"criteria": {
+		"forge": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"iguanatweaksreborn:forge"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"forge"
+		]
+	]
+}

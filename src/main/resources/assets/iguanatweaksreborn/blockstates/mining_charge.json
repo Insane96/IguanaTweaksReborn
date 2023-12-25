@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "iguanatweaksreborn:block/mining_charge"
+    },
+    "facing=up": {
+      "model": "iguanatweaksreborn:block/mining_charge",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "iguanatweaksreborn:block/mining_charge",
+      "x": 90,
+      "y": 180
+    },
+    "facing=south": {
+      "model": "iguanatweaksreborn:block/mining_charge",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "iguanatweaksreborn:block/mining_charge",
+      "x": 90,
+      "y": 270
+    },
+    "facing=west": {
+      "model": "iguanatweaksreborn:block/mining_charge",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

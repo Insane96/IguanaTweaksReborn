@@ -1,0 +1,13 @@
+{
+  "type": "iguanatweaksreborn:multi_item_soul_blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1,
+  "group": "gold_ingot",
+  "ingredients": [
+    {
+      "item": "minecraft:raw_gold"
+    }
+  ],
+  "result": "minecraft:gold_ingot"
+}

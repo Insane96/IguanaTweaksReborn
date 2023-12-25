@@ -1,0 +1,26 @@
+{
+	"item_to_repair": {
+		"id": "iguanatweaksreborn:durium_leggings"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:iron_ingot"
+			},
+			"amount": 7,
+			"max_repair": 0.5
+		},
+		{
+			"repair_material": {
+				"id": "iguanatweaksreborn:durium_ingot"
+			},
+			"amount": 2
+		},
+		{
+			"repair_material": {
+				"id": "iguanatweaksreborn:durium_nugget"
+			},
+			"amount": 18
+		}
+	]
+}

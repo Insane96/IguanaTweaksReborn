@@ -1,0 +1,14 @@
+{
+  "type": "iguanatweaksreborn:forging",
+  "amount": 4,
+  "category": "forge_misc",
+  "experience": 18.0,
+  "gear": {
+    "item": "shieldsplus:golden_shield"
+  },
+  "ingredient": {
+    "item": "iguanatweaksreborn:keego"
+  },
+  "result": "iguanatweaksreborn:keego_shield",
+  "smashes_required": 17
+}

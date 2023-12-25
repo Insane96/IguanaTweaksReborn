@@ -1,0 +1,14 @@
+{
+  "type": "iguanatweaksreborn:multi_item_soul_blasting",
+  "category": "misc",
+  "cookingtime": 50,
+  "experience": 0.7,
+  "output_increase": 0.5,
+  "group": "copper_ingot",
+  "ingredients": [
+    {
+      "item": "iguanatweaksreborn:poor_deepslate_copper_ore"
+    }
+  ],
+  "result": "minecraft:copper_ingot"
+}

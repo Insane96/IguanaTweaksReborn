@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "iguanatweaksreborn:coated_copper_sword"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:obsidian"
+			},
+			"amount": 2
+		}
+	]
+}

@@ -1,0 +1,10 @@
+{
+  "values": [
+    "minecraft:iron_ore",
+    "minecraft:deepslate_iron_ore",
+    "iguanatweaksreborn:poor_iron_ore",
+    "iguanatweaksreborn:rich_iron_ore",
+    "iguanatweaksreborn:poor_deepslate_iron_ore",
+    "iguanatweaksreborn:rich_deepslate_iron_ore"
+  ]
+}

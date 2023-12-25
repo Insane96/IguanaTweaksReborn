@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "f": {
+      "item": "iguanatweaksreborn:durium_ingot"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    " i ",
+    "frf",
+    " f "
+  ],
+  "result": {
+    "item": "iguanatweaksreborn:altimeter"
+  },
+  "show_notification": true
+}

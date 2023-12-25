@@ -1,0 +1,45 @@
+{
+	"display": {
+		"icon": {
+			"item": "iguanatweaksreborn:solarium_ball"
+		},
+		"title": {
+			"translate": "advancements.sr_story.solarium.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.solarium.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "iguanatweaksreborn:story/iron_pickaxe",
+	"criteria": {
+		"solarium": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"iguanatweaksreborn:solarium_pickaxe",
+							"iguanatweaksreborn:solarium_axe",
+							"iguanatweaksreborn:solarium_shovel",
+							"iguanatweaksreborn:solarium_hoe",
+							"iguanatweaksreborn:solarium_sword",
+							"iguanatweaksreborn:solarium_helmet",
+							"iguanatweaksreborn:solarium_chestplate",
+							"iguanatweaksreborn:solarium_leggings",
+							"iguanatweaksreborn:solarium_boots"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"solarium"
+		]
+	]
+}

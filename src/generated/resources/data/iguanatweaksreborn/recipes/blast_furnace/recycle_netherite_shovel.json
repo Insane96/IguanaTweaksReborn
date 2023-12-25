@@ -1,0 +1,16 @@
+{
+  "type": "iguanatweaksreborn:multi_item_blasting",
+  "category": "blast_furnace_misc",
+  "cookingtime": 200,
+  "group": "recycle_netherite_ingot",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_shovel"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 1,
+    "ratio": 0.75
+  },
+  "result": "minecraft:netherite_ingot"
+}

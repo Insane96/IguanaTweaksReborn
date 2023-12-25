@@ -196,7 +196,7 @@
 				{
 					"type": "minecraft:item",
 					"weight": 3,
-					"name": "survivalreimagined:soul_steel_sword",
+					"name": "iguanatweaksreborn:soul_steel_sword",
 					"functions": [
 						{
 							"function": "minecraft:enchant_with_levels",
@@ -212,7 +212,7 @@
 				{
 					"type": "minecraft:item",
 					"weight": 3,
-					"name": "survivalreimagined:soul_steel_boots",
+					"name": "iguanatweaksreborn:soul_steel_boots",
 					"functions": [
 						{
 							"function": "minecraft:enchant_with_levels",
@@ -228,7 +228,7 @@
 				{
 					"type": "minecraft:item",
 					"weight": 3,
-					"name": "survivalreimagined:soul_steel_chestplate",
+					"name": "iguanatweaksreborn:soul_steel_chestplate",
 					"functions": [
 						{
 							"function": "minecraft:enchant_with_levels",
@@ -244,7 +244,7 @@
 				{
 					"type": "minecraft:item",
 					"weight": 3,
-					"name": "survivalreimagined:soul_steel_leggings",
+					"name": "iguanatweaksreborn:soul_steel_leggings",
 					"functions": [
 						{
 							"function": "minecraft:enchant_with_levels",
@@ -260,7 +260,7 @@
 				{
 					"type": "minecraft:item",
 					"weight": 3,
-					"name": "survivalreimagined:soul_steel_helmet",
+					"name": "iguanatweaksreborn:soul_steel_helmet",
 					"functions": [
 						{
 							"function": "minecraft:enchant_with_levels",
@@ -276,7 +276,7 @@
 				{
 					"type": "minecraft:item",
 					"weight": 3,
-					"name": "survivalreimagined:soul_steel_pickaxe",
+					"name": "iguanatweaksreborn:soul_steel_pickaxe",
 					"functions": [
 						{
 							"function": "minecraft:enchant_with_levels",
@@ -292,7 +292,7 @@
 				{
 					"type": "minecraft:item",
 					"weight": 3,
-					"name": "survivalreimagined:soul_steel_shovel",
+					"name": "iguanatweaksreborn:soul_steel_shovel",
 					"functions": [
 						{
 							"function": "minecraft:enchant_with_levels",
@@ -308,7 +308,7 @@
 				{
 					"type": "minecraft:item",
 					"weight": 3,
-					"name": "survivalreimagined:soul_steel_shield",
+					"name": "iguanatweaksreborn:soul_steel_shield",
 					"functions": [
 						{
 							"function": "minecraft:enchant_with_levels",
@@ -324,7 +324,7 @@
 				{
 					"type": "minecraft:item",
 					"weight": 10,
-					"name": "survivalreimagined:ancient_lapis",
+					"name": "iguanatweaksreborn:ancient_lapis",
 					"functions": [
 						{
 							"function": "minecraft:set_count",
@@ -354,7 +354,7 @@
 				{
 					"type": "minecraft:item",
 					"weight": 4,
-					"name": "survivalreimagined:keego",
+					"name": "iguanatweaksreborn:keego",
 					"functions": [
 						{
 							"function": "minecraft:set_count",

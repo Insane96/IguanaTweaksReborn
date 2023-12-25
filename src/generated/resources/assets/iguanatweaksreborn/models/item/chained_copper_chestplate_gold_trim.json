@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "iguanatweaksreborn:item/chained_copper_chestplate",
+    "layer1": "minecraft:trims/items/chestplate_trim_gold"
+  }
+}

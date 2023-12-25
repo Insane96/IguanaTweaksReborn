@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gold_ore_rock": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "iguanatweaksreborn:gold_ore_rock"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "iguanatweaksreborn:gold_ingot_from_smelting_rock"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_gold_ore_rock",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "iguanatweaksreborn:gold_ingot_from_smelting_rock"
+    ]
+  },
+  "sends_telemetry_event": false
+}

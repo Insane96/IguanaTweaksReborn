@@ -1,6 +1,0 @@
-{
-    "type": "forge:add_features",
-    "biomes": "#forge:is_snowy",
-    "features": "survivalreimagined:cyan_flower",
-    "step": "vegetal_decoration"
-}

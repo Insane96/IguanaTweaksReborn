@@ -1,0 +1,15 @@
+{
+  "type": "iguanatweaksreborn:multi_item_soul_blasting",
+  "category": "soul_blast_furnace_misc",
+  "cookingtime": 100,
+  "group": "recycle_copper_ingot",
+  "ingredients": [
+    {
+      "item": "iguanatweaksreborn:copper_shield"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 4
+  },
+  "result": "minecraft:copper_ingot"
+}

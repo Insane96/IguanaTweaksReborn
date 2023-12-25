@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "iguanatweaksreborn:mining_charge"
+		},
+		"title": {
+			"translate": "advancements.sr_story.mining_charge.title"
+		},
+		"description": {
+			"translate": "advancements.sr_story.mining_charge.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "iguanatweaksreborn:story/furnace",
+	"criteria": {
+		"mining_charge": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"iguanatweaksreborn:mining_charge"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"mining_charge"
+		]
+	]
+}

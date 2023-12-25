@@ -9,10 +9,10 @@ plugins {
 }
 
 version = "${mod_version}-mc${mc_version}"
-group = 'insane96mcp.survivalreimagined'
+group = 'insane96mcp.iguanatweaksreborn'
 
 base {
-    archivesName = 'SurvivalReimagined'
+    archivesName = 'IguanaTweaks Reborn'
 }
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
@@ -77,7 +77,7 @@ minecraft {
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
 
-            args '-mixin.config=survivalreimagined.mixins.json'
+            args '-mixin.config=iguanatweaksreborn.mixins.json'
 
             mods {
                 "${mod_id}" {
@@ -89,13 +89,13 @@ minecraft {
         client {
             workingDirectory project.file('run')
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', mod_id
+            // property 'forge.enabledGameTestNamespaces', mod_id
             property 'mixin.debug.export', 'true'
         }
 
         server {
             workingDirectory project.file('run-server')
-            property 'forge.enabledGameTestNamespaces', mod_id
+            // property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
         }
 
@@ -113,7 +113,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 mixin {
-    add sourceSets.main, "survivalreimagined.refmap.json"
+    add sourceSets.main, "iguanatweaksreborn.refmap.json"
 }
 
 repositories {
@@ -195,14 +195,14 @@ tasks.named('jar', Jar).configure {
     archiveClassifier = 'slim'
     manifest {
         attributes([
-                "Specification-Title"     : "survivalreimagined",
+                "Specification-Title"     : "iguanatweaksreborn",
                 "Specification-Vendor"    : "Insane96MCP",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "Insane96MCP",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "survivalreimagined.mixins.json"
+                "MixinConfigs": "iguanatweaksreborn.mixins.json"
         ])
     }
 

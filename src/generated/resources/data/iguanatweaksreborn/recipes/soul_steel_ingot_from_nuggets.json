@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "iguanatweaksreborn:soul_steel_nugget"
+    },
+    {
+      "item": "iguanatweaksreborn:soul_steel_nugget"
+    },
+    {
+      "item": "iguanatweaksreborn:soul_steel_nugget"
+    },
+    {
+      "item": "iguanatweaksreborn:soul_steel_nugget"
+    },
+    {
+      "item": "iguanatweaksreborn:soul_steel_nugget"
+    },
+    {
+      "item": "iguanatweaksreborn:soul_steel_nugget"
+    },
+    {
+      "item": "iguanatweaksreborn:soul_steel_nugget"
+    },
+    {
+      "item": "iguanatweaksreborn:soul_steel_nugget"
+    },
+    {
+      "item": "iguanatweaksreborn:soul_steel_nugget"
+    }
+  ],
+  "result": {
+    "item": "iguanatweaksreborn:soul_steel_ingot"
+  }
+}

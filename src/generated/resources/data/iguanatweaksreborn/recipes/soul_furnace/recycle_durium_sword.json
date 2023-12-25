@@ -1,0 +1,15 @@
+{
+  "type": "iguanatweaksreborn:multi_item_soul_blasting",
+  "category": "soul_blast_furnace_misc",
+  "cookingtime": 100,
+  "group": "recycle_durium_nugget",
+  "ingredients": [
+    {
+      "item": "iguanatweaksreborn:durium_sword"
+    }
+  ],
+  "recycle": {
+    "amount_at_full_durability": 9
+  },
+  "result": "iguanatweaksreborn:durium_nugget"
+}

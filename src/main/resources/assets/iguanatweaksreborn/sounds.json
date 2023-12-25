@@ -1,0 +1,16 @@
+{
+    "unfair_one_shot": {
+        "subtitle": "iguanatweaksreborn.subtitle.unfair_one_shot",
+        "sounds": [ "iguanatweaksreborn:unfair_one_shot" ]
+    },
+    "primed_mining_charge": {
+        "subtitle": "iguanatweaksreborn.subtitle.primed_mining_charge",
+        "sounds": [ "minecraft:entity.tnt.primed" ]
+    },
+    "electrocution": {
+        "subtitle": "iguanatweaksreborn.subtitle.electrocution",
+        "sounds": [
+            "iguanatweaksreborn:electrocution"
+        ]
+    }
+}

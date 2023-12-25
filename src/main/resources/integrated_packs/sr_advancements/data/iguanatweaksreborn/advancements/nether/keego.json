@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"item": "iguanatweaksreborn:keego"
+		},
+		"title": {
+			"translate": "advancements.sr_nether.keego.title"
+		},
+		"description": {
+			"translate": "advancements.sr_nether.keego.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "minecraft:story/enter_the_nether",
+	"criteria": {
+		"keego": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"iguanatweaksreborn:keego"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"keego"
+		]
+	]
+}

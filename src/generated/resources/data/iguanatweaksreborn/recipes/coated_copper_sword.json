@@ -1,0 +1,14 @@
+{
+  "type": "iguanatweaksreborn:forging",
+  "amount": 2,
+  "category": "forge_misc",
+  "experience": 9.0,
+  "gear": {
+    "item": "iguanatweaksreborn:copper_sword"
+  },
+  "ingredient": {
+    "item": "minecraft:obsidian"
+  },
+  "result": "iguanatweaksreborn:coated_copper_sword",
+  "smashes_required": 12
+}

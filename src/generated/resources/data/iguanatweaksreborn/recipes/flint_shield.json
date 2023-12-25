@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "W": {
+      "item": "shieldsplus:wooden_shield"
+    },
+    "f": {
+      "item": "minecraft:flint"
+    }
+  },
+  "pattern": [
+    " f ",
+    "fWf",
+    " f "
+  ],
+  "result": {
+    "item": "iguanatweaksreborn:flint_shield"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "iguanatweaksreborn:solarium_ball"
+  },
+  "base": {
+    "item": "minecraft:iron_hoe"
+  },
+  "result": {
+    "item": "iguanatweaksreborn:solarium_hoe"
+  },
+  "template": []
+}

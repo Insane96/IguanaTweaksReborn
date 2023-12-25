@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "GNG",
+        "GXG",
+        "###"
+    ],
+    "key": {
+        "N": {
+            "item": "minecraft:netherite_ingot"
+        },
+        "#": {
+            "item": "minecraft:nether_bricks"
+        },
+        "G": {
+            "item": "minecraft:gold_ingot"
+        },
+        "X": {
+            "item": "iguanatweaksreborn:blast_furnace"
+        }
+    },
+    "result": {
+        "item": "iguanatweaksreborn:soul_blast_furnace"
+    }
+}

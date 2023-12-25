@@ -1,0 +1,20 @@
+{
+	"item_to_repair": {
+		"id": "iguanatweaksreborn:keego_pickaxe"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:diamond"
+			},
+			"amount": 3,
+			"max_repair": 0.5
+		},
+		{
+			"repair_material": {
+				"id": "iguanatweaksreborn:keego"
+			},
+			"amount": 2
+		}
+	]
+}
