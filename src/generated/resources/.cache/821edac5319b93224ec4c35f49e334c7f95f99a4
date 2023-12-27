@@ -1,20 +1,2 @@
-// 1.20.1	2023-12-25T21:47:07.7770536	Tags for minecraft:item mod id iguanatweaksreborn
-b1eaa8c6251363a43fec48d3a61979cccb61a40a data/iguanatweaksreborn/tags/items/energy_boost.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/iguanatweaksreborn/tags/items/food_drinks_no_hunger_changes.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/iguanatweaksreborn/tags/items/nerfed_bone_meal_blacklist.json
-0f961bc02e8167da884e02b75679db05d9fe2a60 data/iguanatweaksreborn/tags/items/not_unbreakable.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/iguanatweaksreborn/tags/items/no_damage.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/iguanatweaksreborn/tags/items/no_efficiency.json
-0afc4b22f147c071c2642b34ba270feadb7649e1 data/iguanatweaksreborn/tags/items/no_fertility_tooltip.json
-7ed3116413a687ab0b86d1c195045bc055148639 data/iguanatweaksreborn/tags/items/no_stack_size_changes.json
-a04a8c101c6e237ccf2a8020c1f226ec9f2f1639 data/iguanatweaksreborn/tags/items/raw_food.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/iguanatweaksreborn/tags/items/reduced_knockback.json
-3c136ad71b9cc1a962b06ab779e09369ea8e25a9 data/iguanatweaksreborn/tags/items/spawner_reactivator.json
-6e5451f2a009faee4eeef09f24198ac6d5a016f2 data/minecraft/tags/items/arrows.json
-27f14be2d7d32eb17bb3f2c007f2f357a6e263eb data/minecraft/tags/items/axes.json
-86436a8ef3099901a024526e6bf7c8b805102d6f data/minecraft/tags/items/beacon_payment_items.json
-6f191a59e5cfdfee4d43e46aa81b07104ae5af10 data/minecraft/tags/items/hoes.json
-a2b36ad1a5f620b7735bb81b00717bee39583372 data/minecraft/tags/items/pickaxes.json
-4516968e2dfd1906e959e4ea0923f6dc34d6854a data/minecraft/tags/items/shovels.json
-a4e287a030e8bafcc0f2234af4d264c658094dc9 data/minecraft/tags/items/swords.json
-fd3d884cee7b1bebd809978234de9fa67248409d data/minecraft/tags/items/trimmable_armor.json
+// 1.20.1	2023-12-27T11:31:17.3584097	Tags for minecraft:item mod id iguanatweaksreborn
+8e8d56001ef8eaca748cba186d23791bc2e33932 data/iguanatweaksreborn/tags/items/not_unbreakable.json

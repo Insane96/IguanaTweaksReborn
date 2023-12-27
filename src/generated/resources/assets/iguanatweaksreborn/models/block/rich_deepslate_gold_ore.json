@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "iguanatweaksreborn:block/rich_deepslate_gold_ore"
-  }
-}

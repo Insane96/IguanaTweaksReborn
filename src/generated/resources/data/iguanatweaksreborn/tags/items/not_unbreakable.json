@@ -1,14 +1,6 @@
 {
   "values": [
     "#iguanatweaksreborn:equipment/hand/wooden",
-    "#iguanatweaksreborn:equipment/hand/stone",
-    "#iguanatweaksreborn:equipment/hand/flint",
-    "#iguanatweaksreborn:equipment/hand/copper",
-    "#iguanatweaksreborn:equipment/armor/chained_copper",
-    "iguanatweaksreborn:copper_shield",
-    "shieldsplus:wooden_shield",
-    "shieldsplus:stone_shield",
-    "iguanatweaksreborn:flint_shield",
-    "iguanatweaksreborn:firestarter"
+    "#iguanatweaksreborn:equipment/hand/stone"
   ]
 }

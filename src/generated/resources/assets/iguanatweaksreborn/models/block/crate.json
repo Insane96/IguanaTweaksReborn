@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "bottom": "iguanatweaksreborn:block/crate_bottom",
-    "side": "iguanatweaksreborn:block/crate_side",
-    "top": "iguanatweaksreborn:block/crate_top"
-  }
-}

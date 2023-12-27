@@ -1,6 +1,4 @@
-// 1.20.1	2023-12-25T21:47:07.7780736	Tags for minecraft:damage_type mod id iguanatweaksreborn
-cc6e6b82aea1b286659f7bfd48684e183f649815 data/iguanatweaksreborn/tags/damage_type/doesnt_trigger_electrocution.json
-cc6e6b82aea1b286659f7bfd48684e183f649815 data/iguanatweaksreborn/tags/damage_type/doesnt_trigger_piercing.json
+// 1.20.1	2023-12-27T11:31:17.3604315	Tags for minecraft:damage_type mod id iguanatweaksreborn
 ee1e81c42e4434e63b3e7191c56344c58a6eb938 data/iguanatweaksreborn/tags/damage_type/piercing_damage_type.json
 2e7be3525b7948af66c725247a77dace022992a2 data/minecraft/tags/damage_type/bypasses_armor.json
 2e7be3525b7948af66c725247a77dace022992a2 data/minecraft/tags/damage_type/bypasses_cooldown.json
