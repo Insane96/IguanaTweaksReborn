@@ -1,0 +1,7 @@
+{
+    "replace": false,
+    "values": [
+        "#iguanatweaksreborn:equipment/hand/tools/diamond",
+        "minecraft:diamond_sword"
+    ]
+}

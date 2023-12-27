@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"group": "stone_button",
+	"ingredients": [
+		{
+			"item": "minecraft:stone"
+		},
+		{
+			"item": "minecraft:redstone"
+		}
+	],
+	"result":
+	{
+		"item": "minecraft:stone_button"
+	}
+}
