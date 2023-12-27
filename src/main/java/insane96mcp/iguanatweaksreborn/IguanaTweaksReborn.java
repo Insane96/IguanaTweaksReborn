@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRDamageTypeTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
+import insane96mcp.iguanatweaksreborn.module.combat.PiercingPickaxes;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
@@ -67,8 +68,9 @@ public class IguanaTweaksReborn
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::commonSetup);
-        ITRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));
         modEventBus.addListener(this::gatherData);
+        modEventBus.addListener(PiercingPickaxes::piercingDamageAttribute);
+        ITRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));
         /*MinecraftForge.EVENT_BUS.register(SpawnerDataAttacher.class);
         if (FMLLoader.getDist().isClient()) {
             modEventBus.addListener(ClientSetup::onBuildCreativeModeTabContents);

@@ -65,7 +65,7 @@ public class PiercingPickaxes extends Feature {
 
 	@SuppressWarnings("DataFlowIssue")
 	@SubscribeEvent
-	public void onPostEntityDamaged(LivingDamageEvent event) {
+	public void onEntityDamaged(LivingDamageEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getSource().getDirectEntity() instanceof LivingEntity attacker)
 				|| event.getEntity().isDeadOrDying()

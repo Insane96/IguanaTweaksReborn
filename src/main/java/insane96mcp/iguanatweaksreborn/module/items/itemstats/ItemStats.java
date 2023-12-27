@@ -1,7 +1,5 @@
 package insane96mcp.iguanatweaksreborn.module.items.itemstats;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
@@ -12,8 +10,6 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.data.IdTagMatcher;
-import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.insanelib.event.HurtItemStackEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
@@ -23,11 +19,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.Equipable;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -40,10 +36,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 @Label(name = "Item Stats", description = "Less durable items and efficient tools. Items Durability and Efficiency are controlled via json in this feature's folder. Note that removing entries from the json requires a Minecraft Restart")
 @LoadFeature(module = Modules.Ids.ITEMS)
@@ -60,13 +52,6 @@ public class ItemStats extends JsonFeature {
 	public static final TagKey<Item> NOT_UNBREAKABLE = ITRItemTagsProvider.create("not_unbreakable");
 
 	/*public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
-			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/wooden", 127),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/stone", 63),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/golden", 72),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/iron", 375),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/diamond", 2341),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/netherite", 2131),
-
 			IdTagValue.newId("minecraft:elytra", 144),
 			IdTagValue.newId("minecraft:carrot_on_a_stick", 63),
 			IdTagValue.newId("minecraft:fishing_rod", 33),
@@ -103,31 +88,7 @@ public class ItemStats extends JsonFeature {
 			IdTagValue.newId("minecraft:netherite_leggings", 222),
 			IdTagValue.newId("minecraft:netherite_boots", 192)
 	));
-	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();
-
-	public static final ArrayList<IdTagValue> TOOL_EFFICIENCIES_DEFAULT = new ArrayList<>(List.of(
-			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/tools/wooden", 1.5d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/tools/stone", 2d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/tools/iron", 3.5d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/tools/diamond", 6d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/tools/netherite", 6d)
-	));
-	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();*/
-
-	public static final ArrayList<IdTagValue> ITEM_ATTACK_DAMAGES_DEFAULT = new ArrayList<>(List.of(
-			IdTagValue.newTag("minecraft:axes", 6d),
-			IdTagValue.newTag("minecraft:swords", 1d),
-			IdTagValue.newTag("minecraft:pickaxes", 2d),
-			IdTagValue.newTag("minecraft:shovels", 3.5d),
-			IdTagValue.newTag("minecraft:hoes", 0d)
-	));
-	public static final ArrayList<IdTagValue> itemAttackDamages = new ArrayList<>();
-
-	public static final ArrayList<IdTagValue> ITEM_ATTACK_SPEEDS_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:axes", 0.8d),
-			new IdTagValue(IdTagMatcher.Type.TAG, "minecraft:hoes", 2.5d)
-	));
-	public static final ArrayList<IdTagValue> itemAttackSpeeds = new ArrayList<>();
+	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();*/
 
 	@Config
 	@Label(name = "More Items Tooltips", description = "If set to true items in the 'no_damage_items' and 'no_efficiency_items' will get a tooltip. Items with durability get a durability tooltip. Tools get an efficiency tooltip.")
@@ -163,74 +124,14 @@ public class ItemStats extends JsonFeature {
 		super.loadJsonConfigs();
 	}
 
-	/*public static void loadDurabilities(List<IdTagValue> list, boolean isClientSide) {
-		for (IdTagValue durability : list) {
-			List<Item> items = getAllItems(durability.id, isClientSide);
-			for (Item item : items) {
-				item.maxDamage = (int) durability.value;
-			}
-		}
-	}
-
-	public static void loadToolEfficiencies(List<IdTagValue> list, boolean isClientSide) {
-		for (IdTagValue efficiency : list) {
-			List<Item> items = getAllItems(efficiency.id, isClientSide);
-			for (Item item : items) {
-				if (!(item instanceof DiggerItem diggerItem))
-					continue;
-				diggerItem.speed = (float) efficiency.value;
-			}
-		}
-	}*/
-
-	protected static final UUID BASE_ATTACK_DAMAGE_UUID = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF");
-	protected static final UUID BASE_ATTACK_SPEED_UUID = UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3");
-
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onAttributeEvent(ItemAttributeModifierEvent event) {
 		if (!this.isEnabled())
 			return;
 
-		boolean foundAttackDamage = false;
-		double ad = 0d;
-		for (IdTagValue itemAttackDamage : itemAttackDamages) {
-			if (itemAttackDamage.id.matchesItem(event.getItemStack())) {
-				foundAttackDamage = true;
-				ad = itemAttackDamage.value;
-				break;
-			}
+		for (ItemStatistics itemStats : ItemStatsReloadListener.STATS) {
+			itemStats.applyAttributes(event, event.getItemStack(), event.getModifiers());
 		}
-
-		boolean foundAttackSpeed = false;
-		double as = 0d;
-		for (IdTagValue itemAttackDamage : itemAttackSpeeds) {
-			if (itemAttackDamage.id.matchesItem(event.getItemStack())) {
-				foundAttackSpeed = true;
-				as = itemAttackDamage.value;
-				break;
-			}
-		}
-		if (!foundAttackDamage && !foundAttackSpeed)
-			return;
-
-		double baseAd = 0d;
-		if (foundAttackDamage && event.getItemStack().getItem() instanceof TieredItem tieredItem)
-			baseAd = tieredItem.getTier().getAttackDamageBonus();
-
-		Multimap<Attribute, AttributeModifier> toAdd = HashMultimap.create();
-		Multimap<Attribute, AttributeModifier> toRemove = HashMultimap.create();
-		for (var entry : event.getModifiers().entries()) {
-			if (foundAttackDamage && entry.getValue().getId().equals(BASE_ATTACK_DAMAGE_UUID) && entry.getKey().equals(Attributes.ATTACK_DAMAGE)) {
-				toAdd.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", ad + baseAd, AttributeModifier.Operation.ADDITION));
-				toRemove.put(entry.getKey(), entry.getValue());
-			}
-			if (foundAttackSpeed && entry.getValue().getId().equals(BASE_ATTACK_SPEED_UUID) && entry.getKey().equals(Attributes.ATTACK_SPEED)) {
-				toAdd.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", -(4d - as), AttributeModifier.Operation.ADDITION));
-				toRemove.put(entry.getKey(), entry.getValue());
-			}
-		}
-		toRemove.forEach(event::removeModifier);
-		toAdd.forEach(event::addModifier);
 	}
 
 	@SubscribeEvent
