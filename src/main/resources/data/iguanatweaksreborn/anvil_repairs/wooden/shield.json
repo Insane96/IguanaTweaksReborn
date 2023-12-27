@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "shieldsplus:wooden_shield"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"tag": "minecraft:planks"
+			},
+			"amount": 4
+		}
+	]
+}

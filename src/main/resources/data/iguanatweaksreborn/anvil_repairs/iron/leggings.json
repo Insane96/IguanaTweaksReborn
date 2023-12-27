@@ -1,0 +1,19 @@
+{
+	"item_to_repair": {
+		"id": "minecraft:iron_leggings"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:iron_ingot"
+			},
+			"amount": 7
+		},
+		{
+			"repair_material": {
+				"id": "minecraft:iron_nugget"
+			},
+			"amount": 63
+		}
+	]
+}

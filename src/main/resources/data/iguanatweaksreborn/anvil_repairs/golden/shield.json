@@ -1,0 +1,19 @@
+{
+	"item_to_repair": {
+		"id": "shieldsplus:golden_shield"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:gold_ingot"
+			},
+			"amount": 4
+		},
+		{
+			"repair_material": {
+				"id": "minecraft:gold_nugget"
+			},
+			"amount": 36
+		}
+	]
+}

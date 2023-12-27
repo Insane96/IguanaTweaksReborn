@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "minecraft:wooden_hoe"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"tag": "minecraft:planks"
+			},
+			"amount": 2
+		}
+	]
+}

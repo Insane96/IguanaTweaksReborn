@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "survivalreimagined:stone_hammer"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"tag": "minecraft:stone_tool_materials"
+			},
+			"amount": 5
+		}
+	]
+}

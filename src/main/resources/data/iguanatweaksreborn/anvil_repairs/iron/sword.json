@@ -1,0 +1,19 @@
+{
+	"item_to_repair": {
+		"id": "minecraft:iron_sword"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:iron_ingot"
+			},
+			"amount": 2
+		},
+		{
+			"repair_material": {
+				"id": "minecraft:iron_nugget"
+			},
+			"amount": 18
+		}
+	]
+}

@@ -19,7 +19,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
@@ -60,7 +59,7 @@ public class ItemStats extends JsonFeature {
 	public static final TagKey<Item> NO_EFFICIENCY = ITRItemTagsProvider.create("no_efficiency");
 	public static final TagKey<Item> NOT_UNBREAKABLE = ITRItemTagsProvider.create("not_unbreakable");
 
-	public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
+	/*public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
 			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/wooden", 127),
 			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/stone", 63),
 			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/golden", 72),
@@ -113,7 +112,7 @@ public class ItemStats extends JsonFeature {
 			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/tools/diamond", 6d),
 			IdTagValue.newTag("iguanatweaksreborn:equipment/hand/tools/netherite", 6d)
 	));
-	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();
+	public static final ArrayList<IdTagValue> toolEfficiencies = new ArrayList<>();*/
 
 	public static final ArrayList<IdTagValue> ITEM_ATTACK_DAMAGES_DEFAULT = new ArrayList<>(List.of(
 			IdTagValue.newTag("minecraft:axes", 6d),
@@ -142,14 +141,14 @@ public class ItemStats extends JsonFeature {
 
 	public ItemStats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_durabilities"), new SyncType(json -> loadAndReadJson(json, itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE)));
+		/*addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_durabilities"), new SyncType(json -> loadAndReadJson(json, itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE)));
 		JSON_CONFIGS.add(new JsonConfig<>("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadDurabilities, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_durabilities")));
 		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "tool_efficiencies"), new SyncType(json -> loadAndReadJson(json, toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE)));
 		JSON_CONFIGS.add(new JsonConfig<>("tool_efficiencies.json", toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadToolEfficiencies, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "tool_efficiencies")));
 		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_attack_damages"), new SyncType(json -> loadAndReadJson(json, itemAttackDamages, ITEM_ATTACK_DAMAGES_DEFAULT, IdTagValue.LIST_TYPE)));
 		JSON_CONFIGS.add(new JsonConfig<>("item_attack_damages.json", itemAttackDamages, ITEM_ATTACK_DAMAGES_DEFAULT, IdTagValue.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_attack_damages")));
 		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_attack_speeds"), new SyncType(json -> loadAndReadJson(json, itemAttackSpeeds, ITEM_ATTACK_SPEEDS_DEFAULT, IdTagValue.LIST_TYPE)));
-		JSON_CONFIGS.add(new JsonConfig<>("item_attack_speeds.json", itemAttackSpeeds, ITEM_ATTACK_SPEEDS_DEFAULT, IdTagValue.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_attack_speeds")));
+		JSON_CONFIGS.add(new JsonConfig<>("item_attack_speeds.json", itemAttackSpeeds, ITEM_ATTACK_SPEEDS_DEFAULT, IdTagValue.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_attack_speeds")));*/
 	}
 
 	@Override
@@ -164,25 +163,25 @@ public class ItemStats extends JsonFeature {
 		super.loadJsonConfigs();
 	}
 
-	public static void loadDurabilities(List<IdTagValue> list, boolean isclientSide) {
+	/*public static void loadDurabilities(List<IdTagValue> list, boolean isClientSide) {
 		for (IdTagValue durability : list) {
-			List<Item> items = getAllItems(durability.id, isclientSide);
+			List<Item> items = getAllItems(durability.id, isClientSide);
 			for (Item item : items) {
 				item.maxDamage = (int) durability.value;
 			}
 		}
 	}
 
-	public static void loadToolEfficiencies(List<IdTagValue> list, boolean isclientSide) {
+	public static void loadToolEfficiencies(List<IdTagValue> list, boolean isClientSide) {
 		for (IdTagValue efficiency : list) {
-			List<Item> items = getAllItems(efficiency.id, isclientSide);
+			List<Item> items = getAllItems(efficiency.id, isClientSide);
 			for (Item item : items) {
 				if (!(item instanceof DiggerItem diggerItem))
 					continue;
 				diggerItem.speed = (float) efficiency.value;
 			}
 		}
-	}
+	}*/
 
 	protected static final UUID BASE_ATTACK_DAMAGE_UUID = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5CF");
 	protected static final UUID BASE_ATTACK_SPEED_UUID = UUID.fromString("FA233E1C-4180-4865-B01B-BCCE9785ACA3");

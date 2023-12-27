@@ -1,20 +1,22 @@
 {
-    "required": true,
-    "package": "insane96mcp.iguanatweaksreborn.mixin",
-    "compatibilityLevel": "JAVA_17",
-    "refmap": "iguanatweaksreborn.refmap.json",
-    "mixins": [
-        "AbstractArrowMixin",
-        "DigDurabilityEnchantmentMixin",
-        "EnchantmentMixin",
-        "MusicsMixin",
-        "PlayerMixin",
-        "ProtectionEnchantmentMixin",
-        "ThornsEnchantmentMixin"
-    ],
-    "minVersion": "0.8",
-    "client": [
-        "client.GameRendererMixin",
-        "client.LevelRendererMixin"
-    ]
+	"required": true,
+	"package": "insane96mcp.iguanatweaksreborn.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"refmap": "iguanatweaksreborn.refmap.json",
+	"mixins": [
+		"AbstractArrowMixin",
+		"AnvilMenuMixin",
+		"DigDurabilityEnchantmentMixin",
+		"EnchantmentMixin",
+		"MusicsMixin",
+		"PlayerMixin",
+		"ProtectionEnchantmentMixin",
+		"ThornsEnchantmentMixin"
+	],
+	"minVersion": "0.8",
+	"client": [
+		"client.AnvilScreenMixin",
+		"client.GameRendererMixin",
+		"client.LevelRendererMixin"
+	]
 }

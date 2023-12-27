@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRDamageTypeTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
+import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
+import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.setup.ITRCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITRPackSource;
@@ -84,7 +86,8 @@ public class IguanaTweaksReborn
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onAddReloadListener(AddReloadListenerEvent event) {
-        //event.addListener(AnvilRepairReloadListener.INSTANCE);
+        event.addListener(AnvilRepairReloadListener.INSTANCE);
+        event.addListener(ItemStatsReloadListener.INSTANCE);
     }
 
     @SubscribeEvent

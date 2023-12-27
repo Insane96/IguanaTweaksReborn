@@ -1,0 +1,17 @@
+{
+	"item_to_repair": "minecraft:trident",
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:prismarine_shard"
+			},
+			"amount": 32
+		},
+		{
+			"repair_material": {
+				"id": "minecraft:prismarine_crystal"
+			},
+			"amount": 9
+		}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "minecraft:diamond_sword"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:diamond"
+			},
+			"amount": 2
+		}
+	]
+}
