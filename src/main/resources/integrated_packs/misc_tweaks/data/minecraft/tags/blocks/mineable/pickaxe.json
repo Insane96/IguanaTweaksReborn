@@ -1,8 +1,0 @@
-{
-    "replace": false,
-    "values": [
-        "minecraft:lever",
-        "#forge:glass",
-        "#forge:glass_panes"
-    ]
-}

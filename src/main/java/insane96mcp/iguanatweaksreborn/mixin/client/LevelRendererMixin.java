@@ -11,7 +11,9 @@ public abstract class LevelRendererMixin {
 
 	@ModifyVariable(at = @At(value = "STORE"), method = "renderWorldBorder", ordinal = 4)
 	private double onWorldBorderHeight(double value) {
-		return value / 4d;
+		if (Misc.shouldShortenWorldBorder())
+			return value / 4d;
+		return value;
 	}
 
 	@ModifyVariable(at = @At(value = "STORE", ordinal = 2), method = "renderWorldBorder", ordinal = 1)

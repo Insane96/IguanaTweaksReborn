@@ -1,6 +1,0 @@
-{
-    "type": "forge:add_features",
-    "biomes": "#forge:is_hot/overworld",
-    "features": "iguanatweaksreborn:gold_ore_beeg_vein",
-    "step": "underground_ores"
-}

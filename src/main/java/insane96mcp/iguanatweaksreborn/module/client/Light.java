@@ -11,7 +11,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 @LoadFeature(module = ClientModules.Ids.CLIENT)
 public class Light extends Feature {
 
-    public static final int NIGHT_VISION_FADE_OUT_AT = 40;
+    public static final int NIGHT_VISION_FADE_OUT_AT = 50;
 
     @Config
     @Label(name = "No Night Vision Flashing", description = "If true night vision will no longer flash 10 seconds before expiring, instead will slowly fade out 2 seconds before expiring.")

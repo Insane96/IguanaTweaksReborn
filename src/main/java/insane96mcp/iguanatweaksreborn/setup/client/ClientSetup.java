@@ -1,70 +1,17 @@
 package insane96mcp.iguanatweaksreborn.setup.client;
 
-import com.google.common.collect.ImmutableList;
-import insane96mcp.shieldsplus.setup.SPItems;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.module.combat.fletching.Fletching;
-import insane96mcp.iguanatweaksreborn.module.combat.fletching.client.FletchingScreen;
-import insane96mcp.iguanatweaksreborn.module.combat.fletching.client.SRArrowRenderer;
-import insane96mcp.iguanatweaksreborn.module.experience.Lapis;
-import insane96mcp.iguanatweaksreborn.module.experience.enchanting.EnchantingFeature;
-import insane96mcp.iguanatweaksreborn.module.experience.enchanting.SREnchantingTableRenderer;
-import insane96mcp.iguanatweaksreborn.module.experience.enchanting.SREnchantingTableScreen;
-import insane96mcp.iguanatweaksreborn.module.farming.bonemeal.BoneMeal;
-import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
-import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
-import insane96mcp.iguanatweaksreborn.module.items.ChainedCopperArmor;
-import insane96mcp.iguanatweaksreborn.module.items.altimeter.Altimeter;
-import insane96mcp.iguanatweaksreborn.module.items.copper.CopperToolsExpansion;
-import insane96mcp.iguanatweaksreborn.module.items.copper.ElectrocutionSparkParticle;
-import insane96mcp.iguanatweaksreborn.module.items.crate.Crate;
-import insane96mcp.iguanatweaksreborn.module.items.explosivebarrel.ExplosiveBarrel;
-import insane96mcp.iguanatweaksreborn.module.items.flintexpansion.FlintExpansion;
-import insane96mcp.iguanatweaksreborn.module.items.recallidol.RecallIdol;
-import insane96mcp.iguanatweaksreborn.module.items.solarium.Solarium;
-import insane96mcp.iguanatweaksreborn.module.mining.Durium;
-import insane96mcp.iguanatweaksreborn.module.mining.SoulSteel;
-import insane96mcp.iguanatweaksreborn.module.mining.forging.ForgeRenderer;
-import insane96mcp.iguanatweaksreborn.module.mining.forging.ForgeScreen;
-import insane96mcp.iguanatweaksreborn.module.mining.forging.Forging;
-import insane96mcp.iguanatweaksreborn.module.mining.keego.Keego;
-import insane96mcp.iguanatweaksreborn.module.mining.miningcharge.MiningCharge;
-import insane96mcp.iguanatweaksreborn.module.mining.miningcharge.MiningChargeRenderer;
-import insane96mcp.iguanatweaksreborn.module.mining.multiblockfurnaces.MultiBlockFurnaces;
-import insane96mcp.iguanatweaksreborn.module.mining.multiblockfurnaces.client.MultiBlockBlastFurnaceScreen;
-import insane96mcp.iguanatweaksreborn.module.mining.multiblockfurnaces.client.MultiBlockSoulBlastFurnaceScreen;
-import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.BeaconConduit;
-import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.SRBeaconRenderer;
-import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.SRBeaconScreen;
-import insane96mcp.iguanatweaksreborn.module.movement.minecarts.Minecarts;
-import insane96mcp.iguanatweaksreborn.module.sleeprespawn.Cloth;
-import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.Death;
-import insane96mcp.iguanatweaksreborn.module.sleeprespawn.respawn.Respawn;
-import insane96mcp.iguanatweaksreborn.module.world.CyanFlower;
-import insane96mcp.iguanatweaksreborn.module.world.coalfire.CoalFire;
-import insane96mcp.iguanatweaksreborn.module.world.oregeneration.OreGeneration;
-import insane96mcp.iguanatweaksreborn.setup.SRRegistries;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.RecipeBookCategories;
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.entity.FallingBlockRenderer;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.*;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.minecraftforge.client.event.RegisterRecipeBookCategoriesEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.List;
 
 public class ClientSetup {
     public static void onBuildCreativeModeTabContents(final BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES)
+        /*if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES)
         {
             addAfter(event, Items.STONE_HOE, FlintExpansion.HOE.get());
             addAfter(event, Items.STONE_HOE, FlintExpansion.AXE.get());
@@ -237,23 +184,23 @@ public class ClientSetup {
         else if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
             addAfter(event, Items.MUSHROOM_STEW, FoodDrinks.BROWN_MUSHROOM_STEW.get());
             addAfter(event, Items.MUSHROOM_STEW, FoodDrinks.RED_MUSHROOM_STEW.get());
-        }
+        }*/
     }
 
-    private static void addBefore(BuildCreativeModeTabContentsEvent event, Item before, Item itemToAdd) {
+    /*private static void addBefore(BuildCreativeModeTabContentsEvent event, Item before, Item itemToAdd) {
         event.getEntries().putBefore(new ItemStack(before), new ItemStack(itemToAdd), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
     }
 
     private static void addAfter(BuildCreativeModeTabContentsEvent event, Item after, Item itemToAdd) {
         event.getEntries().putAfter(new ItemStack(after), new ItemStack(itemToAdd), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-    }
+    }*/
 
     public static void init(FMLClientSetupEvent event) {
         DecimalFormatSymbols DECIMAL_FORMAT_SYMBOLS = new DecimalFormatSymbols(Minecraft.getInstance().getLocale());
         IguanaTweaksReborn.ONE_DECIMAL_FORMATTER = new DecimalFormat("#.#", DECIMAL_FORMAT_SYMBOLS);
 
-        event.enqueueWork(() ->
-                ItemProperties.register(Altimeter.ITEM.get(), new ResourceLocation(IguanaTweaksReborn.MOD_ID, "y"), (stack, clientLevel, livingEntity, entityId) -> {
+        /*event.enqueueWork(() ->
+                ItemProperties.register(Altimeter.ITEM.get(), new ResourceLocation(SurvivalReimagined.MOD_ID, "y"), (stack, clientLevel, livingEntity, entityId) -> {
                     if (livingEntity == null)
                         return 96f;
                     return (float) livingEntity.getY();
@@ -264,10 +211,10 @@ public class ClientSetup {
         MenuScreens.register(Forging.FORGE_MENU_TYPE.get(), ForgeScreen::new);
         MenuScreens.register(EnchantingFeature.ENCHANTING_TABLE_MENU_TYPE.get(), SREnchantingTableScreen::new);
         MenuScreens.register(Fletching.FLETCHING_MENU_TYPE.get(), FletchingScreen::new);
-        MenuScreens.register(BeaconConduit.BEACON_MENU_TYPE.get(), SRBeaconScreen::new);
+        MenuScreens.register(BeaconConduit.BEACON_MENU_TYPE.get(), SRBeaconScreen::new);*/
     }
 
-    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+    /*public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(SRRegistries.PILABLE_FALLING_LAYER.get(), FallingBlockRenderer::new);
         event.registerEntityRenderer(Fletching.QUARTZ_ARROW.get(), SRArrowRenderer::new);
         event.registerEntityRenderer(Fletching.DIAMOND_ARROW.get(), SRArrowRenderer::new);
@@ -279,13 +226,13 @@ public class ClientSetup {
         event.registerBlockEntityRenderer(EnchantingFeature.ENCHANTING_TABLE_BLOCK_ENTITY.get(), SREnchantingTableRenderer::new);
 
         event.registerBlockEntityRenderer(BeaconConduit.BEACON_BLOCK_ENTITY_TYPE.get(), SRBeaconRenderer::new);
-    }
+    }*/
 
-    static RecipeBookCategories BLAST_FURNACE_SEARCH = RecipeBookCategories.create(IguanaTweaksReborn.RESOURCE_PREFIX + "blast_furnace_search", new ItemStack(Items.COMPASS));
-    static RecipeBookCategories BLAST_FURNACE_MISC = RecipeBookCategories.create(IguanaTweaksReborn.RESOURCE_PREFIX + "blast_furnace_misc", new ItemStack(MultiBlockFurnaces.BLAST_FURNACE.item().get()));
+    /*static RecipeBookCategories BLAST_FURNACE_SEARCH = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "blast_furnace_search", new ItemStack(Items.COMPASS));
+    static RecipeBookCategories BLAST_FURNACE_MISC = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "blast_furnace_misc", new ItemStack(MultiBlockFurnaces.BLAST_FURNACE.item().get()));
     public static final List<RecipeBookCategories> BLAST_FURNACE_CATEGORIES = ImmutableList.of(BLAST_FURNACE_SEARCH, BLAST_FURNACE_MISC);
-    static RecipeBookCategories SOUL_BLAST_FURNACE_SEARCH = RecipeBookCategories.create(IguanaTweaksReborn.RESOURCE_PREFIX + "soul_blast_furnace_search", new ItemStack(Items.COMPASS));
-    static RecipeBookCategories SOUL_BLAST_FURNACE_MISC = RecipeBookCategories.create(IguanaTweaksReborn.RESOURCE_PREFIX + "soul_blast_furnace_misc", new ItemStack(MultiBlockFurnaces.SOUL_BLAST_FURNACE.item().get()));
+    static RecipeBookCategories SOUL_BLAST_FURNACE_SEARCH = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "soul_blast_furnace_search", new ItemStack(Items.COMPASS));
+    static RecipeBookCategories SOUL_BLAST_FURNACE_MISC = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "soul_blast_furnace_misc", new ItemStack(MultiBlockFurnaces.SOUL_BLAST_FURNACE.item().get()));
     public static final List<RecipeBookCategories> SOUL_BLAST_FURNACE_CATEGORIES = ImmutableList.of(SOUL_BLAST_FURNACE_SEARCH, SOUL_BLAST_FURNACE_MISC);
     static RecipeBookCategories FORGE_SEARCH = RecipeBookCategories.create("forge_search", new ItemStack(Items.COMPASS));
     static RecipeBookCategories FORGE_MISC = RecipeBookCategories.create("forge_misc", new ItemStack(Forging.FORGE.item().get()));
@@ -295,24 +242,24 @@ public class ClientSetup {
     public static final List<RecipeBookCategories> FLETCHING_CATEGORIES = ImmutableList.of(FLETCHING_SEARCH, FLETCHING_MISC);
 
     public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
-        event.registerBookCategories(IguanaTweaksReborn.MULTI_ITEM_BLASTING_RECIPE_BOOK_TYPE, BLAST_FURNACE_CATEGORIES);
+        event.registerBookCategories(SurvivalReimagined.MULTI_ITEM_BLASTING_RECIPE_BOOK_TYPE, BLAST_FURNACE_CATEGORIES);
         event.registerAggregateCategory(BLAST_FURNACE_SEARCH, ImmutableList.of(BLAST_FURNACE_MISC));
         event.registerRecipeCategoryFinder(MultiBlockFurnaces.BLASTING_RECIPE_TYPE.get(), r -> BLAST_FURNACE_MISC);
 
-        event.registerBookCategories(IguanaTweaksReborn.MULTI_ITEM_SOUL_BLASTING_RECIPE_BOOK_TYPE, SOUL_BLAST_FURNACE_CATEGORIES);
+        event.registerBookCategories(SurvivalReimagined.MULTI_ITEM_SOUL_BLASTING_RECIPE_BOOK_TYPE, SOUL_BLAST_FURNACE_CATEGORIES);
         event.registerAggregateCategory(SOUL_BLAST_FURNACE_SEARCH, ImmutableList.of(SOUL_BLAST_FURNACE_MISC));
         event.registerRecipeCategoryFinder(MultiBlockFurnaces.SOUL_BLASTING_RECIPE_TYPE.get(), r -> SOUL_BLAST_FURNACE_MISC);
 
-        event.registerBookCategories(IguanaTweaksReborn.FORGING_RECIPE_BOOK_TYPE, FORGE_CATEGORIES);
+        event.registerBookCategories(SurvivalReimagined.FORGING_RECIPE_BOOK_TYPE, FORGE_CATEGORIES);
         event.registerAggregateCategory(FORGE_SEARCH, ImmutableList.of(FORGE_MISC));
         event.registerRecipeCategoryFinder(Forging.FORGE_RECIPE_TYPE.get(), r -> FORGE_MISC);
 
-        event.registerBookCategories(IguanaTweaksReborn.FLETCHING_RECIPE_BOOK_TYPE, FLETCHING_CATEGORIES);
+        event.registerBookCategories(SurvivalReimagined.FLETCHING_RECIPE_BOOK_TYPE, FLETCHING_CATEGORIES);
         event.registerAggregateCategory(FLETCHING_SEARCH, ImmutableList.of(FLETCHING_MISC));
         event.registerRecipeCategoryFinder(Fletching.FLETCHING_RECIPE_TYPE.get(), r -> FLETCHING_MISC);
     }
 
     public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(CopperToolsExpansion.ELECTROCUTION_SPARKS.get(), ElectrocutionSparkParticle.Provider::new);
-    }
+    }*/
 }

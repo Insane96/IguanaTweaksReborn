@@ -15,6 +15,10 @@ public class Misc extends Feature {
     @Label(name = "World Border Transparency", description = "Multiplies the world border transparency by this value")
     public static Double worldBorderTransparency = 0.4d;
 
+    @Config
+    @Label(name = "Shorter world border", description = "If true, the world border height is reduced by 4 times.")
+    public static Boolean shorterWorldBorder = true;
+
     public Misc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -23,5 +27,9 @@ public class Misc extends Feature {
         if (isEnabled(Misc.class))
             return worldBorderTransparency.floatValue();
         return 1f;
+    }
+
+    public static boolean shouldShortenWorldBorder() {
+        return isEnabled(Misc.class) && shorterWorldBorder;
     }
 }

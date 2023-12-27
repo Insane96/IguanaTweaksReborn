@@ -1,8 +1,8 @@
 package insane96mcp.iguanatweaksreborn.module;
 
-import insane96mcp.insanelib.base.Module;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.setup.SRCommonConfig;
+import insane96mcp.iguanatweaksreborn.setup.ITRCommonConfig;
+import insane96mcp.insanelib.base.Module;
 import net.minecraftforge.fml.config.ModConfig;
 
 public class Modules {
@@ -20,17 +20,17 @@ public class Modules {
 	public static Module world;
 
 	public static void init() {
-		combat = Module.Builder.create(Ids.COMBAT, "Combat", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
-		experience = Module.Builder.create(Ids.EXPERIENCE, "Experience", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
-		farming = Module.Builder.create(Ids.FARMING, "Farming", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
-		hungerHealth = Module.Builder.create(Ids.HUNGER_HEALTH, "Hunger & Health", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
-		hungerHealth = Module.Builder.create(Ids.ITEMS, "Items", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
-		mining = Module.Builder.create(Ids.MINING, "Mining", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
-		misc = Module.Builder.create(Ids.MISC, "Miscellaneous", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
-		mobs = Module.Builder.create(Ids.MOBS, "Mobs", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
-		movement = Module.Builder.create(Ids.MOVEMENT, "Movement", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
-		sleepRespawn = Module.Builder.create(Ids.SLEEP_RESPAWN, "Sleep & Respawn", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
-		world = Module.Builder.create(Ids.WORLD, "World", ModConfig.Type.COMMON, SRCommonConfig.builder).build();
+		combat = Module.Builder.create(Ids.COMBAT, "Combat", ModConfig.Type.COMMON, ITRCommonConfig.builder).build();
+		experience = Module.Builder.create(Ids.EXPERIENCE, "Experience", ModConfig.Type.COMMON, ITRCommonConfig.builder).build();
+		farming = Module.Builder.create(Ids.FARMING, "Farming", ModConfig.Type.COMMON, ITRCommonConfig.builder).build();
+		hungerHealth = Module.Builder.create(Ids.HUNGER_HEALTH, "Hunger & Health", ModConfig.Type.COMMON, ITRCommonConfig.builder).build();
+		hungerHealth = Module.Builder.create(Ids.ITEMS, "Items", ModConfig.Type.COMMON, ITRCommonConfig.builder).build();
+		mining = Module.Builder.create(Ids.MINING, "Mining", ModConfig.Type.COMMON, ITRCommonConfig.builder).build();
+		misc = Module.Builder.create(Ids.MISC, "Miscellaneous", ModConfig.Type.COMMON, ITRCommonConfig.builder).build();
+		mobs = Module.Builder.create(Ids.MOBS, "Mobs", ModConfig.Type.COMMON, ITRCommonConfig.builder).build();
+		movement = Module.Builder.create(Ids.MOVEMENT, "Movement", ModConfig.Type.COMMON, ITRCommonConfig.builder).build();
+		sleepRespawn = Module.Builder.create(Ids.SLEEP_RESPAWN, "Sleep & Respawn", ModConfig.Type.COMMON, ITRCommonConfig.builder).build();
+		world = Module.Builder.create(Ids.WORLD, "World", ModConfig.Type.COMMON, ITRCommonConfig.builder).build();
 	}
 
 	public static class Ids {

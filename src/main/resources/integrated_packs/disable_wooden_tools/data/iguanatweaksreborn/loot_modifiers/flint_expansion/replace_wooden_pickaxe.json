@@ -1,8 +1,0 @@
-{
-  "type": "iguanatweaksreborn:replace_drop",
-  "chests_only": true,
-  "conditions": [],
-  "item_to_replace": "minecraft:wooden_pickaxe",
-  "keep_durability": true,
-  "new_item": "iguanatweaksreborn:flint_pickaxe"
-}

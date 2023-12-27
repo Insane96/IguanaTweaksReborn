@@ -33,7 +33,7 @@ minecraft {
     //
     // Use non-default mappings at your own risk. They may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'parchment', version: '2023.07.23-1.20.1'
+    mappings channel: 'parchment', version: "${parchment_version}-${mc_version}"
 
     // When true, this property will have all Eclipse/IntelliJ IDEA run configurations run the "prepareX" task for the given run configuration before launching the game.
     // In most cases, it is not necessary to enable.
@@ -150,39 +150,33 @@ configurations {
 }
 
 dependencies {
-    // Specify the version of Minecraft to use.
-    // Any artifact can be supplied so long as it has a "userdev" classifier artifact and is a compatible patcher artifact.
-    // The "userdev" classifier will be requested and setup by NeoGradle.
-    // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
-    // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.neoforged:forge:${mc_version}-${neo_version}"
 
     implementation fg.deobf("blank:InsaneLib:${lib_version}-mc${mc_version}")
-    runtimeOnly fg.deobf("blank:MobsPropertiesRandomness:${mpr_version}-mc${mc_version}")
-    implementation fg.deobf("blank:Shields+:${shields_plus_version}-mc${mc_version}")
-    implementation fg.deobf("blank:EnhancedAI:${enhancedai_version}-mc${mc_version}")
+    //runtimeOnly fg.deobf("blank:MobsPropertiesRandomness:${mpr_version}-mc${mc_version}")
+    //implementation fg.deobf("blank:Shields+:${shields_plus_version}-mc${mc_version}")
+    //implementation fg.deobf("blank:EnhancedAI:${enhancedai_version}-mc${mc_version}")
 
     runtimeOnly fg.deobf("curse.maven:selene-499980:4728637")
     runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4724732")
     runtimeOnly fg.deobf("curse.maven:better-advancements-272515:4631253")
 
-    implementation fg.deobf("com.github.glitchfiend:SereneSeasons:${mc_version}-${sereneseasons_version}")
+    //implementation fg.deobf("com.github.glitchfiend:SereneSeasons:${mc_version}-${sereneseasons_version}")
 
-    implementation fg.deobf("com.github.Virtuoel:Pehkui:${pehkui_version}-${mc_version}-forge")
-    implementation fg.deobf("curse.maven:kiwi-303657:4592974")
-    implementation fg.deobf("curse.maven:passable-foliage-379887:4593677")
-    implementation fg.deobf("curse.maven:tool-belt-260262:4581167")
+    //implementation fg.deobf("com.github.Virtuoel:Pehkui:${pehkui_version}-${mc_version}-forge")
+    //implementation fg.deobf("curse.maven:kiwi-303657:4592974")
+    //implementation fg.deobf("curse.maven:passable-foliage-379887:4593677")
+    //implementation fg.deobf("curse.maven:tool-belt-260262:4581167")
     //Needed for data gen
     //Hardcoded MC version as there is no 1.20.1 version
-    runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-1.20:1.8.0")
+    //runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-1.20:1.8.0")
+
     runtimeOnly fg.deobf("net.darkhax.maxhealthfix:MaxHealthFix-Forge-${mc_version}:${max_health_fix_version}")
 
     //runtimeOnly fg.deobf("curse.maven:corail-woodcutter-331983:4685515")
 
-    implementation fg.deobf("curse.maven:puzzles-lib-495476:4660882")
-    runtimeOnly fg.deobf("curse.maven:easy-magic-456239:4658750")
-
-    //implementation fg.deobf("curse.maven:copperative-867868:4685249")
+    //implementation fg.deobf("curse.maven:puzzles-lib-495476:4660882")
+    //runtimeOnly fg.deobf("curse.maven:easy-magic-456239:4658750")
 
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"

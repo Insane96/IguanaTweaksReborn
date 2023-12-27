@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/orientable",
-  "textures": {
-    "front": "iguanatweaksreborn:block/soul_blast_furnace_front_on",
-    "side": "iguanatweaksreborn:block/soul_blast_furnace_side",
-    "top": "iguanatweaksreborn:block/soul_blast_furnace_top"
-  }
-}

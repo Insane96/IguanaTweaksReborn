@@ -11,7 +11,7 @@ import net.minecraft.sounds.Musics;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 
-@Label(name = "Sounds & Music", description = "Changes to sounds and music")
+@Label(name = "Sounds & Music", description = "Changes to sounds and music. Disabling this feature requires a Minecraft restart.")
 @LoadFeature(module = ClientModules.Ids.CLIENT)
 public class Sound extends Feature {
 
@@ -27,7 +27,8 @@ public class Sound extends Feature {
     public void readConfig(ModConfigEvent event) {
         super.readConfig(event);
 
-        Musics.END = new Music(SoundEvents.MUSIC_END, (int) (6000 * getMusicDelayMultiplier()), (int) (24000 * getMusicDelayMultiplier()), true);
+        if (this.isEnabled())
+            Musics.END = new Music(SoundEvents.MUSIC_END, (int) (6000 * getMusicDelayMultiplier()), (int) (24000 * getMusicDelayMultiplier()), true);
     }
 
     public static double getMusicDelayMultiplier() {
