@@ -12,39 +12,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class SyncAnvilRepair {
+public class AnvilRepairSync {
 
     int count;
     List<AnvilRepair> anvilRepairList;
 
-    public SyncAnvilRepair(List<AnvilRepair> anvilRepairList) {
+    public AnvilRepairSync(List<AnvilRepair> anvilRepairList) {
         this.anvilRepairList = anvilRepairList;
         this.count = anvilRepairList.size();
     }
 
-    public static void encode(SyncAnvilRepair pkt, FriendlyByteBuf buf) {
+    public static void encode(AnvilRepairSync pkt, FriendlyByteBuf buf) {
         buf.writeInt(pkt.count);
         for (AnvilRepair anvilRepair : pkt.anvilRepairList) {
             anvilRepair.toNetwork(buf);
         }
     }
 
-    public static SyncAnvilRepair decode(FriendlyByteBuf buf) {
+    public static AnvilRepairSync decode(FriendlyByteBuf buf) {
         int count = buf.readInt();
         List<AnvilRepair> list = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
             list.add(AnvilRepair.fromNetwork(buf));
         }
-        return new SyncAnvilRepair(list);
+        return new AnvilRepairSync(list);
     }
 
-    public static void handle(final SyncAnvilRepair message, Supplier<NetworkEvent.Context> ctx) {
+    public static void handle(final AnvilRepairSync message, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> AnvilRepairReloadListener.REPAIRS.addAll(message.anvilRepairList));
         ctx.get().setPacketHandled(true);
     }
 
     public static void sync(List<AnvilRepair> repairs, ServerPlayer player) {
-        Object msg = new SyncAnvilRepair(repairs);
+        Object msg = new AnvilRepairSync(repairs);
         NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 }

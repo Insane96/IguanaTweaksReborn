@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.network.message.SyncAnvilRepair;
+import insane96mcp.iguanatweaksreborn.network.message.AnvilRepairSync;
 import insane96mcp.iguanatweaksreborn.utils.ITRLogHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -59,10 +59,10 @@ public class AnvilRepairReloadListener extends SimpleJsonResourceReloadListener 
 	@SubscribeEvent
 	public static void onDataPackSync(OnDatapackSyncEvent event) {
 		if (event.getPlayer() == null) {
-			event.getPlayerList().getPlayers().forEach(player -> SyncAnvilRepair.sync(REPAIRS, player));
+			event.getPlayerList().getPlayers().forEach(player -> AnvilRepairSync.sync(REPAIRS, player));
 		}
 		else {
-			SyncAnvilRepair.sync(REPAIRS, event.getPlayer());
+			AnvilRepairSync.sync(REPAIRS, event.getPlayer());
 		}
 	}
 

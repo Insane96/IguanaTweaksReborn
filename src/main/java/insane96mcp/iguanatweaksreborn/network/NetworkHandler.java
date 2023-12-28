@@ -1,10 +1,7 @@
 package insane96mcp.iguanatweaksreborn.network;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.network.message.JumpMidAirMessage;
-import insane96mcp.iguanatweaksreborn.network.message.SyncAnvilRepair;
-import insane96mcp.iguanatweaksreborn.network.message.SyncInvulnerableTimeMessage;
-import insane96mcp.iguanatweaksreborn.network.message.SyncItemStatistics;
+import insane96mcp.iguanatweaksreborn.network.message.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -22,8 +19,9 @@ public class NetworkHandler {
 
 	public static void init() {
 		CHANNEL.registerMessage(++index, JumpMidAirMessage.class, JumpMidAirMessage::encode, JumpMidAirMessage::decode, JumpMidAirMessage::handle);
-		CHANNEL.registerMessage(++index, SyncInvulnerableTimeMessage.class, SyncInvulnerableTimeMessage::encode, SyncInvulnerableTimeMessage::decode, SyncInvulnerableTimeMessage::handle);
-		CHANNEL.registerMessage(++index, SyncAnvilRepair.class, SyncAnvilRepair::encode, SyncAnvilRepair::decode, SyncAnvilRepair::handle);
-		CHANNEL.registerMessage(++index, SyncItemStatistics.class, SyncItemStatistics::encode, SyncItemStatistics::decode, SyncItemStatistics::handle);
+		CHANNEL.registerMessage(++index, InvulnerableTimeMessageSync.class, InvulnerableTimeMessageSync::encode, InvulnerableTimeMessageSync::decode, InvulnerableTimeMessageSync::handle);
+		CHANNEL.registerMessage(++index, AnvilRepairSync.class, AnvilRepairSync::encode, AnvilRepairSync::decode, AnvilRepairSync::handle);
+		CHANNEL.registerMessage(++index, ItemStatisticsSync.class, ItemStatisticsSync::encode, ItemStatisticsSync::decode, ItemStatisticsSync::handle);
+		CHANNEL.registerMessage(++index, StackSizesSync.class, StackSizesSync::encode, StackSizesSync::decode, StackSizesSync::handle);
 	}
 }

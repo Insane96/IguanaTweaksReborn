@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.network.message.SyncItemStatistics;
+import insane96mcp.iguanatweaksreborn.network.message.ItemStatisticsSync;
 import insane96mcp.iguanatweaksreborn.utils.ITRLogHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -60,10 +60,10 @@ public class ItemStatsReloadListener extends SimpleJsonResourceReloadListener {
 	@SubscribeEvent
 	public static void onDataPackSync(OnDatapackSyncEvent event) {
 		if (event.getPlayer() == null) {
-			event.getPlayerList().getPlayers().forEach(player -> SyncItemStatistics.sync(STATS, player));
+			event.getPlayerList().getPlayers().forEach(player -> ItemStatisticsSync.sync(STATS, player));
 		}
 		else {
-			SyncItemStatistics.sync(STATS, event.getPlayer());
+			ItemStatisticsSync.sync(STATS, event.getPlayer());
 		}
 	}
 

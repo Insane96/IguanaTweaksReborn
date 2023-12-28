@@ -31,13 +31,14 @@ import java.util.function.Supplier;
 
 @JsonAdapter(ItemStatistics.Serializer.class)
 //TODO List of attribute modifiers
-public record ItemStatistics(IdTagMatcher item, @Nullable Integer durability, @Nullable Double efficiency,
+public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, @Nullable Integer durability, @Nullable Double efficiency,
 							 @Nullable Double baseAttackDamage, @Nullable Double baseAttackSpeed,
 							 @Nullable Double baseArmor, @Nullable Double baseArmorToughness,
 							 @Nullable Double baseKnockbackResistance,
 							 @Nullable List<SerializableAttributeModifer> modifiers) {
-	public ItemStatistics(@NotNull IdTagMatcher item, @Nullable Integer durability, @Nullable Double efficiency, @Nullable Double baseAttackDamage, @Nullable Double baseAttackSpeed, @Nullable Double baseArmor, @Nullable Double baseArmorToughness, @Nullable Double baseKnockbackResistance, @Nullable List<SerializableAttributeModifer> modifiers) {
+	public ItemStatistics(@NotNull IdTagMatcher item, @Nullable Integer maxStackSize, @Nullable Integer durability, @Nullable Double efficiency, @Nullable Double baseAttackDamage, @Nullable Double baseAttackSpeed, @Nullable Double baseArmor, @Nullable Double baseArmorToughness, @Nullable Double baseKnockbackResistance, @Nullable List<SerializableAttributeModifer> modifiers) {
 		this.item = item;
+		this.maxStackSize = maxStackSize;
 		this.durability = durability;
 		this.efficiency = efficiency;
 		this.baseAttackDamage = baseAttackDamage;
@@ -53,9 +54,10 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer durability, @N
 		for (Item item : items) {
 			if (this.durability != null)
 				item.maxDamage = this.durability;
-			if (this.efficiency != null && item instanceof DiggerItem diggerItem) {
+			if (this.efficiency != null && item instanceof DiggerItem diggerItem)
 				diggerItem.speed = this.efficiency().floatValue();
-			}
+			if (this.maxStackSize != null)
+				item.maxStackSize = this.maxStackSize;
 		}
 	}
 
@@ -136,6 +138,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer durability, @N
 		public ItemStatistics deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 			JsonObject jObject = json.getAsJsonObject();
 			IdTagMatcher item = context.deserialize(jObject.get("item"), IdTagMatcher.class);
+			Integer maxStackSize = ITRGsonHelper.getAsInt(jObject, "max_stack");
 			Integer durability = ITRGsonHelper.getAsInt(jObject, "durability");
 			Double efficiency = ITRGsonHelper.getAsDouble(jObject, "efficiency");
 			Double baseAttackDamage = ITRGsonHelper.getAsDouble(jObject, "attack_damage");
@@ -146,7 +149,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer durability, @N
 			List<SerializableAttributeModifer> modifiers = null;
 			if (jObject.has("modifiers"))
 				modifiers = context.deserialize(jObject.get("modifiers"), SerializableAttributeModifer.LIST_TYPE);
-			return new ItemStatistics(item, durability, efficiency, baseAttackDamage, baseAttackSpeed, baseArmor, baseToughness, baseKnockbackResistance, modifiers);
+			return new ItemStatistics(item, maxStackSize, durability, efficiency, baseAttackDamage, baseAttackSpeed, baseArmor, baseToughness, baseKnockbackResistance, modifiers);
 		}
 
 		@Override
@@ -154,6 +157,8 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer durability, @N
 			JsonObject jObject = new JsonObject();
 			JsonElement item = context.serialize(src.item);
 			jObject.add("item", item);
+			if (src.maxStackSize != null)
+				jObject.addProperty("max_stack", src.maxStackSize);
 			if (src.durability != null)
 				jObject.addProperty("durability", src.durability);
 			if (src.efficiency != null)
@@ -179,6 +184,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer durability, @N
 		IdTagMatcher item = IdTagMatcher.parseLine(utf);
 		if (item == null)
 			throw new NullPointerException("Parsing item from %s for Item Statistics returned null".formatted(utf));
+		Integer maxStackSize = byteBuf.readNullable(FriendlyByteBuf::readInt);
 		Integer durability = byteBuf.readNullable(FriendlyByteBuf::readInt);
 		Double efficiency = byteBuf.readNullable(FriendlyByteBuf::readDouble);
 		Double baseAttackDamage = byteBuf.readNullable(FriendlyByteBuf::readDouble);
@@ -195,11 +201,12 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer durability, @N
 				modifiers.add(SerializableAttributeModifer.fromNetwork(byteBuf));
 			}
 		}
-		return new ItemStatistics(item, durability, efficiency, baseAttackDamage, baseAttackSpeed, baseArmor, baseToughness, baseKnockbackResistance, modifiers);
+		return new ItemStatistics(item, maxStackSize, durability, efficiency, baseAttackDamage, baseAttackSpeed, baseArmor, baseToughness, baseKnockbackResistance, modifiers);
 	}
 
 	public void toNetwork(FriendlyByteBuf byteBuf) {
 		byteBuf.writeUtf(this.item.getSerializedName());
+		byteBuf.writeNullable(this.maxStackSize, FriendlyByteBuf::writeInt);
 		byteBuf.writeNullable(this.durability, FriendlyByteBuf::writeInt);
 		byteBuf.writeNullable(this.efficiency, FriendlyByteBuf::writeDouble);
 		byteBuf.writeNullable(this.baseAttackDamage, FriendlyByteBuf::writeDouble);

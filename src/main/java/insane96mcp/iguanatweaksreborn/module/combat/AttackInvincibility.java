@@ -2,7 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.combat;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
-import insane96mcp.iguanatweaksreborn.network.message.SyncInvulnerableTimeMessage;
+import insane96mcp.iguanatweaksreborn.network.message.InvulnerableTimeMessageSync;
 import insane96mcp.iguanatweaksreborn.setup.IntegratedDataPack;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -46,6 +46,6 @@ public class AttackInvincibility extends Feature {
 		int time = (int) ((1f / serverPlayer.getAttribute(Attributes.ATTACK_SPEED).getValue()) * 20);
 		event.getEntity().invulnerableTime = time;
 		event.getEntity().hurtTime = time;
-		SyncInvulnerableTimeMessage.sync((ServerLevel) event.getEntity().level(), event.getEntity(), time);
+		InvulnerableTimeMessageSync.sync((ServerLevel) event.getEntity().level(), event.getEntity(), time);
 	}
 }

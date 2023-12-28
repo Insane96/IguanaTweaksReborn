@@ -5,6 +5,7 @@ Please note this changelog is based off the latest Survival Reimagined version, 
 * Item Stats
   * Now Items statistics are defined via Data Pack
     * `item`: id or item tag
+    * `max_stack`: The max stack size of the item
     * `durability`
     * `efficiency` (only for tools)
     * `attack_damage`, `attack_speed`
@@ -12,6 +13,7 @@ Please note this changelog is based off the latest Survival Reimagined version, 
     * `modifiers`: A list of modifiers to apply to the tool (stolen from Stats)
 * Removed `item_modifiers.json`. Check Item Stats
   * Moved `iguanatweaksreborn:remove_original_modifiers`
+* Removed `custom_stack_sizes.json`. Check Item Stats
 * Client
   * Added config option to disable the shorter world border
   * Fixed End music being changed even if the Sound feature was disabled
