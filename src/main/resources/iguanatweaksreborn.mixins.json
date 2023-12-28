@@ -9,6 +9,7 @@
 		"DigDurabilityEnchantmentMixin",
 		"EnchantmentMixin",
 		"ExplosionMixin",
+		"LivingEntityMixin",
 		"MusicsMixin",
 		"PlayerMixin",
 		"ProtectionEnchantmentMixin",
