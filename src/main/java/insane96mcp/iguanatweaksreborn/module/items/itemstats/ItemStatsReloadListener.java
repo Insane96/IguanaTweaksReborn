@@ -54,7 +54,7 @@ public class ItemStatsReloadListener extends SimpleJsonResourceReloadListener {
 			}
 		}
 
-		ITRLogHelper.debug("Loaded %s Item Statistics", STATS.size());
+		ITRLogHelper.info("Loaded %s Item Statistics", STATS.size());
 	}
 
 	@SubscribeEvent

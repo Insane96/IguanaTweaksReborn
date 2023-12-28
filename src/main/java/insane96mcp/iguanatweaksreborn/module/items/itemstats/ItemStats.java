@@ -5,7 +5,7 @@ import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
-import insane96mcp.insanelib.base.JsonFeature;
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -39,7 +39,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Item Stats", description = "Less durable items and efficient tools. Items Durability and Efficiency are controlled via json in this feature's folder. Note that removing entries from the json requires a Minecraft Restart")
 @LoadFeature(module = Modules.Ids.ITEMS)
-public class ItemStats extends JsonFeature {
+public class ItemStats extends Feature {
 
 	public static final String TOOL_EFFICIENCY_LANG = "iguanatweaksreborn.tool_efficiency";
 	public static final String TOOL_DURABILITY_LANG = "iguanatweaksreborn.tool_durability";
@@ -50,45 +50,7 @@ public class ItemStats extends JsonFeature {
 	public static final TagKey<Item> NO_DAMAGE = ITRItemTagsProvider.create("no_damage");
 	public static final TagKey<Item> NO_EFFICIENCY = ITRItemTagsProvider.create("no_efficiency");
 	public static final TagKey<Item> NOT_UNBREAKABLE = ITRItemTagsProvider.create("not_unbreakable");
-
-	/*public static final ArrayList<IdTagValue> ITEM_DURABILITIES_DEFAULT = new ArrayList<>(List.of(
-			IdTagValue.newId("minecraft:elytra", 144),
-			IdTagValue.newId("minecraft:carrot_on_a_stick", 63),
-			IdTagValue.newId("minecraft:fishing_rod", 33),
-			IdTagValue.newId("minecraft:shears", 87),
-			IdTagValue.newId("minecraft:trident", 475),
-
-			IdTagValue.newId("minecraft:leather_helmet", 72),
-			IdTagValue.newId("minecraft:leather_chestplate", 96),
-			IdTagValue.newId("minecraft:leather_leggings", 90),
-			IdTagValue.newId("minecraft:leather_boots", 78),
-
-			IdTagValue.newId("minecraft:chainmail_helmet", 48),
-			IdTagValue.newId("minecraft:chainmail_chestplate", 64),
-			IdTagValue.newId("minecraft:chainmail_leggings", 60),
-			IdTagValue.newId("minecraft:chainmail_boots", 52),
-
-			IdTagValue.newId("minecraft:golden_helmet", 72),
-			IdTagValue.newId("minecraft:golden_chestplate", 96),
-			IdTagValue.newId("minecraft:golden_leggings", 90),
-			IdTagValue.newId("minecraft:golden_boots", 78),
-
-			IdTagValue.newId("minecraft:iron_helmet", 72),
-			IdTagValue.newId("minecraft:iron_chestplate", 96),
-			IdTagValue.newId("minecraft:iron_leggings", 90),
-			IdTagValue.newId("minecraft:iron_boots", 78),
-
-			IdTagValue.newId("minecraft:diamond_helmet", 180),
-			IdTagValue.newId("minecraft:diamond_chestplate", 240),
-			IdTagValue.newId("minecraft:diamond_leggings", 225),
-			IdTagValue.newId("minecraft:diamond_boots", 195),
-
-			IdTagValue.newId("minecraft:netherite_helmet", 178),
-			IdTagValue.newId("minecraft:netherite_chestplate", 237),
-			IdTagValue.newId("minecraft:netherite_leggings", 222),
-			IdTagValue.newId("minecraft:netherite_boots", 192)
-	));
-	public static final ArrayList<IdTagValue> itemDurabilities = new ArrayList<>();*/
+	public static final TagKey<Item> REMOVE_ORIGINAL_MODIFIERS_TAG = ITRItemTagsProvider.create("remove_original_modifiers");
 
 	@Config
 	@Label(name = "More Items Tooltips", description = "If set to true items in the 'no_damage_items' and 'no_efficiency_items' will get a tooltip. Items with durability get a durability tooltip. Tools get an efficiency tooltip.")
@@ -102,26 +64,6 @@ public class ItemStats extends JsonFeature {
 
 	public ItemStats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		/*addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_durabilities"), new SyncType(json -> loadAndReadJson(json, itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE)));
-		JSON_CONFIGS.add(new JsonConfig<>("item_durabilities.json", itemDurabilities, ITEM_DURABILITIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadDurabilities, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_durabilities")));
-		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "tool_efficiencies"), new SyncType(json -> loadAndReadJson(json, toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE)));
-		JSON_CONFIGS.add(new JsonConfig<>("tool_efficiencies.json", toolEfficiencies, TOOL_EFFICIENCIES_DEFAULT, IdTagValue.LIST_TYPE, ItemStats::loadToolEfficiencies, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "tool_efficiencies")));
-		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_attack_damages"), new SyncType(json -> loadAndReadJson(json, itemAttackDamages, ITEM_ATTACK_DAMAGES_DEFAULT, IdTagValue.LIST_TYPE)));
-		JSON_CONFIGS.add(new JsonConfig<>("item_attack_damages.json", itemAttackDamages, ITEM_ATTACK_DAMAGES_DEFAULT, IdTagValue.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_attack_damages")));
-		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_attack_speeds"), new SyncType(json -> loadAndReadJson(json, itemAttackSpeeds, ITEM_ATTACK_SPEEDS_DEFAULT, IdTagValue.LIST_TYPE)));
-		JSON_CONFIGS.add(new JsonConfig<>("item_attack_speeds.json", itemAttackSpeeds, ITEM_ATTACK_SPEEDS_DEFAULT, IdTagValue.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_attack_speeds")));*/
-	}
-
-	@Override
-	public String getModConfigFolder() {
-		return IguanaTweaksReborn.CONFIG_FOLDER;
-	}
-
-	@Override
-	public void loadJsonConfigs() {
-		if (!this.isEnabled())
-			return;
-		super.loadJsonConfigs();
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)

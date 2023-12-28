@@ -2,5 +2,15 @@
 	"item": "minecraft:golden_boots",
 	"durability": 72,
 	"armor": 1,
-	"toughness": 1
+	"toughness": 1,
+	"modifiers": [
+		{
+			"uuid": "dc49f564-489f-4f70-ab50-ce85cc4bfa85",
+			"name": "Golden armor bonus max health",
+			"slot": "feet",
+			"attribute": "minecraft:generic.max_health",
+			"amount": 2,
+			"operation": "addition"
+		}
+	]
 }

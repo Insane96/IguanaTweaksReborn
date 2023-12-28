@@ -1,26 +1,20 @@
 package insane96mcp.iguanatweaksreborn.module.combat.stats;
 
 import com.google.common.collect.Multimap;
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.PiercingPickaxes;
-import insane96mcp.iguanatweaksreborn.module.combat.stats.data.ItemAttributeModifier;
-import insane96mcp.insanelib.base.JsonFeature;
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.AttackDamageMobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -29,12 +23,10 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -48,43 +40,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Label(name = "Stats", description = "Various changes from weapons damage to armor reduction. Item modifiers are controlled via json in this feature's folder")
+@Label(name = "Misc Stats", description = "Various changes from weapons damage to armor reduction")
 @LoadFeature(module = Modules.Ids.COMBAT)
-public class Stats extends JsonFeature {
-
-	public static final String GENERIC_ITEM_MODIFIER = IguanaTweaksReborn.RESOURCE_PREFIX + "item_modifier";
-	public static TagKey<Item> REMOVE_ORIGINAL_MODIFIERS_TAG = ITRItemTagsProvider.create("remove_original_modifiers");
-
-	public static final ArrayList<ItemAttributeModifier> ITEM_MODIFIERS_DEFAULT = new ArrayList<>(List.of(
-			// Material Attack Speed changes
-			new ItemAttributeModifier(IdTagMatcher.newTag("iguanatweaksreborn:equipment/hand/wooden"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.15d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newTag("iguanatweaksreborn:equipment/hand/stone"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newTag("iguanatweaksreborn:equipment/hand/golden"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0.20d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newTag("iguanatweaksreborn:equipment/hand/iron"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newTag("iguanatweaksreborn:equipment/hand/diamond"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, -0.05d, AttributeModifier.Operation.MULTIPLY_BASE),
-			new ItemAttributeModifier(IdTagMatcher.newTag("iguanatweaksreborn:equipment/hand/netherite"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_SPEED, 0d, AttributeModifier.Operation.MULTIPLY_BASE),
-
-			// Material Attack damage changes
-			new ItemAttributeModifier(IdTagMatcher.newTag("iguanatweaksreborn:equipment/hand/wooden"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 0.5d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("iguanatweaksreborn:equipment/hand/stone"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 0d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("iguanatweaksreborn:equipment/hand/golden"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, 1.5d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("iguanatweaksreborn:equipment/hand/iron"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -0.5d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("iguanatweaksreborn:equipment/hand/diamond"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1.5d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("iguanatweaksreborn:equipment/hand/netherite"), UUID.fromString("294e0db0-1185-4d78-b95e-8823b8bb0041"), EquipmentSlot.MAINHAND, () -> Attributes.ATTACK_DAMAGE, -1.5d, AttributeModifier.Operation.ADDITION),
-
-			//Reach changes
-			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:swords"), UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 0.5d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newTag("minecraft:hoes"), UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 0.5d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:trident"), UUID.fromString("de87cf5d-0f15-4b4e-88c5-9b3c971146d0"), EquipmentSlot.MAINHAND, ForgeMod.ENTITY_REACH, 1d, AttributeModifier.Operation.ADDITION),
-
-			//Golden
-			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:golden_helmet"), UUID.fromString("3f22e9a3-0916-43ab-a93f-ba52e5ae28e5"), EquipmentSlot.HEAD, () -> Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:golden_chestplate"), UUID.fromString("f700b45a-0c51-40f8-9f59-836c519d64d5"), EquipmentSlot.CHEST, () -> Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:golden_leggings"), UUID.fromString("4f1caa92-2558-4416-829c-9faf922d7137"), EquipmentSlot.LEGS, () -> Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION),
-			new ItemAttributeModifier(IdTagMatcher.newId("minecraft:golden_boots"), UUID.fromString("dc49f564-489f-4f70-ab50-ce85cc4bfa85"), EquipmentSlot.FEET, () -> Attributes.MAX_HEALTH, 2d, AttributeModifier.Operation.ADDITION)
-	));
-	public static final ArrayList<ItemAttributeModifier> itemModifiers = new ArrayList<>();
-
+public class Stats extends Feature {
 	public static final UUID ATTACK_RANGE_REDUCTION_UUID = UUID.fromString("0dd017a7-274c-4101-85b4-78af20a24c54");
 	public static final UUID MOVEMENT_SPEED_REDUCTION_UUID = UUID.fromString("a88ac0d1-e2b3-4cf1-bb0e-9577486c874a");
 	@Config(min = -4d, max = 4d)
@@ -94,7 +52,7 @@ public class Stats extends JsonFeature {
 	@Label(name = "Players movement speed reduction", description = "Reduces movement speed for players by this percentage.")
 	public static Double playersMovementSpeedReduction = 0.05d;
 	@Config
-	@Label(name = "Disable Crit Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
+	@Label(name = "Disable Critical Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
 	public static Boolean disableCritArrowsBonusDamage = true;
 	@Config(min = 0, max = 1)
 	@Label(name = "Hoes Knockback multiplier")
@@ -116,13 +74,6 @@ public class Stats extends JsonFeature {
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_modifiers"), new SyncType(json -> loadAndReadJson(json, itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE)));
-		JSON_CONFIGS.add(new JsonConfig<>("item_modifiers.json", itemModifiers, ITEM_MODIFIERS_DEFAULT, ItemAttributeModifier.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_modifiers")));
-	}
-
-	@Override
-	public String getModConfigFolder() {
-		return IguanaTweaksReborn.CONFIG_FOLDER;
 	}
 
 	@Override
@@ -150,29 +101,6 @@ public class Stats extends JsonFeature {
 			MCUtils.applyModifier(player, ForgeMod.ENTITY_REACH.get(), ATTACK_RANGE_REDUCTION_UUID, "Entity Reach reduction", playerAttackRangeModifier, AttributeModifier.Operation.ADDITION, false);
 		if (playersMovementSpeedReduction != 0d)
 			MCUtils.applyModifier(player, Attributes.MOVEMENT_SPEED, MOVEMENT_SPEED_REDUCTION_UUID, "Movement Speed reduction", -playersMovementSpeedReduction, AttributeModifier.Operation.MULTIPLY_BASE, false);
-	}
-
-	//Run before Absorption armor
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	public void onAttributeEvent(ItemAttributeModifierEvent event) {
-		if (!this.isEnabled())
-			return;
-
-		//Try to remove original modifiers first
-		if (event.getItemStack().is(REMOVE_ORIGINAL_MODIFIERS_TAG)) {
-			Multimap<Attribute, AttributeModifier> modifiers = event.getOriginalModifiers();
-			modifiers.forEach(event::removeModifier);
-		}
-
-		for (ItemAttributeModifier itemAttributeModifier : itemModifiers) {
-			if (!itemAttributeModifier.item.matchesItem(event.getItemStack().getItem()))
-				continue;
-			if (event.getSlotType() != itemAttributeModifier.slot)
-				continue;
-
-			AttributeModifier modifier = new AttributeModifier(itemAttributeModifier.uuid, GENERIC_ITEM_MODIFIER, itemAttributeModifier.amount, itemAttributeModifier.operation);
-			event.addModifier(itemAttributeModifier.attribute.get(), modifier);
-		}
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)

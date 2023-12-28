@@ -1,4 +1,14 @@
 {
 	"item": "minecraft:trident",
-	"attack_damage": 7
+	"attack_damage": 7,
+	"modifiers": [
+		{
+			"uuid": "de87cf5d-0f15-4b4e-88c5-9b3c971146d0",
+			"name": "Tool modifier",
+			"slot": "mainhand",
+			"attribute": "forge:entity_reach",
+			"amount": 1,
+			"operation": "addition"
+		}
+	]
 }

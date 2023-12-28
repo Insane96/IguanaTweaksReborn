@@ -53,7 +53,7 @@ public class AnvilRepairReloadListener extends SimpleJsonResourceReloadListener 
 			}
 		}
 
-		ITRLogHelper.debug("Loaded %s Anvil Recipe(s)", REPAIRS.size());
+		ITRLogHelper.info("Loaded %s Anvil Recipe(s)", REPAIRS.size());
 	}
 
 	@SubscribeEvent

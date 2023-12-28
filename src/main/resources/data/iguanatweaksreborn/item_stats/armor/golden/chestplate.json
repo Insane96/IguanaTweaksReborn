@@ -2,5 +2,15 @@
 	"item": "minecraft:golden_chestplate",
 	"durability": 96,
 	"armor": 5,
-	"toughness": 1
+	"toughness": 1,
+	"modifiers": [
+		{
+			"uuid": "f700b45a-0c51-40f8-9f59-836c519d64d5",
+			"name": "Golden armor bonus max health",
+			"slot": "chest",
+			"attribute": "minecraft:generic.max_health",
+			"amount": 2,
+			"operation": "addition"
+		}
+	]
 }
