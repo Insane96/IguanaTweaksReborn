@@ -68,35 +68,39 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer durability, @N
 		Multimap<Attribute, AttributeModifier> toAdd = HashMultimap.create();
 		Multimap<Attribute, AttributeModifier> toRemove = HashMultimap.create();
 		for (var entry : modifiers.entries()) {
-			if (this.baseAttackDamage != null && entry.getValue().getId().equals(BASE_ATTACK_DAMAGE_UUID) && entry.getKey().equals(Attributes.ATTACK_DAMAGE)) {
+			if (this.baseAttackDamage != null) {
 				if (this.baseAttackDamage > 0d) {
 					double materialAd = 0d;
 					if (stack.getItem() instanceof TieredItem tieredItem)
 						materialAd = tieredItem.getTier().getAttackDamageBonus();
 					toAdd.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", this.baseAttackDamage + materialAd, AttributeModifier.Operation.ADDITION));
 				}
-				toRemove.put(entry.getKey(), entry.getValue());
+				if (entry.getValue().getId().equals(BASE_ATTACK_DAMAGE_UUID) && entry.getKey().equals(Attributes.ATTACK_DAMAGE))
+					toRemove.put(entry.getKey(), entry.getValue());
 			}
-			if (this.baseAttackSpeed != null && entry.getValue().getId().equals(BASE_ATTACK_SPEED_UUID) && entry.getKey().equals(Attributes.ATTACK_SPEED)) {
+			if (this.baseAttackSpeed != null) {
 				if (this.baseAttackSpeed > 0d)
 					toAdd.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", -(4d - this.baseAttackSpeed), AttributeModifier.Operation.ADDITION));
-				toRemove.put(entry.getKey(), entry.getValue());
+				if (entry.getValue().getId().equals(BASE_ATTACK_SPEED_UUID) && entry.getKey().equals(Attributes.ATTACK_SPEED))
+					toRemove.put(entry.getKey(), entry.getValue());
 			}
-			if (this.baseArmor != null && stack.getItem() instanceof ArmorItem armorItem && entry.getValue().getId().equals(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType())) && entry.getKey().equals(Attributes.ARMOR)) {
+			if (this.baseArmor != null && stack.getItem() instanceof ArmorItem armorItem) {
 				if (this.baseArmor > 0d)
 					toAdd.put(Attributes.ARMOR, new AttributeModifier(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType()), "Armor modifier", this.baseArmor, AttributeModifier.Operation.ADDITION));
-				toRemove.put(entry.getKey(), entry.getValue());
+				if (entry.getValue().getId().equals(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType())) && entry.getKey().equals(Attributes.ARMOR))
+					toRemove.put(entry.getKey(), entry.getValue());
 			}
-			if (this.baseArmorToughness != null && stack.getItem() instanceof ArmorItem armorItem && entry.getValue().getId().equals(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType())) && entry.getKey().equals(Attributes.ARMOR_TOUGHNESS)) {
+			if (this.baseArmorToughness != null && stack.getItem() instanceof ArmorItem armorItem) {
 				if (this.baseArmorToughness > 0d)
 					toAdd.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType()), "Armor toughness", this.baseArmorToughness, AttributeModifier.Operation.ADDITION));
-				toRemove.put(entry.getKey(), entry.getValue());
+				if (entry.getValue().getId().equals(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType())) && entry.getKey().equals(Attributes.ARMOR_TOUGHNESS))
+					toRemove.put(entry.getKey(), entry.getValue());
 			}
-			//TODO If it doesn't have it, it doesn't apply it
-			if (this.baseKnockbackResistance != null && stack.getItem() instanceof ArmorItem armorItem && entry.getValue().getId().equals(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType())) && entry.getKey().equals(Attributes.KNOCKBACK_RESISTANCE)) {
+			if (this.baseKnockbackResistance != null && stack.getItem() instanceof ArmorItem armorItem) {
 				if (this.baseKnockbackResistance > 0d)
 					toAdd.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType()), "Armor knockback resistance", this.baseKnockbackResistance, AttributeModifier.Operation.ADDITION));
-				toRemove.put(entry.getKey(), entry.getValue());
+				if (entry.getValue().getId().equals(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType())) && entry.getKey().equals(Attributes.KNOCKBACK_RESISTANCE))
+					toRemove.put(entry.getKey(), entry.getValue());
 			}
 		}
 		toRemove.forEach(event::removeModifier);
