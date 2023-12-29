@@ -63,12 +63,12 @@ public class DataPacks extends Feature {
 
     public DataPacks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "hardcore_torches", Component.literal("Survival Reimagined Hardcore Torches"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && hardcoreTorches));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "cheaper_chains", Component.literal("Survival Reimagined Cheaper Chains"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cheaperChains));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "misc_tweaks", Component.literal("Survival Reimagined Misc Tweaks"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && miscTweaks));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "actual_redstone_components", Component.literal("Survival Reimagined Actual Redstone components"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && actualRedstoneComponents && !ModList.get().isLoaded("copperative")));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_furnace", Component.literal("Survival Reimagined Copper Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperFurnace));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "disable_long_noses", Component.literal("Survival Reimagined Disable Long Noses"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableLongNoses));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "fishing_loot_changes", Component.literal("Survival Reimagined Fishing Loot Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && fishingLootChanges));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "hardcore_torches", Component.literal("IguanaTweaks Reborn Hardcore Torches"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && hardcoreTorches));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "cheaper_chains", Component.literal("IguanaTweaks Reborn Cheaper Chains"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cheaperChains));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "misc_tweaks", Component.literal("IguanaTweaks Reborn Misc Tweaks"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && miscTweaks));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "actual_redstone_components", Component.literal("IguanaTweaks Reborn Actual Redstone components"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && actualRedstoneComponents && !ModList.get().isLoaded("copperative")));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_furnace", Component.literal("IguanaTweaks Reborn Copper Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperFurnace));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "disable_long_noses", Component.literal("IguanaTweaks Reborn Disable Long Noses"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableLongNoses));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "fishing_loot_changes", Component.literal("IguanaTweaks Reborn Fishing Loot Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && fishingLootChanges));
     }
 }

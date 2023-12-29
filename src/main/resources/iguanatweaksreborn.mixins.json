@@ -6,8 +6,10 @@
 	"mixins": [
 		"AbstractArrowMixin",
 		"AnvilMenuMixin",
+		"ApplyBonusCountMixin",
 		"BoatMixin",
 		"DigDurabilityEnchantmentMixin",
+		"DiggerItemMixin",
 		"EnchantmentMixin",
 		"ExplosionMixin",
 		"FoodDataMixin",

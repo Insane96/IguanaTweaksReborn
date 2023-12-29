@@ -43,7 +43,7 @@ public class BackwardsSlowdown extends Feature {
 
 		event.player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(BACKWARD_WALK_SLOWDOWN_UUID);
 		if (event.player.zza < 0f) {
-			MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, BACKWARD_WALK_SLOWDOWN_UUID, "Survival Reimagined backward slowdown", -slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
+			MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, BACKWARD_WALK_SLOWDOWN_UUID, "IguanaTweaks Reborn backward slowdown", -slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		}
 		if (event.player instanceof LocalPlayer localPlayer && localPlayer.tickCount % 2 == 0)
 			MovementDirectionSync.sync(localPlayer);
