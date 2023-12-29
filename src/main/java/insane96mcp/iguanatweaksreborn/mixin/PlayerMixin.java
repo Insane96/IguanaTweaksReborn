@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
 import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
+import insane96mcp.iguanatweaksreborn.module.experience.PlayerExperience;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.DamageTypeTags;
@@ -14,7 +15,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
 
@@ -28,7 +31,7 @@ public abstract class PlayerMixin extends LivingEntity {
 		super(type, level);
 	}
 
-	/*@Inject(at = @At("RETURN"), method = "getXpNeededForNextLevel", cancellable = true)
+	@Inject(at = @At("RETURN"), method = "getXpNeededForNextLevel", cancellable = true)
 	private void xpBarCap(CallbackInfoReturnable<Integer> callback) {
 		int exp = PlayerExperience.getBetterScalingLevel(this.experienceLevel);
 		if (exp != -1)
@@ -40,7 +43,7 @@ public abstract class PlayerMixin extends LivingEntity {
 		int exp = PlayerExperience.getExperienceOnDeath((Player) (Object) this, false);
 		if (exp != -1)
 			callback.setReturnValue(exp);
-	}*/
+	}
 
 	//Changes efficiency formula
 	@ModifyVariable(method = "getDigSpeed", ordinal = 0, at = @At(value = "STORE", ordinal = 1), remap = false)

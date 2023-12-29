@@ -26,7 +26,7 @@ public class AttackInvincibility extends Feature {
 	@Label(name = "Invincibility frames based off attack speed", description = "If true less invincibility frames are applied to mobs only if using an item with attack speed modifier")
 	public static Boolean invincibilityFramesAttackSpeed = true;
 	@Config
-	@Label(name = "Arrows and magic ignore invincibility frames", description = "If true, a datapack is enabled that makes Arrows and magic damage ignore invincibility frames.")
+	@Label(name = "Arrows and magic ignore invincibility frames", description = "If true, a data pack is enabled that makes Arrows and magic damage ignore invincibility frames.")
 	public static Boolean arrowsMagicNoInvincFrames = true;
 
 	public AttackInvincibility(Module module, boolean enabledByDefault, boolean canBeDisabled) {

@@ -17,3 +17,4 @@ Please note this changelog is based off the latest Survival Reimagined version, 
 * Client
   * Added config option to disable the shorter world border
   * Fixed End music being changed even if the Sound feature was disabled
+* Merged Global, Block, Mobs and Other experience into a single Feature

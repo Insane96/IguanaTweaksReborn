@@ -13,7 +13,8 @@
 		"MusicsMixin",
 		"PlayerMixin",
 		"ProtectionEnchantmentMixin",
-		"ThornsEnchantmentMixin"
+		"ThornsEnchantmentMixin",
+		"ThrownExperienceBottleMixin"
 	],
 	"minVersion": "0.8",
 	"client": [

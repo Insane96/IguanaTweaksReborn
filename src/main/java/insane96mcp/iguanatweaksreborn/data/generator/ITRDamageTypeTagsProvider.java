@@ -29,9 +29,7 @@ public class ITRDamageTypeTagsProvider extends DamageTypeTagsProvider {
         tag(DamageTypeTags.NO_IMPACT).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE);
 
         tag(PiercingPickaxes.PIERCING_DAMAGE_TYPE).add(PiercingPickaxes.PIERCING_MOB_ATTACK, PiercingPickaxes.PIERCING_PLAYER_ATTACK);
-        tag(PiercingPickaxes.DOESNT_TRIGGER_PIERCING).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE)/*.add(CopperToolsExpansion.ELECTROCUTION_ATTACK)*/;
-
-        //tag(CopperToolsExpansion.DOESNT_TRIGGER_ELECTROCUTION).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE).add(CopperToolsExpansion.ELECTROCUTION_ATTACK);
+        tag(PiercingPickaxes.DOESNT_TRIGGER_PIERCING).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE);
     }
 
     public static TagKey<DamageType> create(String tagName) {
