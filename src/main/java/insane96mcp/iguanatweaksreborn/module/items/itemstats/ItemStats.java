@@ -4,7 +4,6 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
-import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -84,14 +83,14 @@ public class ItemStats extends Feature {
 			return;
 
 		ItemStack stack = player.getMainHandItem();
-		if (Utils.isItemInTag(stack.getItem(), NO_DAMAGE)) {
+		if (stack.is(NO_DAMAGE)) {
 			event.setAmount(1f);
 			player.displayClientMessage(Component.translatable(NO_DAMAGE_ITEM_LANG), true);
 		}
 	}
 
 	public static boolean shouldNotBreak(ItemStack stack) {
-		return !Utils.isItemInTag(stack.getItem(), NOT_UNBREAKABLE) || (unbreakableEnchantedItems && stack.isEnchanted());
+		return !stack.is(NOT_UNBREAKABLE) || (unbreakableEnchantedItems && stack.isEnchanted());
 	}
 
 	public static boolean isBroken(ItemStack stack) {
@@ -129,7 +128,7 @@ public class ItemStats extends Feature {
 		ItemStack stack = player.getMainHandItem();
 		if (stack.getMaxDamage() == 0)
 			return;
-		if (Utils.isItemInTag(stack.getItem(), NO_EFFICIENCY)) {
+		if (stack.is(NO_EFFICIENCY)) {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(NO_EFFICIENCY_ITEM_LANG), true);
 		}
@@ -218,10 +217,10 @@ public class ItemStats extends Feature {
 			return;
 
 		ItemStack stack = event.getItemStack();
-		if (Utils.isItemInTag(stack.getItem(), NO_DAMAGE)) {
+		if (stack.is(NO_DAMAGE)) {
 			event.getToolTip().add(Component.translatable(NO_DAMAGE_ITEM_LANG).withStyle(ChatFormatting.RED));
 		}
-		if (Utils.isItemInTag(stack.getItem(), NO_EFFICIENCY)) {
+		if (stack.is(NO_EFFICIENCY)) {
 			event.getToolTip().add(Component.translatable(NO_EFFICIENCY_ITEM_LANG).withStyle(ChatFormatting.RED));
 		}
 		else if (stack.getItem() instanceof DiggerItem diggerItem){

@@ -3,7 +3,6 @@ package insane96mcp.iguanatweaksreborn.module.experience;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -11,10 +10,12 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagRange;
 import insane96mcp.insanelib.setup.ILStrings;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.ThrownExperienceBottle;
@@ -36,7 +37,7 @@ public class Experience extends JsonFeature {
 
 	public static final String XP_PROCESSED = IguanaTweaksReborn.RESOURCE_PREFIX + "xp_processed";
 	public static final TagKey<Block> NO_BLOCK_XP_MULTIPLIER = ITRBlockTagsProvider.create("no_block_xp_multiplier");
-	public static final ResourceLocation NO_SPAWNER_XP_MULTIPLIER = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "no_spawner_xp_multiplier");
+	public static final TagKey<EntityType<?>> NO_SPAWNER_XP_MULTIPLIER = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "no_spawner_xp_multiplier"));
 
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Global Experience Multiplier", description = "Experience dropped will be multiplied by this value.\nCan be set to 0 to disable experience drop from any source.")
@@ -120,7 +121,7 @@ public class Experience extends JsonFeature {
 	public static void handleMobsMultiplier(EntityJoinLevelEvent event) {
 		if ((mobsFromSpawnersMultiplier == 1d && naturalMobsMultiplier == 1d)
 				|| !(event.getEntity() instanceof Mob mob)
-				|| Utils.isEntityInTag(mob, NO_SPAWNER_XP_MULTIPLIER))
+				|| mob.getType().is(NO_SPAWNER_XP_MULTIPLIER))
 			return;
 
 		if (mob.getPersistentData().getBoolean(ILStrings.Tags.SPAWNED_FROM_SPAWNER))

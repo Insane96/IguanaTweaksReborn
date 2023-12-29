@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.data.generator;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.module.items.StackSizes;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -9,6 +10,7 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -50,25 +52,21 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
                 .add(Items.COOKIE)
                 .addOptional(new ResourceLocation("farmersdelight:chocolate_pie_slice")).addOptional(new ResourceLocation("create:bar_of_chocolate")).addOptional(new ResourceLocation("create:chocolate_glazed_berries"));
 
-        tag(ItemStats.NO_DAMAGE);
-        tag(ItemStats.NO_EFFICIENCY);
-        //noinspection unchecked
-        tag(Knockback.REDUCED_KNOCKBACK);
-
         tag(Spawners.SPAWNER_REACTIVATOR_TAG)
                 .add(Items.ECHO_SHARD);
 
         tag(FoodDrinks.RAW_FOOD)
                 .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT);
 
-        tag(StackSizes.NO_STACK_SIZE_CHANGES)
-                .add(Items.ROTTEN_FLESH, Items.SPIDER_EYE);
 
         tag(FoodDrinks.FOOD_BLACKLIST);
         tag(BoneMeal.ITEM_BLACKLIST);
 
         tag(PlantsGrowth.NO_FERTILITY_TOOLTIP)
                 .add(Items.CARROT, Items.POTATO);*/
+        tag(StackSizes.NO_STACK_SIZE_CHANGES)
+                .add(Items.ROTTEN_FLESH, Items.SPIDER_EYE);
+
         //noinspection unchecked
         tag(ItemStats.NOT_UNBREAKABLE)
                 .addTags(WOODEN_HAND_EQUIPMENT, STONE_HAND_EQUIPMENT);

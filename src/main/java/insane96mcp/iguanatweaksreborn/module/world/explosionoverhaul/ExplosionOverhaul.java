@@ -2,16 +2,18 @@ package insane96mcp.iguanatweaksreborn.module.world.explosionoverhaul;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Explosion;
 import net.minecraftforge.event.level.ExplosionEvent;
@@ -21,8 +23,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Label(name = "Explosion Overhaul", description = "Various changes to explosions from knockback to shielding.")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class ExplosionOverhaul extends Feature {
-	public static final ResourceLocation KNOCKBACK_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "explosion_knockback_blacklist");
-	public static final ResourceLocation ENTITY_BLACKLIST = new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "explosion_entity_blacklist");
+	public static final TagKey<EntityType<?>> KNOCKBACK_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "explosion_knockback_blacklist"));
+	public static final TagKey<EntityType<?>> ENTITY_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "explosion_entity_blacklist"));
 
 	@Config
 	@Label(name = "Disable Explosion Randomness", description = "Vanilla Explosions use a random number that changes the explosion power. With this enabled the ray strength will be as the explosion size.")
@@ -108,7 +110,7 @@ public class ExplosionOverhaul extends Feature {
 	public void replaceExplosionWithSRExplosion(ExplosionEvent.Start event) {
 		if (!this.isEnabled()
 				|| !(event.getLevel() instanceof ServerLevel level)
-				|| (event.getExplosion().getExploder() != null && Utils.isEntityInTag(event.getExplosion().getExploder(), ENTITY_BLACKLIST)))
+				|| (event.getExplosion().getExploder() != null && event.getExplosion().getExploder().getType().is(ENTITY_BLACKLIST)))
 			return;
 
 		event.setCanceled(true);
@@ -123,6 +125,6 @@ public class ExplosionOverhaul extends Feature {
 		if (!(entity instanceof LivingEntity))
 			return true;
 
-		return Utils.isEntityInTag(entity, KNOCKBACK_BLACKLIST);
+		return entity.getType().is(KNOCKBACK_BLACKLIST);
 	}
 }
