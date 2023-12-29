@@ -1,7 +1,10 @@
 package insane96mcp.iguanatweaksreborn.network;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.network.message.*;
+import insane96mcp.iguanatweaksreborn.network.message.AnvilRepairSync;
+import insane96mcp.iguanatweaksreborn.network.message.InvulnerableTimeMessageSync;
+import insane96mcp.iguanatweaksreborn.network.message.ItemStatisticsSync;
+import insane96mcp.iguanatweaksreborn.network.message.StackSizesSync;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -18,7 +21,6 @@ public class NetworkHandler {
 	private static int index = 0;
 
 	public static void init() {
-		CHANNEL.registerMessage(++index, JumpMidAirMessage.class, JumpMidAirMessage::encode, JumpMidAirMessage::decode, JumpMidAirMessage::handle);
 		CHANNEL.registerMessage(++index, InvulnerableTimeMessageSync.class, InvulnerableTimeMessageSync::encode, InvulnerableTimeMessageSync::decode, InvulnerableTimeMessageSync::handle);
 		CHANNEL.registerMessage(++index, AnvilRepairSync.class, AnvilRepairSync::encode, AnvilRepairSync::decode, AnvilRepairSync::handle);
 		CHANNEL.registerMessage(++index, ItemStatisticsSync.class, ItemStatisticsSync::encode, ItemStatisticsSync::decode, ItemStatisticsSync::handle);

@@ -64,7 +64,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
 			IdTagMatcher.newId("minecraft:protection"),
 			IdTagMatcher.newId("minecraft:mending"),
-			// IdTagMatcher.newId("minecraft:bane_of_arthropods"),
+			IdTagMatcher.newId("minecraft:bane_of_arthropods"),
 			IdTagMatcher.newId("allurement:reforming"),
 			IdTagMatcher.newId("allurement:alleviating")
 
