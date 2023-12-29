@@ -1,9 +1,9 @@
-// 1.20.1	2023-12-27T11:31:17.3614385	Tags for minecraft:block mod id iguanatweaksreborn
+// 1.20.1	2023-12-29T19:34:43.555385	Tags for minecraft:block mod id iguanatweaksreborn
 cb87c71bdb2f81be349f5de365ab2aa66a11bde6 data/iguanatweaksreborn/tags/blocks/depth_multiplier_blacklist.json
 9c8472a64a3dcde9ed2c0ad0bb67999d78d40431 data/iguanatweaksreborn/tags/blocks/grass_blocks.json
 cb87c71bdb2f81be349f5de365ab2aa66a11bde6 data/iguanatweaksreborn/tags/blocks/hardness_blacklist.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/iguanatweaksreborn/tags/blocks/no_block_xp_multiplier.json
-858b4736f63a64046a40e9dbd025c709c79d7cb2 data/iguanatweaksreborn/tags/blocks/obsidians.json
+b00f6c1b8e85adbd6341a8c159fe0ba6eb6a0751 data/iguanatweaksreborn/tags/blocks/obsidians.json
 ac37cd654850943fcc007084876459bf0f24c761 data/iguanatweaksreborn/tags/blocks/structures/respawn_obelisk/blocks_to_rot.json
 c9886fc6bfa99b22909fe8b51a89b534144880e8 data/iguanatweaksreborn/tags/blocks/tall_grass.json
 e7a8c631b3ba3bd9a98d2bb83f927b25fe348d37 data/minecraft/tags/blocks/fall_damage_resetting.json

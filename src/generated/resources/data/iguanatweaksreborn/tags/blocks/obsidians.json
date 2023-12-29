@@ -1,6 +1,8 @@
 {
   "values": [
     "minecraft:obsidian",
+    "minecraft:crying_obsidian",
+    "minecraft:obsidian",
     "minecraft:crying_obsidian"
   ]
 }

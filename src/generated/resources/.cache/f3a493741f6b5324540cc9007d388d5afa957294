@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-27T21:50:02.3215989	Tags for minecraft:damage_type mod id iguanatweaksreborn
+// 1.20.1	2023-12-29T19:34:43.5533554	Tags for minecraft:damage_type mod id iguanatweaksreborn
 2e7be3525b7948af66c725247a77dace022992a2 data/iguanatweaksreborn/tags/damage_type/doesnt_trigger_piercing.json
 ee1e81c42e4434e63b3e7191c56344c58a6eb938 data/iguanatweaksreborn/tags/damage_type/piercing_damage_type.json
 2e7be3525b7948af66c725247a77dace022992a2 data/minecraft/tags/damage_type/bypasses_armor.json
