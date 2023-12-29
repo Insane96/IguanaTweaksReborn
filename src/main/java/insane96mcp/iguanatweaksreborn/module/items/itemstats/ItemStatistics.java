@@ -77,10 +77,10 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 		Multimap<Attribute, AttributeModifier> toRemove = HashMultimap.create();
 		for (var entry : modifiers.entries()) {
 			if (this.baseAttackDamage != null) {
-				if (this.baseAttackDamage > 0d) {
-					double materialAd = 0d;
-					if (stack.getItem() instanceof TieredItem tieredItem)
-						materialAd = tieredItem.getTier().getAttackDamageBonus();
+				double materialAd = 0d;
+				if (stack.getItem() instanceof TieredItem tieredItem)
+					materialAd = tieredItem.getTier().getAttackDamageBonus();
+				if (this.baseAttackDamage + materialAd > 0d) {
 					toAdd.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", this.baseAttackDamage + materialAd, AttributeModifier.Operation.ADDITION));
 				}
 				if (entry.getValue().getId().equals(BASE_ATTACK_DAMAGE_UUID) && entry.getKey().equals(Attributes.ATTACK_DAMAGE))
@@ -130,8 +130,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 		toAdd.forEach(event::addModifier);
 	}
 
-	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<ItemStatistics>>() {
-	}.getType();
+	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<ItemStatistics>>() {}.getType();
 
 	public static class Serializer implements JsonDeserializer<ItemStatistics>, JsonSerializer<ItemStatistics> {
 		@Override
