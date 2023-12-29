@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.data.generator;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.iguanatweaksreborn.module.items.StackSizes;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
 import net.minecraft.core.HolderLookup;
@@ -55,11 +56,6 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
         tag(Spawners.SPAWNER_REACTIVATOR_TAG)
                 .add(Items.ECHO_SHARD);
 
-        tag(FoodDrinks.RAW_FOOD)
-                .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT);
-
-
-        tag(FoodDrinks.FOOD_BLACKLIST);
         tag(BoneMeal.ITEM_BLACKLIST);
 
         tag(PlantsGrowth.NO_FERTILITY_TOOLTIP)
@@ -70,6 +66,8 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
         //noinspection unchecked
         tag(ItemStats.NOT_UNBREAKABLE)
                 .addTags(WOODEN_HAND_EQUIPMENT, STONE_HAND_EQUIPMENT);
+        tag(FoodDrinks.RAW_FOOD)
+                .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT);
     }
 
     public static TagKey<Item> create(String tagName) {

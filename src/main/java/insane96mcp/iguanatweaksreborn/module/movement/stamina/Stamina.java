@@ -1,11 +1,11 @@
 package insane96mcp.iguanatweaksreborn.module.movement.stamina;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.mixin.client.GuiMixin;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.network.message.StaminaSync;
+import insane96mcp.iguanatweaksreborn.utils.ClientUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -34,7 +34,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
-import org.lwjgl.opengl.GL11;
 
 @Label(name = "Stamina", description = "Stamina to let the player run and do stuff.")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
@@ -210,9 +209,9 @@ public class Stamina extends Feature {
         int halfHeartsStamina = Mth.ceil(StaminaHandler.getStamina(player) / staminaPerHalfHeart);
         int height = 9;
         if (StaminaHandler.isStaminaLocked(player))
-            setColor(0.8f, 0.8f, 0.8f, .8f);
+            ClientUtils.setColor(0.8f, 0.8f, 0.8f, .8f);
         else
-            setColor(1f, 1f, 1f, 0.5f);
+            ClientUtils.setColor(1f, 1f, 1f, 0.5f);
         //int jiggle = 0;
         //TODO Change to the same way vanilla renders hearts
         for (int hp = halfHeartsMaxStamina - 1; hp >= 0; hp--) {
@@ -239,18 +238,7 @@ public class Stamina extends Feature {
 
             guiGraphics.blit(IguanaTweaksReborn.GUI_ICONS, right + (hp / 2 * 8) + r - (hp / 20 * 80), top - (hp / 20 * rowHeight), u, v, width, height);
         }
-        resetColor();
-    }
-
-    public static void setColor(float r, float g, float b, float alpha) {
-        RenderSystem.enableBlend();
-        RenderSystem.setShaderColor(r, g, b, alpha);
-        RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-    }
-
-    public static void resetColor() {
-        RenderSystem.disableBlend();
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        ClientUtils.resetColor();
     }
 
     @OnlyIn(Dist.CLIENT)

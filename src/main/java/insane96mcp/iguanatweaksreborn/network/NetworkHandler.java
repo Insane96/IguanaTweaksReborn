@@ -24,5 +24,8 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(++index, StackSizesSync.class, StackSizesSync::encode, StackSizesSync::decode, StackSizesSync::handle);
 		CHANNEL.registerMessage(++index, MovementDirectionSync.class, MovementDirectionSync::encode, MovementDirectionSync::decode, MovementDirectionSync::handle);
 		CHANNEL.registerMessage(++index, StaminaSync.class, StaminaSync::encode, StaminaSync::decode, StaminaSync::handle);
+		CHANNEL.registerMessage(++index, FoodRegenSync.class, FoodRegenSync::encode, FoodRegenSync::decode, FoodRegenSync::handle);
+		CHANNEL.registerMessage(++index, ExhaustionSync.class, ExhaustionSync::encode, ExhaustionSync::decode, ExhaustionSync::handle);
+		CHANNEL.registerMessage(++index, SaturationSync.class, SaturationSync::encode, SaturationSync::decode, SaturationSync::handle);
 	}
 }

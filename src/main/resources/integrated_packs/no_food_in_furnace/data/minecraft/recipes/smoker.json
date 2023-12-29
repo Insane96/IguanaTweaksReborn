@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "#X#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:logs"
+    },
+    "X": {
+      "item": "minecraft:furnace"
+    },
+    "I": {
+      "item": "survivalreimagined:durium_ingot"
+    }
+  },
+  "result": {
+    "item": "minecraft:smoker"
+  }
+}
