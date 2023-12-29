@@ -2,5 +2,5 @@
 	"item": "minecraft:chainmail_helmet",
 	"durability": 52,
 	"armor": 4,
-	"toughness": 1
+	"armor_toughness": 1
 }

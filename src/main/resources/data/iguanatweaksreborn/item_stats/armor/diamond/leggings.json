@@ -2,6 +2,6 @@
 	"item": "minecraft:diamond_leggings",
 	"durability": 225,
 	"armor": 5,
-	"toughness": 1,
+	"armor_toughness": 1,
 	"knockback_resistance": 0.03
 }

@@ -2,6 +2,6 @@
 	"item": "minecraft:netherite_helmet",
 	"durability": 182,
 	"armor": 4,
-	"toughness": 2,
+	"armor_toughness": 2,
 	"knockback_resistance": 0.05
 }

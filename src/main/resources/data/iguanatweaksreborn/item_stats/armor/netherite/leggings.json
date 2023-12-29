@@ -2,6 +2,6 @@
 	"item": "minecraft:netherite_leggings",
 	"durability": 210,
 	"armor": 6,
-	"toughness": 2,
+	"armor_toughness": 2,
 	"knockback_resistance": 0.05
 }
