@@ -1,7 +1,11 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
 import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
+import insane96mcp.iguanatweaksreborn.module.movement.TerrainSlowdown;
+import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -31,32 +35,26 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         super(pEntityType, pLevel);
     }
 
-    /*@Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isSprinting()Z"), method = "jumpFromGround")
-    public boolean onSprintJumpCheck(LivingEntity instance) {
-        if (instance.isSprinting() && Feature.isEnabled(TerrainSlowdown.class)) {
-            float yRot = instance.getYRot() * ((float)Math.PI / 180F);
-            float boost = 0.2f;
-            boost *= MCUtils.getMovementSpeedRatio(instance);
-            instance.setDeltaMovement(instance.getDeltaMovement().add((-Mth.sin(yRot) * boost), 0.0D, (Mth.cos(yRot) * boost)));
-            return false;
-        }
-        return instance.isSprinting();
-    }
-
+    /*
     @Inject(method = "getCurrentSwingDuration", at = @At("HEAD"), cancellable = true)
     private void onPostDamage(CallbackInfoReturnable<Integer> cir) {
         if (this.hasEffect(Tiredness.TIRED.get())) {
             //noinspection DataFlowIssue
             cir.setReturnValue(6 + (1 + this.getEffect(Tiredness.TIRED.get()).getAmplifier()));
         }
-    }
-
-    @Redirect(method = "handleOnClimbable", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;resetFallDistance()V"))
-    public void onResetFallDamageOnClimbables(LivingEntity instance) {
-        if (instance.fallDistance > 0f)
-            instance.causeFallDamage(instance.fallDistance, 1f, instance.damageSources().fall());
-        instance.resetFallDistance();
     }*/
+
+    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isSprinting()Z"), method = "jumpFromGround")
+    public boolean onSprintJumpCheck(LivingEntity instance) {
+        if (instance.isSprinting() && Feature.isEnabled(TerrainSlowdown.class)) {
+            float yRot = instance.getYRot() * ((float)Math.PI / 180F);
+            float boost = 0.2f;
+            boost *= (float) MCUtils.getMovementSpeedRatio(instance);
+            instance.setDeltaMovement(instance.getDeltaMovement().add((-Mth.sin(yRot) * boost), 0.0D, (Mth.cos(yRot) * boost)));
+            return false;
+        }
+        return instance.isSprinting();
+    }
 
     @ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
     private float onCalculateAbsorption(float f1, DamageSource damageSource, float amount) {
@@ -69,5 +67,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
     @Redirect(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setAbsorptionAmount(F)V", ordinal = 1))
     private void onSetAbsorptionSecondTime(LivingEntity instance, float absorption) {
         //Cancel Mojang damaging absorption twice for some reason
+    }
+
+    @Redirect(method = "handleOnClimbable", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;resetFallDistance()V"))
+    public void onResetFallDamageOnClimbable(LivingEntity instance) {
+        if (instance.fallDistance > 0f)
+            instance.causeFallDamage(instance.fallDistance, 1f, instance.damageSources().fall());
+        instance.resetFallDistance();
     }
 }

@@ -74,7 +74,7 @@ public class FoodDrinks extends JsonFeature {
 	public static Boolean noFurnaceFoodAndSmokerRecipe = true;
 
 	@Config(min = 0d, max = 1f)
-	@Label(name = "Raw food Poison Chance", description = "Raw food has this chance to poison the player. Raw food is defined in the survivalreimagined:raw_food tag")
+	@Label(name = "Raw food Poison Chance", description = "Raw food has this chance to poison the player. Raw food is defined in the iguanatweaksreborn:raw_food tag")
 	public static Double rawFoodPoisonChance = 0.7d;
 
 	public FoodDrinks(Module module, boolean enabledByDefault, boolean canBeDisabled) {

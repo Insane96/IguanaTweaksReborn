@@ -1,0 +1,31 @@
+{
+	"replace": false,
+	"entries": [
+		"iguanatweaksreborn:world_loot/chests/abandoned_mineshaft",
+		"iguanatweaksreborn:world_loot/chests/buried_treasure",
+		"iguanatweaksreborn:world_loot/chests/desert_pyramid",
+		"iguanatweaksreborn:world_loot/chests/igloo_chest",
+		"iguanatweaksreborn:world_loot/chests/jungle_temple",
+		"iguanatweaksreborn:world_loot/chests/pillager_outpost",
+		"iguanatweaksreborn:world_loot/chests/ruined_portal",
+		"iguanatweaksreborn:world_loot/chests/shipwreck_treasure",
+		"iguanatweaksreborn:world_loot/chests/simple_dungeon",
+		"iguanatweaksreborn:world_loot/chests/spawn_bonus_chest",
+		"iguanatweaksreborn:world_loot/chests/village/village_armorer",
+		"iguanatweaksreborn:world_loot/chests/village/village_butcher",
+		"iguanatweaksreborn:world_loot/chests/village/village_cartographer",
+		"iguanatweaksreborn:world_loot/chests/village/village_desert_house",
+		"iguanatweaksreborn:world_loot/chests/village/village_fisher",
+		"iguanatweaksreborn:world_loot/chests/village/village_fletcher",
+		"iguanatweaksreborn:world_loot/chests/village/village_mason",
+		"iguanatweaksreborn:world_loot/chests/village/village_plains_house",
+		"iguanatweaksreborn:world_loot/chests/village/village_savanna_house",
+		"iguanatweaksreborn:world_loot/chests/village/village_shepherd",
+		"iguanatweaksreborn:world_loot/chests/village/village_snowy_house",
+		"iguanatweaksreborn:world_loot/chests/village/village_taiga_house",
+		"iguanatweaksreborn:world_loot/chests/village/village_tannery",
+		"iguanatweaksreborn:world_loot/chests/village/village_temple",
+		"iguanatweaksreborn:world_loot/chests/village/village_toolsmith",
+		"iguanatweaksreborn:world_loot/chests/village/village_weaponsmith"
+	]
+}

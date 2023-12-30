@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.data.generator;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.mining.blockhardness.BlockHardness;
+import insane96mcp.iguanatweaksreborn.module.world.desirepaths.DesirePaths;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -19,7 +20,6 @@ import java.util.concurrent.CompletableFuture;
 public class ITRBlockTagsProvider extends BlockTagsProvider {
     public static final TagKey<Block> RESPAWN_OBELISK_BLOCKS_TO_ROT = create("structures/respawn_obelisk/blocks_to_rot");
     public static final TagKey<Block> OBSIDIANS = create("obsidians");
-    public static final TagKey<Block> TALL_GRASS = create("tall_grass");
     public static final TagKey<Block> NO_BLOCK_XP_MULTIPLIER = create("no_block_xp_multiplier");
     public static final TagKey<Block> GRASS_BLOCKS = create("grass_blocks");
     public static final TagKey<Block> COPPER_ORES = create("copper_ores");
@@ -53,7 +53,7 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
         tag(BlockHardness.DEPTH_MULTIPLIER_BLACKLIST)
                 .addTag(OBSIDIANS);
 
-        tag(TALL_GRASS)
+        tag(DesirePaths.TALL_GRASS)
                 .add(Blocks.GRASS).add(Blocks.TALL_GRASS).add(Blocks.FERN).add(Blocks.DEAD_BUSH);
 
         tag(GRASS_BLOCKS)

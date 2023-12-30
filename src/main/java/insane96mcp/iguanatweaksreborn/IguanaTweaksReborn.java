@@ -9,6 +9,7 @@ import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.module.movement.stamina.Stamina;
+import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerData;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.setup.ITRCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITRPackSource;
@@ -75,6 +76,7 @@ public class IguanaTweaksReborn
         modEventBus.addListener(PiercingPickaxes::piercingDamageAttribute);
         modEventBus.addListener(RegeneratingAbsorption::regeneratingAbsorptionAttribute);
         modEventBus.register(Stamina.class);
+		modEventBus.register(SpawnerData.class);
         ITRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));
         /*MinecraftForge.EVENT_BUS.register(SpawnerDataAttacher.class);
         if (FMLLoader.getDist().isClient()) {
@@ -83,8 +85,7 @@ public class IguanaTweaksReborn
             modEventBus.addListener(ClientSetup::registerRecipeBookCategories);
             modEventBus.addListener(ClientSetup::registerParticleFactories);
         }
-        modEventBus.register(Tiredness.class);
-        modEventBus.register(SpawnerData.class);*/
+        modEventBus.register(Tiredness.class);*/
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)

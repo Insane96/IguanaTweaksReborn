@@ -9,7 +9,6 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
-import net.minecraftforge.fml.ModList;
 
 @Label(name = "Data Packs", description = "Various data packs that can be enabled/disabled")
 @LoadFeature(module = Modules.Ids.MISC)
@@ -50,25 +49,38 @@ public class DataPacks extends Feature {
     public static Boolean actualRedstoneComponents = true;
 
     @Config
-    @Label(name = "Copper Furnace", description = "If true a datapack will be enabled that makes furnaces require copper. Copper ingots can be obtained from raw copper on campfires.")
+    @Label(name = "Copper Furnace", description = "If true a data pack will be enabled that makes furnaces require copper. Copper ingots can be obtained from raw copper on campfires.")
     public static Boolean copperFurnace = true;
 
     @Config
-    @Label(name = "Disable Long Noses Structures", description = "If true a datapack will be enabled that disables villages and pillagers outpost generation.")
+    @Label(name = "Disable Long Noses Structures", description = "If true a data pack will be enabled that disables villages and pillagers outpost generation.")
     public static Boolean disableLongNoses = true;
 
     @Config
-    @Label(name = "Fishing Loot Changes", description = "If true a datapack will be enabled that changes fishing Loot.")
+    @Label(name = "Fishing Loot Changes", description = "If true a data pack will be enabled that changes fishing Loot.")
     public static Boolean fishingLootChanges = true;
+    @Config
+    @Label(name = "Increase End Cities", description = "If true, a data pack will be enabled that makes End Cities will be more common.")
+    public static Boolean increaseEndCities = true;
+
+    @Config
+    @Label(name = "Better Structure Loot", description = "If true a data pack will be enabled that overhauls structure loot")
+    public static Boolean betterStructureLoot = true;
+    @Config
+    @Label(name = "Less loot closer to spawn", description = "If true a data pack will be enabled that reduces loot from structures closer to spawn")
+    public static Boolean lessLootCloserToSpawn = true;
 
     public DataPacks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "hardcore_torches", Component.literal("IguanaTweaks Reborn Hardcore Torches"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && hardcoreTorches));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "cheaper_chains", Component.literal("IguanaTweaks Reborn Cheaper Chains"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cheaperChains));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "misc_tweaks", Component.literal("IguanaTweaks Reborn Misc Tweaks"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && miscTweaks));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "actual_redstone_components", Component.literal("IguanaTweaks Reborn Actual Redstone components"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && actualRedstoneComponents && !ModList.get().isLoaded("copperative")));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "actual_redstone_components", Component.literal("IguanaTweaks Reborn Actual Redstone components"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && actualRedstoneComponents));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_furnace", Component.literal("IguanaTweaks Reborn Copper Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperFurnace));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "disable_long_noses", Component.literal("IguanaTweaks Reborn Disable Long Noses"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableLongNoses));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "fishing_loot_changes", Component.literal("IguanaTweaks Reborn Fishing Loot Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && fishingLootChanges));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "increased_end_cities", Component.literal("Survival Reimagined Increased End Cities"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && increaseEndCities));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "better_loot", Component.literal("Survival Reimagined Better Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && betterStructureLoot));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "hardcore_loot", Component.literal("IguanaTweaks Reborn Less Loot Closer to Spawn"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lessLootCloserToSpawn));
     }
 }

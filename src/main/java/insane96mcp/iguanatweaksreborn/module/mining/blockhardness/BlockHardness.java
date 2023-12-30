@@ -75,7 +75,7 @@ public class BlockHardness extends JsonFeature {
 			IdTagValue.newId("survivalreimagined:rich_deepslate_gold_ore", 6.666d),
 
 			IdTagValue.newId("minecraft:ancient_debris", 12d),
-			IdTagValue.newTag("survivalreimagined:obsidians", 33d),
+			IdTagValue.newTag("iguanatweaksreborn:obsidians", 33d),
 
 			IdTagValue.newId("minecraft:powder_snow", 2.5d)
 	));

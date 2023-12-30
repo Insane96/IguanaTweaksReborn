@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.iguanatweaksreborn.module.items.StackSizes;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
+import insane96mcp.iguanatweaksreborn.module.world.spawners.Spawners;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -47,16 +48,9 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
 
         tag(ItemTags.BEACON_PAYMENT_ITEMS).add(Items.NETHER_STAR).add(Durium.INGOT.get(), SoulSteel.INGOT.get(), Keego.GEM.get());
         //Mod's
-        //tag(Hoes.DISABLED_HOES);
-
         tag(Tiredness.ENERGY_BOOST_ITEM_TAG)
                 .add(Items.COOKIE)
                 .addOptional(new ResourceLocation("farmersdelight:chocolate_pie_slice")).addOptional(new ResourceLocation("create:bar_of_chocolate")).addOptional(new ResourceLocation("create:chocolate_glazed_berries"));
-
-        tag(Spawners.SPAWNER_REACTIVATOR_TAG)
-                .add(Items.ECHO_SHARD);
-
-        tag(BoneMeal.ITEM_BLACKLIST);
 
         tag(PlantsGrowth.NO_FERTILITY_TOOLTIP)
                 .add(Items.CARROT, Items.POTATO);*/
@@ -68,6 +62,8 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
                 .addTags(WOODEN_HAND_EQUIPMENT, STONE_HAND_EQUIPMENT);
         tag(FoodDrinks.RAW_FOOD)
                 .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT);
+		tag(Spawners.SPAWNER_REACTIVATOR_TAG)
+				.add(Items.ECHO_SHARD);
     }
 
     public static TagKey<Item> create(String tagName) {
