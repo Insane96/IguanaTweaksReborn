@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.data.generator;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.module.farming.HardCrops;
 import insane96mcp.iguanatweaksreborn.module.mining.blockhardness.BlockHardness;
 import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.iguanatweaksreborn.module.world.desirepaths.DesirePaths;
@@ -45,8 +46,8 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
         tag(OBSIDIANS)
                 .add(Blocks.OBSIDIAN).add(Blocks.CRYING_OBSIDIAN);
 
-        /*tag(HardCrops.HARDER_CROPS_TAG)
-                .add(Blocks.WHEAT, Blocks.CARROTS, Blocks.POTATOES, Blocks.BEETROOTS);*/
+        tag(HardCrops.HARDER_CROPS_TAG)
+                .add(Blocks.WHEAT, Blocks.CARROTS, Blocks.POTATOES, Blocks.BEETROOTS);
 
         tag(OBSIDIANS)
                 .add(Blocks.OBSIDIAN).add(Blocks.CRYING_OBSIDIAN);
