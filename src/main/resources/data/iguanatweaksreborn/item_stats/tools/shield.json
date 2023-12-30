@@ -1,0 +1,24 @@
+{
+	"item": "minecraft:shield",
+	"attack_damage": 4,
+	"attack_speed": 0.5,
+	"durability": 187,
+	"modifiers": [
+		{
+			"uuid": "4342df85-537a-4844-b318-245c75572e22",
+			"name": "Heavy Shield",
+			"slot": "mainhand",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": -0.1,
+			"operation": "multiply_base"
+		},
+		{
+			"uuid": "0997d302-38cd-46c7-be89-4e235585da03",
+			"name": "Heavy Shield",
+			"slot": "offhand",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": -0.1,
+			"operation": "multiply_base"
+		}
+	]
+}

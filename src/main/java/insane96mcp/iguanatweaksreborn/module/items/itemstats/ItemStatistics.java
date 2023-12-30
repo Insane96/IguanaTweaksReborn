@@ -30,7 +30,6 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 @JsonAdapter(ItemStatistics.Serializer.class)
-//TODO List of attribute modifiers
 public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, @Nullable Integer durability, @Nullable Double efficiency,
 							 @Nullable Double baseAttackDamage, @Nullable Double baseAttackSpeed,
 							 @Nullable Double baseArmor, @Nullable Double baseArmorToughness,
@@ -76,7 +75,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 		Multimap<Attribute, AttributeModifier> toAdd = HashMultimap.create();
 		Multimap<Attribute, AttributeModifier> toRemove = HashMultimap.create();
 		for (var entry : modifiers.entries()) {
-			if (this.baseAttackDamage != null) {
+			if (this.baseAttackDamage != null && event.getSlotType() == EquipmentSlot.MAINHAND) {
 				double materialAd = 0d;
 				if (stack.getItem() instanceof TieredItem tieredItem)
 					materialAd = tieredItem.getTier().getAttackDamageBonus();
@@ -86,7 +85,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 				if (entry.getValue().getId().equals(BASE_ATTACK_DAMAGE_UUID) && entry.getKey().equals(Attributes.ATTACK_DAMAGE))
 					toRemove.put(entry.getKey(), entry.getValue());
 			}
-			if (this.baseAttackSpeed != null) {
+			if (this.baseAttackSpeed != null && event.getSlotType() == EquipmentSlot.MAINHAND) {
 				if (this.baseAttackSpeed > 0d)
 					toAdd.put(Attributes.ATTACK_SPEED, new net.minecraft.world.entity.ai.attributes.AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", -(4d - this.baseAttackSpeed), net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADDITION));
 				if (entry.getValue().getId().equals(BASE_ATTACK_SPEED_UUID) && entry.getKey().equals(Attributes.ATTACK_SPEED))
