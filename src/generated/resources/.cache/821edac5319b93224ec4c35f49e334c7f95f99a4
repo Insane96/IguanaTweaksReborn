@@ -1,4 +1,5 @@
-// 1.20.1	2023-12-29T19:34:43.5501638	Tags for minecraft:item mod id iguanatweaksreborn
+// 1.20.1	2023-12-30T12:15:21.4535899	Tags for minecraft:item mod id iguanatweaksreborn
 8e8d56001ef8eaca748cba186d23791bc2e33932 data/iguanatweaksreborn/tags/items/not_unbreakable.json
 7ed3116413a687ab0b86d1c195045bc055148639 data/iguanatweaksreborn/tags/items/no_stack_size_changes.json
 a04a8c101c6e237ccf2a8020c1f226ec9f2f1639 data/iguanatweaksreborn/tags/items/raw_food.json
+3c136ad71b9cc1a962b06ab779e09369ea8e25a9 data/iguanatweaksreborn/tags/items/spawner_reactivator.json

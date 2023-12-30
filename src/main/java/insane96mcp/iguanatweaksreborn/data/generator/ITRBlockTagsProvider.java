@@ -2,7 +2,9 @@ package insane96mcp.iguanatweaksreborn.data.generator;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.mining.blockhardness.BlockHardness;
+import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.iguanatweaksreborn.module.world.desirepaths.DesirePaths;
+import insane96mcp.iguanatweaksreborn.module.world.timber.TimberTrees;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -11,6 +13,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -20,7 +23,6 @@ import java.util.concurrent.CompletableFuture;
 public class ITRBlockTagsProvider extends BlockTagsProvider {
     public static final TagKey<Block> RESPAWN_OBELISK_BLOCKS_TO_ROT = create("structures/respawn_obelisk/blocks_to_rot");
     public static final TagKey<Block> OBSIDIANS = create("obsidians");
-    public static final TagKey<Block> NO_BLOCK_XP_MULTIPLIER = create("no_block_xp_multiplier");
     public static final TagKey<Block> GRASS_BLOCKS = create("grass_blocks");
     public static final TagKey<Block> COPPER_ORES = create("copper_ores");
     public static final TagKey<Block> GOLD_ORES = create("gold_ores");
@@ -59,7 +61,12 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
         tag(GRASS_BLOCKS)
                 .add(Blocks.GRASS_BLOCK, Blocks.PODZOL, Blocks.MYCELIUM);
 
-        tag(NO_BLOCK_XP_MULTIPLIER);
+		//noinspection unchecked
+		tag(Tweaks.BREAK_ON_FALL)
+				.addTags(Tags.Blocks.GLASS, BlockTags.LEAVES);
+		//noinspection unchecked
+		tag(TimberTrees.TIMBER_TRUNKS)
+				.addTags(BlockTags.OVERWORLD_NATURAL_LOGS);
         /*tag(BoneMeal.BLOCK_BLACKLIST);
 
         tag(MultiBlockBlastFurnaceBlock.BOTTOM_BLOCKS_TAG)
@@ -76,12 +83,6 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
         tag(MultiBlockSoulBlastFurnaceBlock.TOP_BLOCKS_TAG)
                 .add(Blocks.RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICK_STAIRS);*/
 
-        //noinspection unchecked
-        /*tag(Tweaks.FALL_ON_BREAK)
-                .addTags(Tags.Blocks.GLASS, BlockTags.LEAVES);
-
-        tag(TimberTrees.TIMBER_TRUNKS)
-                .addTag(BlockTags.OVERWORLD_NATURAL_LOGS);*/
     }
 
     public static TagKey<Block> create(String tagName) {

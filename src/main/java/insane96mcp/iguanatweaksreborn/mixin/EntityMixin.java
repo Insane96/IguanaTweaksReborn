@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
+import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.iguanatweaksreborn.module.world.Fluids;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.minecraft.world.entity.Entity;
@@ -7,10 +8,8 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
@@ -20,11 +19,11 @@ public abstract class EntityMixin {
     @Shadow(remap = false)
     protected Object2DoubleMap<FluidType> forgeFluidTypeHeight;
 
-    /*@Inject(at = @At(value = "RETURN"), method = "fireImmune", cancellable = true)
+    @Inject(at = @At(value = "RETURN"), method = "fireImmune", cancellable = true)
     private void onFireImmune(CallbackInfoReturnable<Boolean> cir) {
         if (Tweaks.isFireImmune((Entity) (Object) this))
             cir.setReturnValue(true);
-    }*/
+    }
 
     @ModifyConstant(method = "updateInWaterStateAndDoFluidPushing", constant = @Constant(floatValue = 1f))
     private float onFluidFallModifer(float waterFallDamageModifier) {

@@ -10,6 +10,7 @@ import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReload
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.module.movement.stamina.Stamina;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerData;
+import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerDataAttacher;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.setup.ITRCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITRPackSource;
@@ -68,6 +69,7 @@ public class IguanaTweaksReborn
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ITRClientConfig.CONFIG_SPEC, MOD_ID + "/client.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ITRCommonConfig.CONFIG_SPEC, MOD_ID + "/common.toml");
         MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.EVENT_BUS.register(SpawnerDataAttacher.class);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::commonSetup);
@@ -78,7 +80,7 @@ public class IguanaTweaksReborn
         modEventBus.register(Stamina.class);
 		modEventBus.register(SpawnerData.class);
         ITRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));
-        /*MinecraftForge.EVENT_BUS.register(SpawnerDataAttacher.class);
+        /*
         if (FMLLoader.getDist().isClient()) {
             modEventBus.addListener(ClientSetup::onBuildCreativeModeTabContents);
             modEventBus.addListener(ClientSetup::registerEntityRenderers);
