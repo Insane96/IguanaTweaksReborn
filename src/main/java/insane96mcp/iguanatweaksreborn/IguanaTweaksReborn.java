@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn;
 
 import com.google.common.collect.Lists;
+import insane96mcp.iguanatweaksreborn.command.ITRCommand;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRDamageTypeTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
@@ -9,6 +10,7 @@ import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.module.movement.stamina.Stamina;
+import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerData;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerDataAttacher;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
@@ -79,6 +81,7 @@ public class IguanaTweaksReborn
         modEventBus.addListener(RegeneratingAbsorption::regeneratingAbsorptionAttribute);
         modEventBus.register(Stamina.class);
 		modEventBus.register(SpawnerData.class);
+        modEventBus.register(Tiredness.class);
         ITRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));
         /*
         if (FMLLoader.getDist().isClient()) {
@@ -86,8 +89,7 @@ public class IguanaTweaksReborn
             modEventBus.addListener(ClientSetup::registerEntityRenderers);
             modEventBus.addListener(ClientSetup::registerRecipeBookCategories);
             modEventBus.addListener(ClientSetup::registerParticleFactories);
-        }
-        modEventBus.register(Tiredness.class);*/
+        }*/
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
@@ -98,7 +100,7 @@ public class IguanaTweaksReborn
 
     @SubscribeEvent
     public void registerCommands(RegisterCommandsEvent event) {
-        //SRCommand.register(event.getDispatcher());
+        ITRCommand.register(event.getDispatcher());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {

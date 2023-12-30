@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.iguanatweaksreborn.module.items.StackSizes;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
+import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.Spawners;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -48,14 +49,14 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
 
         tag(ItemTags.BEACON_PAYMENT_ITEMS).add(Items.NETHER_STAR).add(Durium.INGOT.get(), SoulSteel.INGOT.get(), Keego.GEM.get());
         //Mod's
-        tag(Tiredness.ENERGY_BOOST_ITEM_TAG)
-                .add(Items.COOKIE)
-                .addOptional(new ResourceLocation("farmersdelight:chocolate_pie_slice")).addOptional(new ResourceLocation("create:bar_of_chocolate")).addOptional(new ResourceLocation("create:chocolate_glazed_berries"));
-
         tag(PlantsGrowth.NO_FERTILITY_TOOLTIP)
                 .add(Items.CARROT, Items.POTATO);*/
         tag(StackSizes.NO_STACK_SIZE_CHANGES)
                 .add(Items.ROTTEN_FLESH, Items.SPIDER_EYE);
+
+        tag(Tiredness.ENERGY_BOOST_ITEM_TAG)
+                .add(Items.COOKIE)
+                .addOptional(new ResourceLocation("farmersdelight:chocolate_pie_slice")).addOptional(new ResourceLocation("create:bar_of_chocolate")).addOptional(new ResourceLocation("create:chocolate_glazed_berries"));
 
         //noinspection unchecked
         tag(ItemStats.NOT_UNBREAKABLE)

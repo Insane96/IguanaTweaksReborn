@@ -69,6 +69,9 @@ public class DataPacks extends Feature {
     @Config
     @Label(name = "Less loot closer to spawn", description = "If true a data pack will be enabled that reduces loot from structures closer to spawn")
     public static Boolean lessLootCloserToSpawn = true;
+    @Config
+    @Label(name = "Mob loot changes", description = "Changes mobs loot and makes mobs drop reduced loot if not killed by a player")
+    public static Boolean mobLootChanges = true;
 
     public DataPacks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -79,8 +82,9 @@ public class DataPacks extends Feature {
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "copper_furnace", Component.literal("IguanaTweaks Reborn Copper Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperFurnace));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "disable_long_noses", Component.literal("IguanaTweaks Reborn Disable Long Noses"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableLongNoses));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "fishing_loot_changes", Component.literal("IguanaTweaks Reborn Fishing Loot Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && fishingLootChanges));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "increased_end_cities", Component.literal("Survival Reimagined Increased End Cities"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && increaseEndCities));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "better_loot", Component.literal("Survival Reimagined Better Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && betterStructureLoot));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "increased_end_cities", Component.literal("IguanaTweaks Reborn Increased End Cities"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && increaseEndCities));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "better_loot", Component.literal("IguanaTweaks Reborn Better Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && betterStructureLoot));
         IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "hardcore_loot", Component.literal("IguanaTweaks Reborn Less Loot Closer to Spawn"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lessLootCloserToSpawn));
+        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "mob_loot_changes", Component.literal("IguanaTweaks Reborn Mob Loot Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && mobLootChanges));
     }
 }

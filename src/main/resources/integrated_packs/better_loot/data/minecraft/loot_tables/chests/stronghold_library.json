@@ -64,11 +64,6 @@
 				{
 					"type": "minecraft:item",
 					"weight": 10,
-					"name": "survivalreimagined:cleansed_lapis"
-				},
-				{
-					"type": "minecraft:item",
-					"weight": 10,
 					"name": "minecraft:experience_bottle"
 				}
 			]
