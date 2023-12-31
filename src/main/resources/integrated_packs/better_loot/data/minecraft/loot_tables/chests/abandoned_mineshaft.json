@@ -288,34 +288,6 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "weight": 10,
-                    "name": "survivalreimagined:copper_powered_rail",
-                    "functions": [
-                        {
-                            "function": "minecraft:set_count",
-                            "count": {
-                                "min": 4,
-                                "max": 7
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "minecraft:item",
-                    "weight": 5,
-                    "name": "survivalreimagined:golden_powered_rail",
-                    "functions": [
-                        {
-                            "function": "minecraft:set_count",
-                            "count": {
-                                "min": 2,
-                                "max": 4
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "minecraft:item",
                     "weight": 15,
                     "name": "minecraft:torch",
                     "functions": [

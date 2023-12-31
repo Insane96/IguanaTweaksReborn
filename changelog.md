@@ -17,4 +17,5 @@ Please note this changelog is based off the latest Survival Reimagined version, 
 * Client
   * Added config option to disable the shorter world border
   * Fixed End music being changed even if the Sound feature was disabled
+* Added the possibility to change what a pumpkin drops when sheared with the loot table `iguanatweaksreborn:pumpkin_shear`
 * Merged Global, Block, Mobs and Other experience into a single Feature

@@ -29,6 +29,7 @@
 		"PlayerMixin",
 		"PotionItemMixin",
 		"ProtectionEnchantmentMixin",
+		"PumpkinBlockMixin",
 		"SmeltItemFunctionMixin",
 		"SpongeBlockMixin",
 		"SpringFeatureMixin",
@@ -36,6 +37,7 @@
 		"ThrownExperienceBottleMixin",
 		"VillagerMixin",
 		"WanderingTraderMixin",
+		"WolfMixin",
 		"ZombieMixin"
 	],
 	"minVersion": "0.8",
