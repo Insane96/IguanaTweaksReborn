@@ -9,58 +9,66 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.data.IdTagMatcher;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.MushroomCow;
+import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Label(name = "Livestock", description = "Slower breeding, Growing, Egging and Milking. Lower yield.")
 @LoadFeature(module = Modules.Ids.FARMING)
 public class Livestock extends JsonFeature {
 
-	/*public static final String MILK_COOLDOWN_LANG = SurvivalReimagined.MOD_ID + ".milk_cooldown";
-	public static final String MILK_COOLDOWN = SurvivalReimagined.RESOURCE_PREFIX + "milk_cooldown";
+	public static final String MILK_COOLDOWN_LANG = IguanaTweaksReborn.MOD_ID + ".milk_cooldown";
+	public static final String MILK_COOLDOWN = IguanaTweaksReborn.RESOURCE_PREFIX + "milk_cooldown";
 
 	public static final ArrayList<LivestockData> GROWTH_SLOWNDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 2.5d, Season.SPRING),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 2.0d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 3.0d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 4.0d, Season.WINTER),
+			new LivestockData(IdTagMatcher.newTag(IguanaTweaksReborn.RESOURCE_PREFIX + "breedable_animals"), 3.0d),
 
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 2.5d, Season.SPRING),
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 2.0d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 3.0d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 4.0d, Season.WINTER)
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 3.0d, "AUTUMN")
 	));
 
 	public static final ArrayList<LivestockData> growthSlowdown = new ArrayList<>();
 
 	public static final ArrayList<LivestockData> BREEDING_COOLDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 2.5d, Season.SPRING),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 2.0d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 3.0d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 4.0d, Season.WINTER),
+			new LivestockData(IdTagMatcher.newTag(IguanaTweaksReborn.RESOURCE_PREFIX + "breedable_animals"), 3.0d),
 
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 5d, Season.SPRING),
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 4.0d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 6.0d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 8.0d, Season.WINTER)
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 6.0d)
 	));
 
 	public static final ArrayList<LivestockData> breedingCooldown = new ArrayList<>();
 
 	public static final ArrayList<LivestockData> EGG_LAY_SLOWDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "chickens"), 2.5d, Season.SPRING),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "chickens"), 2.0d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "chickens"), 3.0d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "chickens"), 4.0d, Season.WINTER)
+			new LivestockData(IdTagMatcher.newTag(IguanaTweaksReborn.RESOURCE_PREFIX + "chickens"), 3.0d)
 	));
 
 	public static final ArrayList<LivestockData> eggLaySlowdown = new ArrayList<>();
 
 	public static final ArrayList<LivestockData> COW_MILK_COOLDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "cows"), 1500, Season.SPRING),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "cows"), 1200, Season.SUMMER),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "cows"), 1800, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "cows"), 3000, Season.WINTER)
+			new LivestockData(IdTagMatcher.newTag(IguanaTweaksReborn.RESOURCE_PREFIX + "cows"), 1800)
 	));
 
 	public static final ArrayList<LivestockData> cowMilkCooldown = new ArrayList<>();
@@ -72,18 +80,12 @@ public class Livestock extends JsonFeature {
 	public static final ArrayList<LivestockData> sheepWoolRegrowthChance = new ArrayList<>();
 
 	public static final ArrayList<LivestockData> BREEDING_FAIL_CHANCE_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 0.6d, Season.SPRING),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 0.5d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 0.7d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.newTag(SurvivalReimagined.RESOURCE_PREFIX + "breedable_animals"), 0.9d, Season.WINTER),
+			new LivestockData(IdTagMatcher.newTag(IguanaTweaksReborn.RESOURCE_PREFIX + "breedable_animals"), 0.7d),
 
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 0.6d, Season.SPRING),
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 0.5d, Season.SUMMER),
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 0.7d, Season.AUTUMN),
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 0.9d, Season.WINTER)
+			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 0.7d)
 	));
 
-	public static final ArrayList<LivestockData> breedingFailChance = new ArrayList<>();*/
+	public static final ArrayList<LivestockData> breedingFailChance = new ArrayList<>();
 
 	//TODO
 	/*@Config
@@ -91,19 +93,19 @@ public class Livestock extends JsonFeature {
 	public static Integer chickenFromEggChance = 4;*/
 
 	@Config
-	@Label(name = "Loot DataPack", description = "Enables a datapack that changes food drops")
+	@Label(name = "Loot DataPack", description = "Enables a data pack that changes food drops")
 	public static Boolean lootDataPack = true;
 
 	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		/*JSON_CONFIGS.add(new JsonConfig<>("growth_slowdown_multiplier.json", growthSlowdown, GROWTH_SLOWNDOWN_DEFAULT, LivestockData.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("growth_slowdown_multiplier.json", growthSlowdown, GROWTH_SLOWNDOWN_DEFAULT, LivestockData.LIST_TYPE));
 		JSON_CONFIGS.add(new JsonConfig<>("breeding_cooldown_multiplier.json", breedingCooldown, BREEDING_COOLDOWN_DEFAULT, LivestockData.LIST_TYPE));
 		JSON_CONFIGS.add(new JsonConfig<>("egg_lay_cooldown_multiplier.json", eggLaySlowdown, EGG_LAY_SLOWDOWN_DEFAULT, LivestockData.LIST_TYPE));
 		JSON_CONFIGS.add(new JsonConfig<>("cow_milk_cooldown.json", cowMilkCooldown, COW_MILK_COOLDOWN_DEFAULT, LivestockData.LIST_TYPE));
 		JSON_CONFIGS.add(new JsonConfig<>("sheep_wool_regrowth_chance.json", sheepWoolRegrowthChance, SHEEP_WOOL_REGROWTH_CHANCE, LivestockData.LIST_TYPE));
-		JSON_CONFIGS.add(new JsonConfig<>("breeding_fail_chance.json", breedingFailChance, BREEDING_FAIL_CHANCE_DEFAULT, LivestockData.LIST_TYPE));*/
+		JSON_CONFIGS.add(new JsonConfig<>("breeding_fail_chance.json", breedingFailChance, BREEDING_FAIL_CHANCE_DEFAULT, LivestockData.LIST_TYPE));
 
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "livestock_loot_changes", Component.literal("Survival Reimagined Livestock Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lootDataPack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "livestock_loot_changes", Component.literal("IguanaTweaks Reborn Livestock Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lootDataPack));
 	}
 
 	@Override
@@ -118,7 +120,7 @@ public class Livestock extends JsonFeature {
 		super.loadJsonConfigs();
 	}
 
-	/*@SubscribeEvent
+	@SubscribeEvent
 	public void onSheepJoinLevel(EntityJoinLevelEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getEntity() instanceof Sheep sheep))
@@ -288,5 +290,5 @@ public class Livestock extends JsonFeature {
 
 		if (event.getParentA().getRandom().nextFloat() < failChance / c)
 			event.setCanceled(true);
-	}*/
+	}
 }

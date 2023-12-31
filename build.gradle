@@ -161,7 +161,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:4724732")
     runtimeOnly fg.deobf("curse.maven:better-advancements-272515:4631253")
 
-    //implementation fg.deobf("com.github.glitchfiend:SereneSeasons:${mc_version}-${sereneseasons_version}")
+    implementation fg.deobf("com.github.glitchfiend:SereneSeasons:${mc_version}-${sereneseasons_version}")
 
     //implementation fg.deobf("com.github.Virtuoel:Pehkui:${pehkui_version}-${mc_version}-forge")
     //implementation fg.deobf("curse.maven:kiwi-303657:4592974")

@@ -8,6 +8,7 @@
 		"AnvilMenuMixin",
 		"ApplyBonusCountMixin",
 		"BaseSpawnerMixin",
+		"BellBlockEntityMixin",
 		"BoatMixin",
 		"DigDurabilityEnchantmentMixin",
 		"DiggerItemMixin",

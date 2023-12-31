@@ -45,3 +45,10 @@ license="All rights reserved"
     versionRange="[12.0.2,)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.iguanatweaksreborn]]
+    modId="sereneseasons"
+    mandatory=false
+    versionRange="[9.0.0.43,)"
+    ordering="NONE"
+    side="BOTH"
