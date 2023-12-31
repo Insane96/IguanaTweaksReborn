@@ -19,6 +19,7 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.GameType;
@@ -71,6 +72,9 @@ public class Tweaks extends Feature {
     @Config
     @Label(name = "Player air ticks refilled", description = "The amount of air ticks the player regains each tick when out of water. Vanilla is 4")
     public static Integer playerRefillAirAmount = 1;
+    @Config
+    @Label(name = "Efficiency based destroy delay", description = "In vanilla there's a 5 tick delay (0.25 secs) between breaking blocks. The tick delay is reduced by 1 tick every 2 tool efficiency.")
+    public static Boolean efficiencyBasedDestroyDelay = true;
 
     public Tweaks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -105,7 +109,11 @@ public class Tweaks extends Feature {
 		return isEnabled(Tweaks.class) ? poisonDamageSpeed : 25;
 	}
 
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static int destroyDelay(ItemStack stack, DiggerItem item, BlockState state) {
+        return isEnabled(Tweaks.class) && efficiencyBasedDestroyDelay ? Math.max(5 - (int) (item.speed / 2f), 1) : 5;
+    }
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
     public void onPlayerDeath(LivingDeathEvent event) {
         if (!this.isEnabled()
                 || !betterHardcoreDeath

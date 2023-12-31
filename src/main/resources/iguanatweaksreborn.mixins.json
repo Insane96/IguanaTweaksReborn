@@ -42,6 +42,7 @@
 	],
 	"minVersion": "0.8",
 	"client": [
+		"MultiplayerGameModeMixin",
 		"client.AnvilScreenMixin",
 		"client.GameRendererMixin",
 		"client.GuiMixin",
