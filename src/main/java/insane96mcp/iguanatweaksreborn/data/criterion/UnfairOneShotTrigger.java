@@ -9,9 +9,7 @@ import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = IguanaTweaksReborn.MOD_ID)
 public class UnfairOneShotTrigger extends SimpleCriterionTrigger<UnfairOneShotTrigger.TriggerInstance> {
 	static final ResourceLocation ID = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "unfair_oneshot");
 

@@ -5,6 +5,9 @@ import insane96mcp.iguanatweaksreborn.command.ITRCommand;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRDamageTypeTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
+import insane96mcp.iguanatweaksreborn.data.generator.client.ITRBlockModelsProvider;
+import insane96mcp.iguanatweaksreborn.data.generator.client.ITRBlockStatesProvider;
+import insane96mcp.iguanatweaksreborn.data.generator.client.ITRItemModelsProvider;
 import insane96mcp.iguanatweaksreborn.module.combat.PiercingPickaxes;
 import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
@@ -128,9 +131,9 @@ public class IguanaTweaksReborn
         generator.addProvider(event.includeServer(), blockTags);
         generator.addProvider(event.includeServer(), new ITRItemTagsProvider(generator.getPackOutput(), lookupProvider, blockTags.contentsGetter(), IguanaTweaksReborn.MOD_ID, existingFileHelper));
         generator.addProvider(event.includeServer(), new ITRDamageTypeTagsProvider(generator.getPackOutput(), lookupProvider, IguanaTweaksReborn.MOD_ID, existingFileHelper));
-        /*generator.addProvider(event.includeClient(), new SRBlockStatesProvider(generator.getPackOutput(), IguanaTweaksReborn.MOD_ID, existingFileHelper));
-        generator.addProvider(event.includeClient(), new SRBlockModelsProvider(generator.getPackOutput(), IguanaTweaksReborn.MOD_ID, existingFileHelper));
-        generator.addProvider(event.includeClient(), new SRItemModelsProvider(generator.getPackOutput(), IguanaTweaksReborn.MOD_ID, existingFileHelper));*/
+        generator.addProvider(event.includeClient(), new ITRBlockStatesProvider(generator.getPackOutput(), IguanaTweaksReborn.MOD_ID, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ITRBlockModelsProvider(generator.getPackOutput(), IguanaTweaksReborn.MOD_ID, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ITRItemModelsProvider(generator.getPackOutput(), IguanaTweaksReborn.MOD_ID, existingFileHelper));
     }
 
     public void addPackFinders(AddPackFindersEvent event)

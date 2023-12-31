@@ -1,8 +1,8 @@
 {
     "replace": false,
     "values": [
-        "#survivalreimagined:cows",
-        "#survivalreimagined:chickens",
+        "#iguanatweaksreborn:cows",
+        "#iguanatweaksreborn:chickens",
         "minecraft:pig",
         "minecraft:horse",
         "minecraft:donkey",

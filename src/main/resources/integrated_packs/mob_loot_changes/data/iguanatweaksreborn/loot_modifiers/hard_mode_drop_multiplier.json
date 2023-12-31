@@ -2,10 +2,10 @@
     "type": "iguanatweaksreborn:drop_multiplier",
     "conditions": [
         {
-            "condition": "survivalreimagined:living_entity"
+            "condition": "iguanatweaksreborn:living_entity"
         },
         {
-            "condition": "survivalreimagined:killer_has_advancement",
+            "condition": "iguanatweaksreborn:killer_has_advancement",
             "advancement": "minecraft:end/kill_dragon"
         }
     ],

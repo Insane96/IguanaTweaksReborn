@@ -16,6 +16,7 @@
 		"EntityMixin",
 		"ExplosionMixin",
 		"FallingBlockEntityMixin",
+		"FarmBlockMixin",
 		"FoodDataMixin",
 		"HoneyBottleItemMixin",
 		"ItemMixin",

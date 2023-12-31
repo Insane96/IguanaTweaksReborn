@@ -2,26 +2,7 @@
 	"iguanatweaksreborn:experience_module": "Experience",
 	"iguanatweaksreborn.can_be_repaired_with": "Can be repaired with %s",
 	"container.repair.free": "No Cost",
-	"item.iguanatweaksreborn.ancient_lapis": "Ancient Lapis",
-	"item.iguanatweaksreborn.cleansed_lapis": "Cleansed Lapis",
-	"block.iguanatweaksreborn.ensorceller": "Ensorceller",
-	"container.ensorceller": "Roll and Enchant",
-	"iguanatweaksreborn.cannot_be_merged": "Cannot be merged",
-	"iguanatweaksreborn.missing_sunlight": "Not enough sunlight",
-	"enchantment.iguanatweaksreborn.magnetic": "Magnetic",
-	"enchantment.iguanatweaksreborn.magic_protection": "Magic Protection",
-	"enchantment.iguanatweaksreborn.melee_protection": "Melee Protection",
-	"enchantment.iguanatweaksreborn.expanded": "Expanded",
-	"enchantment.iguanatweaksreborn.blasting": "Blasting",
-	"enchantment.iguanatweaksreborn.step_up": "Step Up",
 	"enchantment.iguanatweaksreborn.bane_of_sssss": "Bane of SSSSS",
-	"enchantment.iguanatweaksreborn.water_coolant": "Water Coolant",
-	"enchantment.iguanatweaksreborn.smartness": "Smartness",
-	"enchantment.iguanatweaksreborn.ma_jump": "M.A. Jump",
-	"enchantment.iguanatweaksreborn.gravity_defying": "Gravity Defying",
-	"enchantment.iguanatweaksreborn.critical": "Critical",
-	"enchantment.iguanatweaksreborn.healthy": "Healthy",
-	"enchantment.iguanatweaksreborn.swift_strike": "Swift Strike",
 
 
 	"iguanatweaksreborn:combat_module": "Combat",
@@ -32,13 +13,6 @@
 	"attribute.name.regenerating_absorption": "Regenerating Absorption",
 	"attribute.name.regenerating_absorption_speed": "Absorption Regen Speed",
 
-	"block.iguanatweaksreborn.fletching_table": "Fletching Table",
-	"item.iguanatweaksreborn.quartz_arrow": "Quartz Arrow",
-	"item.iguanatweaksreborn.diamond_arrow": "Diamond Arrow",
-	"item.iguanatweaksreborn.explosive_arrow": "Explosive Arrow",
-	"item.iguanatweaksreborn.torch_arrow": "Torch Arrow",
-
-	"container.fletching": "Fletching",
 
 	"iguanatweaksreborn:farming_module": "Farming",
 
@@ -59,11 +33,7 @@
 	"iguanatweaksreborn.tooltip.sec": "sec",
 	"effect.iguanatweaksreborn.vigour": "Vigour",
 	"effect.iguanatweaksreborn.vigour.description": "Decreases hunger/stamina consumption by 20% per level.",
-	"item.iguanatweaksreborn.brown_mushroom_stew": "Brown Mushroom Stew",
-	"item.iguanatweaksreborn.red_mushroom_stew": "Red Mushroom Stew",
-	"item.iguanatweaksreborn.over_easy_egg": "Over Easy Egg",
-	"item.iguanatweaksreborn.pumpkin_pulp": "Pumpkin Pulp",
-	"iguanatweaksreborn.subtitle.unfair_one_shot": "Player rolls a nat 20",
+	"iguanatweaksreborn.subtitle.unfair_one_shot": "Player triggers Relentless Endurance",
 
 	"iguanatweaksreborn:items_module": "Items",
 

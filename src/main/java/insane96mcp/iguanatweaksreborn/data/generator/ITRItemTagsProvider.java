@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.data.generator;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth.PlantsGrowth;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.iguanatweaksreborn.module.items.StackSizes;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
@@ -47,10 +48,7 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
 
         tag(ItemTags.ARROWS).add(Fletching.QUARTZ_ARROW_ITEM.get(), Fletching.DIAMOND_ARROW_ITEM.get(), Fletching.EXPLOSIVE_ARROW_ITEM.get(), Fletching.TORCH_ARROW_ITEM.get());
 
-        tag(ItemTags.BEACON_PAYMENT_ITEMS).add(Items.NETHER_STAR).add(Durium.INGOT.get(), SoulSteel.INGOT.get(), Keego.GEM.get());
-        //Mod's
-        tag(PlantsGrowth.NO_FERTILITY_TOOLTIP)
-                .add(Items.CARROT, Items.POTATO);*/
+        tag(ItemTags.BEACON_PAYMENT_ITEMS).add(Items.NETHER_STAR).add(Durium.INGOT.get(), SoulSteel.INGOT.get(), Keego.GEM.get());*/
         tag(StackSizes.NO_STACK_SIZE_CHANGES)
                 .add(Items.ROTTEN_FLESH, Items.SPIDER_EYE);
 
@@ -65,6 +63,8 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
                 .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT);
 		tag(Spawners.SPAWNER_REACTIVATOR_TAG)
 				.add(Items.ECHO_SHARD);
+        tag(PlantsGrowth.NO_FERTILITY_TOOLTIP)
+                .add(Items.CARROT, Items.POTATO);
     }
 
     public static TagKey<Item> create(String tagName) {
