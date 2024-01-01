@@ -10,6 +10,7 @@
 		"BaseSpawnerMixin",
 		"BellBlockEntityMixin",
 		"BoatMixin",
+		"ConduitBlockEntityMixin",
 		"DigDurabilityEnchantmentMixin",
 		"DiggerItemMixin",
 		"EnchantmentMixin",

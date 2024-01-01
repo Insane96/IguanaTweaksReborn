@@ -48,6 +48,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -86,13 +87,13 @@ public class IguanaTweaksReborn
 		modEventBus.register(SpawnerData.class);
         modEventBus.register(Tiredness.class);
         ITRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));
-        /*
+
         if (FMLLoader.getDist().isClient()) {
             modEventBus.addListener(ClientSetup::onBuildCreativeModeTabContents);
             modEventBus.addListener(ClientSetup::registerEntityRenderers);
-            modEventBus.addListener(ClientSetup::registerRecipeBookCategories);
-            modEventBus.addListener(ClientSetup::registerParticleFactories);
-        }*/
+            //modEventBus.addListener(ClientSetup::registerRecipeBookCategories);
+            //modEventBus.addListener(ClientSetup::registerParticleFactories);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)

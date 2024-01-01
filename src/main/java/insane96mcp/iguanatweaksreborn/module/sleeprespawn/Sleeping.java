@@ -21,8 +21,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN, enabledByDefault = false)
 public class Sleeping extends Feature {
 
-	public static final String DECORATIVE_BEDS = "survivalreimagined.decorative_beds";
-	public static final String ENJOY_THE_NIGHT = "survivalreimagined.enjoy_the_night";
+	public static final String DECORATIVE_BEDS = "iguanatweaksreborn.decorative_beds";
+	public static final String ENJOY_THE_NIGHT = "iguanatweaksreborn.enjoy_the_night";
 	@Config
 	@Label(name = "Disable Sleeping", description = "If set to true the player will not be able to sleep.")
 	public static Boolean disableSleeping = false;

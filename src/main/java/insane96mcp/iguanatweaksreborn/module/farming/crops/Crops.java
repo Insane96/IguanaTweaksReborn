@@ -66,7 +66,7 @@ public class Crops extends Feature {
 
 	public Crops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "crops", Component.literal("Survival Reimagined Crops"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "crops", Component.literal("IguanaTweaks Reborn Crops"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
 	}
 
 	@SubscribeEvent

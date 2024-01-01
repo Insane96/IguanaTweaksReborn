@@ -36,7 +36,7 @@ public class SleepingEffects extends JsonFeature {
 			new ITRMobEffectInstance(MobEffects.REGENERATION, 900, 0)
 	));
 	public static final ArrayList<ITRMobEffectInstance> effectsOnWakeUp = new ArrayList<>();
-	public static final String NO_FOOD_FOR_SLEEP = "survivalreimagined.no_food_for_sleep";
+	public static final String NO_FOOD_FOR_SLEEP = "iguanatweaksreborn.no_food_for_sleep";
 
 	@Config(min = 0, max = 20)
 	@Label(name = "Hunger Depleted on Wake Up", description = "How much the hunger bar is depleted when you wake up in the morning. Saturation is depleted before depleting hunger bar. Setting to 0 will disable this feature.")

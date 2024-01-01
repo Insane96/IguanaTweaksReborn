@@ -1,7 +1,12 @@
 package insane96mcp.iguanatweaksreborn.setup.client;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.BeaconConduit;
+import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconRenderer;
+import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -210,12 +215,12 @@ public class ClientSetup {
         MenuScreens.register(MultiBlockFurnaces.SOUL_BLAST_FURNACE_MENU_TYPE.get(), MultiBlockSoulBlastFurnaceScreen::new);
         MenuScreens.register(Forging.FORGE_MENU_TYPE.get(), ForgeScreen::new);
         MenuScreens.register(EnchantingFeature.ENCHANTING_TABLE_MENU_TYPE.get(), SREnchantingTableScreen::new);
-        MenuScreens.register(Fletching.FLETCHING_MENU_TYPE.get(), FletchingScreen::new);
-        MenuScreens.register(BeaconConduit.BEACON_MENU_TYPE.get(), SRBeaconScreen::new);*/
+        MenuScreens.register(Fletching.FLETCHING_MENU_TYPE.get(), FletchingScreen::new);*/
+        MenuScreens.register(BeaconConduit.BEACON_MENU_TYPE.get(), ITRBeaconScreen::new);
     }
 
-    /*public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(SRRegistries.PILABLE_FALLING_LAYER.get(), FallingBlockRenderer::new);
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        /*event.registerEntityRenderer(SRRegistries.PILABLE_FALLING_LAYER.get(), FallingBlockRenderer::new);
         event.registerEntityRenderer(Fletching.QUARTZ_ARROW.get(), SRArrowRenderer::new);
         event.registerEntityRenderer(Fletching.DIAMOND_ARROW.get(), SRArrowRenderer::new);
         event.registerEntityRenderer(Fletching.EXPLOSIVE_ARROW.get(), SRArrowRenderer::new);
@@ -223,10 +228,10 @@ public class ClientSetup {
         event.registerEntityRenderer(MiningCharge.PRIMED_MINING_CHARGE.get(), MiningChargeRenderer::new);
 
         event.registerBlockEntityRenderer(Forging.FORGE_BLOCK_ENTITY_TYPE.get(), ForgeRenderer::new);
-        event.registerBlockEntityRenderer(EnchantingFeature.ENCHANTING_TABLE_BLOCK_ENTITY.get(), SREnchantingTableRenderer::new);
+        event.registerBlockEntityRenderer(EnchantingFeature.ENCHANTING_TABLE_BLOCK_ENTITY.get(), SREnchantingTableRenderer::new);*/
 
-        event.registerBlockEntityRenderer(BeaconConduit.BEACON_BLOCK_ENTITY_TYPE.get(), SRBeaconRenderer::new);
-    }*/
+        event.registerBlockEntityRenderer(BeaconConduit.BEACON_BLOCK_ENTITY_TYPE.get(), ITRBeaconRenderer::new);
+    }
 
     /*static RecipeBookCategories BLAST_FURNACE_SEARCH = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "blast_furnace_search", new ItemStack(Items.COMPASS));
     static RecipeBookCategories BLAST_FURNACE_MISC = RecipeBookCategories.create(SurvivalReimagined.RESOURCE_PREFIX + "blast_furnace_misc", new ItemStack(MultiBlockFurnaces.BLAST_FURNACE.item().get()));

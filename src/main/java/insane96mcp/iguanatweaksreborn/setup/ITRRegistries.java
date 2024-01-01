@@ -2,18 +2,26 @@ package insane96mcp.iguanatweaksreborn.setup;
 
 import com.mojang.serialization.Codec;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.data.condition.BlockTagCondition;
+import insane96mcp.iguanatweaksreborn.data.condition.KillerHasAdvancementCondition;
+import insane96mcp.iguanatweaksreborn.data.condition.LivingEntityCondition;
+import insane96mcp.iguanatweaksreborn.data.condition.NonPlayerArisedDropCondition;
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.LootPurgerModifier;
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.ReplaceLootModifier;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -28,6 +36,8 @@ public class ITRRegistries {
 
 	public static final DeferredRegister<Block> BLOCKS = createRegistry(ForgeRegistries.BLOCKS);
 	public static final DeferredRegister<Item> ITEMS = createRegistry(ForgeRegistries.ITEMS);
+	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = createRegistry(ForgeRegistries.BLOCK_ENTITY_TYPES);
+	public static final DeferredRegister<MenuType<?>> MENU_TYPES = createRegistry(ForgeRegistries.MENU_TYPES);
 	public static final DeferredRegister<Attribute> ATTRIBUTES = createRegistry(ForgeRegistries.ATTRIBUTES);
 	public static final DeferredRegister<Enchantment> ENCHANTMENTS = createRegistry(ForgeRegistries.ENCHANTMENTS);
 	public static final DeferredRegister<MobEffect> MOB_EFFECTS = createRegistry(ForgeRegistries.MOB_EFFECTS);
@@ -38,6 +48,13 @@ public class ITRRegistries {
 	public static final RegistryObject<Codec<? extends IGlobalLootModifier>> LOOT_PURGER_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("loot_purger", LootPurgerModifier.CODEC);
 	public static final RegistryObject<Codec<? extends IGlobalLootModifier>> DROP_MULTIPLIER_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("drop_multiplier", DropMultiplierModifier.CODEC);
 	public static final RegistryObject<Codec<? extends IGlobalLootModifier>> REPLACE_DROP_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("replace_drop", ReplaceLootModifier.CODEC);
+
+	public static final DeferredRegister<LootItemConditionType> LOOT_CONDITION_TYPES = createRegistry(Registries.LOOT_CONDITION_TYPE.location());
+	public static final RegistryObject<LootItemConditionType> BLOCK_TAG_MATCH = LOOT_CONDITION_TYPES.register("block_tag_match", () -> new LootItemConditionType(new BlockTagCondition.Serializer()));
+	public static final RegistryObject<LootItemConditionType> KILLER_HAS_ADVANCEMENT = LOOT_CONDITION_TYPES.register("killer_has_advancement", () -> new LootItemConditionType(new KillerHasAdvancementCondition.Serializer()));
+	public static final RegistryObject<LootItemConditionType> LIVING_ENTITY = LOOT_CONDITION_TYPES.register("living_entity", () -> new LootItemConditionType(new LivingEntityCondition.Serializer()));
+	public static final RegistryObject<LootItemConditionType> NON_PLAYER_ARISED_DROP = LOOT_CONDITION_TYPES.register("non_player_arised_drop", () -> new LootItemConditionType(new NonPlayerArisedDropCondition.Serializer()));
+	//public static final RegistryObject<LootItemConditionType> CURRENT_SEASON = LOOT_CONDITION_TYPES.register("current_season", () -> new LootItemConditionType(new LootItemCurrentSeasonCondition.Serializer()));
 
 	static <R> DeferredRegister<R> createRegistry(ResourceKey<? extends Registry<R>> key) {
 		DeferredRegister<R> register = DeferredRegister.create(key, IguanaTweaksReborn.MOD_ID);
