@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-31T16:27:58.3142027	Tags for minecraft:block mod id iguanatweaksreborn
+// 1.20.1	2024-01-02T15:18:59.3055359	Tags for minecraft:block mod id iguanatweaksreborn
 a60fb24dab6707c402d6f42a50d493c071ee8724 data/iguanatweaksreborn/tags/blocks/break_on_fall.json
 cb87c71bdb2f81be349f5de365ab2aa66a11bde6 data/iguanatweaksreborn/tags/blocks/depth_multiplier_blacklist.json
 9c8472a64a3dcde9ed2c0ad0bb67999d78d40431 data/iguanatweaksreborn/tags/blocks/grass_blocks.json
@@ -9,3 +9,4 @@ ac37cd654850943fcc007084876459bf0f24c761 data/iguanatweaksreborn/tags/blocks/str
 c9886fc6bfa99b22909fe8b51a89b534144880e8 data/iguanatweaksreborn/tags/blocks/tall_grass.json
 17101232f637078d895d0c5b5f9e6d9fc5a88944 data/iguanatweaksreborn/tags/blocks/timber_trunks.json
 e7a8c631b3ba3bd9a98d2bb83f927b25fe348d37 data/minecraft/tags/blocks/fall_damage_resetting.json
+0f401961a87ef5681d7366240bc4946d0dc57e40 data/minecraft/tags/blocks/mineable/pickaxe.json

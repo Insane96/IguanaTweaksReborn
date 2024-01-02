@@ -166,10 +166,9 @@ dependencies {
     //implementation fg.deobf("com.github.Virtuoel:Pehkui:${pehkui_version}-${mc_version}-forge")
     //implementation fg.deobf("curse.maven:kiwi-303657:4592974")
     //implementation fg.deobf("curse.maven:passable-foliage-379887:4593677")
-    //implementation fg.deobf("curse.maven:tool-belt-260262:4581167")
-    //Needed for data gen
-    //Hardcoded MC version as there is no 1.20.1 version
-    //runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-1.20:1.8.0")
+    implementation fg.deobf("curse.maven:tool-belt-260262:4581167")
+    //Needed for data gen, Hardcoded MC version as there is no 1.20.1 version
+    runtimeOnly fg.deobf("dev.gigaherz.sewingkit:SewingKit-1.20:1.8.0")
 
     runtimeOnly fg.deobf("net.darkhax.maxhealthfix:MaxHealthFix-Forge-${mc_version}:${max_health_fix_version}")
 

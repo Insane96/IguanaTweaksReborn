@@ -4,8 +4,10 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.BeaconConduit;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconRenderer;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconScreen;
+import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.Death;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -16,6 +18,12 @@ import java.text.DecimalFormatSymbols;
 public class ClientSetup {
     public static void onBuildCreativeModeTabContents(final BuildCreativeModeTabContentsEvent event)
     {
+        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            event.accept(BeaconConduit.BEACON.item());
+        }
+        else if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(Death.GRAVE.item().get());
+        }
         /*if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES)
         {
             addAfter(event, Items.STONE_HOE, FlintExpansion.HOE.get());
@@ -126,7 +134,6 @@ public class ClientSetup {
             event.accept(SoulSteel.BLOCK.item().get());
             event.accept(Keego.BLOCK.item().get());
             event.accept(CoalFire.CHARCOAL_LAYER.item().get());
-            event.accept(Death.GRAVE.item().get());
         }
         else if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(Respawn.RESPAWN_OBELISK.item().get());

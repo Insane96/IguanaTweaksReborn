@@ -4,6 +4,8 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.farming.HardCrops;
 import insane96mcp.iguanatweaksreborn.module.mining.blockhardness.BlockHardness;
 import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
+import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.BeaconConduit;
+import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.Death;
 import insane96mcp.iguanatweaksreborn.module.world.desirepaths.DesirePaths;
 import insane96mcp.iguanatweaksreborn.module.world.timber.TimberTrees;
 import net.minecraft.core.HolderLookup;
@@ -38,6 +40,9 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
         //Vanilla Tags
         tag(BlockTags.FALL_DAMAGE_RESETTING)
                 .add(Blocks.COBWEB);
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(Death.GRAVE.block().get())
+                .add(BeaconConduit.BEACON.block().get());
 
         //Mod's tags
         tag(RESPAWN_OBELISK_BLOCKS_TO_ROT)
@@ -68,21 +73,6 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
 		//noinspection unchecked
 		tag(TimberTrees.TIMBER_TRUNKS)
 				.addTags(BlockTags.OVERWORLD_NATURAL_LOGS);
-        /*tag(BoneMeal.BLOCK_BLACKLIST);
-
-        tag(MultiBlockBlastFurnaceBlock.BOTTOM_BLOCKS_TAG)
-                .add(Blocks.SMOOTH_STONE, Blocks.SMOOTH_STONE_SLAB);
-        tag(MultiBlockBlastFurnaceBlock.MIDDLE_BLOCKS_TAG)
-                .add(Blocks.BRICKS);
-        tag(MultiBlockBlastFurnaceBlock.TOP_BLOCKS_TAG)
-                .add(Blocks.BRICKS, Blocks.BRICK_STAIRS);
-
-        tag(MultiBlockSoulBlastFurnaceBlock.BOTTOM_BLOCKS_TAG)
-                .add(Blocks.GILDED_BLACKSTONE, Blocks.CHISELED_POLISHED_BLACKSTONE, Blocks.POLISHED_BLACKSTONE, Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS, Blocks.POLISHED_BLACKSTONE_BRICKS);
-        tag(MultiBlockSoulBlastFurnaceBlock.MIDDLE_BLOCKS_TAG)
-                .add(Blocks.RED_NETHER_BRICKS);
-        tag(MultiBlockSoulBlastFurnaceBlock.TOP_BLOCKS_TAG)
-                .add(Blocks.RED_NETHER_BRICKS, Blocks.RED_NETHER_BRICK_STAIRS);*/
 
     }
 
