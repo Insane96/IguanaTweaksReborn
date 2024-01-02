@@ -20,4 +20,7 @@ This version is missing a few features
   * Fixed End music being changed even if the Sound feature was disabled
 * Added the possibility to change what a pumpkin drops when sheared with the loot table `iguanatweaksreborn:pumpkin_shear`
 * The delay between breaking blocks is now reduced with higher speed tools 
+* Fixed Pickaxes being OP
+  * Too much damage (literally double any other tool / weapon)
+  * Piercing damage didn't scale with attack cooldown
 * Merged Global, Block, Mobs and Other experience into a single Feature

@@ -48,7 +48,7 @@ public class PiercingPickaxes extends Feature {
 
 	@Config(min = 0d)
 	@Label(name = "Pickaxe damage to piercing ratio")
-	public static Double piercingRatio = 1d;
+	public static Double piercingRatio = 0.5d;
 
 	public PiercingPickaxes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -74,13 +74,17 @@ public class PiercingPickaxes extends Feature {
 			return;
 
 		AttributeInstance piercingInstance = attacker.getAttribute(PIERCING_DAMAGE.get());
-		if (piercingInstance.getValue() <= 0d)
+		float amount = (float) piercingInstance.getValue();
+		if (amount <= 0d)
 			return;
 		DamageSource piercingDamageSource = attacker.damageSources().source(PIERCING_MOB_ATTACK, attacker);
-		if (attacker instanceof Player)
+		if (attacker instanceof Player player) {
 			piercingDamageSource = attacker.damageSources().source(PIERCING_PLAYER_ATTACK, attacker);
+			float f2 = player.getAttackStrengthScale(0.5F);
+			amount *= 0.2F + f2 * f2 * 0.8F;
+		}
 
-		MCUtils.attackEntityIgnoreInvFrames(piercingDamageSource, (float) piercingInstance.getValue(), event.getEntity(), event.getEntity(), true);
+		MCUtils.attackEntityIgnoreInvFrames(piercingDamageSource, amount, event.getEntity(), event.getEntity(), true);
 	}
 
 	@SubscribeEvent
