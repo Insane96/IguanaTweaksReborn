@@ -40,6 +40,6 @@ public class MaterialsDataPacks extends Feature {
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "farmable_iron", Component.literal("IguanaTweaks Reborn Farmable Iron"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && farmableIronDataPack));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "ore_smelting", Component.literal("IguanaTweaks Reborn Ore Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && oreSmelting));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "coal_generation", Component.literal("IguanaTweaks Reborn Coal Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && differentCoalGeneration));
-		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "diamond_generation", Component.literal("Survival Reimagined Diamond Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && backportDiamondGen));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "diamond_generation", Component.literal("IguanaTweaks Reborn Diamond Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && backportDiamondGen));
 	}
 }

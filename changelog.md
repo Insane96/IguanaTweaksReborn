@@ -1,8 +1,7 @@
 # Changelog
 
-## Alpha 4.0.0
+## Beta 4.0.0
 Please note this changelog is based off the latest Survival Reimagined version, and not 1.19.2 ITR version
-This version is missing a few features
 * Item Stats
   * Now Items statistics are defined via Data Pack
     * `item`: id or item tag
