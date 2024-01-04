@@ -31,11 +31,15 @@ public class MaterialsDataPacks extends Feature {
 			* Smelting Iron in a Furnace takes 4x time, and 2x time in a blast furnace
 			* Can no longer smelt gold in a Furnace, and 2x in a blast furnace""")
 	public static Boolean oreSmelting = true;
+	@Config
+	@Label(name = "Backport 1.20.2 Diamond ore generation", description = "Enables a Data Pack.")
+	public static Boolean backportDiamondGen = true;
 
 	public MaterialsDataPacks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "farmable_iron", Component.literal("IguanaTweaks Reborn Farmable Iron"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && farmableIronDataPack));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "ore_smelting", Component.literal("IguanaTweaks Reborn Ore Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && oreSmelting));
 		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "coal_generation", Component.literal("IguanaTweaks Reborn Coal Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && differentCoalGeneration));
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "diamond_generation", Component.literal("Survival Reimagined Diamond Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && backportDiamondGen));
 	}
 }

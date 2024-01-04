@@ -9,12 +9,15 @@ import insane96mcp.iguanatweaksreborn.data.condition.NonPlayerArisedDropConditio
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.LootPurgerModifier;
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.ReplaceLootModifier;
+import insane96mcp.iguanatweaksreborn.module.world.coalfire.PilableFallingLayerEntity;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
@@ -36,6 +39,12 @@ public class ITRRegistries {
 
 	public static final DeferredRegister<Block> BLOCKS = createRegistry(ForgeRegistries.BLOCKS);
 	public static final DeferredRegister<Item> ITEMS = createRegistry(ForgeRegistries.ITEMS);
+	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = createRegistry(ForgeRegistries.ENTITY_TYPES);
+	public static final RegistryObject<EntityType<PilableFallingLayerEntity>> PILABLE_FALLING_LAYER = ENTITY_TYPES.register("pilable_falling_layer", () -> EntityType.Builder.<PilableFallingLayerEntity>of(PilableFallingLayerEntity::new, MobCategory.MISC)
+			.sized(0.98f, 0.98f)
+			.clientTrackingRange(10)
+			.updateInterval(20)
+			.build("pilable_falling_layer"));
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = createRegistry(ForgeRegistries.BLOCK_ENTITY_TYPES);
 	public static final DeferredRegister<MenuType<?>> MENU_TYPES = createRegistry(ForgeRegistries.MENU_TYPES);
 	public static final DeferredRegister<Attribute> ATTRIBUTES = createRegistry(ForgeRegistries.ATTRIBUTES);
