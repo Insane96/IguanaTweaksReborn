@@ -20,7 +20,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Lucky Gold", description = "Makes gold tools more useful")
 @LoadFeature(module = Modules.Ids.MINING)
-public class Gold extends Feature {
+public class LuckyGold extends Feature {
 
 	public static final String LUCKY_GOLD_TOOLTIP = IguanaTweaksReborn.MOD_ID + ".innate_luck";
 
@@ -29,7 +29,7 @@ public class Gold extends Feature {
 	public static Boolean luckyGold = true;
 
 
-	public Gold(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public LuckyGold(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
@@ -49,7 +49,7 @@ public class Gold extends Feature {
 	}
 
 	public static int getFortuneLevel(int prev, ItemStack itemStack) {
-		if(!isEnabled(Gold.class)
+		if(!isEnabled(LuckyGold.class)
 				|| !luckyGold
 				|| !(itemStack.getItem() instanceof TieredItem tieredItem)
 				|| tieredItem.getTier() != Tiers.GOLD
@@ -60,7 +60,7 @@ public class Gold extends Feature {
 	}
 
 	public static Tier getEffectiveTier(Tier originalTier) {
-		if(!isEnabled(Gold.class)
+		if(!isEnabled(LuckyGold.class)
 				|| !luckyGold
 				|| originalTier != Tiers.GOLD)
 			return originalTier;
