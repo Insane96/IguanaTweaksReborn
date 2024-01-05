@@ -50,9 +50,11 @@
     "client": [
         "MultiplayerGameModeMixin",
         "client.AnvilScreenMixin",
+        "client.ClientLevelMixin",
         "client.GameRendererMixin",
         "client.GuiMixin",
         "client.LevelRendererMixin",
+        "client.LocalPlayerMixin",
         "client.MinecraftMixin"
-	]
+    ]
 }
