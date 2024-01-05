@@ -2,7 +2,7 @@
 
 ## Beta 3.0.1
 * Added missing cyan recipe from cyan flower
-* Moved all registries here for IguanaTweaks Expanded
+* General clean up
 
 ## Beta 3.0.0
 Please note this changelog is based off the latest Survival Reimagined version, and not 1.19.2 ITR version
