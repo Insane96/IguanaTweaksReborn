@@ -60,6 +60,9 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Config
 	@Label(name = "Buff Feather Falling", description = "Increases the damage protection from Feather Falling. From 12% per level to 16% per level")
 	public static Boolean buffFeatherFalling = true;
+	@Config
+	@Label(name = "Specific damaging enchantments bonus damage", description = "Changes the bonus damage of type based damage enchantments (e.g. Smite). Vanilla is 2.5")
+	public static Double typeBasedDamageEnchantmentBonus = 2.0d;
 
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
 			IdTagMatcher.newId("minecraft:protection"),
