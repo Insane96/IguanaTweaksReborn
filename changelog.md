@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Missing IguanaTweaks Expanded stuff
+
 ## Beta 3.0.1
 * Added missing cyan recipe from cyan flower
 * General clean up

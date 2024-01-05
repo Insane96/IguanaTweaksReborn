@@ -3,13 +3,13 @@
 	"repair": [
 		{
 			"repair_material": {
-				"id": "survivalreimagined:soul_steel_ingot"
+				"id": "iguanatweaksexpanded:soul_steel_ingot"
 			},
 			"amount": 1
 		},
 		{
 			"repair_material": {
-				"id": "survivalreimagined:soul_steel_nugget"
+				"id": "iguanatweaksexpanded:soul_steel_nugget"
 			},
 			"amount": 9
 		}

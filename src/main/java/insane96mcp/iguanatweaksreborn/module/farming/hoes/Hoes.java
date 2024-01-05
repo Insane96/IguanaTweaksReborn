@@ -44,16 +44,16 @@ public class Hoes extends JsonFeature {
 	public static final ArrayList<HoeStat> HOES_STATS_DEFAULT = new ArrayList<>(List.of(
 			new HoeStat(IdTagMatcher.newId("minecraft:wooden_hoe"), 40, 4, 1),
 			new HoeStat(IdTagMatcher.newId("minecraft:stone_hoe"), 30, 4, 0),
-			//new HoeStat(IdTagMatcher.newId("survivalreimagined:flint_hoe"), 25, 4, 0),
-			//new HoeStat(IdTagMatcher.newId("survivalreimagined:copper_hoe"), 20, 4, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:flint_hoe"), 25, 4, 0),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:copper_hoe"), 20, 4, 1),
 			new HoeStat(IdTagMatcher.newId("minecraft:golden_hoe"), 6, 3, 2),
 			new HoeStat(IdTagMatcher.newId("minecraft:iron_hoe"), 22, 3, 1),
-			//new HoeStat(IdTagMatcher.newId("survivalreimagined:solarium_hoe"), 28, 3, 1),
-			//new HoeStat(IdTagMatcher.newId("survivalreimagined:durium_hoe"), 25, 3, 0),
-			//new HoeStat(IdTagMatcher.newId("survivalreimagined:coated_copper_hoe"), 18, 2, 1),
-			//new HoeStat(IdTagMatcher.newId("survivalreimagined:keego_hoe"), 10, 2, 2),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:solarium_hoe"), 28, 3, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:durium_hoe"), 25, 3, 0),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:coated_copper_hoe"), 18, 2, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:keego_hoe"), 10, 2, 2),
 			new HoeStat(IdTagMatcher.newId("minecraft:diamond_hoe"), 12, 2, 2),
-			//new HoeStat(IdTagMatcher.newId("survivalreimagined:soul_steel_hoe"), 14, 2, 2),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:soul_steel_hoe"), 14, 2, 2),
 			new HoeStat(IdTagMatcher.newId("minecraft:netherite_hoe"), 12, 2, 2)
 	));
 

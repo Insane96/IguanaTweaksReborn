@@ -51,12 +51,12 @@ public class BlockHardness extends JsonFeature {
 			IdTagValue.newId("minecraft:lapis_ore", 3d),
 			IdTagValue.newId("minecraft:emerald_ore", 4d),
 
-			/*IdTagValue.newId("survivalreimagined:poor_copper_ore", 1.667d),
-			IdTagValue.newId("survivalreimagined:poor_iron_ore", 2d),
-			IdTagValue.newId("survivalreimagined:poor_gold_ore", 2.333d),
-			IdTagValue.newId("survivalreimagined:rich_copper_ore", 3.333d),
-			IdTagValue.newId("survivalreimagined:rich_iron_ore", 4d),
-			IdTagValue.newId("survivalreimagined:rich_gold_ore", 4.6666d),*/
+			IdTagValue.newId("iguanatweaksexpanded:poor_copper_ore", 1.667d),
+			IdTagValue.newId("iguanatweaksexpanded:poor_iron_ore", 2d),
+			IdTagValue.newId("iguanatweaksexpanded:poor_gold_ore", 2.333d),
+			IdTagValue.newId("iguanatweaksexpanded:rich_copper_ore", 3.333d),
+			IdTagValue.newId("iguanatweaksexpanded:rich_iron_ore", 4d),
+			IdTagValue.newId("iguanatweaksexpanded:rich_gold_ore", 4.6666d),
 
 			IdTagValue.newId("minecraft:deepslate_coal_ore", 4d),
 			IdTagValue.newId("minecraft:deepslate_copper_ore", 4d),
@@ -67,12 +67,12 @@ public class BlockHardness extends JsonFeature {
 			IdTagValue.newId("minecraft:deepslate_lapis_ore", 4.5d),
 			IdTagValue.newId("minecraft:deepslate_emerald_ore", 6d),
 
-			IdTagValue.newId("survivalreimagined:poor_deepslate_copper_ore", 2.667d),
-			IdTagValue.newId("survivalreimagined:poor_deepslate_iron_ore", 3d),
-			IdTagValue.newId("survivalreimagined:poor_deepslate_gold_ore", 3.333d),
-			IdTagValue.newId("survivalreimagined:rich_deepslate_copper_ore", 5.333d),
-			IdTagValue.newId("survivalreimagined:rich_deepslate_iron_ore", 6d),
-			IdTagValue.newId("survivalreimagined:rich_deepslate_gold_ore", 6.666d),
+			IdTagValue.newId("iguanatweaksexpanded:poor_deepslate_copper_ore", 2.667d),
+			IdTagValue.newId("iguanatweaksexpanded:poor_deepslate_iron_ore", 3d),
+			IdTagValue.newId("iguanatweaksexpanded:poor_deepslate_gold_ore", 3.333d),
+			IdTagValue.newId("iguanatweaksexpanded:rich_deepslate_copper_ore", 5.333d),
+			IdTagValue.newId("iguanatweaksexpanded:rich_deepslate_iron_ore", 6d),
+			IdTagValue.newId("iguanatweaksexpanded:rich_deepslate_gold_ore", 6.666d),
 
 			IdTagValue.newId("minecraft:ancient_debris", 12d),
 			IdTagValue.newTag("iguanatweaksreborn:obsidians", 33d),
