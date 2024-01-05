@@ -11,6 +11,7 @@ import insane96mcp.iguanatweaksreborn.data.lootmodifier.LootPurgerModifier;
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.ReplaceLootModifier;
 import insane96mcp.iguanatweaksreborn.module.world.coalfire.PilableFallingLayerEntity;
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -21,9 +22,13 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTestType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.registries.DeferredRegister;
@@ -64,6 +69,12 @@ public class ITRRegistries {
 	public static final RegistryObject<LootItemConditionType> LIVING_ENTITY = LOOT_CONDITION_TYPES.register("living_entity", () -> new LootItemConditionType(new LivingEntityCondition.Serializer()));
 	public static final RegistryObject<LootItemConditionType> NON_PLAYER_ARISED_DROP = LOOT_CONDITION_TYPES.register("non_player_arised_drop", () -> new LootItemConditionType(new NonPlayerArisedDropCondition.Serializer()));
 	//public static final RegistryObject<LootItemConditionType> CURRENT_SEASON = LOOT_CONDITION_TYPES.register("current_season", () -> new LootItemConditionType(new LootItemCurrentSeasonCondition.Serializer()));
+
+	public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = createRegistry(ForgeRegistries.PARTICLE_TYPES);
+	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = createRegistry(ForgeRegistries.RECIPE_SERIALIZERS);
+	public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = createRegistry(ForgeRegistries.RECIPE_TYPES);
+	public static final DeferredRegister<Feature<?>> FEATURES = createRegistry(ForgeRegistries.FEATURES);
+	public static final DeferredRegister<RuleTestType<?>> RULE_TEST_TYPES = createRegistry(Registries.RULE_TEST);
 
 	static <R> DeferredRegister<R> createRegistry(ResourceKey<? extends Registry<R>> key) {
 		DeferredRegister<R> register = DeferredRegister.create(key, IguanaTweaksReborn.MOD_ID);
