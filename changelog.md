@@ -1,6 +1,6 @@
 # Changelog
 
-## Beta 4.0.0
+## Beta 3.0.0
 Please note this changelog is based off the latest Survival Reimagined version, and not 1.19.2 ITR version
 * Item Stats
   * Now Items statistics are defined via Data Pack
