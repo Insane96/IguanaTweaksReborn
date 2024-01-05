@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "survivalreimagined:cyan_flower"
+    }
+  ],
+  "result": {
+    "item": "minecraft:cyan_dye"
+  }
+}
