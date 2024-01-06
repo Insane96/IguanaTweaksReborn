@@ -1,7 +1,5 @@
 {
 	"item": "minecraft:shield",
-	"attack_damage": 4,
-	"attack_speed": 0.5,
 	"durability": 187,
 	"modifiers": [
 		{

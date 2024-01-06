@@ -3,6 +3,7 @@
 ## Upcoming
 * Missing IguanaTweaks Expanded stuff
 * Fixed advancement triggers not being registered
+* Fixed items tooltips with modifiers in multiple slots showing all in the last slot
 
 ## Beta 3.0.1
 * Added missing cyan recipe from cyan flower

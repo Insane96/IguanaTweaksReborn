@@ -114,10 +114,18 @@ public class Stats extends Feature {
 		List<Component> toRemove = new ArrayList<>();
 		boolean hasModifiersTooltip = false;
 
+		Component emptyLine = null;
 		for (Component mutableComponent : event.getToolTip()) {
+			if (emptyLine == null)
+				emptyLine = mutableComponent.getSiblings().isEmpty() ? mutableComponent : null;
 			if (mutableComponent.getContents() instanceof TranslatableContents t) {
-				if (t.getKey().startsWith("item.modifiers."))
+				if (t.getKey().startsWith("item.modifiers.")) {
 					hasModifiersTooltip = true;
+					toRemove.add(mutableComponent);
+					if (emptyLine != null)
+						toRemove.add(emptyLine);
+					emptyLine = null;
+				}
 				else if (t.getKey().startsWith("attribute.modifier."))
 					toRemove.add(mutableComponent);
 			}
@@ -135,9 +143,14 @@ public class Stats extends Feature {
 
 		toRemove.forEach(component -> event.getToolTip().remove(component));
 
+		boolean isFirstModifier = true;
 		for(EquipmentSlot equipmentslot : EquipmentSlot.values()) {
 			Multimap<Attribute, AttributeModifier> multimap = event.getItemStack().getAttributeModifiers(equipmentslot);
 			if (!multimap.isEmpty()) {
+				if (!isFirstModifier)
+					event.getToolTip().add(CommonComponents.EMPTY);
+				event.getToolTip().add(Component.translatable("item.modifiers." + equipmentslot.getName()).withStyle(ChatFormatting.GRAY));
+				isFirstModifier = false;
 				for(Attribute attribute : multimap.keySet()) {
 					Map<AttributeModifier.Operation, List<AttributeModifier>> modifiersByOperation = multimap.get(attribute).stream().collect(Collectors.groupingBy(AttributeModifier::getOperation));
 					modifiersByOperation.forEach((operation, modifier) -> {
