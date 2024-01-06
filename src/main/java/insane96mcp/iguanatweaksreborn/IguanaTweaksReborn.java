@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn;
 
 import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.command.ITRCommand;
+import insane96mcp.iguanatweaksreborn.data.criterion.ITRTriggers;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRDamageTypeTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
@@ -87,6 +88,8 @@ public class IguanaTweaksReborn
 		modEventBus.register(SpawnerData.class);
         modEventBus.register(Tiredness.class);
         ITRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));
+
+        ITRTriggers.init();
 
         if (FMLLoader.getDist().isClient()) {
             modEventBus.addListener(ClientSetup::onBuildCreativeModeTabContents);

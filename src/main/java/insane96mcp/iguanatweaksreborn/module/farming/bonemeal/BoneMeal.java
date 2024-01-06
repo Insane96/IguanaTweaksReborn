@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.farming.bonemeal;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.data.criterion.MakeRichFarmlandTrigger;
+import insane96mcp.iguanatweaksreborn.data.criterion.ITRTriggers;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
@@ -120,7 +120,7 @@ public class BoneMeal extends JsonFeature {
 				event.getLevel().setBlockAndUpdate(farmlandPos, RICH_FARMLAND.block().get().defaultBlockState().setValue(FarmBlock.MOISTURE, event.getLevel().getBlockState(farmlandPos).getValue(FarmBlock.MOISTURE)));
 				event.getEntity().swing(event.getEntity().getMainHandItem().getItem() == event.getStack().getItem() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND, true);
 				event.setResult(Event.Result.ALLOW);
-				MakeRichFarmlandTrigger.TRIGGER.trigger((ServerPlayer) event.getEntity());
+				ITRTriggers.MAKE_RICH_FARMLAND.trigger((ServerPlayer) event.getEntity());
 			}
 		}
 		if (event.getResult() != Event.Result.ALLOW) {

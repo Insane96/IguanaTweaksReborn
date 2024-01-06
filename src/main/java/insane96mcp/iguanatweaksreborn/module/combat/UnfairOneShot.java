@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.combat;
 
-import insane96mcp.iguanatweaksreborn.data.criterion.UnfairOneShotTrigger;
+import insane96mcp.iguanatweaksreborn.data.criterion.ITRTriggers;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.insanelib.base.Feature;
@@ -30,7 +30,7 @@ public class UnfairOneShot extends Feature {
 		if (player.getHealth() >= 15 && player.getHealth() - event.getAmount() <= 0) {
 			event.setAmount(player.getHealth() - 1f);
 			player.level().playSound(null, player.blockPosition(), ITRRegistries.UNFAIR_ONE_SHOT.get(), SoundSource.PLAYERS, 2f, 0.7f);
-			UnfairOneShotTrigger.TRIGGER.trigger(player);
+			ITRTriggers.UNFAIR_ONESHOT.trigger(player);
 		}
 	}
 }
