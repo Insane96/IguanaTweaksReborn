@@ -1,6 +1,7 @@
 # Changelog
 
-## Upcoming
+## Beta 3.0.2
+* Mobs now despawn in a radius (48 for world respawn and 24 for bed respawn) from the player respawn point
 * Missing IguanaTweaks Expanded stuff
 * Fixed advancement triggers not being registered
 * Fixed items tooltips with modifiers in multiple slots showing all in the last slot

@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.sleeprespawn.respawn;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.utils.ITRLogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -15,14 +16,18 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 @Label(name = "Respawn", description = "Changes to respawning")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
@@ -33,10 +38,16 @@ public class Respawn extends Feature {
 	@Config(min = 0)
 	@Label(name = "Loose World Spawn Range", description = "The range from world spawn where players will respawn.")
 	public static MinMax looseWorldSpawnRange = new MinMax(128d, 192d);
+	@Config(min = 0)
+	@Label(name = "Despawn mobs on world respawn", description = "Mobs in this range from the player will be despawned when respawning at world spawn.")
+	public static Integer despawnMobsOnWorldRespawn = 48;
 
 	@Config(min = 0)
 	@Label(name = "Loose Bed Spawn Range", description = "The range from beds where players will respawn.")
 	public static MinMax looseBedSpawnRange = new MinMax(64d, 128d);
+	@Config(min = 0)
+	@Label(name = "Despawn mobs on bed respawn", description = "Mobs in this range from the player will be despawned when respawning at bed spawn.")
+	public static Integer despawnMobsOnBedRespawn = 24;
 
 	public Respawn(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -49,42 +60,51 @@ public class Respawn extends Feature {
 				|| event.isEndConquered())
 			return;
 
-		BlockPos respawn = looseWorldSpawn(event);
-		if (respawn == null) {
-			respawn = looseBedSpawn(event);
+		boolean hasRespawned = looseWorldSpawn(event);
+		if (!hasRespawned) {
+			looseBedSpawn(event);
 		}
-
-		if (respawn != null)
-			event.getEntity().teleportToWithTicket(respawn.getX() + 0.5d, respawn.getY() + 0.5d, respawn.getZ() + 0.5d);
-
-		//tryRespawnObelisk(event);
 	}
 
-	@Nullable
-	private BlockPos looseWorldSpawn(PlayerEvent.PlayerRespawnEvent event) {
+	private boolean looseWorldSpawn(PlayerEvent.PlayerRespawnEvent event) {
 		if (looseWorldSpawnRange.min == 0d
 				|| event.getEntity().isSpectator())
-			return null;
+			return false;
 		ServerPlayer player = (ServerPlayer) event.getEntity();
 		BlockPos pos = player.getRespawnPosition();
 		if (pos != null)
-			return null;
+			return false;
 
-		return getSpawnPositionInRange(player.level().getSharedSpawnPos(), looseWorldSpawnRange, player.level(), player.level().random);
+		BlockPos respawnPos = getSpawnPositionInRange(player.level().getSharedSpawnPos(), looseWorldSpawnRange, player.level(), player.level().random);
+		if (respawnPos == null)
+			return false;
+
+		event.getEntity().teleportToWithTicket(respawnPos.getX() + 0.5d, respawnPos.getY() + 0.5d, respawnPos.getZ() + 0.5d);
+		List<Entity> entities = player.level().getEntities(player, new AABB(respawnPos).inflate(despawnMobsOnWorldRespawn), entity -> entity instanceof Monster);
+		ITRLogHelper.debug("Despawning %d entities", entities.size());
+		entities.forEach(Entity::discard);
+		return true;
 	}
 
-	@Nullable
-	private BlockPos looseBedSpawn(PlayerEvent.PlayerRespawnEvent event) {
+	private boolean looseBedSpawn(PlayerEvent.PlayerRespawnEvent event) {
 		if (looseBedSpawnRange.min == 0d
 				|| event.getEntity().isSpectator())
-			return null;
+			return false;
 		ServerPlayer player = (ServerPlayer) event.getEntity();
 		BlockPos pos = player.getRespawnPosition();
 		if (pos == null
 				|| !event.getEntity().level().getBlockState(pos).is(BlockTags.BEDS))
-			return null;
+			return false;
 
-		return getSpawnPositionInRange(pos, looseBedSpawnRange, player.level(), player.level().random);
+		BlockPos respawnPos = getSpawnPositionInRange(pos, looseBedSpawnRange, player.level(), player.level().random);
+		if (respawnPos == null)
+			return false;
+
+		event.getEntity().teleportToWithTicket(respawnPos.getX() + 0.5d, respawnPos.getY() + 0.5d, respawnPos.getZ() + 0.5d);
+		List<Entity> entities = player.level().getEntities(player, new AABB(respawnPos).inflate(despawnMobsOnBedRespawn), entity -> entity instanceof Monster);
+		ITRLogHelper.debug("Despawning %d entities", entities.size());
+		entities.forEach(Entity::discard);
+		return true;
 	}
 
 	@Nullable
