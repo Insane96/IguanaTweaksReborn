@@ -48,18 +48,18 @@ public class HardCrops extends JsonFeature {
 	}
 
 	public static void applyHardness(List<IdTagValue> list, boolean isClientSide) {
-		for (IdTagValue hardnesses : list) {
-			getAllBlocks(hardnesses.id, isClientSide).forEach(block -> {
+		for (IdTagValue hardness : list) {
+			getAllBlocks(hardness.id, isClientSide).forEach(block -> {
 				if (onlyFullyGrown) {
 					//I have doubts that this always takes the fully grown modded crops
 					BlockState state = block.getStateDefinition().getPossibleStates().get(block.getStateDefinition().getPossibleStates().size() - 1);
 					if (state.destroySpeed == 0f)
-						state.destroySpeed = (float) hardnesses.value;
+						state.destroySpeed = (float) hardness.value;
 				}
 				else {
 					block.getStateDefinition().getPossibleStates().forEach(blockState -> {
 						if (blockState.destroySpeed == 0f)
-							blockState.destroySpeed = (float) hardnesses.value;
+							blockState.destroySpeed = (float) hardness.value;
 					});
 				}
 			});

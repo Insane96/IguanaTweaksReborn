@@ -25,6 +25,7 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
 
     public static final TagKey<Item> WOODEN_HAND_EQUIPMENT = ITRItemTagsProvider.create("equipment/hand/wooden");
     public static final TagKey<Item> STONE_HAND_EQUIPMENT = ITRItemTagsProvider.create("equipment/hand/stone");
+    public static final TagKey<Item> LEATHER_ARMOR_EQUIPMENT = ITRItemTagsProvider.create("equipment/armor/leather");
 
     public ITRItemTagsProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture, CompletableFuture<TagLookup<Block>> tagLookupCompletableFuture, String modId, @Nullable ExistingFileHelper existingFileHelper) {
         super(packOutput, completableFuture, tagLookupCompletableFuture, modId, existingFileHelper);
@@ -58,8 +59,9 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
 
         //noinspection unchecked
         tag(ItemStats.NOT_UNBREAKABLE)
-                .addTags(WOODEN_HAND_EQUIPMENT, STONE_HAND_EQUIPMENT)
-                .addOptionalTag(new ResourceLocation("iguanatweaksexpanded:equipment/hand/flint")).addOptionalTag(new ResourceLocation("iguanatweaksexpanded:equipment/hand/copper"));
+                .addTags(WOODEN_HAND_EQUIPMENT, STONE_HAND_EQUIPMENT, LEATHER_ARMOR_EQUIPMENT)
+                .addOptionalTag(new ResourceLocation("iguanatweaksexpanded:equipment/hand/flint")).addOptionalTag(new ResourceLocation("iguanatweaksexpanded:equipment/hand/copper"))
+                .addOptionalTag(new ResourceLocation("iguanatweaksexpanded:equipment/armor/chained_copper"));
         tag(FoodDrinks.RAW_FOOD)
                 .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT);
 		tag(Spawners.SPAWNER_REACTIVATOR_TAG)

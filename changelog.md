@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Leather and chained copper armor are no longer unbreakable
 * Fixed copper and flint tools being unbreakable
 
 ## Beta 3.0.2

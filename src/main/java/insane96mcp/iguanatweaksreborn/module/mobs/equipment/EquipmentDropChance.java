@@ -44,7 +44,7 @@ public class EquipmentDropChance {
         @Override
         public EquipmentDropChance deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             IdTagMatcher entity = context.deserialize(json.getAsJsonObject().get("entity"), IdTagMatcher.class);
-            Float dropChance = json.getAsJsonObject().has("drop_chance") ? GsonHelper.getAsFloat(json.getAsJsonObject(), "drop_chance", Float.MIN_VALUE) : null;
+            Float dropChance = json.getAsJsonObject().has("drop_chance") ? GsonHelper.getAsFloat(json.getAsJsonObject(), "drop_chance") : null;
             return new EquipmentDropChance(entity, EquipmentSlot.byName(GsonHelper.getAsString(json.getAsJsonObject(), "slot")), dropChance);
         }
 

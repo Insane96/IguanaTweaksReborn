@@ -2,12 +2,17 @@
   "values": [
     "#iguanatweaksreborn:equipment/hand/wooden",
     "#iguanatweaksreborn:equipment/hand/stone",
+    "#iguanatweaksreborn:equipment/armor/leather",
     {
       "id": "#iguanatweaksexpanded:equipment/hand/flint",
       "required": false
     },
     {
       "id": "#iguanatweaksexpanded:equipment/hand/copper",
+      "required": false
+    },
+    {
+      "id": "#iguanatweaksexpanded:equipment/armor/chained_copper",
       "required": false
     }
   ]
