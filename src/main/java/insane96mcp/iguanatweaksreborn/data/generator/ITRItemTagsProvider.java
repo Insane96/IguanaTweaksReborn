@@ -58,7 +58,8 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
 
         //noinspection unchecked
         tag(ItemStats.NOT_UNBREAKABLE)
-                .addTags(WOODEN_HAND_EQUIPMENT, STONE_HAND_EQUIPMENT);
+                .addTags(WOODEN_HAND_EQUIPMENT, STONE_HAND_EQUIPMENT)
+                .addOptionalTag(new ResourceLocation("iguanatweaksexpanded:equipment/hand/flint")).addOptionalTag(new ResourceLocation("iguanatweaksexpanded:equipment/hand/copper"));
         tag(FoodDrinks.RAW_FOOD)
                 .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT);
 		tag(Spawners.SPAWNER_REACTIVATOR_TAG)

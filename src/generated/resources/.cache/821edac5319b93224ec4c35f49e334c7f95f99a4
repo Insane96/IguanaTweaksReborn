@@ -1,6 +1,6 @@
-// 1.20.1	2023-12-31T16:27:58.3106687	Tags for minecraft:item mod id iguanatweaksreborn
+// 1.20.1	2024-01-07T11:49:58.589959	Tags for minecraft:item mod id iguanatweaksreborn
 b1eaa8c6251363a43fec48d3a61979cccb61a40a data/iguanatweaksreborn/tags/items/energy_boost.json
-8e8d56001ef8eaca748cba186d23791bc2e33932 data/iguanatweaksreborn/tags/items/not_unbreakable.json
+133b3dc810ecbc55621dd6c6dc09ea7ae05ab399 data/iguanatweaksreborn/tags/items/not_unbreakable.json
 0afc4b22f147c071c2642b34ba270feadb7649e1 data/iguanatweaksreborn/tags/items/no_fertility_tooltip.json
 7ed3116413a687ab0b86d1c195045bc055148639 data/iguanatweaksreborn/tags/items/no_stack_size_changes.json
 a04a8c101c6e237ccf2a8020c1f226ec9f2f1639 data/iguanatweaksreborn/tags/items/raw_food.json

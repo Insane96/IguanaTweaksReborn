@@ -1,6 +1,14 @@
 {
   "values": [
     "#iguanatweaksreborn:equipment/hand/wooden",
-    "#iguanatweaksreborn:equipment/hand/stone"
+    "#iguanatweaksreborn:equipment/hand/stone",
+    {
+      "id": "#iguanatweaksexpanded:equipment/hand/flint",
+      "required": false
+    },
+    {
+      "id": "#iguanatweaksexpanded:equipment/hand/copper",
+      "required": false
+    }
   ]
 }
