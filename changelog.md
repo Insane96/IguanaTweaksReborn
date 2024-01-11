@@ -1,11 +1,11 @@
 # Changelog
 
 * Sleeping should skip 12000 ticks instead of to night or day
-* Ore veins should generate more, closer to the center
 
 ## Upcoming
+* Sleeping now adds 10 minutes to the daytime instead of skipping the day/night
 * Leather and chained copper armor are no longer unbreakable
-* Slight rebalance of Iron Tools
+* Slight re-balance of Iron Tools
 * Fixed copper and flint tools being unbreakable
 
 ## Beta 3.0.2

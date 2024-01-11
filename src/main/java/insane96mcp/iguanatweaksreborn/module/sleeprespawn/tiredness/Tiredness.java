@@ -226,10 +226,7 @@ public class Tiredness extends JsonFeature {
 			player.removeEffect(TIRED.get());
 		});
 
-		int toSub = 11458;
-		if (event.getLevel().getLevelData().isRaining())
-			toSub = 11990;
-		event.setTimeAddition(event.getNewTime() - toSub);
+		event.setTimeAddition(event.getLevel().dayTime() + 12000);
 	}
 
 	@SubscribeEvent
