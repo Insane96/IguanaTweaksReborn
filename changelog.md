@@ -1,8 +1,6 @@
 # Changelog
 
-* Sleeping should skip 12000 ticks instead of to night or day
-
-## Upcoming
+## 3.0.3
 * Sleeping now adds 10 minutes to the daytime instead of skipping the day/night
 * Leather and chained copper armor are no longer unbreakable
 * Slight re-balance of Iron Tools
