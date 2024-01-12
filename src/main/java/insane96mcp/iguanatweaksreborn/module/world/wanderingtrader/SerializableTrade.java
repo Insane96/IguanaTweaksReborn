@@ -134,7 +134,7 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 					CompoundTag resultTag = TagParser.parseTag(itemATag);
 					serializableTrade.itemA.setTag(resultTag);
 				} catch (Exception e) {
-					throw new JsonParseException("Failed to parse item_A_tag %s".formatted(e.getMessage()));
+					throw new JsonParseException("Failed to parse item_a_tag %s".formatted(e.getMessage()));
 				}
 			}
 

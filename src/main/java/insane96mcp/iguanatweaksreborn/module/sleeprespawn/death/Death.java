@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.sleeprespawn.death;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.integration.ToolBelt;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
@@ -7,10 +8,14 @@ import insane96mcp.iguanatweaksreborn.setup.registry.SimpleBlockWithItem;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.setup.ILStrings;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Blocks;
@@ -37,7 +42,13 @@ public class Death extends Feature {
 	public static final SimpleBlockWithItem GRAVE = SimpleBlockWithItem.register("grave", () -> new GraveBlock(BlockBehaviour.Properties.of().pushReaction(PushReaction.BLOCK).mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).forceSolidOn().strength(1.5F, 6.0F)));
 	public static final RegistryObject<BlockEntityType<?>> GRAVE_BLOCK_ENTITY_TYPE = ITRRegistries.BLOCK_ENTITY_TYPES.register("grave", () -> BlockEntityType.Builder.of(GraveBlockEntity::new, GRAVE.block().get()).build(null));
 
+	public static final String KILLED_PLAYER = IguanaTweaksReborn.RESOURCE_PREFIX + "killed_player";
+	public static final String PLAYER_KILLER_LANG = IguanaTweaksReborn.MOD_ID + ".player_killer";
+
 	//TODO Configs for the grave
+	@Config
+	@Label(name = "Player's killer bounty", description = "If true, the player's killer will not despawn and when killed will drop 4x more items and experience.")
+	public static Boolean vindicationVsKiller = true;
 
 	public Death(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -86,5 +97,31 @@ public class Death extends Feature {
 		graveBlockEntity.setOwner(player.getUUID());
 		graveBlockEntity.setDeathNumber(player.getStats().getValue(Stats.CUSTOM.get(Stats.DEATHS)) + 1);
 		player.getInventory().clearContent();
+
+		if (vindicationVsKiller && event.getSource().getEntity() instanceof Mob killer && !killer.getPersistentData().contains(KILLED_PLAYER)) {
+			if (killer.isRemoved() || killer.isDeadOrDying())
+				return;
+			killer.setPersistenceRequired();
+			double experienceMultiplier = 4d;
+			if (killer.getPersistentData().contains(ILStrings.Tags.EXPERIENCE_MULTIPLIER))
+				experienceMultiplier *= killer.getPersistentData().getDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER);
+			killer.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, experienceMultiplier);
+			killer.getPersistentData().putUUID(KILLED_PLAYER, player.getUUID());
+			killer.setCustomName(Component.translatable(PLAYER_KILLER_LANG, player.getGameProfile().getName()));
+		}
+	}
+
+	@SubscribeEvent
+	public void onPlayerKillerDeath(LivingDeathEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof Mob mob)
+				|| !mob.level().getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES)
+				|| !mob.getPersistentData().contains(KILLED_PLAYER)
+				|| mob.level().isClientSide)
+			return;
+		Component deathMessage = event.getEntity().getCombatTracker().getDeathMessage();
+
+		//noinspection DataFlowIssue
+		mob.level().getServer().getPlayerList().broadcastSystemMessage(deathMessage, false);
 	}
 }

@@ -76,6 +76,7 @@
 
 	"block.iguanatweaksreborn.grave": "Grave",
 	"iguanatweaksreborn.player_ghost": "%s's Ghost",
+	"iguanatweaksreborn.player_killer": "%s's Killer",
 
 	"iguanatweaksreborn.loose_bed_respawn_point_set": "Your respawn point is loose, you'll respawn in a radius from your bed.",
 

@@ -2,10 +2,7 @@ package insane96mcp.iguanatweaksreborn.setup;
 
 import com.mojang.serialization.Codec;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.data.condition.BlockTagCondition;
-import insane96mcp.iguanatweaksreborn.data.condition.KillerHasAdvancementCondition;
-import insane96mcp.iguanatweaksreborn.data.condition.LivingEntityCondition;
-import insane96mcp.iguanatweaksreborn.data.condition.NonPlayerArisedDropCondition;
+import insane96mcp.iguanatweaksreborn.data.condition.*;
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.LootPurgerModifier;
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.ReplaceLootModifier;
@@ -65,6 +62,7 @@ public class ITRRegistries {
 	public static final RegistryObject<LootItemConditionType> KILLER_HAS_ADVANCEMENT = LOOT_CONDITION_TYPES.register("killer_has_advancement", () -> new LootItemConditionType(new KillerHasAdvancementCondition.Serializer()));
 	public static final RegistryObject<LootItemConditionType> LIVING_ENTITY = LOOT_CONDITION_TYPES.register("living_entity", () -> new LootItemConditionType(new LivingEntityCondition.Serializer()));
 	public static final RegistryObject<LootItemConditionType> NON_PLAYER_ARISED_DROP = LOOT_CONDITION_TYPES.register("non_player_arised_drop", () -> new LootItemConditionType(new NonPlayerArisedDropCondition.Serializer()));
+	public static final RegistryObject<LootItemConditionType> KILLED_BY_KILLED_PLAYER = LOOT_CONDITION_TYPES.register("killed_by_killed_player", () -> new LootItemConditionType(new KilledByKilledPlayerCondition.Serializer()));
 
 	public static final DeferredRegister<RuleTestType<?>> RULE_TEST_TYPES = createRegistry(Registries.RULE_TEST);
 	public static final RegistryObject<RuleTestType<RandomBlockTagMatchTest>> RANDOM_BLOCK_TAG_MATCH = RULE_TEST_TYPES.register("random_block_tag_match", RandomBlockTagMatchTest.Type::new);

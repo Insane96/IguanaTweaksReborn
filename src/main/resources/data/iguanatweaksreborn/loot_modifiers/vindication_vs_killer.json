@@ -1,0 +1,10 @@
+{
+    "type": "iguanatweaksreborn:drop_multiplier",
+    "conditions": [
+        {
+            "condition": "iguanatweaksreborn:killed_by_killed_player",
+            "entity": "this"
+        }
+    ],
+    "multiplier": 4
+}
