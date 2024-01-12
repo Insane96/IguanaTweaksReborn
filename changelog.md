@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed diamond generation backport not working
+
 ## 3.0.3
 * Sleeping now adds 10 minutes to the daytime instead of skipping the day/night
 * Leather and chained copper armor are no longer unbreakable

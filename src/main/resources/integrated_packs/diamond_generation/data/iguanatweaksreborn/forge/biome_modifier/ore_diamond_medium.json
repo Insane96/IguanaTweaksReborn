@@ -1,0 +1,6 @@
+{
+    "type": "forge:add_features",
+    "biomes": "#minecraft:is_overworld",
+    "features": "iguanatweaksexpanded:ore_diamond_medium",
+    "step": "underground_ores"
+}
