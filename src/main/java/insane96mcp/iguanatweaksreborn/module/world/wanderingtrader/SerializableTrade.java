@@ -3,7 +3,6 @@ package insane96mcp.iguanatweaksreborn.module.world.wanderingtrader;
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import insane96mcp.iguanatweaksreborn.utils.ITRLogHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -123,55 +122,55 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 	public static class SerializableTradeSerializer implements JsonDeserializer<SerializableTrade>, JsonSerializer<SerializableTrade> {
 		@Override
 		public SerializableTrade deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+			JsonObject jObject = json.getAsJsonObject();
 			SerializableTrade serializableTrade = new SerializableTrade();
-
-			String sItemA = GsonHelper.getAsString(json.getAsJsonObject(), "item_a");
-			int itemACount = GsonHelper.getAsInt(json.getAsJsonObject(), "item_a_count", 1);
+			String sItemA = GsonHelper.getAsString(jObject, "item_a");
+			int itemACount = GsonHelper.getAsInt(jObject, "item_a_count", 1);
 			ResourceLocation itemA = new ResourceLocation(sItemA);
 			serializableTrade.itemA = new ItemStack(ForgeRegistries.ITEMS.getValue(itemA), itemACount);
-			String sItemATag = GsonHelper.getAsString(json.getAsJsonObject(), "item_a_tag", "{}");
-			CompoundTag itemATag;
-			try {
-				itemATag = TagParser.parseTag(sItemATag);
-			} catch (CommandSyntaxException e) {
-				itemATag = null;
+			if (jObject.has("item_A_tag")) {
+				String itemATag = GsonHelper.getAsString(jObject, "item_A_tag");
+				try {
+					CompoundTag resultTag = TagParser.parseTag(itemATag);
+					serializableTrade.itemA.setTag(resultTag);
+				} catch (Exception e) {
+					throw new JsonParseException("Failed to parse item_A_tag %s".formatted(e.getMessage()));
+				}
 			}
-			if (itemATag != null)
-				serializableTrade.itemA.setTag(itemATag);
 
-			String sItemB = GsonHelper.getAsString(json.getAsJsonObject(), "item_b", "");
+			String sItemB = GsonHelper.getAsString(jObject, "item_b", "");
 			if (!sItemB.isEmpty()) {
-				int itemBCount = GsonHelper.getAsInt(json.getAsJsonObject(), "item_b_count", 1);
+				int itemBCount = GsonHelper.getAsInt(jObject, "item_b_count", 1);
 				ResourceLocation itemB = new ResourceLocation(sItemB);
 				serializableTrade.itemB = new ItemStack(ForgeRegistries.ITEMS.getValue(itemB), itemBCount);
-				String sItemBTag = GsonHelper.getAsString(json.getAsJsonObject(), "item_b_tag", "{}");
-				CompoundTag itemBTag;
-				try {
-					itemBTag = TagParser.parseTag(sItemBTag);
-				} catch (CommandSyntaxException e) {
-					itemBTag = null;
+				if (jObject.has("item_b_tag")) {
+					String itemBTag = GsonHelper.getAsString(jObject, "item_b_tag");
+					try {
+						CompoundTag resultTag = TagParser.parseTag(itemBTag);
+						serializableTrade.itemB.setTag(resultTag);
+					} catch (Exception e) {
+						throw new JsonParseException("Failed to parse item_b_tag %s".formatted(e.getMessage()));
+					}
 				}
-				if (itemBTag != null)
-					serializableTrade.itemB.setTag(itemBTag);
 			}
-			String sItemResult = GsonHelper.getAsString(json.getAsJsonObject(), "item_result");
-			int itemResultCount = GsonHelper.getAsInt(json.getAsJsonObject(), "item_result_count", 1);
-			String itemResultTag = GsonHelper.getAsString(json.getAsJsonObject(), "item_result_tag", "{}");
+			String sItemResult = GsonHelper.getAsString(jObject, "item_result");
 			ResourceLocation itemResult = new ResourceLocation(sItemResult);
-			CompoundTag resultTag;
-			try {
-				resultTag = TagParser.parseTag(itemResultTag);
-			} catch (CommandSyntaxException e) {
-				resultTag = null;
-			}
+			int itemResultCount = GsonHelper.getAsInt(jObject, "item_result_count", 1);
 			serializableTrade.result = new ItemStack(ForgeRegistries.ITEMS.getValue(itemResult), itemResultCount);
-			if (resultTag != null)
-				serializableTrade.result.setTag(resultTag);
-			JsonObject enchantRandomly = GsonHelper.getAsJsonObject(json.getAsJsonObject(), "enchant_randomly", null);
+			if (jObject.has("item_result_tag")) {
+				String itemResultTag = GsonHelper.getAsString(jObject, "item_result_tag");
+				try {
+					CompoundTag resultTag = TagParser.parseTag(itemResultTag);
+					serializableTrade.result.setTag(resultTag);
+				} catch (Exception e) {
+					throw new JsonParseException("Failed to parse item_result_tag %s".formatted(e.getMessage()));
+				}
+			}
+			JsonObject enchantRandomly = GsonHelper.getAsJsonObject(jObject, "enchant_randomly", null);
 			if (enchantRandomly != null) {
 				serializableTrade.enchantRandomly = new EnchantRandomly(GsonHelper.getAsInt(enchantRandomly, "min_levels"), GsonHelper.getAsInt(enchantRandomly, "max_levels"), GsonHelper.getAsBoolean(enchantRandomly, "treasure"));
 			}
-			JsonArray enchantments = GsonHelper.getAsJsonArray(json.getAsJsonObject(), "enchantments", null);
+			JsonArray enchantments = GsonHelper.getAsJsonArray(jObject, "enchantments", null);
 			if (enchantments != null) {
 				enchantments.asList().forEach(jsonElement -> {
 					String id = GsonHelper.getAsString(jsonElement.getAsJsonObject(), "id");
@@ -179,11 +178,11 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 					serializableTrade.enchantments.add(new EnchantmentInstance(ForgeRegistries.ENCHANTMENTS.getValue(ResourceLocation.tryParse(id)), level));
 				});
 			}
-			if (json.getAsJsonObject().has("exploration_map"))
-					serializableTrade.explorationMap = context.deserialize(json.getAsJsonObject().get("exploration_map"), ExplorationMap.class);
+			if (jObject.has("exploration_map"))
+					serializableTrade.explorationMap = context.deserialize(jObject.get("exploration_map"), ExplorationMap.class);
 
-			serializableTrade.maxUses = GsonHelper.getAsInt(json.getAsJsonObject(), "max_uses");
-			serializableTrade.xp = GsonHelper.getAsInt(json.getAsJsonObject(), "xp", 0);
+			serializableTrade.maxUses = GsonHelper.getAsInt(jObject, "max_uses");
+			serializableTrade.xp = GsonHelper.getAsInt(jObject, "xp", 0);
 
 			return serializableTrade;
 		}

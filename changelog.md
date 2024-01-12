@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Fixed diamond generation backport not working
+* Fixed Wandering Trader trades being not stackable
 
 ## 3.0.3
 * Sleeping now adds 10 minutes to the daytime instead of skipping the day/night
