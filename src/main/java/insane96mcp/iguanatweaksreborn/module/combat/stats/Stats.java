@@ -12,6 +12,7 @@ import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.tags.ItemTags;
@@ -116,7 +117,7 @@ public class Stats extends Feature {
 		Component emptyLine = null;
 		for (Component mutableComponent : event.getToolTip()) {
 			if (emptyLine == null)
-				emptyLine = mutableComponent.getSiblings().isEmpty() ? mutableComponent : null;
+				emptyLine = mutableComponent.getSiblings().isEmpty() && mutableComponent.getContents().equals(ComponentContents.EMPTY) ? mutableComponent : null;
 			if (mutableComponent.getContents() instanceof TranslatableContents t) {
 				if (t.getKey().startsWith("item.modifiers.")) {
 					hasModifiersTooltip = true;
@@ -142,14 +143,11 @@ public class Stats extends Feature {
 
 		toRemove.forEach(component -> event.getToolTip().remove(component));
 
-		boolean isFirstModifier = true;
 		for(EquipmentSlot equipmentslot : EquipmentSlot.values()) {
 			Multimap<Attribute, AttributeModifier> multimap = event.getItemStack().getAttributeModifiers(equipmentslot);
 			if (!multimap.isEmpty()) {
-				if (!isFirstModifier)
-					event.getToolTip().add(CommonComponents.EMPTY);
+				event.getToolTip().add(CommonComponents.EMPTY);
 				event.getToolTip().add(Component.translatable("item.modifiers." + equipmentslot.getName()).withStyle(ChatFormatting.GRAY));
-				isFirstModifier = false;
 				for(Attribute attribute : multimap.keySet()) {
 					Map<AttributeModifier.Operation, List<AttributeModifier>> modifiersByOperation = multimap.get(attribute).stream().collect(Collectors.groupingBy(AttributeModifier::getOperation));
 					modifiersByOperation.forEach((operation, modifier) -> {

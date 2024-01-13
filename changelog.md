@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Fixed chainmail armor having wrong stats
+* Fixed first enchantment on armor being invisible
 
 ## 3.0.4
 * Added player's killer bounty
