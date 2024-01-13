@@ -17,7 +17,7 @@ import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Better Ladders", description = "Player's slides down ladders faster and shift when opening an interface.")
+@Label(name = "Better Ladders", description = "Player's slides down ladders faster and stands still when opening an interface.")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class BetterLadders extends Feature {
 
