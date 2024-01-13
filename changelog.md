@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed chainmail armor having wrong stats
+
 ## 3.0.4
 * Added player's killer bounty
   * Mobs that kill players will not despawn and will drop 4x more experience and loot
