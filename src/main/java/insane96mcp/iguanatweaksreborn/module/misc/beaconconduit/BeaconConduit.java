@@ -90,7 +90,7 @@ public class BeaconConduit extends JsonFeature {
             new BeaconEffect(MobEffects.DIG_SPEED, new int[] {1, 2, 4}),
             new BeaconEffect(MobEffects.DAMAGE_BOOST, new int[] {1, 3, 9}),
             new BeaconEffect(MobEffects.JUMP, new int[] {1, 2, 3}),
-            new BeaconEffect(MobEffects.REGENERATION, new int[] {3}),
+            new BeaconEffect(MobEffects.REGENERATION, new int[] {8}),
             new BeaconEffect("iguanatweaksreborn:vigour", new int[] {2, 5}),
             new BeaconEffect("iguanatweaksreborn:regenerating_absorption", new int[] {2, 4}),
             new BeaconEffect(MobEffects.DAMAGE_RESISTANCE, new int[] {1, 3, 9}),

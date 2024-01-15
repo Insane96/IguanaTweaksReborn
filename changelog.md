@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Regeneration in beacon costs much more time
 * Fixed chainmail armor having wrong stats
 * Fixed first enchantment on armor being invisible
 
