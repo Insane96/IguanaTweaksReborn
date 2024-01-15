@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Regeneration in beacon costs much more time
+* Beacon now accepts only stacks of 1 item
 * Fixed chainmail armor having wrong stats
 * Fixed first enchantment on armor being invisible
 

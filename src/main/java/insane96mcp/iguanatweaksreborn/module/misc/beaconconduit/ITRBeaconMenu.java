@@ -172,6 +172,11 @@ public class ITRBeaconMenu extends AbstractContainerMenu {
         }
 
         @Override
+        public int getMaxStackSize() {
+            return 1;
+        }
+
+        @Override
         public void setChanged() {
             super.setChanged();
             ITRBeaconMenu.this.slotsChanged(this.container);
