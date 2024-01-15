@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Mixin(value = AnvilMenu.class, priority = 1001)
-public class AnvilMenuMixin extends ItemCombinerMenu {
+public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 
 	@Shadow
 	@Final
@@ -270,25 +270,17 @@ public class AnvilMenuMixin extends ItemCombinerMenu {
 	}
 
 	@Shadow
-	protected boolean mayPickup(@NotNull Player p_39798_, boolean p_39799_) {
-		return false;
-	}
+	protected abstract boolean mayPickup(@NotNull Player p_39798_, boolean p_39799_);
 
 	@Shadow
-	protected void onTake(@NotNull Player p_150601_, @NotNull ItemStack p_150602_) {
-	}
+	protected abstract void onTake(@NotNull Player p_150601_, @NotNull ItemStack p_150602_);
 
 	@Shadow
-	protected boolean isValidBlock(@NotNull BlockState p_39788_) {
-		return false;
-	}
+	protected abstract boolean isValidBlock(@NotNull BlockState p_39788_);
 
 	@Shadow
-	public void createResult() {
-	}
+	public abstract void createResult();
 
 	@Shadow
-	protected ItemCombinerMenuSlotDefinition createInputSlotDefinitions() {
-		return null;
-	}
+	protected abstract ItemCombinerMenuSlotDefinition createInputSlotDefinitions();
 }
