@@ -40,6 +40,9 @@ public class MiningMisc extends Feature {
 	@Config
 	@Label(name = "Faster slabs, stairs and walls", description = "Makes slabs, stairs and walls take less time to break")
 	public static Boolean fastSlabsStairsWalls = true;
+	@Config
+	@Label(name = "Efficiency based destroy delay", description = "In vanilla there's a 5 tick delay (0.25 secs) between breaking blocks. The tick delay is reduced by 1 tick every 2 tool efficiency.")
+	public static Boolean efficiencyBasedDestroyDelay = true;
 
 	public MiningMisc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

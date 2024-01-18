@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.misc;
 
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.mining.MiningMisc;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -54,12 +55,12 @@ public class Tweaks extends Feature {
     @Config(min = 1)
     @Label(name = "Poison damage speed", description = "Poison will damage the player every this ticks at level I. Vanilla is 25.")
     public static Integer poisonDamageSpeed = 60;
-    //TODO Remove when quark 1.20.x
+
     @Config
-    @Label(name = "Maximum Sponge Soak Blocks", description = "The maximum amount of blocks a sponge can soak. (Vanilla is 64)")
+    @Label(name = "Maximum Sponge Soak Blocks", description = "The maximum amount of blocks a sponge can soak. (Vanilla is 64, disabled if quark is installed)")
     public static Integer maxSpongeSoakBlocks = 256;
     @Config
-    @Label(name = "Maximum Sponge Soak Range", description = "The maximum range at which sponges will check for soakable blocks. (Vanilla is 5)")
+    @Label(name = "Maximum Sponge Soak Range", description = "The maximum range at which sponges will check for soakable blocks. (Vanilla is 5, disabled if quark is installed)")
     public static Integer maxSpongeSoakRange = 10;
 
     @Config
@@ -72,9 +73,6 @@ public class Tweaks extends Feature {
     @Config
     @Label(name = "Player air ticks refilled", description = "The amount of air ticks the player regains each tick when out of water. Vanilla is 4")
     public static Integer playerRefillAirAmount = 1;
-    @Config
-    @Label(name = "Efficiency based destroy delay", description = "In vanilla there's a 5 tick delay (0.25 secs) between breaking blocks. The tick delay is reduced by 1 tick every 2 tool efficiency.")
-    public static Boolean efficiencyBasedDestroyDelay = true;
 
     public Tweaks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -110,7 +108,7 @@ public class Tweaks extends Feature {
 	}
 
     public static int destroyDelay(ItemStack stack, DiggerItem item, BlockState state) {
-        return isEnabled(Tweaks.class) && efficiencyBasedDestroyDelay ? Math.max(5 - (int) (item.speed / 2f), 1) : 5;
+        return isEnabled(MiningMisc.class) && MiningMisc.efficiencyBasedDestroyDelay ? Math.max(5 - (int) (item.speed / 2f), 1) : 5;
     }
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)

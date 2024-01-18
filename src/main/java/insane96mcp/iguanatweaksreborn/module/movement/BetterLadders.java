@@ -16,8 +16,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 
-@Label(name = "Better Ladders", description = "Player's slides down ladders faster and stands still when opening an interface.")
+@Label(name = "Better Ladders", description = "Player's slides down ladders faster and stands still when opening an interface. This is disabled if quark is enabled")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class BetterLadders extends Feature {
 
@@ -25,6 +26,11 @@ public class BetterLadders extends Feature {
 
 	public BetterLadders(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled() && !ModList.get().isLoaded("quark");
 	}
 
 	@OnlyIn(Dist.CLIENT)

@@ -12,7 +12,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 public class Boats extends Feature {
 
 	@Config
-	@Label(name = "No Ice Boats", description = "If true, boats will no longer go stupidly fast on ice.")
+	@Label(name = "No Ice Boats", description = "If true, boats will no longer go stupidly fast on ice. (If quark is present this is disabled)")
 	public static Boolean noIceBoat = true;
 
 	public Boats(Module module, boolean enabledByDefault, boolean canBeDisabled) {

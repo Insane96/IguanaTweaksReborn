@@ -5,6 +5,7 @@
 * Beacon now accepts only stacks of 1 item
 * Fixed chainmail armor having wrong stats
 * Fixed first enchantment on armor being invisible
+* Fixed Quark compatibility
 
 ## 3.0.4
 * Added player's killer bounty

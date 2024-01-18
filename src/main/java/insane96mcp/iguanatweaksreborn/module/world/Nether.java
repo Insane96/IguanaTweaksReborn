@@ -35,7 +35,7 @@ public class Nether extends Feature {
     @Label(name = "Portal requires Gold Blocks or Crying Obsidians", description = "The portal requires Gold blocks or Crying Obsidian in the corners to turn it on (in the overworld).")
     public static Boolean portalRequiresGoldBlock = true;
     @Config
-    @Label(name = "Remove Lava Pockets", description = "If true, lava pockets in the nether are removed.")
+    @Label(name = "Remove Lava Pockets", description = "If true, lava pockets in the nether are removed. If quark is installed, this is disabled")
     public static Boolean removeLavaPockets = true;
 
     public Nether(Module module, boolean enabledByDefault, boolean canBeDisabled) {
