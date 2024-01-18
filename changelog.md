@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* If ITE is installed, torches can now be made with Cloth
+
 ## 3.0.5
 * Regeneration in beacon costs much more time
 * Beacon now accepts only stacks of 1 item

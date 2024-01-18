@@ -1,0 +1,38 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "iguanatweaksexpanded"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shapeless",
+        "ingredients": [
+          {
+            "item": "minecraft:stick"
+          },
+          [
+            {
+              "item": "minecraft:coal"
+            },
+            {
+              "item": "minecraft:charcoal"
+            }
+          ],
+          [
+            {
+              "item": "iguanatweaksexpanded:cloth"
+            }
+          ]
+        ],
+        "result": {
+          "item": "minecraft:torch",
+          "count": 3
+        }
+      }
+    }
+  ]
+}
