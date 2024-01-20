@@ -4,6 +4,7 @@
 * If ITE is installed and Harder Torches Data Pack is enabled, torches can be made with Cloth
 * Fall damage now ignores invincibility frames
 * Fixed Elytra and fishing rod having wrong durability
+* Fixed Infinity overhaul lost in SR split
 
 ## 3.0.5
 * Regeneration in beacon costs much more time
