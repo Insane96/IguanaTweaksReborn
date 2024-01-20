@@ -1,7 +1,8 @@
 # Changelog
 
 ## Upcoming
-* If ITE is installed, torches can now be made with Cloth
+* If ITE is installed and Harder Torches Data Pack is enabled, torches can be made with Cloth
+* Fixed Elytra and fishing rod having wrong durability
 
 ## 3.0.5
 * Regeneration in beacon costs much more time
