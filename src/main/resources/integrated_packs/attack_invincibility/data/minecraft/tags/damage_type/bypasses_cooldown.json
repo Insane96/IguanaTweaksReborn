@@ -2,6 +2,7 @@
     "replace": true,
     "values": [
         "minecraft:magic",
-        "minecraft:arrow"
+        "minecraft:arrow",
+        "minecraft:fall"
     ]
 }

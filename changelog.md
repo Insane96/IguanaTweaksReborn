@@ -2,6 +2,7 @@
 
 ## Upcoming
 * If ITE is installed and Harder Torches Data Pack is enabled, torches can be made with Cloth
+* Fall damage now ignores invincibility frames
 * Fixed Elytra and fishing rod having wrong durability
 
 ## 3.0.5
