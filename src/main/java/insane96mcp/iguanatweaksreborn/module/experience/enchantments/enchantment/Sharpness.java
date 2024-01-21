@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class Sharpness extends BonusDamageEnchantment {
     public Sharpness() {
-        super(Rarity.UNCOMMON, EnchantmentsFeature.ITR_WEAPONS, new EquipmentSlot[]{ EquipmentSlot.MAINHAND });
+        super(Rarity.UNCOMMON, EnchantmentsFeature.ITR_WEAPONS_CATEGORY, new EquipmentSlot[]{ EquipmentSlot.MAINHAND });
     }
 
     @Override

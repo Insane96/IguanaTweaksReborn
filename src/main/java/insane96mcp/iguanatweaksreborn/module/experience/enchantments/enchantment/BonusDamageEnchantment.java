@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 //Add a getDamageBonus method, making it stack sensitive
 //Add a tooltip for bonus damage against x
 //Add
-public abstract class BonusDamageEnchantment extends Enchantment {
+public abstract class BonusDamageEnchantment extends Enchantment implements IEnchantmentTooltip {
 
     protected BonusDamageEnchantment(Rarity pRarity, EnchantmentCategory pCategory, EquipmentSlot[] pApplicableSlots) {
         super(pRarity, pCategory, pApplicableSlots);
@@ -45,10 +45,22 @@ public abstract class BonusDamageEnchantment extends Enchantment {
     }
 
     public float getDamageBonus(LivingEntity attacker, LivingEntity target, ItemStack stack, int lvl) {
+        if (!this.isAffectedByEnchantment(target))
+            return 0f;
         return this.getDamageBonus(stack, lvl);
     }
 
-    public abstract float getDamageBonus(ItemStack stack, int lvl);
+    public float getDamageBonus(ItemStack stack, int lvl) {
+        return this.getDamageBonusPerLevel() * lvl * this.getDamageBonusRatio(stack);
+    }
+
+    public float getDamageBonusPerLevel() {
+        return 1.25f;
+    }
+
+    public boolean isAffectedByEnchantment(LivingEntity target) {
+        return true;
+    }
 
     public float getDamageBonusRatio(ItemStack stack) {
         if (!(stack.getItem() instanceof TieredItem))
@@ -61,7 +73,8 @@ public abstract class BonusDamageEnchantment extends Enchantment {
         return baseDamage / 5f;
     }
 
-    public Component getBonusDamageTooltip(LivingEntity attacker, LivingEntity target, ItemStack stack, int lvl) {
-        return Component.translatable(this.getDescriptionId() + ".affected", IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(this.getDamageBonus(stack, lvl))).withStyle(ChatFormatting.DARK_PURPLE);
+    @Override
+    public Component getTooltip(LivingEntity attacker, LivingEntity target, ItemStack stack, int lvl) {
+        return Component.translatable(this.getDescriptionId() + ".tooltip", IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(this.getDamageBonus(stack, lvl))).withStyle(ChatFormatting.DARK_PURPLE);
     }
 }

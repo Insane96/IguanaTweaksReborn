@@ -3,10 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.experience.enchantments;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.stats.Stats;
-import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.BaneOfSSSS;
-import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.BonusDamageEnchantment;
-import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Sharpness;
-import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Smite;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.*;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.JsonFeature;
@@ -18,6 +15,7 @@ import insane96mcp.insanelib.data.IdTagMatcher;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.*;
@@ -28,8 +26,10 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.RegistryObject;
@@ -44,7 +44,9 @@ public class EnchantmentsFeature extends JsonFeature {
 	public static final RegistryObject<Enchantment> SHARPNESS = ITRRegistries.ENCHANTMENTS.register("sharpness", Sharpness::new);
 	public static final RegistryObject<Enchantment> SMITE = ITRRegistries.ENCHANTMENTS.register("smite", Smite::new);
 	public static final RegistryObject<Enchantment> BANE_OF_SSSSS = ITRRegistries.ENCHANTMENTS.register("bane_of_sssss", BaneOfSSSS::new);
-	public static final EnchantmentCategory ITR_WEAPONS = EnchantmentCategory.create("itr_weapons", item -> item instanceof SwordItem || item instanceof PickaxeItem || item instanceof AxeItem || item instanceof ShovelItem || item instanceof HoeItem);
+	public static final RegistryObject<Enchantment> FIRE_ASPECT = ITRRegistries.ENCHANTMENTS.register("fire_aspect", FireAspect::new);
+	public static final RegistryObject<Enchantment> KNOCKBACK = ITRRegistries.ENCHANTMENTS.register("knockback", Knockback::new);
+	public static final EnchantmentCategory ITR_WEAPONS_CATEGORY = EnchantmentCategory.create("itr_weapons", item -> item instanceof SwordItem || item instanceof PickaxeItem || item instanceof AxeItem || item instanceof ShovelItem || item instanceof HoeItem);
 	@Config
 	@Label(name = "Infinity overhaul", description = "Infinity can go up to level 4. Each level makes an arrow have 1 in level+1 chance to not consume.")
 	public static Boolean infinityOverhaul = true;
@@ -77,6 +79,8 @@ public class EnchantmentsFeature extends JsonFeature {
 			IdTagMatcher.newId("minecraft:smite"),
 			IdTagMatcher.newId("minecraft:bane_of_arthropods"),
 			IdTagMatcher.newId("minecraft:sharpness"),
+			IdTagMatcher.newId("minecraft:fire_aspect"),
+			IdTagMatcher.newId("minecraft:knockback"),
 			IdTagMatcher.newId("allurement:reforming"),
 			IdTagMatcher.newId("allurement:alleviating")
 
@@ -139,8 +143,6 @@ public class EnchantmentsFeature extends JsonFeature {
 
 	public static float getEfficiencyBonus(float toolEfficiency, int lvl) {
 		if (isBetterEfficiencyFormula()) {
-			/*float baseEfficiency = 0.15f;
-			return toolEfficiency * (baseEfficiency * (lvl * lvl + 1));*/
 			return toolEfficiency * (lvl * 0.5f);
 		}
 		else {
@@ -152,24 +154,40 @@ public class EnchantmentsFeature extends JsonFeature {
 		return Feature.isEnabled(EnchantmentsFeature.class) && thornsOverhaul;
 	}
 
+	//Run before knockback feature
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void onKnockback(LivingKnockBackEvent event) {
+		if (!this.isEnabled()
+				|| event.getEntity().getCombatTracker().entries.isEmpty())
+			return;
+
+		Entity directAttacker = event.getEntity().getCombatTracker().entries.get(event.getEntity().getCombatTracker().entries.size() - 1).source().getDirectEntity();
+		if (!(directAttacker instanceof LivingEntity attacker))
+			return;
+
+		int knockback = attacker.getMainHandItem().getEnchantmentLevel(KNOCKBACK.get());
+		if (knockback == 0)
+			return;
+		event.setStrength(event.getStrength() + knockback);
+	}
+
 	@SubscribeEvent
 	public void onLivingAttack(LivingHurtEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getSource().getEntity() instanceof LivingEntity attacker))
 			return;
 
-		bonusDamageEnchantment(attacker, event.getEntity(), event);
-	}
-
-	public void bonusDamageEnchantment(LivingEntity attacker, LivingEntity target, LivingHurtEvent event) {
 		Map<Enchantment, Integer> allEnchantments = attacker.getMainHandItem().getAllEnchantments();
 		for (Enchantment enchantment : allEnchantments.keySet()) {
-			if (!(enchantment instanceof BonusDamageEnchantment bonusDamageEnchantment))
-				continue;
-			int lvl = allEnchantments.get(enchantment);
-			float damageBonus = bonusDamageEnchantment.getDamageBonus(attacker, target, attacker.getMainHandItem(), lvl);
-			event.setAmount(event.getAmount() + damageBonus);
+			bonusDamageEnchantment(enchantment, allEnchantments.get(enchantment), attacker, event.getEntity(), event);
 		}
+	}
+
+	public void bonusDamageEnchantment(Enchantment enchantment, int lvl, LivingEntity attacker, LivingEntity target, LivingHurtEvent event) {
+		if (!(enchantment instanceof BonusDamageEnchantment bonusDamageEnchantment))
+			return;
+		float damageBonus = bonusDamageEnchantment.getDamageBonus(attacker, target, attacker.getMainHandItem(), lvl);
+		event.setAmount(event.getAmount() + damageBonus);
 	}
 
 	@SubscribeEvent
@@ -223,10 +241,10 @@ public class EnchantmentsFeature extends JsonFeature {
 
 		Map<Enchantment, Integer> allEnchantments = event.getItemStack().getAllEnchantments();
 		for (Enchantment enchantment : allEnchantments.keySet()) {
-			if (!(enchantment instanceof BonusDamageEnchantment bonusDamageEnchantment))
+			if (!(enchantment instanceof IEnchantmentTooltip enchantmentTooltip))
 				continue;
 			int lvl = allEnchantments.get(enchantment);
-			event.getToolTip().add(bonusDamageEnchantment.getBonusDamageTooltip(null, null, event.getItemStack(), lvl));
+			event.getToolTip().add(enchantmentTooltip.getTooltip(null, null, event.getItemStack(), lvl));
 		}
 	}
 
