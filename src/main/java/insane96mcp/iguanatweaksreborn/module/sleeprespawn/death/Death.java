@@ -49,6 +49,9 @@ public class Death extends Feature {
 	@Config
 	@Label(name = "Player's killer bounty", description = "If true, the player's killer will not despawn and when killed will drop 4x more items and experience.")
 	public static Boolean vindicationVsKiller = true;
+	@Config
+	@Label(name = "Grave", description = "If true, the player will generate a grave on death with its items in it.")
+	public static Boolean grave = true;
 
 	public Death(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -57,6 +60,7 @@ public class Death extends Feature {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onPlayerDeath(LivingDeathEvent event) {
 		if (!this.isEnabled()
+				|| !grave
 				|| !(event.getEntity() instanceof ServerPlayer player)
 				|| player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
 				|| player.level().isOutsideBuildHeight(player.blockPosition().getY())

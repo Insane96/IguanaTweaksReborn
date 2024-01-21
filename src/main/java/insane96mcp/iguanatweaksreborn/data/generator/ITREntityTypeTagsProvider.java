@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.data.generator;
 
-import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.BaneOfSSSS;
-import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Smite;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.BaneOfSSSS;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.Smite;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;

@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment;
+package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
@@ -12,7 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 public class Smite extends BonusDamageEnchantment {
     public static final TagKey<EntityType<?>> AFFECTED_BY_SMITE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "enchantments/smite"));
     public Smite() {
-        super(Rarity.UNCOMMON, EnchantmentsFeature.ITR_WEAPONS_CATEGORY, new EquipmentSlot[]{ EquipmentSlot.MAINHAND });
+        super(Rarity.UNCOMMON, EnchantmentsFeature.WEAPONS_CATEGORY, new EquipmentSlot[]{ EquipmentSlot.MAINHAND });
     }
 
     @Override

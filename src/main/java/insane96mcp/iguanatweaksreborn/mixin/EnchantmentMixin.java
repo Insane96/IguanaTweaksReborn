@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
-import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.IProtectionEnchantment;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.IProtectionEnchantment;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.ArrowInfiniteEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;

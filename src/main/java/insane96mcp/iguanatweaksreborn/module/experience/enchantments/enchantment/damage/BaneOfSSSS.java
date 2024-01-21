@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment;
+package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 public class BaneOfSSSS extends BonusDamageEnchantment {
     public static final TagKey<EntityType<?>> AFFECTED_BY_BANE_OF_SSSSS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "enchantments/bane_of_sssss"));
     public BaneOfSSSS() {
-        super(Rarity.UNCOMMON, EnchantmentsFeature.ITR_WEAPONS_CATEGORY, new EquipmentSlot[]{ EquipmentSlot.MAINHAND });
+        super(Rarity.UNCOMMON, EnchantmentsFeature.WEAPONS_CATEGORY, new EquipmentSlot[]{ EquipmentSlot.MAINHAND });
     }
 
     @Override

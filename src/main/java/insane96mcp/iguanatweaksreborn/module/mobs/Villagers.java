@@ -51,7 +51,7 @@ public class Villagers extends Feature {
 	@Label(name = "Clamp Negative Demand", description = "When villagers restock, they update the 'demand'. Demand is a trade modifier that increases the price whenever a trade is done many times, BUT when a trade is not performed, at each restock the 'demand' goes negative, making possible for a trade to never increase it's price due to high negative demand. With this to true, negative demand will be capped at -max_uses of the trade (e.g. Carrot trade from a farmer will have it's minimum demand set to -16).")
 	public static Boolean clampNegativeDemand = true;
 	@Config
-	@Label(name = "Remove Bad Omen")
+	@Label(name = "Remove Bad Omen", description = "If true, the effect can no longer be applied to entities")
 	public static Boolean removeBadOmen = true;
 
 	public Villagers(Module module, boolean enabledByDefault, boolean canBeDisabled) {

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class FireAspect extends Enchantment implements IEnchantmentTooltip {
     public FireAspect() {
-        super(Rarity.RARE, EnchantmentsFeature.ITR_WEAPONS_CATEGORY, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
+        super(Rarity.RARE, EnchantmentsFeature.WEAPONS_CATEGORY, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
     }
 
     public int getMinCost(int pEnchantmentLevel) {

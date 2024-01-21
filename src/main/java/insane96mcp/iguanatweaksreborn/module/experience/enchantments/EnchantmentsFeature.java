@@ -3,7 +3,13 @@ package insane96mcp.iguanatweaksreborn.module.experience.enchantments;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.stats.Stats;
-import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.*;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.FireAspect;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.IEnchantmentTooltip;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Knockback;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.BaneOfSSSS;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.BonusDamageEnchantment;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.Sharpness;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.Smite;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.JsonFeature;
@@ -17,6 +23,7 @@ import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -46,7 +53,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	public static final RegistryObject<Enchantment> BANE_OF_SSSSS = ITRRegistries.ENCHANTMENTS.register("bane_of_sssss", BaneOfSSSS::new);
 	public static final RegistryObject<Enchantment> FIRE_ASPECT = ITRRegistries.ENCHANTMENTS.register("fire_aspect", FireAspect::new);
 	public static final RegistryObject<Enchantment> KNOCKBACK = ITRRegistries.ENCHANTMENTS.register("knockback", Knockback::new);
-	public static final EnchantmentCategory ITR_WEAPONS_CATEGORY = EnchantmentCategory.create("itr_weapons", item -> item instanceof SwordItem || item instanceof PickaxeItem || item instanceof AxeItem || item instanceof ShovelItem || item instanceof HoeItem);
+	public static final EnchantmentCategory WEAPONS_CATEGORY = EnchantmentCategory.create("itr_weapons", item -> item instanceof SwordItem || item instanceof PickaxeItem || item instanceof AxeItem || item instanceof ShovelItem || item instanceof HoeItem);
 	@Config
 	@Label(name = "Infinity overhaul", description = "Infinity can go up to level 4. Each level makes an arrow have 1 in level+1 chance to not consume.")
 	public static Boolean infinityOverhaul = true;
@@ -58,7 +65,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	public static Boolean thornsOverhaul = true;
 
 	@Config
-	@Label(name = "Better Efficiency Formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to tool_efficiency * (0.15 * (lvl * lvl + 1))")
+	@Label(name = "Better Efficiency Formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to tool_efficiency * (1 + (0.5*lvl))")
 	public static Boolean changeEfficiencyFormula = true;
 
 	@Config(min = 0d, max = 2d)
@@ -165,14 +172,16 @@ public class EnchantmentsFeature extends JsonFeature {
 		if (!(directAttacker instanceof LivingEntity attacker))
 			return;
 
-		int knockback = attacker.getMainHandItem().getEnchantmentLevel(KNOCKBACK.get());
+		float knockback = attacker.getMainHandItem().getEnchantmentLevel(KNOCKBACK.get());
 		if (knockback == 0)
 			return;
+		if (attacker instanceof Player player)
+			knockback *= player.getAttackStrengthScale(0.5f);
 		event.setStrength(event.getStrength() + knockback);
 	}
 
 	@SubscribeEvent
-	public void onLivingAttack(LivingHurtEvent event) {
+	public void onLivingHurt(LivingHurtEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getSource().getEntity() instanceof LivingEntity attacker))
 			return;

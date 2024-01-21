@@ -10,7 +10,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 
 public class Knockback extends Enchantment implements IEnchantmentTooltip {
     public Knockback() {
-        super(Rarity.UNCOMMON, EnchantmentsFeature.ITR_WEAPONS_CATEGORY, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
+        super(Rarity.UNCOMMON, EnchantmentsFeature.WEAPONS_CATEGORY, new EquipmentSlot[] { EquipmentSlot.MAINHAND });
     }
 
     public int getMinCost(int pEnchantmentLevel) {
