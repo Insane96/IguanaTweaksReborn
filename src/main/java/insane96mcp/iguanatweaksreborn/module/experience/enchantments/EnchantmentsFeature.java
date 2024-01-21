@@ -4,6 +4,9 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.stats.Stats;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.BaneOfSSSS;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.BonusDamageEnchantment;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Sharpness;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Smite;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.JsonFeature;
@@ -12,18 +15,20 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -31,11 +36,15 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Label(name = "Enchantments", description = "Changes to some enchantments related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class EnchantmentsFeature extends JsonFeature {
+	public static final RegistryObject<Enchantment> SHARPNESS = ITRRegistries.ENCHANTMENTS.register("sharpness", Sharpness::new);
+	public static final RegistryObject<Enchantment> SMITE = ITRRegistries.ENCHANTMENTS.register("smite", Smite::new);
 	public static final RegistryObject<Enchantment> BANE_OF_SSSSS = ITRRegistries.ENCHANTMENTS.register("bane_of_sssss", BaneOfSSSS::new);
+	public static final EnchantmentCategory ITR_WEAPONS = EnchantmentCategory.create("itr_weapons", item -> item instanceof SwordItem || item instanceof PickaxeItem || item instanceof AxeItem || item instanceof ShovelItem || item instanceof HoeItem);
 	@Config
 	@Label(name = "Infinity overhaul", description = "Infinity can go up to level 4. Each level makes an arrow have 1 in level+1 chance to not consume.")
 	public static Boolean infinityOverhaul = true;
@@ -60,14 +69,14 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Config
 	@Label(name = "Buff Feather Falling", description = "Increases the damage protection from Feather Falling. From 12% per level to 16% per level")
 	public static Boolean buffFeatherFalling = true;
-	@Config
-	@Label(name = "Specific damaging enchantments bonus damage", description = "Changes the bonus damage of type based damage enchantments (e.g. Smite). Vanilla is 2.5")
-	public static Double typeBasedDamageEnchantmentBonus = 2.0d;
 
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
 			IdTagMatcher.newId("minecraft:protection"),
 			IdTagMatcher.newId("minecraft:mending"),
+			IdTagMatcher.newId("minecraft:sharpness"),
+			IdTagMatcher.newId("minecraft:smite"),
 			IdTagMatcher.newId("minecraft:bane_of_arthropods"),
+			IdTagMatcher.newId("minecraft:sharpness"),
 			IdTagMatcher.newId("allurement:reforming"),
 			IdTagMatcher.newId("allurement:alleviating")
 
@@ -149,17 +158,18 @@ public class EnchantmentsFeature extends JsonFeature {
 				|| !(event.getSource().getEntity() instanceof LivingEntity attacker))
 			return;
 
-		baneOfSssssOnAttack(attacker, event.getEntity(), event);
+		bonusDamageEnchantment(attacker, event.getEntity(), event);
 	}
 
-	public void baneOfSssssOnAttack(LivingEntity attacker, LivingEntity entity, LivingHurtEvent event) {
-		if (!(entity instanceof Creeper))
-			return;
-		int lvl = attacker.getMainHandItem().getEnchantmentLevel(BANE_OF_SSSSS.get());
-		if (lvl == 0)
-			return;
-
-		event.setAmount((event.getAmount() + 2.5f * lvl));
+	public void bonusDamageEnchantment(LivingEntity attacker, LivingEntity target, LivingHurtEvent event) {
+		Map<Enchantment, Integer> allEnchantments = attacker.getMainHandItem().getAllEnchantments();
+		for (Enchantment enchantment : allEnchantments.keySet()) {
+			if (!(enchantment instanceof BonusDamageEnchantment bonusDamageEnchantment))
+				continue;
+			int lvl = allEnchantments.get(enchantment);
+			float damageBonus = bonusDamageEnchantment.getDamageBonus(attacker, target, attacker.getMainHandItem(), lvl);
+			event.setAmount(event.getAmount() + damageBonus);
+		}
 	}
 
 	@SubscribeEvent
@@ -201,6 +211,23 @@ public class EnchantmentsFeature extends JsonFeature {
 
 	public static boolean isFeatherFallingBuffed() {
 		return Feature.isEnabled(EnchantmentsFeature.class) && buffFeatherFalling;
+	}
+
+	@SubscribeEvent
+	public void onTooltip(ItemTooltipEvent event) {
+		if (!this.isEnabled()
+				|| !event.getItemStack().isEnchanted()
+				|| !Screen.hasShiftDown()
+				/*|| !Minecraft.getInstance().player.isShiftKeyDown()*/)
+			return;
+
+		Map<Enchantment, Integer> allEnchantments = event.getItemStack().getAllEnchantments();
+		for (Enchantment enchantment : allEnchantments.keySet()) {
+			if (!(enchantment instanceof BonusDamageEnchantment bonusDamageEnchantment))
+				continue;
+			int lvl = allEnchantments.get(enchantment);
+			event.getToolTip().add(bonusDamageEnchantment.getBonusDamageTooltip(null, null, event.getItemStack(), lvl));
+		}
 	}
 
 	public static float applyMiningSpeedModifiers(float miningSpeed, boolean applyEfficiency, LivingEntity entity) {

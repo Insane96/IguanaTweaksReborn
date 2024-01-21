@@ -14,7 +14,6 @@
         "BoatMixin",
         "CampfireBlockMixin",
         "ConduitBlockEntityMixin",
-        "DamageEnchantmentMixin",
         "DigDurabilityEnchantmentMixin",
         "DiggerItemMixin",
         "EnchantmentMixin",

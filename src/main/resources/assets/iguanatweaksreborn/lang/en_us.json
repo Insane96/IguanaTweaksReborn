@@ -8,6 +8,11 @@
 	"iguanatweaksreborn.can_be_repaired_with": "Can be repaired with %s",
 	"container.repair.free": "No Cost",
 	"enchantment.iguanatweaksreborn.bane_of_sssss": "Bane of SSSSS",
+	"enchantment.iguanatweaksreborn.bane_of_sssss.affected": "+%s Damage to Hissing Creatures",
+	"enchantment.iguanatweaksreborn.sharpness": "Sharpness",
+	"enchantment.iguanatweaksreborn.sharpness.affected": "+%s Damage to Any Creature",
+	"enchantment.iguanatweaksreborn.smite": "Smite",
+	"enchantment.iguanatweaksreborn.smite.affected": "+%s Damage to Undead Creatures",
 
 
 	"iguanatweaksreborn:combat_module": "Combat",
