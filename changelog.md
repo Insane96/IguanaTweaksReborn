@@ -8,6 +8,7 @@
   * Sharpness bonus damage is 0.75 per level every 5 damage of the weapon. Specific enchantments instead have 1.5 bonus damage per level every 5 damage of the weapon.
 * If ITE is installed and Harder Torches Data Pack is enabled, torches can be made with Cloth
 * Reduced axes base damage (6 -> 5)
+* Reduced shovels base damage (3.5 -> 3)
 * Fall damage now ignores invincibility frames
 * Fixed Elytra and fishing rod having wrong durability
 * Fixed Infinity overhaul lost in SR split
