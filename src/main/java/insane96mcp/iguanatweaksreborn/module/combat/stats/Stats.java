@@ -3,6 +3,8 @@ package insane96mcp.iguanatweaksreborn.module.combat.stats;
 import com.google.common.collect.Multimap;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.PiercingPickaxes;
+import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
+import insane96mcp.iguanatweaksreborn.setup.IntegratedDataPack;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -15,6 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.AttackDamageMobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -72,9 +75,13 @@ public class Stats extends Feature {
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Bow's Arrows Base Damage", description = "Set arrow's base damage if shot from bow.")
 	public static Double bowsArrowsBaseDamage = 1.5d;
+	@Config
+	@Label(name = "Item Stats Data Pack", description = "Enables a data pack that changes all the item stats")
+	public static Boolean itemStatsDataPack = true;
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "item_stats", Component.literal("IguanaTweaks Reborn Item Stats"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && itemStatsDataPack));
 	}
 
 	@Override
