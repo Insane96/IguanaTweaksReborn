@@ -43,7 +43,7 @@ public class FireAspect extends Enchantment implements IEnchantmentTooltip {
     }
 
     @Override
-    public Component getTooltip(LivingEntity attacker, LivingEntity target, ItemStack stack, int lvl) {
+    public Component getTooltip(ItemStack stack, int lvl) {
         return Component.translatable(this.getDescriptionId() + ".tooltip", this.secondsOnFirePerLevel() * lvl).withStyle(ChatFormatting.DARK_PURPLE);
     }
 }

@@ -1,6 +1,8 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
 import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.IProtectionEnchantment;
 import insane96mcp.iguanatweaksreborn.module.movement.TerrainSlowdown;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.insanelib.base.Feature;
@@ -14,7 +16,9 @@ import net.minecraft.world.entity.Attackable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.apache.commons.lang3.mutable.MutableFloat;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,6 +37,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
     @Shadow @Nullable public abstract MobEffectInstance getEffect(MobEffect pEffect);
 
     @Shadow public abstract float getAbsorptionAmount();
+
+    @Shadow public abstract Iterable<ItemStack> getArmorSlots();
 
     public LivingEntityMixin(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -76,5 +82,23 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         if (instance.fallDistance > 0f)
             instance.causeFallDamage(instance.fallDistance, 1f, instance.damageSources().fall());
         instance.resetFallDistance();
+    }
+
+    @Inject(method = "getDamageAfterMagicAbsorb", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getDamageProtection(Ljava/lang/Iterable;Lnet/minecraft/world/damagesource/DamageSource;)I"), cancellable = true)
+    public void onGetDamageProtection(DamageSource damageSource, float damageAmount, CallbackInfoReturnable<Float> cir) {
+        if (!Feature.isEnabled(EnchantmentsFeature.class)
+                || !EnchantmentsFeature.replaceProtectionEnchantments
+                || damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY))
+            return;
+        MutableFloat damageReduction = new MutableFloat();
+        for (ItemStack stack : this.getArmorSlots()) {
+            stack.getAllEnchantments().forEach((enchantment, lvl) -> {
+                if (enchantment instanceof IProtectionEnchantment protectionEnchantment && ((IProtectionEnchantment) enchantment).isSourceReduced(damageSource))
+                    damageReduction.add(protectionEnchantment.getDamageReduction(lvl));
+            });
+        }
+        if (damageReduction.getValue() == 0f)
+            return;
+        cir.setReturnValue(damageAmount - (damageAmount * Math.min(damageReduction.getValue(), 0.8f)));
     }
 }

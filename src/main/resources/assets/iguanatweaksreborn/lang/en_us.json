@@ -17,6 +17,16 @@
 	"enchantment.iguanatweaksreborn.fire_aspect.tooltip": "%ss On Fire",
 	"enchantment.iguanatweaksreborn.knockback": "Knockback",
 	"enchantment.iguanatweaksreborn.knockback.tooltip": "+%d Knockback",
+	"enchantment.iguanatweaksreborn.protection": "Protection",
+	"enchantment.iguanatweaksreborn.protection.tooltip": "%s%% Damage reduction",
+	"enchantment.iguanatweaksreborn.blast_protection": "Blast Protection",
+	"enchantment.iguanatweaksreborn.blast_protection.tooltip": "%s%% Blast Damage reduction",
+	"enchantment.iguanatweaksreborn.fire_protection": "Fire Protection",
+	"enchantment.iguanatweaksreborn.fire_protection.tooltip": "%s%% Fire Damage reduction",
+	"enchantment.iguanatweaksreborn.projectile_protection": "Projectile Protection",
+	"enchantment.iguanatweaksreborn.projectile_protection.tooltip": "%s%% Projectile Damage reduction",
+	"enchantment.iguanatweaksreborn.feather_falling": "Feather Falling",
+	"enchantment.iguanatweaksreborn.feather_falling.tooltip": "%s%% Fall Damage reduction",
 
 
 	"iguanatweaksreborn:combat_module": "Combat",

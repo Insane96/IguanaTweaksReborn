@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Pair;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.entity.ITRFallingBlockEntity;
 import insane96mcp.iguanatweaksreborn.event.SREventFactory;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -262,12 +263,12 @@ public class ITRExplosion extends Explosion {
 	}
 
 	private List<Entity> gatherAffectedEntities(float affectedRadius) {
-		int z2 = Mth.floor(this.getPosition().z() + (double)affectedRadius + 1.0D);
 		int x1 = Mth.floor(this.getPosition().x() - (double)affectedRadius - 1.0D);
 		int x2 = Mth.floor(this.getPosition().x() + (double)affectedRadius + 1.0D);
-		int z1 = Mth.floor(this.getPosition().z() - (double)affectedRadius - 1.0D);
 		int y1 = Mth.floor(this.getPosition().y() - (double)affectedRadius - 1.0D);
 		int y2 = Mth.floor(this.getPosition().y() + (double)affectedRadius + 1.0D);
+		int z1 = Mth.floor(this.getPosition().z() - (double)affectedRadius - 1.0D);
+		int z2 = Mth.floor(this.getPosition().z() + (double)affectedRadius + 1.0D);
 		return this.level.getEntities(this.source, new AABB(x1, y1, z1, x2, y2, z2));
 	}
 
@@ -276,18 +277,15 @@ public class ITRExplosion extends Explosion {
 	 */
 	public static double getKnockbackReduction(LivingEntity livingEntity, double knockback) {
 		double knockbackReduction = 0d;
-		int blastProtLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.BLAST_PROTECTION, livingEntity);
-		if (blastProtLevel > 0) {
+		int blastProtLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.BLAST_PROTECTION, livingEntity) + EnchantmentHelper.getEnchantmentLevel(EnchantmentsFeature.BLAST_PROTECTION.get(), livingEntity);
+		if (blastProtLevel > 0)
 			knockbackReduction += blastProtLevel * 0.15d;
-		}
 
-		if (livingEntity.getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null) {
+		if (livingEntity.getAttribute(Attributes.KNOCKBACK_RESISTANCE) != null)
 			//noinspection ConstantConditions
 			knockbackReduction += livingEntity.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue();
-		}
 
-		knockback -= knockback * knockbackReduction;
-		return knockback;
+		return knockback - knockback * Mth.clamp(knockbackReduction, 0d, 1d);
 	}
 
 	@Nullable

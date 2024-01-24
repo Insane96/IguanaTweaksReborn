@@ -75,7 +75,7 @@ public abstract class BonusDamageEnchantment extends Enchantment implements IEnc
     }
 
     @Override
-    public Component getTooltip(LivingEntity attacker, LivingEntity target, ItemStack stack, int lvl) {
+    public Component getTooltip(ItemStack stack, int lvl) {
         return Component.translatable(this.getDescriptionId() + ".tooltip", IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(this.getDamageBonus(stack, lvl))).withStyle(ChatFormatting.DARK_PURPLE);
     }
 }

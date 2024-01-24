@@ -10,6 +10,7 @@ import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.BonusDamageEnchantment;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.Sharpness;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.Smite;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.*;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.JsonFeature;
@@ -22,6 +23,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -32,6 +34,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -53,7 +56,13 @@ public class EnchantmentsFeature extends JsonFeature {
 	public static final RegistryObject<Enchantment> BANE_OF_SSSSS = ITRRegistries.ENCHANTMENTS.register("bane_of_sssss", BaneOfSSSS::new);
 	public static final RegistryObject<Enchantment> FIRE_ASPECT = ITRRegistries.ENCHANTMENTS.register("fire_aspect", FireAspect::new);
 	public static final RegistryObject<Enchantment> KNOCKBACK = ITRRegistries.ENCHANTMENTS.register("knockback", Knockback::new);
+	public static final RegistryObject<Enchantment> PROTECTION = ITRRegistries.ENCHANTMENTS.register("protection", OverallProtection::new);
+	public static final RegistryObject<Enchantment> BLAST_PROTECTION = ITRRegistries.ENCHANTMENTS.register("blast_protection", BlastProtection::new);
+	public static final RegistryObject<Enchantment> FIRE_PROTECTION = ITRRegistries.ENCHANTMENTS.register("fire_protection", FireProtection::new);
+	public static final RegistryObject<Enchantment> PROJECTILE_PROTECTION = ITRRegistries.ENCHANTMENTS.register("projectile_protection", ProjectileProtection::new);
+	public static final RegistryObject<Enchantment> FEATHER_FALLING = ITRRegistries.ENCHANTMENTS.register("feather_falling", FeatherFalling::new);
 	public static final EnchantmentCategory WEAPONS_CATEGORY = EnchantmentCategory.create("itr_weapons", item -> item instanceof SwordItem || item instanceof PickaxeItem || item instanceof AxeItem || item instanceof ShovelItem || item instanceof HoeItem);
+	public static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 	@Config
 	@Label(name = "Infinity overhaul", description = "Infinity can go up to level 4. Each level makes an arrow have 1 in level+1 chance to not consume.")
 	public static Boolean infinityOverhaul = true;
@@ -76,11 +85,10 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Label(name = "Prevent farmland trampling with Feather Falling")
 	public static Boolean preventFarmlandTramplingWithFeatherFalling = true;
 	@Config
-	@Label(name = "Buff Feather Falling", description = "Increases the damage protection from Feather Falling. From 12% per level to 16% per level")
-	public static Boolean buffFeatherFalling = true;
+	@Label(name = "Replace protection enchantments", description = "If true, vanilla protection enchantments are replaced with mod's ones. To re-enable vanilla enchantments refer to `disabled_enchantments.json`.\nProtection has only one level, and protects 6% per level. Other protections work the same except for projectile that reduces the sight range of mobs by 2% per level. Feather falling protects for 16% per level instead of 12%.")
+	public static Boolean replaceProtectionEnchantments = true;
 
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
-			IdTagMatcher.newId("minecraft:protection"),
 			IdTagMatcher.newId("minecraft:mending"),
 			IdTagMatcher.newId("minecraft:sharpness"),
 			IdTagMatcher.newId("minecraft:smite"),
@@ -88,6 +96,11 @@ public class EnchantmentsFeature extends JsonFeature {
 			IdTagMatcher.newId("minecraft:sharpness"),
 			IdTagMatcher.newId("minecraft:fire_aspect"),
 			IdTagMatcher.newId("minecraft:knockback"),
+			IdTagMatcher.newId("minecraft:protection"),
+			IdTagMatcher.newId("minecraft:blast_protection"),
+			IdTagMatcher.newId("minecraft:projectile_protection"),
+			IdTagMatcher.newId("minecraft:fire_protection"),
+			IdTagMatcher.newId("minecraft:feather_falling"),
 			IdTagMatcher.newId("allurement:reforming"),
 			IdTagMatcher.newId("allurement:alleviating")
 
@@ -181,6 +194,18 @@ public class EnchantmentsFeature extends JsonFeature {
 	}
 
 	@SubscribeEvent
+	public void onLivingHurt(LivingEvent.LivingVisibilityEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		int lvl = EnchantmentHelper.getEnchantmentLevel(PROJECTILE_PROTECTION.get(), event.getEntity());
+		if (lvl < 1)
+			return;
+
+		event.modifyVisibility(1f - 0.15f * lvl);
+	}
+
+	@SubscribeEvent
 	public void onLivingHurt(LivingHurtEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getSource().getEntity() instanceof LivingEntity attacker))
@@ -204,7 +229,7 @@ public class EnchantmentsFeature extends JsonFeature {
 		if (!this.isEnabled()
 				|| !preventFarmlandTramplingWithFeatherFalling
 				|| !(event.getEntity() instanceof LivingEntity entity)
-				|| EnchantmentHelper.getEnchantmentLevel(Enchantments.FALL_PROTECTION, entity) <= 0)
+				|| (EnchantmentHelper.getEnchantmentLevel(Enchantments.FALL_PROTECTION, entity) <= 0 && EnchantmentHelper.getEnchantmentLevel(FEATHER_FALLING.get(), entity) <= 0))
 			return;
 
 		event.setCanceled(true);
@@ -236,10 +261,6 @@ public class EnchantmentsFeature extends JsonFeature {
 		return Feature.isEnabled(EnchantmentsFeature.class) && infinityOverhaul;
 	}
 
-	public static boolean isFeatherFallingBuffed() {
-		return Feature.isEnabled(EnchantmentsFeature.class) && buffFeatherFalling;
-	}
-
 	@SubscribeEvent
 	public void onTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled()
@@ -253,7 +274,7 @@ public class EnchantmentsFeature extends JsonFeature {
 			if (!(enchantment instanceof IEnchantmentTooltip enchantmentTooltip))
 				continue;
 			int lvl = allEnchantments.get(enchantment);
-			event.getToolTip().add(enchantmentTooltip.getTooltip(null, null, event.getItemStack(), lvl));
+			event.getToolTip().add(enchantmentTooltip.getTooltip(event.getItemStack(), lvl));
 		}
 	}
 
