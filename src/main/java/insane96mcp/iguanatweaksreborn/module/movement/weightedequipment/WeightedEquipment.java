@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.movement.weightedequipment;
 import com.google.common.collect.Multimap;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -32,10 +33,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Label(name = "Weighted Equipment", description = "Armor slows down the player. Material Weights and Enchantment Weights are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
@@ -153,13 +151,19 @@ public class WeightedEquipment extends JsonFeature {
 			ArmorItem armorItem = (ArmorItem) itemStack.getItem();
 			Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(armorItem.getEquipmentSlot());
 			double armor = 0d;
-			for (AttributeModifier attributeModifier : attributeModifiers.get(Attributes.ARMOR)) {
+			Collection<AttributeModifier> armorModifiers = attributeModifiers.get(Attributes.ARMOR);
+			if (armorModifiers.isEmpty())
+				armorModifiers = attributeModifiers.get(RegeneratingAbsorption.ATTRIBUTE.get());
+			for (AttributeModifier attributeModifier : armorModifiers) {
 				if (!attributeModifier.getOperation().equals(AttributeModifier.Operation.ADDITION))
 					continue;
 				armor += attributeModifier.getAmount();
 			}
 			double armorToughness = 0d;
-			for (AttributeModifier attributeModifier : attributeModifiers.get(Attributes.ARMOR_TOUGHNESS)) {
+			Collection<AttributeModifier> toughnessModifiers = attributeModifiers.get(Attributes.ARMOR_TOUGHNESS);
+			if (armorModifiers.isEmpty())
+				toughnessModifiers = attributeModifiers.get(RegeneratingAbsorption.REGEN_ATTRIBUTE.get());
+			for (AttributeModifier attributeModifier : toughnessModifiers) {
 				if (!attributeModifier.getOperation().equals(AttributeModifier.Operation.ADDITION))
 					continue;
 				armorToughness += attributeModifier.getAmount();

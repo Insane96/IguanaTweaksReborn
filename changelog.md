@@ -14,6 +14,7 @@
 * Fall damage now ignores invincibility frames
 * Fixed Elytra and fishing rod having wrong durability
 * Fixed Infinity overhaul lost in SR split
+* Fixed Weighted equipment armor and toughness modifiers not working if Absorption armor is enabled
 
 ## 3.0.5
 * Regeneration in beacon costs much more time
