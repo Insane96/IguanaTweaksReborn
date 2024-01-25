@@ -1,13 +1,16 @@
 package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.IEnchantmentTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -16,12 +19,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Stream;
 
-//TODO Expand
-//Add a getDamageBonus method, making it stack sensitive
-//Add a tooltip for bonus damage against x
-//Add
 public abstract class BonusDamageEnchantment extends Enchantment implements IEnchantmentTooltip {
 
+    public static final TagKey<Item> ACCEPTS_DAMAGE_ENCHANTMENTS = ITRItemTagsProvider.create("enchantments/accepts_damage_enchantments");
     protected BonusDamageEnchantment(Rarity pRarity, EnchantmentCategory pCategory, EquipmentSlot[] pApplicableSlots) {
         super(pRarity, pCategory, pApplicableSlots);
     }
@@ -62,6 +62,11 @@ public abstract class BonusDamageEnchantment extends Enchantment implements IEnc
 
     public boolean isAffectedByEnchantment(LivingEntity target) {
         return true;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack) {
+        return super.canApplyAtEnchantingTable(stack) || stack.is(ACCEPTS_DAMAGE_ENCHANTMENTS);
     }
 
     public float getDamageBonusRatio(ItemStack stack) {
