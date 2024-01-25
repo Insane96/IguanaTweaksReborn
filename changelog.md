@@ -3,11 +3,15 @@
 ## 3.1.0
 * Replaced vanilla weapon enchantments with the mod's ones
   * Bane of SSSSS, Smite and Sharpness bonus damages now scales with the weapon's damage (So a hoe with one of those enchantments will not obliterate monsters)
+  * Also, every tool can now get weapon enchantments
   * Knockback and Fire Aspect have also been replaced
-    * Fire Aspect now deals damage .5s later so the first fire damage is not lost
-  * Also, every tool can now get one of those enchantments
+    * Fire Aspect now deals damage .5s later so the first fire tick is not lost
   * With this, sharpness has been re-enabled
-  * Sharpness bonus damage is 0.75 per level every 5 damage of the weapon. Specific enchantments instead have 1.25 bonus damage per level every 5 damage of the weapon.
+  * Sharpness bonus damage is 0.75 per level every 5 Attack Damage from the weapon. Specific enchantments instead have 1.25 bonus damage per level every 5 Attack Damage from the weapon.
+* Replaced vanilla protection enchantments with mod's ones
+  * Protection has been re-enabled, max 1 level protects for 6% of damage
+  * All the specific protections now have the same chance to appear in the enchanting table and same rarity
+  * Projectile protection now reduces monster sight
 * If ITE is installed and Harder Torches Data Pack is enabled, torches can be made with Cloth
 * Reduced axes base damage (6 -> 5)
 * Reduced shovels base damage (3.5 -> 3)

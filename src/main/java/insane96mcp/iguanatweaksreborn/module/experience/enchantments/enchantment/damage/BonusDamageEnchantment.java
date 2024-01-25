@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Stream;
 
@@ -36,8 +37,8 @@ public abstract class BonusDamageEnchantment extends Enchantment implements IEnc
     }
 
     @Override
-    protected boolean checkCompatibility(Enchantment pOther) {
-        return super.checkCompatibility(pOther) && !(pOther instanceof BonusDamageEnchantment);
+    protected boolean checkCompatibility(@NotNull Enchantment other) {
+        return super.checkCompatibility(other) && !(other instanceof BonusDamageEnchantment);
     }
 
     @Override
