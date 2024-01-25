@@ -32,7 +32,7 @@ public class MaterialsDataPacks extends Feature {
 			* Can no longer smelt gold in a Furnace, and 2x in a blast furnace""")
 	public static Boolean oreSmelting = true;
 	@Config
-	@Label(name = "Backport 1.20.2 Diamond ore generation", description = "Enables a Data Pack.")
+	@Label(name = "Backport 1(dot)20(dot)2 Diamond ore generation", description = "Enables a Data Pack.")
 	public static Boolean backportDiamondGen = true;
 
 	public MaterialsDataPacks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
