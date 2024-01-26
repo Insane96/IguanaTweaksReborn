@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.world.wanderingtrader;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -36,8 +37,8 @@ public class WanderingTrades extends JsonFeature {
 
     public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_GENERIC_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
             new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Items.WHEAT_SEEDS), 4),
-            //new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Crops.CARROT_SEEDS.get()), 4),
-            //new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Crops.ROOTED_POTATO.get()), 4),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Crops.CARROT_SEEDS.get()), 4),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Crops.ROOTED_POTATO.get()), 4),
             new SerializableTrade(new ItemStack(Items.EMERALD, 2), new ItemStack(Items.BEETROOT_SEEDS), 4),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.BROWN_MUSHROOM), 4),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.RED_MUSHROOM), 4),
@@ -64,10 +65,10 @@ public class WanderingTrades extends JsonFeature {
     public static final ArrayList<SerializableTrade> wanderingTraderGenericTrades = new ArrayList<>();
 
     public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_RARE_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
-            new SerializableTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(Items.BOOK), 1)
-                    .enchantResult(10, 18, false),
-            new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.BOOK), 1)
-                    .enchantResult(4, 8, false),
+            //new SerializableTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(Items.BOOK), 1)
+                    //.enchantResult(10, 18, false),
+            //new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.BOOK), 1)
+                    //.enchantResult(4, 8, false),
             //new SerializableTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(Lapis.ANCIENT_LAPIS.get()), 1),
             //new SerializableTrade(new ItemStack(Items.EMERALD, 4), new ItemStack(Lapis.CLEANSED_LAPIS.get()), 2),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.GUNPOWDER, 4), 3),
