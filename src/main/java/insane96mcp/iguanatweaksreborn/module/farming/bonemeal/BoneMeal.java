@@ -42,7 +42,6 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.FARMING)
 public class BoneMeal extends JsonFeature {
 
-	//TODO Bonemealable canes and cactuses
 	public static final SimpleBlockWithItem RICH_FARMLAND = SimpleBlockWithItem.register("rich_farmland", () -> new RichFarmlandBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking((state, blockGetter, pos) -> true).isSuffocating((state, blockGetter, pos) -> true)));
 
 	public static final TagKey<Item> ITEM_BLACKLIST = ITRItemTagsProvider.create("nerfed_bone_meal_blacklist");

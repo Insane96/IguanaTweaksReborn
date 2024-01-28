@@ -41,6 +41,7 @@ public class WeightedEquipment extends JsonFeature {
 	public static final String ARMOR_SLOWDOWN = IguanaTweaksReborn.MOD_ID + ".armor_slowdown";
 	public static final UUID ARMOR_SLOWDOWN_UUID = UUID.fromString("8588420e-ce50-4e4e-a3e4-974dfc8a98ec");
 
+	//TODO Remove and use Item Stats
 	public static final ArrayList<IdTagValue> ARMOR_WEIGHTS_DEFAULT = new ArrayList<>(List.of(
 			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/leather", 0d),
 			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/chained_copper", 0d),
@@ -63,13 +64,13 @@ public class WeightedEquipment extends JsonFeature {
 
 	@Config(min = 0, max = 1d)
 	@Label(name = "Slowdown per Armor", description = "Percentage slowdown per point of armor the player is wearing.")
-	public static Double slownessPerArmor = 0.002d;
+	public static Double slownessPerArmor = 0d;
 	@Config(min = 0, max = 1d)
 	@Label(name = "Percentage Increase per Toughness", description = """
 						This value times the Armor Toughness worn by the player is a percentage increase of the Slowdown per Armor.
 						Total percentage slowdown is '(slowness_per_armor * armor_points) * (1 + (toughness * percentage_per_toughness))'
 						E.g. with 'Slowness per Armor' set to 0.005 and this set to 0.025 and the player wearing Diamond Armor the slowdown is '(0.005 * 20) * (1 + (8 * 0.025))' = '0.1 * 1.2'= '0.12' = -12% Speed applied to the player.""")
-	public static Double percentagePerToughness = 0.025d;
+	public static Double percentagePerToughness = 0d;
 
 	// 11 - 16 - 15 - 13
 	public static final HashMap<EquipmentSlot, Double> materialRequiredAmountRatio = new HashMap<>();

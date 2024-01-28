@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.Input;
@@ -16,13 +17,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 
 @Label(name = "Better Ladders", description = "Player's slides down ladders faster and stands still when opening an interface. This is disabled if quark is enabled")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class BetterLadders extends Feature {
 
-	//TODO speed config option
+	@Config(min = 0, max = 5d)
+	@Label(name = "Speed", description = "How much faster the players moves down ladders")
+	public static Double speed = 0.2d;
 
 	public BetterLadders(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -30,7 +32,7 @@ public class BetterLadders extends Feature {
 
 	@Override
 	public boolean isEnabled() {
-		return super.isEnabled() && !ModList.get().isLoaded("quark");
+		return super.isEnabled();
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -49,7 +51,7 @@ public class BetterLadders extends Feature {
 				&& !localPlayer.input.jumping
 				&& !localPlayer.onGround()
 				&& !localPlayer.getAbilities().flying) {
-			localPlayer.move(MoverType.SELF, new Vec3(0, -0.2f, 0));
+			localPlayer.move(MoverType.SELF, new Vec3(0, -speed.floatValue(), 0));
 		}
 	}
 
@@ -61,9 +63,9 @@ public class BetterLadders extends Feature {
 
 		Player player = event.getEntity();
 		if (player.onClimbable()
+				&& Minecraft.getInstance().screen != null
 				&& !player.getAbilities().flying
 				&& !player.level().getBlockState(player.blockPosition()).isScaffolding(player)
-				&& Minecraft.getInstance().screen != null
 				&& !(player.zza == 0 && player.getXRot() > 75f)
 				&& !player.onGround()) {
 			Input input = event.getInput();

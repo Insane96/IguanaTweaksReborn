@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.sleeprespawn.death;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.experience.PlayerExperience;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.integration.ToolBelt;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.iguanatweaksreborn.setup.registry.SimpleBlockWithItem;
@@ -45,13 +46,15 @@ public class Death extends Feature {
 	public static final String KILLED_PLAYER = IguanaTweaksReborn.RESOURCE_PREFIX + "killed_player";
 	public static final String PLAYER_KILLER_LANG = IguanaTweaksReborn.MOD_ID + ".player_killer";
 
-	//TODO Configs for the grave
 	@Config
 	@Label(name = "Player's killer bounty", description = "If true, the player's killer will not despawn and when killed will drop 4x more items and experience.")
 	public static Boolean vindicationVsKiller = true;
 	@Config
 	@Label(name = "Grave", description = "If true, the player will generate a grave on death with its items in it.")
 	public static Boolean grave = true;
+	@Config
+	@Label(name = "Grave keeps experience", description = "If true, the player's experience is stored in the grave.")
+	public static Boolean graveExperience = false;
 
 	public Death(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -94,10 +97,12 @@ public class Death extends Feature {
 		if (ModList.get().isLoaded("toolbelt"))
 			ToolBelt.onDeath(items, player);
 		graveBlockEntity.setItems(items);
-		/*int xpDropped = PlayerExperience.getExperienceOnDeath(player, true);
-		graveBlockEntity.setXpStored(xpDropped);
-		player.setExperienceLevels(0);
-		player.setExperiencePoints(0);*/
+		if (graveExperience) {
+			int xpDropped = PlayerExperience.getExperienceOnDeath(player, true);
+			graveBlockEntity.setXpStored(xpDropped);
+			player.setExperienceLevels(0);
+			player.setExperiencePoints(0);
+		}
 		graveBlockEntity.setOwner(player.getUUID());
 		graveBlockEntity.setDeathNumber(player.getStats().getValue(Stats.CUSTOM.get(Stats.DEATHS)) + 1);
 		player.getInventory().clearContent();

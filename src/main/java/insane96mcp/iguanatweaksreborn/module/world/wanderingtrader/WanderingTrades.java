@@ -65,10 +65,10 @@ public class WanderingTrades extends JsonFeature {
     public static final ArrayList<SerializableTrade> wanderingTraderGenericTrades = new ArrayList<>();
 
     public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_RARE_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
-            //new SerializableTrade(new ItemStack(Items.EMERALD, 6), new ItemStack(Items.BOOK), 1)
-                    //.enchantResult(10, 18, false),
-            //new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.BOOK), 1)
-                    //.enchantResult(4, 8, false),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 7), new ItemStack(Items.BOOK), 1)
+                    .enchantResult(10, 18, false),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.BOOK), 1)
+                    .enchantResult(4, 8, false),
             //new SerializableTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(Lapis.ANCIENT_LAPIS.get()), 1),
             //new SerializableTrade(new ItemStack(Items.EMERALD, 4), new ItemStack(Lapis.CLEANSED_LAPIS.get()), 2),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.GUNPOWDER, 4), 3),

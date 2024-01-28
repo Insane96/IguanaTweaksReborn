@@ -54,7 +54,7 @@ public class FoodDrinks extends JsonFeature {
 	//TODO Change this to formula
 	@Config(min = 0d, max = 64d)
 	@Label(name = "Food Saturation Multiplier", description = "Food's saturation restored will be multiplied by this value. Be aware that saturation is a multiplier and not a flat value, it is used to calculate the effective saturation restored when a player eats, and this calculation includes hunger, so by reducing hunger you automatically reduce saturation too. Setting to 1 will disable this feature.\nThis requires a Minecraft Restart.")
-	public static Double foodSaturationMultiplier = 1.0d;
+	public static Double foodSaturationMultiplier = 1d;
 
 	@Config
 	@Label(name = "Faster Drink Consuming", description = "Makes potion, milk and honey faster to drink, 1 second instead of 1.6.")

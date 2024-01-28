@@ -15,6 +15,7 @@
 * If ITE is installed and Harder Torches Data Pack is enabled, torches can be made with Cloth
 * Reduced axes base damage (6 -> 5)
 * Reduced shovels base damage (3.5 -> 3)
+* Added a few config options for Graves and Better Ladders
 * Fall damage now ignores invincibility frames
 * Fixed Elytra and fishing rod having wrong durability
 * Fixed Infinity overhaul lost in SR split
