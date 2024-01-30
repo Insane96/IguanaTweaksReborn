@@ -44,15 +44,15 @@ public class WeightedEquipment extends JsonFeature {
 	//TODO Remove and use Item Stats
 	public static final ArrayList<IdTagValue> ARMOR_WEIGHTS_DEFAULT = new ArrayList<>(List.of(
 			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/leather", 0d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/chained_copper", 0d),
+			IdTagValue.newTag("iguanatweaksexpanded:equipment/armor/chained_copper", 0d),
 			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/chainmail", 0.03d),
 			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/iron", 0.02d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/solarium", 0.025d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/durium", 0.025d),
+			IdTagValue.newTag("iguanatweaksexpanded:equipment/armor/solarium", 0.025d),
+			IdTagValue.newTag("iguanatweaksexpanded:equipment/armor/durium", 0.025d),
 			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/golden", 0.01d),
 			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/diamond", 0.05d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/soul_steel", 0.075d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/keego", 0.06d),
+			IdTagValue.newTag("iguanatweaksexpanded:equipment/armor/soul_steel", 0.075d),
+			IdTagValue.newTag("iguanatweaksexpanded:equipment/armor/keego", 0.06d),
 			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/netherite", 0.10d)
 	));
 	public static final ArrayList<IdTagValue> armorWeights = new ArrayList<>();
