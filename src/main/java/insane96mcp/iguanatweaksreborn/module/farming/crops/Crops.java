@@ -48,7 +48,7 @@ public class Crops extends Feature {
 
 	@Config
 	@Label(name = "Crops data pack", description = """
-		Enables a data pack that makes the following changes:
+		Makes potatoes and carrots not plantable and also enables a data pack that makes the following changes:
 		* Makes all vanilla crops drop only one seed (and makes carrots and potatoes drop the new seed item)
 		* Makes melon seeds and pumpkin seeds harder to obtain
 		* Removes carrots and potato drops from zombies
@@ -130,7 +130,8 @@ public class Crops extends Feature {
 	@SubscribeEvent
 	public void onTryToPlant(PlayerInteractEvent.RightClickBlock event) {
 		if (!this.isEnabled()
-				|| !(event.getLevel().getBlockState(event.getHitVec().getBlockPos()).getBlock() instanceof FarmBlock))
+				|| !(event.getLevel().getBlockState(event.getHitVec().getBlockPos()).getBlock() instanceof FarmBlock)
+				|| !dataPack)
 			return;
 
 		if (event.getItemStack().is(Items.POTATO) || event.getItemStack().is(Items.CARROT))

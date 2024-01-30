@@ -21,6 +21,7 @@
 * Fixed Infinity overhaul lost in SR split
 * Fixed Weighted equipment armor and toughness modifiers not working if Absorption armor is enabled
 * Fixed crash with Tiredness and Guard villagers
+* Fixed disabling wild crops data pack still preventing potatoes and carrots from planting 
 
 ## 3.0.5
 * Regeneration in beacon costs much more time
