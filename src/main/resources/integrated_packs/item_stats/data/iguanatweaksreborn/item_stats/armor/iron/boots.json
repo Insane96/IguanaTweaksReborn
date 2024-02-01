@@ -1,5 +1,16 @@
 {
 	"item": "minecraft:iron_boots",
-	"durability": 72,
-	"armor": 2
+	"durability": 96,
+	"armor": 1,
+	"knockback_resistance": 0.03,
+	"modifiers": [
+		{
+			"uuid": "4b8573c6-bd4b-4560-a411-04b78ae950ce",
+			"name": "Armor slowdown",
+			"slot": "feet",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": -0.0075,
+			"operation": "multiply_base"
+		}
+	]
 }

@@ -1,5 +1,16 @@
 {
 	"item": "minecraft:iron_helmet",
-	"durability": 78,
-	"armor": 2
+	"durability": 104,
+	"armor": 2,
+	"knockback_resistance": 0.03,
+	"modifiers": [
+		{
+			"uuid": "cf4db784-9677-4e90-9c74-ee3d85c9a641",
+			"name": "Armor slowdown",
+			"slot": "head",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": -0.01,
+			"operation": "multiply_base"
+		}
+	]
 }

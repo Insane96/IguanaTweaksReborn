@@ -1,16 +1,24 @@
 {
 	"item": "minecraft:golden_chestplate",
-	"durability": 96,
-	"armor": 5,
-	"armor_toughness": 1,
+	"durability": 80,
+	"armor": 3,
+	"armor_toughness": 0,
 	"modifiers": [
 		{
 			"uuid": "f700b45a-0c51-40f8-9f59-836c519d64d5",
 			"name": "Golden armor bonus max health",
 			"slot": "chest",
 			"attribute": "minecraft:generic.max_health",
-			"amount": 2,
+			"amount": 5,
 			"operation": "addition"
+		},
+		{
+			"uuid": "e5ca3f97-f7a0-439b-8c94-b1af3bdf3828",
+			"name": "Armor slowdown",
+			"slot": "chest",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": -0.007,
+			"operation": "multiply_base"
 		}
 	]
 }

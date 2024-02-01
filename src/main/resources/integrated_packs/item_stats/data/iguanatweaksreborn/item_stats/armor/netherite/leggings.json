@@ -1,7 +1,15 @@
 {
 	"item": "minecraft:netherite_leggings",
 	"durability": 210,
-	"armor": 6,
-	"armor_toughness": 2,
-	"knockback_resistance": 0.05
+	"armor": 5,
+	"modifiers": [
+		{
+			"uuid": "1277bad1-246f-4f3b-932c-d944839a164e",
+			"name": "Armor slowdown",
+			"slot": "legs",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": -0.036,
+			"operation": "multiply_base"
+		}
+	]
 }

@@ -7,13 +7,14 @@
   * Knockback and Fire Aspect have also been replaced
     * Fire Aspect now deals damage .5s later so the first fire tick is not lost
   * With this, sharpness has been re-enabled
-  * Sharpness bonus damage is 0.75 per level every 5 Attack Damage from the weapon. Specific enchantments instead have 1.25 bonus damage per level every 5 Attack Damage from the weapon.
+  * Bonus damage scales with weapon attack damage (every 5 AD). Sharpness bonus damage is 0.75 per level, specific enchantments instead have 1.25 bonus damage per level.
 * Replaced vanilla protection enchantments with mod's ones
   * Protection has been re-enabled, max 1 level protects for 6% of damage
   * All the specific protections now have the same chance to appear in the enchanting table and same rarity
   * Projectile protection now reduces monster sight
 * Item Stats
   * Now accepts `enchantability` to change the item's enchantability
+* Rebalanced all the armors
 * If ITE is installed and Harder Torches Data Pack is enabled, torches can be made with Cloth
 * Reduced axes base damage (6 -> 5)
 * Reduced shovels base damage (3.5 -> 3)
@@ -23,8 +24,9 @@
 * Fixed Infinity overhaul lost in SR split
 * Fixed Weighted equipment armor and toughness modifiers not working if Absorption armor is enabled
 * Fixed crash with Tiredness and Guard villagers
-* Fixed Renegerating absorption 'Un-damaged time to regen' not being affected by regen speed
-* Fixed regen absorption speed behaving strangely when entity lost health
+* Renegerating absorption 
+  * 'Un-damaged time to regen' increased (1.5s -> 2.5s) but is now affected by regen speed
+  * Fixed regen absorption speed behaving strangely when entity lost health
 * Fixed disabling wild crops data pack still preventing potatoes and carrots from planting 
 
 ## 3.0.5

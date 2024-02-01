@@ -1,6 +1,16 @@
 {
 	"item": "minecraft:chainmail_helmet",
-	"durability": 52,
-	"armor": 1,
-	"armor_toughness": 1
+	"durability": 33,
+	"armor": 2,
+	"armor_toughness": 0,
+	"modifiers": [
+		{
+			"uuid": "cf4db784-9677-4e90-9c74-ee3d85c9a641",
+			"name": "Armor slowdown",
+			"slot": "head",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": 0,
+			"operation": "multiply_base"
+		}
+	]
 }

@@ -11,6 +11,8 @@ import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.Sharpness;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.Smite;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.*;
+import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatistics;
+import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.JsonFeature;
@@ -261,12 +263,19 @@ public class EnchantmentsFeature extends JsonFeature {
 		return Feature.isEnabled(EnchantmentsFeature.class) && infinityOverhaul;
 	}
 
+	public static int getEnchantmentValue(ItemStack stack) {
+		for (ItemStatistics itemStatistics : ItemStatsReloadListener.STATS) {
+			if (itemStatistics.enchantability() != null && itemStatistics.item().matchesItem(stack))
+				return itemStatistics.enchantability();
+		}
+		return stack.getEnchantmentValue();
+	}
+
 	@SubscribeEvent
 	public void onTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled()
 				|| !event.getItemStack().isEnchanted()
-				|| !Screen.hasShiftDown()
-				/*|| !Minecraft.getInstance().player.isShiftKeyDown()*/)
+				|| !Screen.hasShiftDown())
 			return;
 
 		Map<Enchantment, Integer> allEnchantments = event.getItemStack().getAllEnchantments();

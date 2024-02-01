@@ -2,6 +2,14 @@
 	"item": "minecraft:netherite_boots",
 	"durability": 168,
 	"armor": 3,
-	"armor_toughness": 2,
-	"knockback_resistance": 0.05
+	"modifiers": [
+		{
+			"uuid": "4b8573c6-bd4b-4560-a411-04b78ae950ce",
+			"name": "Armor slowdown",
+			"slot": "feet",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": -0.018,
+			"operation": "multiply_base"
+		}
+	]
 }

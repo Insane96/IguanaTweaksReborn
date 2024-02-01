@@ -1,6 +1,16 @@
 {
 	"item": "minecraft:chainmail_chestplate",
-	"durability": 64,
+	"durability": 40,
 	"armor": 5,
-	"armor_toughness": 1
+	"armor_toughness": 0,
+	"modifiers": [
+		{
+			"uuid": "e5ca3f97-f7a0-439b-8c94-b1af3bdf3828",
+			"name": "Armor slowdown",
+			"slot": "chest",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": 0,
+			"operation": "multiply_base"
+		}
+	]
 }

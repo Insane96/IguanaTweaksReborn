@@ -30,16 +30,17 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 @JsonAdapter(ItemStatistics.Serializer.class)
-public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, @Nullable Integer durability, @Nullable Double efficiency,
+public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, @Nullable Integer durability, @Nullable Double efficiency, @Nullable Integer enchantability,
 							 @Nullable Double baseAttackDamage, @Nullable Double baseAttackSpeed,
 							 @Nullable Double baseArmor, @Nullable Double baseArmorToughness,
 							 @Nullable Double baseKnockbackResistance,
 							 @Nullable List<SerializableAttributeModifer> modifiers) {
-	public ItemStatistics(@NotNull IdTagMatcher item, @Nullable Integer maxStackSize, @Nullable Integer durability, @Nullable Double efficiency, @Nullable Double baseAttackDamage, @Nullable Double baseAttackSpeed, @Nullable Double baseArmor, @Nullable Double baseArmorToughness, @Nullable Double baseKnockbackResistance, @Nullable List<SerializableAttributeModifer> modifiers) {
+	public ItemStatistics(@NotNull IdTagMatcher item, @Nullable Integer maxStackSize, @Nullable Integer durability, @Nullable Double efficiency, @Nullable Integer enchantability, @Nullable Double baseAttackDamage, @Nullable Double baseAttackSpeed, @Nullable Double baseArmor, @Nullable Double baseArmorToughness, @Nullable Double baseKnockbackResistance, @Nullable List<SerializableAttributeModifer> modifiers) {
 		this.item = item;
 		this.maxStackSize = maxStackSize;
 		this.durability = durability;
 		this.efficiency = efficiency;
+		this.enchantability = enchantability;
 		this.baseAttackDamage = baseAttackDamage;
 		this.baseAttackSpeed = baseAttackSpeed;
 		this.baseArmor = baseArmor;
@@ -139,6 +140,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 			Integer maxStackSize = ITRGsonHelper.getAsInt(jObject, "max_stack");
 			Integer durability = ITRGsonHelper.getAsInt(jObject, "durability");
 			Double efficiency = ITRGsonHelper.getAsDouble(jObject, "efficiency");
+			Integer enchantability = ITRGsonHelper.getAsInt(jObject, "enchantability");
 			Double baseAttackDamage = ITRGsonHelper.getAsDouble(jObject, "attack_damage");
 			Double baseAttackSpeed = ITRGsonHelper.getAsDouble(jObject, "attack_speed");
 			Double baseArmor = ITRGsonHelper.getAsDouble(jObject, "armor");
@@ -147,7 +149,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 			List<SerializableAttributeModifer> modifiers = null;
 			if (jObject.has("modifiers"))
 				modifiers = context.deserialize(jObject.get("modifiers"), SerializableAttributeModifer.LIST_TYPE);
-			return new ItemStatistics(item, maxStackSize, durability, efficiency, baseAttackDamage, baseAttackSpeed, baseArmor, baseToughness, baseKnockbackResistance, modifiers);
+			return new ItemStatistics(item, maxStackSize, durability, efficiency, enchantability, baseAttackDamage, baseAttackSpeed, baseArmor, baseToughness, baseKnockbackResistance, modifiers);
 		}
 
 		@Override
@@ -161,6 +163,8 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 				jObject.addProperty("durability", src.durability);
 			if (src.efficiency != null)
 				jObject.addProperty("efficiency", src.efficiency);
+			if (src.enchantability != null)
+				jObject.addProperty("enchantability", src.enchantability);
 			if (src.baseAttackDamage != null)
 				jObject.addProperty("attack_damage", src.baseAttackDamage);
 			if (src.baseAttackSpeed != null)
@@ -185,6 +189,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 		Integer maxStackSize = byteBuf.readNullable(FriendlyByteBuf::readInt);
 		Integer durability = byteBuf.readNullable(FriendlyByteBuf::readInt);
 		Double efficiency = byteBuf.readNullable(FriendlyByteBuf::readDouble);
+		Integer enchantability = byteBuf.readNullable(FriendlyByteBuf::readInt);
 		Double baseAttackDamage = byteBuf.readNullable(FriendlyByteBuf::readDouble);
 		Double baseAttackSpeed = byteBuf.readNullable(FriendlyByteBuf::readDouble);
 		Double baseArmor = byteBuf.readNullable(FriendlyByteBuf::readDouble);
@@ -199,7 +204,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 				modifiers.add(SerializableAttributeModifer.fromNetwork(byteBuf));
 			}
 		}
-		return new ItemStatistics(item, maxStackSize, durability, efficiency, baseAttackDamage, baseAttackSpeed, baseArmor, baseToughness, baseKnockbackResistance, modifiers);
+		return new ItemStatistics(item, maxStackSize, durability, efficiency, enchantability, baseAttackDamage, baseAttackSpeed, baseArmor, baseToughness, baseKnockbackResistance, modifiers);
 	}
 
 	public void toNetwork(FriendlyByteBuf byteBuf) {
@@ -207,6 +212,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 		byteBuf.writeNullable(this.maxStackSize, FriendlyByteBuf::writeInt);
 		byteBuf.writeNullable(this.durability, FriendlyByteBuf::writeInt);
 		byteBuf.writeNullable(this.efficiency, FriendlyByteBuf::writeDouble);
+		byteBuf.writeNullable(this.enchantability, FriendlyByteBuf::writeInt);
 		byteBuf.writeNullable(this.baseAttackDamage, FriendlyByteBuf::writeDouble);
 		byteBuf.writeNullable(this.baseAttackSpeed, FriendlyByteBuf::writeDouble);
 		byteBuf.writeNullable(this.baseArmor, FriendlyByteBuf::writeDouble);

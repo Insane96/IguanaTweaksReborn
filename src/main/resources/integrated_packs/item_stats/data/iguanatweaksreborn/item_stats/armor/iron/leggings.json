@@ -1,5 +1,16 @@
 {
 	"item": "minecraft:iron_leggings",
-	"durability": 90,
-	"armor": 4
+	"durability": 120,
+	"armor": 4,
+	"knockback_resistance": 0.03,
+	"modifiers": [
+		{
+			"uuid": "1277bad1-246f-4f3b-932c-d944839a164e",
+			"name": "Armor slowdown",
+			"slot": "legs",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": -0.015,
+			"operation": "multiply_base"
+		}
+	]
 }

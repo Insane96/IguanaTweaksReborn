@@ -17,6 +17,7 @@
         "ConduitBlockEntityMixin",
         "DigDurabilityEnchantmentMixin",
         "DiggerItemMixin",
+        "EnchantmentHelperMixin",
         "EnchantmentMixin",
         "EntityMixin",
         "ExplosionMixin",

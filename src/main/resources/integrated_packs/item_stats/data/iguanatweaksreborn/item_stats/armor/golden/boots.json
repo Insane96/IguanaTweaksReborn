@@ -1,16 +1,24 @@
 {
 	"item": "minecraft:golden_boots",
-	"durability": 72,
+	"durability": 60,
 	"armor": 1,
-	"armor_toughness": 1,
+	"armor_toughness": 0,
 	"modifiers": [
 		{
 			"uuid": "dc49f564-489f-4f70-ab50-ce85cc4bfa85",
 			"name": "Golden armor bonus max health",
 			"slot": "feet",
 			"attribute": "minecraft:generic.max_health",
-			"amount": 2,
+			"amount": 5,
 			"operation": "addition"
+		},
+		{
+			"uuid": "4b8573c6-bd4b-4560-a411-04b78ae950ce",
+			"name": "Armor slowdown",
+			"slot": "feet",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": -0.003,
+			"operation": "multiply_base"
 		}
 	]
 }

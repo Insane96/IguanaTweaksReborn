@@ -9,8 +9,6 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.data.IdTagMatcher;
-import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.insanelib.util.MCUtils;
 import insane96mcp.insanelib.util.Utils;
 import net.minecraft.ChatFormatting;
@@ -18,7 +16,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -33,32 +30,20 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 @Label(name = "Weighted Equipment", description = "Armor slows down the player. Material Weights and Enchantment Weights are controlled via json in this feature's folder")
-@LoadFeature(module = Modules.Ids.MOVEMENT)
+@LoadFeature(module = Modules.Ids.MOVEMENT, enabledByDefault = false)
 public class WeightedEquipment extends JsonFeature {
 	public static final String ARMOR_SLOWDOWN = IguanaTweaksReborn.MOD_ID + ".armor_slowdown";
 	public static final UUID ARMOR_SLOWDOWN_UUID = UUID.fromString("8588420e-ce50-4e4e-a3e4-974dfc8a98ec");
 
-	//TODO Remove and use Item Stats
-	public static final ArrayList<IdTagValue> ARMOR_WEIGHTS_DEFAULT = new ArrayList<>(List.of(
-			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/leather", 0d),
-			IdTagValue.newTag("iguanatweaksexpanded:equipment/armor/chained_copper", 0d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/chainmail", 0.03d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/iron", 0.02d),
-			IdTagValue.newTag("iguanatweaksexpanded:equipment/armor/solarium", 0.025d),
-			IdTagValue.newTag("iguanatweaksexpanded:equipment/armor/durium", 0.025d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/golden", 0.01d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/diamond", 0.05d),
-			IdTagValue.newTag("iguanatweaksexpanded:equipment/armor/soul_steel", 0.075d),
-			IdTagValue.newTag("iguanatweaksexpanded:equipment/armor/keego", 0.06d),
-			IdTagValue.newTag("iguanatweaksreborn:equipment/armor/netherite", 0.10d)
-	));
-	public static final ArrayList<IdTagValue> armorWeights = new ArrayList<>();
-
+	//TODO Change formula to use attribute modifier
 	public static final ArrayList<ArmorEnchantmentWeight> ENCHANTMENTS_LIST_DEFAULT = new ArrayList<>(List.of(
-			new ArmorEnchantmentWeight.Builder(IdTagMatcher.newId("minecraft:feather_falling")).setPercentageSlownessPerLevel(-0.005f).build()
+			//new ArmorEnchantmentWeight.Builder(IdTagMatcher.newId("minecraft:feather_falling")).setPercentageSlownessPerLevel(-0.005f).build()
 	));
 	public static final ArrayList<ArmorEnchantmentWeight> enchantmentsList = new ArrayList<>();
 
@@ -72,20 +57,10 @@ public class WeightedEquipment extends JsonFeature {
 						E.g. with 'Slowness per Armor' set to 0.005 and this set to 0.025 and the player wearing Diamond Armor the slowdown is '(0.005 * 20) * (1 + (8 * 0.025))' = '0.1 * 1.2'= '0.12' = -12% Speed applied to the player.""")
 	public static Double percentagePerToughness = 0d;
 
-	// 11 - 16 - 15 - 13
-	public static final HashMap<EquipmentSlot, Double> materialRequiredAmountRatio = new HashMap<>();
-
 	public WeightedEquipment(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "enchantments_weights"), new SyncType(json -> loadAndReadJson(json, enchantmentsList, ENCHANTMENTS_LIST_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE)));
 		JSON_CONFIGS.add(new JsonConfig<>("enchantments_weights.json", enchantmentsList, ENCHANTMENTS_LIST_DEFAULT, ArmorEnchantmentWeight.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "enchantments_weights")));
-		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "armor_weights"), new SyncType(json -> loadAndReadJson(json, armorWeights, ARMOR_WEIGHTS_DEFAULT, IdTagValue.LIST_TYPE)));
-		JSON_CONFIGS.add(new JsonConfig<>("armor_weights.json", armorWeights, ARMOR_WEIGHTS_DEFAULT, IdTagValue.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "armor_weights")));
-
-		materialRequiredAmountRatio.put(EquipmentSlot.HEAD, 0.2083333333d);
-		materialRequiredAmountRatio.put(EquipmentSlot.CHEST, 0.3333333333d);
-		materialRequiredAmountRatio.put(EquipmentSlot.LEGS, 0.2916666667d);
-		materialRequiredAmountRatio.put(EquipmentSlot.FEET, 0.1666666667d);
 	}
 
 	@Override
@@ -137,7 +112,7 @@ public class WeightedEquipment extends JsonFeature {
 		if (!(itemStack.getItem() instanceof ArmorItem))
 			return 0d;
 		double slowdown = 0d;
-		boolean hasMaterialSlowdown = false;
+		/*boolean hasMaterialSlowdown = false;
 		for (IdTagValue idTagValue : armorWeights) {
 			if (!idTagValue.id.matchesItem(itemStack.getItem())
 					|| !(itemStack.getItem() instanceof ArmorItem armorItem))
@@ -146,9 +121,9 @@ public class WeightedEquipment extends JsonFeature {
             slowdown = idTagValue.value * materialRequiredAmountRatio.get(slot);
 			hasMaterialSlowdown = true;
 			break;
-		}
+		}*/
 		//If no slowdown was found in the material weight
-		if (!hasMaterialSlowdown) {
+		//if (!hasMaterialSlowdown) {
 			ArmorItem armorItem = (ArmorItem) itemStack.getItem();
 			Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(armorItem.getEquipmentSlot());
 			double armor = 0d;
@@ -172,7 +147,7 @@ public class WeightedEquipment extends JsonFeature {
 			double armorSlowdown = armor * slownessPerArmor;
 			double toughnessSlowdown = armorToughness * percentagePerToughness;
 			slowdown = armorSlowdown * (1 + toughnessSlowdown);
-		}
+		//}
 		double flatEnchantmentSlowdown = 0d, percentageEnchantmentSlowdown = 0d;
 		for (ArmorEnchantmentWeight enchantmentWeight : enchantmentsList) {
 			int enchantmentLevel = MCUtils.getEnchantmentLevel(enchantmentWeight.enchantment.location, itemStack);

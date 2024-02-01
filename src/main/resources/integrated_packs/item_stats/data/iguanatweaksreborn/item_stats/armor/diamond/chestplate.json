@@ -1,7 +1,15 @@
 {
 	"item": "minecraft:diamond_chestplate",
 	"durability": 240,
-	"armor": 6,
-	"armor_toughness": 1,
-	"knockback_resistance": 0.03
+	"armor": 5,
+	"modifiers": [
+		{
+			"uuid": "e5ca3f97-f7a0-439b-8c94-b1af3bdf3828",
+			"name": "Armor slowdown",
+			"slot": "chest",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": -0.028,
+			"operation": "multiply_base"
+		}
+	]
 }

@@ -1,16 +1,24 @@
 {
 	"item": "minecraft:golden_leggings",
-	"durability": 90,
-	"armor": 3,
-	"armor_toughness": 1,
+	"durability": 75,
+	"armor": 2,
+	"armor_toughness": 0,
 	"modifiers": [
 		{
 			"uuid": "4f1caa92-2558-4416-829c-9faf922d7137",
 			"name": "Golden armor bonus max health",
 			"slot": "legs",
 			"attribute": "minecraft:generic.max_health",
-			"amount": 2,
+			"amount": 5,
 			"operation": "addition"
+		},
+		{
+			"uuid": "1277bad1-246f-4f3b-932c-d944839a164e",
+			"name": "Armor slowdown",
+			"slot": "legs",
+			"attribute": "minecraft:generic.movement_speed",
+			"amount": -0.006,
+			"operation": "multiply_base"
 		}
 	]
 }
