@@ -12,6 +12,8 @@
   * Protection has been re-enabled, max 1 level protects for 6% of damage
   * All the specific protections now have the same chance to appear in the enchanting table and same rarity
   * Projectile protection now reduces monster sight
+* Item Stats
+  * Now accepts `enchantability` to change the item's enchantability
 * If ITE is installed and Harder Torches Data Pack is enabled, torches can be made with Cloth
 * Reduced axes base damage (6 -> 5)
 * Reduced shovels base damage (3.5 -> 3)
@@ -21,6 +23,8 @@
 * Fixed Infinity overhaul lost in SR split
 * Fixed Weighted equipment armor and toughness modifiers not working if Absorption armor is enabled
 * Fixed crash with Tiredness and Guard villagers
+* Fixed Renegerating absorption 'Un-damaged time to regen' not being affected by regen speed
+* Fixed regen absorption speed behaving strangely when entity lost health
 * Fixed disabling wild crops data pack still preventing potatoes and carrots from planting 
 
 ## 3.0.5
