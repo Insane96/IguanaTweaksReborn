@@ -42,7 +42,7 @@ public class RegeneratingAbsorption extends Feature {
     public static Integer absorptionDecay = 10;
     @Config(min = 0)
     @Label(name = "Un-damaged time to regen", description = "Ticks that must pass from the last hit to regen absorption hearts. This is affected by regenerating absorption speed")
-    public static Integer unDamagedTimeToRegen = 30;
+    public static Integer unDamagedTimeToRegen = 50;
     @Config
     @Label(name = "Cap to health", description = "The amount of regenerating absorption hearts cannot go over the entity's current health.")
     public static Boolean capToHealth = true;
@@ -83,12 +83,11 @@ public class RegeneratingAbsorption extends Feature {
 
         //Take into account absorption effect
         int absorptionAmplifier = 0;
-        if (entity.hasEffect(MobEffects.ABSORPTION)) {
+        if (entity.hasEffect(MobEffects.ABSORPTION))
             absorptionAmplifier = entity.getEffect(MobEffects.ABSORPTION).getAmplifier() + 1;
-        }
 
         float actualGoldenAbsorption = entity.getAbsorptionAmount() - (absorptionAmplifier * 4);
-
+        regeneratingAbsorption = Math.min(regeneratingAbsorption, Math.ceil(entity.getHealth()));
         if (actualGoldenAbsorption < 0f || actualGoldenAbsorption == regeneratingAbsorption)
             return;
 
