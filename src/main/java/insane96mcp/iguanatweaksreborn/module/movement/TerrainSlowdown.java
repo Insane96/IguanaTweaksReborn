@@ -5,14 +5,18 @@ import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.TickEvent;
@@ -36,6 +40,10 @@ public class TerrainSlowdown extends JsonFeature {
 			IdTagValue.newId("minecraft:powder_snow", 0.5d)
 	));
 	public static final ArrayList<IdTagValue> customInTerrainSlowdown = new ArrayList<>();
+
+	@Config
+	@Label(name = "Frost walker reduces Ice slowdown")
+	public static Boolean frostWalkerOnIce = true;
 
 	public TerrainSlowdown(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -72,6 +80,10 @@ public class TerrainSlowdown extends JsonFeature {
 				for (IdTagValue idTagValue : customTerrainSlowdown) {
 					if (idTagValue.id.matchesBlock(state.getBlock())) {
 						blockSlowdown = idTagValue.value;
+						if (state.is(BlockTags.ICE) && frostWalkerOnIce) {
+							int lvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.FROST_WALKER, event.player);
+							blockSlowdown -= blockSlowdown * (lvl * 0.25f);
+						}
 						blocks++;
 						break;
 					}

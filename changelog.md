@@ -19,6 +19,7 @@
 * Reduced axes base damage (6 -> 5)
 * Reduced shovels base damage (3.5 -> 3)
 * Added a few config options for Graves and Better Ladders
+* Each level of frost walker now reduces slowdown on ice by 25%
 * Fall damage now ignores invincibility frames
 * Fixed Elytra and fishing rod having wrong durability
 * Fixed Infinity overhaul lost in SR split
