@@ -13,7 +13,7 @@ public class OverallProtection extends ITRProtectionEnchantment {
     }
     @Override
     public int getCostPerLevel() {
-        return 30;
+        return 40;
     }
 
     @Override
