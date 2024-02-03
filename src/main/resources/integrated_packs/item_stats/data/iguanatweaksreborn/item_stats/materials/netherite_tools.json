@@ -1,6 +1,7 @@
 {
 	"item": "#iguanatweaksreborn:equipment/hand/netherite",
 	"durability": 2131,
+	"enchantability": 13,
 	"efficiency": 6,
 	"modifiers": [
 		{

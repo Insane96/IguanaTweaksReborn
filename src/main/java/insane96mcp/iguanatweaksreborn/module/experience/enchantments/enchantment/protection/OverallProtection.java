@@ -22,6 +22,11 @@ public class OverallProtection extends ITRProtectionEnchantment {
     }
 
     @Override
+    public boolean isTreasureOnly() {
+        return true;
+    }
+
+    @Override
     public float getDamageReductionPerLevel() {
         return 0.06f;
     }

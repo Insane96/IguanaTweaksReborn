@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Protection enchantment is now treasure
+
 ## 3.1.0
 * Replaced vanilla weapon enchantments with the mod's ones
   * Bane of SSSSS, Smite and Sharpness bonus damages now scales with the weapon's damage (So a hoe with one of those enchantments will not obliterate monsters)

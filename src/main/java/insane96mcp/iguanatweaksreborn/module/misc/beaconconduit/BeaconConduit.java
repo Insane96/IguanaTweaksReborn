@@ -70,7 +70,8 @@ public class BeaconConduit extends JsonFeature {
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_block", 4d),
             new IdTagValue(IdTagMatcher.Type.ID, "iguanatweaksexpanded:durium_block", 3.0d),
             new IdTagValue(IdTagMatcher.Type.ID, "iguanatweaksexpanded:soul_steel_block", 1.5d),
-            new IdTagValue(IdTagMatcher.Type.ID, "iguanatweaksexpanded:keego_block", 4d)
+            new IdTagValue(IdTagMatcher.Type.ID, "iguanatweaksexpanded:quaron_block", 1.5d),
+            new IdTagValue(IdTagMatcher.Type.ID, "iguanatweaksexpanded:keego_block", 3d)
     ));
     public static final ArrayList<IdTagValue> blocksList = new ArrayList<>();
     public static final ArrayList<IdTagValue> PAYMENT_TIMES_DEFAULT = new ArrayList<>(List.of(
@@ -81,6 +82,7 @@ public class BeaconConduit extends JsonFeature {
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:netherite_ingot", 115200),
             new IdTagValue(IdTagMatcher.Type.ID, "iguanatweaksexpanded:durium_ingot", 12000),
             new IdTagValue(IdTagMatcher.Type.ID, "iguanatweaksexpanded:keego", 96000),
+            new IdTagValue(IdTagMatcher.Type.ID, "iguanatweaksexpanded:quaron_ingot", 96000),
             new IdTagValue(IdTagMatcher.Type.ID, "iguanatweaksexpanded:soul_steel_ingot", 96000),
             new IdTagValue(IdTagMatcher.Type.ID, "minecraft:nether_star", 576000)
     ));
