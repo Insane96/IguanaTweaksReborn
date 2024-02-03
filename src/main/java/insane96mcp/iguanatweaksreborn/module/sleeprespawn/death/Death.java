@@ -12,6 +12,8 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.setup.ILStrings;
+import insane96mcp.insanelib.world.scheduled.ScheduledTasks;
+import insane96mcp.insanelib.world.scheduled.ScheduledTickTask;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -110,13 +112,18 @@ public class Death extends Feature {
 		if (vindicationVsKiller && event.getSource().getEntity() instanceof Mob killer && !killer.getPersistentData().contains(KILLED_PLAYER)) {
 			if (killer.isRemoved() || killer.isDeadOrDying())
 				return;
-			killer.setPersistenceRequired();
-			double experienceMultiplier = 4d;
-			if (killer.getPersistentData().contains(ILStrings.Tags.EXPERIENCE_MULTIPLIER))
-				experienceMultiplier *= killer.getPersistentData().getDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER);
-			killer.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, experienceMultiplier);
-			killer.getPersistentData().putUUID(KILLED_PLAYER, player.getUUID());
-			killer.setCustomName(Component.translatable(PLAYER_KILLER_LANG, player.getGameProfile().getName()));
+			ScheduledTasks.schedule(new ScheduledTickTask(1) {
+				@Override
+				public void run() {
+					killer.setPersistenceRequired();
+					double experienceMultiplier = 4d;
+					if (killer.getPersistentData().contains(ILStrings.Tags.EXPERIENCE_MULTIPLIER))
+						experienceMultiplier *= killer.getPersistentData().getDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER);
+					killer.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, experienceMultiplier);
+					killer.getPersistentData().putUUID(KILLED_PLAYER, player.getUUID());
+					killer.setCustomName(Component.translatable(PLAYER_KILLER_LANG, player.getGameProfile().getName()));
+				}
+			});
 		}
 	}
 
