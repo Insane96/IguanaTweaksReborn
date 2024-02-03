@@ -4,6 +4,7 @@
 * Protection enchantment is now treasure
 * Fixed 'Player's killer bounty' name changing before the player's death
 * Fixed diamond and netherite armor having vanilla toughness
+* Fixed respawn mobs despawn despawning persistent mobs
 
 ## 3.1.0
 * Replaced vanilla weapon enchantments with the mod's ones

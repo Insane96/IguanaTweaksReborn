@@ -40,14 +40,14 @@ public class Respawn extends Feature {
 	public static MinMax looseWorldSpawnRange = new MinMax(128d, 192d);
 	@Config(min = 0)
 	@Label(name = "Despawn mobs on world respawn", description = "Mobs in this range from the player will be despawned when respawning at world spawn.")
-	public static Integer despawnMobsOnWorldRespawn = 48;
+	public static Integer despawnMobsOnWorldRespawn = 64;
 
 	@Config(min = 0)
 	@Label(name = "Loose Bed Spawn Range", description = "The range from beds where players will respawn.")
 	public static MinMax looseBedSpawnRange = new MinMax(64d, 128d);
 	@Config(min = 0)
 	@Label(name = "Despawn mobs on bed respawn", description = "Mobs in this range from the player will be despawned when respawning at bed spawn.")
-	public static Integer despawnMobsOnBedRespawn = 24;
+	public static Integer despawnMobsOnBedRespawn = 32;
 
 	public Respawn(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -61,9 +61,8 @@ public class Respawn extends Feature {
 			return;
 
 		boolean hasRespawned = looseWorldSpawn(event);
-		if (!hasRespawned) {
+		if (!hasRespawned)
 			looseBedSpawn(event);
-		}
 	}
 
 	private boolean looseWorldSpawn(PlayerEvent.PlayerRespawnEvent event) {
@@ -80,7 +79,7 @@ public class Respawn extends Feature {
 			return false;
 
 		event.getEntity().teleportToWithTicket(respawnPos.getX() + 0.5d, respawnPos.getY() + 0.5d, respawnPos.getZ() + 0.5d);
-		List<Entity> entities = player.level().getEntities(player, new AABB(respawnPos).inflate(despawnMobsOnWorldRespawn), entity -> entity instanceof Monster);
+		List<Entity> entities = player.level().getEntities(player, new AABB(respawnPos).inflate(despawnMobsOnWorldRespawn), entity -> entity instanceof Monster monster && !monster.isPersistenceRequired());
 		ITRLogHelper.debug("Despawning %d entities", entities.size());
 		entities.forEach(Entity::discard);
 		return true;
@@ -101,7 +100,7 @@ public class Respawn extends Feature {
 			return false;
 
 		event.getEntity().teleportToWithTicket(respawnPos.getX() + 0.5d, respawnPos.getY() + 0.5d, respawnPos.getZ() + 0.5d);
-		List<Entity> entities = player.level().getEntities(player, new AABB(respawnPos).inflate(despawnMobsOnBedRespawn), entity -> entity instanceof Monster);
+		List<Entity> entities = player.level().getEntities(player, new AABB(respawnPos).inflate(despawnMobsOnBedRespawn), entity -> entity instanceof Monster monster && !monster.isPersistenceRequired());
 		ITRLogHelper.debug("Despawning %d entities", entities.size());
 		entities.forEach(Entity::discard);
 		return true;
