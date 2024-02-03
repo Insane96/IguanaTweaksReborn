@@ -2,7 +2,6 @@
 	"item": "minecraft:golden_boots",
 	"durability": 60,
 	"armor": 1,
-	"armor_toughness": 0,
 	"modifiers": [
 		{
 			"uuid": "dc49f564-489f-4f70-ab50-ce85cc4bfa85",
