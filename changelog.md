@@ -1,7 +1,10 @@
 # Changelog
 
+* Config option for damaging enchantments
+
 ## Upcoming
 * Protection enchantment is now treasure
+* Absorption is now affected only by damage types outside the minecraft:bypasses_armor damage type tag
 * Fixed 'Player's killer bounty' name changing before the player's death
 * Fixed diamond and netherite armor having vanilla toughness
 * Fixed respawn mobs despawn despawning persistent mobs

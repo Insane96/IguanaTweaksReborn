@@ -66,7 +66,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
 
     @ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
     private float onCalculateAbsorption(float f1, DamageSource damageSource, float amount) {
-        if (RegeneratingAbsorption.entityAbsorption() && (damageSource.getEntity() == null || damageSource.is(DamageTypeTags.BYPASSES_ARMOR))) {
+        if (RegeneratingAbsorption.damageTypeTagOnly() && damageSource.is(DamageTypeTags.BYPASSES_ARMOR)) {
             return amount;
         }
         return Math.max(amount - this.getAbsorptionAmount(), 0.0F);

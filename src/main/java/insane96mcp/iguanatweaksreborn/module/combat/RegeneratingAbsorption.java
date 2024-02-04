@@ -47,8 +47,8 @@ public class RegeneratingAbsorption extends Feature {
     @Label(name = "Cap to health", description = "The amount of regenerating absorption hearts cannot go over the entity's current health.")
     public static Boolean capToHealth = true;
     @Config
-    @Label(name = "Absorbing Entity damage only", description = "If true, absorption hearts will not shield from damages not from mobs (e.g. Poison).")
-    public static Boolean absorbingEntityDamageOnly = true;
+    @Label(name = "Absorbing bypasses_armor damage only", description = "If true, absorption hearts will not shield from damages in the bypasses_armor damage type tag.")
+    public static Boolean absorbingDamageTypeTagOnly = true;
 
     public RegeneratingAbsorption(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -121,7 +121,7 @@ public class RegeneratingAbsorption extends Feature {
         event.getEntity().getPersistentData().putInt(HURT_COOLDOWN, unDamagedTimeToRegen - (int)(absorptionSpeed * unDamagedTimeToRegen));
     }
 
-    public static boolean entityAbsorption() {
-        return isEnabled(RegeneratingAbsorption.class) && absorbingEntityDamageOnly;
+    public static boolean damageTypeTagOnly() {
+        return isEnabled(RegeneratingAbsorption.class) && absorbingDamageTypeTagOnly;
     }
 }
