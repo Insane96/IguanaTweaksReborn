@@ -7,6 +7,7 @@
 * Absorption is now affected only by damage types outside the minecraft:bypasses_armor damage type tag
 * Added a config option to disable the replacing of damaging enchantments
 * Further reduced Shovels base damage (3 -> 2.5)
+* Ancient debris can no longer be smelted in furnaces
 * Fixed 'Player's killer bounty' name changing before the player's death
 * Fixed diamond and netherite armor having vanilla toughness
 * Fixed respawn mobs despawn despawning persistent mobs

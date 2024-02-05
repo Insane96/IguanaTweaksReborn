@@ -29,7 +29,7 @@ public class MaterialsDataPacks extends Feature {
 			Enables the following changes to vanilla data pack:
 			* Smelting copper in a furnace takes 2x time
 			* Smelting Iron in a Furnace takes 4x time, and 2x time in a blast furnace
-			* Can no longer smelt gold in a Furnace, and 2x in a blast furnace""")
+			* Can no longer smelt gold and Ancient Debris in a Furnace, and 2x in a blast furnace""")
 	public static Boolean oreSmelting = true;
 	@Config
 	@Label(name = "Backport 1(dot)20(dot)2 Diamond ore generation", description = "Enables a Data Pack.")
