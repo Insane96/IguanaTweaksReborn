@@ -87,8 +87,18 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Label(name = "Prevent farmland trampling with Feather Falling")
 	public static Boolean preventFarmlandTramplingWithFeatherFalling = true;
 	@Config
-	@Label(name = "Replace protection enchantments", description = "If true, vanilla protection enchantments are replaced with mod's ones. To re-enable vanilla enchantments refer to `disabled_enchantments.json`.\nProtection has only one level, protects 6% per level and is treasure. Other protections work the same except for projectile that reduces the sight range of mobs by 2% per level. Feather falling protects for 16% per level instead of 12%.")
+	@Label(name = "Replace protection enchantments", description = "If true, vanilla protection enchantments are replaced with mod's ones. To re-enable vanilla enchantments refer to `disabled_enchantments.json`.\n" +
+			"Protection has only one level, protects 6% per level and is treasure. Other protections work the same except for projectile that reduces the sight range of mobs by 2% per level. Feather falling protects for 16% per level instead of 12%.")
 	public static Boolean replaceProtectionEnchantments = true;
+	@Config
+	@Label(name = "Replace damaging enchantments", description = """
+            If true, vanilla damaging enchantments (such as smite or sharpness) are replaced with mod's ones. To re-enable vanilla enchantments refer to `disabled_enchantments.json`.
+            Changes to damaging enchantments:
+            Enchantments deal bonus damage based off the item's attack damage. So Sharpness on a Sword adds less damage than Sharpness on an Axe.
+            Sharpness deals +0.75 damage per level
+            Smite deals +1.25 damage per level to undead
+            Bane of Arthropods has been replaced with Bane of SSSSS that deals +1.25 damage per level to arthropods and creepers and applies slowness""")
+	public static Boolean replaceDamagingEnchantments = true;
 
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
 			IdTagMatcher.newId("minecraft:mending"),

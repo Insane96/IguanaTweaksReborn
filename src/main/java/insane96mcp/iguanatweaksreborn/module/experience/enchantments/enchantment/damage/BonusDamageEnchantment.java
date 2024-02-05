@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantmen
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.IEnchantmentTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -66,7 +67,7 @@ public abstract class BonusDamageEnchantment extends Enchantment implements IEnc
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return super.canApplyAtEnchantingTable(stack) || stack.is(ACCEPTS_DAMAGE_ENCHANTMENTS);
+        return (super.canApplyAtEnchantingTable(stack) || stack.is(ACCEPTS_DAMAGE_ENCHANTMENTS)) && EnchantmentsFeature.replaceDamagingEnchantments;
     }
 
     public float getDamageBonusRatio(ItemStack stack) {
