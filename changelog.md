@@ -1,7 +1,6 @@
 # Changelog
 
 * Config option for damaging enchantments
-* Overeasy egg can be smelted in the furnace
 * Blast furnace multi ghost blocks
 
 ## Upcoming
@@ -11,6 +10,7 @@
 * Fixed 'Player's killer bounty' name changing before the player's death
 * Fixed diamond and netherite armor having vanilla toughness
 * Fixed respawn mobs despawn despawning persistent mobs
+* Fixed over easy egg from ITE being cookable in a furnace
 
 ## 3.1.0
 * Replaced vanilla weapon enchantments with the mod's ones
