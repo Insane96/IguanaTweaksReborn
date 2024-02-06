@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.1.1
 * Sweet berries can no longer be planted, instead bushes now drop seeds
   * Bone meal has now 50% chance to fail when used on sweet berry bushes
 * Protection enchantment is now treasure
@@ -12,6 +12,7 @@
 * Fixed diamond and netherite armor having vanilla toughness
 * Fixed respawn mobs despawn despawning persistent mobs
 * Fixed over easy egg from ITE being cookable in a furnace
+* Paxi and Global Data mods now should run after this mod's, allowing for overwriting changes from integrated packs
 
 ## 3.1.0
 * Replaced vanilla weapon enchantments with the mod's ones

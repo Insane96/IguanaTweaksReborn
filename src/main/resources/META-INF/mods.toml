@@ -52,3 +52,17 @@ license="All rights reserved"
     versionRange="[9.0.0.43,)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.iguanatweaksreborn]]
+    modId="globaldataandresourcepacks"
+    mandatory=false
+    versionRange="[1.16.2,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.iguanatweaksreborn]]
+    modId="paxi"
+    mandatory=false
+    versionRange="[4.0,)"
+    ordering="AFTER"
+    side="BOTH"
