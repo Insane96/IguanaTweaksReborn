@@ -1,8 +1,8 @@
 # Changelog
 
-* Blast furnace multi ghost blocks
-
 ## Upcoming
+* Sweet berries can no longer be planted, instead bushes now drop seeds
+  * Bone meal has now 50% chance to fail when used on sweet berry bushes
 * Protection enchantment is now treasure
 * Absorption is now affected only by damage types outside the minecraft:bypasses_armor damage type tag
 * Added a config option to disable the replacing of damaging enchantments

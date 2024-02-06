@@ -75,6 +75,7 @@ public class BoneMeal extends JsonFeature {
 
 	public static final List<IdTagValue> BONE_MEAL_FAIL_CHANCE_DEFAULT = new ArrayList<>(List.of(
 			IdTagValue.newTag("minecraft:cave_vines", 0.75f),
+			IdTagValue.newTag("minecraft:sweet_berry_bush", 0.5f),
 			IdTagValue.newTag("minecraft:saplings", 0.2f)
 	));
 	public static final ArrayList<IdTagValue> boneMealFailChances = new ArrayList<>();

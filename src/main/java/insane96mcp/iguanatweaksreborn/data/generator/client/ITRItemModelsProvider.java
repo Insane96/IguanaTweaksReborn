@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.data.generator.client;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
+import insane96mcp.iguanatweaksreborn.module.world.BerryBushes;
 import insane96mcp.iguanatweaksreborn.module.world.CyanFlower;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +24,8 @@ public class ITRItemModelsProvider extends ItemModelProvider {
     protected void registerModels() {
         basicItem(Crops.CARROT_SEEDS.get());
         basicItem(Crops.ROOTED_POTATO.get());
+
+        basicItem(BerryBushes.SWEET_BERRY_SEEDS.get());
 
         basicItemWithTexture(CyanFlower.FLOWER.item().get(), new ResourceLocation(IguanaTweaksReborn.MOD_ID, "block/cyan_flower"));
     }
