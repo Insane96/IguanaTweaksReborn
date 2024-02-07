@@ -66,7 +66,7 @@ public class NoHunger extends Feature {
     public static MinMax passiveRegenerationTime = new MinMax(120, 3600);
     @Config(min = 0d)
     @Label(name = "Food Heal.Over Time", description = "The formula to calculate the health regenerated when eating a food. Leave empty to disable. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
-    public static String healOverTime = "(hunger^1.5)*0.2";
+    public static String healOverTime = "(hunger^1.55)*0.2";
     @Config
     @Label(name = "Food Heal.Over time Strength", description = "How much HP does food regen each second? Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. Default is 75% of the saturation modifier, down to a minimum of 0.2/s")
     public static String healOverTimeStrength = "MAX(0.2, 0.75 * saturation_modifier)";
