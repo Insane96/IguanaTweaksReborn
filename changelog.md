@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.1.2
 * Fixed item stats not syncing the first time a server is joined
 * Fixed compatiblity with Paxi
 * Fixed stamina overlay not jiggling together with health when low
