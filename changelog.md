@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Fixed item stats not syncing the first time a server is joined
+* Fixed compatiblity with Paxi
+
 ## 3.1.1
 * Sweet berries can no longer be planted, instead bushes now drop seeds
   * Bone meal has now 50% chance to fail when used on sweet berry bushes

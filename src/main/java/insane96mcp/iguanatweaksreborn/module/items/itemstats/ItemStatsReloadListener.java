@@ -5,13 +5,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.network.message.ItemStatisticsApply;
 import insane96mcp.iguanatweaksreborn.network.message.ItemStatisticsSync;
 import insane96mcp.iguanatweaksreborn.utils.ITRLogHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraftforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -65,6 +68,11 @@ public class ItemStatsReloadListener extends SimpleJsonResourceReloadListener {
 		else {
 			ItemStatisticsSync.sync(STATS, event.getPlayer());
 		}
+	}
+
+	@SubscribeEvent
+	public static void onDataPackSync(PlayerEvent.PlayerLoggedInEvent event) {
+		ItemStatisticsApply.sync((ServerPlayer) event.getEntity());
 	}
 
 	@Override
