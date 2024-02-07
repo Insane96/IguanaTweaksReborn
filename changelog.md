@@ -3,6 +3,8 @@
 ## Upcoming
 * Fixed item stats not syncing the first time a server is joined
 * Fixed compatiblity with Paxi
+* Fixed stamina overlay not jiggling together with health when low
+* Fixed stamina not regenerating correctly when close to locked stamina
 
 ## 3.1.1
 * Sweet berries can no longer be planted, instead bushes now drop seeds

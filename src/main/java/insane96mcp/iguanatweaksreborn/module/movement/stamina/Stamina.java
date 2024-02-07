@@ -18,7 +18,9 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -179,7 +181,7 @@ public class Stamina extends Feature {
     }
 
     private static final Vec2 UV_STAMINA = new Vec2(0, 9);
-    //protected static final RandomSource random = RandomSource.create();
+    protected static final RandomSource RANDOM = RandomSource.create();
 
     @OnlyIn(Dist.CLIENT)
     public static void renderStamina(ForgeGui gui, GuiGraphics guiGraphics) {
@@ -187,13 +189,14 @@ public class Stamina extends Feature {
         Player player = mc.player;
         assert player != null;
 
-        //random.setSeed(gui.getGuiTicks() * 312871L);
+        RANDOM.setSeed(gui.getGuiTicks() * 312871L);
 
         int health = Mth.ceil(player.getHealth());
         int healthLast = ((GuiMixin)gui).getDisplayHealth();
 
         AttributeInstance attrMaxHealth = player.getAttribute(Attributes.MAX_HEALTH);
         float healthMax = Math.max((float) attrMaxHealth.getValue(), Math.max(healthLast, health));
+        int healthMaxI = Mth.ceil(healthMax);
         int absorb = Mth.ceil(player.getAbsorptionAmount());
 
         int healthRows = Mth.ceil((healthMax + absorb) / 2.0F / 10.0F);
@@ -208,17 +211,25 @@ public class Stamina extends Feature {
         int halfHeartsMaxStamina = Mth.ceil(StaminaHandler.getMaxStamina(player) / staminaPerHalfHeart);
         int halfHeartsStamina = Mth.ceil(StaminaHandler.getStamina(player) / staminaPerHalfHeart);
         int height = 9;
+        int regen = -1;
+        if (player.hasEffect(MobEffects.REGENERATION))
+            regen = gui.getGuiTicks() % Mth.ceil(healthMax + 5.0F);
+
         if (StaminaHandler.isStaminaLocked(player))
-            ClientUtils.setColor(0.8f, 0.8f, 0.8f, .8f);
+            ClientUtils.setRenderColor(0.8f, 0.8f, 0.8f, .8f);
         else
-            ClientUtils.setColor(1f, 1f, 1f, 0.5f);
-        //int jiggle = 0;
-        //TODO Change to the same way vanilla renders hearts
-        for (int hp = halfHeartsMaxStamina - 1; hp >= 0; hp--) {
-            /*if (player.getHealth() + player.getAbsorptionAmount() <= 4 && ((hp + 1) % 2 == 0 || hp == halfHeartsMaxStamina - 1)) {
-                jiggle = random.nextInt(2);
-            }*/
-            if (hp < halfHeartsStamina)
+            ClientUtils.setRenderColor(1f, 1f, 1f, 0.5f);
+        int jiggle = 0;
+
+        for (int hp = healthMaxI - 1; hp >= 0; hp--) {
+            if ((hp + 1) % 2 == 0) {
+                if (health + absorb <= 4)
+                    jiggle = RANDOM.nextInt(2);
+                //TODO ...
+                /*if (hp + 1 == regen)
+                    jiggle -= 2;*/
+            }
+            if (hp >= halfHeartsMaxStamina || hp < halfHeartsStamina)
                 continue;
             int v = (int) UV_STAMINA.y;
             int width;
@@ -234,11 +245,9 @@ public class Stamina extends Feature {
                 r = 5;
             }
 
-            //top += jiggle;
-
-            guiGraphics.blit(IguanaTweaksReborn.GUI_ICONS, right + (hp / 2 * 8) + r - (hp / 20 * 80), top - (hp / 20 * rowHeight), u, v, width, height);
+            guiGraphics.blit(IguanaTweaksReborn.GUI_ICONS, right + (hp / 2 * 8) + r - (hp / 20 * 80), top - (hp / 20 * rowHeight) + jiggle, u, v, width, height);
         }
-        ClientUtils.resetColor();
+        ClientUtils.resetRenderColor();
     }
 
     @OnlyIn(Dist.CLIENT)

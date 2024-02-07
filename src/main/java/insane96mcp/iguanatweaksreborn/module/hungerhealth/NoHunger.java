@@ -341,9 +341,9 @@ public class NoHunger extends Feature {
         float saturationModifier = getFoodRegenStrength(player) * 20 * 2;
         if (saturationModifier == 0f)
             return;
-        ClientUtils.setColor(1.2f - (saturationModifier / 1.2f), 0.78f, 0.17f, 1f);
+        ClientUtils.setRenderColor(1.2f - (saturationModifier / 1.2f), 0.78f, 0.17f, 1f);
         guiGraphics.blit(IguanaTweaksReborn.GUI_ICONS, right, top, (int) UV_ARROW.x, (int) UV_ARROW.y, 9, 9);
-        ClientUtils.resetColor();
+        ClientUtils.resetRenderColor();
     }
 
     @OnlyIn(Dist.CLIENT)

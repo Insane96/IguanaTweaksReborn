@@ -5,7 +5,7 @@ import net.minecraft.world.entity.player.Player;
 
 public class StaminaHandler {
     public static float getMaxStamina(Player player) {
-        return Mth.ceil(player.getHealth() * Stamina.staminaPerHalfHeart);
+        return Mth.ceil(player.getHealth()) * Stamina.staminaPerHalfHeart;
     }
 
     public static float getStamina(Player player) {

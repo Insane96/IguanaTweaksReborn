@@ -7,13 +7,13 @@ import org.lwjgl.opengl.GL11;
 
 public class ClientUtils {
 
-	public static void setColor(float r, float g, float b, float alpha) {
+	public static void setRenderColor(float r, float g, float b, float alpha) {
 		RenderSystem.enableBlend();
 		RenderSystem.setShaderColor(r, g, b, alpha);
 		RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	public static void resetColor() {
+	public static void resetRenderColor() {
 		RenderSystem.disableBlend();
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 	}
