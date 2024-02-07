@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Increased wooden tools efficiency (1.5 -> 1.7)
+
 ## 3.1.2
 * Fixed item stats not syncing the first time a server is joined
 * Fixed compatiblity with Paxi
