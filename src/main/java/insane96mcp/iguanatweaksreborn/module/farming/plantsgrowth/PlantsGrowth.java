@@ -30,7 +30,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import sereneseasons.api.season.Season;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Plants Growth", description = "Slower Plants (non-crops) growing. Plants properties are controlled via json in this feature's folder")
@@ -39,7 +38,7 @@ public class PlantsGrowth extends JsonFeature {
 
 	public static final TagKey<Item> NO_FERTILITY_TOOLTIP = ITRItemTagsProvider.create("no_fertility_tooltip");
 
-	public static final ArrayList<PlantGrowthModifier> PLANTS_LIST_DEFAULT = new ArrayList<>(Arrays.asList(
+	public static final List<PlantGrowthModifier> PLANTS_LIST_DEFAULT = List.of(
 			new PlantGrowthModifier.Builder(IdTagMatcher.Type.ID, "minecraft:sugar_cane")
 					.setNoSunglightMultipler(1.75f, 10)
 					/*.addSeasonMultiplier(Season.WINTER, 0f)
@@ -160,7 +159,7 @@ public class PlantsGrowth extends JsonFeature {
 					/*.addSeasonMultiplier(Season.SUMMER, 0f)
 					.addSeasonMultiplier(Season.WINTER, 0f)*/
 					.inverseCorrectBiomes().build()
-	));
+	);
 	public static final ArrayList<PlantGrowthModifier> plantsList = new ArrayList<>();
 
 	@Config
@@ -169,7 +168,7 @@ public class PlantsGrowth extends JsonFeature {
 
 	public PlantsGrowth(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_durabilities"), new SyncType(json -> loadAndReadJson(json, plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE)));
+		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "plants_growth_modifiers"), new SyncType(json -> loadAndReadJson(json, plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE)));
 		JSON_CONFIGS.add(new JsonConfig<>("plants_growth_modifiers.json", plantsList, PLANTS_LIST_DEFAULT, PlantGrowthModifier.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "plants_growth_modifiers")));
 	}
 

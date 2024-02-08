@@ -68,7 +68,7 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
 		tag(Spawners.SPAWNER_REACTIVATOR_TAG)
 				.add(Items.ECHO_SHARD);
         tag(PlantsGrowth.NO_FERTILITY_TOOLTIP)
-                .add(Items.CARROT, Items.POTATO);
+                .add(Items.CARROT, Items.POTATO, Items.SWEET_BERRIES);
     }
 
     public static TagKey<Item> create(String tagName) {

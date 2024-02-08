@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.setup.client;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.BeaconConduit;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconRenderer;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconScreen;
@@ -31,6 +32,8 @@ public class ClientSetup {
         }
         else if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             addAfter(event, Items.POPPY, CyanFlower.FLOWER.item());
+            addAfter(event, Items.WHEAT_SEEDS, Crops.CARROT_SEEDS);
+            addAfter(event, Items.BEETROOT_SEEDS, Crops.ROOTED_POTATO);
         }
     }
 
