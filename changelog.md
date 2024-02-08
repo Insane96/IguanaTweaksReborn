@@ -1,11 +1,10 @@
 # Changelog
 
-* Carrot seeds should temp chickens
-
 ## Upcoming
 * Increased wooden and stone tools efficiency (1.5 -> 1.7 and 2 -> 2.2)
 * Reduced berries from berry bushes
 * Slightly increased health healed overtime from foods
+* Chickens are now tempted by carrot seeds
 * Fixed plants growth multiplier not synced to server
 
 ## 3.1.2

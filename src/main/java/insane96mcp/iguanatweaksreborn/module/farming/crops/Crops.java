@@ -12,6 +12,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -138,7 +140,17 @@ public class Crops extends Feature {
 			event.setCanceled(true);
 	}
 
-	private static final Ingredient CHICKEN_FOOD_ITEMS = Ingredient.of(Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS, Items.TORCHFLOWER_SEEDS);
+	@SubscribeEvent
+	public void onTryToPlant(EntityJoinLevelEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof Chicken chicken))
+			return;
+
+		chicken.goalSelector.addGoal(3, new TemptGoal(chicken, 1.0D, Ingredient.of(CARROT_SEEDS.get()), false));
+	}
+
+	//TODO Remove Melon and Pumpkin when they'll no longer be renewable
+	private static final Ingredient CHICKEN_FOOD_ITEMS = Ingredient.of(Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.TORCHFLOWER_SEEDS);
 	@SubscribeEvent
 	public void onTryToSeedChickens(PlayerInteractEvent.EntityInteract event) {
 		if (!this.isEnabled()
