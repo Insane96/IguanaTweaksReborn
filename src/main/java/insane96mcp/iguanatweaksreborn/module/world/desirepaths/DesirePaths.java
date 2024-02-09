@@ -70,8 +70,10 @@ public class DesirePaths extends Feature {
 			return;
 
 		float walkDistDelta = event.player.walkDist - event.player.walkDistO;
-		float chance = chanceToTransform.floatValue() * walkDistDelta / 0.12f; //chance:0.12=x:walkDistDelta
-		AABB bb = event.player.getBoundingBox().deflate(0.02d, 0.02d, 0.02d);
+		float chance = chanceToTransform.floatValue();
+		if (speedBasedChance)
+			chance *= walkDistDelta / 0.12f; //chance:0.12=x:walkDistDelta
+		AABB bb = event.player.getBoundingBox().deflate(0.1d, 0.1d, 0.1d);
 		int mX = Mth.floor(bb.minX);
 		int mZ = Mth.floor(bb.minZ);
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
