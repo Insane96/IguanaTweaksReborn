@@ -4,6 +4,7 @@
 
 ## Upcoming
 * Protection enchantment now protects from any source outside the minecraft:bypasses_armor damage type tag
+* Fixed missing Phantoms in the End feature
 
 ## 3.1.3
 * Increased wooden and stone tools efficiency (1.5 -> 1.7 and 2 -> 2.2)
