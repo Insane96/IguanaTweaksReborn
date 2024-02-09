@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection;
 
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 
 public class OverallProtection extends ITRProtectionEnchantment {
@@ -33,6 +34,6 @@ public class OverallProtection extends ITRProtectionEnchantment {
 
     @Override
     public boolean isSourceReduced(DamageSource source) {
-        return true;
+        return !source.is(DamageTypeTags.BYPASSES_ARMOR);
     }
 }
