@@ -3,6 +3,7 @@
 * Slabs and stairs fast mining is not synced?
 
 ## Upcoming
+* Hoes no longer have +0.5 attack range
 * Protection enchantment now protects from any source outside the minecraft:bypasses_armor damage type tag
 * Fixed missing Phantoms in the End feature
 
