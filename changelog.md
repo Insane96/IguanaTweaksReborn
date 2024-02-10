@@ -2,6 +2,9 @@
 
 * Slabs and stairs fast mining is not synced?
 
+## Upcoming
+* Fixed Regenerating Absorption>Un-damaged time to regen not applying if only absorption hearts were damaged
+
 ## 3.1.4
 * Hoes 
   * No longer have +0.5 attack range

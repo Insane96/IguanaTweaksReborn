@@ -18,8 +18,8 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -111,7 +111,7 @@ public class RegeneratingAbsorption extends Feature {
     }
 
     @SubscribeEvent
-    public void onEntityHurt(LivingDamageEvent event) {
+    public void onEntityHurt(LivingHurtEvent event) {
         if (!this.isEnabled()
                 || unDamagedTimeToRegen == 0
                 || event.getSource().getEntity() == null)
