@@ -18,7 +18,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,27 +41,27 @@ public class Hoes extends JsonFeature {
 	public static final TagKey<Item> DISABLED_HOES = ITRItemTagsProvider.create("disabled_hoes");
 
 	public static final ArrayList<HoeStat> HOES_STATS_DEFAULT = new ArrayList<>(List.of(
-			new HoeStat(IdTagMatcher.newId("minecraft:wooden_hoe"), 0, 4, 1),
-			new HoeStat(IdTagMatcher.newId("minecraft:stone_hoe"), 0, 4, 0),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:flint_hoe"), 0, 4, 0),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:copper_hoe"), 0, 4, 1),
-			new HoeStat(IdTagMatcher.newId("minecraft:golden_hoe"), 0, 3, 2),
-			new HoeStat(IdTagMatcher.newId("minecraft:iron_hoe"), 0, 3, 1),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:solarium_hoe"), 0, 3, 1),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:durium_hoe"), 0, 3, 0),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:coated_copper_hoe"), 0, 2, 1),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:keego_hoe"), 0, 2, 2),
-			new HoeStat(IdTagMatcher.newId("minecraft:diamond_hoe"), 0, 2, 2),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:soul_steel_hoe"), 0, 2, 2),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:quaron_hoe"), 0, 2, 1),
-			new HoeStat(IdTagMatcher.newId("minecraft:netherite_hoe"), 0, 2, 2)
+			new HoeStat(IdTagMatcher.newId("minecraft:wooden_hoe"), 23, 4, 1),
+			new HoeStat(IdTagMatcher.newId("minecraft:stone_hoe"), 20, 4, 0),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:flint_hoe"), 17, 4, 0),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:copper_hoe"), 13, 4, 1),
+			new HoeStat(IdTagMatcher.newId("minecraft:golden_hoe"), 5, 4, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:iron_hoe"), 17, 4, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:solarium_hoe"), 19, 4, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:durium_hoe"), 20, 4, 0),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:coated_copper_hoe"), 17, 4, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:quaron_hoe"), 13, 4, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:keego_hoe"), 12, 4, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:diamond_hoe"), 10, 4, 2),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:soul_steel_hoe"), 13, 4, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:netherite_hoe"), 10, 2, 4)
 	));
 
 	public static final ArrayList<HoeStat> hoesStats = new ArrayList<>();
 
-	@Config(min = 0)
+	/*@Config(min = 0)
 	@Label(name = "Efficiency cooldown reduction", description = "Each Efficiency level reduces the cooldown of hoes by this many ticks.")
-	public static Integer efficiencyCooldownReduction = 1;
+	public static Integer efficiencyCooldownReduction = 0;*/
 
 	@Config
 	@Label(name = "Trigger only for farmland")
@@ -124,8 +123,8 @@ public class Hoes extends JsonFeature {
         for (HoeStat hoeStat : hoesStats) {
 			if (hoeStat.hoe.matchesItem(hoeStack.getItem(), null)) {
 				if (hoeStat.cooldown > 0) {
-					int efficiency = hoeStack.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
-					int cooldown = hoeStat.cooldown - (efficiency * efficiencyCooldownReduction);
+					//int efficiency = hoeStack.getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
+					int cooldown = hoeStat.cooldown /*- (efficiency * efficiencyCooldownReduction)*/;
 					if (hoeStack.getItem() instanceof IHoeCooldownModifier cooldownModifier)
 						cooldown = cooldownModifier.getCooldownOnUse(cooldown, player, player.level());
 					if (cooldown > 0)
@@ -177,8 +176,8 @@ public class Hoes extends JsonFeature {
 						|| hoeStat.cooldown <= 0)
 					continue;
 
-				int efficiency = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);
-				int cooldown = hoeStat.cooldown - (efficiency * efficiencyCooldownReduction);
+				/*int efficiency = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);*/
+				int cooldown = hoeStat.cooldown /*- (efficiency * efficiencyCooldownReduction)*/;
 				event.getToolTip().add(CommonComponents.space().append(Component.translatable(TILL_COOLDOWN, IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
 				if (hoeStat.scytheRadius > 0)
 					event.getToolTip().add(CommonComponents.space().append(Component.translatable(SCYTHE_RADIUS, hoeStat.scytheRadius).withStyle(ChatFormatting.DARK_GREEN)));

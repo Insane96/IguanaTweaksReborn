@@ -3,9 +3,11 @@
 * Slabs and stairs fast mining is not synced?
 
 ## Upcoming
-* Hoes no longer have +0.5 attack range
-* Hoes no longer have a cooldown when tilling
-  * This was done back in the days to make making huge farms harder, but since crops are now scarce, it's not really needed anymore
+* Hoes 
+  * No longer have +0.5 attack range
+  * All hoes are damaged by 4 durability when tilling
+  * Reduced cooldown when tilling
+    * About -33% cooldown of a ITE hammer
 * Protection enchantment now protects from any source outside the minecraft:bypasses_armor damage type tag
 * Fixed missing Phantoms in the End feature
 * Fixed iron tools having -10% attack speed
