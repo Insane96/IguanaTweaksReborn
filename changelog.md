@@ -4,6 +4,7 @@
 
 ## Upcoming
 * Fixed Regenerating Absorption>Un-damaged time to regen not applying if only absorption hearts were damaged
+* Budding amethyst are now harder to break
 
 ## 3.1.4
 * Hoes 
