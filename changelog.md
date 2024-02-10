@@ -2,14 +2,14 @@
 
 * Slabs and stairs fast mining is not synced?
 
-## Upcoming
+## 3.1.4
 * Hoes 
   * No longer have +0.5 attack range
-  * All hoes are damaged by 4 durability when tilling
+  * All hoes are damaged by 4 durability when tilling (no longer reduced for higher tier materials)
   * Reduced cooldown when tilling
     * About -33% cooldown of a ITE hammer
 * Protection enchantment now protects from any source outside the minecraft:bypasses_armor damage type tag
-* Fixed missing Phantoms in the End feature
+* Fixed missing "Phantoms in the End" feature
 * Fixed iron tools having -10% attack speed
 
 ## 3.1.3
