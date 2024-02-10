@@ -4,6 +4,8 @@
 
 ## Upcoming
 * Hoes no longer have +0.5 attack range
+* Hoes no longer have a cooldown when tilling
+  * This was done back in the days to make making huge farms harder, but since crops are now scarce, it's not really needed anymore
 * Protection enchantment now protects from any source outside the minecraft:bypasses_armor damage type tag
 * Fixed missing Phantoms in the End feature
 * Fixed iron tools having -10% attack speed

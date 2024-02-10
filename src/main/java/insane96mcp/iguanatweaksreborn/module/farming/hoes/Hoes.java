@@ -42,19 +42,19 @@ public class Hoes extends JsonFeature {
 	public static final TagKey<Item> DISABLED_HOES = ITRItemTagsProvider.create("disabled_hoes");
 
 	public static final ArrayList<HoeStat> HOES_STATS_DEFAULT = new ArrayList<>(List.of(
-			new HoeStat(IdTagMatcher.newId("minecraft:wooden_hoe"), 40, 4, 1),
-			new HoeStat(IdTagMatcher.newId("minecraft:stone_hoe"), 30, 4, 0),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:flint_hoe"), 25, 4, 0),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:copper_hoe"), 20, 4, 1),
-			new HoeStat(IdTagMatcher.newId("minecraft:golden_hoe"), 6, 3, 2),
-			new HoeStat(IdTagMatcher.newId("minecraft:iron_hoe"), 22, 3, 1),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:solarium_hoe"), 28, 3, 1),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:durium_hoe"), 25, 3, 0),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:coated_copper_hoe"), 18, 2, 1),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:keego_hoe"), 10, 2, 2),
-			new HoeStat(IdTagMatcher.newId("minecraft:diamond_hoe"), 12, 2, 2),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:soul_steel_hoe"), 14, 2, 2),
-			new HoeStat(IdTagMatcher.newId("minecraft:netherite_hoe"), 12, 2, 2)
+			new HoeStat(IdTagMatcher.newId("minecraft:wooden_hoe"), 0, 4, 1),
+			new HoeStat(IdTagMatcher.newId("minecraft:stone_hoe"), 0, 4, 0),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:flint_hoe"), 0, 4, 0),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:copper_hoe"), 0, 4, 1),
+			new HoeStat(IdTagMatcher.newId("minecraft:golden_hoe"), 0, 3, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:iron_hoe"), 0, 3, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:solarium_hoe"), 0, 3, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:durium_hoe"), 0, 3, 0),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:coated_copper_hoe"), 0, 2, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:keego_hoe"), 0, 2, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:diamond_hoe"), 0, 2, 2),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:soul_steel_hoe"), 0, 2, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:netherite_hoe"), 0, 2, 2)
 	));
 
 	public static final ArrayList<HoeStat> hoesStats = new ArrayList<>();
