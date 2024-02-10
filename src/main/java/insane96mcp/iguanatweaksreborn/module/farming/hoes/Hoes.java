@@ -54,6 +54,7 @@ public class Hoes extends JsonFeature {
 			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:keego_hoe"), 0, 2, 2),
 			new HoeStat(IdTagMatcher.newId("minecraft:diamond_hoe"), 0, 2, 2),
 			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:soul_steel_hoe"), 0, 2, 2),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:quaron_hoe"), 0, 2, 1),
 			new HoeStat(IdTagMatcher.newId("minecraft:netherite_hoe"), 0, 2, 2)
 	));
 
