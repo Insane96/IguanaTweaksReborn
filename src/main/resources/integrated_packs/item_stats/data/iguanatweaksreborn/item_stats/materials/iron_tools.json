@@ -8,7 +8,7 @@
 			"name": "Material modifier",
 			"slot": "mainhand",
 			"attribute": "minecraft:generic.attack_speed",
-			"amount": -0.1,
+			"amount": 0,
 			"operation": "multiply_base"
 		},
 		{
