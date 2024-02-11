@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:netherite_helmet",
 	"durability": 182,
-	"armor": 3,
+	"armor": 3.4,
 	"modifiers": [
 		{
 			"uuid": "cf4db784-9677-4e90-9c74-ee3d85c9a641",

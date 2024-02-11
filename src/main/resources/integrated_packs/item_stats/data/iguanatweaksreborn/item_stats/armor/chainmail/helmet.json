@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:chainmail_helmet",
 	"durability": 33,
-	"armor": 2,
+	"armor": 1.8,
 	"armor_toughness": 0,
 	"modifiers": [
 		{

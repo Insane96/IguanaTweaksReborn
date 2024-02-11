@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:diamond_leggings",
 	"durability": 225,
-	"armor": 4,
+	"armor": 4.2,
 	"modifiers": [
 		{
 			"uuid": "1277bad1-246f-4f3b-932c-d944839a164e",

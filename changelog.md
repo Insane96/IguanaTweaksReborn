@@ -3,10 +3,13 @@
 * Slabs and stairs fast mining is not synced?
 
 ## Upcoming
-* Fixed Regenerating Absorption>Un-damaged time to regen not applying if only absorption hearts were damaged
-* Budding amethyst are now harder to break
+* Changed armor (or regen. absorption) for all armor to use decimal values
+  * This makes the armor they give more accurate, so it's better to mix and match armor pieces
+  * Also minor changes to other stats
 * Changed efficiency formula yet again
   * From +50% efficiency per level to +16/40/80/136/208/296% from level I to VI
+* Fixed Regenerating Absorption>Un-damaged time to regen not applying if only absorption hearts were damaged
+* Budding amethyst are now harder to break
 
 ## 3.1.4
 * Hoes 

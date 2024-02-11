@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:leather_chestplate",
 	"durability": 64,
-	"armor": 2,
+	"armor": 2.1,
 	"modifiers": [
 		{
 			"uuid": "e5ca3f97-f7a0-439b-8c94-b1af3bdf3828",

@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:leather_leggings",
 	"durability": 60,
-	"armor": 2,
+	"armor": 1.8,
 	"modifiers": [
 		{
 			"uuid": "1277bad1-246f-4f3b-932c-d944839a164e",

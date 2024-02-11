@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:diamond_boots",
 	"durability": 180,
-	"armor": 2,
+	"armor": 2.1,
 	"modifiers": [
 		{
 			"uuid": "4b8573c6-bd4b-4560-a411-04b78ae950ce",

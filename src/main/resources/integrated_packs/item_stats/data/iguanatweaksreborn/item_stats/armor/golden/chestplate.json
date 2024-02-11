@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:golden_chestplate",
 	"durability": 80,
-	"armor": 3,
+	"armor": 2.4,
 	"modifiers": [
 		{
 			"uuid": "f700b45a-0c51-40f8-9f59-836c519d64d5",

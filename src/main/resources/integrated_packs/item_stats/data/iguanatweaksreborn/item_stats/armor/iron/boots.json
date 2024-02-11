@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:iron_boots",
-	"durability": 96,
-	"armor": 1,
+	"durability": 84,
+	"armor": 1.8,
 	"knockback_resistance": 0.03,
 	"modifiers": [
 		{

@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:iron_helmet",
-	"durability": 104,
-	"armor": 2,
+	"durability": 91,
+	"armor": 2.4,
 	"knockback_resistance": 0.03,
 	"modifiers": [
 		{

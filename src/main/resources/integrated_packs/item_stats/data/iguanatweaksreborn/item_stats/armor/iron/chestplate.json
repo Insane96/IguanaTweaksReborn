@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:iron_chestplate",
-	"durability": 128,
-	"armor": 5,
+	"durability": 112,
+	"armor": 4.2,
 	"knockback_resistance": 0.03,
 	"modifiers": [
 		{
