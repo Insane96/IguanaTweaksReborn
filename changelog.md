@@ -2,7 +2,7 @@
 
 * Slabs and stairs fast mining is not synced?
 
-## Upcoming
+## 3.1.5
 * Changed armor (or regen. absorption) for all armor to use decimal values
   * This makes the armor they give more accurate, so it's better to mix and match armor pieces
   * Also minor changes to other stats
