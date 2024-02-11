@@ -9,6 +9,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffects;
@@ -114,7 +115,7 @@ public class RegeneratingAbsorption extends Feature {
     public void onEntityHurt(LivingHurtEvent event) {
         if (!this.isEnabled()
                 || unDamagedTimeToRegen == 0
-                || event.getSource().getEntity() == null)
+                || event.getSource().is(DamageTypeTags.BYPASSES_ARMOR))
             return;
 
         double absorptionSpeed = event.getEntity().getAttributeValue(REGEN_ATTRIBUTE.get());
