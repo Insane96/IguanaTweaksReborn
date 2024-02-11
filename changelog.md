@@ -1,9 +1,8 @@
 # Changelog
 
-* Slabs and stairs fast mining is not synced?
-
 ## 3.1.6
-* Added iguanatweaks:doLooseRespawn game rule to disable the loose respawn mechanic
+* Changed config folder to `iguanatweaks` and config file names
+* Added `iguanatweaks:doLooseRespawn` game rule to disable the loose respawn mechanic
 
 ## 3.1.5
 * Changed armor (or regen. absorption) for all armor to use decimal values
