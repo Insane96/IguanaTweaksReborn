@@ -18,6 +18,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -29,11 +30,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import javax.annotation.Nullable;
 import java.util.List;
 
-@Label(name = "Respawn", description = "Changes to respawning")
+@Label(name = "Respawn", description = "Changes to respawning. Adds the doLooseRespawn gamerule that can disable the loose spawn range")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class Respawn extends Feature {
 
 	public static final String LOOSE_RESPAWN_POINT_SET = IguanaTweaksReborn.MOD_ID + ".loose_bed_respawn_point_set";
+	public static final GameRules.Key<GameRules.BooleanValue> RULE_RANGEDRESPAWN = GameRules.register("iguanatweaks:doLooseRespawn", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
 
 	@Config(min = 0)
 	@Label(name = "Loose World Spawn Range", description = "The range from world spawn where players will respawn.")
@@ -57,7 +59,8 @@ public class Respawn extends Feature {
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
 		if (!this.isEnabled()
-				|| event.isEndConquered())
+				|| event.isEndConquered()
+				|| !event.getEntity().level().getGameRules().getBoolean(RULE_RANGEDRESPAWN))
 			return;
 
 		boolean hasRespawned = looseWorldSpawn(event);
@@ -147,6 +150,7 @@ public class Respawn extends Feature {
 	public void onSetSpawnLooseMessage(PlayerSetSpawnEvent event) {
 		if (!this.isEnabled()
 				|| event.isForced()
+				|| !event.getEntity().level().getGameRules().getBoolean(RULE_RANGEDRESPAWN)
 				|| looseBedSpawnRange.min == 0d
 				|| event.getNewSpawn() == null
 				|| !event.getEntity().level().getBlockState(event.getNewSpawn()).is(BlockTags.BEDS))
