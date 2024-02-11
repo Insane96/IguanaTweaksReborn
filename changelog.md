@@ -10,6 +10,7 @@
   * From +50% efficiency per level to +16/40/80/136/208/296% from level I to VI
 * Fixed Regenerating Absorption>Un-damaged time to regen not applying if only absorption hearts were damaged
 * Budding amethyst are now harder to break
+* Tired I no longer applies modifiers
 
 ## 3.1.4
 * Hoes 

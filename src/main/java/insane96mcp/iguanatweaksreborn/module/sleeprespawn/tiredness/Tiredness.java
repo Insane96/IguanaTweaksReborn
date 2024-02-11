@@ -189,6 +189,8 @@ public class Tiredness extends JsonFeature {
 
 		//noinspection ConstantConditions
 		int level = event.getEntity().getEffect(TIRED.get()).getAmplifier() + 1;
+		if (level == 1)
+			return;
 		event.setNewSpeed(event.getNewSpeed() * (1 - (level * 0.05f)));
 	}
 
