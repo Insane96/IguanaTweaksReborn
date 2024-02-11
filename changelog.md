@@ -1,7 +1,6 @@
 # Changelog
 
 ## 3.1.6
-* Changed config folder to `iguanatweaks` and config file names
 * Added `iguanatweaks:doLooseRespawn` game rule to disable the loose respawn mechanic
 
 ## 3.1.5
