@@ -54,8 +54,6 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
         tag(HardCrops.HARDER_CROPS_TAG)
                 .add(Blocks.WHEAT, Blocks.CARROTS, Blocks.POTATOES, Blocks.BEETROOTS);
 
-        tag(OBSIDIANS)
-                .add(Blocks.OBSIDIAN).add(Blocks.CRYING_OBSIDIAN);
         tag(BlockHardness.HARDNESS_BLACKLIST)
                 .addTag(OBSIDIANS);
         tag(BlockHardness.DEPTH_MULTIPLIER_BLACKLIST)
