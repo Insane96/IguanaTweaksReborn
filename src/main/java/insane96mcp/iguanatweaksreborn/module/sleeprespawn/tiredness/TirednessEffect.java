@@ -13,18 +13,18 @@ public class TirednessEffect extends ILMobEffect implements IStaminaModifier {
 
     @Override
     public float consumedStaminaModifier(int amplifier) {
-        return 0.25f * (amplifier + 1);
+        return 0.25f * amplifier;
     }
 
     @Override
     public float regenStaminaModifier(int amplifier) {
-        return -0.1f * (amplifier + 1);
+        return -0.1f * amplifier;
     }
 
     @Override
     public void addAttributeModifiers(LivingEntity pLivingEntity, AttributeMap pAttributeMap, int pAmplifier) {
         if (pAmplifier == 0)
             return;
-        super.addAttributeModifiers(pLivingEntity, pAttributeMap, pAmplifier);
+        super.addAttributeModifiers(pLivingEntity, pAttributeMap, pAmplifier - 1);
     }
 }
