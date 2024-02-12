@@ -138,7 +138,7 @@ public class WeightedEquipment extends JsonFeature {
 			double armorToughness = 0d;
 			Collection<AttributeModifier> toughnessModifiers = attributeModifiers.get(Attributes.ARMOR_TOUGHNESS);
 			if (armorModifiers.isEmpty())
-				toughnessModifiers = attributeModifiers.get(RegeneratingAbsorption.REGEN_ATTRIBUTE.get());
+				toughnessModifiers = attributeModifiers.get(RegeneratingAbsorption.SPEED_ATTRIBUTE.get());
 			for (AttributeModifier attributeModifier : toughnessModifiers) {
 				if (!attributeModifier.getOperation().equals(AttributeModifier.Operation.ADDITION))
 					continue;

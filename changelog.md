@@ -1,5 +1,14 @@
 # Changelog
 
+## Upcoming
+* Golden apples now give Regenerating Absorption instead of absorption
+* Regenerating Absorption
+  * Golden Apples now give regenerating absorption instead of absorption
+  * Effect now gives 10% more regen speed per level
+  * Fixed regenerating absorption blinking with floating point value armor
+* Minor fixes and balancements
+* Sleeping effects is now disabled by default
+
 ## 3.1.6
 * Added `iguanatweaks:doLooseRespawn` game rule to disable the loose respawn mechanic
 

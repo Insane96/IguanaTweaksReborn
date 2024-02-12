@@ -28,19 +28,15 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class RegeneratingAbsorption extends Feature {
 
-    private static final String TICK_REGEN_ABSORPTION = IguanaTweaksReborn.RESOURCE_PREFIX + "tick_regen_absorption";
     private static final String HURT_COOLDOWN = IguanaTweaksReborn.RESOURCE_PREFIX + "regen_absorption_hurt_cooldown";
 
     public static final RegistryObject<Attribute> ATTRIBUTE = ITRRegistries.ATTRIBUTES.register("regenerating_absorption", () -> new RangedAttribute("attribute.name.regenerating_absorption", 0d, 0d, 1024d));
 
-    public static final RegistryObject<Attribute> REGEN_ATTRIBUTE = ITRRegistries.ATTRIBUTES.register("regenerating_absorption_speed", () -> new RangedAttribute("attribute.name.regenerating_absorption_speed", 0.200d, 0d, 20d));
+    public static final RegistryObject<Attribute> SPEED_ATTRIBUTE = ITRRegistries.ATTRIBUTES.register("regenerating_absorption_speed", () -> new RangedAttribute("attribute.name.regenerating_absorption_speed", 0.200d, 0d, 20d));
 
     public static final RegistryObject<MobEffect> EFFECT = ITRRegistries.MOB_EFFECTS.register("regenerating_absorption", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x818894)
-            .addAttributeModifier(ATTRIBUTE.get(), "704d7291-63ba-4346-8aa8-a08e90a13fdf", 4, AttributeModifier.Operation.ADDITION));
+            .addAttributeModifier(ATTRIBUTE.get(), "704d7291-63ba-4346-8aa8-a08e90a13fdf", 4, AttributeModifier.Operation.ADDITION).addAttributeModifier(SPEED_ATTRIBUTE.get(), "704d7291-63ba-4346-8aa8-a08e90a13fdf", 0.1f, AttributeModifier.Operation.MULTIPLY_BASE));
 
-    @Config(min = 0)
-    @Label(name = "Absorption decay", description = "Speed (in ticks) at which Absorption hearts decay")
-    public static Integer absorptionDecay = 10;
     @Config(min = 0)
     @Label(name = "Un-damaged time to regen", description = "Ticks that must pass from the last hit to regen absorption hearts. This is affected by regenerating absorption speed (absorp regen speed * this)")
     public static Integer unDamagedTimeToRegen = 50;
@@ -59,8 +55,8 @@ public class RegeneratingAbsorption extends Feature {
         for (EntityType<? extends LivingEntity> entityType : event.getTypes()) {
             if (!event.has(entityType, ATTRIBUTE.get()))
                 event.add(entityType, ATTRIBUTE.get());
-            if (!event.has(entityType, REGEN_ATTRIBUTE.get()))
-                event.add(entityType, REGEN_ATTRIBUTE.get());
+            if (!event.has(entityType, SPEED_ATTRIBUTE.get()))
+                event.add(entityType, SPEED_ATTRIBUTE.get());
         }
     }
 
@@ -78,37 +74,29 @@ public class RegeneratingAbsorption extends Feature {
             return;
         }
         double regeneratingAbsorption = entity.getAttributeValue(ATTRIBUTE.get());
-        int absorptionSpeed = (int) Math.round(20 * (1f / entity.getAttributeValue(REGEN_ATTRIBUTE.get())));
-        if (absorptionSpeed == 0)
+        double regenSpeed = entity.getAttributeValue(SPEED_ATTRIBUTE.get()) / 20f;
+        if (regenSpeed == 0)
             return;
 
         //Take into account absorption effect
-        int absorptionAmplifier = 0;
+        int absorptionEffect = 0;
         if (entity.hasEffect(MobEffects.ABSORPTION))
-            absorptionAmplifier = entity.getEffect(MobEffects.ABSORPTION).getAmplifier() + 1;
+            absorptionEffect = (entity.getEffect(MobEffects.ABSORPTION).getAmplifier() + 1) * 4;
 
-        float actualGoldenAbsorption = entity.getAbsorptionAmount() - (absorptionAmplifier * 4);
+        float actualRegenAbsorption = entity.getAbsorptionAmount() - absorptionEffect;
         regeneratingAbsorption = Math.min(regeneratingAbsorption, Math.ceil(entity.getHealth()));
-        if (actualGoldenAbsorption < 0f || actualGoldenAbsorption == regeneratingAbsorption)
+        if (actualRegenAbsorption < 0f || actualRegenAbsorption == regeneratingAbsorption)
             return;
 
-        int tickRegenAbsorption = entity.getPersistentData().getInt(TICK_REGEN_ABSORPTION);
-        tickRegenAbsorption++;
-        //int undamagedTicksToRegen = unDamagedTimeToRegen;
-        //undamagedTicksToRegen = (int) (undamagedTicksToRegen - (entity.getAttributeValue(REGEN_ATTRIBUTE.get()) * 20f));
-        //if (entity instanceof Player player)
-            //player.displayClientMessage(Component.literal("regeneratingAbsorption: %s, absorptionSpeed: %s, tickRegenAbsorption: %s, hurtCooldown: %s".formatted(regeneratingAbsorption, absorptionSpeed, tickRegenAbsorption, hurtCooldown)), true);
-        if (actualGoldenAbsorption > regeneratingAbsorption && entity.tickCount % absorptionDecay == 0) {
-            entity.setAbsorptionAmount(entity.getAbsorptionAmount() - 1);
+        if (actualRegenAbsorption > regeneratingAbsorption) {
+            entity.setAbsorptionAmount((float) (entity.getAbsorptionAmount() - regenSpeed * 10f));
         }
-        else if (tickRegenAbsorption >= absorptionSpeed) {
-            double newAbsorption = Math.min(entity.getAbsorptionAmount() + 1, entity.getAttributeValue(ATTRIBUTE.get()) + (absorptionAmplifier * 4));
+        else {
+                double newAbsorption = Math.min(entity.getAbsorptionAmount() + regenSpeed, entity.getAttributeValue(ATTRIBUTE.get()) + absorptionEffect);
             if (capToHealth)
-                newAbsorption = Math.min(newAbsorption, entity.getHealth() + (absorptionAmplifier * 4));
+                newAbsorption = Math.min(newAbsorption, entity.getHealth() + absorptionEffect);
             entity.setAbsorptionAmount((float) newAbsorption);
-            tickRegenAbsorption = 0;
         }
-        entity.getPersistentData().putInt(TICK_REGEN_ABSORPTION, tickRegenAbsorption);
     }
 
     @SubscribeEvent
@@ -118,7 +106,7 @@ public class RegeneratingAbsorption extends Feature {
                 || event.getSource().is(DamageTypeTags.BYPASSES_ARMOR))
             return;
 
-        double absorptionSpeed = event.getEntity().getAttributeValue(REGEN_ATTRIBUTE.get());
+        double absorptionSpeed = event.getEntity().getAttributeValue(SPEED_ATTRIBUTE.get());
         event.getEntity().getPersistentData().putInt(HURT_COOLDOWN, unDamagedTimeToRegen - (int)(absorptionSpeed * unDamagedTimeToRegen));
     }
 

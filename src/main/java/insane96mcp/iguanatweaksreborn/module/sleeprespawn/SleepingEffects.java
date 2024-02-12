@@ -12,7 +12,6 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -29,12 +28,12 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN, enabledByDefault = false)
 public class SleepingEffects extends JsonFeature {
 
-	public static final ArrayList<ITRMobEffectInstance> EFFECTS_ON_WAKE_UP_DEFAULT = new ArrayList<>(List.of(
-			new ITRMobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 400, 0),
-			new ITRMobEffectInstance(MobEffects.WEAKNESS, 300, 1),
-			new ITRMobEffectInstance(MobEffects.DIG_SLOWDOWN, 300, 1),
-			new ITRMobEffectInstance(MobEffects.REGENERATION, 900, 0)
-	));
+	public static final List<ITRMobEffectInstance> EFFECTS_ON_WAKE_UP_DEFAULT = List.of(
+			new ITRMobEffectInstance.Builder(MobEffects.MOVEMENT_SLOWDOWN, 400).build(),
+			new ITRMobEffectInstance.Builder(MobEffects.WEAKNESS, 300).setAmplifier(1).build(),
+			new ITRMobEffectInstance.Builder(MobEffects.DIG_SLOWDOWN, 300).setAmplifier(1).build(),
+			new ITRMobEffectInstance.Builder(MobEffects.REGENERATION, 900).build()
+	);
 	public static final ArrayList<ITRMobEffectInstance> effectsOnWakeUp = new ArrayList<>();
 	public static final String NO_FOOD_FOR_SLEEP = "iguanatweaksreborn.no_food_for_sleep";
 
@@ -81,12 +80,12 @@ public class SleepingEffects extends JsonFeature {
 			if (hungerToDeplete > 0)
 				foodData.setFoodLevel(foodData.foodLevel - Math.min(hungerToDeplete, foodData.foodLevel));
 
-			for (MobEffectInstance mobEffectInstance : effectsOnWakeUp) {
-				if (noBeneficialEffectWhenHungry && mobEffectInstance.getEffect().isBeneficial() && player.getFoodData().getFoodLevel() <= 0)
+			for (ITRMobEffectInstance mobEffectInstance : effectsOnWakeUp) {
+				if (noBeneficialEffectWhenHungry && mobEffectInstance.effect.get().isBeneficial() && player.getFoodData().getFoodLevel() <= 0)
 					continue;
-				if (dizzyWhenToTired && Feature.isEnabled(Tiredness.class) && tirednessOnWakeUp == 0f && !mobEffectInstance.getEffect().isBeneficial())
+				if (dizzyWhenToTired && Feature.isEnabled(Tiredness.class) && tirednessOnWakeUp == 0f && !mobEffectInstance.effect.get().isBeneficial())
 					continue;
-				player.addEffect(new MobEffectInstance(mobEffectInstance));
+				player.addEffect(mobEffectInstance.getMobEffectInstance());
 			}
 		});
 	}

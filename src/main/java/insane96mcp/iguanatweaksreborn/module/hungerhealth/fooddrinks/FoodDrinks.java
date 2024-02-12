@@ -1,8 +1,10 @@
 package insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.data.ITRMobEffectInstance;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
 import insane96mcp.iguanatweaksreborn.setup.IntegratedDataPack;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
@@ -13,7 +15,6 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.event.AddEatEffectEvent;
-import insane96mcp.insanelib.util.LogHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -43,7 +44,15 @@ public class FoodDrinks extends JsonFeature {
 
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(
 			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:rotten_flesh")).setNutrition(2).setEatingTime(55).build(),
-			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:spider_eye")).setNutrition(1).setEatingTime(40).build()
+			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:spider_eye")).setNutrition(1).setEatingTime(40).build(),
+			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:golden_apple"))
+					.addEffect(new ITRMobEffectInstance.Builder(MobEffects.REGENERATION, 100).setAmplifier(1).build())
+					.addEffect(new ITRMobEffectInstance.Builder(RegeneratingAbsorption.EFFECT, 2400).build()).build(),
+			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:enchanted_golden_apple"))
+					.addEffect(new ITRMobEffectInstance.Builder(MobEffects.REGENERATION, 400).setAmplifier(1).build())
+					.addEffect(new ITRMobEffectInstance.Builder(MobEffects.DAMAGE_RESISTANCE, 6000).build())
+					.addEffect(new ITRMobEffectInstance.Builder(MobEffects.FIRE_RESISTANCE, 6000).build())
+					.addEffect(new ITRMobEffectInstance.Builder(RegeneratingAbsorption.EFFECT, 2400).setAmplifier(3).build()).build()
 	));
 	public static final ArrayList<CustomFoodProperties> customFoodProperties = new ArrayList<>();
 
@@ -122,7 +131,7 @@ public class FoodDrinks extends JsonFeature {
 		}
 		else {
 			for (CustomFoodProperties cfp : customFoodProperties) {
-				if (cfp.food.matchesItem(stack.getItem())) {
+				if (cfp.food.matchesItem(stack.getItem()) && cfp.eatingTime >= 0) {
 					customFoodPropertiesCache = cfp;
 					return cfp.eatingTime;
 				}
@@ -160,7 +169,7 @@ public class FoodDrinks extends JsonFeature {
 
 			foodValue.getEffects().forEach(pair -> {
 				if (!event.getLevel().isClientSide && pair.getFirst() != null && event.getLevel().random.nextFloat() < pair.getSecond()) {
-					event.getEntity().addEffect(new MobEffectInstance(pair.getFirst()));
+					event.getEntity().addEffect(new MobEffectInstance(pair.getFirst().getMobEffectInstance()));
 				}
 			});
 			event.setCanceled(true);
@@ -195,22 +204,7 @@ public class FoodDrinks extends JsonFeature {
 			return;
 
 		for (CustomFoodProperties foodValue : list) {
-			List<Item> items = getAllItems(foodValue.food, false);
-			for (Item item : items) {
-				if (!item.isEdible()) {
-					LogHelper.warn("In Custom Food Value %s is not a food", item);
-					continue;
-				}
-				FoodProperties food = item.getFoodProperties();
-				if (foodValue.nutrition >= 0)
-					food.nutrition = foodValue.nutrition;
-				if (foodValue.saturationModifier >= 0f)
-					food.saturationModifier = foodValue.saturationModifier;
-				if (foodValue.fastEating)
-					food.fastFood = foodValue.fastEating;
-				//if (foodValue.effects != null)
-					//food.effects = foodValue.effects.stream().map(pair -> Pair.of(pair.getFirst(), pair.getSecond())).collect(java.util.stream.Collectors.toList());
-			}
+			foodValue.apply();
 		}
 
 		//reset cache when reloading

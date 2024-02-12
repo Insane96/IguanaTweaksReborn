@@ -4,12 +4,12 @@ import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.mojang.datafixers.util.Pair;
+import insane96mcp.iguanatweaksreborn.data.ITRMobEffectInstance;
 import insane96mcp.insanelib.data.IdTagMatcher;
-import net.minecraft.resources.ResourceLocation;
+import insane96mcp.insanelib.util.LogHelper;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +21,38 @@ public class CustomFoodProperties {
 	public int nutrition = -1;
 	public float saturationModifier = -1f;
 	public int eatingTime = -1;
-	public boolean fastEating = false;
+	public Boolean fastEating = null;
+	public Boolean canAlwaysEat = null;
 	//If null, don't modify existing effects
-	public List<Pair<Supplier<MobEffectInstance>, Float>> effects = null;
+	public List<Pair<Supplier<ITRMobEffectInstance>, Float>> effects = null;
 
 	public CustomFoodProperties(IdTagMatcher food) {
 		this.food = food;
 	}
 
-	public List<Pair<MobEffectInstance, Float>> getEffects() {
+	public List<Pair<ITRMobEffectInstance, Float>> getEffects() {
 		return this.effects.stream().map(pair -> Pair.of(pair.getFirst() != null ? pair.getFirst().get() : null, pair.getSecond())).collect(java.util.stream.Collectors.toList());
+	}
+
+	@SuppressWarnings("DataFlowIssue")
+	public void apply() {
+		List<Item> items = FoodDrinks.getAllItems(this.food, false);
+		for (Item item : items) {
+			if (!item.isEdible()) {
+				LogHelper.warn("Item %s in Custom Food Properties is not edible", item);
+				return;
+			}
+			//noinspection deprecation
+			FoodProperties food = item.getFoodProperties();
+			if (this.nutrition >= 0)
+				food.nutrition = this.nutrition;
+			if (this.saturationModifier >= 0f)
+				food.saturationModifier = this.saturationModifier;
+			if (this.fastEating != null)
+				food.fastFood = this.fastEating;
+			if (this.canAlwaysEat != null)
+				food.canAlwaysEat = this.canAlwaysEat;
+		}
 	}
 
 	public static class Builder {
@@ -59,8 +81,13 @@ public class CustomFoodProperties {
 			return this;
 		}
 
-		public Builder setFastEating(boolean fastEating) {
+		public Builder fastEating(boolean fastEating) {
 			this.customFoodProperties.fastEating = fastEating;
+			return this;
+		}
+
+		public Builder alwaysEat(boolean alwaysEat) {
+			this.customFoodProperties.canAlwaysEat = alwaysEat;
 			return this;
 		}
 
@@ -69,7 +96,11 @@ public class CustomFoodProperties {
 			return this;
 		}
 
-		public Builder addEffect(MobEffectInstance mobEffectInstance, float chance) {
+		public Builder addEffect(ITRMobEffectInstance mobEffectInstance) {
+			return this.addEffect(mobEffectInstance, 1f);
+		}
+
+		public Builder addEffect(ITRMobEffectInstance mobEffectInstance, float chance) {
 			if (this.customFoodProperties.effects == null)
 				this.customFoodProperties.effects = new ArrayList<>();
 			this.customFoodProperties.effects.add(Pair.of(() -> mobEffectInstance, chance));
@@ -79,7 +110,7 @@ public class CustomFoodProperties {
 
 	@Override
 	public String toString() {
-		return "FoodValue{food: %s, nutrition: %s, saturation_modifier: %s, eating_time: %s, fast_eating: %s, effects: %s}".formatted(this.food, this.nutrition, this.saturationModifier, this.eatingTime, this.fastEating, this.effects);
+		return "FoodValue{food: %s, nutrition: %s, saturation_modifier: %s, eating_time: %s, fast_eating: %s, can_always_eat: %s, effects: %s}".formatted(this.food, this.nutrition, this.saturationModifier, this.eatingTime, this.fastEating, this.canAlwaysEat, this.effects);
 	}
 
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<CustomFoodProperties>>(){}.getType();
@@ -87,31 +118,23 @@ public class CustomFoodProperties {
 	public static class Serializer implements JsonDeserializer<CustomFoodProperties>, JsonSerializer<CustomFoodProperties> {
 		@Override
 		public CustomFoodProperties deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-			IdTagMatcher food = context.deserialize(json.getAsJsonObject().get("food"), IdTagMatcher.class);
+			JsonObject jObject = json.getAsJsonObject();
+			IdTagMatcher food = context.deserialize(jObject.get("food"), IdTagMatcher.class);
 
 			Builder builder = new Builder(food)
-					.setNutrition(GsonHelper.getAsInt(json.getAsJsonObject(), "nutrition", -1))
-					.setSaturationModifier(GsonHelper.getAsFloat(json.getAsJsonObject(), "saturation_modifier", -1f))
-					.setEatingTime(GsonHelper.getAsInt(json.getAsJsonObject(), "eating_time", -1))
-					.setFastEating(GsonHelper.getAsBoolean(json.getAsJsonObject(), "fast_eating", false));
-			if (json.getAsJsonObject().has("effects")) {
-				JsonArray jArray = json.getAsJsonObject().getAsJsonArray("effects");
+					.setNutrition(GsonHelper.getAsInt(jObject, "nutrition", -1))
+					.setSaturationModifier(GsonHelper.getAsFloat(jObject, "saturation_modifier", -1f))
+					.setEatingTime(GsonHelper.getAsInt(jObject, "eating_time", -1));
+			if (jObject.has("fast_eating"))
+				builder.fastEating(GsonHelper.getAsBoolean(jObject, "fast_eating"));
+			if (jObject.has("can_always_eat"))
+				builder.alwaysEat(GsonHelper.getAsBoolean(jObject, "can_always_eat"));
+			if (jObject.has("effects")) {
+				JsonArray jArray = jObject.getAsJsonArray("effects");
 				if (jArray.isEmpty())
 					builder.noEffects();
-				else {
-					jArray.forEach(element -> {
-						String stringId = GsonHelper.getAsString(element.getAsJsonObject(), "id");
-						ResourceLocation effectId = ResourceLocation.tryParse(stringId);
-						MobEffect mobEffect = ForgeRegistries.MOB_EFFECTS.getValue(effectId);
-						if (mobEffect == null)
-							throw new JsonParseException("Mob effect %s not found".formatted(stringId));
-						int amplifier = GsonHelper.getAsInt(element.getAsJsonObject(), "amplifier", 0);
-						int duration = GsonHelper.getAsInt(element.getAsJsonObject(), "duration");
-						MobEffectInstance effectInstance = new MobEffectInstance(mobEffect, duration, amplifier);
-						float chance = GsonHelper.getAsFloat(element.getAsJsonObject(), "chance", 1f);
-						builder.addEffect(effectInstance, chance);
-					});
-				}
+				else
+					jArray.forEach(element -> builder.addEffect(context.deserialize(element, ITRMobEffectInstance.class)));
 			}
 
 			return builder.build();
@@ -127,17 +150,14 @@ public class CustomFoodProperties {
 				jsonObject.addProperty("saturation_modifier", src.saturationModifier);
 			if (src.eatingTime >= 0)
 				jsonObject.addProperty("eating_time", src.eatingTime);
-			if (src.fastEating)
-				jsonObject.addProperty("fast_eating", true);
+			if (src.fastEating != null)
+				jsonObject.addProperty("fast_eating", src.fastEating);
+			if (src.canAlwaysEat != null)
+				jsonObject.addProperty("can_always_eat", src.canAlwaysEat);
 			if (src.effects != null) {
 				JsonArray effects = new JsonArray();
 				src.getEffects().forEach(pair -> {
-					JsonObject effect = new JsonObject();
-					effect.addProperty("id", ForgeRegistries.MOB_EFFECTS.getKey(pair.getFirst().getEffect()).toString());
-					effect.addProperty("amplifier", pair.getFirst().getAmplifier());
-					effect.addProperty("duration", pair.getFirst().getDuration());
-					if (pair.getSecond() < 1f)
-						effect.addProperty("chance", pair.getSecond());
+					JsonElement effect = context.serialize(pair.getFirst());
 					effects.add(effect);
 				});
 				jsonObject.add("effects", effects);
