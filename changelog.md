@@ -8,6 +8,7 @@
   * Fixed regenerating absorption blinking with floating point value armor
 * Minor fixes and balancements
 * Sleeping effects is now disabled by default
+* Obsidian is less hard to break
 
 ## 3.1.6
 * Added `iguanatweaks:doLooseRespawn` game rule to disable the loose respawn mechanic
