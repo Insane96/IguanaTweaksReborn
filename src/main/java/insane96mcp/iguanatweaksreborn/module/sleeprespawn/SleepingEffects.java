@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Label(name = "Sleeping Effects", description = "Prevents the player from sleeping if has not enough Hunger and gives him effects on wake up. Effects on wake up are controlled via json in this feature's folder")
-@LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
+@LoadFeature(module = Modules.Ids.SLEEP_RESPAWN, enabledByDefault = false)
 public class SleepingEffects extends JsonFeature {
 
 	public static final ArrayList<ITRMobEffectInstance> EFFECTS_ON_WAKE_UP_DEFAULT = new ArrayList<>(List.of(
