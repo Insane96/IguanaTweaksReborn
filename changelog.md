@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.1.7
 * Golden apples now give Regenerating Absorption instead of absorption
 * Regenerating Absorption
   * Golden Apples now give regenerating absorption instead of absorption

@@ -222,6 +222,7 @@ public class Stamina extends Feature {
         int jiggle = 0;
 
         for (int hp = healthMaxI - 1; hp >= 0; hp--) {
+            //Doesn't work with absorption ...
             if ((hp + 1) % 2 == 0) {
                 if (health + absorb <= 4)
                     jiggle = RANDOM.nextInt(2);
