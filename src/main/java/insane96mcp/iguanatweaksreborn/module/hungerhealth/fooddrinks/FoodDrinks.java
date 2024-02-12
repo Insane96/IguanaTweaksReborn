@@ -134,8 +134,10 @@ public class FoodDrinks extends JsonFeature {
 			return lastFoodEatenTime;
 
 		int ticks = (int) Utils.computeFoodFormula(food, eatingSpeedFormula);
+		lastFoodEatenCache = food;
 		//noinspection DataFlowIssue
-		return ticks >= 0 ? ticks : (food.isFastFood() ? 16 : 32);
+		lastFoodEatenTime = ticks >= 0 ? ticks : (food.isFastFood() ? 16 : 32);
+		return lastFoodEatenTime;
 	}
 
 	@SubscribeEvent
