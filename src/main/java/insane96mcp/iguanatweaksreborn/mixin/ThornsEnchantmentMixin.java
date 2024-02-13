@@ -36,7 +36,11 @@ public abstract class ThornsEnchantmentMixin {
         if (!EnchantmentsFeature.isThornsOverhaul())
             return;
 
-        //1 + 0~lvl*2
+        //lvl~lvl+lvl*2
+        //1~3
+        //2~6
+        //3~9
+        //4~12
         cir.setReturnValue(lvl + random.nextInt(lvl * 2 + 1));
     }
 }
