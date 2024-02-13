@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed fishing rods being usable when broken
+
 ## 3.1.7
 * Golden apples now give Regenerating Absorption instead of absorption
 * Regenerating Absorption

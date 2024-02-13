@@ -142,7 +142,22 @@ public class ItemStats extends Feature {
 	}
 
 	@SubscribeEvent
-	public void onBlockRightClick(PlayerInteractEvent.RightClickBlock event) {
+	public void onBlockRightClick(PlayerInteractEvent.RightClickEmpty event) {
+		if (!this.isEnabled()
+				|| !unbreakableItems)
+			return;
+
+		ItemStack stack = event.getItemStack();
+		if (stack.getMaxDamage() == 0)
+			return;
+		if (isBroken(stack)) {
+			event.setCanceled(true);
+			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
+		}
+	}
+
+	@SubscribeEvent
+	public void onBlockRightClick(PlayerInteractEvent.RightClickItem event) {
 		if (!this.isEnabled()
 				|| !unbreakableItems)
 			return;
