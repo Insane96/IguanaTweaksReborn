@@ -249,12 +249,15 @@ public class ItemStats extends Feature {
 		}
 
 		if (stack.isDamageableItem()) {
-			int durabilityLeft = stack.getMaxDamage() - stack.getDamageValue();
+			int durability = stack.getMaxDamage();
+			if (unbreakableItems)
+				durability--;
+			int durabilityLeft = durability - stack.getDamageValue();
 			MutableComponent component;
             if (isBroken(stack))
                 component = Component.translatable(BROKEN_DURABILITY_LANG).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD);
             else
-                component = Component.translatable(TOOL_DURABILITY_LANG, durabilityLeft, stack.getMaxDamage()).withStyle(ChatFormatting.GRAY);
+                component = Component.translatable(TOOL_DURABILITY_LANG, durabilityLeft, durability).withStyle(ChatFormatting.GRAY);
             if (durabilityLeft > 1 && stack.getAllEnchantments().containsKey(Enchantments.UNBREAKING) && Screen.hasShiftDown()) {
 				int lvl = stack.getAllEnchantments().get(Enchantments.UNBREAKING);
 				component.append(Component.literal(" (+%.0f%%)".formatted(getUnbreakingPercentageBonus(lvl) * 100f)).withStyle(ChatFormatting.DARK_PURPLE));
