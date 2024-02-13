@@ -70,7 +70,7 @@ public class ItemStatsReloadListener extends SimpleJsonResourceReloadListener {
 
 
 	@SubscribeEvent
-	public void onTagsUpdatedEvent(TagsUpdatedEvent event) {
+	public static void onTagsUpdatedEvent(TagsUpdatedEvent event) {
 		if (event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED) {
 			for (ItemStatistics itemStatistics : ItemStatsReloadListener.STATS) {
 				itemStatistics.applyStats(true);

@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.movement;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.network.message.MovementDirectionSync;
+import insane96mcp.iguanatweaksreborn.network.message.BackwardsSlowdownUpdate;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -11,8 +11,7 @@ import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -22,7 +21,7 @@ import java.util.UUID;
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class BackwardsSlowdown extends Feature {
 
-	private final UUID BACKWARD_WALK_SLOWDOWN_UUID = UUID.fromString("3c085336-5bee-465f-b4a8-6677f245e7fc");
+	private static final UUID BACKWARD_WALK_SLOWDOWN_UUID = UUID.fromString("3c085336-5bee-465f-b4a8-6677f245e7fc");
 
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Slowdown", description = "How much slower will the player go when walking backwards.")
@@ -32,20 +31,24 @@ public class BackwardsSlowdown extends Feature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
+				//Don't apply it server side from here since the server doesn't know the zza of the player
+				|| !event.player.level().isClientSide
 				|| event.phase != TickEvent.Phase.START
 				|| slowdown == 0d
-				|| event.player.getAbilities().flying)
+				|| event.player.getAbilities().flying
+				|| event.player.isPassenger())
 			return;
 
-		event.player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(BACKWARD_WALK_SLOWDOWN_UUID);
-		if (event.player.zza < 0f) {
-			MCUtils.applyModifier(event.player, Attributes.MOVEMENT_SPEED, BACKWARD_WALK_SLOWDOWN_UUID, "IguanaTweaks Reborn backward slowdown", -slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
-		}
-		if (event.player instanceof LocalPlayer localPlayer && localPlayer.tickCount % 2 == 0)
-			MovementDirectionSync.sync(localPlayer);
+		applyModifier(event.player, event.player.zza);
+		BackwardsSlowdownUpdate.sync((LocalPlayer) event.player);
+	}
+
+	public static void applyModifier(Player player, float zza) {
+		player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(BACKWARD_WALK_SLOWDOWN_UUID);
+		if (zza < 0f)
+			MCUtils.applyModifier(player, Attributes.MOVEMENT_SPEED, BACKWARD_WALK_SLOWDOWN_UUID, "IguanaTweaks Reborn backward slowdown", -slowdown, AttributeModifier.Operation.MULTIPLY_BASE, false);
 	}
 }

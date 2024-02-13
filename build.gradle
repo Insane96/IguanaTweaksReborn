@@ -92,6 +92,10 @@ minecraft {
             // property 'forge.enabledGameTestNamespaces', mod_id
             property 'mixin.debug.export', 'true'
         }
+        client2 {
+            workingDirectory project.file('run-2')
+            args "--username", "Dev2"
+        }
 
         server {
             workingDirectory project.file('run-server')
