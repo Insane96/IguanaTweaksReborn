@@ -13,6 +13,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -33,9 +34,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.entity.living.LivingBreatheEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -73,6 +72,9 @@ public class Tweaks extends Feature {
     @Config
     @Label(name = "Player air ticks refilled", description = "The amount of air ticks the player regains each tick when out of water. Vanilla is 4")
     public static Integer playerRefillAirAmount = 1;
+    @Config
+    @Label(name = "Totem resistance", description = "If enabled, the Totem of Undying will give Resistance IV for 5 seconds")
+    public static Boolean totemResistance = true;
 
     public Tweaks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -136,6 +138,27 @@ public class Tweaks extends Feature {
             Component component = player.getCombatTracker().getDeathMessage();
             player.server.getPlayerList().broadcastSystemMessage(component, false);
         }*/
+    }
+
+    boolean appliedResistance = false;
+    @SubscribeEvent
+    public void onTotemUse(LivingUseTotemEvent event) {
+        if (!this.isEnabled()
+                || !totemResistance)
+            return;
+
+        event.getEntity().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 110, 3));
+        appliedResistance = true;
+    }
+
+    @SubscribeEvent
+    public void onEffectRemoved(MobEffectEvent.Remove event) {
+        if (!this.isEnabled()
+                || !appliedResistance
+                || !event.getEffect().equals(MobEffects.DAMAGE_RESISTANCE))
+            return;
+        event.setCanceled(true);
+        appliedResistance = false;
     }
 
     @SubscribeEvent

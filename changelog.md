@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Totem of Undying now gives 5 seconds of Resistance IV
 * Fixed fishing rods being usable when broken
 * Fixed step sounds heard twice in multiplayer
 * Fixed (hopefully and again) item stats not being synced when on server
