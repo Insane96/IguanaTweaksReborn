@@ -61,9 +61,10 @@ public class RegeneratingAbsorption extends Feature {
     }
 
     @SubscribeEvent
-    public void onPlayerTick(LivingEvent.LivingTickEvent event) {
+    public void onLivingTick(LivingEvent.LivingTickEvent event) {
         if (!this.isEnabled()
-                || event.getEntity().level().isClientSide)
+                || event.getEntity().level().isClientSide
+                || event.getEntity().isDeadOrDying())
             return;
 
         LivingEntity entity = event.getEntity();
