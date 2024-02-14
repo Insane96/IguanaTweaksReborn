@@ -27,11 +27,10 @@ public class Sound extends Feature {
     public void readConfig(ModConfigEvent event) {
         super.readConfig(event);
 
-        if (this.isEnabled())
-            Musics.END = new Music(SoundEvents.MUSIC_END, (int) (6000 * getMusicDelayMultiplier()), (int) (24000 * getMusicDelayMultiplier()), true);
-    }
-
-    public static double getMusicDelayMultiplier() {
-        return !isEnabled(Sound.class) ? 1d : musicDelayMultiplier;
+        if (this.isEnabled()) {
+            Musics.END = new Music(SoundEvents.MUSIC_END, (int) (6000 * musicDelayMultiplier), (int) (24000 * musicDelayMultiplier), true);
+            Musics.UNDER_WATER = new Music(SoundEvents.MUSIC_UNDER_WATER, (int) (12000 * musicDelayMultiplier), (int) (24000 * musicDelayMultiplier), false);
+            Musics.GAME = new Music(SoundEvents.MUSIC_GAME, (int) (12000 * musicDelayMultiplier), (int) (24000 * musicDelayMultiplier), false);
+        }
     }
 }

@@ -34,7 +34,6 @@
         "MobEffectMixin",
         "MobMixin",
         "MonsterMixin",
-        "MusicsMixin",
         "NaturalSpawnerMixin",
         "PistonBaseBlockMixin",
         "PistonMovingBlockEntityMixin",

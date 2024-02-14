@@ -4,6 +4,7 @@
 * Fixed fishing rods being usable when broken
 * Fixed step sounds heard twice in multiplayer
 * Fixed (hopefully and again) item stats not being synced when on server
+* Fixed mod crashing the game before the dependencies screen
 
 ## 3.1.7
 * Golden apples now give Regenerating Absorption instead of absorption

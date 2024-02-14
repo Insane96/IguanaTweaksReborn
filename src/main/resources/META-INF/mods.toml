@@ -66,3 +66,10 @@ license="All rights reserved"
     versionRange="[1.20-forge-4.0,)"
     ordering="AFTER"
     side="BOTH"
+
+[[dependencies.iguanatweaksreborn]]
+    modId="iguanatweaksexpanded"
+    mandatory=false
+    versionRange="[1.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
