@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1.9
+* Crash with ITE
+
 ## 3.1.8
 * Totem of Undying now gives 5 seconds of Resistance IV
 * Fixed fishing rods being usable when broken
