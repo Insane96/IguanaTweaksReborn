@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1.10
+* Fixed crash in multiplayer with Backwards slowdown
+
 ## 3.1.9
 * Crash with ITE
 

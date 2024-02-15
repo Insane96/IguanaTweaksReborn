@@ -9,6 +9,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -36,6 +37,7 @@ public class BackwardsSlowdown extends Feature {
 		if (!this.isEnabled()
 				//Don't apply it server side from here since the server doesn't know the zza of the player
 				|| !event.player.level().isClientSide
+				|| event.player instanceof RemotePlayer
 				|| event.phase != TickEvent.Phase.START
 				|| slowdown == 0d
 				|| event.player.getAbilities().flying
