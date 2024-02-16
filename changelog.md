@@ -1,7 +1,13 @@
 # Changelog
 
+## 3.1.12
+* Fixed enchantments not synced between client and server
+
 ## 3.1.11
 * Fixed crash in multiplayer with Backwards slowdown
+
+## 3.1.10
+* Fork me
 
 ## 3.1.9
 * Crash with ITE
