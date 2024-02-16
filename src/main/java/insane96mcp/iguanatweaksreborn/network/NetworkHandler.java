@@ -30,6 +30,6 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(++index, GlobalHardnessSync.class, GlobalHardnessSync::encode, GlobalHardnessSync::decode, GlobalHardnessSync::handle);
 		CHANNEL.registerMessage(++index, SpawnerStatusSync.class, SpawnerStatusSync::encode, SpawnerStatusSync::decode, SpawnerStatusSync::handle);
 		CHANNEL.registerMessage(++index, TirednessSync.class, TirednessSync::encode, TirednessSync::decode, TirednessSync::handle);
-		CHANNEL.registerMessage(++index, ServerboundSetITRBeacon.class, ServerboundSetITRBeacon::encode, ServerboundSetITRBeacon::decode, ServerboundSetITRBeacon::handle);
+		CHANNEL.registerMessage(++index, SetITRBeaconEffects.class, SetITRBeaconEffects::encode, SetITRBeaconEffects::decode, SetITRBeaconEffects::handle);
 	}
 }

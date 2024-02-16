@@ -15,29 +15,26 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public class ServerboundSetITRBeacon {
+public class SetITRBeaconEffects {
     final Optional<MobEffect> mobEffect;
     final int amplifier;
 
-    public ServerboundSetITRBeacon(Optional<MobEffect> mobEffect, int amplifier) {
+    public SetITRBeaconEffects(Optional<MobEffect> mobEffect, int amplifier) {
         this.mobEffect = mobEffect;
         this.amplifier = amplifier;
     }
 
-    public static void encode(ServerboundSetITRBeacon pkt, FriendlyByteBuf buf) {
+    public static void encode(SetITRBeaconEffects pkt, FriendlyByteBuf buf) {
         buf.writeOptional(pkt.mobEffect, (byteBuf, mobEffect) -> byteBuf.writeId(BuiltInRegistries.MOB_EFFECT, mobEffect));
         buf.writeInt(pkt.amplifier);
     }
 
-    public static ServerboundSetITRBeacon decode(FriendlyByteBuf buf) {
-        return new ServerboundSetITRBeacon(buf.readOptional((byteBuf) -> byteBuf.readById(BuiltInRegistries.MOB_EFFECT)), buf.readInt());
+    public static SetITRBeaconEffects decode(FriendlyByteBuf buf) {
+        return new SetITRBeaconEffects(buf.readOptional((byteBuf) -> byteBuf.readById(BuiltInRegistries.MOB_EFFECT)), buf.readInt());
     }
 
-    public static void handle(final ServerboundSetITRBeacon message, Supplier<NetworkEvent.Context> ctx) {
+    public static void handle(final SetITRBeaconEffects message, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            if (ctx.get().getSender() == null)
-                return;
-
             ServerPlayer player = ctx.get().getSender();
             AbstractContainerMenu abstractcontainermenu = player.containerMenu;
             if (abstractcontainermenu instanceof ITRBeaconMenu srBeaconMenu) {
@@ -53,7 +50,7 @@ public class ServerboundSetITRBeacon {
     }
 
     public static void updateServer(LocalPlayer player, MobEffect mobEffect, int amplifier) {
-        Object msg = new ServerboundSetITRBeacon(Optional.of(mobEffect), amplifier);
+        Object msg = new SetITRBeaconEffects(Optional.of(mobEffect), amplifier);
         NetworkHandler.CHANNEL.sendTo(msg, player.connection.getConnection(), NetworkDirection.PLAY_TO_SERVER);
     }
 }

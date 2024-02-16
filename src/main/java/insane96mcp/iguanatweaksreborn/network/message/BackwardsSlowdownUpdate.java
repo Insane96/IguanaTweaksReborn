@@ -26,8 +26,8 @@ public class BackwardsSlowdownUpdate {
 
 	public static void handle(final BackwardsSlowdownUpdate message, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-			if (ctx.get().getSender() != null)
-				BackwardsSlowdown.applyModifier(ctx.get().getSender(), message.zza);
+			//noinspection DataFlowIssue
+			BackwardsSlowdown.applyModifier(ctx.get().getSender(), message.zza);
 		});
 		ctx.get().setPacketHandled(true);
 	}

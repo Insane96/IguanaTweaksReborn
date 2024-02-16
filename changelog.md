@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.1.13
+* I hate client-server stuff
+
 ## 3.1.12
 * Fixed enchantments not synced between client and server
 

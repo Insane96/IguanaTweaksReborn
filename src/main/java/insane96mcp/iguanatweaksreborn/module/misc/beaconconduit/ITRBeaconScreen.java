@@ -2,7 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.misc.beaconconduit;
 
 import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.network.message.ServerboundSetITRBeacon;
+import insane96mcp.iguanatweaksreborn.network.message.SetITRBeaconEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
@@ -145,7 +145,7 @@ public class ITRBeaconScreen extends AbstractContainerScreen<ITRBeaconMenu> {
                 ITRBeaconScreen.this.effect = this.effect;
                 ITRBeaconScreen.this.amplifier = 0;
                 ITRBeaconScreen.this.updateMaxAmplifier();
-                ServerboundSetITRBeacon.updateServer(minecraft.player, ITRBeaconScreen.this.effect, amplifier);
+                SetITRBeaconEffects.updateServer(minecraft.player, ITRBeaconScreen.this.effect, amplifier);
                 ITRBeaconScreen.this.updateButtons();
             }
         }
@@ -189,7 +189,7 @@ public class ITRBeaconScreen extends AbstractContainerScreen<ITRBeaconMenu> {
         public void onPress() {
             if (!this.isSelected()) {
                 ITRBeaconScreen.this.amplifier = this.amplifier;
-                ServerboundSetITRBeacon.updateServer(minecraft.player, ITRBeaconScreen.this.effect, this.amplifier);
+                SetITRBeaconEffects.updateServer(minecraft.player, ITRBeaconScreen.this.effect, this.amplifier);
                 ITRBeaconScreen.this.updateButtons();
             }
         }
