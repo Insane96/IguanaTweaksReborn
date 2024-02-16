@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.network.message;
 
 import insane96mcp.iguanatweaksreborn.module.movement.stamina.Stamina;
-import net.minecraft.client.Minecraft;
+import insane96mcp.iguanatweaksreborn.network.NetworkHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -28,8 +28,8 @@ public class StaminaSync {
 
     public static void handle(final StaminaSync message, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            Minecraft.getInstance().player.getPersistentData().putInt(Stamina.STAMINA, message.stamina);
-            Minecraft.getInstance().player.getPersistentData().putBoolean(Stamina.STAMINA_LOCKED, message.staminaLocked);
+            NetworkHelper.getSidedPlayer(ctx.get()).getPersistentData().putInt(Stamina.STAMINA, message.stamina);
+            NetworkHelper.getSidedPlayer(ctx.get()).getPersistentData().putBoolean(Stamina.STAMINA_LOCKED, message.staminaLocked);
         });
         ctx.get().setPacketHandled(true);
     }

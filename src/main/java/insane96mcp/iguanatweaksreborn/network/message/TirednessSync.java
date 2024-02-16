@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.network.message;
 
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.TirednessHandler;
-import net.minecraft.client.Minecraft;
+import insane96mcp.iguanatweaksreborn.network.NetworkHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -23,7 +23,7 @@ public class TirednessSync {
 	}
 
 	public static void handle(final TirednessSync message, Supplier<NetworkEvent.Context> ctx) {
-		ctx.get().enqueueWork(() -> TirednessHandler.set(Minecraft.getInstance().player, message.tiredness));
+		ctx.get().enqueueWork(() -> TirednessHandler.set(NetworkHelper.getSidedPlayer(ctx.get()), message.tiredness));
 		ctx.get().setPacketHandled(true);
 	}
 }
