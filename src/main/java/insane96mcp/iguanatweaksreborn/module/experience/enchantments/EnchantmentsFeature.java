@@ -123,7 +123,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	public EnchantmentsFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "disabled_enchantments"), new SyncType(json -> loadAndReadJson(json, disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, IdTagMatcher.LIST_TYPE)));
-		JSON_CONFIGS.add(new JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, IdTagMatcher.LIST_TYPE));
+		JSON_CONFIGS.add(new JsonConfig<>("disabled_enchantments.json", disabledEnchantments, DISABLED_ENCHANTMENTS_DEFAULT, IdTagMatcher.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "disabled_enchantments")));
 	}
 
 	@Override
