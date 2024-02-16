@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.network.message;
 
-import insane96mcp.iguanatweaksreborn.network.NetworkHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -22,7 +22,7 @@ public class SaturationSync {
 	}
 
 	public static void handle(final SaturationSync message, Supplier<NetworkEvent.Context> ctx) {
-		ctx.get().enqueueWork(() -> NetworkHelper.getSidedPlayer(ctx.get()).getFoodData().saturationLevel = message.saturationLevel);
+		ctx.get().enqueueWork(() -> Minecraft.getInstance().player.getFoodData().saturationLevel = message.saturationLevel);
 		ctx.get().setPacketHandled(true);
 	}
 }

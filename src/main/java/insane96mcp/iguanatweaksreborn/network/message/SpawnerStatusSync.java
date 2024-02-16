@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.network.message;
 
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerData;
-import insane96mcp.iguanatweaksreborn.network.NetworkHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
@@ -29,7 +29,7 @@ public class SpawnerStatusSync {
 
 	public static void handle(final SpawnerStatusSync message, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-			if (NetworkHelper.getSidedPlayer(ctx.get()).level().getBlockEntity(message.pos) instanceof SpawnerBlockEntity spawnerBlockEntity) {
+			if (Minecraft.getInstance().player.level().getBlockEntity(message.pos) instanceof SpawnerBlockEntity spawnerBlockEntity) {
 				spawnerBlockEntity.getCapability(SpawnerData.INSTANCE).ifPresent(iSpawner -> iSpawner.setDisabled(message.status));
 			}
 		});

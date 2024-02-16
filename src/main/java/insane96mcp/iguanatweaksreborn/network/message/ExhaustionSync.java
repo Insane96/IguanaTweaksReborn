@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.network.message;
 
-import insane96mcp.iguanatweaksreborn.network.NetworkHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -22,7 +22,7 @@ public class ExhaustionSync {
 	}
 
 	public static void handle(final ExhaustionSync message, Supplier<NetworkEvent.Context> ctx) {
-		ctx.get().enqueueWork(() -> NetworkHelper.getSidedPlayer(ctx.get()).getFoodData().exhaustionLevel = message.exhaustionLevel);
+		ctx.get().enqueueWork(() -> Minecraft.getInstance().player.getFoodData().exhaustionLevel = message.exhaustionLevel);
 		ctx.get().setPacketHandled(true);
 	}
 }
