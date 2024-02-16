@@ -7,16 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
-public class IntegratedDataPack {
+public class IntegratedPack {
 
-    public static final List<IntegratedDataPack> INTEGRATED_DATA_PACKS = new ArrayList<>();
+    public static final List<IntegratedPack> INTEGRATED_PACKS = new ArrayList<>();
 
     PackType packType;
     String path;
     MutableComponent description;
     BooleanSupplier enabled;
 
-    public IntegratedDataPack(PackType packType, String path, MutableComponent description, BooleanSupplier enabled) {
+    public IntegratedPack(PackType packType, String path, MutableComponent description, BooleanSupplier enabled) {
         this.packType = packType;
         this.path = path;
         this.description = description;
@@ -37,5 +37,9 @@ public class IntegratedDataPack {
 
     public boolean shouldBeEnabled() {
         return this.enabled.getAsBoolean();
+    }
+
+    public static void addPack(IntegratedPack integratedPack) {
+        INTEGRATED_PACKS.add(integratedPack);
     }
 }

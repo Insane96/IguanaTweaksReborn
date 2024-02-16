@@ -3,7 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.world;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
-import insane96mcp.iguanatweaksreborn.setup.IntegratedDataPack;
+import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -44,7 +44,7 @@ public class BerryBushes extends Feature {
 
     public BerryBushes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "berries", Component.literal("IguanaTweaks Reborn Berries"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
+        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "berries", Component.literal("IguanaTweaks Reborn Berries"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
     }
 
     @SubscribeEvent

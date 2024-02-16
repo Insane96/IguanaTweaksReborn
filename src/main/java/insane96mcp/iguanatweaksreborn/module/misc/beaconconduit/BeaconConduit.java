@@ -7,7 +7,7 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
-import insane96mcp.iguanatweaksreborn.setup.IntegratedDataPack;
+import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
 import insane96mcp.iguanatweaksreborn.setup.registry.SimpleBlockWithItem;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
@@ -123,7 +123,7 @@ public class BeaconConduit extends JsonFeature {
         JSON_CONFIGS.add(new JsonConfig<>("beacon_payment_times.json", paymentTimes, PAYMENT_TIMES_DEFAULT, IdTagValue.LIST_TYPE));
         addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "beacon_effects"), new SyncType(json -> loadAndReadJson(json, effects, EFFECTS_DEFAULT, BeaconEffect.LIST_TYPE)));
         JSON_CONFIGS.add(new JsonConfig<>("beacon_effects.json", effects, EFFECTS_DEFAULT, BeaconEffect.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "beacon_effects")));
-        IntegratedDataPack.INTEGRATED_DATA_PACKS.add(new IntegratedDataPack(PackType.SERVER_DATA, "better_beacon", Component.literal("IguanaTweaks Reborn Better Beacon"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks));
+        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "better_beacon", Component.literal("IguanaTweaks Reborn Better Beacon"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks));
     }
 
     @Override

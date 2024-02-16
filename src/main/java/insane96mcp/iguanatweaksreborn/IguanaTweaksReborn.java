@@ -22,7 +22,7 @@ import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.setup.ITRCommonConfig;
 import insane96mcp.iguanatweaksreborn.setup.ITRPackSource;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
-import insane96mcp.iguanatweaksreborn.setup.IntegratedDataPack;
+import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
 import insane96mcp.iguanatweaksreborn.setup.client.ClientSetup;
 import insane96mcp.iguanatweaksreborn.setup.client.ITRClientConfig;
 import net.minecraft.core.HolderLookup;
@@ -144,7 +144,7 @@ public class IguanaTweaksReborn
 
     public void addPackFinders(AddPackFindersEvent event)
     {
-        for (IntegratedDataPack dataPack : IntegratedDataPack.INTEGRATED_DATA_PACKS) {
+        for (IntegratedPack dataPack : IntegratedPack.INTEGRATED_PACKS) {
             if (event.getPackType() != dataPack.getPackType())
                 continue;
 
@@ -161,7 +161,7 @@ public class IguanaTweaksReborn
         boolean hasDisabledPack = false;
         PackRepository packRepository = event.getServer().getPackRepository();
         List<Pack> list = Lists.newArrayList(packRepository.getSelectedPacks());
-        for (IntegratedDataPack dataPack : IntegratedDataPack.INTEGRATED_DATA_PACKS) {
+        for (IntegratedPack dataPack : IntegratedPack.INTEGRATED_PACKS) {
             String dataPackId = IguanaTweaksReborn.RESOURCE_PREFIX + dataPack.getPath();
             Pack pack = packRepository.getPack(dataPackId);
             if (pack != null && !dataPack.shouldBeEnabled()) {

@@ -3,12 +3,15 @@ package insane96mcp.iguanatweaksreborn.module.combat;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
+import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -46,9 +49,13 @@ public class RegeneratingAbsorption extends Feature {
     @Config
     @Label(name = "Absorbing bypasses_armor damage only", description = "If true, absorption hearts will not shield from damages in the bypasses_armor damage type tag.")
     public static Boolean absorbingDamageTypeTagOnly = true;
+    @Config
+    @Label(name = "Shield texture for absorption hearts", description = "If true, enables a resource pack that changes absorption hearts to use a shield instead of hearts.")
+    public static Boolean shieldTexture = true;
 
     public RegeneratingAbsorption(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
+        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.CLIENT_RESOURCES, "shield_absorption", Component.literal("IguanaTweaks Reborn Shield shaped absorption"), () -> this.isEnabled() && shieldTexture));
     }
 
     public static void regeneratingAbsorptionAttribute(EntityAttributeModificationEvent event) {

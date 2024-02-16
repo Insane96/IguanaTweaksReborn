@@ -1,5 +1,7 @@
 # Changelog
 
+* Shield shaped absorption hearts
+
 ## 3.1.13
 * I hate client-server stuff
 
