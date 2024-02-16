@@ -1,26 +1,37 @@
 package insane96mcp.iguanatweaksreborn.module.combat;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.event.LivingHurtPreAbsorptionEvent;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.network.message.RegenAbsorptionSync;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
-import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
+import insane96mcp.iguanatweaksreborn.utils.ClientUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.packs.PackType;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -31,7 +42,9 @@ import net.minecraftforge.registries.RegistryObject;
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class RegeneratingAbsorption extends Feature {
 
-    private static final String HURT_COOLDOWN = IguanaTweaksReborn.RESOURCE_PREFIX + "regen_absorption_hurt_cooldown";
+    public static final ResourceLocation GUI_ICONS = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "textures/gui/absorption.png");
+    public static final String REGEN_ABSORPTION_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "regen_absorption";
+    public static final String HURT_COOLDOWN_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "regen_absorption_hurt_cooldown";
 
     public static final RegistryObject<Attribute> ATTRIBUTE = ITRRegistries.ATTRIBUTES.register("regenerating_absorption", () -> new RangedAttribute("attribute.name.regenerating_absorption", 0d, 0d, 1024d));
 
@@ -49,13 +62,9 @@ public class RegeneratingAbsorption extends Feature {
     @Config
     @Label(name = "Absorbing bypasses_armor damage only", description = "If true, absorption hearts will not shield from damages in the bypasses_armor damage type tag.")
     public static Boolean absorbingDamageTypeTagOnly = true;
-    @Config
-    @Label(name = "Shield texture for absorption hearts", description = "If true, enables a resource pack that changes absorption hearts to use a shield instead of hearts.")
-    public static Boolean shieldTexture = true;
 
     public RegeneratingAbsorption(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.CLIENT_RESOURCES, "shield_absorption", Component.literal("IguanaTweaks Reborn Shield shaped absorption"), () -> this.isEnabled() && shieldTexture));
     }
 
     public static void regeneratingAbsorptionAttribute(EntityAttributeModificationEvent event) {
@@ -75,36 +84,75 @@ public class RegeneratingAbsorption extends Feature {
             return;
 
         LivingEntity entity = event.getEntity();
-        int hurtCooldown = entity.getPersistentData().getInt(HURT_COOLDOWN);
+        int hurtCooldown = entity.getPersistentData().getInt(HURT_COOLDOWN_TAG);
         if (hurtCooldown > 0) {
             hurtCooldown--;
-            entity.getPersistentData().putInt(HURT_COOLDOWN, hurtCooldown);
+            entity.getPersistentData().putInt(HURT_COOLDOWN_TAG, hurtCooldown);
             return;
         }
-        double regeneratingAbsorption = entity.getAttributeValue(ATTRIBUTE.get());
-        double regenSpeed = entity.getAttributeValue(SPEED_ATTRIBUTE.get()) / 20f;
+        float maxAbsorption = (float) entity.getAttributeValue(ATTRIBUTE.get());
+        if (maxAbsorption == 0f)
+            return;
+        float regenSpeed = (float) (entity.getAttributeValue(SPEED_ATTRIBUTE.get()) / 20f);
         if (regenSpeed == 0)
             return;
 
-        //Take into account absorption effect
-        int absorptionEffect = 0;
-        if (entity.hasEffect(MobEffects.ABSORPTION))
-            absorptionEffect = (entity.getEffect(MobEffects.ABSORPTION).getAmplifier() + 1) * 4;
-
-        float actualRegenAbsorption = entity.getAbsorptionAmount() - absorptionEffect;
-        regeneratingAbsorption = Math.min(regeneratingAbsorption, Math.ceil(entity.getHealth()));
-        if (actualRegenAbsorption < 0f || actualRegenAbsorption == regeneratingAbsorption)
+        float currentAbsorption = entity.getPersistentData().getFloat(REGEN_ABSORPTION_TAG);
+        maxAbsorption = Math.min(maxAbsorption, Mth.ceil(entity.getHealth()));
+        if (currentAbsorption < 0f || currentAbsorption == maxAbsorption)
             return;
 
-        if (actualRegenAbsorption > regeneratingAbsorption) {
-            entity.setAbsorptionAmount((float) (entity.getAbsorptionAmount() - regenSpeed * 10f));
+        if (currentAbsorption > maxAbsorption)
+            currentAbsorption = Math.max(currentAbsorption - regenSpeed * 10f, 0f);
+        else
+            currentAbsorption = Math.min(currentAbsorption + regenSpeed, maxAbsorption);
+
+        if (entity instanceof ServerPlayer player)
+            RegenAbsorptionSync.sync(player, currentAbsorption);
+        entity.getPersistentData().putFloat(REGEN_ABSORPTION_TAG, currentAbsorption);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
+        event.registerBelow(VanillaGuiOverlay.AIR_LEVEL.id(), "regenerating_absorption", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
+            if (isEnabled(RegeneratingAbsorption.class) && gui.shouldDrawSurvivalElements() && gui.shouldDrawSurvivalElements())
+                renderAbsorption(guiGraphics, screenWidth, screenHeight);
+        });
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    protected static void renderAbsorption(GuiGraphics guiGraphics, int width, int height) {
+        Minecraft mc = Minecraft.getInstance();
+        ForgeGui gui = (ForgeGui) mc.gui;
+        mc.getProfiler().push("armor");
+
+        RenderSystem.enableBlend();
+        int left = width / 2 + 82;
+        int top = height - gui.rightHeight;
+
+        int level = Mth.ceil(mc.player.getPersistentData().getFloat(REGEN_ABSORPTION_TAG));
+        for (int i = 1; i <= level; i += 2)
+        {
+            if (i == level)
+                ClientUtils.blitVericallyMirrored(GUI_ICONS, guiGraphics, left, top, 9, 0, 9, 9, 18, 9);
+            else
+                guiGraphics.blit(GUI_ICONS, left, top, 0, 0, 9, 9, 18, 9);
+            //else
+                //guiGraphics.blit(GUI_ICONS, left, top, 0, 0, 0, 9, 256, 256);
+            if (i % 19 == 0) {
+                left = width / 2 + 82;
+                top -= 10;
+                gui.rightHeight += 10;
+            }
+            else
+                left -= 8;
         }
-        else {
-                double newAbsorption = Math.min(entity.getAbsorptionAmount() + regenSpeed, entity.getAttributeValue(ATTRIBUTE.get()) + absorptionEffect);
-            if (capToHealth)
-                newAbsorption = Math.min(newAbsorption, entity.getHealth() + absorptionEffect);
-            entity.setAbsorptionAmount((float) newAbsorption);
-        }
+        if (level > 0)
+            gui.rightHeight += 10;
+
+        RenderSystem.disableBlend();
+        mc.getProfiler().pop();
     }
 
     @SubscribeEvent
@@ -115,10 +163,27 @@ public class RegeneratingAbsorption extends Feature {
             return;
 
         double absorptionSpeed = event.getEntity().getAttributeValue(SPEED_ATTRIBUTE.get());
-        event.getEntity().getPersistentData().putInt(HURT_COOLDOWN, unDamagedTimeToRegen - (int)(absorptionSpeed * unDamagedTimeToRegen));
+        event.getEntity().getPersistentData().putInt(HURT_COOLDOWN_TAG, unDamagedTimeToRegen - (int)(absorptionSpeed * unDamagedTimeToRegen));
     }
 
-    public static boolean damageTypeTagOnly() {
-        return isEnabled(RegeneratingAbsorption.class) && absorbingDamageTypeTagOnly;
+    @SubscribeEvent
+    public void onLivingHurtPreAbsorption(LivingHurtPreAbsorptionEvent event) {
+        if (!this.isEnabled()
+                || !canDamageAbsorption(event.getSource()))
+            return;
+
+        float currentAbsorption = event.getEntity().getPersistentData().getFloat(REGEN_ABSORPTION_TAG);
+        float toRemove = Math.min(currentAbsorption, event.getAmount());
+        currentAbsorption -= toRemove;
+        event.setAmount(event.getAmount() - toRemove);
+        event.getEntity().getPersistentData().putFloat(REGEN_ABSORPTION_TAG, currentAbsorption);
+        if (event.getEntity() instanceof ServerPlayer player)
+            RegenAbsorptionSync.sync(player, currentAbsorption);
+    }
+
+    public static boolean canDamageAbsorption(DamageSource source) {
+        if (!absorbingDamageTypeTagOnly)
+            return true;
+        return source.getEntity() != null && !source.is(DamageTypeTags.BYPASSES_ARMOR);
     }
 }

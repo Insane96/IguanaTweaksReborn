@@ -41,6 +41,7 @@ import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
 import org.apache.commons.lang3.StringUtils;
@@ -263,8 +264,9 @@ public class NoHunger extends Feature {
         }
     }
 
+    //Render before Regenerating absorption
     @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public void removeFoodBar(final RenderGuiOverlayEvent.Pre event) {
         if (this.isEnabled()) {
             if (event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type())) {

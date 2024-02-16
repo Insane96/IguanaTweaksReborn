@@ -1,10 +1,9 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
+import insane96mcp.iguanatweaksreborn.event.SREventFactory;
 import insane96mcp.iguanatweaksreborn.module.experience.PlayerExperience;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -56,11 +55,16 @@ public abstract class PlayerMixin extends LivingEntity {
 		return efficiency + EnchantmentsFeature.getEfficiencyBonus(efficiency, lvl);
 	}
 
-	@ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
+	/*@ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
 	private float onCalculateAbsorption(float f1, DamageSource damageSource, float amount) {
 		if (RegeneratingAbsorption.damageTypeTagOnly() && (damageSource.getEntity() == null || damageSource.is(DamageTypeTags.BYPASSES_ARMOR))) {
 			return amount;
 		}
 		return Math.max(amount - this.getAbsorptionAmount(), 0.0F);
+	}*/
+
+	@ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 2), argsOnly = true, ordinal = 0)
+	public float onPreAbsorptionCalculation(float amount, DamageSource damageSource) {
+		return SREventFactory.onLivingHurtPreAbsorption(this, damageSource, amount);
 	}
 }

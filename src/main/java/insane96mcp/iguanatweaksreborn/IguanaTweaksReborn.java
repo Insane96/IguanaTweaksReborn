@@ -88,6 +88,7 @@ public class IguanaTweaksReborn
         modEventBus.register(Stamina.class);
 		modEventBus.register(SpawnerData.class);
         modEventBus.register(Tiredness.class);
+        modEventBus.register(RegeneratingAbsorption.class);
         ITRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));
 
         ITRTriggers.init();

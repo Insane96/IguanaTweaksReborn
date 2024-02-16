@@ -15,7 +15,6 @@ import insane96mcp.insanelib.event.PlayerSprintEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -168,8 +167,6 @@ public class Stamina extends Feature {
         consumed += (consumed * percIncrease);
         StaminaHandler.consumeStamina(player, consumed);
     }
-
-    static ResourceLocation PLAYER_HEALTH_ELEMENT = new ResourceLocation("minecraft", "player_health");
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
