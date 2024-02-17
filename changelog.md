@@ -5,6 +5,7 @@
   * A data pack is included that adds the same multiplier as before
 * Regenerating absorption no longer uses vanilla absorption
   * Instead, a new shield like icons will appear above the XP bar
+* Lower saturation foods now instantly heal the full amount instead of having an over time amount
 * Fixed wandering traders crashing when disabled
 
 ## 3.1.13
