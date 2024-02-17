@@ -24,8 +24,8 @@ public class ItemStatisticsSync {
 
     public static void encode(ItemStatisticsSync pkt, FriendlyByteBuf buf) {
         buf.writeInt(pkt.count);
-        for (ItemStatistics anvilRepair : pkt.itemStatistics) {
-            anvilRepair.toNetwork(buf);
+        for (ItemStatistics itemStat : pkt.itemStatistics) {
+            itemStat.toNetwork(buf);
         }
     }
 

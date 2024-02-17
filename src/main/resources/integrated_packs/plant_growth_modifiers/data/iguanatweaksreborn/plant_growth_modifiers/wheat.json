@@ -1,0 +1,36 @@
+{
+    "block": "minecraft:wheat",
+    "modifiers": [
+        {
+            "id": "iguanatweaksreborn:sunlight",
+            "min_sunlight": 10,
+            "multiplier": 20
+        },
+        {
+            "id": "iguanatweaksreborn:night_time",
+            "multiplier": 2
+        },
+        {
+            "id": "iguanatweaksreborn:correct_biome",
+            "biomes": [
+                "minecraft:plains"
+            ],
+            "multiplier": 0
+        },
+        {
+            "id": "iguanatweaksreborn:wrong_biome",
+            "biomes": [
+                "minecraft:the_end"
+            ],
+            "multiplier": 0
+        },
+        {
+            "id": "iguanatweaksexpanded:season",
+            "seasons": [
+                "AUTUMN",
+                "WINTER"
+            ],
+            "multiplier": 0
+        }
+    ]
+}

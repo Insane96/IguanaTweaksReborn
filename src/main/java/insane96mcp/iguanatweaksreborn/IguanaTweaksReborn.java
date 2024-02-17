@@ -13,6 +13,7 @@ import insane96mcp.iguanatweaksreborn.data.generator.client.ITRItemModelsProvide
 import insane96mcp.iguanatweaksreborn.module.combat.PiercingPickaxes;
 import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
+import insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth.PlantsGrowthReloadListener;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.module.movement.stamina.Stamina;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
@@ -105,6 +106,7 @@ public class IguanaTweaksReborn
     public void onAddReloadListener(AddReloadListenerEvent event) {
         event.addListener(AnvilRepairReloadListener.INSTANCE);
         event.addListener(ItemStatsReloadListener.INSTANCE);
+        event.addListener(PlantsGrowthReloadListener.INSTANCE);
     }
 
     @SubscribeEvent
