@@ -6,6 +6,7 @@
 * Regenerating absorption no longer uses vanilla absorption
   * Instead, a new shield like icons will appear above the XP bar
 * Lower saturation foods now instantly heal the full amount instead of having an over time amount
+* Nether wart no longer grows in the overworld
 * Fixed wandering traders crashing when disabled
 
 ## 3.1.13

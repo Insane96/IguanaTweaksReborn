@@ -27,7 +27,7 @@ public class PlantsGrowth extends Feature {
 	public static Boolean hugeMushroomsOnMyceliumOnly = true;
 
 	@Config
-	@Label(name = "Plant growth mulitpliers data pack", description = "If true, a data pack is enabled that changes the growth of plants based off various factors, such as sunlight and biome")
+	@Label(name = "Plant growth multipliers data pack", description = "If true, a data pack is enabled that changes the growth of plants based off various factors, such as sunlight and biome")
 	public static Boolean plantGrowthMultipliersDataPack = true;
 
 	public PlantsGrowth(Module module, boolean enabledByDefault, boolean canBeDisabled) {

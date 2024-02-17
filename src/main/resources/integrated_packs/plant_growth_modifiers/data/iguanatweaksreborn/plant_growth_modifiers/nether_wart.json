@@ -7,7 +7,7 @@
             "biomes": [
                 "#forge:is_nether"
             ],
-            "multiplier": 3
+            "multiplier": 0
         }
     ]
 }
