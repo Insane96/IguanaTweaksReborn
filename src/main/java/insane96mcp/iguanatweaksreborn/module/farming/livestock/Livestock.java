@@ -105,7 +105,7 @@ public class Livestock extends JsonFeature {
 		JSON_CONFIGS.add(new JsonConfig<>("sheep_wool_regrowth_chance.json", sheepWoolRegrowthChance, SHEEP_WOOL_REGROWTH_CHANCE, LivestockData.LIST_TYPE));
 		JSON_CONFIGS.add(new JsonConfig<>("breeding_fail_chance.json", breedingFailChance, BREEDING_FAIL_CHANCE_DEFAULT, LivestockData.LIST_TYPE));
 
-		IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "livestock_loot_changes", Component.literal("IguanaTweaks Reborn Livestock Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lootDataPack));
+		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "livestock_loot_changes", Component.literal("IguanaTweaks Reborn Livestock Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lootDataPack));
 	}
 
 	@Override

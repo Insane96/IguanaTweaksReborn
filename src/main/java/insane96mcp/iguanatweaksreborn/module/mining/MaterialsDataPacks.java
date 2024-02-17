@@ -37,9 +37,9 @@ public class MaterialsDataPacks extends Feature {
 
 	public MaterialsDataPacks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "farmable_iron", Component.literal("IguanaTweaks Reborn Farmable Iron"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && farmableIronDataPack));
-		IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "ore_smelting", Component.literal("IguanaTweaks Reborn Ore Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && oreSmelting));
-		IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "coal_generation", Component.literal("IguanaTweaks Reborn Coal Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && differentCoalGeneration));
-		IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "diamond_generation", Component.literal("IguanaTweaks Reborn Diamond Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && backportDiamondGen));
+		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "farmable_iron", Component.literal("IguanaTweaks Reborn Farmable Iron"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && farmableIronDataPack));
+		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "ore_smelting", Component.literal("IguanaTweaks Reborn Ore Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && oreSmelting));
+		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "coal_generation", Component.literal("IguanaTweaks Reborn Coal Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && differentCoalGeneration));
+		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "diamond_generation", Component.literal("IguanaTweaks Reborn Diamond Generation"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && backportDiamondGen));
 	}
 }

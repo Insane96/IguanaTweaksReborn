@@ -44,7 +44,7 @@ public class BerryBushes extends Feature {
 
     public BerryBushes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "berries", Component.literal("IguanaTweaks Reborn Berries"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "berries", Component.literal("IguanaTweaks Reborn Berries"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
     }
 
     @SubscribeEvent

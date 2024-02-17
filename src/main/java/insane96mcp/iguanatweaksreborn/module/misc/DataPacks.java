@@ -75,16 +75,16 @@ public class DataPacks extends Feature {
 
     public DataPacks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "hardcore_torches", Component.literal("IguanaTweaks Reborn Hardcore Torches"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && hardcoreTorches));
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "cheaper_chains", Component.literal("IguanaTweaks Reborn Cheaper Chains"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cheaperChains));
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "misc_tweaks", Component.literal("IguanaTweaks Reborn Misc Tweaks"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && miscTweaks));
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "actual_redstone_components", Component.literal("IguanaTweaks Reborn Actual Redstone components"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && actualRedstoneComponents));
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "copper_furnace", Component.literal("IguanaTweaks Reborn Copper Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperFurnace));
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "disable_long_noses", Component.literal("IguanaTweaks Reborn Disable Long Noses"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableLongNoses));
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "fishing_loot_changes", Component.literal("IguanaTweaks Reborn Fishing Loot Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && fishingLootChanges));
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "increased_end_cities", Component.literal("IguanaTweaks Reborn Increased End Cities"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && increaseEndCities));
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "better_loot", Component.literal("IguanaTweaks Reborn Better Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && betterStructureLoot));
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "hardcore_loot", Component.literal("IguanaTweaks Reborn Less Loot Closer to Spawn"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lessLootCloserToSpawn));
-        IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "mob_loot_changes", Component.literal("IguanaTweaks Reborn Mob Loot Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && mobLootChanges));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "hardcore_torches", Component.literal("IguanaTweaks Reborn Hardcore Torches"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && hardcoreTorches));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "cheaper_chains", Component.literal("IguanaTweaks Reborn Cheaper Chains"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && cheaperChains));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "misc_tweaks", Component.literal("IguanaTweaks Reborn Misc Tweaks"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && miscTweaks));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "actual_redstone_components", Component.literal("IguanaTweaks Reborn Actual Redstone components"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && actualRedstoneComponents));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "copper_furnace", Component.literal("IguanaTweaks Reborn Copper Furnace"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && copperFurnace));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "disable_long_noses", Component.literal("IguanaTweaks Reborn Disable Long Noses"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && disableLongNoses));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "fishing_loot_changes", Component.literal("IguanaTweaks Reborn Fishing Loot Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && fishingLootChanges));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "increased_end_cities", Component.literal("IguanaTweaks Reborn Increased End Cities"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && increaseEndCities));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "better_loot", Component.literal("IguanaTweaks Reborn Better Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && betterStructureLoot));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "hardcore_loot", Component.literal("IguanaTweaks Reborn Less Loot Closer to Spawn"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lessLootCloserToSpawn));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "mob_loot_changes", Component.literal("IguanaTweaks Reborn Mob Loot Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && mobLootChanges));
     }
 }
