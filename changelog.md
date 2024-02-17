@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Added Chicken from egg chance
 * Plants Growth multipliers have been moved to data packs
   * A data pack is included that adds the same multiplier as before
 * Regenerating absorption no longer uses vanilla absorption

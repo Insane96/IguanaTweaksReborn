@@ -87,10 +87,9 @@ public class Livestock extends JsonFeature {
 
 	public static final ArrayList<LivestockData> breedingFailChance = new ArrayList<>();
 
-	//TODO
-	/*@Config
+	@Config
 	@Label(name = "Chicken from egg chance", description = "Changes the chance for a chicken to come out from an egg (1 in this value). Vanilla is 8")
-	public static Integer chickenFromEggChance = 4;*/
+	public static Integer chickenFromEggChance = 8;
 
 	@Config
 	@Label(name = "Loot DataPack", description = "Enables a data pack that changes food drops")
