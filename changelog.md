@@ -3,6 +3,7 @@
 ## Upcoming
 * Regenerating absorption no longer uses vanilla absorption
   * Instead, a new shield like icons will appear above the XP bar
+* Fixed wandering traders crashing when disabled
 
 ## 3.1.13
 * I hate client-server stuff
