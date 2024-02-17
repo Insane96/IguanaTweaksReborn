@@ -9,6 +9,7 @@
 * Lower saturation foods now instantly heal the full amount instead of having an over time amount
 * Nether wart no longer grows in the overworld
 * Fixed wandering traders crashing when disabled
+* Fixed cows milk cooldown not synced to clients
 
 ## 3.1.13
 * I hate client-server stuff

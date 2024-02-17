@@ -104,7 +104,7 @@ public class Livestock extends JsonFeature {
 		JSON_CONFIGS.add(new JsonConfig<>("sheep_wool_regrowth_chance.json", sheepWoolRegrowthChance, SHEEP_WOOL_REGROWTH_CHANCE, LivestockData.LIST_TYPE));
 		JSON_CONFIGS.add(new JsonConfig<>("breeding_fail_chance.json", breedingFailChance, BREEDING_FAIL_CHANCE_DEFAULT, LivestockData.LIST_TYPE));
 
-		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "livestock_loot_changes", Component.literal("IguanaTweaks Reborn Livestock Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lootDataPack));
+		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "livestock_changes", Component.literal("IguanaTweaks Reborn Livestock Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lootDataPack));
 	}
 
 	@Override
@@ -234,16 +234,6 @@ public class Livestock extends JsonFeature {
 				|| animal.getAge() < 0)
 			return;
 
-		int cooldown = 0;
-		for (LivestockData data : cowMilkCooldown){
-			if (data.matches(animal)) {
-				cooldown = (int) data.value;
-				break;
-			}
-		}
-		if (cooldown == 0)
-			return;
-
 		Player player = event.getEntity();
 		InteractionHand hand = event.getHand();
 		ItemStack equipped = player.getItemInHand(hand);
@@ -265,9 +255,43 @@ public class Livestock extends JsonFeature {
 				event.setCancellationResult(InteractionResult.SUCCESS);
 		}
 		else {
+			int cooldown = 0;
+			for (LivestockData data : cowMilkCooldown) {
+				if (data.matches(animal)) {
+					cooldown = (int) data.value;
+					break;
+				}
+			}
+			if (cooldown == 0)
+				return;
 			milkCooldown = cooldown * 20;
 			cowNBT.putInt(MILK_COOLDOWN, milkCooldown);
-			player.swing(event.getHand());
+			if (!animal.level().isClientSide)
+				ForgeDataIntSync.sync(animal, MILK_COOLDOWN, milkCooldown);
+			//player.swing(event.getHand());
+		}
+	}
+
+	@SubscribeEvent
+	public void onEntityLoad(EntityJoinLevelEvent event) {
+		if (!this.isEnabled()
+				|| event.getLevel().isClientSide
+				|| !(event.getEntity() instanceof LivingEntity livingEntity)
+				|| !livingEntity.getPersistentData().contains(MILK_COOLDOWN))
+			return;
+
+		ForgeDataIntSync.sync(livingEntity, MILK_COOLDOWN, livingEntity.getPersistentData().getInt(MILK_COOLDOWN));
+	}
+
+	@SubscribeEvent
+	public void onPlayerJoinWorld(PlayerEvent.PlayerLoggedInEvent event) {
+		if (!this.isEnabled()
+				|| event.getEntity().level().isClientSide)
+			return;
+
+		for (Entity entity : ((ServerLevel) event.getEntity().level()).getEntities().getAll()) {
+			if (entity instanceof LivingEntity livingEntity && livingEntity.getPersistentData().contains(MILK_COOLDOWN))
+				ForgeDataIntSync.sync((ServerPlayer) event.getEntity(), livingEntity, MILK_COOLDOWN, livingEntity.getPersistentData().getInt(MILK_COOLDOWN));
 		}
 	}
 
