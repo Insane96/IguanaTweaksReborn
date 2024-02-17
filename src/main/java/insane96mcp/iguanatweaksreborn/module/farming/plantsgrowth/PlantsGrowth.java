@@ -1,10 +1,9 @@
 package insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth;
 
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
 import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
-import insane96mcp.insanelib.base.JsonFeature;
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -22,7 +21,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Plants Growth", description = "Slower Plants (non-crops) growing. Plants properties are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class PlantsGrowth extends JsonFeature {
+public class PlantsGrowth extends Feature {
 	@Config
 	@Label(name = "Huge mushrooms on Mycelium only")
 	public static Boolean hugeMushroomsOnMyceliumOnly = true;
@@ -34,18 +33,6 @@ public class PlantsGrowth extends JsonFeature {
 	public PlantsGrowth(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "plant_growth_modifiers", Component.literal("IguanaTweaks Reborn Plant Growth modifiers"), () -> super.isEnabled() && !DataPacks.disableAllDataPacks && plantGrowthMultipliersDataPack));
-	}
-
-	@Override
-	public String getModConfigFolder() {
-		return IguanaTweaksReborn.CONFIG_FOLDER;
-	}
-
-	@Override
-	public void loadJsonConfigs() {
-		if (!this.isEnabled())
-			return;
-		super.loadJsonConfigs();
 	}
 
 	@SubscribeEvent
