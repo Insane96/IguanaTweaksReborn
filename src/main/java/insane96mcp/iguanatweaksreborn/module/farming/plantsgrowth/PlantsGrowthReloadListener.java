@@ -5,15 +5,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.network.message.PlantGrowthMultiplierSync;
 import insane96mcp.iguanatweaksreborn.utils.ITRLogHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
-import net.minecraftforge.event.OnDatapackSyncEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +54,7 @@ public class PlantsGrowthReloadListener extends SimpleJsonResourceReloadListener
 		ITRLogHelper.info("Loaded %s Plant Growth Multipliers", GROWTH_MULTIPLIERS.size());
 	}
 
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public static void onDataPackSync(OnDatapackSyncEvent event) {
 		if (event.getPlayer() == null) {
 			event.getPlayerList().getPlayers().forEach(player -> PlantGrowthMultiplierSync.sync(GROWTH_MULTIPLIERS, player));
@@ -64,19 +62,10 @@ public class PlantsGrowthReloadListener extends SimpleJsonResourceReloadListener
 		else {
 			PlantGrowthMultiplierSync.sync(GROWTH_MULTIPLIERS, event.getPlayer());
 		}
-	}
-
-	/*@SubscribeEvent
-	public static void onTagsUpdatedEvent(TagsUpdatedEvent event) {
-		if (event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED) {
-			for (PlantGrowthModifier itemStatistics : PlantsGrowthReloadListener.STATS) {
-				itemStatistics.applyStats(true);
-			}
-		}
 	}*/
 
 	@Override
-	public String getName() {
+	public @NotNull String getName() {
 		return "Plants Growth Reload Listener";
 	}
 }

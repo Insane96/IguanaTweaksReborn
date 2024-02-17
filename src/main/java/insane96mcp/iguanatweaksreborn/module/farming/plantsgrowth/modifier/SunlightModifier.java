@@ -25,19 +25,11 @@ public class SunlightModifier extends PlantGrowthModifier {
         return 1f;
     }
 
-    public static class Serializer implements JsonDeserializer<SunlightModifier>, JsonSerializer<SunlightModifier> {
+    public static class Serializer implements JsonDeserializer<SunlightModifier> {
         @Override
         public SunlightModifier deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jObject = json.getAsJsonObject();
             return new SunlightModifier(GsonHelper.getAsFloat(jObject, "multiplier"), GsonHelper.getAsInt(jObject, "min_sunlight"));
-        }
-
-        @Override
-        public JsonElement serialize(SunlightModifier src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
-            JsonObject jObject = new JsonObject();
-            jObject.addProperty("multiplier", src.multiplier);
-            jObject.addProperty("min_sunlight", src.minSunlight);
-            return jObject;
         }
     }
 }

@@ -1,0 +1,18 @@
+{
+    "block": "minecraft:cocoa",
+    "growth_multiplier": 3,
+    "modifiers": [
+        {
+            "id": "iguanatweaksreborn:sunlight",
+            "min_sunlight": 10,
+            "multiplier": 2.5
+        },
+        {
+            "id": "iguanatweaksreborn:correct_biome",
+            "biomes": [
+                "#forge:is_hot"
+            ],
+            "multiplier": 3
+        }
+    ]
+}

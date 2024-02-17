@@ -1,0 +1,22 @@
+{
+    "block": "minecraft:bamboo",
+    "growth_multiplier": 2,
+    "modifiers": [
+        {
+            "id": "iguanatweaksreborn:sunlight",
+            "min_sunlight": 10,
+            "multiplier": 2.5
+        },
+        {
+            "id": "iguanatweaksreborn:night_time",
+            "multiplier": 1.25
+        },
+        {
+            "id": "iguanatweaksreborn:correct_biome",
+            "biomes": [
+                "#forge:is_wet"
+            ],
+            "multiplier": 3
+        }
+    ]
+}

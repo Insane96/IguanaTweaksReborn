@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Plants Growth multipliers have been moved to data packs
+  * A data pack is included that adds the same multiplier as before
 * Regenerating absorption no longer uses vanilla absorption
   * Instead, a new shield like icons will appear above the XP bar
 * Fixed wandering traders crashing when disabled

@@ -1,0 +1,17 @@
+{
+    "block": "minecraft:cactus",
+    "modifiers": [
+        {
+            "id": "iguanatweaksreborn:sunlight",
+            "min_sunlight": 10,
+            "multiplier": 1.5
+        },
+        {
+            "id": "iguanatweaksreborn:correct_biome",
+            "biomes": [
+                "#forge:is_hot"
+            ],
+            "multiplier": 3
+        }
+    ]
+}

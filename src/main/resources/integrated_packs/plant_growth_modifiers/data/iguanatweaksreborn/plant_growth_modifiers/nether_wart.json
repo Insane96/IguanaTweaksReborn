@@ -1,0 +1,13 @@
+{
+    "block": "minecraft:nether_wart",
+    "growth_multiplier": 2,
+    "modifiers": [
+        {
+            "id": "iguanatweaksreborn:correct_biome",
+            "biomes": [
+                "#forge:is_nether"
+            ],
+            "multiplier": 3
+        }
+    ]
+}

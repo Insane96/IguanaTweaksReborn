@@ -1,0 +1,22 @@
+{
+    "block": "minecraft:sweet_berry_bush",
+    "growth_multiplier": 2,
+    "modifiers": [
+        {
+            "id": "iguanatweaksreborn:sunlight",
+            "min_sunlight": 10,
+            "multiplier": 2
+        },
+        {
+            "id": "iguanatweaksreborn:night_time",
+            "multiplier": 1.5
+        },
+        {
+            "id": "iguanatweaksreborn:wrong_biome",
+            "biomes": [
+                "#forge:is_taiga"
+            ],
+            "multiplier": 3
+        }
+    ]
+}

@@ -13,6 +13,7 @@ import insane96mcp.iguanatweaksreborn.data.generator.client.ITRItemModelsProvide
 import insane96mcp.iguanatweaksreborn.module.combat.PiercingPickaxes;
 import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
+import insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth.PlantGrowthModifiers;
 import insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth.PlantsGrowthReloadListener;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.module.movement.stamina.Stamina;
@@ -116,6 +117,7 @@ public class IguanaTweaksReborn
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         NetworkHandler.init();
+        PlantGrowthModifiers.init();
 
         /*event.enqueueWork(() -> {
             DispenserBlock.registerBehavior(Fletching.QUARTZ_ARROW_ITEM.get(), new SRArrowDispenseBehaviour());
