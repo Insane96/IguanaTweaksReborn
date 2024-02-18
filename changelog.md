@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.2.0
 * Added Chicken from egg chance
 * Added Player no damage when spamming
 * Plants Growth multipliers and Livestock data have been moved to data packs
