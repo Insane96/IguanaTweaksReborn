@@ -137,15 +137,15 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 		public ItemStatistics deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 			JsonObject jObject = json.getAsJsonObject();
 			IdTagMatcher item = context.deserialize(jObject.get("item"), IdTagMatcher.class);
-			Integer maxStackSize = ITRGsonHelper.getAsInt(jObject, "max_stack");
-			Integer durability = ITRGsonHelper.getAsInt(jObject, "durability");
-			Double efficiency = ITRGsonHelper.getAsDouble(jObject, "efficiency");
-			Integer enchantability = ITRGsonHelper.getAsInt(jObject, "enchantability");
-			Double baseAttackDamage = ITRGsonHelper.getAsDouble(jObject, "attack_damage");
-			Double baseAttackSpeed = ITRGsonHelper.getAsDouble(jObject, "attack_speed");
-			Double baseArmor = ITRGsonHelper.getAsDouble(jObject, "armor");
-			Double baseToughness = ITRGsonHelper.getAsDouble(jObject, "armor_toughness");
-			Double baseKnockbackResistance = ITRGsonHelper.getAsDouble(jObject, "knockback_resistance");
+			Integer maxStackSize = ITRGsonHelper.getAsNullableInt(jObject, "max_stack");
+			Integer durability = ITRGsonHelper.getAsNullableInt(jObject, "durability");
+			Double efficiency = ITRGsonHelper.getAsNullableDouble(jObject, "efficiency");
+			Integer enchantability = ITRGsonHelper.getAsNullableInt(jObject, "enchantability");
+			Double baseAttackDamage = ITRGsonHelper.getAsNullableDouble(jObject, "attack_damage");
+			Double baseAttackSpeed = ITRGsonHelper.getAsNullableDouble(jObject, "attack_speed");
+			Double baseArmor = ITRGsonHelper.getAsNullableDouble(jObject, "armor");
+			Double baseToughness = ITRGsonHelper.getAsNullableDouble(jObject, "armor_toughness");
+			Double baseKnockbackResistance = ITRGsonHelper.getAsNullableDouble(jObject, "knockback_resistance");
 			List<SerializableAttributeModifer> modifiers = null;
 			if (jObject.has("modifiers"))
 				modifiers = context.deserialize(jObject.get("modifiers"), SerializableAttributeModifer.LIST_TYPE);

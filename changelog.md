@@ -2,7 +2,7 @@
 
 ## Upcoming
 * Added Chicken from egg chance
-* Plants Growth multipliers have been moved to data packs
+* Plants Growth multipliers and Livestock data have been moved to data packs
   * A data pack is included that adds the same multiplier as before
 * Regenerating absorption no longer uses vanilla absorption
   * Instead, a new shield like icons will appear above the XP bar

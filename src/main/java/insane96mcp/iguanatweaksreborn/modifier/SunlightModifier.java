@@ -1,16 +1,14 @@
-package insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth.modifier;
+package insane96mcp.iguanatweaksreborn.modifier;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
-import insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth.PlantGrowthModifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.block.state.BlockState;
 
 @JsonAdapter(SunlightModifier.Serializer.class)
-public class SunlightModifier extends PlantGrowthModifier {
+public class SunlightModifier extends Modifier {
     int minSunlight;
     protected SunlightModifier(float multiplier, int minSunlight) {
         super(multiplier);
@@ -18,7 +16,7 @@ public class SunlightModifier extends PlantGrowthModifier {
     }
 
     @Override
-    public float getMultiplier(BlockState state, Level level, BlockPos pos) {
+    public float getMultiplier(Level level, BlockPos pos) {
         int skyLight = level.getBrightness(LightLayer.SKY, pos);
         if (skyLight < this.minSunlight)
             return this.multiplier;

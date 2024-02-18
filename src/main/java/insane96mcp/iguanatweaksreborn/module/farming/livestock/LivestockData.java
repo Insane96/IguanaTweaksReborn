@@ -3,63 +3,60 @@ package insane96mcp.iguanatweaksreborn.module.farming.livestock;
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
-import insane96mcp.iguanatweaksreborn.integration.SereneSeasons;
+import insane96mcp.iguanatweaksreborn.modifier.Modifier;
 import insane96mcp.insanelib.data.IdTagMatcher;
-import insane96mcp.insanelib.data.IdTagValue;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.fml.ModList;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @JsonAdapter(LivestockData.Serializer.class)
-public class LivestockData extends IdTagValue {
-	@Nullable
-	private final Object season;
+public class LivestockData {
+	final IdTagMatcher entity;
+	final List<Modifier> growthSpeed;
+	final List<Modifier> breedingCooldown;
+	final List<Modifier> eggLayCooldown;
+	final float beedingFailChance;
+	final List<Modifier> beedingFailChanceModifiers;
+	final int cowFluidCooldown;
+	final List<Modifier> cowFluidCooldownModifiers;
+	final float sheepWoolGrowthChance;
+	final List<Modifier> sheepWoolGrowthChanceModifiers;
 
-	public LivestockData(IdTagMatcher idTagMatcher, double value) {
-		this(idTagMatcher, value, null);
-	}
-
-	public LivestockData(IdTagMatcher idTagMatcher, double value, @Nullable Object season) {
-		super(idTagMatcher, value);
-		this.season = season;
-	}
+    public LivestockData(IdTagMatcher entity, List<Modifier> growthSpeed, List<Modifier> breedingCooldown, List<Modifier> eggLayCooldown, float beedingFailChance, List<Modifier> beedingFailChanceModifiers, int cowFluidCooldown, List<Modifier> cowFluidCooldownModifiers, float sheepWoolGrowthChance, List<Modifier> sheepWoolGrowthChanceModifiers) {
+        this.entity = entity;
+        this.growthSpeed = growthSpeed;
+        this.breedingCooldown = breedingCooldown;
+        this.eggLayCooldown = eggLayCooldown;
+        this.beedingFailChance = beedingFailChance;
+        this.beedingFailChanceModifiers = beedingFailChanceModifiers;
+        this.cowFluidCooldown = cowFluidCooldown;
+        this.cowFluidCooldownModifiers = cowFluidCooldownModifiers;
+        this.sheepWoolGrowthChance = sheepWoolGrowthChance;
+        this.sheepWoolGrowthChanceModifiers = sheepWoolGrowthChanceModifiers;
+    }
 
 	public boolean matches(Entity entity) {
-		if (this.season != null && !SereneSeasons.doesSeasonMatch(this.season, entity.level()))
-			return false;
-		return this.id.matchesEntity(entity);
+		return this.entity.matchesEntity(entity);
 	}
 
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<LivestockData>>(){}.getType();
-
-	public static class Serializer implements JsonDeserializer<LivestockData>, JsonSerializer<LivestockData> {
+    public static class Serializer implements JsonDeserializer<LivestockData> {
 		@Override
 		public LivestockData deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 			JsonObject jObject = json.getAsJsonObject();
-			IdTagMatcher idTagMatcher = context.deserialize(jObject.get("entity"), IdTagMatcher.class);
-			Object season = null;
-			if (jObject.has("season")) {
-				if (!ModList.get().isLoaded("sereneseasons"))
-					throw new JsonParseException("Tried deserializing Livestock Data `season` but Serene Season is not installed");
-				season = SereneSeasons.deserializeSeason(jObject, "season");
-			}
-			return new LivestockData(idTagMatcher, GsonHelper.getAsDouble(jObject, "value"), season);
-		}
-
-		@Override
-		public JsonElement serialize(LivestockData src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
-			JsonObject jsonObject = new JsonObject();
-			jsonObject.add("entity", context.serialize(src.id));
-			jsonObject.addProperty("value", src.value);
-			if (src.season != null) {
-				if (!ModList.get().isLoaded("sereneseasons"))
-					throw new JsonParseException("Tried serializing Livestock Data `season` but Serene Season is not installed");
-				jsonObject.addProperty("season", SereneSeasons.serializeSeason(src.season));
-			}
-			return jsonObject;
+			IdTagMatcher entity = context.deserialize(jObject.get("entity"), IdTagMatcher.class);
+			List<Modifier> growthSpeed = Modifier.getListFromJson(jObject, "growth_speed", context);
+			List<Modifier> breedingCooldown = Modifier.getListFromJson(jObject, "breeding_cooldown", context);
+			List<Modifier> eggLayCooldown = Modifier.getListFromJson(jObject, "egg_lay_cooldown", context);
+			float breedingFailChance = GsonHelper.getAsFloat(jObject, "breeding_fail_chance", 0f);
+			List<Modifier> breedingFailChanceModifiers = Modifier.getListFromJson(jObject, "breeding_fail_chance_modifiers", context);
+			int cowFluidCooldown = GsonHelper.getAsInt(jObject, "cow_fluid_cooldown", 0);
+			List<Modifier> cowFluidCooldownModifiers = Modifier.getListFromJson(jObject, "cow_fluid_cooldown_modifiers", context);
+			float sheepWoolGrowthChance = GsonHelper.getAsFloat(jObject, "sheep_wool_growth_chance", 1f);
+			List<Modifier> sheepWoolGrowthChanceModifiers = Modifier.getListFromJson(jObject, "sheep_wool_growth_chance_modifiers", context);
+			return new LivestockData(entity, growthSpeed, breedingCooldown, eggLayCooldown, breedingFailChance, breedingFailChanceModifiers, cowFluidCooldown, cowFluidCooldownModifiers, sheepWoolGrowthChance, sheepWoolGrowthChanceModifiers);
 		}
 	}
 }

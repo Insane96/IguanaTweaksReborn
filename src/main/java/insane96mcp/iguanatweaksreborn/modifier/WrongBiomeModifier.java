@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth.modifier;
+package insane96mcp.iguanatweaksreborn.modifier;
 
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
@@ -8,7 +8,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public class WrongBiomeModifier extends AbstractBiomeModifier {
     }
 
     @Override
-    public float getMultiplier(BlockState state, Level level, BlockPos pos) {
+    public float getMultiplier(Level level, BlockPos pos) {
         Holder<Biome> currentBiome = level.getBiome(pos);
         for (IdTagMatcher biome : this.biomes) {
             if (biome.matchesBiome(currentBiome))

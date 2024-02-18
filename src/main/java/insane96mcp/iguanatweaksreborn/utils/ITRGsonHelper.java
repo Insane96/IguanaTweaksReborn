@@ -10,7 +10,7 @@ public class ITRGsonHelper {
 	 * Wrapper of GsonHelper.getAsInt, but if there is no member returns null
 	 */
 	@Nullable
-	public static Integer getAsInt(JsonObject jObject, String memberName) {
+	public static Integer getAsNullableInt(JsonObject jObject, String memberName) {
 		if (!jObject.has(memberName))
 			return null;
 		return GsonHelper.getAsInt(jObject, memberName);
@@ -19,7 +19,7 @@ public class ITRGsonHelper {
 	 * Wrapper of GsonHelper.getAsDouble, but if there is no member returns null
 	 */
 	@Nullable
-	public static Double getAsDouble(JsonObject jObject, String memberName) {
+	public static Double getAsNullableDouble(JsonObject jObject, String memberName) {
 		if (!jObject.has(memberName))
 			return null;
 		return GsonHelper.getAsDouble(jObject, memberName);
@@ -28,7 +28,7 @@ public class ITRGsonHelper {
 	 * Wrapper of GsonHelper.getAsFloat, but if there is no member returns null
 	 */
 	@Nullable
-	public static Float getAsFloat(JsonObject jObject, String memberName) {
+	public static Float getAsNullableFloat(JsonObject jObject, String memberName) {
 		if (!jObject.has(memberName))
 			return null;
 		return GsonHelper.getAsFloat(jObject, memberName);
@@ -37,7 +37,7 @@ public class ITRGsonHelper {
 	 * Wrapper of GsonHelper.getAsBoolean, but if there is no member returns null
 	 */
 	@Nullable
-	public static Boolean getAsBoolean(JsonObject jObject, String memberName) {
+	public static Boolean getAsNullableBoolean(JsonObject jObject, String memberName) {
 		if (!jObject.has(memberName))
 			return null;
 		return GsonHelper.getAsBoolean(jObject, memberName);

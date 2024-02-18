@@ -1,0 +1,19 @@
+{
+    "entity": "#iguanatweaksreborn:breedable_animals",
+    "growth_speed": [
+        {
+            "id": "iguanatweaksreborn:global",
+            "multiplier": 3
+        }
+    ],
+    "breeding_cooldown": [
+        {
+            "id": "iguanatweaksreborn:global",
+            "multiplier": 3
+        }
+    ],
+    "breeding_fail_chance": 0.7,
+    "breeding_fail_chance_modifiers": [
+
+    ]
+}

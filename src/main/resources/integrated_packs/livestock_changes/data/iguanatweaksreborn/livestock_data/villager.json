@@ -1,0 +1,16 @@
+{
+    "entity": "minecraft:villager",
+    "growth_speed": [
+        {
+            "id": "iguanatweaksreborn:global",
+            "multiplier": 3
+        }
+    ],
+    "breeding_cooldown": [
+        {
+            "id": "iguanatweaksreborn:global",
+            "multiplier": 6
+        }
+    ],
+    "breeding_fail_chance": 0.7
+}

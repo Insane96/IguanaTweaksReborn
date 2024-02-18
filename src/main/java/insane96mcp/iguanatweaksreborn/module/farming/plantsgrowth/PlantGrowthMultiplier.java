@@ -3,14 +3,13 @@ package insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth;
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
+import insane96mcp.iguanatweaksreborn.modifier.Modifier;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +17,9 @@ import java.util.List;
 public class PlantGrowthMultiplier {
 	public final IdTagMatcher block;
 	private final float growthMultiplier;
-	protected final List<PlantGrowthModifier> modifiers = new ArrayList<>();
+	protected final List<Modifier> modifiers = new ArrayList<>();
 
-	private PlantGrowthMultiplier(IdTagMatcher block, float growthMultiplier, List<PlantGrowthModifier> modifiers) {
+	private PlantGrowthMultiplier(IdTagMatcher block, float growthMultiplier, List<Modifier> modifiers) {
 		this.block = block;
 		this.growthMultiplier = growthMultiplier;
 		this.modifiers.addAll(modifiers);
@@ -35,8 +34,8 @@ public class PlantGrowthMultiplier {
 		if (!this.block.matchesBlock(state))
 			return 1f;
 		float multiplier = this.growthMultiplier;
-		for (PlantGrowthModifier modifier : this.modifiers) {
-			multiplier *= modifier.getMultiplier(state, level, pos);
+		for (Modifier modifier : this.modifiers) {
+			multiplier *= modifier.getMultiplier(level, pos);
 		}
 		return multiplier;
 	}
@@ -50,18 +49,7 @@ public class PlantGrowthMultiplier {
 			IdTagMatcher block = context.deserialize(jObject.get("block"), IdTagMatcher.class);
 			float multiplier = GsonHelper.getAsFloat(jObject, "growth_multiplier", 1f);
 
-			List<PlantGrowthModifier> modifiers = new ArrayList<>();
-			JsonArray aModifiers = GsonHelper.getAsJsonArray(jObject, "modifiers", null);
-			if (aModifiers != null) {
-				for (JsonElement jsonElement : aModifiers) {
-					JsonObject jObjectModifier = jsonElement.getAsJsonObject();
-					ResourceLocation modifierId = ResourceLocation.tryParse(GsonHelper.getAsString(jObjectModifier, "id"));
-					Type modifierType = PlantGrowthModifiers.MODIFIERS.get(modifierId);
-					if (modifierType == null)
-						throw new JsonParseException("modifier %s does not exist".formatted(modifierId));
-					modifiers.add(context.deserialize(jObjectModifier, modifierType));
-				}
-			}
+			List<Modifier> modifiers = Modifier.getListFromJson(jObject, "modifiers", context);
 
 			return new PlantGrowthMultiplier(block, multiplier, modifiers);
 		}

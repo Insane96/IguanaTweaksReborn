@@ -1,23 +1,28 @@
 package insane96mcp.iguanatweaksreborn.module.farming.livestock;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.modifier.Modifier;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
+import insane96mcp.iguanatweaksreborn.network.message.ForgeDataIntSync;
 import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
-import insane96mcp.insanelib.base.JsonFeature;
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.data.IdTagMatcher;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
@@ -30,62 +35,18 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Label(name = "Livestock", description = "Slower breeding, Growing, Egging and Milking. Lower yield.")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class Livestock extends JsonFeature {
+public class Livestock extends Feature {
 
 	public static final String MILK_COOLDOWN_LANG = IguanaTweaksReborn.MOD_ID + ".milk_cooldown";
 	public static final String MILK_COOLDOWN = IguanaTweaksReborn.RESOURCE_PREFIX + "milk_cooldown";
-
-	public static final ArrayList<LivestockData> GROWTH_SLOWNDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.newTag(IguanaTweaksReborn.RESOURCE_PREFIX + "breedable_animals"), 3.0d),
-
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 3.0d, "AUTUMN")
-	));
-
-	public static final ArrayList<LivestockData> growthSlowdown = new ArrayList<>();
-
-	public static final ArrayList<LivestockData> BREEDING_COOLDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.newTag(IguanaTweaksReborn.RESOURCE_PREFIX + "breedable_animals"), 3.0d),
-
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 6.0d)
-	));
-
-	public static final ArrayList<LivestockData> breedingCooldown = new ArrayList<>();
-
-	public static final ArrayList<LivestockData> EGG_LAY_SLOWDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.newTag(IguanaTweaksReborn.RESOURCE_PREFIX + "chickens"), 3.0d)
-	));
-
-	public static final ArrayList<LivestockData> eggLaySlowdown = new ArrayList<>();
-
-	public static final ArrayList<LivestockData> COW_MILK_COOLDOWN_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.newTag(IguanaTweaksReborn.RESOURCE_PREFIX + "cows"), 1800)
-	));
-
-	public static final ArrayList<LivestockData> cowMilkCooldown = new ArrayList<>();
-
-	public static final ArrayList<LivestockData> SHEEP_WOOL_REGROWTH_CHANCE = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.newId("minecraft:sheep"), 0.75d)
-	));
-
-	public static final ArrayList<LivestockData> sheepWoolRegrowthChance = new ArrayList<>();
-
-	public static final ArrayList<LivestockData> BREEDING_FAIL_CHANCE_DEFAULT = new ArrayList<>(List.of(
-			new LivestockData(IdTagMatcher.newTag(IguanaTweaksReborn.RESOURCE_PREFIX + "breedable_animals"), 0.7d),
-
-			new LivestockData(IdTagMatcher.newId("minecraft:villager"), 0.7d)
-	));
-
-	public static final ArrayList<LivestockData> breedingFailChance = new ArrayList<>();
 
 	@Config
 	@Label(name = "Chicken from egg chance", description = "Changes the chance for a chicken to come out from an egg (1 in this value). Vanilla is 8")
@@ -97,26 +58,7 @@ public class Livestock extends JsonFeature {
 
 	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		JSON_CONFIGS.add(new JsonConfig<>("growth_slowdown_multiplier.json", growthSlowdown, GROWTH_SLOWNDOWN_DEFAULT, LivestockData.LIST_TYPE));
-		JSON_CONFIGS.add(new JsonConfig<>("breeding_cooldown_multiplier.json", breedingCooldown, BREEDING_COOLDOWN_DEFAULT, LivestockData.LIST_TYPE));
-		JSON_CONFIGS.add(new JsonConfig<>("egg_lay_cooldown_multiplier.json", eggLaySlowdown, EGG_LAY_SLOWDOWN_DEFAULT, LivestockData.LIST_TYPE));
-		JSON_CONFIGS.add(new JsonConfig<>("cow_milk_cooldown.json", cowMilkCooldown, COW_MILK_COOLDOWN_DEFAULT, LivestockData.LIST_TYPE));
-		JSON_CONFIGS.add(new JsonConfig<>("sheep_wool_regrowth_chance.json", sheepWoolRegrowthChance, SHEEP_WOOL_REGROWTH_CHANCE, LivestockData.LIST_TYPE));
-		JSON_CONFIGS.add(new JsonConfig<>("breeding_fail_chance.json", breedingFailChance, BREEDING_FAIL_CHANCE_DEFAULT, LivestockData.LIST_TYPE));
-
 		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "livestock_changes", Component.literal("IguanaTweaks Reborn Livestock Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lootDataPack));
-	}
-
-	@Override
-	public String getModConfigFolder() {
-		return IguanaTweaksReborn.CONFIG_FOLDER;
-	}
-
-	@Override
-	public void loadJsonConfigs() {
-		if (!this.isEnabled())
-			return;
-		super.loadJsonConfigs();
 	}
 
 	@SubscribeEvent
@@ -132,9 +74,13 @@ public class Livestock extends JsonFeature {
 
 	public static boolean canSheepRegrowWool(Mob mob) {
 		double chance = 1d;
-		for (LivestockData data : sheepWoolRegrowthChance){
-			if (data.matches(mob))
-				chance = data.value;
+		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA) {
+			if (data.matches(mob)) {
+				chance = data.sheepWoolGrowthChance;
+				for (Modifier modifier : data.sheepWoolGrowthChanceModifiers) {
+					chance += modifier.getMultiplier(mob.level(), mob.blockPosition());
+				}
+			}
 		}
 		if (chance == 1d)
 			return true;
@@ -161,9 +107,11 @@ public class Livestock extends JsonFeature {
 			return;
 
 		double multiplier = 0d;
-		for (LivestockData data : growthSlowdown){
-			if (data.matches(mob))
-				multiplier += data.value;
+		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
+			if (data.matches(mob)) {
+				for (Modifier modifier : data.growthSpeed)
+					multiplier += modifier.getMultiplier(mob.level(), mob.blockPosition());
+			}
 		}
 		if (multiplier == 0d)
 			return;
@@ -171,6 +119,7 @@ public class Livestock extends JsonFeature {
 		double chance = 1d / multiplier;
 		if (mob.getRandom().nextFloat() > chance)
 			mob.setAge(growingAge - 1);
+
 	}
 
 	public void slowdownBreeding(LivingEvent.LivingTickEvent event) {
@@ -182,9 +131,11 @@ public class Livestock extends JsonFeature {
 			return;
 
 		double multiplier = 0d;
-		for (LivestockData data : breedingCooldown){
-			if (data.matches(mob))
-				multiplier += data.value;
+		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
+			if (data.matches(mob)) {
+				for (Modifier modifier : data.breedingCooldown)
+					multiplier += modifier.getMultiplier(mob.level(), mob.blockPosition());
+			}
 		}
 		if (multiplier == 0d)
 			return;
@@ -203,9 +154,11 @@ public class Livestock extends JsonFeature {
 			return;
 
 		double multiplier = 0d;
-		for (LivestockData data : eggLaySlowdown){
-			if (data.matches(chicken))
-				multiplier += data.value;
+		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
+			if (data.matches(chicken)) {
+				for (Modifier modifier : data.eggLayCooldown)
+					multiplier += modifier.getMultiplier(chicken.level(), chicken.blockPosition());
+			}
 		}
 		if (multiplier == 0d)
 			return;
@@ -256,10 +209,12 @@ public class Livestock extends JsonFeature {
 		}
 		else {
 			int cooldown = 0;
-			for (LivestockData data : cowMilkCooldown) {
+			for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA) {
 				if (data.matches(animal)) {
-					cooldown = (int) data.value;
-					break;
+					cooldown = data.cowFluidCooldown;
+					for (Modifier modifier : data.cowFluidCooldownModifiers) {
+						cooldown += (int) modifier.getMultiplier(animal.level(), animal.blockPosition());
+					}
 				}
 			}
 			if (cooldown == 0)
@@ -301,17 +256,18 @@ public class Livestock extends JsonFeature {
 			return;
 
 		double failChance = 0d;
-		int c = 0;
-		for (LivestockData data : breedingFailChance){
-			if (data.matches(event.getParentA())) {
-				failChance += data.value;
-				c++;
+		Mob parentA = event.getParentA();
+		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
+			if (data.matches(parentA)) {
+				failChance = data.beedingFailChance;
+				for (Modifier modifier : data.beedingFailChanceModifiers)
+					failChance += modifier.getMultiplier(parentA.level(), parentA.blockPosition());
 			}
 		}
-		if (c == 0d)
+		if (failChance == 0d)
 			return;
 
-		if (event.getParentA().getRandom().nextFloat() < failChance / c)
+		if (parentA.getRandom().nextFloat() < failChance)
 			event.setCanceled(true);
 	}
 }
