@@ -208,18 +208,18 @@ public class Livestock extends Feature {
 				event.setCancellationResult(InteractionResult.SUCCESS);
 		}
 		else {
-			int cooldown = 0;
+			float cooldown = 0;
 			for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA) {
 				if (data.matches(animal)) {
 					cooldown = data.cowFluidCooldown;
 					for (Modifier modifier : data.cowFluidCooldownModifiers) {
-						cooldown += (int) modifier.getMultiplier(animal.level(), animal.blockPosition());
+						cooldown *= modifier.getMultiplier(animal.level(), animal.blockPosition());
 					}
 				}
 			}
 			if (cooldown == 0)
 				return;
-			milkCooldown = cooldown * 20;
+			milkCooldown = (int) (cooldown * 20);
 			cowNBT.putInt(MILK_COOLDOWN, milkCooldown);
 			if (!animal.level().isClientSide)
 				ForgeDataIntSync.sync(animal, MILK_COOLDOWN, milkCooldown);

@@ -10,7 +10,7 @@
 * Nether wart no longer grows in the overworld
 * Fixed wandering traders crashing when disabled
 * Fixed cows milk cooldown not synced to clients
-* Reduced priority for EnchantmentHelperMixin. Should fix incompatiblity with apotheosis
+* Reduced priority for EnchantmentHelperMixin. Should fix incompatibility with apotheosis
 
 ## 3.1.13
 * I hate client-server stuff
