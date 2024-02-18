@@ -134,6 +134,8 @@ public class WanderingTrades extends JsonFeature {
 
     @SubscribeEvent
     public void onWanderingTradesEvent(WandererTradesEvent event) {
+        if (!this.isEnabled())
+            return;
         event.getGenericTrades().clear();
         for (SerializableTrade serializableTrade : wanderingTraderGenericTrades) {
             event.getGenericTrades().add(serializableTrade);

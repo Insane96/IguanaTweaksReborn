@@ -1,0 +1,14 @@
+{
+    "block": "minecraft:pumpkin_stem",
+    "modifiers": [
+        {
+            "id": "iguanatweaksreborn:sunlight",
+            "min_sunlight": 10,
+            "multiplier": 2.5
+        },
+        {
+            "id": "iguanatweaksreborn:night_time",
+            "multiplier": 1.5
+        }
+    ]
+}

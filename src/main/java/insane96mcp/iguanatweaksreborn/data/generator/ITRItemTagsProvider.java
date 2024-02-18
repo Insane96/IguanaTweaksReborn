@@ -1,7 +1,6 @@
 package insane96mcp.iguanatweaksreborn.data.generator;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth.PlantsGrowth;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.iguanatweaksreborn.module.items.StackSizes;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
@@ -67,8 +66,6 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
                 .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT);
 		tag(Spawners.SPAWNER_REACTIVATOR_TAG)
 				.add(Items.ECHO_SHARD);
-        tag(PlantsGrowth.NO_FERTILITY_TOOLTIP)
-                .add(Items.CARROT, Items.POTATO, Items.SWEET_BERRIES);
     }
 
     public static TagKey<Item> create(String tagName) {

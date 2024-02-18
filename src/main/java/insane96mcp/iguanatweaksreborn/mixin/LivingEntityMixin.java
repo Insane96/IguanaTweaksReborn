@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
+import insane96mcp.iguanatweaksreborn.event.SREventFactory;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.IProtectionEnchantment;
 import insane96mcp.iguanatweaksreborn.module.movement.TerrainSlowdown;
@@ -64,7 +64,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         return instance.isSprinting();
     }
 
-    @ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
+    /*@ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
     private float onCalculateAbsorption(float f1, DamageSource damageSource, float amount) {
         if (RegeneratingAbsorption.damageTypeTagOnly() && damageSource.is(DamageTypeTags.BYPASSES_ARMOR)) {
             return amount;
@@ -75,6 +75,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
     @Redirect(method = "actuallyHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setAbsorptionAmount(F)V", ordinal = 1))
     private void onSetAbsorptionSecondTime(LivingEntity instance, float absorption) {
         //Cancel Mojang damaging absorption twice for some reason
+    }*/
+
+    @ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 2), argsOnly = true, ordinal = 0)
+    public float onPreAbsorptionCalculation(float amount, DamageSource damageSource) {
+        return SREventFactory.onLivingHurtPreAbsorption((LivingEntity) (Object) this, damageSource, amount);
     }
 
     @Redirect(method = "handleOnClimbable", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;resetFallDistance()V"))

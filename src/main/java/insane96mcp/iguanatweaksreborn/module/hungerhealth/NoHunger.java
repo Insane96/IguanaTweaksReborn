@@ -41,6 +41,7 @@ import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
 import org.apache.commons.lang3.StringUtils;
@@ -62,7 +63,7 @@ public class NoHunger extends Feature {
     @Label(name = "Passive Health Regen.Enable", description = "If true, Passive Regeneration is enabled")
     public static Boolean enablePassiveRegen = false;
     @Config
-    @Label(name = "Passive Health Regen.Regen Speed", description = "Min represents how many seconds the regeneration of 1 HP takes when health is 100%, Max how many seconds when health is 0%")
+    @Label(name = "Passive Health Regen.Regen Speed", description = "Min represents how many ticks the regeneration of 1 HP takes when health is 100%, Max how many ticks when health is 0%")
     public static MinMax passiveRegenerationTime = new MinMax(120, 3600);
     @Config(min = 0d)
     @Label(name = "Food Heal.Over Time", description = "The formula to calculate the health regenerated when eating a food. Leave empty to disable. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
@@ -73,6 +74,9 @@ public class NoHunger extends Feature {
     @Config(min = 0d)
     @Label(name = "Food Heal.Instant Heal", description = "The formula to calculate the health restored instantly when eating. Leave empty to disable. To have the same effect as pre-Beta 1.8 food just use \"hunger\". Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
     public static String instantHeal = "(hunger^1.25)*0.15";
+    @Config(min = 0d)
+    @Label(name = "Food Heal.Low saturation foods instant heal", description = "If true, foods below this saturation will fully instantly heal (Over Time + Instant Heal) instead of having over time heal.")
+    public static Double instantHealLowSaturationFoods = 3d;
     @Config
     @Label(name = "Raw food.Heal Multiplier", description = "If true, raw food will heal by this percentage (this is applied after 'Food Heal.Health Multiplier'). Raw food is defined in the iguanatweaksreborn:raw_food tag")
     public static Double rawFoodHealPercentage = 1d;
@@ -175,32 +179,50 @@ public class NoHunger extends Feature {
     }
 
     public void onEatHealOverTime(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
-        if (!StringUtils.isBlank(healOverTime) && !StringUtils.isBlank(healOverTimeStrength)) {
-            float heal = Utils.computeFoodFormula(foodProperties, healOverTime);
-            if (heal <= 0f)
-                return;
-            if (buffCakes && item == null)
-                heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.4f, 1f);
-            if (isRawFood && rawFoodHealPercentage != 1d)
-                heal *= rawFoodHealPercentage;
+        if (!doesHealOverTime(foodProperties))
+            return;
 
-            float strength = Utils.computeFoodFormula(foodProperties, healOverTimeStrength) / 20f;
-            setFoodRegenLeft(player, heal);
-            setFoodRegenStrength(player, strength);
-        }
+        float heal = Utils.computeFoodFormula(foodProperties, healOverTime);
+        if (heal <= 0f)
+            return;
+        if (buffCakes && item == null)
+            heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.4f, 1f);
+        if (isRawFood && rawFoodHealPercentage != 1d)
+            heal *= rawFoodHealPercentage;
+
+        float strength = Utils.computeFoodFormula(foodProperties, healOverTimeStrength) / 20f;
+        setFoodRegenLeft(player, heal);
+        setFoodRegenStrength(player, strength);
+    }
+
+    public static boolean doesHealOverTime(FoodProperties foodProperties) {
+        return Utils.getFoodSaturationRestored(foodProperties) >= instantHealLowSaturationFoods
+                && !StringUtils.isBlank(healOverTime) && !StringUtils.isBlank(healOverTimeStrength);
     }
 
     private void onEatInstantHeal(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
-        if (!StringUtils.isBlank(instantHeal)) {
-            float heal = Utils.computeFoodFormula(foodProperties, instantHeal);
-            if (heal <= 0f)
-                return;
-            if (buffCakes && item == null)
-                heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.2f, 1f);
-            if (isRawFood && rawFoodHealPercentage != 1d)
-                heal *= rawFoodHealPercentage;
-            player.heal(heal);
-        }
+        if (!doesHealInstantly(foodProperties))
+            return;
+
+        float heal = getInstantHealAmount(foodProperties, isRawFood);
+        if (Utils.getFoodSaturationRestored(foodProperties) < instantHealLowSaturationFoods && !StringUtils.isBlank(healOverTime))
+            setFoodRegenStrength(player, 5f);
+        if (buffCakes && item == null)
+            heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.2f, 1f);
+        player.heal(heal);
+    }
+
+    public static float getInstantHealAmount(FoodProperties foodProperties, boolean isRawFood) {
+        float heal = Utils.computeFoodFormula(foodProperties, instantHeal);
+        if (Utils.getFoodSaturationRestored(foodProperties) < instantHealLowSaturationFoods && !StringUtils.isBlank(healOverTime))
+            heal += Utils.computeFoodFormula(foodProperties, healOverTime);
+        if (isRawFood && rawFoodHealPercentage != 1d)
+            heal *= rawFoodHealPercentage;
+        return heal;
+    }
+
+    public static boolean doesHealInstantly(FoodProperties foodProperties) {
+        return !StringUtils.isBlank(instantHeal);
     }
 
     private static int getPassiveRegenSpeed(Player player) {
@@ -263,8 +285,9 @@ public class NoHunger extends Feature {
         }
     }
 
+    //Render before Regenerating absorption
     @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public void removeFoodBar(final RenderGuiOverlayEvent.Pre event) {
         if (this.isEnabled()) {
             if (event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type())) {
@@ -358,37 +381,38 @@ public class NoHunger extends Feature {
         if (player == null)
             return;
 
-        if (!mc.options.reducedDebugInfo().get() && mc.options.advancedItemTooltips) {
-            FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
+        if (mc.options.reducedDebugInfo().get() || !mc.options.advancedItemTooltips)
+            return;
 
+        FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
 
-            if (!StringUtils.isBlank(instantHeal)) {
-                //noinspection ConstantConditions
-                float heal = Utils.computeFoodFormula(food, instantHeal);
-                MutableComponent component = Component.literal(IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(heal))
-                        .append(" ")
-                        .append(Component.translatable(HEALTH_LANG))
-                        .withStyle(ChatFormatting.GRAY)
-                        .withStyle(ChatFormatting.ITALIC);
-                event.getToolTip().add(component);
-            }
+        if (doesHealInstantly(food)) {
+            boolean isRawFood = FoodDrinks.isRawFood(event.getItemStack().getItem());
+            //noinspection ConstantConditions
+            float heal = getInstantHealAmount(food, isRawFood);
+            MutableComponent component = Component.literal(IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(heal))
+                    .append(" ")
+                    .append(Component.translatable(HEALTH_LANG))
+                    .withStyle(ChatFormatting.GRAY)
+                    .withStyle(ChatFormatting.ITALIC);
+            event.getToolTip().add(component);
+        }
 
-            if (!StringUtils.isBlank(healOverTime) && !StringUtils.isBlank(healOverTimeStrength)) {
-                //noinspection ConstantConditions
-                float heal = Utils.computeFoodFormula(food, healOverTime);
-                //Half heart per second by default
-                float strength = Utils.computeFoodFormula(food, healOverTimeStrength);
-                MutableComponent component = Component.literal(IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(heal))
-                        .append(" ")
-                        .append(Component.translatable(HEALTH_LANG))
-                        .append(" / ")
-                        .append(IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(heal / strength))
-                        .append(" ")
-                        .append(Component.translatable(SEC_LANG))
-                        .withStyle(ChatFormatting.GRAY)
-                        .withStyle(ChatFormatting.ITALIC);
-                event.getToolTip().add(component);
-            }
+        if (doesHealOverTime(food)) {
+            //noinspection ConstantConditions
+            float heal = Utils.computeFoodFormula(food, healOverTime);
+            //Half heart per second by default
+            float strength = Utils.computeFoodFormula(food, healOverTimeStrength);
+            MutableComponent component = Component.literal(IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(heal))
+                    .append(" ")
+                    .append(Component.translatable(HEALTH_LANG))
+                    .append(" / ")
+                    .append(IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(heal / strength))
+                    .append(" ")
+                    .append(Component.translatable(SEC_LANG))
+                    .withStyle(ChatFormatting.GRAY)
+                    .withStyle(ChatFormatting.ITALIC);
+            event.getToolTip().add(component);
         }
     }
 

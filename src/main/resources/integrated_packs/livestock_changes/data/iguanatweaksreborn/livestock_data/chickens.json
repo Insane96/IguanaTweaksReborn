@@ -1,0 +1,9 @@
+{
+    "entity": "#iguanatweaksreborn:chickens",
+    "egg_lay_cooldown": [
+        {
+            "id": "iguanatweaksreborn:global",
+            "multiplier": 3
+        }
+    ]
+}

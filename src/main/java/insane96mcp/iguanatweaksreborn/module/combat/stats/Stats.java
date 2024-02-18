@@ -53,6 +53,9 @@ public class Stats extends Feature {
 	@Label(name = "Player attack range modifier", description = "Adds this to players' attack range")
 	public static Double playerAttackRangeModifier = -0.5d;
 	@Config
+	@Label(name = "Player no damage when spamming", description = "In vanilla, if you attack as soon as you just attacked you already deal 20% of the full damage. This changes that to 0%.")
+	public static Boolean playerNoDamageWhenSpamming = true;
+	@Config
 	@Label(name = "Players movement speed reduction", description = "Reduces movement speed for players by this percentage.")
 	public static Double playersMovementSpeedReduction = 0.05d;
 	@Config
@@ -81,7 +84,7 @@ public class Stats extends Feature {
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedPack.INTEGRATED_PACKS.add(new IntegratedPack(PackType.SERVER_DATA, "item_stats", Component.literal("IguanaTweaks Reborn Item Stats"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && itemStatsDataPack));
+		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "item_stats", Component.literal("IguanaTweaks Reborn Item Stats"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && itemStatsDataPack));
 	}
 
 	@Override
@@ -97,6 +100,10 @@ public class Stats extends Feature {
 			MobEffects.WEAKNESS.addAttributeModifier(Attributes.ATTACK_DAMAGE, "22653B89-116E-49DC-9B6B-9971489B5BE5", 0.0D, AttributeModifier.Operation.MULTIPLY_BASE);
 			((AttackDamageMobEffect)MobEffects.WEAKNESS).multiplier = -0.2d;
 		}
+	}
+
+	public static boolean noDamageWhenSpamming() {
+		return isEnabled(Stats.class) && playerNoDamageWhenSpamming;
 	}
 
 	@SubscribeEvent

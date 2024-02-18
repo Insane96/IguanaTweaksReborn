@@ -10,9 +10,12 @@ import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.client.ITRBlockModelsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.client.ITRBlockStatesProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.client.ITRItemModelsProvider;
+import insane96mcp.iguanatweaksreborn.modifier.Modifiers;
 import insane96mcp.iguanatweaksreborn.module.combat.PiercingPickaxes;
 import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
+import insane96mcp.iguanatweaksreborn.module.farming.livestock.LivestockDataReloadListener;
+import insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth.PlantsGrowthReloadListener;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.module.movement.stamina.Stamina;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
@@ -88,6 +91,7 @@ public class IguanaTweaksReborn
         modEventBus.register(Stamina.class);
 		modEventBus.register(SpawnerData.class);
         modEventBus.register(Tiredness.class);
+        modEventBus.register(RegeneratingAbsorption.class);
         ITRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));
 
         ITRTriggers.init();
@@ -104,6 +108,8 @@ public class IguanaTweaksReborn
     public void onAddReloadListener(AddReloadListenerEvent event) {
         event.addListener(AnvilRepairReloadListener.INSTANCE);
         event.addListener(ItemStatsReloadListener.INSTANCE);
+        event.addListener(PlantsGrowthReloadListener.INSTANCE);
+        event.addListener(LivestockDataReloadListener.INSTANCE);
     }
 
     @SubscribeEvent
@@ -113,6 +119,7 @@ public class IguanaTweaksReborn
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         NetworkHandler.init();
+        Modifiers.init();
 
         /*event.enqueueWork(() -> {
             DispenserBlock.registerBehavior(Fletching.QUARTZ_ARROW_ITEM.get(), new SRArrowDispenseBehaviour());

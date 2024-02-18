@@ -1,6 +1,17 @@
 # Changelog
 
-* Shield shaped absorption hearts
+## 3.2.0
+* Added Chicken from egg chance
+* Added Player no damage when spamming
+* Plants Growth multipliers and Livestock data have been moved to data packs
+  * A data pack is included that adds the same multiplier as before
+* Regenerating absorption no longer uses vanilla absorption
+  * Instead, a new shield like icons will appear above the XP bar
+* Lower saturation foods now instantly heal the full amount instead of having an over time amount
+* Nether wart no longer grows in the overworld
+* Fixed wandering traders crashing when disabled
+* Fixed cows milk cooldown not synced to clients
+* Reduced priority for EnchantmentHelperMixin. Should fix incompatibility with apotheosis
 
 ## 3.1.13
 * I hate client-server stuff
