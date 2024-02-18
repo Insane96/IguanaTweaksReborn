@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Added Chicken from egg chance
+* Added Player no damage when spamming
 * Plants Growth multipliers and Livestock data have been moved to data packs
   * A data pack is included that adds the same multiplier as before
 * Regenerating absorption no longer uses vanilla absorption
