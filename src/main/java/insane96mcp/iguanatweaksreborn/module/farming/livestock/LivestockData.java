@@ -4,10 +4,11 @@ import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
 import insane96mcp.iguanatweaksreborn.modifier.Modifier;
+import insane96mcp.iguanatweaksreborn.utils.ITRGsonHelper;
 import insane96mcp.insanelib.data.IdTagMatcher;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.Entity;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +18,17 @@ public class LivestockData {
 	final List<Modifier> growthSpeed;
 	final List<Modifier> breedingCooldown;
 	final List<Modifier> eggLayCooldown;
-	final float beedingFailChance;
+	@Nullable
+	final Float beedingFailChance;
 	final List<Modifier> beedingFailChanceModifiers;
-	final int cowFluidCooldown;
+	@Nullable
+	final Integer cowFluidCooldown;
 	final List<Modifier> cowFluidCooldownModifiers;
-	final float sheepWoolGrowthChance;
+	@Nullable
+	final Float sheepWoolGrowthChance;
 	final List<Modifier> sheepWoolGrowthChanceModifiers;
 
-    public LivestockData(IdTagMatcher entity, List<Modifier> growthSpeed, List<Modifier> breedingCooldown, List<Modifier> eggLayCooldown, float beedingFailChance, List<Modifier> beedingFailChanceModifiers, int cowFluidCooldown, List<Modifier> cowFluidCooldownModifiers, float sheepWoolGrowthChance, List<Modifier> sheepWoolGrowthChanceModifiers) {
+    public LivestockData(IdTagMatcher entity, List<Modifier> growthSpeed, List<Modifier> breedingCooldown, List<Modifier> eggLayCooldown, @Nullable Float beedingFailChance, List<Modifier> beedingFailChanceModifiers, @Nullable Integer cowFluidCooldown, List<Modifier> cowFluidCooldownModifiers, @Nullable Float sheepWoolGrowthChance, List<Modifier> sheepWoolGrowthChanceModifiers) {
         this.entity = entity;
         this.growthSpeed = growthSpeed;
         this.breedingCooldown = breedingCooldown;
@@ -50,11 +54,11 @@ public class LivestockData {
 			List<Modifier> growthSpeed = Modifier.getListFromJson(jObject, "growth_speed", context);
 			List<Modifier> breedingCooldown = Modifier.getListFromJson(jObject, "breeding_cooldown", context);
 			List<Modifier> eggLayCooldown = Modifier.getListFromJson(jObject, "egg_lay_cooldown", context);
-			float breedingFailChance = GsonHelper.getAsFloat(jObject, "breeding_fail_chance", 0f);
+			Float breedingFailChance = ITRGsonHelper.getAsNullableFloat(jObject, "breeding_fail_chance");
 			List<Modifier> breedingFailChanceModifiers = Modifier.getListFromJson(jObject, "breeding_fail_chance_modifiers", context);
-			int cowFluidCooldown = GsonHelper.getAsInt(jObject, "cow_fluid_cooldown", 0);
+			Integer cowFluidCooldown = ITRGsonHelper.getAsNullableInt(jObject, "cow_fluid_cooldown");
 			List<Modifier> cowFluidCooldownModifiers = Modifier.getListFromJson(jObject, "cow_fluid_cooldown_modifiers", context);
-			float sheepWoolGrowthChance = GsonHelper.getAsFloat(jObject, "sheep_wool_growth_chance", 1f);
+			Float sheepWoolGrowthChance = ITRGsonHelper.getAsNullableFloat(jObject, "sheep_wool_growth_chance");
 			List<Modifier> sheepWoolGrowthChanceModifiers = Modifier.getListFromJson(jObject, "sheep_wool_growth_chance_modifiers", context);
 			return new LivestockData(entity, growthSpeed, breedingCooldown, eggLayCooldown, breedingFailChance, breedingFailChanceModifiers, cowFluidCooldown, cowFluidCooldownModifiers, sheepWoolGrowthChance, sheepWoolGrowthChanceModifiers);
 		}

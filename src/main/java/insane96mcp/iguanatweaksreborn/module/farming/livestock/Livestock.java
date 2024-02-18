@@ -53,12 +53,12 @@ public class Livestock extends Feature {
 	public static Integer chickenFromEggChance = 8;
 
 	@Config
-	@Label(name = "Loot DataPack", description = "Enables a data pack that changes food drops")
-	public static Boolean lootDataPack = true;
+	@Label(name = "Data Pack", description = "Enables a data pack that changes food drops and slows down growing, breeding, egging etc")
+	public static Boolean dataPack = true;
 
 	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "livestock_changes", Component.literal("IguanaTweaks Reborn Livestock Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lootDataPack));
+		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "livestock_changes", Component.literal("IguanaTweaks Reborn Livestock Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
 	}
 
 	@SubscribeEvent
@@ -76,7 +76,8 @@ public class Livestock extends Feature {
 		double chance = 1d;
 		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA) {
 			if (data.matches(mob)) {
-				chance = data.sheepWoolGrowthChance;
+				if (data.sheepWoolGrowthChance != null)
+					chance = data.sheepWoolGrowthChance;
 				for (Modifier modifier : data.sheepWoolGrowthChanceModifiers) {
 					chance += modifier.getMultiplier(mob.level(), mob.blockPosition());
 				}
@@ -211,7 +212,8 @@ public class Livestock extends Feature {
 			float cooldown = 0;
 			for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA) {
 				if (data.matches(animal)) {
-					cooldown = data.cowFluidCooldown;
+					if (data.cowFluidCooldown != null)
+						cooldown = data.cowFluidCooldown;
 					for (Modifier modifier : data.cowFluidCooldownModifiers) {
 						cooldown *= modifier.getMultiplier(animal.level(), animal.blockPosition());
 					}
@@ -259,7 +261,8 @@ public class Livestock extends Feature {
 		Mob parentA = event.getParentA();
 		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
 			if (data.matches(parentA)) {
-				failChance = data.beedingFailChance;
+				if (data.beedingFailChance != null)
+					failChance = data.beedingFailChance;
 				for (Modifier modifier : data.beedingFailChanceModifiers)
 					failChance += modifier.getMultiplier(parentA.level(), parentA.blockPosition());
 			}
