@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed instant heal foods leaving behind a never ending arrow
+
 ## 3.2.0
 * Added Chicken from egg chance
 * Added Player no damage when spamming
