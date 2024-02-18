@@ -19,8 +19,8 @@ public class LivestockData {
 	final List<Modifier> breedingCooldown;
 	final List<Modifier> eggLayCooldown;
 	@Nullable
-	final Float beedingFailChance;
-	final List<Modifier> beedingFailChanceModifiers;
+	final Float breedingFailChance;
+	final List<Modifier> breedingFailChanceModifiers;
 	@Nullable
 	final Integer cowFluidCooldown;
 	final List<Modifier> cowFluidCooldownModifiers;
@@ -28,13 +28,13 @@ public class LivestockData {
 	final Float sheepWoolGrowthChance;
 	final List<Modifier> sheepWoolGrowthChanceModifiers;
 
-    public LivestockData(IdTagMatcher entity, List<Modifier> growthSpeed, List<Modifier> breedingCooldown, List<Modifier> eggLayCooldown, @Nullable Float beedingFailChance, List<Modifier> beedingFailChanceModifiers, @Nullable Integer cowFluidCooldown, List<Modifier> cowFluidCooldownModifiers, @Nullable Float sheepWoolGrowthChance, List<Modifier> sheepWoolGrowthChanceModifiers) {
+    public LivestockData(IdTagMatcher entity, List<Modifier> growthSpeed, List<Modifier> breedingCooldown, List<Modifier> eggLayCooldown, @Nullable Float breedingFailChance, List<Modifier> breedingFailChanceModifiers, @Nullable Integer cowFluidCooldown, List<Modifier> cowFluidCooldownModifiers, @Nullable Float sheepWoolGrowthChance, List<Modifier> sheepWoolGrowthChanceModifiers) {
         this.entity = entity;
         this.growthSpeed = growthSpeed;
         this.breedingCooldown = breedingCooldown;
         this.eggLayCooldown = eggLayCooldown;
-        this.beedingFailChance = beedingFailChance;
-        this.beedingFailChanceModifiers = beedingFailChanceModifiers;
+        this.breedingFailChance = breedingFailChance;
+        this.breedingFailChanceModifiers = breedingFailChanceModifiers;
         this.cowFluidCooldown = cowFluidCooldown;
         this.cowFluidCooldownModifiers = cowFluidCooldownModifiers;
         this.sheepWoolGrowthChance = sheepWoolGrowthChance;

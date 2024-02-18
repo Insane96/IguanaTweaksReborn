@@ -41,6 +41,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Label(name = "Livestock", description = "Slower breeding, Growing, Egging and Milking. Lower yield.")
 @LoadFeature(module = Modules.Ids.FARMING)
 public class Livestock extends Feature {
@@ -74,15 +77,16 @@ public class Livestock extends Feature {
 
 	public static boolean canSheepRegrowWool(Mob mob) {
 		double chance = 1d;
+		List<Modifier> modifiersToApply = new ArrayList<>();
 		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA) {
 			if (data.matches(mob)) {
 				if (data.sheepWoolGrowthChance != null)
 					chance = data.sheepWoolGrowthChance;
-				for (Modifier modifier : data.sheepWoolGrowthChanceModifiers) {
-					chance += modifier.getMultiplier(mob.level(), mob.blockPosition());
-				}
+				modifiersToApply.addAll(data.sheepWoolGrowthChanceModifiers);
 			}
 		}
+		for (Modifier modifier : modifiersToApply)
+			chance += modifier.getMultiplier(mob.level(), mob.blockPosition());
 		if (chance == 1d)
 			return true;
 		return mob.getRandom().nextDouble() < chance;
@@ -210,17 +214,19 @@ public class Livestock extends Feature {
 		}
 		else {
 			float cooldown = 0;
+			List<Modifier> modifiersToApply = new ArrayList<>();
 			for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA) {
 				if (data.matches(animal)) {
 					if (data.cowFluidCooldown != null)
 						cooldown = data.cowFluidCooldown;
-					for (Modifier modifier : data.cowFluidCooldownModifiers) {
-						cooldown *= modifier.getMultiplier(animal.level(), animal.blockPosition());
-					}
+					modifiersToApply.addAll(data.cowFluidCooldownModifiers);
 				}
 			}
+			for (Modifier modifier : modifiersToApply)
+				cooldown *= modifier.getMultiplier(animal.level(), animal.blockPosition());
 			if (cooldown == 0)
 				return;
+
 			milkCooldown = (int) (cooldown * 20);
 			cowNBT.putInt(MILK_COOLDOWN, milkCooldown);
 			if (!animal.level().isClientSide)
@@ -258,15 +264,17 @@ public class Livestock extends Feature {
 			return;
 
 		double failChance = 0d;
+		List<Modifier> modifiersToApply = new ArrayList<>();
 		Mob parentA = event.getParentA();
 		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
 			if (data.matches(parentA)) {
-				if (data.beedingFailChance != null)
-					failChance = data.beedingFailChance;
-				for (Modifier modifier : data.beedingFailChanceModifiers)
-					failChance += modifier.getMultiplier(parentA.level(), parentA.blockPosition());
+				if (data.breedingFailChance != null)
+					failChance = data.breedingFailChance;
+				modifiersToApply.addAll(data.breedingFailChanceModifiers);
 			}
 		}
+		for (Modifier modifier : modifiersToApply)
+			failChance += modifier.getMultiplier(parentA.level(), parentA.blockPosition());
 		if (failChance == 0d)
 			return;
 
