@@ -98,7 +98,8 @@ public class RegeneratingAbsorption extends Feature {
             return;
 
         float currentAbsorption = entity.getPersistentData().getFloat(REGEN_ABSORPTION_TAG);
-        maxAbsorption = Math.min(maxAbsorption, Mth.ceil(entity.getHealth()));
+        if (capToHealth)
+            maxAbsorption = Math.min(maxAbsorption, Mth.ceil(entity.getHealth()));
         if (currentAbsorption < 0f || currentAbsorption == maxAbsorption)
             return;
 
