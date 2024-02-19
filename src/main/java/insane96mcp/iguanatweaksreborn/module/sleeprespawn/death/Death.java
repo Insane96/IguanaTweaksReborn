@@ -44,6 +44,7 @@ public class Death extends Feature {
 
 	public static final SimpleBlockWithItem GRAVE = SimpleBlockWithItem.register("grave", () -> new GraveBlock(BlockBehaviour.Properties.of().pushReaction(PushReaction.BLOCK).mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).forceSolidOn().strength(1.5F, 6.0F)));
 	public static final RegistryObject<BlockEntityType<?>> GRAVE_BLOCK_ENTITY_TYPE = ITRRegistries.BLOCK_ENTITY_TYPES.register("grave", () -> BlockEntityType.Builder.of(GraveBlockEntity::new, GRAVE.block().get()).build(null));
+	public static final GameRules.Key<GameRules.BooleanValue> RULE_DEATHGRAVE = GameRules.register("iguanatweaks:deathGrave", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
 
 	public static final String KILLED_PLAYER = IguanaTweaksReborn.RESOURCE_PREFIX + "killed_player";
 	public static final String PLAYER_KILLER_LANG = IguanaTweaksReborn.MOD_ID + ".player_killer";
@@ -51,9 +52,6 @@ public class Death extends Feature {
 	@Config
 	@Label(name = "Player's killer bounty", description = "If true, the player's killer will not despawn and when killed will drop 4x more items and experience.")
 	public static Boolean vindicationVsKiller = true;
-	@Config
-	@Label(name = "Grave", description = "If true, the player will generate a grave on death with its items in it.")
-	public static Boolean grave = true;
 	@Config
 	@Label(name = "Grave keeps experience", description = "If true, the player's experience is stored in the grave.")
 	public static Boolean graveExperience = false;
@@ -65,9 +63,9 @@ public class Death extends Feature {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onPlayerDeath(LivingDeathEvent event) {
 		if (!this.isEnabled()
-				|| !grave
 				|| !(event.getEntity() instanceof ServerPlayer player)
 				|| player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
+				|| !player.level().getGameRules().getBoolean(RULE_DEATHGRAVE)
 				|| player.level().isOutsideBuildHeight(player.blockPosition().getY())
 				|| (player.getInventory().isEmpty() && player.experienceLevel == 0))
 			return;
