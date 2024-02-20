@@ -90,12 +90,12 @@ public class ItemStats extends Feature {
 		}
 	}
 
-	public static boolean shouldNotBreak(ItemStack stack) {
+	public static boolean isUnbreakable(ItemStack stack) {
 		return !stack.is(NOT_UNBREAKABLE) || (unbreakableEnchantedItems && stack.isEnchanted());
 	}
 
 	public static boolean isBroken(ItemStack stack) {
-		return stack.isDamageableItem() && shouldNotBreak(stack) && stack.getDamageValue() >= stack.getMaxDamage() - 1;
+		return stack.isDamageableItem() && isUnbreakable(stack) && stack.getDamageValue() >= stack.getMaxDamage() - 1;
 	}
 
 	@SubscribeEvent
@@ -210,7 +210,7 @@ public class ItemStats extends Feature {
 			return;
 
 		ItemStack stack = event.getStack();
-		if (!shouldNotBreak(stack))
+		if (!isUnbreakable(stack))
 			return;
 		if (event.getAmount() >= stack.getMaxDamage() - stack.getDamageValue() - 1) {
 			event.getStack().setDamageValue(event.getStack().getMaxDamage() - 1);
@@ -250,7 +250,7 @@ public class ItemStats extends Feature {
 
 		if (stack.isDamageableItem()) {
 			int durability = stack.getMaxDamage();
-			if (unbreakableItems)
+			if (unbreakableItems && isUnbreakable(stack))
 				durability--;
 			int durabilityLeft = durability - stack.getDamageValue();
 			MutableComponent component;

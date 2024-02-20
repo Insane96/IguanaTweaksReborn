@@ -2,7 +2,6 @@
 
 * Regenerating absorption doesn't update when it's 0
 * Border change seems to not work
-* Durability 0 on tools that break
 * Coal it's waaay too rare
 * Torch arrows place torches on moss
 
@@ -14,6 +13,7 @@
   * When apotheosis is present changing enchantment value of items from Item Stats will not be possible
 * Fixed instant heal foods leaving behind a never ending arrow
 * Fixed 'Cap to health' config option not working
+* Fixed breakable items showing 0 durability left
 
 ## 3.2.0
 * Added Chicken from egg chance
