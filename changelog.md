@@ -1,6 +1,5 @@
 # Changelog
 
-* Border change seems to not work
 * Coal it's waaay too rare
 * Torch arrows place torches on moss
 
@@ -10,6 +9,7 @@
   * Removed the config option to disable graves
 * Fixed crash with Aphotheosis
   * When apotheosis is present changing enchantment value of items from Item Stats will not be possible
+* World border height is now capped to 128 blocks
 * Fixed instant heal foods leaving behind a never ending arrow
 * Fixed 'Cap to health' config option not working
 * Fixed breakable items showing 0 durability left

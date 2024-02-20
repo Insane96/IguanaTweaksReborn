@@ -12,7 +12,7 @@ public abstract class LevelRendererMixin {
 	@ModifyVariable(at = @At(value = "STORE"), method = "renderWorldBorder", ordinal = 4)
 	private double onWorldBorderHeight(double value) {
 		if (Misc.shouldShortenWorldBorder())
-			return value / 4d;
+			return Math.min(Misc.capWorldBorderHeight, value / 4d);
 		return value;
 	}
 

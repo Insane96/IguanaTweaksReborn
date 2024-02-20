@@ -19,6 +19,10 @@ public class Misc extends Feature {
     @Label(name = "Shorter world border", description = "If true, the world border height is reduced by 4 times.")
     public static Boolean shorterWorldBorder = true;
 
+    @Config(min = 1d)
+    @Label(name = "Cap world border height", description = "Set the max height of the world border.")
+    public static Double capWorldBorderHeight = 128d;
+
     public Misc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
