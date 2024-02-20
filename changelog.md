@@ -1,6 +1,5 @@
 # Changelog
 
-* Regenerating absorption doesn't update when it's 0
 * Border change seems to not work
 * Coal it's waaay too rare
 * Torch arrows place torches on moss
@@ -14,6 +13,7 @@
 * Fixed instant heal foods leaving behind a never ending arrow
 * Fixed 'Cap to health' config option not working
 * Fixed breakable items showing 0 durability left
+* Fixed Regenerating Absorption not decaying when at 0
 
 ## 3.2.0
 * Added Chicken from egg chance

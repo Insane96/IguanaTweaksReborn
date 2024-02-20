@@ -91,11 +91,7 @@ public class RegeneratingAbsorption extends Feature {
             return;
         }
         float maxAbsorption = (float) entity.getAttributeValue(ATTRIBUTE.get());
-        if (maxAbsorption == 0f)
-            return;
         float regenSpeed = (float) (entity.getAttributeValue(SPEED_ATTRIBUTE.get()) / 20f);
-        if (regenSpeed == 0)
-            return;
 
         float currentAbsorption = entity.getPersistentData().getFloat(REGEN_ABSORPTION_TAG);
         if (capToHealth)
@@ -104,7 +100,7 @@ public class RegeneratingAbsorption extends Feature {
             return;
 
         if (currentAbsorption > maxAbsorption)
-            currentAbsorption = Math.max(currentAbsorption - regenSpeed * 10f, 0f);
+            currentAbsorption = Math.max(currentAbsorption - 0.1f, 0f);
         else
             currentAbsorption = Math.min(currentAbsorption + regenSpeed, maxAbsorption);
 
