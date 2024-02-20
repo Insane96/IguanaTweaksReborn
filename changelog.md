@@ -1,5 +1,20 @@
 # Changelog
 
+* Regenerating absorption doesn't update when it's 0
+* Border change seems to not work
+* Durability 0 on tools that break
+* Coal it's waaay too rare
+* Torch arrows place torches on moss
+
+## Upcoming
+* Added `iguanatweaks:deathGrave` game rule
+  * If enabled the grave will generate on death
+  * Removed the config option to disable graves
+* Fixed crash with Aphotheosis
+  * When apotheosis is present changing enchantment value of items from Item Stats will not be possible
+* Fixed instant heal foods leaving behind a never ending arrow
+* Fixed 'Cap to health' config option not working
+
 ## 3.2.0
 * Added Chicken from egg chance
 * Added Player no damage when spamming

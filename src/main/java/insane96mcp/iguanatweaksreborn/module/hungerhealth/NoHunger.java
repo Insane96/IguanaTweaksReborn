@@ -205,8 +205,8 @@ public class NoHunger extends Feature {
             return;
 
         float heal = getInstantHealAmount(foodProperties, isRawFood);
-        if (Utils.getFoodSaturationRestored(foodProperties) < instantHealLowSaturationFoods && !StringUtils.isBlank(healOverTime))
-            setFoodRegenStrength(player, 5f);
+        /*if (Utils.getFoodSaturationRestored(foodProperties) < instantHealLowSaturationFoods && !StringUtils.isBlank(healOverTime))
+            setFoodRegenStrength(player, 5f);*/
         if (buffCakes && item == null)
             heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.2f, 1f);
         player.heal(heal);

@@ -18,7 +18,8 @@ public class ModLoadedPlugin implements IMixinConfigPlugin {
             "insane96mcp.iguanatweaksreborn.mixin.PistonMovingBlockEntityMixin", () -> LoadingModList.get().getModFileById("quark") == null,
             "insane96mcp.iguanatweaksreborn.mixin.PistonBaseBlockMixin", () -> LoadingModList.get().getModFileById("quark") == null,
             "insane96mcp.iguanatweaksreborn.mixin.FallingBlockEntityMixin", () -> LoadingModList.get().getModFileById("quark") == null,
-            "insane96mcp.iguanatweaksreborn.mixin.BoatMixin", () -> LoadingModList.get().getModFileById("quark") == null
+            "insane96mcp.iguanatweaksreborn.mixin.BoatMixin", () -> LoadingModList.get().getModFileById("quark") == null,
+            "insane96mcp.iguanatweaksreborn.mixin.EnchantmentHelperMixin", () -> LoadingModList.get().getModFileById("apotheosis") == null
     );
     @Override
     public void onLoad(String mixinPackage) {
