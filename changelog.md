@@ -2,6 +2,7 @@
 
 ## Upcoming
 * If hit, Regenerating Absorption now goes on cooldown for 4 seconds instead of 2
+* Players now lose 20% xp on death instead of 15%
 
 ## 3.2.1
 * Added `iguanatweaks:deathGrave` game rule
