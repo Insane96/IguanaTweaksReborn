@@ -1,12 +1,12 @@
 # Changelog
 
-## Upcoming
+## 3.2.1
 * Added `iguanatweaks:deathGrave` game rule
   * If enabled the grave will generate on death
   * Removed the config option to disable graves
 * Coal veins are much much bigger now
 * Fixed crash with Aphotheosis
-  * When apotheosis is present changing enchantment value of items from Item Stats will not be possible
+  * When apotheosis is present, enchantment value of items from Item Stats will not be applied
 * World border height is now capped to 128 blocks
 * Fixed instant heal foods leaving behind a never ending arrow
 * Fixed 'Cap to health' config option not working
