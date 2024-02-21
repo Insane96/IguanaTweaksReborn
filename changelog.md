@@ -1,7 +1,7 @@
 # Changelog
 
 ## Upcoming
-* If hit, Regenerating Absorption now goes on cooldown for 5 seconds instead of 2.5
+* If hit, Regenerating Absorption now goes on cooldown for 4 seconds instead of 1.5
 
 ## 3.2.1
 * Added `iguanatweaks:deathGrave` game rule
