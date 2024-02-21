@@ -55,7 +55,7 @@ public class RegeneratingAbsorption extends Feature {
 
     @Config(min = 0)
     @Label(name = "Un-damaged time to regen", description = "Ticks that must pass from the last hit to regen absorption hearts. This is affected by regenerating absorption speed (absorp regen speed * this)")
-    public static Integer unDamagedTimeToRegen = 50;
+    public static Integer unDamagedTimeToRegen = 100;
     @Config
     @Label(name = "Cap to health", description = "The amount of regenerating absorption hearts cannot go over the entity's current health.")
     public static Boolean capToHealth = true;
@@ -155,6 +155,7 @@ public class RegeneratingAbsorption extends Feature {
     @SubscribeEvent
     public void onEntityHurt(LivingHurtEvent event) {
         if (!this.isEnabled()
+                || event.getEntity().level().isClientSide
                 || unDamagedTimeToRegen == 0
                 || event.getSource().is(DamageTypeTags.BYPASSES_ARMOR))
             return;

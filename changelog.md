@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* If hit, Regenerating Absorption now goes on cooldown for 5 seconds instead of 2.5
+
 ## 3.2.1
 * Added `iguanatweaks:deathGrave` game rule
   * If enabled the grave will generate on death
