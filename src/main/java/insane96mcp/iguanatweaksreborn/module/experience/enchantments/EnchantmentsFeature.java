@@ -6,6 +6,7 @@ import insane96mcp.iguanatweaksreborn.module.combat.stats.Stats;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.FireAspect;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.IEnchantmentTooltip;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Knockback;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Luck;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.BaneOfSSSS;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.BonusDamageEnchantment;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.Sharpness;
@@ -59,6 +60,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	public static final RegistryObject<Enchantment> BANE_OF_SSSSS = ITRRegistries.ENCHANTMENTS.register("bane_of_sssss", BaneOfSSSS::new);
 	public static final RegistryObject<Enchantment> FIRE_ASPECT = ITRRegistries.ENCHANTMENTS.register("fire_aspect", FireAspect::new);
 	public static final RegistryObject<Enchantment> KNOCKBACK = ITRRegistries.ENCHANTMENTS.register("knockback", Knockback::new);
+	public static final RegistryObject<Enchantment> LUCK = ITRRegistries.ENCHANTMENTS.register("luck", Luck::new);
 	public static final RegistryObject<Enchantment> PROTECTION = ITRRegistries.ENCHANTMENTS.register("protection", OverallProtection::new);
 	public static final RegistryObject<Enchantment> BLAST_PROTECTION = ITRRegistries.ENCHANTMENTS.register("blast_protection", BlastProtection::new);
 	public static final RegistryObject<Enchantment> FIRE_PROTECTION = ITRRegistries.ENCHANTMENTS.register("fire_protection", FireProtection::new);
@@ -100,6 +102,9 @@ public class EnchantmentsFeature extends JsonFeature {
             Smite deals +1.25 damage per level to undead
             Bane of Arthropods has been replaced with Bane of SSSSS that deals +1.25 damage per level to arthropods and creepers and applies slowness""")
 	public static Boolean replaceDamagingEnchantments = true;
+	@Config
+	@Label(name = "Replace looting, fortune and LotS enchantments", description = "If true, vanilla looting, fortune and Luck of the Sea enchantments are replaced with a single one: Luck. To re-enable vanilla enchantments refer to `disabled_enchantments.json`.")
+	public static Boolean replaceLuckEnchantments = true;
 
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
 			IdTagMatcher.newId("minecraft:mending"),
@@ -114,6 +119,9 @@ public class EnchantmentsFeature extends JsonFeature {
 			IdTagMatcher.newId("minecraft:projectile_protection"),
 			IdTagMatcher.newId("minecraft:fire_protection"),
 			IdTagMatcher.newId("minecraft:feather_falling"),
+			IdTagMatcher.newId("minecraft:looting"),
+			IdTagMatcher.newId("minecraft:fortune"),
+			IdTagMatcher.newId("minecraft:luck_of_the_sea"),
 			IdTagMatcher.newId("allurement:reforming"),
 			IdTagMatcher.newId("allurement:alleviating")
 
@@ -143,6 +151,10 @@ public class EnchantmentsFeature extends JsonFeature {
 			Enchantments.THORNS.rarity = Enchantment.Rarity.RARE;
 		else
 			Enchantments.THORNS.rarity = Enchantment.Rarity.VERY_RARE;
+
+		//Can this make something blow up?
+		if (replaceLuckEnchantments)
+			Enchantments.BLOCK_FORTUNE = LUCK.get();
 	}
 
 	public static boolean isEnchantmentDisabled(Enchantment enchantment) {

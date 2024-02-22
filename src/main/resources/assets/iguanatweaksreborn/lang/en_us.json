@@ -9,6 +9,8 @@
 	"container.repair.free": "No Cost",
 	"enchantment.iguanatweaksreborn.bane_of_sssss": "Bane of SSSSS",
 	"enchantment.iguanatweaksreborn.bane_of_sssss.tooltip": "+%s Damage to Hissing Creatures",
+	"enchantment.iguanatweaksreborn.luck": "Luck",
+	"enchantment.iguanatweaksreborn.luck.tooltip": "Increased loot from mobs and fishing and drops from blocks",
 	"enchantment.iguanatweaksreborn.sharpness": "Sharpness",
 	"enchantment.iguanatweaksreborn.sharpness.tooltip": "+%s Damage to Any Creature",
 	"enchantment.iguanatweaksreborn.smite": "Smite",
