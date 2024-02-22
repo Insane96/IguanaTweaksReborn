@@ -78,7 +78,9 @@ public class BlockHardness extends JsonFeature {
 			IdTagValue.newId("minecraft:budding_amethyst", 4.5d),
 			IdTagValue.newTag("iguanatweaksreborn:obsidians", 25d),
 
-			IdTagValue.newId("minecraft:powder_snow", 2.5d)
+			IdTagValue.newId("minecraft:powder_snow", 2.5d),
+
+			IdTagValue.newTag("minecraft:leaves", 0.4d)
 	));
 	public static final ArrayList<IdTagValue> customHardnesses = new ArrayList<>();
 
