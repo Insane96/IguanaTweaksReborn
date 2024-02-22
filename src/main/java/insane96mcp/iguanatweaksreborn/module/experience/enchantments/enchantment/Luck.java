@@ -12,7 +12,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.LootBonusEnchantment;
 
 public class Luck extends LootBonusEnchantment implements IEnchantmentTooltip {
-    public static final TagKey<Item> ACCEPTS_LUCK = ITRItemTagsProvider.create("accepts_luck");
+    public static final TagKey<Item> ACCEPTS_LUCK = ITRItemTagsProvider.create("enchantments/accepts_luck");
     static final EnchantmentCategory CATEGORY = EnchantmentCategory.create("luck", item -> item.builtInRegistryHolder().is(ACCEPTS_LUCK));
     public Luck() {
         super(Rarity.RARE, CATEGORY, EquipmentSlot.MAINHAND);

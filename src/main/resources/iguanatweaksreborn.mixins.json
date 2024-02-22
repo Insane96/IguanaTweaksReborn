@@ -13,6 +13,7 @@
         "BaseSpawnerMixin",
         "BellBlockEntityMixin",
         "BoatMixin",
+        "BonusLevelTableConditionMixin",
         "CampfireBlockMixin",
         "ConduitBlockEntityMixin",
         "DigDurabilityEnchantmentMixin",
