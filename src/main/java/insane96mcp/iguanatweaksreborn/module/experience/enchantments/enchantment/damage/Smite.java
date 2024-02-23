@@ -20,4 +20,8 @@ public class Smite extends BonusDamageEnchantment {
         return target.getType().is(AFFECTED_BY_SMITE);
     }
 
+    @Override
+    public float getDamageBonusPerLevel() {
+        return 1.5f;
+    }
 }

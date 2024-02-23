@@ -2,7 +2,6 @@ package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantmen
 
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
 
 public class Sharpness extends BonusDamageEnchantment {
     public Sharpness() {
@@ -10,7 +9,7 @@ public class Sharpness extends BonusDamageEnchantment {
     }
 
     @Override
-    public float getDamageBonus(ItemStack stack, int lvl) {
-        return 0.75f * lvl * this.getDamageBonusRatio(stack);
+    public float getDamageBonusPerLevel() {
+        return 0.75f;
     }
 }
