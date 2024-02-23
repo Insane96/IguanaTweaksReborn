@@ -67,13 +67,13 @@ public class NoHunger extends Feature {
     public static MinMax passiveRegenerationTime = new MinMax(120, 3600);
     @Config(min = 0d)
     @Label(name = "Food Heal.Over Time", description = "The formula to calculate the health regenerated when eating a food. Leave empty to disable. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
-    public static String healOverTime = "(hunger^1.55)*0.2";
+    public static String healOverTime = "(hunger^1.5)*0.15";
     @Config
-    @Label(name = "Food Heal.Over time Strength", description = "How much HP does food regen each second? Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. Default is 75% of the saturation modifier, down to a minimum of 0.2/s")
-    public static String healOverTimeStrength = "MAX(0.2, 0.75 * saturation_modifier)";
+    @Label(name = "Food Heal.Over time Strength", description = "How much HP does food regen each second? Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. Default is 60% of the saturation modifier, down to a minimum of 0.15/s")
+    public static String healOverTimeStrength = "MAX(0.15, 0.6 * saturation_modifier)";
     @Config(min = 0d)
     @Label(name = "Food Heal.Instant Heal", description = "The formula to calculate the health restored instantly when eating. Leave empty to disable. To have the same effect as pre-Beta 1.8 food just use \"hunger\". Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
-    public static String instantHeal = "(hunger^1.25)*0.15";
+    public static String instantHeal = "(hunger^1.45)*0.2";
     @Config(min = 0d)
     @Label(name = "Food Heal.Low saturation foods instant heal", description = "If true, foods below this saturation will fully instantly heal (Over Time + Instant Heal) instead of having over time heal.")
     public static Double instantHealLowSaturationFoods = 3d;
