@@ -6,6 +6,7 @@
 * If hit, Regenerating Absorption now goes on cooldown for 4 seconds instead of 2
 * Players now lose 20% xp on death instead of 15%
 * Bows and crossbows now have halved durability
+* Broken items can now still attack with 1 damage and reduced knockback if the Knockback feature is enabled
 * Leaves are now twice as dull
 
 ## 3.2.1

@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.combat;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRDamageTypeTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.insanelib.base.Feature;
@@ -70,7 +71,8 @@ public class PiercingPickaxes extends Feature {
 				|| !(event.getSource().getDirectEntity() instanceof LivingEntity attacker)
 				|| event.getEntity().isDeadOrDying()
 				|| event.getSource().is(DOESNT_TRIGGER_PIERCING)
-				|| attacker.getAttribute(PIERCING_DAMAGE.get()) == null)
+				|| attacker.getAttribute(PIERCING_DAMAGE.get()) == null
+				|| (isEnabled(ItemStats.class) && ItemStats.unbreakableItems && ItemStats.isBroken(attacker.getMainHandItem())))
 			return;
 
 		AttributeInstance piercingInstance = attacker.getAttribute(PIERCING_DAMAGE.get());

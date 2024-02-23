@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.combat;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -33,7 +34,8 @@ public class BonkingShovels extends Feature {
 	public void addAttributeToPickaxes(ItemAttributeModifierEvent event) {
 		if (!this.isEnabled()
 				|| event.getSlotType() != EquipmentSlot.MAINHAND
-				|| !(event.getItemStack().getItem() instanceof ShovelItem shovelItem))
+				|| !(event.getItemStack().getItem() instanceof ShovelItem shovelItem)
+				|| (isEnabled(ItemStats.class) && ItemStats.unbreakableItems && ItemStats.isBroken(event.getItemStack())))
 			return;
 
 		event.addModifier(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(SHOVEL_KNOCKBACK_MODIFIER_UUID, "Shovels Knockback modifier", shovelItem.getAttackDamage() * knockbackRatio, AttributeModifier.Operation.ADDITION));

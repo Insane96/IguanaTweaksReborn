@@ -4,6 +4,7 @@ import com.google.common.collect.Multimap;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -75,13 +76,11 @@ public class Knockback extends Feature {
 
 		ItemStack itemStack = player.getMainHandItem();
 
-		boolean isInTag = itemStack.is(REDUCED_KNOCKBACK);
-
 		boolean reducedKnockback = false;
 		Multimap<Attribute, AttributeModifier> attributeModifiers = itemStack.getAttributeModifiers(EquipmentSlot.MAINHAND);
-		if ((!attributeModifiers.containsKey(Attributes.ATTACK_DAMAGE) && noItemNoKnockback) || isInTag) {
+		if ((!attributeModifiers.containsKey(Attributes.ATTACK_DAMAGE) && noItemNoKnockback) || itemStack.is(REDUCED_KNOCKBACK) || (isEnabled(ItemStats.class) && ItemStats.unbreakableItems && ItemStats.isBroken(itemStack)))
 			reducedKnockback = true;
-		}
+
 		int ticksSinceLastSwing = player.getPersistentData().getInt(TIME_SINCE_LAST_SWING);
 		float cooldown = Mth.clamp((ticksSinceLastSwing + 0.5f) / player.getCurrentItemAttackStrengthDelay(), 0.0F, 1.0F);
 		if (cooldown <= 0.9f)

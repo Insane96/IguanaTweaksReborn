@@ -29,7 +29,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -79,7 +78,6 @@ public class ItemStats extends Feature {
 	@SubscribeEvent
 	public void processAttackDamage(LivingHurtEvent event) {
 		if (!this.isEnabled()
-				|| !unbreakableItems
 				|| !(event.getSource().getDirectEntity() instanceof Player player))
 			return;
 
@@ -87,6 +85,13 @@ public class ItemStats extends Feature {
 		if (stack.is(NO_DAMAGE)) {
 			event.setAmount(1f);
 			player.displayClientMessage(Component.translatable(NO_DAMAGE_ITEM_LANG), true);
+		}
+
+		if (stack.getMaxDamage() == 0)
+			return;
+		if (unbreakableItems && isBroken(stack)) {
+			event.setAmount(1f);
+			player.displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
 		}
 	}
 
@@ -133,11 +138,9 @@ public class ItemStats extends Feature {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(NO_EFFICIENCY_ITEM_LANG), true);
 		}
-		else if (isBroken(stack)){
-			if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
-				event.setCanceled(true);
-				event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
-			}
+		else if (unbreakableItems && isBroken(stack)){
+			event.setCanceled(true);
+			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
 		}
 	}
 
@@ -183,22 +186,6 @@ public class ItemStats extends Feature {
 		if (isBroken(stack)) {
 			event.setCanceled(true);
 			event.getEntity().displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
-		}
-	}
-
-	@SubscribeEvent
-	public void processBrokenToolsOnAttack(LivingAttackEvent event) {
-		if (!this.isEnabled()
-				|| !unbreakableItems
-				|| !(event.getSource().getDirectEntity() instanceof Player player))
-			return;
-
-		ItemStack stack = player.getMainHandItem();
-		if (stack.getMaxDamage() == 0)
-			return;
-		if (isBroken(stack)) {
-			event.setCanceled(true);
-			player.displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
 		}
 	}
 
