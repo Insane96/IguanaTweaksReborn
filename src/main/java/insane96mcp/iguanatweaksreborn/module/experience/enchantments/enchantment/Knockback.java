@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment;
 
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.BonusDamageEnchantment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,6 +27,6 @@ public class Knockback extends Enchantment implements IEnchantmentTooltip {
 
     @Override
     public Component getTooltip(ItemStack stack, int lvl) {
-        return Component.translatable(this.getDescriptionId() + ".tooltip", lvl).withStyle(ChatFormatting.DARK_PURPLE);
+        return Component.translatable(this.getDescriptionId() + ".tooltip", BonusDamageEnchantment.getDamageBonusRatio(stack) * lvl).withStyle(ChatFormatting.DARK_PURPLE);
     }
 }

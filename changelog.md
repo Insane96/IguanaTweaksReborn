@@ -3,11 +3,17 @@
 ## Upcoming
 * Added Luck enchantment
   * Unifies Looting, Fortune and Luck of the Sea
+* Rebalanced Heal over time and instant heal
+  * Increased Instant heal
+  * Slightly reduced heal over time amount and strength
+* Increased Smite bonus damage from 1.25 to 1.5 per level
+* Knockback enchantment now scales with weapon damage (like Smite like enchantments)
 * If hit, Regenerating Absorption now goes on cooldown for 4 seconds instead of 2
 * Players now lose 20% xp on death instead of 15%
 * Bows and crossbows now have halved durability
 * Broken items can now still attack with 1 damage and reduced knockback if the Knockback feature is enabled
 * Leaves are now twice as dull
+* Tools and weapons now show attack and mine reach
 
 ## 3.2.1
 * Added `iguanatweaks:deathGrave` game rule

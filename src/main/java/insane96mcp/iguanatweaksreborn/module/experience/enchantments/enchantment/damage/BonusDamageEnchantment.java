@@ -54,7 +54,7 @@ public abstract class BonusDamageEnchantment extends Enchantment implements IEnc
     }
 
     public float getDamageBonus(ItemStack stack, int lvl) {
-        return this.getDamageBonusPerLevel() * lvl * this.getDamageBonusRatio(stack);
+        return this.getDamageBonusPerLevel() * lvl * getDamageBonusRatio(stack);
     }
 
     public float getDamageBonusPerLevel() {
@@ -70,7 +70,7 @@ public abstract class BonusDamageEnchantment extends Enchantment implements IEnc
         return (super.canApplyAtEnchantingTable(stack) || stack.is(ACCEPTS_DAMAGE_ENCHANTMENTS)) && EnchantmentsFeature.replaceDamagingEnchantments;
     }
 
-    public float getDamageBonusRatio(ItemStack stack) {
+    public static float getDamageBonusRatio(ItemStack stack) {
         if (!(stack.getItem() instanceof TieredItem))
             return 0f;
         float baseDamage = 0f;
