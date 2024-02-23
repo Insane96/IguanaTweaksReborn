@@ -22,14 +22,12 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.AttackDamageMobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
@@ -166,23 +164,25 @@ public class Stats extends Feature {
 					Map<AttributeModifier.Operation, List<AttributeModifier>> modifiersByOperation = multimap.get(attribute).stream().collect(Collectors.groupingBy(AttributeModifier::getOperation));
 					modifiersByOperation.forEach((operation, modifier) -> {
 						double amount = modifier.stream().mapToDouble(AttributeModifier::getAmount).sum();
-						if (amount == 0d)
-							return;
 
 						boolean isEqualTooltip = false;
 						if (event.getEntity() != null && operation == AttributeModifier.Operation.ADDITION && equipmentslot == EquipmentSlot.MAINHAND) {
 							if (attribute.equals(Attributes.ATTACK_DAMAGE)) {
 								amount += event.getEntity().getAttributeBaseValue(Attributes.ATTACK_DAMAGE);
-								amount += EnchantmentHelper.getDamageBonus(event.getItemStack(), MobType.UNDEFINED);
+								//amount += EnchantmentHelper.getDamageBonus(event.getItemStack(), MobType.UNDEFINED);
 								isEqualTooltip = true;
 							}
 							if (attribute.equals(PiercingPickaxes.PIERCING_DAMAGE.get())
 									|| attribute.equals(Attributes.ATTACK_SPEED)
-									|| attribute.equals(Attributes.KNOCKBACK_RESISTANCE)) {
+									|| attribute.equals(Attributes.KNOCKBACK_RESISTANCE)
+									|| attribute.equals(ForgeMod.ENTITY_REACH.get())
+									|| attribute.equals(ForgeMod.BLOCK_REACH.get())) {
 								amount += event.getEntity().getAttributeBaseValue(attribute);
 								isEqualTooltip = true;
 							}
 						}
+						if (!isEqualTooltip && amount == 0d)
+							return;
 
 						MutableComponent component = null;
 						String translationString = "attribute.modifier.plus.";
