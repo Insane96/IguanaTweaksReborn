@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.3.0
 * Added Luck enchantment
   * Unifies Looting, Fortune and Luck of the Sea
 * Rebalanced Heal over time and instant heal
