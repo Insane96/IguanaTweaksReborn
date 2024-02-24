@@ -40,7 +40,7 @@ public class EnergyBoostItem {
             duration = mobEffectInstance.duration;
         if (this.duration == 0) {
             FoodProperties food = stack.getFoodProperties(player);
-            //noinspection ConstantConditions .isEdible() is checked
+            //noinspection ConstantConditions .getFoodProperties() == null is checked
             duration += (int) (Utils.getFoodEffectiveness(food) * 20 * Tiredness.defaultEnergyBoostDurationMultiplier);
         }
         else {

@@ -136,7 +136,7 @@ public class StackSizes extends Feature {
 
         for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
             Item item = entry.getKey();
-            if (!item.isEdible()
+            if (item.getFoodProperties() == null
                     || JsonFeature.isItemInTag(item, NO_STACK_SIZE_CHANGES, isClientSide))
                 continue;
 

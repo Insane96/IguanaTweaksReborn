@@ -18,9 +18,8 @@ public class ItemMixin {
 		if (!FoodDrinks.eatingSpeedBasedOffFood || !Feature.isEnabled(FoodDrinks.class))
 			return;
 
-		if (stack.getItem().isEdible()) {
+		if (stack.getItem().getFoodProperties() != null)
 			callbackInfo.setReturnValue(FoodDrinks.getFoodConsumingTime(stack));
-		}
 	}
 
 	@Inject(at = @At("RETURN"), method = "getUseAnimation", cancellable = true)

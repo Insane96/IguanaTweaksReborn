@@ -14,6 +14,7 @@
 * Broken items can now still attack with 1 damage and reduced knockback if the Knockback feature is enabled
 * Leaves are now twice as dull
 * Tools and weapons now show attack and mine reach
+* Fixed crash with Crossroads mod
 
 ## 3.2.1
 * Added `iguanatweaks:deathGrave` game rule

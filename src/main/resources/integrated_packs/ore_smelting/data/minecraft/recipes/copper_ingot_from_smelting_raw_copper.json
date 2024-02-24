@@ -2,7 +2,7 @@
   "type": "minecraft:smelting",
   "category": "misc",
   "cookingtime": 400,
-  "experience": 0.7,
+  "experience": 0.75,
   "group": "copper_ingot",
   "ingredient": {
     "item": "minecraft:raw_copper"

@@ -173,7 +173,7 @@ public class Tiredness extends JsonFeature {
 	@SubscribeEvent
 	public void onItemFinishUse(LivingEntityUseItemEvent.Finish event) {
 		if (!this.isEnabled()
-				|| !event.getItem().isEdible()
+				|| event.getItem().getItem().getFoodProperties() == null
 				|| !(event.getEntity() instanceof Player player))
 			return;
 		for (EnergyBoostItem energyBoostItem : energyBoostItems) {

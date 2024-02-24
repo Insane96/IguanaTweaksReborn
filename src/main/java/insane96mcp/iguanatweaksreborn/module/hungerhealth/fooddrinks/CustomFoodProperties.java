@@ -38,7 +38,7 @@ public class CustomFoodProperties {
 	public void apply() {
 		List<Item> items = FoodDrinks.getAllItems(this.food, false);
 		for (Item item : items) {
-			if (!item.isEdible()) {
+			if (item.getFoodProperties() == null) {
 				LogHelper.warn("Item %s in Custom Food Properties is not edible", item);
 				return;
 			}

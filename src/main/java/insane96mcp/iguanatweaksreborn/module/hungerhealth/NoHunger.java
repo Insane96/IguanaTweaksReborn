@@ -148,7 +148,7 @@ public class NoHunger extends Feature {
     @SubscribeEvent
     public void onPlayerEat(LivingEntityUseItemEvent.Finish event) {
         if (!this.isEnabled()
-                || !event.getItem().isEdible()
+                || event.getItem().getItem().getFoodProperties() == null
                 || !(event.getEntity() instanceof Player player)
                 || event.getEntity().level().isClientSide)
             return;
@@ -373,7 +373,7 @@ public class NoHunger extends Feature {
     @SubscribeEvent
     public void onTooltip(ItemTooltipEvent event) {
         if (!this.isEnabled()
-                || (!event.getItemStack().getItem().isEdible()))
+                || event.getItemStack().getItem().getFoodProperties() == null)
             return;
 
         Minecraft mc = Minecraft.getInstance();

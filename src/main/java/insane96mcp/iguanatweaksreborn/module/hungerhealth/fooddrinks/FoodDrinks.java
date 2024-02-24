@@ -109,7 +109,7 @@ public class FoodDrinks extends JsonFeature {
 	@SubscribeEvent
 	public void onPlayerEat(LivingEntityUseItemEvent.Finish event) {
 		if (!this.isEnabled()
-				|| !event.getItem().isEdible()
+				|| event.getItem().getItem().getFoodProperties() == null
 				|| !(event.getEntity() instanceof Player player)
 				|| event.getEntity().level().isClientSide)
 			return;
@@ -186,7 +186,7 @@ public class FoodDrinks extends JsonFeature {
 		processedFoodMultipliers = true;
 
 		for (Item item : ForgeRegistries.ITEMS.getValues()) {
-			if (!item.isEdible()
+			if (item.getFoodProperties() == null
 					|| isItemInTag(item, FOOD_BLACKLIST, isClientSide))
 				continue;
 
