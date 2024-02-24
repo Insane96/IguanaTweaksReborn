@@ -65,7 +65,6 @@
 * Fixed mod crashing the game before the dependencies screen
 
 ## 3.1.7
-* Golden apples now give Regenerating Absorption instead of absorption
 * Regenerating Absorption
   * Golden Apples now give regenerating absorption instead of absorption
   * Effect now gives 10% more regen speed per level
