@@ -47,7 +47,7 @@ public class Nerfs extends Feature {
 
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Fishing has a chance to fish a guardian")
-	public static Double fishingCreatureChance = 0.05d;
+	public static Double fishingCreatureChance = 0d;
 
     public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

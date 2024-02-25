@@ -1,7 +1,7 @@
 # Changelog
 
 ## Upcoming
-* 
+* Disabled Fishing Guardian
 
 ## 3.3.0
 * Added Luck enchantment
