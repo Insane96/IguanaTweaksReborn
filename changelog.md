@@ -1,7 +1,9 @@
 # Changelog
 
 ## Upcoming
-* Disabled Fishing Guardian
+* Added No fish if fishing in the same spot
+  * If fishing too many times in the same spot you'll start getting nothing
+  * Disabled Fishing Guardian
 
 ## 3.3.0
 * Added Luck enchantment

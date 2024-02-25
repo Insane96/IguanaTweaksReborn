@@ -1,14 +1,18 @@
 package insane96mcp.iguanatweaksreborn.module.misc;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
@@ -22,6 +26,8 @@ import net.minecraftforge.fml.loading.FMLLoader;
 @Label(name = "Nerfs", description = "Various Nerfs")
 @LoadFeature(module = Modules.Ids.MISC)
 public class Nerfs extends Feature {
+	static final String LAST_FISHING_POS_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "last_fishing_pos";
+	static final String LAST_FISHING_COUNT_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "last_fishing_count";
 	@Config
 	@Label(name = "Iron from Golems only when killed by Player", description = "If true, Iron golems will only drop Iron when killed by the player.")
 	public static Boolean ironRequiresPlayer = true;
@@ -48,6 +54,9 @@ public class Nerfs extends Feature {
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Fishing has a chance to fish a guardian")
 	public static Double fishingCreatureChance = 0d;
+	@Config
+	@Label(name = "No fish if fishing in the same spot")
+	public static Boolean antiFishingFarms = true;
 
     public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -95,12 +104,45 @@ public class Nerfs extends Feature {
 
 	@SubscribeEvent
 	public void onRetrieveBobber(ItemFishedEvent event) {
-		if (!this.isEnabled()
-				|| fishingCreatureChance == 0d
-				|| event.getHookEntity().level().random.nextFloat() > fishingCreatureChance)
+		if (!this.isEnabled())
 			return;
 
-		Guardian guardian = EntityType.GUARDIAN.create(event.getHookEntity().level());
+		trySummonGuardian(event);
+		nerfAutoFishFarm(event);
+	}
+
+	public static void nerfAutoFishFarm(ItemFishedEvent event) {
+		if (!antiFishingFarms
+				|| event.getHookEntity().getPlayerOwner() == null)
+			return;
+		CompoundTag persistentData = event.getHookEntity().getPlayerOwner().getPersistentData();
+		if (persistentData.contains(LAST_FISHING_POS_TAG)) {
+			BlockPos lastFishingPos = new BlockPos(persistentData.getIntArray(LAST_FISHING_POS_TAG)[0], persistentData.getIntArray(LAST_FISHING_POS_TAG)[1], persistentData.getIntArray(LAST_FISHING_POS_TAG)[2]);
+			int distance = lastFishingPos.distManhattan(event.getHookEntity().blockPosition());
+			int lastFishingCount = persistentData.getInt(LAST_FISHING_COUNT_TAG);
+			if (distance <= 6) {
+				lastFishingCount++;
+				if (lastFishingCount >= 10) {
+					event.setCanceled(true);
+					event.getHookEntity().getPlayerOwner().displayClientMessage(Component.translatable(IguanaTweaksReborn.MOD_ID + ".too_much_fishing_in_this_spot"), true);
+				}
+				persistentData.putInt(LAST_FISHING_COUNT_TAG, lastFishingCount);
+			}
+			else {
+				persistentData.putIntArray(LAST_FISHING_POS_TAG, new int[] {event.getHookEntity().getBlockX(), event.getHookEntity().getBlockY(), event.getHookEntity().getBlockZ()});
+				persistentData.putInt(LAST_FISHING_COUNT_TAG, 0);
+			}
+		}
+		else {
+			persistentData.putIntArray(LAST_FISHING_POS_TAG, new int[] {event.getHookEntity().getBlockX(), event.getHookEntity().getBlockY(), event.getHookEntity().getBlockZ()});
+		}
+	}
+
+	public static void trySummonGuardian(ItemFishedEvent event) {
+		if (fishingCreatureChance == 0d
+				|| event.getHookEntity().level().random.nextFloat() > fishingCreatureChance)
+			return;
+		LivingEntity guardian = EntityType.GUARDIAN.create(event.getHookEntity().level());
 		guardian.setPos(event.getHookEntity().position().add(0, guardian.getBbHeight(), 0));
 		Player player = event.getHookEntity().getPlayerOwner();
 		double d0 = player.getX() - event.getHookEntity().getX();

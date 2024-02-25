@@ -4,9 +4,10 @@ import insane96mcp.iguanatweaksreborn.module.world.explosionoverhaul.ITRExplosio
 import insane96mcp.iguanatweaksreborn.module.world.explosionoverhaul.ITRExplosionCreatedEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraftforge.common.MinecraftForge;
 
-public class SREventFactory {
+public class ITEEventFactory {
     /**
      * Returns true if the event is canceled
      */
@@ -25,5 +26,15 @@ public class SREventFactory {
         LivingHurtPreAbsorptionEvent event = new LivingHurtPreAbsorptionEvent(livingEntity, source, amount);
         MinecraftForge.EVENT_BUS.post(event);
         return event.getAmount();
+    }
+
+    /**
+     * Apply changes to the ticks that will be removed from the hook to lure and hook
+     */
+    public static int onHookTickToHookLure(FishingHook hook, int tick)
+    {
+        HookTickToHookLure event = new HookTickToHookLure(hook, tick);
+        MinecraftForge.EVENT_BUS.post(event);
+        return event.getTick();
     }
 }

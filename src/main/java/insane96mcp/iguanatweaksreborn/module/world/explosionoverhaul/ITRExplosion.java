@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 import com.mojang.datafixers.util.Pair;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.entity.ITRFallingBlockEntity;
-import insane96mcp.iguanatweaksreborn.event.SREventFactory;
+import insane96mcp.iguanatweaksreborn.event.ITEEventFactory;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.Util;
@@ -306,7 +306,7 @@ public class ITRExplosion extends Explosion {
 
 	public static ITRExplosion explode(ServerLevel level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, BlockInteraction blockInteraction, boolean poofParticles) {
 		ITRExplosion explosion = new ITRExplosion(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, ExplosionOverhaul.creeperCollateral, poofParticles);
-		if (SREventFactory.onSRExplosionCreated(explosion)) return explosion;
+		if (ITEEventFactory.onSRExplosionCreated(explosion)) return explosion;
 		explosion.gatherAffectedBlocks(!ExplosionOverhaul.disableExplosionRandomness);
 		if (ExplosionOverhaul.enableFlyingBlocks)
 			explosion.fallingBlocks();

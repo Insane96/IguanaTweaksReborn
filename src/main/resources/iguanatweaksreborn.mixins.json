@@ -25,6 +25,7 @@
         "FallingBlockEntityMixin",
         "FarmBlockMixin",
         "FireBlockMixin",
+        "FishingHookMixin",
         "FoodDataMixin",
         "HoneyBottleItemMixin",
         "ItemMixin",

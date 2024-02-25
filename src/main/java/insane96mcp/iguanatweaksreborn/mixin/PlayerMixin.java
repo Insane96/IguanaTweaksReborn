@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.event.SREventFactory;
+import insane96mcp.iguanatweaksreborn.event.ITEEventFactory;
 import insane96mcp.iguanatweaksreborn.module.combat.stats.Stats;
 import insane96mcp.iguanatweaksreborn.module.experience.PlayerExperience;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
@@ -64,7 +64,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 2), argsOnly = true, ordinal = 0)
 	public float onPreAbsorptionCalculation(float amount, DamageSource damageSource) {
-		return SREventFactory.onLivingHurtPreAbsorption(this, damageSource, amount);
+		return ITEEventFactory.onLivingHurtPreAbsorption(this, damageSource, amount);
 	}
 
 	@ModifyConstant(method = "attack", constant = @Constant(floatValue = 0.2f, ordinal = 0))

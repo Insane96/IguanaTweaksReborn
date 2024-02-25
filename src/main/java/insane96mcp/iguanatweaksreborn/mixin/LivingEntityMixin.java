@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.event.SREventFactory;
+import insane96mcp.iguanatweaksreborn.event.ITEEventFactory;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.IProtectionEnchantment;
 import insane96mcp.iguanatweaksreborn.module.movement.TerrainSlowdown;
@@ -79,7 +79,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
 
     @ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 2), argsOnly = true, ordinal = 0)
     public float onPreAbsorptionCalculation(float amount, DamageSource damageSource) {
-        return SREventFactory.onLivingHurtPreAbsorption((LivingEntity) (Object) this, damageSource, amount);
+        return ITEEventFactory.onLivingHurtPreAbsorption((LivingEntity) (Object) this, damageSource, amount);
     }
 
     @Redirect(method = "handleOnClimbable", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;resetFallDistance()V"))
