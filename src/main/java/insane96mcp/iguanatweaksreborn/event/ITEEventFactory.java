@@ -33,7 +33,7 @@ public class ITEEventFactory {
      */
     public static int onHookTickToHookLure(FishingHook hook, int tick)
     {
-        HookTickToHookLure event = new HookTickToHookLure(hook, tick);
+        HookTickToHookLureEvent event = new HookTickToHookLureEvent(hook, tick);
         MinecraftForge.EVENT_BUS.post(event);
         return event.getTick();
     }

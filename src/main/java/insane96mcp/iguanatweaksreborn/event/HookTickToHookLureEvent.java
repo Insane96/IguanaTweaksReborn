@@ -3,10 +3,10 @@ package insane96mcp.iguanatweaksreborn.event;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraftforge.eventbus.api.Event;
 
-public class HookTickToHookLure extends Event {
+public class HookTickToHookLureEvent extends Event {
     private final FishingHook hook;
     private int tick;
-    public HookTickToHookLure(FishingHook hook, int tick)
+    public HookTickToHookLureEvent(FishingHook hook, int tick)
     {
         this.hook = hook;
         this.tick = tick;
