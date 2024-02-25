@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.3.1
 * Added No fish if fishing in the same spot
   * If fishing too many times in the same spot you'll start getting nothing
   * Disabled Fishing Guardian
