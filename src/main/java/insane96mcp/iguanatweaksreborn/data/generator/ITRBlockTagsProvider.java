@@ -6,6 +6,7 @@ import insane96mcp.iguanatweaksreborn.module.mining.blockhardness.BlockHardness;
 import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.BeaconConduit;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.Death;
+import insane96mcp.iguanatweaksreborn.module.world.Nether;
 import insane96mcp.iguanatweaksreborn.module.world.desirepaths.DesirePaths;
 import insane96mcp.iguanatweaksreborn.module.world.timber.TimberTrees;
 import net.minecraft.core.HolderLookup;
@@ -71,6 +72,9 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
 		//noinspection unchecked
 		tag(TimberTrees.TIMBER_TRUNKS)
 				.addTags(BlockTags.OVERWORLD_NATURAL_LOGS);
+
+        tag(Nether.PORTAL_CORNERS)
+                .add(Blocks.CRYING_OBSIDIAN);
 
     }
 

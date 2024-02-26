@@ -4,6 +4,8 @@
 * Added No fish if fishing in the same spot
   * If fishing too many times in the same spot you'll start getting nothing
   * Disabled Fishing Guardian
+* Nether portals now require Crying Obsidian only instead of Gold blocks as alternative
+  * Also made the blocks required configurable with the iguanatweaksreborn:portal_corners block tag
 
 ## 3.3.0
 * Added Luck enchantment
