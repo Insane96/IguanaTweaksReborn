@@ -235,60 +235,47 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 	}
 
 	@JsonAdapter(ExplorationMap.ExplorationMapSerializer.class)
-	private static class ExplorationMap {
-		final TagKey<Structure> destination;
-		final MapDecoration.Type mapDecoration;
-		final byte zoom;
-		final int searchRadius;
-		final boolean skipKnownStructures;
-
-		private ExplorationMap(TagKey<Structure> destination, MapDecoration.Type mapDecoration, byte zoom, int searchRadius, boolean skipKnownStructures) {
-			this.destination = destination;
-			this.mapDecoration = mapDecoration;
-			this.zoom = zoom;
-			this.searchRadius = searchRadius;
-			this.skipKnownStructures = skipKnownStructures;
-		}
+		private record ExplorationMap(TagKey<Structure> destination, MapDecoration.Type mapDecoration, byte zoom,
+									  int searchRadius, boolean skipKnownStructures) {
 
 		public static class ExplorationMapSerializer implements JsonDeserializer<ExplorationMap>, JsonSerializer<ExplorationMap> {
-			@Override
-			public ExplorationMap deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-				TagKey<Structure> tagkey = readStructure(json.getAsJsonObject());
-				String s = json.getAsJsonObject().has("decoration") ? GsonHelper.getAsString(json.getAsJsonObject(), "decoration") : "mansion";
-				MapDecoration.Type mapdecoration$type = ExplorationMapFunction.DEFAULT_DECORATION;
+				@Override
+				public ExplorationMap deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+					TagKey<Structure> tagkey = readStructure(json.getAsJsonObject());
+					String s = json.getAsJsonObject().has("decoration") ? GsonHelper.getAsString(json.getAsJsonObject(), "decoration") : "mansion";
+					MapDecoration.Type mapdecoration$type = ExplorationMapFunction.DEFAULT_DECORATION;
 
-				try {
-					mapdecoration$type = MapDecoration.Type.valueOf(s.toUpperCase(Locale.ROOT));
-				}
-				catch (IllegalArgumentException illegalargumentexception) {
-					ITRLogHelper.error("Error while parsing loot table decoration entry. Found {}. Defaulting to {}", s, ExplorationMapFunction.DEFAULT_DECORATION);
+					try {
+						mapdecoration$type = MapDecoration.Type.valueOf(s.toUpperCase(Locale.ROOT));
+					} catch (IllegalArgumentException illegalargumentexception) {
+						ITRLogHelper.error("Error while parsing loot table decoration entry. Found {}. Defaulting to {}", s, ExplorationMapFunction.DEFAULT_DECORATION);
+					}
+
+					byte b0 = GsonHelper.getAsByte(json.getAsJsonObject(), "zoom", ExplorationMapFunction.DEFAULT_ZOOM);
+					int i = GsonHelper.getAsInt(json.getAsJsonObject(), "search_radius", ExplorationMapFunction.DEFAULT_SEARCH_RADIUS);
+					boolean flag = GsonHelper.getAsBoolean(json.getAsJsonObject(), "skip_existing_chunks", ExplorationMapFunction.DEFAULT_SKIP_EXISTING);
+					return new ExplorationMap(tagkey, mapdecoration$type, b0, i, flag);
 				}
 
-				byte b0 = GsonHelper.getAsByte(json.getAsJsonObject(), "zoom", ExplorationMapFunction.DEFAULT_ZOOM);
-				int i = GsonHelper.getAsInt(json.getAsJsonObject(), "search_radius", ExplorationMapFunction.DEFAULT_SEARCH_RADIUS);
-				boolean flag = GsonHelper.getAsBoolean(json.getAsJsonObject(), "skip_existing_chunks", ExplorationMapFunction.DEFAULT_SKIP_EXISTING);
-				return new ExplorationMap(tagkey, mapdecoration$type, b0, i, flag);
+				@Override
+				public JsonElement serialize(ExplorationMap src, Type typeOfSrc, JsonSerializationContext context) {
+					JsonObject jsonObject = new JsonObject();
+					jsonObject.addProperty("destination", src.destination.location().toString());
+					if (src.mapDecoration != ExplorationMapFunction.DEFAULT_DECORATION)
+						jsonObject.add("decoration", context.serialize(src.mapDecoration.toString().toLowerCase(Locale.ROOT)));
+					if (src.zoom != 2)
+						jsonObject.addProperty("zoom", src.zoom);
+					if (src.searchRadius != 50)
+						jsonObject.addProperty("search_radius", src.searchRadius);
+					if (!src.skipKnownStructures)
+						jsonObject.addProperty("skip_existing_chunks", src.skipKnownStructures);
+					return jsonObject;
+				}
 			}
 
-			@Override
-			public JsonElement serialize(ExplorationMap src, Type typeOfSrc, JsonSerializationContext context) {
-				JsonObject jsonObject = new JsonObject();
-				jsonObject.addProperty("destination", src.destination.location().toString());
-				if (src.mapDecoration != ExplorationMapFunction.DEFAULT_DECORATION)
-					jsonObject.add("decoration", context.serialize(src.mapDecoration.toString().toLowerCase(Locale.ROOT)));
-				if (src.zoom != 2)
-					jsonObject.addProperty("zoom", src.zoom);
-				if (src.searchRadius != 50)
-					jsonObject.addProperty("search_radius", src.searchRadius);
-				if (!src.skipKnownStructures)
-					jsonObject.addProperty("skip_existing_chunks", src.skipKnownStructures);
-				return jsonObject;
+			private static TagKey<Structure> readStructure(JsonObject pJson) {
+				String s = GsonHelper.getAsString(pJson, "destination");
+				return TagKey.create(Registries.STRUCTURE, new ResourceLocation(s));
 			}
 		}
-
-		private static TagKey<Structure> readStructure(JsonObject pJson) {
-			String s = GsonHelper.getAsString(pJson, "destination");
-			return TagKey.create(Registries.STRUCTURE, new ResourceLocation(s));
-		}
-	}
 }

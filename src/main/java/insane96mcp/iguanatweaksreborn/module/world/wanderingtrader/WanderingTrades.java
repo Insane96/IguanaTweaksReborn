@@ -33,6 +33,7 @@ import java.util.function.Supplier;
 @LoadFeature(module = Modules.Ids.WORLD)
 public class WanderingTrades extends JsonFeature {
     public static final TagKey<Structure> DESERT_TEMPLE_TAG = TagKey.create(Registries.STRUCTURE, new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "desert_pyramid"));
+    public static final TagKey<Structure> JUNGLE_PYRAMID_TAG = TagKey.create(Registries.STRUCTURE, new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "jungle_pyramid"));
     public static final TagKey<Structure> IGLOO_TAG = TagKey.create(Registries.STRUCTURE, new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "igloo"));
 
     public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_GENERIC_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
@@ -77,6 +78,8 @@ public class WanderingTrades extends JsonFeature {
             new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.EXPERIENCE_BOTTLE), 8),
             new SerializableTrade(new ItemStack(Items.EMERALD, 8), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.desert_pyramid")), 1)
                     .explorationMap(DESERT_TEMPLE_TAG, MapDecoration.Type.MANSION, ExplorationMapFunction.DEFAULT_ZOOM, 50, false),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 8), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.jungle_pyramid")), 1)
+                    .explorationMap(JUNGLE_PYRAMID_TAG, MapDecoration.Type.MANSION, ExplorationMapFunction.DEFAULT_ZOOM, 50, false),
             new SerializableTrade(new ItemStack(Items.EMERALD, 8), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.igloo")), 1)
                     .explorationMap(IGLOO_TAG, MapDecoration.Type.MANSION, ExplorationMapFunction.DEFAULT_ZOOM, 50, false),
             new SerializableTrade(new ItemStack(Items.EMERALD, 8), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.mansion")), 1)
