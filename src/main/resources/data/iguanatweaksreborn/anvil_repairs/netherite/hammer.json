@@ -1,13 +1,13 @@
 {
 	"item_to_repair": {
-		"id": "minecraft:netherite_hammer"
+		"id": "iguanatweaksexpanded:netherite_hammer"
 	},
 	"repair": [
 		{
 			"repair_material": {
 				"id": "minecraft:diamond"
 			},
-			"amount": 5,
+			"amount": 6,
 			"max_repair": 0.5
 		},
 		{
