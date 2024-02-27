@@ -13,7 +13,9 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -171,11 +173,19 @@ public class Anvils extends Feature {
         oCustomAnvilRepair.ifPresent(anvilRepair -> {
             for (AnvilRepair.RepairData repairData : anvilRepair.repairData) {
                 if (repairData.repairMaterial().type == IdTagMatcher.Type.TAG) {
-                    itemsDescriptions.add(Component.literal("#").append(repairData.repairMaterial().location.toString()));
+                    MutableComponent component = Component.literal("#").append(repairData.repairMaterial().location.toString());
+                    if (repairData.maxRepair() < 1f)
+                        component.append(CommonComponents.space().append(Component.translatable("iguanatweaksreborn.partial_repair")));
+                    itemsDescriptions.add(component);
                 }
                 else {
                     Optional<Item> oItem = repairData.repairMaterial().getAllItems().stream().findAny();
-                    oItem.ifPresent(item -> itemsDescriptions.add(item.getDescription()));
+                    if (oItem.isPresent()) {
+                        MutableComponent component = oItem.get().getDescription().copy();
+                        if (repairData.maxRepair() < 1f)
+                            component.append(CommonComponents.space().append(Component.translatable("iguanatweaksreborn.partial_repair")));
+                        itemsDescriptions.add(component);
+                    }
                 }
             }
         });
