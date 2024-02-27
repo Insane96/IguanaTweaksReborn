@@ -5,6 +5,7 @@
 * "Can be repaired with: ..." in an Anvil now shows if a material only partially repairs the item
 * Reduced netherite enchantability (13 -> 7)
 * Fixed netherite stuff having wrong repair amount for diamonds
+* Fixed infinity overhaul broken?
 
 ## 3.3.1
 * Added No fish if fishing in the same spot

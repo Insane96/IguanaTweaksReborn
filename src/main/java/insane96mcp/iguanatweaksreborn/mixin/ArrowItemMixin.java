@@ -18,7 +18,7 @@ public class ArrowItemMixin {
     @Inject(at = @At("RETURN"), method = "isInfinite", cancellable = true, remap = false)
     private void onIsInfinite(ItemStack stack, ItemStack bow, Player player, CallbackInfoReturnable<Boolean> cir) {
         //Change the return value only if the original method had returned true
-        if (!cir.getReturnValue() || EnchantmentsFeature.isInfinityOverhaulEnabled())
+        if (!cir.getReturnValue() || !EnchantmentsFeature.isInfinityOverhaulEnabled())
             return;
         int enchant = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
         RandomSource random = Utils.syncedRandom(player);
