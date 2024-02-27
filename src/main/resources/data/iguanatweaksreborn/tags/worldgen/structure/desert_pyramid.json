@@ -1,5 +1,9 @@
 {
     "values": [
-        "minecraft:desert_pyramid"
+        "minecraft:desert_pyramid",
+        {
+            "id": "#betterdeserttemples:better_desert_temples",
+            "required": false
+        }
     ]
 }
