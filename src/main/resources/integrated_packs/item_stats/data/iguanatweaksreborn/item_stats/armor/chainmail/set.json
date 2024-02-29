@@ -1,5 +1,6 @@
 {
     "item": "#iguanatweaksreborn:equipment/armor/chainmail",
-    "enchantability": 15,
-    "armor_toughness": 0
+    "enchantability": 9,
+    "armor_toughness": 0,
+    "knockback_resistance": 0.02
 }

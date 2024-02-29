@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:golden_leggings",
 	"durability": 75,
-	"armor": 2.1,
+	"armor": 1.5,
 	"modifiers": [
 		{
 			"uuid": "4f1caa92-2558-4416-829c-9faf922d7137",

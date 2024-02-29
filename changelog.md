@@ -1,6 +1,9 @@
 # Changelog
 
-## Upcoming
+## 3.4.0
+* Added Innate Resistance and rebalanced armors
+  * Innate Resistance is a new attribute that decreases damage taken by a flat amount
+  * Armors have been rebalanced and some now have Innate Resistance
 * Wandering Traders can now sell Jungle temple maps
 * "Can be repaired with: ..." in an Anvil now shows if a material only partially repairs the item
 * Reduced netherite enchantability (13 -> 7)

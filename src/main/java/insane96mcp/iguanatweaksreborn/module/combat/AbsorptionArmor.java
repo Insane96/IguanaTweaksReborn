@@ -13,7 +13,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Absorption Armor", description = "Armor gives regenerating absorption instead of armor and toughness speeds up regen speed")
+@Label(name = "Absorption Armor", description = "Armor gives regenerating absorption and innate resistance instead of armor and toughness speeds up regen speed")
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class AbsorptionArmor extends Feature {
 

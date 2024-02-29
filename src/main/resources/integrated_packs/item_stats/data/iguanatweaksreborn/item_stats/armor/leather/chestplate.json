@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:leather_chestplate",
-	"durability": 64,
-	"armor": 2.1,
+	"durability": 80,
+	"armor": 1.4,
 	"modifiers": [
 		{
 			"uuid": "e5ca3f97-f7a0-439b-8c94-b1af3bdf3828",
@@ -10,6 +10,14 @@
 			"attribute": "minecraft:generic.movement_speed",
 			"amount": 0,
 			"operation": "multiply_base"
+		},
+		{
+			"uuid": "e5ca3f97-f7a0-439b-8c94-b1af3bdf3828",
+			"name": "Item stats data pack",
+			"slot": "chest",
+			"attribute": "iguanatweaksreborn:innate_resistance",
+			"amount": 0.4,
+			"operation": "addition"
 		}
 	]
 }

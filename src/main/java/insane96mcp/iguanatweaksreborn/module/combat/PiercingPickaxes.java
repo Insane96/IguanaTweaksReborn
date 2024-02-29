@@ -55,7 +55,7 @@ public class PiercingPickaxes extends Feature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
-	public static void piercingDamageAttribute(EntityAttributeModificationEvent event) {
+	public static void addAttribute(EntityAttributeModificationEvent event) {
 		for (EntityType<? extends LivingEntity> entityType : event.getTypes()) {
 			if (event.has(entityType, PIERCING_DAMAGE.get()))
 				continue;

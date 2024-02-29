@@ -67,7 +67,7 @@ public class RegeneratingAbsorption extends Feature {
         super(module, enabledByDefault, canBeDisabled);
     }
 
-    public static void regeneratingAbsorptionAttribute(EntityAttributeModificationEvent event) {
+    public static void addAttribute(EntityAttributeModificationEvent event) {
         for (EntityType<? extends LivingEntity> entityType : event.getTypes()) {
             if (!event.has(entityType, ATTRIBUTE.get()))
                 event.add(entityType, ATTRIBUTE.get());

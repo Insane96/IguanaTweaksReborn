@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:netherite_boots",
 	"durability": 168,
-	"armor": 2.6,
+	"armor": 2.4,
 	"modifiers": [
 		{
 			"uuid": "4b8573c6-bd4b-4560-a411-04b78ae950ce",
@@ -10,6 +10,14 @@
 			"attribute": "minecraft:generic.movement_speed",
 			"amount": -0.018,
 			"operation": "multiply_base"
+		},
+		{
+			"uuid": "4b8573c6-bd4b-4560-a411-04b78ae950ce",
+			"name": "Item stats data pack",
+			"slot": "feet",
+			"attribute": "iguanatweaksreborn:innate_resistance",
+			"amount": 0.3,
+			"operation": "addition"
 		}
 	]
 }

@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:leather_leggings",
-	"durability": 60,
-	"armor": 1.8,
+	"durability": 75,
+	"armor": 1.2,
 	"modifiers": [
 		{
 			"uuid": "1277bad1-246f-4f3b-932c-d944839a164e",
@@ -10,6 +10,14 @@
 			"attribute": "minecraft:generic.movement_speed",
 			"amount": 0,
 			"operation": "multiply_base"
+		},
+		{
+			"uuid": "1277bad1-246f-4f3b-932c-d944839a164e",
+			"name": "Item stats data pack",
+			"slot": "legs",
+			"attribute": "iguanatweaksreborn:innate_resistance",
+			"amount": 0.4,
+			"operation": "addition"
 		}
 	]
 }

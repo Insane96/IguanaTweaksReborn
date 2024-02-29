@@ -1,8 +1,7 @@
 {
 	"item": "minecraft:iron_helmet",
 	"durability": 91,
-	"armor": 2.4,
-	"knockback_resistance": 0.03,
+	"armor": 1.6,
 	"modifiers": [
 		{
 			"uuid": "cf4db784-9677-4e90-9c74-ee3d85c9a641",
@@ -11,6 +10,14 @@
 			"attribute": "minecraft:generic.movement_speed",
 			"amount": -0.01,
 			"operation": "multiply_base"
+		},
+		{
+			"uuid": "cf4db784-9677-4e90-9c74-ee3d85c9a641",
+			"name": "Item stats data pack",
+			"slot": "head",
+			"attribute": "iguanatweaksreborn:innate_resistance",
+			"amount": 0.4,
+			"operation": "addition"
 		}
 	]
 }

@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:golden_helmet",
 	"durability": 65,
-	"armor": 1.4,
+	"armor": 1,
 	"modifiers": [
 		{
 			"uuid": "3f22e9a3-0916-43ab-a93f-ba52e5ae28e5",
