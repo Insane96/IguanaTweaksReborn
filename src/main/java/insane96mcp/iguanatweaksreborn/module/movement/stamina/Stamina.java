@@ -42,6 +42,7 @@ public class Stamina extends Feature {
 
     public static final String STAMINA = IguanaTweaksReborn.RESOURCE_PREFIX + "stamina";
     public static final String STAMINA_LOCKED = IguanaTweaksReborn.RESOURCE_PREFIX + "stamina_locked";
+    public static String OVERLAY = "stamina_overlay";
 
     @Config(min = 0)
     @Label(name = "Stamina per half heart", description = "How much stamina the player has per half heart. Each 1 stamina is 1 tick of running")
@@ -171,8 +172,8 @@ public class Stamina extends Feature {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
-        event.registerAbove(VanillaGuiOverlay.PLAYER_HEALTH.id(), "stamina_overlay", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
-            if (isEnabled(Stamina.class) && gui.shouldDrawSurvivalElements() && gui.shouldDrawSurvivalElements())
+        event.registerAbove(VanillaGuiOverlay.PLAYER_HEALTH.id(), OVERLAY, (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
+            if (isEnabled(Stamina.class) && gui.shouldDrawSurvivalElements())
                 renderStamina(gui, guiGraphics);
         });
     }

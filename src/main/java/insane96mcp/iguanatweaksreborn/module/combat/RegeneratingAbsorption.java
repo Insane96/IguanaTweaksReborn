@@ -4,9 +4,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.event.LivingHurtPreAbsorptionEvent;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.movement.stamina.Stamina;
 import insane96mcp.iguanatweaksreborn.network.message.RegenAbsorptionSync;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
-import insane96mcp.iguanatweaksreborn.utils.ClientUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -31,7 +31,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -113,7 +112,7 @@ public class RegeneratingAbsorption extends Feature {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
-        event.registerAbove(VanillaGuiOverlay.PLAYER_HEALTH.id(), "regenerating_absorption", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAbove(new ResourceLocation(IguanaTweaksReborn.MOD_ID, Stamina.OVERLAY), "regenerating_absorption", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
             if (isEnabled(RegeneratingAbsorption.class) && gui.shouldDrawSurvivalElements() && gui.shouldDrawSurvivalElements())
                 renderAbsorption(guiGraphics, screenWidth, screenHeight);
         });
@@ -133,7 +132,7 @@ public class RegeneratingAbsorption extends Feature {
         for (int i = 1; i <= level; i += 2)
         {
             if (i == level)
-                ClientUtils.blitVericallyMirrored(GUI_ICONS, guiGraphics, left, top, 9, 0, 9, 9, 18, 9);
+                guiGraphics.blit(GUI_ICONS, left, top, 9, 0, 9, 9, 18, 9);
             else
                 guiGraphics.blit(GUI_ICONS, left, top, 0, 0, 9, 9, 18, 9);
             //else
