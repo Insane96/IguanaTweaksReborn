@@ -35,6 +35,7 @@ import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -110,7 +111,7 @@ public class RegeneratingAbsorption extends Feature {
     }
 
     @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
         event.registerAbove(VanillaGuiOverlay.PLAYER_HEALTH.id(), "regenerating_absorption", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
             if (isEnabled(RegeneratingAbsorption.class) && gui.shouldDrawSurvivalElements() && gui.shouldDrawSurvivalElements())
@@ -125,7 +126,7 @@ public class RegeneratingAbsorption extends Feature {
         mc.getProfiler().push("armor");
 
         RenderSystem.enableBlend();
-        int left = width / 2 + 82;
+        int left = width / 2 - 91;
         int top = height - gui.leftHeight;
 
         int level = Mth.ceil(mc.player.getPersistentData().getFloat(REGEN_ABSORPTION_TAG));
@@ -138,12 +139,12 @@ public class RegeneratingAbsorption extends Feature {
             //else
                 //guiGraphics.blit(GUI_ICONS, left, top, 0, 0, 0, 9, 256, 256);
             if (i % 19 == 0) {
-                left = width / 2 + 82;
+                left = width / 2 - 91;
                 top -= 10;
                 gui.leftHeight += 10;
             }
             else
-                left -= 8;
+                left += 8;
         }
         if (level > 0)
             gui.leftHeight += 10;
