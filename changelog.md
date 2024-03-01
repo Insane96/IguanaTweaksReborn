@@ -1,9 +1,11 @@
 # Changelog
 
 ## 3.4.0
-* Added Innate Resistance and rebalanced armors
-  * Innate Resistance is a new attribute that decreases damage taken by a flat amount
-  * Armors have been rebalanced and some now have Innate Resistance
+* Reworked armor and toughness
+  * Armor now reduces damage by a percentage
+  * Toughness reduces a flat amount of damage
+  * Absorption armor has been disabled
+  * Golden armor now gives +2 regenerating absorption and +20% regen absorption speed instead of +5 max health
 * Wandering Traders can now sell Jungle temple maps
 * "Can be repaired with: ..." in an Anvil now shows if a material only partially repairs the item
 * Regenerating absorption effect no longer gives regen speed

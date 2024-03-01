@@ -10,14 +10,6 @@
 			"attribute": "minecraft:generic.movement_speed",
 			"amount": -0.018,
 			"operation": "multiply_base"
-		},
-		{
-			"uuid": "4b8573c6-bd4b-4560-a411-04b78ae950ce",
-			"name": "Item stats data pack",
-			"slot": "feet",
-			"attribute": "iguanatweaksreborn:innate_resistance",
-			"amount": 0.3,
-			"operation": "addition"
 		}
 	]
 }

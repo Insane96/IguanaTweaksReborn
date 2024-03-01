@@ -112,7 +112,7 @@ public class RegeneratingAbsorption extends Feature {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
-        event.registerBelow(VanillaGuiOverlay.AIR_LEVEL.id(), "regenerating_absorption", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
+        event.registerAbove(VanillaGuiOverlay.PLAYER_HEALTH.id(), "regenerating_absorption", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
             if (isEnabled(RegeneratingAbsorption.class) && gui.shouldDrawSurvivalElements() && gui.shouldDrawSurvivalElements())
                 renderAbsorption(guiGraphics, screenWidth, screenHeight);
         });
@@ -126,7 +126,7 @@ public class RegeneratingAbsorption extends Feature {
 
         RenderSystem.enableBlend();
         int left = width / 2 + 82;
-        int top = height - gui.rightHeight;
+        int top = height - gui.leftHeight;
 
         int level = Mth.ceil(mc.player.getPersistentData().getFloat(REGEN_ABSORPTION_TAG));
         for (int i = 1; i <= level; i += 2)
@@ -140,13 +140,13 @@ public class RegeneratingAbsorption extends Feature {
             if (i % 19 == 0) {
                 left = width / 2 + 82;
                 top -= 10;
-                gui.rightHeight += 10;
+                gui.leftHeight += 10;
             }
             else
                 left -= 8;
         }
         if (level > 0)
-            gui.rightHeight += 10;
+            gui.leftHeight += 10;
 
         RenderSystem.disableBlend();
         mc.getProfiler().pop();

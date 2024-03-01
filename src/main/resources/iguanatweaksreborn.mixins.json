@@ -15,6 +15,7 @@
         "BoatMixin",
         "BonusLevelTableConditionMixin",
         "CampfireBlockMixin",
+        "CombatRulesMixin",
         "ConduitBlockEntityMixin",
         "DigDurabilityEnchantmentMixin",
         "DiggerItemMixin",

@@ -5,11 +5,19 @@
 	"modifiers": [
 		{
 			"uuid": "f700b45a-0c51-40f8-9f59-836c519d64d5",
-			"name": "Golden armor bonus max health",
+			"name": "Golden armor bonus",
 			"slot": "chest",
-			"attribute": "minecraft:generic.max_health",
-			"amount": 5,
+			"attribute": "iguanatweaksreborn:regenerating_absorption",
+			"amount": 2,
 			"operation": "addition"
+		},
+		{
+			"uuid": "f700b45a-0c51-40f8-9f59-836c519d64d5",
+			"name": "Golden armor bonus",
+			"slot": "chest",
+			"attribute": "iguanatweaksreborn:regenerating_absorption_speed",
+			"amount": 0.2,
+			"operation": "multiply_base"
 		},
 		{
 			"uuid": "e5ca3f97-f7a0-439b-8c94-b1af3bdf3828",

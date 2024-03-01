@@ -10,14 +10,6 @@
 			"attribute": "minecraft:generic.movement_speed",
 			"amount": -0.042,
 			"operation": "multiply_base"
-		},
-		{
-			"uuid": "e5ca3f97-f7a0-439b-8c94-b1af3bdf3828",
-			"name": "Item stats data pack",
-			"slot": "chest",
-			"attribute": "iguanatweaksreborn:innate_resistance",
-			"amount": 0.3,
-			"operation": "addition"
 		}
 	]
 }

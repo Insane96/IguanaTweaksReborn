@@ -1,6 +1,6 @@
 {
     "item": "#iguanatweaksreborn:equipment/armor/iron",
     "enchantability": 11,
-    "armor_toughness": 0,
+    "armor_toughness": 4,
     "knockback_resistance": 0.03
 }
