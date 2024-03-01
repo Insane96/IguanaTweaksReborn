@@ -6,6 +6,7 @@
   * Armors have been rebalanced and some now have Innate Resistance
 * Wandering Traders can now sell Jungle temple maps
 * "Can be repaired with: ..." in an Anvil now shows if a material only partially repairs the item
+* Regenerating absorption effect no longer gives regen speed
 * Reduced netherite enchantability (13 -> 7)
 * Fixed netherite stuff having wrong repair amount for diamonds
 * Fixed infinity overhaul broken?
