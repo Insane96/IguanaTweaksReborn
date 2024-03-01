@@ -156,7 +156,7 @@ public class Crops extends Feature {
 		if (!this.isEnabled()
 				|| !dataPack
 				|| !(event.getTarget() instanceof Chicken)
-				|| !CHICKEN_FOOD_ITEMS.test(event.getItemStack()))
+				|| CHICKEN_FOOD_ITEMS.test(event.getItemStack()))
 			return;
 
 		event.setCanceled(true);

@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed chickens feedable with the wrong seeds
+
 ## 3.4.0
 * Reworked armor and toughness
   * Armor now reduces damage by a percentage
