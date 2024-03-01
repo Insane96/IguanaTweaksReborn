@@ -28,7 +28,7 @@ public class InnateResistance extends Feature {
     public static final RegistryObject<Attribute> ATTRIBUTE = ITRRegistries.ATTRIBUTES.register("innate_resistance", () -> new RangedAttribute("attribute.name.innate_resistance", 0d, 0d, 1024d));
 
     public static final RegistryObject<MobEffect> EFFECT = ITRRegistries.MOB_EFFECTS.register("innate_resistance", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x818894)
-            .addAttributeModifier(ATTRIBUTE.get(), "704d7291-63ba-4346-8aa8-a08e90a13fdf", 0.5, AttributeModifier.Operation.ADDITION));
+            .addAttributeModifier(ATTRIBUTE.get(), "704d7291-63ba-4346-8aa8-a08e90a13fdf", 0.4, AttributeModifier.Operation.ADDITION));
 
     public InnateResistance(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
