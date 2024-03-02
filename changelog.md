@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Halved Ancient Debris hardness
 * Fixed chickens feedable with the wrong seeds
 
 ## 3.4.0

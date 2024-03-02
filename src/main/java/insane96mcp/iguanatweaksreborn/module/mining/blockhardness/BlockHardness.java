@@ -74,7 +74,7 @@ public class BlockHardness extends JsonFeature {
 			IdTagValue.newId("iguanatweaksexpanded:rich_deepslate_iron_ore", 6d),
 			IdTagValue.newId("iguanatweaksexpanded:rich_deepslate_gold_ore", 6.666d),
 
-			IdTagValue.newId("minecraft:ancient_debris", 12d),
+			IdTagValue.newId("minecraft:ancient_debris", 6d),
 			IdTagValue.newId("minecraft:budding_amethyst", 4.5d),
 			IdTagValue.newTag("iguanatweaksreborn:obsidians", 25d),
 
