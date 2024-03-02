@@ -72,7 +72,7 @@ public class Spawners extends JsonFeature {
 
 	@Config(min = 0)
 	@Label(name = "Spawning speed boost", description = "How much faster spawners tick down the spawning delay.")
-	public static Integer spawningSpeedBoost = 3;
+	public static Integer spawningSpeedBoost = 2;
 
 	public static final ArrayList<IdTagValue> FIXED_SPAWNER_SPAWNABLE_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.newId("minecraft:blaze", "minecraft:the_nether"), 64)
