@@ -73,6 +73,9 @@ public class Stats extends Feature {
 	@Config
 	@Label(name = "Better weakness", description = "Changes Weakness like Strength effect from -3 damage per level to -20% damage per level. (Requires a Minecraft restart)")
 	public static Boolean betterWeakness = true;
+	@Config
+	@Label(name = "Better haste/mining fatigue", description = "Changes Mining fatigue and haste to no longer affects attack speed. (Requires a Minecraft restart)")
+	public static Boolean betterHasteMiningFatigue = true;
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Bow's Arrows Base Damage", description = "Set arrow's base damage if shot from bow.")
 	public static Double bowsArrowsBaseDamage = 1.5d;
@@ -97,6 +100,10 @@ public class Stats extends Feature {
 			MobEffects.WEAKNESS.attributeModifiers.remove(Attributes.ATTACK_DAMAGE);
 			MobEffects.WEAKNESS.addAttributeModifier(Attributes.ATTACK_DAMAGE, "22653B89-116E-49DC-9B6B-9971489B5BE5", 0.0D, AttributeModifier.Operation.MULTIPLY_BASE);
 			((AttackDamageMobEffect)MobEffects.WEAKNESS).multiplier = -0.2d;
+		}
+		if (betterHasteMiningFatigue) {
+			MobEffects.DIG_SPEED.attributeModifiers.remove(Attributes.ATTACK_SPEED);
+			MobEffects.DIG_SLOWDOWN.attributeModifiers.remove(Attributes.ATTACK_SPEED);
 		}
 	}
 

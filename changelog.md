@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Added Better Haste / Mining Fatigue
+  * Removes the attack speed changes from these effects
 * Halved Ancient Debris hardness
 * Slowed down spawners
 * Fixed chickens feedable with the wrong seeds
