@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Halved Ancient Debris hardness
+* Slowed down spawners
 * Fixed chickens feedable with the wrong seeds
 
 ## 3.4.0
