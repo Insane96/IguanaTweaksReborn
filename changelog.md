@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.4.2
 * Coal veins are now rarer
 * Better Loot data pack now disables itself if ITE is present
 
