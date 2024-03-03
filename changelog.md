@@ -1,7 +1,8 @@
 # Changelog
 
 ## Upcoming
-* Slightly reduced coal generation
+* Coal veins are now rarer
+* Better Loot data pack now disables itself if ITE is present
 
 ## 3.4.1
 * Added Better Haste / Mining Fatigue
