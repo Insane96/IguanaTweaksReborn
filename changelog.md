@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Slightly reduced coal generation
+
 ## 3.4.1
 * Added Better Haste / Mining Fatigue
   * Removes the attack speed changes from these effects
