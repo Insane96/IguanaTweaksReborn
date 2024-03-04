@@ -1,7 +1,7 @@
 {
 	"item": "minecraft:trident",
-	"durability": 475,
-	"attack_damage": 7,
+	"durability": 315,
+	"attack_damage": 5,
 	"attack_speed": 1.0,
 	"modifiers": [
 		{
