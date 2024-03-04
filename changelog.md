@@ -3,6 +3,7 @@
 ## Upcoming
 * Tools no longer take 2 damage when hurting entities
 * Reduced Hoes base attack speed (2.5 -> 2.2)
+* Reduced trident attack speed (1.1 -> 1.0)
 * Moved IEnchantmentTooltip to InsaneLib
 
 ## 3.4.2
