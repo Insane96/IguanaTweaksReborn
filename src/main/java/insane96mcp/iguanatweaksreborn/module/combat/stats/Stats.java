@@ -80,6 +80,9 @@ public class Stats extends Feature {
 	@Label(name = "Bow's Arrows Base Damage", description = "Set arrow's base damage if shot from bow.")
 	public static Double bowsArrowsBaseDamage = 1.5d;
 	@Config
+	@Label(name = "1 damage for tools attacking", description = "If enabled, tools will not take 2 damage when used to hurt entities")
+	public static Boolean oneDamageForToolAttacking = true;
+	@Config
 	@Label(name = "Item Stats Data Pack", description = "Enables a data pack that changes all the item stats")
 	public static Boolean itemStatsDataPack = true;
 
