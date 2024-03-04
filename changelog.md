@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Tools no longer take 2 damage when hurting entities
+* Moved IEnchantmentTooltip to InsaneLib
 
 ## 3.4.2
 * Coal veins are now rarer

@@ -4,7 +4,6 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.stats.Stats;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.FireAspect;
-import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.IEnchantmentTooltip;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Knockback;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Luck;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.BaneOfSSSS;
@@ -22,7 +21,6 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
@@ -41,7 +39,6 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -293,22 +290,6 @@ public class EnchantmentsFeature extends JsonFeature {
 				return itemStatistics.enchantability();
 		}
 		return stack.getEnchantmentValue();
-	}
-
-	@SubscribeEvent
-	public void onTooltip(ItemTooltipEvent event) {
-		if (!this.isEnabled()
-				|| !event.getItemStack().isEnchanted()
-				|| !Screen.hasShiftDown())
-			return;
-
-		Map<Enchantment, Integer> allEnchantments = event.getItemStack().getAllEnchantments();
-		for (Enchantment enchantment : allEnchantments.keySet()) {
-			if (!(enchantment instanceof IEnchantmentTooltip enchantmentTooltip))
-				continue;
-			int lvl = allEnchantments.get(enchantment);
-			event.getToolTip().add(enchantmentTooltip.getTooltip(event.getItemStack(), lvl));
-		}
 	}
 
 	public static float applyMiningSpeedModifiers(float miningSpeed, boolean applyEfficiency, LivingEntity entity) {
