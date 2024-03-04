@@ -4,6 +4,7 @@
 * Tools no longer take 2 damage when hurting entities
 * Reduced Hoes base attack speed (2.5 -> 2.2)
 * Reduced trident attack speed (1.1 -> 1.0), durability (475 -> 315) and attack damage (8 -> 6)
+* Unbreaking formula changed from +50% per level to +`35% * level + 35% * (level - 1)`
 * Moved IEnchantmentTooltip to InsaneLib
 
 ## 3.4.2

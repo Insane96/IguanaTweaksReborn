@@ -69,7 +69,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Label(name = "Infinity overhaul", description = "Infinity can go up to level 4. Each level makes an arrow have 1 in level+1 chance to not consume.")
 	public static Boolean infinityOverhaul = true;
 	@Config
-	@Label(name = "Less unbreakable unbreaking", description = "Unbreaking chance to not consume durability is changed from 50%/66.7%/75%/80%/... to 25%/45%/60%/70%/... (at levels I/II/III/IV)")
+	@Label(name = "Less unbreakable unbreaking", description = "Unbreaking \"bonus durability\" is changed from 100%/200%/300%/400% to 35%/105%/175%/245% (at levels I/II/III/IV)")
 	public static Boolean unbreakingOverhaul = true;
 	@Config
 	@Label(name = "Small Thorns Overhaul", description = "Thorns is no longer compatible with other protections, but deals damage every time (higher levels deal more damage) and no longer damages items.")
@@ -171,8 +171,8 @@ public class EnchantmentsFeature extends JsonFeature {
 
 	public static float unbreakingBonus(int lvl) {
 		if (isUnbreakingOverhaul()) {
-			//Tools last 50% more per level
-			return 1 - 1 / (1 + lvl * 0.5f);
+			//Tools last 35% more per level + 35% * (level - 1)
+			return 1 - 1 / (1 + (lvl * 0.35f + (0.35f * (lvl - 1))));
 		}
 		else {
 			return 1f / (lvl + 1);
