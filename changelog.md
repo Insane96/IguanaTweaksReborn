@@ -6,6 +6,7 @@
 * Reduced trident attack speed (1.1 -> 1.0), durability (475 -> 315) and attack damage (8 -> 6)
 * Unbreaking formula changed from +50% per level to +`35% * level + 35% * (level - 1)`
 * Moved IEnchantmentTooltip to InsaneLib
+* Fixed Graves keeping vanishing curse items
 
 ## 3.4.2
 * Coal veins are now rarer

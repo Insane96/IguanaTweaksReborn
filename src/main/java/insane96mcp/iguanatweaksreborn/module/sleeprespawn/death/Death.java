@@ -20,6 +20,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -83,15 +84,15 @@ public class Death extends Feature {
 		GraveBlockEntity graveBlockEntity = (GraveBlockEntity) player.level().getBlockEntity(pos);
 		List<ItemStack> items = new ArrayList<>();
 		player.getInventory().items.forEach(itemStack -> {
-			if (!itemStack.isEmpty())
+			if (!itemStack.isEmpty() && itemStack.getEnchantmentLevel(Enchantments.VANISHING_CURSE) == 0)
 				items.add(itemStack);
 		});
 		player.getInventory().armor.forEach(itemStack -> {
-			if (!itemStack.isEmpty())
+			if (!itemStack.isEmpty() && itemStack.getEnchantmentLevel(Enchantments.VANISHING_CURSE) == 0)
 				items.add(itemStack);
 		});
 		player.getInventory().offhand.forEach(itemStack -> {
-			if (!itemStack.isEmpty())
+			if (!itemStack.isEmpty() && itemStack.getEnchantmentLevel(Enchantments.VANISHING_CURSE) == 0)
 				items.add(itemStack);
 		});
 		if (ModList.get().isLoaded("toolbelt"))
