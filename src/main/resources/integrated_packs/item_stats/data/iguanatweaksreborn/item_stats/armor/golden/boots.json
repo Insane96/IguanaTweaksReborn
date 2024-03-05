@@ -8,16 +8,8 @@
 			"name": "Golden armor bonus",
 			"slot": "feet",
 			"attribute": "iguanatweaksreborn:regenerating_absorption",
-			"amount": 2,
+			"amount": 1,
 			"operation": "addition"
-		},
-		{
-			"uuid": "dc49f564-489f-4f70-ab50-ce85cc4bfa85",
-			"name": "Golden armor bonus",
-			"slot": "feet",
-			"attribute": "iguanatweaksreborn:regenerating_absorption_speed",
-			"amount": 0.2,
-			"operation": "multiply_base"
 		},
 		{
 			"uuid": "4b8573c6-bd4b-4560-a411-04b78ae950ce",

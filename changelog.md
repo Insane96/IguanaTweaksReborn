@@ -5,6 +5,9 @@
 * Reduced Hoes base attack speed (2.5 -> 2.2) and knockback (-60% -> -75%)
 * Reduced trident attack speed (1.1 -> 1.0), durability (475 -> 315) and attack damage (8 -> 6)
 * Unbreaking formula changed from +`50% * level` to +`35% * level + 35% * (level - 1)`
+* Changed armor formula
+  * Armor reduces damage by a percentage with diminishing return
+  * Toughness reduces a flat amount of damage
 * Item's stats are now ordered
 * Moved IEnchantmentTooltip to InsaneLib
 * Fixed Graves keeping vanishing curse items

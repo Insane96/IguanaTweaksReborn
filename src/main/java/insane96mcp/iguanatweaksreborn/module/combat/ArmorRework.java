@@ -16,7 +16,7 @@ public class ArmorRework extends Feature {
 
     @Config
     @Label(name = "Damage Reduction formula", description = "Vanilla formula is 'damage * (1 - ((MIN(20, MAX(armor / 5, armor - ((4 * damage) / (toughness + 8)))))) / 25))'")
-    public static String formula = "(damage - (toughness / 10)) * (1 - ((MIN(20, MAX(armor / 5, armor - (2 * (damage - (toughness / 10)) / 10)))) / 40))";
+    public static String formula = "MAX(0, damage - (0.8 * toughness / 10 * ((toughness + 4) / (toughness + 1)))) * (1 - 1.25 * (armor / (armor + 30)))";
 
     public ArmorRework(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -34,7 +34,7 @@ public class ArmorRework extends Feature {
             return result.getNumberValue().floatValue();
         }
         catch (Exception ex) {
-            LogHelper.error("Failed to evaluate armor formula: %s", expression);
+            LogHelper.error("Failed to evaluate armor formula: %s\n%s", formula, ex);
             return -1f;
         }
     }
