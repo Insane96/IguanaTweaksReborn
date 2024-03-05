@@ -61,7 +61,7 @@ public class Stats extends Feature {
 	public static Boolean disableCritArrowsBonusDamage = true;
 	@Config(min = 0, max = 1)
 	@Label(name = "Hoes Knockback multiplier")
-	public static Double hoesKnockbackMultiplier = 0.4d;
+	public static Double hoesKnockbackMultiplier = 0.25d;
 
 	@Config
 	@Label(name = "Fix tooltips", description = "Vanilla tooltips on gear don't sum up multiple modifiers (e.g. a sword would have \"4 Attack Damage\" and \"-2 Attack Damage\" instead of \"2 Attack Damage\". This might break other mods messing with these Tooltips (e.g. Quark's improved tooltips)")
