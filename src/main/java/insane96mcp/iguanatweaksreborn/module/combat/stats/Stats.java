@@ -35,11 +35,9 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Label(name = "Misc Stats", description = "Various changes from weapons damage to armor reduction")
@@ -170,59 +168,61 @@ public class Stats extends Feature {
 			if (!multimap.isEmpty()) {
 				event.getToolTip().add(CommonComponents.EMPTY);
 				event.getToolTip().add(Component.translatable("item.modifiers." + equipmentslot.getName()).withStyle(ChatFormatting.GRAY));
-				for(Attribute attribute : multimap.keySet()) {
-					Map<AttributeModifier.Operation, List<AttributeModifier>> modifiersByOperation = multimap.get(attribute).stream().collect(Collectors.groupingBy(AttributeModifier::getOperation));
-					modifiersByOperation.forEach((operation, modifier) -> {
-						double amount = modifier.stream().mapToDouble(AttributeModifier::getAmount).sum();
+				multimap.keySet().stream().sorted(Comparator.comparing(attr -> ForgeRegistries.ATTRIBUTES.getKey(attr).getPath())).forEach(
+					attribute -> {
+						Map<AttributeModifier.Operation, List<AttributeModifier>> modifiersByOperation = multimap.get(attribute).stream().collect(Collectors.groupingBy(AttributeModifier::getOperation));
+						modifiersByOperation.forEach((operation, modifier) -> {
+							double amount = modifier.stream().mapToDouble(AttributeModifier::getAmount).sum();
 
-						boolean isEqualTooltip = false;
-						if (event.getEntity() != null && operation == AttributeModifier.Operation.ADDITION && equipmentslot == EquipmentSlot.MAINHAND) {
-							if (attribute.equals(Attributes.ATTACK_DAMAGE)) {
-								amount += event.getEntity().getAttributeBaseValue(Attributes.ATTACK_DAMAGE);
-								//amount += EnchantmentHelper.getDamageBonus(event.getItemStack(), MobType.UNDEFINED);
-								isEqualTooltip = true;
+							boolean isEqualTooltip = false;
+							if (event.getEntity() != null && operation == AttributeModifier.Operation.ADDITION && equipmentslot == EquipmentSlot.MAINHAND) {
+								if (attribute.equals(Attributes.ATTACK_DAMAGE)) {
+									amount += event.getEntity().getAttributeBaseValue(Attributes.ATTACK_DAMAGE);
+									//amount += EnchantmentHelper.getDamageBonus(event.getItemStack(), MobType.UNDEFINED);
+									isEqualTooltip = true;
+								}
+								if (attribute.equals(PiercingPickaxes.PIERCING_DAMAGE.get())
+										|| attribute.equals(Attributes.ATTACK_SPEED)
+										|| attribute.equals(Attributes.KNOCKBACK_RESISTANCE)
+										|| attribute.equals(ForgeMod.ENTITY_REACH.get())
+										|| attribute.equals(ForgeMod.BLOCK_REACH.get())) {
+									amount += event.getEntity().getAttributeBaseValue(attribute);
+									isEqualTooltip = true;
+								}
 							}
-							if (attribute.equals(PiercingPickaxes.PIERCING_DAMAGE.get())
-									|| attribute.equals(Attributes.ATTACK_SPEED)
-									|| attribute.equals(Attributes.KNOCKBACK_RESISTANCE)
-									|| attribute.equals(ForgeMod.ENTITY_REACH.get())
-									|| attribute.equals(ForgeMod.BLOCK_REACH.get())) {
-								amount += event.getEntity().getAttributeBaseValue(attribute);
-								isEqualTooltip = true;
-							}
-						}
-						if (!isEqualTooltip && amount == 0d)
-							return;
+							if (!isEqualTooltip && amount == 0d)
+								return;
 
-						MutableComponent component = null;
-						String translationString = "attribute.modifier.plus.";
-						if (isEqualTooltip)
-							translationString = "attribute.modifier.equals.";
-						else if (amount < 0)
-							translationString = "attribute.modifier.take.";
-						switch (operation) {
-							case ADDITION -> {
-								if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE))
-									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amount * 100) + "%", Component.translatable(attribute.getDescriptionId()));
-								else
-									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount)), Component.translatable(attribute.getDescriptionId()));
+							MutableComponent component = null;
+							String translationString = "attribute.modifier.plus.";
+							if (isEqualTooltip)
+								translationString = "attribute.modifier.equals.";
+							else if (amount < 0)
+								translationString = "attribute.modifier.take.";
+							switch (operation) {
+								case ADDITION -> {
+									if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE))
+										component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amount * 100) + "%", Component.translatable(attribute.getDescriptionId()));
+									else
+										component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount)), Component.translatable(attribute.getDescriptionId()));
+								}
+								case MULTIPLY_BASE -> {
+									component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount) * 100), Component.translatable(attribute.getDescriptionId()));
+								}
+								case MULTIPLY_TOTAL -> {
+									component = Component.literal("x").append(Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount) + 1), Component.translatable(attribute.getDescriptionId())));
+								}
 							}
-							case MULTIPLY_BASE -> {
-								component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount) * 100), Component.translatable(attribute.getDescriptionId()));
-							}
-							case MULTIPLY_TOTAL -> {
-								component = Component.literal("x").append(Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount) + 1), Component.translatable(attribute.getDescriptionId())));
-							}
-						}
-						if (isEqualTooltip)
-							component = CommonComponents.space().append(component.withStyle(ChatFormatting.DARK_GREEN));
-						else if (amount > 0)
-							component.withStyle(ChatFormatting.BLUE);
-						else
-							component.withStyle(ChatFormatting.RED);
-						event.getToolTip().add(component);
-					});
-				}
+							if (isEqualTooltip)
+								component = CommonComponents.space().append(component.withStyle(ChatFormatting.DARK_GREEN));
+							else if (amount > 0)
+								component.withStyle(ChatFormatting.BLUE);
+							else
+								component.withStyle(ChatFormatting.RED);
+							event.getToolTip().add(component);
+						});
+					}
+				);
 			}
 		}
 	}
