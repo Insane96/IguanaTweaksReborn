@@ -1,5 +1,10 @@
 # Changelog
 
+* Empowered spawners
+  * Whenever you approach a spawner it is empowered and will spawn mobs really fast.
+  * After a few mobs spawned the spawner slows down to vanilla speed
+  * Should be able to remove MonsterMixin by using SpawnPlacementCheck
+
 ## Upcoming
 * Tools no longer take 2 damage when hurting entities
 * Reduced Hoes base attack speed (2.5 -> 2.4) and knockback (-60% -> -75%)

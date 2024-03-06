@@ -18,8 +18,7 @@ public abstract class MonsterMixin {
 
     @Inject(at = @At("HEAD"), method = "checkMonsterSpawnRules", cancellable = true)
     private static void onMonsterCheckSpawnRules(EntityType<? extends Monster> entityType, ServerLevelAccessor levelAccessor, MobSpawnType mobSpawnType, BlockPos pos, RandomSource random, CallbackInfoReturnable<Boolean> cir) {
-        if(mobSpawnType.equals(MobSpawnType.SPAWNER) && Feature.isEnabled(Spawners.class) && Spawners.ignoreLight) {
+        if (mobSpawnType.equals(MobSpawnType.SPAWNER) && Feature.isEnabled(Spawners.class) && Spawners.ignoreLight)
             cir.setReturnValue(Monster.checkAnyLightMonsterSpawnRules(entityType, levelAccessor, mobSpawnType, pos, random));
-        }
     }
 }
