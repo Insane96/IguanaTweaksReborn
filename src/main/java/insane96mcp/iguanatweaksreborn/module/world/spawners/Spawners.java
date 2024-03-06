@@ -28,6 +28,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BaseSpawner;
@@ -158,6 +159,31 @@ public class Spawners extends JsonFeature {
 		double distance = Math.sqrt(event.getPos().distSqr(level.getSharedSpawnPos()));
 		float distanceRatio = isDisabled(spawnerBlockEntity) ? 1024f : 256f;
 		event.setExpToDrop((int) (event.getExpToDrop() * (1 + distance / distanceRatio)));
+	}
+
+	@SubscribeEvent
+	public void onSpawnCheck(MobSpawnEvent.SpawnPlacementCheck event) {
+		if (!this.isEnabled()
+				|| !ignoreLight
+				|| event.getSpawnType() != MobSpawnType.SPAWNER
+				|| event.getDefaultResult()
+			/*|| !(event.getEntityType() instanceof EntityType<? extends Monster>)*/)
+			return;
+
+		//noinspection unchecked
+		if (Monster.checkAnyLightMonsterSpawnRules((EntityType<? extends Monster>) event.getEntityType(), event.getLevel(), event.getSpawnType(), event.getPos(), event.getRandom()))
+			event.setResult(Event.Result.ALLOW);
+	}
+
+	@SubscribeEvent
+	public void onSpawnCheck(MobSpawnEvent.PositionCheck event) {
+		if (!this.isEnabled()
+				|| !ignoreLight
+				|| event.getSpawnType() != MobSpawnType.SPAWNER)
+			return;
+
+		if (event.getEntity().checkSpawnObstruction(event.getLevel()))
+			event.setResult(Event.Result.ALLOW);
 	}
 
 	/**

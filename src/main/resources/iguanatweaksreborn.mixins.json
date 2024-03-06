@@ -36,7 +36,6 @@
         "MilkBucketItemMixin",
         "MobEffectMixin",
         "MobMixin",
-        "MonsterMixin",
         "NaturalSpawnerMixin",
         "PistonBaseBlockMixin",
         "PistonMovingBlockEntityMixin",
