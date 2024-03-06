@@ -128,8 +128,8 @@ public class SerializableTrade implements VillagerTrades.ItemListing {
 			int itemACount = GsonHelper.getAsInt(jObject, "item_a_count", 1);
 			ResourceLocation itemA = new ResourceLocation(sItemA);
 			serializableTrade.itemA = new ItemStack(ForgeRegistries.ITEMS.getValue(itemA), itemACount);
-			if (jObject.has("item_A_tag")) {
-				String itemATag = GsonHelper.getAsString(jObject, "item_A_tag");
+			if (jObject.has("item_a_tag")) {
+				String itemATag = GsonHelper.getAsString(jObject, "item_a_tag");
 				try {
 					CompoundTag resultTag = TagParser.parseTag(itemATag);
 					serializableTrade.itemA.setTag(resultTag);

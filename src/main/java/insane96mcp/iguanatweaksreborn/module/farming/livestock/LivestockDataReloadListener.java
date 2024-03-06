@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = IguanaTweaksReborn.MOD_ID)
 public class LivestockDataReloadListener extends SimpleJsonResourceReloadListener {
-	public static List<LivestockData> LIVESTOCK_DATA = new ArrayList<>();
+	public static final List<LivestockData> LIVESTOCK_DATA = new ArrayList<>();
 	public static final LivestockDataReloadListener INSTANCE;
 	private static final Gson GSON = new GsonBuilder().create();
 	public LivestockDataReloadListener() {
@@ -32,26 +32,26 @@ public class LivestockDataReloadListener extends SimpleJsonResourceReloadListene
 
 	@Override
 	protected void apply(Map<ResourceLocation, JsonElement> map, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
-		LIVESTOCK_DATA.clear();
-		for (var entry : map.entrySet()) {
-			try {
-				ResourceLocation name = entry.getKey();
-				String[] split = name.getPath().split("/");
-				if (split[split.length - 1].startsWith("_"))
-					continue;
+		synchronized (LIVESTOCK_DATA) {
+			LIVESTOCK_DATA.clear();
+			for (var entry : map.entrySet()) {
+				try {
+					ResourceLocation name = entry.getKey();
+					String[] split = name.getPath().split("/");
+					if (split[split.length - 1].startsWith("_"))
+						continue;
 
-				LivestockData livestockData = GSON.fromJson(entry.getValue(), LivestockData.class);
-				LIVESTOCK_DATA.add(livestockData);
+					LivestockData livestockData = GSON.fromJson(entry.getValue(), LivestockData.class);
+					LIVESTOCK_DATA.add(livestockData);
+				} catch (JsonSyntaxException e) {
+					ITRLogHelper.error("Parsing error loading Livestock Data %s: %s", entry.getKey(), e.getMessage());
+				} catch (Exception e) {
+					ITRLogHelper.error("Failed loading Livestock Data %s: %s", entry.getKey(), e.getMessage());
+				}
 			}
-			catch (JsonSyntaxException e) {
-				ITRLogHelper.error("Parsing error loading Livestock Data %s: %s", entry.getKey(), e.getMessage());
-			}
-			catch (Exception e) {
-				ITRLogHelper.error("Failed loading Livestock Data %s: %s", entry.getKey(), e.getMessage());
-			}
+
+			ITRLogHelper.info("Loaded %s Livestock Data", LIVESTOCK_DATA.size());
 		}
-
-		ITRLogHelper.info("Loaded %s Livestock Data", LIVESTOCK_DATA.size());
 	}
 
 	/*@SubscribeEvent

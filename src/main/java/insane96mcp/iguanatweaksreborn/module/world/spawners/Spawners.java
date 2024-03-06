@@ -5,8 +5,6 @@ import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.ISpawnerData;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerData;
-import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
-import insane96mcp.iguanatweaksreborn.network.message.SpawnerStatusSync;
 import insane96mcp.iguanatweaksreborn.utils.ITRLogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.JsonFeature;
@@ -24,17 +22,15 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -42,10 +38,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.network.NetworkDirection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,23 +51,32 @@ public class Spawners extends JsonFeature {
 	public static final TagKey<EntityType<?>> BLACKLISTED_SPAWNERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "blacklisted_spawners"));
 	public static final TagKey<Item> SPAWNER_REACTIVATOR_TAG = ITRItemTagsProvider.create("spawner_reactivator");
 	public static final String SPAWNER_REACTIVATOR = IguanaTweaksReborn.MOD_ID + ".spawner_reactivator";
+	@Config
+	@Label(name = "Disable spawners.Enabled")
+	public static Boolean disableSpawnersEnabled = false;
 	@Config(min = 0)
-	@Label(name = "Minimum Spawnable Mobs", description = "The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn. The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
+	@Label(name = "Disable spawners.Minimum Spawnable Mobs", description = "The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn. The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
 	public static Integer minSpawnableMobs = 20;
 	@Config(min = 0d)
-	@Label(name = "Spawnable mobs multiplier", description = "This multiplier increases the max mobs spawned.")
+	@Label(name = "Disable spawners.Spawnable mobs multiplier", description = "This multiplier increases the max mobs spawned.")
 	public static Double spawnableMobsMultiplier = 1.0d;
-	@Config
-	@Label(name = "Bonus experience if not disabled", description = "If true, the spawner will drop more experience when broken, if not disabled, based of distance from spawn. +100% every 1024 blocks from spawn. The multiplier from 'Experience From Blocks' Feature still applies.")
-	public static Boolean bonusExperienceIfNotDisabled = true;
 
 	@Config
 	@Label(name = "Ignore Light", description = "If true, monsters from spawners will spawn no matter the light level.")
 	public static Boolean ignoreLight = true;
 
+	@Config
+	@Label(name = "Empowered.Enabled", description = "If true, spawners will generate in an empowered state. When empowered, will generate mobs really fast for a while and then will slow down.")
+	public static Boolean empoweredEnabled = true;
 	@Config(min = 0)
-	@Label(name = "Spawning speed boost", description = "How much faster spawners tick down the spawning delay.")
-	public static Integer spawningSpeedBoost = 2;
+	@Label(name = "Empowered.Mobs amount", description = "How many mobs are spawned before empowered ends.")
+	public static Integer empoweredMobsAmount = 30;
+	@Config(min = 0)
+	@Label(name = "Empowered.Spawning Speed Multiplier", description = "Spawning Speed when the Spawner is empowered.")
+	public static Double empoweredSpawningSpeed = 3d;
+	@Config(min = 0)
+	@Label(name = "Empowered.Normal Speed Multiplier", description = "Spawning Speed when the Spawner stops being empowered.")
+	public static Double empoweredNormalSpeed = 0.4d;
 
 	public static final ArrayList<IdTagValue> FIXED_SPAWNER_SPAWNABLE_DEFAULT = new ArrayList<>(List.of(
 			new IdTagValue(IdTagMatcher.newId("minecraft:blaze", "minecraft:the_nether"), 64)
@@ -97,6 +100,7 @@ public class Spawners extends JsonFeature {
 				|| event.getSpawner() == null
 				|| event.getSpawner().getSpawnerBlockEntity() == null)
 			return;
+
 		CompoundTag nbt = new CompoundTag();
 		event.getSpawner().save(nbt);
 		BlockPos spawnerPos = event.getSpawner().getSpawnerBlockEntity().getBlockPos();
@@ -107,25 +111,35 @@ public class Spawners extends JsonFeature {
 		}
 		mobSpawner.getCapability(SpawnerData.INSTANCE).ifPresent(spawnerCap -> {
 			spawnerCap.addSpawnedMobs(1);
-			if (event.getEntity().getType().is(BLACKLISTED_SPAWNERS))
-				return;
-			int maxSpawned = 0;
-			for (IdTagValue idTagValue : fixedSpawnerSpawnable) {
-				if (idTagValue.id.matchesEntity(event.getEntity(), event.getEntity().level().dimension().location())) {
-					maxSpawned = (int) idTagValue.value;
-					break;
-				}
-			}
-			if (maxSpawned <= 0) {
-				double distance = Math.sqrt(spawnerPos.distSqr(level.getSharedSpawnPos()));
-				maxSpawned = (int) ((minSpawnableMobs + (distance / 8d)) * spawnableMobsMultiplier);
-			}
-
-			if (spawnerCap.getSpawnedMobs() >= maxSpawned) {
-				setSpawnerStatus(mobSpawner, true);
-			}
-			mobSpawner.setChanged();
+			disabledSpawners(mobSpawner, event.getEntity(), level, spawnerPos, spawnerCap);
 		});
+	}
+
+	private void disabledSpawners(SpawnerBlockEntity spawnerBlockEntity, Mob mob, ServerLevel level, BlockPos spawnerPos, ISpawnerData spawnerCap) {
+        if (!disableSpawnersEnabled
+				|| mob.getType().is(BLACKLISTED_SPAWNERS))
+			return;
+
+        int maxSpawned = 0;
+		for (IdTagValue idTagValue : fixedSpawnerSpawnable) {
+			if (idTagValue.id.matchesEntity(mob, level.dimension().location())) {
+				maxSpawned = (int) idTagValue.value;
+				break;
+			}
+		}
+		if (maxSpawned <= 0) {
+			double distance = Math.sqrt(spawnerPos.distSqr(level.getSharedSpawnPos()));
+			maxSpawned = (int) ((minSpawnableMobs + (distance / 8d)) * spawnableMobsMultiplier);
+		}
+
+		if (spawnerCap.getSpawnedMobs() >= maxSpawned) {
+			setSpawnerStatus(spawnerBlockEntity, true);
+		}
+		spawnerBlockEntity.setChanged();
+	}
+
+	private static void empoweredSpawner() {
+
 	}
 
 	@SubscribeEvent
@@ -144,21 +158,6 @@ public class Spawners extends JsonFeature {
 			event.getItemStack().shrink(1);
 		event.getEntity().swing(event.getHand(), true);
 		resetSpawner(spawner);
-	}
-
-	@SubscribeEvent
-	public void onBlockXPDrop(BlockEvent.BreakEvent event) {
-		if (!isEnabled()
-				|| !bonusExperienceIfNotDisabled
-				|| !event.getState().getBlock().equals(Blocks.SPAWNER))
-			return;
-		BlockEntity blockEntity = event.getLevel().getBlockEntity(event.getPos());
-		if (!(blockEntity instanceof SpawnerBlockEntity spawnerBlockEntity))
-			return;
-		ServerLevel level = (ServerLevel) event.getLevel();
-		double distance = Math.sqrt(event.getPos().distSqr(level.getSharedSpawnPos()));
-		float distanceRatio = isDisabled(spawnerBlockEntity) ? 1024f : 256f;
-		event.setExpToDrop((int) (event.getExpToDrop() * (1 + distance / distanceRatio)));
 	}
 
 	@SubscribeEvent
@@ -196,7 +195,7 @@ public class Spawners extends JsonFeature {
 			return false;
 		else if (isDisabled(spawnerBlockEntity))
 			return true;
-		spawner.spawnDelay = Math.max(spawner.spawnDelay - spawningSpeedBoost, 0);
+		//spawner.spawnDelay = Math.max(spawner.spawnDelay - spawningSpeedBoost, 0);
 		return false;
 	}
 
@@ -207,7 +206,7 @@ public class Spawners extends JsonFeature {
 		if (!Feature.isEnabled(Spawners.class)
 			|| !(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity))
 			return false;
-		spawner.spawnDelay = Math.max(spawner.spawnDelay - spawningSpeedBoost, 0);
+		//spawner.spawnDelay = Math.max(spawner.spawnDelay - spawningSpeedBoost, 0);
 		if (!isDisabled(spawnerBlockEntity))
 			return false;
 		Level level = spawnerBlockEntity.getLevel();
@@ -225,10 +224,10 @@ public class Spawners extends JsonFeature {
 		spawner.setChanged();
 		//noinspection ConstantConditions
 		if (spawner.hasLevel() && !spawner.getLevel().isClientSide) {
-			Object msg = new SpawnerStatusSync(spawner.getBlockPos(), disabled);
+			/*Object msg = new SpawnerStatusSync(spawner.getBlockPos(), disabled);
 			for (Player player : spawner.getLevel().players()) {
 				NetworkHandler.CHANNEL.sendTo(msg, ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-			}
+			}*/
 		}
 	}
 

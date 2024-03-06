@@ -1,9 +1,8 @@
 # Changelog
 
 * Empowered spawners
-  * Whenever you approach a spawner it is empowered and will spawn mobs really fast.
-  * After a few mobs spawned the spawner slows down to vanilla speed
-  * Should be able to remove MonsterMixin by using SpawnPlacementCheck
+  * Whenever you approach a spawner it is empowered and will spawn mobs really fast.  
+  After a few mobs spawned the spawner slows down to 1/3 vanilla speed
 
 ## Upcoming
 * Tools no longer take 2 damage when hurting entities
@@ -16,6 +15,7 @@
 * Item's stats are now ordered
 * Moved IEnchantmentTooltip to InsaneLib
 * Fixed Graves keeping vanishing curse items
+* Fixed Serializable trades not reading item_a_tag
 * Fixed Netherite armor having knockback resistance
 
 ## 3.4.2
