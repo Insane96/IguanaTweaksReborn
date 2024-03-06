@@ -1,7 +1,7 @@
 {
 	"item": "#minecraft:hoes",
 	"attack_damage": 0,
-	"attack_speed": 2.2,
+	"attack_speed": 2.4,
 	"modifiers": [
 		{
 			"uuid": "de87cf5d-0f15-4b4e-88c5-9b3c971146d0",
