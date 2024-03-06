@@ -1,5 +1,6 @@
 {
     "item": "#iguanatweaksreborn:equipment/armor/netherite",
     "enchantability": 7,
-    "armor_toughness": 1
+    "armor_toughness": 1,
+    "knockback_resistance": 0
 }

@@ -11,6 +11,7 @@
 * Item's stats are now ordered
 * Moved IEnchantmentTooltip to InsaneLib
 * Fixed Graves keeping vanishing curse items
+* Fixed Netherite armor having knockback resistance
 
 ## 3.4.2
 * Coal veins are now rarer
