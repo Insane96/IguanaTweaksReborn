@@ -127,11 +127,10 @@ public class Tiredness extends JsonFeature {
 
 		//noinspection ConstantConditions
 		int effectLevel = player.getEffect(ENERGY_BOOST.get()).getAmplifier() + 1;
-		TirednessHandler.subtract(player, 0.01f * effectLevel);
+		TirednessHandler.subtract(player, 0.025f * effectLevel);
 
-		if (player.tickCount % 20 == 0) {
+		if (player.tickCount % 20 == 0)
 			TirednessHandler.syncToClient(player);
-		}
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -144,9 +143,8 @@ public class Tiredness extends JsonFeature {
 
 		float tiredness = TirednessHandler.get(serverPlayer);
 		float newTiredness = TirednessHandler.addAndGet(serverPlayer, event.getAmount() * tirednessGainMultiplier.floatValue());
-		if (tiredness < tirednessToEffect && newTiredness >= tirednessToEffect) {
+		if (tiredness < tirednessToEffect && newTiredness >= tirednessToEffect)
 			serverPlayer.displayClientMessage(Component.translatable(TIRED_ENOUGH), false);
-		}
 		applyTired(tiredness, serverPlayer);
 
 		TirednessHandler.syncToClient(serverPlayer);
