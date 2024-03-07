@@ -266,7 +266,7 @@ public class NoHunger extends Feature {
     private static void consumeAndHealFromFoodRegen(Player player) {
         float regenLeft = getFoodRegenLeft(player);
         float regenStrength = getFoodRegenStrength(player);
-        if (!HealthRegen.isPlayerHurt(player)) {
+        if (player.getHealth() == player.getMaxHealth()) {
             regenLeft -= 0.001f * FOOD_REGEN_TICK_RATE;
         }
         else {

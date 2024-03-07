@@ -91,7 +91,8 @@ public class Tiredness extends JsonFeature {
 			What to do with tiredness when the player dies.
 			RESET resets the tiredness to 0
 			KEEP keeps the current tiredness
-			SET_AT_EFFECT keeps the current tiredness but if higher than 'Tiredness for effect' it's set to that""")
+			SET_AT_EFFECT keeps the current tiredness but if higher than 'Tiredness for effect' it's set to that
+			REMOVE_ONE_LEVEL keeps the current tiredness but if higher than 'Tiredness for effect' removes one level of Tired to a minimum of I""")
 	public static OnDeath onDeathBehaviour = OnDeath.SET_AT_EFFECT;
 
 	public Tiredness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -107,7 +108,8 @@ public class Tiredness extends JsonFeature {
 	public enum OnDeath {
 		RESET,
 		KEEP,
-		SET_AT_EFFECT
+		SET_AT_EFFECT,
+		REMOVE_ONE_LEVEL
 	}
 
 	@SubscribeEvent
@@ -264,6 +266,13 @@ public class Tiredness extends JsonFeature {
 			case SET_AT_EFFECT -> {
 				if (tiredness > tirednessToEffect)
 					tiredness = tirednessToEffect.floatValue();
+			}
+			case REMOVE_ONE_LEVEL -> {
+				if (tiredness > tirednessToEffect) {
+					tiredness -= tirednessPerLevel;
+					if (tiredness < tirednessToEffect)
+						tiredness = tirednessToEffect.floatValue();
+				}
 			}
 		}
 

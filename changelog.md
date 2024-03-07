@@ -8,6 +8,7 @@
   * Spawners no longer disable themselves after various mobs spawned and no longer give bonus experience when broken
 * Tiredness
   * Energy boost effect is now stronger
+  * On death only one level worth of Tired is removed
   * Now renders a texture overlay instead of darkening the screen
   * Reduced attack speed, movement speed, mining speed and stamina reduction
 * Hunger and health
