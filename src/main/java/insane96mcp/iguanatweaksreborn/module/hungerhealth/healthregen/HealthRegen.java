@@ -88,6 +88,9 @@ public class HealthRegen extends Feature {
 	@Label(name = "Respawn.Only if below", description = "If hunger or saturation were above the values on respawn, they will not be reduced.")
 	public static Boolean respawnFoodOnlyIfBelow = true;
 	@Config(min = 0, max = 20)
+	@Label(name = "Respawn.Health", description = "Health of respawning players")
+	public static insane96mcp.insanelib.base.config.Difficulty healthOnRespawn = new insane96mcp.insanelib.base.config.Difficulty(20, 14, 8);
+	@Config(min = 0, max = 20)
 	@Label(name = "Respawn.Hunger", description = "Hunger of respawning players")
 	public static insane96mcp.insanelib.base.config.Difficulty hungerOnRespawn = new insane96mcp.insanelib.base.config.Difficulty(14, 10, 10);
 	@Config(min = 0, max = 20)
@@ -95,19 +98,19 @@ public class HealthRegen extends Feature {
 	public static insane96mcp.insanelib.base.config.Difficulty saturationOnRespawn = new insane96mcp.insanelib.base.config.Difficulty(10, 10, 6);
 	//Effects
 	@Config
-	@Label(name = "Effects.Vigour.Enable", description = "Set to true to enable Vigour, a new effect that lowers hunger consumption and increases health regen speed. Applied when good foods are eaten.")
-	public static Boolean enableVigour = true;
+	@Label(name = "Vigour.Enable", description = "Set to true to enable Vigour, a new effect that lowers hunger consumption and increases health regen speed. Applied when good foods are eaten.")
+	public static Boolean enableVigour = false;
 	@Config(min = 0d, max = 128d)
-	@Label(name = "Effects.Vigour.Duration Multiplier", description = "Multiplies the base duration of Vigour by this value. Base duration is 1 second per food saturation.")
+	@Label(name = "Vigour.Duration Multiplier", description = "Multiplies the base duration of Vigour by this value. Base duration is 1 second per food saturation.")
 	public static Double vigourDurationMultiplier = 20d;
 	@Config(min = 0d, max = 1d)
-	@Label(name = "Effects.Vigour.Effectiveness", description = "How much does health regen Vigour increases.")
+	@Label(name = "Vigour.Effectiveness", description = "How much does health regen Vigour increases.")
 	public static Double vigourEffectiveness = 0.20d;
 	@Config(min = 0d, max = 20d)
-	@Label(name = "Effects.Vigour.Minimum Saturation", description = "Minimum saturation given by the food to apply Vigour.")
+	@Label(name = "Vigour.Minimum Saturation", description = "Minimum saturation given by the food to apply Vigour.")
 	public static Double vigourMinimumSaturation = 7d;
 	@Config
-	@Label(name = "Effects.Vigour.Stacks", description = "If true, eating when already under Vigour increases the duration.")
+	@Label(name = "Vigour.Stacks", description = "If true, eating when already under Vigour increases the duration.")
 	public static Boolean vigourStacks = true;
 
 	public HealthRegen(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -281,6 +284,7 @@ public class HealthRegen extends Feature {
 			player.getFoodData().saturationLevel = sOnRespawn;
 		else
 			player.getFoodData().saturationLevel = saturation;
+		player.setHealth((float) healthOnRespawn.getByDifficulty(player.level()));
 	}
 
 	@OnlyIn(Dist.CLIENT)
