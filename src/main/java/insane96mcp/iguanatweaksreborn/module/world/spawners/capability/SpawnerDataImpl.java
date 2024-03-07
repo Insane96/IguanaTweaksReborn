@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.world.spawners.capability;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 
 public class SpawnerDataImpl implements ISpawnerData {
 
@@ -61,5 +62,19 @@ public class SpawnerDataImpl implements ISpawnerData {
 		this.setSpawnedMobs(nbt.getInt(SPAWNED_MOBS));
 		this.setDisabled(nbt.getBoolean(SPAWNER_DISABLED));
 		this.setEmpowered(nbt.getBoolean(SPAWNER_EMPOWERED));
+	}
+
+	public void toNetwork(FriendlyByteBuf buf) {
+		buf.writeInt(this.spawnedMobs);
+		buf.writeBoolean(this.disabled);
+		buf.writeBoolean(this.empowered);
+	}
+
+	public static SpawnerDataImpl fromNetwork(FriendlyByteBuf buf) {
+		SpawnerDataImpl spawnerData = new SpawnerDataImpl();
+		spawnerData.spawnedMobs = buf.readInt();
+		spawnerData.disabled = buf.readBoolean();
+		spawnerData.empowered = buf.readBoolean();
+		return spawnerData;
 	}
 }

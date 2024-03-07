@@ -5,6 +5,9 @@ import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.ISpawnerData;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerData;
+import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerDataImpl;
+import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
+import insane96mcp.iguanatweaksreborn.network.message.SpawnerStatusSync;
 import insane96mcp.iguanatweaksreborn.utils.ITRLogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.JsonFeature;
@@ -12,8 +15,9 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.data.IdTagMatcher;
+import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.data.IdTagValue;
+import insane96mcp.insanelib.util.MathHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -22,16 +26,28 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
@@ -40,9 +56,11 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Label(name = "Spawners", description = "Spawners will no longer spawn mobs infinitely. Echo shards can reactivate a spawner. Monsters spawning from spawners ignore light and spawning is much faster")
 @LoadFeature(module = Modules.Ids.WORLD)
@@ -56,10 +74,10 @@ public class Spawners extends JsonFeature {
 	public static Boolean disableSpawnersEnabled = false;
 	@Config(min = 0)
 	@Label(name = "Disable spawners.Minimum Spawnable Mobs", description = "The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn. The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
-	public static Integer minSpawnableMobs = 20;
+	public static Integer disableSpawnersMinSpawnableMobs = 20;
 	@Config(min = 0d)
 	@Label(name = "Disable spawners.Spawnable mobs multiplier", description = "This multiplier increases the max mobs spawned.")
-	public static Double spawnableMobsMultiplier = 1.0d;
+	public static Double disableSpawnersSpawnableMobsMultiplier = 1.0d;
 
 	@Config
 	@Label(name = "Ignore Light", description = "If true, monsters from spawners will spawn no matter the light level.")
@@ -70,16 +88,22 @@ public class Spawners extends JsonFeature {
 	public static Boolean empoweredEnabled = true;
 	@Config(min = 0)
 	@Label(name = "Empowered.Mobs amount", description = "How many mobs are spawned before empowered ends.")
-	public static Integer empoweredMobsAmount = 30;
-	@Config(min = 0)
+	public static Integer empoweredMobsAmount = 24;
+	@Config(min = 1)
 	@Label(name = "Empowered.Spawning Speed Multiplier", description = "Spawning Speed when the Spawner is empowered.")
-	public static Double empoweredSpawningSpeed = 3d;
-	@Config(min = 0)
+	public static Double empoweredSpawningSpeed = 2d;
+	@Config(min = 0.01)
 	@Label(name = "Empowered.Normal Speed Multiplier", description = "Spawning Speed when the Spawner stops being empowered.")
 	public static Double empoweredNormalSpeed = 0.4d;
+	@Config(min = 0)
+	@Label(name = "Empowered.Experience Reward", description = "When the Spawner stops being empowered, will generate this amount of experience")
+	public static MinMax empoweredExperienceReward = new MinMax(100, 200);
+	@Config
+	@Label(name = "Empowered.Loot Reward", description = "When the Spawner stops being empowered, will generate loot from the iguanatweaksreborn:empowered_spawner loot table")
+	public static Boolean empoweredLootReward = true;
 
 	public static final ArrayList<IdTagValue> FIXED_SPAWNER_SPAWNABLE_DEFAULT = new ArrayList<>(List.of(
-			new IdTagValue(IdTagMatcher.newId("minecraft:blaze", "minecraft:the_nether"), 64)
+			//new IdTagValue(IdTagMatcher.newId("minecraft:blaze", "minecraft:the_nether"), 64)
 	));
 	public static final ArrayList<IdTagValue> fixedSpawnerSpawnable = new ArrayList<>();
 
@@ -112,6 +136,7 @@ public class Spawners extends JsonFeature {
 		mobSpawner.getCapability(SpawnerData.INSTANCE).ifPresent(spawnerCap -> {
 			spawnerCap.addSpawnedMobs(1);
 			disabledSpawners(mobSpawner, event.getEntity(), level, spawnerPos, spawnerCap);
+			empoweredSpawner(mobSpawner, event.getEntity(), level, spawnerPos, spawnerCap);
 		});
 	}
 
@@ -129,17 +154,32 @@ public class Spawners extends JsonFeature {
 		}
 		if (maxSpawned <= 0) {
 			double distance = Math.sqrt(spawnerPos.distSqr(level.getSharedSpawnPos()));
-			maxSpawned = (int) ((minSpawnableMobs + (distance / 8d)) * spawnableMobsMultiplier);
+			maxSpawned = (int) ((disableSpawnersMinSpawnableMobs + (distance / 8d)) * disableSpawnersSpawnableMobsMultiplier);
 		}
 
-		if (spawnerCap.getSpawnedMobs() >= maxSpawned) {
-			setSpawnerStatus(spawnerBlockEntity, true);
-		}
+		if (spawnerCap.getSpawnedMobs() >= maxSpawned)
+			setSpawnerDisabled(spawnerBlockEntity, true);
 		spawnerBlockEntity.setChanged();
 	}
 
-	private static void empoweredSpawner() {
+	private static void empoweredSpawner(SpawnerBlockEntity spawnerBlockEntity, Mob mob, ServerLevel level, BlockPos spawnerPos, ISpawnerData spawnerCap) {
+		if (!empoweredEnabled
+				|| !spawnerCap.isEmpowered())
+			return;
 
+		if (spawnerCap.getSpawnedMobs() >= empoweredMobsAmount) {
+			setSpawnerEmpowered(spawnerBlockEntity, false);
+			int amount = empoweredExperienceReward.getIntRandBetween(level.random);
+			ExperienceOrb.award(level, new Vec3(spawnerPos.getX() + 0.5d, spawnerPos.getY() + 1.1d, spawnerPos.getZ() + 0.5d), amount);
+			if (empoweredLootReward) {
+				LootParams.Builder lootParamsBuilder = (new LootParams.Builder(level)).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(spawnerPos)).withParameter(LootContextParams.TOOL, ItemStack.EMPTY).withOptionalParameter(LootContextParams.BLOCK_STATE, level.getBlockState(spawnerPos)).withOptionalParameter(LootContextParams.BLOCK_ENTITY, spawnerBlockEntity);
+				LootParams lootParams = lootParamsBuilder.create(LootContextParamSets.EMPTY);
+				LootTable loottable = level.getServer().getLootData().getLootTable(new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "empowered_spawner"));
+				loottable.getRandomItems(lootParams).forEach(stack ->
+						level.addFreshEntity(new ItemEntity(level, spawnerPos.getX() + 0.5f, spawnerPos.getY() + 1.1f, spawnerPos.getZ() + 0.5f, stack)));
+			}
+			level.playSound(null, spawnerPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 3.0f, 1.5f);
+		}
 	}
 
 	@SubscribeEvent
@@ -189,14 +229,23 @@ public class Spawners extends JsonFeature {
 	 * Returns true if the spawner should not tick
 	 */
 	public static boolean onSpawnerServerTick(BaseSpawner spawner) {
-		if (!(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity))
+        if (!(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity)
+                || !Feature.isEnabled(Spawners.class))
 			return false;
-		if (!Feature.isEnabled(Spawners.class))
-			return false;
-		else if (isDisabled(spawnerBlockEntity))
-			return true;
-		//spawner.spawnDelay = Math.max(spawner.spawnDelay - spawningSpeedBoost, 0);
-		return false;
+		spawnerBlockEntity.getCapability(SpawnerData.INSTANCE).ifPresent(spawnerData -> {
+			Level level = spawnerBlockEntity.getLevel();
+			if (level == null
+					|| !spawner.isNearPlayer(level, spawnerBlockEntity.getBlockPos()))
+				return;
+			if (spawnerData.isEmpowered())
+				spawner.spawnDelay = Math.max(spawner.spawnDelay - (MathHelper.getAmountWithDecimalChance(level.getRandom(), empoweredSpawningSpeed) - 1), 0);
+			else if (empoweredNormalSpeed > 1)
+				spawner.spawnDelay = Math.max(spawner.spawnDelay - (MathHelper.getAmountWithDecimalChance(level.getRandom(), empoweredNormalSpeed) - 1), 0);
+			else if (empoweredNormalSpeed < 1 && level.getRandom().nextFloat() >= empoweredNormalSpeed){
+				spawner.spawnDelay = Math.max(spawner.spawnDelay + 1, 0);
+			}
+		});
+		return isDisabled(spawnerBlockEntity);
 	}
 
 	/**
@@ -204,35 +253,72 @@ public class Spawners extends JsonFeature {
 	 */
 	public static boolean onSpawnerClientTick(BaseSpawner spawner) {
 		if (!Feature.isEnabled(Spawners.class)
-			|| !(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity))
+			|| !(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity)
+			|| spawner.nextSpawnData == null)
 			return false;
-		//spawner.spawnDelay = Math.max(spawner.spawnDelay - spawningSpeedBoost, 0);
+		Optional<EntityType<?>> optional = EntityType.by(spawner.nextSpawnData.entityToSpawn());
+		if (optional.isEmpty())
+			return false;
+		clientTickOnEmpowered(spawner, spawnerBlockEntity);
+		clientTickOnDisabled(spawnerBlockEntity);
+		return isDisabled(spawnerBlockEntity);
+	}
+
+	private static void clientTickOnEmpowered(BaseSpawner spawner, SpawnerBlockEntity spawnerBlockEntity) {
+		if (!isEmpowered(spawnerBlockEntity))
+			return;
+		Level level = spawnerBlockEntity.getLevel();
+		if (level == null
+				/*|| !spawner.isNearPlayer(level, spawnerBlockEntity.getBlockPos())*/)
+			return;
+		spawner.spawnDelay = Math.max(spawner.spawnDelay - (MathHelper.getAmountWithDecimalChance(level.getRandom(), empoweredSpawningSpeed) - 1), 0);
+		BlockPos blockpos = spawnerBlockEntity.getBlockPos();
+		for (int i = 0; i < 5; i++) {
+			level.addParticle(ParticleTypes.FLAME, blockpos.getX() + level.random.nextDouble(), blockpos.getY() + level.random.nextDouble(), blockpos.getZ() + level.random.nextDouble(), 0.0D, 0.0D, 0.0D);
+		}
+	}
+
+	private static void clientTickOnDisabled(SpawnerBlockEntity spawnerBlockEntity) {
 		if (!isDisabled(spawnerBlockEntity))
-			return false;
+			return;
 		Level level = spawnerBlockEntity.getLevel();
 		if (level == null)
-			return false;
+			return;
 		BlockPos blockpos = spawnerBlockEntity.getBlockPos();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 8; i++) {
 			level.addParticle(ParticleTypes.SMOKE, blockpos.getX() + level.random.nextDouble(), blockpos.getY() + level.random.nextDouble(), blockpos.getZ() + level.random.nextDouble(), 0.0D, 0.0D, 0.0D);
 		}
-		return true;
 	}
 
-	private static void setSpawnerStatus(SpawnerBlockEntity spawner, boolean disabled) {
+	private static void setSpawnerEmpowered(SpawnerBlockEntity spawner, boolean empowered) {
+		spawner.getCapability(SpawnerData.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setEmpowered(empowered));
+		spawner.setChanged();
+		syncSpawnerData(spawner);
+	}
+
+	private static void setSpawnerDisabled(SpawnerBlockEntity spawner, boolean disabled) {
 		spawner.getCapability(SpawnerData.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setDisabled(disabled));
 		spawner.setChanged();
-		//noinspection ConstantConditions
-		if (spawner.hasLevel() && !spawner.getLevel().isClientSide) {
-			/*Object msg = new SpawnerStatusSync(spawner.getBlockPos(), disabled);
-			for (Player player : spawner.getLevel().players()) {
-				NetworkHandler.CHANNEL.sendTo(msg, ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-			}*/
-		}
+		syncSpawnerData(spawner);
 	}
 
+	private static void syncSpawnerData(SpawnerBlockEntity spawner) {
+		//noinspection ConstantConditions
+        if (!spawner.hasLevel()
+				|| spawner.getLevel().isClientSide)
+            return;
+
+        LazyOptional<ISpawnerData> spawnerDataLazy = spawner.getCapability(SpawnerData.INSTANCE);
+		spawnerDataLazy.ifPresent(spawnerData -> {
+			Object msg = new SpawnerStatusSync(spawner.getBlockPos(), (SpawnerDataImpl) spawnerData);
+			for (Player player : spawner.getLevel().players()) {
+				NetworkHandler.CHANNEL.sendTo(msg, ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+			}
+		});
+    }
+
 	private static void resetSpawner(SpawnerBlockEntity spawner) {
-		setSpawnerStatus(spawner, false);
+		setSpawnerDisabled(spawner, false);
 		spawner.getCapability(SpawnerData.INSTANCE).ifPresent(spawnerCap -> spawnerCap.setSpawnedMobs(0));
 		spawner.setChanged();
 	}
@@ -240,6 +326,11 @@ public class Spawners extends JsonFeature {
 	private static boolean isDisabled(SpawnerBlockEntity spawner) {
 		LazyOptional<ISpawnerData> cap = spawner.getCapability(SpawnerData.INSTANCE);
 		return cap.map(ISpawnerData::isDisabled).orElse(false);
+	}
+
+	private static boolean isEmpowered(SpawnerBlockEntity spawner) {
+		LazyOptional<ISpawnerData> cap = spawner.getCapability(SpawnerData.INSTANCE);
+		return cap.map(ISpawnerData::isEmpowered).orElse(false);
 	}
 
 	@SubscribeEvent

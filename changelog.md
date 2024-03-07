@@ -1,10 +1,10 @@
 # Changelog
 
-* Empowered spawners
-  * Whenever you approach a spawner it is empowered and will spawn mobs really fast.  
-  After a few mobs spawned the spawner slows down to 1/3 vanilla speed
-
 ## Upcoming
+* Reworked spawners
+  * Spawners now generate empowered and will spawn mobs really fast  
+    After 24 mobs spawned the spawner will slowdown the spawning but still remain active and award experience and loot
+  * Spawners no longer disable themselves after various mobs spawned and no longer give bonus experience when broken
 * Tools no longer take 2 damage when hurting entities
 * Reduced Hoes base attack speed (2.5 -> 2.4) and knockback (-60% -> -75%)
 * Reduced trident attack speed (1.1 -> 1.0), durability (475 -> 315) and attack damage (8 -> 6)

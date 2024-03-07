@@ -289,18 +289,18 @@ public class NoHunger extends Feature {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void removeFoodBar(final RenderGuiOverlayEvent.Pre event) {
-        if (this.isEnabled()) {
-            if (event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type())) {
-                event.setCanceled(true);
-            }
-            if (event.getOverlay().equals(VanillaGuiOverlay.ARMOR_LEVEL.type()) && renderArmorAtHunger) {
-                event.setCanceled(true);
-                Minecraft mc = Minecraft.getInstance();
-                ForgeGui gui = (ForgeGui) mc.gui;
-                if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                    renderArmor(event.getGuiGraphics(), event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());
-                }
-            }
+        if (!this.isEnabled())
+            return;
+
+        if (event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type()))
+            event.setCanceled(true);
+        //Remove armor bar to render it on the right
+        if (event.getOverlay().equals(VanillaGuiOverlay.ARMOR_LEVEL.type()) && renderArmorAtHunger) {
+            event.setCanceled(true);
+            Minecraft mc = Minecraft.getInstance();
+            ForgeGui gui = (ForgeGui) mc.gui;
+            if (!mc.options.hideGui && gui.shouldDrawSurvivalElements())
+                renderArmor(event.getGuiGraphics(), event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());
         }
     }
 

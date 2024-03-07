@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.Spawners;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -7,22 +8,27 @@ import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BaseSpawner.class)
 public abstract class BaseSpawnerMixin {
 
-	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BaseSpawner;isNearPlayer(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z", shift = At.Shift.AFTER), method = "serverTick", cancellable = true)
-	private void serverTick(ServerLevel p_151312_, BlockPos p_151313_, CallbackInfo callback) {
-		if (Spawners.onSpawnerServerTick((BaseSpawner) (Object) this))
-			callback.cancel();
+	@ModifyExpressionValue(
+			method = "serverTick",
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BaseSpawner;isNearPlayer(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z")
+	)
+	private boolean serverTick(boolean isPlayerNearby, ServerLevel level, BlockPos blockPos) {
+		if (isPlayerNearby && Spawners.onSpawnerServerTick((BaseSpawner) (Object) this))
+			return false;
+		return isPlayerNearby;
 	}
 
-	@Inject(at = @At("HEAD"), method = "clientTick", cancellable = true)
-	private void clientTick(Level p_151320_, BlockPos p_151321_, CallbackInfo callback) {
-		if (Spawners.onSpawnerClientTick((BaseSpawner) (Object) this))
-			callback.cancel();
+	@ModifyExpressionValue(
+			method = "clientTick",
+			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BaseSpawner;isNearPlayer(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z")
+	)
+	private boolean clientTick(boolean isPlayerNearby, Level level, BlockPos blockPos) {
+		if (isPlayerNearby && Spawners.onSpawnerClientTick((BaseSpawner) (Object) this))
+			return false;
+		return isPlayerNearby;
 	}
-
 }
