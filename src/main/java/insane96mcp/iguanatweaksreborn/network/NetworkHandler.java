@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.network;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.FoodRegenSync;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.NoHungerSync;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.SpawnerStatusSync;
 import insane96mcp.iguanatweaksreborn.network.message.*;

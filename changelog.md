@@ -7,9 +7,14 @@
   * Also increased the range for activation from 16 to 32
   * Spawners no longer disable themselves after various mobs spawned and no longer give bonus experience when broken
 * Tiredness
+  * Energy boost effect is now stronger
   * Now renders a texture overlay instead of darkening the screen
   * Reduced attack speed, movement speed, mining speed and stamina reduction
-* No Hunger can now be enabled/disable with a gamerule
+* Hunger and health
+  * Foods with saturation below 4 now heal instantly, while >= 4 heal only overtime. Heal over time is also kept when full health and only slowly decays
+  * Disabled vigour effect
+  * If you die, you now respawn with less health based off difficulty
+  * No Hunger can now be enabled/disabled with a gamerule
 * Tools no longer take 2 damage when hurting entities
 * Reduced Hoes base attack speed (2.5 -> 2.4) and knockback (-60% -> -75%)
 * Reduced trident attack speed (1.1 -> 1.0), durability (475 -> 315) and attack damage (8 -> 6)

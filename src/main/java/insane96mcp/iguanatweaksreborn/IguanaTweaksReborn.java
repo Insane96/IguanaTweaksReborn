@@ -16,6 +16,7 @@ import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
 import insane96mcp.iguanatweaksreborn.module.farming.livestock.LivestockDataReloadListener;
 import insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth.PlantsGrowthReloadListener;
+import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.NoHunger;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.module.movement.stamina.Stamina;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
@@ -91,6 +92,7 @@ public class IguanaTweaksReborn
         modEventBus.register(Stamina.class);
 		modEventBus.register(SpawnerData.class);
         modEventBus.register(Tiredness.class);
+        modEventBus.register(NoHunger.class);
         modEventBus.register(RegeneratingAbsorption.class);
         ITRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));
 

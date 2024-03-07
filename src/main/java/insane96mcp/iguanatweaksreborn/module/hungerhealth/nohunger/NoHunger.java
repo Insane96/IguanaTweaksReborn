@@ -6,7 +6,6 @@ import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.healthregen.HealthRegen;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
-import insane96mcp.iguanatweaksreborn.network.message.FoodRegenSync;
 import insane96mcp.iguanatweaksreborn.utils.ClientUtils;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
@@ -32,12 +31,11 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.GuiOverlayManager;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -74,16 +72,16 @@ public class NoHunger extends Feature {
     public static MinMax passiveRegenerationTime = new MinMax(120, 3600);
     @Config(min = 0d)
     @Label(name = "Food Heal.Over Time", description = "The formula to calculate the health regenerated when eating a food. Leave empty to disable. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
-    public static String healOverTime = "(hunger^1.5)*0.15";
+    public static String healOverTime = "(hunger^1.55)*0.25";
     @Config
     @Label(name = "Food Heal.Over time Strength", description = "How much HP does food regen each second? Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. Default is 60% of the saturation modifier, down to a minimum of 0.15/s")
     public static String healOverTimeStrength = "MAX(0.15, 0.6 * saturation_modifier)";
     @Config(min = 0d)
     @Label(name = "Food Heal.Instant Heal", description = "The formula to calculate the health restored instantly when eating. Leave empty to disable. To have the same effect as pre-Beta 1.8 food just use \"hunger\". Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
-    public static String instantHeal = "(hunger^1.45)*0.2";
+    public static String instantHeal = "(hunger^1.65)*0.2";
     @Config(min = 0d)
-    @Label(name = "Food Heal.Low saturation foods instant heal", description = "If true, foods below this saturation will fully instantly heal (Over Time + Instant Heal) instead of having over time heal.")
-    public static Double instantHealLowSaturationFoods = 3d;
+    @Label(name = "Food Heal.Saturation threshold", description = "Foods below this saturation will instantly heal, foods above this threshold will have overtime heal.")
+    public static Double instantHealSaturationThreshold = 4d;
     @Config
     @Label(name = "Raw food.Heal Multiplier", description = "If true, raw food will heal by this percentage (this is applied after 'Food Heal.Health Multiplier'). Raw food is defined in the iguanatweaksreborn:raw_food tag")
     public static Double rawFoodHealPercentage = 1d;
@@ -147,9 +145,8 @@ public class NoHunger extends Feature {
             event.player.removeEffect(MobEffects.SATURATION);
         }
 
-        if (event.player.tickCount % FOOD_REGEN_TICK_RATE == 0 && getFoodRegenLeft(event.player) > 0f) {
+        if (event.player.tickCount % FOOD_REGEN_TICK_RATE == 0 && getFoodRegenLeft(event.player) > 0f)
             consumeAndHealFromFoodRegen(event.player);
-        }
     }
 
     @SubscribeEvent
@@ -181,12 +178,14 @@ public class NoHunger extends Feature {
     @SuppressWarnings("ConstantConditions")
     public void healOnEat(Player player, @Nullable Item item, FoodProperties foodProperties) {
         boolean isRawFood = item != null && FoodDrinks.isRawFood(item);
-        onEatInstantHeal(player, item, foodProperties, isRawFood);
-        onEatHealOverTime(player, item, foodProperties, isRawFood);
+        if (Utils.getFoodSaturationRestored(foodProperties) > instantHealSaturationThreshold)
+            onEatHealOverTime(player, item, foodProperties, isRawFood);
+        else
+            onEatInstantHeal(player, item, foodProperties, isRawFood);
     }
 
     public void onEatHealOverTime(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
-        if (!doesHealOverTime(foodProperties))
+        if (!doesHealOverTime())
             return;
 
         float heal = Utils.computeFoodFormula(foodProperties, healOverTime);
@@ -198,22 +197,18 @@ public class NoHunger extends Feature {
             heal *= rawFoodHealPercentage;
 
         float strength = Utils.computeFoodFormula(foodProperties, healOverTimeStrength) / 20f;
-        setFoodRegenLeft(player, heal);
-        setFoodRegenStrength(player, strength);
+        setHealOverTime(player, heal, strength);
     }
 
-    public static boolean doesHealOverTime(FoodProperties foodProperties) {
-        return Utils.getFoodSaturationRestored(foodProperties) >= instantHealLowSaturationFoods
-                && !StringUtils.isBlank(healOverTime) && !StringUtils.isBlank(healOverTimeStrength);
+    public static boolean doesHealOverTime() {
+        return !StringUtils.isBlank(healOverTime) && !StringUtils.isBlank(healOverTimeStrength);
     }
 
     private void onEatInstantHeal(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
-        if (!doesHealInstantly(foodProperties))
+        if (!doesHealInstantly())
             return;
 
         float heal = getInstantHealAmount(foodProperties, isRawFood);
-        /*if (Utils.getFoodSaturationRestored(foodProperties) < instantHealLowSaturationFoods && !StringUtils.isBlank(healOverTime))
-            setFoodRegenStrength(player, 5f);*/
         if (buffCakes && item == null)
             heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.2f, 1f);
         player.heal(heal);
@@ -221,21 +216,18 @@ public class NoHunger extends Feature {
 
     public static float getInstantHealAmount(FoodProperties foodProperties, boolean isRawFood) {
         float heal = Utils.computeFoodFormula(foodProperties, instantHeal);
-        if (Utils.getFoodSaturationRestored(foodProperties) < instantHealLowSaturationFoods && !StringUtils.isBlank(healOverTime))
-            heal += Utils.computeFoodFormula(foodProperties, healOverTime);
         if (isRawFood && rawFoodHealPercentage != 1d)
             heal *= rawFoodHealPercentage;
         return heal;
     }
 
-    public static boolean doesHealInstantly(FoodProperties foodProperties) {
+    public static boolean doesHealInstantly() {
         return !StringUtils.isBlank(instantHeal);
     }
 
     private static int getPassiveRegenSpeed(Player player) {
         float healthPerc = 1f - (player.getHealth() / player.getMaxHealth());
-        float secs;
-        secs = (float) ((passiveRegenerationTime.max - passiveRegenerationTime.min) * healthPerc + passiveRegenerationTime.min);
+        float secs = (float) ((passiveRegenerationTime.max - passiveRegenerationTime.min) * healthPerc + passiveRegenerationTime.min);
         if (player.level().getDifficulty().equals(Difficulty.HARD))
             secs *= 1.5f;
         if (player.hasEffect(HealthRegen.VIGOUR.get())) {
@@ -262,34 +254,37 @@ public class NoHunger extends Feature {
         return player.getPersistentData().getFloat(FOOD_REGEN_LEFT);
     }
 
-    private static void setFoodRegenLeft(Player player, float amount) {
+    public static void setHealOverTime(Player player, float amount, float strength) {
         player.getPersistentData().putFloat(FOOD_REGEN_LEFT, amount);
+        player.getPersistentData().putFloat(FOOD_REGEN_STRENGTH, strength);
+        if (player instanceof ServerPlayer serverPlayer) {
+            Object msg = new FoodRegenSync(amount, strength);
+            NetworkHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        }
     }
 
     private static void consumeAndHealFromFoodRegen(Player player) {
         float regenLeft = getFoodRegenLeft(player);
-        float regenStrength = getFoodRegenStrength(player) * FOOD_REGEN_TICK_RATE;
-        if (regenLeft < regenStrength)
-            regenStrength = regenLeft;
-        player.heal(regenStrength);
-        regenLeft -= regenStrength;
-        if (regenLeft <= 0f){
-            regenLeft = 0f;
-            setFoodRegenStrength(player, 0f);
+        float regenStrength = getFoodRegenStrength(player);
+        if (!HealthRegen.isPlayerHurt(player)) {
+            regenLeft -= 0.001f * FOOD_REGEN_TICK_RATE;
         }
-        setFoodRegenLeft(player, regenLeft);
+        else {
+            float healAmount = regenStrength * FOOD_REGEN_TICK_RATE;
+            if (regenLeft < healAmount)
+                healAmount = regenLeft;
+            if (player.getMaxHealth() - player.getHealth() < healAmount)
+                healAmount = player.getMaxHealth() - player.getHealth();
+            player.heal(healAmount);
+            regenLeft -= healAmount;
+            if (regenLeft <= 0f)
+                regenLeft = 0f;
+        }
+        setHealOverTime(player, regenLeft, regenStrength);
     }
 
     private static float getFoodRegenStrength(Player player) {
         return player.getPersistentData().getFloat(FOOD_REGEN_STRENGTH);
-    }
-
-    public static void setFoodRegenStrength(Player player, float amount) {
-        player.getPersistentData().putFloat(FOOD_REGEN_STRENGTH, amount);
-        if (player instanceof ServerPlayer serverPlayer) {
-            Object msg = new FoodRegenSync(amount);
-            NetworkHandler.CHANNEL.sendTo(msg, serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-        }
     }
 
     //Render before Regenerating absorption
@@ -340,40 +335,31 @@ public class NoHunger extends Feature {
         mc.getProfiler().pop();
     }
 
-    static ResourceLocation PLAYER_HEALTH_ELEMENT = new ResourceLocation("minecraft", "player_health");
+    protected static final ResourceLocation OT_REGEN_LOCATION = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "textures/gui/ot_regen.png");
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    public void onRenderGuiOverlayPre(RenderGuiOverlayEvent.Post event) {
-        if (!this.isEnabled())
-            return;
-        if (event.getOverlay() == GuiOverlayManager.findOverlay(PLAYER_HEALTH_ELEMENT)) {
+    public static void registerGui(RegisterGuiOverlaysEvent event) {
+        event.registerAbove(VanillaGuiOverlay.PLAYER_HEALTH.id(), "ot_regen", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
+            if (!Feature.isEnabled(NoHunger.class)
+                    || !gui.shouldDrawSurvivalElements())
+                return;
+
             Minecraft mc = Minecraft.getInstance();
-            ForgeGui gui = (ForgeGui) mc.gui;
-            if (!mc.options.hideGui && gui.shouldDrawSurvivalElements()) {
-                renderFoodRegen(gui, event.getGuiGraphics(), event.getPartialTick(), event.getWindow().getScreenWidth(), event.getWindow().getScreenHeight());
-            }
-        }
-    }
+            Player player = mc.player;
+            if (player == null)
+                return;
 
-    private static final Vec2 UV_ARROW = new Vec2(0, 18);
-
-    @OnlyIn(Dist.CLIENT)
-    public static void renderFoodRegen(ForgeGui gui, GuiGraphics guiGraphics, float partialTicks, int screenWidth, int screenHeight) {
-        int healthIconsOffset = 49;
-
-        Minecraft mc = Minecraft.getInstance();
-        Player player = mc.player;
-        assert player != null;
-
-        int right = mc.getWindow().getGuiScaledWidth() / 2 - 94;
-        int top = mc.getWindow().getGuiScaledHeight() - healthIconsOffset + 11;
-        float saturationModifier = getFoodRegenStrength(player) * 20 * 2;
-        if (saturationModifier == 0f)
-            return;
-        ClientUtils.setRenderColor(1.2f - (saturationModifier / 1.2f), 0.78f, 0.17f, 1f);
-        guiGraphics.blit(IguanaTweaksReborn.GUI_ICONS, right, top, (int) UV_ARROW.x, (int) UV_ARROW.y, 9, 9);
-        ClientUtils.resetRenderColor();
+            int right = screenWidth / 2 - 91;
+            int top = screenHeight - gui.leftHeight + 16;
+            float regenLeft = Math.min(20, getFoodRegenLeft(player));
+            float regenStrength = getFoodRegenStrength(player) * 20 * 2;
+            if (regenStrength == 0f)
+                return;
+            ClientUtils.setRenderColor(1.2f - (regenStrength / 1.2f), 0.78f, 0.17f, 1f);
+            guiGraphics.blit(OT_REGEN_LOCATION, right, top, 0f, 0f, (int) (regenLeft / 2f * 9), 3, 90, 3);
+            ClientUtils.resetRenderColor();
+        });
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -393,7 +379,7 @@ public class NoHunger extends Feature {
 
         FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
 
-        if (doesHealInstantly(food)) {
+        if (Utils.getFoodSaturationRestored(food) < instantHealSaturationThreshold && doesHealInstantly()) {
             boolean isRawFood = FoodDrinks.isRawFood(event.getItemStack().getItem());
             //noinspection ConstantConditions
             float heal = getInstantHealAmount(food, isRawFood);
@@ -405,7 +391,7 @@ public class NoHunger extends Feature {
             event.getToolTip().add(component);
         }
 
-        if (doesHealOverTime(food)) {
+        if (Utils.getFoodSaturationRestored(food) >= instantHealSaturationThreshold && doesHealOverTime()) {
             //noinspection ConstantConditions
             float heal = Utils.computeFoodFormula(food, healOverTime);
             //Half heart per second by default
