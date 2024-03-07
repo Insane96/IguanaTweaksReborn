@@ -16,9 +16,11 @@ import insane96mcp.insanelib.world.effect.ILMobEffect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -55,8 +57,8 @@ import java.util.List;
 public class Tiredness extends JsonFeature {
 
 	public static final RegistryObject<MobEffect> TIRED = ITRRegistries.MOB_EFFECTS.register("tired", () -> new TirednessEffect(MobEffectCategory.HARMFUL, 0x818894)
-			.addAttributeModifier(Attributes.MOVEMENT_SPEED, "697c48dd-6bbd-4082-8501-040bb9812c09", -0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL)
-			.addAttributeModifier(Attributes.ATTACK_SPEED, "40c789ef-d30d-4a27-8f46-13fe0edbb259", -0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+			.addAttributeModifier(Attributes.MOVEMENT_SPEED, "697c48dd-6bbd-4082-8501-040bb9812c09", -0.01F, AttributeModifier.Operation.MULTIPLY_TOTAL)
+			.addAttributeModifier(Attributes.ATTACK_SPEED, "40c789ef-d30d-4a27-8f46-13fe0edbb259", -0.01F, AttributeModifier.Operation.MULTIPLY_TOTAL));
 	public static final RegistryObject<MobEffect> ENERGY_BOOST = ITRRegistries.MOB_EFFECTS.register("energy_boost", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x857965, true));
 
 	public static final String NOT_TIRED = IguanaTweaksReborn.MOD_ID + ".not_tired";
@@ -151,8 +153,6 @@ public class Tiredness extends JsonFeature {
 	}
 
 	private static void applyTired(float tiredness, ServerPlayer player) {
-		if (tiredness < tirednessToEffect)
-			return;
 		int amplifier = Math.min((int) ((tiredness - tirednessToEffect) / tirednessPerLevel), 4);
 		if (amplifier >= 0) {
 			int oAmplifier = -1;
@@ -191,7 +191,7 @@ public class Tiredness extends JsonFeature {
 		int level = event.getEntity().getEffect(TIRED.get()).getAmplifier() + 1;
 		if (level == 1)
 			return;
-		event.setNewSpeed(event.getNewSpeed() * (1 - (level * 0.05f)));
+		event.setNewSpeed(event.getNewSpeed() * (1 - (level * 0.01f)));
 	}
 
 	@SubscribeEvent
@@ -272,36 +272,56 @@ public class Tiredness extends JsonFeature {
 		TirednessHandler.set(event.getEntity(), tiredness);
 	}
 
+	protected static final ResourceLocation OVERLAY_LOCATION = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "textures/misc/tiredness_overlay.png");
+	/*@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public void onRenderer(RenderGuiOverlayEvent.Post event) {
+		GuiGraphics guiGraphics = event.getGuiGraphics();
+		int screenWidth = event.getWindow().getGuiScaledWidth();
+		int screenHeight = event.getWindow().getGuiScaledHeight();
+		LocalPlayer player = Minecraft.getInstance().player;
+		if (!player.hasEffect(TIRED.get()))
+			return;
+		RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+		//noinspection DataFlowIssue
+		int amplifier = player.getEffect(TIRED.get()).getAmplifier() + 1;
+		float brightness = Mth.clamp((amplifier * 20f) / 100.0F, 0f, 1f);
+		Minecraft.getInstance().getProfiler().push("tired_overlay");
+		RenderSystem.disableDepthTest();
+		RenderSystem.depthMask(false);
+		guiGraphics.setColor(1f, 1f, 1f, brightness);
+		guiGraphics.blit(OVERLAY_LOCATION, 0, 0, -90, 0.0F, 0.0F, screenWidth, screenHeight, screenWidth, screenHeight);
+		RenderSystem.depthMask(true);
+		RenderSystem.enableDepthTest();
+		guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+		Minecraft.getInstance().getProfiler().pop();
+		RenderSystem.defaultBlendFunc();
+	}*/
+
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void registerGui(RegisterGuiOverlaysEvent event) {
-		event.registerAbove(VanillaGuiOverlay.SLEEP_FADE.id(), "tired_overlay", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
-			assert Minecraft.getInstance().player != null : "Minecraft.getInstance().player is null";
-			if (isEnabled(Tiredness.class) && gui.shouldDrawSurvivalElements())
-			{
-				LocalPlayer player = Minecraft.getInstance().player;
-				if (!player.hasEffect(TIRED.get()))
-					return;
-				//noinspection DataFlowIssue
-				int amplifier = player.getEffect(TIRED.get()).getAmplifier() + 1;
-				//No overlay at Tired I
-				if (amplifier < 2)
-					return;
-				amplifier--;
-				Minecraft.getInstance().getProfiler().push("tired_overlay");
-				RenderSystem.disableDepthTest();
-				float opacity = (amplifier * 25f) / 100.0F;
-				if (opacity > 1.0F)
-					opacity = 1.0F - (amplifier * 25f - 100) / 10.0F;
-
-				int color = (int) (220.0F * opacity) << 24 | 1052704;
-				guiGraphics.fill(0, 0, screenWidth, screenHeight, color);
-				RenderSystem.enableDepthTest();
-				Minecraft.getInstance().getProfiler().pop();
-			}
+		event.registerAbove(VanillaGuiOverlay.VIGNETTE.id(), "tired_overlay", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
+			//gui.setupOverlayRenderState(true, false);
+			LocalPlayer player = Minecraft.getInstance().player;
+			if (!player.hasEffect(TIRED.get()))
+				return;
+			//RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+			//noinspection DataFlowIssue
+			int amplifier = player.getEffect(TIRED.get()).getAmplifier() + 1;
+			float brightness = Mth.clamp(amplifier * 0.1f + ((amplifier - 1) * 0.1f), 0f, 1f);
+			Minecraft.getInstance().getProfiler().push("tired_overlay");
+			//RenderSystem.disableDepthTest();
+			//RenderSystem.depthMask(false);
+			guiGraphics.setColor(1f, 1f, 1f, brightness);
+			guiGraphics.blit(OVERLAY_LOCATION, 0, 0, -90, 0.0F, 0.0F, screenWidth, screenHeight, screenWidth, screenHeight);
+			//RenderSystem.depthMask(true);
+			//RenderSystem.enableDepthTest();
+			guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+			Minecraft.getInstance().getProfiler().pop();
+			RenderSystem.defaultBlendFunc();
 		});
 	}
-
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent

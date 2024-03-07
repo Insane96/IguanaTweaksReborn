@@ -6,6 +6,9 @@
     After 24 mobs spawned the spawner will slowdown the spawning but still remain active and award experience and loot
   * Also increased the range for activation from 16 to 32
   * Spawners no longer disable themselves after various mobs spawned and no longer give bonus experience when broken
+* Tiredness
+  * Now renders a texture overlay instead of darkening the screen
+  * Reduced attack speed, movement speed, mining speed and stamina reduction
 * No Hunger can now be enabled/disable with a gamerule
 * Tools no longer take 2 damage when hurting entities
 * Reduced Hoes base attack speed (2.5 -> 2.4) and knockback (-60% -> -75%)
