@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.5.0
 * Reworked spawners
   * Spawners now generate empowered and will spawn mobs faster  
     After 24 mobs spawned the spawner will slowdown the spawning but still remain active and award experience and loot
