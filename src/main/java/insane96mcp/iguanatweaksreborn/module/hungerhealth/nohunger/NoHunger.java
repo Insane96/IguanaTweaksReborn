@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.module.hungerhealth;
+package insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
@@ -30,6 +30,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
@@ -47,10 +48,16 @@ import net.minecraftforge.network.NetworkDirection;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
-@Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days.")
-@LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
+@Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days. Use the gamerule iguanatweaks:no_hunger to re-enable hunger (and thus, disable this feature)")
+@LoadFeature(module = Modules.Ids.HUNGER_HEALTH, canBeDisabled = false)
 public class NoHunger extends Feature {
 
+    public static final GameRules.Key<GameRules.BooleanValue> RULE_NOHUNGER = GameRules.register("iguanatweaks:noHunger", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true, (server, booleanValue) -> {
+        Module.getFeature(NoHunger.class).setEnabled(booleanValue.get());
+        for (ServerPlayer serverPlayer : server.getPlayerList().getPlayers()) {
+            NoHungerSync.sync(booleanValue.get(), serverPlayer);
+        }
+    }));
     private static final String PASSIVE_REGEN_TICK = IguanaTweaksReborn.RESOURCE_PREFIX + "passive_regen_ticks";
     private static final String FOOD_REGEN_LEFT = IguanaTweaksReborn.RESOURCE_PREFIX + "food_regen_left";
     private static final String FOOD_REGEN_STRENGTH = IguanaTweaksReborn.RESOURCE_PREFIX + "food_regen_strength";

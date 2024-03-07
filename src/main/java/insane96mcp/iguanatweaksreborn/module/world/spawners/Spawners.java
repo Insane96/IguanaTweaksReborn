@@ -89,6 +89,7 @@ public class Spawners extends JsonFeature {
 	@Config(min = 0)
 	@Label(name = "Empowered.Mobs amount", description = "How many mobs are spawned before empowered ends.")
 	public static Integer empoweredMobsAmount = 24;
+	//TODO Change vanilla delay instead of this hacky way
 	@Config(min = 1)
 	@Label(name = "Empowered.Spawning Speed Multiplier", description = "Spawning Speed when the Spawner is empowered.")
 	public static Double empoweredSpawningSpeed = 2d;

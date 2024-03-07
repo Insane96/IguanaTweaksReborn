@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.network.message;
 
-import insane96mcp.iguanatweaksreborn.module.hungerhealth.NoHunger;
+import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.NoHunger;
 import insane96mcp.iguanatweaksreborn.network.NetworkHelper;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
@@ -24,9 +24,7 @@ public class FoodRegenSync {
     }
 
     public static void handle(final FoodRegenSync message, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            NoHunger.setFoodRegenStrength(NetworkHelper.getSidedPlayer(ctx.get()), message.regenStrength);
-        });
+        ctx.get().enqueueWork(() -> NoHunger.setFoodRegenStrength(NetworkHelper.getSidedPlayer(ctx.get()), message.regenStrength));
         ctx.get().setPacketHandled(true);
     }
 }
