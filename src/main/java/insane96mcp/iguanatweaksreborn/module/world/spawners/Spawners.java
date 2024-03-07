@@ -7,7 +7,6 @@ import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.ISpawnerD
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerData;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerDataImpl;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
-import insane96mcp.iguanatweaksreborn.network.message.SpawnerStatusSync;
 import insane96mcp.iguanatweaksreborn.utils.ITRLogHelper;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.JsonFeature;
@@ -17,7 +16,6 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.data.IdTagValue;
-import insane96mcp.insanelib.util.MathHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -89,13 +87,15 @@ public class Spawners extends JsonFeature {
 	@Config(min = 0)
 	@Label(name = "Empowered.Mobs amount", description = "How many mobs are spawned before empowered ends.")
 	public static Integer empoweredMobsAmount = 24;
-	//TODO Change vanilla delay instead of this hacky way
 	@Config(min = 1)
-	@Label(name = "Empowered.Spawning Speed Multiplier", description = "Spawning Speed when the Spawner is empowered.")
-	public static Double empoweredSpawningSpeed = 2d;
-	@Config(min = 0.01)
-	@Label(name = "Empowered.Normal Speed Multiplier", description = "Spawning Speed when the Spawner stops being empowered.")
-	public static Double empoweredNormalSpeed = 0.4d;
+	@Label(name = "Empowered.Delay", description = "Spawning Delay (in ticks) when the Spawner is empowered.")
+	public static MinMax empoweredDelay = new MinMax(100, 400);
+	@Config(min = 1)
+	@Label(name = "Delay", description = "Spawning Delay (in ticks) of the spawner. Vanilla is 200~800.")
+	public static MinMax delay = new MinMax(500, 2000);
+	@Config(min = 0)
+	@Label(name = "Required Player Range", description = "Range in which a player must be present for a spawner to work. Vanilla is 16.")
+	public static int requiredPlayerRange = 32;
 	@Config(min = 0)
 	@Label(name = "Empowered.Experience Reward", description = "When the Spawner stops being empowered, will generate this amount of experience")
 	public static MinMax empoweredExperienceReward = new MinMax(100, 200);
@@ -233,7 +233,7 @@ public class Spawners extends JsonFeature {
         if (!(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity)
                 || !Feature.isEnabled(Spawners.class))
 			return false;
-		spawnerBlockEntity.getCapability(SpawnerData.INSTANCE).ifPresent(spawnerData -> {
+		/*spawnerBlockEntity.getCapability(SpawnerData.INSTANCE).ifPresent(spawnerData -> {
 			Level level = spawnerBlockEntity.getLevel();
 			if (level == null
 					|| !spawner.isNearPlayer(level, spawnerBlockEntity.getBlockPos()))
@@ -245,14 +245,14 @@ public class Spawners extends JsonFeature {
 			else if (empoweredNormalSpeed < 1 && level.getRandom().nextFloat() >= empoweredNormalSpeed){
 				spawner.spawnDelay = Math.max(spawner.spawnDelay + 1, 0);
 			}
-		});
+		});*/
 		return isDisabled(spawnerBlockEntity);
 	}
 
 	/**
 	 * Returns true if the spawner should not tick
 	 */
-	public static boolean onSpawnerClientTick(BaseSpawner spawner) {
+	public static boolean onSpawnerClientTick(BaseSpawner spawner, Level level) {
 		if (!Feature.isEnabled(Spawners.class)
 			|| !(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity)
 			|| spawner.nextSpawnData == null)
@@ -260,30 +260,35 @@ public class Spawners extends JsonFeature {
 		Optional<EntityType<?>> optional = EntityType.by(spawner.nextSpawnData.entityToSpawn());
 		if (optional.isEmpty())
 			return false;
-		clientTickOnEmpowered(spawner, spawnerBlockEntity);
-		clientTickOnDisabled(spawnerBlockEntity);
+		clientTickOnEmpowered(spawner, level, spawnerBlockEntity);
+		clientTickOnDisabled(spawner, level, spawnerBlockEntity);
 		return isDisabled(spawnerBlockEntity);
 	}
 
-	private static void clientTickOnEmpowered(BaseSpawner spawner, SpawnerBlockEntity spawnerBlockEntity) {
+	public static void onSpawnerDelaySet(BaseSpawner spawner, Level level, BlockPos pos) {
+		if (!Feature.isEnabled(Spawners.class)
+				|| !(spawner.getSpawnerBlockEntity() instanceof SpawnerBlockEntity spawnerBlockEntity))
+			return;
+        if (isEmpowered(spawnerBlockEntity))
+            spawner.spawnDelay = empoweredDelay.getIntRandBetween(level.getRandom());
+        else
+            spawner.spawnDelay = delay.getIntRandBetween(level.getRandom());
+		spawner.requiredPlayerRange = requiredPlayerRange;
+		syncSpawnerData(spawnerBlockEntity);
+    }
+
+	private static void clientTickOnEmpowered(BaseSpawner spawner, Level level, SpawnerBlockEntity spawnerBlockEntity) {
 		if (!isEmpowered(spawnerBlockEntity))
 			return;
-		Level level = spawnerBlockEntity.getLevel();
-		if (level == null
-				/*|| !spawner.isNearPlayer(level, spawnerBlockEntity.getBlockPos())*/)
-			return;
-		spawner.spawnDelay = Math.max(spawner.spawnDelay - (MathHelper.getAmountWithDecimalChance(level.getRandom(), empoweredSpawningSpeed) - 1), 0);
 		BlockPos blockpos = spawnerBlockEntity.getBlockPos();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 5; i++)
 			level.addParticle(ParticleTypes.FLAME, blockpos.getX() + level.random.nextDouble(), blockpos.getY() + level.random.nextDouble(), blockpos.getZ() + level.random.nextDouble(), 0.0D, 0.0D, 0.0D);
-		}
+		if (spawner.spawnDelay > 0 && spawner.spawnDelay % 10 == 0)
+			level.addParticle(ParticleTypes.ANGRY_VILLAGER, blockpos.getX() + level.random.nextDouble(), blockpos.getY() + level.random.nextDouble() + 0.2f, blockpos.getZ() + level.random.nextDouble(), 0.0D, 0.0D, 0.0D);
 	}
 
-	private static void clientTickOnDisabled(SpawnerBlockEntity spawnerBlockEntity) {
+	private static void clientTickOnDisabled(BaseSpawner spawner, Level level, SpawnerBlockEntity spawnerBlockEntity) {
 		if (!isDisabled(spawnerBlockEntity))
-			return;
-		Level level = spawnerBlockEntity.getLevel();
-		if (level == null)
 			return;
 		BlockPos blockpos = spawnerBlockEntity.getBlockPos();
 		for (int i = 0; i < 8; i++) {
@@ -311,7 +316,7 @@ public class Spawners extends JsonFeature {
 
         LazyOptional<ISpawnerData> spawnerDataLazy = spawner.getCapability(SpawnerData.INSTANCE);
 		spawnerDataLazy.ifPresent(spawnerData -> {
-			Object msg = new SpawnerStatusSync(spawner.getBlockPos(), (SpawnerDataImpl) spawnerData);
+			Object msg = new SpawnerStatusSync(spawner.getBlockPos(), (SpawnerDataImpl) spawnerData, spawner.getSpawner().spawnDelay, spawner.getSpawner().requiredPlayerRange);
 			for (Player player : spawner.getLevel().players()) {
 				NetworkHandler.CHANNEL.sendTo(msg, ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 			}

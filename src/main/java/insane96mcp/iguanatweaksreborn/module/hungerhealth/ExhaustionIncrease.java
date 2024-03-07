@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.hungerhealth;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.NoHunger;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.network.message.ExhaustionSync;
 import insane96mcp.iguanatweaksreborn.network.message.SaturationSync;

@@ -61,7 +61,10 @@ public class SpawnerDataImpl implements ISpawnerData {
 	public void deserializeNBT(CompoundTag nbt) {
 		this.setSpawnedMobs(nbt.getInt(SPAWNED_MOBS));
 		this.setDisabled(nbt.getBoolean(SPAWNER_DISABLED));
-		this.setEmpowered(nbt.getBoolean(SPAWNER_EMPOWERED));
+		if (!nbt.contains(SPAWNER_EMPOWERED))
+			this.setEmpowered(true);
+		else
+			this.setEmpowered(nbt.getBoolean(SPAWNER_EMPOWERED));
 	}
 
 	public void toNetwork(FriendlyByteBuf buf) {
