@@ -165,6 +165,7 @@ public class Spawners extends JsonFeature {
 
 	private static void empoweredSpawner(SpawnerBlockEntity spawnerBlockEntity, Mob mob, ServerLevel level, BlockPos spawnerPos, ISpawnerData spawnerCap) {
 		if (!empoweredEnabled
+				|| mob.getType().is(BLACKLISTED_SPAWNERS)
 				|| !spawnerCap.isEmpowered())
 			return;
 
@@ -206,6 +207,7 @@ public class Spawners extends JsonFeature {
 		if (!this.isEnabled()
 				|| !ignoreLight
 				|| event.getSpawnType() != MobSpawnType.SPAWNER
+				|| event.getEntityType().is(BLACKLISTED_SPAWNERS)
 				|| event.getDefaultResult()
 			/*|| !(event.getEntityType() instanceof EntityType<? extends Monster>)*/)
 			return;
@@ -219,7 +221,8 @@ public class Spawners extends JsonFeature {
 	public void onSpawnCheck(MobSpawnEvent.PositionCheck event) {
 		if (!this.isEnabled()
 				|| !ignoreLight
-				|| event.getSpawnType() != MobSpawnType.SPAWNER)
+				|| event.getSpawnType() != MobSpawnType.SPAWNER
+				|| event.getEntity().getType().is(BLACKLISTED_SPAWNERS))
 			return;
 
 		if (event.getEntity().checkSpawnObstruction(event.getLevel()))
