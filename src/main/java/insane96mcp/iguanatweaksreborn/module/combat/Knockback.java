@@ -38,7 +38,7 @@ public class Knockback extends Feature {
 
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Knockback reduction", description = "Percentage knockback dealt when conditions are met.")
-	public static Double knockbackReduction = 0.6d;
+	public static Double knockbackReduction = 0.35d;
 
 	public Knockback(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

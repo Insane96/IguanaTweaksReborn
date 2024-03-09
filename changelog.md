@@ -5,7 +5,8 @@
   * Also the overlay is no longer applied at Tired I
 * Over time heal decay when full health is now affected by regen speed
   * So with lower regen speed, the decay is slower
-* Damaging enchantments are now applied earlier for crit to apply
+* Damaging enchantments are now applied earlier for various checks to apply
+* Heavily reduced knockback without a weapon
 * Fixed hoes putting out fire in a radius
 * Fixed snowballs dealing reduced damage to blazes
 
