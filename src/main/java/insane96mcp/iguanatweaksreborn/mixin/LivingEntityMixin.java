@@ -64,6 +64,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         return instance.isSprinting();
     }
 
+    @ModifyVariable(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;onLivingAttack(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;F)Z", shift = At.Shift.BEFORE), argsOnly = true)
+    public float onAttackAmount(float amount, DamageSource source) {
+        return ITEEventFactory.onPlayerAttack((LivingEntity) (Object) this, source, amount);
+    }
+
     /*@ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
     private float onCalculateAbsorption(float f1, DamageSource damageSource, float amount) {
         if (RegeneratingAbsorption.damageTypeTagOnly() && damageSource.is(DamageTypeTags.BYPASSES_ARMOR)) {

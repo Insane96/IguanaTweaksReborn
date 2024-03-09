@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.module.world.explosionoverhaul.ITRExplosio
 import insane96mcp.iguanatweaksreborn.module.world.explosionoverhaul.ITRExplosionCreatedEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -36,5 +37,21 @@ public class ITEEventFactory {
         HookTickToHookLureEvent event = new HookTickToHookLureEvent(hook, tick);
         MinecraftForge.EVENT_BUS.post(event);
         return event.getTick();
+    }
+
+    public static float onLivingAttack(LivingEntity entity, DamageSource src, float amount)
+    {
+        if (entity instanceof Player)
+            return amount;
+        ITRLivingAttackEvent event = new ITRLivingAttackEvent(entity, src, amount);
+        MinecraftForge.EVENT_BUS.post(event);
+        return event.getAmount();
+    }
+
+    public static float onPlayerAttack(LivingEntity entity, DamageSource src, float amount)
+    {
+        ITRLivingAttackEvent event = new ITRLivingAttackEvent(entity, src, amount);
+        MinecraftForge.EVENT_BUS.post(event);
+        return event.getAmount();
     }
 }

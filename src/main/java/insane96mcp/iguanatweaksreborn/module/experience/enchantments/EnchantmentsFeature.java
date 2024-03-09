@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.experience.enchantments;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.event.ITRLivingAttackEvent;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.stats.Stats;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.FireAspect;
@@ -37,7 +38,6 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -229,7 +229,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	}
 
 	@SubscribeEvent
-	public void onLivingHurt(LivingHurtEvent event) {
+	public void onLivingHurt(ITRLivingAttackEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getSource().getEntity() instanceof LivingEntity attacker))
 			return;
@@ -240,7 +240,7 @@ public class EnchantmentsFeature extends JsonFeature {
 		}
 	}
 
-	public void bonusDamageEnchantment(Enchantment enchantment, int lvl, LivingEntity attacker, LivingEntity target, LivingHurtEvent event) {
+	public void bonusDamageEnchantment(Enchantment enchantment, int lvl, LivingEntity attacker, LivingEntity target, ITRLivingAttackEvent event) {
 		if (!(enchantment instanceof BonusDamageEnchantment bonusDamageEnchantment))
 			return;
 		float damageBonus = bonusDamageEnchantment.getDamageBonus(attacker, target, attacker.getMainHandItem(), lvl);

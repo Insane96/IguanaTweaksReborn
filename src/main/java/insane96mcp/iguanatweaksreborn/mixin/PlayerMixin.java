@@ -43,6 +43,11 @@ public abstract class PlayerMixin extends LivingEntity {
 			callback.setReturnValue(exp);
 	}
 
+	@ModifyVariable(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;onPlayerAttack(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;F)Z", shift = At.Shift.BEFORE), argsOnly = true)
+	public float onAttackAmount(float amount, DamageSource source) {
+		return ITEEventFactory.onPlayerAttack(this, source, amount);
+	}
+
 	//Changes efficiency formula
 	@ModifyVariable(method = "getDigSpeed", ordinal = 0, at = @At(value = "STORE", ordinal = 1), remap = false)
 	private float changeEfficiencyFormula(float efficiency, BlockState p_36282_, @Nullable BlockPos pos) {
