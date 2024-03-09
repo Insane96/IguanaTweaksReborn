@@ -47,7 +47,7 @@ public class Stats extends Feature {
 	public static final UUID MOVEMENT_SPEED_REDUCTION_UUID = UUID.fromString("a88ac0d1-e2b3-4cf1-bb0e-9577486c874a");
 	@Config(min = -4d, max = 4d)
 	@Label(name = "Player attack range modifier", description = "Adds this to players' attack range")
-	public static Double playerAttackRangeModifier = -0.5d;
+	public static Double playerAttackRangeModifier = 0d;
 	@Config
 	@Label(name = "Player no damage when spamming", description = "In vanilla, if you attack as soon as you just attacked you already deal 20% of the full damage. This changes that to 0%.")
 	public static Boolean playerNoDamageWhenSpamming = true;
