@@ -3,6 +3,8 @@
 ## Upcoming
 * Added back the "You should really get some sleep" message when reaching Tired V
   * Also the overlay is no longer applied at Tired I
+* Over time heal decay when full health is now affected by regen speed
+  * So with lower regen speed, the decay is slower
 * Fixed hoes putting out fire in a radius
 * Fixed snowballs dealing reduced damage to blazes
 
