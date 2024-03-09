@@ -7,9 +7,11 @@
   * So with lower regen speed, the decay is slower
 * Damaging enchantments are now applied earlier for various checks to apply
 * Heavily reduced knockback without a weapon
+* The player no longer has -0.5 attack reach 
+  * Weapons have been changed accordingly to have the same reach as before
 * Fixed hoes putting out fire in a radius
 * Fixed snowballs dealing reduced damage to blazes
-
+War
 ## 3.5.0
 * Reworked spawners
   * Spawners now generate empowered and will spawn mobs faster  
