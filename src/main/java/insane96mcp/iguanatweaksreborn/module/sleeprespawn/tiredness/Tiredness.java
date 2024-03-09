@@ -282,50 +282,20 @@ public class Tiredness extends JsonFeature {
 	}
 
 	protected static final ResourceLocation OVERLAY_LOCATION = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "textures/misc/tiredness_overlay.png");
-	/*@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent
-	public void onRenderer(RenderGuiOverlayEvent.Post event) {
-		GuiGraphics guiGraphics = event.getGuiGraphics();
-		int screenWidth = event.getWindow().getGuiScaledWidth();
-		int screenHeight = event.getWindow().getGuiScaledHeight();
-		LocalPlayer player = Minecraft.getInstance().player;
-		if (!player.hasEffect(TIRED.get()))
-			return;
-		RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-		//noinspection DataFlowIssue
-		int amplifier = player.getEffect(TIRED.get()).getAmplifier() + 1;
-		float brightness = Mth.clamp((amplifier * 20f) / 100.0F, 0f, 1f);
-		Minecraft.getInstance().getProfiler().push("tired_overlay");
-		RenderSystem.disableDepthTest();
-		RenderSystem.depthMask(false);
-		guiGraphics.setColor(1f, 1f, 1f, brightness);
-		guiGraphics.blit(OVERLAY_LOCATION, 0, 0, -90, 0.0F, 0.0F, screenWidth, screenHeight, screenWidth, screenHeight);
-		RenderSystem.depthMask(true);
-		RenderSystem.enableDepthTest();
-		guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-		Minecraft.getInstance().getProfiler().pop();
-		RenderSystem.defaultBlendFunc();
-	}*/
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void registerGui(RegisterGuiOverlaysEvent event) {
 		event.registerAbove(VanillaGuiOverlay.VIGNETTE.id(), "tired_overlay", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
-			//gui.setupOverlayRenderState(true, false);
 			LocalPlayer player = Minecraft.getInstance().player;
 			if (!player.hasEffect(TIRED.get()))
 				return;
-			//RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 			//noinspection DataFlowIssue
 			int amplifier = player.getEffect(TIRED.get()).getAmplifier() + 1;
-			float brightness = Mth.clamp(amplifier * 0.1f + ((amplifier - 1) * 0.1f), 0f, 1f);
+			float brightness = Mth.clamp(amplifier * 0.1f * ((amplifier - 1) * 0.5f), 0f, 1f);
 			Minecraft.getInstance().getProfiler().push("tired_overlay");
-			//RenderSystem.disableDepthTest();
-			//RenderSystem.depthMask(false);
 			guiGraphics.setColor(1f, 1f, 1f, brightness);
 			guiGraphics.blit(OVERLAY_LOCATION, 0, 0, -90, 0.0F, 0.0F, screenWidth, screenHeight, screenWidth, screenHeight);
-			//RenderSystem.depthMask(true);
-			//RenderSystem.enableDepthTest();
 			guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
 			Minecraft.getInstance().getProfiler().pop();
 			RenderSystem.defaultBlendFunc();

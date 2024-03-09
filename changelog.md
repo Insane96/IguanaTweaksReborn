@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Added back the "You should really get some sleep" message when reaching Tired V
+  * Also the overlay is no longer applied at Tired I
 * Fixed hoes putting out fire in a radius
 
 ## 3.5.0
