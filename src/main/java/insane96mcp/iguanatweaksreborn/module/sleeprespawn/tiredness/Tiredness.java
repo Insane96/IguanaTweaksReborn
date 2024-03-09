@@ -63,6 +63,7 @@ public class Tiredness extends JsonFeature {
 
 	public static final String NOT_TIRED = IguanaTweaksReborn.MOD_ID + ".not_tired";
 	public static final String TIRED_ENOUGH = IguanaTweaksReborn.MOD_ID + ".tired_enough";
+	public static final String TOO_TIRED = IguanaTweaksReborn.MOD_ID + ".too_tired";
 	public static final TagKey<Item> ENERGY_BOOST_ITEM_TAG = ITRItemTagsProvider.create("energy_boost");
 
 	public static final List<EnergyBoostItem> ENERGY_BOOST_ITEMS_DEFAULT = new ArrayList<>(Arrays.asList(
@@ -144,15 +145,12 @@ public class Tiredness extends JsonFeature {
 		ServerPlayer serverPlayer = (ServerPlayer) event.getEntity();
 
 		float tiredness = TirednessHandler.get(serverPlayer);
-		float newTiredness = TirednessHandler.addAndGet(serverPlayer, event.getAmount() * tirednessGainMultiplier.floatValue());
-		if (tiredness < tirednessToEffect && newTiredness >= tirednessToEffect)
-			serverPlayer.displayClientMessage(Component.translatable(TIRED_ENOUGH), false);
-		applyTired(tiredness, serverPlayer);
-
+		TirednessHandler.add(serverPlayer, event.getAmount() * tirednessGainMultiplier.floatValue());
+		tryApplyTired(tiredness, serverPlayer);
 		TirednessHandler.syncToClient(serverPlayer);
 	}
 
-	private static void applyTired(float tiredness, ServerPlayer player) {
+	private static void tryApplyTired(float tiredness, ServerPlayer player) {
 		int amplifier = Math.min((int) ((tiredness - tirednessToEffect) / tirednessPerLevel), 4);
 		if (amplifier >= 0) {
 			int oAmplifier = -1;
@@ -160,13 +158,17 @@ public class Tiredness extends JsonFeature {
 				//noinspection DataFlowIssue
 				oAmplifier = player.getEffect(TIRED.get()).getAmplifier();
 			}
-			if (amplifier != oAmplifier)
+			if (amplifier != oAmplifier) {
 				player.addEffect(new MobEffectInstance(TIRED.get(), -1, amplifier, true, false, true));
+				if (amplifier == 0)
+					player.displayClientMessage(Component.translatable(TIRED_ENOUGH), false);
+				else if (amplifier == 4)
+					player.displayClientMessage(Component.translatable(TOO_TIRED), false);
+			}
 		}
 		else {
-			if (player.hasEffect(TIRED.get())) {
+			if (player.hasEffect(TIRED.get()))
 				player.removeEffect(TIRED.get());
-			}
 		}
 	}
 

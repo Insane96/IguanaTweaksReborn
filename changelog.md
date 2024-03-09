@@ -1,8 +1,7 @@
 # Changelog
 
-* Tiredness message appears for other levels too
-
 ## Upcoming
+* Added back the "You should really get some sleep" message when reaching Tired V
 * Fixed hoes putting out fire in a radius
 
 ## 3.5.0
