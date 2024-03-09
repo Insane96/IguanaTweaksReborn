@@ -1,5 +1,10 @@
 # Changelog
 
+* Tiredness message appears for other levels too
+
+## Upcoming
+* Fixed hoes putting out fire in a radius
+
 ## 3.5.0
 * Reworked spawners
   * Spawners now generate empowered and will spawn mobs faster  

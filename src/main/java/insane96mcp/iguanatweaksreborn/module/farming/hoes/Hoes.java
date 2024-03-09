@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.farming.hoes;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.JsonFeature;
@@ -149,9 +150,8 @@ public class Hoes extends JsonFeature {
 				BlockPos.betweenClosedStream(event.getPos().offset(-hoeStat.scytheRadius, -(hoeStat.scytheRadius - 1), -hoeStat.scytheRadius), event.getPos().offset(hoeStat.scytheRadius, hoeStat.scytheRadius - 1, hoeStat.scytheRadius))
 						.forEach(pos -> {
 							BlockState state = event.getPlayer().level().getBlockState(pos);
-							if (!state.canBeReplaced()
+							if (!state.is(ITRBlockTagsProvider.TALL_GRASS)
 									|| state.destroySpeed > 0f
-									|| !state.getFluidState().isEmpty()
 									|| pos.equals(event.getPos()))
 								return;
 							event.getPlayer().level().destroyBlock(pos, false);

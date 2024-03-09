@@ -7,7 +7,6 @@ import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.BeaconConduit;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.Death;
 import insane96mcp.iguanatweaksreborn.module.world.Nether;
-import insane96mcp.iguanatweaksreborn.module.world.desirepaths.DesirePaths;
 import insane96mcp.iguanatweaksreborn.module.world.timber.TimberTrees;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -31,6 +30,7 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
     public static final TagKey<Block> COPPER_ORES = create("copper_ores");
     public static final TagKey<Block> GOLD_ORES = create("gold_ores");
     public static final TagKey<Block> IRON_ORES = create("iron_ores");
+    public static final TagKey<Block> TALL_GRASS = create("tall_grass");
 
     public ITRBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, @Nullable ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, modId, existingFileHelper);
@@ -60,7 +60,7 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
         tag(BlockHardness.DEPTH_MULTIPLIER_BLACKLIST)
                 .addTag(OBSIDIANS);
 
-        tag(DesirePaths.TALL_GRASS)
+        tag(TALL_GRASS)
                 .add(Blocks.GRASS).add(Blocks.TALL_GRASS).add(Blocks.FERN).add(Blocks.DEAD_BUSH);
 
         tag(GRASS_BLOCKS)

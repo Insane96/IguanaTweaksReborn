@@ -8,7 +8,6 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,7 +24,6 @@ import java.util.List;
 @Label(name = "Desire Paths", description = "Wear down grass when passing on it.")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class DesirePaths extends Feature {
-	public static final TagKey<Block> TALL_GRASS = ITRBlockTagsProvider.create("tall_grass");
 
 	private static final List<String> DEFAULT_TRANSFORMATION_LIST = List.of("minecraft:grass_block,minecraft:dirt", "minecraft:dirt,minecraft:coarse_dirt");
 	private static ForgeConfigSpec.ConfigValue<List<? extends String>> transformationListConfig;
@@ -93,9 +91,8 @@ public class DesirePaths extends Feature {
 						if (!breakTallGrass) continue;
 						pos.set(x2, event.player.position().y + 0.002d, z2);
 						state = event.player.level().getBlockState(pos);
-						if (state.is(TALL_GRASS)) {
+						if (state.is(ITRBlockTagsProvider.TALL_GRASS))
 							event.player.level().destroyBlock(pos, false, event.player);
-						}
 					}
 				}
 			}
