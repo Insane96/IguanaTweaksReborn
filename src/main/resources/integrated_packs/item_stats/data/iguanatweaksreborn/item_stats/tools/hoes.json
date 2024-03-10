@@ -8,7 +8,7 @@
 			"name": "Tool modifier",
 			"slot": "mainhand",
 			"attribute": "forge:entity_reach",
-			"amount": -0.3,
+			"amount": -0.5,
 			"operation": "addition"
 		},
 		{
