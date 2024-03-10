@@ -7,7 +7,6 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.Input;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
@@ -17,22 +16,23 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 
-@Label(name = "Better Ladders", description = "Player's slides down ladders faster and stands still when opening an interface. This is disabled if quark is enabled")
+@Label(name = "Better Climbable", description = "Player's slides down climbable blocks faster and stands still when opening an interface. This is disabled if quark is enabled")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
-public class BetterLadders extends Feature {
+public class BetterClimbable extends Feature {
 
 	@Config(min = 0, max = 5d)
-	@Label(name = "Speed", description = "How much faster the players moves down ladders")
+	@Label(name = "Speed", description = "How much faster the players moves down climbable blocks")
 	public static Double speed = 0.2d;
 
-	public BetterLadders(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public BetterClimbable(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return super.isEnabled();
+		return super.isEnabled() && !ModList.get().isLoaded("quark");
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -68,8 +68,7 @@ public class BetterLadders extends Feature {
 				&& !player.level().getBlockState(player.blockPosition()).isScaffolding(player)
 				&& !(player.zza == 0 && player.getXRot() > 75f)
 				&& !player.onGround()) {
-			Input input = event.getInput();
-			input.shiftKeyDown = true;
+			event.getInput().shiftKeyDown = true;
 		}
 	}
 

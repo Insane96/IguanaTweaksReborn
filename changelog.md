@@ -9,9 +9,11 @@
 * Heavily reduced knockback without a weapon
 * The player no longer has -0.5 attack reach 
   * Weapons have been changed accordingly to have the same reach as before
+  * Hoes have +0.2 reach
+* Better Climbable (aka Better Ladders) now disables itself if Quark is installed
 * Fixed hoes putting out fire in a radius
 * Fixed snowballs dealing reduced damage to blazes
-War
+
 ## 3.5.0
 * Reworked spawners
   * Spawners now generate empowered and will spawn mobs faster  
