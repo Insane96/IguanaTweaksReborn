@@ -60,7 +60,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Label(name = "Spawners", description = "Spawners will no longer spawn mobs infinitely. Echo shards can reactivate a spawner. Monsters spawning from spawners ignore light and spawning is much faster")
+@Label(name = "Spawners", description = "Spawners are now a challenge. Monsters spawning from spawners ignore light.")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class Spawners extends JsonFeature {
 
@@ -89,7 +89,7 @@ public class Spawners extends JsonFeature {
 	public static Integer empoweredMobsAmount = 24;
 	@Config(min = 1)
 	@Label(name = "Empowered.Delay", description = "Spawning Delay (in ticks) when the Spawner is empowered.")
-	public static MinMax empoweredDelay = new MinMax(100, 400);
+	public static MinMax empoweredDelay = new MinMax(100, 300);
 	@Config(min = 1)
 	@Label(name = "Delay", description = "Spawning Delay (in ticks) of the spawner. Vanilla is 200~800.")
 	public static MinMax delay = new MinMax(500, 2000);
@@ -98,10 +98,10 @@ public class Spawners extends JsonFeature {
 	public static int requiredPlayerRange = 32;
 	@Config(min = 0)
 	@Label(name = "Empowered.Experience Reward", description = "When the Spawner stops being empowered, will generate this amount of experience")
-	public static MinMax empoweredExperienceReward = new MinMax(100, 200);
+	public static MinMax empoweredExperienceReward = new MinMax(150, 200);
 	@Config
 	@Label(name = "Empowered.Loot Reward", description = "When the Spawner stops being empowered, will generate loot from the iguanatweaksreborn:empowered_spawner loot table")
-	public static Boolean empoweredLootReward = true;
+	public static Boolean empoweredLootReward = false;
 
 	public static final ArrayList<IdTagValue> FIXED_SPAWNER_SPAWNABLE_DEFAULT = new ArrayList<>(List.of(
 			//new IdTagValue(IdTagMatcher.newId("minecraft:blaze", "minecraft:the_nether"), 64)
