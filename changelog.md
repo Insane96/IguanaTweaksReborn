@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Spawners no longer give loot but give more experience
 * Added back the "You should really get some sleep" message when reaching Tired V
   * Also the overlay is no longer applied at Tired I
 * Over time heal decay when full health is now affected by regen speed
