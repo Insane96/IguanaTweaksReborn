@@ -13,6 +13,7 @@
 * Better Climbable (aka Better Ladders) now disables itself if Quark is installed
 * Removed Hard mode
 * Removed TnT from creepers drops
+* Broken items can no longer attack
 * Fixed hoes putting out fire in a radius
 * Fixed snowballs dealing reduced damage to blazes
 

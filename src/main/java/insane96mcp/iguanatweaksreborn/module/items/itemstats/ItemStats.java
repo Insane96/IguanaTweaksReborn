@@ -75,6 +75,14 @@ public class ItemStats extends Feature {
 		}
 	}
 
+	public static boolean isUnbreakable(ItemStack stack) {
+		return !stack.is(NOT_UNBREAKABLE) || (unbreakableEnchantedItems && stack.isEnchanted());
+	}
+
+	public static boolean isBroken(ItemStack stack) {
+		return stack.isDamageableItem() && isUnbreakable(stack) && stack.getDamageValue() >= stack.getMaxDamage() - 1;
+	}
+
 	@SubscribeEvent
 	public void processAttackDamage(LivingHurtEvent event) {
 		if (!this.isEnabled()
@@ -83,24 +91,16 @@ public class ItemStats extends Feature {
 
 		ItemStack stack = player.getMainHandItem();
 		if (stack.is(NO_DAMAGE)) {
-			event.setAmount(1f);
+			event.setCanceled(true);
 			player.displayClientMessage(Component.translatable(NO_DAMAGE_ITEM_LANG), true);
 		}
 
 		if (stack.getMaxDamage() == 0)
 			return;
 		if (unbreakableItems && isBroken(stack)) {
-			event.setAmount(1f);
+			event.setCanceled(true);
 			player.displayClientMessage(Component.translatable(BROKEN_ITEM_LANG), true);
 		}
-	}
-
-	public static boolean isUnbreakable(ItemStack stack) {
-		return !stack.is(NOT_UNBREAKABLE) || (unbreakableEnchantedItems && stack.isEnchanted());
-	}
-
-	public static boolean isBroken(ItemStack stack) {
-		return stack.isDamageableItem() && isUnbreakable(stack) && stack.getDamageValue() >= stack.getMaxDamage() - 1;
 	}
 
 	@SubscribeEvent
