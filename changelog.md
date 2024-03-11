@@ -12,6 +12,7 @@
   * Weapons have been changed accordingly to have the same reach as before
 * Better Climbable (aka Better Ladders) now disables itself if Quark is installed
 * Removed Hard mode
+* Removed TnT from creepers drops
 * Fixed hoes putting out fire in a radius
 * Fixed snowballs dealing reduced damage to blazes
 
