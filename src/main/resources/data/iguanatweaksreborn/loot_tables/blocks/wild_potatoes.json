@@ -19,6 +19,15 @@
                     "name": "minecraft:potato"
                 }
             ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "iguanatweaksreborn:solanum_neorossii"
+                }
+            ]
         }
     ]
 }

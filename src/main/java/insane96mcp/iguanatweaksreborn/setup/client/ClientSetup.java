@@ -1,6 +1,5 @@
 package insane96mcp.iguanatweaksreborn.setup.client;
 
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.BeaconConduit;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconRenderer;
@@ -8,7 +7,6 @@ import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconScreen;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.Death;
 import insane96mcp.iguanatweaksreborn.module.world.CyanFlower;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.FallingBlockRenderer;
 import net.minecraft.world.item.*;
@@ -17,8 +15,6 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.function.Supplier;
 
 public class ClientSetup {
@@ -54,9 +50,6 @@ public class ClientSetup {
     }
 
     public static void init(FMLClientSetupEvent event) {
-        DecimalFormatSymbols DECIMAL_FORMAT_SYMBOLS = new DecimalFormatSymbols(Minecraft.getInstance().getLocale());
-        IguanaTweaksReborn.ONE_DECIMAL_FORMATTER = new DecimalFormat("#.#", DECIMAL_FORMAT_SYMBOLS);
-
         MenuScreens.register(BeaconConduit.BEACON_MENU_TYPE.get(), ITRBeaconScreen::new);
     }
 

@@ -59,7 +59,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Path;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -74,8 +73,6 @@ public class IguanaTweaksReborn
     public static final String CONFIG_FOLDER = "config/" + MOD_ID;
 
     public static final ResourceLocation GUI_ICONS = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "textures/gui/icons.png");
-
-    public static DecimalFormat ONE_DECIMAL_FORMATTER;
 
     public IguanaTweaksReborn() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ITRClientConfig.CONFIG_SPEC, MOD_ID + "/client.toml");

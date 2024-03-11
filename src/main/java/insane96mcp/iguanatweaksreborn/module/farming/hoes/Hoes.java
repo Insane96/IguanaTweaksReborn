@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.insanelib.InsaneLib;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -178,7 +179,7 @@ public class Hoes extends JsonFeature {
 
 				/*int efficiency = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);*/
 				int cooldown = hoeStat.cooldown /*- (efficiency * efficiencyCooldownReduction)*/;
-				event.getToolTip().add(CommonComponents.space().append(Component.translatable(TILL_COOLDOWN, IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
+				event.getToolTip().add(CommonComponents.space().append(Component.translatable(TILL_COOLDOWN, InsaneLib.ONE_DECIMAL_FORMATTER.format(cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
 				if (hoeStat.scytheRadius > 0)
 					event.getToolTip().add(CommonComponents.space().append(Component.translatable(SCYTHE_RADIUS, hoeStat.scytheRadius).withStyle(ChatFormatting.DARK_GREEN)));
 				break;

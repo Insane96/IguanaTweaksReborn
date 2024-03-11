@@ -19,6 +19,15 @@
                     "name": "minecraft:carrot"
                 }
             ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:azure_bluet"
+                }
+            ]
         }
     ]
 }

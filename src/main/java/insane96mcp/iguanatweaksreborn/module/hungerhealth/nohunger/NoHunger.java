@@ -8,6 +8,7 @@ import insane96mcp.iguanatweaksreborn.module.hungerhealth.healthregen.HealthRege
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.utils.ClientUtils;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
+import insane96mcp.insanelib.InsaneLib;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -383,7 +384,7 @@ public class NoHunger extends Feature {
             boolean isRawFood = FoodDrinks.isRawFood(event.getItemStack().getItem());
             //noinspection ConstantConditions
             float heal = getInstantHealAmount(food, isRawFood);
-            MutableComponent component = Component.literal(IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(heal))
+            MutableComponent component = Component.literal(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal))
                     .append(" ")
                     .append(Component.translatable(HEALTH_LANG))
                     .withStyle(ChatFormatting.GRAY)
@@ -396,11 +397,11 @@ public class NoHunger extends Feature {
             float heal = Utils.computeFoodFormula(food, healOverTime);
             //Half heart per second by default
             float strength = Utils.computeFoodFormula(food, healOverTimeStrength);
-            MutableComponent component = Component.literal(IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(heal))
+            MutableComponent component = Component.literal(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal))
                     .append(" ")
                     .append(Component.translatable(HEALTH_LANG))
                     .append(" / ")
-                    .append(IguanaTweaksReborn.ONE_DECIMAL_FORMATTER.format(heal / strength))
+                    .append(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal / strength))
                     .append(" ")
                     .append(Component.translatable(SEC_LANG))
                     .withStyle(ChatFormatting.GRAY)
