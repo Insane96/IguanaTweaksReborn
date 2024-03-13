@@ -28,6 +28,7 @@ public class ClientSetup {
         }
         else if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             addAfter(event, Items.POPPY, CyanFlower.FLOWER.item());
+            addAfter(event, Items.POPPY, Crops.SOLANUM_NEOROSSII.item());
             addAfter(event, Items.WHEAT_SEEDS, Crops.CARROT_SEEDS);
             addAfter(event, Items.BEETROOT_SEEDS, Crops.ROOTED_POTATO);
         }

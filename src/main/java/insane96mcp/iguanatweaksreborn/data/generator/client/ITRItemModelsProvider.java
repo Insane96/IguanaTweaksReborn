@@ -28,6 +28,7 @@ public class ITRItemModelsProvider extends ItemModelProvider {
         basicItem(BerryBushes.SWEET_BERRY_SEEDS.get());
 
         basicItemWithTexture(CyanFlower.FLOWER.item().get(), new ResourceLocation(IguanaTweaksReborn.MOD_ID, "block/cyan_flower"));
+        basicItemWithTexture(Crops.SOLANUM_NEOROSSII.item().get(), new ResourceLocation(IguanaTweaksReborn.MOD_ID, "block/solanum_neorossii"));
     }
     public ItemModelBuilder basicItemWithTexture(Item item, ResourceLocation texture)
     {

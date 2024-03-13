@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.data.generator.client;
 
+import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
 import insane96mcp.iguanatweaksreborn.module.world.CyanFlower;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -13,5 +14,6 @@ public class ITRBlockStatesProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         simpleBlock(CyanFlower.FLOWER.block().get());
+        simpleBlock(Crops.SOLANUM_NEOROSSII.block().get());
     }
 }
