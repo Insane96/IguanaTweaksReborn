@@ -1,7 +1,5 @@
 # Changelog
 
-* Solanum should be wild potatoes exclusive
-
 ## Upcoming
 * Spawners no longer give loot but give more experience
 * Added back the "You should really get some sleep" message when reaching Tired V
@@ -16,14 +14,16 @@
 * Removed Hard mode
 * Removed TnT from creepers drops
 * Broken items can no longer attack
-* Wild crops new textures!
+* Added a new flower can be obtained by breaking wild potatoes
+  * Also new textures for wild crops
 * Fixed hoes putting out fire in a radius
+* Fixed drop_multiplier Loot modifier applying to unstackable items
 * Fixed snowballs dealing reduced damage to blazes
 
 ## 3.5.0
 * Reworked spawners
   * Spawners now generate empowered and will spawn mobs faster  
-    After 24 mobs spawned the spawner will slowdown the spawning but still remain active and award experience and loot
+    After 24 mobs spawned the spawner will slowdown but still remain active and award experience and loot
   * Also increased the range for activation from 16 to 32
   * Spawners no longer disable themselves after various mobs spawned and no longer give bonus experience when broken
 * Tiredness

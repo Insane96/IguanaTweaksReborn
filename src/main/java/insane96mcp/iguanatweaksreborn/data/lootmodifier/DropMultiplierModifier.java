@@ -36,7 +36,8 @@ public class DropMultiplierModifier extends LootModifier {
                             ForgeRegistries.ITEMS.getCodec().optionalFieldOf("item").forGetter(m -> m.item),
                             TagKey.codec(Registries.ITEM).optionalFieldOf("tag").forGetter(m -> m.tag),
                             Codec.floatRange(0f, 1024f).fieldOf("multiplier").forGetter(m -> m.multiplier),
-                            Codec.intRange(0, 256).optionalFieldOf("amount_to_keep", 0).forGetter(m -> m.amountToKeep)
+                            Codec.intRange(0, 256).optionalFieldOf("amount_to_keep", 0).forGetter(m -> m.amountToKeep),
+                            Codec.BOOL.optionalFieldOf("ignore_unstackable", true).forGetter(m -> m.ignoreUnstackable)
                     )).apply(inst, DropMultiplierModifier::new)
             ));
 
@@ -48,13 +49,16 @@ public class DropMultiplierModifier extends LootModifier {
     private float multiplier;
     //This amount is subtracted from the total amount before applying the multiplier
     private int amountToKeep;
+    //Unstackable items will not be multiplied
+    private boolean ignoreUnstackable;
 
-    public DropMultiplierModifier(LootItemCondition[] conditionsIn, Optional<Item> item, Optional<TagKey<Item>> tag, float multiplier, int amountToKeep) {
+    public DropMultiplierModifier(LootItemCondition[] conditionsIn, Optional<Item> item, Optional<TagKey<Item>> tag, float multiplier, int amountToKeep, boolean ignoreUnstackable) {
         super(conditionsIn);
         this.item = item;
         this.tag = tag;
         this.multiplier = multiplier;
         this.amountToKeep = amountToKeep;
+        this.ignoreUnstackable = ignoreUnstackable;
     }
 
     @Override
@@ -74,6 +78,8 @@ public class DropMultiplierModifier extends LootModifier {
 
         List<ItemStack> newStacks = new ArrayList<>();
         for (ItemStack stack : stream) {
+            if (!stack.isStackable() && this.ignoreUnstackable)
+                continue;
             ItemStack existingStack = null;
             for (ItemStack newStack : newStacks) {
                 if (ItemStack.isSameItemSameTags(stack, newStack)) {
@@ -104,11 +110,11 @@ public class DropMultiplierModifier extends LootModifier {
     }
 
     public static DropMultiplierModifier newItem(LootItemCondition[] conditionsIn, Optional<Item> item, float multiplier) {
-        return new DropMultiplierModifier(conditionsIn, item, Optional.empty(), multiplier, 0);
+        return new DropMultiplierModifier(conditionsIn, item, Optional.empty(), multiplier, 0, true);
     }
 
     public static DropMultiplierModifier newTag(LootItemCondition[] conditionsIn, Optional<TagKey<Item>> tag, float multiplier) {
-        return new DropMultiplierModifier(conditionsIn, Optional.empty(), tag, multiplier, 0);
+        return new DropMultiplierModifier(conditionsIn, Optional.empty(), tag, multiplier, 0, true);
     }
 
     @Override
@@ -153,6 +159,11 @@ public class DropMultiplierModifier extends LootModifier {
 
         public Builder keepAmount(int amount) {
             this.dropMultiplierModifier.amountToKeep = amount;
+            return this;
+        }
+
+        public Builder ignoreUnstackable(boolean ignoreUnstackable) {
+            this.dropMultiplierModifier.ignoreUnstackable = ignoreUnstackable;
             return this;
         }
 
