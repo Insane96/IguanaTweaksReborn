@@ -33,6 +33,40 @@
                     "predicate": {}
                 }
             ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:potato"
+                }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:block_state_property",
+                    "block": "minecraft:potatoes",
+                    "properties": {
+                        "age": "7"
+                    }
+                },
+                {
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {}
+                },
+                {
+                    "condition": "minecraft:table_bonus",
+                    "enchantment": "minecraft:fortune",
+                    "chances": [
+                        0,
+                        0.25,
+                        0.5,
+                        0.75,
+                        1
+                    ]
+                }
+            ]
         }
     ],
     "functions": [

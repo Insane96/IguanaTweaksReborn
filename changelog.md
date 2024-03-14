@@ -16,6 +16,7 @@
 * Broken items can no longer attack
 * Added a new flower can be obtained by breaking wild potatoes
   * Also new textures for wild crops
+* Fortune (or Luck) now affects crops drops
 * Fixed hoes putting out fire in a radius
 * Fixed drop_multiplier Loot modifier applying to unstackable items
 * Fixed snowballs dealing reduced damage to blazes
