@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Reduced flint and steel durability
+
 ## 3.5.1
 * Spawners no longer give loot but give more experience
 * Added back the "You should really get some sleep" message when reaching Tired V
