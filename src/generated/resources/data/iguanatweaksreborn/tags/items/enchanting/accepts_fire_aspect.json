@@ -1,9 +1,5 @@
 {
   "values": [
-    "#minecraft:axes",
-    "#minecraft:pickaxes",
-    "#minecraft:shovels",
-    "#minecraft:hoes",
-    "#minecraft:swords"
+    "#iguanatweaksreborn:enchanting/accepts_damage_enchantments"
   ]
 }

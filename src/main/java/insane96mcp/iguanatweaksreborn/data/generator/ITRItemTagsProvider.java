@@ -57,15 +57,15 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
                 .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT);
 		tag(Spawners.SPAWNER_REACTIVATOR_TAG)
 				.add(Items.ECHO_SHARD);
-        tag(Luck.ACCEPTS_ENCHANTMENT)
-                .addTags(ItemTags.AXES, ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.HOES, ItemTags.SWORDS)
-                .add(Items.FISHING_ROD);
-        tag(Knockback.ACCEPTS_ENCHANTMENT)
-                .addTags(ItemTags.AXES, ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.HOES, ItemTags.SWORDS);
         tag(BonusDamageEnchantment.ACCEPTS_ENCHANTMENT)
                 .addTags(ItemTags.AXES, ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.HOES, ItemTags.SWORDS);
+        tag(Luck.ACCEPTS_ENCHANTMENT)
+                .addTag(BonusDamageEnchantment.ACCEPTS_ENCHANTMENT)
+                .add(Items.FISHING_ROD);
+        tag(Knockback.ACCEPTS_ENCHANTMENT)
+                .addTag(BonusDamageEnchantment.ACCEPTS_ENCHANTMENT);
         tag(FireAspect.ACCEPTS_ENCHANTMENT)
-                .addTags(ItemTags.AXES, ItemTags.PICKAXES, ItemTags.SHOVELS, ItemTags.HOES, ItemTags.SWORDS);
+                .addTag(BonusDamageEnchantment.ACCEPTS_ENCHANTMENT);
     }
 
     public static TagKey<Item> create(String tagName) {
