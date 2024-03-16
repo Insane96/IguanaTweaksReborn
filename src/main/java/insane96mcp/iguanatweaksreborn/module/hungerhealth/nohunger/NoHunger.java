@@ -79,7 +79,7 @@ public class NoHunger extends Feature {
     public static String healOverTimeStrength = "MAX(0.15, 0.6 * saturation_modifier)";
     @Config(min = 0d)
     @Label(name = "Food Heal.Instant Heal", description = "The formula to calculate the health restored instantly when eating. Leave empty to disable. To have the same effect as pre-Beta 1.8 food just use \"hunger\". Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
-    public static String instantHeal = "(hunger^1.65)*0.2";
+    public static String instantHeal = "(hunger^1.5)*0.3";
     @Config(min = 0d)
     @Label(name = "Food Heal.Saturation threshold", description = "Foods below this saturation will instantly heal, foods above this threshold will have overtime heal.")
     public static Double instantHealSaturationThreshold = 4d;
@@ -209,9 +209,9 @@ public class NoHunger extends Feature {
         if (!doesHealInstantly())
             return;
 
-        float heal = getInstantHealAmount(foodProperties, isRawFood);
-        if (buffCakes && item == null)
-            heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.2f, 1f);
+        float heal = buffCakes && item == null
+                ? Math.max((player.getMaxHealth() - player.getHealth()) * 0.2f, 1f)
+                : getInstantHealAmount(foodProperties, isRawFood);
         player.heal(heal);
     }
 

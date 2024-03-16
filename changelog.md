@@ -2,7 +2,9 @@
 
 ## Upcoming
 * Players are no longer able to pillar only if there are monsters nearby
+* Instant heal food now heal more
 * Reduced the speed at which over heal decays
+* Reduced Honey bottle healing
 * Reduced flint and steel durability
 
 ## 3.5.1
