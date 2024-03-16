@@ -8,6 +8,7 @@
 * Reduced flint and steel durability
 * Items on which enchantments can go now are fully data packable
   * Item tags: `iguanatweaksreborn:enchanting/accepts_damage_enchantments`, `iguanatweaksreborn:enchanting/accepts_fire_aspect`, `iguanatweaksreborn:enchanting/accepts_knockback`, `iguanatweaksreborn:enchanting/accepts_luck`
+* Reduced thorns damage
 * Fixed hoes having too much Attack Damage
   * With this, attack speed has been reverted to 2.5
 * Fixed repairing enchanted items with non-enchanted ones costing levels
