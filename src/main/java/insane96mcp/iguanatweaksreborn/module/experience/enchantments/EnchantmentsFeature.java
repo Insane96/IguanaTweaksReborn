@@ -244,6 +244,8 @@ public class EnchantmentsFeature extends JsonFeature {
 		if (!(enchantment instanceof BonusDamageEnchantment bonusDamageEnchantment))
 			return;
 		float damageBonus = bonusDamageEnchantment.getDamageBonus(attacker, target, attacker.getMainHandItem(), lvl);
+		if (attacker instanceof Player player)
+			damageBonus *= player.getAttackStrengthScale(0.5f) *player.getAttackStrengthScale(0.5f);
 		event.setAmount(event.getAmount() + damageBonus);
 	}
 
