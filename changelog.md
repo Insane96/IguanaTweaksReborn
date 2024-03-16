@@ -9,6 +9,7 @@
 * Items on which enchantments can go now are fully data packable
   * Item tags: `iguanatweaksreborn:enchanting/accepts_damage_enchantments`, `iguanatweaksreborn:enchanting/accepts_fire_aspect`, `iguanatweaksreborn:enchanting/accepts_knockback`, `iguanatweaksreborn:enchanting/accepts_luck`
 * Fixed hoes having too much Attack Damage
+  * With this, attack speed has been reverted to 2.5
 * Fixed enchantments not scaling with attack cooldown
 
 ## 3.5.1
