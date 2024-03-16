@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.5.2
 * Players are no longer able to pillar **only if** there are monsters nearby
 * Instant heal food now heal more
 * Reduced the speed at which over heal decays
