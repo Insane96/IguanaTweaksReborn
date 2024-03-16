@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " r",
+        "OO"
+    ],
+    "key": {
+        "r": {
+            "item": "minecraft:redstone"
+        },
+        "O": {
+            "tag": "forge:obsidian"
+        }
+    },
+    "result": {
+        "item": "quark:obsidian_pressure_plate"
+    },
+    "conditions": [
+        {
+            "type": "quark:flag",
+            "flag": "obsidian_plate"
+        }
+    ]
+}

@@ -6,6 +6,7 @@
 * Reduced the speed at which over heal decays
 * Reduced Honey bottle healing
 * Reduced flint and steel durability
+* Fixed hoes having too much Attack Damage
 
 ## 3.5.1
 * Spawners no longer give loot but give more experience
