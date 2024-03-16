@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Players are no longer able to pillar only if there are monsters nearby
+* Reduced the speed at which over heal decays
 * Reduced flint and steel durability
 
 ## 3.5.1
