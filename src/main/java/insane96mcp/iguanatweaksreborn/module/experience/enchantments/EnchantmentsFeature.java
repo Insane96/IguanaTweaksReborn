@@ -211,7 +211,7 @@ public class EnchantmentsFeature extends JsonFeature {
 		if (knockback == 0)
 			return;
 		if (attacker instanceof Player player)
-			knockback *= player.getAttackStrengthScale(0.5f);
+			knockback *= player.getAttackStrengthScale(0.5f) * player.getAttackStrengthScale(0.5f);
 		knockback *= BonusDamageEnchantment.getDamageBonusRatio(attacker.getMainHandItem()) / 5f;
 		event.setStrength(event.getStrength() + knockback);
 	}
