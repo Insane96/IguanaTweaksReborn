@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.mixin;
 
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepair;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.Anvils;
+import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
 import insane96mcp.insanelib.base.Feature;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -143,7 +144,10 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 			}
 			//Else it's merging items
 			else {
-				if ((!isEnchantedBook && (!resultStack.is(right.getItem()) || !resultStack.isDamageableItem()))) {
+				if ((!isEnchantedBook && (!resultStack.is(right.getItem())
+						|| !resultStack.isDamageableItem()))
+						//If unbreakable items is enabled then I cannot use broken items to repair
+						|| Feature.isEnabled(ItemStats.class) && ItemStats.unbreakableItems && ItemStats.isBroken(right)) {
 					this.resultSlots.setItem(0, ItemStack.EMPTY);
 					this.cost.set(0);
 					return;
@@ -218,6 +222,9 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 						mergeCost += enchantmentRarityCost * enchantment.getValue();
 					}
 				}
+				//If the right item is not enchanted then I'm repairing the left one with it, so there should be no cost
+				if (!right.isEnchanted())
+					mergeCost = 0;
 
 				if (cannotEnchant && !canEnchant) {
 					this.resultSlots.setItem(0, ItemStack.EMPTY);
