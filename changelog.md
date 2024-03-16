@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Players are no longer able to pillar only if there are monsters nearby
 * Reduced flint and steel durability
 
 ## 3.5.1
