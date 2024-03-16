@@ -22,9 +22,10 @@ import java.util.stream.Stream;
 
 public abstract class BonusDamageEnchantment extends Enchantment implements IEnchantmentTooltip {
 
-    public static final TagKey<Item> ACCEPTS_DAMAGE_ENCHANTMENTS = ITRItemTagsProvider.create("enchantments/accepts_damage_enchantments");
-    protected BonusDamageEnchantment(Rarity pRarity, EnchantmentCategory pCategory, EquipmentSlot[] pApplicableSlots) {
-        super(pRarity, pCategory, pApplicableSlots);
+    public static final TagKey<Item> ACCEPTS_ENCHANTMENT = ITRItemTagsProvider.create("enchanting/accepts_damage_enchantments");
+    static final EnchantmentCategory CATEGORY = EnchantmentCategory.create("damage_enchantment", item -> item.builtInRegistryHolder().is(ACCEPTS_ENCHANTMENT));
+    protected BonusDamageEnchantment(Rarity pRarity, EquipmentSlot[] pApplicableSlots) {
+        super(pRarity, CATEGORY, pApplicableSlots);
     }
 
     @Override
@@ -67,7 +68,7 @@ public abstract class BonusDamageEnchantment extends Enchantment implements IEnc
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return (super.canApplyAtEnchantingTable(stack) || stack.is(ACCEPTS_DAMAGE_ENCHANTMENTS)) && EnchantmentsFeature.replaceDamagingEnchantments;
+        return (super.canApplyAtEnchantingTable(stack) || stack.is(ACCEPTS_ENCHANTMENT)) && EnchantmentsFeature.replaceDamagingEnchantments;
     }
 
     public static float getDamageBonusRatio(ItemStack stack) {

@@ -26,13 +26,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
@@ -63,8 +61,6 @@ public class EnchantmentsFeature extends JsonFeature {
 	public static final RegistryObject<Enchantment> FIRE_PROTECTION = ITRRegistries.ENCHANTMENTS.register("fire_protection", FireProtection::new);
 	public static final RegistryObject<Enchantment> PROJECTILE_PROTECTION = ITRRegistries.ENCHANTMENTS.register("projectile_protection", ProjectileProtection::new);
 	public static final RegistryObject<Enchantment> FEATHER_FALLING = ITRRegistries.ENCHANTMENTS.register("feather_falling", FeatherFalling::new);
-	public static final EnchantmentCategory WEAPONS_CATEGORY = EnchantmentCategory.create("itr_weapons", item -> item instanceof SwordItem || item instanceof PickaxeItem || item instanceof AxeItem || item instanceof ShovelItem || item instanceof HoeItem);
-	public static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 	@Config
 	@Label(name = "Infinity overhaul", description = "Infinity can go up to level 4. Each level makes an arrow have only 1 in level+1 chance to consume. E.g. with Infinity 4 there's 1 in 5 chance to consume the arrow, and 4 in 5 to not consume it.")
 	public static Boolean infinityOverhaul = true;

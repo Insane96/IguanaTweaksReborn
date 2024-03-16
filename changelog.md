@@ -1,11 +1,13 @@
 # Changelog
 
 ## Upcoming
-* Players are no longer able to pillar only if there are monsters nearby
+* Players are no longer able to pillar **only if** there are monsters nearby
 * Instant heal food now heal more
 * Reduced the speed at which over heal decays
 * Reduced Honey bottle healing
 * Reduced flint and steel durability
+* Items on which enchantments can go now are fully data packable
+  * Item tags: `iguanatweaksreborn:enchanting/accepts_damage_enchantments`, `iguanatweaksreborn:enchanting/accepts_fire_aspect`, `iguanatweaksreborn:enchanting/accepts_knockback`, `iguanatweaksreborn:enchanting/accepts_luck`
 * Fixed hoes having too much Attack Damage
 * Fixed enchantments not scaling with attack cooldown
 

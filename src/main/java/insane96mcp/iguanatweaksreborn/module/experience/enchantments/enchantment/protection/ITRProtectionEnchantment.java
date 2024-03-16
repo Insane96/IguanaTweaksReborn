@@ -6,6 +6,7 @@ import insane96mcp.insanelib.world.enchantments.IEnchantmentTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -13,8 +14,10 @@ import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class ITRProtectionEnchantment extends Enchantment implements IProtectionEnchantment, IEnchantmentTooltip {
+    public static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+
     public ITRProtectionEnchantment(Rarity rarity) {
-        super(rarity, EnchantmentCategory.ARMOR, EnchantmentsFeature.ARMOR_SLOTS);
+        super(rarity, EnchantmentCategory.ARMOR, ARMOR_SLOTS);
     }
 
     @Override
