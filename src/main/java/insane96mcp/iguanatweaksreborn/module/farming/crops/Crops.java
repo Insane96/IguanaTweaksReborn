@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.farming.crops;
 
+import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
@@ -13,6 +14,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.animal.Chicken;
@@ -37,6 +39,9 @@ import net.minecraftforge.registries.RegistryObject;
 @Label(name = "Crops", description = "Crops tweaks and less yield from crops")
 @LoadFeature(module = Modules.Ids.FARMING)
 public class Crops extends Feature {
+
+	public static final TagKey<Item> CHICKEN_FOOD_ITEMS = ITRItemTagsProvider.create("chicken_food_items");
+
 	@Config
 	@Label(name = "Crops Require Water", description = """
 						Set if crops require wet farmland to grow.
@@ -153,14 +158,13 @@ public class Crops extends Feature {
 		chicken.goalSelector.addGoal(3, new TemptGoal(chicken, 1.0D, Ingredient.of(CARROT_SEEDS.get()), false));
 	}
 
-	//TODO Remove Melon and Pumpkin when they'll no longer be renewable
-	private static final Ingredient CHICKEN_FOOD_ITEMS = Ingredient.of(Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.TORCHFLOWER_SEEDS);
 	@SubscribeEvent
 	public void onTryToSeedChickens(PlayerInteractEvent.EntityInteract event) {
 		if (!this.isEnabled()
 				|| !dataPack
-				|| !(event.getTarget() instanceof Chicken)
-				|| CHICKEN_FOOD_ITEMS.test(event.getItemStack()))
+				|| !(event.getTarget() instanceof Chicken chicken)
+				|| !chicken.isFood(event.getItemStack())
+				|| event.getItemStack().is(CHICKEN_FOOD_ITEMS))
 			return;
 
 		event.setCanceled(true);
