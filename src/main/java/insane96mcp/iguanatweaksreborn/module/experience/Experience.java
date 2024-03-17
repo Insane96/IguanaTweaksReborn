@@ -69,7 +69,7 @@ public class Experience extends JsonFeature {
 
 	@Config(min = 0, max = 512)
 	@Label(name = "Bottle o' Enchanting Bonus XP", description = "Bottle o' enchanting will drop this more XP. Experience is still affected by 'Global Experience Multiplier'\nCan be set to 0 to make Bottle o' enchanting drop no bonus experience")
-	public static Integer xpBottleBonus = 20;
+	public static Integer xpBottleBonus = 35;
 
 	public static final ArrayList<IdTagRange> CUSTOM_BLOCKS_EXPERIENCE_DEFAULT = new ArrayList<>(List.of(
 			IdTagRange.newTag("iguanatweaksexpanded:copper_ores", 0, 2),

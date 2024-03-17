@@ -92,7 +92,7 @@ public class EnchantmentsFeature extends JsonFeature {
             Changes to damaging enchantments:
             Enchantments deal bonus damage based off the item's attack damage. So Sharpness on a Sword adds less damage than Sharpness on an Axe.
             Sharpness deals +0.75 damage per level
-            Smite deals +1.25 damage per level to undead
+            Smite deals +1.5 damage per level to undead
             Bane of Arthropods has been replaced with Bane of SSSSS that deals +1.25 damage per level to arthropods and creepers and applies slowness""")
 	public static Boolean replaceDamagingEnchantments = true;
 	@Config

@@ -57,26 +57,21 @@ public class Stats extends Feature {
 	@Config
 	@Label(name = "Disable Critical Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
 	public static Boolean disableCritArrowsBonusDamage = true;
-	@Config(min = 0, max = 1)
-	@Label(name = "Hoes Knockback multiplier")
-	public static Double hoesKnockbackMultiplier = 0.25d;
-
-	@Config
-	@Label(name = "Fix tooltips", description = "Vanilla tooltips on gear don't sum up multiple modifiers (e.g. a sword would have \"4 Attack Damage\" and \"-2 Attack Damage\" instead of \"2 Attack Damage\". This might break other mods messing with these Tooltips (e.g. Quark's improved tooltips)")
-	public static Boolean fixTooltips = true;
-
-	@Config
-	@Label(name = "Combat Test Strength", description = "Changes Strength effect from +3 damage per level to +20% damage per level. (Requires a Minecraft restart)")
-	public static Boolean combatTestStrength = true;
-	@Config
-	@Label(name = "Better weakness", description = "Changes Weakness like Strength effect from -3 damage per level to -20% damage per level. (Requires a Minecraft restart)")
-	public static Boolean betterWeakness = true;
-	@Config
-	@Label(name = "Better haste/mining fatigue", description = "Changes Mining fatigue and haste to no longer affects attack speed. (Requires a Minecraft restart)")
-	public static Boolean betterHasteMiningFatigue = true;
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Bow's Arrows Base Damage", description = "Set arrow's base damage if shot from bow.")
 	public static Double bowsArrowsBaseDamage = 1.5d;
+	@Config(min = 0, max = 1)
+	@Label(name = "Hoes Knockback multiplier")
+	public static Double hoesKnockbackMultiplier = 0.25d;
+	@Config
+	@Label(name = "Fix tooltips", description = "Vanilla tooltips on gear don't sum up multiple modifiers (e.g. a sword would have \"4 Attack Damage\" and \"-2 Attack Damage\" instead of \"2 Attack Damage\". This might break other mods messing with these Tooltips (e.g. Quark's improved tooltips)")
+	public static Boolean fixTooltips = true;
+	@Config
+	@Label(name = "Better strength and weakness", description = "Changes Strength and Weakness +/-3 damage per level to +/-20% damage per level. (Requires a Minecraft restart)")
+	public static Boolean betterStrengthWeakness = true;
+	@Config
+	@Label(name = "Better haste/mining fatigue", description = "Changes Mining fatigue and haste to no longer affects attack speed. (Requires a Minecraft restart)")
+	public static Boolean betterHasteMiningFatigue = true;
 	@Config
 	@Label(name = "1 damage for tools attacking", description = "If enabled, tools will not take 2 damage when used to hurt entities")
 	public static Boolean oneDamageForToolAttacking = true;
@@ -92,12 +87,12 @@ public class Stats extends Feature {
 	@Override
 	public void readConfig(ModConfigEvent event) {
 		super.readConfig(event);
-		if (combatTestStrength) {
+		if (betterStrengthWeakness) {
 			MobEffects.DAMAGE_BOOST.attributeModifiers.remove(Attributes.ATTACK_DAMAGE);
 			MobEffects.DAMAGE_BOOST.addAttributeModifier(Attributes.ATTACK_DAMAGE, "648D7064-6A60-4F59-8ABE-C2C23A6DD7A9", 0.0D, AttributeModifier.Operation.MULTIPLY_BASE);
 			((AttackDamageMobEffect)MobEffects.DAMAGE_BOOST).multiplier = 0.2d;
 		}
-		if (betterWeakness) {
+		if (betterStrengthWeakness) {
 			MobEffects.WEAKNESS.attributeModifiers.remove(Attributes.ATTACK_DAMAGE);
 			MobEffects.WEAKNESS.addAttributeModifier(Attributes.ATTACK_DAMAGE, "22653B89-116E-49DC-9B6B-9971489B5BE5", 0.0D, AttributeModifier.Operation.MULTIPLY_BASE);
 			((AttackDamageMobEffect)MobEffects.WEAKNESS).multiplier = -0.2d;

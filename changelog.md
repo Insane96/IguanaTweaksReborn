@@ -3,6 +3,7 @@
 ## Upcoming
 * Moved chicken food items to item tag `iguanatweaksreborn:chicken_food_items`
   * Also fixed not being able to use any item on chickens
+* Increased experience from experience bottles
 
 ## 3.5.2
 * Players are no longer able to pillar **only if** there are monsters nearby
