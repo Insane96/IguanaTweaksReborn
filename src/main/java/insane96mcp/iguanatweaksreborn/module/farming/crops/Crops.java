@@ -1,27 +1,30 @@
 package insane96mcp.iguanatweaksreborn.module.farming.crops;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
 import insane96mcp.iguanatweaksreborn.setup.registry.SimpleBlockWithItem;
-import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.data.IdTagValue;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.animal.Chicken;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
@@ -29,18 +32,39 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Label(name = "Crops", description = "Crops tweaks and less yield from crops")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class Crops extends Feature {
+public class Crops extends JsonFeature {
 
 	public static final TagKey<Item> CHICKEN_FOOD_ITEMS = ITRItemTagsProvider.create("chicken_food_items");
+
+	public static final TagKey<Block> HARDER_CROPS_TAG = ITRBlockTagsProvider.create("harder_crops");
+	public static final ArrayList<IdTagValue> CROPS_HARDNESS_DEFAULT = new ArrayList<>(List.of(
+			IdTagValue.newTag(HARDER_CROPS_TAG.location().toString(), 1.5d)
+	));
+	public static final ArrayList<IdTagValue> cropsHardness = new ArrayList<>();
+
+	public static final RegistryObject<BlockItem> ROOTED_POTATO = ITRRegistries.ITEMS.register("rooted_potato", () -> new SeedsBlockItem(Blocks.POTATOES, new Item.Properties()));
+	public static final RegistryObject<BlockItem> CARROT_SEEDS = ITRRegistries.ITEMS.register("carrot_seeds", () -> new SeedsBlockItem(Blocks.CARROTS, new Item.Properties()));
+	public static final RegistryObject<WildCropBlock> WILD_WHEAT = ITRRegistries.BLOCKS.register("wild_wheat", () -> new WildCropBlock(BlockBehaviour.Properties.of().noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+	public static final RegistryObject<WildCropBlock> WILD_CARROTS = ITRRegistries.BLOCKS.register("wild_carrots", () -> new WildCropBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+	public static final RegistryObject<WildCropBlock> WILD_POTATOES = ITRRegistries.BLOCKS.register("wild_potatoes", () -> new WildCropBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+	public static final RegistryObject<WildCropBlock> WILD_BEETROOTS = ITRRegistries.BLOCKS.register("wild_beetroots", () -> new WildCropBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+
+	public static final SimpleBlockWithItem SOLANUM_NEOROSSII = SimpleBlockWithItem.register("solanum_neorossii", () -> new FlowerBlock(() -> MobEffects.MOVEMENT_SPEED, 10, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final RegistryObject<Block> POTTED_SOLANUM_NEOROSSII = ITRRegistries.BLOCKS.register("potted_solanum_neorossii", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, () -> SOLANUM_NEOROSSII.block().get(), BlockBehaviour.Properties.copy(Blocks.POTTED_ALLIUM)));
 
 	@Config
 	@Label(name = "Crops Require Water", description = """
@@ -54,6 +78,9 @@ public class Crops extends Feature {
 	@Config(min = 1)
 	@Label(name = "Water Hydration Radius", description = "Radius where water hydrates farmland, vanilla is 4.")
 	public static Integer waterHydrationRadius = 2;
+	@Config
+	@Label(name = "Only fully grown", description = "If the hardness should be applied to mature crops only.")
+	public static Boolean onlyFullyGrown = true;
 
 	@Config
 	@Label(name = "Crops data pack", description = """
@@ -66,19 +93,16 @@ public class Crops extends Feature {
 	""")
 	public static Boolean dataPack = true;
 
-	public static final RegistryObject<BlockItem> ROOTED_POTATO = ITRRegistries.ITEMS.register("rooted_potato", () -> new SeedsBlockItem(Blocks.POTATOES, new Item.Properties()));
-	public static final RegistryObject<BlockItem> CARROT_SEEDS = ITRRegistries.ITEMS.register("carrot_seeds", () -> new SeedsBlockItem(Blocks.CARROTS, new Item.Properties()));
-	public static final RegistryObject<WildCropBlock> WILD_WHEAT = ITRRegistries.BLOCKS.register("wild_wheat", () -> new WildCropBlock(BlockBehaviour.Properties.of().noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
-	public static final RegistryObject<WildCropBlock> WILD_CARROTS = ITRRegistries.BLOCKS.register("wild_carrots", () -> new WildCropBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
-	public static final RegistryObject<WildCropBlock> WILD_POTATOES = ITRRegistries.BLOCKS.register("wild_potatoes", () -> new WildCropBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
-	public static final RegistryObject<WildCropBlock> WILD_BEETROOTS = ITRRegistries.BLOCKS.register("wild_beetroots", () -> new WildCropBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
-
-	public static final SimpleBlockWithItem SOLANUM_NEOROSSII = SimpleBlockWithItem.register("solanum_neorossii", () -> new FlowerBlock(() -> MobEffects.MOVEMENT_SPEED, 10, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> POTTED_SOLANUM_NEOROSSII = ITRRegistries.BLOCKS.register("potted_solanum_neorossii", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, () -> SOLANUM_NEOROSSII.block().get(), BlockBehaviour.Properties.copy(Blocks.POTTED_ALLIUM)));
-
 	public Crops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "crops", Component.literal("IguanaTweaks Reborn Crops"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
+		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "crops_hardness"), new SyncType(json -> loadAndReadJson(json, cropsHardness, CROPS_HARDNESS_DEFAULT, IdTagValue.LIST_TYPE)));
+		JSON_CONFIGS.add(new JsonConfig<>("crops_hardness.json", cropsHardness, CROPS_HARDNESS_DEFAULT, IdTagValue.LIST_TYPE, Crops::applyHardness, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "crops_hardness")));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return IguanaTweaksReborn.CONFIG_FOLDER;
 	}
 
 	@SubscribeEvent
@@ -168,6 +192,52 @@ public class Crops extends Feature {
 			return;
 
 		event.setCanceled(true);
+	}
+
+	public static void applyHardness(List<IdTagValue> list, boolean isClientSide) {
+		for (IdTagValue hardness : list) {
+			getAllBlocks(hardness.id, isClientSide).forEach(block -> {
+				if (onlyFullyGrown) {
+					//I have doubts that this always takes the fully grown modded crops
+					BlockState state = block.getStateDefinition().getPossibleStates().get(block.getStateDefinition().getPossibleStates().size() - 1);
+					if (state.destroySpeed == 0f)
+						state.destroySpeed = (float) hardness.value;
+				}
+				else {
+					block.getStateDefinition().getPossibleStates().forEach(blockState -> {
+						if (blockState.destroySpeed == 0f)
+							blockState.destroySpeed = (float) hardness.value;
+					});
+				}
+			});
+		}
+	}
+
+	@SubscribeEvent
+	public void onCropBreaking(PlayerEvent.BreakSpeed event) {
+		if (!this.isEnabled()
+				|| event.getState().destroySpeed == 0f)
+			return;
+		ItemStack heldStack = event.getEntity().getMainHandItem();
+		if (!(heldStack.getItem() instanceof TieredItem heldItem))
+			return;
+		if (!heldItem.canPerformAction(heldStack, ToolActions.HOE_DIG) && !heldItem.canPerformAction(heldStack, ToolActions.AXE_DIG))
+			return;
+		Block block = event.getState().getBlock();
+		if (!(block instanceof CropBlock) && !event.getState().is(HARDER_CROPS_TAG))
+			return;
+		float efficiency = heldItem.getTier().getSpeed();
+		if (efficiency > 1.0F) {
+			int efficiencyLevel = EnchantmentHelper.getBlockEfficiency(event.getEntity());
+			ItemStack itemstack = event.getEntity().getMainHandItem();
+			if (efficiencyLevel > 0 && !itemstack.isEmpty()) {
+				efficiency += (float) (efficiencyLevel * efficiencyLevel + 1);
+			}
+		}
+		if (heldItem.canPerformAction(heldStack, ToolActions.HOE_DIG))
+			event.setNewSpeed(event.getNewSpeed() * efficiency);
+		else
+			event.setNewSpeed(event.getNewSpeed() / efficiency);
 	}
 
 	public static int getWaterHydrationRadius() {

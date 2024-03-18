@@ -47,9 +47,6 @@ public class BoneMeal extends JsonFeature {
 	public static final TagKey<Item> ITEM_BLACKLIST = ITRItemTagsProvider.create("nerfed_bone_meal_blacklist");
 	public static final TagKey<Block> BLOCK_BLACKLIST = ITRBlockTagsProvider.create("nerfed_bone_meal_blacklist");
 	@Config
-	@Label(name = "Nerfed Bone Meal", description = "Makes more Bone Meal required for Crops. Valid Values are\nNO: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
-	public static BoneMealNerf nerfedBoneMeal = BoneMealNerf.NERFED;
-	@Config
 	@Label(name = "Transform Farmland in Rich Farmland", description = "Bone meal used on Farmland transforms it into Rich Farmland.")
 	public static Boolean farmlandToRich = true;
 	@Config(min = 1)
@@ -59,6 +56,9 @@ public class BoneMeal extends JsonFeature {
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Rich Farmland Chance to Decay", description = "Chance for a Rich farmland to decay back to farmland")
 	public static Double richFarmlandChanceToDecay = 0.4d;
+	@Config
+	@Label(name = "Nerfed Bone Meal", description = "Makes more Bone Meal required for Crops. Valid Values are\nNO: No Bone Meal changes\nSLIGHT: Makes Bone Meal grow 1-2 crop stages\nNERFED: Makes Bone Meal grow only 1 Stage")
+	public static BoneMealNerf nerfedBoneMeal = BoneMealNerf.NERFED;
 
 	@Config
 	@Label(name = "Bone meal dirt to grass", description = "If true, you can bone meal dirt that's near a grass block to get grass block.")
