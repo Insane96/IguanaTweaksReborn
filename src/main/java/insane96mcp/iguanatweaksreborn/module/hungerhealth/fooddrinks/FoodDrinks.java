@@ -74,18 +74,17 @@ public class FoodDrinks extends JsonFeature {
 	public static Boolean eatingSpeedBasedOffFood = true;
 	@Config
 	@Label(name = "Eating Speed Formula", description = "The formula to calculate the ticks required to eat a food. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. The default formula increases the time to eat exponentially when higher effectiveness.")
-	public static String eatingSpeedFormula = "MAX((IF(fast_food, 16, 32) * effectiveness) * 0.08, IF(fast_food, 12, 20))"; //max((32 * x) * 0.08, 24) or, if the food is fast eat max((16 * x) * 0.08, 16)
+	public static String eatingSpeedFormula = "MAX((IF(fast_food, 16, 32) * effectiveness) * 0.08, IF(fast_food, 16, 24))"; //max((32 * x) * 0.08, 24) or, if the food is fast eat max((16 * x) * 0.08, 16)
 	@Config
 	@Label(name = "Stop consuming on hit", description = "If true, eating/drinking stops when the player's hit.")
 	public static Boolean stopConsumingOnHit = true;
+	@Config(min = 0d, max = 1f)
+	@Label(name = "Raw food Poison Chance", description = "Raw food has this chance to poison the player. Raw food is defined in the iguanatweaksreborn:raw_food tag")
+	public static Double rawFoodPoisonChance = 0.7d;
 
 	@Config
 	@Label(name = "No Furnace food and smoker recipe", description = "Food can no longer be smelted in furnaces and change smokers recipe to require Mithril ingot.\nThis also enables a change to the smelt_item_function in loot tables to use smoker recipes instead of furnaces (otherwise, mobs wouldn't drop cooked food). Might have unintended side effects.")
 	public static Boolean noFurnaceFoodAndSmokerRecipe = true;
-
-	@Config(min = 0d, max = 1f)
-	@Label(name = "Raw food Poison Chance", description = "Raw food has this chance to poison the player. Raw food is defined in the iguanatweaksreborn:raw_food tag")
-	public static Double rawFoodPoisonChance = 0.7d;
 
 	public FoodDrinks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
