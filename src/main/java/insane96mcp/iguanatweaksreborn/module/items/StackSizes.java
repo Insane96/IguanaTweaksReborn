@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraftforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -160,6 +161,14 @@ public class StackSizes extends Feature {
         else {
             StackSizesSync.sync(foodStackReduction, foodStackReductionFormula, stackableSoups, itemStackMultiplier, blockStackMultiplier, event.getPlayer());
         }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public void applyFeature(TagsUpdatedEvent event) {
+        if (!this.isEnabled()
+                || event.getUpdateCause() != TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED)
+            return;
+        processStackSizes(true);
     }
 
     /**

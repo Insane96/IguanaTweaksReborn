@@ -5,6 +5,7 @@
   * Also fixed not being able to use any item on chickens
 * Increased experience from experience bottles
 * Moved HardCrops feature to Crops
+* Fixed stack sizes not syncing properly on clients
 
 ## 3.5.2
 * Players are no longer able to pillar **only if** there are monsters nearby

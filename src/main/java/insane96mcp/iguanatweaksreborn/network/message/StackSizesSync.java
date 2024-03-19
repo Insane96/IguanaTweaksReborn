@@ -43,7 +43,6 @@ public class StackSizesSync {
 			StackSizes.stackableSoups = message.stackableSoups;
 			StackSizes.itemStackMultiplier = message.itemStackMultiplier;
 			StackSizes.blockStackMultiplier = message.blockStackMultiplier;
-			StackSizes.processStackSizes(true);
 		});
 		ctx.get().setPacketHandled(true);
 	}
