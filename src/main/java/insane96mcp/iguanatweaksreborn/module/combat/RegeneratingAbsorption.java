@@ -17,6 +17,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -27,6 +29,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
@@ -45,6 +48,7 @@ public class RegeneratingAbsorption extends Feature {
     public static final ResourceLocation GUI_ICONS = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "textures/gui/absorption.png");
     public static final String REGEN_ABSORPTION_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "regen_absorption";
     public static final String HURT_COOLDOWN_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "regen_absorption_hurt_cooldown";
+    public static final String NO_HURT_SOUND_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "no_hurt_sound";
 
     public static final RegistryObject<Attribute> ATTRIBUTE = ITRRegistries.ATTRIBUTES.register("regenerating_absorption", () -> new RangedAttribute("attribute.name.regenerating_absorption", 0d, 0d, 1024d));
 
@@ -62,6 +66,9 @@ public class RegeneratingAbsorption extends Feature {
     @Config
     @Label(name = "Absorbing bypasses_armor damage only", description = "If true, absorption hearts will not shield from damages in the bypasses_armor damage type tag.")
     public static Boolean absorbingDamageTypeTagOnly = true;
+    @Config
+    @Label(name = "Sound on absorption hurt", description = "If true, a sound is played when the absorption is damaged.")
+    public static Boolean soundOnAbsorptionHurt = true;
 
     public RegeneratingAbsorption(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -109,6 +116,47 @@ public class RegeneratingAbsorption extends Feature {
         entity.getPersistentData().putFloat(REGEN_ABSORPTION_TAG, currentAbsorption);
     }
 
+    @SubscribeEvent
+    public void onEntityHurt(LivingHurtEvent event) {
+        if (!this.isEnabled()
+                || event.getEntity().level().isClientSide
+                || unDamagedTimeToRegen == 0
+                || event.getSource().is(DamageTypeTags.BYPASSES_ARMOR))
+            return;
+
+        double absorptionSpeed = event.getEntity().getAttributeValue(SPEED_ATTRIBUTE.get());
+        event.getEntity().getPersistentData().putInt(HURT_COOLDOWN_TAG, unDamagedTimeToRegen - (int)(absorptionSpeed * unDamagedTimeToRegen));
+    }
+
+    @SubscribeEvent
+    public void onLivingHurtPreAbsorption(LivingHurtPreAbsorptionEvent event) {
+        if (!this.isEnabled()
+                || !canDamageAbsorption(event.getSource()))
+            return;
+
+        float currentAbsorption = event.getEntity().getPersistentData().getFloat(REGEN_ABSORPTION_TAG);
+        if (currentAbsorption <= 0)
+            return;
+        //if (currentAbsorption < event.getAmount())
+            //event.getEntity().level().playSound(null, event.getEntity(), SoundEvents.GENERIC_EXPLODE, event.getEntity() instanceof Player ? SoundSource.PLAYERS : SoundSource.HOSTILE, 0.5f, 2f);
+        //else
+            //event.getEntity().getPersistentData().putBoolean(NO_HURT_SOUND_TAG, true);
+        float toRemove = Math.min(currentAbsorption, event.getAmount());
+        currentAbsorption -= toRemove;
+        event.setAmount(event.getAmount() - toRemove);
+        event.getEntity().getPersistentData().putFloat(REGEN_ABSORPTION_TAG, currentAbsorption);
+        if (soundOnAbsorptionHurt)
+            event.getEntity().level().playSound(null, event.getEntity(), SoundEvents.SHIELD_BREAK, event.getEntity() instanceof Player ? SoundSource.PLAYERS : SoundSource.HOSTILE, 0.75f, 2f);
+        if (event.getEntity() instanceof ServerPlayer player)
+            RegenAbsorptionSync.sync(player, currentAbsorption);
+    }
+
+    public static boolean canDamageAbsorption(DamageSource source) {
+        if (!absorbingDamageTypeTagOnly)
+            return true;
+        return source.getEntity() != null && !source.is(DamageTypeTags.BYPASSES_ARMOR);
+    }
+
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
@@ -136,7 +184,7 @@ public class RegeneratingAbsorption extends Feature {
             else
                 guiGraphics.blit(GUI_ICONS, left, top, 0, 0, 9, 9, 18, 9);
             //else
-                //guiGraphics.blit(GUI_ICONS, left, top, 0, 0, 0, 9, 256, 256);
+            //guiGraphics.blit(GUI_ICONS, left, top, 0, 0, 0, 9, 256, 256);
             if (i % 19 == 0) {
                 left = width / 2 - 91;
                 top -= 10;
@@ -150,38 +198,5 @@ public class RegeneratingAbsorption extends Feature {
 
         RenderSystem.disableBlend();
         mc.getProfiler().pop();
-    }
-
-    @SubscribeEvent
-    public void onEntityHurt(LivingHurtEvent event) {
-        if (!this.isEnabled()
-                || event.getEntity().level().isClientSide
-                || unDamagedTimeToRegen == 0
-                || event.getSource().is(DamageTypeTags.BYPASSES_ARMOR))
-            return;
-
-        double absorptionSpeed = event.getEntity().getAttributeValue(SPEED_ATTRIBUTE.get());
-        event.getEntity().getPersistentData().putInt(HURT_COOLDOWN_TAG, unDamagedTimeToRegen - (int)(absorptionSpeed * unDamagedTimeToRegen));
-    }
-
-    @SubscribeEvent
-    public void onLivingHurtPreAbsorption(LivingHurtPreAbsorptionEvent event) {
-        if (!this.isEnabled()
-                || !canDamageAbsorption(event.getSource()))
-            return;
-
-        float currentAbsorption = event.getEntity().getPersistentData().getFloat(REGEN_ABSORPTION_TAG);
-        float toRemove = Math.min(currentAbsorption, event.getAmount());
-        currentAbsorption -= toRemove;
-        event.setAmount(event.getAmount() - toRemove);
-        event.getEntity().getPersistentData().putFloat(REGEN_ABSORPTION_TAG, currentAbsorption);
-        if (event.getEntity() instanceof ServerPlayer player)
-            RegenAbsorptionSync.sync(player, currentAbsorption);
-    }
-
-    public static boolean canDamageAbsorption(DamageSource source) {
-        if (!absorbingDamageTypeTagOnly)
-            return true;
-        return source.getEntity() != null && !source.is(DamageTypeTags.BYPASSES_ARMOR);
     }
 }

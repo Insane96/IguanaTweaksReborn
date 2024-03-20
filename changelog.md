@@ -1,9 +1,12 @@
 # Changelog
 
+* Replace toughness with regenerating absorption
+
 ## Upcoming
 * Moved chicken food items to item tag `iguanatweaksreborn:chicken_food_items`
   * Also fixed not being able to use any item on chickens
 * Increased experience from experience bottles
+* Added sound effect when regen absorption hearts are damaged
 * Moved HardCrops feature to Crops
 * Fixed stack sizes not syncing properly on clients
 

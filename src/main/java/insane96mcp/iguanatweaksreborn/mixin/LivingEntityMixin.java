@@ -1,6 +1,9 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import insane96mcp.iguanatweaksreborn.event.ITEEventFactory;
+import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.IProtectionEnchantment;
 import insane96mcp.iguanatweaksreborn.module.movement.TerrainSlowdown;
@@ -35,8 +38,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
     @Shadow public abstract boolean hasEffect(MobEffect pEffect);
 
     @Shadow @Nullable public abstract MobEffectInstance getEffect(MobEffect pEffect);
-
-    @Shadow public abstract float getAbsorptionAmount();
 
     @Shadow public abstract Iterable<ItemStack> getArmorSlots();
 
@@ -92,6 +93,13 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         if (instance.fallDistance > 0f)
             instance.causeFallDamage(instance.fallDistance, 1f, instance.damageSources().fall());
         instance.resetFallDistance();
+    }
+
+    @WrapOperation(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;playHurtSound(Lnet/minecraft/world/damagesource/DamageSource;)V"))
+    public void onPlayHurtSound(LivingEntity instance, DamageSource pSource, Operation<Void> original) {
+        if (instance.getPersistentData().contains(RegeneratingAbsorption.NO_HURT_SOUND_TAG))
+            return;
+        original.call(instance, pSource);
     }
 
     @Inject(method = "getDamageAfterMagicAbsorb", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getDamageProtection(Ljava/lang/Iterable;Lnet/minecraft/world/damagesource/DamageSource;)I"), cancellable = true)

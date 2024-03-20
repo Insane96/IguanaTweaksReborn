@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import javax.annotation.Nullable;
 
 //Higher priority over ShieldsPlus. This makes this run first so ShieldPlus overrides this.
-@Mixin(value = Player.class)
+@Mixin(Player.class)
 public abstract class PlayerMixin extends LivingEntity {
 	@Shadow
 	public int experienceLevel;
