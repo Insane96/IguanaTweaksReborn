@@ -15,7 +15,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class CriticalHits extends Feature {
 	@Config(min = 0d)
 	@Label(name = "Critical hit damage multiplier", description = "How much damage a critical hit does. Vanilla is 1.5")
-	public static Double critDamageMultiplier = 1.25d;
+	public static Double critDamageMultiplier = 1.2d;
 
 	public CriticalHits(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

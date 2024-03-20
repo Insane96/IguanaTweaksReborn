@@ -1,6 +1,8 @@
 # Changelog
 
 * Replace toughness with regenerating absorption
+* Armor should protect less to durability similar to beta 1.7.3
+* Ageing and dying animals
 
 ## Upcoming
 * Moved chicken food items to item tag `iguanatweaksreborn:chicken_food_items`
@@ -8,6 +10,7 @@
 * Increased experience from experience bottles
 * Added sound effect when regen absorption hearts are damaged
 * Moved HardCrops feature to Crops
+* Reduced Critical hits damage (25% -> 20%)
 * Fixed stack sizes not syncing properly on clients
 
 ## 3.5.2
