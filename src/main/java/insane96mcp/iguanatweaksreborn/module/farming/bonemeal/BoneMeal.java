@@ -105,7 +105,7 @@ public class BoneMeal extends JsonFeature {
 	@SubscribeEvent
 	public void onBonemeal(BonemealEvent event) {
 		if (event.isCanceled()
-				|| event.getResult() == Event.Result.DENY
+				|| event.getResult() != Event.Result.DEFAULT
 				|| event.isCanceled()
 				|| !this.isEnabled()
 				|| event.getLevel().isClientSide)

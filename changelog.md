@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Regenerating absorption now applies before damage reduction from armor and enchantments
+* BoneMeal event is ignored if other mods have allowed or denied the use of bonemeal
 
 ## 3.5.3
 * Moved chicken food items to item tag `iguanatweaksreborn:chicken_food_items`
