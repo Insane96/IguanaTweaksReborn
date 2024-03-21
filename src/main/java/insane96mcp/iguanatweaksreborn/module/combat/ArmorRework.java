@@ -10,13 +10,13 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.LogHelper;
 
-@Label(name = "Armor Rework", description = "Changes how armor and toughness work. Armor reduces armor by a percentage and Toughness reduces damage by a flat amount")
+@Label(name = "Armor Rework", description = "Change armor and toughness formula")
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class ArmorRework extends Feature {
 
     @Config
     @Label(name = "Damage Reduction formula", description = "Vanilla formula is 'damage * (1 - ((MIN(20, MAX(armor / 5, armor - ((4 * damage) / (toughness + 8)))))) / 25))'")
-    public static String formula = "MAX(0, damage - (0.8 * toughness / 10 * ((toughness + 4) / (toughness + 1)))) * (1 - 1.25 * (armor / (armor + 30)))";
+    public static String formula = "damage * (1 - 1.20 * (armor / (armor + 20)))";
 
     public ArmorRework(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
