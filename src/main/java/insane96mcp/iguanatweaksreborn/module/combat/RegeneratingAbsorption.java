@@ -149,7 +149,7 @@ public class RegeneratingAbsorption extends Feature {
         event.setAmount(event.getAmount() - toRemove);
         event.getEntity().getPersistentData().putFloat(REGEN_ABSORPTION_TAG, currentAbsorption);
         if (soundOnAbsorptionHurt)
-            event.getEntity().level().playSound(null, event.getEntity(), SoundEvents.SHIELD_BREAK, event.getEntity() instanceof Player ? SoundSource.PLAYERS : SoundSource.HOSTILE, 0.75f, 2f);
+            event.getEntity().level().playSound(null, event.getEntity(), SoundEvents.SHIELD_BREAK, event.getEntity() instanceof Player ? SoundSource.PLAYERS : SoundSource.HOSTILE, 1f, 2f);
         if (event.getEntity() instanceof ServerPlayer player)
             RegenAbsorptionSync.sync(player, currentAbsorption);
     }
