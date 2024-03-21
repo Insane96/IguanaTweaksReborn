@@ -6,6 +6,7 @@ import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
 import insane96mcp.iguanatweaksreborn.data.AttributeModifierOperation;
+import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.utils.ITRGsonHelper;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
@@ -34,8 +35,10 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 							 @Nullable Double baseAttackDamage, @Nullable Double baseAttackSpeed,
 							 @Nullable Double baseArmor, @Nullable Double baseArmorToughness,
 							 @Nullable Double baseKnockbackResistance,
+							 @Nullable Double baseRegeneratingAbsorption, @Nullable Double baseRegenAbsorptionSpeed,
+							 @Nullable Double movementSpeedPenalty,
 							 @Nullable List<SerializableAttributeModifer> modifiers) {
-	public ItemStatistics(@NotNull IdTagMatcher item, @Nullable Integer maxStackSize, @Nullable Integer durability, @Nullable Double efficiency, @Nullable Integer enchantability, @Nullable Double baseAttackDamage, @Nullable Double baseAttackSpeed, @Nullable Double baseArmor, @Nullable Double baseArmorToughness, @Nullable Double baseKnockbackResistance, @Nullable List<SerializableAttributeModifer> modifiers) {
+	public ItemStatistics(@NotNull IdTagMatcher item, @Nullable Integer maxStackSize, @Nullable Integer durability, @Nullable Double efficiency, @Nullable Integer enchantability, @Nullable Double baseAttackDamage, @Nullable Double baseAttackSpeed, @Nullable Double baseArmor, @Nullable Double baseArmorToughness, @Nullable Double baseKnockbackResistance, @Nullable Double baseRegeneratingAbsorption, @Nullable Double baseRegenAbsorptionSpeed, @Nullable Double movementSpeedPenalty, @Nullable List<SerializableAttributeModifer> modifiers) {
 		this.item = item;
 		this.maxStackSize = maxStackSize;
 		this.durability = durability;
@@ -46,6 +49,9 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 		this.baseArmor = baseArmor;
 		this.baseArmorToughness = baseArmorToughness;
 		this.baseKnockbackResistance = baseKnockbackResistance;
+		this.baseRegeneratingAbsorption = baseRegeneratingAbsorption;
+		this.baseRegenAbsorptionSpeed = baseRegenAbsorptionSpeed;
+		this.movementSpeedPenalty = movementSpeedPenalty;
 		this.modifiers = modifiers;
 	}
 
@@ -55,7 +61,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 			if (this.durability != null)
 				item.maxDamage = this.durability;
 			if (this.efficiency != null && item instanceof DiggerItem diggerItem)
-				diggerItem.speed = this.efficiency().floatValue();
+				diggerItem.speed = this.efficiency.floatValue();
 			if (this.maxStackSize != null)
 				item.maxStackSize = this.maxStackSize;
 		}
@@ -110,6 +116,22 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 				if (entry.getValue().getId().equals(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType())) && entry.getKey().equals(Attributes.KNOCKBACK_RESISTANCE))
 					toRemove.put(entry.getKey(), entry.getValue());
 			}
+			if (this.baseRegeneratingAbsorption != null && stack.getItem() instanceof ArmorItem armorItem) {
+				if (this.baseRegeneratingAbsorption > 0d)
+					toAdd.put(RegeneratingAbsorption.ATTRIBUTE.get(), new net.minecraft.world.entity.ai.attributes.AttributeModifier(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType()), "Armor Regenerating Absorption", this.baseRegeneratingAbsorption, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADDITION));
+				if (entry.getValue().getId().equals(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType())) && entry.getKey().equals(RegeneratingAbsorption.ATTRIBUTE.get()))
+					toRemove.put(entry.getKey(), entry.getValue());
+			}
+			if (this.baseRegenAbsorptionSpeed != null && stack.getItem() instanceof ArmorItem armorItem) {
+				if (this.baseRegenAbsorptionSpeed > 0d)
+					toAdd.put(RegeneratingAbsorption.SPEED_ATTRIBUTE.get(), new net.minecraft.world.entity.ai.attributes.AttributeModifier(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType()), "Armor Regenerating Absorption Speed", this.baseRegenAbsorptionSpeed, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADDITION));
+				if (entry.getValue().getId().equals(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType())) && entry.getKey().equals(RegeneratingAbsorption.SPEED_ATTRIBUTE.get()))
+					toRemove.put(entry.getKey(), entry.getValue());
+			}
+			if (this.movementSpeedPenalty != null && stack.getItem() instanceof ArmorItem armorItem) {
+				if (this.movementSpeedPenalty > 0d)
+					toAdd.put(Attributes.MOVEMENT_SPEED, new net.minecraft.world.entity.ai.attributes.AttributeModifier(ARMOR_MODIFIER_UUID_PER_TYPE.get(armorItem.getType()), "Armor Movement Speed Reduction", getSpeedReductionPerArmor(-this.movementSpeedPenalty, armorItem), AttributeModifier.Operation.MULTIPLY_BASE));
+			}
 		}
 
 		//Try to remove original modifiers first
@@ -130,6 +152,15 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 		toAdd.forEach(event::addModifier);
 	}
 
+	private static double getSpeedReductionPerArmor(double totalReduction, ArmorItem item) {
+        return switch (item.getEquipmentSlot()) {
+            case HEAD -> totalReduction * 0.2d;
+            case CHEST -> totalReduction * 0.35d;
+            case LEGS -> totalReduction * 0.3d;
+            default -> totalReduction * 0.15d;
+        };
+	}
+
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<ItemStatistics>>() {}.getType();
 
 	public static class Serializer implements JsonDeserializer<ItemStatistics>, JsonSerializer<ItemStatistics> {
@@ -145,11 +176,14 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 			Double baseAttackSpeed = ITRGsonHelper.getAsNullableDouble(jObject, "attack_speed");
 			Double baseArmor = ITRGsonHelper.getAsNullableDouble(jObject, "armor");
 			Double baseToughness = ITRGsonHelper.getAsNullableDouble(jObject, "armor_toughness");
+			Double regeneratingAbsorption = ITRGsonHelper.getAsNullableDouble(jObject, "regenerating_absorption");
+			Double regeneratingAbsorptionSpeed = ITRGsonHelper.getAsNullableDouble(jObject, "regenerating_absorption_speed");
 			Double baseKnockbackResistance = ITRGsonHelper.getAsNullableDouble(jObject, "knockback_resistance");
+			Double movementSpeedPenalty = ITRGsonHelper.getAsNullableDouble(jObject, "movement_speed_penalty");
 			List<SerializableAttributeModifer> modifiers = null;
 			if (jObject.has("modifiers"))
 				modifiers = context.deserialize(jObject.get("modifiers"), SerializableAttributeModifer.LIST_TYPE);
-			return new ItemStatistics(item, maxStackSize, durability, efficiency, enchantability, baseAttackDamage, baseAttackSpeed, baseArmor, baseToughness, baseKnockbackResistance, modifiers);
+			return new ItemStatistics(item, maxStackSize, durability, efficiency, enchantability, baseAttackDamage, baseAttackSpeed, baseArmor, baseToughness, baseKnockbackResistance, regeneratingAbsorption, regeneratingAbsorptionSpeed, movementSpeedPenalty, modifiers);
 		}
 
 		@Override
@@ -175,6 +209,12 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 				jObject.addProperty("armor_toughness", src.baseArmorToughness);
 			if (src.baseKnockbackResistance != null)
 				jObject.addProperty("knockback_resistance", src.baseKnockbackResistance);
+			if (src.baseRegeneratingAbsorption != null)
+				jObject.addProperty("regenerating_absorption", src.baseRegeneratingAbsorption);
+			if (src.baseRegenAbsorptionSpeed != null)
+				jObject.addProperty("regenerating_absorption_speed", src.baseRegenAbsorptionSpeed);
+			if (src.movementSpeedPenalty != null)
+				jObject.addProperty("movement_speed_penalty", src.movementSpeedPenalty);
 			if (src.modifiers != null)
 				jObject.add("modifiers", context.serialize(src.modifiers, SerializableAttributeModifer.LIST_TYPE));
 			return jObject;
@@ -195,6 +235,9 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 		Double baseArmor = byteBuf.readNullable(FriendlyByteBuf::readDouble);
 		Double baseToughness = byteBuf.readNullable(FriendlyByteBuf::readDouble);
 		Double baseKnockbackResistance = byteBuf.readNullable(FriendlyByteBuf::readDouble);
+		Double baseRegeneratingAbsorption = byteBuf.readNullable(FriendlyByteBuf::readDouble);
+		Double baseRegeneratingAbsorptionSpeed = byteBuf.readNullable(FriendlyByteBuf::readDouble);
+		Double movementSpeedPenalty = byteBuf.readNullable(FriendlyByteBuf::readDouble);
 		boolean hasModifiers = byteBuf.readBoolean();
 		List<SerializableAttributeModifer> modifiers = null;
 		if (hasModifiers) {
@@ -204,7 +247,7 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 				modifiers.add(SerializableAttributeModifer.fromNetwork(byteBuf));
 			}
 		}
-		return new ItemStatistics(item, maxStackSize, durability, efficiency, enchantability, baseAttackDamage, baseAttackSpeed, baseArmor, baseToughness, baseKnockbackResistance, modifiers);
+		return new ItemStatistics(item, maxStackSize, durability, efficiency, enchantability, baseAttackDamage, baseAttackSpeed, baseArmor, baseToughness, baseKnockbackResistance, baseRegeneratingAbsorption, baseRegeneratingAbsorptionSpeed, movementSpeedPenalty, modifiers);
 	}
 
 	public void toNetwork(FriendlyByteBuf byteBuf) {
@@ -218,6 +261,9 @@ public record ItemStatistics(IdTagMatcher item, @Nullable Integer maxStackSize, 
 		byteBuf.writeNullable(this.baseArmor, FriendlyByteBuf::writeDouble);
 		byteBuf.writeNullable(this.baseArmorToughness, FriendlyByteBuf::writeDouble);
 		byteBuf.writeNullable(this.baseKnockbackResistance, FriendlyByteBuf::writeDouble);
+		byteBuf.writeNullable(this.baseRegeneratingAbsorption, FriendlyByteBuf::writeDouble);
+		byteBuf.writeNullable(this.baseRegenAbsorptionSpeed, FriendlyByteBuf::writeDouble);
+		byteBuf.writeNullable(this.movementSpeedPenalty, FriendlyByteBuf::writeDouble);
 		if (this.modifiers != null) {
 			byteBuf.writeBoolean(true);
 			byteBuf.writeInt(this.modifiers.size());
