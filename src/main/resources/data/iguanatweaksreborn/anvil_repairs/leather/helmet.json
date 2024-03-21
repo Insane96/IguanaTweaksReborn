@@ -1,0 +1,17 @@
+{
+	"item_to_repair": "minecraft:leather_helmet",
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:leather"
+			},
+			"amount": 5
+		},
+		{
+			"repair_material": {
+				"id": "minecraft:rabbit_hide"
+			},
+			"amount": 15
+		}
+	]
+}
