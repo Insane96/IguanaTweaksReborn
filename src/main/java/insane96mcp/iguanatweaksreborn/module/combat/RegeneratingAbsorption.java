@@ -59,7 +59,10 @@ public class RegeneratingAbsorption extends Feature {
 
     @Config(min = 0)
     @Label(name = "Un-damaged time to regen", description = "Ticks that must pass from the last hit to regen absorption hearts. This is affected by regenerating absorption speed (absorp regen speed * this)")
-    public static Integer unDamagedTimeToRegen = 100;
+    public static Integer unDamagedTimeToRegen = 150;
+    @Config(min = 0)
+    @Label(name = "Un-damaged time to regen cap", description = "Min Un-damaged time to regen")
+    public static Integer unDamagedTimeToRegenCap = 60;
     @Config
     @Label(name = "Cap to health", description = "The amount of regenerating absorption hearts cannot go over the entity's current health.")
     public static Boolean capToHealth = true;
@@ -125,7 +128,7 @@ public class RegeneratingAbsorption extends Feature {
             return;
 
         double absorptionSpeed = event.getEntity().getAttributeValue(SPEED_ATTRIBUTE.get());
-        event.getEntity().getPersistentData().putInt(HURT_COOLDOWN_TAG, unDamagedTimeToRegen - (int)(absorptionSpeed * unDamagedTimeToRegen));
+        event.getEntity().getPersistentData().putInt(HURT_COOLDOWN_TAG, (int) Math.max(unDamagedTimeToRegen * (1f - absorptionSpeed), unDamagedTimeToRegenCap));
     }
 
     @SubscribeEvent

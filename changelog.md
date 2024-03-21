@@ -4,8 +4,10 @@
 * Moved chicken food items to item tag `iguanatweaksreborn:chicken_food_items`
   * Also fixed not being able to use any item on chickens
 * Increased experience from experience bottles
-* Added sound effect when regen absorption hearts are damaged
-* Revert regenerating absorption base speed (0.25/s -> 0.2s)
+* Regenerating absorption
+  * Added sound effect when regen absorption hearts are damaged
+  * Revert regenerating absorption base speed (0.25/s -> 0.2s)
+  * Increased time to not get damaged before regenerating (5s -> 7.5s)
 * Changed again Armor formula
   * Toughness has been removed from the calculation and damage reduction at 20 armor has been increased (-50% -> -60% damage)
 * Moved HardCrops feature to Crops
