@@ -2,7 +2,6 @@ package insane96mcp.iguanatweaksreborn.module.combat;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.event.LivingHurtPreAbsorptionEvent;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.movement.stamina.Stamina;
 import insane96mcp.iguanatweaksreborn.network.message.RegenAbsorptionSync;
@@ -132,7 +131,7 @@ public class RegeneratingAbsorption extends Feature {
     }
 
     @SubscribeEvent
-    public void onLivingHurtPreAbsorption(LivingHurtPreAbsorptionEvent event) {
+    public void onLivingHurtPreAbsorption(LivingHurtEvent event) {
         if (!this.isEnabled()
                 || !canDamageAbsorption(event.getSource()))
             return;

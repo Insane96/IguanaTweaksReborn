@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Regenerating absorption now applies before damage reduction from armor and enchantments
+
 ## 3.5.3
 * Moved chicken food items to item tag `iguanatweaksreborn:chicken_food_items`
   * Also fixed not being able to use any item on chickens
