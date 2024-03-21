@@ -122,8 +122,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
     }
 
     @WrapOperation(method = "handleDamageEvent", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"))
-    public void onPlayHurtSoundClientSide(LivingEntity instance, SoundEvent soundEvent, float volume, float pitch, Operation<Void> original) {
-        if (instance.getPersistentData().getFloat(RegeneratingAbsorption.REGEN_ABSORPTION_TAG) > 0)
+    public void onPlayHurtSoundClientSide(LivingEntity instance, SoundEvent soundEvent, float volume, float pitch, Operation<Void> original, DamageSource source) {
+        if (RegeneratingAbsorption.canDamageAbsorption(source) && instance.getPersistentData().getFloat(RegeneratingAbsorption.REGEN_ABSORPTION_TAG) > 0)
             return;
         original.call(instance, soundEvent, volume, pitch);
     }
