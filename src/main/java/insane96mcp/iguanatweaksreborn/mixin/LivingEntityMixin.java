@@ -10,6 +10,7 @@ import insane96mcp.iguanatweaksreborn.module.movement.TerrainSlowdown;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.util.MCUtils;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -118,5 +119,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         if (damageReduction.getValue() == 0f)
             return;
         cir.setReturnValue(damageAmount - (damageAmount * Math.min(damageReduction.getValue(), 0.8f)));
+    }
+
+    @WrapOperation(method = "handleDamageEvent", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"))
+    public void onPlayHurtSoundClientSide(LivingEntity instance, SoundEvent soundEvent, float volume, float pitch, Operation<Void> original) {
+        if (instance.getPersistentData().getFloat(RegeneratingAbsorption.REGEN_ABSORPTION_TAG) > 0)
+            return;
+        original.call(instance, soundEvent, volume, pitch);
     }
 }
