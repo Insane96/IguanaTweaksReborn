@@ -1,23 +1,8 @@
 {
 	"item": "minecraft:golden_helmet",
-	"durability": 65,
+	"durability": 52,
 	"armor": 1,
 	"modifiers": [
-		{
-			"uuid": "3f22e9a3-0916-43ab-a93f-ba52e5ae28e5",
-			"name": "Golden armor bonus",
-			"slot": "head",
-			"attribute": "iguanatweaksreborn:regenerating_absorption",
-			"amount": 1,
-			"operation": "addition"
-		},
-		{
-			"uuid": "cf4db784-9677-4e90-9c74-ee3d85c9a641",
-			"name": "Armor slowdown",
-			"slot": "head",
-			"attribute": "minecraft:generic.movement_speed",
-			"amount": -0.004,
-			"operation": "multiply_base"
-		}
+
 	]
 }

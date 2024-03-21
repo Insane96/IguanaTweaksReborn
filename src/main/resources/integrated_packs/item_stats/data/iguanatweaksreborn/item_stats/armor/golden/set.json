@@ -1,5 +1,6 @@
 {
     "item": "#iguanatweaksreborn:equipment/armor/golden",
     "enchantability": 25,
-    "armor_toughness": 0
+    "armor_toughness": 0,
+    "movement_speed_penalty": 0.02
 }

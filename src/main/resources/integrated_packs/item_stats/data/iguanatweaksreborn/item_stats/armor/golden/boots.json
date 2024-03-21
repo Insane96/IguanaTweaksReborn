@@ -1,23 +1,8 @@
 {
 	"item": "minecraft:golden_boots",
-	"durability": 60,
+	"durability": 48,
 	"armor": 0.8,
 	"modifiers": [
-		{
-			"uuid": "dc49f564-489f-4f70-ab50-ce85cc4bfa85",
-			"name": "Golden armor bonus",
-			"slot": "feet",
-			"attribute": "iguanatweaksreborn:regenerating_absorption",
-			"amount": 1,
-			"operation": "addition"
-		},
-		{
-			"uuid": "4b8573c6-bd4b-4560-a411-04b78ae950ce",
-			"name": "Armor slowdown",
-			"slot": "feet",
-			"attribute": "minecraft:generic.movement_speed",
-			"amount": -0.003,
-			"operation": "multiply_base"
-		}
+
 	]
 }

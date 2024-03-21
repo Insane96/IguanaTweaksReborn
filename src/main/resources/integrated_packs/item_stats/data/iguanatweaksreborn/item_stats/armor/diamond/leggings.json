@@ -1,15 +1,8 @@
 {
 	"item": "minecraft:diamond_leggings",
-	"durability": 225,
+	"durability": 180,
 	"armor": 4.2,
 	"modifiers": [
-		{
-			"uuid": "1277bad1-246f-4f3b-932c-d944839a164e",
-			"name": "Armor slowdown",
-			"slot": "legs",
-			"attribute": "minecraft:generic.movement_speed",
-			"amount": -0.024,
-			"operation": "multiply_base"
-		}
+
 	]
 }

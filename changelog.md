@@ -6,10 +6,14 @@
 * Increased experience from experience bottles
 * Regenerating absorption
   * Added sound effect when regen absorption hearts are damaged
-  * Revert regenerating absorption base speed (0.25/s -> 0.2s)
+  * Revert regenerating absorption base speed (0.25/s -> 0.2/s)
   * Increased time to not get damaged before regenerating (5s -> 7.5s)
-* Changed again Armor formula
-  * Toughness has been removed from the calculation and damage reduction at 20 armor has been increased (-50% -> -60% damage)
+* Armor
+  * Changed again armor formula
+    * Toughness has been removed from the calculation and damage reduction has been increased
+  * Toughness has been replaced with Regenerating absorption
+  * Rebalanced armors accordingly
+* Item statistics now accept `regenerating_abosorption`, `regenerating_absorption_speed` and `movement_speed_penalty`
 * Moved HardCrops feature to Crops
 * Reduced Critical hits damage (25% -> 20%)
 * Fixed missing Leather armor repair data

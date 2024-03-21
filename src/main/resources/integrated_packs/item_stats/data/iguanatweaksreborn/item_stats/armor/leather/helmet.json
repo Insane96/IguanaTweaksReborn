@@ -1,15 +1,8 @@
 {
 	"item": "minecraft:leather_helmet",
-	"durability": 65,
+	"durability": 52,
 	"armor": 0.8,
 	"modifiers": [
-		{
-			"uuid": "cf4db784-9677-4e90-9c74-ee3d85c9a641",
-			"name": "Armor slowdown",
-			"slot": "head",
-			"attribute": "minecraft:generic.movement_speed",
-			"amount": 0,
-			"operation": "multiply_base"
-		}
+
 	]
 }

@@ -1,16 +1,8 @@
 {
 	"item": "minecraft:chainmail_leggings",
-	"durability": 53,
+	"durability": 38,
 	"armor": 3.6,
-	"armor_toughness": 0,
 	"modifiers": [
-		{
-			"uuid": "1277bad1-246f-4f3b-932c-d944839a164e",
-			"name": "Armor slowdown",
-			"slot": "legs",
-			"attribute": "minecraft:generic.movement_speed",
-			"amount": 0,
-			"operation": "multiply_base"
-		}
+
 	]
 }
