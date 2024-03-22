@@ -14,7 +14,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class FeatherFalling extends Enchantment implements IProtectionEnchantment, IEnchantmentTooltip {
     public FeatherFalling() {
-        super(Rarity.RARE, EnchantmentCategory.ARMOR_FEET, new EquipmentSlot[] { EquipmentSlot.FEET });
+        super(Rarity.UNCOMMON, EnchantmentCategory.ARMOR_FEET, new EquipmentSlot[] { EquipmentSlot.FEET });
     }
 
     @Override
