@@ -5,6 +5,7 @@
 * BoneMeal event is ignored if other mods have allowed or denied the use of bonemeal
 * Reduced Feather Falling cost
 * Rebalanced some materials
+* Reduced spawners player range
 
 ## 3.5.3
 * Moved chicken food items to item tag `iguanatweaksreborn:chicken_food_items`

@@ -95,7 +95,7 @@ public class Spawners extends JsonFeature {
 	public static MinMax delay = new MinMax(500, 2000);
 	@Config(min = 0)
 	@Label(name = "Required Player Range", description = "Range in which a player must be present for a spawner to work. Vanilla is 16.")
-	public static int requiredPlayerRange = 32;
+	public static int requiredPlayerRange = 24;
 	@Config(min = 0)
 	@Label(name = "Empowered.Experience Reward", description = "When the Spawner stops being empowered, will generate this amount of experience")
 	public static MinMax empoweredExperienceReward = new MinMax(150, 200);
