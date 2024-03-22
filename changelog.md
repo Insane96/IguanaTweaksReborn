@@ -8,6 +8,7 @@
 * BoneMeal event is ignored if other mods have allowed or denied the use of bone meal
 * Reduced Feather Falling cost
 * Rebalanced some materials
+* No pillaring no longer has an allowed distance
 * Reduced spawners player range
 
 ## 3.5.3
