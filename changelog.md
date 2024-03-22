@@ -2,8 +2,8 @@
 
 * Allow spawners to be empowered with echo shards
 
-## Upcoming
-* Spawners now drop 1 echo shard when finish empowered
+## 3.5.4
+* Spawners now drop 1 echo shard when finish empowered. Also reduced activation range
 * Regenerating absorption now applies before damage reduction from armor and enchantments
 * BoneMeal event is ignored if other mods have allowed or denied the use of bone meal
 * Reduced Feather Falling cost
