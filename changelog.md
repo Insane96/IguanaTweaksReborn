@@ -1,5 +1,8 @@
 # Changelog
 
+* Re-texture spawners to remind echo shards
+* Allow spawners to be empowered with echo shards
+
 ## Upcoming
 * Regenerating absorption now applies before damage reduction from armor and enchantments
 * BoneMeal event is ignored if other mods have allowed or denied the use of bonemeal

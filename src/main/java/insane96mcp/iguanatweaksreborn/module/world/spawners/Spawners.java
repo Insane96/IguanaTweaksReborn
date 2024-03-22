@@ -346,6 +346,7 @@ public class Spawners extends JsonFeature {
 	@OnlyIn(Dist.CLIENT)
 	public void onTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled()
+				|| !Spawners.disableSpawnersEnabled
 				|| !event.getItemStack().is(SPAWNER_REACTIVATOR_TAG))
 			return;
 
