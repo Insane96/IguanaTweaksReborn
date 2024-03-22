@@ -101,7 +101,7 @@ public class Spawners extends JsonFeature {
 	public static MinMax empoweredExperienceReward = new MinMax(150, 200);
 	@Config
 	@Label(name = "Empowered.Loot Reward", description = "When the Spawner stops being empowered, will generate loot from the iguanatweaksreborn:empowered_spawner loot table")
-	public static Boolean empoweredLootReward = false;
+	public static Boolean empoweredLootReward = true;
 
 	public static final ArrayList<IdTagValue> FIXED_SPAWNER_SPAWNABLE_DEFAULT = new ArrayList<>(List.of(
 			//new IdTagValue(IdTagMatcher.newId("minecraft:blaze", "minecraft:the_nether"), 64)

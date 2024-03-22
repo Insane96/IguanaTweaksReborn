@@ -1,11 +1,11 @@
 # Changelog
 
-* Re-texture spawners to remind echo shards
 * Allow spawners to be empowered with echo shards
 
 ## Upcoming
+* Spawners now drop 1 echo shard when finish empowered
 * Regenerating absorption now applies before damage reduction from armor and enchantments
-* BoneMeal event is ignored if other mods have allowed or denied the use of bonemeal
+* BoneMeal event is ignored if other mods have allowed or denied the use of bone meal
 * Reduced Feather Falling cost
 * Rebalanced some materials
 * Reduced spawners player range
