@@ -76,7 +76,7 @@ public class Stats extends Feature {
 	@Label(name = "1 damage for tools attacking", description = "If enabled, tools will not take 2 damage when used to hurt entities")
 	public static Boolean oneDamageForToolAttacking = true;
 	@Config
-	@Label(name = "Item Stats Data Pack", description = "Enables a data pack that changes all the item stats")
+	@Label(name = "Item Stats Data Pack", description = "Enables a data pack that rebalances all the items, from armor to efficiency to weapons. Also changes some item stacks.")
 	public static Boolean itemStatsDataPack = true;
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
