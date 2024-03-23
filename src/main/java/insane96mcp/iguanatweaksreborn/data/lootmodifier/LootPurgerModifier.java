@@ -3,7 +3,6 @@ package insane96mcp.iguanatweaksreborn.data.lootmodifier;
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -18,6 +17,7 @@ import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.common.loot.LootTableIdCondition;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class LootPurgerModifier extends LootModifier {
@@ -28,7 +28,7 @@ public class LootPurgerModifier extends LootModifier {
                             Codec.INT.fieldOf("end_range").forGetter(m -> m.endRange),
                             Codec.FLOAT.optionalFieldOf("multiplier_at_start", 0f).forGetter(m -> m.multiplierAtStart),
                             Codec.BOOL.optionalFieldOf("apply_to_damageable", false).forGetter(m -> m.applyToDamageable),
-                            TagKey.codec(Registries.ITEM).optionalFieldOf("blacklisted_items_tag", ITRItemTagsProvider.create("fake_tag_so_the_codec_is_happy")).forGetter(m -> m.blacklistedItemsTag)
+                            TagKey.codec(Registries.ITEM).optionalFieldOf("blacklisted_items_tag").forGetter(m -> m.blacklistedItemsTag)
                     )).apply(inst, LootPurgerModifier::new)
             ));
 
@@ -37,13 +37,13 @@ public class LootPurgerModifier extends LootModifier {
     //Chance to purge when at start range
     private float multiplierAtStart = 0f;
     private boolean applyToDamageable = false;
-    private TagKey<Item> blacklistedItemsTag = null;
+    private Optional<TagKey<Item>> blacklistedItemsTag;
 
     public LootPurgerModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
-    public LootPurgerModifier(LootItemCondition[] conditionsIn, int startRange, int endRange, float multiplierAtStart, boolean applyToDamageable, TagKey<Item> blacklistedItemsTag) {
+    public LootPurgerModifier(LootItemCondition[] conditionsIn, int startRange, int endRange, float multiplierAtStart, boolean applyToDamageable, Optional<TagKey<Item>> blacklistedItemsTag) {
         super(conditionsIn);
         this.startRange = startRange;
         this.endRange = endRange;
@@ -70,7 +70,7 @@ public class LootPurgerModifier extends LootModifier {
         else
             multiplier = (this.endRange - distanceFromStart) / ((float) this.endRange - this.startRange) * (1f - this.multiplierAtStart);
         generatedLoot.removeIf(itemStack -> {
-            if (blacklistedItemsTag != null && itemStack.is(blacklistedItemsTag))
+            if (blacklistedItemsTag.isPresent() && itemStack.is(blacklistedItemsTag.get()))
                 return false;
             return context.getRandom().nextDouble() < multiplier;
         });
@@ -116,7 +116,7 @@ public class LootPurgerModifier extends LootModifier {
         }
 
         public Builder blacklistedItemTag(TagKey<Item> tag) {
-            this.lootPurgerModifier.blacklistedItemsTag = tag;
+            this.lootPurgerModifier.blacklistedItemsTag = Optional.of(tag);
             return this;
         }
 
