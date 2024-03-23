@@ -5,6 +5,7 @@
 ## Upcoming
 * OverTime healing now decays based off exhaustion instead of every tick
 * Supplementaries flax is now hard to break and grows slower
+* Terrain slowndown now affects entities
 
 ## 3.5.4
 * Spawners now drop 1 echo shard when finish empowered. Also reduced activation range
