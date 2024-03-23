@@ -2,6 +2,9 @@
 
 * Allow spawners to be empowered with echo shards
 
+## Upcoming
+* OverTime healing now decays based off exhaustion instead of every tick
+
 ## 3.5.4
 * Spawners now drop 1 echo shard when finish empowered. Also reduced activation range
 * Regenerating absorption now applies before damage reduction from armor and enchantments

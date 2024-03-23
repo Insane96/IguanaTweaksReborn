@@ -16,6 +16,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.event.CakeEatEvent;
+import insane96mcp.insanelib.event.PlayerExhaustionEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -173,6 +174,22 @@ public class NoHunger extends Feature {
         healOnEat(event.getEntity(), null, CAKE_FOOD_PROPERTIES);
     }
 
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onFoodExhaustion(PlayerExhaustionEvent event) {
+        if (!isEnabled(NoHunger.class)
+                || event.getEntity().level().isClientSide)
+            return;
+
+        ServerPlayer player = (ServerPlayer) event.getEntity();
+
+        float regenLeft = getFoodRegenLeft(player);
+        if (regenLeft <= 0)
+            return;
+        float regenStrength = getFoodRegenStrength(player);
+        regenLeft -= event.getAmount() * 0.1f;
+        setHealOverTime(player, regenLeft, regenStrength);
+    }
+
     /**
      * item is null when eating cakes
      */
@@ -267,20 +284,22 @@ public class NoHunger extends Feature {
     private static void consumeAndHealFromFoodRegen(Player player) {
         float regenLeft = getFoodRegenLeft(player);
         float regenStrength = getFoodRegenStrength(player);
-        if (player.getHealth() == player.getMaxHealth()) {
+        if (player.getHealth() >= player.getMaxHealth())
+            return;
+        /*if (player.getHealth() == player.getMaxHealth()) {
             regenLeft -= regenStrength * 0.02f * FOOD_REGEN_TICK_RATE;
         }
-        else {
-            float healAmount = regenStrength * FOOD_REGEN_TICK_RATE;
-            if (regenLeft < healAmount)
-                healAmount = regenLeft;
-            if (player.getMaxHealth() - player.getHealth() < healAmount)
-                healAmount = player.getMaxHealth() - player.getHealth();
-            player.heal(healAmount);
-            regenLeft -= healAmount;
-            if (regenLeft <= 0f)
-                regenLeft = 0f;
-        }
+        else {*/
+        float healAmount = regenStrength * FOOD_REGEN_TICK_RATE;
+        if (regenLeft < healAmount)
+            healAmount = regenLeft;
+        if (player.getMaxHealth() - player.getHealth() < healAmount)
+            healAmount = player.getMaxHealth() - player.getHealth();
+        player.heal(healAmount);
+        regenLeft -= healAmount;
+        if (regenLeft <= 0f)
+            regenLeft = 0f;
+        //}
         setHealOverTime(player, regenLeft, regenStrength);
     }
 
