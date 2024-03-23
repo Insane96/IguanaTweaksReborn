@@ -10,6 +10,7 @@
 * Some items now always drop regardless of the player kill
   * Music Discs
   * More items can be added to the `iguanatweaksreborn:reduced_no_player_kill_drop_blacklist` item tag
+* Quark's Forgotten is now affected by Smite
 * Fixed stackable soups having a strange behaviour when eaten and inventory was full
 
 ## 3.5.4

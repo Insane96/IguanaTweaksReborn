@@ -11,6 +11,10 @@
     "minecraft:zombie_villager",
     "minecraft:zombified_piglin",
     "minecraft:zoglin",
-    "minecraft:phantom"
+    "minecraft:phantom",
+    {
+      "id": "quark:forgotten",
+      "required": false
+    }
   ]
 }
