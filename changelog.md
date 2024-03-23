@@ -4,6 +4,7 @@
 
 ## Upcoming
 * OverTime healing now decays based off exhaustion instead of every tick
+* Supplementaries flax is now hard to break
 
 ## 3.5.4
 * Spawners now drop 1 echo shard when finish empowered. Also reduced activation range

@@ -3,6 +3,10 @@
     "minecraft:wheat",
     "minecraft:carrots",
     "minecraft:potatoes",
-    "minecraft:beetroots"
+    "minecraft:beetroots",
+    {
+      "id": "supplementaries:flax",
+      "required": false
+    }
   ]
 }
