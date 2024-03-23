@@ -63,7 +63,7 @@ public class DesirePaths extends Feature {
 		if (!this.isEnabled()
 				|| event.player.level().isClientSide
 				|| event.player.walkDist - event.player.walkDistO < 0.04f
-				|| event.phase == TickEvent.Phase.START
+				|| event.phase != TickEvent.Phase.START
 				|| !event.player.onGround())
 			return;
 

@@ -16,6 +16,7 @@
 * Reduced Arrows and Power strength
 * Quark's Forgotten is now affected by Smite
 * Fixed stackable soups having a strange behaviour when eaten and inventory was full
+* Fixed desire paths no longer working
 
 ## 3.5.4
 * Spawners now drop 1 echo shard when finish empowered. Also reduced activation range
