@@ -6,6 +6,7 @@
 * OverTime healing now decays based off exhaustion instead of every tick
 * Supplementaries 
   * Flax is now hard to break and grows slower. Also no longer drops more than 1 seed
+  * Soap is no longer affected by food stack sizes
 * Terrain slowndown now affects entities
 * Some items now always drop regardless of the player kill
   * Music Discs

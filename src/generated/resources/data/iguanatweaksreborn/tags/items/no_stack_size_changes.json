@@ -1,6 +1,10 @@
 {
   "values": [
     "minecraft:rotten_flesh",
-    "minecraft:spider_eye"
+    "minecraft:spider_eye",
+    {
+      "id": "supplementaries:soap",
+      "required": false
+    }
   ]
 }
