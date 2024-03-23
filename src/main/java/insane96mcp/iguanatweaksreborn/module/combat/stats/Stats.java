@@ -59,7 +59,7 @@ public class Stats extends Feature {
 	public static Boolean disableCritArrowsBonusDamage = true;
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Bow's Arrows Base Damage", description = "Set arrow's base damage if shot from bow.")
-	public static Double bowsArrowsBaseDamage = 1.5d;
+	public static Double bowsArrowsBaseDamage = 1d;
 	@Config(min = 0, max = 1)
 	@Label(name = "Hoes Knockback multiplier")
 	public static Double hoesKnockbackMultiplier = 0.25d;

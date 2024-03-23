@@ -77,7 +77,7 @@ public class EnchantmentsFeature extends JsonFeature {
 
 	@Config(min = 0d, max = 2d)
 	@Label(name = "Power Enchantment Damage", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
-	public static Double powerEnchantmentDamage = 0.35d;
+	public static Double powerEnchantmentDamage = 0.3d;
 
 	@Config
 	@Label(name = "Prevent farmland trampling with Feather Falling")
