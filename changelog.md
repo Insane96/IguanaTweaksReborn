@@ -7,6 +7,9 @@
 * Supplementaries 
   * Flax is now hard to break and grows slower. Also no longer drops more than 1 seed
 * Terrain slowndown now affects entities
+* Some items now always drop regardless of the player kill
+  * Music Discs
+  * More items can be added to the `iguanatweaksreborn:reduced_no_player_kill_drop_blacklist` item tag
 * Fixed stackable soups having a strange behaviour when eaten and inventory was full
 
 ## 3.5.4
