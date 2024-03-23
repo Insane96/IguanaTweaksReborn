@@ -176,16 +176,17 @@ public class StackSizes extends Feature {
      */
     @SubscribeEvent
     public void fixUnstackableItemsEat(LivingEntityUseItemEvent.Finish event) {
-        if (event.getEntity() instanceof Player player) {
-            ItemStack original = event.getItem();
-            ItemStack result = event.getResultStack();
-            if (original.getCount() > 1 && (result.getItem() == Items.BOWL || result.getItem() == Items.BUCKET || result.getItem() == Items.GLASS_BOTTLE)) {
-                ItemStack newResult = original.copy();
-                newResult.setCount(original.getCount() - 1);
-                event.setResultStack(newResult);
-                if (!player.addItem(result))
-                    player.drop(newResult, true);
-            }
-        }
+        if (!(event.getEntity() instanceof Player player))
+            return;
+
+        ItemStack original = event.getItem();
+        ItemStack result = event.getResultStack();
+        if (original.getCount() <= 1
+                || (result.getItem() != Items.BOWL && result.getItem() != Items.BUCKET && result.getItem() != Items.GLASS_BOTTLE))
+            return;
+
+        event.setResultStack(original.copyWithCount(original.getCount() - 1));
+        if (!player.addItem(result))
+            player.drop(result, true);
     }
 }
