@@ -4,7 +4,8 @@
 
 ## Upcoming
 * OverTime healing now decays based off exhaustion instead of every tick
-* Supplementaries flax is now hard to break and grows slower
+* Supplementaries 
+  * Flax is now hard to break and grows slower. Also no longer drops more than 1 seed
 * Terrain slowndown now affects entities
 * Fixed stackable soups having a strange behaviour when eaten and inventory was full
 

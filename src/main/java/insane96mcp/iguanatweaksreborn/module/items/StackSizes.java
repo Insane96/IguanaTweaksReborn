@@ -185,7 +185,7 @@ public class StackSizes extends Feature {
                 || (result.getItem() != Items.BOWL && result.getItem() != Items.BUCKET && result.getItem() != Items.GLASS_BOTTLE))
             return;
 
-        event.setResultStack(original.copyWithCount(original.getCount() - 1));
+        event.setResultStack(original.copyWithCount(original.getCount() - result.getCount()));
         if (!player.addItem(result))
             player.drop(result, true);
     }
