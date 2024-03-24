@@ -3,7 +3,7 @@
 * Tiredness should play random sounds
 * Allow spawners to be empowered with echo shards
 
-## Upcoming
+## 3.5.5
 * Added Vigour enchantment
   * A new chestplate enchantment that reduces stamina consumption
 * Repairing enchanted items in an anvil now costs more materials

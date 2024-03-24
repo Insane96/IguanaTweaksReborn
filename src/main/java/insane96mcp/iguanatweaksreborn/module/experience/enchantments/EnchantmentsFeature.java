@@ -100,7 +100,6 @@ public class EnchantmentsFeature extends JsonFeature {
 	public static Boolean replaceLuckEnchantments = true;
 
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
-			IdTagMatcher.newId("minecraft:mending"),
 			IdTagMatcher.newId("minecraft:sharpness"),
 			IdTagMatcher.newId("minecraft:smite"),
 			IdTagMatcher.newId("minecraft:bane_of_arthropods"),
