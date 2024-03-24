@@ -1,10 +1,12 @@
 # Changelog
 
+* Tiredness should play random sounds
 * Allow spawners to be empowered with echo shards
 
 ## Upcoming
 * Added Vigour enchantment
   * A new chestplate enchantment that reduces stamina consumption
+* Repairing enchanted items in an anvil now costs more materials
 * OverTime healing now decays based off exhaustion instead of every tick
 * Supplementaries 
   * Flax is now hard to break and grows slower. Also no longer drops more than 1 seed

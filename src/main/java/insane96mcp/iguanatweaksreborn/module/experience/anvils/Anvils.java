@@ -62,6 +62,9 @@ public class Anvils extends Feature {
     @Config
     @Label(name = "No xp repair cost", description = "Repairing items in an anvil doesn't cost xp")
     public static Boolean noXpRepairCost = true;
+    @Config
+    @Label(name = "Increase materials required with enchantments", description = "Repairing items in an anvil costs more materials if the item is enchanted. This is the percentage increase for each level of enchantment on the item")
+    public static Double moreMaterialIfEnchanted = 0.15d;
     @Config(min = 0)
     @Label(name = "Enchantments cost by rarity.Common", description = "Vanilla: 1")
     public static Integer enchantmentCostCommon = 1;
