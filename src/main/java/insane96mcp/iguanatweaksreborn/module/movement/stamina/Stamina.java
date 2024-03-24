@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.movement.stamina;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.event.ITEEventFactory;
 import insane96mcp.iguanatweaksreborn.mixin.client.GuiMixin;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
@@ -102,8 +103,11 @@ public class Stamina extends Feature {
                 if (instance.getEffect() instanceof IStaminaModifier staminaModifier)
                     percIncrease += staminaModifier.consumedStaminaModifier(instance.getAmplifier());
             }
-
             staminaToConsume += (staminaToConsume * percIncrease);
+
+            staminaToConsume = ITEEventFactory.onStaminaConsumed(player, staminaToConsume);
+            if (staminaToConsume == 0)
+                return;
             StaminaHandler.consumeStamina(player, staminaToConsume);
             shouldSync = true;
         }
@@ -123,6 +127,10 @@ public class Stamina extends Feature {
                 percIncrease += (maxStamina - staminaPerHalfHeart * 20) / (staminaPerHalfHeart * 20);
             }
             staminaToRecover += (staminaToRecover * percIncrease);
+
+            staminaToRecover = ITEEventFactory.onStaminaRegenerated(player, staminaToRecover);
+            if (staminaToRecover == 0)
+                return;
             stamina = StaminaHandler.regenStamina(player, staminaToRecover);
             if (isStaminaLocked && stamina >= maxStamina * unlockStaminaAtHealthRatio)
                 StaminaHandler.unlockSprinting(player);

@@ -15,6 +15,7 @@
   * Lower tiers have higher enchantability
 * Reduced Arrows and Power strength
 * Quark's Forgotten is now affected by Smite
+* Added a `StaminaEvent.Consumed` and `StaminaEvent.Regenerated`, two events to change the amount of stamina consumed and regenerated
 * Fixed stackable soups having a strange behaviour when eaten and inventory was full
 * Fixed desire paths no longer working
 
