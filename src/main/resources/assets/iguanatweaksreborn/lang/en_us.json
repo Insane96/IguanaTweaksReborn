@@ -94,6 +94,8 @@
 	"iguanatweaksreborn:movement_module": "Movement",
 
 	"iguanatweaksreborn.armor_slowdown": "-%s%% Speed",
+	"enchantment.iguanatweaksreborn.vigour": "Vigour",
+	"enchantment.iguanatweaksreborn.vigour.tooltip": "Reduced stamina consumption",
 
 
 	"iguanatweaksreborn:sleep_respawn_module": "Sleep & Respawn",

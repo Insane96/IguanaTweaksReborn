@@ -6,6 +6,7 @@ import insane96mcp.iguanatweaksreborn.mixin.client.GuiMixin;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.network.message.StaminaSync;
+import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.iguanatweaksreborn.utils.ClientUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -25,6 +26,8 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -36,6 +39,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Stamina", description = "Stamina to let the player run and do stuff.")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
@@ -44,6 +48,8 @@ public class Stamina extends Feature {
     public static final String STAMINA = IguanaTweaksReborn.RESOURCE_PREFIX + "stamina";
     public static final String STAMINA_LOCKED = IguanaTweaksReborn.RESOURCE_PREFIX + "stamina_locked";
     public static String OVERLAY = "stamina_overlay";
+
+    public static final RegistryObject<Enchantment> VIGOUR = ITRRegistries.ENCHANTMENTS.register("vigour", Vigour::new);
 
     @Config(min = 0)
     @Label(name = "Stamina per half heart", description = "How much stamina the player has per half heart. Each 1 stamina is 1 tick of running")
@@ -104,7 +110,9 @@ public class Stamina extends Feature {
                     percIncrease += staminaModifier.consumedStaminaModifier(instance.getAmplifier());
             }
             staminaToConsume += (staminaToConsume * percIncrease);
-
+            int vigourEnchLvl = EnchantmentHelper.getEnchantmentLevel(VIGOUR.get(), player);
+            if (vigourEnchLvl > 0)
+                staminaToConsume *= (1 - vigourEnchLvl * 0.2f);
             staminaToConsume = ITEEventFactory.onStaminaConsumed(player, staminaToConsume);
             if (staminaToConsume == 0)
                 return;
@@ -174,6 +182,9 @@ public class Stamina extends Feature {
                 percIncrease += staminaModifier.consumedStaminaModifier(instance.getAmplifier());
         }
         consumed += (consumed * percIncrease);
+        int vigourEnchLvl = EnchantmentHelper.getEnchantmentLevel(VIGOUR.get(), player);
+        if (vigourEnchLvl > 0)
+            consumed *= (1 - vigourEnchLvl * 0.2f);
         StaminaHandler.consumeStamina(player, consumed);
     }
 
