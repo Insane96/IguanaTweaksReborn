@@ -6,10 +6,10 @@
 * Enderman should attack slower
 * New flower no loot table
 * Smelting killed animals items
-* Decrease the experience from grindstone
 
 ## Upcoming
 * Reduced coal vein size
+* Fixed missing solanum neorossii loot table
 
 ## 3.5.5
 * Added Vigour enchantment
