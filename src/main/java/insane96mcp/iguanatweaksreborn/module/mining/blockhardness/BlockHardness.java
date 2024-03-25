@@ -32,7 +32,7 @@ public class BlockHardness extends JsonFeature {
 	public static final TagKey<Block> DEPTH_MULTIPLIER_BLACKLIST = ITRBlockTagsProvider.create("depth_multiplier_blacklist");
 
 	public static final ArrayList<DimensionHardnessMultiplier> DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT = new ArrayList<>(List.of(
-			new DimensionHardnessMultiplier("minecraft:the_nether", 3d)
+			new DimensionHardnessMultiplier("minecraft:the_nether", 2d)
 	));
 	public static final ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier = new ArrayList<>();
 
