@@ -64,7 +64,7 @@ public class Anvils extends Feature {
     public static Boolean noXpRepairCost = true;
     @Config
     @Label(name = "Different xp repair cost", description = "XP cost when repairing an item in an anvil is based of the levels of the enchantments. This is not affected by 'Repair cost multiplier'")
-    public static Boolean differentXpRepairCost = true;
+    public static Boolean differentXpRepairCost = false;
     @Config
     @Label(name = "Increase materials required with enchantments", description = "Repairing items in an anvil costs more materials if the item is enchanted. This is the percentage increase for each level of enchantment on the item")
     public static Double moreMaterialIfEnchanted = 0.15d;
