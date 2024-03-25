@@ -2,6 +2,14 @@
 
 * Tiredness should play random sounds
 * Allow spawners to be empowered with echo shards
+* Graves should have inscriptions that can be seen when you look at them
+* Enderman should attack slower
+* New flower no loot table
+* Smelting killed animals items
+* Decrease the experience from grindstone
+
+## Upcoming
+* Reduced coal vein size
 
 ## 3.5.5
 * Added Vigour enchantment
