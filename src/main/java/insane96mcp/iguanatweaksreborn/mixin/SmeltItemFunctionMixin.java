@@ -27,21 +27,24 @@ public class SmeltItemFunctionMixin {
 
     @Inject(method = "run", at = @At("HEAD"), cancellable = true)
     private void onRecipeRun(ItemStack pStack, LootContext pContext, CallbackInfoReturnable<ItemStack> cir) {
-        if (FoodDrinks.noFurnaceFoodAndSmokerRecipe) {
-            if (pStack.isEmpty()) {
-                cir.setReturnValue(pStack);
-            } else {
-                Optional<CampfireCookingRecipe> optional = pContext.getLevel().getRecipeManager().getRecipeFor(RecipeType.CAMPFIRE_COOKING, new SimpleContainer(pStack), pContext.getLevel());
-                if (optional.isPresent()) {
-                    ItemStack itemstack = optional.get().getResultItem(pContext.getLevel().registryAccess());
-                    if (!itemstack.isEmpty()) {
-                        cir.setReturnValue(itemstack.copyWithCount(pStack.getCount() * itemstack.getCount())); // Forge: Support smelting returning multiple
-                    }
-                }
+        if (!FoodDrinks.noFurnaceFoodAndSmokerRecipe)
+            return;
 
-                LOGGER.warn("Couldn't smelt {} because there is no smelting recipe", (Object)pStack);
-                cir.setReturnValue(pStack);
+        if (pStack.isEmpty()) {
+            cir.setReturnValue(pStack);
+        }
+        else {
+            Optional<CampfireCookingRecipe> optional = pContext.getLevel().getRecipeManager().getRecipeFor(RecipeType.CAMPFIRE_COOKING, new SimpleContainer(pStack), pContext.getLevel());
+            if (optional.isPresent()) {
+                ItemStack itemstack = optional.get().getResultItem(pContext.getLevel().registryAccess());
+                if (!itemstack.isEmpty()) {
+                    cir.setReturnValue(itemstack.copyWithCount(pStack.getCount() * itemstack.getCount())); // Forge: Support smelting returning multiple
+                    return;
+                }
             }
+
+            LOGGER.warn("Couldn't smelt {} because there is no smelting recipe", (Object)pStack);
+            cir.setReturnValue(pStack);
         }
 
     }

@@ -3,13 +3,12 @@
 * Tiredness should play random sounds
 * Allow spawners to be empowered with echo shards
 * Graves should have inscriptions that can be seen when you look at them
-* Enderman should attack slower
-* Smelting killed animals items
 
 ## Upcoming
 * Reduced coal vein size
 * Reduced block hardness in the nether
 * Fixed missing solanum neorossii loot table
+* Fixed animals not dropping cooked food
 
 ## 3.5.5
 * Added Vigour enchantment
