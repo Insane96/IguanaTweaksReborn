@@ -3,8 +3,14 @@
 * Tiredness should play random sounds
 * Allow spawners to be empowered with echo shards
 * Graves should have inscriptions that can be seen when you look at them
+* Recall potion advancement
+* New item to make the recall potion made with 2x wither rose, 1x chorus fruit, 1x echo shard
+* Recall potions should not have an extended version
+* Think about no grave in the void
 
 ## Upcoming
+* Anvil repair now costs levels
+  * 1 Level per enchantment level
 * Reduced coal vein size
 * Reduced block hardness in the nether
 * Fixed missing solanum neorossii loot table

@@ -104,10 +104,13 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 					AnvilRepair.RepairData repairData = oRepairData.get();
 					int maxPartialRepairDmg = Mth.ceil(resultStack.getMaxDamage() * (1f - repairData.maxRepair()));
 					float amountRequired = repairData.amountRequired();
+					int xpCost = 0;
 					if (Anvils.moreMaterialIfEnchanted > 0f && left.isEnchanted()) {
 						float increase = 0f;
 						for (Integer lvl : EnchantmentHelper.getEnchantments(left).values()) {
 							increase += Anvils.moreMaterialIfEnchanted.floatValue() * lvl;
+							if (Anvils.differentXpRepairCost)
+								xpCost += lvl;
 						}
 						amountRequired *= 1 + increase;
 					}
@@ -122,26 +125,45 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 						int dmgAfterRepair = resultStack.getDamageValue() - repairSteps;
 						resultStack.setDamageValue(Math.max(maxPartialRepairDmg, dmgAfterRepair));
 						if (!Anvils.noXpRepairCost)
+							//Vanilla behaviour
 							++mergeCost;
 						repairSteps = Math.min(resultStack.getDamageValue(), Mth.ceil(resultStack.getMaxDamage() / amountRequired));
 					}
+					float repairedDurabilityRatio = ((resultStack.getMaxDamage() - resultStack.getDamageValue()) - (left.getMaxDamage() - left.getDamageValue())) / (float) resultStack.getMaxDamage();
+					xpCost = Mth.ceil(xpCost * repairedDurabilityRatio);
+					mergeCost += xpCost;
 				}
 				//Otherwise, vanilla behaviour
 				else {
-					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
+					float amountRequired = 4;
+					int xpCost = 0;
+					if (Anvils.moreMaterialIfEnchanted > 0f && left.isEnchanted()) {
+						float increase = 0f;
+						for (Integer lvl : EnchantmentHelper.getEnchantments(left).values()) {
+							increase += Anvils.moreMaterialIfEnchanted.floatValue() * lvl;
+							if (Anvils.differentXpRepairCost)
+								xpCost += lvl;
+						}
+						amountRequired *= 1 + increase;
+					}
+					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / (int) amountRequired);
 					if (repairSteps <= 0) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
 						this.cost.set(0);
 						return;
 					}
 
-					for(repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount(); ++repairItemCountCost) {
+					for (repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount(); ++repairItemCountCost) {
 						int dmgAfterRepair = resultStack.getDamageValue() - repairSteps;
 						resultStack.setDamageValue(dmgAfterRepair);
 						if (!Anvils.noXpRepairCost)
+							//Vanilla behaviour
 							++mergeCost;
-						repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / 4);
+						repairSteps = (int) Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / amountRequired);
 					}
+					float repairedDurabilityRatio = ((resultStack.getMaxDamage() - resultStack.getDamageValue()) - (left.getMaxDamage() - left.getDamageValue())) / (float) resultStack.getMaxDamage();
+					xpCost = Mth.ceil(xpCost * repairedDurabilityRatio);
+					mergeCost += xpCost;
 				}
 
 				if (oRepairData.isPresent()) {

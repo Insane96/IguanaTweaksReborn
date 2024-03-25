@@ -60,8 +60,11 @@ public class Anvils extends Feature {
     @Label(name = "Merging Repair bonus", description = "Vanilla is 12%")
     public static Integer mergingRepairBonus = 15;
     @Config
-    @Label(name = "No xp repair cost", description = "Repairing items in an anvil doesn't cost xp")
+    @Label(name = "No vanilla xp repair cost", description = "Repairing items in an anvil doesn't cost xp")
     public static Boolean noXpRepairCost = true;
+    @Config
+    @Label(name = "Different xp repair cost", description = "XP cost when repairing an item in an anvil is based of the levels of the enchantments. This is not affected by 'Repair cost multiplier'")
+    public static Boolean differentXpRepairCost = true;
     @Config
     @Label(name = "Increase materials required with enchantments", description = "Repairing items in an anvil costs more materials if the item is enchanted. This is the percentage increase for each level of enchantment on the item")
     public static Double moreMaterialIfEnchanted = 0.15d;
@@ -79,7 +82,7 @@ public class Anvils extends Feature {
     public static Integer enchantmentCostVeryRare = 6;
     @Config(min = 0)
     @Label(name = "Repair cost multiplier", description = "Multiplier for the levels required to repair or merge an item.")
-    public static Double repairCostMultiplier = 0.70d;
+    public static Double repairCostMultiplier = 1d;
     @Config(min = 0)
     @Label(name = "Break chance", description = "Chance for an anvil to become chipped/damaged/break. Vanilla is 12%")
     public static Double breakChance = 0.075d;
