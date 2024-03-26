@@ -8,6 +8,7 @@
         "AbstractArrowMixin",
         "AnvilMenuMixin",
         "ApplyBonusCountMixin",
+        "ApplyBonusCountOreDropsMixin",
         "ArrowInfiniteEnchantmentMixin",
         "ArrowItemMixin",
         "BaseSpawnerMixin",

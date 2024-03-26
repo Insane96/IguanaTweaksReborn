@@ -7,10 +7,14 @@
 * New item to make the recall potion made with 2x wither rose, 1x chorus fruit, 1x echo shard
 * Recall potions should not have an extended version
 * Think about no grave in the void
+* Non-unbreakable items show 0 durability
+* Purple from nerossi
+* Revert pillaring distance
+* Nerf fortune
 
 ## Upcoming
-* Anvil repair now costs levels
-  * 1 Level per enchantment level
+* Fortune has been nerfed
+  * From 25%/75%/120% drop increase to 30%/60%/90%
 * Reduced coal vein size
 * Reduced block hardness in the nether
 * Fixed missing solanum neorossii loot table

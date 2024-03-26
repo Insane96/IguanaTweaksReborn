@@ -75,6 +75,10 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Label(name = "Better Efficiency Formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to tool_efficiency * (1 + (0.5*lvl))")
 	public static Boolean changeEfficiencyFormula = true;
 
+	@Config
+	@Label(name = "Nerf fortune", description = "The ore_drops formula is changed to 30%/60%/90%/... drop increase from 25%/75%/125%/...")
+	public static Boolean nerfFortune = true;
+
 	@Config(min = 0d, max = 2d)
 	@Label(name = "Power Enchantment Damage", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
 	public static Double powerEnchantmentDamage = 0.3d;
