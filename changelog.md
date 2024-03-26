@@ -5,6 +5,10 @@
 * Graves should have inscriptions that can be seen when you look at them
 * Recall potion advancement
 * New item to make the recall potion made with 2x wither rose, 1x chorus fruit, 1x echo shard
+* Infested blocks should generate in every biome, more 
+* Use Forge to repair items
+* An enchantment to steal air from entities
+* Conduit are OP in water monuments
 
 ## Upcoming
 * Fortune has been nerfed
@@ -16,6 +20,7 @@
   * But jump boost no longer increases the allowed distance
 * Dying in the void no longer generates a grave
   * Damage type tag `iguanatweaksreborn:doesnt_spawn_grave`
+* Crossbows can now be crafted again
 * Fixed missing solanum neorossii loot table
 * Fixed animals not dropping cooked food
 
