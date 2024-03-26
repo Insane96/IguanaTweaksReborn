@@ -8,12 +8,11 @@
 * Recall potions should not have an extended version
 * Think about no grave in the void
 * Non-unbreakable items show 0 durability
-* Purple from nerossi
-* Revert pillaring distance
 
 ## Upcoming
 * Fortune has been nerfed
   * From 25%/75%/120% drop increase to 30%/60%/90%
+* Nerossii can now be crafted into purple dye
 * Reduced coal vein size
 * Reduced block hardness in the nether
 * Reverted "No pillaring no longer has an allowed distance"
