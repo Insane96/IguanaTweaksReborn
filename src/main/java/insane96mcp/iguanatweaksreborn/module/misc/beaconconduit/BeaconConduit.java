@@ -29,6 +29,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
@@ -173,19 +174,18 @@ public class BeaconConduit extends JsonFeature {
                 || !betterConduitProtection)
             return false;
 
-        List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, getDamageAABB(blockPos, blocks),
-                (living) -> living instanceof Enemy && living.isInWaterOrRain());
+        LivingEntity nearestEntity = level.getNearestEntity(LivingEntity.class, TargetingConditions.forNonCombat().selector(livingEntity -> livingEntity instanceof Enemy && livingEntity.isInWaterOrRain()), null, blockPos.getX(), blockPos.getY(), blockPos.getZ(), getDamageAABB(blockPos, blocks));
+        if (nearestEntity == null)
+            return true;
 
-        for (LivingEntity entity : list) {
-            level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.CONDUIT_ATTACK_TARGET, SoundSource.BLOCKS, 1.0F, 1.0F);
-            double distance = entity.position().distanceTo(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()));
-            float damage;
-            if (distance < conduitProtectionMaxDamageDistance)
-                damage = MAX_DAMAGE;
-            else
-                damage = (float) (1 - (distance - conduitProtectionMaxDamageDistance) / (maxRangeRadius() - conduitProtectionMaxDamageDistance)) * (MAX_DAMAGE - MIN_DAMAGE) + MIN_DAMAGE;
-            entity.hurt(entity.damageSources().magic(), damage);
-        }
+        level.playSound(null, nearestEntity.getX(), nearestEntity.getY(), nearestEntity.getZ(), SoundEvents.CONDUIT_ATTACK_TARGET, SoundSource.BLOCKS, 1.0F, 1.0F);
+        double distance = nearestEntity.position().distanceTo(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ()));
+        float damage;
+        if (distance < conduitProtectionMaxDamageDistance)
+            damage = MAX_DAMAGE;
+        else
+            damage = (float) (1 - (distance - conduitProtectionMaxDamageDistance) / (maxRangeRadius() - conduitProtectionMaxDamageDistance)) * (MAX_DAMAGE - MIN_DAMAGE) + MIN_DAMAGE;
+        nearestEntity.hurt(nearestEntity.damageSources().magic(), damage);
         return true;
     }
 

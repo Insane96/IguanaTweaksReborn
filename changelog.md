@@ -8,8 +8,6 @@
 * Infested blocks should generate in every biome 
 * Use Forge to repair items
 * An enchantment to steal air from entities
-* Conduit are OP in water monuments
-* Maybe purge map chest from shipwrecks
 
 ## Upcoming
 * Fortune has been nerfed
@@ -17,6 +15,7 @@
 * Nerossii can now be crafted into purple dye
 * Reduced coal vein size
 * Reduced block hardness in the nether
+* Conduits no longer deal damage to all entities in the area, but only the nearest
 * Reverted "No pillaring no longer has an allowed distance"
   * But jump boost no longer increases the allowed distance
 * Dying in the void no longer generates a grave
