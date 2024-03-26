@@ -100,7 +100,7 @@ public class TerrainSlowdown extends JsonFeature {
 						blockSlowdown = idTagValue.value;
 						if (state.is(BlockTags.ICE) && frostWalkerOnIce) {
 							int lvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.FROST_WALKER, entity);
-							blockSlowdown -= blockSlowdown * (lvl * 0.25f);
+							blockSlowdown -= blockSlowdown * (lvl * 0.5f);
 						}
 						blocks++;
 						break;

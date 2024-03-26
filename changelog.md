@@ -9,6 +9,8 @@
 * Use Forge to repair items
 * An enchantment to steal air from entities
 * Conduit are OP in water monuments
+* Maybe purge map chest from shipwrecks
+* Speed up air gain when out of water for more time
 
 ## Upcoming
 * Fortune has been nerfed
@@ -23,6 +25,7 @@
 * Slightly rebalanced hardcore loot
 * Crossbows can now be crafted again
 * Glowstone can now be mined faster with pickaxes
+* Frost walker now decreases slowdown more on ice
 * Fixed missing solanum neorossii loot table
 * Fixed animals not dropping cooked food
 
