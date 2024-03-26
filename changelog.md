@@ -21,6 +21,7 @@
 * Dying in the void no longer generates a grave
   * Damage type tag `iguanatweaksreborn:doesnt_spawn_grave`
 * Crossbows can now be crafted again
+* Glowstone can now be mined faster with pickaxes
 * Fixed missing solanum neorossii loot table
 * Fixed animals not dropping cooked food
 

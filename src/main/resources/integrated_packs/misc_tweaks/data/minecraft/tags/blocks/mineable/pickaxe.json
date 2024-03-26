@@ -3,6 +3,7 @@
     "values": [
         "minecraft:lever",
         "#forge:glass",
-        "#forge:glass_panes"
+        "#forge:glass_panes",
+        "minecraft:glowstone"
     ]
 }
