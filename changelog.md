@@ -8,6 +8,10 @@
 * Infested blocks should generate in every biome 
 * Use Forge to repair items
 * An enchantment to steal air from entities
+* (Quaron) Axes break crops slower
+
+## Upcoming
+* Vigour enchantment is now stronger
 
 ## 3.5.6
 * Fortune has been nerfed
