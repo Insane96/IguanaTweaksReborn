@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.data.generator;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.combat.PiercingPickaxes;
+import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.Death;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -10,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,6 +29,8 @@ public class ITRDamageTypeTagsProvider extends DamageTypeTagsProvider {
         tag(DamageTypeTags.BYPASSES_COOLDOWN).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE);
         tag(DamageTypeTags.BYPASSES_SHIELD).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE);
         tag(DamageTypeTags.NO_IMPACT).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE);
+
+        tag(Death.DOESNT_SPAWN_GRAVE).add(DamageTypes.FELL_OUT_OF_WORLD);
 
         tag(PiercingPickaxes.PIERCING_DAMAGE_TYPE).add(PiercingPickaxes.PIERCING_MOB_ATTACK, PiercingPickaxes.PIERCING_PLAYER_ATTACK);
         tag(PiercingPickaxes.DOESNT_TRIGGER_PIERCING).addTag(PiercingPickaxes.PIERCING_DAMAGE_TYPE);

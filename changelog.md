@@ -5,7 +5,6 @@
 * Graves should have inscriptions that can be seen when you look at them
 * Recall potion advancement
 * New item to make the recall potion made with 2x wither rose, 1x chorus fruit, 1x echo shard
-* Think about no grave in the void
 
 ## Upcoming
 * Fortune has been nerfed
@@ -15,6 +14,8 @@
 * Reduced block hardness in the nether
 * Reverted "No pillaring no longer has an allowed distance"
   * But jump boost no longer increases the allowed distance
+* Dying in the void no longer generates a grave
+  * Damage type tag `iguanatweaksreborn:doesnt_spawn_grave`
 * Fixed missing solanum neorossii loot table
 * Fixed animals not dropping cooked food
 
