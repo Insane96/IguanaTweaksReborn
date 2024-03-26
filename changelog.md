@@ -5,12 +5,11 @@
 * Graves should have inscriptions that can be seen when you look at them
 * Recall potion advancement
 * New item to make the recall potion made with 2x wither rose, 1x chorus fruit, 1x echo shard
-* Infested blocks should generate in every biome, more 
+* Infested blocks should generate in every biome 
 * Use Forge to repair items
 * An enchantment to steal air from entities
 * Conduit are OP in water monuments
 * Maybe purge map chest from shipwrecks
-* Speed up air gain when out of water for more time
 
 ## Upcoming
 * Fortune has been nerfed
@@ -23,6 +22,7 @@
 * Dying in the void no longer generates a grave
   * Damage type tag `iguanatweaksreborn:doesnt_spawn_grave`
 * Slightly rebalanced hardcore loot
+* Air refills faster after 4 seconds that you can breathe
 * Crossbows can now be crafted again
 * Glowstone can now be mined faster with pickaxes
 * Frost walker now decreases slowdown more on ice

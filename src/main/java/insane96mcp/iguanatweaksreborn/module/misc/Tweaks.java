@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.misc;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.mining.MiningMisc;
@@ -8,6 +9,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.base.config.MinMax;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -70,8 +72,8 @@ public class Tweaks extends Feature {
     @Label(name = "Player air ticks consumed", description = "The amount of ticks the player consumes when underwater. In vanilla it's 1 without Respiration enchantment.")
     public static Integer playerConsumeAirAmount = 1;
     @Config
-    @Label(name = "Player air ticks refilled", description = "The amount of air ticks the player regains each tick when out of water. Vanilla is 4")
-    public static Integer playerRefillAirAmount = 1;
+    @Label(name = "Player air ticks refilled", description = "The amount of air ticks the player regains each tick when out of water. Vanilla is 4. Min is the amount as soon as you exit water, 4 is the maximum a few seconds out of water.")
+    public static MinMax playerRefillAirAmount = new MinMax(1, 3);
     @Config
     @Label(name = "Totem resistance", description = "If enabled, the Totem of Undying will give Resistance IV for 5 seconds")
     public static Boolean totemResistance = true;
@@ -198,10 +200,22 @@ public class Tweaks extends Feature {
                 || !(event.getEntity() instanceof Player player))
             return;
 
+        boolean wasBreathing = player.getPersistentData().getBoolean(IguanaTweaksReborn.RESOURCE_PREFIX + "was_breathing");
+        long ticksSinceOutOfWater = player.level().getGameTime() - player.getPersistentData().getLong(IguanaTweaksReborn.RESOURCE_PREFIX + "tick_since_out_of_water");
+        if (!wasBreathing && event.canBreathe()) {
+            ticksSinceOutOfWater = 0;
+            player.getPersistentData().putLong(IguanaTweaksReborn.RESOURCE_PREFIX + "tick_since_out_of_water", player.level().getGameTime());
+        }
+
         int airConsumed = playerConsumeAirAmount;
         int respiration = EnchantmentHelper.getRespiration(player);
         airConsumed = respiration > 0 && player.getRandom().nextInt(respiration + 1) > 0 ? 0 : airConsumed;
         event.setConsumeAirAmount(airConsumed);
-        event.setRefillAirAmount(playerRefillAirAmount);
+
+        int refillAmount = (int) playerRefillAirAmount.min;
+        if (ticksSinceOutOfWater > 75)
+            refillAmount = (int) playerRefillAirAmount.max;
+        event.setRefillAirAmount(refillAmount);
+        player.getPersistentData().putBoolean(IguanaTweaksReborn.RESOURCE_PREFIX + "was_breathing", event.canBreathe());
     }
 }
