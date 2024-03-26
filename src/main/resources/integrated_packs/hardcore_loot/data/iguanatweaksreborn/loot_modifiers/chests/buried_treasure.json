@@ -7,6 +7,6 @@
       "loot_table_id": "minecraft:chests/buried_treasure"
     }
   ],
-  "end_range": 3000,
-  "multiplier_at_start": 0.1
+  "end_range": 2000,
+  "multiplier_at_start": 0.2
 }

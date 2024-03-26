@@ -8,5 +8,5 @@
     }
   ],
   "end_range": 2000,
-  "multiplier_at_start": 0.7
+  "multiplier_at_start": 0.1
 }
