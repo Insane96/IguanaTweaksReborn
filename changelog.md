@@ -10,13 +10,14 @@
 * Non-unbreakable items show 0 durability
 * Purple from nerossi
 * Revert pillaring distance
-* Nerf fortune
 
 ## Upcoming
 * Fortune has been nerfed
   * From 25%/75%/120% drop increase to 30%/60%/90%
 * Reduced coal vein size
 * Reduced block hardness in the nether
+* Reverted "No pillaring no longer has an allowed distance"
+  * But jump boost no longer increases the allowed distance
 * Fixed missing solanum neorossii loot table
 * Fixed animals not dropping cooked food
 

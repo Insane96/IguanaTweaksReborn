@@ -47,7 +47,7 @@ public class NoPillaring extends Feature {
 		BlockPos placedPos = event.getPos().relative(event.getFace());
 		Vec3 placedBlock = new Vec3(placedPos.getX() + 0.5d, placedPos.getY() + 0.5d, placedPos.getZ() + 0.5d);
 		double distance = placedBlock.distanceTo(playerEntity.position());
-		//double allowedDistance = 1.36d;
+		double allowedDistance = 1.35d;
 		//if (playerEntity.hasEffect(MobEffects.JUMP))
 			//noinspection ConstantConditions
 			//allowedDistance *= 1 + ((playerEntity.getEffect(MobEffects.JUMP).getAmplifier() + 1) * 0.5);
@@ -59,7 +59,7 @@ public class NoPillaring extends Feature {
 				state = block.defaultBlockState();
 			isSolidBlock = state.blocksMotion();/*state.canOcclude();/*state.entityCanStandOn(event.getLevel(), event.getPos(), event.getEntity());*/
 		}
-		if (isSolidBlock && playerEntity.getViewXRot(1.0f) > 40f && !playerEntity.onGround() && event.getItemStack().getItem() instanceof BlockItem && /*distance <= allowedDistance &&*/ playerEntity.getY() > placedPos.getY()) {
+		if (isSolidBlock && playerEntity.getViewXRot(1.0f) > 40f && !playerEntity.onGround() && event.getItemStack().getItem() instanceof BlockItem && distance <= allowedDistance && playerEntity.getY() > placedPos.getY()) {
 			event.setCanceled(true);
 			event.setResult(Event.Result.DENY);
 		}
