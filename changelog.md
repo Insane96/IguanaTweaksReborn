@@ -5,9 +5,7 @@
 * Graves should have inscriptions that can be seen when you look at them
 * Recall potion advancement
 * New item to make the recall potion made with 2x wither rose, 1x chorus fruit, 1x echo shard
-* Recall potions should not have an extended version
 * Think about no grave in the void
-* Non-unbreakable items show 0 durability
 
 ## Upcoming
 * Fortune has been nerfed
