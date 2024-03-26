@@ -9,7 +9,7 @@
 * Use Forge to repair items
 * An enchantment to steal air from entities
 
-## Upcoming
+## 3.5.6
 * Fortune has been nerfed
   * From 25%/75%/120% drop increase to 30%/60%/90%
 * Nerossii can now be crafted into purple dye
