@@ -1,0 +1,7 @@
+{
+	"block": "minecraft:sugar_cane",
+	"states": [
+		"age=0"
+	],
+	"hardness": 10
+}
