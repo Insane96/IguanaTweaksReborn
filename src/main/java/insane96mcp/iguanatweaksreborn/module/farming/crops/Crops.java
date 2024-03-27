@@ -221,7 +221,7 @@ public class Crops extends JsonFeature {
 		ItemStack heldStack = event.getEntity().getMainHandItem();
 		if (!(heldStack.getItem() instanceof TieredItem heldItem))
 			return;
-		if (!heldItem.canPerformAction(heldStack, ToolActions.HOE_DIG) && !heldItem.canPerformAction(heldStack, ToolActions.AXE_DIG))
+		if (!heldItem.canPerformAction(heldStack, ToolActions.HOE_DIG) /*&& !heldItem.canPerformAction(heldStack, ToolActions.AXE_DIG)*/)
 			return;
 		Block block = event.getState().getBlock();
 		if (!(block instanceof CropBlock) && !event.getState().is(HARDER_CROPS_TAG))
@@ -236,8 +236,8 @@ public class Crops extends JsonFeature {
 		}
 		if (heldItem.canPerformAction(heldStack, ToolActions.HOE_DIG))
 			event.setNewSpeed(event.getNewSpeed() * efficiency);
-		else
-			event.setNewSpeed(event.getNewSpeed() / efficiency);
+		//else
+			//event.setNewSpeed(event.getNewSpeed() / efficiency);
 	}
 
 	public static int getWaterHydrationRadius() {

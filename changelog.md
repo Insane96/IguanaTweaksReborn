@@ -9,9 +9,12 @@
 * Use Forge to repair items
 * An enchantment to steal air from entities
 * (Quaron) Axes break crops slower
+* Rewrite Harder Crops as a Json feature and make use of block states
+  * Due to some blocks having multiple states (e.g. Supplementaries' Flax has bottom and top fully grown)
 
 ## Upcoming
 * Vigour enchantment is now stronger
+* Fixed crops being harder to break with axes
 
 ## 3.5.6
 * Fortune has been nerfed
