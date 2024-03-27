@@ -32,6 +32,7 @@
         "HoneyBottleItemMixin",
         "ItemMixin",
         "LeavesBlockMixin",
+        "LevelStorageSourceMixin",
         "LivingEntityMixin",
         "MerchantOfferMixin",
         "MilkBucketItemMixin",

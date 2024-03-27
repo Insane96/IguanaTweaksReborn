@@ -7,6 +7,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraftforge.fml.ModList;
@@ -74,6 +75,10 @@ public class DataPacks extends Feature {
     @Label(name = "Mob loot changes", description = "Changes mobs loot and makes mobs drop reduced loot if not killed by a player")
     public static Boolean mobLootChanges = true;
 
+    @Config
+    @Label(name = "Force Reload world Data Packs", description = "When you add a new mod the game automatically sets the data pack of the mod at the bottom of all the data packs, making the data packs loaded from this mod not work. If this is set to true the enabled and disabled Data Packs of the world are reset and reloaded. WARNING: you'll lose disabled data packs!")
+    public static Boolean forceReloadWorldDataPacks = false;
+
     public DataPacks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
         IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "hardcore_torches", Component.literal("IguanaTweaks Reborn Hardcore Torches"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && hardcoreTorches));
@@ -87,5 +92,15 @@ public class DataPacks extends Feature {
         IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "better_loot", Component.literal("IguanaTweaks Reborn Better Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && betterStructureLoot && !ModList.get().isLoaded("iguanatweaksexpanded")));
         IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "hardcore_loot", Component.literal("IguanaTweaks Reborn Less Loot Closer to Spawn"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lessLootCloserToSpawn));
         IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "mob_loot_changes", Component.literal("IguanaTweaks Reborn Mob Loot Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && mobLootChanges));
+    }
+
+    public static CompoundTag forceReloadWorldDataPacks(CompoundTag levelTag) {
+        if (!forceReloadWorldDataPacks)
+            return levelTag;
+
+        Feature.get(DataPacks.class).getConfigOption("Force Reload world Data Packs").set(false);
+        CompoundTag dataTag = levelTag.getCompound("Data");
+        dataTag.remove("DataPacks");
+        return levelTag;
     }
 }

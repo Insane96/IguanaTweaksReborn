@@ -163,6 +163,7 @@ public class IguanaTweaksReborn
         }
     }
 
+    //Reload the data packs to disable the ones that have been disabled
     @SubscribeEvent
     public void onServerStartedEvent(ServerStartedEvent event)
     {
