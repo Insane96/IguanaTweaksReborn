@@ -1,4 +1,5 @@
 {
 	"block": "minecraft:dirt",
+	"state_instrument": "xylophone",
 	"explosion_resistance": 10
 }

@@ -41,7 +41,7 @@ public class BlockDataReloadListener extends SimpleJsonResourceReloadListener {
 					continue;
 
 				BlockData blockData = GSON.fromJson(entry.getValue(), BlockData.class);
-				blockData.apply(false);
+				blockData.apply();
 				STATS.add(blockData);
 			}
 			catch (JsonSyntaxException e) {

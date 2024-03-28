@@ -1,7 +1,4 @@
 {
-	"block": "minecraft:beehive",
-	"states": [
-		"facing=north"
-	],
-	"hardness": 10
+	"block": "minecraft:stone",
+	"state_requires_correct_tool_for_drops": false
 }
