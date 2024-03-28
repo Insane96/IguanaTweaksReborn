@@ -31,22 +31,28 @@ public class BlockData {
 	private final NoteBlockInstrument stateNoteBlockInstrument;
 
 	@Nullable
-	public Float explosionResistance;
+	public final Float explosionResistance;
+	@Nullable
+	public final Float friction;
+	@Nullable
+	public final Float speedFactor;
+	@Nullable
+	public final Float jumpFactor;
 	/*
 	 * Block
 	 * soundType?
-	 * friction
-	 * speedFactor
-	 * jumpFactor
 	 * */
 
-	public BlockData(Block block, List<BlockState> blockStates, @Nullable Float stateHardness, @Nullable Boolean stateRequiresCorrectToolForDrops, @Nullable NoteBlockInstrument stateNoteBlockInstrument, @Nullable Float explosionResistance) {
+	public BlockData(Block block, List<BlockState> blockStates, @Nullable Float stateHardness, @Nullable Boolean stateRequiresCorrectToolForDrops, @Nullable NoteBlockInstrument stateNoteBlockInstrument, @Nullable Float explosionResistance, @Nullable Float friction, @Nullable Float speedFactor, @Nullable Float jumpFactor) {
 		this.block = block;
 		this.blockStates = blockStates;
 		this.stateHardness = stateHardness;
 		this.stateRequiresCorrectToolForDrops = stateRequiresCorrectToolForDrops;
 		this.stateNoteBlockInstrument = stateNoteBlockInstrument;
 		this.explosionResistance = explosionResistance;
+		this.friction = friction;
+		this.speedFactor = speedFactor;
+		this.jumpFactor = jumpFactor;
 	}
 
 	public void apply() {
@@ -62,6 +68,12 @@ public class BlockData {
 		});
 		if (this.explosionResistance != null)
 			this.block.explosionResistance = this.explosionResistance;
+		if (this.friction != null)
+			this.block.friction = this.friction;
+		if (this.speedFactor != null)
+			this.block.speedFactor = this.speedFactor;
+		if (this.jumpFactor != null)
+			this.block.jumpFactor = this.jumpFactor;
 	}
 
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<BlockData>>(){}.getType();
@@ -98,7 +110,10 @@ public class BlockData {
 						.orElseThrow();
 			}
 			Float explosionResistance = ITRGsonHelper.getAsNullableFloat(jObject, "explosion_resistance");
-			return new BlockData(block, blockStates, hardness, requiresCorrectToolForDrops, instrument, explosionResistance);
+			Float friction = ITRGsonHelper.getAsNullableFloat(jObject, "friction");
+			Float speedFactor = ITRGsonHelper.getAsNullableFloat(jObject, "speed_factor");
+			Float jumpFactor = ITRGsonHelper.getAsNullableFloat(jObject, "jump_factor");
+			return new BlockData(block, blockStates, hardness, requiresCorrectToolForDrops, instrument, explosionResistance, friction, speedFactor, jumpFactor);
 		}
 
 		@Override
@@ -123,6 +138,8 @@ public class BlockData {
 		static <T extends Comparable<T>> PropertyAndValue<?> of(StateDefinition definition, String string) {
 			String[] split = string.split("=", 2);
 			Property<T> prop = (Property<T>) definition.getProperty(split[0]);
+			if (prop == null)
+				throw new NullPointerException("Property %s doesn't belong to %s".formatted(split[0], definition));
 			T value = prop.getValue(split[1]).orElseThrow();
 			return new PropertyAndValue<>(prop, value);
 		}

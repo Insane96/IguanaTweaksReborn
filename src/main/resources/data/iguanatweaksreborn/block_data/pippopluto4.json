@@ -1,4 +1,5 @@
 {
 	"block": "minecraft:stone",
-	"state_requires_correct_tool_for_drops": false
+	"state_requires_correct_tool_for_drops": false,
+	"friction": 0.999
 }
