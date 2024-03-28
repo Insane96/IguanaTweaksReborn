@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -18,9 +19,7 @@ import java.util.List;
 @JsonAdapter(BlockData.Serializer.class)
 public class BlockData {
 	public Block block;
-	public List<BlockState> blockStates;
-	@Nullable
-	public Float hardness;
+	public List<StateProperties> stateProperties;
 	@Nullable
 	public Float explosionResistance;
 	/*
@@ -69,15 +68,16 @@ public class BlockData {
 			if (jObject.has("states")) {
 				JsonArray array = jObject.getAsJsonArray("states");
 				for (JsonElement element : array) {
-					PropertyAndValue<?> propertyAndValue = PropertyAndValue.of(block.getStateDefinition(), element.getAsString());
+					PropertiesAndValues propertyAndValues = PropertiesAndValues.of(block.getStateDefinition(), element.getAsString());
 					block.getStateDefinition().getPossibleStates().forEach(blockState -> {
-						if (propertyAndValue.match(blockState))
+						if (propertyAndValues.match(blockState))
 							blockStates.add(blockState);
 					});
 				}
 			}
 			Float hardness = ITRGsonHelper.getAsNullableFloat(jObject, "hardness");
-			return new BlockData(block, blockStates, hardness);
+			Float explosionResistance = ITRGsonHelper.getAsNullableFloat(jObject, "explosion_resistance");
+			return new BlockData(block, blockStates, hardness, explosionResistance);
 		}
 
 		@Override
@@ -91,6 +91,8 @@ public class BlockData {
 			}*/
 			if (src.hardness != null)
 				jObject.addProperty("hardness", src.hardness);
+			if (src.explosionResistance != null)
+				jObject.addProperty("explosion_resistance", src.explosionResistance);
 			return jObject;
 		}
 	}
@@ -107,9 +109,74 @@ public class BlockData {
 		boolean match(BlockState state) {
 			return state.getValue(property) == value;
 		}
+	}
 
-		BlockState set(BlockState orig) {
-			return orig.setValue(property, value);
+	public static class PropertiesAndValues extends ArrayList<PropertyAndValue<?>> {
+
+		public static PropertiesAndValues of(StateDefinition definition, String string) {
+			PropertiesAndValues propertiesAndValues = new PropertiesAndValues();
+			String[] split = string.split(",");
+			for (String s : split) {
+				propertiesAndValues.add(PropertyAndValue.of(definition, s));
+			}
+			return propertiesAndValues;
+		}
+
+		public boolean match(BlockState state) {
+			for (PropertyAndValue<?> propertyAndValue : this) {
+				if (!propertyAndValue.match(state))
+					return false;
+			}
+			return true;
+		}
+	}
+
+	@JsonAdapter(StateProperties.Serializer.class)
+	public record StateProperties(List<BlockState> blockStates, @Nullable Float hardness, @Nullable NoteBlockInstrument noteBlockInstrument, @Nullable Boolean spawnParticlesOnBreak) {
+
+		public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<StateProperties>>() {}.getType();
+
+		public static class Serializer implements JsonDeserializer<StateProperties>, JsonSerializer<StateProperties> {
+			@Override
+			public StateProperties deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+				JsonObject jObject = json.getAsJsonObject();
+				ResourceLocation blockRL = ResourceLocation.tryParse(jObject.get("block").getAsString());
+				if (blockRL == null)
+					throw new JsonParseException("Failed to get block for %s".formatted(jObject.get("block").getAsString()));
+				Block block = ForgeRegistries.BLOCKS.getValue(blockRL);
+				if (block == null)
+					throw new JsonParseException("Failed to get block for %s".formatted(jObject.get("block").getAsString()));
+				List<BlockState> blockStates = new ArrayList<>();
+				if (jObject.has("states")) {
+					JsonArray array = jObject.getAsJsonArray("states");
+					for (JsonElement element : array) {
+						PropertiesAndValues propertyAndValues = PropertiesAndValues.of(block.getStateDefinition(), element.getAsString());
+						block.getStateDefinition().getPossibleStates().forEach(blockState -> {
+							if (propertyAndValues.match(blockState))
+								blockStates.add(blockState);
+						});
+					}
+				}
+				Float hardness = ITRGsonHelper.getAsNullableFloat(jObject, "hardness");
+				Float explosionResistance = ITRGsonHelper.getAsNullableFloat(jObject, "explosion_resistance");
+				return new StateProperties(block, blockStates, hardness, explosionResistance);
+			}
+
+			@Override
+			public JsonElement serialize(StateProperties src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
+				JsonObject jObject = new JsonObject();
+			/*if (!src.blockStates.isEmpty()) {
+				JsonArray array = new JsonArray();
+				for (BlockState state : src.blockStates) {
+					array.add("%s=%s".formatted(property.property.getName(), property.value));
+				}
+			}*/
+				if (src.hardness != null)
+					jObject.addProperty("hardness", src.hardness);
+				if (src.explosionResistance != null)
+					jObject.addProperty("explosion_resistance", src.explosionResistance);
+				return jObject;
+			}
 		}
 	}
 }

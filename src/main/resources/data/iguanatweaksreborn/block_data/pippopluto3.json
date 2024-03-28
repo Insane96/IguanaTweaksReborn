@@ -1,0 +1,7 @@
+{
+	"block": "minecraft:beehive",
+	"states": [
+		"facing=east,honey_level=1"
+	],
+	"hardness": 10
+}

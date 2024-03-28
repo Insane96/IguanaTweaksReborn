@@ -1,4 +1,4 @@
 {
 	"block": "minecraft:dirt",
-	"hardness": 10
+	"explosion_resistance": 10
 }
