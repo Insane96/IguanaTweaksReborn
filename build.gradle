@@ -87,6 +87,9 @@ minecraft {
         }
 
         client {
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
             workingDirectory project.file('run')
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             // property 'forge.enabledGameTestNamespaces', mod_id
@@ -145,6 +148,10 @@ repositories {
             includeGroup "com.github.Virtuoel"
         }
     }
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+    }
     maven { url 'https://maven.blamejared.com' }
 }
 
@@ -168,6 +175,9 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:supplementaries-412082:5211386")
 
     implementation fg.deobf("com.github.glitchfiend:SereneSeasons:${mc_version}-${sereneseasons_version}")
+
+    compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}:api")
+    runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
 
     //implementation fg.deobf("com.github.Virtuoel:Pehkui:${pehkui_version}-${mc_version}-forge")
     //implementation fg.deobf("curse.maven:kiwi-303657:4592974")
