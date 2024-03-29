@@ -10,6 +10,9 @@
 * An enchantment to steal air from entities
 * Rewrite Harder Crops as a Json feature and make use of block states
   * Due to some blocks having multiple states (e.g. Supplementaries' Flax has bottom and top fully grown)
+* Add option to add effects based on stamina in Debuffs
+* Add option to choose the starting season in ITE
+* Add option to show healing properties of items
 
 ## Upcoming
 * Vigour enchantment is now stronger
