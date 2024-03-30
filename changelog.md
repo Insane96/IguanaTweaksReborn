@@ -12,11 +12,11 @@
   * Due to some blocks having multiple states (e.g. Supplementaries' Flax has bottom and top fully grown)
 * Add option to add effects based on stamina in Debuffs
 * Add option to choose the starting season in ITE
-* Add option to show healing properties of items
 
 ## Upcoming
 * Vigour enchantment is now stronger
 * Added a flag config option to wipe the Data Pack list of a world so they are loaded correctly
+* Added an option for No Hunger to display on foods the regeneration amount
 * Fixed crops being harder to break with axes
 
 ## 3.5.6

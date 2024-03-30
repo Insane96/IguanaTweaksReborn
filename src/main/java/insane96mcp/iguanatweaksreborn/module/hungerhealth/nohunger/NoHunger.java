@@ -97,12 +97,16 @@ public class NoHunger extends Feature {
     public static Boolean convertSaturationToHaste = true;
 
     @Config
-    @Label(name = "Render armor at Hunger", description = "(Client Only) Armor is rendered in the place of Hunger bar")
-    public static Boolean renderArmorAtHunger = true;
-
-    @Config
     @Label(name = "Buff cakes", description = "Make cakes restore 40% missing health")
     public static Boolean buffCakes = true;
+
+    @Config
+    @Label(name = "Regen tooltip", description = "(Client Only) Food shows how much food regenerates in its tooltip. Disabling this still shows the tooltip with advanced tooltip enabled (and reducedDebugInfo = false). Please note that if the formulas differ from client to server then this will display wrong values.")
+    public static Boolean regenTooltip = false;
+
+    @Config
+    @Label(name = "Render armor at Hunger", description = "(Client Only) Armor is rendered in the place of Hunger bar")
+    public static Boolean renderArmorAtHunger = true;
 
     public NoHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -394,11 +398,12 @@ public class NoHunger extends Feature {
         if (player == null)
             return;
 
-        if (mc.options.reducedDebugInfo().get() || !mc.options.advancedItemTooltips)
+        if ((mc.options.reducedDebugInfo().get() || !mc.options.advancedItemTooltips) && !regenTooltip)
             return;
 
         FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
 
+        ChatFormatting color = FoodDrinks.isRawFood(event.getItemStack().getItem()) ? ChatFormatting.RED : ChatFormatting.GRAY;
         if (Utils.getFoodSaturationRestored(food) < instantHealSaturationThreshold && doesHealInstantly()) {
             boolean isRawFood = FoodDrinks.isRawFood(event.getItemStack().getItem());
             //noinspection ConstantConditions
@@ -406,7 +411,7 @@ public class NoHunger extends Feature {
             MutableComponent component = Component.literal(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal))
                     .append(" ")
                     .append(Component.translatable(HEALTH_LANG))
-                    .withStyle(ChatFormatting.GRAY)
+                    .withStyle(color)
                     .withStyle(ChatFormatting.ITALIC);
             event.getToolTip().add(component);
         }
@@ -423,7 +428,7 @@ public class NoHunger extends Feature {
                     .append(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal / strength))
                     .append(" ")
                     .append(Component.translatable(SEC_LANG))
-                    .withStyle(ChatFormatting.GRAY)
+                    .withStyle(color)
                     .withStyle(ChatFormatting.ITALIC);
             event.getToolTip().add(component);
         }
