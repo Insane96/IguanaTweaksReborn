@@ -14,6 +14,7 @@
 * Add option to choose the starting season in ITE
 
 ## Upcoming
+* If player's stamina is below 20 (2 hearts) and stamina is locked, the player is slowed down by 25%, 
 * Vigour enchantment is now stronger
 * Added a flag config option to wipe the Data Pack list of a world so they are loaded correctly
 * Added an option for No Hunger to display on foods the regeneration amount
