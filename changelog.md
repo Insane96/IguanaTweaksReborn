@@ -3,14 +3,16 @@
 * Tiredness should play random sounds
 * Allow spawners to be empowered with echo shards
 * Graves should have inscriptions that can be seen when you look at them
-* Recall potion advancement
 * New item to make the recall potion made with 2x wither rose, 1x chorus fruit, 1x echo shard
 * Infested blocks should generate in every biome 
 * Use Forge to repair items
 * An enchantment to steal air from entities
 * Rewrite Harder Crops as a Json feature and make use of block states
   * Due to some blocks having multiple states (e.g. Supplementaries' Flax has bottom and top fully grown)
-* Fix mobs dropping 0 durability items
+* Advancement
+  * Update them by checking all the current features (after the next big update)
+  * Recall potion
+* Maybe make the material repair cost when enchanted have a flat amount per levels and not percentage on the total
 
 ## Upcoming
 * If player's stamina is below 20 (2 hearts) and stamina is locked, the player is slowed down by 25%
@@ -21,6 +23,7 @@
 * Vigour enchantment is now stronger
 * Added a flag config option to wipe the Data Pack list of a world so they are loaded correctly
 * Added an option for No Hunger to display on foods the regeneration amount
+* Increased material repair cost when repairing enchanted items
 * Fixed crops being harder to break with axes
 * Fixed items being usable when broken
 
