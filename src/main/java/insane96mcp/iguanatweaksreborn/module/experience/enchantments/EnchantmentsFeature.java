@@ -22,6 +22,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagValue;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
@@ -211,7 +212,10 @@ public class EnchantmentsFeature extends JsonFeature {
 			return;
 		if (attacker instanceof Player player)
 			knockback *= player.getAttackStrengthScale(0.5f) * player.getAttackStrengthScale(0.5f);
-		knockback *= BonusDamageEnchantment.getDamageBonusRatio(attacker.getMainHandItem()) / 5f;
+		for (IdTagValue itemKnockbackMultiplier : insane96mcp.iguanatweaksreborn.module.combat.Knockback.KNOCKBACKS) {
+			if (itemKnockbackMultiplier.id.matchesItem(attacker.getMainHandItem()))
+				knockback *= (float) itemKnockbackMultiplier.value;
+		};
 		event.setStrength(event.getStrength() + knockback);
 	}
 

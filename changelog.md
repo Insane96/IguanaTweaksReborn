@@ -10,11 +10,13 @@
 * An enchantment to steal air from entities
 * Rewrite Harder Crops as a Json feature and make use of block states
   * Due to some blocks having multiple states (e.g. Supplementaries' Flax has bottom and top fully grown)
-* Add option to add effects based on stamina in Debuffs
-* Add option to choose the starting season in ITE
+* Fix mobs dropping 0 durability items
 
 ## Upcoming
-* If player's stamina is below 20 (2 hearts) and stamina is locked, the player is slowed down by 25%, 
+* If player's stamina is below 20 (2 hearts) and stamina is locked, the player is slowed down by 25%
+* Knockback
+  * Pickaxes, axes and ITE Forge Hammers now deal reduced knockback
+  * Moved all knockback related stuff to knockback feature (removed Bonking Shovels)
 * Vigour enchantment is now stronger
 * Added a flag config option to wipe the Data Pack list of a world so they are loaded correctly
 * Added an option for No Hunger to display on foods the regeneration amount
