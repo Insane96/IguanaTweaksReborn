@@ -30,7 +30,6 @@ public abstract class MobMixin extends LivingEntity {
 	public int damageValue(int damageValue, @Local ItemStack stack) {
 		if (!Feature.isEnabled(Equipment.class))
 			return Math.min(damageValue, stack.getMaxDamage());
-		//The max durability doesn't work properly
 		return stack.getMaxDamage() - this.random.nextInt((int) (stack.getMaxDamage() * Equipment.maxDurability));
 	}
 }
