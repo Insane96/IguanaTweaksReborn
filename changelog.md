@@ -19,6 +19,7 @@
 * Added a flag config option to wipe the Data Pack list of a world so they are loaded correctly
 * Added an option for No Hunger to display on foods the regeneration amount
 * Fixed crops being harder to break with axes
+* Fixed items being usable when broken
 
 ## 3.5.6
 * Fortune has been nerfed
