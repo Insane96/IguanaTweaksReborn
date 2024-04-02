@@ -3,7 +3,6 @@
 * Tiredness should play random sounds
 * Allow spawners to be empowered with echo shards
 * Graves should have inscriptions that can be seen when you look at them
-* New item to make the recall potion made with 2x wither rose, 1x chorus fruit, 1x echo shard
 * Infested blocks should generate in every biome 
 * Use Forge to repair items
 * An enchantment to steal air from entities
@@ -13,10 +12,9 @@
   * Update them by checking all the current features (after the next big update)
   * Recall potion
 * Maybe make the material repair cost when enchanted have a flat amount per levels and not percentage on the total
-* Make a new potion between regen and recall. A regen+wither potion
+* Make a new potion between regen and recall. A regen+wither potion that with a Echo shard becomes a Recall Potion
 * Keego definitely needs a nerf to base stats and buff to momentum
 * Reduce burst of arrows to 6
-* Chance to break glass should increase exponentially
 * Respawn obelisks should accept blocks from 1 to 3 blocks away
 * Maybe bring back the 8 block ratio in the Nethah
 
@@ -32,6 +30,7 @@
 * Increased material repair cost when repairing enchanted items
 * Increased tired debuffs amount (1% -> 2%)
 * Increased backword slowdown (25% -> 30%)
+* Chance to break glass now increases exponentially
 * Fixed crops being harder to break with axes
 * Fixed items being usable when broken
 

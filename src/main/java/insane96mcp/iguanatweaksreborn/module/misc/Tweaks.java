@@ -163,7 +163,8 @@ public class Tweaks extends Feature {
         appliedResistance = false;
     }
 
-    @SubscribeEvent
+    //Lowest priority so other mods can change/cancel fall damage
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onFalling(LivingFallEvent event) {
         if (!this.isEnabled()
                 || !fallingBreakingGlass
@@ -175,7 +176,10 @@ public class Tweaks extends Feature {
         int mX = Mth.floor(bb.minX);
         int mZ = Mth.floor(bb.minZ);
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-        float chance = (event.getDistance() - 3) * 0.05f;
+        float distance = event.getDistance() - 3f;
+        if (distance <= 0)
+            return;
+        float chance = (float) (Math.pow(distance, 1.25f) * 0.05f);
         if (entity.getRandom().nextFloat() >= chance)
             return;
         for (int x2 = mX; x2 < bb.maxX; x2++) {
