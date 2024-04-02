@@ -12,11 +12,7 @@
   * Update them by checking all the current features (after the next big update)
   * Recall potion
 * Maybe make the material repair cost when enchanted have a flat amount per levels and not percentage on the total
-* Make a new potion between regen and recall. A regen+wither potion that with a Echo shard becomes a Recall Potion
-* Keego definitely needs a nerf to base stats and buff to momentum
-* Reduce burst of arrows to 6
 * Respawn obelisks should accept blocks from 1 to 3 blocks away
-* Maybe bring back the 8 block ratio in the Nethah
 
 ## Upcoming
 * If player's stamina is below 20 (2 hearts) and stamina is locked, the player is slowed down by 25%
@@ -25,6 +21,7 @@
   * Moved all knockback related stuff to knockback feature (removed Bonking Shovels)
 * Equipment dropped by mobs max durability left is now 60%
 * Vigour enchantment is now stronger
+* 1 block in the nether is now 4 blocks in the overworld
 * Added a flag config option to wipe the Data Pack list of a world so they are loaded correctly
 * Added an option for No Hunger to display on foods the regeneration amount
 * Increased material repair cost when repairing enchanted items
