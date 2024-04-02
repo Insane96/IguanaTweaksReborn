@@ -13,6 +13,13 @@
   * Update them by checking all the current features (after the next big update)
   * Recall potion
 * Maybe make the material repair cost when enchanted have a flat amount per levels and not percentage on the total
+* Make a new potion between regen and recall. A regen+wither potion
+* Keego definitely needs a nerf to base stats and buff to momentum
+* Reduce burst of arrows to 6
+* Chance to break glass should increase exponentially
+* Increase backward walking penalty to 30%
+* Respawn obelisks should accept blocks from 1 to 3 blocks away
+* Maybe bring back the 8 block ratio in the Nethah
 
 ## Upcoming
 * If player's stamina is below 20 (2 hearts) and stamina is locked, the player is slowed down by 25%
@@ -24,6 +31,7 @@
 * Added a flag config option to wipe the Data Pack list of a world so they are loaded correctly
 * Added an option for No Hunger to display on foods the regeneration amount
 * Increased material repair cost when repairing enchanted items
+* Increased tired debuffs amount (1% -> 2%)
 * Fixed crops being harder to break with axes
 * Fixed items being usable when broken
 
