@@ -6,6 +6,8 @@
   * Pickaxes, axes and ITE Forge Hammers now deal reduced knockback
   * Moved all knockback related stuff to knockback feature (removed Bonking Shovels)
 * Equipment dropped by mobs max durability left is now 60%
+* Reduced swords base damage (-0.5)
+* Reduced smite bonus damage (+1.5 -> +1.25)
 * Vigour enchantment is now stronger
 * 1 block in the nether is now 4 blocks in the overworld
 * Added a flag config option to wipe the Data Pack list of a world so they are loaded correctly
@@ -16,6 +18,7 @@
 * Chance to break glass now increases exponentially
 * Fixed crops being harder to break with axes
 * Fixed items being usable when broken
+* Nerfed hoes
 
 ## 3.5.6
 * Fortune has been nerfed
