@@ -1,7 +1,5 @@
 # Changelog
 
-* Make fortune work like vanilla but less
-
 ## Upcoming
 * Autumnity Integration!
   * Eating with the Foul Taste effect now increases heal by 50%
@@ -10,8 +8,8 @@
 * Mending overhaul!
   * Mending now consumes player experience every 2 seconds instead of picked up experience
 * Changed fortune formula to be similar to Vanilla but with reduced average
-  * From previous version: 30%/60%/90%/120% -> 20%/50%/85.7%/125%
-  * From vanilla: 25%/75%/120%/167% -> 20%/50%/85.7%/125%
+  * From previous version: Fixed increase 30%/60%/90%/120% -> Average increase 20%/50%/85.7%/125%
+  * From vanilla: Average increase 25%/75%/120%/167% -> Average increase 20%/50%/85.7%/125%
 * If player's stamina is below 20 (2 hearts) and stamina is locked, the player is slowed down by 20%
 * Knockback
   * Pickaxes, axes and ITE Forge Hammers now deal reduced knockback
