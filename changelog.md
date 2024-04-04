@@ -9,6 +9,9 @@
 * Other minor integrations with Autumnity and Berry Good
 * Mending overhaul!
   * Mending now consumes player experience every 2 seconds instead of picked up experience
+* Changed fortune formula to be similar to Vanilla but with reduced average
+  * From previous version: 30%/60%/90%/120% -> 20%/50%/85.7%/125%
+  * From vanilla: 25%/75%/120%/167% -> 20%/50%/85.7%/125%
 * If player's stamina is below 20 (2 hearts) and stamina is locked, the player is slowed down by 20%
 * Knockback
   * Pickaxes, axes and ITE Forge Hammers now deal reduced knockback
