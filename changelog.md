@@ -3,6 +3,7 @@
 ## Upcoming
 * Autumnity Integration!
   * Eating with the Foul Taste effect now increases heal by 50%
+  * Eating turkey or pancake now heals
 * If player's stamina is below 20 (2 hearts) and stamina is locked, the player is slowed down by 25%
 * Knockback
   * Pickaxes, axes and ITE Forge Hammers now deal reduced knockback

@@ -200,7 +200,7 @@ public class NoHunger extends Feature {
      * item is null when eating cakes
      */
     @SuppressWarnings("ConstantConditions")
-    public void healOnEat(Player player, @Nullable Item item, FoodProperties foodProperties) {
+    public static void healOnEat(Player player, @Nullable Item item, FoodProperties foodProperties) {
         boolean isRawFood = item != null && FoodDrinks.isRawFood(item);
         if (Utils.getFoodSaturationRestored(foodProperties) > instantHealSaturationThreshold)
             onEatHealOverTime(player, item, foodProperties, isRawFood);
@@ -211,7 +211,7 @@ public class NoHunger extends Feature {
     /**
      * item is null when is a cake
      */
-    public void onEatHealOverTime(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
+    public static void onEatHealOverTime(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
         if (!doesHealOverTime())
             return;
 
@@ -232,7 +232,7 @@ public class NoHunger extends Feature {
         return !StringUtils.isBlank(healOverTime) && !StringUtils.isBlank(healOverTimeStrength);
     }
 
-    private void onEatInstantHeal(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
+    private static void onEatInstantHeal(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
         if (!doesHealInstantly())
             return;
 

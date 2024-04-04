@@ -54,7 +54,10 @@
         "VillagerMixin",
         "WanderingTraderMixin",
         "WolfMixin",
-        "ZombieMixin"
+        "ZombieMixin",
+        "integration.autumnity.CookedTurkeyBlockMixin",
+        "integration.autumnity.PancakeBlockMixin",
+        "integration.autumnity.TurkeyBlockMixin"
     ],
     "minVersion": "0.8",
     "client": [

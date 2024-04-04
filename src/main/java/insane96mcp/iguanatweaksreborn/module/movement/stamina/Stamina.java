@@ -88,7 +88,7 @@ public class Stamina extends Feature {
     public static Double slowdownFlatThreshold = 20d;
     @Config(min = -1)
     @Label(name = "Slowdown.Amount")
-    public static Double slowdownAmount = -0.25;
+    public static Double slowdownAmount = -0.2;
     @Config
     @Label(name = "Slowdown.Only when locked")
     public static Boolean slowdownOnlyWhenLocked = true;
