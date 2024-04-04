@@ -5,6 +5,7 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.healthregen.HealthRegen;
+import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.integration.AutumnityIntegration;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.utils.ClientUtils;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
@@ -44,6 +45,7 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.network.NetworkDirection;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
@@ -206,6 +208,9 @@ public class NoHunger extends Feature {
             onEatInstantHeal(player, item, foodProperties, isRawFood);
     }
 
+    /**
+     * item is null when is a cake
+     */
     public void onEatHealOverTime(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
         if (!doesHealOverTime())
             return;
@@ -217,6 +222,7 @@ public class NoHunger extends Feature {
             heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.4f, 1f);
         if (isRawFood && rawFoodHealPercentage != 1d)
             heal *= rawFoodHealPercentage;
+        heal = applyModifiers(player, heal);
 
         float strength = Utils.computeFoodFormula(foodProperties, healOverTimeStrength) / 20f;
         setHealOverTime(player, heal, strength);
@@ -233,6 +239,7 @@ public class NoHunger extends Feature {
         float heal = buffCakes && item == null
                 ? Math.max((player.getMaxHealth() - player.getHealth()) * 0.2f, 1f)
                 : getInstantHealAmount(foodProperties, isRawFood);
+        heal = applyModifiers(player, heal);
         player.heal(heal);
     }
 
@@ -309,6 +316,12 @@ public class NoHunger extends Feature {
 
     private static float getFoodRegenStrength(Player player) {
         return player.getPersistentData().getFloat(FOOD_REGEN_STRENGTH);
+    }
+
+    private static float applyModifiers(Player player, float amount) {
+        if (ModList.get().isLoaded("autumnity"))
+            amount = AutumnityIntegration.tryApplyFoulTaste(player, amount);
+        return amount;
     }
 
     //Render before Regenerating absorption
