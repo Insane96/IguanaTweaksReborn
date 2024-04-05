@@ -22,10 +22,12 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
+import insane96mcp.insanelib.data.IdTagValue;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -34,6 +36,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
@@ -70,6 +73,9 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Config
 	@Label(name = "Small Thorns Overhaul", description = "Thorns is no longer compatible with other protections, but deals damage every time (higher levels deal more damage) and no longer damages items.")
 	public static Boolean thornsOverhaul = true;
+	@Config
+	@Label(name = "Mending Overhaul", description = "Mending is changed to consume player experience instead of picked up experience.")
+	public static Boolean mendingOverhaul = true;
 
 	@Config
 	@Label(name = "Better Efficiency Formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to tool_efficiency * (1 + (0.5*lvl))")
@@ -96,7 +102,7 @@ public class EnchantmentsFeature extends JsonFeature {
             Changes to damaging enchantments:
             Enchantments deal bonus damage based off the item's attack damage. So Sharpness on a Sword adds less damage than Sharpness on an Axe.
             Sharpness deals +0.75 damage per level
-            Smite deals +1.5 damage per level to undead
+            Smite deals +1.25 damage per level to undead
             Bane of Arthropods has been replaced with Bane of SSSSS that deals +1.25 damage per level to arthropods and creepers and applies slowness""")
 	public static Boolean replaceDamagingEnchantments = true;
 	@Config
@@ -117,9 +123,7 @@ public class EnchantmentsFeature extends JsonFeature {
 			IdTagMatcher.newId("minecraft:feather_falling"),
 			IdTagMatcher.newId("minecraft:looting"),
 			IdTagMatcher.newId("minecraft:fortune"),
-			IdTagMatcher.newId("minecraft:luck_of_the_sea"),
-			IdTagMatcher.newId("allurement:reforming"),
-			IdTagMatcher.newId("allurement:alleviating")
+			IdTagMatcher.newId("minecraft:luck_of_the_sea")
 
 	));
 	public static final ArrayList<IdTagMatcher> disabledEnchantments = new ArrayList<>();
@@ -211,7 +215,10 @@ public class EnchantmentsFeature extends JsonFeature {
 			return;
 		if (attacker instanceof Player player)
 			knockback *= player.getAttackStrengthScale(0.5f) * player.getAttackStrengthScale(0.5f);
-		knockback *= BonusDamageEnchantment.getDamageBonusRatio(attacker.getMainHandItem()) / 5f;
+		for (IdTagValue itemKnockbackMultiplier : insane96mcp.iguanatweaksreborn.module.combat.Knockback.KNOCKBACKS) {
+			if (itemKnockbackMultiplier.id.matchesItem(attacker.getMainHandItem()))
+				knockback *= (float) itemKnockbackMultiplier.value;
+		};
 		event.setStrength(event.getStrength() + knockback);
 	}
 
@@ -257,6 +264,23 @@ public class EnchantmentsFeature extends JsonFeature {
 			return;
 
 		event.setCanceled(true);
+	}
+
+	@SubscribeEvent
+	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+		if (!this.isEnabled()
+				|| event.phase == TickEvent.Phase.START
+				|| event.player.level().isClientSide
+				|| !mendingOverhaul
+				|| event.player.tickCount % 40 != 0)
+			return;
+		Map.Entry<EquipmentSlot, ItemStack> entry = EnchantmentHelper.getRandomItemWith(Enchantments.MENDING, event.player, ItemStack::isDamaged);
+		if (entry == null)
+			return;
+
+		ItemStack stack = entry.getValue();
+		event.player.giveExperiencePoints(-1);
+		stack.setDamageValue(stack.getDamageValue()-1);
 	}
 
 	@SubscribeEvent

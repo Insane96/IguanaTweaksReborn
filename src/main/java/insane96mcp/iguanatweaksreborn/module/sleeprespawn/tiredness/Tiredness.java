@@ -57,8 +57,8 @@ import java.util.List;
 public class Tiredness extends JsonFeature {
 
 	public static final RegistryObject<MobEffect> TIRED = ITRRegistries.MOB_EFFECTS.register("tired", () -> new TirednessEffect(MobEffectCategory.HARMFUL, 0x818894)
-			.addAttributeModifier(Attributes.MOVEMENT_SPEED, "697c48dd-6bbd-4082-8501-040bb9812c09", -0.01F, AttributeModifier.Operation.MULTIPLY_TOTAL)
-			.addAttributeModifier(Attributes.ATTACK_SPEED, "40c789ef-d30d-4a27-8f46-13fe0edbb259", -0.01F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+			.addAttributeModifier(Attributes.MOVEMENT_SPEED, "697c48dd-6bbd-4082-8501-040bb9812c09", -0.02F, AttributeModifier.Operation.MULTIPLY_TOTAL)
+			.addAttributeModifier(Attributes.ATTACK_SPEED, "40c789ef-d30d-4a27-8f46-13fe0edbb259", -0.02F, AttributeModifier.Operation.MULTIPLY_TOTAL));
 	public static final RegistryObject<MobEffect> ENERGY_BOOST = ITRRegistries.MOB_EFFECTS.register("energy_boost", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x857965, true));
 
 	public static final String NOT_TIRED = IguanaTweaksReborn.MOD_ID + ".not_tired";
@@ -193,7 +193,7 @@ public class Tiredness extends JsonFeature {
 		int level = event.getEntity().getEffect(TIRED.get()).getAmplifier() + 1;
 		if (level == 1)
 			return;
-		event.setNewSpeed(event.getNewSpeed() * (1 - (level * 0.01f)));
+		event.setNewSpeed(event.getNewSpeed() * (1 - (level * 0.02f)));
 	}
 
 	@SubscribeEvent

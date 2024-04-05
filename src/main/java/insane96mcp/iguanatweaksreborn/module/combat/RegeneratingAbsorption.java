@@ -71,6 +71,9 @@ public class RegeneratingAbsorption extends Feature {
     @Config
     @Label(name = "Sound on absorption hurt", description = "If true, a sound is played when the absorption is damaged.")
     public static Boolean soundOnAbsorptionHurt = true;
+    @Config
+    @Label(name = "Render on the right", description = "If true, regenerating absorption hearts are rendered on the right instead on top of hearts.")
+    public static Boolean renderOnRight = false;
 
     public RegeneratingAbsorption(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -175,8 +178,8 @@ public class RegeneratingAbsorption extends Feature {
         mc.getProfiler().push("armor");
 
         RenderSystem.enableBlend();
-        int left = width / 2 - 91;
-        int top = height - gui.leftHeight;
+        int left = width / 2 + (!renderOnRight ? -91 : 82);
+        int top = height - (!renderOnRight ? gui.leftHeight : gui.rightHeight);
 
         int level = Mth.ceil(mc.player.getPersistentData().getFloat(REGEN_ABSORPTION_TAG));
         for (int i = 1; i <= level; i += 2)

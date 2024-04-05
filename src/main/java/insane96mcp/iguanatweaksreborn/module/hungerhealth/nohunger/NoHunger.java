@@ -5,6 +5,7 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.healthregen.HealthRegen;
+import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.integration.AutumnityIntegration;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.utils.ClientUtils;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
@@ -44,6 +45,7 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.network.NetworkDirection;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
@@ -97,12 +99,16 @@ public class NoHunger extends Feature {
     public static Boolean convertSaturationToHaste = true;
 
     @Config
-    @Label(name = "Render armor at Hunger", description = "(Client Only) Armor is rendered in the place of Hunger bar")
-    public static Boolean renderArmorAtHunger = true;
-
-    @Config
     @Label(name = "Buff cakes", description = "Make cakes restore 40% missing health")
     public static Boolean buffCakes = true;
+
+    @Config
+    @Label(name = "Regen tooltip", description = "(Client Only) Food shows how much food regenerates in its tooltip. Disabling this still shows the tooltip with advanced tooltip enabled (and reducedDebugInfo = false). Please note that if the formulas differ from client to server then this will display wrong values.")
+    public static Boolean regenTooltip = false;
+
+    @Config
+    @Label(name = "Render armor at Hunger", description = "(Client Only) Armor is rendered in the place of Hunger bar")
+    public static Boolean renderArmorAtHunger = true;
 
     public NoHunger(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -194,7 +200,7 @@ public class NoHunger extends Feature {
      * item is null when eating cakes
      */
     @SuppressWarnings("ConstantConditions")
-    public void healOnEat(Player player, @Nullable Item item, FoodProperties foodProperties) {
+    public static void healOnEat(Player player, @Nullable Item item, FoodProperties foodProperties) {
         boolean isRawFood = item != null && FoodDrinks.isRawFood(item);
         if (Utils.getFoodSaturationRestored(foodProperties) > instantHealSaturationThreshold)
             onEatHealOverTime(player, item, foodProperties, isRawFood);
@@ -202,7 +208,10 @@ public class NoHunger extends Feature {
             onEatInstantHeal(player, item, foodProperties, isRawFood);
     }
 
-    public void onEatHealOverTime(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
+    /**
+     * item is null when is a cake
+     */
+    public static void onEatHealOverTime(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
         if (!doesHealOverTime())
             return;
 
@@ -213,6 +222,7 @@ public class NoHunger extends Feature {
             heal = Math.max((player.getMaxHealth() - player.getHealth()) * 0.4f, 1f);
         if (isRawFood && rawFoodHealPercentage != 1d)
             heal *= rawFoodHealPercentage;
+        heal = applyModifiers(player, heal);
 
         float strength = Utils.computeFoodFormula(foodProperties, healOverTimeStrength) / 20f;
         setHealOverTime(player, heal, strength);
@@ -222,13 +232,14 @@ public class NoHunger extends Feature {
         return !StringUtils.isBlank(healOverTime) && !StringUtils.isBlank(healOverTimeStrength);
     }
 
-    private void onEatInstantHeal(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
+    private static void onEatInstantHeal(Player player, @Nullable Item item, FoodProperties foodProperties, boolean isRawFood) {
         if (!doesHealInstantly())
             return;
 
         float heal = buffCakes && item == null
                 ? Math.max((player.getMaxHealth() - player.getHealth()) * 0.2f, 1f)
                 : getInstantHealAmount(foodProperties, isRawFood);
+        heal = applyModifiers(player, heal);
         player.heal(heal);
     }
 
@@ -305,6 +316,12 @@ public class NoHunger extends Feature {
 
     private static float getFoodRegenStrength(Player player) {
         return player.getPersistentData().getFloat(FOOD_REGEN_STRENGTH);
+    }
+
+    private static float applyModifiers(Player player, float amount) {
+        if (ModList.get().isLoaded("autumnity"))
+            amount = AutumnityIntegration.tryApplyFoulTaste(player, amount);
+        return amount;
     }
 
     //Render before Regenerating absorption
@@ -394,11 +411,12 @@ public class NoHunger extends Feature {
         if (player == null)
             return;
 
-        if (mc.options.reducedDebugInfo().get() || !mc.options.advancedItemTooltips)
+        if ((mc.options.reducedDebugInfo().get() || !mc.options.advancedItemTooltips) && !regenTooltip)
             return;
 
         FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
 
+        ChatFormatting color = FoodDrinks.isRawFood(event.getItemStack().getItem()) ? ChatFormatting.RED : ChatFormatting.GRAY;
         if (Utils.getFoodSaturationRestored(food) < instantHealSaturationThreshold && doesHealInstantly()) {
             boolean isRawFood = FoodDrinks.isRawFood(event.getItemStack().getItem());
             //noinspection ConstantConditions
@@ -406,7 +424,7 @@ public class NoHunger extends Feature {
             MutableComponent component = Component.literal(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal))
                     .append(" ")
                     .append(Component.translatable(HEALTH_LANG))
-                    .withStyle(ChatFormatting.GRAY)
+                    .withStyle(color)
                     .withStyle(ChatFormatting.ITALIC);
             event.getToolTip().add(component);
         }
@@ -423,7 +441,7 @@ public class NoHunger extends Feature {
                     .append(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal / strength))
                     .append(" ")
                     .append(Component.translatable(SEC_LANG))
-                    .withStyle(ChatFormatting.GRAY)
+                    .withStyle(color)
                     .withStyle(ChatFormatting.ITALIC);
             event.getToolTip().add(component);
         }

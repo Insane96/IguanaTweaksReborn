@@ -192,6 +192,9 @@ dependencies {
 
     //implementation fg.deobf("curse.maven:puzzles-lib-495476:4660882")
     //runtimeOnly fg.deobf("curse.maven:easy-magic-456239:4658750")
+    implementation fg.deobf("curse.maven:blueprint-382216:5228040")
+    implementation fg.deobf("curse.maven:autumnity-365045:5229021")
+    implementation fg.deobf("curse.maven:berry-good-355589:5228437")
 
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"

@@ -44,6 +44,8 @@ public class DeBuff {
 		public DeBuff deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 			DeBuff deBuff = new DeBuff();
 			deBuff.stat = context.deserialize(json.getAsJsonObject().get("stat"), Stat.class);
+			if (deBuff.stat == null)
+				throw new JsonParseException("Failed to parse stat: %s".formatted(json.getAsJsonObject().get("stat")));
 			deBuff.min = GsonHelper.getAsDouble(json.getAsJsonObject(), "min", Double.MIN_VALUE);
 			deBuff.max = GsonHelper.getAsDouble(json.getAsJsonObject(), "max", Double.MAX_VALUE);
 			String sMobEffect = GsonHelper.getAsString(json.getAsJsonObject(), "effect");
