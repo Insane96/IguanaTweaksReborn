@@ -27,6 +27,7 @@
 * Chance to break glass now increases exponentially
 * Fixed crops being harder to break with axes
 * Fixed items being usable when broken
+* Fixed breeding broken with ITE installed
 * Nerfed hoes
 
 ## 3.5.6
