@@ -97,9 +97,11 @@ public class Livestock extends Feature {
 		if (!this.isEnabled())
 			return;
 
-		slowdownAnimalGrowth(event);
-		slowdownBreeding(event);
-		slowdownEggLay(event);
+		if (!event.getEntity().level().isClientSide) {
+			slowdownAnimalGrowth(event);
+			slowdownBreeding(event);
+			slowdownEggLay(event);
+		}
 		cowMilkTick(event);
 	}
 

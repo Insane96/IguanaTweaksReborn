@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.6.1
+* Fixed crash when joining servers
+
 ## 3.6.0 - The Abnormals' Release Update
 * Autumnity Integration!
   * Eating with the Foul Taste effect now increases heal by 50%
