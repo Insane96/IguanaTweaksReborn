@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.6.0 - The Abnormals' Release Update
 * Autumnity Integration!
   * Eating with the Foul Taste effect now increases heal by 50%
   * Eating turkey or pancake now heals
@@ -21,7 +21,7 @@
 * Reduced smite bonus damage (+1.5 -> +1.25)
 * Vigour enchantment is now stronger
 * 1 block in the nether is now 4 blocks in the overworld
-* Added a flag config option to wipe the Data Pack list of a world so they are loaded correctly
+* Added a flag config option to wipe the Data Pack list of a world, so they are loaded correctly
 * Added an option for No Hunger to display on foods the regeneration amount
 * Infested blocks now generate in every biome (more in mountains)
 * Graves can now be crafted
