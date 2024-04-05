@@ -25,6 +25,7 @@
 * Increased tired debuffs amount (1% -> 2%)
 * Increased backward slowdown (25% -> 30%)
 * Chance to break glass now increases exponentially
+* Added config option to move the regenerating absorption hearts to the right
 * Fixed crops being harder to break with axes
 * Fixed items being usable when broken
 * Fixed breeding broken with ITE installed
