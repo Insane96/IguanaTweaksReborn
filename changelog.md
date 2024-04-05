@@ -4,6 +4,7 @@
 * Eggs no longer stack to 64
 * Minecarts, horse armors and saddles now stack less
 * Fixed wrong enchantment values on many materials
+* Fixed pips crafting from berry good
 
 ## 3.6.1
 * Fixed crash when joining servers
