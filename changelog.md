@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.6.2
 * Eggs no longer stack to 64
 * Minecarts, horse armors and saddles now stack less
 * Fixed wrong enchantment values on many materials
