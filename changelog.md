@@ -15,6 +15,7 @@
   * Pickaxes, axes and ITE Forge Hammers now deal reduced knockback
   * Moved all knockback related stuff to knockback feature (removed Bonking Shovels)
 * Repairing an enchanted item material's cost is now 5% of total levels of enchantments + 0.5 per levels of enchantments
+* Repairing Leather armor now requires fewer rabbit hide but can only be repaired partially
 * Equipment dropped by mobs max durability left is now 60%
 * Reduced swords base damage (-0.5)
 * Reduced smite bonus damage (+1.5 -> +1.25)
