@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Eggs no longer stack to 64
+* Minecarts, horse armors and saddles now stack less
+
 ## 3.6.1
 * Fixed crash when joining servers
 
