@@ -21,6 +21,7 @@
 * 1 block in the nether is now 4 blocks in the overworld
 * Added a flag config option to wipe the Data Pack list of a world so they are loaded correctly
 * Added an option for No Hunger to display on foods the regeneration amount
+* Infested blocks now generate in every biome (more in mountains)
 * Graves can now be crafted
 * Increased material repair cost when repairing enchanted items
 * Increased tired debuffs amount (1% -> 2%)
