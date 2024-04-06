@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Falling in a boat will now always break the boat and passenger will take fall damage
+
 ## 3.6.2
 * Eggs no longer stack to 64
 * Minecarts, horse armors and saddles now stack less
