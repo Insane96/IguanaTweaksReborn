@@ -21,6 +21,6 @@ public class Smite extends BonusDamageEnchantment {
 
     @Override
     public float getDamageBonusPerLevel() {
-        return 1.5f;
+        return 1.25f;
     }
 }

@@ -97,9 +97,11 @@ public class Livestock extends Feature {
 		if (!this.isEnabled())
 			return;
 
-		slowdownAnimalGrowth(event);
-		slowdownBreeding(event);
-		slowdownEggLay(event);
+		if (!event.getEntity().level().isClientSide) {
+			slowdownAnimalGrowth(event);
+			slowdownBreeding(event);
+			slowdownEggLay(event);
+		}
 		cowMilkTick(event);
 	}
 
@@ -274,7 +276,7 @@ public class Livestock extends Feature {
 			}
 		}
 		for (Modifier modifier : modifiersToApply)
-			failChance += modifier.getMultiplier(parentA.level(), parentA.blockPosition());
+			failChance *= modifier.getMultiplier(parentA.level(), parentA.blockPosition());
 		if (failChance == 0d)
 			return;
 

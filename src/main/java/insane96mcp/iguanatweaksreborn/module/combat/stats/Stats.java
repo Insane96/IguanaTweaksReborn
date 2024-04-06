@@ -18,7 +18,6 @@ import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.AttackDamageMobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -30,7 +29,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PotionItem;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -60,9 +58,6 @@ public class Stats extends Feature {
 	@Config(min = 0d, max = 10d)
 	@Label(name = "Bow's Arrows Base Damage", description = "Set arrow's base damage if shot from bow.")
 	public static Double bowsArrowsBaseDamage = 1d;
-	@Config(min = 0, max = 1)
-	@Label(name = "Hoes Knockback multiplier")
-	public static Double hoesKnockbackMultiplier = 0.25d;
 	@Config
 	@Label(name = "Fix tooltips", description = "Vanilla tooltips on gear don't sum up multiple modifiers (e.g. a sword would have \"4 Attack Damage\" and \"-2 Attack Damage\" instead of \"2 Attack Damage\". This might break other mods messing with these Tooltips (e.g. Quark's improved tooltips)")
 	public static Boolean fixTooltips = true;
@@ -220,17 +215,6 @@ public class Stats extends Feature {
 				);
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void onKnockback(LivingKnockBackEvent event) {
-		if (!this.isEnabled()
-				|| hoesKnockbackMultiplier == 1d
-				|| !(event.getEntity().getLastHurtByMob() instanceof Player player)
-				|| !player.getMainHandItem().is(ItemTags.HOES))
-			return;
-
-		event.setStrength(event.getStrength() * hoesKnockbackMultiplier.floatValue());
 	}
 
 }

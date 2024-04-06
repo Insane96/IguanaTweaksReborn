@@ -26,7 +26,7 @@ public class BackwardsSlowdown extends Feature {
 
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Slowdown", description = "How much slower will the player go when walking backwards.")
-	public static Double slowdown = 0.25d;
+	public static Double slowdown = 0.3d;
 
 	public BackwardsSlowdown(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

@@ -114,6 +114,15 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 						}
 						amountRequired *= 1 + increase;
 					}
+					if (Anvils.moreMaterialIfEnchantedFlat > 0f && left.isEnchanted()) {
+						float increase = 0f;
+						for (Integer lvl : EnchantmentHelper.getEnchantments(left).values()) {
+							increase += Anvils.moreMaterialIfEnchantedFlat.floatValue() * lvl;
+							if (Anvils.differentXpRepairCost)
+								xpCost += lvl;
+						}
+						amountRequired += increase;
+					}
 					int repairSteps = Math.min(resultStack.getDamageValue(), Mth.ceil(resultStack.getMaxDamage() / amountRequired));
 					if (repairSteps <= 0 || resultStack.getDamageValue() <= maxPartialRepairDmg) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
@@ -145,6 +154,15 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 								xpCost += lvl;
 						}
 						amountRequired *= 1 + increase;
+					}
+					if (Anvils.moreMaterialIfEnchantedFlat > 0f && left.isEnchanted()) {
+						float increase = 0f;
+						for (Integer lvl : EnchantmentHelper.getEnchantments(left).values()) {
+							increase += Anvils.moreMaterialIfEnchantedFlat.floatValue() * lvl;
+							if (Anvils.differentXpRepairCost)
+								xpCost += lvl;
+						}
+						amountRequired += increase;
 					}
 					int repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / (int) amountRequired);
 					if (repairSteps <= 0) {

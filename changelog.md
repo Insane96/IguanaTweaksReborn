@@ -1,20 +1,51 @@
 # Changelog
 
-* Tiredness should play random sounds
-* Allow spawners to be empowered with echo shards
-* Graves should have inscriptions that can be seen when you look at them
-* Recall potion advancement
-* New item to make the recall potion made with 2x wither rose, 1x chorus fruit, 1x echo shard
-* Infested blocks should generate in every biome 
-* Use Forge to repair items
-* An enchantment to steal air from entities
-* Rewrite Harder Crops as a Json feature and make use of block states
-  * Due to some blocks having multiple states (e.g. Supplementaries' Flax has bottom and top fully grown)
-
 ## Upcoming
+* Falling in a boat will now always break the boat and passenger will take fall damage
+
+## 3.6.2
+* Eggs no longer stack to 64
+* Minecarts, horse armors and saddles now stack less
+* Fixed wrong enchantment values on many materials
+* Fixed pips crafting from berry good
+
+## 3.6.1
+* Fixed crash when joining servers
+
+## 3.6.0 - The Abnormals' Release Update
+* Autumnity Integration!
+  * Eating with the Foul Taste effect now increases heal by 50%
+  * Eating turkey or pancake now heals
+* Other minor integrations with Autumnity and Berry Good
+* Mending overhaul!
+  * Mending now consumes player experience every 2 seconds instead of picked up experience
+* Changed fortune formula to be similar to Vanilla but with reduced average
+  * From previous version: Fixed increase 30%/60%/90%/120% -> Average increase 20%/50%/85.7%/125%
+  * From vanilla: Average increase 25%/75%/120%/167% -> Average increase 20%/50%/85.7%/125%
+* If player's stamina is below 20 (2 hearts) and stamina is locked, the player is slowed down by 20%
+* Knockback
+  * Pickaxes, axes and ITE Forge Hammers now deal reduced knockback
+  * Moved all knockback related stuff to knockback feature (removed Bonking Shovels)
+* Repairing an enchanted item material's cost is now 5% of total levels of enchantments + 0.5 per levels of enchantments
+* Repairing Leather armor now requires fewer rabbit hide but can only be repaired partially
+* Equipment dropped by mobs max durability left is now 60%
+* Reduced swords base damage (-0.5)
+* Reduced smite bonus damage (+1.5 -> +1.25)
 * Vigour enchantment is now stronger
-* Added a flag config option to wipe the Data Pack list of a world so they are loaded correctly
+* 1 block in the nether is now 4 blocks in the overworld
+* Added a flag config option to wipe the Data Pack list of a world, so they are loaded correctly
+* Added an option for No Hunger to display on foods the regeneration amount
+* Infested blocks now generate in every biome (more in mountains)
+* Graves can now be crafted
+* Increased material repair cost when repairing enchanted items
+* Increased tired debuffs amount (1% -> 2%)
+* Increased backward slowdown (25% -> 30%)
+* Chance to break glass now increases exponentially
+* Added config option to move the regenerating absorption hearts to the right
 * Fixed crops being harder to break with axes
+* Fixed items being usable when broken
+* Fixed breeding broken with ITE installed
+* Nerfed hoes
 
 ## 3.5.6
 * Fortune has been nerfed

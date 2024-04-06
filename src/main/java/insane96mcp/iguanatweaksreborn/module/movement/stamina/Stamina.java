@@ -14,6 +14,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.event.PlayerSprintEvent;
+import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
@@ -24,6 +25,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -41,9 +43,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.UUID;
+
 @Label(name = "Stamina", description = "Stamina to let the player run and do stuff.")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class Stamina extends Feature {
+    public static final UUID SLOWDOWN_UUID = UUID.fromString("b17cbf02-97f8-4c50-9cd1-6dc732593fed");
 
     public static final String STAMINA = IguanaTweaksReborn.RESOURCE_PREFIX + "stamina";
     public static final String STAMINA_LOCKED = IguanaTweaksReborn.RESOURCE_PREFIX + "stamina_locked";
@@ -75,8 +80,21 @@ public class Stamina extends Feature {
     @Label(name = "Stamina regen per tick if locked")
     public static Double staminaRegenPerTickIfLocked = 0.35d;
 
+    @Config(min = 0, max = 1)
+    @Label(name = "Slowdown.Threshold", description = "Below this percentage stamina you'll get slowed down.")
+    public static Double slowdownThreshold = 0.2;
+    @Config(min = 0)
+    @Label(name = "Slowdown.Flat Threshold", description = "Below this stamina you'll get slowed down.")
+    public static Double slowdownFlatThreshold = 20d;
+    @Config(min = -1)
+    @Label(name = "Slowdown.Amount")
+    public static Double slowdownAmount = -0.2;
     @Config
-    @Label(name = "Disable Sprinting", description = "Disable sprinting altogether")
+    @Label(name = "Slowdown.Only when locked")
+    public static Boolean slowdownOnlyWhenLocked = true;
+
+    @Config
+    @Label(name = "Disable Sprinting", description = "Disable sprinting (and swimming) altogether")
     public static Boolean disableSprinting = false;
 
     public Stamina(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -140,21 +158,33 @@ public class Stamina extends Feature {
             if (staminaToRecover == 0)
                 return;
             stamina = StaminaHandler.regenStamina(player, staminaToRecover);
-            if (isStaminaLocked && stamina >= maxStamina * unlockStaminaAtHealthRatio)
+            if (isStaminaLocked && stamina >= maxStamina * unlockStaminaAtHealthRatio) {
                 StaminaHandler.unlockSprinting(player);
+                isStaminaLocked = false;
+            }
             shouldSync = true;
         }
         else if (!isStaminaLocked && maxStamina < staminaPerHalfHeart * 5) {
             StaminaHandler.setStamina(player, 0);
             StaminaHandler.lockSprinting(player);
+            isStaminaLocked = true;
             shouldSync = true;
         }
+        slowdown(player, stamina, stamina / maxStamina, isStaminaLocked);
 
         if (shouldSync) {
             //Sync stamina to client
             Object msg = new StaminaSync((int) StaminaHandler.getStamina(player), StaminaHandler.isStaminaLocked(player));
             NetworkHandler.CHANNEL.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
+    }
+
+    public static void slowdown(Player player, float stamina, float staminaPercentage, boolean isLocked) {
+        player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SLOWDOWN_UUID);
+        if ((!isLocked && slowdownOnlyWhenLocked)
+                || (staminaPercentage > slowdownThreshold && stamina > slowdownFlatThreshold))
+            return;
+        MCUtils.applyModifier(player, Attributes.MOVEMENT_SPEED, SLOWDOWN_UUID, "Stamina slowdown", slowdownAmount, AttributeModifier.Operation.MULTIPLY_BASE, false);
     }
 
     @OnlyIn(Dist.CLIENT)

@@ -36,6 +36,9 @@ public class Equipment extends JsonFeature {
     @Config
     @Label(name = "Drop chance", description = "Set the drop chance for mobs equipment.")
     public static Double dropChance = 1d;
+    @Config(min = 0, max = 1)
+    @Label(name = "Max durability", description = "Max durability of items dropped by mobs. This also fixes https://bugs.mojang.com/browse/MC-136374. Setting to 0 will disable this feature.")
+    public static Double maxDurability = 0.6d;
 
     public Equipment(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);

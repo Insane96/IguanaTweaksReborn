@@ -59,7 +59,8 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
                 .addOptionalTag(new ResourceLocation("iguanatweaksexpanded:equipment/armor/chained_copper"))
                 .addOptional(new ResourceLocation("shieldsplus:wooden_shield")).addOptional(new ResourceLocation("shieldsplus:stone_shield")).addOptional(new ResourceLocation("iguanatweaksexpanded:copper_shield")).addOptional(new ResourceLocation("iguanatweaksexpanded:flint_shield"));
         tag(FoodDrinks.RAW_FOOD)
-                .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT);
+                .add(Items.COD, Items.SALMON, Items.TROPICAL_FISH, Items.PORKCHOP, Items.MUTTON, Items.BEEF, Items.CHICKEN, Items.RABBIT, Items.ROTTEN_FLESH, Items.GOLDEN_CARROT)
+                .addOptional(new ResourceLocation("autumnity:turkey_piece"));
 		tag(Spawners.SPAWNER_REACTIVATOR_TAG)
 				.add(Items.ECHO_SHARD);
         tag(BonusDamageEnchantment.ACCEPTS_ENCHANTMENT)
