@@ -4,6 +4,8 @@ import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
 import insane96mcp.iguanatweaksreborn.utils.ITRGsonHelper;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.block.Block;
@@ -20,8 +22,8 @@ import java.util.List;
 
 @JsonAdapter(BlockData.Serializer.class)
 public class BlockData {
-	public Block block;
 
+	public Block block;
 	private final List<BlockState> blockStates;
 	@Nullable
 	private final Float stateHardness;
@@ -38,10 +40,6 @@ public class BlockData {
 	public final Float speedFactor;
 	@Nullable
 	public final Float jumpFactor;
-	/*
-	 * Block
-	 * soundType?
-	 * */
 
 	public BlockData(Block block, List<BlockState> blockStates, @Nullable Float stateHardness, @Nullable Boolean stateRequiresCorrectToolForDrops, @Nullable NoteBlockInstrument stateNoteBlockInstrument, @Nullable Float explosionResistance, @Nullable Float friction, @Nullable Float speedFactor, @Nullable Float jumpFactor) {
 		this.block = block;
@@ -131,6 +129,49 @@ public class BlockData {
 				jObject.addProperty("explosion_resistance", src.explosionResistance);
 			return jObject;
 		}
+	}
+
+	public static BlockData fromNetwork(FriendlyByteBuf byteBuf) {
+		Block block = byteBuf.readById(BuiltInRegistries.BLOCK);
+		List<BlockState> blockStates = new ArrayList<>();
+		byte stateCount = byteBuf.readByte();
+		for (int i = 0; i < stateCount; i++) {
+			byte propertiesCount = byteBuf.readByte();
+			for (int p = 0; p < propertiesCount; p++) {
+				PropertyAndValue<?> propertyAndValue = PropertyAndValue.of(block.getStateDefinition(), byteBuf.readUtf());
+				block.getStateDefinition().getPossibleStates().forEach(blockState -> {
+					if (propertyAndValue.match(blockState))
+						blockStates.add(blockState);
+				});
+			}
+		}
+		Float hardness = byteBuf.readNullable(FriendlyByteBuf::readFloat);
+		Boolean requiresCorrectToolForDrops = byteBuf.readNullable(FriendlyByteBuf::readBoolean);
+		NoteBlockInstrument noteBlockInstrument = byteBuf.readNullable(buf -> buf.readEnum(NoteBlockInstrument.class));
+		Float explosionResistance = byteBuf.readNullable(FriendlyByteBuf::readFloat);
+		Float friction = byteBuf.readNullable(FriendlyByteBuf::readFloat);
+		Float speedFactor = byteBuf.readNullable(FriendlyByteBuf::readFloat);
+		Float jumpFactor = byteBuf.readNullable(FriendlyByteBuf::readFloat);
+		return new BlockData(block, blockStates, hardness, requiresCorrectToolForDrops, noteBlockInstrument, explosionResistance, friction, speedFactor, jumpFactor);
+	}
+
+	public void toNetwork(FriendlyByteBuf byteBuf) {
+		byteBuf.writeId(BuiltInRegistries.BLOCK, this.block);
+		byteBuf.writeByte(this.blockStates.size());
+		for (BlockState state : this.blockStates)
+		{
+			byteBuf.writeByte(state.getProperties().size());
+			for (Property<?> property : state.getProperties()) {
+				byteBuf.writeUtf(property.getName() + "=" + state.getValue(property));
+			}
+		}
+		byteBuf.writeNullable(this.stateHardness, FriendlyByteBuf::writeFloat);
+		byteBuf.writeNullable(this.stateRequiresCorrectToolForDrops, FriendlyByteBuf::writeBoolean);
+		byteBuf.writeNullable(this.stateNoteBlockInstrument, FriendlyByteBuf::writeEnum);
+		byteBuf.writeNullable(this.explosionResistance, FriendlyByteBuf::writeFloat);
+		byteBuf.writeNullable(this.friction, FriendlyByteBuf::writeFloat);
+		byteBuf.writeNullable(this.speedFactor, FriendlyByteBuf::writeFloat);
+		byteBuf.writeNullable(this.jumpFactor, FriendlyByteBuf::writeFloat);
 	}
 
 	//Thanks Random832
