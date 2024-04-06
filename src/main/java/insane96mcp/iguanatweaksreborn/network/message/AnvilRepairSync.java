@@ -39,7 +39,10 @@ public class AnvilRepairSync {
     }
 
     public static void handle(final AnvilRepairSync message, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> AnvilRepairReloadListener.REPAIRS.addAll(message.anvilRepairList));
+        ctx.get().enqueueWork(() -> {
+            AnvilRepairReloadListener.REPAIRS.clear();
+            AnvilRepairReloadListener.REPAIRS.addAll(message.anvilRepairList);
+        });
         ctx.get().setPacketHandled(true);
     }
 

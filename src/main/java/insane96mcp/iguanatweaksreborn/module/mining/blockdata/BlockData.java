@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.commons.lang3.NotImplementedException;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -24,22 +25,22 @@ import java.util.List;
 public class BlockData {
 
 	public Block block;
-	private final List<BlockState> blockStates;
+	private List<BlockState> blockStates = new ArrayList<>();
 	@Nullable
-	private final Float stateHardness;
+	private Float stateHardness;
 	@Nullable
-	private final Boolean stateRequiresCorrectToolForDrops;
+	private Boolean stateRequiresCorrectToolForDrops;
 	@Nullable
-	private final NoteBlockInstrument stateNoteBlockInstrument;
+	private NoteBlockInstrument stateNoteBlockInstrument;
 
 	@Nullable
-	public final Float explosionResistance;
+	public Float explosionResistance;
 	@Nullable
-	public final Float friction;
+	public Float friction;
 	@Nullable
-	public final Float speedFactor;
+	public Float speedFactor;
 	@Nullable
-	public final Float jumpFactor;
+	public Float jumpFactor;
 
 	public BlockData(Block block, List<BlockState> blockStates, @Nullable Float stateHardness, @Nullable Boolean stateRequiresCorrectToolForDrops, @Nullable NoteBlockInstrument stateNoteBlockInstrument, @Nullable Float explosionResistance, @Nullable Float friction, @Nullable Float speedFactor, @Nullable Float jumpFactor) {
 		this.block = block;
@@ -53,25 +54,47 @@ public class BlockData {
 		this.jumpFactor = jumpFactor;
 	}
 
-	public void apply() {
+	public BlockData(Block block) {
+		this.block = block;
+	}
+
+	public void apply(boolean applyingOriginal) {
+		BlockData originalData = new BlockData(block);
 		this.block.getStateDefinition().getPossibleStates().forEach(blockState -> {
 			if (blockStates.isEmpty() || blockStates.contains(blockState)) {
-				if (this.stateHardness != null)
+				originalData.blockStates.add(blockState);
+				if (this.stateHardness != null) {
+					originalData.stateHardness = blockState.destroySpeed;
 					blockState.destroySpeed = this.stateHardness;
-				if (this.stateRequiresCorrectToolForDrops != null)
+				}
+				if (this.stateRequiresCorrectToolForDrops != null) {
+					originalData.stateRequiresCorrectToolForDrops = blockState.requiresCorrectToolForDrops;
 					blockState.requiresCorrectToolForDrops = this.stateRequiresCorrectToolForDrops;
-				if (this.stateNoteBlockInstrument != null)
+				}
+				if (this.stateNoteBlockInstrument != null) {
+					originalData.stateNoteBlockInstrument = blockState.instrument;
 					blockState.instrument = this.stateNoteBlockInstrument;
+				}
 			}
 		});
-		if (this.explosionResistance != null)
+		if (this.explosionResistance != null) {
+			originalData.explosionResistance = this.block.explosionResistance;
 			this.block.explosionResistance = this.explosionResistance;
-		if (this.friction != null)
+		}
+		if (this.friction != null) {
+			originalData.friction = this.block.friction;
 			this.block.friction = this.friction;
-		if (this.speedFactor != null)
+		}
+		if (this.speedFactor != null) {
+			originalData.speedFactor = this.block.speedFactor;
 			this.block.speedFactor = this.speedFactor;
-		if (this.jumpFactor != null)
+		}
+		if (this.jumpFactor != null) {
+			originalData.jumpFactor = this.block.jumpFactor;
 			this.block.jumpFactor = this.jumpFactor;
+		}
+		if (!applyingOriginal)
+			BlockDataReloadListener.ORIGINAL_DATA.add(originalData);
 	}
 
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<BlockData>>(){}.getType();
@@ -80,9 +103,14 @@ public class BlockData {
 		@Override
 		public BlockData deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 			JsonObject jObject = json.getAsJsonObject();
+			boolean required = GsonHelper.getAsBoolean(jObject, "required", true);
 			ResourceLocation blockRL = ResourceLocation.tryParse(jObject.get("block").getAsString());
-			if (blockRL == null)
-				throw new JsonParseException("Failed to get block for %s".formatted(jObject.get("block").getAsString()));
+			if (blockRL == null) {
+				if (!required)
+					return null;
+				else
+					throw new JsonParseException("Failed to get block for %s".formatted(jObject.get("block").getAsString()));
+			}
 			Block block = ForgeRegistries.BLOCKS.getValue(blockRL);
 			if (block == null)
 				throw new JsonParseException("Failed to get block for %s".formatted(jObject.get("block").getAsString()));
@@ -116,18 +144,19 @@ public class BlockData {
 
 		@Override
 		public JsonElement serialize(BlockData src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
-			JsonObject jObject = new JsonObject();
-			/*if (!src.blockStates.isEmpty()) {
+			throw new NotImplementedException();
+			/*JsonObject jObject = new JsonObject();
+			if (!src.blockStates.isEmpty()) {
 				JsonArray array = new JsonArray();
 				for (BlockState state : src.blockStates) {
 					array.add("%s=%s".formatted(property.property.getName(), property.value));
 				}
-			}*/
+			}
 			if (src.stateHardness != null)
 				jObject.addProperty("hardness", src.stateHardness);
 			if (src.explosionResistance != null)
 				jObject.addProperty("explosion_resistance", src.explosionResistance);
-			return jObject;
+			return jObject;*/
 		}
 	}
 

@@ -5,11 +5,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.network.message.BlockDataSync;
 import insane96mcp.iguanatweaksreborn.utils.ITRLogHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraftforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
@@ -18,7 +21,8 @@ import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = IguanaTweaksReborn.MOD_ID)
 public class BlockDataReloadListener extends SimpleJsonResourceReloadListener {
-	public static List<BlockData> STATS = new ArrayList<>();
+	public static List<BlockData> DATA = new ArrayList<>();
+	public static List<BlockData> ORIGINAL_DATA = new ArrayList<>();
 	public static final BlockDataReloadListener INSTANCE;
 	private static final Gson GSON = new GsonBuilder().create();
 	public BlockDataReloadListener() {
@@ -29,10 +33,12 @@ public class BlockDataReloadListener extends SimpleJsonResourceReloadListener {
 		INSTANCE = new BlockDataReloadListener();
 	}
 
-	//TODO Save original data here
 	@Override
 	protected void apply(Map<ResourceLocation, JsonElement> map, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
-		STATS.clear();
+		//Restore original data
+		restoreOriginalDataAndClear();
+		//Load new data
+		DATA.clear();
 		for (var entry : map.entrySet()) {
 			try {
 				ResourceLocation name = entry.getKey();
@@ -41,8 +47,11 @@ public class BlockDataReloadListener extends SimpleJsonResourceReloadListener {
 					continue;
 
 				BlockData blockData = GSON.fromJson(entry.getValue(), BlockData.class);
-				blockData.apply();
-				STATS.add(blockData);
+				//Serializer can return null in case the block doesn't exist (e.g. from other optional mods)
+				if (blockData == null)
+					return;
+				blockData.apply(false);
+				DATA.add(blockData);
 			}
 			catch (JsonSyntaxException e) {
 				ITRLogHelper.error("Parsing error loading Block Data %s: %s", entry.getKey(), e.getMessage());
@@ -52,7 +61,24 @@ public class BlockDataReloadListener extends SimpleJsonResourceReloadListener {
 			}
 		}
 
-		ITRLogHelper.info("Loaded %s Block Data", STATS.size());
+		ITRLogHelper.info("Loaded %s Block Data", DATA.size());
+	}
+
+	public static void restoreOriginalDataAndClear() {
+		for (BlockData data : ORIGINAL_DATA)
+			data.apply(true);
+		ITRLogHelper.info("Restored %s Block Data", ORIGINAL_DATA.size());
+		ORIGINAL_DATA.clear();
+	}
+
+	@SubscribeEvent
+	public static void onDataPackSync(OnDatapackSyncEvent event) {
+		if (event.getPlayer() == null) {
+			event.getPlayerList().getPlayers().forEach(player -> BlockDataSync.sync(DATA, player));
+		}
+		else {
+			BlockDataSync.sync(DATA, event.getPlayer());
+		}
 	}
 
 	/*@SubscribeEvent

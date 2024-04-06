@@ -16,7 +16,6 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagValue;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffects;
@@ -38,10 +37,10 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Label(name = "Crops", description = "Crops tweaks and less yield from crops")
@@ -51,10 +50,6 @@ public class Crops extends JsonFeature {
 	public static final TagKey<Item> CHICKEN_FOOD_ITEMS = ITRItemTagsProvider.create("chicken_food_items");
 
 	public static final TagKey<Block> HARDER_CROPS_TAG = ITRBlockTagsProvider.create("harder_crops");
-	public static final ArrayList<IdTagValue> CROPS_HARDNESS_DEFAULT = new ArrayList<>(List.of(
-			IdTagValue.newTag(HARDER_CROPS_TAG.location().toString(), 1.5d)
-	));
-	public static final ArrayList<IdTagValue> cropsHardness = new ArrayList<>();
 
 	public static final RegistryObject<BlockItem> ROOTED_POTATO = ITRRegistries.ITEMS.register("rooted_potato", () -> new SeedsBlockItem(Blocks.POTATOES, new Item.Properties()));
 	public static final RegistryObject<BlockItem> CARROT_SEEDS = ITRRegistries.ITEMS.register("carrot_seeds", () -> new SeedsBlockItem(Blocks.CARROTS, new Item.Properties()));
@@ -96,8 +91,6 @@ public class Crops extends JsonFeature {
 	public Crops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "crops", Component.literal("IguanaTweaks Reborn Crops"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
-		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "crops_hardness"), new SyncType(json -> loadAndReadJson(json, cropsHardness, CROPS_HARDNESS_DEFAULT, IdTagValue.LIST_TYPE)));
-		JSON_CONFIGS.add(new JsonConfig<>("crops_hardness.json", cropsHardness, CROPS_HARDNESS_DEFAULT, IdTagValue.LIST_TYPE, Crops::applyHardness, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "crops_hardness")));
 	}
 
 	@Override
@@ -213,18 +206,16 @@ public class Crops extends JsonFeature {
 		}
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onCropBreaking(PlayerEvent.BreakSpeed event) {
 		if (!this.isEnabled()
-				|| event.getState().destroySpeed == 0f)
+				|| event.getState().destroySpeed == 0f
+				|| !event.getState().is(HARDER_CROPS_TAG))
 			return;
 		ItemStack heldStack = event.getEntity().getMainHandItem();
 		if (!(heldStack.getItem() instanceof TieredItem heldItem))
 			return;
-		if (!heldItem.canPerformAction(heldStack, ToolActions.HOE_DIG) /*&& !heldItem.canPerformAction(heldStack, ToolActions.AXE_DIG)*/)
-			return;
-		Block block = event.getState().getBlock();
-		if (!(block instanceof CropBlock) && !event.getState().is(HARDER_CROPS_TAG))
+		if (!heldItem.canPerformAction(heldStack, ToolActions.HOE_DIG) && !heldItem.canPerformAction(heldStack, ToolActions.AXE_DIG))
 			return;
 		float efficiency = heldItem.getTier().getSpeed();
 		if (efficiency > 1.0F) {
@@ -236,8 +227,8 @@ public class Crops extends JsonFeature {
 		}
 		if (heldItem.canPerformAction(heldStack, ToolActions.HOE_DIG))
 			event.setNewSpeed(event.getNewSpeed() * efficiency);
-		//else
-			//event.setNewSpeed(event.getNewSpeed() / efficiency);
+		else
+			event.setNewSpeed(event.getNewSpeed() / efficiency);
 	}
 
 	public static int getWaterHydrationRadius() {
