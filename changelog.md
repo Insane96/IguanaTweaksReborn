@@ -3,8 +3,8 @@
 ## Upcoming
 * Added block data
   * In the `data/block_data` folder can now be placed JSON to modify blocks properties, such as hardness, explosion resistance, speed and jump factor and a few more
-  * With this, harder crops json has been removed and moved to a brand new data pack (block_data) that also changes more stuff
-    * To make crops able to be broken faster by hoes (and not axes) they must be added in the `iguanatweaksreborn:harder_crops` block tag
+  * With this, harder crops and custom hardness has been removed and moved to a brand new data pack (block_data)
+    * To make crops able to be broken faster by hoes (and not axes) they still must be added in the `iguanatweaksreborn:harder_crops` block tag
 * Sponges
   * Wet Sponges now dry when exposed to sun and Sponges now become wet when exposed to rain 
 * Graves
