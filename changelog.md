@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Sponges
+  * Wet Sponges now dry when exposed to sun and Sponges now become wet when exposed to rain 
 * Tiredness
   * When tired, random sounds will be played to the player
   * Increased stamina consumed and lowered stamina regenerated with the Tired effect

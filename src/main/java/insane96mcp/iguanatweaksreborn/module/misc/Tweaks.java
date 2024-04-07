@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -39,6 +40,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 @Label(name = "Tweaks", description = "Various stuff that doesn't fit in any other Feature.")
 @LoadFeature(module = Modules.Ids.MISC)
@@ -63,6 +65,9 @@ public class Tweaks extends Feature {
     @Config
     @Label(name = "Maximum Sponge Soak Range", description = "The maximum range at which sponges will check for soakable blocks. (Vanilla is 5, disabled if quark is installed)")
     public static Integer maxSpongeSoakRange = 10;
+    @Config
+    @Label(name = "Sponges dry in the sun and wet in rain", description = "If exposed to the sun sponges may dry and if exposed to rain sponges might get wet")
+    public static Boolean spongesDryInTheSun = true;
 
     @Config
     @Label(name = "Better hardcore death", description = "When you die in hardcore, your spawn point is set to where you died and a lightning strike is summoned")
@@ -80,6 +85,15 @@ public class Tweaks extends Feature {
 
     public Tweaks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
+    }
+
+    @Override
+    public void readConfig(ModConfigEvent event) {
+        super.readConfig(event);
+        if (spongesDryInTheSun) {
+            Blocks.WET_SPONGE.isRandomlyTicking = true;
+            Blocks.SPONGE.isRandomlyTicking = true;
+        }
     }
 
     public static boolean isFireImmune(Entity entity) {
@@ -106,6 +120,18 @@ public class Tweaks extends Feature {
 		//Vanilla uses < instead of <=
 		return maxSpongeSoakRange + 1;
 	}
+
+    public static void onSpongeTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (!Feature.isEnabled(Tweaks.class))
+            return;
+
+        if (level.canSeeSky(pos.above()) && random.nextInt(5) == 0) {
+            if (state.is(Blocks.SPONGE) && level.isRaining())
+                level.setBlockAndUpdate(pos, Blocks.WET_SPONGE.defaultBlockState());
+            else if (state.is(Blocks.WET_SPONGE) && !level.isRaining() && level.isDay())
+                level.setBlockAndUpdate(pos, Blocks.SPONGE.defaultBlockState());
+        }
+    }
 
 	public static int getPoisonDamageSpeed() {
 		return isEnabled(Tweaks.class) ? poisonDamageSpeed : 25;
