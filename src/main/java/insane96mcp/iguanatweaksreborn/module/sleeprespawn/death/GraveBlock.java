@@ -4,7 +4,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -23,6 +26,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
@@ -107,6 +111,16 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
 
             super.onRemove(state, level, pos, newState, p_60519_);
         }
+    }
+
+    @Override
+    public InteractionResult use(BlockState pState, Level level, BlockPos pos, Player player, InteractionHand pHand, BlockHitResult pHit) {
+        if (!level.isClientSide
+                || !(level.getBlockEntity(pos) instanceof GraveBlockEntity graveBlockEntity)
+                || graveBlockEntity.getMessage() == null)
+            return super.use(pState, level, pos, player, pHand, pHit);
+        player.sendSystemMessage(graveBlockEntity.getMessage());
+        return InteractionResult.SUCCESS;
     }
 
     public void dropGraveItems(Level level, ItemStack stack, BlockPos pos) {

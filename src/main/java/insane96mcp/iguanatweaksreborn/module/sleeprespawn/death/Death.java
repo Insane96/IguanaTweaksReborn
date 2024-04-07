@@ -112,6 +112,7 @@ public class Death extends Feature {
 		graveBlockEntity.setOwner(player.getUUID());
 		graveBlockEntity.setDeathNumber(player.getStats().getValue(Stats.CUSTOM.get(Stats.DEATHS)) + 1);
 		player.getInventory().clearContent();
+		graveBlockEntity.setMessage(player.getCombatTracker().getDeathMessage());
 
 		if (vindicationVsKiller && event.getSource().getEntity() instanceof Mob killer && !killer.getPersistentData().contains(KILLED_PLAYER)) {
 			if (killer.isRemoved() || killer.isDeadOrDying())
