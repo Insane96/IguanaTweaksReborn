@@ -1,6 +1,9 @@
 # Changelog
 
 ## Upcoming
+* Tiredness
+  * When tired, random sounds will be played to the player
+  * Increased stamina consumed and lowered stamina regenerated with the Tired effect
 * Mending overhaul changed
   * Player experience **when item's used** instead of repairing on picked up experience
 * Falling in a boat will now always break the boat and passenger will take fall damage
