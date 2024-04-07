@@ -8,7 +8,9 @@
   * Increased stamina consumed and lowered stamina regenerated with the Tired effect
 * Mending overhaul changed
   * Player experience **when item's used** instead of repairing on picked up experience
-* Falling in a boat will now always break the boat and passenger will take fall damage
+* Client > Misc
+  * Player camera no longer tilts when taking specific damage types
+* Falling while in a boat will now always break the boat and passenger will take fall damage
 
 ## 3.6.2
 * Eggs no longer stack to 64
