@@ -41,9 +41,8 @@ public class BlockDataSync {
     public static void handle(final BlockDataSync message, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             BlockDataReloadListener.restoreOriginalDataAndClear();
-            for (BlockData data : message.blockDataList) {
-                data.apply(false);
-            }
+            BlockDataReloadListener.DATA.clear();
+            BlockDataReloadListener.DATA.addAll(message.blockDataList);
         });
         ctx.get().setPacketHandled(true);
     }

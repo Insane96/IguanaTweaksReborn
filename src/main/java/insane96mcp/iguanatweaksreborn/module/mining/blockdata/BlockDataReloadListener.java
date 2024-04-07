@@ -12,6 +12,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraftforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.event.TagsUpdatedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -50,7 +51,7 @@ public class BlockDataReloadListener extends SimpleJsonResourceReloadListener {
 				//Serializer can return null in case the block doesn't exist (e.g. from other optional mods)
 				if (blockData == null)
 					return;
-				blockData.apply(false);
+				//blockData.apply(false);
 				DATA.add(blockData);
 			}
 			catch (JsonSyntaxException e) {
@@ -81,25 +82,12 @@ public class BlockDataReloadListener extends SimpleJsonResourceReloadListener {
 		}
 	}
 
-	/*@SubscribeEvent
-	public static void onDataPackSync(OnDatapackSyncEvent event) {
-		if (event.getPlayer() == null) {
-			event.getPlayerList().getPlayers().forEach(player -> ItemStatisticsSync.sync(STATS, player));
-		}
-		else {
-			ItemStatisticsSync.sync(STATS, event.getPlayer());
-		}
-	}
-
-
 	@SubscribeEvent
 	public static void onTagsUpdatedEvent(TagsUpdatedEvent event) {
-		if (event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED) {
-			for (ItemStatistics itemStatistics : BlockDataReloadListener.STATS) {
-				itemStatistics.applyStats(true);
-			}
+		for (BlockData data : BlockDataReloadListener.DATA) {
+			data.apply(false);
 		}
-	}*/
+	}
 
 	@Override
 	public String getName() {
