@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.7.0 - The BlockData update
 * Added block data
   * In the `data/block_data` folder can now be placed JSON to modify blocks properties, such as hardness, explosion resistance, speed and jump factor and a few more
   * With this, harder crops, custom hardness and terrain slowdown has been removed and moved to a brand new data pack (block_data)
