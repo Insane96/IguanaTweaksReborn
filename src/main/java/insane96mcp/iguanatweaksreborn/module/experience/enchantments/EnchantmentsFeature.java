@@ -274,8 +274,8 @@ public class EnchantmentsFeature extends JsonFeature {
 		ItemStack stack = event.getStack();
 		if (stack.getEnchantmentLevel(Enchantments.MENDING) == 0)
 			return;
-
-		event.getPlayer().giveExperiencePoints(-1);
+		if (event.getPlayer().getRandom().nextFloat() < 0.6f)
+			event.getPlayer().giveExperiencePoints(-1);
 		stack.setDamageValue(stack.getDamageValue()-1);
 	}
 
