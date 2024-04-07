@@ -23,11 +23,11 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.data.IdTagValue;
+import insane96mcp.insanelib.event.HurtItemStackEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -36,7 +36,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
@@ -74,7 +73,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Label(name = "Small Thorns Overhaul", description = "Thorns is no longer compatible with other protections, but deals damage every time (higher levels deal more damage) and no longer damages items.")
 	public static Boolean thornsOverhaul = true;
 	@Config
-	@Label(name = "Mending Overhaul", description = "Mending is changed to consume player experience instead of picked up experience.")
+	@Label(name = "Mending Overhaul", description = "Mending is changed to consume player experience when item's used instead of repairing on picked up experience.")
 	public static Boolean mendingOverhaul = true;
 
 	@Config
@@ -267,19 +266,16 @@ public class EnchantmentsFeature extends JsonFeature {
 	}
 
 	@SubscribeEvent
-	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+	public void onHurtItemStack(HurtItemStackEvent event) {
 		if (!this.isEnabled()
-				|| event.phase == TickEvent.Phase.START
-				|| event.player.level().isClientSide
 				|| !mendingOverhaul
-				|| event.player.tickCount % 40 != 0)
+				|| event.getPlayer() == null)
 			return;
-		Map.Entry<EquipmentSlot, ItemStack> entry = EnchantmentHelper.getRandomItemWith(Enchantments.MENDING, event.player, ItemStack::isDamaged);
-		if (entry == null)
+		ItemStack stack = event.getStack();
+		if (stack.getEnchantmentLevel(Enchantments.MENDING) == 0)
 			return;
 
-		ItemStack stack = entry.getValue();
-		event.player.giveExperiencePoints(-1);
+		event.getPlayer().giveExperiencePoints(-1);
 		stack.setDamageValue(stack.getDamageValue()-1);
 	}
 

@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Mending overhaul changed
+  * Player experience **when item's used** instead of repairing on picked up experience
 * Falling in a boat will now always break the boat and passenger will take fall damage
 
 ## 3.6.2
