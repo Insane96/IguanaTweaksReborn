@@ -41,16 +41,7 @@ public class BlockHardness extends JsonFeature {
 	));
 	public static final ArrayList<DepthHardnessDimension> depthMultiplierDimension = new ArrayList<>();
 
-	public static final ArrayList<IdTagValue> CUSTOM_HARDNESSES_DEFAULT = new ArrayList<>(List.of(
-			IdTagValue.newId("minecraft:coal_ore", 2.5d),
-			IdTagValue.newId("minecraft:copper_ore", 2.5d),
-			IdTagValue.newId("minecraft:iron_ore", 3d),
-			IdTagValue.newId("minecraft:gold_ore", 3.5d),
-			IdTagValue.newId("minecraft:diamond_ore", 4d),
-			IdTagValue.newId("minecraft:redstone_ore", 3d),
-			IdTagValue.newId("minecraft:lapis_ore", 3d),
-			IdTagValue.newId("minecraft:emerald_ore", 4d),
-
+	/*public static final ArrayList<IdTagValue> CUSTOM_HARDNESSES_DEFAULT = new ArrayList<>(List.of(
 			IdTagValue.newId("iguanatweaksexpanded:poor_copper_ore", 1.667d),
 			IdTagValue.newId("iguanatweaksexpanded:poor_iron_ore", 2d),
 			IdTagValue.newId("iguanatweaksexpanded:poor_gold_ore", 2.333d),
@@ -58,31 +49,13 @@ public class BlockHardness extends JsonFeature {
 			IdTagValue.newId("iguanatweaksexpanded:rich_iron_ore", 4d),
 			IdTagValue.newId("iguanatweaksexpanded:rich_gold_ore", 4.6666d),
 
-			IdTagValue.newId("minecraft:deepslate_coal_ore", 4d),
-			IdTagValue.newId("minecraft:deepslate_copper_ore", 4d),
-			IdTagValue.newId("minecraft:deepslate_iron_ore", 4.5d),
-			IdTagValue.newId("minecraft:deepslate_gold_ore", 5d),
-			IdTagValue.newId("minecraft:deepslate_diamond_ore", 6d),
-			IdTagValue.newId("minecraft:deepslate_redstone_ore", 4.5d),
-			IdTagValue.newId("minecraft:deepslate_lapis_ore", 4.5d),
-			IdTagValue.newId("minecraft:deepslate_emerald_ore", 6d),
-
 			IdTagValue.newId("iguanatweaksexpanded:poor_deepslate_copper_ore", 2.667d),
 			IdTagValue.newId("iguanatweaksexpanded:poor_deepslate_iron_ore", 3d),
 			IdTagValue.newId("iguanatweaksexpanded:poor_deepslate_gold_ore", 3.333d),
 			IdTagValue.newId("iguanatweaksexpanded:rich_deepslate_copper_ore", 5.333d),
 			IdTagValue.newId("iguanatweaksexpanded:rich_deepslate_iron_ore", 6d),
-			IdTagValue.newId("iguanatweaksexpanded:rich_deepslate_gold_ore", 6.666d),
-
-			IdTagValue.newId("minecraft:ancient_debris", 6d),
-			IdTagValue.newId("minecraft:budding_amethyst", 4.5d),
-			IdTagValue.newTag("iguanatweaksreborn:obsidians", 25d),
-
-			IdTagValue.newId("minecraft:powder_snow", 2.5d),
-
-			IdTagValue.newTag("minecraft:leaves", 0.4d)
-	));
-	public static final ArrayList<IdTagValue> customHardnesses = new ArrayList<>();
+			IdTagValue.newId("iguanatweaksexpanded:rich_deepslate_gold_ore", 6.666d)
+	));*/
 
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Hardness Multiplier", description = "Multiplier applied to the hardness of blocks. E.g. with this set to 2.0 blocks will take 2 times longer to break.")
@@ -94,8 +67,6 @@ public class BlockHardness extends JsonFeature {
 		JSON_CONFIGS.add(new JsonConfig<>("dimension_hardness.json", dimensionHardnessMultiplier, DIMENSION_HARDNESS_MULTIPLIERS_DEFAULT, DimensionHardnessMultiplier.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "dimension_hardness")));
 		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "depth_multipliers"), new SyncType(json -> loadAndReadJson(json, depthMultiplierDimension, DEPTH_MULTIPLIER_DIMENSION_DEFAULT, DepthHardnessDimension.LIST_TYPE)));
 		JSON_CONFIGS.add(new JsonConfig<>("depth_multipliers.json", depthMultiplierDimension, DEPTH_MULTIPLIER_DIMENSION_DEFAULT, DepthHardnessDimension.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "depth_multipliers")));
-		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "custom_hardnesses"), new SyncType(json -> loadAndReadJson(json, customHardnesses, CUSTOM_HARDNESSES_DEFAULT, IdTagValue.LIST_TYPE)));
-		JSON_CONFIGS.add(new JsonConfig<>("custom_hardnesses.json", customHardnesses, CUSTOM_HARDNESSES_DEFAULT, IdTagValue.LIST_TYPE, BlockHardness::processBlockHardness, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "custom_hardnesses")));
 	}
 
 	@Override
@@ -154,7 +125,7 @@ public class BlockHardness extends JsonFeature {
 
 	public static double getBlockHardnessMultiplier(BlockState state, ResourceLocation dimensionId, BlockPos pos) {
 		double blockHardness = getBlockGlobalHardnessMultiplier(state, dimensionId);
-		blockHardness += getDepthHardnessMultiplier(state, dimensionId, pos, true);
+		blockHardness += getDepthHardnessMultiplier(state, dimensionId, pos);
 		return blockHardness;
 	}
 
@@ -177,14 +148,9 @@ public class BlockHardness extends JsonFeature {
 	/**
 	 * Returns an additive multiplier based off the depth of the block broken
 	 */
-	public static double getDepthHardnessMultiplier(BlockState state, ResourceLocation dimensionId, BlockPos pos, boolean processCustomHardness) {
+	public static double getDepthHardnessMultiplier(BlockState state, ResourceLocation dimensionId, BlockPos pos) {
 		if (!Feature.isEnabled(BlockHardness.class))
 			return 0d;
-
-		if (!processCustomHardness)
-			for (IdTagValue blockHardness : customHardnesses)
-				if (blockHardness.id.matchesBlock(state, dimensionId))
-					return 0d;
 
 		if (state.is(DEPTH_MULTIPLIER_BLACKLIST))
 			return 0d;

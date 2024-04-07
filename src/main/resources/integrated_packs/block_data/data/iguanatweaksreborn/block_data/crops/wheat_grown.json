@@ -1,0 +1,7 @@
+{
+    "block": "minecraft:wheat",
+    "states": [
+        "age=7"
+    ],
+    "state_hardness": 1.5
+}

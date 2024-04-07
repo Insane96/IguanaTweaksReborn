@@ -1,0 +1,7 @@
+{
+    "block": "supplementaries:flax",
+    "states": [
+        "age=7"
+    ],
+    "state_hardness": 1.5
+}
