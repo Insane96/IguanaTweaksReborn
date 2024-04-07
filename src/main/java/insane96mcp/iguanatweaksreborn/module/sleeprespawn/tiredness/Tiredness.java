@@ -12,13 +12,16 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.event.PlayerExhaustionEvent;
+import insane96mcp.insanelib.util.LogHelper;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
@@ -95,6 +98,12 @@ public class Tiredness extends JsonFeature {
 			SET_AT_EFFECT keeps the current tiredness but if higher than 'Tiredness for effect' it's set to that
 			REMOVE_ONE_LEVEL keeps the current tiredness but if higher than 'Tiredness for effect' removes one level of Tired to a minimum of I""")
 	public static OnDeath onDeathBehaviour = OnDeath.SET_AT_EFFECT;
+	@Config
+	@Label(name = "Tired sounds", description = "Sounds played when the player is tired")
+	public static List<String> tiredSounds = List.of("minecraft:block.basalt.break", "minecraft:block.big_dripleaf.place", "minecraft:block.bone_block.hit", "minecraft:block.candle.extinguish", "minecraft:entity.zombie.ambient", "minecraft:entity.skeleton.ambient", "minecraft:entity.spider.ambient", "minecraft:entity.slime.attack", "minecraft:entity.creeper.hurt", "minecraft:entity.ghast.ambient");
+	@Config
+	@Label(name = "Tired Sound Chance", description = "The chance is 0% of this value as soon as a sound is played, 100% as 10 minutes have passed and 200% at 30 minutes")
+	public static Double tiredSoundChance = 0.025d;
 
 	public Tiredness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -122,6 +131,43 @@ public class Tiredness extends JsonFeature {
 
 		ServerPlayer serverPlayer = (ServerPlayer) event.player;
 		tickEnergyBoostEffect(serverPlayer);
+	}
+
+	private static long lastPlayedSound = 0;
+	@SubscribeEvent
+	public void onClientPlayerTick(TickEvent.PlayerTickEvent event) {
+		if (!this.isEnabled()
+				|| event.player.tickCount % 100 != 69
+				|| !event.player.level().isClientSide
+				|| event.phase == TickEvent.Phase.START
+				|| !event.player.hasEffect(TIRED.get()))
+			return;
+
+		if (lastPlayedSound == 0)
+			lastPlayedSound = event.player.level().getGameTime();
+		//noinspection DataFlowIssue
+		int amplifier = event.player.getEffect(TIRED.get()).getAmplifier();
+		if (amplifier == 0)
+			return;
+		long secondsSinceLastSound = (event.player.level().getGameTime() - lastPlayedSound) / 20;
+		float chance = tiredSoundChance.floatValue() * amplifier;
+		if (secondsSinceLastSound <= 600)
+			chance *= secondsSinceLastSound / 600f;
+		else
+			chance *= secondsSinceLastSound / 300f;
+
+		LogHelper.info("lastPlayedSound: %d, chance: %.4f", lastPlayedSound, chance);
+		if (event.player.getRandom().nextFloat() < chance) {
+			lastPlayedSound = event.player.level().getGameTime();
+			String sSound = tiredSounds.get(event.player.getRandom().nextInt(tiredSounds.size()));
+			ResourceLocation soundLocation = ResourceLocation.tryParse(sSound);
+			if (soundLocation == null) {
+				LogHelper.error("Invalid sound %s for Tired Sounds", sSound);
+				return;
+			}
+			Holder<SoundEvent> holder = Holder.direct(SoundEvent.createVariableRangeEvent(soundLocation));
+			event.player.playSound(holder.value(), 0.5f, event.player.getRandom().nextFloat() * 0.5f + 0.75f);
+		}
 	}
 
 	private void tickEnergyBoostEffect(ServerPlayer player) {
@@ -292,7 +338,7 @@ public class Tiredness extends JsonFeature {
 				return;
 			//noinspection DataFlowIssue
 			int amplifier = player.getEffect(TIRED.get()).getAmplifier() + 1;
-			float brightness = Mth.clamp(amplifier * 0.1f * ((amplifier - 1) * 0.5f), 0f, 1f);
+			float brightness = Mth.clamp(amplifier * 0.1f * ((amplifier - 1) * 0.6f), 0f, 1f);
 			Minecraft.getInstance().getProfiler().push("tired_overlay");
 			guiGraphics.setColor(1f, 1f, 1f, brightness);
 			guiGraphics.blit(OVERLAY_LOCATION, 0, 0, -90, 0.0F, 0.0F, screenWidth, screenHeight, screenWidth, screenHeight);

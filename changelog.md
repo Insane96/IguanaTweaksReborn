@@ -5,7 +5,18 @@
   * In the `data/block_data` folder can now be placed JSON to modify blocks properties, such as hardness, explosion resistance, speed and jump factor and a few more
   * With this, harder crops json has been removed and moved to a brand new data pack (block_data) that also changes more stuff
     * To make crops able to be broken faster by hoes (and not axes) they must be added in the `iguanatweaksreborn:harder_crops` block tag
-* Falling in a boat will now always break the boat and passenger will take fall damage
+* Sponges
+  * Wet Sponges now dry when exposed to sun and Sponges now become wet when exposed to rain 
+* Graves
+  * Graves now save the death message of the player and can be seen when right-clicked
+* Tiredness
+  * When tired, random sounds will be played to the player
+  * Increased stamina consumed and lowered stamina regenerated with the Tired effect
+* Mending overhaul changed
+  * Player experience **when item's used** instead of repairing on picked up experience
+* Client > Misc
+  * Player camera no longer tilts when taking specific damage types
+* Falling while in a boat will now always break the boat and passenger will take fall damage
 
 ## 3.6.2
 * Eggs no longer stack to 64

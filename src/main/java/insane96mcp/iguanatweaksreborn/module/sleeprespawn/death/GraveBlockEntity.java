@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.module.experience.Experience;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -27,10 +29,13 @@ public class GraveBlockEntity extends BlockEntity {
     public static final String XP_STORED_TAG = "xp_stored";
     public static final String OWNER_TAG = "owner";
     public static final String DEATH_NUMBER_TAG = "death_number";
+    public static final String MESSAGE_TAG = "message";
     private List<ItemStack> items = new ArrayList<>();
     private int xpStored = 0;
     private UUID owner;
     private int deathNumber;
+    @Nullable
+    private Component message;
     public GraveBlockEntity(BlockPos pos, BlockState state) {
         super(Death.GRAVE_BLOCK_ENTITY_TYPE.get(), pos, state);
     }
@@ -69,6 +74,14 @@ public class GraveBlockEntity extends BlockEntity {
         this.deathNumber = deathNumber;
     }
 
+    public Component getMessage() {
+        return this.message;
+    }
+
+    public void setMessage(Component message) {
+        this.message = message;
+    }
+
     @Override
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
@@ -82,6 +95,9 @@ public class GraveBlockEntity extends BlockEntity {
         if (compoundTag.contains(OWNER_TAG)) {
             this.owner = compoundTag.getUUID(OWNER_TAG);
             this.deathNumber = compoundTag.getInt(DEATH_NUMBER_TAG);
+        }
+        if (compoundTag.contains(MESSAGE_TAG)) {
+            this.message = Component.Serializer.fromJson(compoundTag.getString(MESSAGE_TAG));
         }
     }
 
@@ -100,6 +116,8 @@ public class GraveBlockEntity extends BlockEntity {
             compoundTag.putUUID(OWNER_TAG, this.owner);
             compoundTag.putInt(DEATH_NUMBER_TAG, this.deathNumber);
         }
+        if (this.message != null)
+            compoundTag.putString(MESSAGE_TAG, Component.Serializer.toJson(this.message));
     }
 
     @Nullable
@@ -110,8 +128,8 @@ public class GraveBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return super.getUpdateTag();
+    public @NotNull CompoundTag getUpdateTag() {
+        return this.saveWithoutMetadata();
     }
 
     public static <T extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, T t) {

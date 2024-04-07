@@ -13,6 +13,7 @@
         "ArrowItemMixin",
         "BaseSpawnerMixin",
         "BellBlockEntityMixin",
+        "BlockBehaviourMixin",
         "BoatMixin",
         "BonusLevelTableConditionMixin",
         "CampfireBlockMixin",

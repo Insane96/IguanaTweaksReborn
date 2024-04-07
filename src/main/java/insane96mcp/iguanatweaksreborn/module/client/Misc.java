@@ -23,6 +23,10 @@ public class Misc extends Feature {
     @Label(name = "Cap world border height", description = "Set the max height of the world border.")
     public static Double capWorldBorderHeight = 128d;
 
+    @Config
+    @Label(name = "No tilting with some damage types", description = "If true, camera will not tilt when taking magic, wither, on fire, cramming, drowning and thorns damage.")
+    public static Boolean noTiltingWithSomeDamageTypes = true;
+
     public Misc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -35,5 +39,9 @@ public class Misc extends Feature {
 
     public static boolean shouldShortenWorldBorder() {
         return isEnabled(Misc.class) && shorterWorldBorder;
+    }
+
+    public static boolean shouldDisableTiltingWithSomeDamageTypes() {
+        return isEnabled(Misc.class) && noTiltingWithSomeDamageTypes;
     }
 }
