@@ -73,8 +73,8 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Label(name = "Small Thorns Overhaul", description = "Thorns is no longer compatible with other protections, but deals damage every time (higher levels deal more damage) and no longer damages items.")
 	public static Boolean thornsOverhaul = true;
 	@Config
-	@Label(name = "Mending Overhaul", description = "Mending is changed to consume player experience when item's used instead of repairing on picked up experience.")
-	public static Boolean mendingOverhaul = true;
+	@Label(name = "Mending Nerf", description = "Mending only makes the tool repair by one durability instead of 2 per xp.")
+	public static Boolean mendingNerf = true;
 
 	@Config
 	@Label(name = "Better Efficiency Formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to tool_efficiency * (1 + (0.5*lvl))")
@@ -268,7 +268,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	@SubscribeEvent
 	public void onHurtItemStack(HurtItemStackEvent event) {
 		if (!this.isEnabled()
-				|| !mendingOverhaul
+				|| !mendingNerf
 				|| event.getPlayer() == null
 				|| (event.getPlayer().experienceLevel == 0 && event.getPlayer().experienceProgress == 0))
 			return;

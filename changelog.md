@@ -1,8 +1,9 @@
 # Changelog
 
 ## Upcoming
+* Reverted Mending
+  * Mending now works again like vanilla but nerfed: 1 XP = ~~2~~ 1 repair
 * Fixed crash when milking cows in multiplayer
-* Fixed mending
 
 ## 3.7.0 - The BlockData update
 * Added block data
