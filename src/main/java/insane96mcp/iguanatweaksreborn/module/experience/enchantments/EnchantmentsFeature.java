@@ -269,14 +269,14 @@ public class EnchantmentsFeature extends JsonFeature {
 	public void onHurtItemStack(HurtItemStackEvent event) {
 		if (!this.isEnabled()
 				|| !mendingOverhaul
-				|| event.getPlayer() == null)
+				|| event.getPlayer() == null
+				|| (event.getPlayer().experienceLevel == 0 && event.getPlayer().experienceProgress == 0))
 			return;
 		ItemStack stack = event.getStack();
 		if (stack.getEnchantmentLevel(Enchantments.MENDING) == 0)
 			return;
-		if (event.getPlayer().getRandom().nextFloat() < 0.6f)
-			event.getPlayer().giveExperiencePoints(-1);
-		stack.setDamageValue(stack.getDamageValue()-1);
+		event.getPlayer().giveExperiencePoints(-1);
+		event.setAmount(0);
 	}
 
 	@SubscribeEvent
