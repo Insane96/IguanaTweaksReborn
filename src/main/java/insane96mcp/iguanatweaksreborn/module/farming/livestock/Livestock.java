@@ -214,7 +214,7 @@ public class Livestock extends Feature {
 			else
 				event.setCancellationResult(InteractionResult.SUCCESS);
 		}
-		else {
+		else if (!animal.level().isClientSide) {
 			float cooldown = 0;
 			List<Modifier> modifiersToApply = new ArrayList<>();
 			for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA) {
@@ -231,8 +231,7 @@ public class Livestock extends Feature {
 
 			milkCooldown = (int) (cooldown * 20);
 			cowNBT.putInt(MILK_COOLDOWN, milkCooldown);
-			if (!animal.level().isClientSide)
-				ForgeDataIntSync.sync(animal, MILK_COOLDOWN, milkCooldown);
+			ForgeDataIntSync.sync(animal, MILK_COOLDOWN, milkCooldown);
 			//player.swing(event.getHand());
 		}
 	}

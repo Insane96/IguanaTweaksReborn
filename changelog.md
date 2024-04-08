@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed crash when milking cows in multiplayer
+
 ## 3.7.0 - The BlockData update
 * Added block data
   * In the `data/block_data` folder can now be placed JSON to modify blocks properties, such as hardness, explosion resistance, speed and jump factor and a few more
