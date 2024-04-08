@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Reworked enchantment tooltips
+  * Now are shown below the enchantment
 * Reverted Mending
   * Mending now works again like vanilla but nerfed: 1 XP = ~~2~~ 1 repair
 * Fixed crash when milking cows in multiplayer

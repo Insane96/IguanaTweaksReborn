@@ -11,7 +11,6 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.event.HurtItemStackEvent;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -260,10 +259,10 @@ public class ItemStats extends Feature {
                 component = Component.translatable(BROKEN_DURABILITY_LANG).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD);
             else
                 component = Component.translatable(TOOL_DURABILITY_LANG, durabilityLeft, durability).withStyle(ChatFormatting.GRAY);
-            if (durabilityLeft > 1 && stack.getAllEnchantments().containsKey(Enchantments.UNBREAKING) && Screen.hasShiftDown()) {
+            /*if (durabilityLeft > 1 && stack.getAllEnchantments().containsKey(Enchantments.UNBREAKING) && Screen.hasShiftDown()) {
 				int lvl = stack.getAllEnchantments().get(Enchantments.UNBREAKING);
 				component.append(Component.literal(" (+%.0f%%)".formatted(getUnbreakingPercentageBonus(lvl) * 100f)).withStyle(ChatFormatting.DARK_PURPLE));
-			}
+			}*/
 			event.getToolTip().add(component);
 		}
 	}

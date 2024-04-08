@@ -24,6 +24,11 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.insanelib.event.HurtItemStackEvent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
@@ -39,15 +44,15 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Label(name = "Enchantments", description = "Changes to some enchantments related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
@@ -107,6 +112,10 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Config
 	@Label(name = "Replace looting, fortune and LotS enchantments", description = "If true, vanilla looting, fortune and Luck of the Sea enchantments are replaced with a single one: Luck. To re-enable vanilla enchantments refer to `disabled_enchantments.json`.")
 	public static Boolean replaceLuckEnchantments = true;
+
+	@Config
+	@Label(name = "Enchantments info", description = "If true and shift it pressed, items will show enchantment info below the enchantments")
+	public static Boolean enchantmentsInfo = true;
 
 	public static final ArrayList<IdTagMatcher> DISABLED_ENCHANTMENTS_DEFAULT = new ArrayList<>(List.of(
 			IdTagMatcher.newId("minecraft:sharpness"),
@@ -286,6 +295,29 @@ public class EnchantmentsFeature extends JsonFeature {
 			return;
 		if (!arrow.shotFromCrossbow())
 			processBow(arrow);
+	}
+
+	@SubscribeEvent
+	public void onItemTooltip(ItemTooltipEvent event) {
+		if (!this.isEnabled()
+				|| !enchantmentsInfo
+				|| !event.getItemStack().isEnchanted()
+				|| !Screen.hasShiftDown())
+			return;
+		HashMap<Integer, Component> tooltipsToAdd = new HashMap<>();
+		Set<Enchantment> enchantments = event.getItemStack().getAllEnchantments().keySet();
+		AtomicInteger added = new AtomicInteger();
+		for (Component line : event.getToolTip()) {
+			if (line.getContents() instanceof TranslatableContents translatableContents) {
+				Optional<Enchantment> oEnchantment = enchantments.stream().filter(e -> translatableContents.getKey().equals(e.getDescriptionId())).findAny();
+				oEnchantment.ifPresent(enchantment -> {
+					tooltipsToAdd.put(event.getToolTip().indexOf(line) + 1 + added.getAndIncrement(), CommonComponents.space().append(Component.translatable(enchantment.getDescriptionId() + ".info").withStyle(ChatFormatting.LIGHT_PURPLE)));
+				});
+			}
+		}
+		for (Map.Entry<Integer, Component> tooltipToAdd : tooltipsToAdd.entrySet()) {
+			event.getToolTip().add(tooltipToAdd.getKey(), tooltipToAdd.getValue());
+		}
 	}
 
 	private static void processBow(AbstractArrow arrow) {

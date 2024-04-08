@@ -1,21 +1,17 @@
 package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment;
 
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
-import insane96mcp.insanelib.world.enchantments.IEnchantmentTooltip;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import org.jetbrains.annotations.NotNull;
 
-public class FireAspect extends Enchantment implements IEnchantmentTooltip {
+public class FireAspect extends Enchantment {
     public static final TagKey<Item> ACCEPTS_ENCHANTMENT = ITRItemTagsProvider.create("enchanting/accepts_fire_aspect");
     static final EnchantmentCategory CATEGORY = EnchantmentCategory.create("fire_aspect", item -> item.builtInRegistryHolder().is(ACCEPTS_ENCHANTMENT));
     public FireAspect() {
@@ -46,10 +42,5 @@ public class FireAspect extends Enchantment implements IEnchantmentTooltip {
 
     public int secondsOnFirePerLevel() {
         return 4;
-    }
-
-    @Override
-    public Component getTooltip(ItemStack stack, int lvl) {
-        return Component.translatable(this.getDescriptionId() + ".tooltip", this.secondsOnFirePerLevel() * lvl).withStyle(ChatFormatting.DARK_PURPLE);
     }
 }

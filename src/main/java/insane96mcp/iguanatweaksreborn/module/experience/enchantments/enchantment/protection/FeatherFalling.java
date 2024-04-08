@@ -1,10 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection;
 
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
-import insane96mcp.insanelib.InsaneLib;
-import insane96mcp.insanelib.world.enchantments.IEnchantmentTooltip;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -12,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-public class FeatherFalling extends Enchantment implements IProtectionEnchantment, IEnchantmentTooltip {
+public class FeatherFalling extends Enchantment implements IProtectionEnchantment {
     public FeatherFalling() {
         super(Rarity.UNCOMMON, EnchantmentCategory.ARMOR_FEET, new EquipmentSlot[] { EquipmentSlot.FEET });
     }
@@ -45,10 +41,5 @@ public class FeatherFalling extends Enchantment implements IProtectionEnchantmen
     @Override
     public boolean isSourceReduced(DamageSource source) {
         return source.is(DamageTypeTags.IS_FALL);
-    }
-
-    @Override
-    public Component getTooltip(ItemStack stack, int lvl) {
-        return Component.translatable(this.getDescriptionId() + ".tooltip", InsaneLib.ONE_DECIMAL_FORMATTER.format(this.getDamageReduction(lvl) * 100f)).withStyle(ChatFormatting.DARK_PURPLE);
     }
 }

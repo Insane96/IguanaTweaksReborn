@@ -2,10 +2,6 @@ package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantmen
 
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
-import insane96mcp.insanelib.InsaneLib;
-import insane96mcp.insanelib.world.enchantments.IEnchantmentTooltip;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.stream.Stream;
 
-public abstract class BonusDamageEnchantment extends Enchantment implements IEnchantmentTooltip {
+public abstract class BonusDamageEnchantment extends Enchantment {
 
     public static final TagKey<Item> ACCEPTS_ENCHANTMENT = ITRItemTagsProvider.create("enchanting/accepts_damage_enchantments");
     static final EnchantmentCategory CATEGORY = EnchantmentCategory.create("damage_enchantment", item -> item.builtInRegistryHolder().is(ACCEPTS_ENCHANTMENT));
@@ -80,10 +76,5 @@ public abstract class BonusDamageEnchantment extends Enchantment implements IEnc
             baseDamage += (float) attributeModifier.getAmount();
         }
         return baseDamage / 5f;
-    }
-
-    @Override
-    public Component getTooltip(ItemStack stack, int lvl) {
-        return Component.translatable(this.getDescriptionId() + ".tooltip", InsaneLib.ONE_DECIMAL_FORMATTER.format(this.getDamageBonus(stack, lvl))).withStyle(ChatFormatting.DARK_PURPLE);
     }
 }
