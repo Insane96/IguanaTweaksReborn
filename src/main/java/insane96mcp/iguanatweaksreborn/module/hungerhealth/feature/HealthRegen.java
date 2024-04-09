@@ -183,7 +183,7 @@ public class HealthRegen extends Feature {
 	@SubscribeEvent
 	public void onPlayerEat(LivingEntityUseItemEvent.Finish event) {
 		if (!this.isEnabled()
-				|| !event.getItem().isEdible()
+				|| event.getItem().getItem().getFoodProperties() == null
 				|| !(event.getEntity() instanceof Player)
 				|| event.getEntity().level.isClientSide)
 			return;

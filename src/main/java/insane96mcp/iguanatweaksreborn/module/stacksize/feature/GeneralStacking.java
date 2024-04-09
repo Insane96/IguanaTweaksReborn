@@ -159,7 +159,7 @@ public class GeneralStacking extends ITFeature {
 
         for (Map.Entry<Item, Integer> entry : originalStackSizes.entrySet()) {
             Item item = entry.getKey();
-            if (!item.isEdible()
+            if (item.getFoodProperties() == null
                     || isItemInTag(item, NO_STACK_SIZE_CHANGES))
                 continue;
 

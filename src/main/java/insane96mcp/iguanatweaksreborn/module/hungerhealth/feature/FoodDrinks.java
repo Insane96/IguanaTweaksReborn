@@ -126,7 +126,7 @@ public class FoodDrinks extends ITFeature {
 		processedFoodMultipliers = true;
 
 		for (Item item : ForgeRegistries.ITEMS.getValues()) {
-			if (!item.isEdible()
+			if (item.getFoodProperties() == null
 					|| isItemInTag(item, FOOD_BLACKLIST))
 				continue;
 
@@ -147,7 +147,7 @@ public class FoodDrinks extends ITFeature {
 		for (CustomFoodProperties foodValue : customFoodProperties) {
 			List<Item> items = getAllItems(foodValue);
 			for (Item item : items) {
-				if (!item.isEdible()) {
+				if (item.getFoodProperties() == null) {
 					LogHelper.warn("In Custom Food Value %s is not a food", item);
 					continue;
 				}

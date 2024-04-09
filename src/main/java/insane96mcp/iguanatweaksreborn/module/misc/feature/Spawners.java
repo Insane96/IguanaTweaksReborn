@@ -62,7 +62,7 @@ public class Spawners extends Feature {
 
 	@Config(min = 0)
 	@Label(name = "Spawning speed boost", description = "How much faster spawners tick down the spawning delay.")
-	public static Integer spawningSpeedBoost = 4;
+	public static Integer spawningSpeedBoost = 3;
 
 	public Spawners(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);

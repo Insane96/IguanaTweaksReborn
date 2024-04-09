@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.13.7
+* Crash fix for Crossroads mod
+
 ## 2.13.6
 * Backported survival reimagined Spawners changes
   * Temp Spawner feature has been renamed to Spawners

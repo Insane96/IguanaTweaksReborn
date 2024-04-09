@@ -130,7 +130,7 @@ public class Tiredness extends ITFeature {
 	@SubscribeEvent
 	public void onItemFinishUse(LivingEntityUseItemEvent.Finish event) {
 		if (!this.isEnabled()
-				|| !event.getItem().isEdible())
+				|| event.getItem().getItem().getFoodProperties() == null)
 			return;
 		for (EnergyBoostItem energyBoostItem : energyBoostItems) {
 			if (energyBoostItem.matchesItem(event.getItem().getItem())) {
