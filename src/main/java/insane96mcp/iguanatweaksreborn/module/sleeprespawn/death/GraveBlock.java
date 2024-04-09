@@ -2,13 +2,17 @@ package insane96mcp.iguanatweaksreborn.module.sleeprespawn.death;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -142,5 +146,13 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         return blockEntityType == Death.GRAVE_BLOCK_ENTITY_TYPE.get() && !level.isClientSide ? GraveBlockEntity::serverTick : null;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+        CompoundTag blockEntityData = BlockItem.getBlockEntityData(pStack);
+        if (blockEntityData == null)
+            return;
+        pTooltip.add(Component.Serializer.fromJson(blockEntityData.getString("message")));
     }
 }

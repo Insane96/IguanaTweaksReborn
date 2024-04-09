@@ -7,6 +7,8 @@
 * Reverted Mending
   * Mending now works again like vanilla but nerfed: 1 XP = ~~2~~ 1 repair
 * Fixed crash when milking cows in multiplayer
+* Graves now save the death message when broken
+  * Also Graves now drop when players die again
 * Fixed mod overwriting the bypasses_cooldown tag
 * Fixed Wandering Trades not reloading on /reload
 

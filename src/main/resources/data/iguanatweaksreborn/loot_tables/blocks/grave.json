@@ -7,7 +7,20 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "iguanatweaksreborn:grave"
+                    "name": "iguanatweaksreborn:grave",
+                    "functions": [
+                        {
+                            "function": "minecraft:copy_nbt",
+                            "ops": [
+                                {
+                                    "op": "replace",
+                                    "source": "message",
+                                    "target": "BlockEntityTag.message"
+                                }
+                            ],
+                            "source": "block_entity"
+                        }
+                    ]
                 }
             ],
             "conditions": [
