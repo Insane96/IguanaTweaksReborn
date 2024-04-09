@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.7.1
 * Reworked enchantment tooltips
   * Now are shown below the enchantment
 * Wandering traders enchanted books can now have Trasure enchantments
