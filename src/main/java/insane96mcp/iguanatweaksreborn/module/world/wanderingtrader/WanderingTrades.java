@@ -8,6 +8,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -22,14 +23,16 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.saveddata.maps.MapDecoration;
 import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.village.WandererTradesEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-@Label(name = "Wandering Trades", description = "Change wandering trader offers")
+@Label(name = "Wandering Trades", description = "Change wandering trader offers.")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class WanderingTrades extends JsonFeature {
     public static final TagKey<Structure> DESERT_TEMPLE_TAG = TagKey.create(Registries.STRUCTURE, new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "desert_pyramid"));
@@ -66,8 +69,8 @@ public class WanderingTrades extends JsonFeature {
     public static final ArrayList<SerializableTrade> wanderingTraderGenericTrades = new ArrayList<>();
 
     public static final Supplier<ArrayList<SerializableTrade>> WANDERING_TRADER_RARE_TRADES_DEFAULT = () -> new ArrayList<>(List.of(
-            new SerializableTrade(new ItemStack(Items.EMERALD, 7), new ItemStack(Items.BOOK), 1)
-                    .enchantResult(10, 18, false),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 9), new ItemStack(Items.BOOK), 1)
+                    .enchantResult(12, 22, true),
             new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.BOOK), 1)
                     .enchantResult(4, 8, false),
             //new SerializableTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(Lapis.ANCIENT_LAPIS.get()), 1),
@@ -133,9 +136,14 @@ public class WanderingTrades extends JsonFeature {
             JSON_CONFIGS.add(new JsonConfig<>("buying_trades.json", wanderingTraderBuyingTrades, WANDERING_TRADER_BUYING_TRADES_DEFAULT.get(), SerializableTrade.SERIALIZABLE_TRADE_LIST_TYPE));
         }
         super.loadJsonConfigs();
+        NonNullList<VillagerTrades.ItemListing> generic = NonNullList.create();
+        NonNullList<VillagerTrades.ItemListing> rare = NonNullList.create();
+        MinecraftForge.EVENT_BUS.post(new WandererTradesEvent(generic, rare));
+        VillagerTrades.WANDERING_TRADER_TRADES.put(1, generic.toArray(new VillagerTrades.ItemListing[0]));
+        VillagerTrades.WANDERING_TRADER_TRADES.put(2, rare.toArray(new VillagerTrades.ItemListing[0]));
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onWanderingTradesEvent(WandererTradesEvent event) {
         if (!this.isEnabled())
             return;

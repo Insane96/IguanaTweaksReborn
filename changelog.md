@@ -3,10 +3,12 @@
 ## Upcoming
 * Reworked enchantment tooltips
   * Now are shown below the enchantment
+* Wandering traders enchanted books can now have Trasure enchantments
 * Reverted Mending
   * Mending now works again like vanilla but nerfed: 1 XP = ~~2~~ 1 repair
 * Fixed crash when milking cows in multiplayer
 * Fixed mod overwriting the bypasses_cooldown tag
+* Fixed Wandering Trades not reloading on /reload
 
 ## 3.7.0 - The BlockData update
 * Added block data
