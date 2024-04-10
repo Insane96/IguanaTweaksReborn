@@ -1,6 +1,6 @@
 {
 	"item": "#minecraft:hoes",
-	"attack_damage": 0,
+	"attack_damage": 2,
 	"attack_speed": 2.2,
 	"durability_multiplier": 1.3,
 	"modifiers": [
@@ -26,6 +26,14 @@
 			"slot": "mainhand",
 			"attribute": "minecraft:generic.attack_speed",
 			"amount": 0.15,
+			"operation": "multiply_base"
+		},
+		{
+			"uuid": "de87cf5d-0f15-4b4e-88c5-9b3c971146d0",
+			"name": "Tool modifier",
+			"slot": "mainhand",
+			"attribute": "minecraft:generic.attack_damage",
+			"amount": -0.5,
 			"operation": "multiply_base"
 		}
 	]

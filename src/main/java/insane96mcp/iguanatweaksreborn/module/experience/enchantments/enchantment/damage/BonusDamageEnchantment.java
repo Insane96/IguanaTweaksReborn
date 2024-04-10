@@ -14,8 +14,6 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.stream.Stream;
-
 public abstract class BonusDamageEnchantment extends Enchantment {
 
     public static final TagKey<Item> ACCEPTS_ENCHANTMENT = ITRItemTagsProvider.create("enchanting/accepts_damage_enchantments");
@@ -70,11 +68,10 @@ public abstract class BonusDamageEnchantment extends Enchantment {
     public static float getDamageBonusRatio(ItemStack stack) {
         if (!(stack.getItem() instanceof TieredItem))
             return 0f;
-        float baseDamage = 0f;
-        Stream<AttributeModifier> weaponAttributeModifier = stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE).stream().filter(attributeModifier -> attributeModifier.getOperation() == AttributeModifier.Operation.ADDITION);
-        for (AttributeModifier attributeModifier : weaponAttributeModifier.toList()) {
-            baseDamage += (float) attributeModifier.getAmount();
-        }
-        return baseDamage / 5f;
+        return (float) (stack.getAttributeModifiers(EquipmentSlot.MAINHAND).get(Attributes.ATTACK_DAMAGE)
+                        .stream()
+                        .filter(attributeModifier -> attributeModifier.getOperation() == AttributeModifier.Operation.MULTIPLY_BASE)
+                        .mapToDouble(AttributeModifier::getAmount)
+                        .sum() + 1f);
     }
 }

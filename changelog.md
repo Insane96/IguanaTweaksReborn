@@ -4,6 +4,7 @@
 * Rebalanced tools
   * Hoes: Increased durability by 30% and attack speed (~10% more)
   * Axes: Decreased durability by 30% and changed damage (base damage 5 -> 2.5; bonus damage 0% -> 50%)
+  * With this, bonus damage enchantments now scale with the percentage modifiers
 * Air is now consumed faster and the more you're drowning, the more damage you're dealt
 * Wandering traders now sell maps to Trail Ruins
 * Slight rebalance of foods (stack sizes, heal over time, instant heal and eating time)

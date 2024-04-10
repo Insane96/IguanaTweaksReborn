@@ -10,7 +10,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class BaneOfSSSS extends BonusDamageEnchantment {
@@ -28,13 +27,6 @@ public class BaneOfSSSS extends BonusDamageEnchantment {
             int i = 20 + attacker.getRandom().nextInt(10 * lvl);
             livingentity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, i, 3));
         }
-    }
-
-    @Override
-    public float getDamageBonus(LivingEntity attacker, LivingEntity target, ItemStack stack, int lvl) {
-        if (!target.getType().is(AFFECTED_BY_BANE_OF_SSSSS))
-            return 0f;
-        return this.getDamageBonus(stack, lvl);
     }
 
     @Override
