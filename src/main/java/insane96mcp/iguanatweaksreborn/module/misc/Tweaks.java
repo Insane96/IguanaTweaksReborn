@@ -10,6 +10,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
+import insane96mcp.insanelib.util.MathHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,7 +24,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -73,12 +73,15 @@ public class Tweaks extends Feature {
     @Label(name = "Better hardcore death", description = "When you die in hardcore, your spawn point is set to where you died and a lightning strike is summoned")
     public static Boolean betterHardcoreDeath = true;
 
+    @Config(min = 0, max = 100)
+    @Label(name = "Player air ticks consumed", description = "The amount of ticks the player consumes when underwater. In vanilla it's 1 without Respiration enchantment. For non integer numbers the decimal part will count as a chance to have a +1")
+    public static Double playerConsumeAirAmount = 1.5d;
     @Config
-    @Label(name = "Player air ticks consumed", description = "The amount of ticks the player consumes when underwater. In vanilla it's 1 without Respiration enchantment.")
-    public static Integer playerConsumeAirAmount = 1;
+    @Label(name = "Player air ticks refilled", description = "The amount of air ticks the player regains each tick when out of water. For non integer numbers the decimal part will count as a chance to have a +1. Vanilla is 4. Min is the amount as soon as you exit water, Max is a few seconds out of water.")
+    public static MinMax playerRefillAirAmount = new MinMax(1, 2.5);
     @Config
-    @Label(name = "Player air ticks refilled", description = "The amount of air ticks the player regains each tick when out of water. Vanilla is 4. Min is the amount as soon as you exit water, 4 is the maximum a few seconds out of water.")
-    public static MinMax playerRefillAirAmount = new MinMax(1, 3);
+    @Label(name = "Increase drown damage the more drowning")
+    public static Boolean increaseDrownDamageTheMoreDrowning = true;
     @Config
     @Label(name = "Totem resistance", description = "If enabled, the Totem of Undying will give Resistance IV for 5 seconds")
     public static Boolean totemResistance = true;
@@ -227,25 +230,43 @@ public class Tweaks extends Feature {
     @SubscribeEvent
     public void onBreathe(LivingBreatheEvent event) {
         if (!this.isEnabled()
-                || !(event.getEntity() instanceof Player player))
+                || event.getEntity().level().isClientSide)
             return;
 
-        boolean wasBreathing = player.getPersistentData().getBoolean(IguanaTweaksReborn.RESOURCE_PREFIX + "was_breathing");
-        long ticksSinceOutOfWater = player.level().getGameTime() - player.getPersistentData().getLong(IguanaTweaksReborn.RESOURCE_PREFIX + "tick_since_out_of_water");
+        boolean wasBreathing = event.getEntity().getPersistentData().getBoolean(IguanaTweaksReborn.RESOURCE_PREFIX + "was_breathing");
+        long ticksSinceOutOfWater = event.getEntity().level().getGameTime() - event.getEntity().getPersistentData().getLong(IguanaTweaksReborn.RESOURCE_PREFIX + "tick_since_out_of_water");
         if (!wasBreathing && event.canBreathe()) {
             ticksSinceOutOfWater = 0;
-            player.getPersistentData().putLong(IguanaTweaksReborn.RESOURCE_PREFIX + "tick_since_out_of_water", player.level().getGameTime());
+            event.getEntity().getPersistentData().putLong(IguanaTweaksReborn.RESOURCE_PREFIX + "tick_since_out_of_water", event.getEntity().level().getGameTime());
         }
-
-        int airConsumed = playerConsumeAirAmount;
-        int respiration = EnchantmentHelper.getRespiration(player);
-        airConsumed = respiration > 0 && player.getRandom().nextInt(respiration + 1) > 0 ? 0 : airConsumed;
+        int airConsumed = MathHelper.getAmountWithDecimalChance(event.getEntity().getRandom(), playerConsumeAirAmount);
+        int respiration = EnchantmentHelper.getRespiration(event.getEntity());
+        airConsumed = respiration > 0 && event.getEntity().getRandom().nextInt(respiration + 1) > 0 ? 0 : airConsumed;
         event.setConsumeAirAmount(airConsumed);
 
-        int refillAmount = (int) playerRefillAirAmount.min;
-        if (ticksSinceOutOfWater > 75)
-            refillAmount = (int) playerRefillAirAmount.max;
+        int refillAmount = MathHelper.getAmountWithDecimalChance(event.getEntity().getRandom(), playerRefillAirAmount.min);
+        if (ticksSinceOutOfWater > 75) {
+            refillAmount = MathHelper.getAmountWithDecimalChance(event.getEntity().getRandom(), playerRefillAirAmount.max);
+            if (event.canBreathe())
+                event.getEntity().getPersistentData().remove(IguanaTweaksReborn.RESOURCE_PREFIX + "times_drowned");
+        }
         event.setRefillAirAmount(refillAmount);
-        player.getPersistentData().putBoolean(IguanaTweaksReborn.RESOURCE_PREFIX + "was_breathing", event.canBreathe());
+        event.getEntity().getPersistentData().putBoolean(IguanaTweaksReborn.RESOURCE_PREFIX + "was_breathing", event.canBreathe());
+    }
+
+    @SubscribeEvent
+    public void onDrown(LivingDrownEvent event) {
+        if (!this.isEnabled()
+                || !increaseDrownDamageTheMoreDrowning)
+            return;
+
+        if (event.isDrowning()) {
+            int timesDrowned = event.getEntity().getPersistentData().getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "times_drowned");
+            timesDrowned++;
+            event.getEntity().getPersistentData().putInt(IguanaTweaksReborn.RESOURCE_PREFIX + "times_drowned", timesDrowned);
+
+            event.setDamageAmount(event.getDamageAmount() * timesDrowned * 0.5f);
+            event.setBubbleCount((int) (event.getBubbleCount() * timesDrowned * 0.5f));
+        }
     }
 }

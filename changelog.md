@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Air is now consumed faster and the more you're drowning, the more damage you're dealt
 * Wandering traders now sell maps to Trail Ruins
 * Trail Ruins suspicious gravel loot has been slightly changed
 
