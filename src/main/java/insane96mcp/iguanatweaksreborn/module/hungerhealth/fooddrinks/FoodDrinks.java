@@ -46,6 +46,7 @@ public class FoodDrinks extends JsonFeature {
 			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:rotten_flesh")).setNutrition(2).setEatingTime(55).build(),
 			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:spider_eye")).setNutrition(1).setEatingTime(40).build(),
 			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:honey_bottle")).setNutrition(3).setEatingTime(40).alwaysEat(false).build(),
+			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:pumpkin_pie")).setNutrition(6).setEatingTime(40).build(),
 			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:golden_apple"))
 					.addEffect(new ITRMobEffectInstance.Builder(MobEffects.REGENERATION, 100).setAmplifier(1).build())
 					.addEffect(new ITRMobEffectInstance.Builder(RegeneratingAbsorption.EFFECT, 2400).build()).build(),
@@ -74,7 +75,7 @@ public class FoodDrinks extends JsonFeature {
 	public static Boolean eatingSpeedBasedOffFood = true;
 	@Config
 	@Label(name = "Eating Speed Formula", description = "The formula to calculate the ticks required to eat a food. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. The default formula increases the time to eat exponentially when higher effectiveness.")
-	public static String eatingSpeedFormula = "MAX((IF(fast_food, 16, 32) * effectiveness) * 0.08, IF(fast_food, 16, 24))"; //max((32 * x) * 0.08, 24) or, if the food is fast eat max((16 * x) * 0.08, 16)
+	public static String eatingSpeedFormula = "MAX((IF(fast_food, 16, 32) * effectiveness) * 0.075, IF(fast_food, 15, 20))"; //max((32 * x) * 0.08, 24) or, if the food is fast eat max((16 * x) * 0.08, 16)
 	@Config
 	@Label(name = "Stop consuming on hit", description = "If true, eating/drinking stops when the player's hit.")
 	public static Boolean stopConsumingOnHit = true;

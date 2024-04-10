@@ -3,6 +3,7 @@
 ## Upcoming
 * Air is now consumed faster and the more you're drowning, the more damage you're dealt
 * Wandering traders now sell maps to Trail Ruins
+* Slight rebalance of foods (stack sizes, heal over time, instant heal and eating time)
 * Trail Ruins suspicious gravel loot has been slightly changed
 
 ## 3.7.1
