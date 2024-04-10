@@ -36,6 +36,7 @@ import java.util.function.Supplier;
 @LoadFeature(module = Modules.Ids.WORLD)
 public class WanderingTrades extends JsonFeature {
     public static final TagKey<Structure> DESERT_TEMPLE_TAG = TagKey.create(Registries.STRUCTURE, new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "desert_pyramid"));
+    public static final TagKey<Structure> TRAIL_RUINS_TAG = TagKey.create(Registries.STRUCTURE, new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "trail_ruins"));
     public static final TagKey<Structure> JUNGLE_PYRAMID_TAG = TagKey.create(Registries.STRUCTURE, new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "jungle_pyramid"));
     public static final TagKey<Structure> IGLOO_TAG = TagKey.create(Registries.STRUCTURE, new ResourceLocation(IguanaTweaksReborn.RESOURCE_PREFIX + "igloo"));
 
@@ -73,8 +74,6 @@ public class WanderingTrades extends JsonFeature {
                     .enchantResult(12, 22, true),
             new SerializableTrade(new ItemStack(Items.EMERALD, 3), new ItemStack(Items.BOOK), 1)
                     .enchantResult(4, 8, false),
-            //new SerializableTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(Lapis.ANCIENT_LAPIS.get()), 1),
-            //new SerializableTrade(new ItemStack(Items.EMERALD, 4), new ItemStack(Lapis.CLEANSED_LAPIS.get()), 2),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.GUNPOWDER, 4), 3),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.LILY_PAD, 5), 2),
             new SerializableTrade(new ItemStack(Items.EMERALD, 1), new ItemStack(Items.PACKED_ICE, 1), 6),
@@ -85,6 +84,8 @@ public class WanderingTrades extends JsonFeature {
                     .explorationMap(JUNGLE_PYRAMID_TAG, MapDecoration.Type.MANSION, ExplorationMapFunction.DEFAULT_ZOOM, 50, false),
             new SerializableTrade(new ItemStack(Items.EMERALD, 8), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.igloo")), 1)
                     .explorationMap(IGLOO_TAG, MapDecoration.Type.MANSION, ExplorationMapFunction.DEFAULT_ZOOM, 50, false),
+            new SerializableTrade(new ItemStack(Items.EMERALD, 8), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.trail_ruins")), 1)
+                    .explorationMap(TRAIL_RUINS_TAG, MapDecoration.Type.TARGET_POINT, ExplorationMapFunction.DEFAULT_ZOOM, 50, false),
             new SerializableTrade(new ItemStack(Items.EMERALD, 8), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.mansion")), 1)
                     .explorationMap(StructureTags.ON_WOODLAND_EXPLORER_MAPS, MapDecoration.Type.MANSION, ExplorationMapFunction.DEFAULT_ZOOM, 100, false),
             new SerializableTrade(new ItemStack(Items.EMERALD, 8), createStackWithName(Items.MAP, 1, Component.translatable("filled_map.monument")), 1)
