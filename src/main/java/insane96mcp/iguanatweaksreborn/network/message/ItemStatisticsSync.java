@@ -40,7 +40,7 @@ public class ItemStatisticsSync {
 
     public static void handle(final ItemStatisticsSync message, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            ItemStatsReloadListener.STATS.addAll(message.itemStatistics);
+            ItemStatsReloadListener.Stats.addAll(message.itemStatistics);
         });
         ctx.get().setPacketHandled(true);
     }

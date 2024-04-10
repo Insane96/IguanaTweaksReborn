@@ -1,7 +1,8 @@
 {
 	"item": "#minecraft:axes",
-	"attack_damage": 5,
+	"attack_damage": 3,
 	"attack_speed": 0.8,
+	"durability_multiplier": 0.7,
 	"modifiers": [
 		{
 			"uuid": "de87cf5d-0f15-4b4e-88c5-9b3c971146d0",
@@ -18,6 +19,14 @@
 			"attribute": "forge:block_reach",
 			"amount": 0,
 			"operation": "addition"
+		},
+		{
+			"uuid": "de87cf5d-0f15-4b4e-88c5-9b3c971146d0",
+			"name": "Tool modifier",
+			"slot": "mainhand",
+			"attribute": "minecraft:generic.attack_damage",
+			"amount": 0.5,
+			"operation": "multiply_base"
 		}
 	]
 }

@@ -12,22 +12,16 @@ import java.util.ArrayList;
 public class HoeStat {
 	public IdTagMatcher hoe;
 	public int cooldown;
-	public int damageOnTill;
 
 	public int scytheRadius;
 
 	public HoeStat(IdTagMatcher hoe, int cooldown) {
-		this(hoe, cooldown, 1);
+		this(hoe, cooldown, 0);
 	}
 
-	public HoeStat(IdTagMatcher hoe, int cooldown, int damageOnTill) {
-		this(hoe, cooldown, damageOnTill, 0);
-	}
-
-	public HoeStat(IdTagMatcher hoe, int cooldown, int damageOnTill, int scytheRadius) {
+	public HoeStat(IdTagMatcher hoe, int cooldown, int scytheRadius) {
 		this.hoe = hoe;
 		this.cooldown = cooldown;
-		this.damageOnTill = damageOnTill;
 		this.scytheRadius = scytheRadius;
 	}
 
@@ -37,7 +31,7 @@ public class HoeStat {
 		@Override
 		public HoeStat deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 			IdTagMatcher idTagMatcher = context.deserialize(json.getAsJsonObject().get("hoe"), IdTagMatcher.class);
-			return new HoeStat(idTagMatcher, GsonHelper.getAsInt(json.getAsJsonObject(), "cooldown"), GsonHelper.getAsInt(json.getAsJsonObject(), "damage_on_till", 1), GsonHelper.getAsInt(json.getAsJsonObject(), "scythe_radius", 0));
+			return new HoeStat(idTagMatcher, GsonHelper.getAsInt(json.getAsJsonObject(), "cooldown"), GsonHelper.getAsInt(json.getAsJsonObject(), "scythe_radius", 0));
 		}
 
 		@Override
@@ -45,8 +39,6 @@ public class HoeStat {
 			JsonObject jsonObject = new JsonObject();
 			jsonObject.add("hoe", context.serialize(src.hoe));
 			jsonObject.addProperty("cooldown", src.cooldown);
-			if (src.damageOnTill > 1)
-				jsonObject.addProperty("damage_on_till", src.damageOnTill);
 			if (src.scytheRadius > 0)
 				jsonObject.addProperty("scythe_radius", src.scytheRadius);
 			return jsonObject;

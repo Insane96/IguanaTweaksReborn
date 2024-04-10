@@ -43,28 +43,27 @@ public class Hoes extends JsonFeature {
 	public static final TagKey<Item> DISABLED_HOES = ITRItemTagsProvider.create("disabled_hoes");
 
 	public static final ArrayList<HoeStat> HOES_STATS_DEFAULT = new ArrayList<>(List.of(
-			new HoeStat(IdTagMatcher.newId("minecraft:wooden_hoe"), 23, 4, 1),
-			new HoeStat(IdTagMatcher.newId("minecraft:stone_hoe"), 20, 4, 0),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:flint_hoe"), 17, 4, 0),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:copper_hoe"), 13, 4, 1),
-			new HoeStat(IdTagMatcher.newId("minecraft:golden_hoe"), 5, 4, 2),
-			new HoeStat(IdTagMatcher.newId("minecraft:iron_hoe"), 17, 4, 1),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:solarium_hoe"), 19, 4, 1),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:durium_hoe"), 20, 4, 0),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:coated_copper_hoe"), 17, 4, 1),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:quaron_hoe"), 13, 4, 1),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:keego_hoe"), 12, 4, 2),
-			new HoeStat(IdTagMatcher.newId("minecraft:diamond_hoe"), 10, 4, 2),
-			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:soul_steel_hoe"), 13, 4, 2),
-			new HoeStat(IdTagMatcher.newId("minecraft:netherite_hoe"), 10, 2, 4)
+			new HoeStat(IdTagMatcher.newId("minecraft:wooden_hoe"), 23, 1),
+			new HoeStat(IdTagMatcher.newId("minecraft:stone_hoe"), 20, 0),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:flint_hoe"), 17, 0),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:copper_hoe"), 13, 1),
+			new HoeStat(IdTagMatcher.newId("minecraft:golden_hoe"), 5, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:iron_hoe"), 17, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:solarium_hoe"), 19, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:durium_hoe"), 20, 0),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:coated_copper_hoe"), 17, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:quaron_hoe"), 13, 1),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:keego_hoe"), 12, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:diamond_hoe"), 10, 2),
+			new HoeStat(IdTagMatcher.newId("iguanatweaksexpanded:soul_steel_hoe"), 13, 2),
+			new HoeStat(IdTagMatcher.newId("minecraft:netherite_hoe"), 10, 4)
 	));
 
 	public static final ArrayList<HoeStat> hoesStats = new ArrayList<>();
 
-	/*@Config(min = 0)
-	@Label(name = "Efficiency cooldown reduction", description = "Each Efficiency level reduces the cooldown of hoes by this many ticks.")
-	public static Integer efficiencyCooldownReduction = 0;*/
-
+	@Config(min = 1)
+	@Label(name = "Durability used on till")
+	public static Integer durabilityOnTill = 4;
 	@Config
 	@Label(name = "Trigger only for farmland")
 	public static Boolean triggerOnlyForFarmland = true;
@@ -132,8 +131,8 @@ public class Hoes extends JsonFeature {
 					if (cooldown > 0)
 						player.getCooldowns().addCooldown(hoeStack.getItem(), cooldown);
 				}
-				if (hoeStat.damageOnTill > 1) {
-					hoeStack.hurtAndBreak(hoeStat.damageOnTill - 1, player, (livingEntity) -> livingEntity.broadcastBreakEvent(livingEntity.getUsedItemHand()));
+				if (durabilityOnTill > 1) {
+					hoeStack.hurtAndBreak(durabilityOnTill - 1, player, (livingEntity) -> livingEntity.broadcastBreakEvent(livingEntity.getUsedItemHand()));
 				}
 				break;
 			}

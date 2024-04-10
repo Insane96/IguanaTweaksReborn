@@ -69,7 +69,7 @@ public class ItemStats extends Feature {
 		if (!this.isEnabled())
 			return;
 
-		for (ItemStatistics itemStats : ItemStatsReloadListener.STATS) {
+		for (ItemStatistics itemStats : ItemStatsReloadListener.Stats) {
 			itemStats.applyAttributes(event, event.getItemStack(), event.getModifiers());
 		}
 	}

@@ -338,7 +338,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	}
 
 	public static int getEnchantmentValue(ItemStack stack) {
-		for (ItemStatistics itemStatistics : ItemStatsReloadListener.STATS) {
+		for (ItemStatistics itemStatistics : ItemStatsReloadListener.Stats) {
 			if (itemStatistics.enchantability() != null && itemStatistics.item().matchesItem(stack))
 				return itemStatistics.enchantability();
 		}
