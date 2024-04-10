@@ -4,6 +4,7 @@
 * Rebalanced tools
   * Hoes: Increased durability by 30% and attack speed (~10% more)
   * Axes: Decreased durability by 30% and changed damage (base damage 5 -> 2.5; bonus damage 0% -> 50%)
+  * Stone tools have +5% attack damage
   * With this, bonus damage enchantments now scale with the percentage modifiers
 * Air is now consumed faster and the more you're drowning, the more damage you're dealt
 * Wandering traders now sell maps to Trail Ruins
@@ -14,7 +15,7 @@
 ## 3.7.1
 * Reworked enchantment tooltips
   * Now are shown below the enchantment
-* Wandering traders enchanted books can now have Trasure enchantments
+* Wandering traders enchanted books can now have Treasure enchantments
 * Reverted Mending
   * Mending now works again like vanilla but nerfed: 1 XP = ~~2~~ 1 repair
 * Fixed crash when milking cows in multiplayer

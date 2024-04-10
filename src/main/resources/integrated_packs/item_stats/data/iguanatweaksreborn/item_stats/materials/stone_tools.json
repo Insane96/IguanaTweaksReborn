@@ -19,6 +19,14 @@
 			"attribute": "minecraft:generic.attack_damage",
 			"amount": 0,
 			"operation": "addition"
+		},
+		{
+			"uuid": "302332bb-d19b-4f9f-a423-6e305969126f",
+			"name": "Material modifier percentage",
+			"slot": "mainhand",
+			"attribute": "minecraft:generic.attack_damage",
+			"amount": 0.05,
+			"operation": "multiply_base"
 		}
 	]
 }
