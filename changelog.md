@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Wandering traders now sell maps to Trail Ruins
+* Trail Ruins suspicious gravel loot has been slightly changed
+
 ## 3.7.1
 * Reworked enchantment tooltips
   * Now are shown below the enchantment
