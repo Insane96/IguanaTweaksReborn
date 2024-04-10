@@ -8,6 +8,7 @@
 * Wandering traders now sell maps to Trail Ruins
 * Slight rebalance of foods (stack sizes, heal over time, instant heal and eating time)
 * Trail Ruins suspicious gravel loot has been slightly changed
+* Fixed piercing damage not respecting new attack cooldown calculations
 
 ## 3.7.1
 * Reworked enchantment tooltips
