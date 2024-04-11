@@ -71,6 +71,9 @@ public class Anvils extends Feature {
     @Config
     @Label(name = "Increase materials required with enchantments (Flat)", description = "Repairing items in an anvil costs more materials if the item is enchanted. This is the flat increase for each level of enchantment on the item")
     public static Double moreMaterialIfEnchantedFlat = 0.5d;
+    @Config
+    @Label(name = "Reduced repair with other item if enchanted", description = "Repairing items in an anvil with another item will repair it less if the item is enchanted (this value is the percentage applied to the right item durability). This also prevents the 'Merging Repair bonus'")
+    public static Double reducedRepairWithOtherItemIfEnchanted = 0.50d;
     @Config(min = 0)
     @Label(name = "Enchantments cost by rarity.Common", description = "Vanilla: 1")
     public static Integer enchantmentCostCommon = 1;

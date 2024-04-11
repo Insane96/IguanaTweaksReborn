@@ -1,7 +1,9 @@
 # Changelog
 
 ## 3.7.3
+* Repairing enchanted items in an anvil with another item now has a penalty on durability
 * Fixed durability not synced client side
+* Fixed missing allurement enchantment descriptions
 
 ## 3.7.2
 * Rebalanced tools

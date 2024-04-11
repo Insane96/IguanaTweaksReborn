@@ -70,6 +70,16 @@
 	"enchantment.minecraft.piercing.info": "Allows projectiles to pierce through mobs",
 	"enchantment.minecraft.soul_speed.info": "Increases movement speed on soul blocks",
 	"enchantment.minecraft.swift_sneak.info": "Increases movement speed while sneaking",
+	"enchantment.allurement.alleviating.info": "Heals the user upon collection of experience",
+	"enchantment.allurement.ascension_curse.info": "Causes the cursed item to float upwards when dropped",
+	"enchantment.allurement.fleeting_curse.info": "Causes nearby entities to repel the cursed item when dropped",
+	"enchantment.allurement.launch.info": "Launches the target upwards instead of away",
+	"enchantment.allurement.obedience.info": "Prevents horses from roaming",
+	"enchantment.allurement.reeling.info": "Pulls targets towards the user upon arrow impact",
+	"enchantment.allurement.reforming.info": "Repairs the durability of items very slowly over time when in use",
+	"enchantment.allurement.shockwave.info": "Creates a shockwave when taking fall damage that damages nearby entities",
+	"enchantment.allurement.spread_of_ailments.info": "Applies the user's active effects to their arrows",
+	"enchantment.allurement.vengeance.info": "Stores some incoming damage and applies it to the user's next attack",
 
 	"iguanatweaksreborn:combat_module": "Combat",
 

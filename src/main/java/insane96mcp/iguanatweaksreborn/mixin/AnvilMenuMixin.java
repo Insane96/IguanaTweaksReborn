@@ -95,7 +95,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 			if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player)) return;
 			isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
 			Optional<AnvilRepair.RepairData> oRepairData = Anvils.getCustomAnvilRepair(left, right);
-			//If it's a damageable item check if trying to repair it
+			//If it's a damageable item and a material check if trying to repair it
 			if (resultStack.isDamageableItem() && (resultStack.getItem().isValidRepairItem(left, right) || oRepairData.isPresent())) {
 				int repairItemCountCost;
 
@@ -205,6 +205,9 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 					int leftDurabilityLeft = left.getMaxDamage() - left.getDamageValue();
 					int rightDurabilityLeft = right.getMaxDamage() - right.getDamageValue();
 					int rightDurabilityLeftPlusBonus = rightDurabilityLeft + resultStack.getMaxDamage() * Anvils.getMergingRepairBonus() / 100;
+					if (Anvils.reducedRepairWithOtherItemIfEnchanted > 0f && left.isEnchanted()) {
+						rightDurabilityLeftPlusBonus = (int) (rightDurabilityLeft * Anvils.reducedRepairWithOtherItemIfEnchanted);
+					}
 					int leftDurabilityLeftPlusRight = leftDurabilityLeft + rightDurabilityLeftPlusBonus;
 					int damageValue = resultStack.getMaxDamage() - leftDurabilityLeftPlusRight;
 					if (damageValue < 0)
