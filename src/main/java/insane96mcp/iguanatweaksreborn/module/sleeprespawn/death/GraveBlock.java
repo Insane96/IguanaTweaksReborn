@@ -123,7 +123,7 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
                 || !(level.getBlockEntity(pos) instanceof GraveBlockEntity graveBlockEntity)
                 || graveBlockEntity.getMessage() == null)
             return super.use(pState, level, pos, player, pHand, pHit);
-        player.sendSystemMessage(graveBlockEntity.getMessage());
+        player.sendSystemMessage(Component.literal("This grave has a message: \"").append(graveBlockEntity.getMessage()).append(Component.literal("\"")));
         return InteractionResult.SUCCESS;
     }
 
