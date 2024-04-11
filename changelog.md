@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.7.2
 * Rebalanced tools
   * Hoes: Increased durability by 30% and attack speed (~10% more). Increased base attack damage to 2 but applied a 50% attack damage reduction to it 
   * Axes: Decreased durability by 30% and changed damage (base damage 5 -> 2.5; bonus damage 0% -> 50%)
