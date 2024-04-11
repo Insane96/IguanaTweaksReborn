@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.7.3
+* Fixed durability not synced client side
+
 ## 3.7.2
 * Rebalanced tools
   * Hoes: Increased durability by 30% and attack speed (~10% more). Increased base attack damage to 2 but applied a 50% attack damage reduction to it 

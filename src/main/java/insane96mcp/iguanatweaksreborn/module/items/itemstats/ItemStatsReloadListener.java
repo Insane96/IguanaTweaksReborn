@@ -84,6 +84,9 @@ public class ItemStatsReloadListener extends SimpleJsonResourceReloadListener {
 			for (ItemStatistics itemStatistics : ItemStatsReloadListener.Stats) {
 				itemStatistics.applyStats(true);
 			}
+			for (var entry : Durability.entrySet()) {
+				entry.getValue().apply(entry.getKey());
+			}
 		}
 	}
 
