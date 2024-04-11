@@ -11,6 +11,7 @@
 * Slight rebalance of foods (stack sizes, heal over time, instant heal and eating time)
 * Trail Ruins suspicious gravel loot has been slightly changed
 * Fixed piercing damage not respecting new attack cooldown calculations
+* Fixed mending working as both the old and new mending
 * Fixed BlockData changing the air block when the id is not valid
 
 ## 3.7.1

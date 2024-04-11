@@ -23,7 +23,6 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.data.IdTagValue;
-import insane96mcp.insanelib.event.HurtItemStackEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
@@ -272,20 +271,6 @@ public class EnchantmentsFeature extends JsonFeature {
 			return;
 
 		event.setCanceled(true);
-	}
-
-	@SubscribeEvent
-	public void onHurtItemStack(HurtItemStackEvent event) {
-		if (!this.isEnabled()
-				|| !mendingNerf
-				|| event.getPlayer() == null
-				|| (event.getPlayer().experienceLevel == 0 && event.getPlayer().experienceProgress == 0))
-			return;
-		ItemStack stack = event.getStack();
-		if (stack.getEnchantmentLevel(Enchantments.MENDING) == 0)
-			return;
-		event.getPlayer().giveExperiencePoints(-event.getAmount());
-		event.setAmount(0);
 	}
 
 	@SubscribeEvent
