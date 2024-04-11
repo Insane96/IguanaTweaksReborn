@@ -4,6 +4,9 @@
 * Rebalanced tools
   * Hoes: Increased durability by 30% and attack speed (~10% more). Increased base attack damage to 2 but applied a 50% attack damage reduction to it 
   * Axes: Decreased durability by 30% and changed damage (base damage 5 -> 2.5; bonus damage 0% -> 50%)
+  * Pickaxes: Decreased base damage (0.5 -> 0) but added +20% bonus damage. Piercing is now 1 for each pickaxe + an amount given by materials
+    * Piercing Pickaxes feature has been changed to Piercing Attribute since Piercing damage is added via item_stats data pack
+  * Shovels: Decreased base damage (2.5 -> 1) but added +35% bonus damage
   * Stone tools have +5% attack damage
   * With this, bonus damage enchantments now scale with the percentage modifiers
 * Air is now consumed faster and the more you're drowning, the more damage you're dealt

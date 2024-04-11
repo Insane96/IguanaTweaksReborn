@@ -220,8 +220,10 @@ public class EnchantmentsFeature extends JsonFeature {
 		float knockback = attacker.getMainHandItem().getEnchantmentLevel(KNOCKBACK.get());
 		if (knockback == 0)
 			return;
-		if (attacker instanceof Player player)
-			knockback *= player.getAttackStrengthScale(0.5f) * player.getAttackStrengthScale(0.5f);
+		if (attacker instanceof Player player) {
+			float f = player.getAttackStrengthScale(0.5f);
+			knockback *= f * f;
+		}
 		for (IdTagValue itemKnockbackMultiplier : insane96mcp.iguanatweaksreborn.module.combat.Knockback.KNOCKBACKS) {
 			if (itemKnockbackMultiplier.id.matchesItem(attacker.getMainHandItem()))
 				knockback *= (float) itemKnockbackMultiplier.value;
@@ -257,8 +259,10 @@ public class EnchantmentsFeature extends JsonFeature {
 		if (!(enchantment instanceof BonusDamageEnchantment bonusDamageEnchantment))
 			return;
 		float damageBonus = bonusDamageEnchantment.getDamageBonus(attacker, target, attacker.getMainHandItem(), lvl);
-		if (attacker instanceof Player player)
-			damageBonus *= player.getAttackStrengthScale(0.5f) *player.getAttackStrengthScale(0.5f);
+		if (attacker instanceof Player player) {
+			float f = player.getAttackStrengthScale(0.5f);
+			damageBonus *= f * f;
+		}
 		event.setAmount(event.getAmount() + damageBonus);
 	}
 
