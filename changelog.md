@@ -2,7 +2,7 @@
 
 ## Upcoming
 * Rebalanced tools
-  * Hoes: Increased durability by 30% and attack speed (~10% more)
+  * Hoes: Increased durability by 30% and attack speed (~10% more). Increased base attack damage to 2 but applied a 50% attack damage reduction to it 
   * Axes: Decreased durability by 30% and changed damage (base damage 5 -> 2.5; bonus damage 0% -> 50%)
   * Stone tools have +5% attack damage
   * With this, bonus damage enchantments now scale with the percentage modifiers
@@ -11,6 +11,7 @@
 * Slight rebalance of foods (stack sizes, heal over time, instant heal and eating time)
 * Trail Ruins suspicious gravel loot has been slightly changed
 * Fixed piercing damage not respecting new attack cooldown calculations
+* Fixed BlockData changing the air block when the id is not valid
 
 ## 3.7.1
 * Reworked enchantment tooltips

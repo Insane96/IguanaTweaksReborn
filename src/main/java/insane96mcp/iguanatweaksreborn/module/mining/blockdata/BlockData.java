@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -186,7 +187,7 @@ public class BlockData {
 				if (blockId == null)
 					throw new JsonParseException("Failed to parse block id for %s".formatted(sBlockId));
 				Block block = ForgeRegistries.BLOCKS.getValue(blockId);
-				if (block == null) {
+				if (block == Blocks.AIR) {
 					if (!required)
 						return null;
 					else
