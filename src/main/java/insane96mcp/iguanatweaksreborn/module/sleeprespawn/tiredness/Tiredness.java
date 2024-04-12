@@ -100,7 +100,7 @@ public class Tiredness extends JsonFeature {
 	public static OnDeath onDeathBehaviour = OnDeath.SET_AT_EFFECT;
 	@Config
 	@Label(name = "Tired sounds", description = "Sounds played when the player is tired")
-	public static List<String> tiredSounds = List.of("minecraft:block.basalt.break", "minecraft:block.big_dripleaf.place", "minecraft:block.bone_block.hit", "minecraft:block.candle.extinguish", "minecraft:entity.zombie.ambient", "minecraft:entity.skeleton.ambient", "minecraft:entity.spider.ambient", "minecraft:entity.slime.attack", "minecraft:entity.creeper.hurt", "minecraft:entity.ghast.ambient");
+	public static List<String> tiredSounds = List.of("minecraft:block.basalt.break", "minecraft:block.big_dripleaf.place", "minecraft:block.bone_block.hit", "minecraft:block.candle.extinguish", "minecraft:entity.zombie.ambient", "minecraft:entity.skeleton.ambient", "minecraft:entity.spider.ambient", "minecraft:entity.slime.attack", "minecraft:entity.creeper.hurt", "minecraft:entity.creeper.primed", "entity.egg.throw");
 	@Config
 	@Label(name = "Tired Sound Chance", description = "The chance is 0% of this value as soon as a sound is played, 100% as 10 minutes have passed and 200% at 30 minutes")
 	public static Double tiredSoundChance = 0.025d;
