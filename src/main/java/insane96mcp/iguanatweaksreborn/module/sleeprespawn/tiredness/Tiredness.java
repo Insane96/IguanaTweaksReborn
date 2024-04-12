@@ -312,8 +312,8 @@ public class Tiredness extends JsonFeature {
 			case RESET -> tiredness = 0;
 			case KEEP -> { }
 			case SET_AT_EFFECT -> {
-				if (tiredness > tirednessToEffect)
-					tiredness = tirednessToEffect.floatValue();
+				if (tiredness > tirednessToEffect.floatValue() + tirednessPerLevel.floatValue())
+					tiredness = tirednessToEffect.floatValue() + tirednessPerLevel.floatValue();
 			}
 			case REMOVE_ONE_LEVEL -> {
 				if (tiredness > tirednessToEffect) {

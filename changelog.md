@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Reduced Vigour enchantment strength at higher levels (was -25% consumption per level, now is 25%/45%/60% at levels I/II/III)
+* Dying when tired II or more now resets the tiredness to Tired II instead of I
 * Armor damage reduction now scales slightly less
 * Fixed beetroots being insta-minable
 
