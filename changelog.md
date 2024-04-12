@@ -5,6 +5,7 @@
 * Reduced axes base damage (3 -> 2)
 * Dying when tired II or more now resets the tiredness to Tired II instead of I
 * Changed a few tired sounds
+* Reduced coal generation on mountains
 * Armor damage reduction now scales slightly less
 * Fixed beetroots being insta-minable
 
