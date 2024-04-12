@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed beetroots being insta-minable
+
 ## 3.7.3
 * Repairing enchanted items in an anvil with another item now has a penalty on durability
 * Fixed durability not synced client side
