@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Fixed beetroots being insta-minable
+* Armor damage reduction now scales slightly less
 
 ## 3.7.3
 * Repairing enchanted items in an anvil with another item now has a penalty on durability
