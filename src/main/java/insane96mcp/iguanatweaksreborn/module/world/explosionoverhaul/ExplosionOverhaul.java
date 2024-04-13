@@ -16,15 +16,17 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.GameRules;
 import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Explosion Overhaul", description = "Various changes to explosions from knockback to shielding.")
+@Label(name = "Explosion Overhaul", description = "Various changes to explosions, like higher knockback and getting hit when behind blown up blocks.")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class ExplosionOverhaul extends Feature {
 	public static final TagKey<EntityType<?>> KNOCKBACK_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "explosion_knockback_blacklist"));
 	public static final TagKey<EntityType<?>> ENTITY_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "explosion_entity_blacklist"));
+	public static final GameRules.Key<GameRules.BooleanValue> RULE_MOBGRIEFING = GameRules.register("iguanatweaks:explosionMobGriefing", GameRules.Category.MISC, GameRules.BooleanValue.create(true));
 
 	@Config
 	@Label(name = "Disable Explosion Randomness", description = "Vanilla Explosions use a random number that changes the explosion power. With this enabled the ray strength will be as the explosion size.")
@@ -72,14 +74,14 @@ public class ExplosionOverhaul extends Feature {
 			return;
 
 		Explosion e = event.getExplosion();
-		if (e.level instanceof ServerLevel level && !e.getToBlow().isEmpty() && e.radius >= 2) {
+		if (e.level instanceof ServerLevel level) {
 			if (e instanceof ITRExplosion itrExplosion && !itrExplosion.poofParticles)
 				return;
-			if (e.blockInteraction != Explosion.BlockInteraction.KEEP) {
-				int particleCount = (int) (e.radius * 80);
-				level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.25D);
-				level.sendParticles(ParticleTypes.SMOKE, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.25D);
-			}
+            if (!e.getToBlow().isEmpty() && e.radius >= 2 && e.blockInteraction != Explosion.BlockInteraction.KEEP) {
+                int particleCount = (int) (e.radius * 80);
+                level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.25D);
+                level.sendParticles(ParticleTypes.SMOKE, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.25D);
+            }
 			else {
 				level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), 1, 0.0D, 0.0D, 0.0D, 1f);
 			}
@@ -107,7 +109,7 @@ public class ExplosionOverhaul extends Feature {
 
 	//Setting the lowest priority so other mods can change explosions params before creating the ITExplosion
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void replaceExplosionWithSRExplosion(ExplosionEvent.Start event) {
+	public void replaceExplosionWithITRExplosion(ExplosionEvent.Start event) {
 		if (!this.isEnabled()
 				|| !(event.getLevel() instanceof ServerLevel level)
 				|| (event.getExplosion().getExploder() != null && event.getExplosion().getExploder().getType().is(ENTITY_BLACKLIST)))

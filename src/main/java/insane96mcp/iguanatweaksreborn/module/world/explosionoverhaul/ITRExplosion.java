@@ -106,15 +106,13 @@ public class ITRExplosion extends Explosion {
 						double x = this.getPosition().x();
 						double y = this.getPosition().y();
 						double z = this.getPosition().z();
-						for(float f1 = 0.3F; rayStrength > 0.0F; rayStrength -= 0.22500001F) {
+						for (;rayStrength > 0.0F; rayStrength -= 0.22500001F) {
 							BlockPos blockpos = BlockPos.containing(x, y, z);
 							BlockState blockstate = this.level.getBlockState(blockpos);
 							FluidState fluidstate = this.level.getFluidState(blockpos);
 							Optional<Float> optional = this.damageCalculator.getBlockExplosionResistance(this, this.level, blockpos, blockstate, fluidstate);
 							if (optional.isPresent()) {
 								float resistance = optional.get();
-								/*if (blockstate.getMaterial().equals(Material.STONE) /*&& this.stoneResistanceDivider >= 0)
-									multiplier /= 5f;*/
 								rayStrength -= (resistance + baseResistanceAdd) * rayStrengthMultiplier;
 							}
 							if (rayStrength > 0.0F && this.damageCalculator.shouldBlockExplode(this, this.level, blockpos, blockstate, rayStrength)) {
@@ -134,7 +132,7 @@ public class ITRExplosion extends Explosion {
 	public void fallingBlocks() {
 		if (!this.interactsWithBlocks())
 			return;
-		for(BlockPos blockpos : this.getToBlow()) {
+		for (BlockPos blockpos : this.getToBlow()) {
 			BlockState blockstate = this.level.getBlockState(blockpos);
 			Block block = blockstate.getBlock();
 			if (blockstate.isAir())
@@ -307,7 +305,8 @@ public class ITRExplosion extends Explosion {
 	public static ITRExplosion explode(ServerLevel level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, BlockInteraction blockInteraction, boolean poofParticles) {
 		ITRExplosion explosion = new ITRExplosion(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, ExplosionOverhaul.creeperCollateral, poofParticles);
 		if (ITEEventFactory.onSRExplosionCreated(explosion)) return explosion;
-		explosion.gatherAffectedBlocks(!ExplosionOverhaul.disableExplosionRandomness);
+		if (level.getGameRules().getBoolean(ExplosionOverhaul.RULE_MOBGRIEFING))
+			explosion.gatherAffectedBlocks(!ExplosionOverhaul.disableExplosionRandomness);
 		if (ExplosionOverhaul.enableFlyingBlocks)
 			explosion.fallingBlocks();
 		explosion.destroyBlocks();
