@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Added `iguanatweaks:explosionMobGriefing` game rule
+* Reduced golden tools efficiency and attack speed
 
 ## 3.7.4
 * Reduced Vigour enchantment strength at higher levels (was -25% consumption per level, now is -25%/-45%/-60% at levels I/II/III)
