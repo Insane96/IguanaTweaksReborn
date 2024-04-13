@@ -3,6 +3,7 @@
 ## Upcoming
 * Added `iguanatweaks:explosionMobGriefing` game rule
 * Reduced golden tools efficiency and attack speed
+* On Unfair One-shot activation the player's now given resistance for a few seconds
 * Fixed vigour preventing stamina from consuming
 
 ## 3.7.4
