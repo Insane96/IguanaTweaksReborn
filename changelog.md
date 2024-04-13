@@ -4,6 +4,7 @@
 * Added `iguanatweaks:explosionMobGriefing` game rule
 * Reduced golden tools efficiency and attack speed
 * On Unfair One-shot activation the player's now given resistance for a few seconds
+* Feather Falling now reduces fall distance by 1 per level
 * Changed Endermen drops (1 (+ 0~1 per looting level) enderpearl -> 0~1 (+ -1~1 per looting level) enderpearls)
 * Fixed vigour preventing stamina from consuming
 

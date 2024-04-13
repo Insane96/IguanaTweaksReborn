@@ -32,6 +32,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -42,6 +43,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -275,6 +277,14 @@ public class EnchantmentsFeature extends JsonFeature {
 			return;
 
 		event.setCanceled(true);
+	}
+
+	@SubscribeEvent
+	public void onFall(LivingFallEvent event) {
+		int lvl = event.getEntity().getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(FEATHER_FALLING.get());
+		if (lvl <= 0)
+			return;
+		event.setDistance(event.getDistance() - lvl);
 	}
 
 	@SubscribeEvent
