@@ -5,7 +5,7 @@
 * Reduced golden tools efficiency and attack speed
 * On Unfair One-shot activation the player's now given resistance for a few seconds
 * Feather Falling now reduces fall distance by 1 per level
-* Changed Endermen drops (1 (+0~1 per looting level) ender pearls -> 0~1 (+-1~1 per looting level) ender pearls)
+* Changed Endermen drops (1 (+0\~1 per looting level) ender pearls -> 0\~1 (+-1~1 per looting level) ender pearls)
 * Fixed vigour preventing stamina from consuming
 
 ## 3.7.4
