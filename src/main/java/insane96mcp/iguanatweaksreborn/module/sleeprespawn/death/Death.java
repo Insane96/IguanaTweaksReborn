@@ -16,15 +16,20 @@ import insane96mcp.insanelib.setup.ILStrings;
 import insane96mcp.insanelib.world.scheduled.ScheduledTasks;
 import insane96mcp.insanelib.world.scheduled.ScheduledTickTask;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
+import net.minecraft.core.SectionPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -71,11 +76,36 @@ public class Death extends Feature {
 				|| !(event.getEntity() instanceof ServerPlayer player)
 				|| player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
 				|| !player.level().getGameRules().getBoolean(RULE_DEATHGRAVE)
-				|| player.level().isOutsideBuildHeight(player.blockPosition().getY())
-				|| (player.getInventory().isEmpty() && player.experienceLevel == 0)
-				|| event.getSource().is(DOESNT_SPAWN_GRAVE))
+				|| player.level().isOutsideBuildHeight(player.blockPosition().getY()))
 			return;
 
+		breakOldGrave(player);
+		summonGrave(player, event.getSource());
+	}
+
+	public static void breakOldGrave(ServerPlayer player) {
+		if (player.getLastDeathLocation().isEmpty())
+			return;
+
+		GlobalPos pos = player.getLastDeathLocation().get();
+		if (player.getServer() == null)
+			return;
+		Level level = player.getServer().getLevel(pos.dimension());
+		if (level == null)
+			return;
+		if (level.isLoaded(pos.pos()) && level.getBlockState(pos.pos()).is(GRAVE.block().get())) {
+			level.destroyBlock(pos.pos(), true, player);
+
+			int chunkX = SectionPos.blockToSectionCoord(pos.pos().getX());
+			int chunkZ = SectionPos.blockToSectionCoord(pos.pos().getZ());
+			((ServerLevel)player.level()).setChunkForced(chunkX, chunkZ, false);
+		}
+	}
+
+	public static void summonGrave(ServerPlayer player, DamageSource source) {
+		if ((player.getInventory().isEmpty() && player.experienceLevel == 0)
+				|| source.is(DOESNT_SPAWN_GRAVE))
+			return;
 		BlockPos pos = player.blockPosition();
 		if (pos.getY() < player.level().getMinBuildHeight())
 			pos = pos.atY(player.level().getMinBuildHeight() + 1);
@@ -114,7 +144,11 @@ public class Death extends Feature {
 		player.getInventory().clearContent();
 		graveBlockEntity.setMessage(player.getCombatTracker().getDeathMessage());
 
-		if (vindicationVsKiller && event.getSource().getEntity() instanceof Mob killer && !killer.getPersistentData().contains(KILLED_PLAYER)) {
+		int chunkX = SectionPos.blockToSectionCoord(pos.getX());
+		int chunkZ = SectionPos.blockToSectionCoord(pos.getZ());
+		((ServerLevel)player.level()).setChunkForced(chunkX, chunkZ, true);
+
+		if (vindicationVsKiller && source.getEntity() instanceof Mob killer && !killer.getPersistentData().contains(KILLED_PLAYER)) {
 			if (killer.isRemoved() || killer.isDeadOrDying())
 				return;
 			ScheduledTasks.schedule(new ScheduledTickTask(1) {
