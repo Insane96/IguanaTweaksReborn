@@ -5,6 +5,7 @@
   * Now drops only ... the drops instead of breaking the grave
   * Also, as soon as the player dies instead when the chunk is loaded
 * Reduced golden tools durability
+* Fixed enchantments info not showing on enchanted books
 
 ## 3.7.5
 * Added `iguanatweaks:explosionMobGriefing` game rule

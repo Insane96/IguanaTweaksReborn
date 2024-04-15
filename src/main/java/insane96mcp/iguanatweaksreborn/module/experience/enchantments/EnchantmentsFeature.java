@@ -37,6 +37,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -300,15 +301,15 @@ public class EnchantmentsFeature extends JsonFeature {
 	public void onItemTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled()
 				|| !enchantmentsInfo
-				|| !event.getItemStack().isEnchanted()
+				|| (!event.getItemStack().isEnchanted() && !event.getItemStack().is(Items.ENCHANTED_BOOK))
 				|| !Screen.hasShiftDown())
 			return;
 		HashMap<Integer, Component> tooltipsToAdd = new HashMap<>();
-		Set<Enchantment> enchantments = event.getItemStack().getAllEnchantments().keySet();
+		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(event.getItemStack());
 		AtomicInteger added = new AtomicInteger();
 		for (Component line : event.getToolTip()) {
 			if (line.getContents() instanceof TranslatableContents translatableContents) {
-				Optional<Enchantment> oEnchantment = enchantments.stream().filter(e -> translatableContents.getKey().equals(e.getDescriptionId())).findAny();
+				Optional<Enchantment> oEnchantment = enchantments.keySet().stream().filter(e -> translatableContents.getKey().equals(e.getDescriptionId())).findAny();
 				oEnchantment.ifPresent(enchantment -> {
 					tooltipsToAdd.put(event.getToolTip().indexOf(line) + 1 + added.getAndIncrement(), CommonComponents.space().append(Component.translatable(enchantment.getDescriptionId() + ".info").withStyle(ChatFormatting.LIGHT_PURPLE)));
 				});
