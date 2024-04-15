@@ -109,10 +109,7 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean p_60519_) {
         if (!state.is(newState.getBlock())) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof GraveBlockEntity graveBlockEntity)
-                graveBlockEntity.getItems().forEach(itemStack -> dropGraveItems(level, itemStack, pos));
-
+            dropGraveItems(level, pos);
             super.onRemove(state, level, pos, newState, p_60519_);
         }
     }
@@ -127,18 +124,26 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
         return InteractionResult.SUCCESS;
     }
 
-    public void dropGraveItems(Level level, ItemStack stack, BlockPos pos) {
+    public static void dropGraveItems(Level level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof GraveBlockEntity graveBlockEntity) {
+            graveBlockEntity.getItems().forEach(itemStack -> dropGraveItem(level, itemStack, pos));
+            graveBlockEntity.getItems().clear();
+        }
+    }
+
+    public static void dropGraveItem(Level level, ItemStack stack, BlockPos pos) {
         if (stack.isEmpty())
             return;
 
-        ItemEntity itementity = new ItemEntity(level, pos.getCenter().x, pos.getCenter().y, pos.getCenter().z, stack);
-        //itementity.setPickUpDelay(40);
+        ItemEntity itementity = new ItemEntity(level, pos.getCenter().x, pos.getCenter().y + 0.8, pos.getCenter().z, stack);
+        itementity.setPickUpDelay(10);
         //2 minutes
         itementity.lifespan = 2400;
 
-        float f = level.random.nextFloat() * 0.25F;
+        float f = level.random.nextFloat() * 0.1F;
         float f1 = level.random.nextFloat() * ((float)Math.PI * 2F);
-        itementity.setDeltaMovement((-Mth.sin(f1) * f), 0.2F, (Mth.cos(f1) * f));
+        itementity.setDeltaMovement((-Mth.sin(f1) * f), 0.1F, (Mth.cos(f1) * f));
         level.addFreshEntity(itementity);
     }
 

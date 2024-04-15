@@ -94,7 +94,8 @@ public class Death extends Feature {
 		if (level == null)
 			return;
 		if (level.isLoaded(pos.pos()) && level.getBlockState(pos.pos()).is(GRAVE.block().get())) {
-			level.destroyBlock(pos.pos(), true, player);
+			GraveBlock.dropGraveItems(level, pos.pos());
+			//level.destroyBlock(pos.pos(), true, player);
 
 			int chunkX = SectionPos.blockToSectionCoord(pos.pos().getX());
 			int chunkZ = SectionPos.blockToSectionCoord(pos.pos().getZ());

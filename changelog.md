@@ -1,7 +1,9 @@
 # Changelog
 
 ## Upcoming
-* Graves now break as soon as the player dies instead when the chunk is loaded
+* Graves 
+  * Now drops only ... the drops instead of breaking the grave
+  * Also, as soon as the player dies instead when the chunk is loaded
 * Reduced golden tools durability
 
 ## 3.7.5

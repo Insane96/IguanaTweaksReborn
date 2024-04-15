@@ -12,8 +12,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -150,14 +148,15 @@ public class GraveBlockEntity extends BlockEntity {
                     level.addFreshEntity(xpOrb);
                     graveBlockEntity.setXpStored(0);
                 }
-                ItemStack grave = new ItemStack(Death.GRAVE.item().get());
+                /*ItemStack grave = new ItemStack(Death.GRAVE.item().get());
                 if (graveBlockEntity.message != null) {
                     CompoundTag compoundTag = new CompoundTag();
                     compoundTag.putString("message", Component.Serializer.toJson(graveBlockEntity.message));
                     BlockItem.setBlockEntityData(grave, Death.GRAVE_BLOCK_ENTITY_TYPE.get(), compoundTag);
                 }
-                level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), grave));
-                level.destroyBlock(pos, false);
+                level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), grave));*/
+                GraveBlock.dropGraveItems(level, pos);
+                graveBlockEntity.owner = null;
             }
         });
     }
