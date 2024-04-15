@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Reduced golden tools durability
+
 ## 3.7.5
 * Added `iguanatweaks:explosionMobGriefing` game rule
 * Reduced golden tools efficiency and attack speed
