@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraftforge.common.MinecraftForge;
 
-public class ITEEventFactory {
+public class ITREventFactory {
     /**
      * Returns true if the event is canceled
      */

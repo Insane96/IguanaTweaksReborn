@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.movement.stamina;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.event.ITEEventFactory;
+import insane96mcp.iguanatweaksreborn.event.ITREventFactory;
 import insane96mcp.iguanatweaksreborn.mixin.client.GuiMixin;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
@@ -131,7 +131,7 @@ public class Stamina extends Feature {
             int vigourEnchLvl = EnchantmentHelper.getEnchantmentLevel(VIGOUR.get(), player);
             if (vigourEnchLvl > 0)
                 staminaToConsume *= (1 - (vigourEnchLvl * 0.15f + 0.1f));
-            staminaToConsume = ITEEventFactory.onStaminaConsumed(player, staminaToConsume);
+            staminaToConsume = ITREventFactory.onStaminaConsumed(player, staminaToConsume);
             if (staminaToConsume == 0)
                 return;
             StaminaHandler.consumeStamina(player, staminaToConsume);
@@ -154,7 +154,7 @@ public class Stamina extends Feature {
             }
             staminaToRecover += (staminaToRecover * percIncrease);
 
-            staminaToRecover = ITEEventFactory.onStaminaRegenerated(player, staminaToRecover);
+            staminaToRecover = ITREventFactory.onStaminaRegenerated(player, staminaToRecover);
             if (staminaToRecover == 0)
                 return;
             stamina = StaminaHandler.regenStamina(player, staminaToRecover);
