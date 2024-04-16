@@ -7,6 +7,7 @@
     * This fixes graves staying in the world even if the owner died, but it's no longer online 
 * Heavily reduced golden tools durability
 * Slightly increased Tiredness effects
+* Reduced treasure fishing loot's level of enchanting (30 -> 18) 
 * Vigour 
   * Vigour effect no longer increases stamina regeneration and uses the formula from the enchantment
   * Fixed enchantment formula (-25%/-40%/-45% -> -25%/-40%/-55% consumption)
