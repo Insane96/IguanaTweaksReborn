@@ -156,7 +156,6 @@ public class Tiredness extends JsonFeature {
 		else
 			chance *= secondsSinceLastSound / 300f;
 
-		LogHelper.info("lastPlayedSound: %d, chance: %.4f", lastPlayedSound, chance);
 		if (event.player.getRandom().nextFloat() < chance) {
 			lastPlayedSound = event.player.level().getGameTime();
 			String sSound = tiredSounds.get(event.player.getRandom().nextInt(tiredSounds.size()));
