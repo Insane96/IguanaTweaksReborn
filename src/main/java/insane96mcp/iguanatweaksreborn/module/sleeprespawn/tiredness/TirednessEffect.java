@@ -18,7 +18,7 @@ public class TirednessEffect extends ILMobEffect implements IStaminaModifier {
 
     @Override
     public float regenStaminaModifier(int amplifier) {
-        return -0.02f * amplifier;
+        return -0.025f * amplifier;
     }
 
     @Override

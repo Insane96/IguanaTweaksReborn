@@ -5,6 +5,7 @@
   * Now drops only ... the drops instead of breaking the grave
   * Also, as soon as the player dies instead when the chunk is loaded
 * Heavily reduced golden tools durability
+* Slightly increased Tiredness effects
 * Fixed enchantments info not showing on enchanted books
 * Removed a leftover log
 
