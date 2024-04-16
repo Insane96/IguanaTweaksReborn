@@ -130,7 +130,7 @@ public class Stamina extends Feature {
             staminaToConsume += (staminaToConsume * percIncrease);
             int vigourEnchLvl = EnchantmentHelper.getEnchantmentLevel(VIGOUR.get(), player);
             if (vigourEnchLvl > 0)
-                staminaToConsume *= (1 - vigourEnchLvl * (0.25f - (0.05f * (vigourEnchLvl - 1))));
+                staminaToConsume *= (1 - (vigourEnchLvl * 0.15f + 0.1f));
             staminaToConsume = ITEEventFactory.onStaminaConsumed(player, staminaToConsume);
             if (staminaToConsume == 0)
                 return;
@@ -214,7 +214,7 @@ public class Stamina extends Feature {
         consumed += (consumed * percIncrease);
         int vigourEnchLvl = EnchantmentHelper.getEnchantmentLevel(VIGOUR.get(), player);
         if (vigourEnchLvl > 0)
-            consumed *= (1 - vigourEnchLvl * 0.2f);
+            consumed *= 1 - (vigourEnchLvl * 0.15f + 0.1f);
         StaminaHandler.consumeStamina(player, consumed);
     }
 

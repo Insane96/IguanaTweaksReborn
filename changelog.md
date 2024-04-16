@@ -3,9 +3,13 @@
 ## Upcoming
 * Graves 
   * Now drops only ... the drops instead of breaking the grave
-  * Also, as soon as the player dies instead when the chunk is loaded
+  * Also, as soon as the player dies the drops will drop instead when the chunk is loaded
+    * This fixes graves staying in the world even if the owner died, but it's no longer online 
 * Heavily reduced golden tools durability
 * Slightly increased Tiredness effects
+* Vigour 
+  * Vigour effect no longer increases stamina regeneration and uses the formula from the enchantment
+  * Fixed enchantment formula (-25%/-40%/-45% -> -25%/-40%/-55% consumption)
 * Fixed enchantments info not showing on enchanted books
 * Removed a leftover log
 
