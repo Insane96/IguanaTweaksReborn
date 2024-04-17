@@ -29,6 +29,7 @@
   * Re-added back to beacons
   * Fixed enchantment formula (-25%/-40%/-45% -> -25%/-40%/-55% consumption)
   * Fixed enchantment not applying to jumps
+* Increased Hoes damage modifier (-50% -> -60%)
 * Fixed enchantments info not showing on enchanted books
 * Removed a leftover log
 
