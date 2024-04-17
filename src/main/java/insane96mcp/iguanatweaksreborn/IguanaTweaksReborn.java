@@ -11,7 +11,7 @@ import insane96mcp.iguanatweaksreborn.data.generator.client.ITRBlockModelsProvid
 import insane96mcp.iguanatweaksreborn.data.generator.client.ITRBlockStatesProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.client.ITRItemModelsProvider;
 import insane96mcp.iguanatweaksreborn.modifier.Modifiers;
-import insane96mcp.iguanatweaksreborn.module.combat.PiercingPickaxes;
+import insane96mcp.iguanatweaksreborn.module.combat.PiercingDamage;
 import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
 import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
@@ -89,7 +89,7 @@ public class IguanaTweaksReborn
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(this::addPackFinders);
-        modEventBus.addListener(PiercingPickaxes::addAttribute);
+        modEventBus.addListener(PiercingDamage::addAttribute);
         modEventBus.addListener(RegeneratingAbsorption::addAttribute);
         modEventBus.register(Stamina.class);
 		modEventBus.register(SpawnerData.class);

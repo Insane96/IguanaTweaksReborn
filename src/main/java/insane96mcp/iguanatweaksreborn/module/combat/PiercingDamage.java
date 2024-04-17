@@ -29,7 +29,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Piercing damage", description = "Adds a new attribute that deals bonus damage that bypasses armor")
 @LoadFeature(module = Modules.Ids.COMBAT)
-public class PiercingPickaxes extends Feature {
+public class PiercingDamage extends Feature {
 	public static ResourceKey<DamageType> PIERCING_MOB_ATTACK = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "piercing_mob_attack"));
 	public static ResourceKey<DamageType> PIERCING_PLAYER_ATTACK = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "piercing_player_attack"));
 
@@ -38,7 +38,7 @@ public class PiercingPickaxes extends Feature {
 	public static final TagKey<DamageType> PIERCING_DAMAGE_TYPE = ITRDamageTypeTagsProvider.create("piercing_damage_type");
 	public static final TagKey<DamageType> DOESNT_TRIGGER_PIERCING = ITRDamageTypeTagsProvider.create("doesnt_trigger_piercing");
 
-	public PiercingPickaxes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public PiercingDamage(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 

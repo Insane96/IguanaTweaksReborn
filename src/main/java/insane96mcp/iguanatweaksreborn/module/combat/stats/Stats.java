@@ -2,7 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.combat.stats;
 
 import com.google.common.collect.Multimap;
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.module.combat.PiercingPickaxes;
+import insane96mcp.iguanatweaksreborn.module.combat.PiercingDamage;
 import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
 import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
 import insane96mcp.insanelib.base.Feature;
@@ -177,7 +177,7 @@ public class Stats extends Feature {
 									//amount += EnchantmentHelper.getDamageBonus(event.getItemStack(), MobType.UNDEFINED);
 									isEqualTooltip = true;
 								}
-								if (attribute.equals(PiercingPickaxes.PIERCING_DAMAGE.get())
+								if (attribute.equals(PiercingDamage.PIERCING_DAMAGE.get())
 										|| attribute.equals(Attributes.ATTACK_SPEED)
 										|| attribute.equals(Attributes.KNOCKBACK_RESISTANCE)
 										|| attribute.equals(ForgeMod.ENTITY_REACH.get())
