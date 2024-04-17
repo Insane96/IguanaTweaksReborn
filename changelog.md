@@ -15,8 +15,8 @@
   * Now drops only ... the drops instead of breaking the grave
   * Also, as soon as the player dies the drops will drop instead when the chunk is loaded
     * This fixes graves staying in the world even if the owner died, but it's no longer online 
-* Heavily reduced golden tools durability
-  * The high enchantability and the fact that can mine like an Iron Pick makes them too strong. This is definitely not be the right way, but we'll see. 
+* Changed golden tools mining level from iron tools to stone tools (so gold tools can no longer mine diamonds, coal, emeralds, redstone and gold)
+  * The high enchantability and the fact that can mine like an Iron Pick makes them too strong 
 * Slightly increased Tiredness debuffs (2% -> 2.5%)
 * Arrow nerf now works differently
   * You may ask "In which way it works differently?", well, I don't really know, I just know I've reworked the code and used Mixins, since the old way was not behaving properly

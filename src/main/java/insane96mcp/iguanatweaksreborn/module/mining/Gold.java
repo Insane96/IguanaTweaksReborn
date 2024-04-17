@@ -5,7 +5,6 @@ import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
-import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -18,16 +17,11 @@ import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Gold", description = "Makes gold tools more useful")
+@Label(name = "Gold", description = "Changes Gold tools to have an innate Fortune/Looting I and changes the harvest level to be like stone tools")
 @LoadFeature(module = Modules.Ids.MINING)
 public class Gold extends Feature {
 
 	public static final String LUCKY_GOLD_TOOLTIP = IguanaTweaksReborn.MOD_ID + ".innate_luck";
-
-	@Config
-	@Label(name = "Lucky Gold", description = "Changes Gold tools to have an innate Fortune/Looting I and changes the harvest level to be like iron tools.")
-	public static Boolean luckyGold = true;
-
 
 	public Gold(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -36,7 +30,6 @@ public class Gold extends Feature {
 	@SubscribeEvent
 	public void onLootingCheck(LootingLevelEvent event) {
 		if (!this.isEnabled()
-				|| !luckyGold
 				|| event.getDamageSource() == null
 				|| !(event.getDamageSource().getEntity() instanceof LivingEntity livingEntity))
 			return;
@@ -50,7 +43,6 @@ public class Gold extends Feature {
 
 	public static int getFortuneLevel(int prev, ItemStack itemStack) {
 		if(!isEnabled(Gold.class)
-				|| !luckyGold
 				|| !(itemStack.getItem() instanceof TieredItem tieredItem)
 				|| tieredItem.getTier() != Tiers.GOLD
 				|| prev >= 1)
@@ -61,18 +53,16 @@ public class Gold extends Feature {
 
 	public static Tier getEffectiveTier(Tier originalTier) {
 		if(!isEnabled(Gold.class)
-				|| !luckyGold
 				|| originalTier != Tiers.GOLD)
 			return originalTier;
 
-		return Tiers.IRON;
+		return Tiers.STONE;
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void onTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled()
-				|| !luckyGold
 				|| !(event.getItemStack().getItem() instanceof TieredItem tieredItem)
 				|| tieredItem.getTier() != Tiers.GOLD
 				|| event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_FORTUNE) > 0
