@@ -3,7 +3,6 @@ package insane96mcp.iguanatweaksreborn.module.experience.enchantments;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.event.ITRLivingAttackEvent;
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.iguanatweaksreborn.module.combat.stats.Stats;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.FireAspect;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Knockback;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Luck;
@@ -35,14 +34,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
@@ -92,8 +89,8 @@ public class EnchantmentsFeature extends JsonFeature {
 	public static Boolean nerfFortune = true;
 
 	@Config(min = 0d, max = 2d)
-	@Label(name = "Power Enchantment Damage", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). Set to 0.5 to disable.")
-	public static Double powerEnchantmentDamage = 0.3d;
+	@Label(name = "Power Enchantment Damage", description = "Set arrow's damage increase with the Power enchantment (vanilla is 0.5). If set to a value != 0.5 the flat 0.5 bonus is also removed. Set to 0.5 to disable.")
+	public static Double powerEnchantmentDamage = 0.4d;
 
 	@Config
 	@Label(name = "Prevent farmland trampling with Feather Falling")
@@ -289,15 +286,6 @@ public class EnchantmentsFeature extends JsonFeature {
 	}
 
 	@SubscribeEvent
-	public void onArrowSpawn(EntityJoinLevelEvent event) {
-		if (!this.isEnabled()
-				|| !(event.getEntity() instanceof AbstractArrow arrow))
-			return;
-		if (!arrow.shotFromCrossbow())
-			processBow(arrow);
-	}
-
-	@SubscribeEvent
 	public void onItemTooltip(ItemTooltipEvent event) {
 		if (!this.isEnabled()
 				|| !enchantmentsInfo
@@ -317,18 +305,6 @@ public class EnchantmentsFeature extends JsonFeature {
 		}
 		for (Map.Entry<Integer, Component> tooltipToAdd : tooltipsToAdd.entrySet()) {
 			event.getToolTip().add(tooltipToAdd.getKey(), tooltipToAdd.getValue());
-		}
-	}
-
-	private static void processBow(AbstractArrow arrow) {
-		if (isEnabled(Stats.class) && Stats.bowsArrowsBaseDamageMultiplier != 1d)
-			arrow.setBaseDamage(arrow.getBaseDamage() * Stats.bowsArrowsBaseDamageMultiplier);
-		if (powerEnchantmentDamage != 0.5d && arrow.getOwner() instanceof LivingEntity) {
-			int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
-			if (powerLevel == 0)
-				return;
-			double powerReduction = 0.5d - powerEnchantmentDamage;
-			arrow.setBaseDamage(arrow.getBaseDamage() - (powerLevel * powerReduction + 0.5d));
 		}
 	}
 

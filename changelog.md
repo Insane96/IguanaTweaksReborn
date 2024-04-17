@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Ageing animals!
+  * The biggest problem with animals is that as long as you have space, you can have infinite of them (especially chickens). With this, you can have infinite but will die eventually
   * After growing from babies, animals will now have a life span, based off the type of animal
   * Cows (and mooshrooms), Chickens, Sheep, Pigs, Rabbits, Quark's Crabs, Autumnity Snails and Turkeys can die of old age
   * Animals have 4 "stages": Young, Adult, Mid age and elder
@@ -15,7 +16,12 @@
   * Also, as soon as the player dies the drops will drop instead when the chunk is loaded
     * This fixes graves staying in the world even if the owner died, but it's no longer online 
 * Heavily reduced golden tools durability
-* Slightly increased Tiredness effects
+  * The high enchantability and the fact that can mine like an Iron Pick makes them too strong. This is definitely not be the right way, but we'll see. 
+* Slightly increased Tiredness debuffs (2% -> 2.5%)
+* Arrow nerf now works differently
+  * You may ask "In which way it works differently?", well, I don't really know, I just know I've reworked the code and used Mixins, since the old way was not behaving properly
+  * HOWEVER, I know for sure that arrow's damage is no longer rounded up to the nearest integer, so between arrows and quartz arrows (from ITE) the difference now actually exists
+  * The arrow damage nerf is also applied to crossbows now, but crossbows shoot arrows with more velocity
 * Reduced treasure fishing loot's level of enchanting (30 -> 18) 
   * Was way too high giving OP items
 * Vigour 
@@ -23,7 +29,6 @@
   * Re-added back to beacons
   * Fixed enchantment formula (-25%/-40%/-45% -> -25%/-40%/-55% consumption)
   * Fixed enchantment not applying to jumps
-* Changed `Bow's Arrows Base Damage` to `Bow's Arrows Base Damage Multiplier`
 * Fixed enchantments info not showing on enchanted books
 * Removed a leftover log
 
