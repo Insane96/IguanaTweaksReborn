@@ -20,6 +20,7 @@
   * Was way too high giving OP items
 * Vigour 
   * Vigour effect no longer increases stamina regeneration and uses the formula from the enchantment
+  * Re-added back to beacons
   * Fixed enchantment formula (-25%/-40%/-45% -> -25%/-40%/-55% consumption)
   * Fixed enchantment not applying to jumps
 * Changed `Bow's Arrows Base Damage` to `Bow's Arrows Base Damage Multiplier`
