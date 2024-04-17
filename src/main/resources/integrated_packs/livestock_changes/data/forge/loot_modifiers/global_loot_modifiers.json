@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "entries": [
+        "iguanatweaksreborn:livestock_drops_young",
+        "iguanatweaksreborn:livestock_drops_adult",
+        "iguanatweaksreborn:livestock_drops_mid_age",
+        "iguanatweaksreborn:livestock_drops_elder"
+    ]
+}

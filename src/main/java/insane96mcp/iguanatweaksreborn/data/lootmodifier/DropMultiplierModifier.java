@@ -63,6 +63,8 @@ public class DropMultiplierModifier extends LootModifier {
 
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+        if (multiplier == 1)
+            return generatedLoot;
         Predicate<ItemStack> MATCHES_ITEM_OR_TAG = stack -> {
             if (item.isPresent()) {
                 return stack.is(item.get());

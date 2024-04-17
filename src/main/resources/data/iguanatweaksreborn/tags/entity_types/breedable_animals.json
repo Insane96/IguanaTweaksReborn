@@ -20,6 +20,18 @@
         "minecraft:bee",
         "minecraft:strider",
         "minecraft:hoglin",
-        "minecraft:frog"
+        "minecraft:frog",
+        {
+            "id": "quark:crab",
+            "required": false
+        },
+        {
+            "id": "autumnity:snail",
+            "required": false
+        },
+        {
+            "id": "autumnity:turkey",
+            "required": false
+        }
     ]
 }

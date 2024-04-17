@@ -1,6 +1,15 @@
 # Changelog
 
 ## Upcoming
+* Ageing animals!
+  * After growing from babies, animals will now have a life span, based off the type of animal
+  * Cows (and mooshrooms), Chickens, Sheep, Pigs, Rabbits, Quark's Crabs, Autumnity Snails and Turkeys can die of old age
+  * Animals have 4 "stages": Young, Adult, Mid age and elder
+    * Young animals are considered as such when below 25% of their lifespan. They have normal drops
+    * Adult animals are considered as such when between 25%~50% of their lifespan. They have increased drops
+    * Mid age animals are considered as such when between 50%~75% of their lifespan. They have normal drops
+    * Elder animals are considered as such when above 75% of their lifespan. They have reduced drops and are slowed down
+  * If pehkui is installed, animals will also visually grow
 * Graves 
   * Now drops only ... the drops instead of breaking the grave
   * Also, as soon as the player dies the drops will drop instead when the chunk is loaded
@@ -8,6 +17,7 @@
 * Heavily reduced golden tools durability
 * Slightly increased Tiredness effects
 * Reduced treasure fishing loot's level of enchanting (30 -> 18) 
+  * Was way too high giving OP items
 * Vigour 
   * Vigour effect no longer increases stamina regeneration and uses the formula from the enchantment
   * Fixed enchantment formula (-25%/-40%/-45% -> -25%/-40%/-55% consumption)

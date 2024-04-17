@@ -47,6 +47,13 @@ license="All rights reserved"
     side="BOTH"
 
 [[dependencies.iguanatweaksreborn]]
+    modId="pehkui"
+    mandatory=false
+    versionRange="[3.7.5,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.iguanatweaksreborn]]
     modId="globaldataandresourcepacks"
     mandatory=false
     versionRange="[1.16.2,)"

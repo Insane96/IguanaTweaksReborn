@@ -179,7 +179,7 @@ dependencies {
     compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}:api")
     runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
 
-    //implementation fg.deobf("com.github.Virtuoel:Pehkui:${pehkui_version}-${mc_version}-forge")
+    implementation fg.deobf("com.github.Virtuoel:Pehkui:${pehkui_version}-${mc_version}-forge")
     //implementation fg.deobf("curse.maven:kiwi-303657:4592974")
     //implementation fg.deobf("curse.maven:passable-foliage-379887:4593677")
     implementation fg.deobf("curse.maven:tool-belt-260262:4581167")

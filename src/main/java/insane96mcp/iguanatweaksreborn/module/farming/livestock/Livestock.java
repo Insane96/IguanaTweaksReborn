@@ -11,6 +11,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -24,6 +25,8 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.MushroomCow;
@@ -40,9 +43,11 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fml.ModList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Label(name = "Livestock", description = "Slower breeding, Growing, Egging and Milking. Lower yield.")
 @LoadFeature(module = Modules.Ids.FARMING)
@@ -101,8 +106,47 @@ public class Livestock extends Feature {
 			slowdownAnimalGrowth(event);
 			slowdownBreeding(event);
 			slowdownEggLay(event);
+			liveDeath(event);
 		}
 		cowMilkTick(event);
+	}
+
+	public static void liveDeath(LivingEvent.LivingTickEvent event) {
+        //noinspection DataFlowIssue
+        if (!(event.getEntity() instanceof AgeableMob ageableMob)
+				|| (ageableMob.level().getServer().getTickCount() + ageableMob.getId()) % 20 != 0
+				|| ageableMob.isBaby())
+			return;
+
+		boolean forceUpdateScale = false;
+		int age = ageableMob.getPersistentData().getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "age");
+		int maxAge = ageableMob.getPersistentData().getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "max_age");
+		if (maxAge == 0) {
+			for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA) {
+                if (data.matches(ageableMob) && data.livingDays != null) {
+					maxAge = (int) (data.getLivingDays(ageableMob) * 20 * 60);
+					ageableMob.getPersistentData().putInt(IguanaTweaksReborn.RESOURCE_PREFIX + "max_age", maxAge);
+                    break;
+                }
+			}
+			if (maxAge == 0)
+				return;
+			forceUpdateScale = true;
+		}
+		age++;
+		if (age >= maxAge) {
+			ageableMob.kill();
+			return;
+		}
+		if (age >= maxAge * 0.75)
+			MCUtils.applyModifier(ageableMob, Attributes.MOVEMENT_SPEED, UUID.fromString("e2083ae7-e37a-47c4-ab3e-84cf14fe6b6c"), "Old animal modifier", -0.4d, AttributeModifier.Operation.MULTIPLY_BASE, false);
+		if (ModList.get().isLoaded("pehkui") && ((ageableMob.level().getServer().getTickCount() + ageableMob.getId()) % 100 == 0 || forceUpdateScale))
+			PehkuiIntegration.setSize(ageableMob, (float) age / (float) maxAge);
+		ageableMob.getPersistentData().putInt(IguanaTweaksReborn.RESOURCE_PREFIX + "age", age);
+    }
+
+	public static float getAgeRatio(AgeableMob mob) {
+		return (float) mob.getPersistentData().getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "age") / (float) mob.getPersistentData().getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "max_age");
 	}
 
 	public void slowdownAnimalGrowth(LivingEvent.LivingTickEvent event) {
