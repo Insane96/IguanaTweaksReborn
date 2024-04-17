@@ -56,8 +56,8 @@ public class Stats extends Feature {
 	@Label(name = "Disable Critical Arrows bonus damage", description = "If true, Arrows from Bows and Crossbows will no longer deal more damage when fully charged.")
 	public static Boolean disableCritArrowsBonusDamage = true;
 	@Config(min = 0d, max = 10d)
-	@Label(name = "Bow's Arrows Base Damage", description = "Set arrow's base damage if shot from bow.")
-	public static Double bowsArrowsBaseDamage = 1d;
+	@Label(name = "Bow's Arrows Base Damage Multiplier", description = "Multiplies arrow's base damage if shot from bow by this value.")
+	public static Double bowsArrowsBaseDamageMultiplier = 0.5d;
 	@Config
 	@Label(name = "Fix tooltips", description = "Vanilla tooltips on gear don't sum up multiple modifiers (e.g. a sword would have \"4 Attack Damage\" and \"-2 Attack Damage\" instead of \"2 Attack Damage\". This might break other mods messing with these Tooltips (e.g. Quark's improved tooltips)")
 	public static Boolean fixTooltips = true;

@@ -321,9 +321,8 @@ public class EnchantmentsFeature extends JsonFeature {
 	}
 
 	private static void processBow(AbstractArrow arrow) {
-		if (isEnabled(Stats.class) && Stats.bowsArrowsBaseDamage != 2d) {
-			arrow.setBaseDamage(arrow.getBaseDamage() - (2d - Stats.bowsArrowsBaseDamage));
-		}
+		if (isEnabled(Stats.class) && Stats.bowsArrowsBaseDamageMultiplier != 1d)
+			arrow.setBaseDamage(arrow.getBaseDamage() * Stats.bowsArrowsBaseDamageMultiplier);
 		if (powerEnchantmentDamage != 0.5d && arrow.getOwner() instanceof LivingEntity) {
 			int powerLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, (LivingEntity) arrow.getOwner());
 			if (powerLevel == 0)
