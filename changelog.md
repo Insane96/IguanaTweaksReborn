@@ -6,6 +6,7 @@
   * Reduced Diamond Efficiency (5 -> 4)
   * Reduced Netherite Efficiency (6 -> 4.5)
   * Reduced Gold Armor Armor (Full set: 5 -> 4)
+* Wandering Trader Bottle o Enchanting Trade nerfed (3 -> 6 emeralds, max 8 -> 4 uses)
 
 ## 3.8.0 - The Aging animals update
 * Ageing animals!
