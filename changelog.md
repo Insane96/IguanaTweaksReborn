@@ -5,6 +5,7 @@
   * Reduced Gold Efficiency (9 -> 7), Base AD (1.5 -> 1), Attack speed (+10% -> +5%)
   * Reduced Diamond Efficiency (5 -> 4)
   * Reduced Netherite Efficiency (6 -> 4.5)
+  * Reduced Gold Armor Armor (Full set: 5 -> 4)
 
 ## 3.8.0 - The Aging animals update
 * Ageing animals!
