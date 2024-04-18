@@ -22,8 +22,8 @@
   * You may ask "In which way it works differently?", well, I don't really know, I just know I've reworked the code and used Mixins, since the old way was not behaving properly
   * HOWEVER, I know for sure that arrow's damage is no longer rounded up to the nearest integer, so between arrows and quartz arrows (from ITE) the difference now actually exists
   * The arrow damage nerf is also applied to crossbows now, but crossbows shoot arrows with more velocity
-* Reduced treasure fishing loot's level of enchanting (30 -> 18) 
-  * Was way too high giving OP items
+* Reduced treasure fishing loot's level of enchanting (30 -> 25) and can no longer be enchanted with treasure enchantments
+  * Was way too high giving OP items and too easy obtaining treasure enchantments
 * Vigour 
   * Vigour effect no longer increases stamina regeneration and uses the formula from the enchantment
   * Re-added back to beacons
