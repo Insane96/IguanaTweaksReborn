@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.8.0 - The Aging animals update
 * Ageing animals!
   * The biggest problem with animals is that as long as you have space, you can have infinite of them (especially chickens). With this, you can have infinite but will die eventually
   * After growing from babies, animals will now have a life span, based off the type of animal
