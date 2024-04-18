@@ -15,12 +15,12 @@ public class FeatherFalling extends Enchantment implements IProtectionEnchantmen
 
     @Override
     public int getMinCost(int lvl) {
-        return 5 + (lvl - 1) * 6;
+        return 5 + (lvl - 1) * 8;
     }
 
     @Override
     public int getMaxCost(int lvl) {
-        return this.getMinCost(lvl) + 6;
+        return this.getMinCost(lvl) + 8;
     }
 
     @Override

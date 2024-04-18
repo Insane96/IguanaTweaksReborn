@@ -31,6 +31,7 @@
   * Fixed enchantment not applying to jumps
 * Increased Hoes damage modifier (-50% -> -60%)
 * Fixed enchantments info not showing on enchanted books
+* Fixed feather falling being too rare
 * Removed a leftover log
 
 ## 3.7.5
