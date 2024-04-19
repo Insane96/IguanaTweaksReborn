@@ -102,7 +102,6 @@
 	"block.minecraft.carrots.seeds": "Carrot Seeds",
 	"block.minecraft.potatoes.seeds": "Rooted Potato",
 	"block.iguanatweaksreborn.solanum_neorossii": "Solanum Nerossii",
-	"emi.iguanatweaksreborn.crops.seeds": "Can be found in the wild",
 
 
 	"iguanatweaksreborn:hunger_health_module": "Hunger & Health",
@@ -181,5 +180,8 @@
 
 	"death.fell.accident.water": "%s thought could drop in shallow water safely",
 
-	"iguanatweaksreborn.requires_corners": "The portal needs Crying Obsidian in the corners to be activated"
+	"iguanatweaksreborn.requires_corners": "The portal needs Crying Obsidian in the corners to be activated",
+
+	"emi.info.iguanatweaksreborn.name_tags": "When applied to a named entity will drop the previous name tag. If the item is not renamed will remove the name from the entity.",
+	"emi.info.iguanatweaksreborn.crops.seeds": "Can be found in the wild"
 }

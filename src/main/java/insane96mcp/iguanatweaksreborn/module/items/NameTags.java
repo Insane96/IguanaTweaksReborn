@@ -28,7 +28,6 @@ public class NameTags extends Feature {
     public void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
         if (!this.isEnabled()
                 || !event.getItemStack().is(Items.NAME_TAG)
-                || !event.getItemStack().hasCustomHoverName()
                 || !(event.getTarget() instanceof LivingEntity target)
                 || target instanceof Player
                 || event.getEntity().level().isClientSide
@@ -37,7 +36,13 @@ public class NameTags extends Feature {
 
         if (target.getPersistentData().contains(IguanaTweaksReborn.RESOURCE_PREFIX + "has_name_tag"))
             dropNameTag(target.level(), target);
-        target.getPersistentData().putBoolean(IguanaTweaksReborn.RESOURCE_PREFIX + "has_name_tag", true);
+        if (event.getItemStack().hasCustomHoverName())
+            target.getPersistentData().putBoolean(IguanaTweaksReborn.RESOURCE_PREFIX + "has_name_tag", true);
+        else {
+            target.getPersistentData().remove(IguanaTweaksReborn.RESOURCE_PREFIX + "has_name_tag");
+            target.setCustomName(null);
+        }
+
     }
 
     @SubscribeEvent

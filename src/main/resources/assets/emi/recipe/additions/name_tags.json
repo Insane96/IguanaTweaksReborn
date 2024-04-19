@@ -1,0 +1,7 @@
+{
+	"type": "emi:info",
+	"stacks": [
+		"item:minecraft:name_tag"
+	],
+	"text": "emi.info.iguanatweaksreborn.name_tag"
+}
