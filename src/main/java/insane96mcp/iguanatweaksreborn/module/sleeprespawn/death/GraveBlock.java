@@ -137,7 +137,7 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
             return;
 
         ItemEntity itementity = new ItemEntity(level, pos.getCenter().x, pos.getCenter().y + 0.8, pos.getCenter().z, stack);
-        itementity.setPickUpDelay(10);
+        itementity.setPickUpDelay(5);
         //2 minutes
         itementity.lifespan = 2400;
 
