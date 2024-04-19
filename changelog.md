@@ -1,10 +1,12 @@
 # Changelog
 
 ## Upcoming
+* Reduced Efficiency enchantment bonus speed (coefficient: 8% -> 6%)
 * Stats
-  * Reduced Gold Efficiency (9 -> 7), Base AD (1.5 -> 1), Attack speed (+10% -> +5%)
-  * Reduced Diamond Efficiency (5 -> 4)
-  * Reduced Netherite Efficiency (6 -> 4.5)
+  * Reduced Gold Efficiency (9 -> 8), Base AD (1.5 -> 1), Attack speed (+10% -> +5%)
+  * Reduced Diamond Efficiency (5 -> 4.5)
+  * Reduced Netherite Efficiency (6 -> 5)
+  * Increased Iron Efficiency (3 -> 3.5)
   * Reduced Gold Armor Armor (Full set: 5 -> 4)
 * Wandering Trader Bottle o Enchanting Trade nerfed (3 -> 6 emeralds, max 8 -> 4 uses)
 * Items can no longer be repaired with nuggets
