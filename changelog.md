@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.8.1
 * Reduced Efficiency enchantment bonus speed (coefficient: 8% -> 6%)
 * Stats
   * Reduced Gold Efficiency (9 -> 8), Base AD (1.5 -> 1), Attack speed (+10% -> +5%)
