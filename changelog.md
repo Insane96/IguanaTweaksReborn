@@ -2,6 +2,7 @@
 
 ## Upcoming
 * You can now use an empty Name Tag on a mob to remove its name tag
+* Reduced Golden tools efficiency (8 -> 7)
 
 ## 3.8.1
 * Reduced Efficiency enchantment bonus speed (coefficient: 8% -> 6%)
