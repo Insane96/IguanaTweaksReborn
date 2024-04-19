@@ -197,7 +197,8 @@ public class Livestock extends Feature {
 	}
 
 	public void slowdownEggLay(LivingEvent.LivingTickEvent event) {
-		if (!(event.getEntity() instanceof Chicken chicken))
+		if (!(event.getEntity() instanceof Chicken chicken)
+				|| chicken.isBaby())
 			return;
 
 		int timeUntilNextEgg = chicken.eggTime;
