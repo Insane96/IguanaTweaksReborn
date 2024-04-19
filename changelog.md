@@ -9,6 +9,9 @@
 * Wandering Trader Bottle o Enchanting Trade nerfed (3 -> 6 emeralds, max 8 -> 4 uses)
 * Items can no longer be repaired with nuggets
   * This made repairing items with nuggets too good when they were enchanted
+* Timber Trees
+  * Hopefully fixed leaves sometimes not decaying after falling
+  * Hopefully fixed blocks being places on water
 
 ## 3.8.0 - The Aging animals update
 * Ageing animals!

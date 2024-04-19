@@ -141,7 +141,7 @@ public class ITRFallingBlockEntity extends FallingBlockEntity {
 			if (this.directionFalling != null)
 				dir = this.random.nextBoolean() ? this.directionFalling.getClockWise() : this.directionFalling.getCounterClockWise();
 			else
-				dir = Arrays.stream(Direction.values()).filter((direction) -> direction.getAxis().isHorizontal()).skip(this.random.nextInt(4)).findFirst().get();
+				dir = Arrays.stream(Direction.values()).filter((direction) -> direction.getAxis().isHorizontal() && direction != this.movedFrom).skip(this.random.nextInt(4)).findFirst().get();
 			//blockPos.set(pos.relative(dir));
 			this.directionFalling = dir;
 			//TODO prevent moving back from where it came
@@ -155,7 +155,7 @@ public class ITRFallingBlockEntity extends FallingBlockEntity {
 		BlockState stateOn = this.level().getBlockState(blockPos.below());
 		boolean canBeReplaced = stateAt.canBeReplaced(new DirectionalPlaceContext(this.level(), blockPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
 		boolean isHarderThanInside = stateAt.getDestroySpeed(this.level(), blockPos) < this.blockState.getDestroySpeed(this.level(), blockPos);
-		boolean canSurvive = this.blockState.canSurvive(this.level(), blockPos);
+		boolean canSurvive = this.blockState.canSurvive(this.level(), blockPos) && stateOn.getFluidState().isEmpty() && !stateOn.isAir();
 		if (canBeReplaced && isHarderThanInside && canSurvive) {
 			this.place(stateOn, this.blockState.getBlock(), blockPos, true);
 			return true;
@@ -170,7 +170,8 @@ public class ITRFallingBlockEntity extends FallingBlockEntity {
 
 			if (breakBlock)
 				this.level().destroyBlock(pos, false);
-			if (this.level().setBlock(pos, this.blockState, 3)) {
+			if (this.level().setBlockAndUpdate(pos, this.blockState)) {
+				Block.updateFromNeighbourShapes(this.blockState, this.level(), pos);
 				((ServerLevel)this.level()).getChunkSource().chunkMap.broadcast(this, new ClientboundBlockUpdatePacket(pos, this.level().getBlockState(pos)));
 				this.discard();
 				if (block instanceof Fallable) {
