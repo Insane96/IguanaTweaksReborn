@@ -7,6 +7,8 @@
   * Reduced Netherite Efficiency (6 -> 4.5)
   * Reduced Gold Armor Armor (Full set: 5 -> 4)
 * Wandering Trader Bottle o Enchanting Trade nerfed (3 -> 6 emeralds, max 8 -> 4 uses)
+* Items can no longer be repaired with nuggets
+  * This made repairing items with nuggets too good when they were enchanted
 
 ## 3.8.0 - The Aging animals update
 * Ageing animals!
