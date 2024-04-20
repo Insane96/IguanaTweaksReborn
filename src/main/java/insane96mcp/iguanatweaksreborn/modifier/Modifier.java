@@ -5,6 +5,7 @@ import com.google.gson.annotations.JsonAdapter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
 import java.lang.reflect.Type;
@@ -17,6 +18,10 @@ public class Modifier {
 
     protected Modifier(float multiplier) {
         this.multiplier = multiplier;
+    }
+
+    public float getMultiplier(LivingEntity entity, Level level, BlockPos pos) {
+        return this.multiplier;
     }
 
     public float getMultiplier(Level level, BlockPos pos) {

@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.farming.livestock;
 
+import com.google.gson.annotations.SerializedName;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.modifier.Modifier;
 import insane96mcp.iguanatweaksreborn.module.Modules;
@@ -91,7 +92,7 @@ public class Livestock extends Feature {
 			}
 		}
 		for (Modifier modifier : modifiersToApply)
-			chance += modifier.getMultiplier(mob.level(), mob.blockPosition());
+			chance += modifier.getMultiplier(mob, mob.level(), mob.blockPosition());
 		if (chance == 1d)
 			return true;
 		return mob.getRandom().nextDouble() < chance;
@@ -149,6 +150,17 @@ public class Livestock extends Feature {
 		return (float) mob.getPersistentData().getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "age") / (float) mob.getPersistentData().getInt(IguanaTweaksReborn.RESOURCE_PREFIX + "max_age");
 	}
 
+	public static Age getAge(AgeableMob mob) {
+		float ratio = getAgeRatio(mob);
+		if (ratio < 0.25f)
+			return Age.YOUNG;
+		if (ratio < 0.5f)
+			return Age.ADULT;
+		if (ratio < 0.75f)
+			return Age.MID_AGE;
+		return Age.OLD;
+	}
+
 	public void slowdownAnimalGrowth(LivingEvent.LivingTickEvent event) {
 		if (!(event.getEntity() instanceof AgeableMob mob))
 			return;
@@ -161,7 +173,7 @@ public class Livestock extends Feature {
 		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
 			if (data.matches(mob)) {
 				for (Modifier modifier : data.growthSpeed)
-					multiplier += modifier.getMultiplier(mob.level(), mob.blockPosition());
+					multiplier += modifier.getMultiplier(mob, mob.level(), mob.blockPosition());
 			}
 		}
 		if (multiplier == 0d)
@@ -185,7 +197,7 @@ public class Livestock extends Feature {
 		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
 			if (data.matches(mob)) {
 				for (Modifier modifier : data.breedingCooldown)
-					multiplier += modifier.getMultiplier(mob.level(), mob.blockPosition());
+					multiplier += modifier.getMultiplier(mob, mob.level(), mob.blockPosition());
 			}
 		}
 		if (multiplier == 0d)
@@ -209,7 +221,7 @@ public class Livestock extends Feature {
 		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
 			if (data.matches(chicken)) {
 				for (Modifier modifier : data.eggLayCooldown)
-					multiplier += modifier.getMultiplier(chicken.level(), chicken.blockPosition());
+					multiplier += modifier.getMultiplier(chicken, chicken.level(), chicken.blockPosition());
 			}
 		}
 		if (multiplier == 0d)
@@ -270,7 +282,7 @@ public class Livestock extends Feature {
 				}
 			}
 			for (Modifier modifier : modifiersToApply)
-				cooldown *= modifier.getMultiplier(animal.level(), animal.blockPosition());
+				cooldown *= modifier.getMultiplier(animal, animal.level(), animal.blockPosition());
 			if (cooldown == 0)
 				return;
 
@@ -320,11 +332,22 @@ public class Livestock extends Feature {
 			}
 		}
 		for (Modifier modifier : modifiersToApply)
-			failChance *= modifier.getMultiplier(parentA.level(), parentA.blockPosition());
+			failChance *= modifier.getMultiplier(parentA, parentA.level(), parentA.blockPosition());
 		if (failChance == 0d)
 			return;
 
 		if (parentA.getRandom().nextFloat() < failChance)
 			event.setCanceled(true);
+	}
+
+	public enum Age {
+		@SerializedName("young")
+		YOUNG,
+		@SerializedName("adult")
+		ADULT,
+		@SerializedName("mid_age")
+		MID_AGE,
+		@SerializedName("old")
+		OLD
 	}
 }

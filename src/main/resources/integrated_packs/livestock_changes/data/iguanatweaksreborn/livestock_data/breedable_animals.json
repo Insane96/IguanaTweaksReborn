@@ -10,6 +10,11 @@
         {
             "id": "iguanatweaksreborn:global",
             "multiplier": 3
+        },
+        {
+            "id": "iguanatweaksreborn:age",
+            "multiplier": 2,
+            "age": "old"
         }
     ],
     "breeding_fail_chance": 0.7,

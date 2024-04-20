@@ -6,6 +6,7 @@ import insane96mcp.insanelib.data.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 
@@ -19,7 +20,7 @@ public class WrongBiomeModifier extends AbstractBiomeModifier {
     }
 
     @Override
-    public float getMultiplier(Level level, BlockPos pos) {
+    public float getMultiplier(LivingEntity entity, Level level, BlockPos pos) {
         Holder<Biome> currentBiome = level.getBiome(pos);
         for (IdTagMatcher biome : this.biomes) {
             if (biome.matchesBiome(currentBiome))

@@ -1,7 +1,11 @@
 {
     "entity": "#iguanatweaksreborn:cows",
-    "cow_fluid_cooldown": 1800,
+    "cow_fluid_cooldown": 1200,
     "cow_fluid_cooldown_modifiers": [
-
+        {
+            "id": "iguanatweaksreborn:age",
+            "multiplier": 2,
+            "age": "old"
+        }
     ]
 }

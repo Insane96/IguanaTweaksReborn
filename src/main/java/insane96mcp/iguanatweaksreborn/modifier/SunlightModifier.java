@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 
@@ -16,7 +17,7 @@ public class SunlightModifier extends Modifier {
     }
 
     @Override
-    public float getMultiplier(Level level, BlockPos pos) {
+    public float getMultiplier(LivingEntity entity, Level level, BlockPos pos) {
         int skyLight = level.getBrightness(LightLayer.SKY, pos);
         if (skyLight < this.minSunlight)
             return this.multiplier;

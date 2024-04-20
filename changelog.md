@@ -2,6 +2,9 @@
 
 ## Upcoming
 * You can now use an empty Name Tag on a mob to remove its name tag
+* Livestock
+  * Old animals now take more time to produce milk, eggs and to be able to be bred again
+  * Reduced cow fluid cooldown from 30 minutes to 20
 * Reduced Golden tools efficiency (8 -> 7)
 * Reduced Quark's Foxhound and Crab, Autumnity's Turkey drops
 * Fixed chickens' laying eggs after a looong time when grown from babies

@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
 @JsonAdapter(NightTimeModifier.Serializer.class)
@@ -13,7 +14,7 @@ public class NightTimeModifier extends Modifier {
     }
 
     @Override
-    public float getMultiplier(Level level, BlockPos pos) {
+    public float getMultiplier(LivingEntity entity, Level level, BlockPos pos) {
         int dayTime = (int) (level.dayTime() % 24000);
         if (dayTime >= 12786 && dayTime < 23216)
             return this.multiplier;

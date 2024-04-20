@@ -16,6 +16,7 @@ public class Modifiers {
         registerModifier(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "night_time"), NightTimeModifier.class);
         registerModifier(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "correct_biome"), CorrectBiomeModifier.class);
         registerModifier(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "wrong_biome"), WrongBiomeModifier.class);
+        registerModifier(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "age"), AgeModifier.class);
     }
 
     public static Type registerModifier(ResourceLocation id, Type modifier) {
