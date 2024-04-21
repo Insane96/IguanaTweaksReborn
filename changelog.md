@@ -9,6 +9,7 @@
 * Revert 'Reduced cow fluid cooldown from 30 minutes to 20'
 * Fixed unbreakable tools sometimes not working
 * Fixed regenerating absorption not wrapping after 40
+* Fixed new flowers in flower pots
 
 ## 3.8.2
 * You can now use an empty Name Tag on a mob to remove its name tag
