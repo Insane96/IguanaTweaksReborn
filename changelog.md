@@ -2,6 +2,10 @@
 
 ## Upcoming
 * Reduced Hoglin drops
+* Trident
+  * Now repairable only up to 25% with prismarine and 50% with Crystals
+  * Fixed not being able to repair with Crystals
+* Revert 'Reduced cow fluid cooldown from 30 minutes to 20'
 
 ## 3.8.2
 * You can now use an empty Name Tag on a mob to remove its name tag
