@@ -82,6 +82,9 @@ public class ExplosionOverhaul extends Feature {
                 level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.25D);
                 level.sendParticles(ParticleTypes.SMOKE, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 4f, e.radius / 4f, e.radius / 4f, 0.25D);
             }
+			else if (e.radius < 2) {
+				level.sendParticles(ParticleTypes.EXPLOSION, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), 1, 0.0D, 0.0D, 0.0D, 1f);
+			}
 			else {
 				level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), 1, 0.0D, 0.0D, 0.0D, 1f);
 			}
