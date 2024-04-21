@@ -15,8 +15,8 @@ import java.util.Optional;
 
 @JsonAdapter(AnvilRepair.Serializer.class)
 public class AnvilRepair {
-    final IdTagMatcher itemToRepair;
-    final List<RepairData> repairData;
+    public final IdTagMatcher itemToRepair;
+    public final List<RepairData> repairData;
 
     public AnvilRepair(IdTagMatcher itemToRepair, List<RepairData> repairData) {
         this.itemToRepair = itemToRepair;

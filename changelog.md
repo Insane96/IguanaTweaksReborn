@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Anvil Repairs are now shown in EMI
 * Reduced Hoglin drops
 * Trident
   * Now repairable only up to 25% with prismarine and 50% with Crystals

@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Label(name = "Anvils", description = "Better repair, free rename and merge.")
+@Label(name = "Anvils", description = "Better repair, free rename and merge. With this feature enabled, EMI's repairs and enchanting in anvil recipes are removed.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class Anvils extends Feature {
 
@@ -111,7 +111,7 @@ public class Anvils extends Feature {
         if (!Feature.isEnabled(Anvils.class))
             return Optional.empty();
 
-        for (AnvilRepair anvilRepair : AnvilRepairReloadListener.REPAIRS) {
+        for (AnvilRepair anvilRepair : AnvilRepairReloadListener.REPAIRS.values()) {
             if (anvilRepair.isItemToRepair(left))
                 return Optional.of(anvilRepair);
         }
@@ -122,7 +122,7 @@ public class Anvils extends Feature {
         if (!Feature.isEnabled(Anvils.class))
             return Optional.empty();
 
-        for (AnvilRepair anvilRepair : AnvilRepairReloadListener.REPAIRS) {
+        for (AnvilRepair anvilRepair : AnvilRepairReloadListener.REPAIRS.values()) {
             if (anvilRepair.isItemToRepair(left)) {
                 Optional<AnvilRepair.RepairData> repairData = anvilRepair.getRepairDataFromMaterial(right);
                 if (repairData.isPresent())

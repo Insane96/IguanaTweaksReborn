@@ -15,13 +15,12 @@ import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = IguanaTweaksReborn.MOD_ID)
 public class AnvilRepairReloadListener extends SimpleJsonResourceReloadListener {
-	public static List<AnvilRepair> REPAIRS = new ArrayList<>();
+	public static HashMap<ResourceLocation, AnvilRepair> REPAIRS = new HashMap<>();
 	public static final AnvilRepairReloadListener INSTANCE;
 	private static final Gson GSON = new GsonBuilder().create();
 	public AnvilRepairReloadListener() {
@@ -37,13 +36,8 @@ public class AnvilRepairReloadListener extends SimpleJsonResourceReloadListener 
 		REPAIRS.clear();
 		for (var entry : map.entrySet()) {
 			try {
-				ResourceLocation name = entry.getKey();
-				String[] split = name.getPath().split("/");
-				if (split[split.length - 1].startsWith("_"))
-					continue;
-
-				AnvilRepair mob = GSON.fromJson(entry.getValue(), AnvilRepair.class);
-				REPAIRS.add(mob);
+				AnvilRepair anvilRepair = GSON.fromJson(entry.getValue(), AnvilRepair.class);
+				REPAIRS.put(entry.getKey(), anvilRepair);
 			}
 			catch (JsonSyntaxException e) {
 				ITRLogHelper.error("Parsing error loading Anvil Recipe %s: %s", entry.getKey(), e.getMessage());
