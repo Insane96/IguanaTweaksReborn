@@ -62,6 +62,6 @@ public class AnvilRepairReloadListener extends SimpleJsonResourceReloadListener 
 
 	@Override
 	public String getName() {
-		return "Anvil Recipe Reload Listener";
+		return "Anvil Repair Reload Listener";
 	}
 }
