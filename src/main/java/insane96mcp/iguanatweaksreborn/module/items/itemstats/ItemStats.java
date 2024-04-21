@@ -203,7 +203,7 @@ public class ItemStats extends Feature {
 		}
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void processItemDamaging(HurtItemStackEvent event) {
 		if (!this.isEnabled()
 				|| !unbreakableItems
