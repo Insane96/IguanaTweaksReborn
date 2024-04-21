@@ -190,7 +190,7 @@ public class RegeneratingAbsorption extends Feature {
                 guiGraphics.blit(GUI_ICONS, left, top, 0, 0, 9, 9, 18, 9);
             //else
             //guiGraphics.blit(GUI_ICONS, left, top, 0, 0, 0, 9, 256, 256);
-            if (i % 19 == 0) {
+            if ((i + 1) % 20 == 0) {
                 left = width / 2 - 91;
                 top -= 10;
                 gui.leftHeight += 10;
