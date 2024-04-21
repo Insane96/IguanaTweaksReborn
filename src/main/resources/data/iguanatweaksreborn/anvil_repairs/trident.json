@@ -5,13 +5,15 @@
 			"repair_material": {
 				"id": "minecraft:prismarine_shard"
 			},
-			"amount": 32
+			"amount": 32,
+			"max_repair": 0.25
 		},
 		{
 			"repair_material": {
-				"id": "minecraft:prismarine_crystal"
+				"id": "minecraft:prismarine_crystals"
 			},
-			"amount": 9
+			"amount": 9,
+			"max_repair": 0.5
 		}
 	]
 }
