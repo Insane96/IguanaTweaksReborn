@@ -3,6 +3,8 @@
 ## Upcoming
 * Anvil Repairs are now shown in EMI
 * Reduced Hoglin drops
+* Halved Mending repair ratio
+  * 1 xp = ~~1~~ -> 0.5 durability
 * Trident
   * Now repairable only up to 25% with prismarine and 75% with Crystals
   * Fixed not being able to repair with Crystals

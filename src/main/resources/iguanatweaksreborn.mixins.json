@@ -26,7 +26,6 @@
         "EnchantmentHelperMixin",
         "EnchantmentMixin",
         "EntityMixin",
-        "ExperienceOrbMixin",
         "ExplosionMixin",
         "FallingBlockEntityMixin",
         "FarmBlockMixin",

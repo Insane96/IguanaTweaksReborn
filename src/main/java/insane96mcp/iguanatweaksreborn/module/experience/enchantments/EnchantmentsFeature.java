@@ -22,6 +22,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.data.IdTagValue;
+import insane96mcp.insanelib.util.MathHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
@@ -32,6 +33,7 @@ import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -44,6 +46,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -276,6 +279,40 @@ public class EnchantmentsFeature extends JsonFeature {
 
 		event.setCanceled(true);
 	}
+
+	//Override vanilla behaviour
+	@SubscribeEvent
+	public void onExperiencePickUp(PlayerXpEvent.PickupXp event) {
+		if (!this.isEnabled()
+				|| !mendingNerf)
+			return;
+
+		event.setCanceled(true);
+		Player player = event.getEntity();
+		player.takeXpDelay = 2;
+		player.take(event.getOrb(), 1);
+		int i = repairPlayerItems(event.getOrb(), player, event.getOrb().value);
+		if (i > 0) {
+			player.giveExperiencePoints(i);
+		}
+
+		--event.getOrb().count;
+		if (event.getOrb().count == 0) {
+			event.getOrb().discard();
+		}
+	}
+
+	private static int repairPlayerItems(ExperienceOrb xpOrb, Player player, int xp) {
+		Map.Entry<EquipmentSlot, ItemStack> entry = EnchantmentHelper.getRandomItemWith(Enchantments.MENDING, player, ItemStack::isDamaged);
+        if (entry == null)
+            return xp;
+
+		ItemStack itemstack = entry.getValue();
+		float repairAmount = Math.min(xpOrb.value * 0.5f, itemstack.getDamageValue());
+		itemstack.setDamageValue(itemstack.getDamageValue() - MathHelper.getAmountWithDecimalChance(player.getRandom(), repairAmount));
+		int j = xp - Math.round(repairAmount * 2f);
+		return j > 0 ? repairPlayerItems(xpOrb, player, j) : 0;
+    }
 
 	@SubscribeEvent
 	public void onFall(LivingFallEvent event) {
