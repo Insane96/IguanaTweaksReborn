@@ -9,6 +9,8 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepair;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.Anvils;
+import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
+import insane96mcp.iguanatweaksreborn.module.items.NameTags;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import net.minecraft.network.chat.Component;
@@ -16,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -46,13 +49,23 @@ public class ITREmiPlugin implements EmiPlugin {
 			registry.removeRecipes(recipe -> recipe.getId() != null && "emi".equals(recipe.getId().getNamespace()) && recipe.getId().getPath().startsWith("/anvil/repairing/material"));
 			registry.removeRecipes(recipe -> recipe.getId() != null && "emi".equals(recipe.getId().getNamespace()) && recipe.getId().getPath().startsWith("/anvil/enchanting"));
 		}
+		if (Feature.isEnabled(NameTags.class)) {
+			registry.addRecipe(createSimpleInfo(Items.NAME_TAG, "name_tag", Component.translatable("emi.info.iguanatweaksreborn.items.name_tags")));
+		}
+		if (Feature.isEnabled(Crops.class)) {
+			registry.addRecipe(createSimpleInfo(emiIngredientOf(Items.WHEAT_SEEDS, Items.BEETROOT_SEEDS, Crops.CARROT_SEEDS.get(), Crops.ROOTED_POTATO.get()), "name_tag", Component.translatable("emi.info.iguanatweaksreborn.crops.seeds")));
+		}
 	}
 
 	public EmiInfoRecipe createSimpleInfo(Item item, String id, Component component) {
 		return new EmiInfoRecipe(List.of(emiIngredientOf(item)), List.of(component), new ResourceLocation(IguanaTweaksReborn.MOD_ID, id));
 	}
 
-	public static EmiIngredient emiIngredientOf(Item item) {
+	public EmiInfoRecipe createSimpleInfo(EmiIngredient emiIngredient, String id, Component component) {
+		return new EmiInfoRecipe(List.of(emiIngredient), List.of(component), new ResourceLocation(IguanaTweaksReborn.MOD_ID, id));
+	}
+
+	public static EmiIngredient emiIngredientOf(Item... item) {
 		return EmiIngredient.of(Ingredient.of(item));
 	}
 }
