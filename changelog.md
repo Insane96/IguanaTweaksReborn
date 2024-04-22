@@ -8,6 +8,9 @@
 * Trident
   * Now repairable only up to 25% with prismarine and 75% with Crystals
   * Fixed not being able to repair with Crystals
+* Animals
+  * Base chance to fail to breed reduced (~~70%~~ -> 60%)
+  * Old animals no longer take more time to breed, instead fail to breed more often
 * Reduced fortune yield from crops (~~25%/50%/75%/100%~~ -> 10%/25%/42.85%/62.5% chance to get another drop with (Fortune) Luck I/II/III/IV)
 * Revert 'Reduced cow fluid cooldown from 30 minutes to 20'
 * Fixed unbreakable tools sometimes not working
