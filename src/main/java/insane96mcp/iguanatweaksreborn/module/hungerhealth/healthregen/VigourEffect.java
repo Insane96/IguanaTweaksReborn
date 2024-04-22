@@ -12,7 +12,7 @@ public class VigourEffect extends ILMobEffect implements IStaminaModifier {
     @Override
     public float consumedStaminaModifier(int amplifier) {
         int lvl = amplifier + 1;
-        return (lvl * -0.15f - 0.1f);
+        return (lvl * -0.1f - 0.15f);
     }
 
     @Override
