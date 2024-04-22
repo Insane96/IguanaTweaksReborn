@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Stamina now unlocks at 50% instead of 75%
+
 ## 3.8.3
 * Anvil Repairs are now shown in EMI
 * Reduced Hoglin drops

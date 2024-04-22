@@ -70,7 +70,7 @@ public class Stamina extends Feature {
 
     @Config(min = 0, max = 1d)
     @Label(name = "Unlock Stamina at health ratio", description = "At which health percentage will stamina be unlocked")
-    public static Double unlockStaminaAtHealthRatio = 0.75d;
+    public static Double unlockStaminaAtHealthRatio = 0.5d;
 
     @Config(min = 0d)
     @Label(name = "Stamina regen per tick")
