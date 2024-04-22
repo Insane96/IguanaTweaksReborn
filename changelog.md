@@ -11,6 +11,7 @@
 * Fixed regenerating absorption not wrapping after 40
 * Fixed new flowers in flower pots
 * Fixed explosion particles with Small explosions (e.g. fireballs)
+* Fixed autumnity and Quark buttons/pressure plate missing redstone in the recipe
 
 ## 3.8.2
 * You can now use an empty Name Tag on a mob to remove its name tag

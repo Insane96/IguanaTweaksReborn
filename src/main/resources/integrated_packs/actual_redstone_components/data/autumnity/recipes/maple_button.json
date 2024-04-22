@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "category": "redstone",
+    "group": "wooden_button",
+    "ingredients": [
+        {
+            "item": "autumnity:maple_planks"
+        },
+        {
+            "item": "minecraft:redstone"
+        }
+    ],
+    "result": {
+        "item": "autumnity:maple_button"
+    }
+}
