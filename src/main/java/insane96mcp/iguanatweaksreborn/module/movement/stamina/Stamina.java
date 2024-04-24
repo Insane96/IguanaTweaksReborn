@@ -61,6 +61,10 @@ public class Stamina extends Feature {
     public static Integer staminaPerHalfHeart = 5;
 
     @Config(min = 0)
+    @Label(name = "Stamina consumed on sprint", description = "How much stamina the player consumes each tick when sprinting")
+    public static Double staminaConsumedOnSprint = 1d;
+
+    @Config(min = 0)
     @Label(name = "Stamina consumed on jump", description = "How much stamina the player consumes on each jump")
     public static Integer staminaConsumedOnJump = 5;
 
@@ -119,7 +123,7 @@ public class Stamina extends Feature {
         if (player.tickCount == 1)
             shouldSync = true;
         if (player.isSprinting() && player.getVehicle() == null && !player.getAbilities().instabuild) {
-            float staminaToConsume = 1f;
+            float staminaToConsume = staminaConsumedOnSprint.floatValue();
             if (player.getPose() == Pose.SWIMMING)
                 staminaToConsume = staminaConsumedOnSwimming.floatValue();
             float percIncrease = 0f;
