@@ -4,7 +4,8 @@
 * Stamina now unlocks at 50% instead of 75%
 * Explosions no longer knockback entities if they are not hurt (e.g. PvP)
 * Reduced Vigour effectiveness
-* Vigour effect no longer increases mining, movement and attack speed
+* Vigour effect no longer increases mining, movement and attack speed\
+* Mobs now only have 50% chance to drop equipment
 
 ## 3.8.3
 * Anvil Repairs are now shown in EMI
