@@ -193,23 +193,23 @@ public class ITRExplosion extends Explosion {
 						player.level().broadcastEntityEvent(player, (byte) 29);
 					}
 				}
-				entity.hurt(source, damageAmount);
-
-				double d11 = d10;
-				if (entity instanceof LivingEntity) {
-					d11 = getKnockbackReduction((LivingEntity) entity, d11);
-				}
-				if (knockbackScaleWithSize)
-					d11 *= this.radius;
-				d11 = Math.max(d11, this.radius * 0.05d);
-				if (entity instanceof ITRFallingBlockEntity || ExplosionOverhaul.shouldTakeReducedKnockback(entity))
-					d11 *= 0.2d;
-				d11 *= getKnockbackMultiplier(this.source);
-				d11 = Math.min(d11, 10f);
-				entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, yDistance * d11, zDistance * d11));
-				if (entity instanceof Player player) {
-					if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
-						this.getHitPlayers().put(player, new Vec3(xDistance * d11, yDistance * d11, zDistance * d11));
+				if (entity.hurt(source, damageAmount)) {
+					double d11 = d10;
+					if (entity instanceof LivingEntity) {
+						d11 = getKnockbackReduction((LivingEntity) entity, d11);
+					}
+					if (knockbackScaleWithSize)
+						d11 *= this.radius;
+					d11 = Math.max(d11, this.radius * 0.05d);
+					if (entity instanceof ITRFallingBlockEntity || ExplosionOverhaul.shouldTakeReducedKnockback(entity))
+						d11 *= 0.2d;
+					d11 *= getKnockbackMultiplier(this.source);
+					d11 = Math.min(d11, 10f);
+					entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, yDistance * d11, zDistance * d11));
+					if (entity instanceof Player player) {
+						if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
+							this.getHitPlayers().put(player, new Vec3(xDistance * d11, yDistance * d11, zDistance * d11));
+						}
 					}
 				}
 			}

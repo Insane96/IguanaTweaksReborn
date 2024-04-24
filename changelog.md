@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Stamina now unlocks at 50% instead of 75%
+* Explosions no longer knockback entities if they are not hurt (e.g. PvP)
 
 ## 3.8.3
 * Anvil Repairs are now shown in EMI
