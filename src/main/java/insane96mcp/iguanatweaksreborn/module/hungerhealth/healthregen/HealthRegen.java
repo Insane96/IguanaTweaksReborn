@@ -18,8 +18,6 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.food.FoodProperties;
@@ -30,7 +28,6 @@ import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -39,9 +36,7 @@ import java.text.DecimalFormat;
 @Label(name = "Hunger Health Regen", description = "Makes Health regen work differently, similar to Combat Test snapshots. Can be customized. Also adds Vigour effect. Hunger related stuff doesn't work (for obvious reasons) if No Hunger feature is enabled")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class HealthRegen extends Feature {
-	public static final RegistryObject<MobEffect> VIGOUR = ITRRegistries.MOB_EFFECTS.register("vigour", () -> new VigourEffect(MobEffectCategory.BENEFICIAL, 0xFCD373)
-			.addAttributeModifier(Attributes.MOVEMENT_SPEED, "34ab9190-98b9-48e7-9048-a201fc116dff", 0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL)
-			.addAttributeModifier(Attributes.ATTACK_SPEED, "18c15105-382a-4a95-8aa9-185350ebf602", 0.05F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+	public static final RegistryObject<MobEffect> VIGOUR = ITRRegistries.MOB_EFFECTS.register("vigour", () -> new VigourEffect(MobEffectCategory.BENEFICIAL, 0xFCD373));
 
 	public static final String HUNGER_ON_DEATH_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "hunger_on_death";
 	public static final String SATURATION_ON_DEATH_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "saturation_on_death";
@@ -242,17 +237,6 @@ public class HealthRegen extends Feature {
 		if (vigour != null)
 			ticksToRegen *= 1 - (((vigour.getAmplifier() + 1) * vigourEffectiveness));
 		return ticksToRegen;
-	}
-
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onVigourBreakSpeed(PlayerEvent.BreakSpeed event) {
-		if (!this.isEnabled()
-				|| !event.getEntity().hasEffect(VIGOUR.get()))
-			return;
-
-		//noinspection ConstantConditions
-		int level = event.getEntity().getEffect(VIGOUR.get()).getAmplifier() + 1;
-		event.setNewSpeed(event.getNewSpeed() * (1 + (level * 0.05f)));
 	}
 
 	@SubscribeEvent
