@@ -25,7 +25,7 @@
 			"name": "Tool modifier",
 			"slot": "mainhand",
 			"attribute": "minecraft:generic.attack_speed",
-			"amount": 0.15,
+			"amount": 0.3,
 			"operation": "multiply_base"
 		},
 		{

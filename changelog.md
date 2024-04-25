@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Possibly fixed chunks staying loaded after player second death
+* Increased Hoes base attack speed bonus (15% -> 30%)
 
 ## 3.8.4
 * Stamina now unlocks at 50% instead of 75%
