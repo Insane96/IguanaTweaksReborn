@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Possibly fixed chunks staying loaded after player second death
+
 ## 3.8.4
 * Stamina now unlocks at 50% instead of 75%
 * Explosions no longer knockback entities if they are not hurt (e.g. PvP)

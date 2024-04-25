@@ -2,9 +2,11 @@ package insane96mcp.iguanatweaksreborn.module.sleeprespawn.death;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.SectionPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -110,6 +112,9 @@ public class GraveBlock extends BaseEntityBlock implements EntityBlock {
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean p_60519_) {
         if (!state.is(newState.getBlock())) {
             dropGraveItems(level, pos);
+            int chunkX = SectionPos.blockToSectionCoord(pos.getX());
+            int chunkZ = SectionPos.blockToSectionCoord(pos.getZ());
+            ((ServerLevel) level).setChunkForced(chunkX, chunkZ, false);
             super.onRemove(state, level, pos, newState, p_60519_);
         }
     }
