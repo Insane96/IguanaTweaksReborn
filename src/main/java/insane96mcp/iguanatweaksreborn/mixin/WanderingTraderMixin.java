@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
 import insane96mcp.iguanatweaksreborn.module.world.wanderingtrader.WanderingTrades;
+import insane96mcp.insanelib.base.Feature;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -21,7 +22,8 @@ public abstract class WanderingTraderMixin extends AbstractVillager {
 
 	@Inject(at = @At("HEAD"), method = "updateTrades", cancellable = true)
 	private void overrideUpdateTrades(CallbackInfo ci) {
-		if (this.level().isClientSide)
+		if (this.level().isClientSide
+				|| !Feature.isEnabled(WanderingTrades.class))
 			return;
 		VillagerTrades.ItemListing[] ordinaryTrades = VillagerTrades.WANDERING_TRADER_TRADES.get(1);
 		VillagerTrades.ItemListing[] rareTrades = VillagerTrades.WANDERING_TRADER_TRADES.get(2);
