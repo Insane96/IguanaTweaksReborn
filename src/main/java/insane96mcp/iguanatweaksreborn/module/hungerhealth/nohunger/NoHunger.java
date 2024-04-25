@@ -44,6 +44,7 @@ import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -323,6 +324,11 @@ public class NoHunger extends Feature {
         if (ModList.get().isLoaded("autumnity"))
             amount = AutumnityIntegration.tryApplyFoulTaste(player, amount);
         return amount;
+    }
+
+    @SubscribeEvent
+    public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        NoHungerSync.sync(this.isEnabled(), (ServerPlayer) event.getEntity());
     }
 
     //Render before Regenerating absorption
