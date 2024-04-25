@@ -11,6 +11,7 @@
 * Fixed Nether wart not growing outside the end
 * Fixed rich farmland having no drop
 * Fixed the mod crashing if no other mod with MixinExtras was installed
+* Fixed mending nerf stopping Allurement Alleviating from working
 * The mod is now compatible with other mods that use EvalEx
 
 ## 3.8.3

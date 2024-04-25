@@ -136,6 +136,7 @@ dependencies {
     implementation fg.deobf("curse.maven:blueprint-382216:5228040")
     implementation fg.deobf("curse.maven:autumnity-365045:5229021")
     implementation fg.deobf("curse.maven:berry-good-355589:5228437")
+    implementation fg.deobf("curse.maven:allurement-438003:5228059")
 
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 

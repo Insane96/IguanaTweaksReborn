@@ -11,6 +11,7 @@ import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.Sharpness;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.Smite;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.*;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.integration.Allurement;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatistics;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
@@ -50,6 +51,7 @@ import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -291,6 +293,8 @@ public class EnchantmentsFeature extends JsonFeature {
 		Player player = event.getEntity();
 		player.takeXpDelay = 2;
 		player.take(event.getOrb(), 1);
+		if (ModList.get().isLoaded("allurement"))
+			Allurement.onExperiencePickup(player, event.getOrb());
 		int i = repairPlayerItems(event.getOrb(), player, event.getOrb().value);
 		if (i > 0) {
 			player.giveExperiencePoints(i);
