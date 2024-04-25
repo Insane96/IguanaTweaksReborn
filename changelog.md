@@ -8,6 +8,7 @@
 * Mobs now only have 50% chance to drop equipment
 * Increased explosion damage
 * Fixed Nether wart not growing outside the end
+* Fixed rich farmland having no drop
 
 ## 3.8.3
 * Anvil Repairs are now shown in EMI
