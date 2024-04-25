@@ -281,7 +281,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	}
 
 	//Override vanilla behaviour
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onExperiencePickUp(PlayerXpEvent.PickupXp event) {
 		if (!this.isEnabled()
 				|| !mendingNerf)

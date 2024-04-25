@@ -7,6 +7,7 @@
 * Vigour effect no longer increases mining, movement and attack speed\
 * Mobs now only have 50% chance to drop equipment
 * Increased explosion damage
+* Fixed Nether wart not growing outside the end
 
 ## 3.8.3
 * Anvil Repairs are now shown in EMI
