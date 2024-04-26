@@ -71,6 +71,9 @@ public class Spawners extends JsonFeature {
 	@Config(min = 1)
 	@Label(name = "Delay", description = "Spawning Delay (in ticks) of the spawner. Vanilla is 200~800.")
 	public static MinMax delay = new MinMax(400, 1600);
+	@Config(min = 1)
+	@Label(name = "Override Spawn Delay", description = "If true, the spawner delay is set to 'delay' instead of using MinSpawnDelay and MaxSpawnDelay")
+	public static Boolean overrideSpawnDelay = true;
 	@Config(min = 0)
 	@Label(name = "Required Player Range", description = "Range in which a player must be present for a spawner to work. Vanilla is 16.")
 	public static int requiredPlayerRange = 24;
@@ -284,7 +287,7 @@ public class Spawners extends JsonFeature {
 			return;
         if (isEmpowered(spawnerBlockEntity))
             spawner.spawnDelay = empoweredDelay.getIntRandBetween(level.getRandom());
-        else
+        else if (overrideSpawnDelay)
             spawner.spawnDelay = delay.getIntRandBetween(level.getRandom());
 		spawner.requiredPlayerRange = requiredPlayerRange;
 		syncSpawnerData(spawnerBlockEntity);
