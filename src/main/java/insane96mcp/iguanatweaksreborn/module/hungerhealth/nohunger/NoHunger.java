@@ -400,7 +400,7 @@ public class NoHunger extends Feature {
             float regenStrength = getFoodRegenStrength(player) * 20 * 2;
             if (regenStrength == 0f)
                 return;
-            int width = Mth.ceil(regenLeft / 2f * 9);
+            int width = Mth.ceil(regenLeft / 2f * 8);
             ClientUtils.setRenderColor(1.2f - (regenStrength / 1.2f), 0.78f, 0.17f, 1f);
             guiGraphics.blit(OT_REGEN_LOCATION, right, top, 0f, 0f, width, 3, 90, 3);
             ClientUtils.resetRenderColor();

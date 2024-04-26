@@ -9,6 +9,7 @@
 * Increased Hoes base attack speed bonus (+15% -> +30%)
 * Possibly fixed chunks staying loaded after player second death
 * Fixed damaging enchantments (e.g. Smite) applying to sweep attack
+* Fixed overtime healing bar having wrong width
 
 ## 3.8.4
 * Stamina now unlocks at 50% instead of 75%
