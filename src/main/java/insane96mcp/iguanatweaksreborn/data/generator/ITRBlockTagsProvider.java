@@ -54,7 +54,8 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
 
         tag(Crops.HARDER_CROPS_TAG)
                 .add(Blocks.WHEAT, Blocks.CARROTS, Blocks.POTATOES, Blocks.BEETROOTS)
-                .addOptional(new ResourceLocation("supplementaries", "flax"));
+                .addOptional(new ResourceLocation("supplementaries", "flax"))
+                .addOptional(new ResourceLocation("farmersdelight", "tomatoes")).addOptional(new ResourceLocation("farmersdelight", "budding_tomatoes")).addOptional(new ResourceLocation("farmersdelight", "rice")).addOptional(new ResourceLocation("farmersdelight", "rice_panicles")).addOptional(new ResourceLocation("farmersdelight", "cabbages")).addOptional(new ResourceLocation("farmersdelight", "onions"));
 
         tag(BlockHardness.HARDNESS_BLACKLIST)
                 .addTag(OBSIDIANS);

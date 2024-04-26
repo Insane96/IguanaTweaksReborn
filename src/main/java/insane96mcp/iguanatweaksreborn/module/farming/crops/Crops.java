@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.farming.crops.integration.FarmersDelightIntegration;
 import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
@@ -39,6 +40,7 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
@@ -53,6 +55,8 @@ public class Crops extends JsonFeature {
 
 	public static final RegistryObject<BlockItem> ROOTED_POTATO = ITRRegistries.ITEMS.register("rooted_potato", () -> new SeedsBlockItem(Blocks.POTATOES, new Item.Properties()));
 	public static final RegistryObject<BlockItem> CARROT_SEEDS = ITRRegistries.ITEMS.register("carrot_seeds", () -> new SeedsBlockItem(Blocks.CARROTS, new Item.Properties()));
+	public static final RegistryObject<BlockItem> ROOTED_ONION = ITRRegistries.ITEMS.register("rooted_onion", () -> new SeedsBlockItem(ModList.get().isLoaded("farmersdelight") ? FarmersDelightIntegration.getOnion() : Blocks.POTATOES, new Item.Properties()));
+	public static final RegistryObject<BlockItem> RICE_SEEDS = ITRRegistries.ITEMS.register("rice_seeds", () -> new SeedsBlockItem(ModList.get().isLoaded("farmersdelight") ? FarmersDelightIntegration.getRice() : Blocks.POTATOES, new Item.Properties()));
 	public static final RegistryObject<WildCropBlock> WILD_WHEAT = ITRRegistries.BLOCKS.register("wild_wheat", () -> new WildCropBlock(BlockBehaviour.Properties.of().noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
 	public static final RegistryObject<WildCropBlock> WILD_CARROTS = ITRRegistries.BLOCKS.register("wild_carrots", () -> new WildCropBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
 	public static final RegistryObject<WildCropBlock> WILD_POTATOES = ITRRegistries.BLOCKS.register("wild_potatoes", () -> new WildCropBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
@@ -157,17 +161,24 @@ public class Crops extends JsonFeature {
 
 	@SubscribeEvent
 	public void onTryToPlant(PlayerInteractEvent.RightClickBlock event) {
-		if (!this.isEnabled()
-				|| !(event.getLevel().getBlockState(event.getHitVec().getBlockPos()).getBlock() instanceof FarmBlock)
+		if (!this.isEnabled())
+			return;
+		if (ModList.get().isLoaded("farmersdelight"))
+			FarmersDelightIntegration.tryAlertRice(event);
+		if (!(event.getLevel().getBlockState(event.getHitVec().getBlockPos()).getBlock() instanceof FarmBlock)
 				|| !dataPack)
 			return;
 
 		if (event.getItemStack().is(Items.POTATO) || event.getItemStack().is(Items.CARROT))
 			event.setCanceled(true);
+		if (ModList.get().isLoaded("farmersdelight")) {
+			if (FarmersDelightIntegration.preventPlanting(event.getItemStack()))
+				event.setCanceled(true);
+		}
 	}
 
 	@SubscribeEvent
-	public void onTryToPlant(EntityJoinLevelEvent event) {
+	public void onChickenJoinLevel(EntityJoinLevelEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getEntity() instanceof Chicken chicken))
 			return;

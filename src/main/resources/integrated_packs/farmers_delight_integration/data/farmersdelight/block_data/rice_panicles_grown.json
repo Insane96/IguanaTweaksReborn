@@ -1,0 +1,7 @@
+{
+    "block": "farmersdelight:rice_panicles",
+    "states": [
+        "age=3"
+    ],
+    "state_hardness": 1.5
+}

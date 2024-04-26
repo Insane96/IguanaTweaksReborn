@@ -93,7 +93,7 @@ public class HealthRegen extends Feature {
 	public static insane96mcp.insanelib.base.config.Difficulty saturationOnRespawn = new insane96mcp.insanelib.base.config.Difficulty(10, 10, 6);
 	//Effects
 	@Config
-	@Label(name = "Vigour.Enable", description = "Set to true to enable Vigour, a new effect that lowers hunger consumption and increases health regen speed. Applied when good foods are eaten.")
+	@Label(name = "Vigour.Enable", description = "Set to true to enable Vigour, a new effect that lowers hunger consumption and increases health regen speed. Applied when good foods are eaten. If stamina is enabled, decreases its consumption")
 	public static Boolean enableVigour = false;
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Vigour.Duration Multiplier", description = "Multiplies the base duration of Vigour by this value. Base duration is 1 second per food saturation.")

@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.setup.client;
 
+import insane96mcp.iguanatweaksreborn.module.farming.bonemeal.BoneMeal;
 import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.BeaconConduit;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconRenderer;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import java.util.function.Supplier;
@@ -31,6 +33,11 @@ public class ClientSetup {
             addAfter(event, Items.POPPY, Crops.SOLANUM_NEOROSSII.item());
             addAfter(event, Items.WHEAT_SEEDS, Crops.CARROT_SEEDS);
             addAfter(event, Items.BEETROOT_SEEDS, Crops.ROOTED_POTATO);
+            if (ModList.get().isLoaded("farmersdelight")) {
+                addAfter(event, Crops.ROOTED_POTATO.get(), Crops.RICE_SEEDS);
+                addAfter(event, Crops.ROOTED_POTATO.get(), Crops.ROOTED_ONION);
+            }
+            addAfter(event, Items.FARMLAND, BoneMeal.RICH_FARMLAND.item());
         }
     }
 

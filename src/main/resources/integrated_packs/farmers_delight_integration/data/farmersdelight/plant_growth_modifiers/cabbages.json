@@ -1,0 +1,17 @@
+{
+    "block": "farmersdelight:cabbages",
+    "modifiers": [
+        {
+            "id": "iguanatweaksreborn:sunlight",
+            "min_sunlight": 10,
+            "multiplier": 2
+        },
+        {
+            "id": "iguanatweaksreborn:correct_biome",
+            "biomes": [
+                "#forge:is_cold"
+            ],
+            "multiplier": 1.5
+        }
+    ]
+}

@@ -7,6 +7,30 @@
     {
       "id": "supplementaries:flax",
       "required": false
+    },
+    {
+      "id": "farmersdelight:tomatoes",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:budding_tomatoes",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:rice",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:rice_panicles",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:cabbages",
+      "required": false
+    },
+    {
+      "id": "farmersdelight:onions",
+      "required": false
     }
   ]
 }

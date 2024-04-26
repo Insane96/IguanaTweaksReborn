@@ -1,0 +1,10 @@
+{
+    "block": "farmersdelight:onions",
+    "modifiers": [
+        {
+            "id": "iguanatweaksreborn:sunlight",
+            "min_sunlight": 10,
+            "multiplier": 2
+        }
+    ]
+}

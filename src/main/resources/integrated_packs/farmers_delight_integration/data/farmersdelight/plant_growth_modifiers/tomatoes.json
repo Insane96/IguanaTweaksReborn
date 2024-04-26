@@ -1,0 +1,10 @@
+{
+    "block": "#farmersdelight:tomato_crops",
+    "modifiers": [
+        {
+            "id": "iguanatweaksreborn:sunlight",
+            "min_sunlight": 10,
+            "multiplier": 2
+        }
+    ]
+}

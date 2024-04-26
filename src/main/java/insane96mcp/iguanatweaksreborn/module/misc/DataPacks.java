@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.module.misc;
 
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.farming.crops.integration.FarmersDelightIntegration;
 import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -10,9 +11,15 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
+import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
+import vectorwing.farmersdelight.common.Configuration;
 
-@Label(name = "Data Packs", description = "Various data packs that can be enabled/disabled")
+@Label(name = "Data Packs & Integration", description = "Various data packs that can be enabled/disabled")
 @LoadFeature(module = Modules.Ids.MISC)
 public class DataPacks extends Feature {
 
@@ -36,7 +43,6 @@ public class DataPacks extends Feature {
     @Config
     @Label(name = "Misc tweaks", description = """
             Minor changes:
-            * Crossbows can no longer be crafted, only be found in pillagers towers or from pillagers
             * Cakes now drop when broken and not eaten
             * Dark Prismarine is made easier
             * Clay balls can be crafted from blocks
@@ -74,6 +80,9 @@ public class DataPacks extends Feature {
     @Config
     @Label(name = "Mob loot changes", description = "Changes mobs loot and makes mobs drop reduced loot if not killed by a player")
     public static Boolean mobLootChanges = true;
+    @Config
+    @Label(name = "Farmer's Delight integration", description = "Integrates the mod with Farmer's delight. Some config options are changed along with a data pack installed. Check here for changes: https://github.com/Insane96/IguanaTweaksReborn/wiki/Farmer%27s-Delight-integration")
+    public static Boolean farmersDelight = true;
 
     @Config
     @Label(name = "Force Reload world Data Packs", description = "When you add a new mod the game automatically sets the data pack of the mod at the bottom of all the data packs, making the data packs loaded from this mod not work. If this is set to true the enabled and disabled Data Packs of the world are reset and reloaded. WARNING: you'll lose disabled data packs!")
@@ -92,6 +101,42 @@ public class DataPacks extends Feature {
         IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "better_loot", Component.literal("IguanaTweaks Reborn Better Loot"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && betterStructureLoot && !ModList.get().isLoaded("iguanatweaksexpanded")));
         IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "hardcore_loot", Component.literal("IguanaTweaks Reborn Less Loot Closer to Spawn"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && lessLootCloserToSpawn));
         IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "mob_loot_changes", Component.literal("IguanaTweaks Reborn Mob Loot Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && mobLootChanges));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "farmers_delight_integration", Component.literal("IguanaTweaks Reborn Farmer's Delight Integration"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && farmersDelight && ModList.get().isLoaded("farmersdelight")));
+    }
+
+    @Override
+    public void readConfig(ModConfigEvent event) {
+        super.readConfig(event);
+        if (this.isEnabled() && ModList.get().isLoaded("farmersdelight") && farmersDelight) {
+            Configuration.ENABLE_STACKABLE_SOUP_ITEMS.set(false);
+            Configuration.CHANCE_WILD_BEETROOTS.set(Integer.MAX_VALUE);
+            Configuration.CHANCE_WILD_CARROTS.set(Integer.MAX_VALUE);
+            Configuration.CHANCE_WILD_POTATOES.set(Integer.MAX_VALUE);
+            Configuration.RICH_SOIL_BOOST_CHANCE.set(0.02d);
+        }
+    }
+
+    @SubscribeEvent
+    public void onTryRichSoilFarmland(PlayerInteractEvent.RightClickBlock event) {
+        if (!ModList.get().isLoaded("farmersdelight")
+                || !this.isEnabled()
+                || !DataPacks.farmersDelight
+                || !event.getItemStack().canPerformAction(ToolActions.HOE_TILL))
+            return;
+
+        if (FarmersDelightIntegration.preventRichSoilFarmland(event.getLevel().getBlockState(event.getHitVec().getBlockPos())))
+            event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public void onEffectApply(TickEvent.PlayerTickEvent event) {
+        if (!ModList.get().isLoaded("farmersdelight")
+                || !this.isEnabled()
+                || !DataPacks.farmersDelight
+                || event.phase == TickEvent.Phase.START)
+            return;
+
+        FarmersDelightIntegration.onTick(event);
     }
 
     public static CompoundTag forceReloadWorldDataPacks(CompoundTag levelTag) {

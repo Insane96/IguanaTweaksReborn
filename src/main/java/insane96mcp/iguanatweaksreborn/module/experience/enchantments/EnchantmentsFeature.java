@@ -134,7 +134,8 @@ public class EnchantmentsFeature extends JsonFeature {
 			IdTagMatcher.newId("minecraft:feather_falling"),
 			IdTagMatcher.newId("minecraft:looting"),
 			IdTagMatcher.newId("minecraft:fortune"),
-			IdTagMatcher.newId("minecraft:luck_of_the_sea")
+			IdTagMatcher.newId("minecraft:luck_of_the_sea"),
+			IdTagMatcher.newId("farmersdelight:backstabbing")
 
 	));
 	public static final ArrayList<IdTagMatcher> disabledEnchantments = new ArrayList<>();

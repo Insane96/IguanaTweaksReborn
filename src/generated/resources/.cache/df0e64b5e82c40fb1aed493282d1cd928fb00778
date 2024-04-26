@@ -1,8 +1,8 @@
-// 1.20.1	2024-03-23T09:45:42.5831542	Tags for minecraft:block mod id iguanatweaksreborn
+// 1.20.1	2024-04-26T18:04:20.7546335	Tags for minecraft:block mod id iguanatweaksreborn
 a60fb24dab6707c402d6f42a50d493c071ee8724 data/iguanatweaksreborn/tags/blocks/break_on_fall.json
 cb87c71bdb2f81be349f5de365ab2aa66a11bde6 data/iguanatweaksreborn/tags/blocks/depth_multiplier_blacklist.json
 9c8472a64a3dcde9ed2c0ad0bb67999d78d40431 data/iguanatweaksreborn/tags/blocks/grass_blocks.json
-3ba9579748a17e9e1f978c30d2ef0ed5f6741c8c data/iguanatweaksreborn/tags/blocks/harder_crops.json
+ea892a0c0ec7b5417352f265dc0b6d75d8c404cc data/iguanatweaksreborn/tags/blocks/harder_crops.json
 cb87c71bdb2f81be349f5de365ab2aa66a11bde6 data/iguanatweaksreborn/tags/blocks/hardness_blacklist.json
 858b4736f63a64046a40e9dbd025c709c79d7cb2 data/iguanatweaksreborn/tags/blocks/obsidians.json
 6709e029dcdb781bc96e92c5e95ef69620b94c99 data/iguanatweaksreborn/tags/blocks/portal_corners.json

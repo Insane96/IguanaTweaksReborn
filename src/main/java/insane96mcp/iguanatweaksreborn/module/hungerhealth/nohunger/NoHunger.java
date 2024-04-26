@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger;
 import com.mojang.blaze3d.systems.RenderSystem;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.farming.crops.integration.FarmersDelightIntegration;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.healthregen.HealthRegen;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.integration.AutumnityIntegration;
@@ -45,6 +46,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -299,20 +301,17 @@ public class NoHunger extends Feature {
         float regenStrength = getFoodRegenStrength(player);
         if (player.getHealth() >= player.getMaxHealth())
             return;
-        /*if (player.getHealth() == player.getMaxHealth()) {
-            regenLeft -= regenStrength * 0.02f * FOOD_REGEN_TICK_RATE;
-        }
-        else {*/
         float healAmount = regenStrength * FOOD_REGEN_TICK_RATE;
         if (regenLeft < healAmount)
             healAmount = regenLeft;
         if (player.getMaxHealth() - player.getHealth() < healAmount)
             healAmount = player.getMaxHealth() - player.getHealth();
+        if (ModList.get().isLoaded("farmersdelight"))
+            healAmount = FarmersDelightIntegration.tryApplyComfort(player, healAmount);
         player.heal(healAmount);
         regenLeft -= healAmount;
         if (regenLeft <= 0f)
             regenLeft = 0f;
-        //}
         setHealOverTime(player, regenLeft, regenStrength);
     }
 
@@ -324,6 +323,11 @@ public class NoHunger extends Feature {
         if (ModList.get().isLoaded("autumnity"))
             amount = AutumnityIntegration.tryApplyFoulTaste(player, amount);
         return amount;
+    }
+
+    @SubscribeEvent
+    public void onServerStarted(ServerStartedEvent event) {
+        this.setEnabled(event.getServer().getGameRules().getRule(RULE_NOHUNGER).get());
     }
 
     @SubscribeEvent

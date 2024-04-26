@@ -24,6 +24,8 @@ public class ITRItemModelsProvider extends ItemModelProvider {
     protected void registerModels() {
         basicItem(Crops.CARROT_SEEDS.get());
         basicItem(Crops.ROOTED_POTATO.get());
+        basicItem(Crops.ROOTED_ONION.get());
+        basicItem(Crops.RICE_SEEDS.get());
 
         basicItem(BerryBushes.SWEET_BERRY_SEEDS.get());
 
