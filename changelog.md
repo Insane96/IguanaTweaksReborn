@@ -1,8 +1,12 @@
 # Changelog
 
 ## Upcoming
-* Possibly fixed chunks staying loaded after player second death
+* Spawners
+  * Are now deactivated when finish being empowered
+  * Can be reactivated with the echo shard they drop
+  * Increased spawn speed (every 25\~100 -> 20\~80 seconds)
 * Increased Hoes base attack speed bonus (+15% -> +30%)
+* Possibly fixed chunks staying loaded after player second death
 
 ## 3.8.4
 * Stamina now unlocks at 50% instead of 75%

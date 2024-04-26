@@ -67,6 +67,17 @@ public class Spawners extends JsonFeature {
 	public static final TagKey<EntityType<?>> BLACKLISTED_SPAWNERS = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "blacklisted_spawners"));
 	public static final TagKey<Item> SPAWNER_REACTIVATOR_TAG = ITRItemTagsProvider.create("spawner_reactivator");
 	public static final String SPAWNER_REACTIVATOR = IguanaTweaksReborn.MOD_ID + ".spawner_reactivator";
+
+	@Config(min = 1)
+	@Label(name = "Delay", description = "Spawning Delay (in ticks) of the spawner. Vanilla is 200~800.")
+	public static MinMax delay = new MinMax(400, 1600);
+	@Config(min = 0)
+	@Label(name = "Required Player Range", description = "Range in which a player must be present for a spawner to work. Vanilla is 16.")
+	public static int requiredPlayerRange = 24;
+	@Config
+	@Label(name = "Ignore Light", description = "If true, monsters from spawners will spawn no matter the light level.")
+	public static Boolean ignoreLight = true;
+
 	@Config
 	@Label(name = "Disable spawners.Enabled")
 	public static Boolean disableSpawnersEnabled = false;
@@ -78,21 +89,17 @@ public class Spawners extends JsonFeature {
 	public static Double disableSpawnersSpawnableMobsMultiplier = 1.0d;
 
 	@Config
-	@Label(name = "Ignore Light", description = "If true, monsters from spawners will spawn no matter the light level.")
-	public static Boolean ignoreLight = true;
-
-	@Config
 	@Label(name = "Empowered.Enabled", description = "If true, spawners will generate in an empowered state. When empowered, will generate mobs really fast for a while and then will slow down.")
 	public static Boolean empoweredEnabled = true;
+	@Config(min = 0)
+	@Label(name = "Empowered.Disable on end", description = "When the spawner stops being empowered, the spawner is now disabled.")
+	public static Boolean empoweredDisableOnEnd = true;
 	@Config(min = 0)
 	@Label(name = "Empowered.Mobs amount", description = "How many mobs are spawned before empowered ends.")
 	public static Integer empoweredMobsAmount = 24;
 	@Config(min = 1)
 	@Label(name = "Empowered.Delay", description = "Spawning Delay (in ticks) when the Spawner is empowered.")
 	public static MinMax empoweredDelay = new MinMax(100, 300);
-	@Config(min = 1)
-	@Label(name = "Delay", description = "Spawning Delay (in ticks) of the spawner. Vanilla is 200~800.")
-	public static MinMax delay = new MinMax(500, 2000);
 	@Config(min = 0)
 	@Label(name = "Empowered.Experience Reward", description = "When the Spawner stops being empowered, will generate this amount of experience")
 	public static MinMax empoweredExperienceReward = new MinMax(150, 200);
@@ -102,9 +109,6 @@ public class Spawners extends JsonFeature {
 	@Config
 	@Label(name = "Empowered.Sound effect", description = "When the Spawner stops being empowered, will play a sound effect")
 	public static Boolean empoweredSoundEffect = true;
-	@Config(min = 0)
-	@Label(name = "Required Player Range", description = "Range in which a player must be present for a spawner to work. Vanilla is 16.")
-	public static int requiredPlayerRange = 24;
 
 	public static final ArrayList<IdTagValue> FIXED_SPAWNER_SPAWNABLE_DEFAULT = new ArrayList<>(List.of(
 			//new IdTagValue(IdTagMatcher.newId("minecraft:blaze", "minecraft:the_nether"), 64)
@@ -183,6 +187,8 @@ public class Spawners extends JsonFeature {
 				loottable.getRandomItems(lootParams).forEach(stack ->
 						level.addFreshEntity(new ItemEntity(level, spawnerPos.getX() + 0.5f, spawnerPos.getY() + 1.1f, spawnerPos.getZ() + 0.5f, stack)));
 			}
+			if (empoweredDisableOnEnd)
+				setSpawnerDisabled(spawnerBlockEntity, true);
 			if (empoweredSoundEffect)
 				level.playSound(null, spawnerPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 3.0f, 1.5f);
 		}
