@@ -13,7 +13,8 @@
 			"repair_material": {
 				"id": "minecraft:iron_nugget"
 			},
-			"amount": 36
+			"amount": 36,
+			"cost_multiplier": 9
 		}
 	]
 }

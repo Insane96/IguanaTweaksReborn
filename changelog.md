@@ -5,6 +5,7 @@
   * Are now deactivated when finish being empowered
   * Can be reactivated with the echo shard they drop
   * Increased spawn speed (every 25\~100 -> 20\~80 seconds)
+* Items can now be repaired again with Nuggets and the cost with enchanted items has been adjusted to match ingots
 * Increased Hoes base attack speed bonus (+15% -> +30%)
 * Possibly fixed chunks staying loaded after player second death
 * Fixed damaging enchantments (e.g. Smite) applying to sweep attack

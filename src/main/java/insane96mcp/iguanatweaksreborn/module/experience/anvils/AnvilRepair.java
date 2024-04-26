@@ -40,7 +40,10 @@ public class AnvilRepair {
         return Optional.empty();
     }
 
-    public record RepairData(@SerializedName("repair_material") IdTagMatcher repairMaterial, @SerializedName("amount") int amountRequired, @SerializedName("max_repair") float maxRepair, @SerializedName("cost_multiplier") float costMultiplier) {
+    public record RepairData(@SerializedName("repair_material") IdTagMatcher repairMaterial,
+                             @SerializedName("amount") int amountRequired,
+                             @SerializedName("max_repair") float maxRepair,
+                             @SerializedName("cost_multiplier") float costMultiplier) {
         public static RepairData fromNetwork(FriendlyByteBuf byteBuf) {
             IdTagMatcher idTagMatcher = IdTagMatcher.parseLine(byteBuf.readUtf());
             int amount = byteBuf.readInt();

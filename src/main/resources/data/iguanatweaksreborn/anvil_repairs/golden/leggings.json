@@ -13,7 +13,8 @@
 			"repair_material": {
 				"id": "minecraft:gold_nugget"
 			},
-			"amount": 63
+			"amount": 63,
+			"cost_multiplier": 9
 		}
 	]
 }

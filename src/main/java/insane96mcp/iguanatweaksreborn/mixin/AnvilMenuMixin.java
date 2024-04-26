@@ -92,13 +92,13 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 		boolean isEnchantedBook = false;
 
 		if (!right.isEmpty()) {
-			if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player)) return;
+			//if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player))
+				//return;
 			isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
 			Optional<AnvilRepair.RepairData> oRepairData = Anvils.getCustomAnvilRepair(left, right);
 			//If it's a damageable item and a material check if trying to repair it
 			if (resultStack.isDamageableItem() && (resultStack.getItem().isValidRepairItem(left, right) || oRepairData.isPresent())) {
 				int repairItemCountCost;
-
 				//If a custom anvil repair is present, use that
 				if (oRepairData.isPresent()) {
 					AnvilRepair.RepairData repairData = oRepairData.get();
@@ -121,23 +121,24 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 							if (Anvils.differentXpRepairCost)
 								xpCost += lvl;
 						}
-						amountRequired += increase;
+						amountRequired += (increase * oRepairData.get().costMultiplier());
 					}
-					int repairSteps = Math.min(resultStack.getDamageValue(), Mth.ceil(resultStack.getMaxDamage() / amountRequired));
+					float repairSteps = Math.min(resultStack.getDamageValue(), resultStack.getMaxDamage() / amountRequired);
 					if (repairSteps <= 0 || resultStack.getDamageValue() <= maxPartialRepairDmg) {
 						this.resultSlots.setItem(0, ItemStack.EMPTY);
 						this.cost.set(0);
 						return;
 					}
 
-					for (repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount() && resultStack.getDamageValue() > maxPartialRepairDmg; ++repairItemCountCost) {
-						int dmgAfterRepair = resultStack.getDamageValue() - repairSteps;
-						resultStack.setDamageValue(Math.max(maxPartialRepairDmg, dmgAfterRepair));
+					float damageValue = resultStack.getDamageValue();
+					for (repairItemCountCost = 0; repairSteps > 0 && repairItemCountCost < right.getCount() && damageValue > maxPartialRepairDmg; ++repairItemCountCost) {
+						damageValue -= repairSteps;
 						if (!Anvils.noXpRepairCost)
 							//Vanilla behaviour
 							++mergeCost;
-						repairSteps = Math.min(resultStack.getDamageValue(), Mth.ceil(resultStack.getMaxDamage() / amountRequired));
+						repairSteps = Math.min(damageValue, resultStack.getMaxDamage() / amountRequired);
 					}
+					resultStack.setDamageValue((int) Math.max(maxPartialRepairDmg, damageValue));
 					float repairedDurabilityRatio = ((resultStack.getMaxDamage() - resultStack.getDamageValue()) - (left.getMaxDamage() - left.getDamageValue())) / (float) resultStack.getMaxDamage();
 					xpCost = Mth.ceil(xpCost * repairedDurabilityRatio);
 					mergeCost += xpCost;
@@ -182,10 +183,6 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 					float repairedDurabilityRatio = ((resultStack.getMaxDamage() - resultStack.getDamageValue()) - (left.getMaxDamage() - left.getDamageValue())) / (float) resultStack.getMaxDamage();
 					xpCost = Mth.ceil(xpCost * repairedDurabilityRatio);
 					mergeCost += xpCost;
-				}
-
-				if (oRepairData.isPresent()) {
-					mergeCost = Mth.floor(mergeCost * oRepairData.get().costMultiplier());
 				}
 
 				this.repairItemCountCost = repairItemCountCost;
