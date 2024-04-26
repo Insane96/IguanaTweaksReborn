@@ -6,6 +6,12 @@
 				"id": "iguanatweaksexpanded:soul_steel_ingot"
 			},
 			"amount": 1
+		},
+		{
+			"repair_material": {
+				"id": "iguanatweaksexpanded:soul_steel_nugget"
+			},
+			"amount": 9
 		}
 	]
 }
