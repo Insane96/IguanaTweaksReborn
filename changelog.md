@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Alpha 3.9.0
 * Added Farmers delight integration
   * https://github.com/Insane96/IguanaTweaksReborn/wiki/Farmer's-Delight-integration
 * Spawners
