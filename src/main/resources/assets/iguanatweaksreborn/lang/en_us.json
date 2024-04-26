@@ -80,6 +80,7 @@
 	"enchantment.allurement.shockwave.info": "Creates a shockwave when taking fall damage that damages nearby entities",
 	"enchantment.allurement.spread_of_ailments.info": "Applies the user's active effects to their arrows",
 	"enchantment.allurement.vengeance.info": "Stores some incoming damage and applies it to the user's next attack",
+	"enchantment.passablefoliage.leaf_walker.info": "Allows the user to walk on leaves",
 
 	"iguanatweaksreborn:combat_module": "Combat",
 
