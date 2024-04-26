@@ -94,14 +94,17 @@ public class Spawners extends JsonFeature {
 	@Label(name = "Delay", description = "Spawning Delay (in ticks) of the spawner. Vanilla is 200~800.")
 	public static MinMax delay = new MinMax(500, 2000);
 	@Config(min = 0)
-	@Label(name = "Required Player Range", description = "Range in which a player must be present for a spawner to work. Vanilla is 16.")
-	public static int requiredPlayerRange = 24;
-	@Config(min = 0)
 	@Label(name = "Empowered.Experience Reward", description = "When the Spawner stops being empowered, will generate this amount of experience")
 	public static MinMax empoweredExperienceReward = new MinMax(150, 200);
 	@Config
 	@Label(name = "Empowered.Loot Reward", description = "When the Spawner stops being empowered, will generate loot from the iguanatweaksreborn:empowered_spawner loot table")
 	public static Boolean empoweredLootReward = true;
+	@Config
+	@Label(name = "Empowered.Sound effect", description = "When the Spawner stops being empowered, will play a sound effect")
+	public static Boolean empoweredSoundEffect = true;
+	@Config(min = 0)
+	@Label(name = "Required Player Range", description = "Range in which a player must be present for a spawner to work. Vanilla is 16.")
+	public static int requiredPlayerRange = 24;
 
 	public static final ArrayList<IdTagValue> FIXED_SPAWNER_SPAWNABLE_DEFAULT = new ArrayList<>(List.of(
 			//new IdTagValue(IdTagMatcher.newId("minecraft:blaze", "minecraft:the_nether"), 64)
@@ -180,7 +183,8 @@ public class Spawners extends JsonFeature {
 				loottable.getRandomItems(lootParams).forEach(stack ->
 						level.addFreshEntity(new ItemEntity(level, spawnerPos.getX() + 0.5f, spawnerPos.getY() + 1.1f, spawnerPos.getZ() + 0.5f, stack)));
 			}
-			level.playSound(null, spawnerPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 3.0f, 1.5f);
+			if (empoweredSoundEffect)
+				level.playSound(null, spawnerPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 3.0f, 1.5f);
 		}
 	}
 
