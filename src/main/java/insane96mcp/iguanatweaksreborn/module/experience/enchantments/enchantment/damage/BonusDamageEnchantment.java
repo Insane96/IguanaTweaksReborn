@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantmen
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -42,7 +43,7 @@ public abstract class BonusDamageEnchantment extends Enchantment {
         return 5;
     }
 
-    public float getDamageBonus(LivingEntity attacker, LivingEntity target, ItemStack stack, int lvl) {
+    public float getDamageBonus(LivingEntity attacker, Entity target, ItemStack stack, int lvl) {
         if (!this.isAffectedByEnchantment(target))
             return 0f;
         return this.getDamageBonus(stack, lvl);
@@ -56,7 +57,7 @@ public abstract class BonusDamageEnchantment extends Enchantment {
         return 1.25f;
     }
 
-    public boolean isAffectedByEnchantment(LivingEntity target) {
+    public boolean isAffectedByEnchantment(Entity target) {
         return true;
     }
 

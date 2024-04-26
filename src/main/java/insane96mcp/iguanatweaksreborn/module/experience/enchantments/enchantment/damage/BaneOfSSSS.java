@@ -30,7 +30,7 @@ public class BaneOfSSSS extends BonusDamageEnchantment {
     }
 
     @Override
-    public boolean isAffectedByEnchantment(LivingEntity target) {
+    public boolean isAffectedByEnchantment(Entity target) {
         return target.getType().is(AFFECTED_BY_BANE_OF_SSSSS);
     }
 }

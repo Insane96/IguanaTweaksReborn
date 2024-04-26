@@ -1,7 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.experience.enchantments;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import insane96mcp.iguanatweaksreborn.event.ITRLivingAttackEvent;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.FireAspect;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Knockback;
@@ -248,27 +247,15 @@ public class EnchantmentsFeature extends JsonFeature {
 		event.modifyVisibility(1f - 0.15f * lvl);
 	}
 
-	@SubscribeEvent
-	public void onLivingHurt(ITRLivingAttackEvent event) {
-		if (!this.isEnabled()
-				|| !(event.getSource().getEntity() instanceof LivingEntity attacker))
-			return;
-
-		Map<Enchantment, Integer> allEnchantments = attacker.getMainHandItem().getAllEnchantments();
-		for (Enchantment enchantment : allEnchantments.keySet()) {
-			bonusDamageEnchantment(enchantment, allEnchantments.get(enchantment), attacker, event.getEntity(), event);
-		}
-	}
-
-	public void bonusDamageEnchantment(Enchantment enchantment, int lvl, LivingEntity attacker, LivingEntity target, ITRLivingAttackEvent event) {
+	public static float bonusDamageEnchantment(Enchantment enchantment, int lvl, LivingEntity attacker, Entity target) {
 		if (!(enchantment instanceof BonusDamageEnchantment bonusDamageEnchantment))
-			return;
+			return 0f;
 		float damageBonus = bonusDamageEnchantment.getDamageBonus(attacker, target, attacker.getMainHandItem(), lvl);
 		if (attacker instanceof Player player) {
 			float f = player.getAttackStrengthScale(0.5f);
 			damageBonus *= f * f;
 		}
-		event.setAmount(event.getAmount() + damageBonus);
+		return damageBonus;
 	}
 
 	@SubscribeEvent

@@ -68,7 +68,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
 
     @ModifyVariable(method = "hurt", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;onLivingAttack(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/damagesource/DamageSource;F)Z", shift = At.Shift.BEFORE), argsOnly = true)
     public float onAttackAmount(float amount, DamageSource source) {
-        return ITREventFactory.onPlayerAttack((LivingEntity) (Object) this, source, amount);
+        return ITREventFactory.onLivingAttack((LivingEntity) (Object) this, source, amount);
     }
 
     /*@ModifyVariable(method = "actuallyHurt", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
