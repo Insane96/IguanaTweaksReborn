@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## Beta 3.9.1
 * Farmer's delight integration
   * Changed all knives recipes to use swords instead
 * If berry good is present a new data pack is enabled
