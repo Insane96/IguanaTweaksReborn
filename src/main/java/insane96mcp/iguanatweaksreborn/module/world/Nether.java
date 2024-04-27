@@ -62,17 +62,17 @@ public class Nether extends Feature {
         if (!level.dimension().equals(Level.OVERWORLD))
             return;
 
-        MutableInt diamondBlocks = new MutableInt();
+        MutableInt cryingObsidians = new MutableInt();
         BlockPos.betweenClosed(event.getPortalSize().bottomLeft.below().relative(event.getPortalSize().rightDir.getOpposite(), 1),
                 event.getPortalSize().bottomLeft.relative(Direction.UP, event.getPortalSize().height).relative(event.getPortalSize().rightDir, event.getPortalSize().width))
                 .forEach((pos) -> {
             if (level.getBlockState(pos).is(PORTAL_CORNERS))
-                diamondBlocks.increment();
+                cryingObsidians.increment();
         });
-        if (diamondBlocks.getValue() < 4) {
+        if (cryingObsidians.getValue() < 4) {
             AABB aabb = new AABB(event.getPos().offset(-4, -4, -4), event.getPos().offset(4, 4, 4));
 
-            for(Player player : level.players()) {
+            for (Player player : level.players()) {
                 if (aabb.contains(player.getX(), player.getY(), player.getZ())) {
                     player.sendSystemMessage(Component.translatable(REQUIRES_CORNERS_LANG));
                 }

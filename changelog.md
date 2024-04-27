@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Farmer's delight integration
+  * Changed all knives recipes to use swords instead
 * No Hunger can now be disabled again from config (the game rule still exists)
 * Update to latest InsaneLib
 

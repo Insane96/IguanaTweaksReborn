@@ -1,0 +1,17 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "farmersdelight:chocolate_pie"
+    }
+  ],
+  "result": [
+    {
+      "count": 4,
+      "item": "farmersdelight:chocolate_pie_slice"
+    }
+  ],
+  "tool": {
+    "tag": "minecraft:swords"
+  }
+}
