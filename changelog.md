@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Broken items now show a red durability bar
 * Slight buff to unbreaking (items last ~~35%/105%/175%/245%~~ -> 50%/120%/190%/260% more)
 
 ## Beta 3.9.1

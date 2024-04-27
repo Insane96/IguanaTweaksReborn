@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
+import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
 import insane96mcp.insanelib.base.Feature;
 import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
@@ -30,5 +31,23 @@ public class ItemMixin {
 		if (stack.getItem() instanceof BowlFoodItem) {
 			callbackInfo.setReturnValue(UseAnim.DRINK);
 		}
+	}
+
+	@Inject(method = "getBarWidth", at = @At("RETURN"), cancellable = true)
+	public void onGetBarWidth(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
+		if (!Feature.isEnabled(ItemStats.class)
+				|| !ItemStats.isBroken(stack))
+			return;
+
+		cir.setReturnValue(13);
+	}
+
+	@Inject(method = "getBarColor", at = @At("RETURN"), cancellable = true)
+	public void onGetBarColor(ItemStack stack, CallbackInfoReturnable<Integer> cir) {
+		if (!Feature.isEnabled(ItemStats.class)
+				|| !ItemStats.isBroken(stack))
+			return;
+
+		cir.setReturnValue(16711680);
 	}
 }
