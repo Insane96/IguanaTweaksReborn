@@ -3,6 +3,7 @@
 ## Upcoming
 * Farmer's delight integration
   * Changed all knives recipes to use swords instead
+* If berry good is present a new data pack is enabled
 * No Hunger can now be disabled again from config (the game rule still exists)
 * Update to latest InsaneLib
 

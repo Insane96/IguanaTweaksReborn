@@ -26,9 +26,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.RegistryObject;
 
-@Label(name = "Berry Bushes")
+@Label(name = "Berries")
 @LoadFeature(module = Modules.Ids.WORLD)
-public class BerryBushes extends Feature {
+public class Berries extends Feature {
 
     public static final RegistryObject<BlockItem> SWEET_BERRY_SEEDS = ITRRegistries.ITEMS.register("sweet_berry_seeds", () -> new ItemNameBlockItem(Blocks.SWEET_BERRY_BUSH, new Item.Properties()));
 
@@ -38,8 +38,9 @@ public class BerryBushes extends Feature {
 
     @Config
     @Label(name = "Data pack", description = """
-		Makes sweet berries not plantable, requiring seeds, and also enables a data pack (If berry_good mod is not present) that makes the following changes:
+		Makes sweet berries not plantable, requiring seeds, and also enables a data pack that makes the following changes:
 		* Makes sweet berry bushes drop seeds
+		If berry good is present, a different datapack is enabled that integrates with the mod
 	""")
     public static Boolean dataPack = true;
 
@@ -49,10 +50,10 @@ public class BerryBushes extends Feature {
 	""")
     public static Boolean dataPackBerryGood = false;*/
 
-    public BerryBushes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+    public Berries(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
         IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "berries", Component.literal("IguanaTweaks Reborn Berries"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack && !ModList.get().isLoaded("berry_good")));
-        //IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "berries_berry_good", Component.literal("IguanaTweaks Reborn Berries (Berry Good compat)"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPackBerryGood && ModList.get().isLoaded("berry_good")));
+        IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "berries_berry_good", Component.literal("IguanaTweaks Reborn Berries (Berry Good compat)"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack && ModList.get().isLoaded("berry_good")));
     }
 
     @SubscribeEvent
