@@ -54,12 +54,12 @@ import net.minecraftforge.network.NetworkDirection;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
-@Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days. Use the gamerule iguanatweaks:no_hunger to re-enable hunger (and thus, disable this feature)")
-@LoadFeature(module = Modules.Ids.HUNGER_HEALTH, canBeDisabled = false)
+@Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days. You can also use the gamerule iguanatweaks:no_hunger to re-enable hunger (and thus, disable this feature)")
+@LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class NoHunger extends Feature {
 
     public static final GameRules.Key<GameRules.BooleanValue> RULE_NOHUNGER = GameRules.register("iguanatweaks:noHunger", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true, (server, booleanValue) -> {
-        Module.getFeature(NoHunger.class).setEnabled(booleanValue.get());
+        Module.getFeature(NoHunger.class).setEnabledConfig(booleanValue.get());
         for (ServerPlayer serverPlayer : server.getPlayerList().getPlayers()) {
             NoHungerSync.sync(booleanValue.get(), serverPlayer);
         }

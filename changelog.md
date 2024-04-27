@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* No Hunger can now be disabled again from config (the game rule still exists)
+* Update to latest InsaneLib
+
 ## Alpha 3.9.0
 * Added Farmers delight integration
   * https://github.com/Insane96/IguanaTweaksReborn/wiki/Farmer's-Delight-integration

@@ -25,7 +25,7 @@ public class NoHungerSync {
     }
 
     public static void handle(final NoHungerSync message, Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> Module.getFeature(NoHunger.class).setEnabled(message.noHunger));
+        ctx.get().enqueueWork(() -> Module.getFeature(NoHunger.class).setEnabledConfig(message.noHunger));
         ctx.get().setPacketHandled(true);
     }
 
