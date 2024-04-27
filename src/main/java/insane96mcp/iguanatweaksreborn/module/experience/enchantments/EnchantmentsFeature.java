@@ -187,7 +187,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	public static float unbreakingBonus(int lvl) {
 		if (isUnbreakingOverhaul()) {
 			//Tools last 35% more per level + 35% * (level - 1)
-			return 1 - 1 / (1 + (lvl * 0.35f + (0.35f * (lvl - 1))));
+			return 1 - 1 / (1 + (lvl * 0.5f + (0.2f * (lvl - 1))));
 		}
 		else {
 			return 1f / (lvl + 1);
