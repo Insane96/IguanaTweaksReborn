@@ -39,7 +39,7 @@ public class ItemMixin {
 				|| !ItemStats.isBroken(stack))
 			return;
 
-		cir.setReturnValue(13);
+		cir.setReturnValue(12);
 	}
 
 	@Inject(method = "getBarColor", at = @At("RETURN"), cancellable = true)
