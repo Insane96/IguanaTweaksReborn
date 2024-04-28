@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Fixed item durability bar when broken being a pixel too long
+* Nerfed Unbreaking (items last ~~50%/120%/190%/260%~~ -> ~~40%/110%/180%/250%~~ more)
+
 ## Beta 3.9.2
 * Broken items now show a red durability bar
 * Slight buff to unbreaking (items last ~~35%/105%/175%/245%~~ -> 50%/120%/190%/260% more)
