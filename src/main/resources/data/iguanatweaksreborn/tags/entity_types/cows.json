@@ -2,6 +2,10 @@
     "replace": false,
     "values": [
         "minecraft:cow",
-        "minecraft:mooshroom"
+        "minecraft:mooshroom",
+        {
+            "id": "buzzier_bees:moobloom",
+            "required": false
+        }
     ]
 }

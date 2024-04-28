@@ -1,0 +1,13 @@
+{
+	"item_to_repair": {
+		"id": "quark:forgotten_hat"
+	},
+	"repair": [
+		{
+			"repair_material": {
+				"id": "minecraft:leather"
+			},
+			"amount": 5
+		}
+	]
+}

@@ -92,8 +92,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 		boolean isEnchantedBook = false;
 
 		if (!right.isEmpty()) {
-			//if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player))
-				//return;
+			if (!net.minecraftforge.common.ForgeHooks.onAnvilChange((AnvilMenu) (Object) this, left, right, resultSlots, itemName, baseCost, this.player))
+				return;
 			isEnchantedBook = right.getItem() == Items.ENCHANTED_BOOK && !EnchantedBookItem.getEnchantments(right).isEmpty();
 			Optional<AnvilRepair.RepairData> oRepairData = Anvils.getCustomAnvilRepair(left, right);
 			//If it's a damageable item and a material check if trying to repair it

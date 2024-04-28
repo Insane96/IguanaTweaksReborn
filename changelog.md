@@ -7,6 +7,8 @@
 * Can no longer smelt Farmers' Delight stuff in furnace with no_food_in_furnace data pack enabled
 * Reduced Sweet Berry Meatballs and Glowgurt nutrition
 * Reduced Bone Drops from skeletons
+* Forgotten hat can now be repaired again with leather
+* Fixed anvil event no longer fired
 
 ## Beta 3.9.2
 * Broken items now show a red durability bar
