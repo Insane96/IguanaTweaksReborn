@@ -14,6 +14,10 @@
     {
       "id": "autumnity:turkey_piece",
       "required": false
+    },
+    {
+      "id": "berry_good:sweet_berry_mince",
+      "required": false
     }
   ]
 }
