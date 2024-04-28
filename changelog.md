@@ -3,6 +3,7 @@
 ## Upcoming
 * Fixed item durability bar when broken being a pixel too long
 * Nerfed Unbreaking (items last ~~50%/120%/190%/260%~~ -> ~~40%/110%/180%/250%~~ more)
+* Hopefully fixed Farmers' Delight wild carrots, potatoes and beetroots from generating
 
 ## Beta 3.9.2
 * Broken items now show a red durability bar
