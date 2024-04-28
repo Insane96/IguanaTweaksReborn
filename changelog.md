@@ -6,6 +6,7 @@
 * Hopefully fixed Farmers' Delight wild carrots, potatoes and beetroots from generating
 * Can no longer smelt Farmers' Delight stuff in furnace with no_food_in_furnace data pack enabled
 * Reduced Sweet Berry Meatballs and Glowgurt nutrition
+* Reduced Bone Drops from skeletons
 
 ## Beta 3.9.2
 * Broken items now show a red durability bar
