@@ -13,7 +13,7 @@
 
 ## 3.9.3
 * Fixed anvil event no longer fired
-* Nerfed Unbreaking (items last ~~50%/120%/190%/260%~~ -> ~~40%/110%/180%/250%~~ more)
+* Nerfed Unbreaking (items last ~~50%/120%/190%/260%~~ -> 40%/110%/180%/250% more)
 * Reduced Sweet Berry Meatballs and Glowgurt nutrition
 * Reduced Bone Drops from skeletons
 * Removed hoes cooldown when tilling
