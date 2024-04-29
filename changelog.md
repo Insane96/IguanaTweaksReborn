@@ -1,7 +1,7 @@
 # Changelog
 
-## Upcoming
-* Fixed item durability bar when broken being a pixel too long
+## 3.9.3
+* Fixed anvil event no longer fired
 * Nerfed Unbreaking (items last ~~50%/120%/190%/260%~~ -> ~~40%/110%/180%/250%~~ more)
 * Reduced Sweet Berry Meatballs and Glowgurt nutrition
 * Reduced Bone Drops from skeletons
@@ -14,7 +14,6 @@
   * Hopefully fixed Farmers' Delight wild carrots, potatoes and beetroots from generating
   * Can no longer smelt Farmers' Delight stuff in furnace with no_food_in_furnace data pack enabled
 * Forgotten hat can now be repaired again with leather
-* Fixed anvil event no longer fired
 
 ## Beta 3.9.2
 * Broken items now show a red durability bar
