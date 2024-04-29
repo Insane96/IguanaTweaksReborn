@@ -172,13 +172,11 @@ public class Hoes extends JsonFeature {
 		}
 		else {
 			for (HoeStat hoeStat : hoesStats) {
-				if (!hoeStat.hoe.matchesItem(event.getItemStack().getItem(), null)
-						|| hoeStat.cooldown <= 0)
+				if (!hoeStat.hoe.matchesItem(event.getItemStack().getItem(), null))
 					continue;
 
-				/*int efficiency = event.getItemStack().getEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY);*/
-				int cooldown = hoeStat.cooldown /*- (efficiency * efficiencyCooldownReduction)*/;
-				event.getToolTip().add(CommonComponents.space().append(Component.translatable(TILL_COOLDOWN, InsaneLib.ONE_DECIMAL_FORMATTER.format(cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
+				if (hoeStat.cooldown > 0)
+					event.getToolTip().add(CommonComponents.space().append(Component.translatable(TILL_COOLDOWN, InsaneLib.ONE_DECIMAL_FORMATTER.format(hoeStat.cooldown / 20f)).withStyle(ChatFormatting.DARK_GREEN)));
 				if (hoeStat.scytheRadius > 0)
 					event.getToolTip().add(CommonComponents.space().append(Component.translatable(SCYTHE_RADIUS, hoeStat.scytheRadius).withStyle(ChatFormatting.DARK_GREEN)));
 				break;

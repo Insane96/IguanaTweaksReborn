@@ -1,6 +1,11 @@
 # Changelog
 
 ## Upcoming
+* Reworked bone meal
+  * With serene seasons installed bone meal can fail to grow plants based off season
+  * Fixed bone meal being wonky on Supplementaries and Farmers Delight crops
+  * Farmland moisture no longer prevents bone meal from working
+  * Growth age can now be configured min and max instead of having NERFED and SLIGHTLY
 * Added Rice Seeds and Rooted Onion textures
 * Fixed foods with high effectiveness not getting stack reduced
   * This should fix de-sync of stack sizes on server
@@ -17,7 +22,7 @@
 * Farmer's Delight
   * Fixed various loot tables
   * Fixed and refactored advancements
-  * Hopefully fixed Farmers' Delight wild carrots, potatoes and beetroots from generating
+  * Hopefully fixed Farmers' Delight wild carrots, potatoes and beetroots still generating
   * Can no longer smelt Farmers' Delight stuff in furnace with no_food_in_furnace data pack enabled
 * Forgotten hat can now be repaired again with leather
 

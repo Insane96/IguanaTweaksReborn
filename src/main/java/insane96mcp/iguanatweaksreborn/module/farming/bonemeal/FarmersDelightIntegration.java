@@ -12,6 +12,12 @@ import vectorwing.farmersdelight.common.registry.ModBlocks;
 import java.util.Optional;
 
 public class FarmersDelightIntegration {
+    public static boolean shouldBoneMeal(Level level, BlockPos pos, BlockState state) {
+        if (!(state.getBlock() instanceof RiceBlock riceBlock))
+            return true;
+        return state.getValue(RiceBlock.AGE) < riceBlock.getMaxAge() || level.getBlockState(pos.above()).isAir();
+    }
+
     public static void onBoneMeal(Level level, BlockPos pos, BlockState state, IntegerProperty ageProperty, int age) {
         if (state.getBlock() instanceof BuddingTomatoBlock buddingTomatoBlock) {
             int maxAge = buddingTomatoBlock.getMaxAge();

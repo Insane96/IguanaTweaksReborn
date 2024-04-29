@@ -190,6 +190,16 @@ public class BoneMeal extends JsonFeature {
             }
             int age = state.getValue(oAgeProperty.get());
             int maxAge = AGE_PROPERTIES.get(oAgeProperty.get());
+            if (ModList.get().isLoaded("supplementaries") && !SupplementariesIntegration.shouldBoneMeal(event.getLevel(), event.getPos(), event.getBlock())) {
+                event.setCanceled(true);
+                return;
+            }
+            if (ModList.get().isLoaded("farmersdelight") && !FarmersDelightIntegration.shouldBoneMeal(event.getLevel(), event.getPos(), event.getBlock())) {
+                event.setCanceled(true);
+                return;
+            }
+            else if (age == maxAge)
+                return;
 
             age = Mth.clamp(age + stageGrowth.getIntRandBetween(event.getLevel().random), 0, maxAge);
             event.getLevel().setBlockAndUpdate(event.getPos(), state.setValue(oAgeProperty.get(), age));
