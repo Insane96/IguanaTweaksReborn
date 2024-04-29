@@ -23,15 +23,6 @@
                         }
                     ],
                     "name": "farmersdelight:tomato"
-                },
-                {
-                    "type": "minecraft:item",
-                    "functions": [
-                        {
-                            "function": "minecraft:explosion_decay"
-                        }
-                    ],
-                    "name": "farmersdelight:tomato_seeds"
                 }
             ]
         },
