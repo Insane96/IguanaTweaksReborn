@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.9.4
 * Reworked bone meal
   * With serene seasons installed bone meal can fail to grow plants based off season
   * Fixed bone meal being wonky on Supplementaries and Farmers Delight crops
