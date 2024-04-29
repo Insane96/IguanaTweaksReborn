@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Added Rice Seeds and Rooted Onion textures
 * Fixed foods with high effectiveness not getting stack reduced
   * This should fix de-sync of stack sizes on server
 
