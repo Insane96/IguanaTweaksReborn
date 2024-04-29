@@ -10,6 +10,7 @@
 * Fixed hoe stats not synced in multiplayer
 * Farmer's Delight
   * Fixed various loot tables
+  * Fixed and refactored advancements
   * Hopefully fixed Farmers' Delight wild carrots, potatoes and beetroots from generating
   * Can no longer smelt Farmers' Delight stuff in furnace with no_food_in_furnace data pack enabled
 * Forgotten hat can now be repaired again with leather
