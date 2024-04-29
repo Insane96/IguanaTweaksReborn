@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Fixed foods with high effectiveness not getting stack reduced
+  * This should fix de-sync of stack sizes on server
+
 ## 3.9.3
 * Fixed anvil event no longer fired
 * Nerfed Unbreaking (items last ~~50%/120%/190%/260%~~ -> ~~40%/110%/180%/250%~~ more)

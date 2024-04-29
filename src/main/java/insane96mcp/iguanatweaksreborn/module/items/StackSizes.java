@@ -38,7 +38,7 @@ public class StackSizes extends Feature {
     public static String foodStackReductionFormula = "ROUND((1 - (effectiveness - 1) / 25) * 64 * 0.25, 0)";
     @Config(min = 1, max = 64)
     @Label(name = "Stackable Stews", description = "Stews will stack up to this number. It's overridden by 'foodStackReduction' if enabled. Still affected by black/whitelist")
-    public static Integer stackableSoups = 16;
+    public static Integer stackableSoups = 1;
     @Config(min = 0.01d, max = 64d)
     @Label(name = "Item Stack Multiplier", description = "Items max stack sizes (excluding blocks) will be multiplied by this value. Foods will be overridden by 'Food Stack Reduction' or 'Food Stack Multiplier' if are active. Setting to 1 will disable this feature.")
     public static Double itemStackMultiplier = 1d;
@@ -143,8 +143,7 @@ public class StackSizes extends Feature {
 
             FoodProperties food = item.getFoodProperties();
             int stackSize = (int) Utils.computeFoodFormula(food, foodStackReductionFormula);
-            if (stackSize > 0)
-                item.maxStackSize = Mth.clamp(stackSize, 1, 64);
+            item.maxStackSize = Mth.clamp(stackSize, 1, 64);
         }
     }
 
