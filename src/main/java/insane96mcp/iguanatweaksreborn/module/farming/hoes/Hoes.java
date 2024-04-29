@@ -70,7 +70,7 @@ public class Hoes extends JsonFeature {
 
 	public Hoes(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "item_durabilities"), new SyncType(json -> loadAndReadJson(json, hoesStats, HOES_STATS_DEFAULT, HoeStat.LIST_TYPE)));
+		addSyncType(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "hoes_stats"), new SyncType(json -> loadAndReadJson(json, hoesStats, HOES_STATS_DEFAULT, HoeStat.LIST_TYPE)));
 		JSON_CONFIGS.add(new JsonConfig<>("hoes_stats.json", hoesStats, HOES_STATS_DEFAULT, HoeStat.LIST_TYPE, true, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "hoes_stats")));
 	}
 
