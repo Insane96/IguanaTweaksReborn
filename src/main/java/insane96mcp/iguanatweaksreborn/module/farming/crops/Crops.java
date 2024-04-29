@@ -14,14 +14,16 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import insane96mcp.insanelib.data.IdTagValue;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -32,6 +34,11 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -42,8 +49,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.List;
 
 @Label(name = "Crops", description = "Crops tweaks and less yield from crops")
 @LoadFeature(module = Modules.Ids.FARMING)
@@ -198,23 +203,47 @@ public class Crops extends JsonFeature {
 		event.setCanceled(true);
 	}
 
-	public static void applyHardness(List<IdTagValue> list, boolean isClientSide) {
-		for (IdTagValue hardness : list) {
-			getAllBlocks(hardness.id, isClientSide).forEach(block -> {
-				if (onlyFullyGrown) {
-					//I have doubts that this always takes the fully grown modded crops
-					BlockState state = block.getStateDefinition().getPossibleStates().get(block.getStateDefinition().getPossibleStates().size() - 1);
-					if (state.destroySpeed == 0f)
-						state.destroySpeed = (float) hardness.value;
-				}
-				else {
-					block.getStateDefinition().getPossibleStates().forEach(blockState -> {
-						if (blockState.destroySpeed == 0f)
-							blockState.destroySpeed = (float) hardness.value;
-					});
-				}
-			});
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public void onPickBlock(InputEvent.InteractionKeyMappingTriggered event) {
+		if (!this.isEnabled()
+				|| !event.getKeyMapping().same(Minecraft.getInstance().options.keyPickItem)
+				|| Minecraft.getInstance().hitResult == null
+				|| Minecraft.getInstance().hitResult.getType() != HitResult.Type.BLOCK)
+			return;
+		Minecraft mc = Minecraft.getInstance();
+		boolean isCreative = mc.player.getAbilities().instabuild;
+		HitResult hitResult = mc.hitResult;
+
+		BlockPos blockpos = ((BlockHitResult) hitResult).getBlockPos();
+		BlockState blockstate = mc.level.getBlockState(blockpos);
+		if (blockstate.isAir())
+			return;
+
+		Block block = blockstate.getBlock();
+		ItemStack stack;
+		if (block == Blocks.CARROTS)
+			stack = new ItemStack(CARROT_SEEDS.get());
+		else if (block == Blocks.POTATOES)
+			stack = new ItemStack(ROOTED_POTATO.get());
+		else
+			stack = FarmersDelightIntegration.tryPickBlock(block);
+		if (stack == null)
+			return;
+		Inventory inventory = mc.player.getInventory();
+
+		int i = inventory.findSlotMatchingItem(stack);
+		if (isCreative) {
+			inventory.setPickedItem(stack);
+			mc.gameMode.handleCreativeModeItemAdd(mc.player.getItemInHand(InteractionHand.MAIN_HAND), 36 + inventory.selected);
 		}
+		else if (i != -1) {
+			if (Inventory.isHotbarSlot(i))
+				inventory.selected = i;
+			else
+				mc.gameMode.handlePickItem(i);
+		}
+		event.setCanceled(true);
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)

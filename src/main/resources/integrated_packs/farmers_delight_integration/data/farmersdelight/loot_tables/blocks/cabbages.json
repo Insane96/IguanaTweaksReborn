@@ -33,20 +33,20 @@
                             "properties": {
                                 "age": "7"
                             }
+                        },
+                        {
+                            "condition": "minecraft:table_bonus",
+                            "enchantment": "minecraft:fortune",
+                            "chances": [
+                                0,
+                                0.10,
+                                0.25,
+                                0.4285,
+                                0.625
+                            ]
                         }
                     ],
                     "name": "farmersdelight:cabbage"
-                },
-                {
-                    "condition": "minecraft:table_bonus",
-                    "enchantment": "minecraft:fortune",
-                    "chances": [
-                        0,
-                        0.10,
-                        0.25,
-                        0.4285,
-                        0.625
-                    ]
                 }
             ]
         },

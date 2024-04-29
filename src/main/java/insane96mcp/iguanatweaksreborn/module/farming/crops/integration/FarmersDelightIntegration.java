@@ -17,6 +17,8 @@ import vectorwing.farmersdelight.common.registry.ModEffects;
 import vectorwing.farmersdelight.common.registry.ModItems;
 import vectorwing.farmersdelight.common.utility.TextUtils;
 
+import javax.annotation.Nullable;
+
 public class FarmersDelightIntegration {
     public static Block getOnion() {
         return ModBlocks.ONION_CROP.get();
@@ -57,5 +59,14 @@ public class FarmersDelightIntegration {
         if (player.hasEffect(ModEffects.COMFORT.get()))
             amount = amount * 1.2f;
         return amount;
+    }
+
+    @Nullable
+    public static ItemStack tryPickBlock(Block block) {
+        if (block == ModBlocks.RICE_CROP.get() || block == ModBlocks.RICE_CROP_PANICLES.get())
+            return new ItemStack(Crops.RICE_SEEDS.get());
+        else if (block == ModBlocks.ONION_CROP.get())
+            return new ItemStack(Crops.ROOTED_ONION.get());
+        return null;
     }
 }

@@ -6,6 +6,7 @@
 * Reduced Sweet Berry Meatballs and Glowgurt nutrition
 * Reduced Bone Drops from skeletons
 * Removed hoes cooldown when tilling
+* Middle-clicking carrots, potatoes, onions and rice now gives the seed instead of the crop
 * Farmer's Delight
   * Fixed various loot tables
   * Hopefully fixed Farmers' Delight wild carrots, potatoes and beetroots from generating
