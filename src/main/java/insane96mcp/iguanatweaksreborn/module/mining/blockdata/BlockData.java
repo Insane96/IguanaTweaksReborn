@@ -47,7 +47,10 @@ public class BlockData {
 	@Nullable
 	public Float jumpFactor;
 
-	public BlockData(Block block, List<BlockState> blockStates, @Nullable Float stateHardness, @Nullable Boolean stateRequiresCorrectToolForDrops, @Nullable NoteBlockInstrument stateNoteBlockInstrument, @Nullable Float explosionResistance, @Nullable Float friction, @Nullable Float speedFactor, @Nullable Float jumpFactor) {
+	@Nullable
+	public Float boneMealFailChance;
+
+	public BlockData(Block block, List<BlockState> blockStates, @Nullable Float stateHardness, @Nullable Boolean stateRequiresCorrectToolForDrops, @Nullable NoteBlockInstrument stateNoteBlockInstrument, @Nullable Float explosionResistance, @Nullable Float friction, @Nullable Float speedFactor, @Nullable Float jumpFactor, @Nullable Float boneMealFailChance) {
 		this.block = block;
 		this.blockStates = blockStates;
 		this.stateHardness = stateHardness;
@@ -57,9 +60,10 @@ public class BlockData {
 		this.friction = friction;
 		this.speedFactor = speedFactor;
 		this.jumpFactor = jumpFactor;
+		this.boneMealFailChance = boneMealFailChance;
 	}
 
-	public BlockData(TagKey<Block> blockTag, @Nullable Float stateHardness, @Nullable Boolean stateRequiresCorrectToolForDrops, @Nullable NoteBlockInstrument stateNoteBlockInstrument, @Nullable Float explosionResistance, @Nullable Float friction, @Nullable Float speedFactor, @Nullable Float jumpFactor) {
+	public BlockData(TagKey<Block> blockTag, @Nullable Float stateHardness, @Nullable Boolean stateRequiresCorrectToolForDrops, @Nullable NoteBlockInstrument stateNoteBlockInstrument, @Nullable Float explosionResistance, @Nullable Float friction, @Nullable Float speedFactor, @Nullable Float jumpFactor, @Nullable Float boneMealFailChance) {
 		this.blockTag = blockTag;
 		this.stateHardness = stateHardness;
 		this.stateRequiresCorrectToolForDrops = stateRequiresCorrectToolForDrops;
@@ -68,6 +72,7 @@ public class BlockData {
 		this.friction = friction;
 		this.speedFactor = speedFactor;
 		this.jumpFactor = jumpFactor;
+		this.boneMealFailChance = boneMealFailChance;
 	}
 
 	public BlockData(Block block) {
@@ -76,6 +81,12 @@ public class BlockData {
 
 	public BlockData(TagKey<Block> blockTag) {
 		this.blockTag = blockTag;
+	}
+
+	public boolean matches(BlockState state) {
+		if (this.block != null)
+			return state.is(this.block);
+		return state.is(this.blockTag);
 	}
 
 	public void apply(boolean applyingOriginal) {
@@ -176,6 +187,8 @@ public class BlockData {
 			Float friction = ITRGsonHelper.getAsNullableFloat(jObject, "friction");
 			Float speedFactor = ITRGsonHelper.getAsNullableFloat(jObject, "speed_factor");
 			Float jumpFactor = ITRGsonHelper.getAsNullableFloat(jObject, "jump_factor");
+			Float boneMealFailChance = ITRGsonHelper.getAsNullableFloat(jObject, "bone_meal_fail_chance");
+
 			if (jObject.has("block_tag") && jObject.has("states"))
 				throw new JsonParseException("`block_tag` and `states` cannot be used together");
 			if (!jObject.has("block") && !jObject.has("block_tag"))
@@ -204,14 +217,14 @@ public class BlockData {
 						});
 					}
 				}
-				return new BlockData(block, blockStates, hardness, requiresCorrectToolForDrops, instrument, explosionResistance, friction, speedFactor, jumpFactor);
+				return new BlockData(block, blockStates, hardness, requiresCorrectToolForDrops, instrument, explosionResistance, friction, speedFactor, jumpFactor, boneMealFailChance);
 			}
 			else {
 				ResourceLocation blockTagId = ResourceLocation.tryParse(jObject.get("block_tag").getAsString());
 				if (blockTagId == null)
 					throw new JsonParseException("Failed to parse block tag id for %s".formatted(jObject.get("block_tag").getAsString()));
 				TagKey<Block> blockTag = TagKey.create(Registries.BLOCK, blockTagId);
-				return new BlockData(blockTag, hardness, requiresCorrectToolForDrops, instrument, explosionResistance, friction, speedFactor, jumpFactor);
+				return new BlockData(blockTag, hardness, requiresCorrectToolForDrops, instrument, explosionResistance, friction, speedFactor, jumpFactor, boneMealFailChance);
 			}
 		}
 
@@ -258,10 +271,11 @@ public class BlockData {
 		Float friction = byteBuf.readNullable(FriendlyByteBuf::readFloat);
 		Float speedFactor = byteBuf.readNullable(FriendlyByteBuf::readFloat);
 		Float jumpFactor = byteBuf.readNullable(FriendlyByteBuf::readFloat);
+		Float boneMealFailChance = byteBuf.readNullable(FriendlyByteBuf::readFloat);
 		if (block != null)
-			return new BlockData(block, blockStates, hardness, requiresCorrectToolForDrops, noteBlockInstrument, explosionResistance, friction, speedFactor, jumpFactor);
+			return new BlockData(block, blockStates, hardness, requiresCorrectToolForDrops, noteBlockInstrument, explosionResistance, friction, speedFactor, jumpFactor, boneMealFailChance);
 		else
-			return new BlockData(blockTag, hardness, requiresCorrectToolForDrops, noteBlockInstrument, explosionResistance, friction, speedFactor, jumpFactor);
+			return new BlockData(blockTag, hardness, requiresCorrectToolForDrops, noteBlockInstrument, explosionResistance, friction, speedFactor, jumpFactor, boneMealFailChance);
 	}
 
 	public void toNetwork(FriendlyByteBuf byteBuf) {
@@ -286,6 +300,7 @@ public class BlockData {
 		byteBuf.writeNullable(this.friction, FriendlyByteBuf::writeFloat);
 		byteBuf.writeNullable(this.speedFactor, FriendlyByteBuf::writeFloat);
 		byteBuf.writeNullable(this.jumpFactor, FriendlyByteBuf::writeFloat);
+		byteBuf.writeNullable(this.boneMealFailChance, FriendlyByteBuf::writeFloat);
 	}
 
 	//Thanks Random832
@@ -305,7 +320,6 @@ public class BlockData {
 	}
 
 	public static class PropertiesAndValues extends ArrayList<PropertyAndValue<?>> {
-
 		public static PropertiesAndValues of(StateDefinition definition, String string) {
 			PropertiesAndValues propertiesAndValues = new PropertiesAndValues();
 			String[] split = string.split(",");
