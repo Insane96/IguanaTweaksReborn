@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.data.generator;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.module.farming.bonemeal.BoneMeal;
 import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
 import insane96mcp.iguanatweaksreborn.module.mining.blockhardness.BlockHardness;
 import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
@@ -44,6 +45,8 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(Death.GRAVE.block().get())
                 .add(BeaconConduit.BEACON.block().get());
+        tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                .add(BoneMeal.RICH_FARMLAND.block().get());
 
         //Mod's tags
         tag(RESPAWN_OBELISK_BLOCKS_TO_ROT)

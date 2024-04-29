@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed Rich farmland not minable with shovels
+
 ## 3.9.4
 * Reworked bone meal
   * With serene seasons installed bone meal can fail to grow plants based off season
