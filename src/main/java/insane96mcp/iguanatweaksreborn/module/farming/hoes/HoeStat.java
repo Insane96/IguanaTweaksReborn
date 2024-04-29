@@ -31,7 +31,7 @@ public class HoeStat {
 		@Override
 		public HoeStat deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 			IdTagMatcher idTagMatcher = context.deserialize(json.getAsJsonObject().get("hoe"), IdTagMatcher.class);
-			return new HoeStat(idTagMatcher, GsonHelper.getAsInt(json.getAsJsonObject(), "cooldown"), GsonHelper.getAsInt(json.getAsJsonObject(), "scythe_radius", 0));
+			return new HoeStat(idTagMatcher, GsonHelper.getAsInt(json.getAsJsonObject(), "cooldown", 0), GsonHelper.getAsInt(json.getAsJsonObject(), "scythe_radius", 0));
 		}
 
 		@Override
