@@ -5,6 +5,7 @@
 * Nerfed Unbreaking (items last ~~50%/120%/190%/260%~~ -> ~~40%/110%/180%/250%~~ more)
 * Reduced Sweet Berry Meatballs and Glowgurt nutrition
 * Reduced Bone Drops from skeletons
+* Removed hoes cooldown when tilling
 * Farmer's Delight
   * Fixed various loot tables
   * Hopefully fixed Farmers' Delight wild carrots, potatoes and beetroots from generating
