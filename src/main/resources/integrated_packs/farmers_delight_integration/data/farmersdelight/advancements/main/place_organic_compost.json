@@ -1,5 +1,5 @@
 {
-    "parent": "farmersdelight:main/root",
+    "parent": "farmersdelight:main/hit_raider_with_rotten_tomato",
     "criteria": {
         "place_organic_compost": {
             "conditions": {
