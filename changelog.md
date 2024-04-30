@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Cave vines now grow slower above sea level or if can see the sky light
 * Fixed Rich farmland not minable with shovels
 
 ## 3.9.4

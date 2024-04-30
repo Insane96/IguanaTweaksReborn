@@ -11,7 +11,9 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.level.BlockEvent;
@@ -25,6 +27,9 @@ public class PlantsGrowth extends Feature {
 	@Config
 	@Label(name = "Huge mushrooms on Mycelium only")
 	public static Boolean hugeMushroomsOnMyceliumOnly = true;
+	@Config(min = 0)
+	@Label(name = "Cave vines underground", description = "If != 1, cave vines will grow this slower above sea level or if they can see the sky light")
+	public static Double caveVinesUnderground = 3d;
 
 	@Config
 	@Label(name = "Plant growth multipliers data pack", description = "If true, a data pack is enabled that changes the growth of plants based off various factors, such as sunlight and biome")
@@ -44,6 +49,12 @@ public class PlantsGrowth extends Feature {
 		for (PlantGrowthMultiplier plantGrowthMultiplier : PlantsGrowthReloadListener.GROWTH_MULTIPLIERS) {
 			multiplier *= plantGrowthMultiplier.getMultiplier(event.getState(), (Level) event.getLevel(), event.getPos());
 		}
+		if (caveVinesUnderground != 1 && event.getState().is(BlockTags.CAVE_VINES)) {
+			if (event.getLevel().getSeaLevel() > event.getPos().getY()
+					|| event.getLevel().getBrightness(LightLayer.SKY, event.getPos()) > 0)
+				multiplier *= 4;
+		}
+
 		if (multiplier == 0d) {
 			event.setResult(Event.Result.DENY);
 			return;
