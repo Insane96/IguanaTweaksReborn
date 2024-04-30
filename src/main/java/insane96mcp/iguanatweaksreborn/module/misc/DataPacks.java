@@ -112,7 +112,6 @@ public class DataPacks extends Feature {
             Configuration.CHANCE_WILD_BEETROOTS.set(Integer.MAX_VALUE);
             Configuration.CHANCE_WILD_CARROTS.set(Integer.MAX_VALUE);
             Configuration.CHANCE_WILD_POTATOES.set(Integer.MAX_VALUE);
-            Configuration.RICH_SOIL_BOOST_CHANCE.set(0.02d);
         }
     }
 
