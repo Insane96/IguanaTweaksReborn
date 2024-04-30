@@ -72,7 +72,7 @@ public class BoneMeal extends JsonFeature {
 
     @Config
     @Label(name = "Season fail chance", description = "Chance for a bone meal to fail to grow something. Empty this string to disable. Accepts a list of seasons and chances separated by a ;")
-    public static String seasonFailChance = "AUTUMN,0.4;WINTER,0.8";
+    public static String seasonFailChance = "WINTER,0.65";
 
     @Config
     @Label(name = "Bone meal dirt to grass", description = "If true, you can bone meal dirt that's near a grass block to get grass block.")
