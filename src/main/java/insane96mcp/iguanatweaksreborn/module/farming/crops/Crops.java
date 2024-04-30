@@ -221,12 +221,12 @@ public class Crops extends JsonFeature {
 			return;
 
 		Block block = blockstate.getBlock();
-		ItemStack stack;
+		ItemStack stack = null;
 		if (block == Blocks.CARROTS)
 			stack = new ItemStack(CARROT_SEEDS.get());
 		else if (block == Blocks.POTATOES)
 			stack = new ItemStack(ROOTED_POTATO.get());
-		else
+		else if (ModList.get().isLoaded("farmersdelight"))
 			stack = FarmersDelightIntegration.tryPickBlock(block);
 		if (stack == null)
 			return;
