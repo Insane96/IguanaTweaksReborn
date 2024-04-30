@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Bone meal no longer fails to grow stuff in autumn and lowered chance to fail in winter
 * Cave vines now grow slower above sea level or if can see the sky light
 * Wild Flax is now rarer
 * Fixed Rich farmland not minable with shovels
