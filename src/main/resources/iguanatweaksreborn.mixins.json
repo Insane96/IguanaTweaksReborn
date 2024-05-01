@@ -60,7 +60,8 @@
         "ZombieMixin",
         "integration.autumnity.CookedTurkeyBlockMixin",
         "integration.autumnity.PancakeBlockMixin",
-        "integration.autumnity.TurkeyBlockMixin"
+        "integration.autumnity.TurkeyBlockMixin",
+        "integration.farmersdelight.PieBlockMixin"
     ],
     "minVersion": "0.8",
     "client": [

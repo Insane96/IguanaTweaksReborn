@@ -6,6 +6,7 @@
 * Wild Flax is now rarer
 * Reverted rich soil boost chance to default value
 * Fixed Rich farmland not minable with shovels
+* Fixed Farmers Delight Pies not healing
 * Fixed crash when missing Farmer's Delight
 
 ## 3.9.4

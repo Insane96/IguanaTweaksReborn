@@ -12,18 +12,19 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public class ModLoadedPlugin implements IMixinConfigPlugin {
-    private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.of(
-            "insane96mcp.iguanatweaksreborn.mixin.SpongeBlockMixin", () -> LoadingModList.get().getModFileById("quark") == null,
-            "insane96mcp.iguanatweaksreborn.mixin.SpringFeatureMixin", () -> LoadingModList.get().getModFileById("quark") == null,
-            "insane96mcp.iguanatweaksreborn.mixin.PistonMovingBlockEntityMixin", () -> LoadingModList.get().getModFileById("quark") == null,
-            "insane96mcp.iguanatweaksreborn.mixin.PistonBaseBlockMixin", () -> LoadingModList.get().getModFileById("quark") == null,
-            "insane96mcp.iguanatweaksreborn.mixin.FallingBlockEntityMixin", () -> LoadingModList.get().getModFileById("quark") == null,
-            "insane96mcp.iguanatweaksreborn.mixin.BoatMixin", () -> LoadingModList.get().getModFileById("quark") == null,
-            "insane96mcp.iguanatweaksreborn.mixin.EnchantmentHelperMixin", () -> LoadingModList.get().getModFileById("apotheosis") == null,
-            "insane96mcp.iguanatweaksreborn.mixin.integration.autumnity.CookedTurkeyBlockMixin", () -> LoadingModList.get().getModFileById("autumnity") != null,
-            "insane96mcp.iguanatweaksreborn.mixin.integration.autumnity.TurkeyBlockMixin", () -> LoadingModList.get().getModFileById("autumnity") != null,
-            "insane96mcp.iguanatweaksreborn.mixin.integration.autumnity.PancakeBlockMixin", () -> LoadingModList.get().getModFileById("autumnity") != null
-    );
+    private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.<String, Supplier<Boolean>>builder()
+            .put("insane96mcp.iguanatweaksreborn.mixin.SpongeBlockMixin", () -> LoadingModList.get().getModFileById("quark") == null)
+            .put("insane96mcp.iguanatweaksreborn.mixin.SpringFeatureMixin", () -> LoadingModList.get().getModFileById("quark") == null)
+            .put("insane96mcp.iguanatweaksreborn.mixin.PistonMovingBlockEntityMixin", () -> LoadingModList.get().getModFileById("quark") == null)
+            .put("insane96mcp.iguanatweaksreborn.mixin.PistonBaseBlockMixin", () -> LoadingModList.get().getModFileById("quark") == null)
+            .put("insane96mcp.iguanatweaksreborn.mixin.FallingBlockEntityMixin", () -> LoadingModList.get().getModFileById("quark") == null)
+            .put("insane96mcp.iguanatweaksreborn.mixin.BoatMixin", () -> LoadingModList.get().getModFileById("quark") == null)
+            .put("insane96mcp.iguanatweaksreborn.mixin.EnchantmentHelperMixin", () -> LoadingModList.get().getModFileById("apotheosis") == null)
+            .put("insane96mcp.iguanatweaksreborn.mixin.integration.autumnity.CookedTurkeyBlockMixin", () -> LoadingModList.get().getModFileById("autumnity") != null)
+            .put("insane96mcp.iguanatweaksreborn.mixin.integration.autumnity.TurkeyBlockMixin", () -> LoadingModList.get().getModFileById("autumnity") != null)
+            .put("insane96mcp.iguanatweaksreborn.mixin.integration.autumnity.PancakeBlockMixin", () -> LoadingModList.get().getModFileById("autumnity") != null)
+            .put("insane96mcp.iguanatweaksreborn.mixin.integration.farmersdelight.PieBlockMixin", () -> LoadingModList.get().getModFileById("farmersdelight") != null)
+            .build();
     @Override
     public void onLoad(String mixinPackage) {
 

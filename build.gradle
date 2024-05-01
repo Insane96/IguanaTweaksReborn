@@ -119,6 +119,7 @@ dependencies {
 
     compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}:api")
     runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}")
+    implementation fg.deobf("curse.maven:jei-238222:5101366")
 
     implementation fg.deobf("com.github.Virtuoel:Pehkui:${pehkui_version}-${mc_version}-forge")
     //implementation fg.deobf("curse.maven:kiwi-303657:4592974")
@@ -138,7 +139,6 @@ dependencies {
     implementation fg.deobf("curse.maven:berry-good-355589:5228437")
     implementation fg.deobf("curse.maven:allurement-438003:5228059")
     implementation fg.deobf("curse.maven:farmers-delight-398521:5051242")
-    implementation fg.deobf("curse.maven:jei-238222:5101366")
 
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
