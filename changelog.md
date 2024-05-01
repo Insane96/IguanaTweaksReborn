@@ -12,6 +12,7 @@
 ## 3.9.4
 * Reworked bone meal
   * With serene seasons installed bone meal can fail to grow plants based off season
+    * This should have already been the case with ITE but didn't work
   * Fixed bone meal being wonky on Supplementaries and Farmers Delight crops
   * Farmland moisture no longer prevents bone meal from working
   * Growth age can now be configured min and max instead of having NERFED and SLIGHTLY
