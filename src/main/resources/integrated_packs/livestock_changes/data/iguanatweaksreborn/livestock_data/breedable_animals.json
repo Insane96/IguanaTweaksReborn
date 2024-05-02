@@ -9,7 +9,7 @@
     "breeding_cooldown": [
         {
             "id": "iguanatweaksreborn:global",
-            "multiplier": 3
+            "multiplier": 2.5
         }
     ],
     "breeding_fail_chance": 0.6,
