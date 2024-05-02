@@ -3,6 +3,8 @@
 ## Upcoming
 * Bone meal no longer fails to grow stuff in autumn and lowered chance to fail in winter
 * Cave vines now grow slower above sea level or if they can see the skylight
+* Nerfed Respiration enchantment
+  * Every level decreases air consumption by 50% instead of 100%
 * Wild Flax is now rarer
 * Reduced breeding cooldown (15 minutes -> 12.5 minutes)
 * Tiredness

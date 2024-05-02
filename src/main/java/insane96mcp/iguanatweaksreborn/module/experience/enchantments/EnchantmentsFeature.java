@@ -81,8 +81,11 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Label(name = "Small Thorns Overhaul", description = "Thorns is no longer compatible with other protections, but deals damage every time (higher levels deal more damage) and no longer damages items.")
 	public static Boolean thornsOverhaul = true;
 	@Config
-	@Label(name = "Mending Nerf", description = "Mending only makes the tool repair by one durability instead of 2 per xp.")
+	@Label(name = "Mending Nerf", description = "Mending only makes the tool repair by one durability every 2 xp instead of 2 durability/1 xp.")
 	public static Boolean mendingNerf = true;
+	@Config
+	@Label(name = "Respiration Nerf", description = "Respiration decreases air consumption by 50% per level instead of 100%.")
+	public static Boolean respirationNerf = true;
 
 	@Config
 	@Label(name = "Better Efficiency Formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to tool_efficiency * (1 + (0.5*lvl))")

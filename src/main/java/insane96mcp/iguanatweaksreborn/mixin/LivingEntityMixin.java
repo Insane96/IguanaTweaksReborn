@@ -21,6 +21,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.spongepowered.asm.mixin.Mixin;
@@ -126,5 +127,16 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         if (RegeneratingAbsorption.canDamageAbsorption(source) && instance.getPersistentData().getFloat(RegeneratingAbsorption.REGEN_ABSORPTION_TAG) > 0)
             return;
         original.call(instance, soundEvent, volume, pitch);
+    }
+
+    @Inject(method = "decreaseAirSupply", at = @At("RETURN"), cancellable = true)
+    public void onDecreaseAirSupply(int pCurrentAir, CallbackInfoReturnable<Integer> cir) {
+        if (!Feature.isEnabled(EnchantmentsFeature.class)
+                || !EnchantmentsFeature.respirationNerf)
+            return;
+        int respirationLvl = EnchantmentHelper.getRespiration((LivingEntity) (Object) this);
+        if (respirationLvl > 0
+                && this.random.nextFloat() < 1f / (1 + (respirationLvl / 2f)))
+            cir.setReturnValue(pCurrentAir - 1);
     }
 }
