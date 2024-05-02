@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Turtle Helmets now give 45 seconds of water breathing instead of 10 seconds
 * Bone meal no longer fails to grow stuff in autumn and lowered chance to fail in winter
 * Cave vines now grow slower above sea level or if they can see the skylight
 * Nerfed Respiration enchantment

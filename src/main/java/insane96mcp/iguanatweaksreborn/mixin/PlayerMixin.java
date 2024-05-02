@@ -5,6 +5,8 @@ import insane96mcp.iguanatweaksreborn.event.ITREventFactory;
 import insane96mcp.iguanatweaksreborn.module.combat.stats.Stats;
 import insane96mcp.iguanatweaksreborn.module.experience.PlayerExperience;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
+import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
+import insane96mcp.insanelib.base.Feature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -28,6 +30,8 @@ import java.util.Map;
 public abstract class PlayerMixin extends LivingEntity {
 	@Shadow
 	public int experienceLevel;
+
+	@Shadow public abstract void remove(RemovalReason pReason);
 
 	protected PlayerMixin(EntityType<? extends LivingEntity> type, Level level) {
 		super(type, level);
@@ -94,5 +98,12 @@ public abstract class PlayerMixin extends LivingEntity {
 			original += EnchantmentsFeature.bonusDamageEnchantment(enchantment, allEnchantments.get(enchantment), this, target);
 		}
 		return original;
+	}
+
+	@ModifyExpressionValue(method = "turtleHelmetTick", at = @At(value = "CONSTANT", args = "intValue=200"))
+	public int onTurtleHelmetTick(int original) {
+		if (!Feature.isEnabled(Tweaks.class))
+			return original;
+		return Tweaks.turtleHelmetWaterBreathingTime;
 	}
 }
