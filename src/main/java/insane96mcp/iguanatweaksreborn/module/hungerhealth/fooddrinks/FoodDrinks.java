@@ -45,7 +45,7 @@ public class FoodDrinks extends JsonFeature {
 	public static final ArrayList<CustomFoodProperties> CUSTOM_FOOD_PROPERTIES_DEFAULT = new ArrayList<>(List.of(
 			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:rotten_flesh")).setNutrition(2).setEatingTime(55).build(),
 			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:spider_eye")).setNutrition(1).setEatingTime(40).build(),
-			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:honey_bottle")).setNutrition(3).setEatingTime(40).alwaysEat(false).build(),
+			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:honey_bottle")).setNutrition(2).alwaysEat(false).build(),
 			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:pumpkin_pie")).setNutrition(6).setEatingTime(40).build(),
 			new CustomFoodProperties.Builder(IdTagMatcher.newId("minecraft:golden_apple"))
 					.addEffect(new ITRMobEffectInstance.Builder(MobEffects.REGENERATION, 100).setAmplifier(1).build())

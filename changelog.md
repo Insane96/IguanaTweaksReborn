@@ -12,6 +12,9 @@
   * Mining hand swing animation is now slightly slower only at Tired IV or more
   * Fixed tiredness overwriting the swing speed when mining
 * Reduced Ender Chest hardness and blacklisted from hardness changes
+* Honey bottles
+  * No longer take 2 seconds to drink (should be ~1 second)
+  * Reduced healing (1.5 -> 1)
 * Reverted rich soil boost chance to default value
 * Farmers Delight Nourishment to Vigour duration conversion is now 2x 
 * Fixed Rich farmland not minable with shovels
