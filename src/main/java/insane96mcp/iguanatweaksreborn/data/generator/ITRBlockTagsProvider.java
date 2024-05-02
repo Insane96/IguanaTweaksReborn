@@ -33,7 +33,7 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
     public static final TagKey<Block> IRON_ORES = create("iron_ores");
     public static final TagKey<Block> TALL_GRASS = create("tall_grass");
 
-    public ITRBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, @Nullable ExistingFileHelper existingFileHelper) {
+    public ITRBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, @Nullable ExistingFileHelper existingFileHelper){
         super(output, lookupProvider, modId, existingFileHelper);
     }
 
@@ -61,8 +61,10 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
                 .addOptional(new ResourceLocation("farmersdelight", "tomatoes")).addOptional(new ResourceLocation("farmersdelight", "budding_tomatoes")).addOptional(new ResourceLocation("farmersdelight", "rice")).addOptional(new ResourceLocation("farmersdelight", "rice_panicles")).addOptional(new ResourceLocation("farmersdelight", "cabbages")).addOptional(new ResourceLocation("farmersdelight", "onions"));
 
         tag(BlockHardness.HARDNESS_BLACKLIST)
+                .add(Blocks.ENDER_CHEST)
                 .addTag(OBSIDIANS);
         tag(BlockHardness.DEPTH_MULTIPLIER_BLACKLIST)
+                .add(Blocks.ENDER_CHEST)
                 .addTag(OBSIDIANS);
 
         tag(TALL_GRASS)
