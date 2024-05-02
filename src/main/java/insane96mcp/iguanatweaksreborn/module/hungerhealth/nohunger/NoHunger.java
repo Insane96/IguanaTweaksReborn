@@ -80,13 +80,13 @@ public class NoHunger extends Feature {
     public static MinMax passiveRegenerationTime = new MinMax(120, 3600);
     @Config(min = 0d)
     @Label(name = "Food Heal.Over Time", description = "The formula to calculate the health regenerated when eating a food. Leave empty to disable. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
-    public static String healOverTime = "(hunger^2.5)*0.05";
+    public static String healOverTime = "(hunger^2.16) * 0.1";
     @Config
     @Label(name = "Food Heal.Over time Strength", description = "How much HP does food regen each second? Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html. Default is 60% of the saturation modifier, down to a minimum of 0.15/s")
-    public static String healOverTimeStrength = "MAX(0.15, 0.6 * saturation_modifier)";
+    public static String healOverTimeStrength = "MAX(0.15, 5 * saturation_modifier * (1 / hunger))";
     @Config(min = 0d)
     @Label(name = "Food Heal.Instant Heal", description = "The formula to calculate the health restored instantly when eating. Leave empty to disable. To have the same effect as pre-Beta 1.8 food just use \"hunger\". Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
-    public static String instantHeal = "(hunger^1.3)*0.35";
+    public static String instantHeal = "(hunger^1.3) * 0.35";
     @Config(min = 0d)
     @Label(name = "Food Heal.Saturation threshold", description = "Foods below this saturation will instantly heal, foods above this threshold will have overtime heal.")
     public static Double instantHealSaturationThreshold = 4d;
