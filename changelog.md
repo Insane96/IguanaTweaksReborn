@@ -5,6 +5,7 @@
 * Cave vines now grow slower above sea level or if can see the sky light
 * Wild Flax is now rarer
 * Reverted rich soil boost chance to default value
+* Farmers Delight Nourishment to Vigour duration conversion is now 2x 
 * Fixed Rich farmland not minable with shovels
 * Fixed Farmers Delight Pies not healing
 * Fixed crash when missing Farmer's Delight

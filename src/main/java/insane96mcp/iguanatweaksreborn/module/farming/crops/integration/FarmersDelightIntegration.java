@@ -50,8 +50,7 @@ public class FarmersDelightIntegration {
         if (effectInstance == null)
             return;
 
-        //noinspection ConstantConditions; Checking with hasEffect
-        event.player.addEffect(new MobEffectInstance(HealthRegen.VIGOUR.get(), effectInstance.getDuration() + 1, effectInstance.getAmplifier(), effectInstance.isAmbient(), effectInstance.isVisible(), effectInstance.showIcon()));
+        event.player.addEffect(new MobEffectInstance(HealthRegen.VIGOUR.get(), (effectInstance.getDuration() + 1) * 2, effectInstance.getAmplifier(), effectInstance.isAmbient(), effectInstance.isVisible(), effectInstance.showIcon()));
         event.player.removeEffect(ModEffects.NOURISHMENT.get());
     }
 
