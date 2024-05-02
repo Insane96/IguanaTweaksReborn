@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.9.5
 * Food Health regen formulas changed
   * Reduced high hunger foods' healing by about 15%
   * Healing speed now scales with food's hunger, higher hunger means lower healing speed
