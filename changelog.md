@@ -5,6 +5,9 @@
 * Cave vines now grow slower above sea level or if they can see the skylight
 * Wild Flax is now rarer
 * Reduced breeding cooldown (15 minutes -> 12.5 minutes)
+* Tiredness
+  * Mining hand swing animation is now slightly slower only at Tired IV or more
+  * Fixed tiredness overwriting the swing speed when mining
 * Reduced Ender Chest hardness and blacklisted from hardness changes
 * Reverted rich soil boost chance to default value
 * Farmers Delight Nourishment to Vigour duration conversion is now 2x 
