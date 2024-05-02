@@ -47,7 +47,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         super(pEntityType, pLevel);
     }
 
-    @Inject(method = "getCurrentSwingDuration", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getCurrentSwingDuration", at = @At("RETURN"), cancellable = true)
     private void onGetCurrentSwingDuration(CallbackInfoReturnable<Integer> cir) {
         int ret = cir.getReturnValue();
         //noinspection DataFlowIssue
