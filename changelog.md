@@ -2,6 +2,9 @@
 
 ## Upcoming
 * Foods now show "Snack" if instantly heal or "Meal" if heal overtime
+* Sponges
+  * Now have a lower chance to dry if touching another wet sponge
+  * Now have 100% chance to get wet in rain (was 20%)
 * Enchanted bows now require more strings to be repaired
 
 ## 3.9.5
