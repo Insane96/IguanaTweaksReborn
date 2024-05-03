@@ -137,6 +137,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         int respirationLvl = EnchantmentHelper.getRespiration((LivingEntity) (Object) this);
         if (respirationLvl > 0
                 && this.random.nextFloat() < 1f / (1 + (respirationLvl / 2f)))
-            cir.setReturnValue(pCurrentAir - 1);
+            cir.setReturnValue(pCurrentAir);
     }
 }
