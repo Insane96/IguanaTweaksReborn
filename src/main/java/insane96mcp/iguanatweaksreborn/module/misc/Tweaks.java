@@ -12,6 +12,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.util.MathHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
@@ -66,7 +67,7 @@ public class Tweaks extends Feature {
     @Label(name = "Maximum Sponge Soak Range", description = "The maximum range at which sponges will check for soakable blocks. (Vanilla is 5, disabled if quark is installed)")
     public static Integer maxSpongeSoakRange = 10;
     @Config
-    @Label(name = "Sponges dry in the sun and wet in rain", description = "If exposed to the sun sponges may dry and if exposed to rain sponges might get wet")
+    @Label(name = "Sponges dry in the sun and wet in rain", description = "If exposed to the sun sponges may dry and if exposed to rain sponges might get wet. Requires a Minecraft restart if disabled")
     public static Boolean spongesDryInTheSun = true;
 
     @Config
@@ -131,10 +132,19 @@ public class Tweaks extends Feature {
         if (!Feature.isEnabled(Tweaks.class))
             return;
 
-        if (level.canSeeSky(pos.above()) && random.nextInt(5) == 0) {
-            if (state.is(Blocks.SPONGE) && level.isRaining())
+        if (!level.canSeeSky(pos.above()))
+            return;
+        if (state.is(Blocks.SPONGE) && level.isRaining())
                 level.setBlockAndUpdate(pos, Blocks.WET_SPONGE.defaultBlockState());
-            else if (state.is(Blocks.WET_SPONGE) && !level.isRaining() && level.isDay())
+        else if (state.is(Blocks.WET_SPONGE) && !level.isRaining() && level.isDay()) {
+            int chance = 5;
+            for (Direction direction : Direction.values()) {
+                if (level.getBlockState(pos.relative(direction)).is(Blocks.WET_SPONGE)) {
+                    chance *= 4;
+                    break;
+                }
+            }
+            if (random.nextInt(chance) == 0)
                 level.setBlockAndUpdate(pos, Blocks.SPONGE.defaultBlockState());
         }
     }
