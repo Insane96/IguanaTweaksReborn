@@ -1,12 +1,15 @@
 # Changelog
 
+## Upcoming
+* Enchanted bows now require more strings to be repaired
+
 ## 3.9.5
 * Food Health regen formulas changed
   * Reduced high hunger foods' healing by about 15%
   * Healing speed now scales with food's hunger, higher hunger means lower healing speed
 * Turtle Helmets now give 45 seconds of water breathing instead of 10 seconds
 * Nerfed Respiration enchantment
-  * Every level decreases air consumption by 50% instead of 100%
+  * Every level "increases" oxygen by 50% instead of 100%
 * Bone meal no longer fails to grow stuff in autumn and lowered chance to fail in winter
 * Cave vines now grow slower above sea level or if they can see the skylight
 * Wild Flax is now rarer
