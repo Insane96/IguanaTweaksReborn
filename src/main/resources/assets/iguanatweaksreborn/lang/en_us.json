@@ -112,6 +112,8 @@
 	"iguanatweaksreborn.tooltip.health": "Health",
 	"iguanatweaksreborn.tooltip.missing_health": "Missing Health",
 	"iguanatweaksreborn.tooltip.sec": "sec",
+	"iguanatweaksreborn.tooltip.snack": "Snack",
+	"iguanatweaksreborn.tooltip.meal": "Meal",
 	"effect.iguanatweaksreborn.vigour": "Vigour",
 	"effect.iguanatweaksreborn.vigour.description": "Decreases hunger/stamina consumption by 20% per level.",
 	"iguanatweaksreborn.subtitle.unfair_one_shot": "Player triggers Relentless Endurance",

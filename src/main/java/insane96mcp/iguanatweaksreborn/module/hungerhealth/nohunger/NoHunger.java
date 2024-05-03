@@ -107,8 +107,8 @@ public class NoHunger extends Feature {
     public static Boolean buffCakes = true;
 
     @Config
-    @Label(name = "Regen tooltip", description = "(Client Only) Food shows how much food regenerates in its tooltip. Disabling this still shows the tooltip with advanced tooltip enabled (and reducedDebugInfo = false). Please note that if the formulas differ from client to server then this will display wrong values.")
-    public static Boolean regenTooltip = false;
+    @Label(name = "Food tooltip", description = "(Client Only) If enabled, Foods will show \"Snack\" when the food instantly heals and \"Meal\" when the food heals over time. If advanced tooltips are enabled, the food will show how much it restores")
+    public static Boolean foodTooltip = true;
 
     @Config
     @Label(name = "Render armor at Hunger", description = "(Client Only) Armor is rendered in the place of Hunger bar")
@@ -423,40 +423,46 @@ public class NoHunger extends Feature {
         if (player == null)
             return;
 
-        if ((mc.options.reducedDebugInfo().get() || !mc.options.advancedItemTooltips) && !regenTooltip)
+        if (!foodTooltip)
             return;
 
         FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
 
-        ChatFormatting color = FoodDrinks.isRawFood(event.getItemStack().getItem()) ? ChatFormatting.RED : ChatFormatting.GRAY;
+        ChatFormatting color = FoodDrinks.isRawFood(event.getItemStack().getItem()) ? ChatFormatting.DARK_GREEN : ChatFormatting.GRAY;
+        MutableComponent component = null;
         if (Utils.getFoodSaturationRestored(food) < instantHealSaturationThreshold && doesHealInstantly()) {
-            boolean isRawFood = FoodDrinks.isRawFood(event.getItemStack().getItem());
-            //noinspection ConstantConditions
-            float heal = getInstantHealAmount(food, isRawFood);
-            MutableComponent component = Component.literal(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal))
-                    .append(" ")
-                    .append(Component.translatable(HEALTH_LANG))
-                    .withStyle(color)
-                    .withStyle(ChatFormatting.ITALIC);
-            event.getToolTip().add(component);
+            if (mc.options.advancedItemTooltips) {
+                boolean isRawFood = FoodDrinks.isRawFood(event.getItemStack().getItem());
+                //noinspection ConstantConditions
+                float heal = getInstantHealAmount(food, isRawFood);
+                component = Component.literal(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal))
+                        .append(" ")
+                        .append(Component.translatable(HEALTH_LANG));
+            }
+            else {
+                component = Component.translatable("iguanatweaksreborn.tooltip.snack");
+            }
         }
-
         if (Utils.getFoodSaturationRestored(food) >= instantHealSaturationThreshold && doesHealOverTime()) {
-            //noinspection ConstantConditions
-            float heal = Utils.computeFoodFormula(food, healOverTime);
-            //Half heart per second by default
-            float strength = Utils.computeFoodFormula(food, healOverTimeStrength);
-            MutableComponent component = Component.literal(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal))
-                    .append(" ")
-                    .append(Component.translatable(HEALTH_LANG))
-                    .append(" / ")
-                    .append(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal / strength))
-                    .append(" ")
-                    .append(Component.translatable(SEC_LANG))
-                    .withStyle(color)
-                    .withStyle(ChatFormatting.ITALIC);
-            event.getToolTip().add(component);
+            if (mc.options.advancedItemTooltips) {
+                //noinspection ConstantConditions
+                float heal = Utils.computeFoodFormula(food, healOverTime);
+                //Half heart per second by default
+                float strength = Utils.computeFoodFormula(food, healOverTimeStrength);
+                component = Component.literal(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal))
+                        .append(" ")
+                        .append(Component.translatable(HEALTH_LANG))
+                        .append(" / ")
+                        .append(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal / strength))
+                        .append(" ")
+                        .append(Component.translatable(SEC_LANG));
+            }
+            else {
+                component = Component.translatable("iguanatweaksreborn.tooltip.meal");
+            }
         }
+        if (component != null)
+            event.getToolTip().add(component.withStyle(color).withStyle(ChatFormatting.ITALIC));
     }
 
 }

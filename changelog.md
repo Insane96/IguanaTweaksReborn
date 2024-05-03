@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Foods now show "Snack" if instantly heal or "Meal" if heal overtime
 * Enchanted bows now require more strings to be repaired
 
 ## 3.9.5
