@@ -6,6 +6,7 @@
   * Now have a lower chance to dry if touching another wet sponge
   * Now have 100% chance to get wet in rain (was 20%)
 * Enchanted bows now require more strings to be repaired
+* Fixed Respiration Nerf
 
 ## 3.9.5
 * Food Health regen formulas changed
