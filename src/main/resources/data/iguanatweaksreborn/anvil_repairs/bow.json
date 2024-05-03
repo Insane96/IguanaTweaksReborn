@@ -5,7 +5,8 @@
 			"repair_material": {
 				"id": "minecraft:string"
 			},
-			"amount": 3
+			"amount": 3,
+			"cost_multiplier": 3
 		}
 	]
 }
