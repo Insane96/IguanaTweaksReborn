@@ -6,6 +6,7 @@
   * Now have a lower chance to dry if touching another wet sponge
   * Now have 100% chance to get wet in rain (was 20%)
 * Enchanted bows now require more strings to be repaired
+* Elder guardians no longer drop sponges and have a higher chance to drop the tide trim
 * Fixed Respiration Nerf
 
 ## 3.9.5
