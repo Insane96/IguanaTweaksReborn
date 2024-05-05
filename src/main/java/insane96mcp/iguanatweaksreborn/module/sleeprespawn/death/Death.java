@@ -38,6 +38,7 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -150,7 +151,7 @@ public class Death extends Feature {
 		((ServerLevel)player.level()).setChunkForced(chunkX, chunkZ, true);
 
 		if (vindicationVsKiller && source.getEntity() instanceof Mob killer && !killer.getPersistentData().contains(KILLED_PLAYER)) {
-			if (killer.isRemoved() || killer.isDeadOrDying())
+			if (killer.isRemoved() || killer.isDeadOrDying() || killer.getType().is(Tags.EntityTypes.BOSSES))
 				return;
 			ScheduledTasks.schedule(new ScheduledTickTask(1) {
 				@Override
