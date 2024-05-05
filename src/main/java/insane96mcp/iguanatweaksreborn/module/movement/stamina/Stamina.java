@@ -135,6 +135,8 @@ public class Stamina extends Feature {
             int vigourEnchLvl = EnchantmentHelper.getEnchantmentLevel(VIGOUR.get(), player);
             if (vigourEnchLvl > 0)
                 staminaToConsume *= (1 - (vigourEnchLvl * 0.10f + 0.10f));
+            if (player.getPose() == Pose.SWIMMING && player.hasEffect(MobEffects.CONDUIT_POWER))
+                staminaToConsume *= 0.9f;
             staminaToConsume = ITREventFactory.onStaminaConsumed(player, staminaToConsume);
             if (staminaToConsume == 0)
                 return;
