@@ -52,7 +52,6 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Label(name = "Tiredness", description = "Prevents sleeping if the player is not tired. Tiredness is gained by gaining exhaustion. Allows you to sleep during daytime if too tired. Energy Boost Items are controlled via json in this feature's folder")
@@ -69,7 +68,7 @@ public class Tiredness extends JsonFeature {
 	public static final String TOO_TIRED = IguanaTweaksReborn.MOD_ID + ".too_tired";
 	public static final TagKey<Item> ENERGY_BOOST_ITEM_TAG = ITRItemTagsProvider.create("energy_boost");
 
-	public static final List<EnergyBoostItem> ENERGY_BOOST_ITEMS_DEFAULT = new ArrayList<>(Arrays.asList(
+	public static final List<EnergyBoostItem> ENERGY_BOOST_ITEMS_DEFAULT = new ArrayList<>(List.of(
 			new EnergyBoostItem(IdTagMatcher.newTag("iguanatweaksreborn:energy_boost"), 0, 0),
 			new EnergyBoostItem(IdTagMatcher.newId("farmersdelight:hot_cocoa"), 80, 0)
 	));

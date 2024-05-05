@@ -2,6 +2,7 @@
   "values": [
     "minecraft:rotten_flesh",
     "minecraft:spider_eye",
+    "minecraft:pufferfish",
     {
       "id": "supplementaries:soap",
       "required": false

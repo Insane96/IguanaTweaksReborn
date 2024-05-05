@@ -7,7 +7,9 @@
   * Now have 100% chance to get wet in rain (was 20%)
 * Enchanted bows now require more strings to be repaired
 * Elder guardians no longer drop sponges and have a higher chance to drop the tide trim
-* Fixed Respiration Nerf
+* Honey bottles now stack to 16
+* Pufferfishes now stack again up to 64
+* Fixed Respiration Nerf working as a buff
 
 ## 3.9.5
 * Food Health regen formulas changed
