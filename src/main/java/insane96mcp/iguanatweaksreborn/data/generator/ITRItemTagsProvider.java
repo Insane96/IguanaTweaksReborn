@@ -43,7 +43,7 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
 
         //ITR
         tag(StackSizes.NO_STACK_SIZE_CHANGES)
-                .add(Items.ROTTEN_FLESH, Items.SPIDER_EYE)
+                .add(Items.ROTTEN_FLESH, Items.SPIDER_EYE, Items.PUFFERFISH)
                 .addOptional(new ResourceLocation("supplementaries", "soap"));
 
         tag(Tiredness.ENERGY_BOOST_ITEM_TAG)
