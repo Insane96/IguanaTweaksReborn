@@ -1,7 +1,7 @@
 # Changelog
 
-## Upcoming
-* Foods now show "Snack" if instantly heal or "Meal" if heal overtime
+## 3.9.6
+* Foods now shows "Snack" if instantly heal or "Meal" if heal overtime
 * Sleeping when Tired II or above now skips 1 minute per level, but Tiredness is now always reset to 0
 * Conduit power now decreases stamina consumption when swimming by 10%
 * Sponges
