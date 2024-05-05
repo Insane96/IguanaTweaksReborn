@@ -11,6 +11,7 @@
 * Elder guardians no longer drop sponges and have a higher chance to drop the tide trim
 * Honey bottles now stack to 16
 * Pufferfishes now stack again up to 64
+* Reduced FD Wild crops found in a patch 
 * Fixed Respiration Nerf working as a buff
 
 ## 3.9.5
