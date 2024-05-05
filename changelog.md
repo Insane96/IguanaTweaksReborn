@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Foods now show "Snack" if instantly heal or "Meal" if heal overtime
+* Conduit power now decreases stamina consumption by 10%
 * Sponges
   * Now have a lower chance to dry if touching another wet sponge
   * Now have 100% chance to get wet in rain (was 20%)
