@@ -5,7 +5,6 @@ import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.network.message.TirednessSync;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.network.NetworkDirection;
 
@@ -48,7 +47,7 @@ public class TirednessHandler {
     }
 
     public static float getOnWakeUp(LivingEntity entity) {
-        return Mth.clamp(get(entity) - Tiredness.tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
+        return 0;//Mth.clamp(get(entity) - Tiredness.tirednessToEffect.floatValue(), 0, Float.MAX_VALUE);
     }
 
     public static void syncToClient(ServerPlayer player) {

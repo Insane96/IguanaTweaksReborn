@@ -53,6 +53,7 @@ import net.minecraftforge.registries.RegistryObject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Label(name = "Tiredness", description = "Prevents sleeping if the player is not tired. Tiredness is gained by gaining exhaustion. Allows you to sleep during daytime if too tired. Energy Boost Items are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
@@ -269,13 +270,20 @@ public class Tiredness extends JsonFeature {
 	public void resetTirednessOnWakeUp(SleepFinishedTimeEvent event) {
 		if (!this.isEnabled())
 			return;
+		AtomicInteger highestTired = new AtomicInteger();
 		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach(player -> {
 			float tirednessOnWakeUp = TirednessHandler.getOnWakeUp(player);
+			if (player.getEffect(TIRED.get()).getAmplifier() > highestTired.get())
+				highestTired.set(player.getEffect(TIRED.get()).getAmplifier());
 			TirednessHandler.set(player, tirednessOnWakeUp);
 			player.removeEffect(TIRED.get());
 		});
 
-		event.setTimeAddition(event.getLevel().dayTime() + 12000);
+		int timeSkipped = 12000;
+		//If above Tired I
+		if (highestTired.get() > 0)
+			timeSkipped += 1200 * highestTired.get();
+		event.setTimeAddition(event.getLevel().dayTime() + timeSkipped);
 	}
 
 	@SubscribeEvent

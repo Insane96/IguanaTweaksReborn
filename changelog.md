@@ -2,7 +2,8 @@
 
 ## Upcoming
 * Foods now show "Snack" if instantly heal or "Meal" if heal overtime
-* Conduit power now decreases stamina consumption by 10%
+* Sleeping when Tired II or above now skips 1 minute per level, but Tiredness is now always reset to 0
+* Conduit power now decreases stamina consumption when swimming by 10%
 * Sponges
   * Now have a lower chance to dry if touching another wet sponge
   * Now have 100% chance to get wet in rain (was 20%)
