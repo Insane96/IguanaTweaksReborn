@@ -36,4 +36,9 @@ public abstract class BoatMixin extends Entity {
 			return original;
 		return original && this.fallDistance >= Boats.breakHeight;
 	}
+
+	@ModifyExpressionValue(method = "hurt", at = @At(value = "CONSTANT", args = "floatValue=40.0"))
+	public float damageToBreak(float damageToBreak) {
+		return 20f;
+	}
 }

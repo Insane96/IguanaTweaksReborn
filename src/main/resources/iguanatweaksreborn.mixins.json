@@ -6,6 +6,7 @@
     "plugin": "insane96mcp.iguanatweaksreborn.mixin.plugin.ModLoadedPlugin",
     "mixins": [
         "AbstractArrowMixin",
+        "AbstractMinecartMixin",
         "AnvilMenuMixin",
         "ApplyBonusCountMixin",
         "ApplyBonusCountOreDropsMixin",
