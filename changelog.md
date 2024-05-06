@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed crash on world creation when missing Supplementaries
+
 ## 3.9.6
 * Foods now shows "Snack" if instantly heal or "Meal" if heal overtime
 * Sleeping when Tired II or above now skips 1 minute per level, but Tiredness is now always reset to 0
