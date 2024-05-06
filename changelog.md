@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.9.7
 * Increased Flint and Steel durability to 61
 * Fixed crash on world creation when missing Supplementaries
 
