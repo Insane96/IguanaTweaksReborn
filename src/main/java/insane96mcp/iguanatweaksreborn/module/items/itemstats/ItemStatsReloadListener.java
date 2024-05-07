@@ -49,7 +49,7 @@ public class ItemStatsReloadListener extends SimpleJsonResourceReloadListener {
 					continue;
 
 				ItemStatistics itemStatistics = GSON.fromJson(entry.getValue(), ItemStatistics.class);
-				itemStatistics.applyStats(false);
+				//itemStatistics.applyStats(false);
 				Stats.add(itemStatistics);
 			}
 			catch (JsonSyntaxException e) {
@@ -62,9 +62,9 @@ public class ItemStatsReloadListener extends SimpleJsonResourceReloadListener {
 
 		ITRLogHelper.info("Loaded %s Item Statistics", Stats.size());
 
-		for (var entry : Durability.entrySet()) {
+		/*for (var entry : Durability.entrySet()) {
 			entry.getValue().apply(entry.getKey());
-		}
+		}*/
 	}
 
 	@SubscribeEvent
@@ -80,13 +80,12 @@ public class ItemStatsReloadListener extends SimpleJsonResourceReloadListener {
 
 	@SubscribeEvent
 	public static void onTagsUpdatedEvent(TagsUpdatedEvent event) {
-		if (event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED) {
-			for (ItemStatistics itemStatistics : ItemStatsReloadListener.Stats) {
-				itemStatistics.applyStats(true);
-			}
-			for (var entry : Durability.entrySet()) {
-				entry.getValue().apply(entry.getKey());
-			}
+		for (ItemStatistics itemStatistics : ItemStatsReloadListener.Stats) {
+			itemStatistics.applyStats(event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED);
+		}
+		ITRLogHelper.info("Applied %s Item Statistics (Client side: %s)", Stats.size(), event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED);
+		for (var entry : Durability.entrySet()) {
+			entry.getValue().apply(entry.getKey());
 		}
 	}
 

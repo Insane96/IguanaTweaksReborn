@@ -152,22 +152,18 @@ public class StackSizes extends Feature {
     public void syncFeatureConfig(OnDatapackSyncEvent event) {
         if (!this.isEnabled())
             return;
-        processStackSizes(false);
 
-        if (event.getPlayer() == null) {
+        if (event.getPlayer() == null)
             event.getPlayerList().getPlayers().forEach(player -> StackSizesSync.sync(foodStackReduction, foodStackReductionFormula, stackableSoups, itemStackMultiplier, blockStackMultiplier, player));
-        }
-        else {
+        else
             StackSizesSync.sync(foodStackReduction, foodStackReductionFormula, stackableSoups, itemStackMultiplier, blockStackMultiplier, event.getPlayer());
-        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void applyFeature(TagsUpdatedEvent event) {
-        if (!this.isEnabled()
-                || event.getUpdateCause() != TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED)
+        if (!this.isEnabled())
             return;
-        processStackSizes(true);
+        processStackSizes(event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.CLIENT_PACKET_RECEIVED);
     }
 
     /**

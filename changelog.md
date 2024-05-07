@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Minecarts and Boats are now easier to break
+* Fixed Item Stats and stack sizes applied on `/reload` instead of post reload, conflicting
 
 ## 3.9.7
 * Increased Flint and Steel durability to 61
