@@ -4,6 +4,7 @@
         "minecraft:lever",
         "#forge:glass",
         "#forge:glass_panes",
-        "minecraft:glowstone"
+        "minecraft:glowstone",
+        "minecraft:sea_lantern"
     ]
 }
