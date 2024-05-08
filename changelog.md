@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.9.8
 * Minecarts and Boats are now easier to break
 * Sea lanterns now break faster with pickaxes
 * Reduced enchanting levels for fished Fishing Rods and Bows
