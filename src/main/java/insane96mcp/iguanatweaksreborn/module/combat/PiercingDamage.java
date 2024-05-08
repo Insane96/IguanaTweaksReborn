@@ -74,5 +74,7 @@ public class PiercingDamage extends Feature {
 		}
 
 		MCUtils.attackEntityIgnoreInvFrames(piercingDamageSource, amount, event.getEntity(), event.getEntity(), true);
+		if (event.getEntity().isDeadOrDying())
+			event.setCanceled(true);
 	}
 }
