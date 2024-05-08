@@ -1,65 +1,69 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.IProtectionEnchantment;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.ArrowInfiniteEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import net.minecraft.world.item.enchantment.ThornsEnchantment;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Enchantment.class)
 public class EnchantmentMixin {
-	@Inject(at = @At("RETURN"), method = "canEnchant", cancellable = true)
-	private void onCanEnchant(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+	@ModifyReturnValue(method = "canEnchant", at = @At("RETURN"))
+	private boolean onCanEnchant(boolean original) {
 		if (EnchantmentsFeature.isEnchantmentDisabled((Enchantment) (Object) this))
-			cir.setReturnValue(false);
+			return false;
+		return original;
 	}
 
-	@Inject(at = @At("RETURN"), method = "canApplyAtEnchantingTable", cancellable = true, remap = false)
-	private void onCanApplyAtEnchantingTable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+	@ModifyReturnValue(method = "canApplyAtEnchantingTable", at = @At("RETURN"))
+	private boolean onCanApplyAtEnchantingTable(boolean original) {
 		if (EnchantmentsFeature.isEnchantmentDisabled((Enchantment) (Object) this))
-			cir.setReturnValue(false);
+			return false;
+		return original;
 	}
 
-	@Inject(at = @At("RETURN"), method = "isTradeable", cancellable = true, remap = false)
-	private void onIsTradeable(CallbackInfoReturnable<Boolean> cir) {
+	@ModifyReturnValue(method = "isTradeable", at = @At("RETURN"))
+	private boolean onIsTradeable(boolean original) {
 		if (EnchantmentsFeature.isEnchantmentDisabled((Enchantment) (Object) this))
-			cir.setReturnValue(false);
+			return false;
+		return original;
 	}
 
-	@Inject(at = @At("RETURN"), method = "isDiscoverable", cancellable = true, remap = false)
-	private void onIsDiscoverable(CallbackInfoReturnable<Boolean> cir) {
+	@ModifyReturnValue(method = "isDiscoverable", at = @At("RETURN"))
+	private boolean onIsDiscoverable(boolean original) {
 		if (EnchantmentsFeature.isEnchantmentDisabled((Enchantment) (Object) this))
-			cir.setReturnValue(false);
+			return false;
+		return original;
 	}
 
-	@Inject(at = @At("RETURN"), method = "isAllowedOnBooks", cancellable = true, remap = false)
-	private void onIsAllowedOnBooks(CallbackInfoReturnable<Boolean> cir) {
+	@ModifyReturnValue(method = "isAllowedOnBooks", at = @At("RETURN"))
+	private boolean onIsAllowedOnBooks(boolean original) {
 		if (EnchantmentsFeature.isEnchantmentDisabled((Enchantment) (Object) this))
-			cir.setReturnValue(false);
+			return false;
+		return original;
 	}
 
-	@Inject(at = @At("RETURN"), method = "getMaxLevel", cancellable = true)
-	private void onGetMaxLevel(CallbackInfoReturnable<Integer> cir) {
+	@ModifyReturnValue(method = "getMaxLevel", at = @At("RETURN"))
+	private int onGetMaxLevel(int original) {
 		//noinspection ConstantValue
 		if (EnchantmentsFeature.isInfinityOverhaulEnabled() && ((Enchantment)(Object) this) instanceof ArrowInfiniteEnchantment)
-			cir.setReturnValue(4);
+			return 4;
+		return original;
 	}
 
-	@Inject(at = @At("RETURN"), method = "checkCompatibility", cancellable = true)
-	private void onCheckCompatibility(Enchantment other, CallbackInfoReturnable<Boolean> cir) {
+	@ModifyReturnValue(method = "checkCompatibility", at = @At("RETURN"))
+	private boolean onCheckCompatibility(boolean original, Enchantment other) {
 		if (!EnchantmentsFeature.isThornsOverhaul())
-			return;
-		//noinspection ConstantValue
+			return original;
 		if (((Enchantment)(Object) this) instanceof ThornsEnchantment) {
 			if ((other instanceof ProtectionEnchantment protectionEnchantment && protectionEnchantment.type != ProtectionEnchantment.Type.FALL)
 					|| other instanceof IProtectionEnchantment)
-				cir.setReturnValue(false);
+				return false;
 		}
+		return original;
 	}
 }

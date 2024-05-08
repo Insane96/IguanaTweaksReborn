@@ -6,6 +6,7 @@
 * Reduced enchanting levels for fished Fishing Rods and Bows
 * Fixed grave not generating if wearing only a tool belt
 * Fixed Item Stats and stack sizes applied on `/reload` instead of post reload, conflicting
+* Fixed Enchantments changes conflicting with Quark
 
 ## 3.9.7
 * Increased Flint and Steel durability to 61
