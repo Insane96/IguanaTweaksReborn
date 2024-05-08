@@ -3,6 +3,7 @@
 ## Upcoming
 * Minecarts and Boats are now easier to break
 * Sea lanterns now break faster with pickaxes
+* Fixed grave not generating if wearing only a tool belt
 * Fixed Item Stats and stack sizes applied on `/reload` instead of post reload, conflicting
 
 ## 3.9.7

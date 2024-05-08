@@ -105,8 +105,7 @@ public class Death extends Feature {
 	}
 
 	public static void summonGrave(ServerPlayer player, DamageSource source) {
-		if ((player.getInventory().isEmpty() && player.experienceLevel == 0)
-				|| source.is(DOESNT_SPAWN_GRAVE))
+		if (source.is(DOESNT_SPAWN_GRAVE))
 			return;
 		BlockPos pos = player.blockPosition();
 		if (pos.getY() < player.level().getMinBuildHeight())
@@ -119,6 +118,8 @@ public class Death extends Feature {
 		player.level().destroyBlock(pos, true, player);
 		player.level().setBlock(pos, grave, 3);
 		GraveBlockEntity graveBlockEntity = (GraveBlockEntity) player.level().getBlockEntity(pos);
+		if (graveBlockEntity == null)
+			return;
 		List<ItemStack> items = new ArrayList<>();
 		player.getInventory().items.forEach(itemStack -> {
 			if (!itemStack.isEmpty() && itemStack.getEnchantmentLevel(Enchantments.VANISHING_CURSE) == 0)
@@ -134,8 +135,10 @@ public class Death extends Feature {
 		});
 		if (ModList.get().isLoaded("toolbelt"))
 			ToolBelt.onDeath(items, player);
+		if (items.isEmpty() && (player.experienceLevel <= 0 || !graveExperience))
+			return;
 		graveBlockEntity.setItems(items);
-		if (graveExperience) {
+		if (graveExperience && player.experienceLevel > 0) {
 			int xpDropped = PlayerExperience.getExperienceOnDeath(player, true);
 			graveBlockEntity.setXpStored(xpDropped);
 			player.setExperienceLevels(0);
