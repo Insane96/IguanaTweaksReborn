@@ -3,10 +3,7 @@ package insane96mcp.iguanatweaksreborn.mixin;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.IProtectionEnchantment;
-import net.minecraft.world.item.enchantment.ArrowInfiniteEnchantment;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.ProtectionEnchantment;
-import net.minecraft.world.item.enchantment.ThornsEnchantment;
+import net.minecraft.world.item.enchantment.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -60,7 +57,7 @@ public class EnchantmentMixin {
 		if (!EnchantmentsFeature.isThornsOverhaul())
 			return original;
 		if (((Enchantment)(Object) this) instanceof ThornsEnchantment) {
-			if ((other instanceof ProtectionEnchantment protectionEnchantment && protectionEnchantment.type != ProtectionEnchantment.Type.FALL)
+			if ((other instanceof ProtectionEnchantment && other != Enchantments.FALL_PROTECTION)
 					|| other instanceof IProtectionEnchantment)
 				return false;
 		}

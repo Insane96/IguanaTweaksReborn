@@ -6,6 +6,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +35,11 @@ public abstract class ITRProtectionEnchantment extends Enchantment implements IP
 
     @Override
     protected boolean checkCompatibility(@NotNull Enchantment other) {
-        return super.checkCompatibility(other) && !(other instanceof IProtectionEnchantment) && !(other instanceof ProtectionEnchantment);
+        if (!super.checkCompatibility(other)
+                || (other instanceof ProtectionEnchantment && other != Enchantments.FALL_PROTECTION)
+                || (other instanceof ITRProtectionEnchantment && other != EnchantmentsFeature.FEATHER_FALLING.get()))
+            return false;
+        return true;
     }
 
     @Override
