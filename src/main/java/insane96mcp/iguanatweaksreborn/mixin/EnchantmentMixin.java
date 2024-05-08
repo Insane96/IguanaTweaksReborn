@@ -19,7 +19,7 @@ public class EnchantmentMixin {
 		return original;
 	}
 
-	@ModifyReturnValue(method = "canApplyAtEnchantingTable", at = @At("RETURN"))
+	@ModifyReturnValue(method = "canApplyAtEnchantingTable", at = @At("RETURN"), remap = false)
 	private boolean onCanApplyAtEnchantingTable(boolean original) {
 		if (EnchantmentsFeature.isEnchantmentDisabled((Enchantment) (Object) this))
 			return false;
@@ -40,7 +40,7 @@ public class EnchantmentMixin {
 		return original;
 	}
 
-	@ModifyReturnValue(method = "isAllowedOnBooks", at = @At("RETURN"))
+	@ModifyReturnValue(method = "isAllowedOnBooks", at = @At("RETURN"), remap = false)
 	private boolean onIsAllowedOnBooks(boolean original) {
 		if (EnchantmentsFeature.isEnchantmentDisabled((Enchantment) (Object) this))
 			return false;
