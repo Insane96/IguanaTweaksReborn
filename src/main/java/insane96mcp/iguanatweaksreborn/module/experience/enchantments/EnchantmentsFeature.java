@@ -344,6 +344,19 @@ public class EnchantmentsFeature extends JsonFeature {
 		return Feature.isEnabled(EnchantmentsFeature.class) && infinityOverhaul;
 	}
 
+	public static boolean shouldReplaceBaneOfArthropods(Enchantment enchantment) {
+		return enchantment ==  Enchantments.BANE_OF_ARTHROPODS
+				&& Feature.isEnabled(EnchantmentsFeature.class)
+				&& EnchantmentsFeature.isEnchantmentDisabled(Enchantments.BANE_OF_ARTHROPODS)
+				&& !EnchantmentsFeature.isEnchantmentDisabled(EnchantmentsFeature.BANE_OF_SSSSS.get());
+	}
+
+	public static boolean shouldReplaceWithLuck(Enchantment enchantment) {
+		return (enchantment == Enchantments.BLOCK_FORTUNE || enchantment == Enchantments.MOB_LOOTING || enchantment == Enchantments.FISHING_LUCK)
+				&& Feature.isEnabled(EnchantmentsFeature.class)
+				&& EnchantmentsFeature.replaceLuckEnchantments;
+	}
+
 	public static int getEnchantmentValue(ItemStack stack) {
 		for (ItemStatistics itemStatistics : ItemStatsReloadListener.Stats) {
 			if (itemStatistics.enchantability() != null && itemStatistics.item().matchesItem(stack))
