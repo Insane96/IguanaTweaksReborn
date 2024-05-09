@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* The `minecraft:enchant_randomly` function now replaces BoA with Bane of SSSSS and Looting, LotS and Fortune with Luck
+
 ## 3.9.8
 * Minecarts and Boats are now easier to break
 * Sea lanterns now break faster with pickaxes
@@ -15,7 +18,7 @@
 
 ## 3.9.6
 * Foods now shows "Snack" if instantly heal or "Meal" if heal overtime
-* Sleeping when Tired II or above now skips 1 minute per level, but Tiredness is now always reset to 0
+* Sleeping when Tired II or above now skips 1 more minute per level, but Tiredness is now always reset to 0
 * Conduit power now decreases stamina consumption when swimming by 10%
 * Sponges
   * Now have a lower chance to dry if touching another wet sponge

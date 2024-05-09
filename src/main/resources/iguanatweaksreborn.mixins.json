@@ -26,6 +26,7 @@
         "DiggerItemMixin",
         "EnchantmentHelperMixin",
         "EnchantmentMixin",
+        "EnchantRandomlyFunctionMixin",
         "EntityMixin",
         "ExplosionMixin",
         "FallingBlockEntityMixin",

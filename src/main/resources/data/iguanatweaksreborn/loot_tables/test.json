@@ -8,7 +8,10 @@
                     "name": "minecraft:book",
                     "functions": [
                         {
-                            "function": "minecraft:enchant_randomly"
+                            "function": "minecraft:enchant_randomly",
+                            "enchantments": [
+                                "bane_of_arthropods"
+                            ]
                         }
                     ]
                 }
