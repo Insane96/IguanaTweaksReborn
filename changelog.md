@@ -7,6 +7,7 @@
   * High tier tools efficiency has been lowered (diamond, netherite, etc)
 * Netherite equipment, ingot and block is now immune to (almost) any in-world damage
 * The `minecraft:enchant_randomly` function now replaces BoA with Bane of SSSSS and Looting, LotS and Fortune with Luck
+* Fixed Regenerating absorption being misplaced when rendered on right
 
 ## 3.9.8
 * Minecarts and Boats are now easier to break
