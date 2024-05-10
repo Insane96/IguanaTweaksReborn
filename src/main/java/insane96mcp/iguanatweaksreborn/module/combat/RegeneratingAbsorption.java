@@ -191,12 +191,15 @@ public class RegeneratingAbsorption extends Feature {
             //else
             //guiGraphics.blit(GUI_ICONS, left, top, 0, 0, 0, 9, 256, 256);
             if ((i + 1) % 20 == 0) {
-                left = width / 2 - 91;
+                left = width / 2 + (!renderOnRight ? -91 : 82);
                 top -= 10;
-                gui.leftHeight += 10;
+                if (!renderOnRight)
+                    gui.leftHeight += 10;
+                else
+                    gui.rightHeight += 10;
             }
             else
-                left += 8;
+                left += renderOnRight ? -8 : 8;
         }
         if (level > 0)
             gui.leftHeight += 10;
