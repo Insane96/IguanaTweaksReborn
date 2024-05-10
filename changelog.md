@@ -1,7 +1,10 @@
 # Changelog
 
 ## Upcoming
-* Reduced Regenerating Absorption from armors by ~25% but increased regeneration speed (1 point every 5 -> 4 seconds)
+* Reduced Regenerating Absorption from armors by ~25% but increased regeneration speed (1 point every ~~5~~ -> 4 seconds)
+* Rebalanced materials efficiencies (also in ITE)
+  * Low tier tools efficiency has been increased (wood, iron, etc)
+  * High tier tools efficiency has been lowered (diamond, netherite, etc)
 * The `minecraft:enchant_randomly` function now replaces BoA with Bane of SSSSS and Looting, LotS and Fortune with Luck
 
 ## 3.9.8
