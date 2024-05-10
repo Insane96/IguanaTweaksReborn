@@ -202,7 +202,10 @@ public class RegeneratingAbsorption extends Feature {
                 left += renderOnRight ? -8 : 8;
         }
         if (level > 0)
-            gui.leftHeight += 10;
+            if (!renderOnRight)
+                gui.leftHeight += 10;
+            else
+                gui.rightHeight += 10;
 
         RenderSystem.disableBlend();
         mc.getProfiler().pop();
