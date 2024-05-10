@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Reduced Regenerating Absorption from armors by ~25% but increased regeneration speed (1 point every 5 -> 4 seconds)
 * The `minecraft:enchant_randomly` function now replaces BoA with Bane of SSSSS and Looting, LotS and Fortune with Luck
 
 ## 3.9.8
