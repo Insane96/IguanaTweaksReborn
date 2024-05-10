@@ -5,6 +5,7 @@
 * Rebalanced materials efficiencies (also in ITE)
   * Low tier tools efficiency has been increased (wood, iron, etc)
   * High tier tools efficiency has been lowered (diamond, netherite, etc)
+* Netherite equipment, ingot and block is now immune to (almost) any in-world damage
 * The `minecraft:enchant_randomly` function now replaces BoA with Bane of SSSSS and Looting, LotS and Fortune with Luck
 
 ## 3.9.8

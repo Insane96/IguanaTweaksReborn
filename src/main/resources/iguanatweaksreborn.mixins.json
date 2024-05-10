@@ -35,6 +35,7 @@
         "FishingHookMixin",
         "FoodDataMixin",
         "HoneyBottleItemMixin",
+        "ItemEntityMixin",
         "ItemMixin",
         "LeavesBlockMixin",
         "LevelStorageSourceMixin",

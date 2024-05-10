@@ -9,6 +9,7 @@ import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.iguanatweaksreborn.module.items.StackSizes;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
+import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.Spawners;
 import net.minecraft.core.HolderLookup;
@@ -73,6 +74,9 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
                 .addTag(BonusDamageEnchantment.ACCEPTS_ENCHANTMENT);
         tag(FireAspect.ACCEPTS_ENCHANTMENT)
                 .addTag(BonusDamageEnchantment.ACCEPTS_ENCHANTMENT);
+        tag(Tweaks.WORLD_IMMUNE)
+                .add(Items.NETHERITE_BLOCK, Items.NETHERITE_INGOT)
+                .addOptionalTag(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "equipment/netherite"));
     }
 
     public static TagKey<Item> create(String tagName) {
