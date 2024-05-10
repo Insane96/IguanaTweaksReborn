@@ -72,7 +72,7 @@ public class RegeneratingAbsorption extends Feature {
     @Label(name = "Sound on absorption hurt", description = "If true, a sound is played when the absorption is damaged.")
     public static Boolean soundOnAbsorptionHurt = true;
     @Config
-    @Label(name = "Render on the right", description = "If true, regenerating absorption hearts are rendered on the right instead on top of hearts.")
+    @Label(name = "Render on the right", description = "(Client only) If true, regenerating absorption hearts are rendered on the right instead on top of hearts.")
     public static Boolean renderOnRight = false;
 
     public RegeneratingAbsorption(Module module, boolean enabledByDefault, boolean canBeDisabled) {
