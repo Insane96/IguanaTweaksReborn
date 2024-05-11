@@ -1,6 +1,6 @@
 {
 	"item": "#minecraft:hoes",
-	"attack_damage": 2,
+	"attack_damage": 1.5,
 	"attack_speed": 2.2,
 	"durability_multiplier": 1.3,
 	"modifiers": [

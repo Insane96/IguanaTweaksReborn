@@ -188,7 +188,7 @@ public class ITRExplosion extends Explosion {
 				DamageSource source = this.getDamageSource();
 				if (entity instanceof ServerPlayer player && blockingDamageReduction > 0d) {
 					if (damageAmount > 0.0F && player.isDamageSourceBlocked(source)) {
-						damageAmount *= blockingDamageReduction;
+						damageAmount *= (float) blockingDamageReduction;
 						player.hurtCurrentlyUsedShield(damageAmount);
 						player.level().broadcastEntityEvent(player, (byte) 29);
 					}
