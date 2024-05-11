@@ -28,7 +28,7 @@ public class Leaves extends Feature {
 
 	@Config(min = 1)
 	@Label(name = "Max ticks to decay")
-	public static Integer maxTicksToDecay = 400;
+	public static Integer maxTicksToDecay = 300;
 
 	public Leaves(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
