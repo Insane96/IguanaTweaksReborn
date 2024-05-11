@@ -428,7 +428,7 @@ public class NoHunger extends Feature {
 
         FoodProperties food = event.getItemStack().getItem().getFoodProperties(event.getItemStack(), event.getEntity());
 
-        ChatFormatting color = FoodDrinks.isRawFood(event.getItemStack().getItem()) ? ChatFormatting.DARK_GREEN : ChatFormatting.GRAY;
+        ChatFormatting color = FoodDrinks.isRawFood(event.getItemStack().getItem()) ? ChatFormatting.DARK_RED : ChatFormatting.GRAY;
         MutableComponent component = null;
         if (Utils.getFoodSaturationRestored(food) < instantHealSaturationThreshold && doesHealInstantly()) {
             if (mc.options.advancedItemTooltips) {

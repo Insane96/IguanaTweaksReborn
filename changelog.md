@@ -3,6 +3,7 @@
 ## Upcoming
 * Reduced hoes base damage (~~2~~ -> 1.5)
 * Sped up leaves decay
+* Poisonous food now shows snack or meal in red instead of green
 
 ## 3.9.9
 * Reduced Regenerating Absorption from armors by ~25% but increased regeneration speed (1 point every ~~5~~ -> 4 seconds)
