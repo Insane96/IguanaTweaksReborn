@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Further reduced Ender Chests hardness
+
 ## 3.9.10
 * Reduced hoes base damage (~~2~~ -> 1.5)
 * Sped up leaves decay (~~11.25~~ -> 8.25 average seconds to decay)
