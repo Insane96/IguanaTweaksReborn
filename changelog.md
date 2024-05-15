@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Further reduced Ender Chests hardness
+* Reduced witches potions drop (~~2\~4~~ -> 0\~4 potions per witch)
 
 ## 3.9.10
 * Reduced hoes base damage (~~2~~ -> 1.5)
