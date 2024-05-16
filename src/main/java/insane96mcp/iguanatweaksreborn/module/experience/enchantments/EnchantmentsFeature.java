@@ -232,7 +232,7 @@ public class EnchantmentsFeature extends JsonFeature {
 			float f = player.getAttackStrengthScale(0.5f);
 			knockback *= f * f;
 		}
-		for (IdTagValue itemKnockbackMultiplier : insane96mcp.iguanatweaksreborn.module.combat.Knockback.KNOCKBACKS) {
+		for (IdTagValue itemKnockbackMultiplier : insane96mcp.iguanatweaksreborn.module.combat.Knockback.knockbackMultipliers) {
 			if (itemKnockbackMultiplier.id.matchesItem(attacker.getMainHandItem()))
 				knockback *= (float) itemKnockbackMultiplier.value;
 		};

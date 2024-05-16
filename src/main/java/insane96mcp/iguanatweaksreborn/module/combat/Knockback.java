@@ -5,7 +5,7 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
-import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -28,12 +28,13 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Label(name = "Knockback", description = "Player will deal reduced knockback if attacking with a non-weapon or spamming.")
 @LoadFeature(module = Modules.Ids.COMBAT)
-public class Knockback extends Feature {
+public class Knockback extends JsonFeature {
 
 	public static final TagKey<Item> REDUCED_KNOCKBACK = ITRItemTagsProvider.create("reduced_knockback");
 	public static final String TIME_SINCE_LAST_SWING = IguanaTweaksReborn.RESOURCE_PREFIX + "ticks_since_last_swing";
@@ -53,15 +54,22 @@ public class Knockback extends Feature {
 	public static Double shovelsKnockbackRatio = 0.4d;
 
 	//Knockback multipliers for items
-	public static final List<IdTagValue> KNOCKBACKS = List.of(
+	public static final ArrayList<IdTagValue> KNOCKBACK_MULTIPLIERS_DEFAULT = new ArrayList<>(List.of(
 			IdTagValue.newTag("minecraft:pickaxes", 0.75d),
 			IdTagValue.newTag("minecraft:axes", 0.85d),
 			IdTagValue.newTag("minecraft:hoes", 0.3d),
 			IdTagValue.newTag("iguanatweaksexpanded:forge_hammers", 0.85d)
-	);
+	));
+	public static final ArrayList<IdTagValue> knockbackMultipliers = new ArrayList<>();
 
 	public Knockback(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+		JSON_CONFIGS.add(new JsonConfig<>("knockback_multipliers.json", knockbackMultipliers, KNOCKBACK_MULTIPLIERS_DEFAULT, IdTagValue.LIST_TYPE));
+	}
+
+	@Override
+	public String getModConfigFolder() {
+		return IguanaTweaksReborn.CONFIG_FOLDER;
 	}
 
 	@SubscribeEvent
@@ -122,7 +130,7 @@ public class Knockback extends Feature {
 		if (event.getEntity().getLastHurtByMob() == null)
 			return;
 		float multiplier = 1f;
-		for (IdTagValue idTagValue : KNOCKBACKS) {
+		for (IdTagValue idTagValue : knockbackMultipliers) {
 			if (idTagValue.id.matchesItem(event.getEntity().getLastHurtByMob().getMainHandItem()))
 				multiplier = (float) idTagValue.value;
 		}
