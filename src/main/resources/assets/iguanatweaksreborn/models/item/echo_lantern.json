@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "iguanatweaksreborn:block/echo_torch"
+    "layer0": "iguanatweaksreborn:item/echo_lantern"
   }
 }

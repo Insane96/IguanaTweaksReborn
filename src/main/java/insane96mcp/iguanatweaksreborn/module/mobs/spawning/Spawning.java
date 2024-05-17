@@ -9,9 +9,9 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
@@ -30,8 +30,8 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.MOBS)
 public class Spawning extends Feature {
 
-    public static final SimpleBlockWithItem ECHO_TORCH = SimpleBlockWithItem.register("echo_torch", () -> new EchoTorchBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_TORCH).lightLevel(state -> 7), ParticleTypes.SCULK_CHARGE_POP));
-    public static final RegistryObject<PoiType> ECHO_TORCH_POI = ITRRegistries.POI_TYPES.register("echo_torch", () -> new PoiType(ImmutableSet.copyOf(ECHO_TORCH.block().get().getStateDefinition().getPossibleStates()), 1, 64));
+    public static final SimpleBlockWithItem ECHO_LANTERN = SimpleBlockWithItem.register("echo_lantern", () -> new EchoLanternBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_TORCH).lightLevel(state -> 7)));
+    public static final RegistryObject<PoiType> ECHO_LANTERN_POI = ITRRegistries.POI_TYPES.register("echo_lantern", () -> new PoiType(ImmutableSet.copyOf(ECHO_LANTERN.block().get().getStateDefinition().getPossibleStates()), 1, 64));
 
     @Config
     @Label(name = "No Zombie Villagers", description = "Disables Zombie Villagers")
@@ -74,10 +74,11 @@ public class Spawning extends Feature {
     public void onMobSpawn(MobSpawnEvent.SpawnPlacementCheck event) {
         if (!this.isEnabled()
                 || !(event.getLevel() instanceof ServerLevel serverLevel)
-                || !BLOCKED_SPAWN_TYPES.contains(event.getSpawnType()))
+                || !BLOCKED_SPAWN_TYPES.contains(event.getSpawnType())
+                || event.getEntityType().getCategory() != MobCategory.MONSTER)
             return;
 
-        boolean theresTorch = serverLevel.getPoiManager().findAll(poiTypeHolder -> poiTypeHolder.is(ECHO_TORCH_POI.getKey()), blockPos -> true, event.getPos(), 64, PoiManager.Occupancy.ANY)
+        boolean theresTorch = serverLevel.getPoiManager().findAll(poiTypeHolder -> poiTypeHolder.is(ECHO_LANTERN_POI.getKey()), blockPos -> true, event.getPos(), 64, PoiManager.Occupancy.ANY)
                 .findAny().isPresent();
         if (theresTorch)
             event.setResult(Event.Result.DENY);

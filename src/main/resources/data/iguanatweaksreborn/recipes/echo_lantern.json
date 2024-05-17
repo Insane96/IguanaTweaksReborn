@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "S",
-    "E",
-    "E"
+    " E ",
+    "ESE",
+    " E "
   ],
   "key": {
     "S": {
@@ -14,6 +14,6 @@
     }
   },
   "result": {
-    "item": "iguanatweaksreborn:echo_torch"
+    "item": "iguanatweaksreborn:echo_lantern"
   }
 }

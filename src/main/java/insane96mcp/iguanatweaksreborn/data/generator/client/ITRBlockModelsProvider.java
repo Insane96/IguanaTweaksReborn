@@ -18,7 +18,6 @@ public class ITRBlockModelsProvider extends BlockModelProvider {
         flowerPotCross("potted_cyan_flower", new ResourceLocation(IguanaTweaksReborn.MOD_ID, "block/cyan_flower")).renderType("cutout");
         cross("solanum_neorossii", new ResourceLocation(IguanaTweaksReborn.MOD_ID, "block/solanum_neorossii")).renderType("cutout");
         flowerPotCross("potted_solanum_neorossii", new ResourceLocation(IguanaTweaksReborn.MOD_ID, "block/solanum_neorossii")).renderType("cutout");
-        torch("echo_torch", new ResourceLocation(IguanaTweaksReborn.MOD_ID, "block/echo_torch")).renderType("cutout");
     }
 
     public BlockModelBuilder flowerPotCross(String name, ResourceLocation plant) {

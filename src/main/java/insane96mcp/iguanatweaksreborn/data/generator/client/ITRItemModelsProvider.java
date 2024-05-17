@@ -2,7 +2,6 @@ package insane96mcp.iguanatweaksreborn.data.generator.client;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
-import insane96mcp.iguanatweaksreborn.module.mobs.spawning.Spawning;
 import insane96mcp.iguanatweaksreborn.module.world.Berries;
 import insane96mcp.iguanatweaksreborn.module.world.CyanFlower;
 import net.minecraft.data.PackOutput;
@@ -32,7 +31,6 @@ public class ITRItemModelsProvider extends ItemModelProvider {
 
         basicItemWithTexture(CyanFlower.FLOWER.item().get(), new ResourceLocation(IguanaTweaksReborn.MOD_ID, "block/cyan_flower"));
         basicItemWithTexture(Crops.SOLANUM_NEOROSSII.item().get(), new ResourceLocation(IguanaTweaksReborn.MOD_ID, "block/solanum_neorossii"));
-        basicItemWithTexture(Spawning.ECHO_TORCH.item().get(), new ResourceLocation(IguanaTweaksReborn.MOD_ID, "block/echo_torch"));
     }
     public ItemModelBuilder basicItemWithTexture(Item item, ResourceLocation texture)
     {

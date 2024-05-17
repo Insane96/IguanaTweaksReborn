@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "hanging=false": {
+            "model": "iguanatweaksreborn:block/echo_lantern"
+        },
+        "hanging=true": {
+            "model": "iguanatweaksreborn:block/echo_lantern_hanging"
+        }
+    }
+}

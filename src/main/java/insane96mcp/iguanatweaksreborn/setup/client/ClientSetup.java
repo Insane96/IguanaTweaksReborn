@@ -25,7 +25,7 @@ public class ClientSetup {
     {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             addAfter(event, Items.BEACON, BeaconConduit.BEACON.item());
-            addAfter(event, Items.SOUL_TORCH, Spawning.ECHO_TORCH.item());
+            addAfter(event, Items.SOUL_TORCH, Spawning.ECHO_LANTERN.item());
         }
         else if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             addAfter(event, Items.CHAIN, Death.GRAVE.item());
