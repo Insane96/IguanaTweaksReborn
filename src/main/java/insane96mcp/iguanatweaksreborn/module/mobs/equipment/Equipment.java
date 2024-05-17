@@ -30,7 +30,8 @@ public class Equipment extends JsonFeature {
             new EquipmentDropChance(IdTagMatcher.newId("minecraft:drowned"), EquipmentSlot.OFFHAND),
             new EquipmentDropChance(IdTagMatcher.newId("minecraft:zombie_villager"), EquipmentSlot.OFFHAND),
             new EquipmentDropChance(IdTagMatcher.newId("minecraft:vex"), EquipmentSlot.MAINHAND),
-            new EquipmentDropChance(IdTagMatcher.newId("minecraft:pillager"), EquipmentSlot.MAINHAND)
+            new EquipmentDropChance(IdTagMatcher.newId("minecraft:pillager"), EquipmentSlot.MAINHAND),
+            new EquipmentDropChance(IdTagMatcher.newId("progressivebosses:wither_minion"), EquipmentSlot.MAINHAND)
     ));
     public static final ArrayList<EquipmentDropChance> equipmentDropChances = new ArrayList<>();
     @Config
