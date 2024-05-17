@@ -345,21 +345,29 @@ public class NoHunger extends Feature {
         if (event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type()))
             event.setCanceled(true);
         //Remove armor bar to render it on the right
-        if (event.getOverlay().equals(VanillaGuiOverlay.ARMOR_LEVEL.type()) && renderArmorAtHunger) {
+        if (event.getOverlay().equals(VanillaGuiOverlay.ARMOR_LEVEL.type()) && renderArmorAtHunger)
             event.setCanceled(true);
-            Minecraft mc = Minecraft.getInstance();
+            /*Minecraft mc = Minecraft.getInstance();
             ForgeGui gui = (ForgeGui) mc.gui;
             if (!mc.options.hideGui && gui.shouldDrawSurvivalElements())
-                renderArmor(event.getGuiGraphics(), event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());
-        }
+                renderArmor(event.getGuiGraphics(), event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());*/
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
+        event.registerBelow(VanillaGuiOverlay.AIR_LEVEL.id(), "armor", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
+            if (renderArmorAtHunger && gui.shouldDrawSurvivalElements() && gui.shouldDrawSurvivalElements())
+                renderArmor(guiGraphics, screenWidth, screenHeight);
+        });
     }
 
     protected static final ResourceLocation GUI_ICONS_LOCATION = new ResourceLocation("textures/gui/icons.png");
     @OnlyIn(Dist.CLIENT)
-    protected void renderArmor(GuiGraphics guiGraphics, int width, int height) {
+    protected static void renderArmor(GuiGraphics guiGraphics, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
         ForgeGui gui = (ForgeGui) mc.gui;
-        mc.getProfiler().push("armor");
+        mc.getProfiler().push(IguanaTweaksReborn.RESOURCE_PREFIX + "armor");
 
         RenderSystem.enableBlend();
         int left = width / 2 + 82;
