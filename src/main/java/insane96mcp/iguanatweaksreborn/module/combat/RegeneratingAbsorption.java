@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.combat;
 import com.mojang.blaze3d.systems.RenderSystem;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.NoHunger;
 import insane96mcp.iguanatweaksreborn.module.movement.stamina.Stamina;
 import insane96mcp.iguanatweaksreborn.network.message.RegenAbsorptionSync;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
@@ -16,7 +17,6 @@ import insane96mcp.insanelib.world.effect.ILMobEffect;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -36,6 +36,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -168,7 +169,14 @@ public class RegeneratingAbsorption extends Feature {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
-        event.registerAbove(new ResourceLocation(IguanaTweaksReborn.MOD_ID, Stamina.OVERLAY), "regenerating_absorption", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
+        ResourceLocation aboveOverlay = new ResourceLocation(IguanaTweaksReborn.MOD_ID, Stamina.OVERLAY);
+        if (renderOnRight) {
+            if (Feature.isEnabled(NoHunger.class) && NoHunger.renderArmorAtHunger)
+                aboveOverlay = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "armor");
+            else
+                aboveOverlay = VanillaGuiOverlay.FOOD_LEVEL.id();
+        }
+        event.registerAbove(aboveOverlay, "regenerating_absorption", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
             if (isEnabled(RegeneratingAbsorption.class) && gui.shouldDrawSurvivalElements() && gui.shouldDrawSurvivalElements())
                 renderAbsorption(gui, guiGraphics, screenWidth, screenHeight);
         });
@@ -214,17 +222,19 @@ public class RegeneratingAbsorption extends Feature {
             displayAbsorption = absorption;
             lastAbsorptionTime = Util.getMillis();
         }
-        player.displayClientMessage(Component.literal("Util.getMillis(): %s, lastAbsorption: %s, absorption: %s, absorptionBlinkTime: %s, displayAbsorption: %s".formatted(Util.getMillis() - lastAbsorptionTime, lastAbsorption, absorption, absorptionBlinkTime, displayAbsorption)), true);
+        //player.displayClientMessage(Component.literal("Util.getMillis(): %s, lastAbsorption: %s, absorption: %s, absorptionBlinkTime: %s, displayAbsorption: %s".formatted(Util.getMillis() - lastAbsorptionTime, lastAbsorption, absorption, absorptionBlinkTime, displayAbsorption)), true);
 
         lastAbsorption = absorption;
         for (int i = 1; i <= displayAbsorption; i++)
         {
             if (i > absorption)
                 ClientUtils.setRenderColor(1, 0, 0, 1f);
-            if (i % 2 == 1)
-                guiGraphics.blit(GUI_ICONS, left, top, 9, v, 9, 9, 18, 18);
+            //ClientUtils.blitVericallyMirrored(GUI_ICONS, guiGraphics, left, top, 9, v, 9, 9, 18, 18);
+            int u = i % 2 == 0 ? 0 : 9;
+            if (!renderOnRight)
+                guiGraphics.blit(GUI_ICONS, left, top, u, v, 9, 9, 18, 18);
             else
-                guiGraphics.blit(GUI_ICONS, left, top, 0, v, 9, 9, 18, 18);
+                ClientUtils.blitVericallyMirrored(GUI_ICONS, guiGraphics,left, top, u, v, 9, 9, 18, 18);
             if ((i + 1) % 20 == 0) {
                 left = width / 2 + (!renderOnRight ? -91 : 82);
                 top -= 10;
@@ -238,7 +248,7 @@ public class RegeneratingAbsorption extends Feature {
             if (i > absorption)
                 ClientUtils.resetRenderColor();
         }
-        if (absorption > 0)
+        if (displayAbsorption > 0)
             if (!renderOnRight)
                 gui.leftHeight += 10;
             else
