@@ -5,6 +5,7 @@ import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.BeaconConduit;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconRenderer;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconScreen;
+import insane96mcp.iguanatweaksreborn.module.mobs.spawning.Spawning;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.Death;
 import insane96mcp.iguanatweaksreborn.module.world.CyanFlower;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
@@ -24,6 +25,7 @@ public class ClientSetup {
     {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             addAfter(event, Items.BEACON, BeaconConduit.BEACON.item());
+            addAfter(event, Items.SOUL_TORCH, Spawning.ECHO_LANTERN.item());
         }
         else if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             addAfter(event, Items.CHAIN, Death.GRAVE.item());
