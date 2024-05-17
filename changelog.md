@@ -4,6 +4,10 @@
 * Added Echo Lantern
   * When placed in the world, monsters in a 64 block radius will not be able to spawn
   * Breaking it will only return some materials used to craft it
+* Critical Hits
+  * Critical hits now have a chance to happen on hit, instead of happening when jumping (5% chance)
+  * ITE Critical enchantment has been moved here. Increases chance to crit by 10% per level and damage multiplier by 25%
+  * Crit multiplier increased back to 50%
 
 ## 3.9.11
 * Regenerating absorption now has visual effects when regenerating and hurt
