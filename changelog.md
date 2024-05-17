@@ -1,5 +1,10 @@
 # Changelog
 
+## Upcoming
+* Added Echo Lantern
+  * When placed in the world, monsters in a 64 block radius will not be able to spawn
+  * Breaking it will only return some materials used to craft it
+
 ## 3.9.11
 * Regenerating absorption now has visual effects when regenerating and hurt
 * Further reduced Ender Chests hardness
