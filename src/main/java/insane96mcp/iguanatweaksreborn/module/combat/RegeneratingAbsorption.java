@@ -6,14 +6,17 @@ import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.movement.stamina.Stamina;
 import insane96mcp.iguanatweaksreborn.network.message.RegenAbsorptionSync;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
+import insane96mcp.iguanatweaksreborn.utils.ClientUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -167,29 +170,61 @@ public class RegeneratingAbsorption extends Feature {
     public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
         event.registerAbove(new ResourceLocation(IguanaTweaksReborn.MOD_ID, Stamina.OVERLAY), "regenerating_absorption", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
             if (isEnabled(RegeneratingAbsorption.class) && gui.shouldDrawSurvivalElements() && gui.shouldDrawSurvivalElements())
-                renderAbsorption(guiGraphics, screenWidth, screenHeight);
+                renderAbsorption(gui, guiGraphics, screenWidth, screenHeight);
         });
     }
 
+    static int lastAbsorption = 0;
+    static long lastAbsorptionTime = 0;
+    static long absorptionBlinkTime = 0;
+    static int displayAbsorption = 0;
+
     @OnlyIn(Dist.CLIENT)
-    protected static void renderAbsorption(GuiGraphics guiGraphics, int width, int height) {
+    protected static void renderAbsorption(ForgeGui gui, GuiGraphics guiGraphics, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
-        ForgeGui gui = (ForgeGui) mc.gui;
-        mc.getProfiler().push("armor");
+        Player player = mc.player;
+        if (player == null)
+            return;
+        mc.getProfiler().push("regen_absorption");
 
         RenderSystem.enableBlend();
         int left = width / 2 + (!renderOnRight ? -91 : 82);
         int top = height - (!renderOnRight ? gui.leftHeight : gui.rightHeight);
 
-        int level = Mth.ceil(mc.player.getPersistentData().getFloat(REGEN_ABSORPTION_TAG));
-        for (int i = 1; i <= level; i += 2)
+        int absorption = Mth.ceil(mc.player.getPersistentData().getFloat(REGEN_ABSORPTION_TAG));
+        boolean highlight = absorptionBlinkTime > (long) gui.getGuiTicks() && (absorptionBlinkTime - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
+        int v = highlight ? 9 : 0;
+
+        if (absorption < lastAbsorption && player.invulnerableTime > 0)
         {
-            if (i == level)
-                guiGraphics.blit(GUI_ICONS, left, top, 9, 0, 9, 9, 18, 9);
+            lastAbsorptionTime = Util.getMillis();
+            displayAbsorption = lastAbsorption;
+            absorptionBlinkTime = gui.getGuiTicks() + 20;
+        }
+        else if (absorption > lastAbsorption)
+        {
+            //lastAbsorptionTime = Util.getMillis();
+            displayAbsorption = absorption;
+            absorptionBlinkTime = gui.getGuiTicks() + 10;
+        }
+
+        if (Util.getMillis() - lastAbsorptionTime > 1000L)
+        {
+            lastAbsorption = absorption;
+            displayAbsorption = absorption;
+            lastAbsorptionTime = Util.getMillis();
+        }
+        player.displayClientMessage(Component.literal("Util.getMillis(): %s, lastAbsorption: %s, absorption: %s, absorptionBlinkTime: %s, displayAbsorption: %s".formatted(Util.getMillis() - lastAbsorptionTime, lastAbsorption, absorption, absorptionBlinkTime, displayAbsorption)), true);
+
+        lastAbsorption = absorption;
+        for (int i = 1; i <= displayAbsorption; i++)
+        {
+            if (i > absorption)
+                ClientUtils.setRenderColor(1, 0, 0, 1f);
+            if (i % 2 == 1)
+                guiGraphics.blit(GUI_ICONS, left, top, 9, v, 9, 9, 18, 18);
             else
-                guiGraphics.blit(GUI_ICONS, left, top, 0, 0, 9, 9, 18, 9);
-            //else
-            //guiGraphics.blit(GUI_ICONS, left, top, 0, 0, 0, 9, 256, 256);
+                guiGraphics.blit(GUI_ICONS, left, top, 0, v, 9, 9, 18, 18);
             if ((i + 1) % 20 == 0) {
                 left = width / 2 + (!renderOnRight ? -91 : 82);
                 top -= 10;
@@ -198,10 +233,12 @@ public class RegeneratingAbsorption extends Feature {
                 else
                     gui.rightHeight += 10;
             }
-            else
+            else if (i % 2 == 0)
                 left += renderOnRight ? -8 : 8;
+            if (i > absorption)
+                ClientUtils.resetRenderColor();
         }
-        if (level > 0)
+        if (absorption > 0)
             if (!renderOnRight)
                 gui.leftHeight += 10;
             else

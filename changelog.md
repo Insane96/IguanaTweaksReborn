@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Regenerating absorption now has visual effects when regenerating and hurt
 * Further reduced Ender Chests hardness
 * Reduced witches potions drop (~~2\~4~~ -> 0\~4 potions per witch)
 * Knockback multipliers are now configurable through json
