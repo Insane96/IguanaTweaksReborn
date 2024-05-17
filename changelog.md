@@ -8,6 +8,9 @@
   * Critical hits now have a chance to happen on hit, instead of happening when jumping (5% chance)
   * ITE Critical enchantment has been moved here. Increases chance to crit by 10% per level and damage multiplier by 25%
   * Crit multiplier increased back to 50%
+* Added ecologic wood
+  * Wooden items now consume much less durability when used in sunlight
+  * Reduced wooden items base durability (127 -> 97)
 
 ## 3.9.11
 * Regenerating absorption now has visual effects when regenerating and hurt
