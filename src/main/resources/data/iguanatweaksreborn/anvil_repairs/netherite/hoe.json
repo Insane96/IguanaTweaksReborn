@@ -14,7 +14,8 @@
 			"repair_material": {
 				"id": "minecraft:netherite_ingot"
 			},
-			"amount": 2
+			"amount": 2,
+			"cost_multiplier": 0.01
 		}
 	]
 }
