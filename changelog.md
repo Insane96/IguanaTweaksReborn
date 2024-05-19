@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.10.0
 * Added Echo Lantern
   * When placed in the world, monsters in a 64 block radius will not be able to spawn
   * Breaking it will only return some materials used to craft it
