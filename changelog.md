@@ -14,6 +14,7 @@
 * Added Force darkness
   * Forces darkness ignoring the video setting
 * Enchanted Netherite items now require much less netherite to be repaired
+* Fixed "multiply_total" attribute modifiers showing incorrectly
 * Fixed wither minions from Progressive Bosses always dropping the main hand item
 
 ## 3.9.11

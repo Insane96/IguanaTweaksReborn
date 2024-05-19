@@ -191,7 +191,7 @@ public class Stats extends Feature {
 
 							MutableComponent component = null;
 							String translationString = "attribute.modifier.plus.";
-							if (isEqualTooltip)
+							if (isEqualTooltip || operation == AttributeModifier.Operation.MULTIPLY_TOTAL)
 								translationString = "attribute.modifier.equals.";
 							else if (amount < 0)
 								translationString = "attribute.modifier.take.";
