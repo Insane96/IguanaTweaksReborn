@@ -27,7 +27,7 @@ public class CriticalHits extends Feature {
 	public static Double enchantmentChance = 0.1d;
 	@Config(min = -1d, max = 1d)
 	@Label(name = "Enchantment Bonus", description = "Critical multiplier increase per level of Critical enchantment. This only applies if chance based crit is enabled, otherwise critical doubles the crit multiplier.")
-	public static Double enchantmentBonus = 0.25d;
+	public static Double enchantmentBonus = 0.3d;
 	@Config(min = 0d)
 	@Label(name = "Damage multiplier", description = "How much damage a critical hit does. Vanilla is 1.5")
 	public static Double critDamageMultiplier = 1.5d;
