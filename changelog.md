@@ -11,6 +11,8 @@
 * Added ecologic wood
   * Wooden items now consume much less durability when used in sunlight
   * Reduced wooden items base durability (127 -> 97)
+* Added Force darkness
+  * Forces darkness ignoring the video setting
 * Fixed wither minions from Progressive Bosses always dropping the main hand item
 
 ## 3.9.11

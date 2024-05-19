@@ -74,6 +74,7 @@
         "client.GameRendererMixin",
         "client.GuiMixin",
         "client.LevelRendererMixin",
+        "client.LightTextureMixin",
         "client.LocalPlayerMixin",
         "client.MinecraftMixin"
     ]
