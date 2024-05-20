@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed skeletons still spawning in Yung's Better Fortresses
+
 ## 3.10.1
 * Added Remove skeletons from Fortresses
   * Disables normal skeletons from spawning in Fortresses
