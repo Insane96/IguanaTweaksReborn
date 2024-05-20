@@ -76,8 +76,8 @@ public class Experience extends JsonFeature {
 			IdTagRange.newTag("iguanatweaksexpanded:iron_ores", 1, 2),
 			IdTagRange.newTag("iguanatweaksexpanded:gold_ores", 2, 3),
 
-			IdTagRange.newId("minecraft:sculk_catalyst", 40, 40),
-			IdTagRange.newId("minecraft:spawner", 40, 40)
+			IdTagRange.newId("minecraft:sculk_catalyst", 35, 35),
+			IdTagRange.newId("minecraft:spawner", 70, 70)
 	));
 
 	public static final ArrayList<IdTagRange> customBlocksExperience = new ArrayList<>();
