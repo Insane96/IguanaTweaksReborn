@@ -5,7 +5,7 @@
         {
             "id": "iguanatweaksreborn:correct_biome",
             "biomes": [
-                "#forge:is_nether"
+                "#minecraft:is_nether"
             ],
             "multiplier": 0
         }
