@@ -14,11 +14,16 @@ public class NightTimeModifier extends Modifier {
     }
 
     @Override
-    public float getMultiplier(LivingEntity entity, Level level, BlockPos pos) {
+    public float getMultiplier(Level level, BlockPos pos) {
         int dayTime = (int) (level.dayTime() % 24000);
         if (dayTime >= 12786 && dayTime < 23216)
             return this.multiplier;
         return 1f;
+    }
+
+    @Override
+    public float getMultiplier(LivingEntity entity, Level level, BlockPos pos) {
+        return this.getMultiplier(level, pos);
     }
 
     public static class Serializer implements JsonDeserializer<NightTimeModifier> {

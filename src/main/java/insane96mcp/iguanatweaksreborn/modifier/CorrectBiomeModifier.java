@@ -20,13 +20,18 @@ public class CorrectBiomeModifier extends AbstractBiomeModifier {
     }
 
     @Override
-    public float getMultiplier(LivingEntity entity, Level level, BlockPos pos) {
+    public float getMultiplier(Level level, BlockPos pos) {
         Holder<Biome> currentBiome = level.getBiome(pos);
         for (IdTagMatcher biome : this.biomes) {
             if (biome.matchesBiome(currentBiome))
                 return 1f;
         }
         return this.multiplier;
+    }
+
+    @Override
+    public float getMultiplier(LivingEntity entity, Level level, BlockPos pos) {
+        return this.getMultiplier(level, pos);
     }
 
     public static class Serializer implements JsonDeserializer<CorrectBiomeModifier> {

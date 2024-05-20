@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Fixed Plant growth modifiers not working properly
+  * Fixes nether wart not growing and some plants growing slower than they should
+
 ## 3.10.0
 * Added Echo Lantern
   * When placed in the world, monsters in a 64 block radius will not be able to spawn
