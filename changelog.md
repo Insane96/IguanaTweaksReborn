@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.10.1
 * Added Remove skeletons from Fortresses
   * Disables normal skeletons from spawning in Fortresses
 * Healing potions now heal `3*2^level` instead of `2*2^level` per level (like pre-1.6.1)
