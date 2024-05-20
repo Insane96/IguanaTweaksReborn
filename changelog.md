@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Healing potions now heal 3*2^level instead of 2*2^level per level (like pre-1.6.1)
 * Fixed Plant growth modifiers not working properly
   * Fixes nether wart not growing and some plants growing slower than they should
 

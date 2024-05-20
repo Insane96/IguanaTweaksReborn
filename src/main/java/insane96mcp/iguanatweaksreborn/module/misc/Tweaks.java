@@ -152,8 +152,8 @@ public class Tweaks extends Feature {
         }
     }
 
-	public static int getPoisonDamageSpeed() {
-		return isEnabled(Tweaks.class) ? poisonDamageSpeed : 25;
+	public static int getPoisonDamageSpeed(int original) {
+		return isEnabled(Tweaks.class) ? poisonDamageSpeed : original;
 	}
 
     public static int destroyDelay(ItemStack stack, DiggerItem item, BlockState state) {

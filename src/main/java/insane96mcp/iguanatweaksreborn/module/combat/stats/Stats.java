@@ -74,6 +74,9 @@ public class Stats extends Feature {
 	@Label(name = "Better haste/mining fatigue", description = "Changes Mining fatigue and haste to no longer affects attack speed. (Requires a Minecraft restart)")
 	public static Boolean betterHasteMiningFatigue = true;
 	@Config
+	@Label(name = "Better healing potion", description = "Changes Healing potions to work like pre 1.6.1 by healing 3 health per level")
+	public static Boolean betterHealingPotion = true;
+	@Config
 	@Label(name = "1 damage for tools attacking", description = "If enabled, tools will not take 2 damage when used to hurt entities")
 	public static Boolean oneDamageForToolAttacking = true;
 	@Config
