@@ -10,6 +10,7 @@ import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepair;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.Anvils;
 import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
+import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.NoHunger;
 import insane96mcp.iguanatweaksreborn.module.items.NameTags;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.data.IdTagMatcher;
@@ -55,6 +56,8 @@ public class ITREmiPlugin implements EmiPlugin {
 		if (Feature.isEnabled(Crops.class)) {
 			registry.addRecipe(createSimpleInfo(emiIngredientOf(Items.WHEAT_SEEDS, Items.BEETROOT_SEEDS, Crops.CARROT_SEEDS.get(), Crops.ROOTED_POTATO.get()), "name_tag", Component.translatable("emi.info.iguanatweaksreborn.crops.seeds")));
 		}
+		if (Feature.isEnabled(NoHunger.class) && NoHunger.buffCakes)
+			registry.addRecipe(createSimpleInfo(emiIngredientOf(Items.CAKE), "cake", Component.translatable("emi.info.iguanatweaksreborn.no_hunger.cake")));
 	}
 
 	public EmiInfoRecipe createSimpleInfo(Item item, String id, Component component) {

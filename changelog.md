@@ -5,6 +5,7 @@
   * Disables normal skeletons from spawning in Fortresses
 * Healing potions now heal `3*2^level` instead of `2*2^level` per level (like pre-1.6.1)
 * Slightly increased spawners delay when empowered and increased experience from broken spawners
+* Farmers' Delight cakes and pies now stack to 1
 * Fixed Plant growth modifiers not working properly
   * Fixes nether wart not growing and some plants growing slower than they should
 * Fixed infinite arrows with Infinity and Allurement

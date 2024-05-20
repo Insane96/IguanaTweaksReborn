@@ -192,5 +192,6 @@
 	"iguanatweaksreborn.requires_corners": "The portal needs Crying Obsidian in the corners to be activated",
 
 	"emi.info.iguanatweaksreborn.items.name_tags": "When applied to a named entity will drop the previous name tag. If the item is not renamed will remove the name from the entity.",
-	"emi.info.iguanatweaksreborn.crops.seeds": "Can be found in the wild"
+	"emi.info.iguanatweaksreborn.crops.seeds": "Can be found in the wild",
+	"emi.info.iguanatweaksreborn.no_hunger.cake": "Restores a percentage of missing health"
 }
