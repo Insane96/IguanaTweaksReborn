@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.experience.enchantments;
 
+import com.teamabnormals.allurement.core.AllurementConfig;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.FireAspect;
@@ -157,8 +158,11 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Override
 	public void readConfig(ModConfigEvent event) {
 		super.readConfig(event);
-		if (infinityOverhaul)
+		if (infinityOverhaul) {
 			Enchantments.INFINITY_ARROWS.rarity = Enchantment.Rarity.RARE;
+			if (ModList.get().isLoaded("allurement"))
+				AllurementConfig.COMMON.infinityRequiresArrows.set(true);
+		}
 		else
 			Enchantments.INFINITY_ARROWS.rarity = Enchantment.Rarity.VERY_RARE;
 
