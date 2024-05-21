@@ -86,10 +86,10 @@ public class Stamina extends Feature {
 
     @Config(min = 0, max = 1)
     @Label(name = "Slowdown.Threshold", description = "Below this percentage stamina you'll get slowed down.")
-    public static Double slowdownThreshold = 0.2;
+    public static Double slowdownThreshold = 0d;
     @Config(min = 0)
     @Label(name = "Slowdown.Flat Threshold", description = "Below this stamina you'll get slowed down.")
-    public static Double slowdownFlatThreshold = 20d;
+    public static Double slowdownFlatThreshold = 0d;
     @Config(min = -1)
     @Label(name = "Slowdown.Amount")
     public static Double slowdownAmount = -0.2;

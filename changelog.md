@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Renaming an item in an anvil no longer consumes it
+* By default, you no longer get slowed down when stamina locks
 * You can now sleep in creative even if you're not tired
 * Fixed skeletons still spawning in Yung's Better Fortresses
 
