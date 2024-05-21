@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.10.2
 * Unbreaking overhaul
   * Increased max Unbreaking level to 5
 * Renaming an item in an anvil no longer consumes it
