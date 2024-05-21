@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Unbreaking overhaul
+  * Increased max Unbreaking level to 5
 * Renaming an item in an anvil no longer consumes it
 * By default, you no longer get slowed down when stamina locks
 * You can now sleep in creative even if you're not tired
