@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Increased chance for chickens, cows and sheeps to drop food with Looting (Luck)
+
 ## 3.10.2
 * Unbreaking overhaul
   * Increased max Unbreaking level to 5
