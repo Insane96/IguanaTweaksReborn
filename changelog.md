@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* You can now sleep in creative even if you're not tired
 * Fixed skeletons still spawning in Yung's Better Fortresses
 
 ## 3.10.1

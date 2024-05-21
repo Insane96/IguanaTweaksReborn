@@ -250,7 +250,7 @@ public class Tiredness extends JsonFeature {
 
 		ServerPlayer player = (ServerPlayer) event.getEntity();
 
-		if (!player.hasEffect(TIRED.get())) {
+		if (!player.hasEffect(TIRED.get()) && !player.getAbilities().instabuild) {
 			event.setResult(Player.BedSleepingProblem.OTHER_PROBLEM);
 			player.displayClientMessage(Component.translatable(NOT_TIRED), true);
 			if (!shouldPreventSpawnPoint)
@@ -271,7 +271,7 @@ public class Tiredness extends JsonFeature {
 		if (!this.isEnabled())
 			return;
 		AtomicInteger highestTired = new AtomicInteger();
-		event.getLevel().players().stream().filter(LivingEntity::isSleeping).toList().forEach(player -> {
+		event.getLevel().players().stream().filter(LivingEntity::isSleeping).filter(player -> player.hasEffect(TIRED.get())).toList().forEach(player -> {
 			float tirednessOnWakeUp = TirednessHandler.getOnWakeUp(player);
 			if (player.getEffect(TIRED.get()).getAmplifier() > highestTired.get())
 				highestTired.set(player.getEffect(TIRED.get()).getAmplifier());
