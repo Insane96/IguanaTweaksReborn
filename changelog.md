@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Renaming an item in an anvil no longer consumes it
 * You can now sleep in creative even if you're not tired
 * Fixed skeletons still spawning in Yung's Better Fortresses
 

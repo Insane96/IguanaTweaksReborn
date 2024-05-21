@@ -93,6 +93,9 @@ public class Anvils extends Feature {
     @Label(name = "Break chance", description = "Chance for an anvil to become chipped/damaged/break. Vanilla is 12%")
     public static Double breakChance = 0.075d;
     @Config
+    @Label(name = "No break on renaming", description = "If true, anvils don't wear down when only used for renaming")
+    public static Boolean noBreakOnRenaming = true;
+    @Config
     @Label(name = "Fix anvils with Iron Blocks")
     public static Boolean allowFixingAnvils = true;
 
@@ -163,11 +166,12 @@ public class Anvils extends Feature {
 
     @SubscribeEvent
     public void onAnvilRepair(AnvilRepairEvent event) {
-        if (!this.isEnabled()
-                || breakChance == 0.12f)
+        if (!this.isEnabled())
             return;
 
         event.setBreakChance(breakChance.floatValue());
+        if (noBreakOnRenaming && ItemStack.isSameItem(event.getLeft(), event.getOutput()) && event.getRight().isEmpty())
+            event.setBreakChance(0);
     }
 
     @OnlyIn(Dist.CLIENT)

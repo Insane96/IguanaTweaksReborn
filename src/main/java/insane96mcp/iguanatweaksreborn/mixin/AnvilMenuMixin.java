@@ -50,6 +50,9 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 		super(p_39773_, p_39774_, p_39775_, p_39776_);
 	}
 
+	/**
+	 * Remove the requirement for cost to be at least 1
+	 */
 	@Inject(
 			method = "mayPickup",
 			at = @At("HEAD"),
