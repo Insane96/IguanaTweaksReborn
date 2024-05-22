@@ -122,7 +122,7 @@ public class Stamina extends Feature {
         //Trigger sync for newly spawned players
         if (player.tickCount == 1)
             shouldSync = true;
-        if (player.isSprinting() && player.getVehicle() == null && !player.getAbilities().instabuild) {
+        if (player.isSprinting() && player.getVehicle() == null && !player.getAbilities().instabuild && !player.isSpectator()) {
             float staminaToConsume = staminaConsumedOnSprint.floatValue();
             if (player.getPose() == Pose.SWIMMING)
                 staminaToConsume = staminaConsumedOnSwimming.floatValue();

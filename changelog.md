@@ -5,6 +5,7 @@
 * Reduced Pigs food drop with looting
 * Reduced Golden Tools durability and increased efficiency
 * Protection enchantment now also protects from Magic damage
+* Fixed stamina applying to spectators
 * Fixed mobs with bows dealing almost no damage
 
 ## 3.10.2
