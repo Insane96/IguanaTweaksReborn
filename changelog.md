@@ -5,6 +5,7 @@
 * Reduced Pigs food drop with looting
 * Reduced Golden Tools durability and increased efficiency
 * Protection enchantment now also protects from Magic damage
+* Redstone lamp now breaks faster with pickaxes
 * Fixed stamina applying to spectators
 * Fixed mobs with bows dealing almost no damage
 
