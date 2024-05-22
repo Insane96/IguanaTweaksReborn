@@ -45,7 +45,7 @@ public abstract class AbstractArrowMixin extends Projectile {
     //Disable mobs' arrow random bonus damage
     @Inject(method = "setEnchantmentEffectsFromEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;setBaseDamage(D)V", ordinal = 0, shift = At.Shift.AFTER))
     private void onSetMobArrowDamage(LivingEntity pShooter, float pVelocity, CallbackInfo ci) {
-        this.setBaseDamage(pVelocity * (this.baseDamage * Stats.arrowsDamageMultiplier));
+        this.setBaseDamage(pVelocity * this.baseDamage);
     }
 
     @WrapOperation(method = "onHitEntity", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;baseDamage:D"))

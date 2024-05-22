@@ -4,6 +4,7 @@
 * Increased chance for chickens, cows and sheep to drop food with Looting (Luck)
 * Reduced Pigs food drop with looting
 * Reduced Golden Tools durability and increased efficiency
+* Fixed mobs with bows dealing almost no damage
 
 ## 3.10.2
 * Unbreaking overhaul
