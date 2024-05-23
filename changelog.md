@@ -8,6 +8,7 @@
 * Redstone lamp now breaks faster with pickaxes
 * Fixed stamina applying to spectators
 * Fixed mobs with bows dealing almost no damage
+* Increased Force Darkness brightness (0% -> 15%)
 
 ## 3.10.2
 * Unbreaking overhaul
