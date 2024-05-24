@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.10.3
 * Increased chance for chickens, cows and sheep to drop food with Looting (Luck)
 * Reduced Pigs food drop with looting
 * Reduced Golden Tools durability and increased efficiency
