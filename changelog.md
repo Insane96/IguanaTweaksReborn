@@ -4,11 +4,12 @@
 * Increased chance for chickens, cows and sheep to drop food with Looting (Luck)
 * Reduced Pigs food drop with looting
 * Reduced Golden Tools durability and increased efficiency
+* Slightly enhanced Echo lantern texture
 * Protection enchantment now also protects from Magic damage
 * Redstone lamp now breaks faster with pickaxes
+* Increased 'Force Darkness' brightness (0% -> 15%)
 * Fixed stamina applying to spectators
 * Fixed mobs with bows dealing almost no damage
-* Increased 'Force Darkness' brightness (0% -> 15%)
 
 ## 3.10.2
 * Unbreaking overhaul
