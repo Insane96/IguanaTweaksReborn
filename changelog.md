@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.10.4
+* Fixed echo lantern dropping nothing
+
 ## 3.10.3
 * Increased chance for chickens, cows and sheep to drop food with Looting (Luck)
 * Reduced Pigs food drop with looting
