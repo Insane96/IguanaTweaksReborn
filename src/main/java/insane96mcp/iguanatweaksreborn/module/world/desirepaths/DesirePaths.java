@@ -62,7 +62,7 @@ public class DesirePaths extends Feature {
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
 				|| event.player.level().isClientSide
-				|| event.player.walkDist - event.player.walkDistO < 0.04f
+				|| event.player.isCrouching()
 				|| event.phase != TickEvent.Phase.START
 				|| !event.player.onGround())
 			return;

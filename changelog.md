@@ -1,6 +1,7 @@
 # Changelog
 
-## 3.10.4
+## Upcoming
+* Desire paths no longer form if the player's sneaking
 * Fixed echo lantern dropping nothing
 
 ## 3.10.3
