@@ -87,11 +87,15 @@ public class Tweaks extends Feature {
     @Label(name = "Increase drown damage the more drowning")
     public static Boolean increaseDrownDamageTheMoreDrowning = true;
     @Config
-    @Label(name = "Totem resistance", description = "If enabled, the Totem of Undying will give Resistance IV for 5 seconds")
+    @Label(name = "Totem resistance", description = "If enabled, the Totem of Undying will give Resistance IV for 5.5 seconds")
     public static Boolean totemResistance = true;
     @Config
     @Label(name = "Turtle Helmet water breathing time", description = "The ticks of Water Breathing given by the Turtle Helmet. Vanilla is 200")
     public static Integer turtleHelmetWaterBreathingTime = 900;
+
+    @Config
+    @Label(name = "Splash potions throw strength", description = "The strength used to throw splash potions. Vanilla is 0.5")
+    public static Double splashPotionThrowStrength = 2.5d;
 
     public Tweaks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);

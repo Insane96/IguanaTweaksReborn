@@ -55,6 +55,7 @@
         "SpongeBlockMixin",
         "SpringFeatureMixin",
         "ThornsEnchantmentMixin",
+        "ThrowablePotionItemMixin",
         "ThrownEggMixin",
         "ThrownExperienceBottleMixin",
         "VillagerMixin",
