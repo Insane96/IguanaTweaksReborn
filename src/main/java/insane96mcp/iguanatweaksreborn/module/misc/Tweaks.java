@@ -95,7 +95,7 @@ public class Tweaks extends Feature {
 
     @Config
     @Label(name = "Splash potions throw strength", description = "The strength used to throw splash potions. Vanilla is 0.5")
-    public static Double splashPotionThrowStrength = 2.5d;
+    public static Double splashPotionThrowStrength = 1d;
 
     public Tweaks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
