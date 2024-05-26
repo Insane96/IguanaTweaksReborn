@@ -3,6 +3,7 @@
 ## Upcoming
 * Splash potions can now be thrown much farther
 * Desire paths no longer form if the player's sneaking
+* Torches made with fire charge now require fewer sticks
 * Fixed echo lantern dropping nothing
 * Fixed piercing damage ignored if the entity had regenerating absorption
 
