@@ -23,7 +23,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -51,9 +52,10 @@ public class PiercingDamage extends Feature {
 		}
 	}
 
+	//Run before Regenerating Absorption
 	@SuppressWarnings("DataFlowIssue")
-	@SubscribeEvent
-	public void onEntityDamaged(LivingDamageEvent event) {
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void onEntityDamaged(LivingHurtEvent event) {
 		if (!this.isEnabled()
 				|| !(event.getSource().getDirectEntity() instanceof LivingEntity attacker)
 				|| event.getEntity().isDeadOrDying()

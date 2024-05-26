@@ -3,6 +3,7 @@
 ## Upcoming
 * Desire paths no longer form if the player's sneaking
 * Fixed echo lantern dropping nothing
+* Fixed piercing damage ignored if the entity had regenerating absorption
 
 ## 3.10.3
 * Increased chance for chickens, cows and sheep to drop food with Looting (Luck)
