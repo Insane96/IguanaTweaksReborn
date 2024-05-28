@@ -55,10 +55,11 @@ public class Knockback extends JsonFeature {
 
 	//Knockback multipliers for items
 	public static final ArrayList<IdTagValue> KNOCKBACK_MULTIPLIERS_DEFAULT = new ArrayList<>(List.of(
-			IdTagValue.newTag("minecraft:pickaxes", 0.75d),
-			IdTagValue.newTag("minecraft:axes", 0.85d),
-			IdTagValue.newTag("minecraft:hoes", 0.3d),
-			IdTagValue.newTag("iguanatweaksexpanded:forge_hammers", 0.85d)
+			IdTagValue.newTag("minecraft:pickaxes", 0.85d),
+			IdTagValue.newTag("minecraft:axes", 0.9d),
+			IdTagValue.newTag("minecraft:swords", 0.85d),
+			IdTagValue.newTag("minecraft:hoes", 0.35d),
+			IdTagValue.newTag("iguanatweaksexpanded:forge_hammers", 1d)
 	));
 	public static final ArrayList<IdTagValue> knockbackMultipliers = new ArrayList<>();
 

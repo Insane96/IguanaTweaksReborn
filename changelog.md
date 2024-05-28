@@ -1,6 +1,11 @@
 # Changelog
 
 ## Upcoming
+* Tentative balance
+  * Swords now have -0.25 reach and lower knockback
+  * Shovels now reach farther (and fixed damage: was 2.5 base damage instead of 1 base damage +30%)
+  * Axes and Forge Hammers have increased knockback
+  * Pickaxes have slightly more knockback
 * Fixed Echo Lantern being insta-break
 * Fixed chunks not being removed from force loaded when in another dimension when the player died and a grave broke
 
