@@ -6,6 +6,7 @@ import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
 import insane96mcp.iguanatweaksreborn.module.mining.blockhardness.BlockHardness;
 import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.BeaconConduit;
+import insane96mcp.iguanatweaksreborn.module.mobs.spawning.Spawning;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.Death;
 import insane96mcp.iguanatweaksreborn.module.world.Nether;
 import insane96mcp.iguanatweaksreborn.module.world.timber.TimberTrees;
@@ -44,7 +45,8 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
                 .add(Blocks.COBWEB);
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(Death.GRAVE.block().get())
-                .add(BeaconConduit.BEACON.block().get());
+                .add(BeaconConduit.BEACON.block().get())
+                .add(Spawning.ECHO_LANTERN.block().get());
         tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(BoneMeal.RICH_FARMLAND.block().get());
 

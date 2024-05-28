@@ -29,7 +29,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -91,7 +90,7 @@ public class Death extends Feature {
 		GlobalPos pos = player.getLastDeathLocation().get();
 		if (player.getServer() == null)
 			return;
-		Level level = player.getServer().getLevel(pos.dimension());
+		ServerLevel level = player.getServer().getLevel(pos.dimension());
 		if (level == null)
 			return;
 		if (level.isLoaded(pos.pos()) && level.getBlockState(pos.pos()).is(GRAVE.block().get())) {
@@ -100,7 +99,7 @@ public class Death extends Feature {
 
 			int chunkX = SectionPos.blockToSectionCoord(pos.pos().getX());
 			int chunkZ = SectionPos.blockToSectionCoord(pos.pos().getZ());
-			((ServerLevel)player.level()).setChunkForced(chunkX, chunkZ, false);
+			level.setChunkForced(chunkX, chunkZ, false);
 		}
 	}
 

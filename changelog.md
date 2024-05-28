@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Fixed Echo Lantern being insta-break
+* Fixed chunks not being removed from force loaded when in another dimension when the player died and a grave broke
 
 ## 3.10.5
 * Added a config option to change decay speed of regenerating absorption
