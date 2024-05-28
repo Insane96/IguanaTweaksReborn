@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.10.5
+* Fixed iron, copper and gold ores not dropping experience
+
 ## 3.10.4
 * Splash potions can now be thrown much farther
 * Blocks are now less hard to break in the nether
