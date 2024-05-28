@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed Echo Lantern being insta-break
+
 ## 3.10.5
 * Added a config option to change decay speed of regenerating absorption
 * Fixed iron, copper and gold ores not dropping experience
