@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.10.4
 * Splash potions can now be thrown much farther
 * Blocks are now less hard to break in the nether
 * Mending and Allurement's Reforming now work for items in the Tool belt
