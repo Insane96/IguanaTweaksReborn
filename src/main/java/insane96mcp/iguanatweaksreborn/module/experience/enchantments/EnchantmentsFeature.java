@@ -2,7 +2,6 @@ package insane96mcp.iguanatweaksreborn.module.experience.enchantments;
 
 import com.google.common.collect.Lists;
 import com.teamabnormals.allurement.core.AllurementConfig;
-import com.teamabnormals.allurement.core.registry.AllurementEnchantments;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.FireAspect;
@@ -14,7 +13,6 @@ import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.Smite;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.*;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.integration.Allurement;
-import insane96mcp.iguanatweaksreborn.module.experience.enchantments.integration.ToolBelt;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatistics;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
@@ -45,7 +43,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -311,9 +308,8 @@ public class EnchantmentsFeature extends JsonFeature {
         if (stack == null)
             return xp;
 
-		ItemStack itemstack = stack;
-		float repairAmount = Math.min(xpOrb.value * 0.5f, itemstack.getDamageValue());
-		itemstack.setDamageValue(itemstack.getDamageValue() - MathHelper.getAmountWithDecimalChance(player.getRandom(), repairAmount));
+		float repairAmount = Math.min(xpOrb.value * 0.5f, stack.getDamageValue());
+		stack.setDamageValue(stack.getDamageValue() - MathHelper.getAmountWithDecimalChance(player.getRandom(), repairAmount));
 		int j = xp - Math.round(repairAmount * 2f);
 		return j > 0 ? repairPlayerItems(xpOrb, player, j) : 0;
     }
@@ -331,8 +327,12 @@ public class EnchantmentsFeature extends JsonFeature {
 				list.add(itemStack);
 			}
 		}
-		if (ModList.get().isLoaded("toolbelt"))
-			ToolBelt.putItems(list, livingEntity);
+		if (ModList.get().isLoaded("toolbelt")) {
+			/*List<ItemStack> toolbeltStacks = new ArrayList<>();
+			ToolBelt.putItems(toolbeltStacks, livingEntity);
+			toolbeltStacks.removeIf(stack -> stack.isEmpty() || EnchantmentHelper.getItemEnchantmentLevel(enchantment, stack) <= 0 || !stack.isDamaged());
+			list.addAll(toolbeltStacks);*/
+		}
 
 		return list.isEmpty() ? null : list.get(livingEntity.getRandom().nextInt(list.size()));
 	}
@@ -342,7 +342,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	 */
 	@SubscribeEvent
 	public static void onLivingUpdate(LivingEvent.LivingTickEvent event) {
-		if (!ModList.get().isLoaded("toolbelt")
+		/*if (!ModList.get().isLoaded("toolbelt")
 				|| !ModList.get().isLoaded("allurement")
 				|| event.getEntity().level().getGameTime() % AllurementConfig.COMMON.reformingTickRate.get() != 0)
 			return;
@@ -355,7 +355,7 @@ public class EnchantmentsFeature extends JsonFeature {
 			if (!stack.isEmpty() && stack.isDamaged() && lvl > 0) {
 				stack.setDamageValue(stack.getDamageValue() - 1);
 			}
-		}
+		}*/
 	}
 
 	@SubscribeEvent

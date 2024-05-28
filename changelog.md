@@ -2,6 +2,8 @@
 
 ## 3.10.5
 * Fixed iron, copper and gold ores not dropping experience
+* Revert 'Mending and Allurement's Reforming now work for items in the Tool belt'
+  * Doesn't work and wastes experience. Was also crashing the game
 
 ## 3.10.4
 * Splash potions can now be thrown much farther
