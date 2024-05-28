@@ -3,6 +3,7 @@
 ## Upcoming
 * Splash potions can now be thrown much farther
 * Blocks are now less hard to break in the nether
+* Mending and Allurement's Reforming now work for items in the Tool belt
 * Desire paths no longer form if the player's sneaking
 * Torches made with fire charge now require fewer sticks
 * Fixed echo lantern dropping nothing

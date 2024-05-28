@@ -1,6 +1,8 @@
 package insane96mcp.iguanatweaksreborn.module.experience.enchantments;
 
+import com.google.common.collect.Lists;
 import com.teamabnormals.allurement.core.AllurementConfig;
+import com.teamabnormals.allurement.core.registry.AllurementEnchantments;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.FireAspect;
@@ -12,6 +14,7 @@ import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.Smite;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.*;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.integration.Allurement;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.integration.ToolBelt;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatistics;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
@@ -42,6 +45,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -57,6 +61,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
 
 @Label(name = "Enchantments", description = "Changes to some enchantments related stuff.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
@@ -302,16 +307,56 @@ public class EnchantmentsFeature extends JsonFeature {
 	}
 
 	private static int repairPlayerItems(ExperienceOrb xpOrb, Player player, int xp) {
-		Map.Entry<EquipmentSlot, ItemStack> entry = EnchantmentHelper.getRandomItemWith(Enchantments.MENDING, player, ItemStack::isDamaged);
-        if (entry == null)
+		ItemStack stack = getRandomItemWith(Enchantments.MENDING, player, ItemStack::isDamaged);
+        if (stack == null)
             return xp;
 
-		ItemStack itemstack = entry.getValue();
+		ItemStack itemstack = stack;
 		float repairAmount = Math.min(xpOrb.value * 0.5f, itemstack.getDamageValue());
 		itemstack.setDamageValue(itemstack.getDamageValue() - MathHelper.getAmountWithDecimalChance(player.getRandom(), repairAmount));
 		int j = xp - Math.round(repairAmount * 2f);
 		return j > 0 ? repairPlayerItems(xpOrb, player, j) : 0;
     }
+
+	public static ItemStack getRandomItemWith(Enchantment enchantment, LivingEntity livingEntity, Predicate<ItemStack> pStackCondition) {
+		Map<EquipmentSlot, ItemStack> map = enchantment.getSlotItems(livingEntity);
+		if (map.isEmpty())
+			return null;
+
+		List<ItemStack> list = Lists.newArrayList();
+
+		for (Map.Entry<EquipmentSlot, ItemStack> entry : map.entrySet()) {
+			ItemStack itemStack = entry.getValue();
+			if (!itemStack.isEmpty() && EnchantmentHelper.getItemEnchantmentLevel(enchantment, itemStack) > 0 && pStackCondition.test(itemStack)) {
+				list.add(itemStack);
+			}
+		}
+		if (ModList.get().isLoaded("toolbelt"))
+			ToolBelt.putItems(list, livingEntity);
+
+		return list.isEmpty() ? null : list.get(livingEntity.getRandom().nextInt(list.size()));
+	}
+
+	/**
+	 * Make Allurement's reforming work with ToolBelt items
+	 */
+	@SubscribeEvent
+	public static void onLivingUpdate(LivingEvent.LivingTickEvent event) {
+		if (!ModList.get().isLoaded("toolbelt")
+				|| !ModList.get().isLoaded("allurement")
+				|| event.getEntity().level().getGameTime() % AllurementConfig.COMMON.reformingTickRate.get() != 0)
+			return;
+		LivingEntity entity = event.getEntity();
+		Level level = entity.getCommandSenderWorld();
+		List<ItemStack> stacksInToolbelt = new ArrayList<>();
+		ToolBelt.putItems(stacksInToolbelt, entity);
+		for (ItemStack stack : stacksInToolbelt) {
+			int lvl = EnchantmentHelper.getTagEnchantmentLevel(AllurementEnchantments.REFORMING.get(), stack);
+			if (!stack.isEmpty() && stack.isDamaged() && lvl > 0) {
+				stack.setDamageValue(stack.getDamageValue() - 1);
+			}
+		}
+	}
 
 	@SubscribeEvent
 	public void onFall(LivingFallEvent event) {
