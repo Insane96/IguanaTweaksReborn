@@ -1,6 +1,7 @@
 # Changelog
 
 ## 3.10.5
+* Added a config option to change decay speed of regenerating absorption
 * Fixed iron, copper and gold ores not dropping experience
 * Revert 'Mending and Allurement's Reforming now work for items in the Tool belt'
   * Doesn't work and wastes experience. Was also crashing the game
