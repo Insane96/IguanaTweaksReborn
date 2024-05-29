@@ -8,6 +8,7 @@
   * Pickaxes have slightly more knockback
 * Fixed Echo Lantern being insta-break
 * Fixed chunks not being removed from force loaded when in another dimension when the player died and a grave broke
+* Fixed armor rendering both left and right if No Hunger was disabled
 
 ## 3.10.5
 * Added a config option to change decay speed of regenerating absorption

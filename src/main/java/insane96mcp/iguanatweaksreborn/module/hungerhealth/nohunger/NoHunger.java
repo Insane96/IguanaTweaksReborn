@@ -357,7 +357,7 @@ public class NoHunger extends Feature {
     @SubscribeEvent
     public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
         event.registerBelow(VanillaGuiOverlay.AIR_LEVEL.id(), "armor", (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
-            if (renderArmorAtHunger && gui.shouldDrawSurvivalElements() && gui.shouldDrawSurvivalElements())
+            if (Feature.isEnabled(NoHunger.class) && renderArmorAtHunger && gui.shouldDrawSurvivalElements() && gui.shouldDrawSurvivalElements())
                 renderArmor(guiGraphics, screenWidth, screenHeight);
         });
     }
