@@ -1,6 +1,9 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import insane96mcp.iguanatweaksreborn.event.ITREventFactory;
 import insane96mcp.iguanatweaksreborn.module.combat.stats.Stats;
 import insane96mcp.iguanatweaksreborn.module.experience.PlayerExperience;
@@ -8,11 +11,13 @@ import insane96mcp.iguanatweaksreborn.module.experience.enchantments.Enchantment
 import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.insanelib.base.Feature;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -20,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
@@ -32,6 +38,8 @@ public abstract class PlayerMixin extends LivingEntity {
 	public int experienceLevel;
 
 	@Shadow public abstract void remove(RemovalReason pReason);
+
+	@Shadow public abstract void resetAttackStrengthTicker();
 
 	protected PlayerMixin(EntityType<? extends LivingEntity> type, Level level) {
 		super(type, level);
@@ -90,7 +98,6 @@ public abstract class PlayerMixin extends LivingEntity {
 		return Stats.noDamageWhenSpamming() ? 1f : value;
 	}
 
-
 	@ModifyExpressionValue(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getDamageBonus(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/MobType;)F"))
 	public float onEnchantmentDamage(float original, Entity target) {
 		Map<Enchantment, Integer> allEnchantments = this.getMainHandItem().getAllEnchantments();
@@ -98,6 +105,38 @@ public abstract class PlayerMixin extends LivingEntity {
 			original += EnchantmentsFeature.bonusDamageEnchantment(enchantment, allEnchantments.get(enchantment), this, target);
 		}
 		return original;
+	}
+
+	/*@ModifyExpressionValue(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;onGround()Z", ordinal = 1))
+	public boolean allowSweepingOffGround(boolean original) {
+		return true;
+	}*/
+
+	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getFireAspect(Lnet/minecraft/world/entity/LivingEntity;)I"))
+	public void storeNewFlag3(Entity pTarget, CallbackInfo ci, @Local(ordinal = 0) boolean flag, @Share("flag3") LocalBooleanRef flag3) {
+		if (!Stats.betterSweeping
+				|| !Feature.isEnabled(Stats.class))
+			return;
+		if (flag) {
+			ItemStack itemstack = this.getItemInHand(InteractionHand.MAIN_HAND);
+			flag3.set(itemstack.canPerformAction(net.minecraftforge.common.ToolActions.SWORD_SWEEP));
+		}
+	}
+
+	@ModifyVariable(method = "attack", ordinal = 3, at = @At("LOAD"))
+	public boolean onFlag3Check(boolean original, @Share("flag3") LocalBooleanRef flag3) {
+		if (!Stats.betterSweeping
+				|| !Feature.isEnabled(Stats.class))
+			return original;
+		return flag3.get();
+	}
+
+	@ModifyExpressionValue(method = "attack",at = @At(value = "CONSTANT", args = "doubleValue=0.4000000059604645"))
+	public double onSweepKnockbackStrength(double original, @Local(name = "i") float i) {
+		if (!Stats.betterSweeping
+				|| !Feature.isEnabled(Stats.class))
+			return original;
+		return i * 0.5F;
 	}
 
 	@ModifyExpressionValue(method = "turtleHelmetTick", at = @At(value = "CONSTANT", args = "intValue=200"))

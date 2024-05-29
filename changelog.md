@@ -2,7 +2,7 @@
 
 ## Upcoming
 * Tentative balance
-  * Swords now have -0.25 reach and lower knockback
+  * Swords now have -0.25 reach and lower knockback, but the sweeping attack now works even when running or jumping and deals the same knockback as the mob hit 
   * Shovels now reach farther (and fixed damage: was 2.5 base damage instead of 1 base damage +30%)
   * Axes and Forge Hammers have increased knockback
   * Pickaxes have slightly more knockback

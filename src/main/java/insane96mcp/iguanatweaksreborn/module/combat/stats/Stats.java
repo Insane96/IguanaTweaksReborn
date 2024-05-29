@@ -82,6 +82,9 @@ public class Stats extends Feature {
 	@Config
 	@Label(name = "Item Stats Data Pack", description = "Enables a data pack that rebalances all the items, from armor to efficiency to weapons. Also changes some item stacks.")
 	public static Boolean itemStatsDataPack = true;
+	@Config
+	@Label(name = "Better sweeping", description = "Makes swords do sweep attack even if not on ground and if did crit")
+	public static Boolean betterSweeping = true;
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
