@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Heavily reduced healing from high food values (changed `Food Heal.Over Time` formula)
+* Foods eating speed is now capped between 1s and 3.75s (was only capped to min 1s)
+
 ## 3.10.6
 * Tentative balance
   * Swords now have -0.25 reach and lower knockback, but the sweeping attack now works even when running or jumping and deals the same knockback as the mob hit 
