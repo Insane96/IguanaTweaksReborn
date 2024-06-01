@@ -19,7 +19,7 @@ public class ProtectionEnchantmentMixin extends Enchantment {
 	}
 
 	@ModifyVariable(method = "getFireAfterDampener", at = @At(value = "STORE", ordinal = 0), ordinal = 1)
-	private static int onFallDamageProtection(int i, LivingEntity pLivingEntity, int pLevel) {
+	private static int onGetFireAfterDampener(int i, LivingEntity pLivingEntity, int pLevel) {
 		i += EnchantmentHelper.getEnchantmentLevel(EnchantmentsFeature.FIRE_PROTECTION.get(), pLivingEntity);
 		return i;
 	}
