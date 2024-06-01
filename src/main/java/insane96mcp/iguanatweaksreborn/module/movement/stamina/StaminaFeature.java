@@ -47,7 +47,7 @@ import java.util.UUID;
 
 @Label(name = "Stamina", description = "Stamina to let the player run and do stuff.")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
-public class Stamina extends Feature {
+public class StaminaFeature extends Feature {
     public static final UUID SLOWDOWN_UUID = UUID.fromString("b17cbf02-97f8-4c50-9cd1-6dc732593fed");
 
     public static final String STAMINA = IguanaTweaksReborn.RESOURCE_PREFIX + "stamina";
@@ -101,7 +101,7 @@ public class Stamina extends Feature {
     @Label(name = "Disable Sprinting", description = "Disable sprinting (and swimming) altogether")
     public static Boolean disableSprinting = false;
 
-    public Stamina(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+    public StaminaFeature(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
 
@@ -228,7 +228,7 @@ public class Stamina extends Feature {
     @SubscribeEvent
     public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
         event.registerAbove(VanillaGuiOverlay.PLAYER_HEALTH.id(), OVERLAY, (gui, guiGraphics, partialTicks, screenWidth, screenHeight) -> {
-            if (isEnabled(Stamina.class) && gui.shouldDrawSurvivalElements())
+            if (isEnabled(StaminaFeature.class) && gui.shouldDrawSurvivalElements())
                 renderStamina(gui, guiGraphics);
         });
     }

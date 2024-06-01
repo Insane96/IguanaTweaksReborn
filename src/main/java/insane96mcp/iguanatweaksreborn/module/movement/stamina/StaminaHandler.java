@@ -5,15 +5,15 @@ import net.minecraft.world.entity.player.Player;
 
 public class StaminaHandler {
     public static float getMaxStamina(Player player) {
-        return Mth.ceil(player.getHealth()) * Stamina.staminaPerHalfHeart;
+        return Mth.ceil(player.getHealth()) * StaminaFeature.staminaPerHalfHeart;
     }
 
     public static float getStamina(Player player) {
-        return player.getPersistentData().getFloat(Stamina.STAMINA);
+        return player.getPersistentData().getFloat(StaminaFeature.STAMINA);
     }
 
     public static boolean isStaminaLocked(Player player) {
-        return player.getPersistentData().getBoolean(Stamina.STAMINA_LOCKED);
+        return player.getPersistentData().getBoolean(StaminaFeature.STAMINA_LOCKED);
     }
 
     public static boolean canSprint(Player player) {
@@ -22,7 +22,7 @@ public class StaminaHandler {
 
     public static float setStamina(Player player, float stamina) {
         stamina = Mth.clamp(stamina, 0, getMaxStamina(player));
-        player.getPersistentData().putFloat(Stamina.STAMINA, stamina);
+        player.getPersistentData().putFloat(StaminaFeature.STAMINA, stamina);
         return stamina;
     }
 
@@ -37,10 +37,10 @@ public class StaminaHandler {
     }
 
     public static void lockSprinting(Player player) {
-        player.getPersistentData().putBoolean(Stamina.STAMINA_LOCKED, true);
+        player.getPersistentData().putBoolean(StaminaFeature.STAMINA_LOCKED, true);
     }
 
     public static void unlockSprinting(Player player) {
-        player.getPersistentData().putBoolean(Stamina.STAMINA_LOCKED, false);
+        player.getPersistentData().putBoolean(StaminaFeature.STAMINA_LOCKED, false);
     }
 }

@@ -33,6 +33,6 @@ public class Vigour extends Enchantment {
 
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack) {
-        return super.canApplyAtEnchantingTable(stack) && Feature.isEnabled(Stamina.class);
+        return super.canApplyAtEnchantingTable(stack) && Feature.isEnabled(StaminaFeature.class);
     }
 }

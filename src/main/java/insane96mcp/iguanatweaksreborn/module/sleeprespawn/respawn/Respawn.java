@@ -55,7 +55,7 @@ public class Respawn extends Feature {
 		super(module, enabledByDefault, canBeDisabled);
 	}
 
-	//Run before Survival Reimagined Respawn Obelisk
+	//Run before ITE Respawn Obelisk
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
 		if (!this.isEnabled()
