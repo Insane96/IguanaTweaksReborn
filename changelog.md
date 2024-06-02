@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.11.0
 * Removed Stamina
   * Moved to a standalone mod
   * Vigour and anything related has been removed
