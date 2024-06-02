@@ -467,6 +467,8 @@ public class NoHunger extends Feature {
             }
             else {
                 component = Component.translatable("iguanatweaksreborn.tooltip.meal");
+                if (Utils.computeFoodFormula(food, healOverTime) > 8)
+                    component.withStyle(ChatFormatting.BOLD);
             }
         }
         if (component != null)

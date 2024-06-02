@@ -55,7 +55,7 @@ public class FarmersDelightIntegration {
         if (ModList.get().isLoaded("stamina"))
             event.getEntity().addEffect(new MobEffectInstance(StaminaFeature.VIGOUR_EFFECT.get(), (event.getEffectInstance().getDuration() + 1) * 2, event.getEffectInstance().getAmplifier(), event.getEffectInstance().isAmbient(), event.getEffectInstance().isVisible(), event.getEffectInstance().showIcon()));
         else
-            event.getEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, (event.getEffectInstance().getDuration() + 1) * 2, event.getEffectInstance().getAmplifier(), event.getEffectInstance().isAmbient(), event.getEffectInstance().isVisible(), event.getEffectInstance().showIcon()));
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, (event.getEffectInstance().getDuration() + 1), event.getEffectInstance().getAmplifier(), event.getEffectInstance().isAmbient(), event.getEffectInstance().isVisible(), event.getEffectInstance().showIcon()));
         event.setResult(Event.Result.DENY);
     }
 
