@@ -72,9 +72,9 @@ public class Experience extends JsonFeature {
 	public static Integer xpBottleBonus = 35;
 
 	public static final ArrayList<IdTagRange> CUSTOM_BLOCKS_EXPERIENCE_DEFAULT = new ArrayList<>(List.of(
-			IdTagRange.newTag("iguanatweaksreborn:copper_ores", 0, 2),
-			IdTagRange.newTag("iguanatweaksreborn:iron_ores", 1, 2),
-			IdTagRange.newTag("iguanatweaksreborn:gold_ores", 2, 3),
+			IdTagRange.newTag("minecraft:copper_ores", 0, 2),
+			IdTagRange.newTag("minecraft:iron_ores", 1, 2),
+			IdTagRange.newTag("minecraft:gold_ores", 2, 3),
 
 			IdTagRange.newId("minecraft:sculk_catalyst", 35, 35),
 			IdTagRange.newId("minecraft:spawner", 70, 70)

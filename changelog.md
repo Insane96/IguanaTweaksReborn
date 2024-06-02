@@ -8,6 +8,7 @@
 * Foods that restore more than 8 hp now show 'Meal' in bold
 * Heavily reduced healing from high food values (changed `Food Heal.Over Time` formula)
 * Foods eating speed is now capped between 1s and 3.75s (was only capped to min 1s)
+* Fixed (again) iron, copper and gold ores not dropping experience
 
 ## 3.10.6
 * Tentative balance
