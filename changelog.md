@@ -4,6 +4,7 @@
 * Removed Stamina
   * Moved to a standalone mod
   * Vigour and anything related has been removed
+* Mobs from spawners now only have 20% chance to drop equipment
 * Heavily reduced healing from high food values (changed `Food Heal.Over Time` formula)
 * Foods eating speed is now capped between 1s and 3.75s (was only capped to min 1s)
 

@@ -8,6 +8,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
+import insane96mcp.insanelib.setup.ILStrings;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -37,6 +38,9 @@ public class Equipment extends JsonFeature {
     @Config
     @Label(name = "Drop chance", description = "Set the drop chance for mobs equipment.")
     public static Double dropChance = 0.5d;
+    @Config
+    @Label(name = "Drop chance from Spawners", description = "Set the drop chance for mobs equipment when spawned from spawners.")
+    public static Double dropChanceFromSpawners = 0.2d;
     @Config(min = 0, max = 1)
     @Label(name = "Max durability", description = "Max durability of items dropped by mobs. This also fixes https://bugs.mojang.com/browse/MC-136374. Setting to 0 will disable this feature.")
     public static Double maxDurability = 0.6d;
@@ -72,8 +76,12 @@ public class Equipment extends JsonFeature {
                     customDropChance = true;
                 }
             }
-            if (!customDropChance)
-                entity.setDropChance(slot, dropChance.floatValue());
+            if (!customDropChance) {
+                if (entity.getPersistentData().getBoolean(ILStrings.Tags.SPAWNED_FROM_SPAWNER))
+                    entity.setDropChance(slot, dropChanceFromSpawners.floatValue());
+                else
+                    entity.setDropChance(slot, dropChance.floatValue());
+            }
         }
     }
 }
