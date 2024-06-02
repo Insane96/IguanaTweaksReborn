@@ -4,15 +4,14 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.NoHunger;
-import insane96mcp.iguanatweaksreborn.module.movement.stamina.StaminaFeature;
 import insane96mcp.iguanatweaksreborn.network.message.RegenAbsorptionSync;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
-import insane96mcp.iguanatweaksreborn.utils.ClientUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import insane96mcp.insanelib.util.ClientUtils;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -171,8 +170,8 @@ public class RegeneratingAbsorption extends Feature {
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOW)
-    public static void onRenderGuiOverlayPre(RegisterGuiOverlaysEvent event) {
-        ResourceLocation aboveOverlay = new ResourceLocation(IguanaTweaksReborn.MOD_ID, StaminaFeature.OVERLAY);
+    public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
+        ResourceLocation aboveOverlay = VanillaGuiOverlay.PLAYER_HEALTH.id();
         if (renderOnRight) {
             if (Feature.isEnabled(NoHunger.class) && NoHunger.renderArmorAtHunger)
                 aboveOverlay = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "armor");

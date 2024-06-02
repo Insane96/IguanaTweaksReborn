@@ -3,7 +3,6 @@ package insane96mcp.iguanatweaksreborn.module.hungerhealth.healthregen;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.NoHunger;
-import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.base.Feature;
@@ -15,9 +14,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.food.FoodProperties;
@@ -29,14 +25,12 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.text.DecimalFormat;
 
 @Label(name = "Hunger Health Regen", description = "Makes Health regen work differently, similar to Combat Test snapshots. Can be customized. Also adds Vigour effect. Hunger related stuff doesn't work (for obvious reasons) if No Hunger feature is enabled")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class HealthRegen extends Feature {
-	public static final RegistryObject<MobEffect> VIGOUR = ITRRegistries.MOB_EFFECTS.register("vigour", () -> new VigourEffect(MobEffectCategory.BENEFICIAL, 0xFCD373));
 
 	public static final String HUNGER_ON_DEATH_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "hunger_on_death";
 	public static final String SATURATION_ON_DEATH_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "saturation_on_death";
@@ -120,29 +114,7 @@ public class HealthRegen extends Feature {
 				|| event.getEntity().level().isClientSide)
 			return;
 
-		processVigour(event);
 		healOnEat(event);
-	}
-
-	private void processVigour(LivingEntityUseItemEvent.Finish event) {
-		if (!enableVigour)
-			return;
-		Player player = (Player) event.getEntity();
-		boolean hasEffect = player.hasEffect(VIGOUR.get());
-		if (hasEffect && !vigourStacks)
-			return;
-
-		FoodProperties food = event.getItem().getItem().getFoodProperties(event.getItem(), player);
-		float saturationRestored = Utils.getFoodSaturationRestored(food);
-		if (saturationRestored < vigourMinimumSaturation)
-			return;
-		int duration = (int) (saturationRestored * vigourDurationMultiplier) * 20;
-		if (hasEffect) {
-			MobEffectInstance effectInstance = player.getEffect(VIGOUR.get());
-			//noinspection DataFlowIssue
-			duration += effectInstance.duration;
-		}
-		player.addEffect(new MobEffectInstance(VIGOUR.get(), duration, 0, false, false, true));
 	}
 
 	public void healOnEat(LivingEntityUseItemEvent.Finish event) {
@@ -232,11 +204,7 @@ public class HealthRegen extends Feature {
 	}
 
 	private static int getRegenSpeed(Player player) {
-		int ticksToRegen = healthRegenSpeed;
-		MobEffectInstance vigour = player.getEffect(VIGOUR.get());
-		if (vigour != null)
-			ticksToRegen *= 1 - (((vigour.getAmplifier() + 1) * vigourEffectiveness));
-		return ticksToRegen;
+		return healthRegenSpeed;
 	}
 
 	@SubscribeEvent

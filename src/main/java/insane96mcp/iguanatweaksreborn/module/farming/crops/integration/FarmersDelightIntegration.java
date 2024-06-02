@@ -1,17 +1,20 @@
 package insane96mcp.iguanatweaksreborn.module.farming.crops.integration;
 
 import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
-import insane96mcp.iguanatweaksreborn.module.hungerhealth.healthregen.HealthRegen;
+import insane96mcp.stamina.stamina.StaminaFeature;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.fml.ModList;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 import vectorwing.farmersdelight.common.registry.ModEffects;
 import vectorwing.farmersdelight.common.registry.ModItems;
@@ -45,13 +48,15 @@ public class FarmersDelightIntegration {
         return state.is(ModBlocks.RICH_SOIL.get());
     }
 
-    public static void onTick(TickEvent.PlayerTickEvent event) {
-        MobEffectInstance effectInstance = event.player.getEffect(ModEffects.NOURISHMENT.get());
-        if (effectInstance == null)
+    public static void onEffectApplicable(MobEffectEvent.Applicable event) {
+        if (event.getEffectInstance().getEffect() != ModEffects.NOURISHMENT.get())
             return;
 
-        event.player.addEffect(new MobEffectInstance(HealthRegen.VIGOUR.get(), (effectInstance.getDuration() + 1) * 2, effectInstance.getAmplifier(), effectInstance.isAmbient(), effectInstance.isVisible(), effectInstance.showIcon()));
-        event.player.removeEffect(ModEffects.NOURISHMENT.get());
+        if (ModList.get().isLoaded("stamina"))
+            event.getEntity().addEffect(new MobEffectInstance(StaminaFeature.VIGOUR_EFFECT.get(), (event.getEffectInstance().getDuration() + 1) * 2, event.getEffectInstance().getAmplifier(), event.getEffectInstance().isAmbient(), event.getEffectInstance().isVisible(), event.getEffectInstance().showIcon()));
+        else
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, (event.getEffectInstance().getDuration() + 1) * 2, event.getEffectInstance().getAmplifier(), event.getEffectInstance().isAmbient(), event.getEffectInstance().isVisible(), event.getEffectInstance().showIcon()));
+        event.setResult(Event.Result.DENY);
     }
 
     public static float tryApplyComfort(Player player, float amount) {

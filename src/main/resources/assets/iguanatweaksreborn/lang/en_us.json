@@ -116,8 +116,6 @@
 	"iguanatweaksreborn.tooltip.sec": "sec",
 	"iguanatweaksreborn.tooltip.snack": "Snack",
 	"iguanatweaksreborn.tooltip.meal": "Meal",
-	"effect.iguanatweaksreborn.vigour": "Vigour",
-	"effect.iguanatweaksreborn.vigour.description": "Decreases hunger/stamina consumption by 20% per level.",
 	"iguanatweaksreborn.subtitle.unfair_one_shot": "Player triggers Relentless Endurance",
 
 
@@ -153,9 +151,6 @@
 	"iguanatweaksreborn:movement_module": "Movement",
 
 	"iguanatweaksreborn.armor_slowdown": "-%s%% Speed",
-	"enchantment.iguanatweaksreborn.vigour": "Vigour",
-	"enchantment.iguanatweaksreborn.vigour.info": "Reduced stamina consumption",
-
 
 	"iguanatweaksreborn:sleep_respawn_module": "Sleep & Respawn",
 

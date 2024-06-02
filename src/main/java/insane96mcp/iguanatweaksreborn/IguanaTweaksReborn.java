@@ -20,7 +20,6 @@ import insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth.PlantsGrowthRe
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.NoHunger;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.module.mining.blockdata.BlockDataReloadListener;
-import insane96mcp.iguanatweaksreborn.module.movement.stamina.StaminaFeature;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.iguanatweaksreborn.module.world.CyanFlower;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerData;
@@ -91,7 +90,6 @@ public class IguanaTweaksReborn
         modEventBus.addListener(this::addPackFinders);
         modEventBus.addListener(PiercingDamage::addAttribute);
         modEventBus.addListener(RegeneratingAbsorption::addAttribute);
-        modEventBus.register(StaminaFeature.class);
 		modEventBus.register(SpawnerData.class);
         modEventBus.register(Tiredness.class);
         modEventBus.register(NoHunger.class);

@@ -8,7 +8,6 @@ import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.healthregen.HealthRegen;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.integration.AutumnityIntegration;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
-import insane96mcp.iguanatweaksreborn.utils.ClientUtils;
 import insane96mcp.iguanatweaksreborn.utils.Utils;
 import insane96mcp.insanelib.InsaneLib;
 import insane96mcp.insanelib.base.Feature;
@@ -19,6 +18,7 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.event.CakeEatEvent;
 import insane96mcp.insanelib.event.PlayerExhaustionEvent;
+import insane96mcp.insanelib.util.ClientUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -263,11 +263,11 @@ public class NoHunger extends Feature {
         float secs = (float) ((passiveRegenerationTime.max - passiveRegenerationTime.min) * healthPerc + passiveRegenerationTime.min);
         if (player.level().getDifficulty().equals(Difficulty.HARD))
             secs *= 1.5f;
-        if (player.hasEffect(HealthRegen.VIGOUR.get())) {
+        /*if (player.hasEffect(HealthRegen.VIGOUR.get())) {
             MobEffectInstance vigour = player.getEffect(HealthRegen.VIGOUR.get());
             //noinspection ConstantConditions
             secs *= 1 - (((vigour.getAmplifier() + 1) * 0.4f));
-        }
+        }*/
         return (int) (secs * 20);
     }
 

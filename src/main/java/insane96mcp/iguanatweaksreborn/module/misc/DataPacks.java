@@ -12,7 +12,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -132,14 +132,13 @@ public class DataPacks extends Feature {
     }
 
     @SubscribeEvent
-    public void onEffectApply(TickEvent.PlayerTickEvent event) {
+    public void onEffectApplicable(MobEffectEvent.Applicable event) {
         if (!ModList.get().isLoaded("farmersdelight")
                 || !this.isEnabled()
-                || !DataPacks.farmersDelight
-                || event.phase == TickEvent.Phase.START)
+                || !DataPacks.farmersDelight)
             return;
 
-        FarmersDelightIntegration.onTick(event);
+        FarmersDelightIntegration.onEffectApplicable(event);
     }
 
     public static CompoundTag forceReloadWorldDataPacks(CompoundTag levelTag) {
