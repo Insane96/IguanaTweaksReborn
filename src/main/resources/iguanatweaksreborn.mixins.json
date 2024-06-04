@@ -73,7 +73,7 @@
         "client.AnvilScreenMixin",
         "client.ClientLevelMixin",
         "client.GameRendererMixin",
-        "client.GuiMixin",
+        "client.GuiAccessor",
         "client.LevelRendererMixin",
         "client.LightTextureMixin",
         "client.LocalPlayerMixin",
