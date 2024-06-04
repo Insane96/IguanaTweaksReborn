@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed stamina rendered incorrectly if the player had regenerating absorption
+
 ## 3.11.0
 * Removed Stamina
   * Moved to a standalone mod

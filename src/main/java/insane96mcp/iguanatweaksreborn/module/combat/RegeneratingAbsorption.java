@@ -41,6 +41,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Regenerating Absorption", description = "Adds a new attribute to add regenerating absorption hearts to the player.")
@@ -172,6 +173,8 @@ public class RegeneratingAbsorption extends Feature {
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
         ResourceLocation aboveOverlay = VanillaGuiOverlay.PLAYER_HEALTH.id();
+        if (ModList.get().isLoaded("stamina"))
+            aboveOverlay = new ResourceLocation("stamina:stamina_overlay");
         if (renderOnRight) {
             if (Feature.isEnabled(NoHunger.class) && NoHunger.renderArmorAtHunger)
                 aboveOverlay = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "armor");
