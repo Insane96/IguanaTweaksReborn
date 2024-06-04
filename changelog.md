@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.11.1
 * Fixed stamina rendered incorrectly if the player had regenerating absorption
 
 ## 3.11.0
