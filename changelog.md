@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Removed Desire Paths
+  * Moved to a standalone mod
+
 ## 3.11.1
 * Fixed stamina rendered incorrectly if the player had regenerating absorption
 
