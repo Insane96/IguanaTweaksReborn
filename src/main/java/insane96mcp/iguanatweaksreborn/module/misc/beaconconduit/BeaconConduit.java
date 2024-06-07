@@ -16,6 +16,7 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.data.IdTagValue;
+import insane96mcp.insanelib.util.LogHelper;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -95,7 +96,7 @@ public class BeaconConduit extends JsonFeature {
             new BeaconEffect(MobEffects.JUMP, new int[] {1, 2, 3}),
             new BeaconEffect(MobEffects.REGENERATION, new int[] {8}),
             new BeaconEffect("iguanatweaksreborn:regenerating_absorption", new int[] {2, 4}),
-            new BeaconEffect("iguanatweaksreborn:vigour", new int[] {2, 5}),
+            new BeaconEffect("stamina:vigour", new int[] {2, 5}),
             new BeaconEffect(MobEffects.DAMAGE_RESISTANCE, new int[] {1, 3, 9}),
             new BeaconEffect(MobEffects.FIRE_RESISTANCE, new int[] {3}),
             new BeaconEffect(MobEffects.INVISIBILITY, new int[] {2}),
@@ -220,9 +221,12 @@ public class BeaconConduit extends JsonFeature {
             this.timeCost = timeCost;
         }
 
+        @Nullable
         public MobEffect getEffect() {
-            if (!ForgeRegistries.MOB_EFFECTS.containsKey(this.location))
-                throw new NullPointerException("No mob effect found with id %s".formatted(this.location));
+            if (!ForgeRegistries.MOB_EFFECTS.containsKey(this.location)) {
+                LogHelper.warn("No mob effect found with id %s", this.location);
+                return null;
+            }
             return ForgeRegistries.MOB_EFFECTS.getValue(this.location);
         }
 

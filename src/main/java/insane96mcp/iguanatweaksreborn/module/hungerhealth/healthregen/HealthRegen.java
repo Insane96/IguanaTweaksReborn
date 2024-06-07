@@ -28,7 +28,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.text.DecimalFormat;
 
-@Label(name = "Hunger Health Regen", description = "Makes Health regen work differently, similar to Combat Test snapshots. Can be customized. Also adds Vigour effect. Hunger related stuff doesn't work (for obvious reasons) if No Hunger feature is enabled")
+@Label(name = "Hunger Health Regen", description = "Makes Health regen work differently, similar to Combat Test snapshots. Can be customized. Hunger related stuff doesn't work (for obvious reasons) if No Hunger feature is enabled")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class HealthRegen extends Feature {
 
@@ -65,10 +65,9 @@ public class HealthRegen extends Feature {
 	@Config(min = 0d, max = 1d)
 	@Label(name = "Hunger Consumption Chance", description = "If 'Consume Hunger Only' is true then this is the chance to consume an hunger whenever the player is healed (vanilla ignores this; Combat Test has this set to 0.5).")
 	public static Double hungerConsumptionChance = 0.5d;
-	//TODO
-	/*@Config
-	@Label(name = "Peaceful Hunger", description = "If enabled, peaceful difficulty no longer heals the player")
-	public static Boolean hungerConsumptionChance = true;*/
+	@Config
+	@Label(name = "Peaceful Hunger & Health", description = "If enabled, peaceful difficulty no longer heals and fulfills the player")
+	public static Boolean peacefulHunger = true;
 
 	@Config(min = 0d, max = 1f)
 	@Label(name = "Food Heal Multiplier", description = "When eating you'll get healed by this percentage of (hunger + saturation) restored.")
@@ -85,22 +84,6 @@ public class HealthRegen extends Feature {
 	@Config(min = 0, max = 20)
 	@Label(name = "Respawn.Saturation", description = "Saturation of respawning players")
 	public static insane96mcp.insanelib.base.config.Difficulty saturationOnRespawn = new insane96mcp.insanelib.base.config.Difficulty(10, 10, 6);
-	//Effects
-	@Config
-	@Label(name = "Vigour.Enable", description = "Set to true to enable Vigour, a new effect that lowers hunger consumption and increases health regen speed. Applied when good foods are eaten. If stamina is enabled, decreases its consumption")
-	public static Boolean enableVigour = false;
-	@Config(min = 0d, max = 128d)
-	@Label(name = "Vigour.Duration Multiplier", description = "Multiplies the base duration of Vigour by this value. Base duration is 1 second per food saturation.")
-	public static Double vigourDurationMultiplier = 20d;
-	@Config(min = 0d, max = 1d)
-	@Label(name = "Vigour.Effectiveness", description = "How much does health regen Vigour increases.")
-	public static Double vigourEffectiveness = 0.20d;
-	@Config(min = 0d, max = 20d)
-	@Label(name = "Vigour.Minimum Saturation", description = "Minimum saturation given by the food to apply Vigour.")
-	public static Double vigourMinimumSaturation = 7d;
-	@Config
-	@Label(name = "Vigour.Stacks", description = "If true, eating when already under Vigour increases the duration.")
-	public static Boolean vigourStacks = true;
 
 	public HealthRegen(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -139,8 +122,7 @@ public class HealthRegen extends Feature {
 			if (foodStats.saturationLevel > 0.0F) {
 				foodStats.saturationLevel = Math.max(foodStats.saturationLevel - 1.0F, 0.0F);
 			}
-			//TODO remove with 'Peaceful Hunger'
-			else if (difficulty != Difficulty.PEACEFUL) {
+			else if (peacefulHunger && difficulty != Difficulty.PEACEFUL) {
 				foodStats.foodLevel = Math.max(foodStats.foodLevel - 1, 0);
 			}
 		}

@@ -3,6 +3,8 @@
 ## Upcoming
 * Removed Desire Paths
   * Moved to a standalone mod
+* Added Peaceful Hunger
+  * Hunger and health no longer regenerates when in peaceful
 
 ## 3.11.1
 * Fixed stamina rendered incorrectly if the player had regenerating absorption
