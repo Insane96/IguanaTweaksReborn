@@ -1,9 +1,9 @@
 # Changelog
 
-## Upcoming
+## 3.12.0
 * Removed Desire Paths
   * Moved to a standalone mod
-* Added Peaceful Hunger
+* Added Peaceful Hunger config option
   * Hunger and health no longer regenerates when in peaceful
 
 ## 3.11.1
