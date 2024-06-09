@@ -5,6 +5,7 @@
 * Explosions 
   * Now always give a minimal knock up
   * Slightly changed particles 
+* Knockback reduction now correctly reduces sprinting knockback
 
 ## 3.12.0
 * Removed Desire Paths

@@ -121,8 +121,11 @@ public class Knockback extends JsonFeature {
 		float cooldown = Mth.clamp((ticksSinceLastSwing + 0.5f) / player.getCurrentItemAttackStrengthDelay(), 0.0F, 1.0F);
 		if (cooldown <= 0.9f)
 			reducedKnockback = true;
-		if (reducedKnockback)
+		if (reducedKnockback) {
+			if (player.isSprinting())
+				event.setStrength(event.getStrength() - 0.5f);
 			event.setStrength(event.getStrength() * knockbackReduction.floatValue());
+		}
 		player.getPersistentData().putBoolean(SHOULD_APPLY_NO_KNOCKBACK, false);
 	}
 
