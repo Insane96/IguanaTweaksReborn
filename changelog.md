@@ -2,6 +2,9 @@
 
 ## Upcoming
 * Leaves fast decay no longer checks for `LeavesBlock` class, instead checks for `#minecraft:leaves` block tag
+* Explosions 
+  * Now always give a minimal knock up
+  * Slightly changed particles 
 
 ## 3.12.0
 * Removed Desire Paths
