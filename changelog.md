@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Leaves fast decay no longer checks for `LeavesBlock` class, instead checks for `#minecraft:leaves` block tag
+
 ## 3.12.0
 * Removed Desire Paths
   * Moved to a standalone mod

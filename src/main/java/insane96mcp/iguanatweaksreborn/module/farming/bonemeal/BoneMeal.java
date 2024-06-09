@@ -14,7 +14,6 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
-import insane96mcp.insanelib.util.LogHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -185,7 +184,7 @@ public class BoneMeal extends JsonFeature {
         if (state.getBlock() instanceof BushBlock bushBlock) {
             Optional<IntegerProperty> oAgeProperty = getAgeProperty(state);
             if (oAgeProperty.isEmpty()) {
-                LogHelper.warn("No vanilla age property found for state %s", state);
+                IguanaTweaksReborn.LOGGER.debug("No vanilla age property found for state %s".formatted(state));
                 return;
             }
             int age = state.getValue(oAgeProperty.get());

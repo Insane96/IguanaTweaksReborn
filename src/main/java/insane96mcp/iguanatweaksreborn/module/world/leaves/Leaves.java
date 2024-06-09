@@ -13,12 +13,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Leaves", description = "Makes leaves decay faster and if Passable Foliage is installed, changes some values")
+@Label(name = "Leaves", description = "Makes leaves decay faster")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class Leaves extends Feature {
 
@@ -53,7 +52,7 @@ public class Leaves extends Feature {
 
 		Direction.stream().forEach(direction -> {
 			BlockState adjacentState = level.getBlockState(pos.relative(direction));
-			if (!(adjacentState.getBlock() instanceof LeavesBlock))
+			if (!adjacentState.is(BlockTags.LEAVES))
 				return;
 			ScheduledTasks.schedule(new LeafDecayScheduledTick(Mth.nextInt(random, minTicksToDecay, maxTicksToDecay), level, pos.relative(direction), random));
 		});
