@@ -34,7 +34,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -46,7 +45,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -58,12 +56,6 @@ import org.jetbrains.annotations.Nullable;
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class NoHunger extends Feature {
 
-    public static final GameRules.Key<GameRules.BooleanValue> RULE_NOHUNGER = GameRules.register("iguanatweaks:noHunger", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true, (server, booleanValue) -> {
-        Module.getFeature(NoHunger.class).setEnabledConfig(booleanValue.get());
-        for (ServerPlayer serverPlayer : server.getPlayerList().getPlayers()) {
-            NoHungerSync.sync(booleanValue.get(), serverPlayer);
-        }
-    }));
     private static final String PASSIVE_REGEN_TICK = IguanaTweaksReborn.RESOURCE_PREFIX + "passive_regen_ticks";
     private static final String FOOD_REGEN_LEFT = IguanaTweaksReborn.RESOURCE_PREFIX + "food_regen_left";
     private static final String FOOD_REGEN_STRENGTH = IguanaTweaksReborn.RESOURCE_PREFIX + "food_regen_strength";
@@ -323,11 +315,6 @@ public class NoHunger extends Feature {
         if (ModList.get().isLoaded("autumnity"))
             amount = AutumnityIntegration.tryApplyFoulTaste(player, amount);
         return amount;
-    }
-
-    @SubscribeEvent
-    public void onServerStarted(ServerStartedEvent event) {
-        this.setEnabled(event.getServer().getGameRules().getRule(RULE_NOHUNGER).get());
     }
 
     @SubscribeEvent

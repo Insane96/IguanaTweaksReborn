@@ -6,6 +6,8 @@
   * Now always give a minimal knock up
   * Slightly changed particles 
 * Knockback reduction now correctly reduces sprinting knockback
+* Removed no hunger gamerule
+  * Had many problems, still the no hunger enabled config is synced when a player joins 
 
 ## 3.12.0
 * Removed Desire Paths
