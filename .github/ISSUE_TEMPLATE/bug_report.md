@@ -21,7 +21,7 @@ Explain what's the problem
 
 //Please send logs even if you don't have any crash  
 //**Use Gist or Pastebin**  
-**Logs / Crash reports**:  
+**debug.log / Crash reports**:  
 E.g. https://pastebin.com/1AbCDEFG
 
 //If different from default
@@ -29,4 +29,5 @@ E.g. https://pastebin.com/1AbCDEFG
 E.g. https://pastebin.com/1AbCDEFG
 
 **Can be reproduced with a minimal set of mods? (IguanaTweaks Reborn + InsaneLib + e.g. Quark)?**:  
-Yes/No
+<Your answer here>
+
