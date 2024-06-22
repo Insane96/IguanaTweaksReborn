@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.12.1
 * Leaves fast decay no longer checks for `LeavesBlock` class, instead checks for `#minecraft:leaves` block tag
 * Explosions 
   * Now always give a minimal knock up
