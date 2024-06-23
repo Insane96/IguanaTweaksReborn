@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.12.2
+* Startup crash fix
+
 ## 3.12.1
 * Leaves fast decay no longer checks for `LeavesBlock` class, instead checks for `#minecraft:leaves` block tag
 * Explosions 
