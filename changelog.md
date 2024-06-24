@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Added gamerule to disable experience (also disables experience bar)
+
 ## 3.12.2
 * Startup crash fix
 

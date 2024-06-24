@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.experience;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.network.message.SyncExperienceFeature;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -10,9 +11,11 @@ import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagRange;
 import insane96mcp.insanelib.setup.ILStrings;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -21,9 +24,16 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.ThrownExperienceBottle;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,16 +41,22 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-@Label(name = "Experience", description = "Various changes to experience")
+@Label(name = "Experience", description = "Various changes to experience. You can also use the iguanatweaks:disableExperience game rule to disable experience drops and experience bar.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
 public class Experience extends JsonFeature {
+	public static final GameRules.Key<GameRules.BooleanValue> RULE_DISABLEEXPERIENCE = GameRules.register("iguanatweaks:disableExperience", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false, (server, booleanValue) -> {
+		Experience.disableExperience = booleanValue.get();
+		for (ServerPlayer serverPlayer : server.getPlayerList().getPlayers()) {
+			SyncExperienceFeature.sync(booleanValue.get(), serverPlayer);
+		}
+	}));
 
 	public static final String XP_PROCESSED = IguanaTweaksReborn.RESOURCE_PREFIX + "xp_processed";
 	public static final TagKey<Block> NO_BLOCK_XP_MULTIPLIER = ITRBlockTagsProvider.create("no_block_xp_multiplier");
 	public static final TagKey<EntityType<?>> NO_SPAWNER_XP_MULTIPLIER = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "no_spawner_xp_multiplier"));
 
-	@Config(min = 0d, max = 128d)
-	@Label(name = "Global Experience Multiplier", description = "Experience dropped will be multiplied by this value.\nCan be set to 0 to disable experience drop from any source.")
+	@Config(min = 1d, max = 128d)
+	@Label(name = "Global Experience Multiplier", description = "Experience dropped will be multiplied by this value.\nUse the iguanatweaks:disableExperience game rule to disable experience drops.")
 	public static Double globalMultiplier = 1d;
 
 	@Config(min = 0d, max = 128d)
@@ -82,6 +98,9 @@ public class Experience extends JsonFeature {
 
 	public static final ArrayList<IdTagRange> customBlocksExperience = new ArrayList<>();
 
+
+	public static Boolean disableExperience = false;
+
 	public Experience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("blocks_experience.json", customBlocksExperience, CUSTOM_BLOCKS_EXPERIENCE_DEFAULT, IdTagRange.LIST_TYPE));
@@ -97,15 +116,19 @@ public class Experience extends JsonFeature {
 		if (!this.isEnabled())
 			return;
 
-		handleGlobalExperience(event);
+		if (event.getEntity() instanceof ExperienceOrb xpOrb) {
+			if (disableExperience)
+				event.setCanceled(true);
+
+			handleGlobalExperience(xpOrb);
+		}
 		handleMobsMultiplier(event);
 	}
 
-	private static void handleGlobalExperience(EntityJoinLevelEvent event) {
+	private static void handleGlobalExperience(ExperienceOrb xpOrb) {
 		if (globalMultiplier == 1.0d
-				|| !(event.getEntity() instanceof ExperienceOrb xpOrb)
 				|| xpOrb.getPersistentData().getBoolean(XP_PROCESSED)
-				|| event.getLevel().isClientSide)
+				|| xpOrb.level().isClientSide)
 			return;
 
 		if (globalMultiplier == 0d)
@@ -201,5 +224,26 @@ public class Experience extends JsonFeature {
 
 		if (xpBottle.level() instanceof ServerLevel)
 			ExperienceOrb.award((ServerLevel)xpBottle.level(), xpBottle.position(), xpBottleBonus);
+	}
+
+	@SubscribeEvent
+	public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+		SyncExperienceFeature.sync(event.getEntity().level().getGameRules().getBoolean(RULE_DISABLEEXPERIENCE), (ServerPlayer) event.getEntity());
+	}
+
+	//Render before Regenerating absorption
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public void removeExperienceBar(final RenderGuiOverlayEvent.Pre event) {
+		if (!this.isEnabled()
+			|| !disableExperience)
+			return;
+
+		if (event.getOverlay().equals(VanillaGuiOverlay.VIGNETTE.type())) {
+			((ForgeGui) Minecraft.getInstance().gui).rightHeight -= 6;
+			((ForgeGui) Minecraft.getInstance().gui).leftHeight -= 6;
+		}
+		else if (event.getOverlay().equals(VanillaGuiOverlay.EXPERIENCE_BAR.type()))
+			event.setCanceled(true);
 	}
 }

@@ -52,7 +52,7 @@ import net.minecraftforge.network.NetworkDirection;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
-@Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days. You can also use the gamerule iguanatweaks:no_hunger to re-enable hunger (and thus, disable this feature)")
+@Label(name = "No Hunger", description = "Remove hunger and get back to the Beta 1.7.3 days")
 @LoadFeature(module = Modules.Ids.HUNGER_HEALTH)
 public class NoHunger extends Feature {
 

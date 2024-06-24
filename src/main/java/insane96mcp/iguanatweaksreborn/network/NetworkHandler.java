@@ -38,5 +38,6 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(++index, ForgeDataIntSync.class, ForgeDataIntSync::encode, ForgeDataIntSync::decode, ForgeDataIntSync::handle);
 		CHANNEL.registerMessage(++index, NoHungerSync.class, NoHungerSync::encode, NoHungerSync::decode, NoHungerSync::handle);
 		CHANNEL.registerMessage(++index, BlockDataSync.class, BlockDataSync::encode, BlockDataSync::decode, BlockDataSync::handle);
+		CHANNEL.registerMessage(++index, SyncExperienceFeature.class, SyncExperienceFeature::encode, SyncExperienceFeature::decode, SyncExperienceFeature::handle);
 	}
 }
