@@ -79,8 +79,8 @@ public class ExplosionOverhaul extends Feature {
 				return;
             if (!e.getToBlow().isEmpty() && e.radius >= 2 && e.blockInteraction != Explosion.BlockInteraction.KEEP) {
                 int particleCount = (int) (e.radius * 80);
-                level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 3f, e.radius / 3f, e.radius / 3f, 0.35D);
-                level.sendParticles(ParticleTypes.SMOKE, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 3f, e.radius / 3f, e.radius / 3f, 0.35D);
+                level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 3f, e.radius / 3f, e.radius / 3f, 0.3D);
+                level.sendParticles(ParticleTypes.SMOKE, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 3f, e.radius / 3f, e.radius / 3f, 0.3D);
             }
 			else if (e.radius < 2) {
 				level.sendParticles(ParticleTypes.EXPLOSION, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), 1, 0.0D, 0.0D, 0.0D, 1f);

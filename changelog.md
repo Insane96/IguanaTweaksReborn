@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Fog
+  * Added fog like pre-1.7.2 which starts closer to player. Also fog starts even closer if rains
 * Added gamerule to disable experience (also disables experience bar)
 
 ## 3.12.2
