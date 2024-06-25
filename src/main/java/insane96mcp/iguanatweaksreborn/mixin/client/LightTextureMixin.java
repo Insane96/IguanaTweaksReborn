@@ -12,7 +12,7 @@ public abstract class LightTextureMixin {
     @ModifyExpressionValue(method = "updateLightTexture", at = @At(value = "INVOKE", target = "Ljava/lang/Double;floatValue()F", ordinal = 1))
     public float onGamma(float value) {
         if (Feature.isEnabled(Light.class) && Light.forceDarkness)
-            return 0.15f;
+            return Math.min(0.15f, value);
         return value;
     }
 }
