@@ -7,8 +7,8 @@
     * Coal generates more in Deserts
     * Copper generates more in Oceans
     * Iron generates more in Taigas
-    * Emerald generate on mountain (like vanilla), but with 50% more veins
-    * Mesa generates 50% more gold veins
+    * Emerald generates only on mountain (like vanilla), but more
+    * Gold generates even more in Mesas (also starts generating slightly lower)
   * Disabled [Ore Veins](https://minecraft.wiki/w/Ore_vein)
 * Fog
   * Added fog like pre-1.7.2 which starts closer to player. Also fog starts even closer if rains
