@@ -45,6 +45,7 @@
         "MobEffectMixin",
         "MobMixin",
         "NaturalSpawnerMixin",
+        "OreVeinifierMixin",
         "PistonBaseBlockMixin",
         "PistonMovingBlockEntityMixin",
         "PlayerMixin",

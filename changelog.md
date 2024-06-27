@@ -2,12 +2,14 @@
 
 ## Upcoming
 * Overhauled Ore generation
-  * Reduced ore generation by ~60%
+  * Reduced ore generation by ~55%
   * Ores now generate more in specific biomes
     * Coal generates more in Deserts
     * Copper generates more in Oceans
+    * Iron generates more in Taigas
     * Emerald generate on mountain (like vanilla), but with 50% more veins
     * Mesa generates 50% more gold veins
+  * Disabled [Ore Veins](https://minecraft.wiki/w/Ore_vein)
 * Fog
   * Added fog like pre-1.7.2 which starts closer to player. Also fog starts even closer if rains
 * Force darkness now sets darkness to 15% only if the video settings are higher

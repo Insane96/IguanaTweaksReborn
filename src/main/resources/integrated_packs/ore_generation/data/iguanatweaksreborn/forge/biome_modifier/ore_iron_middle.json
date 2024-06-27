@@ -1,0 +1,6 @@
+{
+    "type": "forge:add_features",
+    "biomes": "#minecraft:is_taiga",
+    "features": "iguanatweaksreborn:ore_iron_middle",
+    "step": "underground_ores"
+}

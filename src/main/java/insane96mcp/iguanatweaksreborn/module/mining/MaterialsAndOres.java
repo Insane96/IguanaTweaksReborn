@@ -11,12 +11,15 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 
-@Label(name = "Materials Data Packs", description = "Various changes for different materials.")
+@Label(name = "Materials and ores", description = "Various changes for different materials and ores.")
 @LoadFeature(module = Modules.Ids.MINING)
-public class MaterialsDataPacks extends Feature {
+public class MaterialsAndOres extends Feature {
 	@Config
 	@Label(name = "Ore generation Overhaul")
-	public static Boolean backportDiamondGen = true;
+	public static Boolean oreGenerationOverhaul = true;
+	@Config
+	@Label(name = "Disable Ore Veins", description = "https://minecraft.wiki/w/Ore_vein")
+	public static Boolean disableOreVeins = true;
 	@Config
 	@Label(name = "Farmable Iron data pack", description = """
 			Enables the following changes to vanilla data pack:
@@ -32,10 +35,10 @@ public class MaterialsDataPacks extends Feature {
 			* Can no longer smelt gold and Ancient Debris in a Furnace, and 2x in a blast furnace""")
 	public static Boolean oreSmelting = true;
 
-	public MaterialsDataPacks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
+	public MaterialsAndOres(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "farmable_iron", Component.literal("IguanaTweaks Reborn Farmable Iron"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && farmableIronDataPack));
 		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "ore_smelting", Component.literal("IguanaTweaks Reborn Ore Smelting"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && oreSmelting));
-		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "ore_generation", Component.literal("IguanaTweaks Reborn Ore Generation Overhaul"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && backportDiamondGen));
+		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "ore_generation", Component.literal("IguanaTweaks Reborn Ore Generation Overhaul"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && oreGenerationOverhaul));
 	}
 }
