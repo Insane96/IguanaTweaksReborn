@@ -9,6 +9,7 @@
     * Iron generates more in Taigas
     * Emerald generates only on mountain (like vanilla), but more
     * Gold generates even more in Mesas (also starts generating slightly lower)
+    * Diamonds generate more in Jungles
   * Disabled [Ore Veins](https://minecraft.wiki/w/Ore_vein)
 * Fog
   * Added fog like pre-1.7.2 which starts closer to player. Also fog starts even closer if rains
