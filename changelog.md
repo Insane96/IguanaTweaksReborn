@@ -1,9 +1,16 @@
 # Changelog
 
 ## Upcoming
+* Overhauled Ore generation
+  * Reduced ore generation by ~60%
+  * Ores now generate more in specific biomes
+    * Coal generates more in Deserts
+    * Copper generates more in Oceans
+    * Emerald generate on mountain (like vanilla), but with 50% more veins
+    * Mesa generates 50% more gold veins
 * Fog
   * Added fog like pre-1.7.2 which starts closer to player. Also fog starts even closer if rains
-* Force darkness now sets darkness to 15% if the video settings are higher
+* Force darkness now sets darkness to 15% only if the video settings are higher
 * Added gamerule to disable experience (also disables experience bar)
 * Ported season plant growth modifier from ITE
 
