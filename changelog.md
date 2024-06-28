@@ -11,6 +11,7 @@
     * Gold generates even more in Mesas (also starts generating slightly lower)
     * Diamonds generate more in Jungles
     * Redstone generates more in savannas
+    * Lapis generate more in non-cold plains
   * Disabled [Ore Veins](https://minecraft.wiki/w/Ore_vein)
 * Fog
   * Added fog like pre-1.7.2 which starts closer to player. Also fog starts even closer if rains
