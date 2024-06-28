@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.13.0
 * Overhauled Ore generation
   * Reduced ore generation by ~55%
   * Ores now generate more in specific biomes
