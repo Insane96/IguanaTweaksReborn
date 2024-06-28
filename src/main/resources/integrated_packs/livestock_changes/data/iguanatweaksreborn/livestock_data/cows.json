@@ -6,6 +6,27 @@
             "id": "iguanatweaksreborn:age",
             "multiplier": 2,
             "age": "old"
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "WINTER"
+            ],
+            "multiplier": 1.33333333
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "SPRING"
+            ],
+            "multiplier": 0.85
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "SUMMER"
+            ],
+            "multiplier": 0.66666667
         }
     ]
 }

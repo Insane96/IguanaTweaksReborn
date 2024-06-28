@@ -10,6 +10,27 @@
         {
             "id": "iguanatweaksreborn:global",
             "multiplier": 2.5
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "WINTER"
+            ],
+            "multiplier": 1.33333333
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "SPRING"
+            ],
+            "multiplier": 0.85
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "SUMMER"
+            ],
+            "multiplier": 0.66666667
         }
     ],
     "breeding_fail_chance": 0.6,
@@ -18,6 +39,27 @@
             "id": "iguanatweaksreborn:age",
             "multiplier": 1.3,
             "age": "old"
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "WINTER"
+            ],
+            "multiplier": 1.5
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "SPRING"
+            ],
+            "multiplier": 0.9
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "SUMMER"
+            ],
+            "multiplier": 0.8
         }
     ]
 }

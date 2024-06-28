@@ -17,7 +17,7 @@
   * Added fog like pre-1.7.2 which starts closer to player. Also fog starts even closer if rains
 * Force darkness now sets darkness to 15% only if the video settings are higher
 * Added gamerule to disable experience (also disables experience bar)
-* Ported season plant growth modifier from ITE
+* Ported season plant growth modifier and livestock changes from ITE
 
 ## 3.12.2
 * Startup crash fix

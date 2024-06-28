@@ -12,6 +12,15 @@
                 "#forge:is_cold"
             ],
             "multiplier": 1.5
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "WINTER",
+                "SUMMER",
+                "AUTUMN"
+            ],
+            "multiplier": 0
         }
     ]
 }

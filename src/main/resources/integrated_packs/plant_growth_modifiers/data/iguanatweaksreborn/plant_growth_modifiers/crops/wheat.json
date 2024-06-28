@@ -12,6 +12,14 @@
                 "#forge:is_cold"
             ],
             "multiplier": 2
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "WINTER",
+                "SPRING"
+            ],
+            "multiplier": 0
         }
     ]
 }

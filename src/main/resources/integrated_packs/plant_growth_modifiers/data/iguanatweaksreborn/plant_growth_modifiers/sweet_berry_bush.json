@@ -17,6 +17,14 @@
                 "#forge:is_taiga"
             ],
             "multiplier": 3
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "SUMMER",
+                "SPRING"
+            ],
+            "multiplier": 0
         }
     ]
 }

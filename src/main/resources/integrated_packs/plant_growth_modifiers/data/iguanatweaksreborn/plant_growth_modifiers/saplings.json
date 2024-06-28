@@ -9,6 +9,13 @@
         {
             "id": "iguanatweaksreborn:night_time",
             "multiplier": 1.5
+        },
+        {
+            "id": "iguanatweaksreborn:season",
+            "seasons": [
+                "WINTER"
+            ],
+            "multiplier": 0
         }
     ]
 }
