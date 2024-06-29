@@ -163,7 +163,7 @@ public class TimberTrees extends JsonFeature {
                         blocks.add(posImmutable);
                         posToCheck.add(posImmutable);
                         if (isSameLog) {
-                            if (state.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y)
+                            if (stateToCheck.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y)
                                 logs++;
                             else
                                 sidewaysLogs++;

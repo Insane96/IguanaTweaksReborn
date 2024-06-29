@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed timber trees wrongly checking sideways logs making the tree fall again
+
 ## 3.13.0
 * Overhauled Ore generation
   * Reduced ore generation by ~55%
