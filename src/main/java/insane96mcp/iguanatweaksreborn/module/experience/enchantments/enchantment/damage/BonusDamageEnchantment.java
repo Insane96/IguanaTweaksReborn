@@ -54,7 +54,7 @@ public abstract class BonusDamageEnchantment extends Enchantment {
     }
 
     public float getDamageBonusPerLevel() {
-        return 1.2f;
+        return 1f;
     }
 
     public boolean isAffectedByEnchantment(Entity target) {

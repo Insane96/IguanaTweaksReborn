@@ -1,6 +1,10 @@
 # Changelog
 
 ## Upcoming
+* Increased items base damage by 0.5 but reduced enchantments damage
+  * Sharpness (+0.6 -> +0.5 per level)
+  * Smite (+1.25 -> +1 per level)
+  * Bane of SSSSS (+1.2 -> +1 per level)
 * Fixed timber trees wrongly checking sideways logs making the tree fall again
 * Fixed wrong ore generation for diamonds and lapis causing conflicts with other world gen mod
 

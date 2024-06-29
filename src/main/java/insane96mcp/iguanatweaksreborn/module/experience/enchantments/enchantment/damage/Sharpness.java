@@ -9,6 +9,6 @@ public class Sharpness extends BonusDamageEnchantment {
 
     @Override
     public float getDamageBonusPerLevel() {
-        return 0.6f;
+        return 0.5f;
     }
 }
