@@ -1,5 +1,5 @@
 {
-  "feature": "minecraft:ore_diamond_small",
+  "feature": "iguanatweaksreborn:ore_diamond_small",
   "placement": [
     {
       "type": "minecraft:count",

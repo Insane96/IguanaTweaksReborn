@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Fixed timber trees wrongly checking sideways logs making the tree fall again
+* Fixed wrong ore generation for diamonds and lapis causing conflicts with other world gen mod
 
 ## 3.13.0
 * Overhauled Ore generation

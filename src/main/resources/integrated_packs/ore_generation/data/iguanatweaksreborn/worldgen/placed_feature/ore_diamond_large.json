@@ -1,5 +1,5 @@
 {
-  "feature": "minecraft:ore_diamond_large",
+  "feature": "iguanatweaksreborn:ore_diamond_large",
   "placement": [
     {
       "type": "minecraft:rarity_filter",

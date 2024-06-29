@@ -1,5 +1,5 @@
 {
-  "feature": "minecraft:ore_diamond_buried",
+  "feature": "iguanatweaksreborn:ore_diamond_buried",
   "placement": [
     {
       "type": "minecraft:count",

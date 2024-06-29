@@ -1,5 +1,5 @@
 {
-  "feature": "minecraft:ore_lapis",
+  "feature": "iguanatweaksreborn:ore_lapis",
   "placement": [
     {
       "type": "minecraft:count",
