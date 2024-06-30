@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Smite now applies 20s (+ up to 10 per level) of Weakness II to undead creatures
+
 ## 3.13.1
 * Increased items base damage by 0.5 but reduced enchantments damage
   * Sharpness (+0.6 -> +0.5 per level)
