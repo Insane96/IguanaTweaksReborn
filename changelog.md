@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Smite now applies 1s (plus up to 0.5s per level) of Weakness II to undead creatures
+* Increased wooden tools durability
 
 ## 3.13.1
 * Increased items base damage by 0.5 but reduced enchantments damage
