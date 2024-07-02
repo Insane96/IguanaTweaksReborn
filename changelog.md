@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.13.2
 * Smite now applies 1s (plus up to 0.5s per level) of Weakness II to undead creatures
 * Increased wooden tools durability
 * Regenerating absorption 
