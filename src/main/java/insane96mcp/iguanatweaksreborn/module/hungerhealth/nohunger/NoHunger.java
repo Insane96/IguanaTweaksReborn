@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.mixin.client.GuiAccessor;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.farming.crops.integration.FarmersDelightIntegration;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.fooddrinks.FoodDrinks;
@@ -31,6 +32,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
@@ -394,7 +397,16 @@ public class NoHunger extends Feature {
                 return;
 
             int right = screenWidth / 2 - 91;
-            int top = screenHeight - gui.leftHeight + 16;
+            int health = Mth.ceil(player.getHealth());
+            int healthLast = ((GuiAccessor)gui).getDisplayHealth();
+            AttributeInstance attrMaxHealth = player.getAttribute(Attributes.MAX_HEALTH);
+            float healthMax = Math.max((float) attrMaxHealth.getValue(), Math.max(healthLast, health));
+            int absorb = Mth.ceil(player.getAbsorptionAmount());
+            int healthRows = Mth.ceil((healthMax + absorb) / 2.0F / 10.0F);
+            int rowHeight = Math.max(10 - (healthRows - 2), 3);
+            int top = screenHeight - gui.leftHeight + 6;
+            top += (healthRows * rowHeight);
+            if (rowHeight != 10) top += 10 - rowHeight;
             float regenLeft = Math.min(20, getFoodRegenLeft(player));
             float regenStrength = getFoodRegenStrength(player) * 20 * 2;
             if (regenStrength == 0f)

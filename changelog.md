@@ -3,6 +3,8 @@
 ## Upcoming
 * Smite now applies 1s (plus up to 0.5s per level) of Weakness II to undead creatures
 * Increased wooden tools durability
+* Fixed regenerating absorption rendering incorrectly above 20
+* Fixed health regen overlay wrong positioning with regen absorption or more health
 
 ## 3.13.1
 * Increased items base damage by 0.5 but reduced enchantments damage
