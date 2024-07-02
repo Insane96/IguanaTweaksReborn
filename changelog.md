@@ -3,7 +3,10 @@
 ## Upcoming
 * Smite now applies 1s (plus up to 0.5s per level) of Weakness II to undead creatures
 * Increased wooden tools durability
-* Fixed regenerating absorption rendering incorrectly above 20
+* Regenerating absorption 
+  * Added a new sound when damaged thanks to Betterworld_sjq instead of using the shield break sound effect
+  * Fixed rendering incorrectly above 20
+  * Fixed damaged sound playing even when blocking the damage (e.g. with shields)
 * Fixed health regen overlay wrong positioning with regen absorption or more health
 
 ## 3.13.1

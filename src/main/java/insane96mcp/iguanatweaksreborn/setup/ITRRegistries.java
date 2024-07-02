@@ -54,6 +54,7 @@ public class ITRRegistries {
 
 	public static final DeferredRegister<SoundEvent> SOUND_EVENTS = createRegistry(ForgeRegistries.SOUND_EVENTS);
 	public static final RegistryObject<SoundEvent> UNFAIR_ONE_SHOT = SOUND_EVENTS.register("unfair_one_shot", () -> SoundEvent.createFixedRangeEvent(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "unfair_one_shot"), 16f));
+	public static final RegistryObject<SoundEvent> ABSORPTION_HIT = SOUND_EVENTS.register("absorption_hit", () -> SoundEvent.createFixedRangeEvent(new ResourceLocation(IguanaTweaksReborn.MOD_ID, "absorption_hit"), 16f));
 
 	public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> GLOBAL_LOOT_MODIFIER_SERIALIZERS = createRegistry(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS);
 	public static final RegistryObject<Codec<? extends IGlobalLootModifier>> LOOT_PURGER_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("loot_purger", LootPurgerModifier.CODEC);

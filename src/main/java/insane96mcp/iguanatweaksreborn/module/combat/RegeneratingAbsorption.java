@@ -18,7 +18,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
@@ -143,7 +142,8 @@ public class RegeneratingAbsorption extends Feature {
     @SubscribeEvent
     public void onLivingHurtPreAbsorption(LivingHurtEvent event) {
         if (!this.isEnabled()
-                || !canDamageAbsorption(event.getSource()))
+                || !canDamageAbsorption(event.getSource())
+                || event.getAmount() <= 0)
             return;
 
         float currentAbsorption = event.getEntity().getPersistentData().getFloat(REGEN_ABSORPTION_TAG);
@@ -158,7 +158,7 @@ public class RegeneratingAbsorption extends Feature {
         event.setAmount(event.getAmount() - toRemove);
         event.getEntity().getPersistentData().putFloat(REGEN_ABSORPTION_TAG, currentAbsorption);
         if (soundOnAbsorptionHurt)
-            event.getEntity().level().playSound(null, event.getEntity(), SoundEvents.SHIELD_BREAK, event.getEntity() instanceof Player ? SoundSource.PLAYERS : SoundSource.HOSTILE, 1f, 2f);
+            event.getEntity().level().playSound(null, event.getEntity(), ITRRegistries.ABSORPTION_HIT.get(), event.getEntity() instanceof Player ? SoundSource.PLAYERS : SoundSource.HOSTILE, 1f, 2f);
         if (event.getEntity() instanceof ServerPlayer player)
             RegenAbsorptionSync.sync(player, currentAbsorption);
     }
