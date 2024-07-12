@@ -40,6 +40,7 @@ public class Berries extends Feature {
     @Label(name = "Data pack", description = """
 		Makes sweet berries not plantable, requiring seeds, and also enables a data pack that makes the following changes:
 		* Makes sweet berry bushes drop seeds
+		* Makes sweet berry patches has less plants and plants will not be all grown up
 		If berry good is present, a different datapack is enabled that integrates with the mod
 	""")
     public static Boolean dataPack = true;
