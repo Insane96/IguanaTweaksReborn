@@ -9,6 +9,7 @@ import insane96mcp.insanelib.base.Feature;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
@@ -50,6 +51,8 @@ public abstract class AbstractArrowMixin extends Projectile {
 
     @WrapOperation(method = "onHitEntity", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;baseDamage:D"))
     private double onSetArrowDamage(AbstractArrow instance, Operation<Double> original) {
+        if (instance.getOwner() instanceof Mob)
+            return original.call(instance);
         return original.call(instance) * Stats.arrowsDamageMultiplier;
     }
 
@@ -58,7 +61,10 @@ public abstract class AbstractArrowMixin extends Projectile {
         if (!Stats.decimalArrowsDamage)
             return damage;
         double l = this.getDeltaMovement().length();
-        float newDamage = (float) Mth.clamp(l * this.baseDamage * Stats.arrowsDamageMultiplier, 0.0D, Integer.MAX_VALUE);
+        double damageMultiplier = Stats.arrowsDamageMultiplier;
+        if (this.getOwner() instanceof Mob)
+            damageMultiplier = 1f;
+        float newDamage = (float) Mth.clamp(l * this.baseDamage * damageMultiplier, 0.0D, Integer.MAX_VALUE);
         if (this.isCritArrow() && !Stats.disableCritArrowsBonusDamage) {
             newDamage += this.random.nextFloat() * (newDamage / 2 + 2);
         }
