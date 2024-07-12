@@ -1,7 +1,14 @@
 package insane96mcp.iguanatweaksreborn.mixin.client;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import insane96mcp.iguanatweaksreborn.module.client.Misc;
 import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -19,5 +26,15 @@ public abstract class LevelRendererMixin {
 	@ModifyVariable(at = @At(value = "STORE", ordinal = 2), method = "renderWorldBorder", ordinal = 1)
 	private double onWorldBorderAlpha(double value) {
 		return value * Misc.getWorldBorderTransparencyMultiplier();
+	}
+
+	@ModifyExpressionValue(method = "renderHitOutline", at = @At(value = "CONSTANT", args = "floatValue=0.0", ordinal = 0))
+	private float onHitOutline(float value, PoseStack pPoseStack, VertexConsumer pConsumer, Entity entity, double pCamX, double pCamY, double pCamZ, BlockPos pPos, BlockState state) {
+		if (!Misc.redBlockOutlineWithWrongTool
+				|| !(entity instanceof Player player)
+				|| !state.requiresCorrectToolForDrops()
+				|| player.hasCorrectToolForDrops(state))
+			return value;
+		return 0.5f;
 	}
 }

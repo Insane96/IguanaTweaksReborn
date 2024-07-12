@@ -27,6 +27,10 @@ public class Misc extends Feature {
     @Label(name = "No tilting with some damage types", description = "If true, camera will not tilt when taking magic, wither, on fire, cramming, drowning and thorns damage.")
     public static Boolean noTiltingWithSomeDamageTypes = true;
 
+    @Config
+    @Label(name = "Red block outline with wrong tool", description = "If true, the outline around blocks will be red if the tool in hand will make drops not ... drop.")
+    public static Boolean redBlockOutlineWithWrongTool = true;
+
     public Misc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
