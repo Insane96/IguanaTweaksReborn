@@ -4,6 +4,7 @@
 * Added Red block outline with wrong tool
   * If the tool in hand will make the block drop no items then the block outline will be green tinted
 * Berry bushes patches now have fewer bushes and no longer generate all fully grown
+* Slightly increased coal, gold, iron and lapis generation
 * Fixed mobs arrows being affected by arrows damage multiplier
 
 ## 3.13.2
