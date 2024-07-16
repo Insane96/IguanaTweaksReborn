@@ -33,6 +33,8 @@
         "FarmBlockMixin",
         "FireBlockMixin",
         "FishingHookMixin",
+        "FlowingFluidMixin",
+        "FluidTypeMixin",
         "FoodDataMixin",
         "HoneyBottleItemMixin",
         "ItemEntityMixin",

@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = FoodData.class, priority = 1)
+@Mixin(value = FoodData.class)
 public class FoodDataMixin {
 	@Inject(at = @At("HEAD"), method = "tick", cancellable = true)
 	public void tick(Player player, CallbackInfo callbackInfo) {

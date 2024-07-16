@@ -19,6 +19,8 @@ public abstract class EntityMixin {
     @Shadow(remap = false)
     protected Object2DoubleMap<FluidType> forgeFluidTypeHeight;
 
+    @Shadow public abstract float getBbHeight();
+
     @Inject(at = @At(value = "RETURN"), method = "fireImmune", cancellable = true)
     private void onFireImmune(CallbackInfoReturnable<Boolean> cir) {
         if (Tweaks.isFireImmune((Entity) (Object) this))
