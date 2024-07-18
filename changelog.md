@@ -4,6 +4,7 @@
 * Ore Generation
   * Redstone now generates more in oceans instead of savannas
   * Copper now generates more in savannas instead of oceans
+  * Coal now generates between 0 and ~~192~~ -> 128 in deserts
 
 ## 3.13.3
 * Added Red block outline with wrong tool
