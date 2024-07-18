@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.13.4
 * Ore Generation
   * Redstone now generates more in oceans instead of savannas
   * Copper now generates more in savannas instead of oceans
