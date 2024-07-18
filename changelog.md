@@ -1,5 +1,10 @@
 # Changelog
 
+## Upcoming
+* Ore Generation
+  * Redstone now generates more in oceans instead of savannas
+  * Copper now generates more in savannas instead of oceans
+
 ## 3.13.3
 * Added Red block outline with wrong tool
   * If the tool in hand will make the block drop no items then the block outline will be green tinted
