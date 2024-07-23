@@ -30,11 +30,11 @@ public abstract class LevelRendererMixin {
 
 	@ModifyExpressionValue(method = "renderHitOutline", at = @At(value = "CONSTANT", args = "floatValue=0.0", ordinal = 0))
 	private float onHitOutline(float value, PoseStack pPoseStack, VertexConsumer pConsumer, Entity entity, double pCamX, double pCamY, double pCamZ, BlockPos pPos, BlockState state) {
-		if (!Misc.redBlockOutlineWithWrongTool
-				|| !(entity instanceof Player player)
+		if (!(entity instanceof Player player)
+				|| player.getAbilities().instabuild
 				|| !state.requiresCorrectToolForDrops()
 				|| player.hasCorrectToolForDrops(state))
 			return value;
-		return 0.5f;
+		return Misc.getRedOutlineAmount(value);
 	}
 }

@@ -48,4 +48,10 @@ public class Misc extends Feature {
     public static boolean shouldDisableTiltingWithSomeDamageTypes() {
         return isEnabled(Misc.class) && noTiltingWithSomeDamageTypes;
     }
+
+    public static float getRedOutlineAmount(float original) {
+        if (!isEnabled(Misc.class))
+            return original;
+        return 0.42f;
+    }
 }

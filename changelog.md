@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Reduced red color of the red outline on blocks
+
 ## 3.13.4
 * Ore Generation
   * Redstone now generates more in oceans instead of savannas
