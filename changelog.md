@@ -4,6 +4,7 @@
 * Sheep now have higher chance to regrow wool in cold seasons instead of hot seasons
 * Reduced red color of the red outline on blocks
 * Livestock data's `breeding_fail_chance_modifiers` are now added to the base chance instead of multiplying it
+* Fixed Custom Food Properties' effect chance not saved and loaded
 
 ## 3.13.4
 * Ore Generation

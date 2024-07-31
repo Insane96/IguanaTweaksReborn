@@ -1,6 +1,5 @@
 package insane96mcp.iguanatweaksreborn.module.farming.crops;
 
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
@@ -9,7 +8,7 @@ import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
 import insane96mcp.iguanatweaksreborn.setup.registry.SimpleBlockWithItem;
-import insane96mcp.insanelib.base.JsonFeature;
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -52,7 +51,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Crops", description = "Crops tweaks and less yield from crops")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class Crops extends JsonFeature {
+public class Crops extends Feature {
 
 	public static final TagKey<Item> CHICKEN_FOOD_ITEMS = ITRItemTagsProvider.create("chicken_food_items");
 
@@ -100,11 +99,6 @@ public class Crops extends JsonFeature {
 	public Crops(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "crops", Component.literal("IguanaTweaks Reborn Crops"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
-	}
-
-	@Override
-	public String getModConfigFolder() {
-		return IguanaTweaksReborn.CONFIG_FOLDER;
 	}
 
 	@SubscribeEvent

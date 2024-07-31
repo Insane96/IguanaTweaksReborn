@@ -8,7 +8,7 @@ import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.mining.blockdata.BlockData;
 import insane96mcp.iguanatweaksreborn.module.mining.blockdata.BlockDataReloadListener;
 import insane96mcp.iguanatweaksreborn.setup.registry.SimpleBlockWithItem;
-import insane96mcp.insanelib.base.JsonFeature;
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -43,7 +43,7 @@ import java.util.Optional;
 
 @Label(name = "Bone meal", description = "Increase uses for bone meal and nerf its use on some plants")
 @LoadFeature(module = Modules.Ids.FARMING)
-public class BoneMeal extends JsonFeature {
+public class BoneMeal extends Feature {
 
     public static final SimpleBlockWithItem RICH_FARMLAND = SimpleBlockWithItem.register("rich_farmland", () -> new RichFarmlandBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).randomTicks().strength(0.6F).sound(SoundType.GRAVEL).isViewBlocking((state, blockGetter, pos) -> true).isSuffocating((state, blockGetter, pos) -> true)));
 
@@ -83,11 +83,6 @@ public class BoneMeal extends JsonFeature {
 
     public BoneMeal(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-    }
-
-    @Override
-    public String getModConfigFolder() {
-        return IguanaTweaksReborn.CONFIG_FOLDER;
     }
 
     @Override

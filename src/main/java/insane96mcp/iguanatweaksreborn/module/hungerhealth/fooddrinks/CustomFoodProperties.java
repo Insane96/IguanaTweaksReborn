@@ -134,7 +134,12 @@ public class CustomFoodProperties {
 				if (jArray.isEmpty())
 					builder.noEffects();
 				else
-					jArray.forEach(element -> builder.addEffect(context.deserialize(element, ITRMobEffectInstance.class)));
+					jArray.forEach(element -> {
+						float chance = 1f;
+						if (element.getAsJsonObject().has("chance"))
+							chance = GsonHelper.getAsFloat(element.getAsJsonObject(), "chance");
+                        builder.addEffect(context.deserialize(element, ITRMobEffectInstance.class), chance);
+                    });
 			}
 
 			return builder.build();
@@ -158,6 +163,8 @@ public class CustomFoodProperties {
 				JsonArray effects = new JsonArray();
 				src.getEffects().forEach(pair -> {
 					JsonElement effect = context.serialize(pair.getFirst());
+					if (pair.getSecond() != 1f)
+						((JsonObject)effect).addProperty("chance", pair.getSecond());
 					effects.add(effect);
 				});
 				jsonObject.add("effects", effects);
