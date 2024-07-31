@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
 
+//TODO 1.21: rename to Item Data
 @JsonAdapter(ItemStatistics.Serializer.class)
 public final class ItemStatistics {
 	private final IdTagMatcher item;
@@ -201,6 +202,7 @@ public final class ItemStatistics {
             IdTagMatcher item = context.deserialize(jObject.get("item"), IdTagMatcher.class);
             Integer maxStackSize = ITRGsonHelper.getAsNullableInt(jObject, "max_stack");
             Integer durability = ITRGsonHelper.getAsNullableInt(jObject, "durability");
+            Float durabilityBonus = ITRGsonHelper.getAsNullableFloat(jObject, "durability_bonus");
             Float durabilityMultiplier = ITRGsonHelper.getAsNullableFloat(jObject, "durability_multiplier");
             Double efficiency = ITRGsonHelper.getAsNullableDouble(jObject, "efficiency");
             Integer enchantability = ITRGsonHelper.getAsNullableInt(jObject, "enchantability");

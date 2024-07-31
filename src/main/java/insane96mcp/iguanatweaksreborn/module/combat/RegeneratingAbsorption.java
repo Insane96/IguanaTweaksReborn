@@ -240,7 +240,7 @@ public class RegeneratingAbsorption extends Feature {
                 guiGraphics.blit(GUI_ICONS, left, top, u, v, 9, 9, 18, 18);
             else
                 ClientUtils.blitVericallyMirrored(GUI_ICONS, guiGraphics,left, top, u, v, 9, 9, 18, 18);
-            if (i % 20 == 0) {
+            if (i % 20 == 0 && i != displayAbsorption) {
                 left = width / 2 + (!renderOnRight ? -91 : 82);
                 top -= 10;
                 if (!renderOnRight)
