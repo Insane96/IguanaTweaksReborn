@@ -332,7 +332,7 @@ public class Livestock extends Feature {
 			}
 		}
 		for (Modifier modifier : modifiersToApply)
-			failChance *= modifier.getMultiplier(parentA, parentA.level(), parentA.blockPosition());
+			failChance += modifier.getMultiplier(parentA, parentA.level(), parentA.blockPosition());
 		if (failChance == 0d)
 			return;
 
