@@ -1,10 +1,9 @@
 package insane96mcp.iguanatweaksreborn.module.world.timber;
 
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.entity.ITRFallingBlockEntity;
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.insanelib.base.JsonFeature;
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
@@ -33,7 +32,7 @@ import java.util.List;
 
 @Label(name = "Timber Trees", description = "Trees fall when cut.")
 @LoadFeature(module = Modules.Ids.WORLD)
-public class TimberTrees extends JsonFeature {
+public class TimberTrees extends Feature {
 
     public static final TagKey<Block> TIMBER_TRUNKS = ITRBlockTagsProvider.create("timber_trunks");
 
@@ -55,11 +54,6 @@ public class TimberTrees extends JsonFeature {
     public TimberTrees(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
         //JSON_CONFIGS.add(new SRFeature.JsonConfig<>("logs_leaves_pairs.json", logsLeavesPairs, LOGS_LEAVES_PAIRS_DEFAULT, LogsLeavesPair.LIST_TYPE));
-    }
-
-    @Override
-    public String getModConfigFolder() {
-        return IguanaTweaksReborn.CONFIG_FOLDER;
     }
 
     @SubscribeEvent

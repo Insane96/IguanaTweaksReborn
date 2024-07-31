@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.items;
 
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
@@ -9,8 +9,6 @@ import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.event.HurtItemStackEvent;
 import insane96mcp.insanelib.util.MathHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
@@ -22,7 +20,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @Label(name = "Ecologic Wood", description = "Wooden items have a lower chance to break in sunlight.")
 @LoadFeature(module = Modules.Ids.ITEMS)
 public class EcologicWood extends Feature {
-    public static final TagKey<Item> WOODEN_HAND_EQUIPMENT = TagKey.create(Registries.ITEM, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "equipment/hand/wooden"));
+    public static final TagKey<Item> WOODEN_HAND_EQUIPMENT = ITRItemTagsProvider.create("equipment/hand/wooden");
 
     public EcologicWood(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);

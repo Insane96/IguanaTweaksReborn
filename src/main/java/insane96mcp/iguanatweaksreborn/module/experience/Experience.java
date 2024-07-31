@@ -52,8 +52,8 @@ public class Experience extends JsonFeature {
 	}));
 
 	public static final String XP_PROCESSED = IguanaTweaksReborn.RESOURCE_PREFIX + "xp_processed";
-	public static final TagKey<Block> NO_BLOCK_XP_MULTIPLIER = ITRBlockTagsProvider.create("no_block_xp_multiplier");
-	public static final TagKey<EntityType<?>> NO_SPAWNER_XP_MULTIPLIER = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "no_spawner_xp_multiplier"));
+	public static final TagKey<Block> NO_BLOCK_XP_MULTIPLIER = ITRBlockTagsProvider.create("no_xp_multiplier");
+	public static final TagKey<EntityType<?>> NO_ENTITY_XP_MULTIPLIER = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "no_xp_multiplier"));
 
 	@Config(min = 1d, max = 128d)
 	@Label(name = "Global Experience Multiplier", description = "Experience dropped will be multiplied by this value.\nUse the iguanatweaks:disableExperience game rule to disable experience drops.")
@@ -144,7 +144,7 @@ public class Experience extends JsonFeature {
 	public static void handleMobsMultiplier(EntityJoinLevelEvent event) {
 		if ((mobsFromSpawnersMultiplier == 1d && naturalMobsMultiplier == 1d)
 				|| !(event.getEntity() instanceof Mob mob)
-				|| mob.getType().is(NO_SPAWNER_XP_MULTIPLIER))
+				|| mob.getType().is(NO_ENTITY_XP_MULTIPLIER))
 			return;
 
 		if (mob.getPersistentData().getBoolean(ILStrings.Tags.SPAWNED_FROM_SPAWNER))

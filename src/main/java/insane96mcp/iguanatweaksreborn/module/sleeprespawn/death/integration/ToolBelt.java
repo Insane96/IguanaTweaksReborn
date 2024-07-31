@@ -2,9 +2,7 @@ package insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.integration;
 
 import dev.gigaherz.toolbelt.belt.ToolBeltItem;
 import dev.gigaherz.toolbelt.slot.BeltExtensionSlot;
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +13,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import java.util.List;
 
 public class ToolBelt {
-    public static final TagKey<Item> TOOL_BELT_TICKABLE = TagKey.create(Registries.ITEM, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "toolbelt_tickable"));
+    public static final TagKey<Item> TOOL_BELT_TICKABLE = ITRItemTagsProvider.create("toolbelt_tickable");
     public static void onDeath(List<ItemStack> items, Player player) {
         LazyOptional<BeltExtensionSlot> oBeltExtensionSlot = BeltExtensionSlot.get(player);
         oBeltExtensionSlot.ifPresent(beltExtensionSlot -> {
