@@ -5,14 +5,14 @@
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
-                "SPRING"
+                "AUTUMN"
             ],
             "multiplier": 0.1
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
-                "SUMMER"
+                "WINTER"
             ],
             "multiplier": 0.2
         }

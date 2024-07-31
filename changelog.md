@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Sheep now have higher chance to regrow wool in cold seasons instead of hot seasons
 * Reduced red color of the red outline on blocks
 
 ## 3.13.4
