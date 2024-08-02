@@ -54,6 +54,7 @@ public class Death extends Feature {
 	public static final SimpleBlockWithItem GRAVE = SimpleBlockWithItem.register("grave", () -> new GraveBlock(BlockBehaviour.Properties.of().pushReaction(PushReaction.BLOCK).mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).forceSolidOn().strength(1.5F, 6.0F)));
 	public static final RegistryObject<BlockEntityType<?>> GRAVE_BLOCK_ENTITY_TYPE = ITRRegistries.BLOCK_ENTITY_TYPES.register("grave", () -> BlockEntityType.Builder.of(GraveBlockEntity::new, GRAVE.block().get()).build(null));
 	public static final GameRules.Key<GameRules.BooleanValue> RULE_DEATHGRAVE = GameRules.register("iguanatweaks:deathGrave", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
+	public static final GameRules.Key<GameRules.BooleanValue> RULE_DEATHLOSEITEMS = GameRules.register("iguanatweaks:deathLoseItems", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));
 	public static final TagKey<DamageType> DOESNT_SPAWN_GRAVE = ITRDamageTypeTagsProvider.create("doesnt_spawn_grave");
 
 	public static final String KILLED_PLAYER = IguanaTweaksReborn.RESOURCE_PREFIX + "killed_player";
@@ -68,6 +69,16 @@ public class Death extends Feature {
 
 	public Death(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void onPlayerDeathEarly(LivingDeathEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof ServerPlayer player)
+				|| !player.level().getGameRules().getBoolean(RULE_DEATHLOSEITEMS))
+			return;
+
+		player.getInventory().clearContent();
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
