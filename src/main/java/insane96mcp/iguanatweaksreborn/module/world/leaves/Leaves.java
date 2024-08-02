@@ -43,10 +43,10 @@ public class Leaves extends Feature {
 		if (!(event.getLevel() instanceof ServerLevel serverLevel)
 				|| (!serverLevel.getBlockState(event.getPos()).is(BlockTags.LOGS) && !serverLevel.getBlockState(event.getPos()).is(BlockTags.LEAVES)))
 			return;
-		decayAdjacentLeaves(serverLevel, event.getPos(), event.getLevel().getRandom());
+		decayAdjacentLeaves(serverLevel, event.getPos(), event.getLevel().getRandom(), .5f);
 	}
 
-	public static void decayAdjacentLeaves(ServerLevel level, BlockPos pos, RandomSource random) {
+	public static void decayAdjacentLeaves(ServerLevel level, BlockPos pos, RandomSource random, float multiplier) {
 		if (!Feature.isEnabled(Leaves.class))
 			return;
 
@@ -54,7 +54,7 @@ public class Leaves extends Feature {
 			BlockState adjacentState = level.getBlockState(pos.relative(direction));
 			if (!adjacentState.is(BlockTags.LEAVES))
 				return;
-			ScheduledTasks.schedule(new LeafDecayScheduledTick(Mth.nextInt(random, minTicksToDecay, maxTicksToDecay), level, pos.relative(direction), random));
+			ScheduledTasks.schedule(new LeafDecayScheduledTick(Mth.nextInt(random, (int) (minTicksToDecay * 0.5f), (int) (maxTicksToDecay * 0.5f)), level, pos.relative(direction), random));
 		});
 	}
 }

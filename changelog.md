@@ -7,6 +7,7 @@
   * Killer mobs no longer drop 4 times more items
   * Killer mobs bonus experience increased (+300% -> +400%)
   * Added a `iguanatweaksreborn:killer_blacklist` entity type tag that defines which entities will not become killers. Defaults to "#forge:bosses"
+* Breaking leaves or logs now initiates leaves decay twice as fast
 * Sheep now have higher chance to regrow wool in cold seasons instead of hot seasons
 * Reduced red color of the red outline on blocks
 * Livestock data's `breeding_fail_chance_modifiers` are now added to the base chance instead of multiplying it
