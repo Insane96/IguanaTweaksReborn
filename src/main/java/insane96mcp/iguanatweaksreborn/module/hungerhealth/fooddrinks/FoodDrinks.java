@@ -56,7 +56,8 @@ public class FoodDrinks extends JsonFeature {
 					.addEffect(new ITRMobEffectInstance.Builder(MobEffects.FIRE_RESISTANCE, 6000).build())
 					.addEffect(new ITRMobEffectInstance.Builder(RegeneratingAbsorption.EFFECT, 2400).setAmplifier(3).build()).build(),
 			new CustomFoodProperties.Builder(IdTagMatcher.newId("berry_good:sweet_berry_meatballs")).setNutrition(9).build(),
-			new CustomFoodProperties.Builder(IdTagMatcher.newId("berry_good:glowgurt")).setNutrition(8).build()
+			new CustomFoodProperties.Builder(IdTagMatcher.newId("berry_good:glowgurt")).setNutrition(8).build(),
+			new CustomFoodProperties.Builder(IdTagMatcher.newId("farmersdelight:bone_broth")).setNutrition(6).build()
 	));
 	public static final ArrayList<CustomFoodProperties> customFoodProperties = new ArrayList<>();
 
