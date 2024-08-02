@@ -18,13 +18,16 @@ import insane96mcp.insanelib.world.scheduled.ScheduledTickTask;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.SectionPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -37,7 +40,6 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -59,6 +61,7 @@ public class Death extends Feature {
 
 	public static final String KILLED_PLAYER = IguanaTweaksReborn.RESOURCE_PREFIX + "killed_player";
 	public static final String PLAYER_KILLER_LANG = IguanaTweaksReborn.MOD_ID + ".player_killer";
+	public static final TagKey<EntityType<?>> KILLER_BLACKLIST = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "killer_blacklist"));
 
 	@Config
 	@Label(name = "Player's killer bounty", description = "If true, the player's killer will not despawn and when killed will drop 4x more items and experience.")
@@ -164,13 +167,13 @@ public class Death extends Feature {
 		((ServerLevel)player.level()).setChunkForced(chunkX, chunkZ, true);
 
 		if (vindicationVsKiller && source.getEntity() instanceof Mob killer && !killer.getPersistentData().contains(KILLED_PLAYER)) {
-			if (killer.isRemoved() || killer.isDeadOrDying() || killer.getType().is(Tags.EntityTypes.BOSSES))
+			if (killer.isRemoved() || killer.isDeadOrDying() || killer.getType().is(KILLER_BLACKLIST))
 				return;
 			ScheduledTasks.schedule(new ScheduledTickTask(1) {
 				@Override
 				public void run() {
 					killer.setPersistenceRequired();
-					double experienceMultiplier = 4d;
+					double experienceMultiplier = 5d;
 					if (killer.getPersistentData().contains(ILStrings.Tags.EXPERIENCE_MULTIPLIER))
 						experienceMultiplier *= killer.getPersistentData().getDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER);
 					killer.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, experienceMultiplier);
