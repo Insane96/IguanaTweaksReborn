@@ -143,6 +143,9 @@ dependencies {
     implementation fg.deobf("curse.maven:allurement-438003:5228059")
     implementation fg.deobf("curse.maven:farmers-delight-398521:5051242")
 
+    implementation fg.deobf("curse.maven:zeta-968868:5418213")
+    implementation fg.deobf("curse.maven:quark-243121:5418252")
+
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
