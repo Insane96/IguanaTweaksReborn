@@ -23,7 +23,7 @@ public class Leaves extends Feature {
 
 	@Config(min = 1)
 	@Label(name = "Min ticks to decay")
-	public static Integer minTicksToDecay = 100;
+	public static Integer minTicksToDecay = 50;
 
 	@Config(min = 1)
 	@Label(name = "Max ticks to decay")
@@ -54,7 +54,7 @@ public class Leaves extends Feature {
 			BlockState adjacentState = level.getBlockState(pos.relative(direction));
 			if (!adjacentState.is(BlockTags.LEAVES))
 				return;
-			ScheduledTasks.schedule(new LeafDecayScheduledTick(Mth.nextInt(random, (int) (minTicksToDecay * 0.5f), (int) (maxTicksToDecay * 0.5f)), level, pos.relative(direction), random));
+			ScheduledTasks.schedule(new LeafDecayScheduledTick(Mth.nextInt(random, (int) (minTicksToDecay * multiplier), (int) (maxTicksToDecay * multiplier)), level, pos.relative(direction), random));
 		});
 	}
 }

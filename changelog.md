@@ -1,7 +1,7 @@
 # Changelog
 
 ## Upcoming
-* Increased Leaves Min ticks to decay (50 -> 100)
+* Fixed leaves decay being twice as fast as should have been
 * Fixed `large_fern` missing from `tall_grass` block tag
 
 ## 3.13.5
