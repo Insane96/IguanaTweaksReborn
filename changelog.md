@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed `large_fern` missing from `tall_grass` block tag
+
 ## 3.13.5
 * Added a new gamerule `iguanatweaksreborn:deathLoseItems`
   * Defaults to false, if true players' items will disappear on death

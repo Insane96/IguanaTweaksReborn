@@ -70,7 +70,7 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
                 .addTag(OBSIDIANS);
 
         tag(TALL_GRASS)
-                .add(Blocks.GRASS).add(Blocks.TALL_GRASS).add(Blocks.FERN).add(Blocks.DEAD_BUSH);
+                .add(Blocks.GRASS).add(Blocks.TALL_GRASS).add(Blocks.FERN).add(Blocks.LARGE_FERN).add(Blocks.DEAD_BUSH);
 
         tag(GRASS_BLOCKS)
                 .add(Blocks.GRASS_BLOCK, Blocks.PODZOL, Blocks.MYCELIUM);
