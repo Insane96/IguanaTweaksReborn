@@ -29,9 +29,6 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
     public static final TagKey<Block> RESPAWN_OBELISK_BLOCKS_TO_ROT = create("structures/respawn_obelisk/blocks_to_rot");
     public static final TagKey<Block> OBSIDIANS = create("obsidians");
     public static final TagKey<Block> GRASS_BLOCKS = create("grass_blocks");
-    public static final TagKey<Block> COPPER_ORES = create("copper_ores");
-    public static final TagKey<Block> GOLD_ORES = create("gold_ores");
-    public static final TagKey<Block> IRON_ORES = create("iron_ores");
     public static final TagKey<Block> TALL_GRASS = create("tall_grass");
 
     public ITRBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, @Nullable ExistingFileHelper existingFileHelper){
