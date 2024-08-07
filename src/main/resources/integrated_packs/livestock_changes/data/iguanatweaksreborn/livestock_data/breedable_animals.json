@@ -3,7 +3,7 @@
     "growth_speed_modifiers": [
         {
             "id": "iguanatweaksreborn:true",
-            "modifier": 3,
+            "modifier": 2,
             "operation": "add"
         }
     ],
@@ -63,7 +63,7 @@
             "seasons": [
                 "SPRING"
             ],
-            "multiplier": -0.1,
+            "modifier": -0.1,
             "operation": "add"
         },
         {

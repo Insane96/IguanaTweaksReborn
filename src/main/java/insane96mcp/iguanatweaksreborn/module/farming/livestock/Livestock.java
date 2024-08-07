@@ -65,6 +65,10 @@ public class Livestock extends Feature {
 	@Label(name = "Data Pack", description = "Enables a data pack that changes food drops and slows down growing, breeding, egging etc")
 	public static Boolean dataPack = true;
 
+	@Config
+	@Label(name = "Milk Cooldown", description = "Seconds until you can milk cows (or stew mooshrooms)")
+	public static Integer milkingCooldown = 1200;
+
 	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "livestock_changes", Component.literal("IguanaTweaks Reborn Livestock Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
@@ -167,7 +171,7 @@ public class Livestock extends Feature {
 		LivestockDataReloadListener.LIVESTOCK_DATA.stream()
 				.filter(data -> data.matches(mob))
 				.forEach(data -> modifiersToApply.addAll(data.growthSpeedModifiers));
-		float chanceToSlowDown = Modifier.applyModifiers(1f, modifiersToApply, mob.level(), mob.blockPosition(), mob);
+		float chanceToSlowDown = Modifier.applyModifiers(0f, modifiersToApply, mob.level(), mob.blockPosition(), mob);
 		if (chanceToSlowDown <= 1d)
 			return;
 
@@ -188,7 +192,7 @@ public class Livestock extends Feature {
 		LivestockDataReloadListener.LIVESTOCK_DATA.stream()
 				.filter(data -> data.matches(mob))
 				.forEach(data -> modifiersToApply.addAll(data.breedingCooldownModifiers));
-		float chanceToSlowDown = Modifier.applyModifiers(1f, modifiersToApply, mob.level(), mob.blockPosition(), mob);
+		float chanceToSlowDown = Modifier.applyModifiers(0f, modifiersToApply, mob.level(), mob.blockPosition(), mob);
 		if (chanceToSlowDown <= 1d)
 			return;
 
@@ -210,7 +214,7 @@ public class Livestock extends Feature {
 		LivestockDataReloadListener.LIVESTOCK_DATA.stream()
 				.filter(data -> data.matches(chicken))
 				.forEach(data -> modifiersToApply.addAll(data.eggLayCooldownModifiers));
-		float chanceToSlowDown = Modifier.applyModifiers(1f, modifiersToApply, chicken.level(), chicken.blockPosition(), chicken);
+		float chanceToSlowDown = Modifier.applyModifiers(0f, modifiersToApply, chicken.level(), chicken.blockPosition(), chicken);
 		if (chanceToSlowDown <= 1d)
 			return;
 
@@ -263,7 +267,7 @@ public class Livestock extends Feature {
 			LivestockDataReloadListener.LIVESTOCK_DATA.stream()
 					.filter(data -> data.matches(animal))
 					.forEach(data -> modifiersToApply.addAll(data.cowFluidCooldownModifiers));
-			float cooldown = Modifier.applyModifiers(1200, modifiersToApply, animal.level(), animal.blockPosition(), animal);
+			float cooldown = Modifier.applyModifiers(milkingCooldown, modifiersToApply, animal.level(), animal.blockPosition(), animal);
 			if (cooldown <= 0)
 				return;
 

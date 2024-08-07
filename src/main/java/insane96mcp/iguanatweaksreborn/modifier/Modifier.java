@@ -3,7 +3,7 @@ package insane96mcp.iguanatweaksreborn.modifier;
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import insane96mcp.insanelib.util.LogHelper;
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -58,7 +58,7 @@ public class Modifier {
             ResourceLocation modifierId = ResourceLocation.tryParse(GsonHelper.getAsString(jObjectModifier, "id"));
             Type modifierType = Modifiers.MODIFIERS.get(modifierId);
             if (modifierType == null) {
-                LogHelper.error("modifier %s does not exist. Skipping".formatted(modifierId));
+                IguanaTweaksReborn.LOGGER.error("modifier %s does not exist. Skipping".formatted(modifierId));
                 continue;
             }
             modifiers.add(context.deserialize(jObjectModifier, modifierType));

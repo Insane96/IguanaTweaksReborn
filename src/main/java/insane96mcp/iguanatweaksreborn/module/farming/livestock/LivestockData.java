@@ -57,9 +57,9 @@ public class LivestockData {
 			IdTagMatcher entity = context.deserialize(jObject.get("entity"), IdTagMatcher.class);
 			Float livingDays = ITRGsonHelper.getAsNullableFloat(jObject, "living_days");
 			float livingDaysFluctuation = GsonHelper.getAsFloat(jObject, "living_days_fluctuation", 0);
-			List<Modifier> growthSpeed = Modifier.getListFromJson(jObject, "growth_speed", context);
-			List<Modifier> breedingCooldown = Modifier.getListFromJson(jObject, "breeding_cooldown", context);
-			List<Modifier> eggLayCooldown = Modifier.getListFromJson(jObject, "egg_lay_cooldown", context);
+			List<Modifier> growthSpeed = Modifier.getListFromJson(jObject, "growth_speed_modifiers", context);
+			List<Modifier> breedingCooldown = Modifier.getListFromJson(jObject, "breeding_cooldown_modifiers", context);
+			List<Modifier> eggLayCooldown = Modifier.getListFromJson(jObject, "egg_lay_cooldown_modifiers", context);
 			List<Modifier> breedingFailChanceModifiers = Modifier.getListFromJson(jObject, "breeding_fail_chance_modifiers", context);
 			List<Modifier> cowFluidCooldownModifiers = Modifier.getListFromJson(jObject, "cow_fluid_cooldown_modifiers", context);
 			List<Modifier> sheepWoolGrowthChanceModifiers = Modifier.getListFromJson(jObject, "sheep_wool_growth_chance_modifiers", context);

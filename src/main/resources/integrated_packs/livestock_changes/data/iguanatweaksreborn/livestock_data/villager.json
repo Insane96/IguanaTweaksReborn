@@ -2,15 +2,23 @@
     "entity": "minecraft:villager",
     "growth_speed": [
         {
-            "id": "iguanatweaksreborn:global",
-            "multiplier": 3
+            "id": "iguanatweaksreborn:true",
+            "modifier": 3,
+            "operation": "add"
         }
     ],
     "breeding_cooldown": [
         {
-            "id": "iguanatweaksreborn:global",
-            "multiplier": 6
+            "id": "iguanatweaksreborn:true",
+            "modifier": 6,
+            "operation": "add"
         }
     ],
-    "breeding_fail_chance": 0.65
+    "breeding_fail_chance_modifiers": [
+        {
+            "id": "iguanatweaksreborn:true",
+            "modifier": 0.5,
+            "operation": "add"
+        }
+    ]
 }

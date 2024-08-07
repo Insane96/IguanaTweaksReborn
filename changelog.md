@@ -5,7 +5,7 @@
   * Added `operation` that can be either "add" or "multiply"
   * Renamed `multiplier` to `modifier`
   * Removed `sheep_wool_growth_chance`, use modifiers to set it to a different value, defaults to 1 (100% chance to regrow wool)
-  * Removed `cow_fluid_cooldown`, use modifiers to set it to a different value, defaults to 1200 seconds (20 minutes)
+  * Removed `cow_fluid_cooldown`, use modifiers to set it to a different value, defaults to 1200 seconds (20 minutes) changed through 
   * Removed `breeding_fail_chance`, use modifiers to set it to a different value, defaults to 0 (0% chance to fail breeding)
   * Merged `correct_biome` and `wrong_biome` into `matches_biome`
     * The modifier is applied if the current biome matches a biome in the list.  
@@ -13,12 +13,13 @@
   * Renamed `iguanatweaksreborn:global` to `iguanatweaksreborn:true`
 * With the above, the following are the new modifiers to Livestock
   * Breedable animals 
-    * Take 15 minutes (3x more time) to grow from baby
+    * Take 40 minutes (2x more time) to grow from baby
     * Take 7/10/12.5/8.5 minutes (1.4/2/2.5/1.7x more time) to be able to be bred again in Summer though Spring
     * Have 50% chance to fail to breed a baby, increased by 20% if the animal's "old" and +20/-10/-20% chance in Winter/Spring/Summer
   * Sheep have 20% chance to fail to grow wool, decreased to 10/0% in Autumn/Winter
   * Cows have 20 minute cooldown before can be milked/"stewed" again. This time is increased by 10 minutes if the animal's "old". In Winter/Spring/Summer 10/-5/-10 minutes are added to the cooldown.
-  * 
+  * Chickens lay eggs every 12.5 minutes, increased by 2.5 minutes when "old". In Winter/Spring/Summer 2.5/-2/-4 minutes are added to the cooldown.
+  * Villagers now take 15 minutes to grow from baby, can breed every 30 minutes and fail to breed a child 50% of the time
 * Fixed leaves decay being twice as fast as should have been
 * Fixed `large_fern` missing from `tall_grass` block tag
 

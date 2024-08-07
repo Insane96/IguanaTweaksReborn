@@ -1,5 +1,5 @@
 {
-    "entity": "iguanatweaksreborn:sheep",
+    "entity": "#iguanatweaksreborn:sheep",
     "sheep_wool_growth_chance_modifiers": [
         {
             "id": "iguanatweaksreborn:true",

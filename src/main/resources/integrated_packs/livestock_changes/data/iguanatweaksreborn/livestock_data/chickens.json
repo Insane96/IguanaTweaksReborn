@@ -1,13 +1,15 @@
 {
     "entity": "#iguanatweaksreborn:chickens",
-    "egg_lay_cooldown": [
+    "egg_lay_cooldown_modifiers": [
         {
-            "id": "iguanatweaksreborn:global",
-            "multiplier": 3
+            "id": "iguanatweaksreborn:true",
+            "modifier": 2.5,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:age",
-            "multiplier": 2,
+            "modifier": 0.5,
+            "operation": "add",
             "age": "old"
         },
         {
@@ -15,21 +17,24 @@
             "seasons": [
                 "WINTER"
             ],
-            "multiplier": 1.33333333
+            "modifier": 0.5,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "SPRING"
             ],
-            "multiplier": 0.85
+            "modifier": -0.4,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "SUMMER"
             ],
-            "multiplier": 0.66666667
+            "modifier": -0.8,
+            "operation": "add"
         }
     ]
 }
