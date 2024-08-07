@@ -6,31 +6,28 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 @JsonAdapter(NightTimeModifier.Serializer.class)
 public class NightTimeModifier extends Modifier {
-    protected NightTimeModifier(float multiplier) {
-        super(multiplier);
+    protected NightTimeModifier(float modifier, Operation operation) {
+        super(modifier, operation);
     }
 
     @Override
-    public float getMultiplier(Level level, BlockPos pos) {
+    public boolean shouldApply(Level level, BlockPos pos, @Nullable LivingEntity entity) {
         int dayTime = (int) (level.dayTime() % 24000);
-        if (dayTime >= 12786 && dayTime < 23216)
-            return this.multiplier;
-        return 1f;
-    }
-
-    @Override
-    public float getMultiplier(LivingEntity entity, Level level, BlockPos pos) {
-        return this.getMultiplier(level, pos);
+        return dayTime >= 12786 && dayTime < 23216;
     }
 
     public static class Serializer implements JsonDeserializer<NightTimeModifier> {
         @Override
         public NightTimeModifier deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jObject = json.getAsJsonObject();
-            return new NightTimeModifier(GsonHelper.getAsFloat(jObject, "multiplier"));
+            return new NightTimeModifier(
+                    GsonHelper.getAsFloat(jObject, "modifier"),
+                    context.deserialize(jObject.get("operation"), Operation.class)
+            );
         }
     }
 }

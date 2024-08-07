@@ -1,20 +1,26 @@
 {
     "entity": "iguanatweaksreborn:sheep",
-    "sheep_wool_growth_chance": 0.8,
     "sheep_wool_growth_chance_modifiers": [
+        {
+            "id": "iguanatweaksreborn:true",
+            "modifier": -0.2,
+            "operation": "add"
+        },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "AUTUMN"
             ],
-            "multiplier": 0.1
+            "modifier": 0.1,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "WINTER"
             ],
-            "multiplier": 0.2
+            "modifier": 0.2,
+            "operation": "add"
         }
     ]
 }

@@ -1,32 +1,35 @@
 {
     "entity": "#iguanatweaksreborn:cows",
-    "cow_fluid_cooldown": 1800,
     "cow_fluid_cooldown_modifiers": [
         {
             "id": "iguanatweaksreborn:age",
-            "multiplier": 2,
-            "age": "old"
+            "modifier": 600,
+            "age": "old",
+            "operation": "ADD"
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "WINTER"
             ],
-            "multiplier": 1.33333333
+            "modifier": 600,
+            "operation": "ADD"
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "SPRING"
             ],
-            "multiplier": 0.85
+            "modifier": -300,
+            "operation": "ADD"
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "SUMMER"
             ],
-            "multiplier": 0.66666667
+            "modifier": -600,
+            "operation": "ADD"
         }
     ]
 }

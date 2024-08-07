@@ -33,11 +33,7 @@ public class PlantGrowthMultiplier {
 	public float getMultiplier(BlockState state, Level level, BlockPos pos) {
 		if (!this.block.matchesBlock(state))
 			return 1f;
-		float multiplier = this.growthMultiplier;
-		for (Modifier modifier : this.modifiers) {
-			multiplier *= modifier.getMultiplier(level, pos);
-		}
-		return multiplier;
+        return Modifier.applyModifiers(this.growthMultiplier, this.modifiers, level, pos, null);
 	}
 
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<PlantGrowthMultiplier>>(){}.getType();

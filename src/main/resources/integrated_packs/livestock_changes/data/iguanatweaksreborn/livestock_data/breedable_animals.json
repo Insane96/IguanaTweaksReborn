@@ -1,65 +1,78 @@
 {
     "entity": "#iguanatweaksreborn:breedable_animals",
-    "growth_speed": [
+    "growth_speed_modifiers": [
         {
-            "id": "iguanatweaksreborn:global",
-            "multiplier": 3
+            "id": "iguanatweaksreborn:true",
+            "modifier": 3,
+            "operation": "add"
         }
     ],
-    "breeding_cooldown": [
+    "breeding_cooldown_modifiers": [
         {
-            "id": "iguanatweaksreborn:global",
-            "multiplier": 2.5
+            "id": "iguanatweaksreborn:true",
+            "modifier": 2,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "WINTER"
             ],
-            "multiplier": 1.33333333
+            "modifier": 0.5,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "SPRING"
             ],
-            "multiplier": 0.85
+            "modifier": -0.3,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "SUMMER"
             ],
-            "multiplier": 0.66666667
+            "modifier": -0.6,
+            "operation": "add"
         }
     ],
-    "breeding_fail_chance": 0.6,
     "breeding_fail_chance_modifiers": [
         {
+            "id": "iguanatweaksreborn:true",
+            "modifier": 0.5,
+            "operation": "add"
+        },
+        {
             "id": "iguanatweaksreborn:age",
-            "multiplier": 0.2,
-            "age": "old"
+            "modifier": 0.2,
+            "age": "old",
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "WINTER"
             ],
-            "multiplier": 0.3
+            "modifier": 0.2,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "SPRING"
             ],
-            "multiplier": -0.1
+            "multiplier": -0.1,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:season",
             "seasons": [
                 "SUMMER"
             ],
-            "multiplier": -0.2
+            "modifier": -0.2,
+            "operation": "add"
         }
     ]
 }

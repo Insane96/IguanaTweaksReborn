@@ -1,6 +1,24 @@
 # Changelog
 
 ## Upcoming
+* Reworked Plants and Livestock Modifiers. This feature was almost completely broken, so I rewrote it.
+  * Added `operation` that can be either "add" or "multiply"
+  * Renamed `multiplier` to `modifier`
+  * Removed `sheep_wool_growth_chance`, use modifiers to set it to a different value, defaults to 1 (100% chance to regrow wool)
+  * Removed `cow_fluid_cooldown`, use modifiers to set it to a different value, defaults to 1200 seconds (20 minutes)
+  * Removed `breeding_fail_chance`, use modifiers to set it to a different value, defaults to 0 (0% chance to fail breeding)
+  * Merged `correct_biome` and `wrong_biome` into `matches_biome`
+    * The modifier is applied if the current biome matches a biome in the list.  
+      If `inverse` is set to true then the modifier will apply only if the current biome doesn't match any biome in the list
+  * Renamed `iguanatweaksreborn:global` to `iguanatweaksreborn:true`
+* With the above, the following are the new modifiers to Livestock
+  * Breedable animals 
+    * Take 15 minutes (3x more time) to grow from baby
+    * Take 7/10/12.5/8.5 minutes (1.4/2/2.5/1.7x more time) to be able to be bred again in Summer though Spring
+    * Have 50% chance to fail to breed a baby, increased by 20% if the animal's "old" and +20/-10/-20% chance in Winter/Spring/Summer
+  * Sheep have 20% chance to fail to grow wool, decreased to 10/0% in Autumn/Winter
+  * Cows have 20 minute cooldown before can be milked/"stewed" again. This time is increased by 10 minutes if the animal's "old". In Winter/Spring/Summer 10/-5/-10 minutes are added to the cooldown.
+  * 
 * Fixed leaves decay being twice as fast as should have been
 * Fixed `large_fern` missing from `tall_grass` block tag
 

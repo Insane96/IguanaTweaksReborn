@@ -82,20 +82,14 @@ public class Livestock extends Feature {
 	}
 
 	public static boolean canSheepRegrowWool(Mob mob) {
-		double chance = 1d;
 		List<Modifier> modifiersToApply = new ArrayList<>();
-		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA) {
-			if (data.matches(mob)) {
-				if (data.sheepWoolGrowthChance != null)
-					chance = data.sheepWoolGrowthChance;
-				modifiersToApply.addAll(data.sheepWoolGrowthChanceModifiers);
-			}
-		}
-		for (Modifier modifier : modifiersToApply)
-			chance += modifier.getMultiplier(mob, mob.level(), mob.blockPosition());
-		if (chance == 1d)
+		LivestockDataReloadListener.LIVESTOCK_DATA.stream()
+				.filter(data -> data.matches(mob))
+				.forEach(data -> modifiersToApply.addAll(data.sheepWoolGrowthChanceModifiers));
+		float chance = Modifier.applyModifiers(1f, modifiersToApply, mob.level(), mob.blockPosition(), mob);
+		if (chance >= 1d)
 			return true;
-		return mob.getRandom().nextDouble() < chance;
+		return mob.getRandom().nextFloat() < chance;
 	}
 
 	@SubscribeEvent
@@ -169,20 +163,17 @@ public class Livestock extends Feature {
 		if (growingAge >= 0)
 			return;
 
-		double multiplier = 0d;
-		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
-			if (data.matches(mob)) {
-				for (Modifier modifier : data.growthSpeed)
-					multiplier += modifier.getMultiplier(mob, mob.level(), mob.blockPosition());
-			}
-		}
-		if (multiplier == 0d)
+		List<Modifier> modifiersToApply = new ArrayList<>();
+		LivestockDataReloadListener.LIVESTOCK_DATA.stream()
+				.filter(data -> data.matches(mob))
+				.forEach(data -> modifiersToApply.addAll(data.growthSpeedModifiers));
+		float chanceToSlowDown = Modifier.applyModifiers(1f, modifiersToApply, mob.level(), mob.blockPosition(), mob);
+		if (chanceToSlowDown <= 1d)
 			return;
 
-		double chance = 1d / multiplier;
+		double chance = 1d / chanceToSlowDown;
 		if (mob.getRandom().nextFloat() > chance)
 			mob.setAge(growingAge - 1);
-
 	}
 
 	public void slowdownBreeding(LivingEvent.LivingTickEvent event) {
@@ -193,17 +184,15 @@ public class Livestock extends Feature {
 		if (growingAge <= 0)
 			return;
 
-		double multiplier = 0d;
-		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
-			if (data.matches(mob)) {
-				for (Modifier modifier : data.breedingCooldown)
-					multiplier += modifier.getMultiplier(mob, mob.level(), mob.blockPosition());
-			}
-		}
-		if (multiplier == 0d)
+		List<Modifier> modifiersToApply = new ArrayList<>();
+		LivestockDataReloadListener.LIVESTOCK_DATA.stream()
+				.filter(data -> data.matches(mob))
+				.forEach(data -> modifiersToApply.addAll(data.breedingCooldownModifiers));
+		float chanceToSlowDown = Modifier.applyModifiers(1f, modifiersToApply, mob.level(), mob.blockPosition(), mob);
+		if (chanceToSlowDown <= 1d)
 			return;
 
-		double chance = 1d / multiplier;
+		double chance = 1d / chanceToSlowDown;
 		if (mob.getRandom().nextFloat() > chance)
 			mob.setAge(growingAge + 1);
 	}
@@ -217,17 +206,15 @@ public class Livestock extends Feature {
 		if (timeUntilNextEgg < 0)
 			return;
 
-		double multiplier = 0d;
-		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
-			if (data.matches(chicken)) {
-				for (Modifier modifier : data.eggLayCooldown)
-					multiplier += modifier.getMultiplier(chicken, chicken.level(), chicken.blockPosition());
-			}
-		}
-		if (multiplier == 0d)
+		List<Modifier> modifiersToApply = new ArrayList<>();
+		LivestockDataReloadListener.LIVESTOCK_DATA.stream()
+				.filter(data -> data.matches(chicken))
+				.forEach(data -> modifiersToApply.addAll(data.eggLayCooldownModifiers));
+		float chanceToSlowDown = Modifier.applyModifiers(1f, modifiersToApply, chicken.level(), chicken.blockPosition(), chicken);
+		if (chanceToSlowDown <= 1d)
 			return;
 
-		double chance = 1d / multiplier;
+		double chance = 1d / chanceToSlowDown;
 		if (chicken.getRandom().nextFloat() > chance)
 			chicken.eggTime += 1;
 	}
@@ -272,18 +259,12 @@ public class Livestock extends Feature {
 				event.setCancellationResult(InteractionResult.SUCCESS);
 		}
 		else if (!animal.level().isClientSide) {
-			float cooldown = 0;
 			List<Modifier> modifiersToApply = new ArrayList<>();
-			for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA) {
-				if (data.matches(animal)) {
-					if (data.cowFluidCooldown != null)
-						cooldown = data.cowFluidCooldown;
-					modifiersToApply.addAll(data.cowFluidCooldownModifiers);
-				}
-			}
-			for (Modifier modifier : modifiersToApply)
-				cooldown *= modifier.getMultiplier(animal, animal.level(), animal.blockPosition());
-			if (cooldown == 0)
+			LivestockDataReloadListener.LIVESTOCK_DATA.stream()
+					.filter(data -> data.matches(animal))
+					.forEach(data -> modifiersToApply.addAll(data.cowFluidCooldownModifiers));
+			float cooldown = Modifier.applyModifiers(1200, modifiersToApply, animal.level(), animal.blockPosition(), animal);
+			if (cooldown <= 0)
 				return;
 
 			milkCooldown = (int) (cooldown * 20);
@@ -321,22 +302,16 @@ public class Livestock extends Feature {
 		if (!this.isEnabled())
 			return;
 
-		double failChance = 0d;
+		Mob mob = event.getParentA().getRandom().nextBoolean() ? event.getParentA() : event.getParentB();
 		List<Modifier> modifiersToApply = new ArrayList<>();
-		Mob parentA = event.getParentA();
-		for (LivestockData data : LivestockDataReloadListener.LIVESTOCK_DATA){
-			if (data.matches(parentA)) {
-				if (data.breedingFailChance != null)
-					failChance = data.breedingFailChance;
-				modifiersToApply.addAll(data.breedingFailChanceModifiers);
-			}
-		}
-		for (Modifier modifier : modifiersToApply)
-			failChance += modifier.getMultiplier(parentA, parentA.level(), parentA.blockPosition());
-		if (failChance == 0d)
+		LivestockDataReloadListener.LIVESTOCK_DATA.stream()
+				.filter(data -> data.matches(mob))
+				.forEach(data -> modifiersToApply.addAll(data.breedingCooldownModifiers));
+		float failChance = Modifier.applyModifiers(0f, modifiersToApply, mob.level(), mob.blockPosition(), mob);
+		if (failChance <= 0)
 			return;
 
-		if (parentA.getRandom().nextFloat() < failChance)
+		if (mob.getRandom().nextFloat() < failChance)
 			event.setCanceled(true);
 	}
 
