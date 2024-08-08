@@ -3,6 +3,8 @@
 ## Upcoming
 * Added Prevent fast swim up with jump
   * Enabled by default prevents the player from swimming up really fast if holding the jump key
+* Added `faster egg time`
+  * Chickens can no longer be bred, instead when fed they will make eggs faster for 15 minutes
 * Changed `iguanatweaks:deathLoseItems` to `iguanatweaks:deathLoseItemsPercentage`
   * Also added `iguanatweaks:deathLoseItemsEnchanted` that if false will prevent loosing enchanted items
   * A percentage of the items in the inventory to lose on death

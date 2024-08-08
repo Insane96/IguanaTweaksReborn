@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.modifier.Modifier;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
 import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
 import insane96mcp.iguanatweaksreborn.network.message.ForgeDataIntSync;
 import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
@@ -13,6 +14,7 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.MCUtils;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -57,9 +59,15 @@ public class Livestock extends Feature {
 	public static final String MILK_COOLDOWN_LANG = IguanaTweaksReborn.MOD_ID + ".milk_cooldown";
 	public static final String MILK_COOLDOWN = IguanaTweaksReborn.RESOURCE_PREFIX + "milk_cooldown";
 
+	public static final String FED_TIME = IguanaTweaksReborn.RESOURCE_PREFIX + "fed_time";
+
 	@Config
 	@Label(name = "Chicken from egg chance", description = "Changes the chance for a chicken to come out from an egg (1 in this value). Vanilla is 8")
 	public static Integer chickenFromEggChance = 8;
+
+	@Config
+	@Label(name = "Faster egg time", description = "If not 0, chickens will no longer breed, instead when fed will make eggs twice as fast for the seconds set here.")
+	public static Integer fasterEggTime = 900;
 
 	@Config
 	@Label(name = "Data Pack", description = "Enables a data pack that changes food drops and slows down growing, breeding, egging etc")
@@ -85,6 +93,38 @@ public class Livestock extends Feature {
 		sheep.goalSelector.addGoal(5, sheep.eatBlockGoal);
 	}
 
+	@SubscribeEvent
+	public void onLivingTick(LivingEvent.LivingTickEvent event) {
+		if (!this.isEnabled())
+			return;
+
+		if (!event.getEntity().level().isClientSide) {
+			slowdownAnimalGrowth(event);
+			slowdownBreeding(event);
+			liveDeath(event);
+			eggLay(event);
+			tickFedTime(event);
+		}
+		cowMilkTick(event);
+	}
+
+	@SubscribeEvent
+	public void onTryToSeedChickens(PlayerInteractEvent.EntityInteract event) {
+		if (!this.isEnabled()
+				|| !(event.getTarget() instanceof Chicken chicken)
+		        || !event.getItemStack().is(Crops.CHICKEN_FOOD_ITEMS))
+			return;
+
+		event.setCanceled(true);
+		if (chicken.getPersistentData().getInt(FED_TIME) <= 0) {
+			chicken.getPersistentData().putInt(FED_TIME, fasterEggTime * 20);
+			event.getEntity().swing(event.getHand());
+			chicken.level().addParticle(ParticleTypes.HAPPY_VILLAGER, chicken.getX(), chicken.getY() + chicken.getBbHeight() + 0.5D, chicken.getZ(), 0.0D, 0.0D, 0.0D);
+			if (!event.getEntity().getAbilities().instabuild)
+				event.getEntity().getItemInHand(event.getHand()).shrink(1);
+		}
+	}
+
 	public static boolean canSheepRegrowWool(Mob mob) {
 		List<Modifier> modifiersToApply = new ArrayList<>();
 		LivestockDataReloadListener.LIVESTOCK_DATA.stream()
@@ -94,20 +134,6 @@ public class Livestock extends Feature {
 		if (chance >= 1d)
 			return true;
 		return mob.getRandom().nextFloat() < chance;
-	}
-
-	@SubscribeEvent
-	public void onLivingTick(LivingEvent.LivingTickEvent event) {
-		if (!this.isEnabled())
-			return;
-
-		if (!event.getEntity().level().isClientSide) {
-			slowdownAnimalGrowth(event);
-			slowdownBreeding(event);
-			slowdownEggLay(event);
-			liveDeath(event);
-		}
-		cowMilkTick(event);
 	}
 
 	public static void liveDeath(LivingEvent.LivingTickEvent event) {
@@ -201,7 +227,7 @@ public class Livestock extends Feature {
 			mob.setAge(growingAge + 1);
 	}
 
-	public void slowdownEggLay(LivingEvent.LivingTickEvent event) {
+	public void eggLay(LivingEvent.LivingTickEvent event) {
 		if (!(event.getEntity() instanceof Chicken chicken)
 				|| chicken.isBaby())
 			return;
@@ -218,9 +244,30 @@ public class Livestock extends Feature {
 		if (chanceToSlowDown <= 1d)
 			return;
 
+		int fedTime = chicken.getPersistentData().getInt(FED_TIME);
+
 		double chance = 1d / chanceToSlowDown;
-		if (chicken.getRandom().nextFloat() > chance)
-			chicken.eggTime += 1;
+		if (chicken.getRandom().nextFloat() > chance) {
+			timeUntilNextEgg += 1;
+			if (fedTime > 0)
+				timeUntilNextEgg += 1;
+		}
+		if (fedTime > 0)
+			timeUntilNextEgg -= 1;
+
+		chicken.eggTime = timeUntilNextEgg;
+	}
+
+	public void tickFedTime(LivingEvent.LivingTickEvent event) {
+		if (!(event.getEntity() instanceof Chicken chicken)
+				|| chicken.isBaby()
+				|| chicken.tickCount % 20 != 0)
+			return;
+		int fedTime = chicken.getPersistentData().getInt(FED_TIME);
+		if (fedTime <= 0)
+			return;
+
+		chicken.getPersistentData().putInt(FED_TIME, fedTime - 20);
 	}
 
 	public void cowMilkTick(LivingEvent.LivingTickEvent event) {
