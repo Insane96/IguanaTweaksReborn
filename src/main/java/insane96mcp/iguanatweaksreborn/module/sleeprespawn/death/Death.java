@@ -25,6 +25,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
@@ -56,7 +57,7 @@ public class Death extends Feature {
 	public static final SimpleBlockWithItem GRAVE = SimpleBlockWithItem.register("grave", () -> new GraveBlock(BlockBehaviour.Properties.of().pushReaction(PushReaction.BLOCK).mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).forceSolidOn().strength(1.5F, 6.0F)));
 	public static final RegistryObject<BlockEntityType<?>> GRAVE_BLOCK_ENTITY_TYPE = ITRRegistries.BLOCK_ENTITY_TYPES.register("grave", () -> BlockEntityType.Builder.of(GraveBlockEntity::new, GRAVE.block().get()).build(null));
 	public static final GameRules.Key<GameRules.BooleanValue> RULE_DEATHGRAVE = GameRules.register("iguanatweaks:deathGrave", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
-	public static final GameRules.Key<GameRules.BooleanValue> RULE_DEATHLOSEITEMS = GameRules.register("iguanatweaks:deathLoseItems", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));
+	public static final GameRules.Key<GameRules.IntegerValue> RULE_DEATHLOSEITEMSPERCENTAGE = GameRules.register("iguanatweaks:deathLoseItemsPercentage", GameRules.Category.PLAYER, GameRules.IntegerValue.create(0));
 	public static final TagKey<DamageType> DOESNT_SPAWN_GRAVE = ITRDamageTypeTagsProvider.create("doesnt_spawn_grave");
 
 	public static final String KILLED_PLAYER = IguanaTweaksReborn.RESOURCE_PREFIX + "killed_player";
@@ -77,11 +78,22 @@ public class Death extends Feature {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onPlayerDeathEarly(LivingDeathEvent event) {
 		if (!this.isEnabled()
-				|| !(event.getEntity() instanceof ServerPlayer player)
-				|| !player.level().getGameRules().getBoolean(RULE_DEATHLOSEITEMS))
+				|| !(event.getEntity() instanceof ServerPlayer player))
 			return;
+		int lostItemsPercentage = player.level().getGameRules().getInt(RULE_DEATHLOSEITEMSPERCENTAGE);
+		if (lostItemsPercentage == 0)
+			return;
+		if (lostItemsPercentage == 100)
+			player.getInventory().clearContent();
+		else {
+			tryLoseItems(player.getInventory().items, player.getRandom(), lostItemsPercentage);
+			tryLoseItems(player.getInventory().armor, player.getRandom(), lostItemsPercentage);
+			tryLoseItems(player.getInventory().offhand, player.getRandom(), lostItemsPercentage);
+		}
+	}
 
-		player.getInventory().clearContent();
+	private static void tryLoseItems(List<ItemStack> items, RandomSource random, int chance) {
+        items.removeIf(item -> random.nextInt(100) < chance);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
