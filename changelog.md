@@ -4,6 +4,7 @@
 * Added Prevent fast swim up with jump
   * Enabled by default prevents the player from swimming up really fast if holding the jump key
 * Changed `iguanatweaks:deathLoseItems` to `iguanatweaks:deathLoseItemsPercentage`
+  * Also added `iguanatweaks:deathLoseItemsEnchanted` that if false will prevent loosing enchanted items
   * A percentage of the items in the inventory to lose on death
 * Reworked Plants and Livestock Modifiers. This feature was almost completely broken, so I rewrote it.
   * Added `operation` that can be either "add" or "multiply"

@@ -59,6 +59,7 @@ public class Death extends Feature {
 	public static final RegistryObject<BlockEntityType<?>> GRAVE_BLOCK_ENTITY_TYPE = ITRRegistries.BLOCK_ENTITY_TYPES.register("grave", () -> BlockEntityType.Builder.of(GraveBlockEntity::new, GRAVE.block().get()).build(null));
 	public static final GameRules.Key<GameRules.BooleanValue> RULE_DEATHGRAVE = GameRules.register("iguanatweaks:deathGrave", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
 	public static final GameRules.Key<GameRules.IntegerValue> RULE_DEATHLOSEITEMSPERCENTAGE = GameRules.register("iguanatweaks:deathLoseItemsPercentage", GameRules.Category.PLAYER, GameRules.IntegerValue.create(0));
+	public static final GameRules.Key<GameRules.BooleanValue> RULE_DEATHLOSEITEMSENCHANTED = GameRules.register("iguanatweaks:deathLoseItemsEnchanted", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));
 	public static final TagKey<DamageType> DOESNT_SPAWN_GRAVE = ITRDamageTypeTagsProvider.create("doesnt_spawn_grave");
 
 	public static final String KILLED_PLAYER = IguanaTweaksReborn.RESOURCE_PREFIX + "killed_player";
@@ -82,19 +83,22 @@ public class Death extends Feature {
 				|| !(event.getEntity() instanceof ServerPlayer player))
 			return;
 		int lostItemsPercentage = player.level().getGameRules().getInt(RULE_DEATHLOSEITEMSPERCENTAGE);
+		boolean lostItemsEnchanted = player.level().getGameRules().getBoolean(RULE_DEATHLOSEITEMSENCHANTED);
 		if (lostItemsPercentage == 0)
 			return;
 		if (lostItemsPercentage == 100)
 			player.getInventory().clearContent();
 		else {
-			tryLoseItems(player.getInventory(), player.getInventory().items, player.getRandom(), lostItemsPercentage);
-			tryLoseItems(player.getInventory(), player.getInventory().armor, player.getRandom(), lostItemsPercentage);
-			tryLoseItems(player.getInventory(), player.getInventory().offhand, player.getRandom(), lostItemsPercentage);
+			tryLoseItems(player.getInventory(), player.getInventory().items, player.getRandom(), lostItemsPercentage, lostItemsEnchanted);
+			tryLoseItems(player.getInventory(), player.getInventory().armor, player.getRandom(), lostItemsPercentage, lostItemsEnchanted);
+			tryLoseItems(player.getInventory(), player.getInventory().offhand, player.getRandom(), lostItemsPercentage, lostItemsEnchanted);
 		}
 	}
 
-	private static void tryLoseItems(Inventory inventory, List<ItemStack> items, RandomSource random, int chance) {
+	private static void tryLoseItems(Inventory inventory, List<ItemStack> items, RandomSource random, int chance, boolean lostItemsEnchanted) {
 		items.forEach(item -> {
+			if (!lostItemsEnchanted && item.isEnchanted())
+				return;
 			if (random.nextInt(100) < chance)
 				inventory.removeItem(item);
 		});

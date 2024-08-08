@@ -193,6 +193,8 @@
 
 	"gamerule.iguanatweaks:deathGrave": "Spawn grave on death",
 	"gamerule.iguanatweaks:deathLoseItemsPercentage": "Percentage items lost on death",
+	"gamerule.iguanatweaks:deathLoseItemsEnchanted": "Enchanted items are lost on death",
+	"gamerule.iguanatweaks:deathLoseItemsEnchanted.description": "Enchanted items are lost on death",
 	"gamerule.iguanatweaks:explosionMobGriefing": "Mob griefing",
 	"gamerule.iguanatweaks:explosionMobGriefing.description": "Mob griefing for IguanaTweaks's explosions",
 	"gamerule.iguanatweaks:doLooseRespawn": "Loose Respawn",
