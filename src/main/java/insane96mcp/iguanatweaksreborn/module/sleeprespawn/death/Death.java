@@ -30,6 +30,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.GameRules;
@@ -86,14 +87,17 @@ public class Death extends Feature {
 		if (lostItemsPercentage == 100)
 			player.getInventory().clearContent();
 		else {
-			tryLoseItems(player.getInventory().items, player.getRandom(), lostItemsPercentage);
-			tryLoseItems(player.getInventory().armor, player.getRandom(), lostItemsPercentage);
-			tryLoseItems(player.getInventory().offhand, player.getRandom(), lostItemsPercentage);
+			tryLoseItems(player.getInventory(), player.getInventory().items, player.getRandom(), lostItemsPercentage);
+			tryLoseItems(player.getInventory(), player.getInventory().armor, player.getRandom(), lostItemsPercentage);
+			tryLoseItems(player.getInventory(), player.getInventory().offhand, player.getRandom(), lostItemsPercentage);
 		}
 	}
 
-	private static void tryLoseItems(List<ItemStack> items, RandomSource random, int chance) {
-        items.removeIf(item -> random.nextInt(100) < chance);
+	private static void tryLoseItems(Inventory inventory, List<ItemStack> items, RandomSource random, int chance) {
+		items.forEach(item -> {
+			if (random.nextInt(100) < chance)
+				inventory.removeItem(item);
+		});
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
