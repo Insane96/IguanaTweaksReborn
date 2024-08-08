@@ -189,5 +189,14 @@
 
 	"emi.info.iguanatweaksreborn.items.name_tags": "When applied to a named entity will drop the previous name tag. If the item is not renamed will remove the name from the entity.",
 	"emi.info.iguanatweaksreborn.crops.seeds": "Can be found in the wild",
-	"emi.info.iguanatweaksreborn.no_hunger.cake": "Restores a percentage of missing health"
+	"emi.info.iguanatweaksreborn.no_hunger.cake": "Restores a percentage of missing health",
+
+	"gamerule.iguanatweaks:deathGrave": "Spawn grave on death",
+	"gamerule.iguanatweaks:deathLoseItemsPercentage": "Percentage items lost on death",
+	"gamerule.iguanatweaks:explosionMobGriefing": "Mob griefing",
+	"gamerule.iguanatweaks:explosionMobGriefing.description": "Mob griefing for IguanaTweaks's explosions",
+	"gamerule.iguanatweaks:doLooseRespawn": "Loose Respawn",
+	"gamerule.iguanatweaks:doLooseRespawn.description": "Makes players respawn in a radius from world spawn/bed",
+	"gamerule.iguanatweaks:disableExperience": "Disable Experience",
+	"gamerule.iguanatweaks:disableExperience.description": "Completely disables Experience, from mob drops to the xp bar"
 }

@@ -3,6 +3,8 @@
 ## Upcoming
 * Added Prevent fast swim up with jump
   * Enabled by default prevents the player from swimming up really fast if holding the jump key
+* Changed `iguanatweaks:deathLoseItems` to `iguanatweaks:deathLoseItemsPercentage`
+  * A percentage of the items in the inventory to lose on death
 * Reworked Plants and Livestock Modifiers. This feature was almost completely broken, so I rewrote it.
   * Added `operation` that can be either "add" or "multiply"
   * Renamed `multiplier` to `modifier`
@@ -25,6 +27,7 @@
 * With the changes to modifiers, some plants should grow faster under some conditions
 * Fixed leaves decay being twice as fast as should have been
 * Fixed `large_fern` missing from `tall_grass` block tag
+* Added names and descriptions to ITR GameRules
 
 ## 3.13.5
 * Added a new game rule `iguanatweaksreborn:deathLoseItems`
