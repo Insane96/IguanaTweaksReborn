@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.14.0
 * Added Prevent fast swim up with jump
   * Enabled by default prevents the player from swimming up really fast if holding the jump key
 * Added `faster egg time`
