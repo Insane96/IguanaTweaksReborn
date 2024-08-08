@@ -48,7 +48,7 @@ public class Modifier {
         }
     }
 
-    public static List<Modifier> getListFromJson(JsonObject jObject, String memberName, JsonDeserializationContext context) {
+    public static List<Modifier> deserializeList(JsonObject jObject, String memberName, JsonDeserializationContext context) {
         List<Modifier> modifiers = new ArrayList<>();
         if (!jObject.has(memberName))
             return modifiers;
@@ -69,19 +69,19 @@ public class Modifier {
     public static float applyModifiers(float originalValue, List<Modifier> modifiers, Level level, BlockPos pos, @Nullable LivingEntity entity) {
         List<Modifier> addModifiers = modifiers.stream().filter(modifier -> modifier.operation == Operation.ADD).toList();
         List<Modifier> multiplyModifiers = modifiers.stream().filter(modifier -> modifier.operation == Operation.MULTIPLY).toList();
-        float toAdd = 0f;
+        float addedUpValue = originalValue;
         for (Modifier modifier : addModifiers) {
             if (!modifier.shouldApply(level, pos, entity))
                 continue;
-            toAdd += modifier.getModifier();
+            addedUpValue += modifier.getModifier();
         }
-        float toMultiply = 1f;
+        float finalValue = addedUpValue;
         for (Modifier modifier : multiplyModifiers) {
             if (!modifier.shouldApply(level, pos, entity))
                 continue;
-            toMultiply += modifier.getModifier();
+            finalValue += addedUpValue * modifier.getModifier();
         }
-        return (originalValue + toAdd) * toMultiply;
+        return finalValue;
     }
 
     public enum Operation {

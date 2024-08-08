@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Added Prevent fast swim up with jump
+  * Enabled by default prevents the player from swimming up really fast if holding the jump key
 * Reworked Plants and Livestock Modifiers. This feature was almost completely broken, so I rewrote it.
   * Added `operation` that can be either "add" or "multiply"
   * Renamed `multiplier` to `modifier`
@@ -20,11 +22,12 @@
   * Cows have 20 minute cooldown before can be milked/"stewed" again. This time is increased by 10 minutes if the animal's "old". In Winter/Spring/Summer 10/-5/-10 minutes are added to the cooldown.
   * Chickens lay eggs every 12.5 minutes, increased by 2.5 minutes when "old". In Winter/Spring/Summer 2.5/-2/-4 minutes are added to the cooldown.
   * Villagers now take 15 minutes to grow from baby, can breed every 30 minutes and fail to breed a child 50% of the time
+* With the changes to modifiers, some plants should grow faster under some conditions
 * Fixed leaves decay being twice as fast as should have been
 * Fixed `large_fern` missing from `tall_grass` block tag
 
 ## 3.13.5
-* Added a new gamerule `iguanatweaksreborn:deathLoseItems`
+* Added a new game rule `iguanatweaksreborn:deathLoseItems`
   * Defaults to false, if true players' items will disappear on death
 * Killers
   * Killer mobs no longer drop 4 times more items

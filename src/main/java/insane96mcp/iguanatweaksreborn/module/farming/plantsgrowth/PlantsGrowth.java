@@ -52,7 +52,7 @@ public class PlantsGrowth extends Feature {
 		if (caveVinesUnderground != 1 && event.getState().is(BlockTags.CAVE_VINES)) {
 			if (event.getLevel().getSeaLevel() > event.getPos().getY()
 					|| event.getLevel().getBrightness(LightLayer.SKY, event.getPos()) > 0)
-				multiplier *= 4;
+				multiplier *= caveVinesUnderground;
 		}
 
 		if (multiplier == 0d) {

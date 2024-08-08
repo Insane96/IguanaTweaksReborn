@@ -3,11 +3,13 @@
     "growth_multiplier": 2,
     "modifiers": [
         {
-            "id": "iguanatweaksreborn:correct_biome",
+            "id": "iguanatweaksreborn:matches_biome",
             "biomes": [
                 "#minecraft:is_nether"
             ],
-            "multiplier": 0
+            "inverse": true,
+            "modifier": -1,
+            "operation": "multiply"
         }
     ]
 }

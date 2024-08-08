@@ -51,7 +51,7 @@ public class BiomeModifier extends Modifier {
                     GsonHelper.getAsFloat(jObject, "modifier"),
                     context.deserialize(jObject.get("operation"), Operation.class),
                     biomes,
-                    GsonHelper.getAsBoolean(jObject, "inverse")
+                    GsonHelper.getAsBoolean(jObject, "inverse", false)
             );
         }
     }

@@ -4,7 +4,8 @@
         {
             "id": "iguanatweaksreborn:sunlight",
             "min_sunlight": 10,
-            "multiplier": 2
+            "modifier": 2,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:season",
@@ -12,7 +13,8 @@
                 "WINTER",
                 "AUTUMN"
             ],
-            "multiplier": 0
+            "modifier": -1,
+            "operation": "multiply"
         }
     ]
 }

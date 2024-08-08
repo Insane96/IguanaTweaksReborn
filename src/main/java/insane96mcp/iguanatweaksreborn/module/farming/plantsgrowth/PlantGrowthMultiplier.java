@@ -45,7 +45,7 @@ public class PlantGrowthMultiplier {
 			IdTagMatcher block = context.deserialize(jObject.get("block"), IdTagMatcher.class);
 			float multiplier = GsonHelper.getAsFloat(jObject, "growth_multiplier", 1f);
 
-			List<Modifier> modifiers = Modifier.getListFromJson(jObject, "modifiers", context);
+			List<Modifier> modifiers = Modifier.deserializeList(jObject, "modifiers", context);
 
 			return new PlantGrowthMultiplier(block, multiplier, modifiers);
 		}

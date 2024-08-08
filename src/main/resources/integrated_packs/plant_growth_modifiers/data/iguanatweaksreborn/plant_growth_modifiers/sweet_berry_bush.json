@@ -5,18 +5,22 @@
         {
             "id": "iguanatweaksreborn:sunlight",
             "min_sunlight": 10,
-            "multiplier": 2
+            "modifier": 2,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:night_time",
-            "multiplier": 1.5
+            "modifier": 1.5,
+            "operation": "add"
         },
         {
-            "id": "iguanatweaksreborn:wrong_biome",
+            "id": "iguanatweaksreborn:matches_biome",
             "biomes": [
                 "#forge:is_taiga"
             ],
-            "multiplier": 3
+            "inverse": true,
+            "modifier": 3,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:season",
@@ -24,7 +28,8 @@
                 "SUMMER",
                 "SPRING"
             ],
-            "multiplier": 0
+            "modifier": -1,
+            "operation": "multiply"
         }
     ]
 }

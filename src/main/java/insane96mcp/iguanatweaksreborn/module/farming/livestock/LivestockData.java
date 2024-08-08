@@ -57,12 +57,12 @@ public class LivestockData {
 			IdTagMatcher entity = context.deserialize(jObject.get("entity"), IdTagMatcher.class);
 			Float livingDays = ITRGsonHelper.getAsNullableFloat(jObject, "living_days");
 			float livingDaysFluctuation = GsonHelper.getAsFloat(jObject, "living_days_fluctuation", 0);
-			List<Modifier> growthSpeed = Modifier.getListFromJson(jObject, "growth_speed_modifiers", context);
-			List<Modifier> breedingCooldown = Modifier.getListFromJson(jObject, "breeding_cooldown_modifiers", context);
-			List<Modifier> eggLayCooldown = Modifier.getListFromJson(jObject, "egg_lay_cooldown_modifiers", context);
-			List<Modifier> breedingFailChanceModifiers = Modifier.getListFromJson(jObject, "breeding_fail_chance_modifiers", context);
-			List<Modifier> cowFluidCooldownModifiers = Modifier.getListFromJson(jObject, "cow_fluid_cooldown_modifiers", context);
-			List<Modifier> sheepWoolGrowthChanceModifiers = Modifier.getListFromJson(jObject, "sheep_wool_growth_chance_modifiers", context);
+			List<Modifier> growthSpeed = Modifier.deserializeList(jObject, "growth_speed_modifiers", context);
+			List<Modifier> breedingCooldown = Modifier.deserializeList(jObject, "breeding_cooldown_modifiers", context);
+			List<Modifier> eggLayCooldown = Modifier.deserializeList(jObject, "egg_lay_cooldown_modifiers", context);
+			List<Modifier> breedingFailChanceModifiers = Modifier.deserializeList(jObject, "breeding_fail_chance_modifiers", context);
+			List<Modifier> cowFluidCooldownModifiers = Modifier.deserializeList(jObject, "cow_fluid_cooldown_modifiers", context);
+			List<Modifier> sheepWoolGrowthChanceModifiers = Modifier.deserializeList(jObject, "sheep_wool_growth_chance_modifiers", context);
 			return new LivestockData(entity, livingDays, livingDaysFluctuation, growthSpeed, breedingCooldown, eggLayCooldown, breedingFailChanceModifiers, cowFluidCooldownModifiers, sheepWoolGrowthChanceModifiers);
 		}
 	}

@@ -5,18 +5,22 @@
         {
             "id": "iguanatweaksreborn:sunlight",
             "min_sunlight": 10,
-            "multiplier": 2.5
+            "modifier": 2.5,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:night_time",
-            "multiplier": 1.25
+            "modifier": 1.25,
+            "operation": "add"
         },
         {
-            "id": "iguanatweaksreborn:correct_biome",
+            "id": "iguanatweaksreborn:matches_biome",
             "biomes": [
                 "#forge:is_wet"
             ],
-            "multiplier": 3
+            "inverse": true,
+            "modifier": 3,
+            "operation": "add"
         },
         {
             "id": "iguanatweaksreborn:season",
@@ -24,7 +28,8 @@
                 "WINTER",
                 "AUTUMN"
             ],
-            "multiplier": 0
+            "modifier": -1,
+            "operation": "multiply"
         }
     ]
 }
