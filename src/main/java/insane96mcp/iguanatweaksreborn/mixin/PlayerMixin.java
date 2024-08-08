@@ -151,4 +151,19 @@ public abstract class PlayerMixin extends LivingEntity {
 			return original;
 		return Tweaks.turtleHelmetWaterBreathingTime;
 	}
+
+	/*@ModifyExpressionValue(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isSwimming()Z"))
+	public boolean onTravelSwimCheck(boolean original) {
+		if (this.isSwimming() && !this.isPassenger()) {
+			this.setDeltaMovement(Vec3.ZERO);
+			double d3 = this.getLookAngle().y;
+			double d4 = d3 < -0.2D ? 0.085D : 0.06D;
+			if (d3 <= 0.0D || !this.level().getBlockState(BlockPos.containing(this.getX(), this.getY() + 1.0D - 0.1D, this.getZ())).getFluidState().isEmpty()) {
+				Vec3 vec3 = this.getDeltaMovement();
+				this.setDeltaMovement(vec3.add(0.0D, (d3 - vec3.y) * d4, 0.0D));
+			}
+		}
+		return false;
+	}*/
+
 }

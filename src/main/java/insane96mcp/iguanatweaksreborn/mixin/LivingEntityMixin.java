@@ -1,11 +1,13 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import insane96mcp.iguanatweaksreborn.event.ITREventFactory;
 import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.IProtectionEnchantment;
+import insane96mcp.iguanatweaksreborn.module.movement.Swimming;
 import insane96mcp.iguanatweaksreborn.module.movement.TerrainSlowdown;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.insanelib.base.Feature;
@@ -13,6 +15,7 @@ import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -42,6 +45,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
     @Shadow @Nullable public abstract MobEffectInstance getEffect(MobEffect pEffect);
 
     @Shadow public abstract Iterable<ItemStack> getArmorSlots();
+
+    @Shadow public abstract void swing(InteractionHand pHand);
 
     public LivingEntityMixin(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -138,5 +143,12 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         if (respirationLvl > 0
                 && this.random.nextFloat() < 1f / (1 + (respirationLvl / 2f)))
             cir.setReturnValue(pCurrentAir);
+    }
+
+    @ModifyExpressionValue(method = "aiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isAffectedByFluids()Z"))
+    public boolean onJumpWhenSwimmingCheck(boolean original) {
+        if (!Swimming.shouldPreventFastSwimUpWithJump())
+            return original;
+        return original && !this.isSwimming();
     }
 }
