@@ -49,7 +49,7 @@ public class PlantsGrowth extends Feature {
 		for (PlantGrowthMultiplier plantGrowthMultiplier : PlantsGrowthReloadListener.GROWTH_MULTIPLIERS) {
 			multiplier *= plantGrowthMultiplier.getMultiplier(event.getState(), (Level) event.getLevel(), event.getPos());
 		}
-		if (caveVinesUnderground != 1 && event.getState().is(BlockTags.CAVE_VINES)) {
+		if (caveVinesUnderground != 1 && event.getLevel().getBlockState(event.getPos().above()).is(BlockTags.CAVE_VINES)) {
 			if (event.getLevel().getSeaLevel() > event.getPos().getY()
 					|| event.getLevel().getBrightness(LightLayer.SKY, event.getPos()) > 0)
 				multiplier *= caveVinesUnderground;

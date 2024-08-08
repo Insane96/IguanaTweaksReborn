@@ -30,6 +30,7 @@
 * With the changes to modifiers, some plants should grow faster under some conditions
 * Fixed leaves decay being twice as fast as should have been
 * Fixed `large_fern` missing from `tall_grass` block tag
+* Fixed `Cave vines underground` not working
 * Added names and descriptions to ITR GameRules
 
 ## 3.13.5
