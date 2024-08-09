@@ -3,6 +3,7 @@
 ## Upcoming
 * Fixed blocking explosion with shields dealing no knockback
 * Fixed experimental flying block feature not making blocks fly
+* Experimental flying blocks now have a cap on knockback
 * Shields blocking explosion damage config option has been removed
 
 ## 3.14.0

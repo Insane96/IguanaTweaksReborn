@@ -201,6 +201,11 @@ public class ITRExplosion extends Explosion {
 						d11 *= 0.2d;
 					d11 *= getKnockbackMultiplier(this.source);
 					d11 = Math.min(d11, 10f);
+					if (entity instanceof ITRFallingBlockEntity) {
+						d11 = Math.min(d11, 1f);
+						xDistance += this.level.getRandom().nextFloat() - 0.5f;
+						zDistance += this.level.getRandom().nextFloat() - 0.5f;
+					}
 					entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, Math.max(yDistance * d11, 0.1f * this.radius), zDistance * d11));
 					if (entity instanceof Player player) {
 						if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
