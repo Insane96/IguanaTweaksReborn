@@ -1,5 +1,10 @@
 # Changelog
 
+## Upcoming
+* Fixed blocking explosion with shields dealing no knockback
+* Fixed experimental flying block feature not making blocks fly
+* Shields blocking explosion damage config option has been removed
+
 ## 3.14.0
 * Added Prevent fast swim up with jump
   * Enabled by default prevents the player from swimming up really fast if holding the jump key

@@ -158,11 +158,11 @@ public class ITRExplosion extends Explosion {
 		this.clearToBlow();
 	}
 
-	public void processEntities(double blockingDamageReduction, boolean knockbackScaleWithSize) {
+	public void processEntities(boolean knockbackScaleWithSize) {
 		float affectedEntitiesRadius = this.radius * 2.0F;
 		List<Entity> list = gatherAffectedEntities(affectedEntitiesRadius);
 		net.minecraftforge.event.ForgeEventFactory.onExplosionDetonate(this.level, this, list, affectedEntitiesRadius);
-		for(Entity entity : list) {
+		for (Entity entity : list) {
 			if (entity.tickCount == 0 && !(entity instanceof PartEntity<?>)  && !(entity instanceof ITRFallingBlockEntity)  && !ExplosionOverhaul.affectJustSpawnedEntities)
 				continue;
 			if (entity.ignoreExplosion())
@@ -186,14 +186,10 @@ public class ITRExplosion extends Explosion {
 			float damageAmount = (float) ((int) ((d10 * d10 + d10) / 2.0D * ExplosionOverhaul.explosionDamageCalculationMultiplier * (double) affectedEntitiesRadius + 1.0D));
 			if (blockDensity > 0d) {
 				DamageSource source = this.getDamageSource();
-				if (entity instanceof ServerPlayer player && blockingDamageReduction > 0d) {
-					if (damageAmount > 0.0F && player.isDamageSourceBlocked(source)) {
-						damageAmount *= (float) blockingDamageReduction;
-						player.hurtCurrentlyUsedShield(damageAmount);
-						player.level().broadcastEntityEvent(player, (byte) 29);
-					}
-				}
-				if (entity.hurt(source, damageAmount)) {
+				boolean isBlocking = false;
+				if (entity instanceof LivingEntity living)
+					isBlocking = living.isDamageSourceBlocked(source) && living.isBlocking();
+				if (entity.hurt(source, damageAmount) || isBlocking || entity instanceof ITRFallingBlockEntity) {
 					double d11 = d10;
 					if (entity instanceof LivingEntity) {
 						d11 = getKnockbackReduction((LivingEntity) entity, d11);
@@ -310,7 +306,7 @@ public class ITRExplosion extends Explosion {
 		if (ExplosionOverhaul.enableFlyingBlocks)
 			explosion.fallingBlocks();
 		explosion.destroyBlocks();
-		explosion.processEntities(ExplosionOverhaul.blockingDamageScaling, ExplosionOverhaul.knockbackScalesWithSize);
+		explosion.processEntities(ExplosionOverhaul.knockbackScalesWithSize);
 		explosion.dropItems();
 		explosion.processFire();
 		if (explosion.blockInteraction == BlockInteraction.KEEP) {

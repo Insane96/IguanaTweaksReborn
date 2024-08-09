@@ -38,9 +38,6 @@ public class ExplosionOverhaul extends Feature {
 	@Config
 	@Label(name = "Disable Emitter Particles", description = "Removes the particles spawned by the explosion.")
 	public static Boolean disableEmitterParticles = true;
-	@Config(min = 0d, max = 1d)
-	@Label(name = "Blocking Damage Scaling", description = "How much damage will the player take when blocking an explosion with a shield. Putting 0 shields will block all the damage like Vanilla, while putting 1 shields will block no damage.")
-	public static Double blockingDamageScaling = 1d;
 	@Config
 	@Label(name = "Knockback Scales With Size", description = "While enabled knockback is greatly increased by explosion size")
 	public static Boolean knockbackScalesWithSize = true;
