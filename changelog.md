@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed trapdoors still hard to break
+
 ## 3.14.1
 * Wooden trapdoors are now 33% less hard to break
 * Fixed blocking explosion with shields dealing no knockback
