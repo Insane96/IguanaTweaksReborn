@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Wooden trapdoors are now 33% less hard to break
 * Fixed blocking explosion with shields dealing no knockback
 * Fixed experimental flying block feature not making blocks fly
 * Experimental flying blocks now have a cap on knockback
