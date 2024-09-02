@@ -5,22 +5,18 @@ import com.google.common.collect.Multimap;
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
-import insane96mcp.iguanatweaksreborn.data.AttributeModifierOperation;
 import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.utils.ITRGsonHelper;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import net.minecraft.Util;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -29,7 +25,6 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 //TODO 1.21: rename to Item Data
 @JsonAdapter(ItemStatistics.Serializer.class)
@@ -384,71 +379,6 @@ public final class ItemStatistics {
     @Nullable
     public List<SerializableAttributeModifier> modifiers() {
         return modifiers;
-    }
-
-    /**
-     * @param attribute Use supplier due to default modifiers loading at runtime and modded attributes are not yet registered
-     */
-    @JsonAdapter(SerializableAttributeModifier.Serializer.class)
-    public record SerializableAttributeModifier(UUID uuid, String name, EquipmentSlot slot,
-                                                Supplier<Attribute> attribute, double amount,
-                                                AttributeModifier.Operation operation) {
-
-        public static final Type LIST_TYPE = new TypeToken<ArrayList<SerializableAttributeModifier>>() {}.getType();
-        public static class Serializer implements JsonDeserializer<SerializableAttributeModifier>, JsonSerializer<SerializableAttributeModifier> {
-            @Override
-            public SerializableAttributeModifier deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                JsonObject jObject = json.getAsJsonObject();
-                String sUUID = GsonHelper.getAsString(jObject, "uuid");
-                UUID uuid;
-                try {
-                    uuid = UUID.fromString(sUUID);
-                } catch (Exception ex) {
-                    throw new JsonParseException("uuid %s is not valid".formatted(sUUID));
-                }
-                String name = GsonHelper.getAsString(jObject, "name");
-                EquipmentSlot slot = EquipmentSlot.byName(GsonHelper.getAsString(jObject, "slot"));
-                String sAttribute = GsonHelper.getAsString(jObject, "attribute");
-                Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.tryParse(sAttribute));
-                if (attribute == null) {
-                    throw new JsonParseException("Invalid attribute: %s".formatted(sAttribute));
-                }
-                double amount = GsonHelper.getAsDouble(jObject, "amount");
-                AttributeModifierOperation operation = context.deserialize(jObject.get("operation"), AttributeModifierOperation.class);
-                return new SerializableAttributeModifier(uuid, name, slot, () -> attribute, amount, operation.get());
-            }
-
-            @Override
-            public JsonElement serialize(SerializableAttributeModifier src, Type typeOfSrc, JsonSerializationContext context) {
-                JsonObject jObject = new JsonObject();
-                jObject.addProperty("uuid", src.uuid.toString());
-                jObject.addProperty("name", src.name);
-                jObject.addProperty("slot", src.slot.getName());
-                jObject.addProperty("attribute", ForgeRegistries.ATTRIBUTES.getKey(src.attribute.get()).toString());
-                jObject.addProperty("amount", src.amount);
-                jObject.addProperty("operation", AttributeModifierOperation.getNameFromOperation(src.operation));
-                return jObject;
-            }
-        }
-
-        public static SerializableAttributeModifier fromNetwork(FriendlyByteBuf byteBuf) {
-            UUID uuid = byteBuf.readUUID();
-            String name = byteBuf.readUtf();
-            EquipmentSlot slot = EquipmentSlot.byName(byteBuf.readUtf());
-            Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.tryParse(byteBuf.readUtf()));
-            double amount = byteBuf.readDouble();
-            AttributeModifierOperation operation = byteBuf.readEnum(AttributeModifierOperation.class);
-            return new SerializableAttributeModifier(uuid, name, slot, () -> attribute, amount, operation.get());
-        }
-
-        public void toNetwork(FriendlyByteBuf byteBuf) {
-            byteBuf.writeUUID(this.uuid);
-            byteBuf.writeUtf(this.name);
-            byteBuf.writeUtf(this.slot.getName());
-            byteBuf.writeUtf(ForgeRegistries.ATTRIBUTES.getKey(this.attribute.get()).toString());
-            byteBuf.writeDouble(this.amount);
-            byteBuf.writeEnum(this.operation);
-        }
     }
 
     public static final class Durability {

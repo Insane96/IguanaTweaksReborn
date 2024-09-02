@@ -16,8 +16,8 @@
 * Added Faster egg time
   * Chickens can no longer be bred, instead when fed they will make eggs faster for 15 minutes
 * Changed `iguanatweaks:deathLoseItems` to `iguanatweaks:deathLoseItemsPercentage`
-  * Also added `iguanatweaks:deathLoseItemsEnchanted` that if false will prevent loosing enchanted items
   * A percentage of the items in the inventory to lose on death
+  * Also added `iguanatweaks:deathLoseItemsEnchanted` that if false will prevent loosing enchanted items
 * Reworked Plants and Livestock Modifiers. This feature was almost completely broken, so I rewrote it.
   * Added `operation` that can be either "add" or "multiply"
   * Renamed `multiplier` to `modifier`
