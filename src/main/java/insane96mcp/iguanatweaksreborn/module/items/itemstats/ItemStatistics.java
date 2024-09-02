@@ -9,6 +9,7 @@ import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.utils.ITRGsonHelper;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
+import insane96mcp.insanelib.data.SerializableAttributeModifier;
 import net.minecraft.Util;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -169,10 +170,10 @@ public final class ItemStatistics {
 
         if (this.modifiers != null) {
             for (SerializableAttributeModifier attributeModifier : this.modifiers) {
-                if (event.getSlotType() != attributeModifier.slot)
+                if (!attributeModifier.slots().contains(event.getSlotType()))
                     continue;
-                AttributeModifier modifier = new AttributeModifier(attributeModifier.uuid, attributeModifier.name, attributeModifier.amount, attributeModifier.operation);
-                toAdd.put(attributeModifier.attribute.get(), modifier);
+                AttributeModifier modifier = attributeModifier.getModifier();
+                toAdd.put(attributeModifier.attribute().get(), modifier);
             }
         }
         toRemove.forEach(event::removeModifier);

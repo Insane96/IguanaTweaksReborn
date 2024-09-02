@@ -1,6 +1,7 @@
 # Changelog
 
-## Upcoming
+## 3.14.2
+* Requires InsaneLib 1.14.0
 * Fixed trapdoors still hard to break
 
 ## 3.14.1
