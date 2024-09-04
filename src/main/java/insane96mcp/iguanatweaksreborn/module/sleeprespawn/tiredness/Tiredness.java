@@ -52,13 +52,14 @@ import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Label(name = "Tiredness", description = "Prevents sleeping if the player is not tired. Tiredness is gained by gaining exhaustion. Allows you to sleep during daytime if too tired. Energy Boost Items are controlled via json in this feature's folder")
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
@@ -104,8 +105,9 @@ public class Tiredness extends JsonFeature {
 			REMOVE_ONE_LEVEL keeps the current tiredness but if higher than 'Tiredness for effect' removes one level of Tired to a minimum of I""")
 	public static OnDeath onDeathBehaviour = OnDeath.SET_AT_EFFECT;
 	@Config
-	@Label(name = "Fake sound mobs", description = "List of mobs that will have their ambience sound played when the player is tired")
-	public static List<IdTagMatcher> fakeSoundMobs = List.of(IdTagMatcher.newId("minecraft:skeleton", "minecraft:overworld"), IdTagMatcher.newId("minecraft:zombie", "minecraft:overworld"), IdTagMatcher.newId("minecraft:spider", "minecraft:overworld"));
+	@Label(name = "Fake sound mobs", description = "List of mobs (and optional dimension where they should play) that will have their ambience sound played when the player is tired")
+	public static List<String> fakeSoundMobsConfig = List.of("minecraft:skeleton,minecraft:overworld", "minecraft:zombie,minecraft:overworld", "minecraft:spider,minecraft:overworld", "minecraft:ghast,minecraft:the_nether", "minecraft:zombified_piglin,minecraft:the_nether");//List.of(IdTagMatcher.newId("minecraft:skeleton", "minecraft:overworld"), IdTagMatcher.newId("minecraft:zombie", "minecraft:overworld"), IdTagMatcher.newId("minecraft:spider", "minecraft:overworld"), IdTagMatcher.newId("minecraft:ghast", "minecraft:the_nether"), IdTagMatcher.newId("minecraft:wither_skeleton", "minecraft:the_nether"));
+	public static List<IdTagMatcher> fakeSoundMobs = new ArrayList<>();
 	/*@Config
 	@Label(name = "Tired Sound Chance", description = "The chance is 0% of this value as soon as a sound is played, 100% as 10 minutes have passed and 200% at 30 minutes")
 	public static Double tiredSoundChance = 0.025d;*/
@@ -113,6 +115,12 @@ public class Tiredness extends JsonFeature {
 	public Tiredness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		JSON_CONFIGS.add(new JsonConfig<>("energy_boost_items.json", energyBoostItems, ENERGY_BOOST_ITEMS_DEFAULT, EnergyBoostItem.LIST_TYPE));
+	}
+
+	@Override
+	public void readConfig(ModConfigEvent event) {
+		super.readConfig(event);
+		fakeSoundMobs = fakeSoundMobsConfig.stream().map(IdTagMatcher::parseLine).collect(Collectors.toList());
 	}
 
 	@Override
@@ -156,26 +164,33 @@ public class Tiredness extends JsonFeature {
 
 		RandomSource random = event.player.getRandom();
 		if (mobFakeSound == null) {
-			Optional<IdTagMatcher> idTagMatcher = fakeSoundMobs.stream()
+			List<IdTagMatcher> idTagMatchers = fakeSoundMobs.stream()
 					.filter(idTagMatcher1 -> idTagMatcher1.matchesDimension(event.player.level().dimension().location()))
-					.findAny();
-			if (idTagMatcher.isEmpty())
+					.toList();
+			if (idTagMatchers.isEmpty()) {
+				resetMobFakeSound(random, event.player.getEffect(TIRED.get()).getAmplifier());
 				return;
-			Entity entity = idTagMatcher.get().getAllEntityTypes();//EntityType.SKELETON.create(event.player.level());
+			}
+			IdTagMatcher idTagMatcher = idTagMatchers.get(random.nextInt(idTagMatchers.size()));
+			if (idTagMatcher.getAllEntityTypes().isEmpty()) {
+				resetMobFakeSound(random, event.player.getEffect(TIRED.get()).getAmplifier());
+				return;
+			}
+			Entity entity = idTagMatcher.getAllEntityTypes().get(0).create(event.player.level());//EntityType.SKELETON.create(event.player.level());
 			if (!(entity instanceof Mob)) {
 				LogHelper.warn("Can't play fake sound, %s is not an instance of Mob", entity);
 				resetMobFakeSound(random, event.player.getEffect(TIRED.get()).getAmplifier());
 				return;
 			}
 			mobFakeSound = (Mob) entity;
-			fakeSoundTimesToPlay = (int) (random.triangle(15, 10));
+			fakeSoundTimesToPlay = (int) (random.triangle(10, 5));
 		}
 		if (mobFakeSound != null && random.nextInt(1000) < ambientSoundTime++) {
 			SoundEvent soundEvent = ((MobAccessor)mobFakeSound).ambientSound();
 			event.player.level().playSound(event.player,
-					event.player.getX() + random.nextFloat() * 8d,
-					event.player.getY() + random.nextFloat() * 8d,
-					event.player.getZ() + random.nextFloat() * 8d,
+					event.player.getX() + random.nextFloat() * 16d - 8d,
+					event.player.getY() + random.nextFloat() * 16d - 8d,
+					event.player.getZ() + random.nextFloat() * 16d - 8d,
 					soundEvent,
 					mobFakeSound.getSoundSource(),
 					((LivingEntityAccessor)mobFakeSound).soundVolume(),

@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Changed Tiredness fake sounds when tired
 * Rowing boats now gives exhaustion to the player
 * Sweet berry bushes now grow 2x slower in autumn
 * Added a Seasons feature
