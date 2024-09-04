@@ -38,8 +38,11 @@ public class ExhaustionIncrease extends Feature {
 	@Config(min = 0d, max = 128d)
 	@Label(name = "Passive Exhaustion", description = "Every second the player will get this exhaustion.")
 	public static Double passiveExhaustion = 0.005d;
+	@Config(min = 0d, max = 128d)
+	@Label(name = "Rowing Exhaustion", description = "Every tick of the player's rowing will get this exhaustion.")
+	public static Double rowingExhaustion = 0.005d;
 	@Config
-	@Label(name = "Effective Hunger", description = "When affected by the hunger effect ANY action will give you 100% more exhaustion per level.")
+	@Label(name = "Effective Hunger Effect", description = "When affected by the hunger effect ANY action will give you 100% more exhaustion per level.")
 	public static Boolean effectiveHunger = true;
 
 	public ExhaustionIncrease(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -71,12 +74,15 @@ public class ExhaustionIncrease extends Feature {
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
 				|| event.phase != TickEvent.Phase.END
-				|| event.player.level().isClientSide
-				|| passiveExhaustion == 0d
-				|| event.player.tickCount % 20 != 0)
+				|| event.player.level().isClientSide)
 			return;
 
-		event.player.causeFoodExhaustion(passiveExhaustion.floatValue());
+		if (passiveExhaustion > 0d
+				&& event.player.tickCount % 20 == 0)
+			event.player.causeFoodExhaustion(passiveExhaustion.floatValue());
+
+		if (rowingExhaustion > 0d && event.player.getVehicle() != null && event.player.zza != 0)
+			event.player.causeFoodExhaustion(passiveExhaustion.floatValue());
 	}
 
 	@SubscribeEvent

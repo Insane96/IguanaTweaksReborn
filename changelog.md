@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Rowing boats now gives exhaustion to the player
+
 ## 3.14.2
 * Requires InsaneLib 1.14.0
 * Fixed trapdoors still hard to break
