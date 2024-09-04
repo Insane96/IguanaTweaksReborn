@@ -30,7 +30,6 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -58,6 +57,7 @@ import net.minecraftforge.registries.RegistryObject;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Label(name = "Tiredness", description = "Prevents sleeping if the player is not tired. Tiredness is gained by gaining exhaustion. Allows you to sleep during daytime if too tired. Energy Boost Items are controlled via json in this feature's folder")
@@ -104,11 +104,11 @@ public class Tiredness extends JsonFeature {
 			REMOVE_ONE_LEVEL keeps the current tiredness but if higher than 'Tiredness for effect' removes one level of Tired to a minimum of I""")
 	public static OnDeath onDeathBehaviour = OnDeath.SET_AT_EFFECT;
 	@Config
-	@Label(name = "Tired sounds", description = "Sounds played when the player is tired")
-	public static List<String> tiredSounds = List.of("minecraft:block.basalt.break", "minecraft:block.big_dripleaf.place", "minecraft:block.bone_block.hit", "minecraft:block.candle.extinguish", "minecraft:entity.zombie.ambient", "minecraft:entity.skeleton.ambient", "minecraft:entity.spider.ambient", "minecraft:entity.slime.attack", "minecraft:entity.creeper.hurt", "minecraft:entity.creeper.primed", "entity.egg.throw");
-	@Config
+	@Label(name = "Fake sound mobs", description = "List of mobs that will have their ambience sound played when the player is tired")
+	public static List<IdTagMatcher> fakeSoundMobs = List.of(IdTagMatcher.newId("minecraft:skeleton", "minecraft:overworld"), IdTagMatcher.newId("minecraft:zombie", "minecraft:overworld"), IdTagMatcher.newId("minecraft:spider", "minecraft:overworld"));
+	/*@Config
 	@Label(name = "Tired Sound Chance", description = "The chance is 0% of this value as soon as a sound is played, 100% as 10 minutes have passed and 200% at 30 minutes")
-	public static Double tiredSoundChance = 0.025d;
+	public static Double tiredSoundChance = 0.025d;*/
 
 	public Tiredness(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -156,7 +156,12 @@ public class Tiredness extends JsonFeature {
 
 		RandomSource random = event.player.getRandom();
 		if (mobFakeSound == null) {
-			Entity entity = EntityType.SKELETON.create(event.player.level());
+			Optional<IdTagMatcher> idTagMatcher = fakeSoundMobs.stream()
+					.filter(idTagMatcher1 -> idTagMatcher1.matchesDimension(event.player.level().dimension().location()))
+					.findAny();
+			if (idTagMatcher.isEmpty())
+				return;
+			Entity entity = idTagMatcher.get().getAllEntityTypes();//EntityType.SKELETON.create(event.player.level());
 			if (!(entity instanceof Mob)) {
 				LogHelper.warn("Can't play fake sound, %s is not an instance of Mob", entity);
 				resetMobFakeSound(random, event.player.getEffect(TIRED.get()).getAmplifier());
