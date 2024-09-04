@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Rowing boats now gives exhaustion to the player
+* Sweet berry bushes now grow 2x slower in autumn
 
 ## 3.14.2
 * Requires InsaneLib 1.14.0
