@@ -6,6 +6,8 @@
 * Sweet berry bushes now grow 2x slower in autumn
 * Added a Seasons feature
   * Has one config option that changes Serene Season's config to disable seasonal crops as it's handled by Plants Growth
+* Added Serene Seasons fix (from ITE)
+  * Fixes ice not melting in some conditions (near rivers mostly)
 
 ## 3.14.2
 * Requires InsaneLib 1.14.0
