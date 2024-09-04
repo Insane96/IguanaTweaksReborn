@@ -3,6 +3,8 @@ package insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness;
 import com.mojang.blaze3d.systems.RenderSystem;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
+import insane96mcp.iguanatweaksreborn.mixin.LivingEntityAccessor;
+import insane96mcp.iguanatweaksreborn.mixin.MobAccessor;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.insanelib.base.JsonFeature;
@@ -16,7 +18,6 @@ import insane96mcp.insanelib.util.LogHelper;
 import insane96mcp.insanelib.world.effect.ILMobEffect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -24,10 +25,14 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -133,17 +138,49 @@ public class Tiredness extends JsonFeature {
 		tickEnergyBoostEffect(serverPlayer);
 	}
 
-	private static long lastPlayedSound = 0;
+	private static long fakeSoundCooldown = 1200;
+	private static long fakeSoundTimesToPlay = 0;
+	private static long ambientSoundTime = 0;
+	private static Mob mobFakeSound;
 	@SubscribeEvent
 	public void onClientPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (!this.isEnabled()
-				|| event.player.tickCount % 100 != 69
+				//|| event.player.tickCount % 20 != 13
 				|| !event.player.level().isClientSide
 				|| event.phase == TickEvent.Phase.START
 				|| !event.player.hasEffect(TIRED.get()))
 			return;
 
-		if (lastPlayedSound == 0)
+        if (--fakeSoundCooldown > 0)
+            return;
+
+		RandomSource random = event.player.getRandom();
+		if (mobFakeSound == null) {
+			Entity entity = EntityType.SKELETON.create(event.player.level());
+			if (!(entity instanceof Mob)) {
+				LogHelper.warn("Can't play fake sound, %s is not an instance of Mob", entity);
+				resetMobFakeSound(random, event.player.getEffect(TIRED.get()).getAmplifier());
+				return;
+			}
+			mobFakeSound = (Mob) entity;
+			fakeSoundTimesToPlay = (int) (random.triangle(15, 10));
+		}
+		if (mobFakeSound != null && random.nextInt(1000) < ambientSoundTime++) {
+			SoundEvent soundEvent = ((MobAccessor)mobFakeSound).ambientSound();
+			event.player.level().playSound(event.player,
+					event.player.getX() + random.nextFloat() * 8d,
+					event.player.getY() + random.nextFloat() * 8d,
+					event.player.getZ() + random.nextFloat() * 8d,
+					soundEvent,
+					mobFakeSound.getSoundSource(),
+					((LivingEntityAccessor)mobFakeSound).soundVolume(),
+					((LivingEntityAccessor)mobFakeSound).voicePitch());
+			ambientSoundTime = -mobFakeSound.getAmbientSoundInterval();
+			fakeSoundTimesToPlay--;
+			if (fakeSoundTimesToPlay <= 0)
+				resetMobFakeSound(random, event.player.getEffect(TIRED.get()).getAmplifier());
+		}
+		/*if (lastPlayedSound == 0)
 			lastPlayedSound = event.player.level().getGameTime();
 		//noinspection DataFlowIssue
 		int amplifier = event.player.getEffect(TIRED.get()).getAmplifier();
@@ -166,7 +203,13 @@ public class Tiredness extends JsonFeature {
 			}
 			Holder<SoundEvent> holder = Holder.direct(SoundEvent.createVariableRangeEvent(soundLocation));
 			event.player.playSound(holder.value(), 0.5f, event.player.getRandom().nextFloat() * 0.5f + 0.75f);
-		}
+		}*/
+	}
+
+	private void resetMobFakeSound(RandomSource random, int reduction) {
+		fakeSoundTimesToPlay = 0;
+		fakeSoundCooldown = random.nextInt(6000, 12000) / reduction;
+		mobFakeSound = null;
 	}
 
 	private void tickEnergyBoostEffect(ServerPlayer player) {
