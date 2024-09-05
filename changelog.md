@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.14.3
 * Changed Tiredness fake sounds when tired
 * Rowing boats now gives exhaustion to the player
 * Sweet berry bushes now grow 2x slower in autumn
@@ -8,7 +8,6 @@
   * Has one config option that changes Serene Season's config to disable seasonal crops as it's handled by Plants Growth
 * Added Serene Seasons fix (from ITE)
   * Fixes ice not melting in some conditions (near rivers mostly)
-* Fixed unfair oneshot leaving you with 2 health (was actually one but rendered as 2)
 
 ## 3.14.2
 * Requires InsaneLib 1.14.0
