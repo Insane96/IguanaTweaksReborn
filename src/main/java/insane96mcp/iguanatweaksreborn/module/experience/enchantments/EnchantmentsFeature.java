@@ -95,7 +95,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	public static Boolean changeEfficiencyFormula = true;
 
 	@Config
-	@Label(name = "Nerf fortune", description = "The ore_drops formula is changed to 30%/60%/90%/... drop increase from 25%/75%/125%/...")
+	@Label(name = "Nerf fortune", description = "The ore_drops formula is changed to 20%/50%/85%/... drop increase from 25%/75%/125%/...")
 	public static Boolean nerfFortune = true;
 
 	@Config(min = 0d, max = 2d)
