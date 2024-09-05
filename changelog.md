@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.14.5
+* Added entity type tag `iguanatweaksreborn:reduced_drop_no_player_kill_blacklist`
+  * Prevents entities in this tag from not dropping stuff. Fixes drops from Progressive Bosses Wither
+* Renamed item tag `iguanatweaksreborn:reduced_no_player_kill_drop_blacklist` to `iguanatweaksreborn:reduced_drop_no_player_kill_blacklist`
+
 ## 3.14.3
 * Changed Tiredness fake sounds when tired
 * Rowing boats now gives exhaustion to the player

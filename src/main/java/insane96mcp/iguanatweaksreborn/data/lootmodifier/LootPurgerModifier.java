@@ -7,6 +7,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -28,7 +29,8 @@ public class LootPurgerModifier extends LootModifier {
                             Codec.INT.fieldOf("end_range").forGetter(m -> m.endRange),
                             Codec.FLOAT.optionalFieldOf("multiplier_at_start", 0f).forGetter(m -> m.multiplierAtStart),
                             Codec.BOOL.optionalFieldOf("apply_to_damageable", false).forGetter(m -> m.applyToDamageable),
-                            TagKey.codec(Registries.ITEM).optionalFieldOf("blacklisted_items_tag").forGetter(m -> m.blacklistedItemsTag)
+                            TagKey.codec(Registries.ITEM).optionalFieldOf("blacklisted_items_tag").forGetter(m -> m.blacklistedItemsTag),
+                            TagKey.codec(Registries.ENTITY_TYPE).optionalFieldOf("blacklisted_entity_type_tag").forGetter(m -> m.blacklistedEntityTypeTag)
                     )).apply(inst, LootPurgerModifier::new)
             ));
 
@@ -38,24 +40,31 @@ public class LootPurgerModifier extends LootModifier {
     private float multiplierAtStart = 0f;
     private boolean applyToDamageable = false;
     private Optional<TagKey<Item>> blacklistedItemsTag;
+    private Optional<TagKey<EntityType<?>>> blacklistedEntityTypeTag;
 
     public LootPurgerModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
     }
 
-    public LootPurgerModifier(LootItemCondition[] conditionsIn, int startRange, int endRange, float multiplierAtStart, boolean applyToDamageable, Optional<TagKey<Item>> blacklistedItemsTag) {
+    public LootPurgerModifier(LootItemCondition[] conditionsIn, int startRange, int endRange, float multiplierAtStart, boolean applyToDamageable, Optional<TagKey<Item>> blacklistedItemsTag, Optional<TagKey<EntityType<?>>> blacklistedEntityTypeTag) {
         super(conditionsIn);
         this.startRange = startRange;
         this.endRange = endRange;
         this.multiplierAtStart = multiplierAtStart;
         this.applyToDamageable = applyToDamageable;
         this.blacklistedItemsTag = blacklistedItemsTag;
+        this.blacklistedEntityTypeTag = blacklistedEntityTypeTag;
     }
 
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         if (context.getParamOrNull(LootContextParams.ORIGIN) == null)
             return generatedLoot;
+        if (context.getParamOrNull(LootContextParams.THIS_ENTITY) != null
+                && blacklistedEntityTypeTag.isPresent()
+                && context.getParam(LootContextParams.THIS_ENTITY).getType().is(blacklistedEntityTypeTag.get())) {
+            return generatedLoot;
+        }
 
         int spawnX = context.getLevel().getLevelData().getXSpawn();
         int spawnZ = context.getLevel().getLevelData().getZSpawn();
