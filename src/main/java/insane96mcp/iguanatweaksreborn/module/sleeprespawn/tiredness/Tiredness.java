@@ -163,23 +163,24 @@ public class Tiredness extends JsonFeature {
             return;
 
 		RandomSource random = event.player.getRandom();
+		int amplifier = event.player.getEffect(TIRED.get()).getAmplifier() + 1;
 		if (mobFakeSound == null) {
 			List<IdTagMatcher> idTagMatchers = fakeSoundMobs.stream()
 					.filter(idTagMatcher1 -> idTagMatcher1.matchesDimension(event.player.level().dimension().location()))
 					.toList();
 			if (idTagMatchers.isEmpty()) {
-				resetMobFakeSound(random, event.player.getEffect(TIRED.get()).getAmplifier());
+				resetMobFakeSound(random, amplifier);
 				return;
 			}
 			IdTagMatcher idTagMatcher = idTagMatchers.get(random.nextInt(idTagMatchers.size()));
 			if (idTagMatcher.getAllEntityTypes().isEmpty()) {
-				resetMobFakeSound(random, event.player.getEffect(TIRED.get()).getAmplifier());
+				resetMobFakeSound(random, amplifier);
 				return;
 			}
-			Entity entity = idTagMatcher.getAllEntityTypes().get(0).create(event.player.level());//EntityType.SKELETON.create(event.player.level());
+			Entity entity = idTagMatcher.getAllEntityTypes().get(0).create(event.player.level());
 			if (!(entity instanceof Mob)) {
 				LogHelper.warn("Can't play fake sound, %s is not an instance of Mob", entity);
-				resetMobFakeSound(random, event.player.getEffect(TIRED.get()).getAmplifier());
+				resetMobFakeSound(random, amplifier);
 				return;
 			}
 			mobFakeSound = (Mob) entity;
@@ -198,7 +199,7 @@ public class Tiredness extends JsonFeature {
 			ambientSoundTime = -mobFakeSound.getAmbientSoundInterval();
 			fakeSoundTimesToPlay--;
 			if (fakeSoundTimesToPlay <= 0)
-				resetMobFakeSound(random, event.player.getEffect(TIRED.get()).getAmplifier());
+				resetMobFakeSound(random, amplifier);
 		}
 		/*if (lastPlayedSound == 0)
 			lastPlayedSound = event.player.level().getGameTime();

@@ -3,6 +3,7 @@
 ## Upcoming
 * Added `/iguanatweaks get_treasure_enchantments_book` command
 * Fixed wrong effects in beacon breaking it
+* Fixed tiredness crash
 
 ## 3.14.5
 * Fixed `iguanatweaksreborn:reduced_drop_no_player_kill_blacklist` not loading when progressive bosses wasn't installed
