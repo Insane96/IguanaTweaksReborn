@@ -2,6 +2,9 @@
     "values": [
         "minecraft:wither",
         "minecraft:ender_dragon",
-        "progressivebosses:wither"
+        {
+            "required": false,
+            "id": "progressivebosses:wither"
+        }
     ]
 }
