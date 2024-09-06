@@ -72,7 +72,8 @@ public class ITRBeaconScreen extends AbstractContainerScreen<ITRBeaconMenu> {
         }
         for (int i = 0; i < BeaconConduit.effects.size(); i++) {
             MobEffect mobeffect = BeaconConduit.effects.get(i).getEffect();
-            BeaconPowerButton beaconEffectButton = new BeaconPowerButton(topLeftCornerX + 17 + (i % 8 * 25), topLeftCornerY + 15 + (i / 8 * 25), mobeffect);
+            int heightRequired = BeaconConduit.effects.get(i).getHeightRequired();
+            BeaconPowerButton beaconEffectButton = new BeaconPowerButton(topLeftCornerX + 17 + (i % 8 * 25), topLeftCornerY + 15 + (i / 8 * 25), mobeffect, heightRequired);
             beaconEffectButton.active = true;
             if (Objects.equals(this.effect, mobeffect)) {
                 beaconEffectButton.setSelected(true);
@@ -123,17 +124,19 @@ public class ITRBeaconScreen extends AbstractContainerScreen<ITRBeaconMenu> {
 
     public class BeaconPowerButton extends BeaconScreenButton {
         public MobEffect effect;
+        public int heightRequired;
         private TextureAtlasSprite sprite;
 
-        public BeaconPowerButton(int pX, int pY, MobEffect pEffect) {
+        public BeaconPowerButton(int pX, int pY, MobEffect pEffect, int heightRequired) {
             super(pX, pY);
             this.setEffect(pEffect);
+            this.heightRequired = heightRequired;
         }
 
         protected void setEffect(MobEffect pEffect) {
             this.effect = pEffect;
             this.sprite = Minecraft.getInstance().getMobEffectTextures().get(pEffect);
-            this.setTooltip(Tooltip.create(this.createEffectDescription(pEffect), (Component)null));
+            this.setTooltip(Tooltip.create(this.createEffectDescription(pEffect), null));
         }
 
         protected MutableComponent createEffectDescription(MobEffect pEffect) {
@@ -155,6 +158,7 @@ public class ITRBeaconScreen extends AbstractContainerScreen<ITRBeaconMenu> {
         }
 
         public void updateStatus() {
+            this.active = this.heightRequired <= ITRBeaconScreen.this.menu.getLayers();
             this.setSelected(this.effect == ITRBeaconScreen.this.effect);
         }
 

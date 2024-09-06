@@ -91,20 +91,20 @@ public class BeaconConduit extends JsonFeature {
     public static final ArrayList<IdTagValue> paymentTimes = new ArrayList<>();
     public static final ArrayList<BeaconEffect> EFFECTS_DEFAULT = new ArrayList<>(List.of(
             new BeaconEffect(MobEffects.MOVEMENT_SPEED, new int[] {1, 2, 4}),
-            new BeaconEffect(MobEffects.DIG_SPEED, new int[] {1, 2, 4}),
-            new BeaconEffect(MobEffects.DAMAGE_BOOST, new int[] {1, 3, 9}),
             new BeaconEffect(MobEffects.JUMP, new int[] {1, 2, 3}),
-            new BeaconEffect(MobEffects.REGENERATION, new int[] {8}),
-            new BeaconEffect("iguanatweaksreborn:regenerating_absorption", new int[] {2, 4}),
-            new BeaconEffect("stamina:vigour", new int[] {2, 5}),
-            new BeaconEffect(MobEffects.DAMAGE_RESISTANCE, new int[] {1, 3, 9}),
-            new BeaconEffect(MobEffects.FIRE_RESISTANCE, new int[] {3}),
-            new BeaconEffect(MobEffects.INVISIBILITY, new int[] {2}),
-            new BeaconEffect(MobEffects.NIGHT_VISION, new int[] {3}),
-            new BeaconEffect(MobEffects.SLOW_FALLING, new int[] {2}),
-            new BeaconEffect(MobEffects.LEVITATION, new int[] {1, 2, 3}),
             new BeaconEffect("iguanatweaksreborn:block_reach", new int[] {1, 3, 9}),
-            new BeaconEffect("iguanatweaksreborn:entity_reach", new int[] {1, 3, 9})
+            new BeaconEffect(MobEffects.DIG_SPEED, new int[] {1, 2, 4}, 2),
+            new BeaconEffect(MobEffects.FIRE_RESISTANCE, new int[] {3}, 2),
+            new BeaconEffect("stamina:vigour", new int[] {2, 5}, 2),
+            new BeaconEffect(MobEffects.INVISIBILITY, new int[] {2}, 2),
+            new BeaconEffect(MobEffects.LEVITATION, new int[] {1, 2, 3}, 2),
+            new BeaconEffect(MobEffects.DAMAGE_BOOST, new int[] {1, 3, 9}, 3),
+            new BeaconEffect(MobEffects.DAMAGE_RESISTANCE, new int[] {1, 3, 9}, 3),
+            new BeaconEffect(MobEffects.NIGHT_VISION, new int[] {3}, 3),
+            new BeaconEffect(MobEffects.SLOW_FALLING, new int[] {2}, 3),
+            new BeaconEffect(MobEffects.REGENERATION, new int[] {8}, 4),
+            new BeaconEffect("iguanatweaksreborn:regenerating_absorption", new int[] {2, 4}, 4),
+            new BeaconEffect("iguanatweaksreborn:entity_reach", new int[] {1, 3, 9}, 4)
     ));
     public static final ArrayList<BeaconEffect> effects = new ArrayList<>();
 
@@ -210,15 +210,26 @@ public class BeaconConduit extends JsonFeature {
     @JsonAdapter(BeaconEffect.Serializer.class)
     public static class BeaconEffect extends IdTagMatcher {
         int[] timeCost;
+        int heightRequired;
 
-        public BeaconEffect(String location, int[] timeCost) {
+        public BeaconEffect(String location, int[] timeCost, int heightRequired) {
             super(Type.ID, new ResourceLocation(location), null);
             this.timeCost = timeCost;
+            this.heightRequired = heightRequired;
+        }
+
+        public BeaconEffect(MobEffect mobEffect, int[] timeCost, int heightRequired) {
+            super(Type.ID, ForgeRegistries.MOB_EFFECTS.getKey(mobEffect), null);
+            this.timeCost = timeCost;
+            this.heightRequired = heightRequired;
+        }
+
+        public BeaconEffect(String location, int[] timeCost) {
+            this(location, timeCost, 1);
         }
 
         public BeaconEffect(MobEffect mobEffect, int[] timeCost) {
-            super(Type.ID, ForgeRegistries.MOB_EFFECTS.getKey(mobEffect), null);
-            this.timeCost = timeCost;
+            this(mobEffect, timeCost, 1);
         }
 
         @Nullable
@@ -234,6 +245,10 @@ public class BeaconConduit extends JsonFeature {
             return this.timeCost.length - 1;
         }
 
+        public int getHeightRequired() {
+            return this.heightRequired;
+        }
+
         public int getTimeCostForAmplifier(int amplifier) {
             if (this.timeCost.length <= amplifier)
                 return 1;
@@ -245,17 +260,21 @@ public class BeaconConduit extends JsonFeature {
             @Override
             public BeaconEffect deserialize(JsonElement json, java.lang.reflect.Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                 JsonObject jObject = json.getAsJsonObject();
+                int heightRequired = GsonHelper.getAsInt(jObject, "height_required", 1);
                 JsonArray jArray = jObject.getAsJsonArray("time_cost");
                 if (jArray.size() > 8)
                     throw new JsonParseException("time_cost size cannot be greater than 8");
                 List<Integer> timeCost = new ArrayList<>();
                 jArray.forEach(jsonElement -> timeCost.add(jsonElement.getAsInt()));
-                return new BeaconEffect(GsonHelper.getAsString(jObject, "id"), timeCost.stream().mapToInt(i->i).toArray());
+                return new BeaconEffect(GsonHelper.getAsString(jObject, "id"), timeCost.stream().mapToInt(i->i).toArray(), heightRequired);
             }
 
             @Override
             public JsonElement serialize(BeaconEffect src, java.lang.reflect.Type typeOfSrc, JsonSerializationContext context) {
                 JsonObject jObject = new JsonObject();
+                jObject.addProperty("id", src.location.toString());
+                if (src.heightRequired > 1)
+                    jObject.addProperty("height_required", src.heightRequired);
                 jObject.addProperty("id", src.location.toString());
                 JsonArray jArray = new JsonArray();
                 for (int i = 0; i < src.timeCost.length; i++) {
