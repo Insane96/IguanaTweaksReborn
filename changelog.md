@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Fixed `iguanatweaksreborn:reduced_drop_no_player_kill_blacklist` not loading when progressive bosses wasn't installed
+* Fixed mixin error when serene season was not installed
+
 ## 3.14.4
 * Added entity type tag `iguanatweaksreborn:reduced_drop_no_player_kill_blacklist`
   * Prevents entities in this tag from not dropping stuff. Fixes drops from Progressive Bosses Wither
