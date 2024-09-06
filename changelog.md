@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.14.6
 * Some beacon effects now only unlock with more pyramid height 
 * Added `/iguanatweaks get_treasure_enchantments_book` command
 * Fixed wrong effects in beacon breaking it
