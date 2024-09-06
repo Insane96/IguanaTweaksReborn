@@ -6,6 +6,15 @@ import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.TirednessHan
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ITRCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -16,7 +25,22 @@ public class ITRCommand {
                                         .then(Commands.argument("amount", FloatArgumentType.floatArg(0))
                                                 .executes(context -> TirednessHandler.setFromCommand(context.getSource(), EntityArgument.getPlayers(context, "players"), FloatArgumentType.getFloat(context, "amount")))))
                                 .then(Commands.literal("reset")
-                                        .executes(context -> TirednessHandler.setFromCommand(context.getSource(), EntityArgument.getPlayers(context, "players"), 0))))));
+                                        .executes(context -> TirednessHandler.setFromCommand(context.getSource(), EntityArgument.getPlayers(context, "players"), 0)))))
+                .then(Commands.literal("get_treasure_enchantments_book")
+                        .executes(context -> {
+                            if (!(context.getSource().getEntity() instanceof ServerPlayer player))
+                                return 0;
+                            ItemStack enchantedBook = new ItemStack(Items.ENCHANTED_BOOK);
+                            Map<Enchantment, Integer> enchantments = new HashMap<>();
+                            for (Enchantment enchantment : ForgeRegistries.ENCHANTMENTS.getValues()) {
+                                if (!enchantment.isTreasureOnly() || enchantment.isCurse())
+                                    continue;
+                                enchantments.put(enchantment, enchantment.getMaxLevel());
+                            }
+                            EnchantmentHelper.setEnchantments(enchantments, enchantedBook);
+                            player.getInventory().add(enchantedBook);
+                            return 1;
+                        })));
     }
 
 }
