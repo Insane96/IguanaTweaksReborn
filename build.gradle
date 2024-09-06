@@ -34,7 +34,7 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            //args '-mixin.config=iguanatweaksreborn.mixins.json'
+            args '-mixin.config=iguanatweaksreborn.mixins.json'
 
             mods {
                 "${mod_id}" {
@@ -71,11 +71,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 mixin {
-    add sourceSets.main, 'mixins.iguanatweaksreborn.refmap.json'
-    config 'mixins.iguanatweaksreborn.json'
-
-    debug.verbose = true
-    debug.export = true
+    add sourceSets.main, "iguanatweaksreborn.refmap.json"
 }
 
 repositories {
@@ -112,8 +108,6 @@ repositories {
 
 dependencies {
     minecraft "net.neoforged:forge:${mc_version}-${neo_version}"
-
-    annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
     implementation fg.deobf("blank:InsaneLib:${lib_version}-mc${mc_version}")
     implementation fg.deobf("blank:Stamina:1.0.0")
@@ -152,6 +146,8 @@ dependencies {
     implementation fg.deobf("curse.maven:zeta-968868:5418213")
     implementation fg.deobf("curse.maven:quark-243121:5418252")
 
+    annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
+
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'
     jarJar("com.ezylang:EvalEx:3.2.0") {
         jarJar.ranged(it, "[3.2.0,)")
@@ -172,8 +168,8 @@ tasks.named('jar', Jar).configure {
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "Insane96MCP",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")/*,
-                "MixinConfigs": "mixins.iguanatweaksreborn.json"*/
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs": "iguanatweaksreborn.mixins.json"
         ])
     }
 
