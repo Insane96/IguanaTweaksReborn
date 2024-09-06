@@ -159,6 +159,10 @@ public class ITRBeaconScreen extends AbstractContainerScreen<ITRBeaconMenu> {
 
         public void updateStatus() {
             this.active = this.heightRequired <= ITRBeaconScreen.this.menu.getLayers();
+            if (this.active)
+                this.setTooltip(Tooltip.create(this.createEffectDescription(this.effect), null));
+            else
+                this.setTooltip(Tooltip.create(Component.translatable("iguanatweaksreborn.beacon_conduit.requires_higher_pyramid"), null));
             this.setSelected(this.effect == ITRBeaconScreen.this.effect);
         }
 
