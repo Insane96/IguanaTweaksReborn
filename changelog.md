@@ -3,6 +3,7 @@
 ## Upcoming
 * Fixed `iguanatweaksreborn:reduced_drop_no_player_kill_blacklist` not loading when progressive bosses wasn't installed
 * Fixed mixin error when serene season was not installed
+* Fixed startup crash
 
 ## 3.14.4
 * Added entity type tag `iguanatweaksreborn:reduced_drop_no_player_kill_blacklist`
