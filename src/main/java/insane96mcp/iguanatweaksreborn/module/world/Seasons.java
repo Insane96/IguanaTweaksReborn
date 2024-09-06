@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import sereneseasons.config.FertilityConfig;
 
@@ -27,7 +28,7 @@ public class Seasons extends Feature {
 	public void readConfig(ModConfigEvent event) {
 		super.readConfig(event);
 
-		if (changeSereneSeasonsConfig)
+		if (ModList.get().isLoaded("sereneseasons") && changeSereneSeasonsConfig)
 			FertilityConfig.seasonalCrops.set(false);
 	}
 }
