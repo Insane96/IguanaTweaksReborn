@@ -1,5 +1,10 @@
 # Changelog
 
+## Upcoming
+* Changed armor formula
+  * Now protects slightly more
+  * Toughness has been added and reduces damage by 1.75% per toughness
+
 ## 3.14.6
 * Some beacon effects now only unlock with more pyramid height 
 * Added `/iguanatweaks get_treasure_enchantments_book` command
