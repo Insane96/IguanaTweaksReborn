@@ -1,6 +1,9 @@
 # Changelog
 
 ## Upcoming
+* Changed Bow's Power formula
+  * Power potency now scales with the arrow's damage
+  * `base_damage + 0.5 + 0.5 * lvl` -> `base_damage + (base_damage * 0.2 * lvl)` 
 * Changed armor formula
   * Now protects slightly more
   * Toughness has been added and reduces damage by 1.75% per toughness

@@ -113,7 +113,7 @@ dependencies {
     implementation fg.deobf("blank:Stamina:1.0.0")
 
     implementation fg.deobf("curse.maven:selene-499980:5254462")
-    // runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:5051316")
+    runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:5051316")
     runtimeOnly fg.deobf("curse.maven:better-advancements-272515:4631253")
     // runtimeOnly fg.deobf("curse.maven:worldedit-225608:4586218")
     implementation fg.deobf("curse.maven:supplementaries-412082:5225134")
