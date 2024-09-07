@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.14.7
 * Changed Bow's Power formula
   * Power potency now scales with the arrow's damage
   * `base_damage + 0.5 + 0.5 * lvl` -> `base_damage + (base_damage * 0.2 * lvl)` 
