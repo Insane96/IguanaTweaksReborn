@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed 'Power Enchantment Multiplier' set to false not working
+
 ## 3.14.7
 * Changed Bow's Power formula
   * Power potency now scales with the arrow's damage

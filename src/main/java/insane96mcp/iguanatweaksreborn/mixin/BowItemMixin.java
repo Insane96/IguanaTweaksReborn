@@ -24,6 +24,9 @@ public class BowItemMixin {
     public double setBaseDamage(double pBaseDamage, @Local AbstractArrow abstractArrow, @Local(ordinal = 2) int powerLvl) {
         if (!EnchantmentsFeature.powerEnchantmentMultiplier && EnchantmentsFeature.powerEnchantmentDamage == 0.5d)
             return pBaseDamage;
-        return abstractArrow.getBaseDamage() + (abstractArrow.getBaseDamage() * EnchantmentsFeature.powerEnchantmentDamage * powerLvl);
+        if (EnchantmentsFeature.powerEnchantmentMultiplier)
+            return abstractArrow.getBaseDamage() + (abstractArrow.getBaseDamage() * EnchantmentsFeature.powerEnchantmentDamage * powerLvl);
+        else
+            return abstractArrow.getBaseDamage() + EnchantmentsFeature.powerEnchantmentDamage + EnchantmentsFeature.powerEnchantmentDamage * powerLvl;
     }
 }
