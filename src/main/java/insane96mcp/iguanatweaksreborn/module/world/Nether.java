@@ -33,11 +33,14 @@ public class Nether extends Feature {
     public static final TagKey<Block> PORTAL_CORNERS = ITRBlockTagsProvider.create("portal_corners");
 
     @Config
-    @Label(name = "Disable Nether Roof and 8 block ratio", description = "Makes the nether 128 blocks high instead of 256, effectively disabling the \"Nether Roof\" and removes the 8 block ratio between nether and end.")
+    @Label(name = "Disable Nether Roof and reduce block ratio", description = "Makes the nether 128 blocks high instead of 256, effectively disabling the \"Nether Roof\" and reduces the 8 block ratio between nether and other dimensions to 4.")
     public static Boolean netherTweaks = true;
     @Config
     @Label(name = "Remove Lava Pockets", description = "If true, lava pockets in the nether are removed. If quark is installed, this is disabled")
     public static Boolean removeLavaPockets = true;
+    @Config
+    @Label(name = "Disable Nether", description = "If true you cannot lit nether portals")
+    public static Boolean disableNether = false;
     @Config
     @Label(name = "Portal requires Crying Obsidian", description = "The portal requires Crying Obsidian in the corners to turn it on (in the overworld). The block tag 'iguanatweaksreborn:portal_corners' can be used to change the required blocks for the corners")
     public static Boolean portalRequiresCryingObsidian = true;
@@ -54,30 +57,39 @@ public class Nether extends Feature {
     @SubscribeEvent
     public void onPortalTryToActivate(BlockEvent.PortalSpawnEvent event) {
         if (!this.isEnabled()
-                || !portalRequiresCryingObsidian
                 || event.getPortalSize().bottomLeft == null)
             return;
 
-        Level level = (Level) event.getLevel();
-        if (!level.dimension().equals(Level.OVERWORLD))
-            return;
-
-        MutableInt cryingObsidians = new MutableInt();
-        BlockPos.betweenClosed(event.getPortalSize().bottomLeft.below().relative(event.getPortalSize().rightDir.getOpposite(), 1),
-                event.getPortalSize().bottomLeft.relative(Direction.UP, event.getPortalSize().height).relative(event.getPortalSize().rightDir, event.getPortalSize().width))
-                .forEach((pos) -> {
-            if (level.getBlockState(pos).is(PORTAL_CORNERS))
-                cryingObsidians.increment();
-        });
-        if (cryingObsidians.getValue() < 4) {
-            AABB aabb = new AABB(event.getPos().offset(-4, -4, -4), event.getPos().offset(4, 4, 4));
-
+        AABB aabb = AABB.ofSize(event.getPos().getCenter(), 8, 8, 8);
+        if (disableNether) {
+            Level level = (Level) event.getLevel();
             for (Player player : level.players()) {
                 if (aabb.contains(player.getX(), player.getY(), player.getZ())) {
-                    player.sendSystemMessage(Component.translatable(REQUIRES_CORNERS_LANG));
+                    player.sendSystemMessage(Component.translatable("no_nether"));
                 }
             }
             event.setCanceled(true);
+        }
+        else if (portalRequiresCryingObsidian) {
+            Level level = (Level) event.getLevel();
+            if (!level.dimension().equals(Level.OVERWORLD))
+                return;
+
+            MutableInt cryingObsidians = new MutableInt();
+            BlockPos.betweenClosed(event.getPortalSize().bottomLeft.below().relative(event.getPortalSize().rightDir.getOpposite(), 1),
+                            event.getPortalSize().bottomLeft.relative(Direction.UP, event.getPortalSize().height).relative(event.getPortalSize().rightDir, event.getPortalSize().width))
+                    .forEach((pos) -> {
+                        if (level.getBlockState(pos).is(PORTAL_CORNERS))
+                            cryingObsidians.increment();
+                    });
+            if (cryingObsidians.getValue() < 4) {
+                for (Player player : level.players()) {
+                    if (aabb.contains(player.getX(), player.getY(), player.getZ())) {
+                        player.sendSystemMessage(Component.translatable(REQUIRES_CORNERS_LANG));
+                    }
+                }
+                event.setCanceled(true);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Added config option to disable the Nether
 * Fixed 'Power Enchantment Multiplier' set to false not working
 
 ## 3.14.7
