@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Added `iguanatweaks:disenchant` loot modifier that allows to disenchant items from loot
+* Golden tools fortune, looting and harvest levels are now configurable
 * Added config option to disable the Nether
 * Fixed 'Power Enchantment Multiplier' set to false not working
 

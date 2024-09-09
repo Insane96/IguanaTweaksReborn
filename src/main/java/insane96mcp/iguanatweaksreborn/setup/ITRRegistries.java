@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.setup;
 import com.mojang.serialization.Codec;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.condition.*;
+import insane96mcp.iguanatweaksreborn.data.lootmodifier.DisenchantModifier;
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.DropMultiplierModifier;
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.LootPurgerModifier;
 import insane96mcp.iguanatweaksreborn.data.lootmodifier.ReplaceLootModifier;
@@ -58,6 +59,7 @@ public class ITRRegistries {
 
 	public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> GLOBAL_LOOT_MODIFIER_SERIALIZERS = createRegistry(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS);
 	public static final RegistryObject<Codec<? extends IGlobalLootModifier>> LOOT_PURGER_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("loot_purger", LootPurgerModifier.CODEC);
+	public static final RegistryObject<Codec<? extends IGlobalLootModifier>> DISENCHANT_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("disenchant", DisenchantModifier.CODEC);
 	public static final RegistryObject<Codec<? extends IGlobalLootModifier>> DROP_MULTIPLIER_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("drop_multiplier", DropMultiplierModifier.CODEC);
 	public static final RegistryObject<Codec<? extends IGlobalLootModifier>> REPLACE_DROP_MODIFIER = GLOBAL_LOOT_MODIFIER_SERIALIZERS.register("replace_drop", ReplaceLootModifier.CODEC);
 
