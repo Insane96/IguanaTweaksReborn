@@ -42,6 +42,9 @@ public class Nether extends Feature {
     @Label(name = "Disable Nether", description = "If true you cannot lit nether portals")
     public static Boolean disableNether = false;
     @Config
+    @Label(name = "Portal wait time", description = "How much time inside the portal to pass it. Vanilla is 80 ticks")
+    public static Integer portalWaitTime = 50;
+    @Config
     @Label(name = "Portal requires Crying Obsidian", description = "The portal requires Crying Obsidian in the corners to turn it on (in the overworld). The block tag 'iguanatweaksreborn:portal_corners' can be used to change the required blocks for the corners")
     public static Boolean portalRequiresCryingObsidian = true;
 
