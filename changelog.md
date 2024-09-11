@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Lowered hardness of blocks below sea level (~~+64%~~ -> +50% at Y=0 and below)
+
 ## 3.14.8
 * Added `iguanatweaks:disenchant` loot modifier that allows to disenchant items from loot
 * Golden tools fortune, looting and harvest levels are now configurable
