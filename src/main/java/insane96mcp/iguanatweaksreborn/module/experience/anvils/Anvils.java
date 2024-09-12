@@ -56,6 +56,9 @@ public class Anvils extends Feature {
     @Config
     @Label(name = "Merging cost is based off result")
     public static Boolean mergingCostBasedOffResult = true;
+    @Config
+    @Label(name = "Allow Merging Items", description = "If true you can merge items in the anvil and get a repair bonus")
+    public static Boolean allowMergingItems = true;
     @Config(min = 0, max = 100)
     @Label(name = "Merging Repair bonus", description = "Vanilla is 12%")
     public static Integer mergingRepairBonus = 15;

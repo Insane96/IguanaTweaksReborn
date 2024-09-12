@@ -3,6 +3,7 @@
 ## Upcoming
 * Entering the nether now takes 2.5s instead of 4s (configurable)
 * Added config option to prevent equipment from dropping enchanted
+* Added config option to disable item merging in anvil
 * Lowered hardness of blocks below sea level (~~+64%~~ -> +50% at Y=0 and below)
 
 ## 3.14.8

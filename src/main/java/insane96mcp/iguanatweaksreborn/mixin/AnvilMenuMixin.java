@@ -191,7 +191,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 				this.repairItemCountCost = repairItemCountCost;
 			}
 			//Else it's merging items
-			else {
+			else if (Anvils.allowMergingItems){
 				if ((!isEnchantedBook && (!resultStack.is(right.getItem())
 						|| !resultStack.isDamageableItem()))
 						//If unbreakable items is enabled then I cannot use broken items to repair
@@ -282,6 +282,11 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 					this.cost.set(0);
 					return;
 				}
+			}
+			else {
+				this.resultSlots.setItem(0, ItemStack.EMPTY);
+				this.cost.set(0);
+				return;
 			}
 		}
 
