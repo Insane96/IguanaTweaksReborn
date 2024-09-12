@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.14.9
 * Entering the nether now takes 2.5s instead of 4s (configurable)
 * Added config option to prevent equipment from dropping enchanted
 * Added config option to disable item merging in anvil
