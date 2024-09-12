@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Changed Armor formula again
+  * Heavily increased damage reduction with low armor
+
 ## 3.14.9
 * Entering the nether now takes 2.5s instead of 4s (configurable)
 * Added config option to prevent equipment from dropping enchanted
