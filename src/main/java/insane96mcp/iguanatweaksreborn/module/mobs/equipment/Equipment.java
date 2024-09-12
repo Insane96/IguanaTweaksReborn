@@ -11,7 +11,9 @@ import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.setup.ILStrings;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -44,6 +46,9 @@ public class Equipment extends JsonFeature {
     @Config(min = 0, max = 1)
     @Label(name = "Max durability", description = "Max durability of items dropped by mobs. This also fixes https://bugs.mojang.com/browse/MC-136374. Setting to 0 will disable this feature.")
     public static Double maxDurability = 0.6d;
+    @Config
+    @Label(name = "Disenchant equipment", description = "All drops from mobs will be disenchanted.")
+    public static Boolean disenchantEquipment = false;
 
     public Equipment(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -83,5 +88,17 @@ public class Equipment extends JsonFeature {
                     entity.setDropChance(slot, dropChance.floatValue());
             }
         }
+    }
+
+    @SubscribeEvent
+    public void onLivingDrop(LivingDropsEvent event) {
+        if (!this.isEnabled()
+                || !disenchantEquipment)
+            return;
+
+        event.getDrops().forEach(itemEntity -> {
+            if (!itemEntity.getItem().is(Items.ENCHANTED_BOOK))
+                itemEntity.getItem().removeTagKey("Enchantments");
+        });
     }
 }
