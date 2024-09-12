@@ -10,6 +10,7 @@ import insane96mcp.iguanatweaksreborn.module.experience.PlayerExperience;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.healthregen.HealthRegen;
 import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
+import insane96mcp.iguanatweaksreborn.module.world.Nether;
 import insane96mcp.insanelib.base.Feature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -150,6 +151,13 @@ public abstract class PlayerMixin extends LivingEntity {
 		if (!Feature.isEnabled(Tweaks.class))
 			return original;
 		return Tweaks.turtleHelmetWaterBreathingTime;
+	}
+
+	@ModifyExpressionValue(method = "getPortalWaitTime", at = @At(value = "CONSTANT", args = "intValue=80"))
+	public int getPortalWaitTime(int original) {
+		if (!Feature.isEnabled(Nether.class))
+			return original;
+		return Nether.portalWaitTime;
 	}
 
 	/*@ModifyExpressionValue(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;isSwimming()Z"))
