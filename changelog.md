@@ -3,6 +3,7 @@
 ## Upcoming
 * Changed Armor formula again
   * Heavily increased damage reduction with low armor
+* Lowered movement speed reduction of old animals (~~-40%~~ -> -30%)
 
 ## 3.14.9
 * Entering the nether now takes 2.5s instead of 4s (configurable)

@@ -164,7 +164,7 @@ public class Livestock extends Feature {
 			return;
 		}
 		if (age >= maxAge * 0.75)
-			MCUtils.applyModifier(ageableMob, Attributes.MOVEMENT_SPEED, UUID.fromString("e2083ae7-e37a-47c4-ab3e-84cf14fe6b6c"), "Old animal modifier", -0.4d, AttributeModifier.Operation.MULTIPLY_BASE, false);
+			MCUtils.applyModifier(ageableMob, Attributes.MOVEMENT_SPEED, UUID.fromString("e2083ae7-e37a-47c4-ab3e-84cf14fe6b6c"), "Old animal modifier", -0.3d, AttributeModifier.Operation.MULTIPLY_BASE, false);
 		if (ModList.get().isLoaded("pehkui") && ((ageableMob.level().getServer().getTickCount() + ageableMob.getId()) % 100 == 0 || forceUpdateScale))
 			PehkuiIntegration.setSize(ageableMob, (float) age / (float) maxAge);
 		ageableMob.getPersistentData().putInt(IguanaTweaksReborn.RESOURCE_PREFIX + "age", age);
