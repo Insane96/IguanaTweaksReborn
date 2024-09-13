@@ -6,6 +6,7 @@
 * Lowered movement speed reduction of old animals (~~-40%~~ -> -30%)
 * Moved Serene Seasons integration here (from IguanaTweaks Expanded)
 * Fixed scythe breaking sounds (no longer plays the sound each time for every block)
+* Fixed duplicated recipe names in EMI
 
 ## 3.14.9
 * Entering the nether now takes 2.5s instead of 4s (configurable)

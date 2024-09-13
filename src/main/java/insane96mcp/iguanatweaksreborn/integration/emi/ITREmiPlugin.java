@@ -40,9 +40,9 @@ public class ITREmiPlugin implements EmiPlugin {
 					for (AnvilRepair.RepairData repairData : anvilRepair.getValue().repairData) {
 						IdTagMatcher idTagMatcher = repairData.repairMaterial();
 						if (idTagMatcher.type == IdTagMatcher.Type.ID)
-							registry.addRecipe(new EmiAnvilRepairRecipe(anvilRepair.getKey(), stack, ForgeRegistries.ITEMS.getValue(idTagMatcher.location), repairData.amountRequired(), repairData.maxRepair()));
+							registry.addRecipe(new EmiAnvilRepairRecipe(ResourceLocation.tryParse(anvilRepair.getKey() + "_id_" + idTagMatcher.location.getPath()), stack, ForgeRegistries.ITEMS.getValue(idTagMatcher.location), repairData.amountRequired(), repairData.maxRepair()));
 						else
-							registry.addRecipe(new EmiAnvilRepairRecipe(anvilRepair.getKey(), stack, TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), idTagMatcher.location), repairData.amountRequired(), repairData.maxRepair()));
+							registry.addRecipe(new EmiAnvilRepairRecipe(ResourceLocation.tryParse(anvilRepair.getKey() + "_tag_" + idTagMatcher.location.getPath()), stack, TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), idTagMatcher.location), repairData.amountRequired(), repairData.maxRepair()));
 
 					}
 				}
@@ -54,7 +54,7 @@ public class ITREmiPlugin implements EmiPlugin {
 			registry.addRecipe(createSimpleInfo(Items.NAME_TAG, "name_tag", Component.translatable("emi.info.iguanatweaksreborn.items.name_tags")));
 		}
 		if (Feature.isEnabled(Crops.class)) {
-			registry.addRecipe(createSimpleInfo(emiIngredientOf(Items.WHEAT_SEEDS, Items.BEETROOT_SEEDS, Crops.CARROT_SEEDS.get(), Crops.ROOTED_POTATO.get()), "name_tag", Component.translatable("emi.info.iguanatweaksreborn.crops.seeds")));
+			registry.addRecipe(createSimpleInfo(emiIngredientOf(Items.WHEAT_SEEDS, Items.BEETROOT_SEEDS, Crops.CARROT_SEEDS.get(), Crops.ROOTED_POTATO.get()), "crops", Component.translatable("emi.info.iguanatweaksreborn.crops.seeds")));
 		}
 		if (Feature.isEnabled(NoHunger.class) && NoHunger.buffCakes)
 			registry.addRecipe(createSimpleInfo(emiIngredientOf(Items.CAKE), "cake", Component.translatable("emi.info.iguanatweaksreborn.no_hunger.cake")));
