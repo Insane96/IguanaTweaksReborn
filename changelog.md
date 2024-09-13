@@ -1,11 +1,10 @@
 # Changelog
 
-* Move Serene Seasons and Time Control integration here
-
 ## Upcoming
 * Changed Armor formula again
   * Heavily increased damage reduction with low armor
 * Lowered movement speed reduction of old animals (~~-40%~~ -> -30%)
+* Moved Serene Seasons integration here (from IguanaTweaks Expanded)
 * Fixed scythe breaking sounds (no longer plays the sound each time for every block)
 
 ## 3.14.9
