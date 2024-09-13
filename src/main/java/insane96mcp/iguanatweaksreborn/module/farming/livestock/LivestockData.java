@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
 import insane96mcp.iguanatweaksreborn.modifier.Modifier;
+import insane96mcp.iguanatweaksreborn.module.world.seasons.Seasons;
 import insane96mcp.iguanatweaksreborn.utils.ITRGsonHelper;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import net.minecraft.util.GsonHelper;
@@ -46,7 +47,7 @@ public class LivestockData {
 	public float getLivingDays(LivingEntity entity) {
 		if (this.livingDays == null)
 			return 0;
-		return this.livingDays + ((entity.getRandom().nextFloat() * this.livingDaysFluctuation * 2f) - this.livingDaysFluctuation);
+		return (this.livingDays + ((entity.getRandom().nextFloat() * this.livingDaysFluctuation * 2f) - this.livingDaysFluctuation)) * Seasons.getDayNightCycleModifier();
 	}
 
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<LivestockData>>(){}.getType();

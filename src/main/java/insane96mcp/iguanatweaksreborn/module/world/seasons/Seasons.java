@@ -36,9 +36,11 @@ import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import sereneseasons.api.season.Season;
 import sereneseasons.api.season.SeasonChangedEvent;
 import sereneseasons.api.season.SeasonHelper;
+import sereneseasons.config.FertilityConfig;
 import sereneseasons.config.ServerConfig;
 import sereneseasons.handler.season.SeasonHandler;
 import sereneseasons.season.SeasonSavedData;
@@ -56,6 +58,14 @@ public class Seasons extends Feature {
 	public static final GameRules.Key<GameRules.BooleanValue> RULE_SEASONGRASSGROWDEATH = GameRules.register("iguanatweaks:doSeasonGrassGrowDeath", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
 
 	@Config
+	@Label(name = "Serene Seasons changes", description = """
+			Makes the following changes to Serene Seasons config:
+			* seasonal_crops is set to false, as it's controlled by Plants Growth
+			* Sets the starting season to the one in 'Starting season'
+			""")
+	public static Boolean changeSereneSeasonsConfig = true;
+
+	@Config
 	@Label(name = "No greenhouse glass", description = "Removes greenhouse glass.")
 	public static Boolean noGreenHouseGlass = true;
 
@@ -66,13 +76,6 @@ public class Seasons extends Feature {
 	@Config
 	@Label(name = "Grass Decay and Growth", description = "Grass and tall grass decays in Winter and regrows back in Spring. Saplings are also transformed into Dead Bushes.")
 	public static Boolean grassDecayAndGrowth = true;
-
-	@Config
-	@Label(name = "Serene Seasons changes", description = """
-			Makes the following changes to Serene Seasons config:
-			* Sets the starting season to the one in 'Starting season'
-			""")
-	public static Boolean changeSereneSeasonsConfig = true;
 
 	@Config
 	@Label(name = "Starting season", description = "Has no effect if 'Serene Seasons changes' is disabled")
@@ -100,6 +103,19 @@ public class Seasons extends Feature {
 		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "no_saplings_in_winter", Component.literal("IguanaTweaks Expanded No Saplings in Winter"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && noSaplingsInWinter));
 	}
 
+	@Override
+	public void readConfig(ModConfigEvent event) {
+		super.readConfig(event);
+
+		if (this.isEnabled() && changeSereneSeasonsConfig)
+			FertilityConfig.seasonalCrops.set(false);
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return super.isEnabled() && ModList.get().isLoaded("sereneseasons");
+	}
+
 	@SubscribeEvent
 	public void onSeasonChanged(SeasonChangedEvent.Standard event) {
 		if (!this.isEnabled()
@@ -109,11 +125,6 @@ public class Seasons extends Feature {
 
 		if (ModList.get().isLoaded("timecontrol"))
 			TimeControlIntegration.updateDayNightLength(event.getNewSeason());
-
-		//Debug
-		SeasonSavedData seasonData = SeasonHandler.getSeasonSavedData(event.getLevel());
-		SeasonTime time = new SeasonTime(seasonData.seasonCycleTicks);
-		int subSeasonDuration = ServerConfig.subSeasonDuration.get();
 	}
 
 	@SubscribeEvent
@@ -248,7 +259,7 @@ public class Seasons extends Feature {
 			event.setTick(event.getTick() - 1);
 	}
 
-	public float getDayNightCycleModifier() {
-		return timeControlDayNightDuration.floatValue() / 10f;
+	public static float getDayNightCycleModifier() {
+		return Feature.isEnabled(Seasons.class) ? timeControlDayNightDuration.floatValue() / 10f : 1f;
 	}
 }

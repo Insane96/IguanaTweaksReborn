@@ -5,6 +5,7 @@
   * Heavily increased damage reduction with low armor
 * Lowered movement speed reduction of old animals (~~-40%~~ -> -30%)
 * Moved Serene Seasons integration here (from IguanaTweaks Expanded)
+  * Livestock living days now scale with new day length if changed
 * Fixed scythe breaking sounds (no longer plays the sound each time for every block)
 * Fixed duplicated recipe names in EMI
 
