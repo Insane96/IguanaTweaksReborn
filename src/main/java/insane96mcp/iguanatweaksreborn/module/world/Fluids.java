@@ -46,6 +46,6 @@ public class Fluids extends Feature {
                 || event.getEntity().getFluidTypeHeight(ForgeMod.WATER_TYPE.get()) < event.getEntity().getBbHeight() / 3f)
             return;
         Vec3 deltaMovement = event.getEntity().getDeltaMovement();
-        event.getEntity().setDeltaMovement(deltaMovement.x, deltaMovement.y + /*(double)(deltaMovement.y < (double)0.06F ? 5.0E-4F : 0.0F)*/0.04, deltaMovement.z);
+        event.getEntity().setDeltaMovement(deltaMovement.x, deltaMovement.y + /*(double)(deltaMovement.y < (double)0.06F ? 5.0E-4F : 0.0F)*/0.035, deltaMovement.z);
     }
 }
