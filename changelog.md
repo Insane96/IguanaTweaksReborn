@@ -8,6 +8,8 @@
 * Lowered movement speed reduction of old animals (~~-40%~~ -> -30%)
 * Moved Serene Seasons integration here (from IguanaTweaks Expanded)
   * Livestock living days now scale with new day length if changed
+* Added a config option to make entities float in water
+  * You have to swim against the water
 * Fixed scythe breaking sounds (no longer plays the sound each time for every block)
 * Fixed duplicated recipe names in EMI
 

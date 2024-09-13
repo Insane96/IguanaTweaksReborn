@@ -6,6 +6,10 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Fluids")
 @LoadFeature(module = Modules.Ids.WORLD)
@@ -17,8 +21,11 @@ public class Fluids extends Feature {
     @Label(name = "Water push force", description = "How strong does water push entities. Vanilla is 0.014")
     public static Double waterPushForce = 0.03d;
     @Config
-    @Label(name = "Water pushes when no blocks are around", description = "If true water pushes entities down even when no blocks are around")
+    @Label(name = "Water pushes when no blocks are around", description = "If true water pushes entities down with the same strength as there are no blocks around")
     public static Boolean waterPushesWhenNoBlocksAround = true;
+    @Config
+    @Label(name = "Floaty entities", description = "If true, entities will float")
+    public static Boolean floatyEntities = false;
 
     public Fluids(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -30,5 +37,15 @@ public class Fluids extends Feature {
 
     public static boolean shouldWaterPushWhenNoBlocksAround() {
         return Feature.isEnabled(Fluids.class) && waterPushesWhenNoBlocksAround;
+    }
+
+    @SubscribeEvent
+    public void onLivingUpdate(LivingEvent.LivingTickEvent event) {
+        if (!this.isEnabled()
+                || !floatyEntities
+                || event.getEntity().getFluidTypeHeight(ForgeMod.WATER_TYPE.get()) < event.getEntity().getBbHeight() / 3f)
+            return;
+        Vec3 deltaMovement = event.getEntity().getDeltaMovement();
+        event.getEntity().setDeltaMovement(deltaMovement.x, deltaMovement.y + /*(double)(deltaMovement.y < (double)0.06F ? 5.0E-4F : 0.0F)*/0.04, deltaMovement.z);
     }
 }
