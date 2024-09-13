@@ -4,6 +4,7 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.network.message.BreakWithNoSound;
 import insane96mcp.insanelib.InsaneLib;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
@@ -16,6 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -154,7 +156,9 @@ public class Hoes extends JsonFeature {
 									|| state.destroySpeed > 0f
 									|| pos.equals(event.getPos()))
 								return;
-							event.getPlayer().level().destroyBlock(pos, false);
+							//event.getPlayer().level().addDestroyBlockEffect(pos, state);
+							event.getPlayer().level().removeBlock(pos, false);
+							BreakWithNoSound.send((ServerPlayer) event.getPlayer(), pos, state);
 						});
 				break;
 			}
