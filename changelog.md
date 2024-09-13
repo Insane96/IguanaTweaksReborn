@@ -1,5 +1,7 @@
 # Changelog
 
+* Wall hit damage
+
 ## Upcoming
 * Changed Armor formula again
   * Heavily increased damage reduction with low armor

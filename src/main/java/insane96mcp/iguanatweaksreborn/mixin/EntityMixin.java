@@ -3,7 +3,10 @@ package insane96mcp.iguanatweaksreborn.mixin;
 import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.iguanatweaksreborn.module.world.Fluids;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,6 +23,16 @@ public abstract class EntityMixin {
     protected Object2DoubleMap<FluidType> forgeFluidTypeHeight;
 
     @Shadow public abstract float getBbHeight();
+
+    @Shadow public boolean horizontalCollision;
+
+    @Shadow public boolean minorHorizontalCollision;
+
+    @Shadow private Level level;
+
+    @Shadow public abstract boolean hurt(DamageSource pSource, float pAmount);
+
+    @Shadow public abstract DamageSources damageSources();
 
     @Inject(at = @At(value = "RETURN"), method = "fireImmune", cancellable = true)
     private void onFireImmune(CallbackInfoReturnable<Boolean> cir) {

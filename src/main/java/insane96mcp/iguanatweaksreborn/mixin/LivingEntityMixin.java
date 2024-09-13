@@ -26,6 +26,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -47,6 +48,10 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
     @Shadow public abstract Iterable<ItemStack> getArmorSlots();
 
     @Shadow public abstract void swing(InteractionHand pHand);
+
+    @Shadow public abstract Vec3 handleRelativeFrictionAndCalculateMovement(Vec3 pDeltaMovement, float pFriction);
+
+    @Shadow @Nullable protected abstract SoundEvent getDeathSound();
 
     public LivingEntityMixin(EntityType<?> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -150,5 +155,17 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         if (!Swimming.shouldPreventFastSwimUpWithJump())
             return original;
         return original && !this.isSwimming();
+    }
+
+    @WrapOperation(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;handleRelativeFrictionAndCalculateMovement(Lnet/minecraft/world/phys/Vec3;F)Lnet/minecraft/world/phys/Vec3;"))
+    private Vec3 onHandleRelativeFrictionAndCalculateMovement(LivingEntity instance, Vec3 pTravelVector, float pFriction, Operation<Vec3> original) {
+        double horizontalDistance = this.getDeltaMovement().horizontalDistance();
+        Vec3 originalResult = original.call(instance, pTravelVector, pFriction);
+        if (this.horizontalCollision && !this.level().isClientSide) {
+            double length = horizontalDistance - this.getDeltaMovement().horizontalDistance();
+            if (length > 0.2f)
+                this.hurt(this.damageSources().flyIntoWall(), (float) ((length - 0.2f) * 10f));
+        }
+        return originalResult;
     }
 }
