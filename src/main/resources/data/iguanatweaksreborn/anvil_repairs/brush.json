@@ -3,7 +3,7 @@
 	"repair": [
 		{
 			"repair_material": {
-				"id": "minecraft:copper_ingot"
+				"id": "minecraft:feather"
 			},
 			"amount": 1
 		}
