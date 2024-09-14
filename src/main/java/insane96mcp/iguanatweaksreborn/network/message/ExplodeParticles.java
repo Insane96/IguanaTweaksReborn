@@ -52,14 +52,14 @@ public class ExplodeParticles {
 			if (message.hasBrokenBlocks && message.radius >= 2 && message.blockInteraction != Explosion.BlockInteraction.KEEP) {
 				int particleCount = (int) (message.radius * 100);
 				for (int i = 0; i < particleCount; i++) {
-					double r = message.radius * 1;
+					double r = message.radius * 0.75;
 					double v = r / 2f;
 					double x = message.x + level.random.nextFloat() * r - v;
 					double y = message.y + level.random.nextFloat() * r - v;
 					double z = message.z + level.random.nextFloat() * r - v;
 					Vec3 dir = new Vec3(x - message.x, y - message.y, z - message.z).normalize().scale(0.4f);
 					level.addParticle(ParticleTypes.POOF, x, y, z, dir.x, dir.y, dir.z);
-					r = message.radius * 1.5;
+					r = message.radius * 1.25;
 					v = r / 2f;
 					x = message.x + level.random.nextFloat() * r - v;
 					y = message.y + level.random.nextFloat() * r - v;
