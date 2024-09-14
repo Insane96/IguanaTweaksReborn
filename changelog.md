@@ -11,6 +11,7 @@
 * Brushes now require feathers to be repaired
 * Added a config option to make entities float in water
   * You have to swim against the water
+* Decreased shovels bonus attack damage (+30% -> +20%)
 * Fixed scythe breaking sounds (no longer plays the sound each time for every block)
 * Fixed duplicated recipe names in EMI
 
