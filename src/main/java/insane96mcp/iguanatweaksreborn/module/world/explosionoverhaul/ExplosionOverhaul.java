@@ -2,12 +2,12 @@ package insane96mcp.iguanatweaksreborn.module.world.explosionoverhaul;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.network.message.ExplodeParticles;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -72,38 +72,11 @@ public class ExplosionOverhaul extends Feature {
 
 		Explosion e = event.getExplosion();
 		if (e.level instanceof ServerLevel level) {
-			if (e instanceof ITRExplosion itrExplosion && !itrExplosion.poofParticles)
-				return;
-            if (!e.getToBlow().isEmpty() && e.radius >= 2 && e.blockInteraction != Explosion.BlockInteraction.KEEP) {
-                int particleCount = (int) (e.radius * 80);
-                level.sendParticles(ParticleTypes.POOF, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 3f, e.radius / 3f, e.radius / 3f, 0.3D);
-                level.sendParticles(ParticleTypes.SMOKE, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), particleCount, e.radius / 3f, e.radius / 3f, e.radius / 3f, 0.3D);
-            }
-			else if (e.radius < 2) {
-				level.sendParticles(ParticleTypes.EXPLOSION, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), 1, 0.0D, 0.0D, 0.0D, 1f);
+			if (e instanceof ITRExplosion itrExplosion) {
+				if (!itrExplosion.poofParticles)
+					return;
+				ExplodeParticles.sync(level, itrExplosion);
 			}
-			else {
-				level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, e.getPosition().x(), e.getPosition().y(), e.getPosition().z(), 1, 0.0D, 0.0D, 0.0D, 1f);
-			}
-
-			//Pre 1.15 particle spawn, but it was done for each block broken
-			/*double d0 = e.getPosition().x + level.getRandom().nextFloat();
-			double d1 = e.getPosition().y + level.getRandom().nextFloat();
-			double d2 = e.getPosition().z + level.getRandom().nextFloat();
-			double d3 = d0 - e.getPosition().x;
-			double d4 = d1 - e.getPosition().y;
-			double d5 = d2 - e.getPosition().z;
-			double d6 = Math.sqrt(d3 * d3 + d4 * d4 + d5 * d5);
-			d3 = d3 / d6;
-			d4 = d4 / d6;
-			d5 = d5 / d6;
-			double d7 = 0.5D / (d6 / (double)e.radius + 0.1D);
-			d7 = d7 * (double)(level.getRandom().nextFloat() * level.getRandom().nextFloat() + 0.3F);
-			d3 = d3 * d7;
-			d4 = d4 * d7;
-			d5 = d5 * d7;
-			level.sendParticles(ParticleTypes.POOF, (d0 + e.getPosition().x) / 2.0D, (d1 + e.getPosition().y) / 2.0D, (d2 + e.getPosition().z) / 2.0D, particleCount, d3, d4, d5, 0.22D);
-			level.sendParticles(ParticleTypes.SMOKE, d0, d1, d2, particleCount, d3, d4, d5, 0.22D);*/
 		}
 	}
 

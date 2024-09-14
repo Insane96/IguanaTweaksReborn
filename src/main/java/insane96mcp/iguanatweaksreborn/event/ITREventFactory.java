@@ -12,7 +12,7 @@ public class ITREventFactory {
     /**
      * Returns true if the event is canceled
      */
-    public static boolean onSRExplosionCreated(ITRExplosion explosion)
+    public static boolean onITRExplosionCreated(ITRExplosion explosion)
     {
         ITRExplosionCreatedEvent event = new ITRExplosionCreatedEvent(explosion);
         MinecraftForge.EVENT_BUS.post(event);

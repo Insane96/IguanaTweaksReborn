@@ -40,5 +40,6 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(++index, BlockDataSync.class, BlockDataSync::encode, BlockDataSync::decode, BlockDataSync::handle);
 		CHANNEL.registerMessage(++index, SyncExperienceFeature.class, SyncExperienceFeature::encode, SyncExperienceFeature::decode, SyncExperienceFeature::handle);
 		CHANNEL.registerMessage(++index, BreakWithNoSound.class, BreakWithNoSound::encode, BreakWithNoSound::decode, BreakWithNoSound::handle);
+		CHANNEL.registerMessage(++index, ExplodeParticles.class, ExplodeParticles::encode, ExplodeParticles::decode, ExplodeParticles::handle);
 	}
 }

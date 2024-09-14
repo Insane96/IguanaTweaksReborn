@@ -1,5 +1,6 @@
 # Changelog
 
+* Better explosion particles
 * Wall hit damage
 
 ## Upcoming
@@ -8,6 +9,7 @@
 * Lowered movement speed reduction of old animals (~~-40%~~ -> -30%)
 * Moved Serene Seasons integration here (from IguanaTweaks Expanded)
   * Livestock living days now scale with new day length if changed
+* Explosion particles are now more similar to pre-1.15
 * Brushes now require feathers to be repaired
 * Added a config option to make entities float in water
   * You have to swim against the water

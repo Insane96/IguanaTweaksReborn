@@ -305,7 +305,7 @@ public class ITRExplosion extends Explosion {
 
 	public static ITRExplosion explode(ServerLevel level, @Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float radius, boolean fire, BlockInteraction blockInteraction, boolean poofParticles) {
 		ITRExplosion explosion = new ITRExplosion(level, source, damageSource, damageCalculator, x, y, z, radius, fire, blockInteraction, ExplosionOverhaul.creeperCollateral, poofParticles);
-		if (ITREventFactory.onSRExplosionCreated(explosion)) return explosion;
+		if (ITREventFactory.onITRExplosionCreated(explosion)) return explosion;
 		if (level.getGameRules().getBoolean(ExplosionOverhaul.RULE_MOBGRIEFING))
 			explosion.gatherAffectedBlocks(!ExplosionOverhaul.disableExplosionRandomness);
 		if (ExplosionOverhaul.enableFlyingBlocks)
