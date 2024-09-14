@@ -189,15 +189,16 @@ public class ITRExplosion extends Explosion {
 				boolean isBlocking = false;
 				if (entity instanceof LivingEntity living)
 					isBlocking = living.isDamageSourceBlocked(source) && living.isBlocking();
-				if (entity.hurt(source, damageAmount) || isBlocking || entity instanceof ITRFallingBlockEntity) {
+				boolean isLiving = entity instanceof LivingEntity;
+				if (entity.hurt(source, damageAmount) || isBlocking || !isLiving) {
 					double d11 = d10;
-					if (entity instanceof LivingEntity) {
+					if (isLiving) {
 						d11 = getKnockbackReduction((LivingEntity) entity, d11);
 					}
 					if (knockbackScaleWithSize)
 						d11 *= this.radius;
 					d11 = Math.max(d11, this.radius * 0.05d);
-					if (entity instanceof ITRFallingBlockEntity || ExplosionOverhaul.shouldTakeReducedKnockback(entity))
+ 					if (entity instanceof ITRFallingBlockEntity || ExplosionOverhaul.shouldTakeReducedKnockback(entity))
 						d11 *= 0.2d;
 					d11 *= getKnockbackMultiplier(this.source);
 					d11 = Math.min(d11, 10f);
@@ -206,7 +207,10 @@ public class ITRExplosion extends Explosion {
 						xDistance += this.level.getRandom().nextFloat() - 0.5f;
 						zDistance += this.level.getRandom().nextFloat() - 0.5f;
 					}
-					entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, Math.max(yDistance * d11, 0.1f * this.radius), zDistance * d11));
+					double y = yDistance * d11;
+					if (isLiving)
+						y = Math.max(y, 0.1f * this.radius);
+					entity.setDeltaMovement(entity.getDeltaMovement().add(xDistance * d11, y, zDistance * d11));
 					if (entity instanceof Player player) {
 						if (!player.isSpectator() && (!player.isCreative() || !player.getAbilities().flying)) {
 							this.getHitPlayers().put(player, new Vec3(xDistance * d11, Math.max(yDistance * d11, 0.1f * this.radius), zDistance * d11));
