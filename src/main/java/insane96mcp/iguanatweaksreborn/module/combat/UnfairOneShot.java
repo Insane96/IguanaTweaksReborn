@@ -36,7 +36,7 @@ public class UnfairOneShot extends Feature {
 			return;
 
 		if (player.getHealth() >= 15 && player.getHealth() - event.getAmount() <= 0) {
-			event.setAmount(player.getHealth() - 0.1f);
+			event.setAmount(player.getHealth() - 1f);
 			player.level().playSound(null, player.blockPosition(), ITRRegistries.UNFAIR_ONE_SHOT.get(), SoundSource.PLAYERS, 2f, 0.7f);
 			ITRTriggers.UNFAIR_ONESHOT.trigger(player);
 			if (resistance) {
