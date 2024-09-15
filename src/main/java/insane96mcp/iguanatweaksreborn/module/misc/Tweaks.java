@@ -316,7 +316,7 @@ public class Tweaks extends Feature {
                     double x = instance.getX();
                     double y = instance.getY();
                     double z = instance.getZ();
-                    Direction direction = Direction.WEST;
+                    Direction direction = Direction.getNearest(oldDeltaMovement.x, oldDeltaMovement.y, oldDeltaMovement.z);
                     BlockPos pos = BlockPos.containing(x, y, z).relative(direction);
                     BlockState state = instance.level().getBlockState(pos);
                     if (state.isAir()) {
