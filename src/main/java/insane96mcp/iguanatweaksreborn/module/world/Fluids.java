@@ -6,6 +6,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.LoadFeature;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -24,7 +25,7 @@ public class Fluids extends Feature {
     @Label(name = "Water pushes when no blocks are around", description = "If true water pushes entities down with the same strength as there are no blocks around")
     public static Boolean waterPushesWhenNoBlocksAround = true;
     @Config
-    @Label(name = "Floaty entities", description = "If true, entities will float")
+    @Label(name = "[EXPERIMENTAL] Floaty entities", description = "If true, entities will float in water")
     public static Boolean floatyEntities = false;
 
     public Fluids(Module module, boolean enabledByDefault, boolean canBeDisabled) {
@@ -43,7 +44,9 @@ public class Fluids extends Feature {
     public void onLivingUpdate(LivingEvent.LivingTickEvent event) {
         if (!this.isEnabled()
                 || !floatyEntities
-                || event.getEntity().getFluidTypeHeight(ForgeMod.WATER_TYPE.get()) < event.getEntity().getBbHeight() / 3f)
+                || event.getEntity().getFluidTypeHeight(ForgeMod.WATER_TYPE.get()) < event.getEntity().getBbHeight() / 3f
+                /*|| event.getEntity().getMobType() == MobType.WATER*/
+                || (event.getEntity() instanceof Player player && player.getAbilities().flying))
             return;
         Vec3 deltaMovement = event.getEntity().getDeltaMovement();
         event.getEntity().setDeltaMovement(deltaMovement.x, deltaMovement.y + /*(double)(deltaMovement.y < (double)0.06F ? 5.0E-4F : 0.0F)*/0.035, deltaMovement.z);

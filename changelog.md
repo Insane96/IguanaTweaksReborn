@@ -11,6 +11,7 @@
 * Explosion particles are now more similar to pre-1.15
 * Fixed non-living entities (tnt, falling blocks) not being pushed by explosions
 * Brushes now require feathers to be repaired
+* Increased back base ore generation (-50% -> -32%)
 * Added a config option to make entities float in water
   * You have to swim against the water
 * Decreased shovels bonus attack damage (+30% -> +20%)
