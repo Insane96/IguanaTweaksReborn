@@ -166,7 +166,7 @@ public class TimberTrees extends Feature {
                 }
                 checks++;
             }
-            if (posToCheck.isEmpty() && (foundLeaves == null || logs + sidewaysLogs < 3 || sidewaysLogs > logs)) {
+            if (posToCheck.isEmpty() && (foundLeaves == null || logs + sidewaysLogs < 3 || logs < sidewaysLogs / 2)) {
                 blocks.clear();
                 break;
             }
