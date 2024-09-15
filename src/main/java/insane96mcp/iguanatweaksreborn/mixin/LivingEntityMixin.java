@@ -7,6 +7,7 @@ import insane96mcp.iguanatweaksreborn.event.ITREventFactory;
 import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.IProtectionEnchantment;
+import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.iguanatweaksreborn.module.movement.Swimming;
 import insane96mcp.iguanatweaksreborn.module.movement.TerrainSlowdown;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
@@ -157,15 +158,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
         return original && !this.isSwimming();
     }
 
-    /*@WrapOperation(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;handleRelativeFrictionAndCalculateMovement(Lnet/minecraft/world/phys/Vec3;F)Lnet/minecraft/world/phys/Vec3;"))
-    private Vec3 checkCollideHorizontallyAndDamage(LivingEntity instance, Vec3 pTravelVector, float pFriction, Operation<Vec3> original) {
-        double horizontalDistance = this.getDeltaMovement().horizontalDistance();
-        Vec3 originalResult = original.call(instance, pTravelVector, pFriction);
-        if (this.horizontalCollision && !this.level().isClientSide) {
-            double length = horizontalDistance - this.getDeltaMovement().horizontalDistance();
-            if (length > 0.2f)
-                this.hurt(this.damageSources().flyIntoWall(), (float) ((length - 0.2f) * 10f));
-        }
-        return originalResult;
-    }*/
+    @WrapOperation(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;handleRelativeFrictionAndCalculateMovement(Lnet/minecraft/world/phys/Vec3;F)Lnet/minecraft/world/phys/Vec3;"))
+    private Vec3 checkCollideHorizontallyAndDamage(LivingEntity instance, Vec3 pTravelVector, float pFriction, Operation<Vec3> originalOperation) {
+        return Tweaks.onCollideWithWall(instance, pTravelVector, pFriction, originalOperation);
+    }
 }

@@ -1,8 +1,8 @@
 # Changelog
 
-* Wall hit damage
-
 ## Upcoming
+* Added (Misc > Tweaks) 'Collide with walls damage'
+  * When the player collides with a wall, they will take damage based of this value
 * Changed Armor formula again
   * Heavily increased damage reduction with low armor
 * Lowered movement speed reduction of old animals (~~-40%~~ -> -30%)

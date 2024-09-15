@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.data.generator;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.combat.PiercingDamage;
+import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.Death;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -25,10 +26,10 @@ public class ITRDamageTypeTagsProvider extends DamageTypeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
-        tag(DamageTypeTags.BYPASSES_ARMOR).addTag(PiercingDamage.PIERCING_DAMAGE_TYPE);
-        tag(DamageTypeTags.BYPASSES_COOLDOWN).addTag(PiercingDamage.PIERCING_DAMAGE_TYPE);
-        tag(DamageTypeTags.BYPASSES_SHIELD).addTag(PiercingDamage.PIERCING_DAMAGE_TYPE);
-        tag(DamageTypeTags.NO_IMPACT).addTag(PiercingDamage.PIERCING_DAMAGE_TYPE);
+        tag(DamageTypeTags.BYPASSES_ARMOR).add(Tweaks.COLLIDE_WITH_WALL).addTag(PiercingDamage.PIERCING_DAMAGE_TYPE);
+        tag(DamageTypeTags.BYPASSES_COOLDOWN).add(Tweaks.COLLIDE_WITH_WALL).addTag(PiercingDamage.PIERCING_DAMAGE_TYPE);
+        tag(DamageTypeTags.BYPASSES_SHIELD).add(Tweaks.COLLIDE_WITH_WALL).addTag(PiercingDamage.PIERCING_DAMAGE_TYPE);
+        tag(DamageTypeTags.NO_IMPACT).add(Tweaks.COLLIDE_WITH_WALL).addTag(PiercingDamage.PIERCING_DAMAGE_TYPE);
 
         tag(Death.DOESNT_SPAWN_GRAVE).add(DamageTypes.FELL_OUT_OF_WORLD);
 

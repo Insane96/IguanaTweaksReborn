@@ -1,5 +1,6 @@
 package insane96mcp.iguanatweaksreborn.module.misc;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
@@ -14,11 +15,17 @@ import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.util.MathHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -51,6 +58,8 @@ public class Tweaks extends Feature {
 
     public static final TagKey<Block> BREAK_ON_FALL = ITRBlockTagsProvider.create("break_on_fall");
     public static final TagKey<Item> WORLD_IMMUNE = ITRItemTagsProvider.create("world_immune");
+
+    public static ResourceKey<DamageType> COLLIDE_WITH_WALL = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(IguanaTweaksReborn.MOD_ID, "collide_with_wall"));
 
     @Config
     @Label(name = "Prevent fire with resistance", description = "If true, entities will no longer be set on fire if have Fire Resistance (like bedrock edition)")
@@ -96,6 +105,10 @@ public class Tweaks extends Feature {
     @Config
     @Label(name = "Splash potions throw strength", description = "The strength used to throw splash potions. Vanilla is 0.5")
     public static Double splashPotionThrowStrength = 1d;
+
+    @Config
+    @Label(name = "Collide with walls damage", description = "If set higher than 0 it will enable damage when colliding with walls at a high speed (e.g. with explosions or knockback). Higher = more damage")
+    public static Double collideWithWallsDamage = 2.5d;
 
     public Tweaks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -288,5 +301,42 @@ public class Tweaks extends Feature {
             event.setDamageAmount(event.getDamageAmount() * timesDrowned * 0.5f);
             event.setBubbleCount((int) (event.getBubbleCount() * timesDrowned * 0.5f));
         }
+    }
+
+    public static Vec3 onCollideWithWall(LivingEntity instance, Vec3 pTravelVector, float pFriction, Operation<Vec3> originalOperation) {
+        Vec3 oldDeltaMovement = instance.getDeltaMovement();
+        double horizontalDistance = oldDeltaMovement.horizontalDistance();
+        Vec3 originalResult = originalOperation.call(instance, pTravelVector, pFriction);
+        if (instance.horizontalCollision && !instance.level().isClientSide) {
+            double length = horizontalDistance - instance.getDeltaMovement().horizontalDistance();
+            if (length > 0.2f) {
+                instance.hurt(instance.damageSources().source(Tweaks.COLLIDE_WITH_WALL, null), (float) ((length - 0.2f) * collideWithWallsDamage));
+
+                if (!instance.level().isClientSide) {
+                    double x = instance.getX();
+                    double y = instance.getY();
+                    double z = instance.getZ();
+                    Direction direction = Direction.WEST;
+                    BlockPos pos = BlockPos.containing(x, y, z).relative(direction);
+                    BlockState state = instance.level().getBlockState(pos);
+                    if (state.isAir()) {
+                        int height = Mth.ceil(instance.getBbHeight());
+                        for (int i = 1; i < height; i++) {
+                            pos = pos.above();
+                            state = instance.level().getBlockState(pos);
+                            if (!state.isAir())
+                                break;
+                        }
+                    }
+                    if (state.isAir())
+                        return originalResult;
+
+                    int particleCount = 150;
+                    instance.playSound(instance.getFallSounds().big(), 1.0F, 0.7F);
+                    ((ServerLevel)instance.level()).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, state).setPos(pos), x, instance.getY() + instance.getBbHeight() / 2f, z, particleCount, 0.0D, 0.0D, 0.0D, 0.15F);
+                }
+            }
+        }
+        return originalResult;
     }
 }
