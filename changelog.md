@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.15.0
 * Added (Misc > Tweaks) 'Collide with walls damage'
   * When the player collides with a wall, they will take damage based of this value
 * Changed Armor formula again
