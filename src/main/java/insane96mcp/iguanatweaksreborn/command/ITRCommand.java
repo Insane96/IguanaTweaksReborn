@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.FloatArgumentType;
+import insane96mcp.iguanatweaksreborn.entity.ITRFallingBlockEntity;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.TirednessHandler;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -11,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
@@ -39,6 +41,14 @@ public class ITRCommand {
                             }
                             EnchantmentHelper.setEnchantments(enchantments, enchantedBook);
                             player.getInventory().add(enchantedBook);
+                            return 1;
+                        }))
+                .then(Commands.literal("test")
+                        .executes(context -> {
+                            for (int i = 0; i < 3; i++) {
+                                ITRFallingBlockEntity fallingBlock = new ITRFallingBlockEntity(context.getSource().getLevel(), context.getSource().getPosition().x, context.getSource().getPosition().y + i, context.getSource().getPosition().z, i == 1 ? Blocks.ACACIA_LOG.defaultBlockState : Blocks.ACACIA_LEAVES.defaultBlockState);
+                                context.getSource().getLevel().addFreshEntity(fallingBlock);
+                            }
                             return 1;
                         })));
     }

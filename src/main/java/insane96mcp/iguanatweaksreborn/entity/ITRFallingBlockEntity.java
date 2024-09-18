@@ -154,8 +154,8 @@ public class ITRFallingBlockEntity extends FallingBlockEntity {
 		BlockState stateAt = this.level().getBlockState(blockPos);
 		BlockState stateOn = this.level().getBlockState(blockPos.below());
 		boolean canBeReplaced = stateAt.canBeReplaced(new DirectionalPlaceContext(this.level(), blockPos, Direction.DOWN, ItemStack.EMPTY, Direction.UP));
-		boolean isHarderThanInside = stateAt.getDestroySpeed(this.level(), blockPos) < this.blockState.getDestroySpeed(this.level(), blockPos);
-		boolean canSurvive = this.blockState.canSurvive(this.level(), blockPos) && stateOn.getFluidState().isEmpty() && !stateOn.isAir();
+		boolean isHarderThanInside = !stateAt.getFluidState().isEmpty() || stateAt.getDestroySpeed(this.level(), blockPos) < this.blockState.getDestroySpeed(this.level(), blockPos);
+		boolean canSurvive = this.blockState.canSurvive(this.level(), blockPos) && !stateOn.isAir();
 		if (canBeReplaced && isHarderThanInside && canSurvive) {
 			this.place(stateOn, this.blockState.getBlock(), blockPos, true);
 			return true;
