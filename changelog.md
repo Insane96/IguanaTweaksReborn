@@ -1,8 +1,9 @@
 # Changelog
 
 ## Upcoming
-* Decreased the min knockback strength to get damaged against walls
 * Monster spawners are now 3x harder to break
+* Halved falling logs damage
+* Decreased the min knockback strength to get damaged against walls
 
 ## 3.15.0
 * Added (Misc > Tweaks) 'Collide with walls damage'

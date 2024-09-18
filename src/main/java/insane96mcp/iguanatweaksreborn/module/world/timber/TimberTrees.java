@@ -94,7 +94,7 @@ public class TimberTrees extends Feature {
             ITRFallingBlockEntity fallingBlock = new ITRFallingBlockEntity((Level) event.getLevel(), fallingBlockPos, state, direction);
             fallingBlock.move(MoverType.SELF, new Vec3(0, 0.1d * horizontalDistance, 0));
             if (state.is(TIMBER_TRUNKS))
-                fallingBlock.setHurtsEntities(1f, 1024);
+                fallingBlock.setHurtsEntities(0.5f, 1024);
             else
                 fallingBlock.setHurtsEntities(0.1f, 1024);
             event.getLevel().addFreshEntity(fallingBlock);
