@@ -5,8 +5,10 @@ import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.mixin.LivingEntityAccessor;
 import insane96mcp.iguanatweaksreborn.mixin.MobAccessor;
+import insane96mcp.iguanatweaksreborn.mixin.ServerLevelAccessor;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
+import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
@@ -329,6 +331,8 @@ public class Tiredness extends JsonFeature {
 		}
 	}
 
+	static int timeSkipped;
+
 	//Run after Sleeping Effects
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void resetTirednessOnWakeUp(SleepFinishedTimeEvent event) {
@@ -343,11 +347,38 @@ public class Tiredness extends JsonFeature {
 			player.removeEffect(TIRED.get());
 		});
 
-		int timeSkipped = 12000;
+		timeSkipped = 12000;
 		//If above Tired I
 		if (highestTired.get() > 0)
 			timeSkipped += 1200 * highestTired.get();
 		event.setTimeAddition(event.getLevel().dayTime() + timeSkipped);
+	}
+
+	public static boolean onSleepFinished(ServerLevel level, boolean original) {
+		if (!Feature.isEnabled(Tiredness.class))
+			return original;
+
+		int rainTime = ((ServerLevelAccessor)level).getServerLevelData().getRainTime();
+		int thunderTime = ((ServerLevelAccessor)level).getServerLevelData().getThunderTime();
+		int clearWeatherTime = ((ServerLevelAccessor)level).getServerLevelData().getClearWeatherTime();
+		if (rainTime > 0) {
+			rainTime -= timeSkipped;
+			((ServerLevelAccessor) level).getServerLevelData().setRainTime(Math.max(rainTime, 0));
+			if (rainTime <= 0)
+				((ServerLevelAccessor) level).getServerLevelData().setRaining(false);
+		}
+		if (thunderTime > 0) {
+			thunderTime -= timeSkipped;
+			((ServerLevelAccessor) level).getServerLevelData().setThunderTime(Math.max(thunderTime, 0));
+			if (thunderTime <= 0)
+				((ServerLevelAccessor) level).getServerLevelData().setThundering(false);
+		}
+		if (clearWeatherTime > 0) {
+			clearWeatherTime -= timeSkipped;
+            ((ServerLevelAccessor) level).getServerLevelData().setClearWeatherTime(Math.max(clearWeatherTime, 0));
+		}
+		//Return false to cancel the vanilla method of resetting the weather
+		return false;
 	}
 
 	@SubscribeEvent

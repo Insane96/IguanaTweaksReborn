@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Rain and thunder are no longer reset when sleeping (with Tiredness enabled)
+  * Instead, they advance like time
 * Fire spread speed multiplier is now a gamerule instead of a config option
 * Monster spawners are now 3x harder to break
 * Halved falling logs damage
