@@ -239,7 +239,7 @@ public class Experience extends JsonFeature {
 			|| !disableExperience)
 			return;
 
-		if (event.getOverlay().equals(VanillaGuiOverlay.VIGNETTE.type())) {
+		if (Minecraft.getInstance().player.jumpableVehicle() == null && event.getOverlay().equals(VanillaGuiOverlay.VIGNETTE.type())) {
 			((ForgeGui) Minecraft.getInstance().gui).rightHeight -= 6;
 			((ForgeGui) Minecraft.getInstance().gui).leftHeight -= 6;
 		}

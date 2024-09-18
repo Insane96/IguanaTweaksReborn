@@ -6,6 +6,7 @@
 * Halved falling logs damage
 * Decreased the min knockback strength to get damaged against walls
 * Fixed falling trees not stacking properly in fluids
+* Fixed horse jump bar overlapping with the health and armor bars
 
 ## 3.15.0
 * Added (Misc > Tweaks) 'Collide with walls damage'
