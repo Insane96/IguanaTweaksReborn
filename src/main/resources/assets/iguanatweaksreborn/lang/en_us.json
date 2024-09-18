@@ -204,5 +204,7 @@
 	"gamerule.iguanatweaks:doLooseRespawn": "Loose Respawn",
 	"gamerule.iguanatweaks:doLooseRespawn.description": "Makes players respawn in a radius from world spawn/bed",
 	"gamerule.iguanatweaks:disableExperience": "Disable Experience",
-	"gamerule.iguanatweaks:disableExperience.description": "Completely disables Experience, from mob drops to the xp bar"
+	"gamerule.iguanatweaks:disableExperience.description": "Completely disables Experience, from mob drops to the xp bar",
+	"gamerule.iguanatweaks:fireSpeedMultiplier": "Fire Speed Multiplier",
+	"gamerule.iguanatweaks:fireSpeedMultiplier.description": "Multiplier for speed at which fire spreads"
 }

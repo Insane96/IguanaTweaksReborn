@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Fire spread speed multiplier is now a gamerule instead of a config option
 * Monster spawners are now 3x harder to break
 * Halved falling logs damage
 * Decreased the min knockback strength to get damaged against walls
