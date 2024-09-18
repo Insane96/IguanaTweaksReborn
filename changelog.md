@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Decreased the min knockback strength to get damaged against walls
+
 ## 3.15.0
 * Added (Misc > Tweaks) 'Collide with walls damage'
   * When the player collides with a wall, they will take damage based of this value
