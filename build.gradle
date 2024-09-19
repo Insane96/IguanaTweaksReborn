@@ -110,7 +110,7 @@ dependencies {
     minecraft "net.neoforged:forge:${mc_version}-${neo_version}"
 
     implementation fg.deobf("blank:InsaneLib:${lib_version}-mc${mc_version}")
-    implementation fg.deobf("blank:Stamina:1.0.0")
+    implementation fg.deobf("blank:Stamina:1.1.1")
 
     implementation fg.deobf("curse.maven:selene-499980:5254462")
     runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:5051316")

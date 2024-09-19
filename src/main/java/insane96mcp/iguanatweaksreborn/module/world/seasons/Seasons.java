@@ -7,9 +7,9 @@ import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
 import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
-import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.SectionPos;
@@ -52,7 +52,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Label(name = "Seasons", description = "Change a few things relative to Serene Seasons")
-@LoadFeature(module = Modules.Ids.WORLD)
+@LoadFeature(module = Modules.Ids.WORLD, requiresMods = {"sereneseasons"})
 public class Seasons extends Feature {
 
 	public static final GameRules.Key<GameRules.BooleanValue> RULE_SEASONGRASSGROWDEATH = GameRules.register("iguanatweaks:doSeasonGrassGrowDeath", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));

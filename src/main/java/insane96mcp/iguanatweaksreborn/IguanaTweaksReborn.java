@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn;
 import com.google.common.collect.Lists;
 import insane96mcp.iguanatweaksreborn.command.ITRCommand;
 import insane96mcp.iguanatweaksreborn.data.criterion.ITRTriggers;
+import insane96mcp.iguanatweaksreborn.data.criterion.SeasonChangedTrigger;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRDamageTypeTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITREntityTypeTagsProvider;
@@ -82,7 +83,9 @@ public class IguanaTweaksReborn
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ITRClientConfig.CONFIG_SPEC, MOD_ID + "/client.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ITRCommonConfig.CONFIG_SPEC, MOD_ID + "/common.toml");
         MinecraftForge.EVENT_BUS.register(this);
-		MinecraftForge.EVENT_BUS.register(SpawnerDataAttacher.class);
+        MinecraftForge.EVENT_BUS.register(SpawnerDataAttacher.class);
+        if (ModList.get().isLoaded("sereneseasons"))
+            MinecraftForge.EVENT_BUS.register(SeasonChangedTrigger.class);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::commonSetup);

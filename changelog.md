@@ -1,6 +1,9 @@
 # Changelog
 
-## Upcoming
+## 3.15.1
+* Requires InsaneLib 1.15.0
+* Serene Seasons missing no longer crashes the game
+  * Serene Seasons features are no longer loaded if SS it's missing
 * Rain and thunder are no longer reset when sleeping (with Tiredness enabled)
   * Instead, they advance like time
 * Fire spread speed multiplier is now a gamerule instead of a config option

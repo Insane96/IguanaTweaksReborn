@@ -3,9 +3,9 @@ package insane96mcp.iguanatweaksreborn.module.mobs.spawning;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
-import insane96mcp.insanelib.base.config.LoadFeature;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -14,7 +14,7 @@ import sereneseasons.api.season.SeasonChangedEvent;
 import sereneseasons.config.ServerConfig;
 
 @Label(name = "Season Spawning", description = "Changes to mob spawn with Serene Seasons installed")
-@LoadFeature(module = Modules.Ids.MOBS)
+@LoadFeature(module = Modules.Ids.MOBS, requiresMods = {"sereneseasons"})
 public class SeasonSpawning extends Feature {
 
     @Config

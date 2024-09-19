@@ -10,14 +10,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import sereneseasons.api.season.Season;
 import sereneseasons.api.season.SeasonChangedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = IguanaTweaksReborn.MOD_ID)
 public class SeasonChangedTrigger extends SimpleCriterionTrigger<SeasonChangedTrigger.TriggerInstance> {
 	static final ResourceLocation ID = new ResourceLocation(IguanaTweaksReborn.MOD_ID, "season_changed");
 
