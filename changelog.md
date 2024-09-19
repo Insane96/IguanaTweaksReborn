@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.15.2
 * Fixed not being able to apply books to items if Allow Merging Items was false
 
 ## 3.15.1
