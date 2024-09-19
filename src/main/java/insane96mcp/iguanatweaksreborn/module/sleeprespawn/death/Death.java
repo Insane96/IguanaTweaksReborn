@@ -107,14 +107,31 @@ public class Death extends Feature {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onPlayerDeath(LivingDeathEvent event) {
 		if (!this.isEnabled()
-				|| !(event.getEntity() instanceof ServerPlayer player)
-				|| player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
-				|| !player.level().getGameRules().getBoolean(RULE_DEATHGRAVE)
-				|| player.level().isOutsideBuildHeight(player.blockPosition().getY()))
+				|| !(event.getEntity() instanceof ServerPlayer player))
 			return;
 
 		breakOldGrave(player);
-		summonGrave(player, event.getSource());
+        if (!player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)
+                && player.level().getGameRules().getBoolean(RULE_DEATHGRAVE)
+				&& !player.level().isOutsideBuildHeight(player.blockPosition().getY()))
+            summonGrave(player, event.getSource());
+
+		if (vindicationVsKiller && event.getSource().getEntity() instanceof Mob killer && !killer.getPersistentData().contains(KILLED_PLAYER)) {
+			if (killer.isRemoved() || killer.isDeadOrDying() || killer.getType().is(KILLER_BLACKLIST))
+				return;
+			ScheduledTasks.schedule(new ScheduledTickTask(1) {
+				@Override
+				public void run() {
+					killer.setPersistenceRequired();
+					double experienceMultiplier = 5d;
+					if (killer.getPersistentData().contains(ILStrings.Tags.EXPERIENCE_MULTIPLIER))
+						experienceMultiplier *= killer.getPersistentData().getDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER);
+					killer.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, experienceMultiplier);
+					killer.getPersistentData().putUUID(KILLED_PLAYER, player.getUUID());
+					killer.setCustomName(Component.translatable(PLAYER_KILLER_LANG, player.getGameProfile().getName(), killer.getName()));
+				}
+			});
+		}
 	}
 
 	public static void breakOldGrave(ServerPlayer player) {
@@ -185,23 +202,6 @@ public class Death extends Feature {
 		int chunkX = SectionPos.blockToSectionCoord(pos.getX());
 		int chunkZ = SectionPos.blockToSectionCoord(pos.getZ());
 		((ServerLevel)player.level()).setChunkForced(chunkX, chunkZ, true);
-
-		if (vindicationVsKiller && source.getEntity() instanceof Mob killer && !killer.getPersistentData().contains(KILLED_PLAYER)) {
-			if (killer.isRemoved() || killer.isDeadOrDying() || killer.getType().is(KILLER_BLACKLIST))
-				return;
-			ScheduledTasks.schedule(new ScheduledTickTask(1) {
-				@Override
-				public void run() {
-					killer.setPersistenceRequired();
-					double experienceMultiplier = 5d;
-					if (killer.getPersistentData().contains(ILStrings.Tags.EXPERIENCE_MULTIPLIER))
-						experienceMultiplier *= killer.getPersistentData().getDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER);
-					killer.getPersistentData().putDouble(ILStrings.Tags.EXPERIENCE_MULTIPLIER, experienceMultiplier);
-					killer.getPersistentData().putUUID(KILLED_PLAYER, player.getUUID());
-					killer.setCustomName(Component.translatable(PLAYER_KILLER_LANG, player.getGameProfile().getName()));
-				}
-			});
-		}
 	}
 
 	@SubscribeEvent

@@ -8,6 +8,9 @@
     * Nosh: foods that heal instantly half a heart or more
     * Meal: foods that heal overtime, 4 or fewer hearts
     * Feast: foods that heal overtime, more than 4 hearts
+* Death
+  * Killer's names now include the original mob's name
+  * Fixed vindication vs killer not working if graves were disabled or keepInventory was enabled
 
 ## 3.15.2
 * Fixed not being able to apply books to items if Allow Merging Items was false
