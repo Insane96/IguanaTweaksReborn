@@ -8,12 +8,9 @@ import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerDa
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerDataImpl;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
 import insane96mcp.iguanatweaksreborn.utils.ITRLogHelper;
-import insane96mcp.insanelib.base.Feature;
-import insane96mcp.insanelib.base.JsonFeature;
-import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.*;
 import insane96mcp.insanelib.base.config.Config;
-import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.data.IdTagValue;
 import net.minecraft.ChatFormatting;

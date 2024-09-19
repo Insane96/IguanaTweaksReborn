@@ -3,9 +3,9 @@ package insane96mcp.iguanatweaksreborn.module.client;
 import insane96mcp.iguanatweaksreborn.module.ClientModules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
-import insane96mcp.insanelib.base.config.LoadFeature;
 
 @Label(name = "Misc", description = "Misc client side changes")
 @LoadFeature(module = ClientModules.Ids.CLIENT)

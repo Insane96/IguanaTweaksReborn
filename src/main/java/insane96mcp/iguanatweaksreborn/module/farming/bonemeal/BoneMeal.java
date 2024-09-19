@@ -10,9 +10,9 @@ import insane96mcp.iguanatweaksreborn.module.mining.blockdata.BlockDataReloadLis
 import insane96mcp.iguanatweaksreborn.setup.registry.SimpleBlockWithItem;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
-import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.base.config.MinMax;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

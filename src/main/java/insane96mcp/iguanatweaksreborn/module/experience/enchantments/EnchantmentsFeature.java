@@ -16,12 +16,9 @@ import insane96mcp.iguanatweaksreborn.module.experience.enchantments.integration
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatistics;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
-import insane96mcp.insanelib.base.Feature;
-import insane96mcp.insanelib.base.JsonFeature;
-import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.Module;
+import insane96mcp.insanelib.base.*;
 import insane96mcp.insanelib.base.config.Config;
-import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.data.IdTagValue;
 import insane96mcp.insanelib.util.MathHelper;

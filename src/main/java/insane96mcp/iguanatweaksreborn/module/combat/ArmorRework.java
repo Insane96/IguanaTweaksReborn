@@ -5,9 +5,9 @@ import com.ezylang.evalex.data.EvaluationValue;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
+import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
-import insane96mcp.insanelib.base.config.LoadFeature;
 import insane96mcp.insanelib.util.LogHelper;
 
 @Label(name = "Armor Rework", description = "Change armor and toughness formula")
