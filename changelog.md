@@ -11,6 +11,7 @@
 * Death
   * Killer's names now include the original mob's name
   * Fixed vindication vs killer not working if graves were disabled or keepInventory was enabled
+* Fixed missing death.attack.collideWithWall.player
 
 ## 3.15.2
 * Fixed not being able to apply books to items if Allow Merging Items was false
