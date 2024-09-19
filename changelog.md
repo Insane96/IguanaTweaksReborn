@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed not being able to apply books to items if Allow Merging Items was false
+
 ## 3.15.1
 * Requires InsaneLib 1.15.0
 * Serene Seasons missing no longer crashes the game

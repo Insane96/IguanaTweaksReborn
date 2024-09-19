@@ -191,7 +191,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 				this.repairItemCountCost = repairItemCountCost;
 			}
 			//Else it's merging items
-			else if (Anvils.allowMergingItems){
+			else {
 				if ((!isEnchantedBook && (!resultStack.is(right.getItem())
 						|| !resultStack.isDamageableItem()))
 						//If unbreakable items is enabled then I cannot use broken items to repair
@@ -201,7 +201,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 					return;
 				}
 
-				if (resultStack.isDamageableItem() && !isEnchantedBook) {
+				if (resultStack.isDamageableItem() && !isEnchantedBook && Anvils.allowMergingItems) {
 					int leftDurabilityLeft = left.getMaxDamage() - left.getDamageValue();
 					int rightDurabilityLeft = right.getMaxDamage() - right.getDamageValue();
 					int rightDurabilityLeftPlusBonus = rightDurabilityLeft + resultStack.getMaxDamage() * Anvils.getMergingRepairBonus() / 100;
@@ -282,11 +282,6 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
 					this.cost.set(0);
 					return;
 				}
-			}
-			else {
-				this.resultSlots.setItem(0, ItemStack.EMPTY);
-				this.cost.set(0);
-				return;
 			}
 		}
 
