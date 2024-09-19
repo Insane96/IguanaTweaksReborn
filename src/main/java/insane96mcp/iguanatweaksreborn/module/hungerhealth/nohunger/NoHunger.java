@@ -74,14 +74,14 @@ public class NoHunger extends Feature {
     @Label(name = "Passive Health Regen.Regen Speed", description = "Min represents how many ticks the regeneration of 1 HP takes when health is 100%, Max how many ticks when health is 0%")
     public static MinMax passiveRegenerationTime = new MinMax(120, 3600);
     @Config(min = 0d)
-    @Label(name = "Food Heal.Over Time", description = "The formula to calculate the health regenerated when eating a food. Leave empty to disable. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
+    @Label(name = "Food Heal.Over Time", description = "The formula to calculate the health regenerated overtime when eating food. Leave empty to disable. Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
     public static String healOverTime = "(hunger^1.37) * 0.5";
     @Config
     @Label(name = "Food Heal.Over time Strength", description = "How much HP does food regen each second? Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html")
     public static String healOverTimeStrength = "MAX(0.15, 5 * saturation_modifier * (1 / hunger))";
     @Config(min = 0d)
     @Label(name = "Food Heal.Instant Heal", description = "The formula to calculate the health restored instantly when eating. Leave empty to disable. To have the same effect as pre-Beta 1.8 food just use \"hunger\". Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
-    public static String instantHeal = "(hunger^1.3) * 0.35";
+    public static String instantHeal = "0.5 * ROUND((hunger^1.3) * 0.35, 1) / 0.5";
     @Config(min = 0d)
     @Label(name = "Food Heal.Saturation threshold", description = "Foods below this saturation will instantly heal, foods above this threshold will have overtime heal.")
     public static Double instantHealSaturationThreshold = 4d;
@@ -438,22 +438,23 @@ public class NoHunger extends Feature {
         ChatFormatting color = FoodDrinks.isRawFood(event.getItemStack().getItem()) ? ChatFormatting.DARK_RED : ChatFormatting.GRAY;
         MutableComponent component = null;
         if (Utils.getFoodSaturationRestored(food) < instantHealSaturationThreshold && doesHealInstantly()) {
+            boolean isRawFood = FoodDrinks.isRawFood(event.getItemStack().getItem());
+            float heal = getInstantHealAmount(food, isRawFood);
             if (mc.options.advancedItemTooltips) {
-                boolean isRawFood = FoodDrinks.isRawFood(event.getItemStack().getItem());
                 //noinspection ConstantConditions
-                float heal = getInstantHealAmount(food, isRawFood);
                 component = Component.literal(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal))
                         .append(" ")
                         .append(Component.translatable(HEALTH_LANG));
             }
-            else {
+            else if (heal >= 1)
+                component = Component.translatable("iguanatweaksreborn.tooltip.nosh");
+            else
                 component = Component.translatable("iguanatweaksreborn.tooltip.snack");
-            }
         }
         if (Utils.getFoodSaturationRestored(food) >= instantHealSaturationThreshold && doesHealOverTime()) {
+            //noinspection ConstantConditions
+            float heal = Utils.computeFoodFormula(food, healOverTime);
             if (mc.options.advancedItemTooltips) {
-                //noinspection ConstantConditions
-                float heal = Utils.computeFoodFormula(food, healOverTime);
                 //Half heart per second by default
                 float strength = Utils.computeFoodFormula(food, healOverTimeStrength);
                 component = Component.literal(InsaneLib.ONE_DECIMAL_FORMATTER.format(heal))
@@ -466,8 +467,8 @@ public class NoHunger extends Feature {
             }
             else {
                 component = Component.translatable("iguanatweaksreborn.tooltip.meal");
-                if (Utils.computeFoodFormula(food, healOverTime) > 8)
-                    component.withStyle(ChatFormatting.BOLD);
+                if (heal > 8)
+                    component = Component.translatable("iguanatweaksreborn.tooltip.feast");
             }
         }
         if (component != null)

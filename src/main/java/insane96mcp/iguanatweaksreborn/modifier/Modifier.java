@@ -58,7 +58,7 @@ public class Modifier {
             ResourceLocation modifierId = ResourceLocation.tryParse(GsonHelper.getAsString(jObjectModifier, "id"));
             Type modifierType = Modifiers.MODIFIERS.get(modifierId);
             if (modifierType == null) {
-                IguanaTweaksReborn.LOGGER.error("modifier %s does not exist. Skipping".formatted(modifierId));
+                IguanaTweaksReborn.LOGGER.warn("modifier %s does not exist. Skipping".formatted(modifierId));
                 continue;
             }
             modifiers.add(context.deserialize(jObjectModifier, modifierType));

@@ -1,5 +1,14 @@
 # Changelog
 
+## Upcoming
+* No hunger
+  * Heal from foods is now rounded to the nearest 0.5 (e.g. food like beetroots now always heal half a heart every 2 eaten)
+  * Changed food descriptions as follows (was Snack, Meal and **Meal**)
+    * Snack: foods that heal instantly, less than half a heart
+    * Nosh: foods that heal instantly half a heart or more
+    * Meal: foods that heal overtime, 4 or fewer hearts
+    * Feast: foods that heal overtime, more than 4 hearts
+
 ## 3.15.2
 * Fixed not being able to apply books to items if Allow Merging Items was false
 
