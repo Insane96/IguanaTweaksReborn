@@ -6,6 +6,10 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
+import net.minecraft.client.CameraType;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Misc", description = "Misc client side changes")
 @LoadFeature(module = ClientModules.Ids.CLIENT)
@@ -31,6 +35,10 @@ public class Misc extends Feature {
     @Label(name = "Red block outline with wrong tool", description = "If true, the outline around blocks will be red if the tool in hand will make drops not ... drop.")
     public static Boolean redBlockOutlineWithWrongTool = true;
 
+    @Config
+    @Label(name = "Thrid person on death", description = "If true, when you die, you switch to third person camera.")
+    public static Boolean thirdPersonOnDeath = true;
+
     public Misc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
@@ -50,8 +58,26 @@ public class Misc extends Feature {
     }
 
     public static float getRedOutlineAmount(float original) {
-        if (!isEnabled(Misc.class))
+        if (!isEnabled(Misc.class) || !redBlockOutlineWithWrongTool)
             return original;
         return 0.42f;
+    }
+
+    public static boolean dead = false;
+    public static void onDeath() {
+        if (!Feature.isEnabled(Misc.class)
+                || !thirdPersonOnDeath)
+            return;
+
+        CameraType cameratype = Minecraft.getInstance().options.getCameraType();
+        if (cameratype != CameraType.FIRST_PERSON)
+            return;
+        Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
+        dead = true;
+    }
+
+    @SubscribeEvent
+    public void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
+
     }
 }
