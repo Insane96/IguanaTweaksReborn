@@ -8,6 +8,12 @@
     * Nosh: foods that heal instantly half a heart or more
     * Meal: foods that heal overtime, 4 or fewer hearts
     * Feast: foods that heal overtime, more than 4 hearts
+* Armor re-balance
+  * Each armor piece now gives different regenerating absorption values (like armor)
+  * Knockback resistance has been doubled for every armor
+  * Golden armor no longer slows down
+  * Armor points have been rounded to the nearest 0.5
+  * Fixed chainmail helmet having 1 less armor than intended
 * Death
   * Killer's names now include the original mob's name
   * Fixed vindication vs killer not working if graves were disabled or keepInventory was enabled

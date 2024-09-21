@@ -1,7 +1,8 @@
 {
 	"item": "minecraft:leather_leggings",
 	"durability": 60,
-	"armor": 1.2,
+	"armor": 1,
+	"regenerating_absorption": 1.75,
 	"modifiers": [
 
 	]

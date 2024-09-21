@@ -1,7 +1,8 @@
 {
 	"item": "minecraft:leather_chestplate",
 	"durability": 64,
-	"armor": 1.4,
+	"armor": 1.5,
+	"regenerating_absorption": 2,
 	"modifiers": [
 
 	]

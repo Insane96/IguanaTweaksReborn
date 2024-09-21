@@ -1,7 +1,8 @@
 {
 	"item": "minecraft:iron_leggings",
 	"durability": 105,
-	"armor": 2.4,
+	"armor": 2.5,
+	"regenerating_absorption": 1.25,
 	"modifiers": [
 
 	]

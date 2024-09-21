@@ -1,7 +1,8 @@
 {
 	"item": "minecraft:leather_helmet",
 	"durability": 52,
-	"armor": 0.8,
+	"armor": 1,
+	"regenerating_absorption": 1.25,
 	"modifiers": [
 
 	]

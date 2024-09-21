@@ -1,7 +1,8 @@
 {
 	"item": "minecraft:iron_boots",
 	"durability": 84,
-	"armor": 1.2,
+	"armor": 1,
+	"regenerating_absorption": 0.5,
 	"modifiers": [
 
 	]
