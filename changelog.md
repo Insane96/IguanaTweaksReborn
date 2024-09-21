@@ -1,5 +1,10 @@
 # Changelog
 
+* Check for Y level reached by the falling trees
+
+## Upcoming
+* Heavily reduced silverfish veins
+
 ## 3.15.3
 * No hunger
   * Heal from foods is now rounded to the nearest 0.5 (e.g. food like beetroots now always heal half a heart every 2 eaten)
