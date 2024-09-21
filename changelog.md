@@ -20,7 +20,7 @@
 * Client Misc: Added 'Third Person Death'
   * When you die, your camera will switch to third person
   * The death screen has been changed to hide the buttons instead of having them disabled
-  * The buttons are hidden for 2.5 seconds
+  * The buttons are hidden for 2 seconds
 * Fixed missing death.attack.collideWithWall.player
 
 ## 3.15.2

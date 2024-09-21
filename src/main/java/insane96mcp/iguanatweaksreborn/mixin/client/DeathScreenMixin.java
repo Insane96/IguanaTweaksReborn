@@ -24,6 +24,6 @@ public abstract class DeathScreenMixin {
 		if (!Feature.isEnabled(Misc.class)
 				|| !Misc.thirdPersonOnDeath)
 			return original;
-		return 50;
+		return 40;
 	}
 }
