@@ -30,6 +30,10 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
     public static final TagKey<Block> OBSIDIANS = create("obsidians");
     public static final TagKey<Block> GRASS_BLOCKS = create("grass_blocks");
     public static final TagKey<Block> TALL_GRASS = create("tall_grass");
+    public static final TagKey<Block> AZALEA_LEAVES = create("azalea_leaves");
+    public static final TagKey<Block> OAK_LOG_LEAVES = create("oak_log_leaves");
+    public static final TagKey<Block> MAPLE_LEAVES = create("maple_leaves");
+    public static final TagKey<Block> TRUMPET_LEAVES = create("trumpet_leaves");
 
     public ITRBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String modId, @Nullable ExistingFileHelper existingFileHelper){
         super(output, lookupProvider, modId, existingFileHelper);
@@ -71,6 +75,25 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
 
         tag(GRASS_BLOCKS)
                 .add(Blocks.GRASS_BLOCK, Blocks.PODZOL, Blocks.MYCELIUM);
+
+        tag(AZALEA_LEAVES)
+                .add(Blocks.AZALEA_LEAVES, Blocks.FLOWERING_AZALEA_LEAVES);
+        tag(OAK_LOG_LEAVES)
+                .add(Blocks.OAK_LEAVES)
+                .addTag(AZALEA_LEAVES);
+
+        tag(TRUMPET_LEAVES)
+                .addOptional(new ResourceLocation("quark:blue_blossom_leaves"))
+                .addOptional(new ResourceLocation("quark:lavender_blossom_leaves"))
+                .addOptional(new ResourceLocation("quark:orange_blossom_leaves"))
+                .addOptional(new ResourceLocation("quark:yellow_blossom_leaves"))
+                .addOptional(new ResourceLocation("quark:red_blossom_leaves"));
+
+        tag(MAPLE_LEAVES)
+                .addOptional(new ResourceLocation("autumnity:maple_leaves"))
+                .addOptional(new ResourceLocation("autumnity:yellow_maple_leaves"))
+                .addOptional(new ResourceLocation("autumnity:orange_maple_leaves"))
+                .addOptional(new ResourceLocation("autumnity:red_maple_leaves"));
 
 		//noinspection unchecked
 		tag(Tweaks.BREAK_ON_FALL)

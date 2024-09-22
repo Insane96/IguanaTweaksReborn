@@ -1,9 +1,14 @@
 # Changelog
 
-* Check for Y level reached by the falling trees
-
 ## Upcoming
 * Heavily reduced silverfish veins
+* Timber Trees 
+  * Now has a `tree_info.json` config, for more control over logs and leaves (e.g. azalea trees have two leaves blocks)
+  * No longer works if the max Y level is lower than the broken block + 3
+  * Falling logs now deal max 20 damage and falling leaves max 4
+  * Increased performance
+  * Still not perfect for big trees like blossoms from Quark
+* Falling blocks can now stack up to 8 blocks (instead of 4)
 
 ## 3.15.3
 * No hunger

@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "autumnity:maple_leaves",
+      "required": false
+    },
+    {
+      "id": "autumnity:yellow_maple_leaves",
+      "required": false
+    },
+    {
+      "id": "autumnity:orange_maple_leaves",
+      "required": false
+    },
+    {
+      "id": "autumnity:red_maple_leaves",
+      "required": false
+    }
+  ]
+}

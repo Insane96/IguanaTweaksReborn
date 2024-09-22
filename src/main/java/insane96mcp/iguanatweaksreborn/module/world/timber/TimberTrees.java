@@ -1,18 +1,23 @@
 package insane96mcp.iguanatweaksreborn.module.world.timber;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.entity.ITRFallingBlockEntity;
 import insane96mcp.iguanatweaksreborn.module.Modules;
-import insane96mcp.insanelib.base.Feature;
+import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.data.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
+import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Display;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.Level;
@@ -26,26 +31,31 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Label(name = "Timber Trees", description = "Trees fall when cut.")
 @LoadFeature(module = Modules.Ids.WORLD)
-public class TimberTrees extends Feature {
+public class TimberTrees extends JsonFeature {
 
     public static final TagKey<Block> TIMBER_TRUNKS = ITRBlockTagsProvider.create("timber_trunks");
 
-    /*public static final ArrayList<LogsLeavesPair> LOGS_LEAVES_PAIRS_DEFAULT = new ArrayList<>(List.of(
-            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:oak_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:oak_leaves")),
-            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:birch_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:birch_leaves")),
-            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:spruce_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:spruce_leaves")),
-            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:jungle_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:jungle_leaves")),
-            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:dark_oak_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:dark_oak_leaves")),
-            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:acacia_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:acacia_leaves")),
-            new LogsLeavesPair(new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:mangrove_log"), new IdTagMatcher(IdTagMatcher.Type.ID, "minecraft:mangrove_leaves"))
+    public static final ArrayList<TreeInfo> TREE_INFOS_DEFAULT = new ArrayList<>(List.of(
+            new TreeInfo.Builder().log(IdTagMatcher.newId("minecraft:oak_log")).leaves(IdTagMatcher.newTag("iguanatweaksreborn:oak_log_leaves")).build(),
+            new TreeInfo.Builder().log(IdTagMatcher.newId("minecraft:spruce_log")).leaves(IdTagMatcher.newId("minecraft:spruce_leaves")).build(),
+            new TreeInfo.Builder().log(IdTagMatcher.newId("minecraft:birch_log")).leaves(IdTagMatcher.newId("minecraft:birch_leaves")).build(),
+            new TreeInfo.Builder().log(IdTagMatcher.newId("minecraft:jungle_log")).leaves(IdTagMatcher.newId("minecraft:jungle_leaves")).build(),
+            new TreeInfo.Builder().log(IdTagMatcher.newId("minecraft:dark_oak_log")).leaves(IdTagMatcher.newId("minecraft:dark_oak_leaves")).build(),
+            new TreeInfo.Builder().log(IdTagMatcher.newId("minecraft:acacia_log")).leaves(IdTagMatcher.newId("minecraft:acacia_leaves")).build(),
+            new TreeInfo.Builder().log(IdTagMatcher.newId("minecraft:cherry_log")).leaves(IdTagMatcher.newId("minecraft:cherry_leaves")).build(),
+            new TreeInfo.Builder().log(IdTagMatcher.newId("minecraft:mangrove_log")).leaves(IdTagMatcher.newId("minecraft:mangrove_leaves")).build(),
+            new TreeInfo.Builder().log(IdTagMatcher.newId("quark:blossom_log")).leaves(IdTagMatcher.newTag("iguanatweaksreborn:trumpet_leaves")).logsSidewaysRatio(0.33f).maxDistanceFromLogs(12).build(),
+            new TreeInfo.Builder().log(IdTagMatcher.newId("quark:azalea_log")).leaves(IdTagMatcher.newTag("iguanatweaksreborn:azalea_leaves")).build(),
+            new TreeInfo.Builder().log(IdTagMatcher.newId("autumnity:maple_log")).leaves(IdTagMatcher.newTag("iguanatweaksreborn:maple_leaves")).build()
     ));
-    public static final ArrayList<LogsLeavesPair> logsLeavesPairs = new ArrayList<>();*/
+    public static final ArrayList<TreeInfo> treeInfos = new ArrayList<>();
 
     @Config
     @Label(name = "Requires axe")
@@ -53,7 +63,12 @@ public class TimberTrees extends Feature {
 
     public TimberTrees(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
-        //JSON_CONFIGS.add(new SRFeature.JsonConfig<>("logs_leaves_pairs.json", logsLeavesPairs, LOGS_LEAVES_PAIRS_DEFAULT, LogsLeavesPair.LIST_TYPE));
+        JSON_CONFIGS.add(new JsonConfig<>("tree_info.json", treeInfos, TREE_INFOS_DEFAULT, TreeInfo.LIST_TYPE));
+    }
+
+    @Override
+    public String getModConfigFolder() {
+        return IguanaTweaksReborn.CONFIG_FOLDER;
     }
 
     @SubscribeEvent
@@ -73,8 +88,6 @@ public class TimberTrees extends Feature {
             return;
         List<BlockPos> blocks = getTreeBlocks(brokenPos, event.getState(), event.getLevel());
         Direction direction = event.getPlayer().getDirection();
-        /*if (event.getLevel().getRandom().nextDouble() < 0.05d)
-            direction = direction.getOpposite();*/
         for (BlockPos pos : blocks) {
             if (pos.equals(brokenPos))
                 continue;
@@ -94,9 +107,9 @@ public class TimberTrees extends Feature {
             ITRFallingBlockEntity fallingBlock = new ITRFallingBlockEntity((Level) event.getLevel(), fallingBlockPos, state, direction);
             fallingBlock.move(MoverType.SELF, new Vec3(0, 0.1d * horizontalDistance, 0));
             if (state.is(TIMBER_TRUNKS))
-                fallingBlock.setHurtsEntities(0.5f, 1024);
+                fallingBlock.setHurtsEntities(0.5f, 20);
             else
-                fallingBlock.setHurtsEntities(0.1f, 1024);
+                fallingBlock.setHurtsEntities(0.1f, 4);
             event.getLevel().addFreshEntity(fallingBlock);
             event.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         }
@@ -104,11 +117,13 @@ public class TimberTrees extends Feature {
 
     private static List<BlockPos> getTreeBlocks(BlockPos pos, BlockState state, LevelAccessor level) {
         List<BlockPos> blocks = new ArrayList<>();
-        Block foundLeaves = null;
+        boolean foundLeaves = false;
         int checks = 0;
         int logs = 0;
         int sidewaysLogs = 0;
-        List<BlockPos> posToCheck = new ArrayList<>();
+        int maxY = pos.getY();
+        //Set<BlockPos> visited = new HashSet<>();
+        Queue<BlockPos> posToCheck = new ArrayDeque<>(); //Queue seem to be faster than ArrayList
         posToCheck.add(pos.above());
         BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos().set(pos);
         BlockState stateToCheck = level.getBlockState(pos.above());
@@ -131,9 +146,12 @@ public class TimberTrees extends Feature {
         posToCheck.add(blockPos.immutable());
         if (stateToCheck.is(state.getBlock()))
             logs++;
-        //AtomicReference<Block> leaves = new AtomicReference<>();
-        //logsLeavesPairs.stream().filter(logsLeavesPair -> logsLeavesPair.log.matchesBlock(state.getBlock())).findFirst().ifPresent(pair -> leaves.set(ForgeRegistries.BLOCKS.getValue(pair.leaves.location)));
-        do {
+        IdTagMatcher validLeaves = null;
+        Optional<TreeInfo> treeInfo = treeInfos.stream().filter(ti -> ti.log.matchesBlock(state.getBlock())).findFirst();
+        if (treeInfo.isPresent())
+            validLeaves = treeInfo.get().leaves;
+        int i = 0;
+        while (checks < 1536 && !posToCheck.isEmpty()) {
             List<BlockPos> posToCheckTmp = new ArrayList<>(posToCheck);
             posToCheck.clear();
             for (BlockPos p : posToCheckTmp) {
@@ -144,33 +162,58 @@ public class TimberTrees extends Feature {
                     stateToCheck = level.getBlockState(blockPos);
                     if (stateToCheck.isAir())
                         continue;
+                    //if (visited.contains(positionToLoop))
+                        //continue;
+                    //visited.add(positionToLoop);
                     BlockPos posImmutable = blockPos.immutable();
-                    boolean isValidLeaves = stateToCheck.is(BlockTags.LEAVES) && !stateToCheck.getValue(LeavesBlock.PERSISTENT) && (foundLeaves == null || stateToCheck.is(foundLeaves));
+                    if (blocks.contains(posImmutable))
+                        continue;
+                    boolean isLeaves = stateToCheck.is(BlockTags.LEAVES);
+                    boolean isValidLeaves = validLeaves != null && validLeaves.matchesBlock(stateToCheck.getBlock()) && !stateToCheck.getValue(LeavesBlock.PERSISTENT);
                     boolean isSameLog = stateToCheck.is(state.getBlock());
-                    boolean isInDistance = xzDistance(posImmutable, pos) <= 8;
-                    boolean isCurrLeaves = currState.is(BlockTags.LEAVES) && !currState.getValue(LeavesBlock.PERSISTENT);
-                    boolean isCorrectLeavesDistance = isValidLeaves && isCurrLeaves && (stateToCheck.getValue(LeavesBlock.DISTANCE) > currState.getValue(LeavesBlock.DISTANCE) || stateToCheck.getValue(LeavesBlock.DISTANCE) == 7 /*|| (stateToCheck.getValue(LeavesBlock.DISTANCE).equals(currState.getValue(LeavesBlock.DISTANCE)) && level.getRandom().nextBoolean())*/);
-                    if (isValidLeaves) {
-                        foundLeaves = stateToCheck.getBlock();
+                    boolean isInDistance = xzDistance(posImmutable, pos) <= treeInfo.map(ti -> ti.maxDistanceFromLogs).orElse(8);
+                    boolean isCurrLeaves = currState.is(BlockTags.LEAVES);
+                    boolean isCorrectLeavesDistance = isLeaves && isCurrLeaves && (stateToCheck.getValue(LeavesBlock.DISTANCE) > currState.getValue(LeavesBlock.DISTANCE) || stateToCheck.getValue(LeavesBlock.DISTANCE) == 7);
+                    if (isLeaves && validLeaves == null) {
+                        validLeaves = IdTagMatcher.newId(ForgeRegistries.BLOCKS.getKey(stateToCheck.getBlock()).toString());
+                        isValidLeaves = true;
                     }
-                    if (!blocks.contains(posImmutable) && (isSameLog || isValidLeaves) && isInDistance && (!isValidLeaves || !isCurrLeaves || isCorrectLeavesDistance)) {
+                    if ((isSameLog || isValidLeaves) && isInDistance && (!isLeaves || !isCurrLeaves || isCorrectLeavesDistance)) {
                         blocks.add(posImmutable);
+                        //level.removeBlock(posImmutable, false);
                         posToCheck.add(posImmutable);
+                        if (!FMLLoader.isProduction()) {
+                            Display.TextDisplay display = EntityType.TEXT_DISPLAY.create((Level) level);
+                            display.setPos(posImmutable.getCenter());
+                            display.setText(Component.literal(i++ + ""));
+                            level.addFreshEntity(display);
+                        }
+                        if (isValidLeaves)
+                            foundLeaves = true;
                         if (isSameLog) {
                             if (stateToCheck.getValue(BlockStateProperties.AXIS) == Direction.Axis.Y)
                                 logs++;
                             else
                                 sidewaysLogs++;
+
+                            if (posImmutable.getY() > maxY)
+                                maxY = posImmutable.getY();
                         }
                     }
                 }
                 checks++;
             }
-            if (posToCheck.isEmpty() && (foundLeaves == null || logs + sidewaysLogs < 3 || logs < sidewaysLogs / 2)) {
+            float logsSidewaysRatio = sidewaysLogs == 0 ? 999 : (float) logs / sidewaysLogs;
+            if (posToCheck.isEmpty()
+                    && (!foundLeaves
+                        || logs + sidewaysLogs < treeInfo.map(ti -> ti.minLogs).orElse(3)
+                        || logsSidewaysRatio < treeInfo.map(ti -> ti.logsSidewaysRatio).orElse(0.6f))) {
                 blocks.clear();
                 break;
             }
-        } while (checks < 1000 && !posToCheck.isEmpty());
+        }
+        if (maxY < pos.getY() + 3)
+            blocks.clear();
         return blocks;
     }
 
