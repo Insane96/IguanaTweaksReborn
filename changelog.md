@@ -10,6 +10,7 @@
   * Increased performance
   * Still not perfect for big trees like blossoms from Quark
 * Falling blocks can now stack up to 8 blocks (instead of 4)
+* Fixed crash with LivestockData when Serene Seasons was not present
 
 ## 3.15.3
 * No hunger

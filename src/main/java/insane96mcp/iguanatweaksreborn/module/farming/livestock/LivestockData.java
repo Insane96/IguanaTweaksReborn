@@ -10,6 +10,7 @@ import insane96mcp.insanelib.data.IdTagMatcher;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraftforge.fml.ModList;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -47,7 +48,10 @@ public class LivestockData {
 	public float getLivingDays(LivingEntity entity) {
 		if (this.livingDays == null)
 			return 0;
-		return (this.livingDays + ((entity.getRandom().nextFloat() * this.livingDaysFluctuation * 2f) - this.livingDaysFluctuation)) * Seasons.getDayNightCycleModifier();
+		float livingDays = this.livingDays + ((entity.getRandom().nextFloat() * this.livingDaysFluctuation * 2f) - this.livingDaysFluctuation);
+		if (ModList.get().isLoaded("sereneseasons"))
+			livingDays *= Seasons.getDayNightCycleModifier();
+		return livingDays;
 	}
 
 	public static final java.lang.reflect.Type LIST_TYPE = new TypeToken<ArrayList<LivestockData>>(){}.getType();
