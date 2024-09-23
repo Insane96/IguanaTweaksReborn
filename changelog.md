@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.15.4
 * Heavily reduced silverfish veins
 * Added Client > Misc > `Remove Score`
 * Timber Trees 
