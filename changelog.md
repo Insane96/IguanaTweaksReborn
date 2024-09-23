@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Heavily reduced silverfish veins
+* Added Client > Misc > `Remove Score`
 * Timber Trees 
   * Now has a `tree_info.json` config, for more control over logs and leaves (e.g. azalea trees have two leaves blocks)
   * No longer works if the max Y level is lower than the broken block + 3

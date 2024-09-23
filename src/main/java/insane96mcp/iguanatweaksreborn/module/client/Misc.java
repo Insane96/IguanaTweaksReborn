@@ -39,6 +39,10 @@ public class Misc extends Feature {
     @Label(name = "Thrid person on death", description = "If true, when you die, you switch to third person camera.")
     public static Boolean thirdPersonOnDeath = true;
 
+    @Config
+    @Label(name = "Remove score", description = "Why is that still a thing?.")
+    public static Boolean removeScore = true;
+
     public Misc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
