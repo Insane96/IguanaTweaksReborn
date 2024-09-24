@@ -110,6 +110,10 @@ public class Tweaks extends Feature {
     @Label(name = "Collide with walls damage", description = "If set higher than 0 it will enable damage when colliding with walls at a high speed (e.g. with explosions or knockback). Higher = more damage")
     public static Double collideWithWallsDamage = 2.5d;
 
+    @Config
+    @Label(name = "Ding on mob hit at distance", description = "Plays a sound effect when a mob is hit at least from this distance.")
+    public static Integer dingDistance = 40;
+
     public Tweaks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }

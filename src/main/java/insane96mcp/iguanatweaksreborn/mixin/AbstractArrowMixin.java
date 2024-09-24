@@ -5,14 +5,19 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import insane96mcp.iguanatweaksreborn.module.combat.stats.Stats;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
+import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.insanelib.base.Feature;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
@@ -69,6 +74,13 @@ public abstract class AbstractArrowMixin extends Projectile {
             newDamage += this.random.nextFloat() * (newDamage / 2 + 2);
         }
         return newDamage;
+    }
+
+    @Inject(method = "onHitEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;doPostHurtEffects(Lnet/minecraft/world/entity/LivingEntity;)V", shift = At.Shift.AFTER))
+    public void onHitEntity(EntityHitResult pResult, CallbackInfo ci) {
+        if (!(pResult.getEntity() instanceof Player) && this.getOwner() instanceof ServerPlayer serverPlayer && serverPlayer.distanceToSqr(pResult.getEntity()) >= Tweaks.dingDistance * Tweaks.dingDistance) {
+            serverPlayer.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
+        }
     }
 
     @ModifyExpressionValue(method = "setEnchantmentEffectsFromEntity", at = @At(value = "CONSTANT", args = "doubleValue=0.5", ordinal = 0))
