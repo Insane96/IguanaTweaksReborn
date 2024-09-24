@@ -6,6 +6,12 @@
 * Changed Efficiency and Unbreaking formulas
   * Efficiency bonus: ~~+12/30/60/102/156/222%~~ -> +30% per level 
   * Unbreaking: tool lasts ~~40/115/190/265/340/415%~~ -> 50% per level more
+* Material buffs
+  * Wooden tools durability: 112 -> 118
+  * Iron Tools efficiency: 4 -> 4.5
+  * Gold Tools Efficiency: 8 -> 9
+  * Diamond Tools Efficiency: 3.5 -> 4
+  * Netherite Tools Efficiency: 4 -> 5
 * Falling blocks can now stack up to 6 blocks (instead of 8)
 * Overtime heal now decays 5x slower. It's now configurable
 * Fixed animals always failing to breed
