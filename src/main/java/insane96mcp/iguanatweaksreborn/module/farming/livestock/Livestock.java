@@ -357,12 +357,12 @@ public class Livestock extends Feature {
 		List<Modifier> modifiersToApply = new ArrayList<>();
 		LivestockDataReloadListener.LIVESTOCK_DATA.stream()
 				.filter(data -> data.matches(mob))
-				.forEach(data -> modifiersToApply.addAll(data.breedingCooldownModifiers));
+				.forEach(data -> modifiersToApply.addAll(data.breedingFailChanceModifiers));
 		float failChance = Modifier.applyModifiers(0f, modifiersToApply, mob.level(), mob.blockPosition(), mob);
 		if (failChance <= 0)
 			return;
 
-		if (mob.getRandom().nextFloat() < failChance)
+		if (failChance >= 1f || mob.getRandom().nextFloat() < failChance)
 			event.setCanceled(true);
 	}
 

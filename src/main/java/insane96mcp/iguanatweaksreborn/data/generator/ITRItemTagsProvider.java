@@ -11,6 +11,7 @@ import insane96mcp.iguanatweaksreborn.module.items.StackSizes;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStats;
 import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
+import insane96mcp.iguanatweaksreborn.module.world.CyanFlower;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.Spawners;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -41,6 +42,8 @@ public class ITRItemTagsProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         //Vanilla
+        tag(ItemTags.FLOWERS)
+                .add(CyanFlower.FLOWER.item().get());
 
         //ITR
         tag(StackSizes.NO_STACK_SIZE_CHANGES)
