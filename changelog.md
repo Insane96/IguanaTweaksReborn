@@ -3,6 +3,7 @@
 ## Upcoming
 * Timber Trees now breaks some leaves before falling (35% for Quark's Trumpet trees, 10% the others)
 * Falling blocks can now stack up to 6 blocks (instead of 8)
+* Overtime heal now decays 5x slower. It's now configurable
 * Fixed animals always failing to breed
 
 ## 3.15.4

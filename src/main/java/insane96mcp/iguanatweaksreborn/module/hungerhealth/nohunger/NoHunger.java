@@ -79,6 +79,9 @@ public class NoHunger extends Feature {
     @Config
     @Label(name = "Food Heal.Over time Strength", description = "How much HP does food regen each second? Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html")
     public static String healOverTimeStrength = "MAX(0.15, 5 * saturation_modifier * (1 / hunger))";
+    @Config
+    @Label(name = "Food Heal.Over time Decay", description = "Over Time Heal will be consumed at the rate of exhaustion multiplied by this")
+    public static Double healOverTimeDecay = 0.02d;
     @Config(min = 0d)
     @Label(name = "Food Heal.Instant Heal", description = "The formula to calculate the health restored instantly when eating. Leave empty to disable. To have the same effect as pre-Beta 1.8 food just use \"hunger\". Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
     public static String instantHeal = "0.5 * ROUND((hunger^1.3) * 0.35, 1) / 0.5";
@@ -182,7 +185,8 @@ public class NoHunger extends Feature {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onFoodExhaustion(PlayerExhaustionEvent event) {
         if (!isEnabled(NoHunger.class)
-                || event.getEntity().level().isClientSide)
+                || event.getEntity().level().isClientSide
+                || healOverTimeDecay == 0)
             return;
 
         ServerPlayer player = (ServerPlayer) event.getEntity();
@@ -191,7 +195,7 @@ public class NoHunger extends Feature {
         if (regenLeft <= 0)
             return;
         float regenStrength = getFoodRegenStrength(player);
-        regenLeft -= event.getAmount() * 0.1f;
+        regenLeft -= event.getAmount() * healOverTimeDecay.floatValue();
         setHealOverTime(player, regenLeft, regenStrength);
     }
 
