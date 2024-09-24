@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Timber Trees now breaks some leaves before falling (35% for Quark's Trumpet trees, 10% the others)
+* Falling blocks can now stack up to 6 blocks (instead of 8)
+
 ## 3.15.4
 * Heavily reduced silverfish veins
 * Added Client > Misc > `Remove Score`

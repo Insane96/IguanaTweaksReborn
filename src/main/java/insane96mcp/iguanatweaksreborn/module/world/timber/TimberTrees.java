@@ -13,19 +13,18 @@ import insane96mcp.insanelib.data.IdTagMatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
-import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.Display;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
@@ -34,7 +33,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
 
 @Label(name = "Timber Trees", description = "Trees fall when cut.")
 @LoadFeature(module = Modules.Ids.WORLD)
@@ -51,7 +53,7 @@ public class TimberTrees extends JsonFeature {
             new TreeInfo.Builder().log(IdTagMatcher.newId("minecraft:acacia_log")).leaves(IdTagMatcher.newId("minecraft:acacia_leaves")).build(),
             new TreeInfo.Builder().log(IdTagMatcher.newId("minecraft:cherry_log")).leaves(IdTagMatcher.newId("minecraft:cherry_leaves")).build(),
             new TreeInfo.Builder().log(IdTagMatcher.newId("minecraft:mangrove_log")).leaves(IdTagMatcher.newId("minecraft:mangrove_leaves")).build(),
-            new TreeInfo.Builder().log(IdTagMatcher.newId("quark:blossom_log")).leaves(IdTagMatcher.newTag("iguanatweaksreborn:trumpet_leaves")).logsSidewaysRatio(0.33f).maxDistanceFromLogs(12).build(),
+            new TreeInfo.Builder().log(IdTagMatcher.newId("quark:blossom_log")).leaves(IdTagMatcher.newTag("iguanatweaksreborn:trumpet_leaves")).logsSidewaysRatio(0.3f).maxDistanceFromLogs(15).decayPercentage(0.35f).build(),
             new TreeInfo.Builder().log(IdTagMatcher.newId("quark:azalea_log")).leaves(IdTagMatcher.newTag("iguanatweaksreborn:azalea_leaves")).build(),
             new TreeInfo.Builder().log(IdTagMatcher.newId("autumnity:maple_log")).leaves(IdTagMatcher.newTag("iguanatweaksreborn:maple_leaves")).build()
     ));
@@ -81,13 +83,16 @@ public class TimberTrees extends JsonFeature {
             return;
 
         BlockPos brokenPos = event.getPos();
-        if (event.getLevel().getBlockState(brokenPos.north()).is(event.getState().getBlock())
-                || event.getLevel().getBlockState(brokenPos.south()).is(event.getState().getBlock())
-                || event.getLevel().getBlockState(brokenPos.east()).is(event.getState().getBlock())
-                || event.getLevel().getBlockState(brokenPos.west()).is(event.getState().getBlock()))
+        Level level = (Level) event.getLevel();
+        if (level.getBlockState(brokenPos.north()).is(event.getState().getBlock())
+                || level.getBlockState(brokenPos.south()).is(event.getState().getBlock())
+                || level.getBlockState(brokenPos.east()).is(event.getState().getBlock())
+                || level.getBlockState(brokenPos.west()).is(event.getState().getBlock()))
             return;
-        List<BlockPos> blocks = getTreeBlocks(brokenPos, event.getState(), event.getLevel());
+        TreeInfo treeInfo = treeInfos.stream().filter(ti -> ti.log.matchesBlock(event.getState())).findFirst().orElse(new TreeInfo());
+        List<BlockPos> blocks = getTreeBlocks(brokenPos, event.getState(), level, treeInfo);
         Direction direction = event.getPlayer().getDirection();
+        boolean hasBrokenLeaves = false;
         for (BlockPos pos : blocks) {
             if (pos.equals(brokenPos))
                 continue;
@@ -100,22 +105,32 @@ public class TimberTrees extends JsonFeature {
                 horizontalDistance = relative.getZ();
             horizontalDistance *= direction.getAxisDirection().opposite().getStep();
             BlockPos fallingBlockPos = pos.relative(direction, verticalDistance + horizontalDistance).above(horizontalDistance);
-            BlockState state = event.getLevel().getBlockState(pos);
+            BlockState state = level.getBlockState(pos);
+            if (state.is(BlockTags.LEAVES) && level.getRandom().nextFloat() < treeInfo.decayPercentage) {
+                BlockEntity blockentity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+                Block.dropResources(state, level, pos, blockentity, event.getPlayer(), ItemStack.EMPTY);
+                level.removeBlock(pos, false);
+                if (!hasBrokenLeaves) {
+                    level.playSound(null, pos, state.getSoundType().getBreakSound(), SoundSource.BLOCKS, 1f, 1.0f);
+                    hasBrokenLeaves = true;
+                }
+                continue;
+            }
             if (state.getBlock() instanceof RotatedPillarBlock) {
                 state = rotatePillar(state, direction.getAxis());
             }
-            ITRFallingBlockEntity fallingBlock = new ITRFallingBlockEntity((Level) event.getLevel(), fallingBlockPos, state, direction);
+            ITRFallingBlockEntity fallingBlock = new ITRFallingBlockEntity(level, fallingBlockPos, state, direction);
             fallingBlock.move(MoverType.SELF, new Vec3(0, 0.1d * horizontalDistance, 0));
             if (state.is(TIMBER_TRUNKS))
                 fallingBlock.setHurtsEntities(0.5f, 20);
             else
                 fallingBlock.setHurtsEntities(0.1f, 4);
-            event.getLevel().addFreshEntity(fallingBlock);
-            event.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+            level.addFreshEntity(fallingBlock);
+            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
         }
     }
 
-    private static List<BlockPos> getTreeBlocks(BlockPos pos, BlockState state, LevelAccessor level) {
+    private static List<BlockPos> getTreeBlocks(BlockPos pos, BlockState state, Level level, TreeInfo treeInfo) {
         List<BlockPos> blocks = new ArrayList<>();
         boolean foundLeaves = false;
         int checks = 0;
@@ -147,9 +162,8 @@ public class TimberTrees extends JsonFeature {
         if (stateToCheck.is(state.getBlock()))
             logs++;
         IdTagMatcher validLeaves = null;
-        Optional<TreeInfo> treeInfo = treeInfos.stream().filter(ti -> ti.log.matchesBlock(state.getBlock())).findFirst();
-        if (treeInfo.isPresent())
-            validLeaves = treeInfo.get().leaves;
+        if (treeInfo.leaves != null)
+            validLeaves = treeInfo.leaves;
         int i = 0;
         while (checks < 1536 && !posToCheck.isEmpty()) {
             List<BlockPos> posToCheckTmp = new ArrayList<>(posToCheck);
@@ -171,7 +185,7 @@ public class TimberTrees extends JsonFeature {
                     boolean isLeaves = stateToCheck.is(BlockTags.LEAVES);
                     boolean isValidLeaves = validLeaves != null && validLeaves.matchesBlock(stateToCheck.getBlock()) && !stateToCheck.getValue(LeavesBlock.PERSISTENT);
                     boolean isSameLog = stateToCheck.is(state.getBlock());
-                    boolean isInDistance = xzDistance(posImmutable, pos) <= treeInfo.map(ti -> ti.maxDistanceFromLogs).orElse(8);
+                    boolean isInDistance = xzDistance(posImmutable, pos) <= treeInfo.maxDistanceFromLogs;
                     boolean isCurrLeaves = currState.is(BlockTags.LEAVES);
                     boolean isCorrectLeavesDistance = isLeaves && isCurrLeaves && (stateToCheck.getValue(LeavesBlock.DISTANCE) > currState.getValue(LeavesBlock.DISTANCE) || stateToCheck.getValue(LeavesBlock.DISTANCE) == 7);
                     if (isLeaves && validLeaves == null) {
@@ -183,10 +197,10 @@ public class TimberTrees extends JsonFeature {
                         //level.removeBlock(posImmutable, false);
                         posToCheck.add(posImmutable);
                         if (!FMLLoader.isProduction()) {
-                            Display.TextDisplay display = EntityType.TEXT_DISPLAY.create((Level) level);
-                            display.setPos(posImmutable.getCenter());
-                            display.setText(Component.literal(i++ + ""));
-                            level.addFreshEntity(display);
+                            //Display.TextDisplay display = EntityType.TEXT_DISPLAY.create((Level) level);
+                            //display.setPos(posImmutable.getCenter());
+                            //display.setText(Component.literal(i++ + ""));
+                            //level.addFreshEntity(display);
                         }
                         if (isValidLeaves)
                             foundLeaves = true;
@@ -206,8 +220,8 @@ public class TimberTrees extends JsonFeature {
             float logsSidewaysRatio = sidewaysLogs == 0 ? 999 : (float) logs / sidewaysLogs;
             if (posToCheck.isEmpty()
                     && (!foundLeaves
-                        || logs + sidewaysLogs < treeInfo.map(ti -> ti.minLogs).orElse(3)
-                        || logsSidewaysRatio < treeInfo.map(ti -> ti.logsSidewaysRatio).orElse(0.6f))) {
+                        || logs + sidewaysLogs < treeInfo.minLogs
+                        || logsSidewaysRatio < treeInfo.logsSidewaysRatio)) {
                 blocks.clear();
                 break;
             }

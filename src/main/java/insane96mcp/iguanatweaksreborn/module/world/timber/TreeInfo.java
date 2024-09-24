@@ -22,19 +22,22 @@ public class TreeInfo {
      * Max leaves (manhattan) distance from logs
      */
     public int maxDistanceFromLogs;
+    public float decayPercentage;
 
-    public TreeInfo(IdTagMatcher log, IdTagMatcher leaves, float logsSidewaysRatio, int minLogs, int maxDistanceFromLogs) {
+    public TreeInfo(IdTagMatcher log, IdTagMatcher leaves, float logsSidewaysRatio, int minLogs, int maxDistanceFromLogs, float decayPercentage) {
         this.log = log;
         this.leaves = leaves;
         this.logsSidewaysRatio = logsSidewaysRatio;
         this.minLogs = minLogs;
         this.maxDistanceFromLogs = maxDistanceFromLogs;
+        this.decayPercentage = decayPercentage;
     }
 
     public TreeInfo() {
         this.logsSidewaysRatio = 0.6f;
         this.minLogs = 3;
         this.maxDistanceFromLogs = 8;
+        this.decayPercentage = 0.1f;
     }
 
     public static class Builder {
@@ -65,6 +68,11 @@ public class TreeInfo {
             return this;
         }
 
+        public Builder decayPercentage(float decayPercentage) {
+            treeInfo.decayPercentage = decayPercentage;
+            return this;
+        }
+
         public TreeInfo build() {
             return treeInfo;
         }
@@ -80,8 +88,9 @@ public class TreeInfo {
             float logsSidewaysRatio = GsonHelper.getAsFloat(jObject, "logs_sideways_ratio", 0.6f);
             int minLogs = GsonHelper.getAsInt(jObject, "min_logs", 3);
             int maxDistanceFromLogs = GsonHelper.getAsInt(jObject, "max_distance_from_logs", 8);
+            float decayPercentage = GsonHelper.getAsFloat(jObject, "decay_percentage", 0.1f);
 
-            return new TreeInfo(log, leaves, logsSidewaysRatio, minLogs, maxDistanceFromLogs);
+            return new TreeInfo(log, leaves, logsSidewaysRatio, minLogs, maxDistanceFromLogs, decayPercentage);
         }
 
         @Override
@@ -95,6 +104,8 @@ public class TreeInfo {
                 jsonObject.addProperty("min_logs", src.minLogs);
             if (src.maxDistanceFromLogs != 8)
                 jsonObject.addProperty("max_distance_from_logs", src.maxDistanceFromLogs);
+            if (src.decayPercentage != 0.1f)
+                jsonObject.addProperty("decay_percentage", src.decayPercentage);
 
             return jsonObject;
         }
