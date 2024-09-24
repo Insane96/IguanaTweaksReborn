@@ -75,7 +75,7 @@ public class EnchantmentsFeature extends JsonFeature {
 	@Label(name = "Infinity overhaul", description = "Infinity can go up to level 4. Each level makes an arrow have only 1 in level+1 chance to consume. E.g. with Infinity 4 there's 1 in 5 chance to consume the arrow, and 4 in 5 to not consume it.")
 	public static Boolean infinityOverhaul = true;
 	@Config
-	@Label(name = "Less unbreakable unbreaking", description = "Unbreaking max level is now 5 but \"bonus durability\" is reduced")
+	@Label(name = "Less unbreakable unbreaking", description = "Unbreaking max level is now 5 and tool lasts 50% more per level")
 	public static Boolean unbreakingOverhaul = true;
 	@Config
 	@Label(name = "Small Thorns Overhaul", description = "Thorns is no longer compatible with other protections, but deals damage every time (higher levels deal more damage) and no longer damages items.")
@@ -88,11 +88,11 @@ public class EnchantmentsFeature extends JsonFeature {
 	public static Boolean respirationNerf = true;
 
 	@Config
-	@Label(name = "Better Efficiency Formula", description = "Change the efficiency formula from tool_efficiency+(lvl*lvl+1) to tool_efficiency * (1 + (0.5*lvl))")
+	@Label(name = "Better Efficiency Formula", description = "Change the bonus efficiency formula from `lvl*lvl+1` to `tool_efficiency * (0.5*lvl)`")
 	public static Boolean changeEfficiencyFormula = true;
 
 	@Config
-	@Label(name = "Nerf fortune", description = "The ore_drops formula is changed to 20%/50%/85%/... drop increase from 25%/75%/125%/...")
+	@Label(name = "Nerf fortune", description = "The ore_drops formula is changed to 20%/50%/85%/125% drop increase from 33%/75%/120%/166%")
 	public static Boolean nerfFortune = true;
 
 	@Config(min = 0d, max = 2d)
@@ -115,9 +115,9 @@ public class EnchantmentsFeature extends JsonFeature {
             If true, vanilla damaging enchantments (such as smite or sharpness) are replaced with mod's ones. To re-enable vanilla enchantments refer to `disabled_enchantments.json`.
             Changes to damaging enchantments:
             Enchantments deal bonus damage based off the item's attack damage. So Sharpness on a Sword adds less damage than Sharpness on an Axe.
-            Sharpness deals +0.75 damage per level
-            Smite deals +1.25 damage per level to undead
-            Bane of Arthropods has been replaced with Bane of SSSSS that deals +1.25 damage per level to arthropods and creepers and applies slowness""")
+            Sharpness deals +0.5 damage per level
+            Smite deals +1 damage per level to undead and applies weakness
+            Bane of Arthropods has been replaced with Bane of SSSSS that deals +1 damage per level to arthropods and creepers and applies slowness""")
 	public static Boolean replaceDamagingEnchantments = true;
 	@Config
 	@Label(name = "Replace looting, fortune and LotS enchantments", description = "If true, vanilla looting, fortune and Luck of the Sea enchantments are replaced with a single one: Luck. To re-enable vanilla enchantments refer to `disabled_enchantments.json`.")
@@ -196,8 +196,8 @@ public class EnchantmentsFeature extends JsonFeature {
 
 	public static float unbreakingBonus(int lvl) {
 		if (isUnbreakingOverhaul()) {
-			//Tools last 40% more per level + 35% * (level - 1)
-			return 1 - 1 / (1 + (lvl * 0.4f + (0.35f * (lvl - 1))));
+			//Tools last 50% more per level
+			return 1 - 1 / (1 + (lvl * 0.5f));
 		}
 		else {
 			return 1f / (lvl + 1);
@@ -210,7 +210,7 @@ public class EnchantmentsFeature extends JsonFeature {
 
 	public static float getEfficiencyBonus(float toolEfficiency, int lvl) {
 		if (isBetterEfficiencyFormula()) {
-			return toolEfficiency * ((lvl * lvl + 1) * 0.06f);
+			return toolEfficiency * lvl * 0.3f;
 		}
 		else {
 			return lvl * lvl + 1;

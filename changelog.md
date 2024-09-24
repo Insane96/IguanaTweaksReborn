@@ -3,6 +3,9 @@
 ## Upcoming
 * Hitting a mob more than 40 blocks away with an arrow now plays the ding sound
 * Timber Trees now breaks some leaves before falling (35% for Quark's Trumpet trees, 10% the others)
+* Changed Efficiency and Unbreaking formulas
+  * Efficiency bonus: ~~+12/30/60/102/156/222%~~ -> +30% per level 
+  * Unbreaking: tool lasts ~~40/115/190/265/340/415%~~ -> 50% per level more
 * Falling blocks can now stack up to 6 blocks (instead of 8)
 * Overtime heal now decays 5x slower. It's now configurable
 * Fixed animals always failing to breed
