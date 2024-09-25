@@ -7,6 +7,7 @@ import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconRendere
 import insane96mcp.iguanatweaksreborn.module.misc.beaconconduit.ITRBeaconScreen;
 import insane96mcp.iguanatweaksreborn.module.mobs.spawning.Spawning;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.death.Death;
+import insane96mcp.iguanatweaksreborn.module.world.BiomeCompass;
 import insane96mcp.iguanatweaksreborn.module.world.CyanFlower;
 import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -40,6 +41,9 @@ public class ClientSetup {
                 addAfter(event, Crops.ROOTED_POTATO.get(), Crops.ROOTED_ONION);
             }
             addAfter(event, Items.FARMLAND, BoneMeal.RICH_FARMLAND.item());
+        }
+        else if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            addAfter(event, Items.CLOCK, BiomeCompass.COMPASS);
         }
     }
 

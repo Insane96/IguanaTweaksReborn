@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.16.1
+* Forgot to run datagen. Biome Compass now has a texture
+  * Also added it to creative tab
+* Fixed cyan flowers not in the minecraft:flowers item tag (so can now be used to breed bees)
+
 ## 3.16.0
 * Added Biome Compass
   * Tells you in which biome you're in
