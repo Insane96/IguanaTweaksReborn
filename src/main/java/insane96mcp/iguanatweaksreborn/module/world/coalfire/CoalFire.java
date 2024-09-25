@@ -22,11 +22,19 @@ public class CoalFire extends Feature {
     @Label(name = "Unlit campfire", description = "If true, campfires must be lit")
     public static Boolean unlitCampfires = false;
 
+    @Config
+    @Label(name = "Campfire turn off under rain", description = "If true, campfires will be extinguished when it starts to rain")
+    public static Boolean campfireTurnOffUnderRain = true;
+
     public CoalFire(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
     }
 
     public static boolean areCampfiresUnlit() {
         return Feature.isEnabled(CoalFire.class) && unlitCampfires;
+    }
+
+    public static boolean canRainTurnOffCampfires() {
+        return Feature.isEnabled(CoalFire.class) && campfireTurnOffUnderRain;
     }
 }
