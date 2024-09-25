@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.data.lootmodifier;
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import insane96mcp.insanelib.util.MathHelper;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.EntityTypePredicate;
@@ -91,14 +92,16 @@ public class ReplaceLootModifier extends LootModifier {
                     }
                     toRemove.add(stack);
                     if (amountToReplace == -1) {
-                        ItemStack newItemStack = new ItemStack(newItem, (int) (stack.getCount() * multiplier));
+                        int newAmount = MathHelper.getAmountWithDecimalChance(context.getRandom(), stack.getCount() * multiplier);
+                        ItemStack newItemStack = new ItemStack(newItem, newAmount);
                         if (keepDurability) {
                             newItemStack.setDamageValue((int) (newItemStack.getMaxDamage() * percentageDurability));
                         }
                         toAdd.add(newItemStack);
                     }
                     else {
-                        ItemStack replacedStack = new ItemStack(this.newItem, (int) (Math.min(stack.getCount(), amountToReplace) * multiplier));
+                        int newAmount = MathHelper.getAmountWithDecimalChance(context.getRandom(), Math.min(stack.getCount(), amountToReplace) * multiplier);
+                        ItemStack replacedStack = new ItemStack(this.newItem, newAmount);
                         toAdd.add(replacedStack);
                         if (amountToReplace < stack.getCount()) {
                             ItemStack oldStack = new ItemStack(this.itemToReplace, stack.getCount() - amountToReplace);

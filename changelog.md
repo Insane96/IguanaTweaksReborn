@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Added Biome Compass
+  * Tells you in which biome you're in
 * Hitting a mob more than 40 blocks away with an arrow now plays the ding sound
 * Timber Trees now breaks some leaves before falling (35% for Quark's Trumpet trees, 10% the others)
 * Campfires are now extinguished when it starts to rain
