@@ -34,7 +34,7 @@ public class BlockHardness extends JsonFeature {
 	public static final ArrayList<DimensionHardnessMultiplier> dimensionHardnessMultiplier = new ArrayList<>();
 
 	public static final ArrayList<DepthHardnessDimension> DEPTH_MULTIPLIER_DIMENSION_DEFAULT = new ArrayList<>(List.of(
-			new DepthHardnessDimension("minecraft:overworld", 0.078125, 64, 0)
+			new DepthHardnessDimension("minecraft:overworld", 0.0078125, 64, 0)
 	));
 	public static final ArrayList<DepthHardnessDimension> depthMultiplierDimension = new ArrayList<>();
 
