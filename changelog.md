@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.16.0
 * Added Biome Compass
   * Tells you in which biome you're in
 * Hitting a mob more than 40 blocks away with an arrow now plays the ding sound
