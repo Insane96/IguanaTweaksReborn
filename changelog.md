@@ -18,6 +18,7 @@
 * Falling blocks can now stack up to 6 blocks (instead of 8)
 * Overtime heal now decays 5x slower. It's now configurable
 * Fixed animals always failing to breed
+* Fixed Autumnity's Foul Berry Bushes not dropping pips
 * Fixed a bug where block below sea level would be 10x harder than intended
 
 ## 3.15.4
