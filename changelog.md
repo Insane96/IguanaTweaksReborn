@@ -8,6 +8,7 @@
   * Efficiency bonus: ~~+12/30/60/102/156/222%~~ -> +25% per level 
   * Unbreaking: tool lasts ~~40/115/190/265/340/415%~~ -> 50% per level more
 * Reduced items enchantability by ~20%
+* Iron Ore now generates more in lush caves (together with taigas)
 * Material buffs
   * Wooden tools durability: 112 -> 118
   * Iron Tools efficiency: 4 -> 4.5
