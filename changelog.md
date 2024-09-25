@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed missing biome compass recipe
+
 ## 3.16.1
 * Forgot to run datagen. Biome Compass now has a texture
   * Also added it to creative tab
