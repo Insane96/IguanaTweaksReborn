@@ -1,8 +1,8 @@
 {
 	"item": "#iguanatweaksreborn:equipment/hand/golden",
 	"durability": 49,
-	"enchantability": 22,
 	"efficiency": 9,
+	"enchantability": 18,
 	"modifiers": [
 		{
 			"uuid": "294e0db0-1185-4d78-b95e-8823b8bb0041",
