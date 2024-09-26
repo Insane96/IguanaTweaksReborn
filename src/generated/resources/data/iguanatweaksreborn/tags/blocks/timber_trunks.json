@@ -1,5 +1,9 @@
 {
   "values": [
-    "#minecraft:overworld_natural_logs"
+    "#minecraft:overworld_natural_logs",
+    {
+      "id": "quark:ancient_log",
+      "required": false
+    }
   ]
 }

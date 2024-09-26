@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Fixed missing biome compass recipe
+* Quark ashen trees now fall
 
 ## 3.16.1
 * Forgot to run datagen. Biome Compass now has a texture

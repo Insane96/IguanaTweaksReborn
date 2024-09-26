@@ -100,7 +100,8 @@ public class ITRBlockTagsProvider extends BlockTagsProvider {
 				.addTags(Tags.Blocks.GLASS, BlockTags.LEAVES);
 		//noinspection unchecked
 		tag(TimberTrees.TIMBER_TRUNKS)
-				.addTags(BlockTags.OVERWORLD_NATURAL_LOGS);
+				.addTags(BlockTags.OVERWORLD_NATURAL_LOGS)
+                .addOptional(new ResourceLocation("quark:ancient_log"));
 
         tag(Nether.PORTAL_CORNERS)
                 .add(Blocks.CRYING_OBSIDIAN);
