@@ -1,8 +1,9 @@
 # Changelog
 
-## Upcoming
+## 3.16.2
 * Fixed missing biome compass recipe
 * Quark ashen trees now fall
+* Fixed server startup crash
 
 ## 3.16.1
 * Forgot to run datagen. Biome Compass now has a texture

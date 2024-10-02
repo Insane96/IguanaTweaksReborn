@@ -1,14 +1,11 @@
 package insane96mcp.iguanatweaksreborn.network.message;
 
 import insane96mcp.iguanatweaksreborn.module.world.explosionoverhaul.ITRExplosion;
+import insane96mcp.iguanatweaksreborn.network.ClientNetworkHandler;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Explosion;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -46,38 +43,7 @@ public class ExplodeParticles {
 
 	public static void handle(final ExplodeParticles message, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-			Level level = Minecraft.getInstance().level;
-			if (level == null)
-				return;
-			if (message.hasBrokenBlocks && message.radius >= 2 && message.blockInteraction != Explosion.BlockInteraction.KEEP) {
-				int particleCount = (int) (message.radius * 100);
-				for (int i = 0; i < particleCount; i++) {
-					double r = message.radius * 0.75;
-					double v = r / 2f;
-					double x = message.x + level.random.nextFloat() * r - v;
-					double y = message.y + level.random.nextFloat() * r - v;
-					double z = message.z + level.random.nextFloat() * r - v;
-					Vec3 dir = new Vec3(x - message.x, y - message.y, z - message.z).normalize().scale(0.4f);
-					level.addParticle(ParticleTypes.POOF, x, y, z, dir.x, dir.y, dir.z);
-					r = message.radius * 1.25;
-					v = r / 2f;
-					x = message.x + level.random.nextFloat() * r - v;
-					y = message.y + level.random.nextFloat() * r - v;
-					z = message.z + level.random.nextFloat() * r - v;
-					 dir = new Vec3(x - message.x, y - message.y, z - message.z).normalize().scale(0.7f);
-					level.addParticle(ParticleTypes.SMOKE, x, y, z, dir.x, dir.y, dir.z);
-					//level.sendParticles(ParticleTypes.POOF, message.x, message.y, message.z, particleCount, message.radius / 3f, message.radius / 3f, message.radius / 3f, 0.3D);
-					//level.sendParticles(ParticleTypes.SMOKE, message.x, message.y, message.z, particleCount, message.radius / 3f, message.radius / 3f, message.radius / 3f, 0.3D);
-				}
-			}
-			else if (message.radius < 2) {
-				level.addParticle(ParticleTypes.EXPLOSION, message.x, message.y, message.z, 0.0D, 0.0D, 0.0D);
-				//level.sendParticles(ParticleTypes.EXPLOSION, message.x, message.y, message.z, 1, 0.0D, 0.0D, 0.0D, 1f);
-			}
-			else {
-				level.addParticle(ParticleTypes.EXPLOSION_EMITTER, message.x, message.y, message.z, 0.0D, 0.0D, 0.0D);
-				//level.sendParticles(ParticleTypes.EXPLOSION_EMITTER, message.x, message.y, message.z, 1, 0.0D, 0.0D, 0.0D, 1f);
-			}
+			ClientNetworkHandler.handleExplosionParticles(message.x, message.y, message.z, message.radius, message.hasBrokenBlocks, message.blockInteraction);
 		});
 		ctx.get().setPacketHandled(true);
 	}

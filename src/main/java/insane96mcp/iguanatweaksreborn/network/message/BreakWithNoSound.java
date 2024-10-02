@@ -1,7 +1,7 @@
 package insane96mcp.iguanatweaksreborn.network.message;
 
+import insane96mcp.iguanatweaksreborn.network.ClientNetworkHandler;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,8 +32,7 @@ public class BreakWithNoSound {
 
 	public static void handle(final BreakWithNoSound message, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-            if (Minecraft.getInstance().level != null)
-                Minecraft.getInstance().level.addDestroyBlockEffect(message.pos, Block.stateById(message.state));
+			ClientNetworkHandler.handleBreakWithNoSound(message.pos, message.state);
         });
 		ctx.get().setPacketHandled(true);
 	}
