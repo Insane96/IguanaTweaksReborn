@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Reduced health on respawn
+
 ## 3.16.2
 * Fixed missing biome compass recipe
 * Quark ashen trees now fall

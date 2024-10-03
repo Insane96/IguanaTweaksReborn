@@ -77,10 +77,10 @@ public class HealthRegen extends Feature {
 	public static Boolean respawnFoodOnlyIfBelow = true;
 	@Config(min = 0, max = 20)
 	@Label(name = "Respawn.Health", description = "Health of respawning players")
-	public static insane96mcp.insanelib.base.config.Difficulty healthOnRespawn = new insane96mcp.insanelib.base.config.Difficulty(20, 14, 8);
+	public static insane96mcp.insanelib.base.config.Difficulty healthOnRespawn = new insane96mcp.insanelib.base.config.Difficulty(10, 10, 6);
 	@Config(min = 0, max = 20)
 	@Label(name = "Respawn.Hunger", description = "Hunger of respawning players")
-	public static insane96mcp.insanelib.base.config.Difficulty hungerOnRespawn = new insane96mcp.insanelib.base.config.Difficulty(14, 10, 10);
+	public static insane96mcp.insanelib.base.config.Difficulty hungerOnRespawn = new insane96mcp.insanelib.base.config.Difficulty(14, 14, 10);
 	@Config(min = 0, max = 20)
 	@Label(name = "Respawn.Saturation", description = "Saturation of respawning players")
 	public static insane96mcp.insanelib.base.config.Difficulty saturationOnRespawn = new insane96mcp.insanelib.base.config.Difficulty(10, 10, 6);
