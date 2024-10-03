@@ -4,12 +4,14 @@ import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
 import insane96mcp.iguanatweaksreborn.utils.ITRGsonHelper;
+import insane96mcp.insanelib.base.config.MinMax;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,6 +39,8 @@ public class BlockData {
 	private Boolean stateRequiresCorrectToolForDrops;
 	@Nullable
 	private NoteBlockInstrument stateNoteBlockInstrument;
+	@Nullable
+	private MinMax stateExperienceDropped;
 
 	@Nullable
 	public Float explosionResistance;
@@ -50,12 +54,13 @@ public class BlockData {
 	@Nullable
 	public Float boneMealFailChance;
 
-	public BlockData(Block block, List<BlockState> blockStates, @Nullable Float stateHardness, @Nullable Boolean stateRequiresCorrectToolForDrops, @Nullable NoteBlockInstrument stateNoteBlockInstrument, @Nullable Float explosionResistance, @Nullable Float friction, @Nullable Float speedFactor, @Nullable Float jumpFactor, @Nullable Float boneMealFailChance) {
+	public BlockData(Block block, List<BlockState> blockStates, @Nullable Float stateHardness, @Nullable Boolean stateRequiresCorrectToolForDrops, @Nullable NoteBlockInstrument stateNoteBlockInstrument, @Nullable MinMax stateExperienceDropped, @Nullable Float explosionResistance, @Nullable Float friction, @Nullable Float speedFactor, @Nullable Float jumpFactor, @Nullable Float boneMealFailChance) {
 		this.block = block;
 		this.blockStates = blockStates;
 		this.stateHardness = stateHardness;
 		this.stateRequiresCorrectToolForDrops = stateRequiresCorrectToolForDrops;
 		this.stateNoteBlockInstrument = stateNoteBlockInstrument;
+		this.stateExperienceDropped = stateExperienceDropped;
 		this.explosionResistance = explosionResistance;
 		this.friction = friction;
 		this.speedFactor = speedFactor;
@@ -63,11 +68,12 @@ public class BlockData {
 		this.boneMealFailChance = boneMealFailChance;
 	}
 
-	public BlockData(TagKey<Block> blockTag, @Nullable Float stateHardness, @Nullable Boolean stateRequiresCorrectToolForDrops, @Nullable NoteBlockInstrument stateNoteBlockInstrument, @Nullable Float explosionResistance, @Nullable Float friction, @Nullable Float speedFactor, @Nullable Float jumpFactor, @Nullable Float boneMealFailChance) {
+	public BlockData(TagKey<Block> blockTag, @Nullable Float stateHardness, @Nullable Boolean stateRequiresCorrectToolForDrops, @Nullable NoteBlockInstrument stateNoteBlockInstrument, @Nullable MinMax stateExperienceDropped, @Nullable Float explosionResistance, @Nullable Float friction, @Nullable Float speedFactor, @Nullable Float jumpFactor, @Nullable Float boneMealFailChance) {
 		this.blockTag = blockTag;
 		this.stateHardness = stateHardness;
 		this.stateRequiresCorrectToolForDrops = stateRequiresCorrectToolForDrops;
 		this.stateNoteBlockInstrument = stateNoteBlockInstrument;
+		this.stateExperienceDropped = stateExperienceDropped;
 		this.explosionResistance = explosionResistance;
 		this.friction = friction;
 		this.speedFactor = speedFactor;
@@ -84,9 +90,21 @@ public class BlockData {
 	}
 
 	public boolean matches(BlockState state) {
-		if (this.block != null)
-			return state.is(this.block);
+		if (this.block != null) {
+			if (!state.is(this.block))
+				return false;
+			if (this.blockStates.isEmpty())
+				return true;
+			for (BlockState blockState : this.blockStates) {
+				if (blockState == state)
+					return true;
+			}
+		}
 		return state.is(this.blockTag);
+	}
+
+	public int getStateExperienceDropped(RandomSource random) {
+		return this.stateExperienceDropped == null ? -1 : this.stateExperienceDropped.getIntRandBetween(random);
 	}
 
 	public void apply(boolean applyingOriginal) {
@@ -183,6 +201,7 @@ public class BlockData {
 						.findFirst()
 						.orElseThrow();
 			}
+			MinMax experienceDropped = context.deserialize(jObject.get("state_experience_dropped"), MinMax.class);
 			Float explosionResistance = ITRGsonHelper.getAsNullableFloat(jObject, "explosion_resistance");
 			Float friction = ITRGsonHelper.getAsNullableFloat(jObject, "friction");
 			Float speedFactor = ITRGsonHelper.getAsNullableFloat(jObject, "speed_factor");
@@ -217,14 +236,14 @@ public class BlockData {
 						});
 					}
 				}
-				return new BlockData(block, blockStates, hardness, requiresCorrectToolForDrops, instrument, explosionResistance, friction, speedFactor, jumpFactor, boneMealFailChance);
+				return new BlockData(block, blockStates, hardness, requiresCorrectToolForDrops, instrument, experienceDropped, explosionResistance, friction, speedFactor, jumpFactor, boneMealFailChance);
 			}
 			else {
 				ResourceLocation blockTagId = ResourceLocation.tryParse(jObject.get("block_tag").getAsString());
 				if (blockTagId == null)
 					throw new JsonParseException("Failed to parse block tag id for %s".formatted(jObject.get("block_tag").getAsString()));
 				TagKey<Block> blockTag = TagKey.create(Registries.BLOCK, blockTagId);
-				return new BlockData(blockTag, hardness, requiresCorrectToolForDrops, instrument, explosionResistance, friction, speedFactor, jumpFactor, boneMealFailChance);
+				return new BlockData(blockTag, hardness, requiresCorrectToolForDrops, instrument, experienceDropped, explosionResistance, friction, speedFactor, jumpFactor, boneMealFailChance);
 			}
 		}
 
@@ -267,15 +286,16 @@ public class BlockData {
 		Float hardness = byteBuf.readNullable(FriendlyByteBuf::readFloat);
 		Boolean requiresCorrectToolForDrops = byteBuf.readNullable(FriendlyByteBuf::readBoolean);
 		NoteBlockInstrument noteBlockInstrument = byteBuf.readNullable(buf -> buf.readEnum(NoteBlockInstrument.class));
+		MinMax experienceDropped = byteBuf.readNullable(b -> new MinMax(b.readDouble(), b.readDouble()));
 		Float explosionResistance = byteBuf.readNullable(FriendlyByteBuf::readFloat);
 		Float friction = byteBuf.readNullable(FriendlyByteBuf::readFloat);
 		Float speedFactor = byteBuf.readNullable(FriendlyByteBuf::readFloat);
 		Float jumpFactor = byteBuf.readNullable(FriendlyByteBuf::readFloat);
 		Float boneMealFailChance = byteBuf.readNullable(FriendlyByteBuf::readFloat);
 		if (block != null)
-			return new BlockData(block, blockStates, hardness, requiresCorrectToolForDrops, noteBlockInstrument, explosionResistance, friction, speedFactor, jumpFactor, boneMealFailChance);
+			return new BlockData(block, blockStates, hardness, requiresCorrectToolForDrops, noteBlockInstrument, experienceDropped, explosionResistance, friction, speedFactor, jumpFactor, boneMealFailChance);
 		else
-			return new BlockData(blockTag, hardness, requiresCorrectToolForDrops, noteBlockInstrument, explosionResistance, friction, speedFactor, jumpFactor, boneMealFailChance);
+			return new BlockData(blockTag, hardness, requiresCorrectToolForDrops, noteBlockInstrument, experienceDropped, explosionResistance, friction, speedFactor, jumpFactor, boneMealFailChance);
 	}
 
 	public void toNetwork(FriendlyByteBuf byteBuf) {
@@ -296,6 +316,10 @@ public class BlockData {
 		byteBuf.writeNullable(this.stateHardness, FriendlyByteBuf::writeFloat);
 		byteBuf.writeNullable(this.stateRequiresCorrectToolForDrops, FriendlyByteBuf::writeBoolean);
 		byteBuf.writeNullable(this.stateNoteBlockInstrument, FriendlyByteBuf::writeEnum);
+		byteBuf.writeNullable(this.stateExperienceDropped, (b, minMax) -> {
+			b.writeDouble(minMax.min);
+			b.writeDouble(minMax.max);
+		});
 		byteBuf.writeNullable(this.explosionResistance, FriendlyByteBuf::writeFloat);
 		byteBuf.writeNullable(this.friction, FriendlyByteBuf::writeFloat);
 		byteBuf.writeNullable(this.speedFactor, FriendlyByteBuf::writeFloat);

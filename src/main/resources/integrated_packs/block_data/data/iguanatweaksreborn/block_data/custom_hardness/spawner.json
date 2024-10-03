@@ -1,4 +1,8 @@
 {
     "block": "minecraft:spawner",
-    "state_hardness": 15
+    "state_hardness": 15,
+    "state_experience_dropped": {
+        "min": 70,
+        "max": 70
+    }
 }

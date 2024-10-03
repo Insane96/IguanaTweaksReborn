@@ -1,7 +1,10 @@
 # Changelog
 
 ## Upcoming
-* Harvesting Honey or Honeycombs from smoked Hives now awards 5 to 10 experience 
+* Experience
+  * Experience from blocks config has been moved to BlockData
+  * Fully Grown Crops now give 1~2 experience
+  * Harvesting Honey or Honeycombs from smoked Hives now awards 5 to 10 experience 
 * Reduced health on respawn
 
 ## 3.16.2

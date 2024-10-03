@@ -3,5 +3,9 @@
     "states": [
         "age=3"
     ],
-    "state_hardness": 0.3
+    "state_hardness": 0.3,
+    "state_experience_dropped": {
+        "min": 1,
+        "max": 2
+    }
 }

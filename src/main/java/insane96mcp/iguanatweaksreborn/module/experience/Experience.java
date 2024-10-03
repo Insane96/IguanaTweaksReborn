@@ -3,6 +3,8 @@ package insane96mcp.iguanatweaksreborn.module.experience;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
+import insane96mcp.iguanatweaksreborn.module.mining.blockdata.BlockData;
+import insane96mcp.iguanatweaksreborn.module.mining.blockdata.BlockDataReloadListener;
 import insane96mcp.iguanatweaksreborn.network.message.SyncExperienceFeature;
 import insane96mcp.insanelib.base.JsonFeature;
 import insane96mcp.insanelib.base.Label;
@@ -10,7 +12,6 @@ import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.base.config.MinMax;
-import insane96mcp.insanelib.data.IdTagRange;
 import insane96mcp.insanelib.setup.ILStrings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -38,9 +39,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Label(name = "Experience", description = "Various changes to experience. You can also use the iguanatweaks:disableExperience game rule to disable experience drops and experience bar.")
 @LoadFeature(module = Modules.Ids.EXPERIENCE)
@@ -92,7 +90,7 @@ public class Experience extends JsonFeature {
 	@Label(name = "Honey Harvest Experience", description = "Experience gained from harvesting Honey or Honeycombs from beehives")
 	public static MinMax honeyHarvestExperience = new MinMax(5, 10);
 
-	public static final ArrayList<IdTagRange> CUSTOM_BLOCKS_EXPERIENCE_DEFAULT = new ArrayList<>(List.of(
+	/*public static final ArrayList<IdTagRange> CUSTOM_BLOCKS_EXPERIENCE_DEFAULT = new ArrayList<>(List.of(
 			IdTagRange.newTag("minecraft:copper_ores", 0, 2),
 			IdTagRange.newTag("minecraft:iron_ores", 1, 2),
 			IdTagRange.newTag("minecraft:gold_ores", 2, 3),
@@ -101,14 +99,13 @@ public class Experience extends JsonFeature {
 			IdTagRange.newId("minecraft:spawner", 70, 70)
 	));
 
-	public static final ArrayList<IdTagRange> customBlocksExperience = new ArrayList<>();
-
+	public static final ArrayList<IdTagRange> customBlocksExperience = new ArrayList<>();*/
 
 	public static Boolean disableExperience = false;
 
 	public Experience(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-		JSON_CONFIGS.add(new JsonConfig<>("blocks_experience.json", customBlocksExperience, CUSTOM_BLOCKS_EXPERIENCE_DEFAULT, IdTagRange.LIST_TYPE));
+		//JSON_CONFIGS.add(new JsonConfig<>("blocks_experience.json", customBlocksExperience, CUSTOM_BLOCKS_EXPERIENCE_DEFAULT, IdTagRange.LIST_TYPE));
 	}
 
 	@Override
@@ -165,28 +162,20 @@ public class Experience extends JsonFeature {
 				|| event.getState().is(NO_BLOCK_XP_MULTIPLIER))
 			return;
 
-		handleXpOrbDrop(event);
 		handleBlockDrop(event);
 		handleMultiplier(event);
-	}
-
-	private static void handleXpOrbDrop(BlockEvent.BreakEvent event) {
-		int silkTouchLevel = event.getPlayer().getMainHandItem().getEnchantmentLevel(Enchantments.SILK_TOUCH);
-		if (silkTouchLevel > 0)
-			return;
-		for (IdTagRange idTagRange : customBlocksExperience) {
-			if (idTagRange.id.matchesBlock(event.getState().getBlock()))
-				event.setExpToDrop(idTagRange.getRandomIntBetween(event.getLevel().getRandom()));
-		}
 	}
 
 	private static void handleBlockDrop(BlockEvent.BreakEvent event) {
 		int silkTouchLevel = event.getPlayer().getMainHandItem().getEnchantmentLevel(Enchantments.SILK_TOUCH);
 		if (silkTouchLevel > 0)
 			return;
-		for (IdTagRange idTagRange : customBlocksExperience) {
-			if (idTagRange.id.matchesBlock(event.getState().getBlock()))
-				event.setExpToDrop(idTagRange.getRandomIntBetween(event.getLevel().getRandom()));
+		for (BlockData blockData : BlockDataReloadListener.DATA) {
+			if (blockData.matches(event.getState())) {
+				int expDropped = blockData.getStateExperienceDropped(event.getLevel().getRandom());
+				if (expDropped > -1)
+					event.setExpToDrop(expDropped);
+			}
 		}
 	}
 
