@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Harvesting Honey or Honeycombs from smoked Hives now awards 5 to 10 experience 
 * Reduced health on respawn
 
 ## 3.16.2

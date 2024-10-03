@@ -9,6 +9,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.data.IdTagRange;
 import insane96mcp.insanelib.setup.ILStrings;
 import net.minecraft.client.Minecraft;
@@ -86,6 +87,10 @@ public class Experience extends JsonFeature {
 	@Config(min = 0, max = 512)
 	@Label(name = "Bottle o' Enchanting Bonus XP", description = "Bottle o' enchanting will drop this more XP. Experience is still affected by 'Global Experience Multiplier'\nCan be set to 0 to make Bottle o' enchanting drop no bonus experience")
 	public static Integer xpBottleBonus = 35;
+
+	@Config(min = 0)
+	@Label(name = "Honey Harvest Experience", description = "Experience gained from harvesting Honey or Honeycombs from beehives")
+	public static MinMax honeyHarvestExperience = new MinMax(5, 10);
 
 	public static final ArrayList<IdTagRange> CUSTOM_BLOCKS_EXPERIENCE_DEFAULT = new ArrayList<>(List.of(
 			IdTagRange.newTag("minecraft:copper_ores", 0, 2),
