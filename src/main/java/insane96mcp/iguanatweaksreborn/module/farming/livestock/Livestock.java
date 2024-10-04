@@ -81,6 +81,10 @@ public class Livestock extends Feature {
 	@Label(name = "Twins chance", description = "Chance for animals breeding to get twins. This chance is applied for every baby spawned so you have have triplets if lucky enough.")
 	public static Double twinsChance = 0.5d;
 
+	@Config(min = 0, max = 1)
+	@Label(name = "Auto-breed chance", description = "Chance every 10 seconds for animals to fall in love without food (breeding cooldown still applies).")
+	public static Double autoBreedChance = 0.02d;
+
 	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "livestock_changes", Component.literal("IguanaTweaks Reborn Livestock Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
@@ -108,6 +112,14 @@ public class Livestock extends Feature {
 			liveDeath(event);
 			eggLay(event);
 			tickFedTime(event);
+			if (event.getEntity().tickCount % 200 == event.getEntity().getId()
+					&& event.getEntity() instanceof Animal animal
+					&& animal.canFallInLove()
+					&& !animal.isInLove()
+					&& animal.getAge() == 0
+					&& animal.getRandom().nextFloat() < autoBreedChance) {
+				animal.setInLove(null);
+			}
 		}
 		cowMilkTick(event);
 	}

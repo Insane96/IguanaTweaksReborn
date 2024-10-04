@@ -3,6 +3,7 @@
 ## Upcoming
 * Breeding
   * Animals now have 50% chance to have twins
+  * Animals now have 2% chance every 10 seconds to fall in love without food
 * Experience
   * Experience from blocks config has been moved to BlockData
   * Fully Grown Crops now give 1~2 experience
