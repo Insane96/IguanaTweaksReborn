@@ -87,6 +87,10 @@ public class Livestock extends Feature {
 	@Label(name = "Milk xp", description = "Experience obtained when cows or mooshrooms are milked or stewed. This only works if the fluid cooldown is enabled.")
 	public static MinMax milkXp = new MinMax(2, 5);
 
+	@Config(min = 0)
+	@Label(name = "Shear xp", description = "Experience obtained when shearing sheep.")
+	public static MinMax shearXp = new MinMax(1, 3);
+
 	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "livestock_changes", Component.literal("IguanaTweaks Reborn Livestock Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
