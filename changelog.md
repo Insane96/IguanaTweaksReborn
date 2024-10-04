@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Tiredness fake sounds now play less times when less tired
+
 ## 3.17.0
 * Breeding
   * Animals now have 50% chance to have twins

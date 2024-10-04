@@ -183,7 +183,7 @@ public class Tiredness extends JsonFeature {
 				return;
 			}
 			mobFakeSound = (Mob) entity;
-			fakeSoundTimesToPlay = (int) (random.triangle(10, 5));
+			fakeSoundTimesToPlay = (int) (random.triangle(3, 1) * amplifier);
 		}
 		if (mobFakeSound != null && random.nextInt(1000) < ambientSoundTime++) {
 			SoundEvent soundEvent = ((MobAccessor)mobFakeSound).ambientSound();
