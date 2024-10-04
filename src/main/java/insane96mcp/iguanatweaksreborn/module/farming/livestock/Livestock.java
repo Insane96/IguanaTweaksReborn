@@ -115,7 +115,6 @@ public class Livestock extends Feature {
 			if (event.getEntity().tickCount % 200 == event.getEntity().getId()
 					&& event.getEntity() instanceof Animal animal
 					&& animal.canFallInLove()
-					&& !animal.isInLove()
 					&& animal.getAge() == 0
 					&& animal.getRandom().nextFloat() < autoBreedChance) {
 				animal.setInLove(null);
