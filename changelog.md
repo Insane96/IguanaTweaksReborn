@@ -9,6 +9,7 @@
   * Fully Grown Crops now give 1~2 experience
   * Amethyst clusters now give 1~2 experience
   * Harvesting Honey or Honeycombs from smoked Hives now awards 5 to 10 experience 
+  * Milking or stewing cows / mooshrooms now awards 2 to 5 experience
 * Reduced health on respawn
 
 ## 3.16.2

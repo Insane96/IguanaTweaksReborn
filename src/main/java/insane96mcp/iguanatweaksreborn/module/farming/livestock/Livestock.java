@@ -13,6 +13,7 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.util.MCUtils;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -24,10 +25,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
@@ -84,6 +82,10 @@ public class Livestock extends Feature {
 	@Config(min = 0, max = 1)
 	@Label(name = "Auto-breed chance", description = "Chance every 10 seconds for animals to fall in love without food (breeding cooldown still applies).")
 	public static Double autoBreedChance = 0.02d;
+
+	@Config(min = 0)
+	@Label(name = "Milk xp", description = "Experience obtained when cows or mooshrooms are milked or stewed. This only works if the fluid cooldown is enabled.")
+	public static MinMax milkXp = new MinMax(2, 5);
 
 	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -336,8 +338,14 @@ public class Livestock extends Feature {
 			milkCooldown = (int) (cooldown * 20);
 			cowNBT.putInt(MILK_COOLDOWN, milkCooldown);
 			ForgeDataIntSync.sync(animal, MILK_COOLDOWN, milkCooldown);
+			if (milkXp.min > 0 || milkXp.max > 0)
+				tryGenerateMilkXp(animal);
 			//player.swing(event.getHand());
 		}
+	}
+
+	private void tryGenerateMilkXp(Entity entity) {
+		entity.level().addFreshEntity(new ExperienceOrb(entity.level(), entity.getX(), entity.getY(), entity.getZ(), milkXp.getIntRandBetween(entity.level().random)));
 	}
 
 	@SubscribeEvent
