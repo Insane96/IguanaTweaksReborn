@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Breeding
+  * Animals now have 50% chance to have twins
 * Experience
   * Experience from blocks config has been moved to BlockData
   * Fully Grown Crops now give 1~2 experience

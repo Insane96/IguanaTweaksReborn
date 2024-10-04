@@ -77,6 +77,10 @@ public class Livestock extends Feature {
 	@Label(name = "Milk Cooldown", description = "Seconds until you can milk cows (or stew mooshrooms)")
 	public static Integer milkingCooldown = 1200;
 
+	@Config(min = 0, max = 1)
+	@Label(name = "Twins chance", description = "Chance for animals breeding to get twins. This chance is applied for every baby spawned so you have have triplets if lucky enough.")
+	public static Double twinsChance = 0.5d;
+
 	public Livestock(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 		IntegratedPack.addPack(new IntegratedPack(PackType.SERVER_DATA, "livestock_changes", Component.literal("IguanaTweaks Reborn Livestock Changes"), () -> this.isEnabled() && !DataPacks.disableAllDataPacks && dataPack));
@@ -350,20 +354,23 @@ public class Livestock extends Feature {
 
 	@SubscribeEvent
 	public void failBreeding(BabyEntitySpawnEvent event) {
-		if (!this.isEnabled())
+		if (!this.isEnabled()
+				|| !(event.getParentA() instanceof Animal parentA))
 			return;
 
-		Mob mob = event.getParentA().getRandom().nextBoolean() ? event.getParentA() : event.getParentB();
 		List<Modifier> modifiersToApply = new ArrayList<>();
 		LivestockDataReloadListener.LIVESTOCK_DATA.stream()
-				.filter(data -> data.matches(mob))
+				.filter(data -> data.matches(parentA))
 				.forEach(data -> modifiersToApply.addAll(data.breedingFailChanceModifiers));
-		float failChance = Modifier.applyModifiers(0f, modifiersToApply, mob.level(), mob.blockPosition(), mob);
-		if (failChance <= 0)
+		float failChance = Modifier.applyModifiers(0f, modifiersToApply, parentA.level(), parentA.blockPosition(), parentA);
+		if (failChance <= 0) {
 			return;
+		}
 
-		if (failChance >= 1f || mob.getRandom().nextFloat() < failChance)
+		if (failChance >= 1f || parentA.getRandom().nextFloat() < failChance)
 			event.setCanceled(true);
+		else if (parentA.getRandom().nextFloat() < twinsChance && event.getParentB() instanceof Animal)
+			parentA.spawnChildFromBreeding((ServerLevel) parentA.level(), (Animal) event.getParentB());
 	}
 
 	public enum Age {
