@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.17.0
 * Breeding
   * Animals now have 50% chance to have twins
   * Animals now have 2% chance every 10 seconds to fall in love without food
@@ -10,7 +10,7 @@
   * Amethyst clusters now give 1~2 experience
   * Harvesting Honey or Honeycombs from smoked Hives now awards 5 to 10 experience 
   * Milking or stewing cows / mooshrooms now awards 2 to 5 experience
-  * Shearing sheeps now awards 1 to 3 xp
+  * Shearing sheep now awards 1 to 3 xp
 * Reduced health on respawn
 
 ## 3.16.2
