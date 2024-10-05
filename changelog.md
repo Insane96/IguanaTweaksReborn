@@ -1,6 +1,9 @@
 # Changelog
 
 ## Upcoming
+* Anvil Repair
+  * Repairing Items in an anvil now costs ~20% less
+  * Quark's Forgotten Hat can now be partially repaired with hide (like leather armor)
 * Tiredness fake sounds now play less times when less tired
 * If crit arrows bonus damage is disabled then arrows no longer emit particles
 

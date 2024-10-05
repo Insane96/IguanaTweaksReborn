@@ -41,12 +41,12 @@ public class AnvilRepair {
     }
 
     public record RepairData(@SerializedName("repair_material") IdTagMatcher repairMaterial,
-                             @SerializedName("amount") int amountRequired,
+                             @SerializedName("amount") float amountRequired,
                              @SerializedName("max_repair") float maxRepair,
                              @SerializedName("cost_multiplier") float costMultiplier) {
         public static RepairData fromNetwork(FriendlyByteBuf byteBuf) {
             IdTagMatcher idTagMatcher = IdTagMatcher.parseLine(byteBuf.readUtf());
-            int amount = byteBuf.readInt();
+            float amount = byteBuf.readFloat();
             float maxRepair = byteBuf.readFloat();
             float costMultiplier = byteBuf.readFloat();
             return new RepairData(idTagMatcher, amount, maxRepair, costMultiplier);
@@ -54,7 +54,7 @@ public class AnvilRepair {
 
         public void toNetwork(FriendlyByteBuf byteBuf) {
             byteBuf.writeUtf(this.repairMaterial.getSerializedName());
-            byteBuf.writeInt(this.amountRequired);
+            byteBuf.writeFloat(this.amountRequired);
             byteBuf.writeFloat(this.maxRepair);
             byteBuf.writeFloat(this.costMultiplier);
         }
@@ -69,8 +69,8 @@ public class AnvilRepair {
             JsonArray array = GsonHelper.getAsJsonArray(json.getAsJsonObject(), "repair");
             for (JsonElement element : array) {
                 IdTagMatcher repairMaterial = context.deserialize(element.getAsJsonObject().get("repair_material"), IdTagMatcher.class);
-                int amount = GsonHelper.getAsInt(element.getAsJsonObject(), "amount");
-                if (amount < 1)
+                float amount = GsonHelper.getAsFloat(element.getAsJsonObject(), "amount");
+                if (amount <= 0)
                     throw new JsonParseException("amount must be greater than 0");
                 float maxRepair = GsonHelper.getAsFloat(element.getAsJsonObject(), "max_repair", 1f);
                 if (maxRepair > 1f || maxRepair < 0f)
