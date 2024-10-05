@@ -36,16 +36,23 @@ public abstract class AbstractArrowMixin extends Projectile {
     @Shadow private double baseDamage;
 
     @SuppressWarnings("InvalidInjectorMethodSignature")
-    @ModifyVariable(at = @At(value = "STORE"), method = "onHitEntity", ordinal = 0)
+    @ModifyVariable(method = "onHitEntity", at = @At(value = "STORE"), ordinal = 0)
     private float clampDeltaMovementLength(float deltaLength) {
         return Math.min(deltaLength, 10f);
     }
 
-    @Redirect(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;isCritArrow()Z", ordinal = 0), method = "onHitEntity")
+    @Redirect(method = "onHitEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;isCritArrow()Z", ordinal = 0))
     private boolean onCritArrowCheck(AbstractArrow arrow) {
         if (Feature.isEnabled(Stats.class) && Stats.disableCritArrowsBonusDamage)
             return false;
         return this.isCritArrow();
+    }
+
+    @ModifyExpressionValue(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;isCritArrow()Z", ordinal = 0))
+    private boolean onCritArrowCheckParticles(boolean original) {
+        if (!Feature.isEnabled(Stats.class) || !Stats.disableCritArrowsBonusDamage)
+            return original;
+        return false;
     }
 
     //Disable mobs' arrow random bonus damage

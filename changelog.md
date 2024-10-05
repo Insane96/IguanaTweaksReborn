@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Tiredness fake sounds now play less times when less tired
+* If crit arrows bonus damage is disabled then arrows no longer emit particles
 
 ## 3.17.0
 * Breeding
