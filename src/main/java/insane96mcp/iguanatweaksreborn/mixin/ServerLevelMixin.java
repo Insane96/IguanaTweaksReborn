@@ -9,7 +9,13 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelMixin {
     @ModifyExpressionValue(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;isRaining()Z"))
-    private boolean canSurvive(boolean original) {
+    private boolean preventRainClear(boolean original) {
         return Tiredness.onSleepFinished((ServerLevel) (Object) this, original);
     }
+
+    /*@ModifyExpressionValue(method = "tickChunk", at = @At(value = "CONSTANT", args = "intValue=100000"))
+    private int changeThunderChance(int original) {
+        return 20;
+    }*/
+
 }
