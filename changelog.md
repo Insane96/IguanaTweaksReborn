@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Reduced armor enchantability by ~20%
+
 ## 3.18.0
 * Critical is now an Attribute modifier
   * Players no longer have 5% chance to crit
