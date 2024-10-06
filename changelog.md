@@ -1,6 +1,8 @@
 # Changelog
 
-## Upcoming
+## 3.18.1
+* Doubled bows arrows accuracy
+  * Also configurable
 * Reduced armor enchantability by ~20%
 
 ## 3.18.0
