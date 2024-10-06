@@ -5,6 +5,7 @@ import com.teamabnormals.allurement.core.AllurementConfig;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.FireAspect;
+import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.IAttributeEnchantment;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Knockback;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.Luck;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.damage.BaneOfSSSS;
@@ -35,12 +36,14 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
@@ -177,6 +180,17 @@ public class EnchantmentsFeature extends JsonFeature {
 		//Can this make something blow up?
 		if (replaceLuckEnchantments)
 			Enchantments.BLOCK_FORTUNE = LUCK.get();
+	}
+
+	@SubscribeEvent
+	public void onAttributeModifiers(ItemAttributeModifierEvent event) {
+		event.getItemStack().getAllEnchantments().forEach((enchantment, lvl) -> {
+			if (event.getItemStack().getItem() instanceof ArmorItem armorItem
+					&& armorItem.getEquipmentSlot() != event.getSlotType())
+				return;
+			if (enchantment instanceof IAttributeEnchantment attributeEnchantment)
+				attributeEnchantment.applyAttributeModifier(event, lvl);
+		});
 	}
 
 	public static boolean isEnchantmentDisabled(Enchantment enchantment) {

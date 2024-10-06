@@ -93,6 +93,9 @@
 	"attribute.name.regenerating_absorption_speed": "Absorption Regen Speed",
 	"iguanatweaksreborn.subtitle.absorption_hit": "Absorption damaged",
 
+	"attribute.name.critical_chance": "Crit Chance",
+	"attribute.name.critical_damage": "Crit Bonus Damage",
+
 	"iguanatweaksreborn:farming_module": "Farming",
 
 	"iguanatweaksreborn.weak_hoe": "This hoe is too weak to till soil",

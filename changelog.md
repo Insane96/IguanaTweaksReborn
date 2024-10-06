@@ -1,6 +1,10 @@
 # Changelog
 
 ## Upcoming
+* Critical is now an Attribute modifier
+  * Players no longer have 5% chance to crit
+  * `iguanatweaksreborn:critical_chance` defines the chance for a crit to happen (between 0 and 1), defaults to no chance
+  * `iguanatweaksreborn:critical_damage` defines the damage multiplier for a crit. Defaults to 0.5 (+50%)
 * Anvil Repair
   * Repairing Items in an anvil now costs ~20% less
   * Quark's Forgotten Hat can now be partially repaired with hide (like leather armor)

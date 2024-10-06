@@ -22,22 +22,22 @@ public class EmiAnvilRepairRecipe implements EmiRecipe {
 	private final EmiIngredient resource;
 	private final EmiStack output;
 
-	public EmiAnvilRepairRecipe(ResourceLocation id, ItemStack itemToRepair, Ingredient material, int materialAmount, float maxRepair) {
+	public EmiAnvilRepairRecipe(ResourceLocation id, ItemStack itemToRepair, Ingredient material, float materialAmount, float maxRepair) {
 		this.id = id;
 		ItemStack item = itemToRepair.copy();
 		item.setDamageValue(itemToRepair.getMaxDamage() - 1);
 		this.itemToRepair = EmiStack.of(item);
-		this.resource = EmiIngredient.of(material, materialAmount);
+		this.resource = EmiIngredient.of(material, (long) materialAmount);
 		item = itemToRepair.copy();
 		item.setDamageValue(item.getMaxDamage() - (int) (item.getMaxDamage() * maxRepair));
 		this.output = EmiStack.of(item);
 	}
 
-	public EmiAnvilRepairRecipe(ResourceLocation id, ItemStack itemToRepair, Item material, int materialAmount, float maxRepair) {
+	public EmiAnvilRepairRecipe(ResourceLocation id, ItemStack itemToRepair, Item material, float materialAmount, float maxRepair) {
 		this(id, itemToRepair, Ingredient.of(material), materialAmount, maxRepair);
 	}
 
-	public EmiAnvilRepairRecipe(ResourceLocation id, ItemStack itemToRepair, TagKey<Item> material, int materialAmount, float maxRepair) {
+	public EmiAnvilRepairRecipe(ResourceLocation id, ItemStack itemToRepair, TagKey<Item> material, float materialAmount, float maxRepair) {
 		this(id, itemToRepair, Ingredient.of(material), materialAmount, maxRepair);
 	}
 

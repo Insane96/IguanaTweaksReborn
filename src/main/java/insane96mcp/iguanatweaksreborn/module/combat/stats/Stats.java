@@ -3,6 +3,7 @@ package insane96mcp.iguanatweaksreborn.module.combat.stats;
 import com.google.common.collect.Multimap;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.combat.PiercingDamage;
+import insane96mcp.iguanatweaksreborn.module.combat.criticalhits.CriticalRework;
 import insane96mcp.iguanatweaksreborn.module.misc.DataPacks;
 import insane96mcp.iguanatweaksreborn.setup.IntegratedPack;
 import insane96mcp.insanelib.base.Feature;
@@ -187,7 +188,9 @@ public class Stats extends Feature {
 										|| attribute.equals(Attributes.ATTACK_SPEED)
 										|| attribute.equals(Attributes.KNOCKBACK_RESISTANCE)
 										|| attribute.equals(ForgeMod.ENTITY_REACH.get())
-										|| attribute.equals(ForgeMod.BLOCK_REACH.get())) {
+										|| attribute.equals(ForgeMod.BLOCK_REACH.get())
+										|| attribute.equals(CriticalRework.CHANCE_ATTRIBUTE.get())
+										|| attribute.equals(CriticalRework.DAMAGE_ATTRIBUTE.get())) {
 									amount += event.getEntity().getAttributeBaseValue(attribute);
 									isEqualTooltip = true;
 								}
@@ -203,7 +206,7 @@ public class Stats extends Feature {
 								translationString = "attribute.modifier.take.";
 							switch (operation) {
 								case ADDITION -> {
-									if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE))
+									if (attribute.equals(Attributes.KNOCKBACK_RESISTANCE) || attribute.equals(CriticalRework.CHANCE_ATTRIBUTE.get()) || attribute.equals(CriticalRework.DAMAGE_ATTRIBUTE.get()))
 										component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(amount * 100) + "%", Component.translatable(attribute.getDescriptionId()));
 									else
 										component = Component.translatable(translationString + operation.toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(Math.abs(amount)), Component.translatable(attribute.getDescriptionId()));
