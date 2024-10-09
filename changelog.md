@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.18.2
+* Due to SereneSeasons mess, the mod is no longer compatible with SS past 9.0.0.46
+
 ## 3.18.1
 * Doubled bows arrows accuracy
   * Also configurable

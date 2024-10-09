@@ -47,6 +47,13 @@ license="All rights reserved"
     side="BOTH"
 
 [[dependencies.iguanatweaksreborn]]
+    modId="sereneseasons"
+    mandatory=true
+    versionRange="9.0.0.46"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.iguanatweaksreborn]]
     modId="pehkui"
     mandatory=false
     versionRange="[3.7.5,)"
