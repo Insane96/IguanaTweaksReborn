@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed `instant heal saturation threshold` behaving incorrectly in rare cases
+
 ## 3.18.2
 * Due to SereneSeasons mess, the mod is no longer compatible with SS past 9.0.0.46
 

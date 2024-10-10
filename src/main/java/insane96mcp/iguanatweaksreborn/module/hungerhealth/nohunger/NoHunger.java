@@ -205,7 +205,7 @@ public class NoHunger extends Feature {
     @SuppressWarnings("ConstantConditions")
     public static void healOnEat(Player player, @Nullable Item item, FoodProperties foodProperties) {
         boolean isRawFood = item != null && FoodDrinks.isRawFood(item);
-        if (Utils.getFoodSaturationRestored(foodProperties) > instantHealSaturationThreshold)
+        if (Utils.getFoodSaturationRestored(foodProperties) >= instantHealSaturationThreshold)
             onEatHealOverTime(player, item, foodProperties, isRawFood);
         else
             onEatInstantHeal(player, item, foodProperties, isRawFood);
