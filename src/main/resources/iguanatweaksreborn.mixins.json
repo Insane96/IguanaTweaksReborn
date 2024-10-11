@@ -83,6 +83,7 @@
     "client": [
         "MultiplayerGameModeMixin",
         "client.AnvilScreenMixin",
+        "client.CameraMixin",
         "client.ClientLevelMixin",
         "client.ClientPacketListenerMixin",
         "client.DeathScreenMixin",
