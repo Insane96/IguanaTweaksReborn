@@ -9,6 +9,7 @@
   * Instead of respawning with the same amount, each death now makes the player respawn with 1/2/2 less health (based on difficulty), down to a cap of 10/10/6 health
 * Slightly enhanced Third person camera
 * Fixed `instant heal saturation threshold` behaving incorrectly in rare cases
+* Fixed Serene Seasons being mandatory again
 
 ## 3.18.2
 * Due to SereneSeasons mess, the mod is no longer compatible with SS past 9.0.0.46
