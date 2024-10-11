@@ -3,11 +3,13 @@ package insane96mcp.iguanatweaksreborn.module.sleeprespawn.respawn;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.utils.ITRLogHelper;
+import insane96mcp.iguanatweaksreborn.utils.MCUtils;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.Difficulty;
 import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.util.LogHelper;
 import net.minecraft.core.BlockPos;
@@ -18,10 +20,12 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -37,6 +41,10 @@ public class Respawn extends Feature {
 	public static final String LOOSE_RESPAWN_POINT_SET = IguanaTweaksReborn.MOD_ID + ".loose_bed_respawn_point_set";
 	public static final GameRules.Key<GameRules.BooleanValue> RULE_RANGEDRESPAWN = GameRules.register("iguanatweaks:doLooseRespawn", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
 
+	public static final String DEATHS = IguanaTweaksReborn.RESOURCE_PREFIX + "deaths";
+	public static final String HUNGER_ON_DEATH_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "hunger_on_death";
+	public static final String SATURATION_ON_DEATH_TAG = IguanaTweaksReborn.RESOURCE_PREFIX + "saturation_on_death";
+
 	@Config(min = 0)
 	@Label(name = "Loose World Spawn Range", description = "The range from world spawn where players will respawn.")
 	public static MinMax looseWorldSpawnRange = new MinMax(128d, 192d);
@@ -51,8 +59,59 @@ public class Respawn extends Feature {
 	@Label(name = "Despawn mobs on bed respawn", description = "Mobs in this range from the player will be despawned when respawning at bed spawn.")
 	public static Integer despawnMobsOnBedRespawn = 32;
 
+	@Config(min = 0, max = 20)
+	@Label(name = "Stats Penalty.Health.Minimum", description = "Min Health of respawning players")
+	public static Difficulty minHealthOnRespawn = new Difficulty(10, 10, 6);
+	@Config(min = 0, max = 20)
+	@Label(name = "Stats Penalty.Health.Per Death", description = "How much health respawning players loose on respawn")
+	public static Difficulty perDeathHealthOnRespawn = new Difficulty(1, 2, 2);
+	@Config(min = 0, max = 20)
+	@Label(name = "Stats Penalty.Hunger.Minimum", description = "Min Hunger of respawning players")
+	public static Difficulty hungerOnRespawn = new Difficulty(14, 14, 10);
+	@Config(min = 0, max = 20)
+	@Label(name = "Stats Penalty.Saturation.Minimum", description = "Min Saturation of respawning players")
+	public static Difficulty saturationOnRespawn = new Difficulty(10, 10, 6);
+	@Config
+	@Label(name = "Stats Penalty.Only if below", description = "If hunger or saturation were above the values on death, they will not be reduced.")
+	public static Boolean respawnFoodOnlyIfBelow = true;
+
 	public Respawn(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	@SubscribeEvent
+	public void onPlayerDeath(LivingDeathEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof Player player))
+			return;
+
+		MCUtils.getOrCreatePersistedData(player).putInt(DEATHS, MCUtils.getOrCreatePersistedData(player).getInt(DEATHS) + 1);
+		MCUtils.getOrCreatePersistedData(player).putInt(HUNGER_ON_DEATH_TAG, player.getFoodData().foodLevel);
+		MCUtils.getOrCreatePersistedData(player).putFloat(SATURATION_ON_DEATH_TAG, player.getFoodData().saturationLevel);
+	}
+
+	@SubscribeEvent
+	public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+		if (!this.isEnabled()
+				|| event.isEndConquered())
+			return;
+
+		Player player = event.getEntity();
+		int hunger = MCUtils.getOrCreatePersistedData(player).getInt(HUNGER_ON_DEATH_TAG);
+		int hOnRespawn = (int) hungerOnRespawn.getByDifficulty(player.level());
+		if (!respawnFoodOnlyIfBelow || hunger < hOnRespawn)
+			player.getFoodData().foodLevel = hOnRespawn;
+		else
+			player.getFoodData().foodLevel = hunger;
+		float saturation = MCUtils.getOrCreatePersistedData(player).getFloat(SATURATION_ON_DEATH_TAG);
+		float sOnRespawn = (float) saturationOnRespawn.getByDifficulty(player.level());
+		if (!respawnFoodOnlyIfBelow || saturation < sOnRespawn)
+			player.getFoodData().saturationLevel = sOnRespawn;
+		else
+			player.getFoodData().saturationLevel = saturation;
+		double healthOnRespawn = player.getMaxHealth() - (perDeathHealthOnRespawn.getByDifficulty(player.level()) * MCUtils.getOrCreatePersistedData(player).getInt(DEATHS));
+		double minHealth = minHealthOnRespawn.getByDifficulty(player.level());
+		player.setHealth((float) Math.max(healthOnRespawn, minHealth));
 	}
 
 	//Run before ITE Respawn Obelisk

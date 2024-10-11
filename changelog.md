@@ -2,6 +2,8 @@
 
 ## Upcoming
 * Entities now have 20% chance to fall from their mount
+* Moved respawning Health/Hunger/Saturation to `Respawn` and reworked respawning health
+  * Instead of respawning with the same amount, each death now makes the player respawn with 1/2/2 less health (based on difficulty), down to a cap of 10/10/6 health
 * Fixed `instant heal saturation threshold` behaving incorrectly in rare cases
 
 ## 3.18.2
