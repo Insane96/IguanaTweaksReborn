@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Entities now have 20% chance to fall from their mount
 * Fixed `instant heal saturation threshold` behaving incorrectly in rare cases
 
 ## 3.18.2

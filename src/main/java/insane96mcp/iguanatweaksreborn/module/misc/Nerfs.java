@@ -10,12 +10,14 @@ import insane96mcp.insanelib.base.config.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
@@ -58,6 +60,10 @@ public class Nerfs extends Feature {
 	@Label(name = "No fish if fishing in the same spot")
 	public static Boolean antiFishingFarms = true;
 
+	@Config(min = 0, max = 1)
+	@Label(name = "Fall from mount chance", description = "When an entity is hit and on a mount they have this chance to fall")
+	public static Double fallFromMountChance = 0.2;
+
     public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
 	}
@@ -77,6 +83,21 @@ public class Nerfs extends Feature {
 
 		if (ironRequiresPlayer && event.getEntity() instanceof IronGolem && !(event.getSource().getDirectEntity() instanceof Player))
 			event.getDrops().removeIf(itemEntity -> itemEntity.getItem().is(Items.IRON_INGOT));
+	}
+
+	@SubscribeEvent
+	public void onPlayerHit(LivingDamageEvent event) {
+		if (!this.isEnabled()
+				|| !event.getEntity().isPassenger()
+				|| !(event.getSource().getEntity() instanceof LivingEntity
+				|| event.getEntity().level().isClientSide)
+				|| fallFromMountChance == 0)
+			return;
+
+		if (event.getEntity().getRandom().nextFloat() < fallFromMountChance) {
+			event.getEntity().stopRiding();
+			event.getEntity().level().playSound(null, event.getEntity(), SoundEvents.ARMOR_EQUIP_GENERIC, event.getEntity().getSoundSource(), 1f, 0.5f);
+		}
 	}
 
 	@SubscribeEvent
