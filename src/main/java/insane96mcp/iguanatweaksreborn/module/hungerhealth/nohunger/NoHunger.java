@@ -86,7 +86,7 @@ public class NoHunger extends Feature {
     @Label(name = "Food Heal.Instant Heal", description = "The formula to calculate the health restored instantly when eating. Leave empty to disable. To have the same effect as pre-Beta 1.8 food just use \"hunger\". Variables as hunger, saturation_modifier, effectiveness as numbers and fast_food as boolean can be used. This is evaluated with EvalEx https://ezylang.github.io/EvalEx/concepts/parsing_evaluation.html.")
     public static String instantHeal = "0.5 * ROUND((hunger^1.3) * 0.35, 1) / 0.5";
     @Config(min = 0d)
-    @Label(name = "Food Heal.Saturation threshold", description = "Foods below this saturation will instantly heal, foods above this threshold will have overtime heal.")
+    @Label(name = "Food Heal.Saturation threshold", description = "Foods below this saturation will instantly heal, foods equal or above this threshold will have overtime heal.")
     public static Double instantHealSaturationThreshold = 4d;
     @Config
     @Label(name = "Raw food.Heal Multiplier", description = "If true, raw food will heal by this percentage (this is applied after 'Food Heal.Health Multiplier'). Raw food is defined in the iguanatweaksreborn:raw_food tag")
