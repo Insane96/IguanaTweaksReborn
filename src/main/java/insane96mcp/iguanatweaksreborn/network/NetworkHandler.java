@@ -41,5 +41,6 @@ public class NetworkHandler {
 		CHANNEL.registerMessage(++index, SyncExperienceFeature.class, SyncExperienceFeature::encode, SyncExperienceFeature::decode, SyncExperienceFeature::handle);
 		CHANNEL.registerMessage(++index, BreakWithNoSound.class, BreakWithNoSound::encode, BreakWithNoSound::decode, BreakWithNoSound::handle);
 		CHANNEL.registerMessage(++index, ExplodeParticles.class, ExplodeParticles::encode, ExplodeParticles::decode, ExplodeParticles::handle);
+		CHANNEL.registerMessage(++index, FoggySync.class, FoggySync::encode, FoggySync::decode, FoggySync::handle);
 	}
 }

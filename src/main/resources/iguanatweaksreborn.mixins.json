@@ -92,6 +92,7 @@
         "client.LevelRendererMixin",
         "client.LightTextureMixin",
         "client.LocalPlayerMixin",
-        "client.MinecraftMixin"
+        "client.MinecraftMixin",
+        "client.OptionsMixin"
     ]
 }

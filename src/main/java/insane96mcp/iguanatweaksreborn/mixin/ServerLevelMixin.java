@@ -2,7 +2,7 @@ package insane96mcp.iguanatweaksreborn.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
-import insane96mcp.iguanatweaksreborn.module.world.Weather;
+import insane96mcp.iguanatweaksreborn.module.world.weather.Weather;
 import net.minecraft.server.level.ServerLevel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

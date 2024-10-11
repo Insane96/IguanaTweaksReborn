@@ -7,7 +7,6 @@ import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,12 +26,12 @@ public class Fog extends Feature {
     @Config
     @Label(name = "Better visibility in Lava with Fire Resistance Lava", description = "If true you'll be able to see better in lava when with the Fire Resistance Effect.")
     public static Boolean betterFireResistanceLavaFog = true;
-    @Config(min = 0d, max = 1d)
+    /*@Config(min = 0d, max = 1d)
     @Label(name = "Overworld Fog Start Ratio", description = "Changes fog to start closer to the player. E.g. A value of 0.5 makes fog start at half the render distance. Vanilla is 1, Pre-1.18.1 was 0.75, Pre-1.7.2 was 0.25")
     public static Double overworldFogStartRatio = 0.4d;
     @Config(min = 0d, max = 1d)
     @Label(name = "Overworld Fog Start Ratio on Rain", description = "Changes fog ratio when raining. Vanilla is 1")
-    public static Double overworldFogStartRatioOnRain = 0d;
+    public static Double overworldFogStartRatioOnRain = 0d;*/
     @Config
     @Label(name = "Better Nether Fog", description = "If true Nether Fog is no longer limited to 12 chunks.")
     public static Boolean betterNetherFog = true;
@@ -56,12 +55,12 @@ public class Fog extends Feature {
 
         lavaFog(event);
         netherFog(event);
-        betaOverworldFog(event);
+        //betaOverworldFog(event);
         //seasonFog(event);
     }
 
     private void betaOverworldFog(ViewportEvent.RenderFog event) {
-        if (overworldFogStartRatio == 1d && overworldFogStartRatioOnRain == 1d
+        /*if (overworldFogStartRatio == 1d && overworldFogStartRatioOnRain == 1d
                 || event.isCanceled()
                 || event.getCamera().getFluidInCamera() != FogType.NONE
                 || event.getMode() != FogRenderer.FogMode.FOG_TERRAIN)
@@ -77,7 +76,17 @@ public class Fog extends Feature {
         }
         else
             event.setNearPlaneDistance(event.getFarPlaneDistance() * ratio);
-        event.setCanceled(true);
+        if (!(event.getCamera().getEntity() instanceof LivingEntity entity))
+            return;
+        float rainLevel = entity.level().getRainLevel(1f);
+        if (rainLevel > 0f) {
+            event.setNearPlaneDistance(0f);
+            event.setFarPlaneDistance(16f);
+        }
+        else {
+            event.setNearPlaneDistance(event.getFarPlaneDistance() * 0.4f);
+        }
+        event.setCanceled(true);*/
     }
 
     /*private void seasonFog(ViewportEvent.RenderFog event) {
