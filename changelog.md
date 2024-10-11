@@ -1,6 +1,9 @@
 # Changelog
 
 ## Upcoming
+* Added `World`>`Weather Feature`
+  * Added Thunderstorm intensity, making thunderstorms have more chance to lightning strike when intensity is higher.
+    Intensity varies every few minutes
 * Entities now have 20% chance to fall from their mount
 * Moved respawning Health/Hunger/Saturation to `Respawn` and reworked respawning health
   * Instead of respawning with the same amount, each death now makes the player respawn with 1/2/2 less health (based on difficulty), down to a cap of 10/10/6 health

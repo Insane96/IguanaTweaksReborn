@@ -2,6 +2,7 @@ package insane96mcp.iguanatweaksreborn.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
+import insane96mcp.iguanatweaksreborn.module.world.Weather;
 import net.minecraft.server.level.ServerLevel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,9 +14,9 @@ public abstract class ServerLevelMixin {
         return Tiredness.onSleepFinished((ServerLevel) (Object) this, original);
     }
 
-    /*@ModifyExpressionValue(method = "tickChunk", at = @At(value = "CONSTANT", args = "intValue=100000"))
+    @ModifyExpressionValue(method = "tickChunk", at = @At(value = "CONSTANT", args = "intValue=100000"))
     private int changeThunderChance(int original) {
-        return 20;
-    }*/
+        return Weather.getLightningStrikeChance(original);
+    }
 
 }
