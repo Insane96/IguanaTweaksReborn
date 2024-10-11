@@ -5,7 +5,9 @@ import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
+import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.FogType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ViewportEvent;
@@ -47,17 +49,20 @@ public class ClientWeather extends Feature {
             currentFoggy = targetFoggy;
     }
 
-    public static void updateFoggy(int pFoggyTimer, int pFoggyTargetTime, Foggy pCurrentFoggy, Foggy pTargetFoggy) {
-        foggyTimer = pFoggyTimer;
-        foggyTargetTime = pFoggyTargetTime;
-        currentFoggy = pCurrentFoggy;
-        targetFoggy = pTargetFoggy;
+    public static void updateFoggy(WeatherSavedData.FoggyData foggyData) {
+        foggyTimer = foggyData.timer;
+        foggyTargetTime = foggyData.targetTime;
+        currentFoggy = foggyData.current;
+        targetFoggy = foggyData.target;
     }
 
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onFog(ViewportEvent.RenderFog event) {
-        if (!this.isEnabled())
+        if (!this.isEnabled()
+                || event.isCanceled()
+                || event.getCamera().getFluidInCamera() != FogType.NONE
+                || event.getMode() != FogRenderer.FogMode.FOG_TERRAIN)
             return;
 
         float changingRatio = 1f;

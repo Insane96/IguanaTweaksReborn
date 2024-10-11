@@ -1,6 +1,8 @@
 package insane96mcp.iguanatweaksreborn.module.world.weather;
 
+import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +28,10 @@ public class WeatherSavedData extends SavedData {
         weatherSavedData.foggyData.load(compoundTag.getCompound("foggy_data"));
         weatherSavedData.thunderIntensityData.load(compoundTag.getCompound("thunder_intensity_data"));
         return weatherSavedData;
+    }
+
+    public static WeatherSavedData get(ServerLevel level) {
+        return level.getDataStorage().computeIfAbsent(WeatherSavedData::load, WeatherSavedData::new, IguanaTweaksReborn.MOD_ID + "_weather");
     }
 
     public static final class FoggyData {

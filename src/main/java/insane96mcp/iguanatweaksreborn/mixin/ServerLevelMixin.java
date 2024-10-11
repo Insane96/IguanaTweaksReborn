@@ -16,7 +16,7 @@ public abstract class ServerLevelMixin {
 
     @ModifyExpressionValue(method = "tickChunk", at = @At(value = "CONSTANT", args = "intValue=100000"))
     private int changeThunderChance(int original) {
-        return Weather.getLightningStrikeChance(original);
+        return Weather.getLightningStrikeChance((ServerLevel) (Object) this, original);
     }
 
 }

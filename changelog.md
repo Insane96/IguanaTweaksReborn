@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Added `World`>`Weather` Feature
+  * Added Foggy Weather. Weather can now be foggy and slowly changes overtime 
   * Added Thunderstorm intensity, making thunderstorms have more chance to lightning strike when intensity is higher.
     Intensity varies every few minutes
 * Entities now have 20% chance to fall from their mount

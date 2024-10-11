@@ -1,6 +1,5 @@
 package insane96mcp.iguanatweaksreborn.module.world.weather;
 
-import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.network.message.FoggySync;
 import insane96mcp.insanelib.base.Feature;
@@ -11,21 +10,18 @@ import insane96mcp.insanelib.base.config.Config;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Weather")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class Weather extends Feature {
-    public static final String THUNDERSTORM_INTENSITY = IguanaTweaksReborn.RESOURCE_PREFIX + "thunderstorm_intensity";
-    public static final String THUNDERSTORM_TARGET_INTENSITY = IguanaTweaksReborn.RESOURCE_PREFIX + "thunderstorm_target_intensity";
-    public static final String THUNDERSTORM_INTENSITY_TIMER = IguanaTweaksReborn.RESOURCE_PREFIX + "thunderstorm_intensity_timer";
+    public static final GameRules.Key<GameRules.BooleanValue> RULE_THUNDERSTORMINTENSITY = GameRules.register("iguanatweaks:thunderstormIntensity", GameRules.Category.MISC, GameRules.BooleanValue.create(true));
+    public static final GameRules.Key<GameRules.BooleanValue> RULE_FOGGYWEATHER = GameRules.register("iguanatweaks:foggyWeather", GameRules.Category.MISC, GameRules.BooleanValue.create(true));
 
-    @Config
-    @Label(name = "Thunderstorm Intensity.Enabled", description = "If true, thunderstorms can be range from different intensities, increasing / decreasing the lightning bolt chance")
-    public static Boolean thunderstormIntensity = true;
     @Config(min = 1)
     @Label(name = "Thunderstorm Intensity.Min Intensity", description = "Minimum thunderstorm intensity.")
     public static Integer thunderstormIntensityMin = 1;
@@ -36,9 +32,6 @@ public class Weather extends Feature {
     @Label(name = "Thunderstorm Intensity.Base Duration", description = "Base duration of each intensity (in minutes). Lasts less and less the higher the intensity")
     public static Integer thunderstormIntensityBaseDuration = 4;
 
-    @Config
-    @Label(name = "Foggy Weather.Enabled")
-    public static Boolean foggyWeather = true;
     @Config(min = 1)
     @Label(name = "Foggy Weather.Min Time", description = "Minimum time (in minutes) a foggy weather can last.")
     public static Integer foggyWeatherMinTime = 1;
@@ -51,78 +44,90 @@ public class Weather extends Feature {
     }
 
     @SubscribeEvent
-    public void onLevelLoad(LevelEvent.Load event) {
-        if (!(event.getLevel() instanceof ServerLevel serverLevel)
-                || serverLevel.dimension() != Level.OVERWORLD)
-            return;
-        serverLevel.getDataStorage().computeIfAbsent(WeatherSavedData::load, WeatherSavedData::new, IguanaTweaksReborn.RESOURCE_PREFIX + "weather");
-    }
-
-    @SubscribeEvent
     public void onLevelTick(TickEvent.LevelTickEvent event) {
         if (!this.isEnabled()
                 || event.phase != TickEvent.Phase.START
                 || event.level.dimension() != Level.OVERWORLD
-                || event.level.isClientSide
+                || !(event.level instanceof ServerLevel serverLevel)
                 /*|| event.level.tickCount % 20 != 10*/)
             return;
 
-        tickFoggyWeather(event.level);
-        tickVariableThunderstorm(event.level);
+        tickFoggyWeather(serverLevel, WeatherSavedData.get(serverLevel));
+        tickVariableThunderstorm(serverLevel, WeatherSavedData.get(serverLevel));
     }
 
-    public static WeatherSavedData weatherSavedData = new WeatherSavedData();
-
-    public static void tickFoggyWeather(Level level) {
-        if (!foggyWeather)
+    public static void tickFoggyWeather(ServerLevel level, WeatherSavedData wsd) {
+        if (!level.getGameRules().getBoolean(RULE_FOGGYWEATHER))
             return;
-
-        if (weatherSavedData.foggyData.targetTime == -1) {
-            weatherSavedData.foggyData.targetTime = getNewFoggyTargetTime(level.random);
+        if (wsd.foggyData.targetTime == -1) {
+            wsd.foggyData.targetTime = getNewFoggyTargetTime(level.random);
         }
-        if (++weatherSavedData.foggyData.timer >= weatherSavedData.foggyData.targetTime) {
-            if (weatherSavedData.foggyData.current == weatherSavedData.foggyData.target) {
-                weatherSavedData.foggyData.target = Foggy.values()[level.random.nextInt(Foggy.values().length)];
-                weatherSavedData.foggyData.timer = 0;
-                weatherSavedData.foggyData.targetTime = getNewFoggyTargetTime(level.random) / 2;
+        if (++wsd.foggyData.timer >= wsd.foggyData.targetTime) {
+            if (wsd.foggyData.current == wsd.foggyData.target) {
+                wsd.foggyData.target = Foggy.values()[level.random.nextInt(Foggy.values().length)];
+                wsd.foggyData.timer = 0;
+                wsd.foggyData.targetTime = getNewFoggyTargetTime(level.random) / 2;
                 level.players().forEach(player ->
-                        FoggySync.sync((ServerPlayer) player, weatherSavedData.foggyData.timer, weatherSavedData.foggyData.targetTime, weatherSavedData.foggyData.current, weatherSavedData.foggyData.target));
+                        FoggySync.sync(player, wsd.foggyData));
             }
             else {
-                weatherSavedData.foggyData.current = weatherSavedData.foggyData.target;
-                weatherSavedData.foggyData.timer = 0;
-                weatherSavedData.foggyData.targetTime = getNewFoggyTargetTime(level.random);
+                wsd.foggyData.current = wsd.foggyData.target;
+                wsd.foggyData.timer = 0;
+                wsd.foggyData.targetTime = getNewFoggyTargetTime(level.random);
             }
         }
-        weatherSavedData.setDirty();
+        wsd.setDirty();
     }
 
     private static int getNewFoggyTargetTime(RandomSource random) {
         return (int) ((random.nextFloat() * (foggyWeatherMaxTime - foggyWeatherMinTime) + foggyWeatherMinTime) * 60 * 20);
     }
 
-    public static void tickVariableThunderstorm(Level level) {
-        if (!thunderstormIntensity)
-            return;
-
-        if (weatherSavedData.thunderIntensityData.targetIntensity == -1)
-            weatherSavedData.thunderIntensityData.targetIntensity = level.random.nextInt(14) + 1;
-
-        if (--weatherSavedData.thunderIntensityData.timer <= 0) {
-            weatherSavedData.thunderIntensityData.timer = (int) ((4 * 60 * 20) + level.random.nextFloat() * (4 * 60 * 20)) / weatherSavedData.thunderIntensityData.intensity;
-            int delta = weatherSavedData.thunderIntensityData.targetIntensity > weatherSavedData.thunderIntensityData.intensity ? 1 : -1;
-            weatherSavedData.thunderIntensityData.intensity += delta;
-            if (weatherSavedData.thunderIntensityData.intensity == weatherSavedData.thunderIntensityData.targetIntensity)
-                weatherSavedData.thunderIntensityData.targetIntensity = level.random.nextInt(14) + 1;
-        }
-        weatherSavedData.setDirty();
+    public static void clearFoggyWeather(ServerLevel level) {
+        WeatherSavedData wsd = WeatherSavedData.get(level);
+        wsd.foggyData.current = Foggy.NONE;
+        wsd.foggyData.target = Foggy.NONE;
+        wsd.foggyData.timer = 0;
+        wsd.foggyData.targetTime = -1;
+        wsd.setDirty();
+        level.players().forEach(player -> FoggySync.sync(player, wsd.foggyData));
     }
 
-    public static int getLightningStrikeChance(int original) {
+    public static void tickVariableThunderstorm(ServerLevel level, WeatherSavedData wsd) {
+        if (!level.getGameRules().getBoolean(RULE_THUNDERSTORMINTENSITY))
+            return;
+        if (wsd.thunderIntensityData.targetIntensity == -1)
+            wsd.thunderIntensityData.targetIntensity = getNewTargetIntensity(level.random);
+
+        if (--wsd.thunderIntensityData.timer <= 0) {
+            wsd.thunderIntensityData.timer = (int) ((thunderstormIntensityBaseDuration * 60 * 20) + level.random.nextFloat() * (thunderstormIntensityBaseDuration * 60 * 20)) / wsd.thunderIntensityData.intensity;
+            int delta = wsd.thunderIntensityData.targetIntensity > wsd.thunderIntensityData.intensity ? 1 : -1;
+            wsd.thunderIntensityData.intensity += delta;
+            if (wsd.thunderIntensityData.intensity == wsd.thunderIntensityData.targetIntensity)
+                wsd.thunderIntensityData.targetIntensity = getNewTargetIntensity(level.random);
+        }
+        wsd.setDirty();
+    }
+
+    private static int getNewTargetIntensity(RandomSource random) {
+        return random.nextInt(thunderstormIntensityMin, thunderstormIntensityMax + 1);
+    }
+
+    public static int getLightningStrikeChance(ServerLevel level, int original) {
         if (!Feature.isEnabled(Weather.class)
-                || !thunderstormIntensity)
+                || !level.getGameRules().getBoolean(RULE_THUNDERSTORMINTENSITY))
             return original;
-        return original / weatherSavedData.thunderIntensityData.intensity;
+        return original / WeatherSavedData.get(level).thunderIntensityData.intensity;
+    }
+
+    @SubscribeEvent
+    public void onPlayerJoinLevel(EntityJoinLevelEvent event) {
+        if (!this.isEnabled()
+                || event.getLevel().dimension() != Level.OVERWORLD
+                || !(event.getEntity() instanceof ServerPlayer player))
+            return;
+
+        FoggySync.sync(player, WeatherSavedData.get(player.serverLevel()).foggyData);
     }
 
 }
