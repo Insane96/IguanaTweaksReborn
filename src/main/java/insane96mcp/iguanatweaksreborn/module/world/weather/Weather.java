@@ -83,6 +83,16 @@ public class Weather extends Feature {
         return (int) ((random.nextFloat() * (foggyWeatherMaxTime - foggyWeatherMinTime) + foggyWeatherMinTime) * 60 * 20);
     }
 
+    @SubscribeEvent
+    public void onPlayerJoinLevel(EntityJoinLevelEvent event) {
+        if (!this.isEnabled()
+                || event.getLevel().dimension() != Level.OVERWORLD
+                || !(event.getEntity() instanceof ServerPlayer player))
+            return;
+
+        FoggySync.sync(player, WeatherSavedData.get(player.serverLevel()).foggyData);
+    }
+
     public static void clearFoggyWeather(ServerLevel level) {
         WeatherSavedData wsd = WeatherSavedData.get(level);
         wsd.foggyData.current = Foggy.NONE;
@@ -91,6 +101,10 @@ public class Weather extends Feature {
         wsd.foggyData.targetTime = -1;
         wsd.setDirty();
         level.players().forEach(player -> FoggySync.sync(player, wsd.foggyData));
+    }
+
+    public static WeatherSavedData.FoggyData getCurrentFoggyData(ServerLevel level) {
+        return WeatherSavedData.get(level).foggyData;
     }
 
     public static void tickVariableThunderstorm(ServerLevel level, WeatherSavedData wsd) {
@@ -120,14 +134,8 @@ public class Weather extends Feature {
         return original / WeatherSavedData.get(level).thunderIntensityData.intensity;
     }
 
-    @SubscribeEvent
-    public void onPlayerJoinLevel(EntityJoinLevelEvent event) {
-        if (!this.isEnabled()
-                || event.getLevel().dimension() != Level.OVERWORLD
-                || !(event.getEntity() instanceof ServerPlayer player))
-            return;
-
-        FoggySync.sync(player, WeatherSavedData.get(player.serverLevel()).foggyData);
+    public static WeatherSavedData.ThunderIntensityData getCurrentThunderIntensityData(ServerLevel level) {
+        return WeatherSavedData.get(level).thunderIntensityData;
     }
 
 }

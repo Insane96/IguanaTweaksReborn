@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Added `/iguanatweaks foggy_weather get` and `/iguanatweaks thunderstorm_intensity get` commands
+
 ## 3.19.0
 * Added `World`>`Weather` Feature
   * Added Foggy Weather. Weather can now be foggy and slowly changes overtime 

@@ -62,6 +62,16 @@ public class WeatherSavedData extends SavedData {
             this.current = Foggy.values()[compoundTag.getInt("current")];
             this.target = Foggy.values()[compoundTag.getInt("target")];
         }
+
+        @Override
+        public String toString() {
+            return "FoggyData{" +
+                    "timer=" + timer +
+                    ", targetTime=" + targetTime +
+                    ", current=" + current +
+                    ", target=" + target +
+                    '}';
+        }
     }
 
     public static final class ThunderIntensityData {
@@ -87,6 +97,15 @@ public class WeatherSavedData extends SavedData {
             this.timer = compoundTag.getInt("timer");
             this.targetIntensity = compoundTag.getInt("targetIntensity");
             this.intensity = compoundTag.getInt("intensity");
+        }
+
+        @Override
+        public String toString() {
+            return "ThunderIntensityData{" +
+                    "timer=" + timer +
+                    ", targetIntensity=" + targetIntensity +
+                    ", intensity=" + intensity +
+                    '}';
         }
     }
 }
