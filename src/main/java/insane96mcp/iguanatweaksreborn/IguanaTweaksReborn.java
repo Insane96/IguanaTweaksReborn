@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn;
 
 import com.google.common.collect.Lists;
+import glitchcore.event.EventManager;
 import insane96mcp.iguanatweaksreborn.command.ITRCommand;
 import insane96mcp.iguanatweaksreborn.data.criterion.ITRTriggers;
 import insane96mcp.iguanatweaksreborn.data.criterion.SeasonChangedTrigger;
@@ -22,8 +23,10 @@ import insane96mcp.iguanatweaksreborn.module.farming.plantsgrowth.PlantsGrowthRe
 import insane96mcp.iguanatweaksreborn.module.hungerhealth.nohunger.NoHunger;
 import insane96mcp.iguanatweaksreborn.module.items.itemstats.ItemStatsReloadListener;
 import insane96mcp.iguanatweaksreborn.module.mining.blockdata.BlockDataReloadListener;
+import insane96mcp.iguanatweaksreborn.module.mobs.spawning.SeasonSpawning;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
 import insane96mcp.iguanatweaksreborn.module.world.CyanFlower;
+import insane96mcp.iguanatweaksreborn.module.world.seasons.Seasons;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerData;
 import insane96mcp.iguanatweaksreborn.module.world.spawners.capability.SpawnerDataAttacher;
 import insane96mcp.iguanatweaksreborn.network.NetworkHandler;
@@ -108,6 +111,12 @@ public class IguanaTweaksReborn
             modEventBus.addListener(ClientSetup::registerEntityRenderers);
             //modEventBus.addListener(ClientSetup::registerRecipeBookCategories);
             //modEventBus.addListener(ClientSetup::registerParticleFactories);
+        }
+
+        if (ModList.get().isLoaded("sereneseasons")) {
+            EventManager.addListener(SeasonSpawning::onSeasonChanged);
+            EventManager.addListener(Seasons::onSeasonChanged);
+            EventManager.addListener(SeasonChangedTrigger::onSeasonChanged);
         }
     }
 

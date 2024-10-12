@@ -118,7 +118,8 @@ dependencies {
     // runtimeOnly fg.deobf("curse.maven:worldedit-225608:4586218")
     implementation fg.deobf("curse.maven:supplementaries-412082:5225134")
 
-    implementation fg.deobf("com.github.glitchfiend:SereneSeasons:${mc_version}-${sereneseasons_version}")
+    implementation fg.deobf("curse.maven:glitchcore-955399:5787839")
+    implementation fg.deobf("curse.maven:serene-seasons-291874:5790653")
     implementation fg.deobf("curse.maven:time-control-303570:5095704")
 
     compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}:api")

@@ -76,8 +76,7 @@
         "integration.autumnity.CookedTurkeyBlockMixin",
         "integration.autumnity.PancakeBlockMixin",
         "integration.autumnity.TurkeyBlockMixin",
-        "integration.farmersdelight.PieBlockMixin",
-        "integration.sereneseasons.RandomUpdateHandlerMixin"
+        "integration.farmersdelight.PieBlockMixin"
     ],
     "minVersion": "0.8",
     "client": [
