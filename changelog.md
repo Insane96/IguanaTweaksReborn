@@ -9,6 +9,8 @@
   * % attack damage 0% -> -40%
 * Every shovel now deals 2x knockback instead of being based on the attack damage
 * Fixed knockback reduction being called twice (not sure actually lol)
+* Updated Elytra Nerf
+  * You no longer get pulled down outside the end, instead you'll encounter more air resistance
 * Added `/iguanatweaks foggy_weather get` and `/iguanatweaks thunderstorm_intensity get` commands
 * Added a fix for Global GameRules which enforces survival in hardcore worlds
 

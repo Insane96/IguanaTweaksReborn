@@ -8,6 +8,7 @@ import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.EnchantmentsFeature;
 import insane96mcp.iguanatweaksreborn.module.experience.enchantments.enchantment.protection.IProtectionEnchantment;
 import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
+import insane96mcp.iguanatweaksreborn.module.movement.ElytraNerf;
 import insane96mcp.iguanatweaksreborn.module.movement.Swimming;
 import insane96mcp.iguanatweaksreborn.module.movement.TerrainSlowdown;
 import insane96mcp.iguanatweaksreborn.module.sleeprespawn.tiredness.Tiredness;
@@ -31,10 +32,7 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
@@ -161,5 +159,13 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
     @WrapOperation(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;handleRelativeFrictionAndCalculateMovement(Lnet/minecraft/world/phys/Vec3;F)Lnet/minecraft/world/phys/Vec3;"))
     private Vec3 checkCollideHorizontallyAndDamage(LivingEntity instance, Vec3 pTravelVector, float pFriction, Operation<Vec3> originalOperation) {
         return Tweaks.onCollideWithWall(instance, pTravelVector, pFriction, originalOperation);
+    }
+
+    @ModifyArg(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setDeltaMovement(Lnet/minecraft/world/phys/Vec3;)V", ordinal = 6))
+    private Vec3 checkCollideHorizontallyAndDamage(Vec3 vec3) {
+        if (!Feature.isEnabled(ElytraNerf.class)
+                || this.level().dimension() == Level.END)
+            return vec3;
+        return vec3.multiply(ElytraNerf.airResistance, 0.98d, ElytraNerf.airResistance);
     }
 }

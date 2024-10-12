@@ -6,36 +6,16 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Elytra Nerf", description = "Makes flying with elytra outside the end dimension have stronger gravity.")
+@Label(name = "Elytra Nerf", description = "Makes flying with elytra outside the end dimension have stronger \"air resistance\"")
 @LoadFeature(module = Modules.Ids.MOVEMENT)
 public class ElytraNerf extends Feature {
 
 	@Config(min = 0d, max = 1d)
-	@Label(name = "Strength", description = "How much the player is pulled down when flying with elytra in non-end dimensions.")
-	public static Double pullStrength = 0.4d;
+	@Label(name = "Air Resistance", description = "How much the player is slowed down when gliding.")
+	public static Double airResistance = 0.975d;
 
 	public ElytraNerf(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent
-	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-		if (!this.isEnabled()
-				|| event.phase != TickEvent.Phase.START
-				|| !event.player.isFallFlying()
-				|| event.player.isInFluidType()
-				|| event.player.level().dimension() == Level.END)
-			return;
-
-		event.player.move(MoverType.SELF, new Vec3(0, -pullStrength, 0));
 	}
 }
