@@ -4,9 +4,11 @@
 * Sweeping overhaul
   * Sweeping attack now deals full damage to all entities hit
   * Sweeping edge now increases the range of the sweep attack
-  * Swords stats changed
-    * Base attack damage +0.5 -> +1
-    * % attack damage 0% -> -40%
+* Swords stats changed to account for Sweeping overhaul
+  * Base attack damage +0.5 -> +1
+  * % attack damage 0% -> -40%
+* Every shovel now deals 2x knockback instead of being based on the attack damage
+* Fixed knockback reduction being called twice (not sure actually lol)
 * Added `/iguanatweaks foggy_weather get` and `/iguanatweaks thunderstorm_intensity get` commands
 
 ## 3.19.0

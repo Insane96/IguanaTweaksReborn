@@ -11,7 +11,6 @@ import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import insane96mcp.insanelib.data.IdTagValue;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,8 +20,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShovelItem;
-import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -30,7 +27,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Label(name = "Knockback", description = "Player will deal reduced knockback if attacking with a non-weapon or spamming.")
 @LoadFeature(module = Modules.Ids.COMBAT)
@@ -47,11 +43,6 @@ public class Knockback extends JsonFeature {
 	@Config(min = 0d, max = 1d)
 	@Label(name = "No Weapon Penalty.Knockback reduction", description = "Percentage knockback dealt when conditions are met.")
 	public static Double knockbackReduction = 0.35d;
-
-	public static final UUID SHOVELS_KNOCKBACK_MODIFIER_UUID = UUID.fromString("80d9e6b1-c385-49d4-aac0-cb018f4f1b16");
-	@Config(min = 0d)
-	@Label(name = "Shovels damage to knockback ratio")
-	public static Double shovelsKnockbackRatio = 0.4d;
 
 	//Knockback multipliers for items
 	public static final ArrayList<IdTagValue> KNOCKBACK_MULTIPLIERS_DEFAULT = new ArrayList<>(List.of(
@@ -129,7 +120,6 @@ public class Knockback extends JsonFeature {
 		player.getPersistentData().putBoolean(SHOULD_APPLY_NO_KNOCKBACK, false);
 	}
 
-	@SubscribeEvent
 	public void itemKnockbackReduction(LivingKnockBackEvent event) {
 		if (event.getEntity().getLastHurtByMob() == null)
 			return;
@@ -139,17 +129,5 @@ public class Knockback extends JsonFeature {
 				multiplier = (float) idTagValue.value;
 		}
 		event.setStrength(event.getStrength() * multiplier);
-	}
-
-	@SubscribeEvent
-	public void addAttributeToShovels(ItemAttributeModifierEvent event) {
-		if (!this.isEnabled()
-				|| event.getSlotType() != EquipmentSlot.MAINHAND
-				|| !(event.getItemStack().getItem() instanceof ShovelItem shovelItem)
-				|| !(event.getItemStack().is(ItemTags.SHOVELS))
-				|| (isEnabled(ItemStats.class) && ItemStats.unbreakableItems && ItemStats.isBroken(event.getItemStack())))
-			return;
-
-		event.addModifier(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(SHOVELS_KNOCKBACK_MODIFIER_UUID, "Shovels Knockback modifier", shovelItem.getAttackDamage() * shovelsKnockbackRatio, AttributeModifier.Operation.ADDITION));
 	}
 }
