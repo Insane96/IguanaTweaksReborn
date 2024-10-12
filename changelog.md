@@ -1,6 +1,12 @@
 # Changelog
 
 ## Upcoming
+* Sweeping overhaul
+  * Sweeping attack now deals full damage to all entities hit
+  * Sweeping edge now increases the range of the sweep attack
+  * Swords stats changed
+    * Base attack damage +0.5 -> +1
+    * % attack damage 0% -> -40%
 * Added `/iguanatweaks foggy_weather get` and `/iguanatweaks thunderstorm_intensity get` commands
 
 ## 3.19.0

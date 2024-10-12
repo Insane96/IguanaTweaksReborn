@@ -22,8 +22,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
@@ -100,6 +102,32 @@ public abstract class PlayerMixin extends LivingEntity {
 		return Stats.noDamageWhenSpamming() ? 1f : value;
 	}
 
+	@ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
+	public float changeSweepingDamage(float original, @Local(ordinal = 0) float f) {
+		if (!Stats.sweepingOverhaul
+				|| !Feature.isEnabled(Stats.class))
+			return original;
+		return f;
+	}
+
+	@ModifyExpressionValue(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getSweepHitBox(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/phys/AABB;"))
+	public AABB changeSweepingHitbox(AABB original) {
+		if (!Stats.sweepingOverhaul
+				|| !Feature.isEnabled(Stats.class))
+			return original;
+		int lvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.SWEEPING_EDGE, this);
+		return original.inflate(lvl * 0.25f, lvl * 0.1f, lvl * 0.25f);
+	}
+
+	@ModifyExpressionValue(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;getEntityReach()D"))
+	public double increaseSweepingReach(double original) {
+		if (!Stats.sweepingOverhaul
+				|| !Feature.isEnabled(Stats.class))
+			return original;
+		int lvl = EnchantmentHelper.getEnchantmentLevel(Enchantments.SWEEPING_EDGE, this);
+		return original + lvl * 0.25f;
+	}
+
 	@ModifyExpressionValue(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getDamageBonus(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/MobType;)F"))
 	public float onEnchantmentDamage(float original, Entity target) {
 		Map<Enchantment, Integer> allEnchantments = this.getMainHandItem().getAllEnchantments();
@@ -116,7 +144,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@Inject(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getFireAspect(Lnet/minecraft/world/entity/LivingEntity;)I"))
 	public void storeNewFlag3(Entity pTarget, CallbackInfo ci, @Local(ordinal = 0) boolean flag, @Share("flag3") LocalBooleanRef flag3) {
-		if (!Stats.betterSweeping
+		if (!Stats.sweepingOverhaul
 				|| !Feature.isEnabled(Stats.class))
 			return;
 		if (flag) {
@@ -127,7 +155,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@ModifyVariable(method = "attack", ordinal = 3, at = @At("LOAD"))
 	public boolean onFlag3Check(boolean original, @Share("flag3") LocalBooleanRef flag3) {
-		if (!Stats.betterSweeping
+		if (!Stats.sweepingOverhaul
 				|| !Feature.isEnabled(Stats.class))
 			return original;
 		return flag3.get();
@@ -140,7 +168,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
 	@ModifyExpressionValue(method = "attack",at = @At(value = "CONSTANT", args = "doubleValue=0.4000000059604645"))
 	public double onSweepKnockbackStrength(double original, @Local(name = "i") float i) {
-		if (!Stats.betterSweeping
+		if (!Stats.sweepingOverhaul
 				|| !Feature.isEnabled(Stats.class))
 			return original;
 		return i * 0.5F;

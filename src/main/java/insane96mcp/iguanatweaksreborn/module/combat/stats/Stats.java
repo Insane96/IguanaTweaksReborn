@@ -39,7 +39,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Label(name = "Misc Stats", description = "Various changes from weapons damage to armor reduction")
+@Label(name = "Misc Stats", description = "Various changes from weapons damage to bows, arrows and effects")
 @LoadFeature(module = Modules.Ids.COMBAT)
 public class Stats extends Feature {
 	public static final UUID ATTACK_RANGE_REDUCTION_UUID = UUID.fromString("0dd017a7-274c-4101-85b4-78af20a24c54");
@@ -84,11 +84,11 @@ public class Stats extends Feature {
 	@Label(name = "1 damage for tools attacking", description = "If enabled, tools will not take 2 damage when used to hurt entities")
 	public static Boolean oneDamageForToolAttacking = true;
 	@Config
+	@Label(name = "Sweeping overhaul", description = "Rework Swords sweeping attack. The sweeping attack deals full damage and the Sweeping Edge enchantment increases the range.")
+	public static Boolean sweepingOverhaul = true;
+	@Config
 	@Label(name = "Item Stats Data Pack", description = "Enables a data pack that rebalances all the items, from armor to efficiency to weapons. Also changes some item stacks.")
 	public static Boolean itemStatsDataPack = true;
-	@Config
-	@Label(name = "Better sweeping", description = "Makes swords do sweep attack even if not on ground and if did crit")
-	public static Boolean betterSweeping = true;
 
 	public Stats(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
