@@ -20,6 +20,7 @@ public class ModLoadedPlugin implements IMixinConfigPlugin {
             .put("insane96mcp.iguanatweaksreborn.mixin.FallingBlockEntityMixin", () -> LoadingModList.get().getModFileById("quark") == null)
             .put("insane96mcp.iguanatweaksreborn.mixin.BoatMixin", () -> LoadingModList.get().getModFileById("quark") == null)
             .put("insane96mcp.iguanatweaksreborn.mixin.EnchantmentHelperMixin", () -> LoadingModList.get().getModFileById("apotheosis") == null)
+            .put("insane96mcp.iguanatweaksreborn.mixin.integration.globalgamerules.WorldEventsMixin", () -> LoadingModList.get().getModFileById("globalgamerules") != null)
             .put("insane96mcp.iguanatweaksreborn.mixin.integration.autumnity.CookedTurkeyBlockMixin", () -> LoadingModList.get().getModFileById("autumnity") != null)
             .put("insane96mcp.iguanatweaksreborn.mixin.integration.autumnity.TurkeyBlockMixin", () -> LoadingModList.get().getModFileById("autumnity") != null)
             .put("insane96mcp.iguanatweaksreborn.mixin.integration.autumnity.PancakeBlockMixin", () -> LoadingModList.get().getModFileById("autumnity") != null)

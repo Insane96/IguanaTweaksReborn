@@ -10,6 +10,7 @@
 * Every shovel now deals 2x knockback instead of being based on the attack damage
 * Fixed knockback reduction being called twice (not sure actually lol)
 * Added `/iguanatweaks foggy_weather get` and `/iguanatweaks thunderstorm_intensity get` commands
+* Added a fix for Global GameRules which enforces survival in hardcore worlds
 
 ## 3.19.0
 * Added `World`>`Weather` Feature
