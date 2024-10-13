@@ -149,6 +149,9 @@ dependencies {
     implementation fg.deobf("curse.maven:zeta-968868:5418213")
     implementation fg.deobf("curse.maven:quark-243121:5418252")
 
+    //implementation fg.deobf("curse.maven:nostalgic-tweaks-592465:5602576")
+    //implementation fg.deobf("curse.maven:architectury-api-419699:5137938")
+
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
     minecraftLibrary 'com.ezylang:EvalEx:3.0.2'

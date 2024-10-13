@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.20.0
 * Sweeping overhaul
   * Sweeping attack now deals full damage to all entities hit
   * Sweeping edge now increases the range of the sweep attack
