@@ -6,6 +6,8 @@ import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.LoadFeature;
 import insane96mcp.insanelib.base.Module;
 import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FogType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -62,6 +64,8 @@ public class ClientWeather extends Feature {
         if (!this.isEnabled()
                 || event.isCanceled()
                 || event.getCamera().getFluidInCamera() != FogType.NONE
+                || !(event.getCamera().getEntity() instanceof LivingEntity livingEntity)
+                || livingEntity.hasEffect(MobEffects.BLINDNESS)
                 || event.getMode() != FogRenderer.FogMode.FOG_TERRAIN)
             return;
 

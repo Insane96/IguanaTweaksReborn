@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Fixed foggy weather overwriting Blindness
+
 ## 3.20.0
 * Sweeping overhaul
   * Sweeping attack now deals full damage to all entities hit
