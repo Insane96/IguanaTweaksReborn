@@ -4,6 +4,10 @@
     "minecraft:carrots",
     "minecraft:potatoes",
     "minecraft:beetroots",
+    "iguanatweaksreborn:wild_wheat",
+    "iguanatweaksreborn:wild_carrots",
+    "iguanatweaksreborn:wild_potatoes",
+    "iguanatweaksreborn:wild_beetroots",
     {
       "id": "supplementaries:flax",
       "required": false

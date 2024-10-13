@@ -12,6 +12,7 @@
 * Unfair one-shot overhaul
   * Now plays an animation similar to the totem of undying when activated
   * Changed the sound to the level up one
+* Wild crops are no longer insta-break and can be broken faster with hoes
 * Updated Elytra Nerf
   * You no longer get pulled down outside the end, instead you'll encounter more air resistance
 * Added `/iguanatweaks foggy_weather get` and `/iguanatweaks thunderstorm_intensity get` commands

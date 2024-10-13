@@ -1,9 +1,9 @@
-// 1.20.1	2024-09-26T16:48:14.8465884	Tags for minecraft:block mod id iguanatweaksreborn
+// 1.20.1	2024-10-13T12:38:45.8749022	Tags for minecraft:block mod id iguanatweaksreborn
 33e91aee8aadac89fdcdfb63a56cf5d7c281c254 data/iguanatweaksreborn/tags/blocks/azalea_leaves.json
 a60fb24dab6707c402d6f42a50d493c071ee8724 data/iguanatweaksreborn/tags/blocks/break_on_fall.json
 544a881a75df8b3b67af0c65834461695dc442fe data/iguanatweaksreborn/tags/blocks/depth_multiplier_blacklist.json
 9c8472a64a3dcde9ed2c0ad0bb67999d78d40431 data/iguanatweaksreborn/tags/blocks/grass_blocks.json
-ea892a0c0ec7b5417352f265dc0b6d75d8c404cc data/iguanatweaksreborn/tags/blocks/harder_crops.json
+43f673bca0d099dcdabca30f3cc79ea0be49a09a data/iguanatweaksreborn/tags/blocks/harder_crops.json
 544a881a75df8b3b67af0c65834461695dc442fe data/iguanatweaksreborn/tags/blocks/hardness_blacklist.json
 0800256a1db50e9781b12e9d25d586e20ef99ca2 data/iguanatweaksreborn/tags/blocks/maple_leaves.json
 acab7344abee921bb217f74b6166add9a6bc12e6 data/iguanatweaksreborn/tags/blocks/oak_log_leaves.json
