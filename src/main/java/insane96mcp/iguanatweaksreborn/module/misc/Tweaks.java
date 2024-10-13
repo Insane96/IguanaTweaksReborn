@@ -42,6 +42,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.border.WorldBorder;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
@@ -113,6 +114,10 @@ public class Tweaks extends Feature {
     @Config
     @Label(name = "Ding on mob hit at distance", description = "Plays a sound effect when a mob is hit at least from this distance.")
     public static Integer dingDistance = 40;
+
+    @Config
+    @Label(name = "Expand World Border on damage", description = "WorldBorder will expand by this amount for each half heart of damage taken by players.")
+    public static Double expandWorldBorderOnDamage = 0d;
 
     public Tweaks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -217,6 +222,20 @@ public class Tweaks extends Feature {
 
         event.getEntity().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 110, 3));
         appliedResistance = true;
+    }
+
+    @SubscribeEvent
+    public void onDamageEvent(LivingDamageEvent event) {
+        if (!this.isEnabled()
+                || expandWorldBorderOnDamage == 0d
+                || !(event.getEntity() instanceof ServerPlayer player))
+            return;
+
+        //noinspection DataFlowIssue
+        WorldBorder worldBorder = player.getServer().overworld().getWorldBorder();
+        double currentSize = worldBorder.getSize();
+        double newSize = currentSize + expandWorldBorderOnDamage * event.getAmount();
+        worldBorder.lerpSizeBetween(currentSize, newSize, 2000L);
     }
 
     @SubscribeEvent
