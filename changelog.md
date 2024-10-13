@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.20.1
 * Fixed foggy weather overwriting Blindness
 
 ## 3.20.0
