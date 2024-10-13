@@ -233,8 +233,8 @@ public class Tweaks extends Feature {
 
         //noinspection DataFlowIssue
         WorldBorder worldBorder = player.getServer().overworld().getWorldBorder();
-        double currentSize = worldBorder.getSize();
-        double newSize = currentSize + expandWorldBorderOnDamage * event.getAmount();
+        double currentSize = worldBorder.getLerpTarget();
+        double newSize = currentSize + expandWorldBorderOnDamage * Math.min(event.getAmount(), player.getHealth());
         worldBorder.lerpSizeBetween(currentSize, newSize, 2000L);
     }
 
