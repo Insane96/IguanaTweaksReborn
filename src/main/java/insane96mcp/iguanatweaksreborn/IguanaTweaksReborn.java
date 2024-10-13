@@ -14,6 +14,7 @@ import insane96mcp.iguanatweaksreborn.data.generator.client.ITRItemModelsProvide
 import insane96mcp.iguanatweaksreborn.modifier.Modifiers;
 import insane96mcp.iguanatweaksreborn.module.combat.PiercingDamage;
 import insane96mcp.iguanatweaksreborn.module.combat.RegeneratingAbsorption;
+import insane96mcp.iguanatweaksreborn.module.combat.UnfairOneShot;
 import insane96mcp.iguanatweaksreborn.module.combat.criticalhits.CriticalRework;
 import insane96mcp.iguanatweaksreborn.module.experience.anvils.AnvilRepairReloadListener;
 import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
@@ -98,6 +99,7 @@ public class IguanaTweaksReborn
 		modEventBus.register(SpawnerData.class);
         modEventBus.register(Tiredness.class);
         modEventBus.register(NoHunger.class);
+        modEventBus.register(UnfairOneShot.class);
         modEventBus.register(RegeneratingAbsorption.class);
         ITRRegistries.REGISTRIES.forEach(register -> register.register(modEventBus));
 

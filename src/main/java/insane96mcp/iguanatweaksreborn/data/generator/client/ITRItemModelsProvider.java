@@ -1,6 +1,7 @@
 package insane96mcp.iguanatweaksreborn.data.generator.client;
 
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
+import insane96mcp.iguanatweaksreborn.module.combat.UnfairOneShot;
 import insane96mcp.iguanatweaksreborn.module.farming.crops.Crops;
 import insane96mcp.iguanatweaksreborn.module.world.Berries;
 import insane96mcp.iguanatweaksreborn.module.world.BiomeCompass;
@@ -34,6 +35,7 @@ public class ITRItemModelsProvider extends ItemModelProvider {
         basicItemWithTexture(Crops.SOLANUM_NEOROSSII.item().get(), new ResourceLocation(IguanaTweaksReborn.MOD_ID, "block/solanum_neorossii"));
 
         basicItem(BiomeCompass.COMPASS.get());
+        basicItem(UnfairOneShot.HALF_HEART_TEXTURE.get());
     }
     public ItemModelBuilder basicItemWithTexture(Item item, ResourceLocation texture)
     {

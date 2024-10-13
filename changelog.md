@@ -8,7 +8,10 @@
   * Base attack damage +0.5 -> +1
   * % attack damage 0% -> -40%
 * Every shovel now deals 2x knockback instead of being based on the attack damage
-* Fixed knockback reduction being called twice (not sure actually lol)
+* Fixed knockback reduction being called twice (not sure if caused problems actually lol)
+* Unfair one-shot overhaul
+  * Now plays an animation similar to the totem of undying when activated
+  * Changed the sound to the level up one
 * Updated Elytra Nerf
   * You no longer get pulled down outside the end, instead you'll encounter more air resistance
 * Added `/iguanatweaks foggy_weather get` and `/iguanatweaks thunderstorm_intensity get` commands
