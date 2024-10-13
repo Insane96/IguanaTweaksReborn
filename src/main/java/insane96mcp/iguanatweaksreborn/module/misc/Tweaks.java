@@ -37,6 +37,7 @@ import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -56,6 +57,8 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 @Label(name = "Tweaks", description = "Various stuff that doesn't fit in any other Feature.")
 @LoadFeature(module = Modules.Ids.MISC)
 public class Tweaks extends Feature {
+
+    public static final GameRules.Key<GameRules.IntegerValue> RULE_PAINFUL_WORLD_BORDER = GameRules.register("iguanatweaks:painful_world_border", GameRules.Category.MISC, GameRules.IntegerValue.create(0));
 
     public static final TagKey<Block> BREAK_ON_FALL = ITRBlockTagsProvider.create("break_on_fall");
     public static final TagKey<Item> WORLD_IMMUNE = ITRItemTagsProvider.create("world_immune");
@@ -114,10 +117,6 @@ public class Tweaks extends Feature {
     @Config
     @Label(name = "Ding on mob hit at distance", description = "Plays a sound effect when a mob is hit at least from this distance.")
     public static Integer dingDistance = 40;
-
-    @Config
-    @Label(name = "Expand World Border on damage", description = "WorldBorder will expand by this amount for each half heart of damage taken by players.")
-    public static Double expandWorldBorderOnDamage = 0d;
 
     public Tweaks(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -227,14 +226,16 @@ public class Tweaks extends Feature {
     @SubscribeEvent
     public void onDamageEvent(LivingDamageEvent event) {
         if (!this.isEnabled()
-                || expandWorldBorderOnDamage == 0d
                 || !(event.getEntity() instanceof ServerPlayer player))
+            return;
+        int painfulWorldBorder = player.level().getGameRules().getInt(RULE_PAINFUL_WORLD_BORDER);
+        if (painfulWorldBorder == 0)
             return;
 
         //noinspection DataFlowIssue
         WorldBorder worldBorder = player.getServer().overworld().getWorldBorder();
         double currentSize = worldBorder.getLerpTarget();
-        double newSize = currentSize + expandWorldBorderOnDamage * Math.min(event.getAmount(), player.getHealth());
+        double newSize = currentSize + painfulWorldBorder * Math.min(event.getAmount(), player.getHealth());
         worldBorder.lerpSizeBetween(currentSize, newSize, 2000L);
     }
 
