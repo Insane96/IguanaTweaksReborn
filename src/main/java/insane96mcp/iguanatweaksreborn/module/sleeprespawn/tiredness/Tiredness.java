@@ -11,6 +11,7 @@ import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.*;
 import insane96mcp.insanelib.base.config.Config;
+import insane96mcp.insanelib.base.config.MinMax;
 import insane96mcp.insanelib.data.IdTagMatcher;
 import insane96mcp.insanelib.event.PlayerExhaustionEvent;
 import insane96mcp.insanelib.util.LogHelper;
@@ -104,9 +105,12 @@ public class Tiredness extends JsonFeature {
 			REMOVE_ONE_LEVEL keeps the current tiredness but if higher than 'Tiredness for effect' removes one level of Tired to a minimum of I""")
 	public static OnDeath onDeathBehaviour = OnDeath.SET_AT_EFFECT;
 	@Config
-	@Label(name = "Fake sound mobs", description = "List of mobs (and optional dimension where they should play) that will have their ambience sound played when the player is tired")
+	@Label(name = "Fake sound.Mobs", description = "List of mobs (and optional dimension where they should play) that will have their ambience sound played when the player is tired")
 	public static List<String> fakeSoundMobsConfig = List.of("minecraft:skeleton,minecraft:overworld", "minecraft:zombie,minecraft:overworld", "minecraft:spider,minecraft:overworld", "minecraft:ghast,minecraft:the_nether", "minecraft:zombified_piglin,minecraft:the_nether");//List.of(IdTagMatcher.newId("minecraft:skeleton", "minecraft:overworld"), IdTagMatcher.newId("minecraft:zombie", "minecraft:overworld"), IdTagMatcher.newId("minecraft:spider", "minecraft:overworld"), IdTagMatcher.newId("minecraft:ghast", "minecraft:the_nether"), IdTagMatcher.newId("minecraft:wither_skeleton", "minecraft:the_nether"));
 	public static List<IdTagMatcher> fakeSoundMobs = new ArrayList<>();
+	@Config(min = 0)
+	@Label(name = "Fake sound.Cooldown", description = "The cooldown (in ticks) between choosing a mob to play the fake sound. This is divided by the Tired effect level")
+	public static MinMax fakeSoundCooldownBetweenMobs = new MinMax(12000, 24000);
 	/*@Config
 	@Label(name = "Tired Sound Chance", description = "The chance is 0% of this value as soon as a sound is played, 100% as 10 minutes have passed and 200% at 30 minutes")
 	public static Double tiredSoundChance = 0.025d;*/
@@ -200,35 +204,11 @@ public class Tiredness extends JsonFeature {
 			if (fakeSoundTimesToPlay <= 0)
 				resetMobFakeSound(random, amplifier);
 		}
-		/*if (lastPlayedSound == 0)
-			lastPlayedSound = event.player.level().getGameTime();
-		//noinspection DataFlowIssue
-		int amplifier = event.player.getEffect(TIRED.get()).getAmplifier();
-		if (amplifier == 0)
-			return;
-		long secondsSinceLastSound = (event.player.level().getGameTime() - lastPlayedSound) / 20;
-		float chance = tiredSoundChance.floatValue() * amplifier;
-		if (secondsSinceLastSound <= 600)
-			chance *= secondsSinceLastSound / 600f;
-		else
-			chance *= secondsSinceLastSound / 300f;
-
-		if (event.player.getRandom().nextFloat() < chance) {
-			lastPlayedSound = event.player.level().getGameTime();
-			String sSound = tiredSounds.get(event.player.getRandom().nextInt(tiredSounds.size()));
-			ResourceLocation soundLocation = ResourceLocation.tryParse(sSound);
-			if (soundLocation == null) {
-				LogHelper.error("Invalid sound %s for Tired Sounds", sSound);
-				return;
-			}
-			Holder<SoundEvent> holder = Holder.direct(SoundEvent.createVariableRangeEvent(soundLocation));
-			event.player.playSound(holder.value(), 0.5f, event.player.getRandom().nextFloat() * 0.5f + 0.75f);
-		}*/
 	}
 
 	private void resetMobFakeSound(RandomSource random, int reduction) {
 		fakeSoundTimesToPlay = 0;
-		fakeSoundCooldown = random.nextInt(6000, 12000) / reduction;
+		fakeSoundCooldown = fakeSoundCooldownBetweenMobs.getIntRandBetween(random) / reduction;
 		mobFakeSound = null;
 	}
 

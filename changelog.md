@@ -2,6 +2,8 @@
 
 ## Upcoming
 * Increased Shovels knockback (0.8 -> 1)
+* Doubled the cooldown between fake mobs sound when tired
+  * And made it configurable
 
 ## 3.20.1
 * Fixed foggy weather overwriting Blindness
