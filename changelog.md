@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Increased Shovels knockback (0.8 -> 1)
+
 ## 3.20.1
 * Fixed foggy weather overwriting Blindness
 
