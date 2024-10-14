@@ -111,6 +111,9 @@ public class Tiredness extends JsonFeature {
 	@Config(min = 0)
 	@Label(name = "Fake sound.Cooldown", description = "The cooldown (in ticks) between choosing a mob to play the fake sound. This is divided by the Tired effect level")
 	public static MinMax fakeSoundCooldownBetweenMobs = new MinMax(12000, 24000);
+	@Config(min = 0)
+	@Label(name = "Fake sound.Times", description = "How many times will a fake sound of a mob play before going into cooldown. 'Maximum' is multiplied by the Tired effect level")
+	public static MinMax fakeSoundTimes = new MinMax(1, 3);
 	/*@Config
 	@Label(name = "Tired Sound Chance", description = "The chance is 0% of this value as soon as a sound is played, 100% as 10 minutes have passed and 200% at 30 minutes")
 	public static Double tiredSoundChance = 0.025d;*/
@@ -187,7 +190,7 @@ public class Tiredness extends JsonFeature {
 				return;
 			}
 			mobFakeSound = (Mob) entity;
-			fakeSoundTimesToPlay = (int) (random.triangle(3, 1) * amplifier);
+			fakeSoundTimesToPlay = (int) (random.triangle(fakeSoundTimes.min, fakeSoundTimes.max * amplifier));
 		}
 		if (mobFakeSound != null && random.nextInt(1000) < ambientSoundTime++) {
 			SoundEvent soundEvent = ((MobAccessor)mobFakeSound).ambientSound();
