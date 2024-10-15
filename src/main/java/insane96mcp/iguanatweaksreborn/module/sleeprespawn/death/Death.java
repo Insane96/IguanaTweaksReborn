@@ -55,7 +55,7 @@ import java.util.List;
 @LoadFeature(module = Modules.Ids.SLEEP_RESPAWN)
 public class Death extends Feature {
 
-	public static final SimpleBlockWithItem GRAVE = SimpleBlockWithItem.register("grave", () -> new GraveBlock(BlockBehaviour.Properties.of().pushReaction(PushReaction.BLOCK).mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).forceSolidOn().strength(1.5F, 6.0F)));
+	public static final SimpleBlockWithItem GRAVE = SimpleBlockWithItem.register("grave", () -> new GraveBlock(BlockBehaviour.Properties.of().pushReaction(PushReaction.BLOCK).mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).forceSolidOn().strength(1.5F, 4.5f)));
 	public static final RegistryObject<BlockEntityType<?>> GRAVE_BLOCK_ENTITY_TYPE = ITRRegistries.BLOCK_ENTITY_TYPES.register("grave", () -> BlockEntityType.Builder.of(GraveBlockEntity::new, GRAVE.block().get()).build(null));
 	public static final GameRules.Key<GameRules.BooleanValue> RULE_DEATHGRAVE = GameRules.register("iguanatweaks:deathGrave", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
 	public static final GameRules.Key<GameRules.IntegerValue> RULE_DEATHLOSEITEMSPERCENTAGE = GameRules.register("iguanatweaks:deathLoseItemsPercentage", GameRules.Category.PLAYER, GameRules.IntegerValue.create(0));

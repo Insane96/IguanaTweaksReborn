@@ -10,6 +10,7 @@
   * Fake sounds times to play is now configurable
   * Doubled the cooldown between fake mobs sound when tired
     * And made it configurable
+* Graves are now less explosion resistant
 
 ## 3.20.1
 * Fixed foggy weather overwriting Blindness
