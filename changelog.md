@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.20.2
 * Halved mining speed when prone
   * Added `Prone mining speed multiplier` in `Nerfs`
 * Change the movement speed when frozen. Increased from vanilla -0.05 to -0.10
