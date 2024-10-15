@@ -13,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -62,7 +64,11 @@ public class Nerfs extends Feature {
 
 	@Config(min = 0, max = 1)
 	@Label(name = "Fall from mount chance", description = "When an entity is hit and on a mount they have this chance to fall")
-	public static Double fallFromMountChance = 0.2;
+	public static Double fallFromMountChance = 0.2d;
+
+	@Config(min = 0)
+	@Label(name = "Prone mining speed multiplier", description = "When prone your mining speed is multiplied by this")
+	public static Double proneMiningSpeedMultiplier = 0.5d;
 
     public Nerfs(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
@@ -83,6 +89,16 @@ public class Nerfs extends Feature {
 
 		if (ironRequiresPlayer && event.getEntity() instanceof IronGolem && !(event.getSource().getDirectEntity() instanceof Player))
 			event.getDrops().removeIf(itemEntity -> itemEntity.getItem().is(Items.IRON_INGOT));
+	}
+
+	@SubscribeEvent
+	public void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+		if (!this.isEnabled()
+				|| proneMiningSpeedMultiplier == 0
+				|| event.getEntity().getPose() != Pose.SWIMMING)
+			return;
+
+		event.setNewSpeed(event.getNewSpeed() * proneMiningSpeedMultiplier.floatValue());
 	}
 
 	@SubscribeEvent

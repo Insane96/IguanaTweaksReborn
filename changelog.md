@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Added `Prone mining speed multiplier` in `Nerfs`
+  * Decreased mining speed when prone
 * Increased Shovels knockback (0.8 -> 1)
 * Tiredness
   * Fake sounds times to play is now configurable
