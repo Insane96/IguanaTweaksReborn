@@ -1,10 +1,10 @@
 # Changelog
 
 ## Upcoming
-* Added `Prone mining speed multiplier` in `Nerfs`
-  * Decreased mining speed when prone
-* Added `Frozen Movement Speed modifier` in `Tweaks`
-  * Change the movement speed when frozen. Increased from vanilla -0.05 to -0.10
+* Halved mining speed when prone
+  * Added `Prone mining speed multiplier` in `Nerfs`
+* Change the movement speed when frozen. Increased from vanilla -0.05 to -0.10
+  * Added `Frozen Movement Speed modifier` in `Tweaks`
 * Increased Shovels knockback (0.8 -> 1)
 * Tiredness
   * Fake sounds times to play is now configurable
