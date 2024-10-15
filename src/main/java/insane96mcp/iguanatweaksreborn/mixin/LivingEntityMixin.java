@@ -168,4 +168,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, ne
             return vec3;
         return vec3.multiply(ElytraNerf.airResistance, 0.98d, ElytraNerf.airResistance);
     }
+
+    @ModifyExpressionValue(method = "tryAddFrost", at = @At(value = "CONSTANT", args = "floatValue=-0.05"))
+    private float onFrostSlowdown(float original) {
+        if (!Feature.isEnabled(Tweaks.class))
+            return original;
+        return Tweaks.frozenMovementSpeedModifier.floatValue();
+    }
 }
