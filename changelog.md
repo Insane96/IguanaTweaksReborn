@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Wild crops now have only 50% chance to drop the crop, +75% if using a hoe
+
 ## 3.20.2
 * Halved mining speed when prone
   * Added `Prone mining speed multiplier` in `Nerfs`

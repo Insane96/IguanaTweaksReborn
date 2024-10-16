@@ -16,7 +16,39 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "minecraft:carrot"
+                    "name": "minecraft:carrot",
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "minecraft:carrot",
+                    "conditions": [
+                        {
+                            "condition": "minecraft:entity_properties",
+                            "entity": "this",
+                            "predicate": {
+                                "equipment": {
+                                    "mainhand": {
+                                        "tag": "minecraft:hoes"
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.75
+                        }
+                    ]
                 }
             ]
         },
