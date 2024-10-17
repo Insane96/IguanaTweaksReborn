@@ -82,7 +82,7 @@ public class ExhaustionIncrease extends Feature {
 			event.player.causeFoodExhaustion(passiveExhaustion.floatValue());
 
 		if (rowingExhaustion > 0d && event.player.getVehicle() != null && event.player.zza != 0)
-			event.player.causeFoodExhaustion(passiveExhaustion.floatValue());
+			event.player.causeFoodExhaustion(rowingExhaustion.floatValue());
 	}
 
 	@SubscribeEvent
