@@ -16,7 +16,7 @@ public class ArmorRework extends Feature {
 
     @Config
     @Label(name = "Damage Reduction formula", description = "Vanilla formula is 'damage * (1 - ((MIN(20, MAX(armor / 5, armor - ((4 * damage) / (toughness + 8)))))) / 25))'")
-    public static String formula = "damage * (1 - 1.08 * (armor / (armor + 16)) - toughness * 0.0333333333)";
+    public static String formula = "damage * (1 - 1.08 * (armor / (armor + 16)))";
 
     public ArmorRework(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
