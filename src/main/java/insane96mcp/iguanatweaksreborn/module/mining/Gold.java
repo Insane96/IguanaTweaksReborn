@@ -34,7 +34,7 @@ public class Gold extends Feature {
 
 	@Config(min = 0, max = 255)
 	@Label(name = "Looting Level", description = "Set the innate looting level of gold tools.")
-	public static Integer lootingLevel = 1;
+	public static Integer lootingLevel = 2;
 	@Config(min = 0, max = 255)
 	@Label(name = "Fortune Level", description = "Set the innate fortune level of gold tools.")
 	public static Integer fortuneLevel = 1;
