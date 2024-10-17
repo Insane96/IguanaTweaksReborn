@@ -2,6 +2,7 @@
 
 ## Upcoming
 * Wild crops now have only 50% chance to drop the crop, +75% if using a hoe
+* Fixed toughness in armor rework formula
 
 ## 3.20.2
 * Halved mining speed when prone
