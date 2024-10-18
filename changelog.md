@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.21.0
 * Added Scute blocks
   * When baby turtles now grow the scute will be placed on the ground instead of dropping, this way it doesn't despawn
   * Can be disabled in `Tweaks`
