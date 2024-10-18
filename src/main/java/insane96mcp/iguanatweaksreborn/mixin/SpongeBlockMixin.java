@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
+import insane96mcp.iguanatweaksreborn.module.misc.tweaks.Tweaks;
 import net.minecraft.world.level.block.SpongeBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;

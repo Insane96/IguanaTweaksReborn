@@ -1,6 +1,6 @@
 package insane96mcp.iguanatweaksreborn.mixin;
 
-import insane96mcp.iguanatweaksreborn.module.misc.Tweaks;
+import insane96mcp.iguanatweaksreborn.module.misc.tweaks.Tweaks;
 import insane96mcp.iguanatweaksreborn.module.world.Fluids;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import net.minecraft.world.damagesource.DamageSource;

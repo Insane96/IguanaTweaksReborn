@@ -1,6 +1,9 @@
 # Changelog
 
 ## Upcoming
+* Added Scute blocks
+  * When baby turtles now grow the scute will be placed on the ground instead of dropping, this way it doesn't despawn
+  * Can be disabled in `Tweaks`
 * Gold innate Looting is now lvl II instead of I
 * Wild crops now have only 50% chance to drop the crop, +75% if using a hoe
 * Fixed toughness in armor rework formula

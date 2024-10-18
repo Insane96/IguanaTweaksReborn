@@ -1,4 +1,4 @@
-package insane96mcp.iguanatweaksreborn.module.misc;
+package insane96mcp.iguanatweaksreborn.module.misc.tweaks;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import insane96mcp.iguanatweaksreborn.IguanaTweaksReborn;
@@ -6,6 +6,7 @@ import insane96mcp.iguanatweaksreborn.data.generator.ITRBlockTagsProvider;
 import insane96mcp.iguanatweaksreborn.data.generator.ITRItemTagsProvider;
 import insane96mcp.iguanatweaksreborn.module.Modules;
 import insane96mcp.iguanatweaksreborn.module.mining.MiningMisc;
+import insane96mcp.iguanatweaksreborn.setup.ITRRegistries;
 import insane96mcp.insanelib.base.Feature;
 import insane96mcp.insanelib.base.Label;
 import insane96mcp.insanelib.base.LoadFeature;
@@ -41,9 +42,12 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.border.WorldBorder;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
@@ -53,12 +57,15 @@ import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 @Label(name = "Tweaks", description = "Various stuff that doesn't fit in any other Feature.")
 @LoadFeature(module = Modules.Ids.MISC)
 public class Tweaks extends Feature {
 
     public static final GameRules.Key<GameRules.IntegerValue> RULE_PAINFUL_WORLD_BORDER = GameRules.register("iguanatweaks:painful_world_border", GameRules.Category.MISC, GameRules.IntegerValue.create(0));
+
+    public static final RegistryObject<Block> SCUTE = ITRRegistries.BLOCKS.register("scute", () -> new ScuteBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GREEN).strength(0.2F, 0.5F).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape().sound(SoundType.BONE_BLOCK)));
 
     public static final TagKey<Block> BREAK_ON_FALL = ITRBlockTagsProvider.create("break_on_fall");
     public static final TagKey<Item> WORLD_IMMUNE = ITRItemTagsProvider.create("world_immune");
@@ -102,9 +109,13 @@ public class Tweaks extends Feature {
     @Config
     @Label(name = "Totem resistance", description = "If enabled, the Totem of Undying will give Resistance IV for 5.5 seconds")
     public static Boolean totemResistance = true;
+
     @Config
-    @Label(name = "Turtle Helmet water breathing time", description = "The ticks of Water Breathing given by the Turtle Helmet. Vanilla is 200")
+    @Label(name = "Turtle.Helmet water breathing time", description = "The ticks of Water Breathing given by the Turtle Helmet. Vanilla is 200")
     public static Integer turtleHelmetWaterBreathingTime = 900;
+    @Config
+    @Label(name = "Turtle.Scute drop as block", description = "If true scutes will drop as a block and not as item")
+    public static Boolean scuteDropAsBlock = true;
 
     @Config
     @Label(name = "Splash potions throw strength", description = "The strength used to throw splash potions. Vanilla is 0.5")

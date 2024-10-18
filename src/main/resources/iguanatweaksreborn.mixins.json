@@ -69,6 +69,7 @@
         "ThrowablePotionItemMixin",
         "ThrownEggMixin",
         "ThrownExperienceBottleMixin",
+        "TurtleMixin",
         "VillagerMixin",
         "WanderingTraderMixin",
         "WolfMixin",
