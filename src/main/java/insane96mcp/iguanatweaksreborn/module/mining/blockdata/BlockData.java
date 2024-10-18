@@ -99,6 +99,7 @@ public class BlockData {
 				if (blockState == state)
 					return true;
 			}
+			return false;
 		}
 		return state.is(this.blockTag);
 	}

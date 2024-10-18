@@ -7,6 +7,7 @@
 * Gold innate Looting is now lvl II instead of I
 * Wild crops now have only 50% chance to drop the crop, +75% if using a hoe
 * Fixed toughness in armor rework formula
+* A missing `return false` broke the entire BlockData system
 
 ## 3.20.2
 * Halved mining speed when prone
