@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Foggy weathers now last more time (also changed default times from 1~20 to 5~30 minutes)
 * Added weather gamerules descriptions
 * Fixed increased ore generation not applying correctly in lush caves
 

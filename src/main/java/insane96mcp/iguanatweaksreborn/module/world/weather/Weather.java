@@ -16,7 +16,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-@Label(name = "Weather")
+@Label(name = "Weather", description = "Thunderstorm Intensity and Foggy Weather")
 @LoadFeature(module = Modules.Ids.WORLD)
 public class Weather extends Feature {
     public static final GameRules.Key<GameRules.BooleanValue> RULE_THUNDERSTORMINTENSITY = GameRules.register("iguanatweaks:thunderstormIntensity", GameRules.Category.MISC, GameRules.BooleanValue.create(true));
@@ -34,10 +34,10 @@ public class Weather extends Feature {
 
     @Config(min = 1)
     @Label(name = "Foggy Weather.Min Time", description = "Minimum time (in minutes) a foggy weather can last.")
-    public static Integer foggyWeatherMinTime = 1;
+    public static Integer foggyWeatherMinTime = 5;
     @Config(min = 1)
     @Label(name = "Foggy Weather.Max Time", description = "Maximum time (in minutes) a foggy weather can last.")
-    public static Integer foggyWeatherMaxTime = 20;
+    public static Integer foggyWeatherMaxTime = 30;
 
     public Weather(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -59,14 +59,14 @@ public class Weather extends Feature {
     public static void tickFoggyWeather(ServerLevel level, WeatherSavedData wsd) {
         if (!level.getGameRules().getBoolean(RULE_FOGGYWEATHER))
             return;
-        if (wsd.foggyData.targetTime == -1) {
+        if (wsd.foggyData.targetTime == -1)
             wsd.foggyData.targetTime = getNewFoggyTargetTime(level.random);
-        }
+
         if (++wsd.foggyData.timer >= wsd.foggyData.targetTime) {
             if (wsd.foggyData.current == wsd.foggyData.target) {
                 wsd.foggyData.target = Foggy.values()[level.random.nextInt(Foggy.values().length)];
                 wsd.foggyData.timer = 0;
-                wsd.foggyData.targetTime = getNewFoggyTargetTime(level.random) / 2;
+                wsd.foggyData.targetTime = getNewFoggyTargetTime(level.random);
                 level.players().forEach(player ->
                         FoggySync.sync(player, wsd.foggyData));
             }
@@ -74,6 +74,7 @@ public class Weather extends Feature {
                 wsd.foggyData.current = wsd.foggyData.target;
                 wsd.foggyData.timer = 0;
                 wsd.foggyData.targetTime = getNewFoggyTargetTime(level.random);
+                wsd.foggyData.targetTime = (int) (wsd.foggyData.targetTime * wsd.foggyData.current.timerMultiplier);
             }
         }
         wsd.setDirty();
