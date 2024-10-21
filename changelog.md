@@ -1,7 +1,11 @@
 # Changelog
 
 ## Upcoming
+* Changed animal caps in different seasons
+  * In hot season animal cap is heavily increased
+  * Still really low in colder seasons
 * Foggy weathers now last more time (also changed default times from 1~20 to 5~30 minutes)
+  * But more foggy weathers last less
 * Added weather gamerules descriptions
 * Fixed increased ore generation not applying correctly in lush caves
 
