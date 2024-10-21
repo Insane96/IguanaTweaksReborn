@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Added weather gamerules descriptions
 * Fixed increased ore generation not applying correctly in lush caves
 
 ## 3.21.0

@@ -214,5 +214,9 @@
 	"gamerule.iguanatweaks:disableExperience": "Disable Experience",
 	"gamerule.iguanatweaks:disableExperience.description": "Completely disables Experience, from mob drops to the xp bar",
 	"gamerule.iguanatweaks:fireSpeedMultiplier": "Fire Speed Multiplier",
-	"gamerule.iguanatweaks:fireSpeedMultiplier.description": "Multiplier for speed at which fire spreads"
+	"gamerule.iguanatweaks:fireSpeedMultiplier.description": "Multiplier for speed at which fire spreads",
+	"gamerule.iguanatweaks:thunderstormIntensity": "Thunderstorm Variable Intensity",
+	"gamerule.iguanatweaks:thunderstormIntensity.description": "Should Thunderstorm have variable intensity?",
+	"gamerule.iguanatweaks:foggyWeather": "Foggy Weather",
+	"gamerule.iguanatweaks:foggyWeather.description": "Should foggy weather be active?"
 }
