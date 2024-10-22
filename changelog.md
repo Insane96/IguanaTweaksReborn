@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 3.21.1
 * Changed animal caps in different seasons
   * In hot season animal cap is heavily increased
   * Still really low in colder seasons
