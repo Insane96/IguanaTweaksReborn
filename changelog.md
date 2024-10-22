@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Unfair One-shot effects are now configurable
+
 ## 3.21.1
 * Changed animal caps in different seasons
   * In hot season animal cap is heavily increased

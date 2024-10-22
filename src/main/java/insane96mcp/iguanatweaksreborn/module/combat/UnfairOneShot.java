@@ -15,12 +15,13 @@ import insane96mcp.insanelib.base.config.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -32,7 +33,12 @@ import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Label(name = "Unfair one-shots", description = "Players be left with half a heart when too much damage that would kill them is dealt (only works for damage taken from mobs)")
 @LoadFeature(module = Modules.Ids.COMBAT)
@@ -40,14 +46,34 @@ public class UnfairOneShot extends Feature {
 	public static final RegistryObject<Item> HALF_HEART_TEXTURE = ITRRegistries.ITEMS.register("half_heart_texture", () -> new Item(new Item.Properties()));
 
 	@Config
-	@Label(name = "Resistance", description = "If true, a resistance effect is given to players on activation")
-	public static Boolean resistance = true;
+	@Label(name = "Effects", description = "A list of effects to give when Unfair One Shot triggers, separated by semi-colons")
+	public static String effectsConfig = "minecraft:resistance,50,4;minecraft:resistance,100,3;minecraft:resistance,150,1";
+	private static final List<MobEffectInstance> effects = new ArrayList<>();
 	@Config
 	@Label(name = "Animation", description = "If true, an animation is played on activation")
 	public static Boolean animation = true;
 
 	public UnfairOneShot(Module module, boolean enabledByDefault, boolean canBeDisabled) {
 		super(module, enabledByDefault, canBeDisabled);
+	}
+
+	@Override
+	public void readConfig(ModConfigEvent event) {
+		super.readConfig(event);
+
+		effects.clear();
+		String[] effectsArray = effectsConfig.split(";");
+		for (String effect : effectsArray) {
+			if (!effect.isEmpty()) {
+				String[] effectArray = effect.split(",");
+				MobEffect mobEffect = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation(effectArray[0]));
+				if (mobEffect == null)
+					continue;
+				int duration = Integer.parseInt(effectArray[1]);
+				int amplifier = Integer.parseInt(effectArray[2]);
+				effects.add(new MobEffectInstance(mobEffect, duration, amplifier));
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -61,10 +87,8 @@ public class UnfairOneShot extends Feature {
 			event.setAmount(player.getHealth() - 1f);
 			player.level().playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 2f, 0.5f);
 			ITRTriggers.UNFAIR_ONESHOT.trigger(player);
-			if (resistance) {
-				player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 50, 4));
-				player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 3));
-				player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 150, 1));
+			for (MobEffectInstance effect : effects) {
+				player.addEffect(new MobEffectInstance(effect));
 			}
 
 			if (animation)
