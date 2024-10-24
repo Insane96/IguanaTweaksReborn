@@ -91,6 +91,7 @@
         "client.DeathScreenMixin",
         "client.GameRendererMixin",
         "client.GuiAccessor",
+        "client.GuiMixin",
         "client.LevelRendererMixin",
         "client.LightTextureMixin",
         "client.LocalPlayerMixin",

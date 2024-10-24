@@ -8,7 +8,12 @@ import insane96mcp.insanelib.base.Module;
 import insane96mcp.insanelib.base.config.Config;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @Label(name = "Misc", description = "Misc client side changes")
@@ -38,10 +43,13 @@ public class Misc extends Feature {
     @Config
     @Label(name = "Thrid person on death", description = "If true, when you die, you switch to third person camera.")
     public static Boolean thirdPersonOnDeath = true;
-
     @Config
     @Label(name = "Remove score", description = "Why is that still a thing?.")
     public static Boolean removeScore = true;
+
+    @Config(min = 0)
+    @Label(name = "Floaty hotbar", description = "Moves the hotbar this amount of pixels up (like bedrock edition)")
+    public static Integer floatyHotbar = 2;
 
     public Misc(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super(module, enabledByDefault, canBeDisabled);
@@ -80,8 +88,20 @@ public class Misc extends Feature {
         dead = true;
     }
 
-    @SubscribeEvent
-    public void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
+    //Render before Regenerating absorption
+    @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public void removeExperienceBar(final RenderGuiOverlayEvent.Pre event) {
+        if (!shouldRaiseHotbar())
+            return;
 
+        if (event.getOverlay().equals(VanillaGuiOverlay.VIGNETTE.type())) {
+            ((ForgeGui) Minecraft.getInstance().gui).rightHeight += floatyHotbar;
+            ((ForgeGui) Minecraft.getInstance().gui).leftHeight += floatyHotbar;
+        }
+    }
+
+    public static boolean shouldRaiseHotbar() {
+        return Feature.isEnabled(Misc.class) && floatyHotbar > 0;
     }
 }
