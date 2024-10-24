@@ -82,7 +82,7 @@ public class Spawners extends JsonFeature {
 	@Label(name = "Disable spawners.Enabled")
 	public static Boolean disableSpawnersEnabled = false;
 	@Config(min = 0)
-	@Label(name = "Disable spawners.Minimum Spawnable Mobs", description = "The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn. The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
+	@Label(name = "Disable spawners.Minimum Spawnable Mobs", description = "The minimum amount of spawnable mobs (when the spawner is basically in the same position as the world spawn). The amount of spawnable mobs before deactivating is equal to the distance divided by 8 (plus this value). E.g. At 160 blocks from spawn the max spawnable mobs will be 160 / 8 + 25 = 20 + 25 = 55")
 	public static Integer disableSpawnersMinSpawnableMobs = 20;
 	@Config(min = 0d)
 	@Label(name = "Disable spawners.Spawnable mobs multiplier", description = "This multiplier increases the max mobs spawned.")
