@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"id": "insanesurvivaloverhaul:ice_arrow"
+		},
+		"title": {
+			"translate": "advancements.insanesurvivaloverhaul.ice_arrow.title"
+		},
+		"description": {
+			"translate": "advancements.insanesurvivaloverhaul.ice_arrow.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "insanesurvivaloverhaul:story/fletching_table",
+	"criteria": {
+		"ice_arrow": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"insanesurvivaloverhaul:ice_arrow"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"ice_arrow"
+		]
+	]
+}

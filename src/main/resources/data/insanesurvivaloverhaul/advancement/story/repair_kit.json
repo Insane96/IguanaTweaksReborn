@@ -1,0 +1,37 @@
+{
+	"display": {
+		"icon": {
+			"id": "insanesurvivaloverhaul:repair_kit"
+		},
+		"title": {
+			"translate": "advancements.insanesurvivaloverhaul.repair_kit.title"
+		},
+		"description": {
+			"translate": "advancements.insanesurvivaloverhaul.repair_kit.description"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"parent": "minecraft:adventure/root",
+	"criteria": {
+		"repair_kit": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"insanesurvivaloverhaul:repair_kit"
+						]
+					}
+				]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"repair_kit"
+		]
+	]
+}

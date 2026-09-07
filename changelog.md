@@ -1,3 +1,6 @@
+# 5.11.1.0-beta
+* Added Fletching and Repair Kits advancements
+
 # 5.11.0.0-beta
 * The Fletching Table is back!
   * Craft Quartz, Diamond, Explosive, Torch and Ice arrows from vanilla arrows and a catalyst
@@ -15,7 +18,7 @@
     * Tired above III will spawn more Phantoms
 * Rounded sprint speed on armor
 * Moved Copper items out of Minecraft namespace
-  * This should fix incompatiblities with other mods that add Copper items
+  * This should fix incompatibilities with other mods that add Copper items
 * Fixed Glow Block missing recipe and added an advancement
 
 # 5.10.0.1-beta

@@ -46,6 +46,22 @@
     "advancements.insanesurvivaloverhaul.unfair_oneshot.title": "Critical Success on Constitution",
     "advancements.insanesurvivaloverhaul.unfair_oneshot.description": "Take a hit that would've killed you while well above half health, and walk away with a sliver of life instead.",
 
+    "advancements.insanesurvivaloverhaul.fletching_table.title": "§oI shoot my arrows in the air sometimes",
+    "advancements.insanesurvivaloverhaul.fletching_table.description": "Make a Fletching table to be able to make arrows",
+    "advancements.insanesurvivaloverhaul.torch_arrow.title": "Big caves require torching",
+    "advancements.insanesurvivaloverhaul.torch_arrow.description": "Sets targets on fire and lights up where it lands",
+    "advancements.insanesurvivaloverhaul.explosive_arrow.title": "Arrow goes boom",
+    "advancements.insanesurvivaloverhaul.explosive_arrow.description": "Explodes on impact",
+    "advancements.insanesurvivaloverhaul.quartz_arrow.title": "Piercing insight",
+    "advancements.insanesurvivaloverhaul.quartz_arrow.description": "Deals bonus damage that pierces through armor",
+    "advancements.insanesurvivaloverhaul.diamond_arrow.title": "Sharper than quartz",
+    "advancements.insanesurvivaloverhaul.diamond_arrow.description": "Flies flatter and hits much harder",
+    "advancements.insanesurvivaloverhaul.ice_arrow.title": "Cold shoulder",
+    "advancements.insanesurvivaloverhaul.ice_arrow.description": "Freezes whatever it hits",
+
+    "advancements.insanesurvivaloverhaul.repair_kit.title": "Fix it, don't nix it",
+    "advancements.insanesurvivaloverhaul.repair_kit.description": "Craft a Repair Kit",
+
 
     "insanesurvivaloverhaul:death_module": "Death",
 
