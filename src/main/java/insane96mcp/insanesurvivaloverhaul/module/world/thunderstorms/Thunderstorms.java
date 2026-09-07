@@ -11,10 +11,10 @@ import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
-@LoadFeature(module = ISOModules.WORLD, canBeDisabled = false, description = "Thunderstorm Intensity. Disable it via gamerule: insanesurvivaloverhaul:thunderstormIntensity")
+@LoadFeature(module = ISOModules.WORLD, canBeDisabled = false, description = "Thunderstorm Intensity. Disable it via gamerule: insanesurvivaloverhaul:thunderstorm_intensity")
 public class Thunderstorms extends Feature {
     public static final GameRules.Key<GameRules.BooleanValue> RULE_THUNDERSTORMINTENSITY = GameRules.register(
-            "insanesurvivaloverhaul:thunderstormIntensity", GameRules.Category.MISC, GameRules.BooleanValue.create(true));
+            "insanesurvivaloverhaul:thunderstorm_intensity", GameRules.Category.MISC, GameRules.BooleanValue.create(true));
 
     @Config(min = 1, name = "Min Intensity", description = "Minimum thunderstorm intensity.")
     public static Integer thunderstormIntensityMin = 1;

@@ -1,3 +1,9 @@
+# Upcoming
+* Renamed gamerule `insanesurvivaloverhaul:thunderstormIntensity` to `insanesurvivaloverhaul:thunderstorm_intensity` for consistency with all other gamerules (snake_case)
+* Repair Kits can now be crafted from and repair with item tags (e.g. any planks, not just oak), not just a single item
+  * Material amount and max repair can be defined via item components (defaulting to the config options)
+  * Max repair bumped 80% -> 100%
+
 # 5.11.1.0-beta
 * Added Fletching and Repair Kits advancements
 
