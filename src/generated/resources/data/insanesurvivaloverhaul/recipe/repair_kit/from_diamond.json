@@ -12,13 +12,13 @@
       "item": "minecraft:amethyst_shard"
     },
     {
-      "item": "minecraft:diamond"
+      "tag": "c:gems/diamond"
     }
   ],
   "result": {
     "components": {
       "insanesurvivaloverhaul:repair_kit_color": 10615784,
-      "insanesurvivaloverhaul:repair_kit_material": "minecraft:diamond"
+      "insanesurvivaloverhaul:repair_kit_material": "#c:gems/diamond"
     },
     "count": 1,
     "id": "insanesurvivaloverhaul:repair_kit"

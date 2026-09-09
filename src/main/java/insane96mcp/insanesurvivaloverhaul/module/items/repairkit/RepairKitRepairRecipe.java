@@ -1,11 +1,11 @@
 package insane96mcp.insanesurvivaloverhaul.module.items.repairkit;
 
+import insane96mcp.insanelib.data.ObjTag;
 import insane96mcp.insanesurvivaloverhaul.setup.ISORegistries;
 import insane96mcp.insanesurvivaloverhaul.setup.ModIds;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -42,7 +42,7 @@ public class RepairKitRepairRecipe extends CustomRecipe {
                 repairableItem = stack;
             }
             if (stack.is(RepairKits.ITEM.get())) {
-                ResourceLocation material = stack.get(ISORegistries.REPAIR_KIT_MATERIAL.get());
+                String material = stack.get(ISORegistries.REPAIR_KIT_MATERIAL.get());
                 if (repairKit != null && !Objects.equals(repairKit.get(ISORegistries.REPAIR_KIT_MATERIAL.get()), material))
                     return false;
                 repairKit = stack;
@@ -73,26 +73,40 @@ public class RepairKitRepairRecipe extends CustomRecipe {
         if (repairableItem == null || repairKit == null)
             return ItemStack.EMPTY;
 
-        ResourceLocation materialId = repairKit.get(ISORegistries.REPAIR_KIT_MATERIAL.get());
+        String materialId = repairKit.get(ISORegistries.REPAIR_KIT_MATERIAL.get());
         if (materialId == null)
             return ItemStack.EMPTY;
-        Item repairItem = BuiltInRegistries.ITEM.get(materialId);
-        ItemStack repairItemStack = new ItemStack(repairItem);
-
-        boolean experienceTweaksLoaded = ModList.get().isLoaded(ModIds.EXPERIENCE_TWEAKS);
-        Optional<ExperienceTweaksIntegration.RepairData> oRepairData = experienceTweaksLoaded
-                ? ExperienceTweaksIntegration.getCustomRepairData(repairableItem, repairItemStack)
-                : Optional.empty();
+        ObjTag<Item> material = ObjTag.of(materialId, Registries.ITEM);
 
         // Copy every component of the item being repaired (enchantments, custom name, other mods' data, ...) and
         // only ever touch its damage below, so nothing about the item is lost through the repair kit.
         ItemStack resultStack = repairableItem.copy();
-        if (!resultStack.getItem().isValidRepairItem(resultStack, repairItemStack) && oRepairData.isEmpty())
+
+        boolean experienceTweaksLoaded = ModList.get().isLoaded(ModIds.EXPERIENCE_TWEAKS);
+        // The material can be a tag (e.g. one kit valid for iron, gold and diamond tools): try every item it
+        // covers and use the first one this specific item is repairable with, either vanilla or via Experience Tweaks.
+        Optional<ExperienceTweaksIntegration.RepairData> oRepairData = Optional.empty();
+        boolean vanillaValid = false;
+        for (Item candidate : material.getAllObjects()) {
+            ItemStack candidateStack = new ItemStack(candidate);
+            if (resultStack.getItem().isValidRepairItem(resultStack, candidateStack)) {
+                vanillaValid = true;
+                break;
+            }
+            if (experienceTweaksLoaded) {
+                oRepairData = ExperienceTweaksIntegration.getCustomRepairData(repairableItem, candidateStack);
+                if (oRepairData.isPresent())
+                    break;
+            }
+        }
+        if (!vanillaValid && oRepairData.isEmpty())
             return ItemStack.EMPTY;
 
-        int repairCount = RepairKits.repairKitMaterialRatio * kitAmount;
+        int materialRatio = repairKit.getOrDefault(ISORegistries.REPAIR_KIT_AMOUNT.get(), RepairKits.repairKitMaterialRatio);
+        double kitMaxRepair = repairKit.getOrDefault(ISORegistries.REPAIR_KIT_MAX_REPAIR.get(), RepairKits.maxRepair);
+        int repairCount = materialRatio * kitAmount;
         int repairItemCountCost;
-        int maxPartialRepairDmg = Mth.ceil(resultStack.getMaxDamage() * (1f - RepairKits.maxRepair));
+        int maxPartialRepairDmg = Mth.ceil(resultStack.getMaxDamage() * (1f - kitMaxRepair));
         float amountRequired = 4f;
         if (oRepairData.isPresent()) {
             ExperienceTweaksIntegration.RepairData repairData = oRepairData.get();

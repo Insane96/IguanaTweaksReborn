@@ -18,7 +18,7 @@
   "result": {
     "components": {
       "insanesurvivaloverhaul:repair_kit_color": 12096607,
-      "insanesurvivaloverhaul:repair_kit_material": "minecraft:oak_planks"
+      "insanesurvivaloverhaul:repair_kit_material": "#minecraft:planks"
     },
     "count": 1,
     "id": "insanesurvivaloverhaul:repair_kit"

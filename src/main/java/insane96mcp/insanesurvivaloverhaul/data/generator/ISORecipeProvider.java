@@ -1,6 +1,7 @@
 package insane96mcp.insanesurvivaloverhaul.data.generator;
 
 import insane96mcp.insanelib.data.FeatureEnabledCondition;
+import insane96mcp.insanelib.data.ObjTag;
 import insane96mcp.insanesurvivaloverhaul.InsaneSO;
 import insane96mcp.insanesurvivaloverhaul.module.combat.bows.Bows;
 import insane96mcp.insanesurvivaloverhaul.module.combat.fletching.FletchingFeature;
@@ -19,7 +20,6 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -148,12 +148,9 @@ public class ISORecipeProvider extends RecipeProvider {
         SpecialRecipeBuilder.special(RepairKitRepairRecipe::new)
                 .save(repairKitOutput, InsaneSO.id("repair_kit_repairing"));
 
-        for (Item material : RepairKits.DEFAULT_MATERIALS) {
-            int color = RepairKits.DEFAULT_COLORS.getOrDefault(material, 0xFFFFFF);
-            if (material == Items.OAK_PLANKS)
-                repairKit(repairKitOutput, "oak_planks", ItemTags.PLANKS, Items.OAK_PLANKS, color);
-            else
-                repairKit(repairKitOutput, BuiltInRegistries.ITEM.getKey(material).getPath(), material, material, color);
+        for (RepairKits.RepairKitMaterial entry : RepairKits.DEFAULT_MATERIALS) {
+            entry.ingredient().left().ifPresent(item -> repairKit(repairKitOutput, entry.name(), item, entry.material(), entry.color(), entry.materialRatio(), entry.maxRepair()));
+            entry.ingredient().right().ifPresent(tag -> repairKit(repairKitOutput, entry.name(), tag, entry.material(), entry.color(), entry.materialRatio(), entry.maxRepair()));
         }
 
         RecipeOutput fletchingOutput = recipeOutput.withConditions(new FeatureEnabledCondition("Fletching"));
@@ -207,16 +204,16 @@ public class ISORecipeProvider extends RecipeProvider {
      * the material's id in its {@link ISORegistries#REPAIR_KIT_MATERIAL} component and a tint color in its
      * {@link ISORegistries#REPAIR_KIT_COLOR} component.
      */
-    private static void repairKit(RecipeOutput recipeOutput, String materialName, ItemLike ingredient, Item material, int color) {
-        new ShapelessRecipeBuilder(RecipeCategory.TOOLS, RepairKits.of(material, color))
+    private static void repairKit(RecipeOutput recipeOutput, String materialName, ItemLike ingredient, ObjTag<Item> material, int color, @Nullable Integer materialRatio, @Nullable Double maxRepair) {
+        new ShapelessRecipeBuilder(RecipeCategory.TOOLS, RepairKits.of(material, color, materialRatio, maxRepair))
                 .requires(Items.AMETHYST_SHARD)
                 .requires(ingredient)
                 .unlockedBy("has_" + materialName, has(ingredient))
                 .save(recipeOutput, InsaneSO.id("repair_kit/from_" + materialName));
     }
 
-    private static void repairKit(RecipeOutput recipeOutput, String materialName, TagKey<Item> ingredient, Item material, int color) {
-        new ShapelessRecipeBuilder(RecipeCategory.TOOLS, RepairKits.of(material, color))
+    private static void repairKit(RecipeOutput recipeOutput, String materialName, TagKey<Item> ingredient, ObjTag<Item> material, int color, @Nullable Integer materialRatio, @Nullable Double maxRepair) {
+        new ShapelessRecipeBuilder(RecipeCategory.TOOLS, RepairKits.of(material, color, materialRatio, maxRepair))
                 .requires(Items.AMETHYST_SHARD)
                 .requires(ingredient)
                 .unlockedBy("has_" + materialName, has(ingredient))

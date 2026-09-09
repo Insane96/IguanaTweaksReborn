@@ -13,7 +13,6 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
@@ -77,15 +76,31 @@ public class ISORegistries {
                     .persistent(Codec.INT)
                     .networkSynchronized(ByteBufCodecs.INT)
                     .build());
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ResourceLocation>> REPAIR_KIT_MATERIAL =
-            DATA_COMPONENTS.register("repair_kit_material", () -> DataComponentType.<ResourceLocation>builder()
-                    .persistent(ResourceLocation.CODEC)
-                    .networkSynchronized(ResourceLocation.STREAM_CODEC)
+
+    /**
+     * The kit's repair material, serialized the way {@link insane96mcp.insanelib.data.ObjTag} does: either a
+     * plain item id ({@code "minecraft:iron_ingot"}) or a tag ({@code "#minecraft:planks"}), so a single kit
+     * can be valid for repairing with any item covered by a tag.
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> REPAIR_KIT_MATERIAL =
+            DATA_COMPONENTS.register("repair_kit_material", () -> DataComponentType.<String>builder()
+                    .persistent(Codec.STRING)
+                    .networkSynchronized(ByteBufCodecs.STRING_UTF8)
                     .build());
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> REPAIR_KIT_COLOR =
             DATA_COMPONENTS.register("repair_kit_color", () -> DataComponentType.<Integer>builder()
                     .persistent(Codec.INT)
                     .networkSynchronized(ByteBufCodecs.INT)
+                    .build());
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> REPAIR_KIT_AMOUNT =
+            DATA_COMPONENTS.register("repair_kit_amount", () -> DataComponentType.<Integer>builder()
+                    .persistent(Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.INT)
+                    .build());
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Double>> REPAIR_KIT_MAX_REPAIR =
+            DATA_COMPONENTS.register("repair_kit_max_repair", () -> DataComponentType.<Double>builder()
+                    .persistent(Codec.DOUBLE)
+                    .networkSynchronized(ByteBufCodecs.DOUBLE)
                     .build());
 
     private static DeferredRegister<AttachmentType<?>> createAttachmentTypesRegistry() {

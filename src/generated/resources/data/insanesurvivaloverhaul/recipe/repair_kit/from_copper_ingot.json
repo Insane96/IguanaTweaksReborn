@@ -12,13 +12,13 @@
       "item": "minecraft:amethyst_shard"
     },
     {
-      "item": "minecraft:copper_ingot"
+      "tag": "c:ingots/copper"
     }
   ],
   "result": {
     "components": {
       "insanesurvivaloverhaul:repair_kit_color": 13723717,
-      "insanesurvivaloverhaul:repair_kit_material": "minecraft:copper_ingot"
+      "insanesurvivaloverhaul:repair_kit_material": "#c:ingots/copper"
     },
     "count": 1,
     "id": "insanesurvivaloverhaul:repair_kit"

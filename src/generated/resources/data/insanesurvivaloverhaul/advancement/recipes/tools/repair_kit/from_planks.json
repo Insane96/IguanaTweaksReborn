@@ -7,7 +7,7 @@
   ],
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_oak_planks": {
+    "has_planks": {
       "conditions": {
         "items": [
           {
@@ -19,7 +19,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "insanesurvivaloverhaul:repair_kit/from_oak_planks"
+        "recipe": "insanesurvivaloverhaul:repair_kit/from_planks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -27,12 +27,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_oak_planks"
+      "has_planks"
     ]
   ],
   "rewards": {
     "recipes": [
-      "insanesurvivaloverhaul:repair_kit/from_oak_planks"
+      "insanesurvivaloverhaul:repair_kit/from_planks"
     ]
   }
 }
