@@ -74,8 +74,8 @@ public class Tiredness extends JsonFeature {
 	public static ResourceLocation NBT_TAG;
 
 	public static final DeferredHolder<MobEffect, MobEffect> TIRED = ISORegistries.MOB_EFFECTS.register("tired", () -> new TirednessEffect(MobEffectCategory.HARMFUL, 0x818894)
-			.addAttributeModifier(Attributes.MOVEMENT_SPEED, InsaneSO.id("tiredness/effect"), -0.04F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-			.addAttributeModifier(Attributes.ATTACK_SPEED, InsaneSO.id("tiredness/effect"), -0.04F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+			.addAttributeModifier(Attributes.MOVEMENT_SPEED, InsaneSO.id("tiredness/effect"), -0.02F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+			.addAttributeModifier(Attributes.ATTACK_SPEED, InsaneSO.id("tiredness/effect"), -0.02F, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 	public static final DeferredHolder<MobEffect, ILMobEffect> ENERGY_BOOST = ISORegistries.MOB_EFFECTS.register("energy_boost", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x857965));
 
 	public static final String NOT_TIRED = InsaneSO.lang("not_tired");
@@ -358,7 +358,7 @@ public class Tiredness extends JsonFeature {
 
 		//noinspection ConstantConditions
 		int level = event.getEntity().getEffect(TIRED).getAmplifier() + 1;
-		event.setNewSpeed(event.getNewSpeed() * (1 - (level * 0.04f)));
+		event.setNewSpeed(event.getNewSpeed() * (1 - (level * 0.02f)));
 	}
 
 	@SubscribeEvent
