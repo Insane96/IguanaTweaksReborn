@@ -1,0 +1,39 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "insanelib:feature_enabled",
+      "feature": "Repair Kits"
+    }
+  ],
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "repair_kit": {
+      "conditions": {
+        "items": [
+          {
+            "items": "insanesurvivaloverhaul:repair_kit"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.insanesurvivaloverhaul.repair_kit.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "insanesurvivaloverhaul:repair_kit"
+    },
+    "title": {
+      "translate": "advancements.insanesurvivaloverhaul.repair_kit.title"
+    }
+  },
+  "requirements": [
+    [
+      "repair_kit"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

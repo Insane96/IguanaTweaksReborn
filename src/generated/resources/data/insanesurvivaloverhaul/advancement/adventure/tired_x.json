@@ -1,0 +1,42 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "insanelib:feature_enabled",
+      "feature": "Tiredness"
+    }
+  ],
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "tired_x": {
+      "conditions": {
+        "effects": {
+          "insanesurvivaloverhaul:tired": {
+            "amplifier": {
+              "min": 9
+            }
+          }
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.insanesurvivaloverhaul.tired_x.description"
+    },
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "minecraft:phantom_membrane"
+    },
+    "title": {
+      "translate": "advancements.insanesurvivaloverhaul.tired_x.title"
+    }
+  },
+  "requirements": [
+    [
+      "tired_x"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

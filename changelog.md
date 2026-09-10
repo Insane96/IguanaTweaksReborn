@@ -1,5 +1,6 @@
 # Upcoming
 * Halved Tired penalties
+* New Tiredness hidden advancement
 
 # 5.11.2.0-beta
 * Renamed gamerule `insanesurvivaloverhaul:thunderstormIntensity` to `insanesurvivaloverhaul:thunderstorm_intensity` for consistency with all other gamerules (snake_case)

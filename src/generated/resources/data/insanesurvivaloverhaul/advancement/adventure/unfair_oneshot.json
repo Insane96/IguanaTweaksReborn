@@ -1,0 +1,33 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "insanelib:feature_enabled",
+      "feature": "Unfair one-shot"
+    }
+  ],
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "unfair_oneshot": {
+      "trigger": "insanesurvivaloverhaul:unfair_oneshot"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.insanesurvivaloverhaul.unfair_oneshot.description"
+    },
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "insanesurvivaloverhaul:half_heart_texture"
+    },
+    "title": {
+      "translate": "advancements.insanesurvivaloverhaul.unfair_oneshot.title"
+    }
+  },
+  "requirements": [
+    [
+      "unfair_oneshot"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

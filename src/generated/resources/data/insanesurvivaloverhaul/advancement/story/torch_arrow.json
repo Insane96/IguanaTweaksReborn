@@ -1,0 +1,39 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "insanelib:feature_enabled",
+      "feature": "Fletching"
+    }
+  ],
+  "parent": "insanesurvivaloverhaul:story/fletching_table",
+  "criteria": {
+    "torch_arrow": {
+      "conditions": {
+        "items": [
+          {
+            "items": "insanesurvivaloverhaul:torch_arrow"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.insanesurvivaloverhaul.torch_arrow.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "insanesurvivaloverhaul:torch_arrow"
+    },
+    "title": {
+      "translate": "advancements.insanesurvivaloverhaul.torch_arrow.title"
+    }
+  },
+  "requirements": [
+    [
+      "torch_arrow"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
