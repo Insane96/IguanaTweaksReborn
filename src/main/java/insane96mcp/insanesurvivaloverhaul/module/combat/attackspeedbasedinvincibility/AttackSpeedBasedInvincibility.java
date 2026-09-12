@@ -11,7 +11,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
-@LoadFeature(module = ISOModules.COMBAT, description = "Invincibility frames based off attack speed, so faster attacks will give less invincibility frames and viceversa.")
+@LoadFeature(module = ISOModules.COMBAT, description = "Invincibility frames based off attack speed, so faster attacks will give less invincibility frames and vice versa.")
 public class AttackSpeedBasedInvincibility extends Feature {
 
 	@Config(description = "If true, invincibility frames will not be increased for slower attacks.")

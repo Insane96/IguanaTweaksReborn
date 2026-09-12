@@ -1,7 +1,6 @@
 package insane96mcp.insanesurvivaloverhaul.module.combat.regeneratingabsorption;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import insane96mcp.insanelib.core.ModNBTData;
 import insane96mcp.insanelib.core.feature.Feature;
 import insane96mcp.insanelib.util.ClientUtils;
 import insane96mcp.insanesurvivaloverhaul.InsaneSO;
@@ -44,7 +43,7 @@ public class RegeneratingAbsorptionClient {
         int left = width / 2 - 91;
         int top = height - gui.leftHeight;
 
-        int absorption = Mth.ceil(ModNBTData.get(mc.player, RegeneratingAbsorption.REGEN_ABSORPTION_TAG, Float.class));
+        int absorption = Mth.ceil(RegeneratingAbsorption.getCurrentAbsorption(mc.player));
         boolean highlight = absorptionBlinkTime > (long) gui.getGuiTicks() && (absorptionBlinkTime - (long) gui.getGuiTicks()) / 3L % 2L == 1L;
         int v = highlight ? 9 : 0;
 
