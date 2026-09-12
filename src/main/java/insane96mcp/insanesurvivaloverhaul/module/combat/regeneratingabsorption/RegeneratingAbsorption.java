@@ -37,9 +37,9 @@ public class RegeneratingAbsorption extends Feature {
     public static ResourceLocation REGEN_ABSORPTION_TAG;
     public static ResourceLocation NO_HURT_SOUND_TAG;
 
-    public static final DeferredHolder<Attribute, Attribute> ATTRIBUTE = ISORegistries.ATTRIBUTES.register("regenerating_absorption", () -> new RangedAttribute("attribute.name.regenerating_absorption", 0d, 0d, 1024d));
+    public static final DeferredHolder<Attribute, Attribute> ATTRIBUTE = ISORegistries.ATTRIBUTES.register("regenerating_absorption", () -> new RangedAttribute("attribute.name.regenerating_absorption", 0d, 0d, 1024d).setSyncable(true));
 
-    public static final DeferredHolder<Attribute, Attribute> SPEED_ATTRIBUTE = ISORegistries.ATTRIBUTES.register("regenerating_absorption_speed", () -> new RangedAttribute("attribute.name.regenerating_absorption_speed", 0.250d, 0d, 20d));
+    public static final DeferredHolder<Attribute, Attribute> SPEED_ATTRIBUTE = ISORegistries.ATTRIBUTES.register("regenerating_absorption_speed", () -> new RangedAttribute("attribute.name.regenerating_absorption_speed", 0.250d, 0d, 20d).setSyncable(true));
 
     public static final DeferredHolder<MobEffect, MobEffect> EFFECT = ISORegistries.MOB_EFFECTS.register("regenerating_absorption", () -> new ILMobEffect(MobEffectCategory.BENEFICIAL, 0x818894)
             .addAttributeModifier(ATTRIBUTE, InsaneSO.id("regenerating_absorption_effect"), 4, AttributeModifier.Operation.ADD_VALUE)
@@ -48,7 +48,7 @@ public class RegeneratingAbsorption extends Feature {
     @Config(min = 0, description = "If the player has been in combat (attacked or attacking) since this seconds regen speed is multiplied by 'Regen speed'")
     public static Double inCombat$time = 8d;
     @Config(min = 0, max = 1, description = "If the player is in combat, regen speed is multiplied by this")
-    public static Double inCombat$regenSpeed = 0.2;
+    public static Double inCombat$regenSpeed = 0d;
     @Config(description = "The amount of regenerating absorption hearts cannot go over the entity's current health.")
     public static Boolean capToHealth = true;
     @Config(description = "How many absorption hearts are lost each second when higher than the current maximum.")
@@ -57,7 +57,6 @@ public class RegeneratingAbsorption extends Feature {
     public static Boolean absorbingDamageTypeTagOnly = true;
     @Config(description = "If true, a sound is played when the absorption is damaged.")
     public static Boolean soundOnAbsorptionHurt = true;
-    //TODO Config option to replace vanilla absorption with this
 
     public void init(Module module, boolean enabledByDefault, boolean canBeDisabled) {
         super.init(module, enabledByDefault, canBeDisabled);
