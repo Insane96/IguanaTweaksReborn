@@ -1,6 +1,9 @@
 # Upcoming
 * Halved Tired penalties
 * New Tiredness hidden advancement
+* Regenerating absorption
+  * Now shows up in Jade while looking at a mob
+  * Simplified how in-combat regeneration works. Now entering combat will lower your regeneration speed by 80%
 
 # 5.11.2.0-beta
 * Renamed gamerule `insanesurvivaloverhaul:thunderstormIntensity` to `insanesurvivaloverhaul:thunderstorm_intensity` for consistency with all other gamerules (snake_case)
