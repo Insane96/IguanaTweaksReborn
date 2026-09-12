@@ -36,6 +36,8 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class ISOAdvancementProvider implements DataProvider {
+    private static final AdvancementHolder ADVENTURE_ROOT = new AdvancementHolder(ResourceLocation.withDefaultNamespace("adventure/root"), null);
+
     private final PackOutput.PathProvider pathProvider;
     private final CompletableFuture<HolderLookup.Provider> registries;
 
@@ -56,7 +58,6 @@ public class ISOAdvancementProvider implements DataProvider {
     private void generate(CachedOutput output, HolderLookup.Provider registries, List<CompletableFuture<?>> futures) {
         FeatureEnabledCondition pouchEnabled = new FeatureEnabledCondition("Pouch");
 
-        @SuppressWarnings("removal")
         AdvancementHolder obtainPouch = Advancement.Builder.advancement()
                 .display(new DisplayInfo(
                         new ItemStack(Pouch.ITEM.get()),
@@ -65,7 +66,7 @@ public class ISOAdvancementProvider implements DataProvider {
                         Optional.empty(),
                         AdvancementType.TASK,
                         true, true, false))
-                .parent(ResourceLocation.withDefaultNamespace("adventure/root"))
+                .parent(ADVENTURE_ROOT)
                 .addCriterion("has_pouch", InventoryChangeTrigger.TriggerInstance.hasItems(Pouch.ITEM.get()))
                 .build(InsaneSO.id("story/obtain_pouch"));
         save(output, registries, futures, obtainPouch, pouchEnabled);
@@ -94,7 +95,7 @@ public class ISOAdvancementProvider implements DataProvider {
                         Optional.empty(),
                         AdvancementType.TASK,
                         true, true, false))
-                .parent(ResourceLocation.withDefaultNamespace("adventure/root"))
+                .parent(ADVENTURE_ROOT)
                 .addCriterion("has_glow_block", InventoryChangeTrigger.TriggerInstance.hasItems(GlowBlockFeature.GLOW_BLOCK.item().get()))
                 .build(InsaneSO.id("story/obtain_glow_block"));
         save(output, registries, futures, obtainGlowBlock, glowBlockEnabled);
@@ -109,7 +110,7 @@ public class ISOAdvancementProvider implements DataProvider {
                         Optional.empty(),
                         AdvancementType.TASK,
                         true, true, false))
-                .parent(ResourceLocation.withDefaultNamespace("adventure/root"))
+                .parent(ADVENTURE_ROOT)
                 .addCriterion("fletching_table", InventoryChangeTrigger.TriggerInstance.hasItems(Items.FLETCHING_TABLE))
                 .build(InsaneSO.id("story/fletching_table"));
         save(output, registries, futures, fletchingTable, fletchingEnabled);
@@ -135,7 +136,7 @@ public class ISOAdvancementProvider implements DataProvider {
                         Optional.empty(),
                         AdvancementType.TASK,
                         true, true, false))
-                .parent(ResourceLocation.withDefaultNamespace("adventure/root"))
+                .parent(ADVENTURE_ROOT)
                 .addCriterion("repair_kit", InventoryChangeTrigger.TriggerInstance.hasItems(RepairKits.ITEM.get()))
                 .build(InsaneSO.id("story/repair_kit"));
         save(output, registries, futures, repairKit, repairKitsEnabled);
@@ -150,7 +151,7 @@ public class ISOAdvancementProvider implements DataProvider {
                         Optional.empty(),
                         AdvancementType.TASK,
                         true, true, true))
-                .parent(ResourceLocation.withDefaultNamespace("adventure/root"))
+                .parent(ADVENTURE_ROOT)
                 .addCriterion("unfair_oneshot", UnfairOneShot.UNFAIR_ONESHOT.get().createCriterion(
                         new UnfairOneShotTrigger.TriggerInstance(Optional.empty())))
                 .build(InsaneSO.id("adventure/unfair_oneshot"));
@@ -166,7 +167,7 @@ public class ISOAdvancementProvider implements DataProvider {
                         Optional.empty(),
                         AdvancementType.TASK,
                         true, true, true))
-                .parent(ResourceLocation.withDefaultNamespace("adventure/root"))
+                .parent(ADVENTURE_ROOT)
                 .addCriterion("tired_x", EffectsChangedTrigger.TriggerInstance.hasEffects(
                         MobEffectsPredicate.Builder.effects().and(Tiredness.TIRED,
                                 new MobEffectsPredicate.MobEffectInstancePredicate(
